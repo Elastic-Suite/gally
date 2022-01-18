@@ -8,7 +8,7 @@ api_platform:
     swagger:
         versions: [3]
     # Mercure integration, remove if unwanted
-    mercure: ~
+    # mercure: ~
     # Good cache defaults for REST APIs
     defaults:
         stateless: true
