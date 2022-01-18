@@ -22,8 +22,8 @@ services:
     volumes:
       - ./api/docker/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
       - ./api/public:/srv/api/public:ro
-    environment:
-      MERCURE_EXTRA_DIRECTIVES: demo
+    # environment:
+      # MERCURE_EXTRA_DIRECTIVES: demo
 
 ###> doctrine/doctrine-bundle ###
   database:
