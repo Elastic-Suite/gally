@@ -59,8 +59,7 @@
             "": "src/"
         },
         "psr-4": {
-            "App\\": "src/App",
-            "Elasticsuite\\": "src/Elasticsuite/"
+            "": "src/"
         }
     },
     "autoload-dev": {
