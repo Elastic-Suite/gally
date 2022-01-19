@@ -2,7 +2,7 @@ api_platform:
     title: Hello API Platform
     version: 1.0.0
     mapping:
-        paths: ['%kernel.project_dir%/src/Entity', '%kernel.project_dir%/src/Elasticsuite/Entity']
+        paths: ['%kernel.project_dir%/src/App/Entity', '%kernel.project_dir%/src/Elasticsuite/Entity']
     patch_formats:
         json: ['application/merge-patch+json']
     swagger:
