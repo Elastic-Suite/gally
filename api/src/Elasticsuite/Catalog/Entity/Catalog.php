@@ -1,6 +1,6 @@
 <?php
 
-namespace Elasticsuite\Entity;
+namespace Elasticsuite\Catalog\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
