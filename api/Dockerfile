@@ -6,6 +6,7 @@
 # https://docs.docker.com/engine/reference/builder/#understand-how-arg-and-from-interact
 ARG PHP_VERSION=8.1
 ARG CADDY_VERSION=2
+ARG ELASTIC_VERSION=7.16.3
 
 # "php" stage
 FROM php:${PHP_VERSION}-fpm-alpine AS api_platform_php
@@ -138,3 +139,10 @@ WORKDIR /srv/api
 COPY --from=api_platform_caddy_builder /usr/bin/caddy /usr/bin/caddy
 COPY --from=api_platform_php /srv/api/public public/
 COPY docker/caddy/Caddyfile /etc/caddy/Caddyfile
+
+FROM docker.elastic.co/elasticsearch/elasticsearch:${ELASTIC_VERSION} AS api_platform_elasticsearch
+
+WORKDIR /usr/share/elasticsearch
+
+RUN bin/elasticsearch-plugin install analysis-phonetic
+RUN bin/elasticsearch-plugin install analysis-icu

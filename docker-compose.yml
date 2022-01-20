@@ -74,6 +74,27 @@ services:
       # you may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
       # - ./api/docker/db/data:/var/lib/postgresql/data:rw
 
+  elasticsearch:
+    build:
+      context: api/
+      target: api_platform_elasticsearch
+    # restart: unless-stopped
+    environment:
+      - cluster.name=es-docker-cluster
+      - bootstrap.memory_lock=true
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m" # 512 Mo HEAP
+      - cluster.routing.allocation.disk.threshold_enabled=false # Avoid ES going read-only because low disk space availability
+    volumes:
+      - es_data:/usr/share/elasticsearch/data:rw
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - 9200:9200
+      # - 9300:9300
+
 # Mercure is installed as a Caddy module, prevent the Flex recipe from installing another service
 ###> symfony/mercure-bundle ###
 ###< symfony/mercure-bundle ###
@@ -85,5 +106,6 @@ volumes:
 ###> doctrine/doctrine-bundle ###
   db_data:
 ###< doctrine/doctrine-bundle ###
+  es_data:
 ###> symfony/mercure-bundle ###
 ###< symfony/mercure-bundle ###
