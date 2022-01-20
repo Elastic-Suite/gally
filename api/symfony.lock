@@ -117,6 +117,15 @@
     "easyrdf/easyrdf": {
         "version": "1.1.1"
     },
+    "elasticsearch/elasticsearch": {
+        "version": "v7.16.0"
+    },
+    "ezimuel/guzzlestreams": {
+        "version": "3.0.1"
+    },
+    "ezimuel/ringphp": {
+        "version": "1.2.0"
+    },
     "fig/link-util": {
         "version": "1.2.0"
     },
@@ -224,6 +233,9 @@
     },
     "ralouphie/getallheaders": {
         "version": "3.0.3"
+    },
+    "react/promise": {
+        "version": "v2.8.0"
     },
     "symfony/asset": {
         "version": "v6.0.1"
