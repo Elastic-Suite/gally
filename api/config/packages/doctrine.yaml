@@ -17,6 +17,11 @@ doctrine:
                 alias: App
             Elasticsuite:
                 is_bundle: false
-                dir: '%kernel.project_dir%/src/Elasticsuite/Entity'
-                prefix: 'Elasticsuite\Entity'
+                dir: '%kernel.project_dir%/src/Elasticsuite/'
+                prefix: 'Elasticsuite'
                 alias: Elasticsuite
+            Acme:
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Acme/'
+                prefix: 'Acme'
+                alias: Acme
