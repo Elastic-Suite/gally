@@ -3,13 +3,33 @@ version: "3.4"
 # Development environment override
 services:
   php:
+    build:
+      target: api_platform_php_dev
     volumes:
       - ./api:/srv/api:rw,cached
       - ./api/docker/php/conf.d/api-platform.dev.ini:/usr/local/etc/php/conf.d/api-platform.ini
       # if you develop on Linux, you may use a bind-mounted host directory instead
       # - ./api/var:/srv/api/var:rw
+    # If supported by your version of docker/docker-compose
+    # extra_hosts:
+    #  - host.docker.internal:host-gateway
     environment:
       APP_ENV: dev
+      # Lots of change between Xdebug 2 and Xdebug 3, see https://xdebug.org/docs/upgrade_guide
+      # and https://xdebug.org/docs/all_settings
+      # XDEBUG_MODE: debug
+      XDEBUG_CONFIG: >-
+        # Replaces remote_connect_back=1
+        discover_client_host=1
+        # Replaces remote_autostart=1
+        start_with_request=1
+        # Will only work if host-gateway is supported
+        # client_host=host.docker.internal
+        # Default IP of docker0 interface (bridge)
+        # client_host=172.17.0.1
+        client_port=9000
+        idekey=PHPSTORM
+      PHP_IDE_CONFIG: serverName=api-platform
 
   pwa:
     build:
