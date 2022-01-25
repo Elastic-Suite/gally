@@ -1,6 +1,6 @@
 <?php
 
-namespace Acme\Greetings\Entity;
+namespace Acme\GreetingsBundle\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;

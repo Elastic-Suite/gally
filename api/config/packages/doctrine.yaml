@@ -20,8 +20,8 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Elasticsuite/'
                 prefix: 'Elasticsuite'
                 alias: Elasticsuite
-            Acme:
-                is_bundle: false
-                dir: '%kernel.project_dir%/src/Acme/'
-                prefix: 'Acme'
-                alias: Acme
+            #Acme:
+            #    is_bundle: false
+            #    dir: '%kernel.project_dir%/src/Acme/'
+            #    prefix: 'Acme'
+            #    alias: Acme
