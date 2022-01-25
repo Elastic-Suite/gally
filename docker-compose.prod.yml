@@ -7,6 +7,7 @@ services:
       APP_ENV: prod
       APP_SECRET: ${APP_SECRET}
       # MERCURE_JWT_SECRET: ${CADDY_MERCURE_JWT_SECRET}
+      XDEBUG_MODE: off
 
   caddy:
     environment:

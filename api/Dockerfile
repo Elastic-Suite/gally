@@ -7,6 +7,7 @@
 ARG PHP_VERSION=8.1
 ARG CADDY_VERSION=2
 ARG ELASTIC_VERSION=7.16.3
+# ARG XDEBUG_VERSION=3.1.2
 
 # "php" stage
 FROM php:${PHP_VERSION}-fpm-alpine AS api_platform_php
@@ -120,6 +121,17 @@ ENV SYMFONY_PHPUNIT_VERSION=9
 
 ENTRYPOINT ["docker-entrypoint"]
 CMD ["php-fpm"]
+
+# "php+xdebug" stage
+# ENV XDEBUG_VERSION=${XDEBUG_VERSION}
+FROM api_platform_php as api_platform_php_dev
+
+ARG XDEBUG_VERSION=3.1.2
+RUN set -eux; \
+	apk add --no-cache --virtual .build-deps $PHPIZE_DEPS; \
+	pecl install xdebug-${XDEBUG_VERSION}; \
+	docker-php-ext-enable xdebug; \
+	apk del .build-deps
 
 # "caddy" stage
 # depends on the "php" stage above

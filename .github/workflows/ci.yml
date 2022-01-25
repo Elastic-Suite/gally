@@ -38,11 +38,11 @@ jobs:
         run: curl  -vk -o /dev/null https://localhost
       - name: Create test database
         run: |
-          docker-compose exec -T php bin/console -e test doctrine:database:create
-          docker-compose exec -T php bin/console -e test doctrine:migrations:migrate --no-interaction
+          docker-compose exec -e XDEBUG_MODE=off -T php bin/console -e test doctrine:database:create
+          docker-compose exec -e XDEBUG_MODE=off -T php bin/console -e test doctrine:migrations:migrate --no-interaction
       - name: PHPUnit
-        run: docker-compose exec -T php bin/phpunit
+        run: docker-compose exec -e XDEBUG_MODE=off -T php bin/phpunit
       - name: Doctrine Schema Validator
-        run: docker-compose exec -T php bin/console doctrine:schema:validate --skip-sync
+        run: docker-compose exec -e XDEBUG_MODE=off -T php bin/console doctrine:schema:validate --skip-sync
       - name: Jest
         run: docker-compose exec -T pwa yarn test --ci --passWithNoTests
