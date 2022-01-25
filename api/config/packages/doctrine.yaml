@@ -25,3 +25,13 @@ doctrine:
             #    dir: '%kernel.project_dir%/src/Acme/'
             #    prefix: 'Acme'
             #    alias: Acme
+            # Must be the name of the bundle class.
+            AcmeDeclarativeGreetingsBundle:
+                is_bundle: true
+                mapping: true
+                # Alternative location to 'Entity' (default)
+                dir: 'Models'
+                # For manually declared bundles, the prefix MUST be set explicitely.
+                # And it MUST be a prefix of the entities/models classnames located in %dir%.
+                prefix: 'Acme\DeclarativeGreetingsBundle'
+                type: 'attribute'
