@@ -15,4 +15,6 @@ return [
     Acme\GreetingsBundle\AcmeGreetingsBundle::class => ['dev' => true, 'test' => true],
     # all => true is required because there is a mapping in the global config/packages/doctrine.yml.
     Acme\DeclarativeGreetingsBundle\AcmeDeclarativeGreetingsBundle::class => ['all' => true],
+    Elasticsuite\Catalog\ElasticsuiteCatalogBundle::class => ['all' => true],
+    Elasticsuite\Index\ElasticsuiteIndexBundle::class => ['all' => true],
 ];
