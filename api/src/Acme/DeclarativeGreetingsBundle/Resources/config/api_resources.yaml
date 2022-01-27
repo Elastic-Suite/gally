@@ -1,0 +1,14 @@
+resources: 
+    Acme\DeclarativeGreetingsBundle\Models\DeclarativeGreeting:
+        # Shortname used for the route: becomes '/declarative_greeting' and the plural form is applied somehow.
+        shortName: 'DeclarativeGreeting'
+        description: 'Description of declarative greetings (description)'
+        # IRI NOT used for internal object IDs which use the shortName (eg: '"@id"! "/declarative_greetings/1")
+        # BUT used for the @type property.
+        iri: 'Declarative Greeting'
+        # itemOperations: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'] ???
+        # collectionOperations: ['GET'] ??
+        # subresourceOperations: []
+        # graphql: true
+        # attributes: []
+        # properties: []       
