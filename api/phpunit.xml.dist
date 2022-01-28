@@ -19,8 +19,8 @@
     </php>
 
     <testsuites>
-        <testsuite name="Project Test Suite">
-            <directory>tests</directory>
+        <testsuite name="Elasticsuite Standard Test Suite">
+            <directory>src/Elasticsuite/Standard/src/**/Tests/</directory>
         </testsuite>
     </testsuites>
 
