@@ -27,12 +27,14 @@
         "symfony/runtime": "6.0.*",
         "symfony/security-bundle": "6.0.*",
         "symfony/serializer": "6.0.*",
+        "symfony/translation": "6.0.*",
         "symfony/twig-bundle": "6.0.*",
         "symfony/validator": "6.0.*",
         "symfony/yaml": "6.0.*"
     },
     "require-dev": {
         "api-platform/schema-generator": "^4.0",
+        "phpunit/phpunit": "^9.5",
         "symfony/browser-kit": "6.0.*",
         "symfony/css-selector": "6.0.*",
         "symfony/debug-bundle": "6.0.*",
@@ -60,12 +62,13 @@
             "": "src/"
         },
         "psr-4": {
-            "": "src/"
-        }
+            "Elasticsuite\\": "src/Elasticsuite/Standard/src/"
+        },
+        "exclude-from-classmap": ["src/Elasticsuite/Standard/src/**/Tests/"]
     },
     "autoload-dev": {
         "psr-4": {
-            "App\\Tests\\": "tests/"
+            "Elasticsuite\\Example\\Tests\\": "src/Elasticsuite/Standard/src/Example/Tests/"
         }
     },
     "replace": {

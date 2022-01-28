@@ -1,0 +1,48 @@
+<?php
+
+namespace Elasticsuite\Example\Repository\Document;
+
+use Elasticsearch\Client;
+
+class DocumentRepository implements DocumentRepositoryInterface
+{
+    public function __construct(
+        private Client $client
+    ) {
+    }
+
+    public function index(string $indexName, array $documents): void
+    {
+        $params = [];
+        $responses = [];
+        foreach ($documents as $document) {
+            $document = json_decode($document, true);
+            $params['body'][] = [
+                'index' => [
+                    '_index' => $indexName,
+                    '_id' => $document['entity_id'],
+                ]
+            ];
+
+            $params['body'][] = $document;
+        }
+
+        if (count($params) > 0) {
+            $responses = $this->client->bulk($params);
+        }
+    }
+
+    public function delete(string $indexName, array $documents): void
+    {
+        dd($documents);
+        /**
+         * @Todo: Implement the right way to delete an Index
+         */
+        foreach ($documents as $document) {
+            $response = $this->client->delete([
+                'index' => $indexName,
+                'id'    => $document['entity_id']
+            ]);
+        }
+    }
+}
