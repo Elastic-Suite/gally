@@ -6,10 +6,12 @@ PHP_CONT = $(DOCKER_COMP) exec php
 PHP_DATABASE = $(DOCKER_COMP) exec database
 
 # Executables
-PHP       = $(PHP_CONT) php
-COMPOSER  = $(PHP_CONT) composer
-SYMFONY   = $(PHP_CONT) bin/console
-PHP_UNIT  = $(PHP_CONT) bin/phpunit
+PHP          = $(PHP_CONT) php
+COMPOSER     = $(PHP_CONT) composer
+SYMFONY      = $(PHP_CONT) bin/console
+PHP_UNIT     = $(PHP_CONT) bin/phpunit
+PHP_CS_FIXER = $(PHP_CONT) vendor/bin/php-cs-fixer
+PHP_STAN     = $(PHP_CONT) vendor/bin/phpstan
 
 # Misc
 .DEFAULT_GOAL = help
@@ -51,6 +53,22 @@ vendor: composer
 ## —— Services 🔧 ———————————————————————————————————————————————————————————————
 db: ## Connect to the DB
 	@$(PHP_DATABASE) sh -c 'psql $$POSTGRES_DB $$POSTGRES_USER'
+
+phpcsfixer: ## Run php cs fixer, pass the parameter "o=" to ass options, make phpcsfixer o="--dry-run"
+	@$(eval o ?=)
+	@$(PHP_CS_FIXER) fix src $(o)
+
+phpcsfixer_dryrun: ## Run php cs fixer wuth dry run optoin
+phpcsfixer_dryrun: o="--dry-run"
+phpcsfixer_dryrun: phpcsfixer
+
+phpstan: ## Run phpstan , pass the parameter "o=" to ass options, make phpstan o="--level 3"
+	@$(eval o ?=)
+	@$(PHP_STAN) analyse $(o)
+
+qa: ## Run code quality tools
+qa: phpcsfixer_dryrun # TODO: Change this by phpcsfixer when we agree on phpcsfixer conf
+qa: phpstan
 
 phpunit: ## Run php unit tests
 	@$(PHP_UNIT)
