@@ -29,8 +29,8 @@ services:
       context: ./pwa
       target: api_platform_pwa_prod
     environment:
-      API_PLATFORM_CLIENT_GENERATOR_ENTRYPOINT: http://caddy
-      NEXT_PUBLIC_ENTRYPOINT: http://caddy
+      API_PLATFORM_CLIENT_GENERATOR_ENTRYPOINT: https://caddy
+      NEXT_PUBLIC_ENTRYPOINT: https://caddy
 
   caddy:
     build:
@@ -41,7 +41,10 @@ services:
       - pwa
     environment:
       PWA_UPSTREAM: pwa:3000
-      SERVER_NAME: ${SERVER_NAME:-localhost, caddy:80}
+      # SERVER_NAME: ${SERVER_NAME:-localhost, caddy:80}
+      SERVER_NAME: ${SERVER_NAME:-localhost}
+      # VARNISH_UPSTREAM: varnish:80
+      VARNISH_UPSTREAM: varnish:80
       # MERCURE_PUBLISHER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET:-!ChangeMe!}
       # MERCURE_SUBSCRIBER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET:-!ChangeMe!}
     restart: unless-stopped
@@ -62,7 +65,30 @@ services:
       - target: 443
         published: ${HTTP3_PORT:-443}
         protocol: udp
+      - target: 8080
+        published: 8080
+        protocol: tcp
 
+  varnish:
+    # image: varnish:fresh-alpine
+    image: varnish:fresh
+    depends_on:
+      - caddy
+    restart: unless-stopped
+    volumes:
+      - './api/docker/varnish/default.vcl:/etc/varnish/default.vcl:ro'
+    environment:
+      - VARNISH_SIZE=512M
+    #   - SERVERNAME=${SERVER_NAME:-localhost, caddy:80}
+    # If http2 not already supported out of the box
+    # command: "-p default_keep=300 -p feature=+http2"
+    command: "-p default_keep=300"
+    # restart: unless-stopped
+    # ports: 
+    #  - target: 80
+    #    published: 8080
+    #    protocol: tcp
+       
   database:
     image: postgres:${POSTGRES_VERSION:-13}-alpine
     environment:
