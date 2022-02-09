@@ -3,29 +3,26 @@
     {$DEBUG}
     # HTTP/3 support
     servers {
-        protocol {
-            experimental_http3
-        }
+       protocol {
+           experimental_http3
+       }
     }
 }
 
-{$SERVER_NAME}
+(snippet) {
+    # Matches requests for HTML documents, for static files and for Next.js files,
+    # except for known API paths and paths with extensions handled by API Platform
+    @pwa expression `(
+            {header.Accept}.matches("\\btext/html\\b")
+            && !{path}.matches("(?i)(?:^/docs|^/graphql|^/bundles/|^/_profiler|^/_wdt|\\.(?:json|html$|csv$|ya?ml$|xml$))")
+        )
+        || {path} == "/favicon.ico"
+        || {path} == "/manifest.json"
+        || {path} == "/robots.txt"
+        || {path}.startsWith("/_next")
+        || {path}.startsWith("/sitemap")`
 
-log
 
-# Matches requests for HTML documents, for static files and for Next.js files,
-# except for known API paths and paths with extensions handled by API Platform
-@pwa expression `(
-        {header.Accept}.matches("\\btext/html\\b")
-        && !{path}.matches("(?i)(?:^/docs|^/graphql|^/bundles/|^/_profiler|^/_wdt|\\.(?:json|html$|csv$|ya?ml$|xml$))")
-    )
-    || {path} == "/favicon.ico"
-    || {path} == "/manifest.json"
-    || {path} == "/robots.txt"
-    || {path}.startsWith("/_next")
-    || {path}.startsWith("/sitemap")`
-
-route {
     root * /srv/api/public
 #    mercure {
 #        # Transport to use (default to Bolt)
@@ -56,4 +53,48 @@ route {
     php_fastcgi unix//var/run/php/php-fpm.sock
     encode zstd gzip
     file_server
+}
+
+# {$SERVER_NAME}
+
+# log
+
+# @health_check {
+#     host {$SERVER_NAME}
+#     path /health-check
+# }
+
+{$SERVER_NAME} {
+    log
+
+    # named matchers
+    @do_varnish_pass {
+        header !X-Caddy-Forwarded
+        # method GET
+        # protocol https
+        not {
+            header Upgrade websocket
+        }
+    }
+
+    # do the cache pass
+    reverse_proxy @do_varnish_pass http://{$VARNISH_UPSTREAM} {
+        # request_header +X-Caddy-Forwarded 1
+        header_up X-Caddy-Forwarded 1
+        # header_up Host {http.reverse_proxy.upstream.hostport}
+    }
+
+    import snippet
+}
+
+http://{$SERVER_NAME}:8080 {
+    log
+
+    @do_redirect_https {
+        header !X-Caddy-Forwarded
+    }
+
+    redir @do_redirect_https https://{$SERVER_NAME}{uri} permanent
+
+    import snippet
 }
