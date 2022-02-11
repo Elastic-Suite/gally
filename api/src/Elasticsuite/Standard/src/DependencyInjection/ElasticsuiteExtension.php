@@ -45,6 +45,9 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
                     'paths' => [
                         __DIR__ . '/../Example/Model/',
                         __DIR__ . '/../Index/Model/',
+                        __DIR__ . '/../Example/Model/',
+                        __DIR__ . '/../Index/Model/',
+                        __DIR__ . '/../Catalog/Entity/',
                     ],
                 ],
             ]
@@ -87,6 +90,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
         $loader->load('Example/Resources/config/services.yaml');
         $loader->load('Index/Resources/config/services.yaml');
         $loader->load('Fixture/Resources/config/services.yaml');
+        $loader->load('Catalog/Resources/config/services.yaml');
         $loader->load('User/Resources/config/services.yaml');
         $loader->load('Security/Resources/config/services.yaml');
         $loader->load('Cache/Resources/config/services.yaml');
