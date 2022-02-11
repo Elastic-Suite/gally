@@ -1,7 +1,6 @@
 api_platform:
+    title: Elasticsuite API
     version: 1.0.0
-    elasticsearch:
-        hosts: ['%env(ELASTICSEARCH_HOST)%']
     patch_formats:
         json: ['application/merge-patch+json']
     swagger:

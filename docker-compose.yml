@@ -7,6 +7,7 @@ services:
       target: api_platform_php
     depends_on:
       - database
+      - elasticsearch
     restart: unless-stopped
     volumes:
       - php_socket:/var/run/php

@@ -1,0 +1,64 @@
+services:
+    # Declare Dummy service and its interface
+    Elasticsuite\Example\Service\DummyInterface: '@Elasticsuite\Example\Service\Dummy'
+    Elasticsuite\Example\Service\Dummy: ~
+
+    # Declare command elasticsuite:example-mapping:get
+    Elasticsuite\Example\Command\MappingCommand:
+        arguments:
+            - '@Elasticsuite\Example\Service\DummyInterface'
+            - '@Symfony\Contracts\Translation\TranslatorInterface'
+            - null
+        tags:
+            - { name: console.command }
+
+    # Declare decorator service
+    Elasticsuite\Example\Decoration\Metadata\Document\Factory\AttributeDocumentMetadataFactory:
+        decorates: api_platform.elasticsearch.metadata.document.metadata_factory
+        arguments:
+            - '@api_platform.metadata.resource.metadata_factory'
+            - '@.inner'
+        decoration_priority: 100
+
+    # Declare repository
+    Elasticsuite\Example\Repository\Document\DocumentRepositoryInterface: '@Elasticsuite\Example\Repository\Document\DocumentRepository'
+    Elasticsuite\Example\Repository\Document\DocumentRepository:
+        arguments:
+            - '@api_platform.elasticsearch.client'
+
+    Elasticsuite\Example\Repository\Index\IndexRepositoryInterface: '@Elasticsuite\Example\Repository\Index\IndexRepository'
+    Elasticsuite\Example\Repository\Index\IndexRepository:
+        arguments:
+            - '@api_platform.elasticsearch.client'
+
+    Elasticsuite\Example\Repository\Category\CategoryRepository:
+        arguments:
+            - '@Doctrine\Persistence\ManagerRegistry'
+        tags:
+            - { name: doctrine.repository_service } 
+
+    # Declare denormalizer
+    Elasticsuite\Example\Serializer\AttributesDenormalizer:
+        tags:
+            - { name: serializer.normalizer }
+
+    # Declare data persister
+    Elasticsuite\Example\DataPersister\DocumentDataPersister:
+        arguments:
+            - '@Elasticsuite\Example\Repository\Document\DocumentRepositoryInterface'
+        tags:
+            - { name: api_platform.data_persister }
+
+    Elasticsuite\Example\DataPersister\IndexDataPersister:
+        arguments:
+            - '@Elasticsuite\Example\Repository\Index\IndexRepositoryInterface'
+        tags:
+            - { name: api_platform.data_persister }
+
+    # Declare data provider
+    Elasticsuite\Example\DataProvider\IndexDataProvider:
+        arguments:
+            - '@Elasticsuite\Example\Repository\Index\IndexRepositoryInterface'
+        tags:
+            - { name: api_platform.item_data_provider }
+            - { name: api_platform.collection_data_provider }
