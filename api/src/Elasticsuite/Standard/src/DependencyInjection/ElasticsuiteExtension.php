@@ -29,6 +29,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
                 'mapping' => [
                     'paths' => [
                         __DIR__.'/../Example/Model/',
+                        __DIR__.'/../Catalog/Entity/',
                     ],
                 ],
             ]
@@ -59,6 +60,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
         );
 
         $loader->load('Example/Resources/config/services.yaml');
+        $loader->load('Catalog/Resources/config/services.yaml');
 
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
