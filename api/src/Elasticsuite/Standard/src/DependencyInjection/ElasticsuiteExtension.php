@@ -29,6 +29,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
                 'mapping' => [
                     'paths' => [
                         __DIR__.'/../Example/Model/',
+                        __DIR__.'/../Index/Model/',
                     ],
                 ],
             ]
@@ -41,6 +42,15 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
                     'paths' => [
                         __DIR__.'/../Example/Resources/translations',
                     ],
+                ],
+            ]
+        );
+
+        $container->prependExtensionConfig(
+            'hautelook_alice',
+            [
+                'fixtures_path' => [
+                    'src/Example/DataFixtures/fixtures',
                 ],
             ]
         );
@@ -59,6 +69,8 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
         );
 
         $loader->load('Example/Resources/config/services.yaml');
+        $loader->load('Index/Resources/config/services.yaml');
+        $loader->load('Fixture/Resources/config/services.yaml');
 
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
