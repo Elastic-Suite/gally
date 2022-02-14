@@ -1,0 +1,6 @@
+# Alice documentation: https://github.com/nelmio/alice
+# Faker documentation: https://fakerphp.github.io/formatters/
+Elasticsuite\Example\Model\ExampleCategory:
+    id{1..2}:
+        name: Category <current()>
+        description: <text(50)>

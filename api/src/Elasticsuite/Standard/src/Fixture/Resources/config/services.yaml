@@ -1,0 +1,10 @@
+services:
+    Elasticsuite\Fixture\Service\ElasticsearchFixturesInterface: '@Elasticsuite\Fixture\Service\ElasticsearchFixtures'
+    Elasticsuite\Fixture\Service\ElasticsearchFixtures:
+        arguments:
+            - '@Symfony\Component\Validator\Validator\ValidatorInterface'
+            - '@Elasticsuite\Index\Repository\Index\IndexRepositoryInterface'
+            - '@Elasticsuite\Index\Repository\Document\DocumentRepositoryInterface'
+            - '%kernel.environment%'
+            - false
+        public: true

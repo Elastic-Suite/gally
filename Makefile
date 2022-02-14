@@ -70,3 +70,16 @@ migrate: sf
 generate_migration: ## Generate symfony migration
 generate_migration: c=doctrine:migrations:diff
 generate_migration: sf
+
+fixtures_load: ## Load fixtures (Delete DB and Elasticsearch data)
+	@$(SYMFONY) elasticsuite:index:clear
+	@$(SYMFONY) doctrine:fixtures:load
+	@$(SYMFONY) hautelook:fixtures:load
+
+fixtures_append: ## Append fixtures
+	@$(SYMFONY) doctrine:fixtures:load --append
+	@$(SYMFONY) hautelook:fixtures:load --append
+
+index_clear: ## Delete all Elasticsearch indices
+index_clear: c=elasticsuite:index:clear
+index_clear: sf

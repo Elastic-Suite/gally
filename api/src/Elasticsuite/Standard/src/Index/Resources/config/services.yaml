@@ -1,0 +1,44 @@
+services:
+    Elasticsuite\Index\Decoration\Metadata\Document\Factory\AttributeDocumentMetadataFactory:
+        decorates: api_platform.elasticsearch.metadata.document.metadata_factory
+        arguments:
+            - '@Elasticsuite\Fixture\Service\ElasticsearchFixtures'
+            - '@api_platform.metadata.resource.metadata_factory'
+            - '@.inner'
+        decoration_priority: 100
+
+    Elasticsuite\Index\Repository\Document\DocumentRepositoryInterface: '@Elasticsuite\Index\Repository\Document\DocumentRepository'
+    Elasticsuite\Index\Repository\Document\DocumentRepository:
+        arguments:
+            - '@api_platform.elasticsearch.client'
+
+    Elasticsuite\Index\Repository\Index\IndexRepositoryInterface: '@Elasticsuite\Index\Repository\Index\IndexRepository'
+    Elasticsuite\Index\Repository\Index\IndexRepository:
+        arguments:
+            - '@api_platform.elasticsearch.client'
+
+    Elasticsuite\Index\DataPersister\DocumentDataPersister:
+        arguments:
+            - '@Elasticsuite\Index\Repository\Document\DocumentRepositoryInterface'
+        tags:
+            - { name: api_platform.data_persister }
+
+    Elasticsuite\Index\DataPersister\IndexDataPersister:
+        arguments:
+            - '@Elasticsuite\Index\Repository\Index\IndexRepositoryInterface'
+        tags:
+            - { name: api_platform.data_persister }
+
+    Elasticsuite\Index\DataProvider\IndexDataProvider:
+        arguments:
+            - '@Elasticsuite\Index\Repository\Index\IndexRepositoryInterface'
+        tags:
+            - { name: api_platform.item_data_provider }
+            - { name: api_platform.collection_data_provider }
+                
+    Elasticsuite\Index\Command\IndexClearCommand:
+        arguments:
+            - '@Elasticsuite\Index\Repository\Index\IndexRepositoryInterface'
+            - null
+        tags:
+            - { name: console.command }
