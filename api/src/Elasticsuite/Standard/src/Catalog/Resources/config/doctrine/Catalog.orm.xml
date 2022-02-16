@@ -9,8 +9,8 @@
         <id name="id" type="integer">
             <generator strategy="AUTO"/>
         </id>
-        <field name="name" type="string" length="255" nullable="false" unique="false" />
-        <field name="code" type="string" length="255" nullable="true" unique="true" />
+        <field name="name" type="string" length="255" nullable="true" unique="false" />
+        <field name="code" type="string" length="255" nullable="false" unique="true" />
         <field name="locale" type="string" length="5" nullable="true" unique="false" />
 
         <many-to-one field="website" target-entity="Elasticsuite\Catalog\Model\Website" inversed-by="catalogs">
