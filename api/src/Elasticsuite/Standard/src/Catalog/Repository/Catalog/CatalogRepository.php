@@ -1,10 +1,10 @@
 <?php
 
-namespace Elasticsuite\Catalog\Repository;
+namespace Elasticsuite\Catalog\Repository\Catalog;
 
-use Elasticsuite\Catalog\Model\Catalog;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Elasticsuite\Catalog\Model\Catalog;
 
 /**
  * @method Catalog|null find($id, $lockMode = null, $lockVersion = null)
@@ -12,7 +12,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Catalog[]    findAll()
  * @method Catalog[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class CatalogRepository extends ServiceEntityRepository implements WebsiteRepositoryInterface
+class CatalogRepository extends ServiceEntityRepository implements CatalogRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {

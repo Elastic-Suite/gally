@@ -1,14 +1,15 @@
 services:    
-    Elasticsuite\Catalog\Model\Catalog:
+    Elasticsuite\Catalog\Repository\Catalog\CatalogRepository:
         arguments:
             - '@Doctrine\Persistence\ManagerRegistry'
         tags:
             - { name: doctrine.repository_service } 
-    Elasticsuite\Catalog\Model\Website:
+
+    Elasticsuite\Catalog\Repository\Website\WebsiteRepository:
         arguments:
             - '@Doctrine\Persistence\ManagerRegistry'
         tags:
             - { name: doctrine.repository_service }
 
-    Elasticsuite\Catalog\Repository\CatalogRepositoryInterface: '@Elasticsuite\Catalog\Repository\CatalogRepository'
-    Elasticsuite\Catalog\Repository\WebsiteRepositoryInterface: '@Elasticsuite\Catalog\Repository\WebsiteRepository'
+    Elasticsuite\Catalog\Repository\Catalog\CatalogRepositoryInterface: '@Elasticsuite\Catalog\Repository\Catalog\CatalogRepository'
+    Elasticsuite\Catalog\Repository\Website\WebsiteRepositoryInterface: '@Elasticsuite\Catalog\Repository\Website\WebsiteRepository'

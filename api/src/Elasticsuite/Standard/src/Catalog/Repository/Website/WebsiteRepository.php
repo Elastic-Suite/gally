@@ -1,10 +1,10 @@
 <?php
 
-namespace Elasticsuite\Catalog\Repository;
+namespace Elasticsuite\Catalog\Repository\Website;
 
-use Elasticsuite\Catalog\Model\Website;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Elasticsuite\Catalog\Model\Website;
 
 /**
  * @method Website|null find($id, $lockMode = null, $lockVersion = null)
