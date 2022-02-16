@@ -1,6 +1,6 @@
 <?php
 
-namespace Elasticsuite\Catalog\Entity;
+namespace Elasticsuite\Catalog\Model;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 

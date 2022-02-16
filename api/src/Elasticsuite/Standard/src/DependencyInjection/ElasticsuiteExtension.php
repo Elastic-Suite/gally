@@ -29,7 +29,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
                 'mapping' => [
                     'paths' => [
                         __DIR__.'/../Example/Model/',
-                        __DIR__.'/../Catalog/Entity/',
+                        __DIR__.'/../Catalog/Model/',
                     ],
                 ],
             ]
