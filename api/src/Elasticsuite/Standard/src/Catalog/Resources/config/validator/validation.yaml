@@ -1,0 +1,16 @@
+Elasticsuite\Catalog\Model\Website:
+    properties:
+        code:
+            - NotBlank: ~
+
+Elasticsuite\Catalog\Model\Catalog:
+    properties:
+        code:
+            - NotBlank: ~
+        website:
+            - NotBlank: ~
+        locale:
+            - Regex: '/[a-z]{2}_[A-Z]{2}$/'
+            - Length:
+                  min: 5
+                  max: 5
