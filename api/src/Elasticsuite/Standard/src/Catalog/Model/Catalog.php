@@ -4,11 +4,7 @@ namespace Elasticsuite\Catalog\Model;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 
-#[ApiResource(
-    collectionOperations: ['get', 'post'],
-    itemOperations: ['get', 'delete'],
-)]
-
+#[ApiResource]
 class Catalog
 {
     private $id;
