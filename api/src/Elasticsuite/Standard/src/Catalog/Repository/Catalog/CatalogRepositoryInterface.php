@@ -1,6 +1,6 @@
 <?php
 
-namespace Elasticsuite\Catalog\Repository;
+namespace Elasticsuite\Catalog\Repository\Catalog;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface;
 
