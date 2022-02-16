@@ -2,7 +2,7 @@
 
 namespace Elasticsuite\Catalog\Repository;
 
-use Elasticsuite\Catalog\Entity\Website;
+use Elasticsuite\Catalog\Model\Website;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

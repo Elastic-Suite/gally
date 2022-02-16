@@ -14,7 +14,7 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\Catalog\Entity;
+namespace Elasticsuite\Catalog\Model;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 

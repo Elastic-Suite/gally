@@ -5,14 +5,14 @@
                   xsi:schemaLocation="https://doctrine-project.org/schemas/orm/doctrine-mapping
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <entity name="Elasticsuite\Catalog\Entity\Website" table="website" repository-class="Elasticsuite\Catalog\Repository\WebsiteRepository">
+    <entity name="Elasticsuite\Catalog\Model\Website" table="website" repository-class="Elasticsuite\Catalog\Repository\WebsiteRepository">
         <id name="id" type="integer">
             <generator strategy="AUTO"/>
         </id>
         <field name="code" type="string" length="255" nullable="false" unique="true" />
         <field name="name" type="string" length="255" nullable="true" unique="false" />
 
-        <one-to-many field="catalogs" target-entity="Elasticsuite\Catalog\Entity\Catalog" mapped-by="website">
+        <one-to-many field="catalogs" target-entity="Elasticsuite\Catalog\Model\Catalog" mapped-by="website">
             <cascade>
                 <cascade-persist/>
             </cascade>
