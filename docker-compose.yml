@@ -8,6 +8,7 @@ services:
     depends_on:
       - database
       - elasticsearch
+      - redis
     restart: unless-stopped
     volumes:
       - php_socket:/var/run/php
@@ -101,6 +102,17 @@ services:
       # you may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
       # - ./api/docker/db/data:/var/lib/postgresql/data:rw
 
+  redis:
+    image: docker.io/bitnami/redis:6.2
+    environment:
+      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+      - ALLOW_EMPTY_PASSWORD=yes
+      # - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
+    ports:
+      - '6379:6379'
+    volumes:
+      - 'redis_data:/bitnami/redis/data'
+
   elasticsearch:
     build:
       context: api/
@@ -136,3 +148,5 @@ volumes:
   es_data:
 ###> symfony/mercure-bundle ###
 ###< symfony/mercure-bundle ###
+  redis_data:
+    driver: local
