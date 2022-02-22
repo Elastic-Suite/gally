@@ -5,3 +5,6 @@
 kernel:
     resource: ../src/Kernel.php
     type: annotation
+
+elasticsuite_security:
+    resource: '@ElasticsuiteBundle/src/Security/Resources/config/routing.yml'

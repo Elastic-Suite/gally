@@ -74,7 +74,7 @@ generate_migration: sf
 fixtures_load: ## Load fixtures (Delete DB and Elasticsearch data)
 	@$(SYMFONY) elasticsuite:index:clear
 	@$(SYMFONY) doctrine:fixtures:load
-	@$(SYMFONY) hautelook:fixtures:load
+	@$(SYMFONY) hautelook:fixtures:load --append
 
 fixtures_append: ## Append fixtures
 	@$(SYMFONY) doctrine:fixtures:load --append
