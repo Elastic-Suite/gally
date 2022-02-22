@@ -1,0 +1,337 @@
+[
+  {
+    "index_name": "magento2_default_catalog_product_20220101",
+    "documents": [
+      {
+        "entity_id": "1",
+        "attribute_set_id": "15",
+        "type_id": "simple",
+        "sku": "24-MB01",
+        "has_options": false,
+        "required_options": false,
+        "created_at": "2021-09-02 15:20:44",
+        "updated_at": "2021-12-20 14:28:30",
+        "row_id": "1",
+        "created_in": "1",
+        "updated_in": "2147483647",
+        "visibility": "4",
+        "price": [
+          {
+            "price": 34,
+            "original_price": 34,
+            "is_discount": false,
+            "customer_group_id": 0,
+            "tax_class_id": 0,
+            "final_price": 34,
+            "min_price": 34,
+            "max_price": 34
+          },
+          {
+            "price": 34,
+            "original_price": 34,
+            "is_discount": false,
+            "customer_group_id": 1,
+            "tax_class_id": 0,
+            "final_price": 34,
+            "min_price": 34,
+            "max_price": 34
+          },
+          {
+            "price": 34,
+            "original_price": 34,
+            "is_discount": false,
+            "customer_group_id": 2,
+            "tax_class_id": 0,
+            "final_price": 34,
+            "min_price": 34,
+            "max_price": 34
+          },
+          {
+            "price": 34,
+            "original_price": 34,
+            "is_discount": false,
+            "customer_group_id": 3,
+            "tax_class_id": 0,
+            "final_price": 34,
+            "min_price": 34,
+            "max_price": 34
+          }
+        ],
+        "indexed_attributes": [
+          "price",
+          "name",
+          "image",
+          "url_key",
+          "description",
+          "weight",
+          "color",
+          "status"
+        ],
+        "category": [
+          {
+            "category_id": 2,
+            "is_virtual": "false",
+            "category_uid": "Mg=="
+          },
+          {
+            "category_id": 3,
+            "is_parent": true,
+            "is_virtual": "false",
+            "name": "Gear",
+            "category_uid": "Mw=="
+          },
+          {
+            "category_id": 4,
+            "is_parent": true,
+            "is_virtual": "false",
+            "name": "Bags",
+            "category_uid": "NA=="
+          }
+        ],
+        "name": [
+          "Joust Duffle Bag"
+        ],
+        "image": [
+          "/m/b/mb01-blue-0.jpg"
+        ],
+        "url_key": [
+          "joust-duffle-bag"
+        ],
+        "description": [
+          "<p>The sporty Joust Duffle Bag can't be beat - not in the gym, not on the luggage carousel, not anywhere. Big enough to haul a basketball or soccer ball and some sneakers with plenty of room to spare, it's ideal for athletes with places to go.<p>\r\n<ul>\r\n<li>Dual top handles.</li>\r\n<li>Adjustable shoulder strap.</li>\r\n<li>Full-length zipper.</li>\r\n<li>L 29\" x W 13\" x H 11\".</li>\r\n</ul>"
+        ],
+        "weight": [
+          100
+        ],
+        "color": [
+          49
+        ],
+        "option_text_color": [
+          "Black"
+        ],
+        "status": [
+          1
+        ],
+        "option_text_status": [
+          "Enabled"
+        ],
+        "stock": {
+          "is_in_stock": true,
+          "qty": 100
+        }
+      },
+      {
+        "entity_id": "2",
+        "attribute_set_id": "15",
+        "type_id": "simple",
+        "sku": "24-MB04",
+        "has_options": false,
+        "required_options": false,
+        "created_at": "2021-09-02 15:20:47",
+        "updated_at": "2021-12-20 14:29:19",
+        "row_id": "2",
+        "created_in": "1",
+        "updated_in": "2147483647",
+        "visibility": "4",
+        "price": [
+          {
+            "price": 32,
+            "original_price": 32,
+            "is_discount": false,
+            "customer_group_id": 0,
+            "tax_class_id": 2,
+            "final_price": 32,
+            "min_price": 32,
+            "max_price": 32
+          },
+          {
+            "price": 32,
+            "original_price": 32,
+            "is_discount": false,
+            "customer_group_id": 1,
+            "tax_class_id": 2,
+            "final_price": 32,
+            "min_price": 32,
+            "max_price": 32
+          },
+          {
+            "price": 32,
+            "original_price": 32,
+            "is_discount": false,
+            "customer_group_id": 2,
+            "tax_class_id": 2,
+            "final_price": 32,
+            "min_price": 32,
+            "max_price": 32
+          },
+          {
+            "price": 32,
+            "original_price": 32,
+            "is_discount": false,
+            "customer_group_id": 3,
+            "tax_class_id": 2,
+            "final_price": 32,
+            "min_price": 32,
+            "max_price": 32
+          }
+        ],
+        "indexed_attributes": [
+          "price",
+          "name",
+          "image",
+          "url_key",
+          "activity",
+          "style_bags",
+          "material",
+          "strap_bags",
+          "features_bags",
+          "description",
+          "weight",
+          "color",
+          "status",
+          "tax_class_id",
+          "erin_recommends",
+          "sale"
+        ],
+        "category": [
+          {
+            "category_id": 2,
+            "is_virtual": "false",
+            "category_uid": "Mg=="
+          },
+          {
+            "category_id": 3,
+            "is_parent": true,
+            "is_virtual": "false",
+            "name": "Gear",
+            "category_uid": "Mw=="
+          },
+          {
+            "category_id": 4,
+            "is_parent": true,
+            "is_virtual": "false",
+            "name": "Bags",
+            "category_uid": "NA=="
+          },
+          {
+            "category_id": 7,
+            "is_parent": true,
+            "is_virtual": "false",
+            "name": "Collections",
+            "category_uid": "Nw=="
+          }
+        ],
+        "name": [
+          "Strive Shoulder Pack"
+        ],
+        "image": [
+          "/m/b/mb04-black-0.jpg"
+        ],
+        "url_key": [
+          "strive-shoulder-pack"
+        ],
+        "activity": [
+          "11",
+          "21",
+          "23",
+          "18"
+        ],
+        "option_text_activity": [
+          "Gym",
+          "Trail",
+          "Urban",
+          "Hiking"
+        ],
+        "style_bags": [
+          "27",
+          "29",
+          "30"
+        ],
+        "option_text_style_bags": [
+          "Messenger",
+          "Exercise",
+          "Tote"
+        ],
+        "material": [
+          "32",
+          "33",
+          "36",
+          "38"
+        ],
+        "option_text_material": [
+          "Canvas",
+          "Cotton",
+          "Mesh",
+          "Polyester"
+        ],
+        "strap_bags": [
+          "61",
+          "62",
+          "65",
+          "66",
+          "67"
+        ],
+        "option_text_strap_bags": [
+          "Adjustable",
+          "Cross Body",
+          "Padded",
+          "Shoulder",
+          "Single"
+        ],
+        "features_bags": [
+          "72",
+          "74",
+          "75",
+          "78"
+        ],
+        "option_text_features_bags": [
+          "Audio Pocket",
+          "Waterproof",
+          "Lightweight",
+          "Laptop Sleeve"
+        ],
+        "description": [
+          "<p>Convenience is next to nothing when your day is crammed with action. So whether you're heading to class, gym, or the unbeaten path, make sure you've got your Strive Shoulder Pack stuffed with all your essentials, and extras as well.</p>\r\n<ul>\r\n<li>Zippered main compartment.</li>\r\n<li>Front zippered pocket.</li>\r\n<li>Side mesh pocket.</li>\r\n<li>Cell phone pocket on strap.</li>\r\n<li>Adjustable shoulder strap and top carry handle.</li>\r\n</ul>"
+        ],
+        "weight": [
+          200
+        ],
+        "color": [
+          49
+        ],
+        "option_text_color": [
+          "Black"
+        ],
+        "status": [
+          1
+        ],
+        "option_text_status": [
+          "Enabled"
+        ],
+        "tax_class_id": [
+          2
+        ],
+        "option_text_tax_class_id": [
+          "Taxable Goods"
+        ],
+        "erin_recommends": [
+          true
+        ],
+        "option_text_erin_recommends": [
+          "Erin Recommends"
+        ],
+        "sale": [
+          true
+        ],
+        "option_text_sale": [
+          "Sale"
+        ],
+        "stock": {
+          "is_in_stock": true,
+          "qty": 100
+        }
+      }
+    ]
+  }
+]
+

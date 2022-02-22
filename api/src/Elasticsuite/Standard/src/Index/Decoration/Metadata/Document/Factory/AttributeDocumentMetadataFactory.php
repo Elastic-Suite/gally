@@ -1,11 +1,12 @@
 <?php
 
-namespace Elasticsuite\Example\Decoration\Metadata\Document\Factory;
+namespace Elasticsuite\Index\Decoration\Metadata\Document\Factory;
 
 use ApiPlatform\Core\Bridge\Elasticsearch\Exception\IndexNotFoundException;
 use ApiPlatform\Core\Bridge\Elasticsearch\Metadata\Document\DocumentMetadata;
 use ApiPlatform\Core\Bridge\Elasticsearch\Metadata\Document\Factory\DocumentMetadataFactoryInterface;
 use ApiPlatform\Core\Metadata\Resource\Factory\ResourceMetadataFactoryInterface;
+use Elasticsuite\Fixture\Service\ElasticsearchFixtures;
 
 /**
  * Creates document's metadata using the attribute configuration elasticsuite_index and elasticsuite_type.
@@ -14,6 +15,7 @@ class AttributeDocumentMetadataFactory implements DocumentMetadataFactoryInterfa
 {
 
     public function __construct(
+        private ElasticsearchFixtures $elasticsearchFixtures,
         private ResourceMetadataFactoryInterface $resourceMetadataFactory,
         private ?DocumentMetadataFactoryInterface $decorated = null
     ) {
@@ -43,6 +45,8 @@ class AttributeDocumentMetadataFactory implements DocumentMetadataFactoryInterfa
                  * Todo: call a service to get the index name formatted.
                  */
                 $index = 'magento2_default_' . $index;
+                $index = $this->elasticsearchFixtures->getTestIndexName($index);
+
                 $documentMetadata = $documentMetadata ? $documentMetadata->withIndex($index) : new DocumentMetadata($index);
             }
         }
