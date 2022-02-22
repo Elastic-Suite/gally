@@ -1,0 +1,7 @@
+Elasticsuite\Catalog\Model\Website:
+    website1:
+        code: b2c_test
+        name: B2C Test Website
+    website2:
+        code: b2b_test
+        name: B2B Test Website
