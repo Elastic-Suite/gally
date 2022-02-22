@@ -12,13 +12,12 @@ services:
         tags:
             - { name: console.command }
 
-    # Declare decorator service
-    Elasticsuite\Example\Decoration\Metadata\Document\Factory\AttributeDocumentMetadataFactory:
-        decorates: api_platform.elasticsearch.metadata.document.metadata_factory
+    # Declare DataFixtures
+    Elasticsuite\Example\DataFixtures\ExampleFixtures:
         arguments:
-            - '@api_platform.metadata.resource.metadata_factory'
-            - '@.inner'
-        decoration_priority: 100
+            - '@Elasticsuite\Fixture\Service\ElasticsearchFixtures'
+        tags:
+            - { name: doctrine.fixture.orm }
 
     # Declare repository
     Elasticsuite\Example\Repository\Document\DocumentRepositoryInterface: '@Elasticsuite\Example\Repository\Document\DocumentRepository'
