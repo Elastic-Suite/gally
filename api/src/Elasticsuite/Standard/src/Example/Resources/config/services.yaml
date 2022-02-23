@@ -59,9 +59,26 @@ services:
         tags:
             - { name: console.command }
 
+    # Declare command elasticsuite:example:cache-delete
     Elasticsuite\Example\Command\Cache\DeleteCommand:
         arguments:
             - '@Psr\Cache\CacheItemPoolInterface'
+            - null
+        tags:
+            - { name: console.command }
+
+    # Declare command elasticsuite:example:cache-invalidate-tags
+    Elasticsuite\Example\Command\Cache\InvalidateTagsCommand:
+        arguments:
+            - ['elasticsuite.example.custom.cache', 'elasticsuite.example.other.cache']
+            - null
+        tags:
+            - { name: console.command }
+
+    # Declare command elasticsuite:example:cache-invalidate-tags-injected
+    Elasticsuite\Example\Command\Cache\InvalidateTagsInjectedCommand:
+        arguments:
+            - ['@elasticsuite.example.custom.cache', '@elasticsuite.example.other.cache']
             - null
         tags:
             - { name: console.command }
