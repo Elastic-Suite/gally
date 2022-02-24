@@ -17,6 +17,7 @@ services:
     Elasticsuite\Cache\Command\ClearTagsCommand:
         arguments:
             - '@Elasticsuite\Cache\Service\CacheManagerInterface'
+            - '@ApiPlatform\Core\HttpCache\PurgerInterface'
             - null
         tags:
             - { name: console.command }
@@ -36,3 +37,5 @@ services:
             - null
         tags:
             - { name: console.command }
+    
+    ApiPlatform\Core\HttpCache\PurgerInterface: '@api_platform.http_cache.purger.varnish'
