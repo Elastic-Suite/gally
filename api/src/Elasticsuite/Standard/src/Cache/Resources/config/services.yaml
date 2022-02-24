@@ -1,0 +1,38 @@
+services:
+    Elasticsuite\Cache\Service\CacheManagerInterface: '@Elasticsuite\Cache\Service\CacheManager'
+    Elasticsuite\Cache\Service\CacheManager:
+        arguments:
+            - '@elasticsuite.cache'
+            
+    # Declare elasticsuite.cache cache pool
+    elasticsuite.cache:
+        parent: cache.app.taggable
+        # If true, will not be directly usable nor listed through cache:pool:list
+        abstract: false
+        tags:
+            # Allowed: "clearer", "provider", "name", "namespace", "default_lifetime", "early_expiration_message_bus" and "reset"
+            - { name: cache.pool, namespace: 'elasticsuite' }
+    
+    # Declare command elasticsuite:cache:clear-tags
+    Elasticsuite\Cache\Command\ClearTagsCommand:
+        arguments:
+            - '@Elasticsuite\Cache\Service\CacheManagerInterface'
+            - null
+        tags:
+            - { name: console.command }
+
+    # Declare command elasticsuite:cache:create-cache-object
+    Elasticsuite\Cache\Command\CreateCacheObjectCommand:
+        arguments:
+            - '@Elasticsuite\Cache\Service\CacheManagerInterface'
+            - null
+        tags:
+            - { name: console.command }
+
+    # Declare command elasticsuite:cache:clear-all
+    Elasticsuite\Cache\Command\ClearAllCommand:
+        arguments:
+            - '@Elasticsuite\Cache\Service\CacheManagerInterface'
+            - null
+        tags:
+            - { name: console.command }
