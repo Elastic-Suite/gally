@@ -1,4 +1,0 @@
-Elasticsuite\User\Model\User:
-    user:
-        email: johndoe@example.com
-        password: <hashPassword('apassword')>
