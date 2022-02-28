@@ -14,7 +14,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class MappingCommand extends Command
 {
     // the name of the command (the part after "bin/console")
-    protected static $defaultName = 'elasticsuite:example-mapping:get';
+    protected static $defaultName = 'elasticsuite:example:mapping-get';
 
     public function __construct(
         private DummyInterface $dummyService,

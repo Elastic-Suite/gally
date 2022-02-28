@@ -17,3 +17,17 @@ framework:
         # Namespaced pools use the above "app" backend by default
         #pools:
             #my.dedicated.cache: null
+
+        app: cache.adapter.redis_tag_aware
+        default_redis_provider: redis://redis
+
+        # system: default adapters are apcu and phpfiles and are chained together
+        # in \Symfony\Bundle\FrameworkBundle\DependencyInjection\FrameworkExtension::registerCacheConfiguration:L.2124 
+
+        # pools:
+            # elasticsuite.example.simple.cache:
+            #     adapter: cache.app
+
+            # elasticsuite.example.tags.cache:
+            #    adapter: cache.adapter.redis
+            #    tags: true
