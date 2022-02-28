@@ -59,6 +59,11 @@ RUN set -eux; \
 	\
 	apk del .build-deps
 
+# PHP Redis install
+RUN apk add --no-cache pcre-dev $PHPIZE_DEPS \
+	&& pecl install redis \
+    && docker-php-ext-enable redis.so
+
 ###> recipes ###
 ###> doctrine/doctrine-bundle ###
 RUN apk add --no-cache --virtual .pgsql-deps postgresql-dev; \
