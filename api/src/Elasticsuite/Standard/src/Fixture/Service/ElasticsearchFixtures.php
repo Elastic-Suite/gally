@@ -4,9 +4,9 @@ namespace Elasticsuite\Fixture\Service;
 
 use Elasticsuite\Index\Repository\Document\DocumentRepositoryInterface;
 use Elasticsuite\Index\Repository\Index\IndexRepositoryInterface;
+use Symfony\Component\Validator\Constraints\Json;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Symfony\Component\Validator\Constraints\Json;
 
 class ElasticsearchFixtures implements ElasticsearchFixturesInterface
 {

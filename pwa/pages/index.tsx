@@ -70,7 +70,7 @@ const Welcome = () => (
               </div>
               <div className="other__content">
                 <h3>
-                  <Link href="/admin">
+                  <Link href="/admin#/login">
                     <a>Admin</a>
                   </Link>
                 </h3>
