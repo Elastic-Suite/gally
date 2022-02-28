@@ -51,6 +51,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
             [
                 'fixtures_path' => [
                     'src/Example/DataFixtures/fixtures',
+                    'src/User/DataFixtures/fixtures',
                 ],
             ]
         );
@@ -71,6 +72,8 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
         $loader->load('Example/Resources/config/services.yaml');
         $loader->load('Index/Resources/config/services.yaml');
         $loader->load('Fixture/Resources/config/services.yaml');
+        $loader->load('User/Resources/config/services.yaml');
+        $loader->load('Security/Resources/config/services.yaml');
 
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
