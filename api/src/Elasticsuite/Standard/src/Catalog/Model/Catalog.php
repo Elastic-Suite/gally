@@ -17,45 +17,28 @@ declare(strict_types=1);
 namespace Elasticsuite\Catalog\Model;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 #[ApiResource]
 class Catalog
 {
-    /**
-     * The entity ID.
-     */
-    #[ORM\Id]
-    #[ORM\Column(type: 'integer')]
-    #[ORM\GeneratedValue]
-    private ?int $id = null;
+    private $id;
 
-    /**
-     * A nice person.
-     */
-    #[ORM\Column]
-    #[Assert\NotBlank]
-    public string $name = '';
     private $code;
 
-    private $locale;
+    private $name;
 
-    private $website;
+    private $localizedCatalogs;
+
+    public function __construct()
+    {
+        $this->localizedCatalogs = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
     }
 
     public function getCode(): ?string
@@ -70,26 +53,44 @@ class Catalog
         return $this;
     }
 
-    public function getLocale(): ?string
+    public function getName(): ?string
     {
-        return $this->locale;
+        return $this->name;
     }
 
-    public function setLocale(string $locale): self
+    public function setName(string $name): self
     {
-        $this->locale = $locale;
+        $this->name = $name;
 
         return $this;
     }
 
-    public function getWebsite(): ?Website
+    /**
+     * @return Collection|LocalizedCatalog[]
+     */
+    public function getLocalizedCatalogs(): Collection
     {
-        return $this->website;
+        return $this->localizedCatalogs;
     }
 
-    public function setWebsite(?Website $website): self
+    public function addLocalizedCatalog(LocalizedCatalog $localizedCatalog): self
     {
-        $this->website = $website;
+        if (!$this->localizedCatalogs->contains($localizedCatalog)) {
+            $this->localizedCatalogs[] = $localizedCatalog;
+            $localizedCatalog->setCatalog($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLocalizedCatalog(LocalizedCatalog $localizedCatalog): self
+    {
+        if ($this->localizedCatalogs->removeElement($localizedCatalog)) {
+            // set the owning side to null (unless already changed)
+            if ($localizedCatalog->getCatalog() === $this) {
+                $localizedCatalog->setCatalog(null);
+            }
+        }
 
         return $this;
     }

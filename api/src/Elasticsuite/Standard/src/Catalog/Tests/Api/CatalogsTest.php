@@ -4,6 +4,7 @@ namespace Elasticsuite\Catalog\Tests\Api;
 
 use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
 use Elasticsuite\Catalog\Model\Catalog;
+use Hautelook\AliceBundle\PhpUnit\RefreshDatabaseTrait;
 use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
 use Liip\TestFixturesBundle\Services\DatabaseTools\AbstractDatabaseTool;
 
@@ -21,8 +22,6 @@ class CatalogsTest extends ApiTestCase
      */
     public function testCreateValidCatalog($validCatalog): void
     {
-        $validCatalog['website'] = $this->createValidWebsiteAndGetId();
-
         $response = static::createClient()->request('POST', '/catalogs', ['json' => $validCatalog]);
 
         $this->assertResponseStatusCodeSame(201);
@@ -31,12 +30,11 @@ class CatalogsTest extends ApiTestCase
             [
                 '@context' => '/contexts/Catalog',
                 '@type' => 'Catalog',
-                'code' => $validCatalog['code'],
-                'locale' => $validCatalog['locale'],
+                'code' => $validCatalog['code']
             ]
         );
 
-        if (isset($validWebsite['name'])) {
+        if (isset($validCatalog['name'])) {
             $this->assertJsonContains(
                 [
                     'name' => $validCatalog['name'] ?? '',
@@ -51,32 +49,10 @@ class CatalogsTest extends ApiTestCase
     public function validCatalogProvider()
     {
         return [
-            [['code' => 'valid_code', 'name' => 'B2C French catalog', 'locale' => 'fr_FR']],
-            [['code' => 'empty_name', 'name' => '', 'locale' => 'en_US']],
-            [['code' => 'missing_name', 'locale' => 'fr_FR']]
+            [['code' => 'valid_code', 'name' => 'B2C Catalog']],
+            [['code' => 'empty_name', 'name' => '']],
+            [['code' => 'missing_name']]
         ];
-    }
-
-    public function testCreateValidCatalogWithoutWebsite(): void
-    {
-        static::createClient()->request(
-            'POST',
-            '/catalogs',
-            ['json' =>
-                 ['code' => 'valid_code', 'name' => 'B2C French catalog', 'locale' => 'fr_FR']
-            ]
-        );
-
-        $this->assertResponseStatusCodeSame(422);
-        $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
-        $this->assertJsonContains(
-            [
-                '@context' => '/contexts/ConstraintViolationList',
-                '@type' => 'ConstraintViolationList',
-                'hydra:title' => 'An error occurred',
-                'hydra:description' => 'website: This value should not be blank.',
-            ]
-        );
     }
 
     /**
@@ -84,18 +60,16 @@ class CatalogsTest extends ApiTestCase
      */
     public function testCreateInvalidCatalog($invalidCatalog): void
     {
-        $invalidCatalog['website'] = $this->createValidWebsiteAndGetId();
-
         static::createClient()->request('POST', '/catalogs', ['json' => $invalidCatalog]);
 
         $this->assertResponseStatusCodeSame(422);
         $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
         $this->assertJsonContains(
             [
-                '@context' => '/contexts/ConstraintViolationList',
-                '@type' => 'ConstraintViolationList',
-                'hydra:title' => 'An error occurred',
-                'hydra:description' => 'code: This value should not be blank.',
+            '@context' => '/contexts/ConstraintViolationList',
+            '@type' => 'ConstraintViolationList',
+            'hydra:title' => 'An error occurred',
+            'hydra:description' => 'code: This value should not be blank.',
             ]
         );
     }
@@ -106,68 +80,6 @@ class CatalogsTest extends ApiTestCase
             [['code' => '', 'name' => 'Empty Code']],
             [['code' => '']],
             [['name' => 'Missing Code']]
-        ];
-    }
-
-    /**
-     * @dataProvider invalidCatalogLocaleProvider
-     */
-    public function testCreateInvalidCatalogLocale($invalidCatalog): void
-    {
-        $invalidCatalog['website'] = $this->createValidWebsiteAndGetId();
-
-        static::createClient()->request('POST', '/catalogs', ['json' => $invalidCatalog]);
-
-        $this->assertResponseStatusCodeSame(422);
-        $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
-        $this->assertJsonContains(
-            [
-                '@context' => '/contexts/ConstraintViolationList',
-                '@type' => 'ConstraintViolationList',
-                'hydra:title' => 'An error occurred',
-                'hydra:description' => 'locale: This value is not valid.',
-            ]
-        );
-    }
-
-    public function invalidCatalogLocaleProvider()
-    {
-        return [
-            [['code' => 'cat_1_invalid', 'locale' => 'strin']],
-            [['code' => 'cat_1_invalid', 'locale' => 'fr-fr']],
-        ];
-    }
-
-    /**
-     * @dataProvider invalidCatalogLocaleLengthProvider
-     */
-    public function testCreateInvalidCatalogLocaleLength($invalidCatalog): void
-    {
-        $websiteCreation = static::createClient()->request('POST', '/websites', ['json' => ['code' => uniqid('test_website')]]);
-        $websiteId       = $websiteCreation->toArray()['@id'];
-        $invalidCatalog['website'] = $websiteId;
-
-        static::createClient()->request('POST', '/catalogs', ['json' => $invalidCatalog]);
-
-        $this->assertResponseStatusCodeSame(422);
-        $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
-        $this->assertJsonContains(
-            [
-                '@context' => '/contexts/ConstraintViolationList',
-                '@type' => 'ConstraintViolationList',
-                'hydra:title' => 'An error occurred',
-                'hydra:description' => 'locale: This value is not valid.
-locale: This value should have exactly 5 characters.'
-            ]
-        );
-    }
-
-    public function invalidCatalogLocaleLengthProvider()
-    {
-        return [
-            [['code' => 'cat_1_invalid', 'locale' => 'too_long_locale']],
-            [['code' => 'cat_1_invalid', 'locale' => 'a']],
-            [['code' => 'cat_1_invalid', 'locale' => 'abc']],
         ];
     }
 
@@ -194,15 +106,8 @@ locale: This value should have exactly 5 characters.'
                 '@context' => '/contexts/Catalog',
                 '@id' => '/catalogs',
                 '@type' => 'hydra:Collection',
-                'hydra:totalItems' => 3,
+                'hydra:totalItems' => 2,
             ]
         );
-    }
-
-    private function createValidWebsiteAndGetId()
-    {
-        $websiteCreation = static::createClient()->request('POST', '/websites', ['json' => ['code' => uniqid('test_website')]]);
-
-        return $websiteCreation->toArray()['@id'];
     }
 }

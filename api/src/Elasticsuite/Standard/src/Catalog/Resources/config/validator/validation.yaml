@@ -1,13 +1,13 @@
-Elasticsuite\Catalog\Model\Website:
-    properties:
-        code:
-            - NotBlank: ~
-
 Elasticsuite\Catalog\Model\Catalog:
     properties:
         code:
             - NotBlank: ~
-        website:
+
+Elasticsuite\Catalog\Model\LocalizedCatalog:
+    properties:
+        code:
+            - NotBlank: ~
+        catalog:
             - NotBlank: ~
         locale:
             - Regex: '/[a-z]{2}_[A-Z]{2}$/'
