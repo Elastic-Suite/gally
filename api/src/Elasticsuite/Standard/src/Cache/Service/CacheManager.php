@@ -15,6 +15,7 @@
 
 namespace Elasticsuite\Cache\Service;
 
+use ApiPlatform\Core\HttpCache\PurgerInterface as HttpPurgerInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Cache\CacheItem;
 use Symfony\Component\Cache\PruneableInterface;
@@ -23,7 +24,7 @@ use Symfony\Contracts\Cache\TagAwareCacheInterface;
 
 class CacheManager implements CacheManagerInterface
 {
-    public function __construct(private CacheInterface $pool)
+    public function __construct(private CacheInterface $pool, private ?HttpPurgerInterface $httpPurger)
     {
     }
 
@@ -62,7 +63,11 @@ class CacheManager implements CacheManagerInterface
     public function clearTags(array $tags): bool
     {
         if ($this->pool instanceof TagAwareCacheInterface) {
-            return $this->pool->invalidateTags($tags);
+            if ($this->pool->invalidateTags($tags)) {
+                $this->httpPurger?->purge($tags);
+
+                return true;
+            }
         }
 
         return false;

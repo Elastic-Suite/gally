@@ -1,9 +1,13 @@
 services:
     Elasticsuite\Cache\Service\CacheManagerInterface: '@Elasticsuite\Cache\Service\CacheManager'
+    # TODO conditionally inject the purger interface if api http cache is active
     Elasticsuite\Cache\Service\CacheManager:
         arguments:
             - '@elasticsuite.cache'
-            
+            - '@ApiPlatform\Core\HttpCache\PurgerInterface'
+
+    ApiPlatform\Core\HttpCache\PurgerInterface: '@api_platform.http_cache.purger.varnish'
+
     # Declare elasticsuite.cache cache pool
     elasticsuite.cache:
         parent: cache.app.taggable
@@ -17,7 +21,6 @@ services:
     Elasticsuite\Cache\Command\ClearTagsCommand:
         arguments:
             - '@Elasticsuite\Cache\Service\CacheManagerInterface'
-            - '@ApiPlatform\Core\HttpCache\PurgerInterface'
             - null
         tags:
             - { name: console.command }
@@ -37,5 +40,3 @@ services:
             - null
         tags:
             - { name: console.command }
-    
-    ApiPlatform\Core\HttpCache\PurgerInterface: '@api_platform.http_cache.purger.varnish'
