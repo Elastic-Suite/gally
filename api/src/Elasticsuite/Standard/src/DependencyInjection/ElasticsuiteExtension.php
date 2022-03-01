@@ -78,6 +78,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
                 'fixtures_path' => [
                     'src/Example/DataFixtures/fixtures',
                     'src/User/DataFixtures/fixtures',
+                    'src/Catalog/DataFixtures/fixtures'
                 ],
             ]
         );
