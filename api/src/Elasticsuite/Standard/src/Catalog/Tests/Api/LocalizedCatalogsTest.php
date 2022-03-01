@@ -4,11 +4,14 @@ namespace Elasticsuite\Catalog\Tests\Api;
 
 use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
 use Elasticsuite\Catalog\Model\LocalizedCatalog;
+use Elasticsuite\User\DataFixtures\LoginTrait;
 use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
 use Liip\TestFixturesBundle\Services\DatabaseTools\AbstractDatabaseTool;
 
 class LocalizedCatalogsTest extends ApiTestCase
 {
+    use LoginTrait;
+
     private AbstractDatabaseTool $databaseTool;
 
     public function setUp(): void
@@ -23,14 +26,23 @@ class LocalizedCatalogsTest extends ApiTestCase
     {
         $validCatalog['catalog'] = $this->createValidCatalogAndGetId();
 
-        $response = static::createClient()->request('POST', '/catalogs', ['json' => $validCatalog]);
+        $client = static::createClient();
+
+        $loginJson = $this->login(
+            $client,
+            static::getContainer()->get('doctrine')->getManager(),
+            static::getContainer()->get('security.user_password_hasher')
+        );
+
+        $response = $client->request('POST', '/localized_catalogs', ['auth_bearer' => $loginJson['token'], 'json' => $validCatalog]);
+
 
         $this->assertResponseStatusCodeSame(201);
         $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
         $this->assertJsonContains(
             [
-                '@context' => '/contexts/Catalog',
-                '@type' => 'Catalog',
+                '@context' => '/contexts/LocalizedCatalog',
+                '@type' => 'LocalizedCatalog',
                 'code' => $validCatalog['code'],
                 'locale' => $validCatalog['locale'],
             ]
@@ -44,7 +56,7 @@ class LocalizedCatalogsTest extends ApiTestCase
             );
         }
 
-        $this->assertMatchesRegularExpression('~^/catalogs/\d+$~', $response->toArray()['@id']);
+        $this->assertMatchesRegularExpression('~^/localized_catalogs/\d+$~', $response->toArray()['@id']);
         $this->assertMatchesResourceItemJsonSchema(LocalizedCatalog::class);
     }
 
@@ -57,13 +69,20 @@ class LocalizedCatalogsTest extends ApiTestCase
         ];
     }
 
-    public function testCreateValidCatalogWithoutCatalog(): void
+    public function testCreateValidLocalizedCatalogWithoutCatalog(): void
     {
-        static::createClient()->request(
-            'POST',
-            '/catalogs',
-            ['json' =>
-                 ['code' => 'valid_code', 'name' => 'B2C French catalog', 'locale' => 'fr_FR']
+        $client = static::createClient();
+
+        $loginJson = $this->login(
+            $client,
+            static::getContainer()->get('doctrine')->getManager(),
+            static::getContainer()->get('security.user_password_hasher')
+        );
+
+        $client->request('POST', '/localized_catalogs',
+            [
+                'auth_bearer' => $loginJson['token'],
+                'json' => ['code' => 'valid_code', 'name' => 'B2C French catalog', 'locale' => 'fr_FR']
             ]
         );
 
@@ -86,7 +105,15 @@ class LocalizedCatalogsTest extends ApiTestCase
     {
         $invalidCatalog['catalog'] = $this->createValidCatalogAndGetId();
 
-        static::createClient()->request('POST', '/catalogs', ['json' => $invalidCatalog]);
+        $client = static::createClient();
+
+        $loginJson = $this->login(
+            $client,
+            static::getContainer()->get('doctrine')->getManager(),
+            static::getContainer()->get('security.user_password_hasher')
+        );
+
+        $client->request('POST', '/localized_catalogs', ['auth_bearer' => $loginJson['token'], 'json' => $invalidCatalog]);
 
         $this->assertResponseStatusCodeSame(422);
         $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
@@ -116,7 +143,15 @@ class LocalizedCatalogsTest extends ApiTestCase
     {
         $invalidCatalog['catalog'] = $this->createValidCatalogAndGetId();
 
-        static::createClient()->request('POST', '/catalogs', ['json' => $invalidCatalog]);
+        $client = static::createClient();
+
+        $loginJson = $this->login(
+            $client,
+            static::getContainer()->get('doctrine')->getManager(),
+            static::getContainer()->get('security.user_password_hasher')
+        );
+
+        $client->request('POST', '/localized_catalogs', ['auth_bearer' => $loginJson['token'], 'json' => $invalidCatalog]);
 
         $this->assertResponseStatusCodeSame(422);
         $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
@@ -143,11 +178,17 @@ class LocalizedCatalogsTest extends ApiTestCase
      */
     public function testCreateInvalidCatalogLocaleLength($invalidCatalog): void
     {
-        $catalogCreation = static::createClient()->request('POST', '/catalogs', ['json' => ['code' => uniqid('test_catalog')]]);
-        $catalogId       = $catalogCreation->toArray()['@id'];
-        $invalidCatalog['catalog'] = $catalogId;
+        $invalidCatalog['catalog'] = $this->createValidCatalogAndGetId();
 
-        static::createClient()->request('POST', '/catalogs', ['json' => $invalidCatalog]);
+        $client = static::createClient();
+
+        $loginJson = $this->login(
+            $client,
+            static::getContainer()->get('doctrine')->getManager(),
+            static::getContainer()->get('security.user_password_hasher')
+        );
+
+        $client->request('POST', '/localized_catalogs', ['auth_bearer' => $loginJson['token'], 'json' => $invalidCatalog]);
 
         $this->assertResponseStatusCodeSame(422);
         $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
@@ -181,9 +222,17 @@ locale: This value should have exactly 5 characters.'
      */
     public function testGetCollection(): void
     {
-        $this->databaseTool->loadAliceFixture([__DIR__ . '/../fixtures/catalogs.yaml']);
+        $this->databaseTool->loadAliceFixture([__DIR__ . '/../fixtures/localized_catalogs.yaml']);
 
-        static::createClient()->request('GET', '/catalogs');
+        $client = static::createClient();
+
+        $loginJson = $this->login(
+            $client,
+            static::getContainer()->get('doctrine')->getManager(),
+            static::getContainer()->get('security.user_password_hasher')
+        );
+
+        $client->request('GET', '/localized_catalogs', ['auth_bearer' => $loginJson['token']]);
 
         $this->assertResponseIsSuccessful();
 
@@ -191,8 +240,8 @@ locale: This value should have exactly 5 characters.'
 
         $this->assertJsonContains(
             [
-                '@context' => '/contexts/Catalog',
-                '@id' => '/catalogs',
+                '@context' => '/contexts/LocalizedCatalog',
+                '@id' => '/localized_catalogs',
                 '@type' => 'hydra:Collection',
                 'hydra:totalItems' => 3,
             ]
@@ -201,7 +250,18 @@ locale: This value should have exactly 5 characters.'
 
     private function createValidCatalogAndGetId()
     {
-        $catalogCreation = static::createClient()->request('POST', '/catalogs', ['json' => ['code' => uniqid('test_catalog')]]);
+        $client = static::createClient();
+
+        $loginJson = $this->login(
+            $client,
+            static::getContainer()->get('doctrine')->getManager(),
+            static::getContainer()->get('security.user_password_hasher')
+        );
+
+        $catalogCreation = $client->request('POST', '/catalogs', [
+            'auth_bearer' => $loginJson['token'],
+            'json' => ['code' => uniqid('test_catalog')]]
+        );
 
         return $catalogCreation->toArray()['@id'];
     }

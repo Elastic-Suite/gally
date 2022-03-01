@@ -7,17 +7,17 @@ Elasticsuite\Catalog\Model\Catalog:
         name: B2B Catalog
 
 Elasticsuite\Catalog\Model\LocalizedCatalog:
-    catalog1:
+    localized_catalog1:
         catalog: '@catalog1'
         code: b2c_fr
         locale: fr_FR
         name: B2C French Store View
-    catalog2:
+    localized_catalog2:
         catalog: '@catalog1'
         code: b2c_en
         locale: en_US
         name: B2C English Store View
-    catalog3:
+    localized_catalog3:
         catalog: '@catalog2'
         code: b2b_en
         locale: en_US

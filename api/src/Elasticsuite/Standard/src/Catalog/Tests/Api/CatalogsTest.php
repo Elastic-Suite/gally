@@ -4,12 +4,15 @@ namespace Elasticsuite\Catalog\Tests\Api;
 
 use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
 use Elasticsuite\Catalog\Model\Catalog;
+use Elasticsuite\User\DataFixtures\LoginTrait;
 use Hautelook\AliceBundle\PhpUnit\RefreshDatabaseTrait;
 use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
 use Liip\TestFixturesBundle\Services\DatabaseTools\AbstractDatabaseTool;
 
 class CatalogsTest extends ApiTestCase
 {
+    use LoginTrait;
+
     private AbstractDatabaseTool $databaseTool;
 
     public function setUp(): void
@@ -22,7 +25,15 @@ class CatalogsTest extends ApiTestCase
      */
     public function testCreateValidCatalog($validCatalog): void
     {
-        $response = static::createClient()->request('POST', '/catalogs', ['json' => $validCatalog]);
+        $client = static::createClient();
+
+        $loginJson = $this->login(
+            $client,
+            static::getContainer()->get('doctrine')->getManager(),
+            static::getContainer()->get('security.user_password_hasher')
+        );
+
+        $response = $client->request('POST', '/catalogs', ['auth_bearer' => $loginJson['token'], 'json' => $validCatalog]);
 
         $this->assertResponseStatusCodeSame(201);
         $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
@@ -60,7 +71,15 @@ class CatalogsTest extends ApiTestCase
      */
     public function testCreateInvalidCatalog($invalidCatalog): void
     {
-        static::createClient()->request('POST', '/catalogs', ['json' => $invalidCatalog]);
+        $client = static::createClient();
+
+        $loginJson = $this->login(
+            $client,
+            static::getContainer()->get('doctrine')->getManager(),
+            static::getContainer()->get('security.user_password_hasher')
+        );
+
+        $client->request('POST', '/catalogs', ['auth_bearer' => $loginJson['token'], 'json' => $invalidCatalog]);
 
         $this->assertResponseStatusCodeSame(422);
         $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
@@ -95,7 +114,15 @@ class CatalogsTest extends ApiTestCase
     {
         $this->databaseTool->loadAliceFixture([__DIR__ . '/../fixtures/catalogs.yaml']);
 
-        static::createClient()->request('GET', '/catalogs');
+        $client = static::createClient();
+
+        $loginJson = $this->login(
+            $client,
+            static::getContainer()->get('doctrine')->getManager(),
+            static::getContainer()->get('security.user_password_hasher')
+        );
+
+        $client->request('GET', '/catalogs', ['auth_bearer' => $loginJson['token']]);
 
         $this->assertResponseIsSuccessful();
 
