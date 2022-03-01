@@ -5,18 +5,18 @@
                   xsi:schemaLocation="https://doctrine-project.org/schemas/orm/doctrine-mapping
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <entity name="Elasticsuite\Catalog\Model\Catalog" table="catalog" repository-class="Elasticsuite\Catalog\Repository\Catalog\CatalogRepository">
+    <entity name="Elasticsuite\Catalog\Model\Catalog" table="catalog" repository-class="Elasticsuite\Catalog\Repository\CatalogRepository">
         <id name="id" type="integer">
             <generator strategy="AUTO"/>
         </id>
-        <field name="name" type="string" length="255" nullable="true" unique="false" />
         <field name="code" type="string" length="255" nullable="false" unique="true" />
-        <field name="locale" type="string" length="5" nullable="true" unique="false" />
+        <field name="name" type="string" length="255" nullable="true" unique="false" />
 
-        <many-to-one field="website" target-entity="Elasticsuite\Catalog\Model\Website" inversed-by="catalogs">
-            <cascade><cascade-remove /></cascade>
-            <join-column name="website_id" referenced-column-name="id" nullable="false" on-delete="CASCADE" on-update="CASCADE"/>
-        </many-to-one>
+        <one-to-many field="localizedCatalogs" target-entity="Elasticsuite\Catalog\Model\LocalizedCatalog" mapped-by="catalog">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-many>
     </entity>
 
 </doctrine-mapping>
