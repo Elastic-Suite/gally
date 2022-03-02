@@ -23,13 +23,13 @@ use Doctrine\Common\Collections\Collection;
 #[ApiResource]
 class Catalog
 {
-    private $id;
+    private int $id;
 
-    private $code;
+    private string $code;
 
-    private $name;
+    private string|null $name;
 
-    private $localizedCatalogs;
+    private Collection $localizedCatalogs;
 
     public function __construct()
     {
@@ -86,7 +86,6 @@ class Catalog
     public function removeLocalizedCatalog(LocalizedCatalog $localizedCatalog): self
     {
         if ($this->localizedCatalogs->removeElement($localizedCatalog)) {
-            // set the owning side to null (unless already changed)
             if ($localizedCatalog->getCatalog() === $this) {
                 $localizedCatalog->setCatalog(null);
             }

@@ -60,7 +60,7 @@ class LocalizedCatalogsTest extends ApiTestCase
         $this->assertMatchesResourceItemJsonSchema(LocalizedCatalog::class);
     }
 
-    public function validCatalogProvider()
+    public function validCatalogProvider() : array
     {
         return [
             [['code' => 'valid_code', 'name' => 'B2C French catalog', 'locale' => 'fr_FR']],
@@ -127,7 +127,7 @@ class LocalizedCatalogsTest extends ApiTestCase
         );
     }
 
-    public function invalidCatalogProvider()
+    public function invalidCatalogProvider() : array
     {
         return [
             [['code' => '', 'name' => 'Empty Code']],
@@ -165,7 +165,7 @@ class LocalizedCatalogsTest extends ApiTestCase
         );
     }
 
-    public function invalidCatalogLocaleProvider()
+    public function invalidCatalogLocaleProvider() : array
     {
         return [
             [['code' => 'cat_1_invalid', 'locale' => 'strin']],
@@ -203,7 +203,7 @@ locale: This value should have exactly 5 characters.'
         );
     }
 
-    public function invalidCatalogLocaleLengthProvider()
+    public function invalidCatalogLocaleLengthProvider() : array
     {
         return [
             [['code' => 'cat_1_invalid', 'locale' => 'too_long_locale']],
@@ -248,7 +248,7 @@ locale: This value should have exactly 5 characters.'
         );
     }
 
-    private function createValidCatalogAndGetId()
+    private function createValidCatalogAndGetId() : string
     {
         $client = static::createClient();
 

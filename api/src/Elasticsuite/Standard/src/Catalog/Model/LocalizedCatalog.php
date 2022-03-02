@@ -7,15 +7,15 @@ use ApiPlatform\Core\Annotation\ApiResource;
 #[ApiResource]
 class LocalizedCatalog
 {
-    private $id;
+    private int $id;
 
-    private $name;
+    private string|null $name;
 
-    private $code;
+    private string $code;
 
-    private $locale;
+    private string|null $locale;
 
-    private $catalog;
+    private Catalog $catalog;
 
     public function getId(): ?int
     {
