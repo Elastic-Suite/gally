@@ -18,7 +18,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
       - uses: php-actions/composer@v6
         with: 
-          php_version: "8.0"
+          php_version: "8.1"
           args: --working-dir api
       - name: PHP-CS-Fixer
         working-directory: api
@@ -26,5 +26,3 @@ jobs:
       - name: PHPStan
         working-directory: api
         run: ./vendor/bin/phpstan analyse
-
-
