@@ -3,12 +3,17 @@
 declare(strict_types=1);
 
 $header = <<<'HEADER'
-This file is part of the Elasticsuite project.
+DISCLAIMER
 
-(c) Elasticsuite Team <elasticsuite@smile.fr>
+Do not edit or add to this file if you wish to upgrade Smile ElasticSuite to newer
+versions in the future.
 
-For the full copyright and license information, please view the LICENSE
-file that was distributed with this source code.
+@category  Elasticsuite
+@package   Elasticsuite\Standard
+@author    ElasticSuite Team <elasticsuite@smile.fr>
+@copyright 2022 Smile
+@license   Licensed to Smile-SA. All rights reserved. No warranty, explicit or implicit, provided.
+           Unauthorized copying of this file, via any medium, is strictly prohibited.
 HEADER;
 
 $finder = PhpCsFixer\Finder::create()
