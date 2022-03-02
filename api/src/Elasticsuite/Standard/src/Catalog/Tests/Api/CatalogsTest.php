@@ -57,7 +57,7 @@ class CatalogsTest extends ApiTestCase
         $this->assertMatchesResourceItemJsonSchema(Catalog::class);
     }
 
-    public function validCatalogProvider()
+    public function validCatalogProvider() : array
     {
         return [
             [['code' => 'valid_code', 'name' => 'B2C Catalog']],
@@ -93,7 +93,7 @@ class CatalogsTest extends ApiTestCase
         );
     }
 
-    public function invalidCatalogProvider()
+    public function invalidCatalogProvider() : array
     {
         return [
             [['code' => '', 'name' => 'Empty Code']],
