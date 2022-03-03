@@ -46,6 +46,9 @@ return (new PhpCsFixer\Config())
         ],
         'array_indentation' => true,
         'compact_nullable_typehint' => true,
+        'concat_space' => [
+            'spacing' => 'one',
+        ],
         'doctrine_annotation_array_assignment' => [
             'operator' => '=',
         ],
@@ -94,6 +97,9 @@ return (new PhpCsFixer\Config())
                 'const',
             ],
             'sort_algorithm' => 'alpha',
+        ],
+        'phpdoc_to_comment' => [
+            'ignored_tags' => ['var', 'todo'],
         ],
         'php_unit_method_casing' => [
             'case' => 'camel_case',
