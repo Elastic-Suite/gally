@@ -1,7 +1,23 @@
 <?php
 /**
- * SF doc: https://symfony.com/doc/current/bundles/extension.html
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Smile ElasticSuite to newer
+ * versions in the future.
+ *
+ * @category  Elasticsuite
+ * @package   Elasticsuite\DependencyInjection
+ * @author    ElasticSuite Team <elasticsuite@smile.fr>
+ * @copyright 2022 Smile
+ * @license   Licensed to Smile-SA. All rights reserved. No warranty, explicit or implicit, provided.
+ *            Unauthorized copying of this file, via any medium, is strictly prohibited.
  */
+
+declare(strict_types=1);
+/**
+ * SF doc: https://symfony.com/doc/current/bundles/extension.html.
+ */
+
 namespace Elasticsuite\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
@@ -21,15 +37,15 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
     public function prepend(ContainerBuilder $container)
     {
         $yamlParser ??= new YamlParser();
-        $apiPlatformConfig = $yamlParser->parseFile(__DIR__.'/../Example/Resources/config/api_platform.yaml');
+        $apiPlatformConfig = $yamlParser->parseFile(__DIR__ . '/../Example/Resources/config/api_platform.yaml');
         $container->prependExtensionConfig('api_platform', $apiPlatformConfig['api_platform']);
         $container->prependExtensionConfig(
             'api_platform',
             [
                 'mapping' => [
                     'paths' => [
-                        __DIR__.'/../Example/Model/',
-                        __DIR__.'/../Index/Model/',
+                        __DIR__ . '/../Example/Model/',
+                        __DIR__ . '/../Index/Model/',
                     ],
                 ],
             ]
@@ -40,7 +56,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
             [
                 'translator' => [
                     'paths' => [
-                        __DIR__.'/../Example/Resources/translations',
+                        __DIR__ . '/../Example/Resources/translations',
                     ],
                 ],
             ]
@@ -66,7 +82,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
     {
         $loader = new YamlFileLoader(
             $container,
-            new FileLocator(__DIR__.'/../')
+            new FileLocator(__DIR__ . '/../')
         );
 
         $loader->load('Example/Resources/config/services.yaml');
@@ -79,8 +95,6 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
         $config = $this->processConfiguration($configuration, $configs);
         $container->setParameter('elasticsuite.enabled', $config['enabled']);
         $container->setParameter('elasticsuite.twiter.credentials', $config['twitter']);
-
-
 
         //@Todo : Use this feature https://symfony.com/doc/current/bundles/extension.html ?
 //        $this->addAnnotatedClassesToCompile([

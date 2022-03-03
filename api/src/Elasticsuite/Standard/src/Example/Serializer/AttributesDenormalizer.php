@@ -1,4 +1,19 @@
 <?php
+/**
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Smile ElasticSuite to newer
+ * versions in the future.
+ *
+ * @category  Elasticsuite
+ * @package   Elasticsuite\Example
+ * @author    Botis <botis@smile.fr>
+ * @copyright 2022 Smile
+ * @license   Licensed to Smile-SA. All rights reserved. No warranty, explicit or implicit, provided.
+ *            Unauthorized copying of this file, via any medium, is strictly prohibited.
+ */
+
+declare(strict_types=1);
 
 namespace Elasticsuite\Example\Serializer;
 
@@ -20,7 +35,8 @@ class AttributesDenormalizer implements ContextAwareDenormalizerInterface, Denor
     public function supportsDenormalization($data, string $type, string $format = null, array $context = []): bool
     {
         $alreadyCalled = $context[self::ALREADY_CALLED_DENORMALIZER] ?? false;
-        return $type === ExampleProduct::class && !$alreadyCalled;
+
+        return ExampleProduct::class === $type && !$alreadyCalled;
     }
 
     /**
@@ -35,7 +51,7 @@ class AttributesDenormalizer implements ContextAwareDenormalizerInterface, Denor
 
         if (isset($data['_source'])) {
             foreach ($data['_source'] as $attributeCode => $value) {
-                if (!in_array($attributeCode, ExampleProduct::DEFAULT_ATTRIBUTE) && !is_array($value)) {
+                if (!\in_array($attributeCode, ExampleProduct::DEFAULT_ATTRIBUTE, true) && !\is_array($value)) {
                     $esProduct->addAttribute(
                         new TextAttribute($attributeCode, $value)
                     );
