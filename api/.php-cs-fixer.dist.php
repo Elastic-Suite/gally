@@ -59,8 +59,10 @@ return (new PhpCsFixer\Config())
         'explicit_indirect_variable' => true,
         'fully_qualified_strict_types' => true,
         'header_comment' => [
+            'comment_type' => 'PHPDoc',
             'header' => $header,
             'location' => 'after_open',
+            'separate' => 'bottom',
         ],
         'logical_operators' => true,
         'multiline_comment_opening_closing' => true,
