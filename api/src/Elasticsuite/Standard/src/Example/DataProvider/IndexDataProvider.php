@@ -1,4 +1,19 @@
 <?php
+/**
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Smile ElasticSuite to newer
+ * versions in the future.
+ *
+ * @category  Elasticsuite
+ * @package   Elasticsuite\Example
+ * @author    Botis <botis@smile.fr>
+ * @copyright 2022 Smile
+ * @license   Licensed to Smile-SA. All rights reserved. No warranty, explicit or implicit, provided.
+ *            Unauthorized copying of this file, via any medium, is strictly prohibited.
+ */
+
+declare(strict_types=1);
 
 namespace Elasticsuite\Example\DataProvider;
 
@@ -8,9 +23,8 @@ use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
 use Elasticsuite\Example\Model\ExampleIndex;
 use Elasticsuite\Example\Repository\Index\IndexRepositoryInterface;
 
-class IndexDataProvider implements ContextAwareCollectionDataProviderInterface, RestrictedDataProviderInterface , ItemDataProviderInterface
+class IndexDataProvider implements ContextAwareCollectionDataProviderInterface, RestrictedDataProviderInterface, ItemDataProviderInterface
 {
-
     public function __construct(
         private IndexRepositoryInterface $indexRepository
     ) {
@@ -21,7 +35,7 @@ class IndexDataProvider implements ContextAwareCollectionDataProviderInterface, 
      */
     public function supports(string $resourceClass, string $operationName = null, array $context = []): bool
     {
-        return $resourceClass === ExampleIndex::class;
+        return ExampleIndex::class === $resourceClass;
     }
 
     /**
@@ -39,6 +53,4 @@ class IndexDataProvider implements ContextAwareCollectionDataProviderInterface, 
     {
         return $this->indexRepository->findByName($id);
     }
-
-
 }

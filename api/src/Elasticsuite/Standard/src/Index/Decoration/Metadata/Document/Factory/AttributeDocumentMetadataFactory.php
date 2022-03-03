@@ -1,4 +1,19 @@
 <?php
+/**
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Smile ElasticSuite to newer
+ * versions in the future.
+ *
+ * @category  Elasticsuite
+ * @package   Elasticsuite\Index
+ * @author    Botis <botis@smile.fr>
+ * @copyright 2022 Smile
+ * @license   Licensed to Smile-SA. All rights reserved. No warranty, explicit or implicit, provided.
+ *            Unauthorized copying of this file, via any medium, is strictly prohibited.
+ */
+
+declare(strict_types=1);
 
 namespace Elasticsuite\Index\Decoration\Metadata\Document\Factory;
 
@@ -13,7 +28,6 @@ use Elasticsuite\Fixture\Service\ElasticsearchFixtures;
  */
 class AttributeDocumentMetadataFactory implements DocumentMetadataFactoryInterface
 {
-
     public function __construct(
         private ElasticsearchFixtures $elasticsearchFixtures,
         private ResourceMetadataFactoryInterface $resourceMetadataFactory,
@@ -28,7 +42,6 @@ class AttributeDocumentMetadataFactory implements DocumentMetadataFactoryInterfa
     {
         $documentMetadata = null;
         if ($this->decorated) {
-
             try {
                 $documentMetadata = $this->decorated->create($resourceClass);
             } catch (IndexNotFoundException $e) {

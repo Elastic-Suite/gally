@@ -1,4 +1,19 @@
 <?php
+/**
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Smile ElasticSuite to newer
+ * versions in the future.
+ *
+ * @category  Elasticsuite
+ * @package   Elasticsuite\Index
+ * @author    Botis <botis@smile.fr>
+ * @copyright 2022 Smile
+ * @license   Licensed to Smile-SA. All rights reserved. No warranty, explicit or implicit, provided.
+ *            Unauthorized copying of this file, via any medium, is strictly prohibited.
+ */
+
+declare(strict_types=1);
 
 namespace Elasticsuite\Index\Command;
 
@@ -16,7 +31,6 @@ class IndexClearCommand extends Command
      * IndexClearCommand constructor.
      *
      * @param IndexRepositoryInterface $indexRepository
-     * @param string|null $name
      */
     public function __construct(
         private IndexRepositoryInterface $indexRepository,
@@ -39,7 +53,7 @@ class IndexClearCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $ui = new SymfonyStyle($input, $output);
-        if (! $ui->confirm('Careful, all elasticsearch indices will be deleted. Do you want to continue?', ! $input->isInteractive())) {
+        if (!$ui->confirm('Careful, all elasticsearch indices will be deleted. Do you want to continue?', !$input->isInteractive())) {
             return Command::SUCCESS;
         }
 

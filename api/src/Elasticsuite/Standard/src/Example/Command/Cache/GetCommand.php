@@ -13,6 +13,8 @@
  *            Unauthorized copying of this file, via any medium, is strictly prohibited.
  */
 
+declare(strict_types=1);
+
 namespace Elasticsuite\Example\Command\Cache;
 
 use ApiPlatform\Core\Cache\CachedTrait;
@@ -23,10 +25,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * Class GetCommand
+ * Class GetCommand.
  *
  * @category Smile
- * @package  Smile\Elasticsuite
+ *
  * @author   Richard Bayet <richard.bayet@smile.fr>
  */
 class GetCommand extends Command
@@ -65,7 +67,7 @@ class GetCommand extends Command
             $this->translator->trans('example.command.cache.get.label', [], 'elasticsuite_example', 'fr_FR') . ': '
         );
 
-        $cacheKey = self::CACHE_KEY_PREFIX.rand(0,2);
+        $cacheKey = self::CACHE_KEY_PREFIX . random_int(0, 2);
         $cacheValue = $this->getCached($cacheKey, function () use ($output, $cacheKey) {
             $output->writeln(
                 $this->translator->trans(
@@ -75,7 +77,8 @@ class GetCommand extends Command
                     'fr_FR'
                 )
             );
-            return "string_" . rand(0, 999);
+
+            return 'string_' . random_int(0, 999);
         });
 
         $output->writeln(

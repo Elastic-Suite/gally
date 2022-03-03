@@ -6,12 +6,14 @@
  * versions in the future.
  *
  * @category  Elasticsuite
- * @package   Elasticsuite\Example
+ * @package   Elasticsuite\User
  * @author    Botis <botis@smile.fr>
  * @copyright 2022 Smile
  * @license   Licensed to Smile-SA. All rights reserved. No warranty, explicit or implicit, provided.
  *            Unauthorized copying of this file, via any medium, is strictly prohibited.
  */
+
+declare(strict_types=1);
 
 namespace Elasticsuite;
 
