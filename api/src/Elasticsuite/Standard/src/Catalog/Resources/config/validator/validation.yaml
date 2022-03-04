@@ -10,7 +10,13 @@ Elasticsuite\Catalog\Model\LocalizedCatalog:
         catalog:
             - NotBlank: ~
         locale:
+            - NotBlank: ~
             - Regex: '/[a-z]{2}_[A-Z]{2}$/'
             - Length:
                   min: 5
                   max: 5
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+              fields: [code, locale]
+              errorPath: locale
+              message: 'This code and locale couple already exists.'                  
