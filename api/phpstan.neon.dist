@@ -1,10 +1,10 @@
 parameters:
-    level: max
+    level: 5
     paths:
-        - config
         - src
-        - public
-        #- tests
+    excludePaths:
+        - src/App
+        - src/Acme
     inferPrivatePropertyTypeFromConstructor: true
     symfony:
         container_xml_path: var/cache/dev/KernelDevDebugContainer.xml
