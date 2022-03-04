@@ -19,7 +19,7 @@ namespace Elasticsuite\Example\Model;
 class TextAttribute implements AttributeInterface
 {
     protected string $attributeCode;
-    protected string $value;
+    protected mixed $value;
 
     public function __construct($attributeCode, $value)
     {
