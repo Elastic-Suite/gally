@@ -18,9 +18,9 @@ namespace Elasticsuite\Cache\Service;
 
 use ApiPlatform\Core\HttpCache\PurgerInterface as HttpPurgerInterface;
 use Psr\Cache\CacheItemPoolInterface;
-use Symfony\Component\Cache\CacheItem;
 use Symfony\Component\Cache\PruneableInterface;
 use Symfony\Contracts\Cache\CacheInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Contracts\Cache\TagAwareCacheInterface;
 
 class CacheManager implements CacheManagerInterface
@@ -34,7 +34,7 @@ class CacheManager implements CacheManagerInterface
      */
     public function get(string $cacheKey, callable $callback, array $tags, $ttl = null): mixed
     {
-        $callback = function (CacheItem $item, bool &$save) use ($callback, $tags, $ttl) {
+        $callback = function (ItemInterface $item, bool &$save) use ($callback, $tags, $ttl) {
             $value = $callback($tags, $ttl);
             $item->set($value);
             if (!empty($ttl)) {
@@ -55,7 +55,7 @@ class CacheManager implements CacheManagerInterface
      */
     public function delete(string $cacheKey): bool
     {
-        return $this->pool->deleteItem($cacheKey);
+        return $this->pool->deleteItem($cacheKey); // @phpstan-ignore-line
     }
 
     /**

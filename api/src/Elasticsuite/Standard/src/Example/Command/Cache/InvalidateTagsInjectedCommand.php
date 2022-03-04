@@ -86,7 +86,7 @@ EOF
                 } catch (InvalidArgumentException $e) {
                     $output->writeln('Provided tags are invalid for this cache pool');
                 }
-            } else {
+            } else { // @phpstan-ignore-line
                 $output->writeln(sprintf('Injected service %s is not a valid tag aware cache pool', \get_class($pool)));
             }
         }
