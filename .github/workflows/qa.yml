@@ -3,7 +3,8 @@ name: QA
 on:
   push:
     branches:
-      - feat-codequality
+      - main
+  pull_request: ~
 
 jobs:
   qa:
