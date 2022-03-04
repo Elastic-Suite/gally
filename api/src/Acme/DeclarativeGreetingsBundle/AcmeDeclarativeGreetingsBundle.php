@@ -13,11 +13,12 @@
  *            Unauthorized copying of this file, via any medium, is strictly prohibited.
  */
 
+declare(strict_types=1);
+
 namespace Acme\DeclarativeGreetingsBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class AcmeDeclarativeGreetingsBundle extends Bundle
 {
-
 }

@@ -5,13 +5,14 @@
  * Do not edit or add to this file if you wish to upgrade Smile ElasticSuite to newer
  * versions in the future.
  *
- * @category  Elasticsuite
- * @package   Elasticsuite\Example
- * @author    Botis <botis@smile.fr>
+ * @package   Elasticsuite
+ * @author    ElasticSuite Team <elasticsuite@smile.fr>
  * @copyright 2022 Smile
  * @license   Licensed to Smile-SA. All rights reserved. No warranty, explicit or implicit, provided.
  *            Unauthorized copying of this file, via any medium, is strictly prohibited.
  */
+
+declare(strict_types=1);
 
 namespace Elasticsuite;
 
@@ -26,7 +27,7 @@ class ElasticsuiteBundle extends Bundle
         return \dirname(__DIR__);
     }
 
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         $mappings = [
             realpath(__DIR__ . '/Example/Resources/config/doctrine') => 'Elasticsuite\Example\Model',

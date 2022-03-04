@@ -1,4 +1,18 @@
 <?php
+/**
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Smile ElasticSuite to newer
+ * versions in the future.
+ *
+ * @package   Elasticsuite
+ * @author    ElasticSuite Team <elasticsuite@smile.fr>
+ * @copyright 2022 Smile
+ * @license   Licensed to Smile-SA. All rights reserved. No warranty, explicit or implicit, provided.
+ *            Unauthorized copying of this file, via any medium, is strictly prohibited.
+ */
+
+declare(strict_types=1);
 
 namespace Elasticsuite\Example\Tests\Api;
 
@@ -7,7 +21,7 @@ use Elasticsuite\Fixture\Service\ElasticsearchFixtures;
 use Elasticsuite\User\DataFixtures\LoginTrait;
 
 /**
- * Documentation: https://api-platform.com/docs/distribution/testing/
+ * Documentation: https://api-platform.com/docs/distribution/testing/.
  */
 class ExampleProductsTest extends ApiTestCase
 {
@@ -15,7 +29,7 @@ class ExampleProductsTest extends ApiTestCase
 
     private ?ElasticsearchFixtures $elasticsearchFixtures;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->elasticsearchFixtures = static::getContainer()->get(ElasticsearchFixtures::class);
         $this->elasticsearchFixtures->deleteTestFixtures();
@@ -28,7 +42,7 @@ class ExampleProductsTest extends ApiTestCase
         $client = static::createClient();
         $loginJson = $this->login(
             $client,
-            static::getContainer()->get('doctrine')->getManager(),
+            static::getContainer()->get('doctrine')->getManager(), // @phpstan-ignore-line
             static::getContainer()->get('security.user_password_hasher')
         );
 
@@ -43,8 +57,10 @@ class ExampleProductsTest extends ApiTestCase
         ]);
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         $this->elasticsearchFixtures->deleteTestFixtures();
+
+        parent::tearDown();
     }
 }
