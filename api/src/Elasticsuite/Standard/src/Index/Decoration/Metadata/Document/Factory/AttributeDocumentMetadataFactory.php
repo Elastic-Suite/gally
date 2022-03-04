@@ -50,7 +50,7 @@ class AttributeDocumentMetadataFactory implements DocumentMetadataFactoryInterfa
         $resourceMetadata = null;
 
         if (!$documentMetadata || null === $documentMetadata->getIndex()) {
-            $resourceMetadata = $resourceMetadata ?? $this->resourceMetadataFactory->create($resourceClass);
+            $resourceMetadata = $this->resourceMetadataFactory->create($resourceClass);
 
             if (null !== $index = $resourceMetadata->getAttribute('elasticsuite_index')) {
                 /**

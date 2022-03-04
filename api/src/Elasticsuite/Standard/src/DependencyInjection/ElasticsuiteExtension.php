@@ -35,7 +35,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
      */
     public function prepend(ContainerBuilder $container)
     {
-        $yamlParser ??= new YamlParser();
+        $yamlParser ??= new YamlParser(); // @phpstan-ignore-line
         $apiPlatformConfig = $yamlParser->parseFile(__DIR__ . '/../Example/Resources/config/api_platform.yaml');
         $container->prependExtensionConfig('api_platform', $apiPlatformConfig['api_platform']);
         $container->prependExtensionConfig(

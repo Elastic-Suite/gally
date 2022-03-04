@@ -52,7 +52,7 @@ class DocumentRepository implements DocumentRepositoryInterface
         /**
          * @Todo: Implement the right way to delete an Index
          */
-        foreach ($documents as $document) {
+        foreach ($documents as $document) { // @phpstan-ignore-line
             $response = $this->client->delete([
                 'index' => $indexName,
                 'id' => $document['entity_id'],

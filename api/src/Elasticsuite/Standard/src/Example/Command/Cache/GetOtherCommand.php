@@ -16,11 +16,11 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Example\Command\Cache;
 
-use Symfony\Component\Cache\CacheItem;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Contracts\Cache\CacheInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class GetOtherCommand extends Command
@@ -56,7 +56,7 @@ class GetOtherCommand extends Command
     {
         $ttl = 60;
 
-        $cacheObject = $this->elasticsuiteExampleOtherCache->get('common.key', function (CacheItem $item, bool &$save) use ($output, $ttl) {
+        $cacheObject = $this->elasticsuiteExampleOtherCache->get('common.key', function (ItemInterface $item, bool &$save) use ($output, $ttl) {
             if ($item->isHit()) {
                 $output->writeln($this->translator->trans('example.command.cache.hit.recompute', [], 'elasticsuite_example'));
             } else {

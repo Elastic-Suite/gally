@@ -42,7 +42,7 @@ class ExampleProductsTest extends ApiTestCase
         $client = static::createClient();
         $loginJson = $this->login(
             $client,
-            static::getContainer()->get('doctrine')->getManager(),
+            static::getContainer()->get('doctrine')->getManager(), // @phpstan-ignore-line
             static::getContainer()->get('security.user_password_hasher')
         );
 
@@ -60,5 +60,7 @@ class ExampleProductsTest extends ApiTestCase
     protected function tearDown(): void
     {
         $this->elasticsearchFixtures->deleteTestFixtures();
+
+        parent::tearDown();
     }
 }

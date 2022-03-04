@@ -19,17 +19,14 @@ namespace Elasticsuite\Security\Tests\Api;
 use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
 use Elasticsuite\User\DataFixtures\LoginTrait;
 use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
-use Liip\TestFixturesBundle\Services\DatabaseTools\AbstractDatabaseTool;
 
 class AuthenticationTest extends ApiTestCase
 {
     use LoginTrait;
 
-    private AbstractDatabaseTool $databaseTool;
-
     protected function setUp(): void
     {
-        $this->databaseTool = static::getContainer()->get(DatabaseToolCollection::class)->get();
+        $this->databaseTool = static::getContainer()->get(DatabaseToolCollection::class)->get(); // @phpstan-ignore-line
     }
 
     public function testLogin(): void
@@ -37,7 +34,7 @@ class AuthenticationTest extends ApiTestCase
         $client = self::createClient();
         $loginJson = $this->login(
             $client,
-            static::getContainer()->get('doctrine')->getManager(),
+            static::getContainer()->get('doctrine')->getManager(), // @phpstan-ignore-line
             static::getContainer()->get('security.user_password_hasher')
         );
 
