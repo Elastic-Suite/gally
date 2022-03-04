@@ -56,7 +56,7 @@ db: ## Connect to the DB
 
 phpcsfixer: ## Run php cs fixer, pass the parameter "o=" to ass options, make phpcsfixer o="--dry-run"
 	@$(eval o ?=)
-	@$(PHP_CS_FIXER) fix src $(o)
+	@$(PHP_CS_FIXER) fix src/Elasticsuite --diff $(o)
 
 phpcsfixer_dryrun: ## Run php cs fixer wuth dry run optoin
 phpcsfixer_dryrun: o="--dry-run"
@@ -64,7 +64,7 @@ phpcsfixer_dryrun: phpcsfixer
 
 phpstan: ## Run phpstan , pass the parameter "o=" to ass options, make phpstan o="--level 3"
 	@$(eval o ?=)
-	@$(PHP_STAN) analyse $(o)
+	@$(PHP_STAN) --memory-limit=-1 analyse $(o)
 
 qa: ## Run code quality tools
 qa: phpcsfixer_dryrun # TODO: Change this by phpcsfixer when we agree on phpcsfixer conf
