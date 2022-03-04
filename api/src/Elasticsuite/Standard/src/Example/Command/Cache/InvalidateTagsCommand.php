@@ -87,7 +87,7 @@ EOF
             }
         }
 
-        $kernel = $this->getApplication()->getKernel();
+        $kernel = $this->getApplication()->getKernel(); // @phpstan-ignore-line
         foreach ($this->poolNames as $poolName) {
             $pool = $kernel->getContainer()->get($poolName);
             $output->writeln(sprintf('Invalidating tags [%s] in pool %s', implode(', ', $tags), $poolName));
