@@ -18,6 +18,7 @@ HEADER;
 $finder = PhpCsFixer\Finder::create()
     ->in(__DIR__)
     ->exclude([
+        'src/Acme',
         'src/Core/Bridge/Symfony/Maker/Resources/skeleton',
         'tests/Fixtures/app/var',
     ])
