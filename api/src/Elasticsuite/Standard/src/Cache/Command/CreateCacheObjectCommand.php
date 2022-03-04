@@ -5,14 +5,14 @@
  * Do not edit or add to this file if you wish to upgrade Smile ElasticSuite to newer
  * versions in the future.
  *
- * @category  Smile
- * @package   Smile\Elasticsuite
- * @author    Richard Bayet <richard.bayet@smile.fr>
+ * @package   Elasticsuite
+ * @author    ElasticSuite Team <elasticsuite@smile.fr>
  * @copyright 2022 Smile
  * @license   Licensed to Smile-SA. All rights reserved. No warranty, explicit or implicit, provided.
  *            Unauthorized copying of this file, via any medium, is strictly prohibited.
  */
 
+declare(strict_types=1);
 
 namespace Elasticsuite\Cache\Command;
 
@@ -50,8 +50,7 @@ The <info>%command.name%</info> creates a cache object in the elasticsuite cache
 
     %command.full_name% [--ttl=TTL] <key> <value> <tags>...
 EOF
-            )
-        ;
+            );
     }
 
     /**
@@ -59,7 +58,7 @@ EOF
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $cacheKey  = $input->getArgument('key');
+        $cacheKey = $input->getArgument('key');
         $cacheValue = $input->getArgument('value');
         $cacheTags = $input->getArgument('tags');
 
@@ -79,7 +78,6 @@ EOF
             }
 
             return $cacheValue;
-
         }, $cacheTags, $cacheTtl);
 
         $output->writeln(sprintf('Stored value at key "%s" is "%s"', $cacheKey, $cacheValue));
