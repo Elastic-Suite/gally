@@ -42,7 +42,7 @@ class ExampleCategoriesTest extends ApiTestCase
 
         $loginJson = $this->login(
             $client,
-            static::getContainer()->get('doctrine')->getManager(),
+            static::getContainer()->get('doctrine')->getManager(), // @phpstan-ignore-line
             static::getContainer()->get('security.user_password_hasher')
         );
 

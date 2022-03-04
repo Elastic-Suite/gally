@@ -27,7 +27,7 @@ class ElasticsuiteBundle extends Bundle
         return \dirname(__DIR__);
     }
 
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         $mappings = [
             realpath(__DIR__ . '/Example/Resources/config/doctrine') => 'Elasticsuite\Example\Model',
