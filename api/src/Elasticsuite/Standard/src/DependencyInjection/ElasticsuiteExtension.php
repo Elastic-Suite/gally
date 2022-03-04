@@ -45,9 +45,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
                     'paths' => [
                         __DIR__ . '/../Example/Model/',
                         __DIR__ . '/../Index/Model/',
-                        __DIR__ . '/../Example/Model/',
-                        __DIR__ . '/../Index/Model/',
-                        __DIR__ . '/../Catalog/Entity/',
+                        __DIR__ . '/../Catalog/Model/',
                     ],
                 ],
             ]
@@ -65,10 +63,10 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
                     'enabled' => true,
                     'mapping' => [
                         'paths' => [
-                            __DIR__.'/../Catalog/Resources/config/validator',
+                            __DIR__ . '/../Catalog/Resources/config/validator',
                         ],
-                    ]
-                ]
+                    ],
+                ],
             ]
         );
 
@@ -78,7 +76,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
                 'fixtures_path' => [
                     'src/Example/DataFixtures/fixtures',
                     'src/User/DataFixtures/fixtures',
-                    'src/Catalog/DataFixtures/fixtures'
+                    'src/Catalog/DataFixtures/fixtures',
                 ],
             ]
         );
