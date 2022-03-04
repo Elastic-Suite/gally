@@ -1,4 +1,18 @@
 <?php
+/**
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Smile ElasticSuite to newer
+ * versions in the future.
+ *
+ * @package   Elasticsuite
+ * @author    ElasticSuite Team <elasticsuite@smile.fr>
+ * @copyright 2022 Smile
+ * @license   Licensed to Smile-SA. All rights reserved. No warranty, explicit or implicit, provided.
+ *            Unauthorized copying of this file, via any medium, is strictly prohibited.
+ */
+
+declare(strict_types=1);
 
 namespace Elasticsuite\Catalog\Tests\Api;
 
@@ -14,13 +28,15 @@ class LocalizedCatalogsTest extends ApiTestCase
 
     private AbstractDatabaseTool $databaseTool;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->databaseTool = static::getContainer()->get(DatabaseToolCollection::class)->get();
     }
 
     /**
      * @dataProvider validCatalogProvider
+     *
+     * @param mixed $validCatalog
      */
     public function testCreateValidCatalog($validCatalog): void
     {
@@ -30,12 +46,11 @@ class LocalizedCatalogsTest extends ApiTestCase
 
         $loginJson = $this->login(
             $client,
-            static::getContainer()->get('doctrine')->getManager(),
+            static::getContainer()->get('doctrine')->getManager(),// @phpstan-ignore-line
             static::getContainer()->get('security.user_password_hasher')
         );
 
         $response = $client->request('POST', '/localized_catalogs', ['auth_bearer' => $loginJson['token'], 'json' => $validCatalog]);
-
 
         $this->assertResponseStatusCodeSame(201);
         $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
@@ -60,12 +75,12 @@ class LocalizedCatalogsTest extends ApiTestCase
         $this->assertMatchesResourceItemJsonSchema(LocalizedCatalog::class);
     }
 
-    public function validCatalogProvider() : array
+    public function validCatalogProvider(): array
     {
         return [
             [['code' => 'valid_code', 'name' => 'B2C French catalog', 'locale' => 'fr_FR']],
             [['code' => 'empty_name', 'name' => '', 'locale' => 'en_US']],
-            [['code' => 'missing_name', 'locale' => 'fr_FR']]
+            [['code' => 'missing_name', 'locale' => 'fr_FR']],
         ];
     }
 
@@ -75,14 +90,14 @@ class LocalizedCatalogsTest extends ApiTestCase
 
         $loginJson = $this->login(
             $client,
-            static::getContainer()->get('doctrine')->getManager(),
+            static::getContainer()->get('doctrine')->getManager(),// @phpstan-ignore-line
             static::getContainer()->get('security.user_password_hasher')
         );
 
         $client->request('POST', '/localized_catalogs',
             [
                 'auth_bearer' => $loginJson['token'],
-                'json' => ['code' => 'valid_code', 'name' => 'B2C French catalog', 'locale' => 'fr_FR']
+                'json' => ['code' => 'no_catalog', 'name' => 'B2C French catalog', 'locale' => 'fr_FR'],
             ]
         );
 
@@ -99,9 +114,11 @@ class LocalizedCatalogsTest extends ApiTestCase
     }
 
     /**
-     * @dataProvider invalidCatalogProvider
+     * @dataProvider invalidCodeCatalogProvider
+     *
+     * @param mixed $invalidCatalog
      */
-    public function testCreateInvalidCatalog($invalidCatalog): void
+    public function testCreateInvalidCodeCatalog($invalidCatalog): void
     {
         $invalidCatalog['catalog'] = $this->createValidCatalogAndGetId();
 
@@ -109,7 +126,7 @@ class LocalizedCatalogsTest extends ApiTestCase
 
         $loginJson = $this->login(
             $client,
-            static::getContainer()->get('doctrine')->getManager(),
+            static::getContainer()->get('doctrine')->getManager(),// @phpstan-ignore-line
             static::getContainer()->get('security.user_password_hasher')
         );
 
@@ -127,17 +144,57 @@ class LocalizedCatalogsTest extends ApiTestCase
         );
     }
 
-    public function invalidCatalogProvider() : array
+    public function invalidCodeCatalogProvider(): array
     {
         return [
-            [['code' => '', 'name' => 'Empty Code']],
-            [['code' => '']],
-            [['name' => 'Missing Code']]
+            [['code' => '', 'locale' => 'en_US', 'name' => 'Empty Code']],
+            [['code' => '', 'locale' => 'en_US']],
+            [['locale' => 'en_US', 'name' => 'Missing Code']],
+        ];
+    }
+
+    /**
+     * @dataProvider missingLocaleCatalogProvider
+     *
+     * @param mixed $invalidCatalog
+     */
+    public function testCreateMissingLocaleCatalog($invalidCatalog): void
+    {
+        $invalidCatalog['catalog'] = $this->createValidCatalogAndGetId();
+
+        $client = static::createClient();
+
+        $loginJson = $this->login(
+            $client,
+            static::getContainer()->get('doctrine')->getManager(),// @phpstan-ignore-line
+            static::getContainer()->get('security.user_password_hasher')
+        );
+
+        $client->request('POST', '/localized_catalogs', ['auth_bearer' => $loginJson['token'], 'json' => $invalidCatalog]);
+
+        $this->assertResponseStatusCodeSame(422);
+        $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
+        $this->assertJsonContains(
+            [
+                '@context' => '/contexts/ConstraintViolationList',
+                '@type' => 'ConstraintViolationList',
+                'hydra:title' => 'An error occurred',
+                'hydra:description' => 'locale: This value should not be blank.',
+            ]
+        );
+    }
+
+    public function missingLocaleCatalogProvider(): array
+    {
+        return [
+            [['code' => 'missing_locale']],
         ];
     }
 
     /**
      * @dataProvider invalidCatalogLocaleProvider
+     *
+     * @param mixed $invalidCatalog
      */
     public function testCreateInvalidCatalogLocale($invalidCatalog): void
     {
@@ -147,7 +204,7 @@ class LocalizedCatalogsTest extends ApiTestCase
 
         $loginJson = $this->login(
             $client,
-            static::getContainer()->get('doctrine')->getManager(),
+            static::getContainer()->get('doctrine')->getManager(),// @phpstan-ignore-line
             static::getContainer()->get('security.user_password_hasher')
         );
 
@@ -165,7 +222,7 @@ class LocalizedCatalogsTest extends ApiTestCase
         );
     }
 
-    public function invalidCatalogLocaleProvider() : array
+    public function invalidCatalogLocaleProvider(): array
     {
         return [
             [['code' => 'cat_1_invalid', 'locale' => 'strin']],
@@ -175,6 +232,8 @@ class LocalizedCatalogsTest extends ApiTestCase
 
     /**
      * @dataProvider invalidCatalogLocaleLengthProvider
+     *
+     * @param mixed $invalidCatalog
      */
     public function testCreateInvalidCatalogLocaleLength($invalidCatalog): void
     {
@@ -184,7 +243,7 @@ class LocalizedCatalogsTest extends ApiTestCase
 
         $loginJson = $this->login(
             $client,
-            static::getContainer()->get('doctrine')->getManager(),
+            static::getContainer()->get('doctrine')->getManager(),// @phpstan-ignore-line
             static::getContainer()->get('security.user_password_hasher')
         );
 
@@ -198,12 +257,12 @@ class LocalizedCatalogsTest extends ApiTestCase
                 '@type' => 'ConstraintViolationList',
                 'hydra:title' => 'An error occurred',
                 'hydra:description' => 'locale: This value is not valid.
-locale: This value should have exactly 5 characters.'
+locale: This value should have exactly 5 characters.',
             ]
         );
     }
 
-    public function invalidCatalogLocaleLengthProvider() : array
+    public function invalidCatalogLocaleLengthProvider(): array
     {
         return [
             [['code' => 'cat_1_invalid', 'locale' => 'too_long_locale']],
@@ -213,7 +272,6 @@ locale: This value should have exactly 5 characters.'
     }
 
     /**
-     * @return void
      * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
@@ -228,7 +286,7 @@ locale: This value should have exactly 5 characters.'
 
         $loginJson = $this->login(
             $client,
-            static::getContainer()->get('doctrine')->getManager(),
+            static::getContainer()->get('doctrine')->getManager(),// @phpstan-ignore-line
             static::getContainer()->get('security.user_password_hasher')
         );
 
@@ -248,19 +306,19 @@ locale: This value should have exactly 5 characters.'
         );
     }
 
-    private function createValidCatalogAndGetId() : string
+    private function createValidCatalogAndGetId(): string
     {
         $client = static::createClient();
 
         $loginJson = $this->login(
             $client,
-            static::getContainer()->get('doctrine')->getManager(),
+            static::getContainer()->get('doctrine')->getManager(),// @phpstan-ignore-line
             static::getContainer()->get('security.user_password_hasher')
         );
 
         $catalogCreation = $client->request('POST', '/catalogs', [
             'auth_bearer' => $loginJson['token'],
-            'json' => ['code' => uniqid('test_catalog')]]
+            'json' => ['code' => uniqid('test_catalog')], ]
         );
 
         return $catalogCreation->toArray()['@id'];

@@ -29,6 +29,7 @@ class Catalog
 
     private string|null $name;
 
+    /** @var \Doctrine\Common\Collections\Collection&iterable<\Elasticsuite\Catalog\Model\LocalizedCatalog> */
     private Collection $localizedCatalogs;
 
     public function __construct()
@@ -66,7 +67,7 @@ class Catalog
     }
 
     /**
-     * @return Collection|LocalizedCatalog[]
+     * @return Collection&iterable<\Elasticsuite\Catalog\Model\LocalizedCatalog>
      */
     public function getLocalizedCatalogs(): Collection
     {

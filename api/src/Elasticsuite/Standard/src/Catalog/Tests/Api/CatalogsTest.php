@@ -1,11 +1,24 @@
 <?php
+/**
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Smile ElasticSuite to newer
+ * versions in the future.
+ *
+ * @package   Elasticsuite
+ * @author    ElasticSuite Team <elasticsuite@smile.fr>
+ * @copyright 2022 Smile
+ * @license   Licensed to Smile-SA. All rights reserved. No warranty, explicit or implicit, provided.
+ *            Unauthorized copying of this file, via any medium, is strictly prohibited.
+ */
+
+declare(strict_types=1);
 
 namespace Elasticsuite\Catalog\Tests\Api;
 
 use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
 use Elasticsuite\Catalog\Model\Catalog;
 use Elasticsuite\User\DataFixtures\LoginTrait;
-use Hautelook\AliceBundle\PhpUnit\RefreshDatabaseTrait;
 use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
 use Liip\TestFixturesBundle\Services\DatabaseTools\AbstractDatabaseTool;
 
@@ -15,13 +28,15 @@ class CatalogsTest extends ApiTestCase
 
     private AbstractDatabaseTool $databaseTool;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->databaseTool = static::getContainer()->get(DatabaseToolCollection::class)->get();
     }
 
     /**
      * @dataProvider validCatalogProvider
+     *
+     * @param mixed $validCatalog
      */
     public function testCreateValidCatalog($validCatalog): void
     {
@@ -29,7 +44,7 @@ class CatalogsTest extends ApiTestCase
 
         $loginJson = $this->login(
             $client,
-            static::getContainer()->get('doctrine')->getManager(),
+            static::getContainer()->get('doctrine')->getManager(), // @phpstan-ignore-line
             static::getContainer()->get('security.user_password_hasher')
         );
 
@@ -41,7 +56,7 @@ class CatalogsTest extends ApiTestCase
             [
                 '@context' => '/contexts/Catalog',
                 '@type' => 'Catalog',
-                'code' => $validCatalog['code']
+                'code' => $validCatalog['code'],
             ]
         );
 
@@ -57,17 +72,19 @@ class CatalogsTest extends ApiTestCase
         $this->assertMatchesResourceItemJsonSchema(Catalog::class);
     }
 
-    public function validCatalogProvider() : array
+    public function validCatalogProvider(): array
     {
         return [
             [['code' => 'valid_code', 'name' => 'B2C Catalog']],
             [['code' => 'empty_name', 'name' => '']],
-            [['code' => 'missing_name']]
+            [['code' => 'missing_name']],
         ];
     }
 
     /**
      * @dataProvider invalidCatalogProvider
+     *
+     * @param mixed $invalidCatalog
      */
     public function testCreateInvalidCatalog($invalidCatalog): void
     {
@@ -75,7 +92,7 @@ class CatalogsTest extends ApiTestCase
 
         $loginJson = $this->login(
             $client,
-            static::getContainer()->get('doctrine')->getManager(),
+            static::getContainer()->get('doctrine')->getManager(),// @phpstan-ignore-line
             static::getContainer()->get('security.user_password_hasher')
         );
 
@@ -85,25 +102,24 @@ class CatalogsTest extends ApiTestCase
         $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
         $this->assertJsonContains(
             [
-            '@context' => '/contexts/ConstraintViolationList',
-            '@type' => 'ConstraintViolationList',
-            'hydra:title' => 'An error occurred',
-            'hydra:description' => 'code: This value should not be blank.',
+                '@context' => '/contexts/ConstraintViolationList',
+                '@type' => 'ConstraintViolationList',
+                'hydra:title' => 'An error occurred',
+                'hydra:description' => 'code: This value should not be blank.',
             ]
         );
     }
 
-    public function invalidCatalogProvider() : array
+    public function invalidCatalogProvider(): array
     {
         return [
             [['code' => '', 'name' => 'Empty Code']],
             [['code' => '']],
-            [['name' => 'Missing Code']]
+            [['name' => 'Missing Code']],
         ];
     }
 
     /**
-     * @return void
      * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
@@ -118,7 +134,7 @@ class CatalogsTest extends ApiTestCase
 
         $loginJson = $this->login(
             $client,
-            static::getContainer()->get('doctrine')->getManager(),
+            static::getContainer()->get('doctrine')->getManager(),// @phpstan-ignore-line
             static::getContainer()->get('security.user_password_hasher')
         );
 

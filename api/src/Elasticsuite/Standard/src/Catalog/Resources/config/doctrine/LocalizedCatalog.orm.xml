@@ -10,7 +10,11 @@
         </id>
         <field name="name" type="string" length="255" nullable="true" unique="false" />
         <field name="code" type="string" length="255" nullable="false" unique="true" />
-        <field name="locale" type="string" length="5" nullable="true" unique="false" />
+        <field name="locale" type="string" length="5" nullable="false" unique="false" />
+
+        <unique-constraints>
+            <unique-constraint columns="code,locale" name="unique_code_locale" />
+        </unique-constraints>
 
         <many-to-one field="catalog" target-entity="Elasticsuite\Catalog\Model\Catalog" inversed-by="localizedCatalogs">
             <cascade><cascade-remove /></cascade>
