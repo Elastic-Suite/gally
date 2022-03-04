@@ -5,8 +5,22 @@
  * Do not edit or add to this file if you wish to upgrade Smile ElasticSuite to newer
  * versions in the future.
  *
+ * @package   Elasticsuite
+ * @author    ElasticSuite Team <elasticsuite@smile.fr>
+ * @copyright 2022 Smile
+ * @license   Licensed to Smile-SA. All rights reserved. No warranty, explicit or implicit, provided.
+ *            Unauthorized copying of this file, via any medium, is strictly prohibited.
+ */
+
+declare(strict_types=1);
+/**
+ * DISCLAIMER.
+ *
+ * Do not edit or add to this file if you wish to upgrade Smile ElasticSuite to newer
+ * versions in the future.
+ *
  * @category  Elasticsuite
- * @package   Elasticsuite\Example
+ *
  * @author    Richard Bayet <richard.bayet@smile.fr>
  * @copyright 2022 Smile
  * @license   Licensed to Smile-SA. All rights reserved. No warranty, explicit or implicit, provided.
@@ -19,13 +33,12 @@ use Psr\Cache\InvalidArgumentException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Contracts\Cache\TagAwareCacheInterface;
 
 class InvalidateTagsInjectedCommand extends Command
 {
-    /** @var TagAwareCacheInterface[] $pools  */
+    /** @var TagAwareCacheInterface[] */
     private array $pools;
 
     // the name of the command (the part after "bin/console")
@@ -54,8 +67,7 @@ The <info>%command.name%</info> invalidates cache objects from pools injected in
 
     %command.full_name% <key>
 EOF
-            )
-        ;
+            );
     }
 
     /**
@@ -66,18 +78,17 @@ EOF
         $tags = $input->getArgument('tags');
 
         foreach ($this->pools as $pool) {
-            $output->writeln(sprintf('Invalidating tags [%s] in pool of type %s', implode(', ', $tags), get_class($pool)));
+            $output->writeln(sprintf('Invalidating tags [%s] in pool of type %s', implode(', ', $tags), \get_class($pool)));
 
             if ($pool instanceof TagAwareCacheInterface) {
                 try {
                     $pool->invalidateTags($tags);
                 } catch (InvalidArgumentException $e) {
-                    $output->writeln(sprintf('Provided tags are invalid for this cache pool'));
+                    $output->writeln('Provided tags are invalid for this cache pool');
                 }
             } else {
-                $output->writeln(sprintf('Injected service %s is not a valid tag aware cache pool', get_class($pool)));
+                $output->writeln(sprintf('Injected service %s is not a valid tag aware cache pool', \get_class($pool)));
             }
-
         }
 
         return Command::SUCCESS;
