@@ -5,23 +5,22 @@
  * Do not edit or add to this file if you wish to upgrade Smile ElasticSuite to newer
  * versions in the future.
  *
- * @category  Elasticsuite
- * @package   Elasticsuite\Example
- * @author    Richard Bayet <richard.bayet@smile.fr>
+ * @package   Elasticsuite
+ * @author    ElasticSuite Team <elasticsuite@smile.fr>
  * @copyright 2022 Smile
  * @license   Licensed to Smile-SA. All rights reserved. No warranty, explicit or implicit, provided.
  *            Unauthorized copying of this file, via any medium, is strictly prohibited.
  */
 
+declare(strict_types=1);
+
 namespace Elasticsuite\Example\Command\Cache;
 
-use ApiPlatform\Core\Cache\CachedTrait;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DeleteCommand extends Command
 {
@@ -50,8 +49,7 @@ The <info>%command.name%</info> deletes an item from the injected cache pool.
 
     %command.full_name% <key>
 EOF
-            )
-        ;
+            );
     }
 
     /**

@@ -1,4 +1,18 @@
 <?php
+/**
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Smile ElasticSuite to newer
+ * versions in the future.
+ *
+ * @package   Elasticsuite
+ * @author    ElasticSuite Team <elasticsuite@smile.fr>
+ * @copyright 2022 Smile
+ * @license   Licensed to Smile-SA. All rights reserved. No warranty, explicit or implicit, provided.
+ *            Unauthorized copying of this file, via any medium, is strictly prohibited.
+ */
+
+declare(strict_types=1);
 
 namespace Elasticsuite\Fixture\Service;
 
@@ -15,11 +29,11 @@ class ElasticsearchFixtures implements ElasticsearchFixturesInterface
     /**
      * ElasticsearchFixtures constructor.
      *
-     * @param ValidatorInterface $validator
-     * @param IndexRepositoryInterface $indexRepository
+     * @param ValidatorInterface          $validator
+     * @param IndexRepositoryInterface    $indexRepository
      * @param DocumentRepositoryInterface $documentRepository
-     * @param string $env
-     * @param bool $testMode
+     * @param string                      $env
+     * @param bool                        $testMode
      */
     public function __construct(
         private ValidatorInterface $validator,
@@ -28,15 +42,13 @@ class ElasticsearchFixtures implements ElasticsearchFixturesInterface
         private string $env,
         private bool $testMode,
     ) {
-        if ($this->env === 'test') {
+        if ('test' === $this->env) {
             $this->setTestMode(true);
         }
     }
 
     /**
      * Get test mode.
-     *
-     * @return bool
      */
     public function isTestMode(): bool
     {
@@ -45,8 +57,6 @@ class ElasticsearchFixtures implements ElasticsearchFixturesInterface
 
     /**
      * Set test mode.
-     *
-     * @param bool $testMode
      */
     public function setTestMode(bool $testMode): void
     {
@@ -55,8 +65,6 @@ class ElasticsearchFixtures implements ElasticsearchFixturesInterface
 
     /**
      * Create indices from data in $pathFiles.
-     *
-     * @param array $pathFiles
      */
     public function loadFixturesIndexFiles(array $pathFiles): void
     {
@@ -76,8 +84,6 @@ class ElasticsearchFixtures implements ElasticsearchFixturesInterface
 
     /**
      * Create documents from data in $pathFiles.
-     *
-     * @param array $pathFiles
      */
     public function loadFixturesDocumentFiles(array $pathFiles): void
     {
@@ -106,31 +112,22 @@ class ElasticsearchFixtures implements ElasticsearchFixturesInterface
 
     /**
      * Get index name prefixed by the index test prefix.
-     *
-     * @param string $indexName
-     * @return string
      */
     public function getTestIndexName(string $indexName): string
     {
-        return $this->isTestMode() ?  self::PREFIX_TEST_INDEX . $indexName : $indexName;
+        return $this->isTestMode() ? self::PREFIX_TEST_INDEX . $indexName : $indexName;
     }
 
     /**
      * Get index name prefixed by the index test prefix.
-     *
-     * @param string $aliasName
-     * @return string
      */
     public function getTestAliasName(string $aliasName): string
     {
-        return $this->isTestMode() ?  self::PREFIX_TEST_INDEX . $aliasName : $aliasName;
+        return $this->isTestMode() ? self::PREFIX_TEST_INDEX . $aliasName : $aliasName;
     }
 
     /**
      * Validate files format.
-     *
-     * @param array $pathFiles
-     * @return array
      */
     protected function validateFilesFormat(array $pathFiles): array
     {
@@ -154,7 +151,6 @@ class ElasticsearchFixtures implements ElasticsearchFixturesInterface
     /**
      * Format exception message and throw format exception.
      *
-     * @param array $errorsByFile
      * @throws \Exception
      */
     protected function throwFormatException(array $errorsByFile)
@@ -162,15 +158,13 @@ class ElasticsearchFixtures implements ElasticsearchFixturesInterface
         $messages = [];
         foreach ($errorsByFile as $file => $errors) {
             $messages = array_map(
-                function (ConstraintViolation $violation) use ($file){
+                function (ConstraintViolation $violation) use ($file) {
                     return $file . ' => ' . $violation->getMessage();
                 },
                 iterator_to_array($errors->getIterator())
             );
         }
 
-        throw new \Exception(
-            'Format error(s) on fixture files: ' . PHP_EOL . implode(PHP_EOL, $messages)
-        );
+        throw new \Exception('Format error(s) on fixture files: ' . \PHP_EOL . implode(\PHP_EOL, $messages));
     }
 }

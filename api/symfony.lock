@@ -315,6 +315,18 @@
             "tests/bootstrap.php"
         ]
     },
+    "phpstan/extension-installer": {
+        "version": "1.1.0"
+    },
+    "phpstan/phpstan": {
+        "version": "1.4.5"
+    },
+    "phpstan/phpstan-doctrine": {
+        "version": "1.2.8"
+    },
+    "phpstan/phpstan-symfony": {
+        "version": "1.1.4"
+    },
     "psr/cache": {
         "version": "3.0.0"
     },

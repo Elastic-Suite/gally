@@ -5,22 +5,35 @@
  * Do not edit or add to this file if you wish to upgrade Smile ElasticSuite to newer
  * versions in the future.
  *
+ * @package   Elasticsuite
+ * @author    ElasticSuite Team <elasticsuite@smile.fr>
+ * @copyright 2022 Smile
+ * @license   Licensed to Smile-SA. All rights reserved. No warranty, explicit or implicit, provided.
+ *            Unauthorized copying of this file, via any medium, is strictly prohibited.
+ */
+
+declare(strict_types=1);
+/**
+ * DISCLAIMER.
+ *
+ * Do not edit or add to this file if you wish to upgrade Smile ElasticSuite to newer
+ * versions in the future.
+ *
  * @category  Smile
- * @package   Smile\Elasticsuite
+ *
  * @author    Richard Bayet <richard.bayet@smile.fr>
  * @copyright 2022 Smile
  * @license   Licensed to Smile-SA. All rights reserved. No warranty, explicit or implicit, provided.
  *            Unauthorized copying of this file, via any medium, is strictly prohibited.
  */
 
-
 namespace Elasticsuite\Example\Command\Cache;
 
-use Symfony\Component\Cache\CacheItem;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Contracts\Cache\CacheInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class GetCustomCommand extends Command
@@ -50,14 +63,13 @@ class GetCustomCommand extends Command
      * @param InputInterface  $input  Input
      * @param OutputInterface $output Output
      *
-     * @return int
      * @throws \Psr\Cache\InvalidArgumentException
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $ttl = 60;
 
-        $cacheObject = $this->elasticsuiteExampleCustomCache->get('common.key', function (CacheItem $item, bool &$save) use ($output, $ttl) {
+        $cacheObject = $this->elasticsuiteExampleCustomCache->get('common.key', function (ItemInterface $item, bool &$save) use ($output, $ttl) {
             if ($item->isHit()) {
                 $output->writeln($this->translator->trans('example.command.cache.hit.recompute', [], 'elasticsuite_example'));
             } else {
