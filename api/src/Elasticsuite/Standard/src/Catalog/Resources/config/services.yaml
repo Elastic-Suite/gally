@@ -1,0 +1,12 @@
+services:    
+    Elasticsuite\Catalog\Repository\CatalogRepository:
+        arguments:
+            - '@Doctrine\Persistence\ManagerRegistry'
+        tags:
+            - { name: doctrine.repository_service } 
+
+    Elasticsuite\Catalog\Repository\LocalizedCatalogRepository:
+        arguments:
+            - '@Doctrine\Persistence\ManagerRegistry'
+        tags:
+            - { name: doctrine.repository_service }

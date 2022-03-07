@@ -184,6 +184,9 @@
             "fixtures/.gitignore"
         ]
     },
+    "justinrainbow/json-schema": {
+        "version": "5.2.11"
+    },
     "laminas/laminas-code": {
         "version": "4.5.1"
     },
