@@ -45,6 +45,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
                     'paths' => [
                         __DIR__ . '/../Example/Model/',
                         __DIR__ . '/../Index/Model/',
+                        __DIR__ . '/../Catalog/Model/',
                     ],
                 ],
             ]
@@ -58,6 +59,14 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
                         __DIR__ . '/../Example/Resources/translations',
                     ],
                 ],
+                'validation' => [
+                    'enabled' => true,
+                    'mapping' => [
+                        'paths' => [
+                            __DIR__ . '/../Catalog/Resources/config/validator',
+                        ],
+                    ],
+                ],
             ]
         );
 
@@ -67,6 +76,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
                 'fixtures_path' => [
                     'src/Example/DataFixtures/fixtures',
                     'src/User/DataFixtures/fixtures',
+                    'src/Catalog/DataFixtures/fixtures',
                 ],
             ]
         );
@@ -87,6 +97,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
         $loader->load('Example/Resources/config/services.yaml');
         $loader->load('Index/Resources/config/services.yaml');
         $loader->load('Fixture/Resources/config/services.yaml');
+        $loader->load('Catalog/Resources/config/services.yaml');
         $loader->load('User/Resources/config/services.yaml');
         $loader->load('Security/Resources/config/services.yaml');
         $loader->load('Cache/Resources/config/services.yaml');
