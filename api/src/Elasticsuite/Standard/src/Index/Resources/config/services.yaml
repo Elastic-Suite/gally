@@ -17,6 +17,36 @@ services:
         arguments:
             - '@api_platform.elasticsearch.client'
 
+    Elasticsuite\Index\Repository\Metadata\MetadataRepository:
+        arguments:
+            - '@Doctrine\Persistence\ManagerRegistry'
+        tags:
+            - { name: doctrine.repository_service }
+
+    Elasticsuite\Index\Repository\Metadata\SourceFieldRepository:
+        arguments:
+            - '@Doctrine\Persistence\ManagerRegistry'
+        tags:
+            - { name: doctrine.repository_service }
+
+    Elasticsuite\Index\Repository\Metadata\SourceFieldLabelRepository:
+        arguments:
+            - '@Doctrine\Persistence\ManagerRegistry'
+        tags:
+            - { name: doctrine.repository_service }
+
+    Elasticsuite\Index\Repository\Metadata\SourceFieldOptionRepository:
+        arguments:
+            - '@Doctrine\Persistence\ManagerRegistry'
+        tags:
+            - { name: doctrine.repository_service }
+
+    Elasticsuite\Index\Repository\Metadata\SourceFieldOptionLabelRepository:
+        arguments:
+            - '@Doctrine\Persistence\ManagerRegistry'
+        tags:
+            - { name: doctrine.repository_service }
+
     Elasticsuite\Index\DataPersister\DocumentDataPersister:
         arguments:
             - '@Elasticsuite\Index\Repository\Document\DocumentRepositoryInterface'

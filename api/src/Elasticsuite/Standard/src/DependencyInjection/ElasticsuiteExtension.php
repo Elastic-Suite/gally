@@ -64,6 +64,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
                     'mapping' => [
                         'paths' => [
                             __DIR__ . '/../Catalog/Resources/config/validator',
+                            __DIR__ . '/../Index/Resources/config/validator',
                         ],
                     ],
                 ],
