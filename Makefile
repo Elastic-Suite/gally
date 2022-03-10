@@ -67,7 +67,7 @@ phpstan: ## Run phpstan , pass the parameter "o=" to ass options, make phpstan o
 	@$(PHP_STAN) --memory-limit=-1 analyse $(o)
 
 qa: ## Run code quality tools
-qa: phpcsfixer_dryrun # TODO: Change this by phpcsfixer when we agree on phpcsfixer conf
+qa: phpcsfixer
 qa: phpstan
 
 phpunit: ## Run php unit tests
