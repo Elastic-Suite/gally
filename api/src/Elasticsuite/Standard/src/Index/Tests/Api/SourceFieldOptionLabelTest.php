@@ -43,13 +43,11 @@ class SourceFieldOptionLabelTest extends AbstractEntityTest
 
     protected function getJsonCreationValidation(array $validData): array
     {
-        $json = [
+        return [
             '@context' => '/contexts/SourceFieldOptionLabel',
             '@type' => 'SourceFieldOptionLabel',
             'label' => $validData['label'],
         ];
-
-        return $json;
     }
 
     protected function getJsonCollectionValidation(): array
@@ -61,7 +59,6 @@ class SourceFieldOptionLabelTest extends AbstractEntityTest
             'hydra:totalItems' => 4,
         ];
     }
-
 
     public function validDataProvider(): array
     {

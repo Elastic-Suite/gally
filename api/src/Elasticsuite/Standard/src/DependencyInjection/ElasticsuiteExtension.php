@@ -81,6 +81,11 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
                 ],
             ]
         );
+
+        $elasticsuiteConfig = array_merge_recursive(
+            $yamlParser->parseFile(__DIR__ . '/../Catalog/Resources/config/elasticsuite.yaml'),
+        );
+        $container->prependExtensionConfig('elasticsuite', $elasticsuiteConfig['elasticsuite']);
     }
 
     /**
@@ -107,6 +112,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
         $config = $this->processConfiguration($configuration, $configs);
         $container->setParameter('elasticsuite.enabled', $config['enabled']);
         $container->setParameter('elasticsuite.twiter.credentials', $config['twitter']);
+        $container->setParameter('elasticsuite.entities', $config['entities'] ?? []);
 
         //@Todo : Use this feature https://symfony.com/doc/current/bundles/extension.html ?
 //        $this->addAnnotatedClassesToCompile([

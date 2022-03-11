@@ -22,7 +22,7 @@ Elasticsuite\Index\Model\SourceField:
     product_price:
         metadata: '@product'
         name: 'price'
-        type: 'decimal'
+        type: 'price'
     product_brand:
         metadata: '@product'
         name: 'brand'

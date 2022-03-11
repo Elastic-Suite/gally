@@ -65,10 +65,33 @@ services:
         tags:
             - { name: api_platform.item_data_provider }
             - { name: api_platform.collection_data_provider }
+
+    Elasticsuite\Index\Converter\SourceFieldToMappingField: ~
+    
+    Elasticsuite\Index\Service\IndexManager:
+        arguments:
+            - '@Elasticsuite\Index\Converter\SourceFieldToMappingField'
+            - '%elasticsuite.entities%'
                 
     Elasticsuite\Index\Command\IndexClearCommand:
         arguments:
             - '@Elasticsuite\Index\Repository\Index\IndexRepositoryInterface'
             - null
+        tags:
+            - { name: console.command }
+
+    Elasticsuite\Index\Command\MappingGenerateCommand:
+        arguments:
+            - '@Elasticsuite\Index\Repository\Metadata\MetadataRepository'
+            - '@Elasticsuite\Index\Service\IndexManager'
+            - 'elasticsuite:mapping:get'
+        tags:
+            - { name: console.command }
+
+    Elasticsuite\Index\Command\MappingStatusCommand:
+        arguments:
+            - '@Elasticsuite\Index\Repository\Metadata\MetadataRepository'
+            - '@Elasticsuite\Index\Service\IndexManager'
+            - 'elasticsuite:mapping:status'
         tags:
             - { name: console.command }
