@@ -25,13 +25,13 @@ class SourceField
 {
     private int $id;
     private string $name;
-    private ?string $type;
-    private ?int $weight;
-    private ?bool $isSearchable;
-    private ?bool $isFilterable;
-    private ?bool $isSortable;
-    private ?bool $isSpellchecked;
-    private ?bool $isUsedForRules;
+    private ?string $type = null;
+    private ?int $weight = null;
+    private ?bool $isSearchable = null;
+    private ?bool $isFilterable = null;
+    private ?bool $isSortable = null;
+    private ?bool $isSpellchecked = null;
+    private ?bool $isUsedForRules = null;
 
     private Metadata $metadata;
 
