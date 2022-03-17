@@ -1,0 +1,9 @@
+Elasticsuite\Index\Model\SourceFieldLabel:
+    product_name_fr:
+        source_field: '@product_name'
+        catalog: '@localized_catalog1'
+        label: 'Nom'
+    product_name_en:
+        source_field: '@product_name'
+        catalog: '@localized_catalog2'
+        label: 'Name'
