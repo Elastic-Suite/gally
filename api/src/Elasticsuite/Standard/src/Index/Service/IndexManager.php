@@ -64,12 +64,12 @@ class IndexManager
     {
         foreach ($metadata->getSourceFields() as $sourceField) {
             if (!$sourceField->getType()) {
-                return Mapping\Status::Red;
+                return new Mapping\Status($metadata->getEntity(), Mapping\Status::Red);
             }
         }
 
         // @Todo Check mapping status in current index to check if it is the latest version.
 
-        return Mapping\Status::Green;
+        return new Mapping\Status($metadata->getEntity(), Mapping\Status::Green);
     }
 }

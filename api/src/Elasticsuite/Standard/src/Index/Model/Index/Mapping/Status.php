@@ -16,12 +16,41 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Index\Model\Index\Mapping;
 
-/*
- * Describe mapping status
- */
-enum Status
+use ApiPlatform\Core\Annotation\ApiProperty;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Elasticsuite\Index\DataProvider\MappingStatusDataProvider;
+
+#[
+    ApiResource(
+        collectionOperations: [],
+        graphql: [
+            'get' => [
+                'item_query' => MappingStatusDataProvider::class,
+                'args' => [
+                    'entityType' => ['type' => 'String!'],
+                ],
+            ],
+        ],
+        itemOperations: [
+            'get',
+        ],
+        shortName: 'MappingStatus',
+    )
+]
+class Status
 {
-    case Green;     // Current index mapping is accurate with metadata
-    case Yellow;    // Current index mapping is not accurate, mapping will be taken into account on next reindex
-    case Red;       // Current index metadata is not enough qualified
+    public const Green = 'green';     // Current index mapping is accurate with metadata
+    public const Yellow = 'yellow';   // Current index mapping is not accurate, mapping will be taken into account on next reindex
+    public const Red = 'red';         // Current index metadata is not enough qualified
+
+    #[ApiProperty(identifier: true)]
+    public string $entityType;
+
+    public string $status;
+
+    public function __construct(string $entityType, string $status)
+    {
+        $this->entityType = $entityType;
+        $this->status = $status;
+    }
 }

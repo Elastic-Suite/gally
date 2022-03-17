@@ -94,4 +94,12 @@ services:
             - '@Elasticsuite\Index\Service\IndexManager'
             - 'elasticsuite:mapping:status'
         tags:
-            - { name: console.command }
+            - { name: console.command }           
+    
+    Elasticsuite\Index\DataProvider\MappingStatusDataProvider:
+        arguments:
+            - '@Elasticsuite\Index\Repository\Metadata\MetadataRepository'
+            - '@Elasticsuite\Index\Service\IndexManager'
+        tags:
+            - { name: api_platform.item_data_provider }
+            - { name: api_platform.graphql.query_resolver }

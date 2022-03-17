@@ -59,7 +59,7 @@ class SourceFieldTest extends AbstractEntityTest
             '@context' => '/contexts/SourceField',
             '@id' => '/source_fields',
             '@type' => 'hydra:Collection',
-            'hydra:totalItems' => 4,
+            'hydra:totalItems' => 5,
         ];
     }
 
@@ -68,7 +68,7 @@ class SourceFieldTest extends AbstractEntityTest
         return [
             [['name' => 'description', 'metadata' => '/metadata/1']],
             [['name' => 'weight', 'metadata' => '/metadata/1']],
-            [['name' => 'description', 'metadata' => '/metadata/2']],
+            [['name' => 'image', 'metadata' => '/metadata/2']],
             [['name' => 'length', 'isSearchable' => true, 'metadata' => '/metadata/1']],
         ];
     }
