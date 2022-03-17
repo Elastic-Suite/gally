@@ -52,8 +52,22 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
+                //@todo remove twitter example
+                ->arrayNode('entities')
+                    ->useAttributeAsKey('name')
+                    ->arrayPrototype()
+                    ->children()
+                        ->arrayNode('static_fields')
+                        ->arrayPrototype()
+                            ->children()
+                                ->scalarNode('name')->end()
+                                ->scalarNode('type')->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
             ->end();
-        //@todo remove twitter example
+
         return $treeBuilder;
     }
 }

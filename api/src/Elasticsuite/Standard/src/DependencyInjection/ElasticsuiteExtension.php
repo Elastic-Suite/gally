@@ -64,6 +64,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
                     'mapping' => [
                         'paths' => [
                             __DIR__ . '/../Catalog/Resources/config/validator',
+                            __DIR__ . '/../Index/Resources/config/validator',
                         ],
                     ],
                 ],
@@ -77,9 +78,15 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
                     'src/Example/DataFixtures/fixtures',
                     'src/User/DataFixtures/fixtures',
                     'src/Catalog/DataFixtures/fixtures',
+                    'src/Index/DataFixtures/fixtures',
                 ],
             ]
         );
+
+        $elasticsuiteConfig = array_merge_recursive(
+            $yamlParser->parseFile(__DIR__ . '/../Catalog/Resources/config/elasticsuite.yaml'),
+        );
+        $container->prependExtensionConfig('elasticsuite', $elasticsuiteConfig['elasticsuite']);
     }
 
     /**
@@ -106,6 +113,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
         $config = $this->processConfiguration($configuration, $configs);
         $container->setParameter('elasticsuite.enabled', $config['enabled']);
         $container->setParameter('elasticsuite.twiter.credentials', $config['twitter']);
+        $container->setParameter('elasticsuite.entities', $config['entities'] ?? []);
 
         //@Todo : Use this feature https://symfony.com/doc/current/bundles/extension.html ?
 //        $this->addAnnotatedClassesToCompile([

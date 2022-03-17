@@ -17,7 +17,6 @@
         </unique-constraints>
 
         <many-to-one field="catalog" target-entity="Elasticsuite\Catalog\Model\Catalog" inversed-by="localizedCatalogs">
-            <cascade><cascade-remove /></cascade>
             <join-column name="catalog_id" referenced-column-name="id" nullable="false" on-delete="CASCADE" on-update="CASCADE"/>
         </many-to-one>
     </entity>
