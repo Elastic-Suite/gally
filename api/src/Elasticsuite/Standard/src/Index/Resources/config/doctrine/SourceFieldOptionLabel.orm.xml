@@ -14,12 +14,10 @@
         <field name="label" type="string" nullable="false" />
 
         <many-to-one field="catalog" target-entity="Elasticsuite\Catalog\Model\LocalizedCatalog">
-            <cascade><cascade-remove /></cascade>
             <join-column name="catalog_id" referenced-column-name="id" nullable="false" on-delete="CASCADE" on-update="CASCADE"/>
         </many-to-one>
 
         <many-to-one field="sourceFieldOption" target-entity="Elasticsuite\Index\Model\SourceFieldOption" inversed-by="labels">
-            <cascade><cascade-remove /></cascade>
             <join-column name="source_field_option_id" referenced-column-name="id" nullable="false" on-delete="CASCADE" on-update="CASCADE"/>
         </many-to-one>
 

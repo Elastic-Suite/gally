@@ -14,7 +14,6 @@
         <many-to-one field="sourceField"
                      target-entity="Elasticsuite\Index\Model\SourceField"
                      inversed-by="options">
-            <cascade><cascade-remove /></cascade>
             <join-column name="source_field_id" referenced-column-name="id" nullable="false" on-delete="CASCADE" on-update="CASCADE"/>
         </many-to-one>
 
