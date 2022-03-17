@@ -1,0 +1,14 @@
+elasticsuite:
+    entities:
+        product:
+            static_fields:
+                - name: 'id'
+                  type: 'int'
+                - name: 'sku'
+                  type: 'text'
+                - name: 'price'
+                  type: 'price'
+                - name: 'stock.status'
+                  type: 'bool'
+                - name: 'stock.quantity'
+                  type: 'decimal'
