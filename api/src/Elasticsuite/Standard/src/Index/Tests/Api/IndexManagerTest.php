@@ -77,6 +77,7 @@ class IndexManagerTest extends AbstractTest
                 [
                     'properties' => [
                         'name' => ['type' => 'text'],
+                        'description' => ['type' => 'text'],
                     ],
                 ],
             ],
