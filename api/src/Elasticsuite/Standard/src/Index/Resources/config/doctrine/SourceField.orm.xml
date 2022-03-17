@@ -21,7 +21,6 @@
         <field name="isUsedForRules" type="boolean" nullable="true" />
 
         <many-to-one field="metadata" target-entity="Elasticsuite\Index\Model\Metadata" inversed-by="sourceFields">
-            <cascade><cascade-remove /></cascade>
             <join-column name="metadata_id" referenced-column-name="id" nullable="false" on-delete="CASCADE" on-update="CASCADE"/>
         </many-to-one>
 
