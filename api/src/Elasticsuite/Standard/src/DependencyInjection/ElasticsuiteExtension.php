@@ -78,6 +78,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
                     'src/Example/DataFixtures/fixtures',
                     'src/User/DataFixtures/fixtures',
                     'src/Catalog/DataFixtures/fixtures',
+                    'src/Index/DataFixtures/fixtures',
                 ],
             ]
         );
