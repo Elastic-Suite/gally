@@ -7,6 +7,7 @@
         "ext-iconv": "*",
         "api-platform/core": "^2.6",
         "composer/package-versions-deprecated": "^1.11",
+        "cweagans/composer-patches": "^1.7",
         "doctrine/annotations": "^1.0",
         "doctrine/doctrine-bundle": "^2.1",
         "doctrine/doctrine-migrations-bundle": "^3.0",
@@ -67,7 +68,8 @@
             "composer/package-versions-deprecated": true,
             "symfony/flex": true,
             "symfony/runtime": true,
-            "phpstan/extension-installer": true
+            "phpstan/extension-installer": true,
+            "cweagans/composer-patches": true
         }
     },
     "autoload": {
@@ -113,6 +115,11 @@
         "symfony": {
             "allow-contrib": false,
             "require": "6.0.*"
+        },
+        "patches": {
+            "lexik/jwt-authentication-bundle": {
+                "Fix forward port of trait that does not preload correctly": "patches/jwt-authenticator.patch"
+            }
         }
     }
 }
