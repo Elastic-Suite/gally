@@ -28,6 +28,9 @@
     "composer/xdebug-handler": {
         "version": "2.0.4"
     },
+    "cweagans/composer-patches": {
+        "version": "1.7.2"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -289,6 +292,18 @@
     "phpspec/prophecy": {
         "version": "v1.15.0"
     },
+    "phpstan/extension-installer": {
+        "version": "1.1.0"
+    },
+    "phpstan/phpstan": {
+        "version": "1.4.5"
+    },
+    "phpstan/phpstan-doctrine": {
+        "version": "1.2.8"
+    },
+    "phpstan/phpstan-symfony": {
+        "version": "1.1.4"
+    },
     "phpunit/php-code-coverage": {
         "version": "9.2.10"
     },
@@ -317,18 +332,6 @@
             "phpunit.xml.dist",
             "tests/bootstrap.php"
         ]
-    },
-    "phpstan/extension-installer": {
-        "version": "1.1.0"
-    },
-    "phpstan/phpstan": {
-        "version": "1.4.5"
-    },
-    "phpstan/phpstan-doctrine": {
-        "version": "1.2.8"
-    },
-    "phpstan/phpstan-symfony": {
-        "version": "1.1.4"
     },
     "psr/cache": {
         "version": "3.0.0"
