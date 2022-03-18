@@ -1,0 +1,17 @@
+[
+  {
+    "name": "index_product",
+    "settings": {
+      "mappings": {
+        "properties": {
+          "name": {
+            "type": "text"
+          },
+          "size": {
+            "type": "integer"
+          }
+        }
+      }
+    }
+  }
+]

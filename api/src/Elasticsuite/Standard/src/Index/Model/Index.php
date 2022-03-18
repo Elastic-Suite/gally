@@ -18,6 +18,7 @@ namespace Elasticsuite\Index\Model;
 
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Elasticsuite\Index\MutationResolver\BulkIndexMutation;
 use Elasticsuite\Index\MutationResolver\CreateIndexMutation;
 use Elasticsuite\User\Constant\Role;
 
@@ -41,6 +42,17 @@ use Elasticsuite\User\Constant\Role;
                 'security' => "is_granted('" . Role::ROLE_ADMIN . "')",
             ],
             'update' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
+            'bulk' => [
+                'mutation' => BulkIndexMutation::class,
+                'args' => [
+                    'indexName' => ['type' => 'String!'],
+                    'data' => ['type' => 'String!'],
+                ],
+                'read' => false,
+                'deserialize' => false,
+                'write' => false,
+                'serialize' => true,
+            ],
             'delete' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
         ],
         itemOperations: ['get', 'delete'],

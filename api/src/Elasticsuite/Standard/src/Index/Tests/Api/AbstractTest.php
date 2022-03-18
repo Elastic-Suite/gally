@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Elasticsuite\Index\Tests\Api;
 
 use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
+use Elasticsuite\Fixture\Service\ElasticsearchFixtures;
 use Elasticsuite\User\DataFixtures\LoginTrait;
 use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
 use Liip\TestFixturesBundle\Services\DatabaseTools\AbstractDatabaseTool;
@@ -27,15 +28,32 @@ abstract class AbstractTest extends ApiTestCase
     use LoginTrait;
 
     private AbstractDatabaseTool $databaseTool;
+    private ElasticsearchFixtures $elasticFixtures;
 
     protected function setUp(): void
     {
         $this->databaseTool = static::getContainer()->get(DatabaseToolCollection::class)->get();
+        $this->elasticFixtures = static::getContainer()->get(ElasticsearchFixtures::class);
     }
 
     protected function loadFixture(array $paths)
     {
         $this->databaseTool->loadAliceFixture($paths);
+    }
+
+    protected function loadElasticsearchIndexFixtures(array $paths)
+    {
+        $this->elasticFixtures->loadFixturesIndexFiles($paths);
+    }
+
+    protected function loadElasticsearchDocumentFixtures(array $paths)
+    {
+        $this->elasticFixtures->loadFixturesDocumentFiles($paths);
+    }
+
+    protected function deleteElasticsearchFixtures()
+    {
+        $this->elasticFixtures->deleteTestFixtures();
     }
 
     protected function requestGraphQl(string $query): ResponseInterface

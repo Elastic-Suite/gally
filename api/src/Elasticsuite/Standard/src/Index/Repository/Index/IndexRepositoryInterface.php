@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Index\Repository\Index;
 
+use Elasticsuite\Index\Dto\Bulk;
 use Elasticsuite\Index\Model\Index;
 
 interface IndexRepositoryInterface
@@ -42,6 +43,14 @@ interface IndexRepositoryInterface
      * @param string|null  $alias     index alias to assign after index creation
      */
     public function create(string $indexName, array $settings = [], string $alias = null): ?Index;
+
+    /**
+     * Send bulk to index.
+     *
+     * @param Index        $index   indices name
+     * @param Bulk\Request $request bulk request
+     */
+    public function bulk(Index $index, Bulk\Request $request): Bulk\Response;
 
     /**
      * Refresh a list of indices.
