@@ -38,7 +38,39 @@ abstract class AbstractTest extends ApiTestCase
         $this->databaseTool->loadAliceFixture($paths);
     }
 
-    protected function request(string $method, string $path, array $json = []): ResponseInterface
+    protected function requestGraphQl(string $query): ResponseInterface
+    {
+        $response = $this->request(
+            'POST',
+            '/graphql',
+            [
+                'json' => [
+                    'operationName' => null,
+                    'query' => $query,
+                    'variables' => [],
+                ],
+            ]
+        );
+        $this->assertResponseHeaderSame('content-type', 'application/json');
+        $this->assertResponseStatusCodeSame(200);
+
+        return $response;
+    }
+
+    protected function requestRest(string $method, string $path, array $json = []): ResponseInterface
+    {
+        $data = [];
+        if ('POST' === $method) {
+            $data['json'] = $json;
+        }
+
+        $response = $this->request($method, $path, $data);
+        $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
+
+        return $response;
+    }
+
+    private function request(string $method, string $path, array $data = []): ResponseInterface
     {
         $client = static::createClient();
 
@@ -48,14 +80,8 @@ abstract class AbstractTest extends ApiTestCase
             static::getContainer()->get('security.user_password_hasher')
         );
 
-        $data = ['auth_bearer' => $loginJson['token']];
-        if ('POST' === $method) {
-            $data['json'] = $json;
-        }
+        $data['auth_bearer'] = $loginJson['token'];
 
-        $response = $client->request($method, $path, $data);
-        $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
-
-        return $response;
+        return $client->request($method, $path, $data);
     }
 }
