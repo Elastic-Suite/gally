@@ -70,4 +70,12 @@ class MetadataTest extends AbstractEntityTest
             [['entity' => 'category'], 'entity: This value is already used.'],
         ];
     }
+
+    public function mappingStatusDataProvider(): array
+    {
+        return [
+            ['product', 'green'],
+            ['category', 'red'],
+        ];
+    }
 }

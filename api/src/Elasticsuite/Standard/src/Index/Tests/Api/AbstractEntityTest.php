@@ -38,7 +38,7 @@ abstract class AbstractEntityTest extends AbstractTest
     public function testCreateValidData(array $validData): void
     {
         $this->loadFixture($this->getFixtureFiles());
-        $response = $this->request('POST', $this->getApiPath(), $validData);
+        $response = $this->requestRest('POST', $this->getApiPath(), $validData);
         $this->assertResponseStatusCodeSame(201);
         $this->assertJsonContains($this->getJsonCreationValidation($validData));
         $this->assertMatchesRegularExpression('~^' . $this->getApiPath() . '/\d+$~', $response->toArray()['@id']);
@@ -54,7 +54,7 @@ abstract class AbstractEntityTest extends AbstractTest
     public function testCreateInvalidData(array $invalidData, $message, $code = 422): void
     {
         $this->loadFixture($this->getFixtureFiles());
-        $this->request('POST', $this->getApiPath(), $invalidData);
+        $this->requestRest('POST', $this->getApiPath(), $invalidData);
         $this->assertResponseStatusCodeSame($code);
         $this->assertJsonContains(
             [
@@ -69,7 +69,7 @@ abstract class AbstractEntityTest extends AbstractTest
     public function testGetCollection(): void
     {
         $this->loadFixture($this->getFixtureFiles());
-        $this->request('GET', $this->getApiPath());
+        $this->requestRest('GET', $this->getApiPath());
         $this->assertResponseIsSuccessful();
         $this->assertJsonContains($this->getJsonCollectionValidation());
     }
