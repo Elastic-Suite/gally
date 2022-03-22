@@ -72,7 +72,17 @@ services:
         arguments:
             - '@Elasticsuite\Index\Converter\SourceFieldToMappingField'
             - '%elasticsuite.entities%'
-                
+
+    Elasticsuite\Index\Helper\IndexSettings:
+        arguments:
+            - '@Elasticsuite\Catalog\Repository\LocalizedCatalogRepository'
+            - '%elasticsuite.indices_settings%'
+
+    Elasticsuite\Index\Service\IndexSettingsInterface: '@Elasticsuite\Index\Service\IndexSettings'
+    Elasticsuite\Index\Service\IndexSettings:
+        arguments:
+            - '@Elasticsuite\Index\Helper\IndexSettings'
+
     Elasticsuite\Index\Command\IndexClearCommand:
         arguments:
             - '@Elasticsuite\Index\Repository\Index\IndexRepositoryInterface'
