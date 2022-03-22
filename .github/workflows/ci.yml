@@ -4,11 +4,13 @@ on:
   push:
     branches:
       - main
-  pull_request: ~
+  pull_request:
+    types: [labeled]
   workflow_dispatch: ~
 
 jobs:
   tests:
+    if: (github.event_name != 'pull_request') || contains(github.event.pull_request.labels.*.name, 'safe to test')
     name: Tests
     runs-on: ubuntu-latest
     steps:
