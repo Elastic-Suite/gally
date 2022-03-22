@@ -7,7 +7,7 @@ elasticsuite:
                 - name: 'sku'
                   type: 'keyword'
                 - name: 'price'
-                  type: 'price'
+                  type: 'double'
                 - name: 'stock.status'
                   type: 'boolean'
                 - name: 'stock.quantity'

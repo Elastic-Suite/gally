@@ -22,6 +22,10 @@ use Elasticsuite\Index\Model\Metadata;
 
 class IndexManager
 {
+    /**
+     * @param SourceFieldToMappingField $fieldConverter        Source field converter
+     * @param array<mixed>              $entitiesConfiguration Entities configuration
+     */
     public function __construct(
         private SourceFieldToMappingField $fieldConverter,
         private array $entitiesConfiguration

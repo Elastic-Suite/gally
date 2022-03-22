@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Elasticsuite\Index\Service;
 
 use Elasticsuite\Catalog\Model\LocalizedCatalog;
+use Elasticsuite\Index\Api\IndexSettingsInterface;
 use Elasticsuite\Index\Helper\IndexSettings as IndexSettingsHelper;
 
 class IndexSettings implements IndexSettingsInterface
@@ -53,7 +54,162 @@ class IndexSettings implements IndexSettingsInterface
     public function getAnalysisSettings(LocalizedCatalog|int|string $catalog): array
     {
         // TODO: Implement getAnalysisSettings() method.
-        return [];
+        return [
+            'filter' => [
+                'stemmer' => [
+                    'type' => 'stemmer',
+                    'language' => 'english',
+                ],
+                'phonetic' => [
+                    'type' => 'phonetic',
+                    'encoder' => 'metaphone',
+                ],
+                'lowercase' => [
+                    'type' => 'lowercase',
+                ],
+                'trim' => [
+                    'type' => 'trim',
+                ],
+                'reference_word_delimiter' => [
+                    'split_on_numerics' => 'true',
+                    'generate_word_parts' => 'true',
+                    'preserve_original' => 'false',
+                    'catenate_words' => 'false',
+                    'catenate_all' => 'false',
+                    'split_on_case_change' => 'true',
+                    'type' => 'word_delimiter',
+                    'catenate_numbers' => 'false',
+                ],
+                'ascii_folding' => [
+                    'type' => 'asciifolding',
+                    'preserve_original' => 'false',
+                ],
+                'shingle' => [
+                    'max_shingle_size' => '2',
+                    'min_shingle_size' => '2',
+                    'output_unigrams' => 'true',
+                    'type' => 'shingle',
+                ],
+                'truncate_to_max' => [
+                    'length' => '8192',
+                    'type' => 'truncate',
+                ],
+                'reference_shingle' => [
+                    'max_shingle_size' => '10',
+                    'min_shingle_size' => '2',
+                    'token_separator' => '',
+                    'output_unigrams' => 'true',
+                    'type' => 'shingle',
+                ],
+                'word_delimiter' => [
+                    'split_on_numerics' => 'true',
+                    'generate_word_parts' => 'true',
+                    'preserve_original' => 'true',
+                    'catenate_words' => 'true',
+                    'catenate_all' => 'true',
+                    'split_on_case_change' => 'true',
+                    'type' => 'word_delimiter',
+                    'catenate_numbers' => 'true',
+                ],
+            ],
+            'analyzer' => [
+                'reference' => [
+                    'filter' => [
+                        'ascii_folding',
+                        'trim',
+                        'reference_word_delimiter',
+                        'lowercase',
+                        'reference_shingle',
+                    ],
+                    'char_filter' => [
+                        'html_strip',
+                    ],
+                    'type' => 'custom',
+                    'tokenizer' => 'standard',
+                ],
+                'standard' => [
+                    'filter' => [
+                        'ascii_folding',
+                        'trim',
+                        'word_delimiter',
+                        'lowercase',
+                        'stemmer',
+                    ],
+                    'char_filter' => [
+                        'html_strip',
+                    ],
+                    'type' => 'custom',
+                    'tokenizer' => 'standard',
+                ],
+                'phonetic' => [
+                    'filter' => [
+                        'ascii_folding',
+                        'trim',
+                        'word_delimiter',
+                        'lowercase',
+                        'phonetic',
+                    ],
+                    'char_filter' => [
+                        'html_strip',
+                    ],
+                    'type' => 'custom',
+                    'tokenizer' => 'standard',
+                ],
+                'shingle' => [
+                    'filter' => [
+                        'ascii_folding',
+                        'trim',
+                        'word_delimiter',
+                        'lowercase',
+                        'shingle',
+                    ],
+                    'char_filter' => [
+                        'html_strip',
+                    ],
+                    'type' => 'custom',
+                    'tokenizer' => 'whitespace',
+                ],
+                'sortable' => [
+                    'filter' => [
+                        'ascii_folding',
+                        'trim',
+                        'lowercase',
+                    ],
+                    'char_filter' => [
+                        'html_strip',
+                    ],
+                    'type' => 'custom',
+                    'tokenizer' => 'keyword',
+                ],
+                'keyword' => [
+                    'filter' => [
+                        'truncate_to_max',
+                    ],
+                    'char_filter' => [
+                    ],
+                    'type' => 'custom',
+                    'tokenizer' => 'keyword',
+                ],
+                'whitespace' => [
+                    'filter' => [
+                        'ascii_folding',
+                        'trim',
+                        'word_delimiter',
+                        'lowercase',
+                    ],
+                    'char_filter' => [
+                        'html_strip',
+                    ],
+                    'type' => 'custom',
+                    'tokenizer' => 'standard',
+                ],
+            ],
+            'char_filter' => [
+                'html_strip' => [
+                    'type' => 'html_strip',
+                ],
+            ],
+        ];
     }
 
     /**
