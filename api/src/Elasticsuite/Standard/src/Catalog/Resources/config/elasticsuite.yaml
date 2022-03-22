@@ -3,12 +3,12 @@ elasticsuite:
         product:
             static_fields:
                 - name: 'id'
-                  type: 'int'
+                  type: 'integer'
                 - name: 'sku'
-                  type: 'text'
+                  type: 'keyword'
                 - name: 'price'
                   type: 'price'
                 - name: 'stock.status'
-                  type: 'bool'
+                  type: 'boolean'
                 - name: 'stock.quantity'
-                  type: 'decimal'
+                  type: 'double'
