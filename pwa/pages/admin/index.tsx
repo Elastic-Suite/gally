@@ -8,6 +8,12 @@ import {
 import { parseHydraDocumentation } from "@api-platform/api-doc-parser";
 import authProvider from "utils/authProvider";
 import { ENTRYPOINT } from "config/entrypoint";
+import { HydraAdmin, ResourceGuesser } from "@api-platform/admin";
+
+import CatalogEdit from "../../components/CatalogEdit";
+import CatalogsList from "../../components/CatalogsList";
+import CustomLayout from "../../components/CustomLayout";
+import customRoutes from '../../customRoutes';
 
 const getHeaders = () => localStorage.getItem("token") ? {
   Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -60,8 +66,27 @@ const dataProvider = baseHydraDataProvider({
 
 const AdminLoader = () => {
   if (typeof window !== "undefined") {
-    const { HydraAdmin } = require("@api-platform/admin");
-    return <HydraAdmin dataProvider={dataProvider} authProvider={authProvider} entrypoint={window.origin} />;
+    // const { HydraAdmin } = require("@api-platform/admin");
+    // return <HydraAdmin dataProvider={dataProvider} authProvider={authProvider} entrypoint={window.origin} />;
+    return (
+      <HydraAdmin customRoutes={customRoutes} dataProvider={dataProvider} authProvider={authProvider} entrypoint={window.origin} layout={CustomLayout}>
+        <ResourceGuesser name={"example_documents"} />
+        <ResourceGuesser name={"example_products"} />
+        <ResourceGuesser name={"example_categories"} />
+        <ResourceGuesser name={"example_indices"} />
+        <ResourceGuesser name={"indices"} />
+        <ResourceGuesser name={"source_field_options"} />
+        <ResourceGuesser name={"documents"} />
+        <ResourceGuesser name={"source_fields"} />
+        <ResourceGuesser name={"source_field_option_labels"} />
+        <ResourceGuesser name={"metadata"} />
+        <ResourceGuesser name={"source_field_labels"} />
+        <ResourceGuesser name={"catalogs"} list={CatalogsList} edit={CatalogEdit} />
+        <ResourceGuesser name={"localized_catalogs"} />
+        <ResourceGuesser name={"greetings"} />
+        <ResourceGuesser name={"declarative_greetings"} />
+      </HydraAdmin>
+    )
   }
 
   return <></>;
