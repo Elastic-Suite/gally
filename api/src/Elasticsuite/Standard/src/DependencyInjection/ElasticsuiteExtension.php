@@ -25,6 +25,7 @@ use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\Yaml\Parser as YamlParser;
+use Symfony\Component\Yaml\Yaml;
 
 class ElasticsuiteExtension extends Extension implements PrependExtensionInterface
 {
@@ -36,7 +37,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
     public function prepend(ContainerBuilder $container)
     {
         $yamlParser ??= new YamlParser(); // @phpstan-ignore-line
-        $apiPlatformConfig = $yamlParser->parseFile(__DIR__ . '/../Example/Resources/config/api_platform.yaml');
+        $apiPlatformConfig = $yamlParser->parseFile(__DIR__ . '/../Config/Resources/config/api_platform.yaml', Yaml::PARSE_CONSTANT);
         $container->prependExtensionConfig('api_platform', $apiPlatformConfig['api_platform']);
         $container->prependExtensionConfig(
             'api_platform',

@@ -124,6 +124,16 @@ services:
         tags:
             - { name: api_platform.graphql.mutation_resolver }
 
+    Elasticsuite\Index\DataTransformer\CreateIndexInputDataTransformer:
+        arguments:
+            - '@Elasticsuite\Index\Repository\Index\IndexRepositoryInterface'
+            - '@Elasticsuite\Catalog\Repository\LocalizedCatalogRepository'
+            - '@Elasticsuite\Index\Repository\Metadata\MetadataRepository'
+            - '@Elasticsuite\Index\Service\IndexSettings'
+            - '@Elasticsuite\Index\Service\IndexManager'
+        tags:
+            - { name: api_platform.data_transformer }
+
     Elasticsuite\Index\Command\IndexClearCommand:
         arguments:
             - '@Elasticsuite\Index\Repository\Index\IndexRepositoryInterface'

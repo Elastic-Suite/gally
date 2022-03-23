@@ -18,6 +18,7 @@ namespace Elasticsuite\Index\Model;
 
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Elasticsuite\Index\Dto\CreateIndexInput;
 use Elasticsuite\Index\MutationResolver\BulkDeleteIndexMutation;
 use Elasticsuite\Index\MutationResolver\BulkIndexMutation;
 use Elasticsuite\Index\MutationResolver\CreateIndexMutation;
@@ -27,7 +28,15 @@ use Elasticsuite\User\Constant\Role;
 
 #[
     ApiResource(
-        collectionOperations: ['get', 'post'],
+        collectionOperations: [
+            'get',
+            'post' => [
+                'method' => 'POST',
+                'input' => CreateIndexInput::class,
+                'write' => false,
+                'serialize' => true,
+            ],
+        ],
         graphql: [
             // Auto-generated queries and mutations.
             'item_query',
