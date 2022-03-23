@@ -57,14 +57,14 @@ class IndexManagerTest extends AbstractTest
                 'product',
                 [
                     'properties' => [
-                        'id' => ['type' => 'int'],
-                        'sku' => ['type' => 'text'],
+                        'id' => ['type' => 'integer'],
+                        'sku' => ['type' => 'keyword'],
                         'price' => ['type' => 'double'],
                         'stock' => [
                             'type' => 'nested',
                             'properties' => [
-                                'status' => ['type' => 'bool'],
-                                'quantity' => ['type' => 'decimal'],
+                                'status' => ['type' => 'boolean'],
+                                'quantity' => ['type' => 'double'],
                             ],
                         ],
                         'name' => ['type' => 'text'],
