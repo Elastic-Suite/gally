@@ -76,6 +76,7 @@ class ElasticsearchFixtures implements ElasticsearchFixturesInterface
             foreach ($indices as $index) {
                 $this->indexRepository->create(
                     $this->getTestIndexName($index['name']),
+                    $index['settings'],
                     $this->getTestAliasName($index['alias'])
                 );
             }

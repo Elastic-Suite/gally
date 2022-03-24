@@ -18,12 +18,31 @@ namespace Elasticsuite\Index\Model;
 
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Elasticsuite\Index\MutationResolver\CreateIndexMutation;
 
 #[
     ApiResource(
         collectionOperations: ['get', 'post'],
         itemOperations: ['get', 'delete'],
         paginationEnabled: false,
+        graphql: [
+            // Auto-generated queries and mutations.
+            'item_query',
+            'collection_query',
+            'create' => [
+                'mutation' => CreateIndexMutation::class,
+                'args' => [
+                    'entityType' => ['type' => 'String!', 'description' => 'Entity type for which to create an index'],
+                    'catalog' => ['type' => 'ID!', 'description' => 'Catalog scope for which to create an index'],
+                ],
+                'read' => false,
+                'deserialize' => false,
+                'write' => false,
+                'serialize' => true,
+            ],
+            'update',
+            'delete',
+        ],
     ),
 ]
 class Index
@@ -37,7 +56,7 @@ class Index
 
     public function __construct(
         string $name,
-        string $alias,
+        string $alias = ''
     ) {
         $this->name = $name;
         $this->alias = $alias;

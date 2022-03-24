@@ -25,7 +25,7 @@ declare(strict_types=1);
  *            Unauthorized copying of this file, via any medium, is strictly prohibited.
  */
 
-namespace Elasticsuite\Index\Service;
+namespace Elasticsuite\Index\Api;
 
 use Elasticsuite\Catalog\Model\LocalizedCatalog;
 

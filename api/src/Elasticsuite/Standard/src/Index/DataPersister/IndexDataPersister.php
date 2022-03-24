@@ -37,13 +37,14 @@ class IndexDataPersister implements DataPersisterInterface
 
     /**
      * {@inheritdoc}
+     * TODO remove me or disable me ?
      *
      * @return object|void
      */
     public function persist($data)
     {
         /** @var Index $data */
-        $this->indexRepository->create($data->getName(), $data->getAlias());
+        $this->indexRepository->create($data->getName(), [], $data->getAlias());
     }
 
     /**
