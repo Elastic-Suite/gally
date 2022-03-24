@@ -1,0 +1,4 @@
+services:
+    Elasticsuite\Index\Service\IndexSettingsTest:
+        alias: Elasticsuite\Index\Service\IndexSettings
+        public: true
