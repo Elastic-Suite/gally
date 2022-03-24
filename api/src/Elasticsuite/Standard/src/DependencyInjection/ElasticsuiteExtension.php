@@ -87,6 +87,12 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
             $yamlParser->parseFile(__DIR__ . '/../Catalog/Resources/config/elasticsuite.yaml'),
             $yamlParser->parseFile(__DIR__ . '/../Index/Resources/config/elasticsuite.yaml'),
         );
+        if (isset($elasticsuiteConfig['elasticsuite']['indices_settings']['alias'])
+            && ('test' === $container->getParameter('kernel.environment'))
+        ) {
+            $elasticsuiteConfig['elasticsuite']['indices_settings']['alias'] =
+                'test_' . $elasticsuiteConfig['elasticsuite']['indices_settings']['alias'];
+        }
         $container->prependExtensionConfig('elasticsuite', $elasticsuiteConfig['elasticsuite']);
     }
 

@@ -78,10 +78,20 @@ services:
             - '@Elasticsuite\Catalog\Repository\LocalizedCatalogRepository'
             - '%elasticsuite.indices_settings%'
 
-    Elasticsuite\Index\Service\IndexSettingsInterface: '@Elasticsuite\Index\Service\IndexSettings'
+    Elasticsuite\Index\Api\IndexSettingsInterface: '@Elasticsuite\Index\Service\IndexSettings'
     Elasticsuite\Index\Service\IndexSettings:
         arguments:
             - '@Elasticsuite\Index\Helper\IndexSettings'
+
+    Elasticsuite\Index\MutationResolver\CreateIndexMutation:
+        arguments:
+            - '@Elasticsuite\Index\Repository\Index\IndexRepositoryInterface'
+            - '@Elasticsuite\Catalog\Repository\LocalizedCatalogRepository'
+            - '@Elasticsuite\Index\Repository\Metadata\MetadataRepository'
+            - '@Elasticsuite\Index\Service\IndexSettings'
+            - '@Elasticsuite\Index\Service\IndexManager'
+        tags:
+            - {name: api_platform.graphql.mutation_resolver }
 
     Elasticsuite\Index\Command\IndexClearCommand:
         arguments:
