@@ -83,27 +83,46 @@ services:
         arguments:
             - '@Elasticsuite\Index\Helper\IndexSettings'
 
+    Elasticsuite\Index\Service\IndexOperation:
+        arguments:
+            - '@Elasticsuite\Index\Repository\Index\IndexRepositoryInterface'
+            - '@Elasticsuite\Index\Api\IndexSettingsInterface'
+            - '@api_platform.elasticsearch.client'
+
     Elasticsuite\Index\MutationResolver\CreateIndexMutation:
         arguments:
             - '@Elasticsuite\Index\Repository\Index\IndexRepositoryInterface'
             - '@Elasticsuite\Catalog\Repository\LocalizedCatalogRepository'
             - '@Elasticsuite\Index\Repository\Metadata\MetadataRepository'
-            - '@Elasticsuite\Index\Service\IndexSettings'
+            - '@Elasticsuite\Index\Api\IndexSettingsInterface'
             - '@Elasticsuite\Index\Service\IndexManager'
         tags:
-            - {name: api_platform.graphql.mutation_resolver }
-    
+            - { name: api_platform.graphql.mutation_resolver }
+
     Elasticsuite\Index\MutationResolver\BulkIndexMutation:
         arguments:
             - '@Elasticsuite\Index\Repository\Index\IndexRepositoryInterface'
         tags:
-            - {name: api_platform.graphql.mutation_resolver }
-    
+            - { name: api_platform.graphql.mutation_resolver }
+
     Elasticsuite\Index\MutationResolver\BulkDeleteIndexMutation:
         arguments:
             - '@Elasticsuite\Index\Repository\Index\IndexRepositoryInterface'
         tags:
-            - {name: api_platform.graphql.mutation_resolver }
+            - { name: api_platform.graphql.mutation_resolver }
+
+    Elasticsuite\Index\MutationResolver\InstallIndexMutation:
+        arguments:
+            - '@Elasticsuite\Index\Service\IndexOperation'
+            - '@Elasticsuite\Index\Repository\Index\IndexRepositoryInterface'
+        tags:
+            - { name: api_platform.graphql.mutation_resolver }
+
+    Elasticsuite\Index\MutationResolver\RefreshIndexMutation:
+        arguments:
+            - '@Elasticsuite\Index\Repository\Index\IndexRepositoryInterface'
+        tags:
+            - { name: api_platform.graphql.mutation_resolver }
 
     Elasticsuite\Index\Command\IndexClearCommand:
         arguments:

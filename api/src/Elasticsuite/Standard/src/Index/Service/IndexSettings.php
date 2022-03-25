@@ -51,6 +51,14 @@ class IndexSettings implements IndexSettingsInterface
     /**
      * {@inheritDoc}
      */
+    public function getNewIndexMetadataAliases(string $indexIdentifier, LocalizedCatalog|int|string $catalog): array
+    {
+        return $this->indexSettingsHelper->getNewIndexMetadataAliases($indexIdentifier, $catalog);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getAnalysisSettings(LocalizedCatalog|int|string $catalog): array
     {
         // TODO: Implement getAnalysisSettings() method.
