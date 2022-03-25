@@ -14,20 +14,14 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\Security\Tests\Api;
+namespace Elasticsuite\Security\Tests\Api\Rest;
 
 use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
 use Elasticsuite\User\DataFixtures\LoginTrait;
-use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
 
 class AuthenticationTest extends ApiTestCase
 {
     use LoginTrait;
-
-    protected function setUp(): void
-    {
-        $this->databaseTool = static::getContainer()->get(DatabaseToolCollection::class)->get(); // @phpstan-ignore-line
-    }
 
     public function testLogin(): void
     {
@@ -41,12 +35,14 @@ class AuthenticationTest extends ApiTestCase
         $this->assertResponseIsSuccessful();
         $this->assertArrayHasKey('token', $loginJson);
 
-        // test not authorized
-        $client->request('GET', '/indices');
+        $catalog = ['code' => 'login_rest_catalog', 'name' => 'Login Rest catalog'];
+
+        // Test not authorized.
+        $client->request('POST', '/catalogs', ['json' => $catalog]);
         $this->assertResponseStatusCodeSame(401);
 
-        // test authorized
-        $client->request('GET', '/indices', ['auth_bearer' => $loginJson['token']]);
-        $this->assertResponseIsSuccessful();
+        // Test authorized.
+        $client->request('POST', '/catalogs', ['auth_bearer' => $loginJson['token'], 'json' => $catalog]);
+        $this->assertResponseStatusCodeSame(201);
     }
 }

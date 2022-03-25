@@ -29,18 +29,7 @@ trait LoginTrait
 {
     public function login(Client $client, EntityManagerInterface $manager, UserPasswordHasherInterface $passwordHasher): array
     {
-        $user = $manager->getRepository(User::class)->findOneBy(['email' => UserTest::EMAIL]);
-        if (null === $user) {
-            $user = new User();
-            $user->setEmail(UserTest::EMAIL);
-            $user->setPassword(
-               $passwordHasher->hashPassword($user, UserTest::PASSWORD)
-           );
-
-            $manager->persist($user);
-            $manager->flush();
-        }
-
+        $this->initTestUser($manager, $passwordHasher);
         $response = $client->request('POST', '/authentication_token', [
             'headers' => ['Content-Type' => 'application/json'],
             'json' => [
@@ -50,5 +39,59 @@ trait LoginTrait
         ]);
 
         return $response->toArray();
+    }
+
+    public function loginGraphQl(Client $client, EntityManagerInterface $manager, UserPasswordHasherInterface $passwordHasher): array
+    {
+        $this->initTestUser($manager, $passwordHasher);
+        $email = UserTest::EMAIL;
+        $password = UserTest::PASSWORD;
+
+        $query = <<<GQL
+            mutation {
+              tokenAuthentication(input: {email: "{$email}", password: "{$password}"}) {
+                authentication {
+                  id
+                  email
+                  password
+                  token
+                  code
+                  message
+                }
+              }
+            }
+        GQL;
+
+        $response = $client->request(
+            'POST',
+            '/graphql',
+            [
+                'json' => [
+                    'operationName' => null,
+                    'query' => $query,
+                    'variables' => [],
+                ],
+            ]
+        );
+
+        $responseArray = $response->toArray();
+
+        return $responseArray['data']['tokenAuthentication']['authentication'] ?? $responseArray;
+    }
+
+    public function initTestUser(EntityManagerInterface $manager, UserPasswordHasherInterface $passwordHasher): void
+    {
+        $user = $manager->getRepository(User::class)->findOneBy(['email' => UserTest::EMAIL]);
+        if (null === $user) {
+            $user = new User();
+            $user->setEmail(UserTest::EMAIL);
+            $user->setPassword(
+                $passwordHasher->hashPassword($user, UserTest::PASSWORD)
+            );
+            $user->setRoles(UserTest::ROLES);
+
+            $manager->persist($user);
+            $manager->flush();
+        }
     }
 }
