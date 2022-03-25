@@ -24,7 +24,7 @@ use Elasticsuite\Index\Repository\Index\IndexRepositoryInterface;
 
 class BulkIndexMutation implements MutationResolverInterface
 {
-    public function __construct(private IndexRepositoryInterface $indexRepository)
+    public function __construct(protected IndexRepositoryInterface $indexRepository)
     {
     }
 
@@ -35,15 +35,28 @@ class BulkIndexMutation implements MutationResolverInterface
      */
     public function __invoke($item, array $context)
     {
+        $index = $this->getIndex($context);
+        $request = new Bulk\Request();
+        $request->addDocuments($index, json_decode($context['args']['input']['data'], true) ?? []);
+
+        $this->runBulkQuery($index, $request);
+
+        return $index;
+    }
+
+    protected function getIndex(array $context): Index
+    {
         $indexName = $context['args']['input']['indexName'];
         $index = $this->indexRepository->findByName($indexName);
         if (!$index) {
             throw new InvalidArgumentException(sprintf('Index with name [%s] does not exist', $indexName));
         }
 
-        $request = new Bulk\Request();
-        $request->addDocuments($index, json_decode($context['args']['input']['data'], true) ?? []);
+        return $index;
+    }
 
+    protected function runBulkQuery(Index $index, Bulk\Request $request): Bulk\Response
+    {
         if ($request->isEmpty()) {
             throw new InvalidArgumentException('Can not execute empty bulk.');
         }
@@ -67,6 +80,6 @@ class BulkIndexMutation implements MutationResolverInterface
             }
         }
 
-        return $index;
+        return $response;
     }
 }

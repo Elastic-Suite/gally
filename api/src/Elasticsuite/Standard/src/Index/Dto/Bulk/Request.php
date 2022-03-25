@@ -88,7 +88,7 @@ class Request
     {
         array_walk(
             $documentIds,
-            function ($documentData, $identifier) use ($index) {
+            function ($identifier) use ($index) {
                 $this->deleteDocument($index, $identifier);
             }
         );

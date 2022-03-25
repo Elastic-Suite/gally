@@ -18,6 +18,7 @@ namespace Elasticsuite\Index\Model;
 
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Elasticsuite\Index\MutationResolver\BulkDeleteIndexMutation;
 use Elasticsuite\Index\MutationResolver\BulkIndexMutation;
 use Elasticsuite\Index\MutationResolver\CreateIndexMutation;
 use Elasticsuite\User\Constant\Role;
@@ -47,6 +48,17 @@ use Elasticsuite\User\Constant\Role;
                 'args' => [
                     'indexName' => ['type' => 'String!'],
                     'data' => ['type' => 'String!'],
+                ],
+                'read' => false,
+                'deserialize' => false,
+                'write' => false,
+                'serialize' => true,
+            ],
+            'bulkDelete' => [
+                'mutation' => BulkDeleteIndexMutation::class,
+                'args' => [
+                    'indexName' => ['type' => 'String!'],
+                    'ids' => ['type' => '[ID]!'],
                 ],
                 'read' => false,
                 'deserialize' => false,
