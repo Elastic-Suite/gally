@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace Elasticsuite\User\Model;
 
+use Elasticsuite\User\Constant\Role;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -28,11 +29,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private array $roles = [];
 
     private string $password;
-
-    public function __construct()
-    {
-        $this->roles = ['ROLE_CONTRIBUTOR'];
-    }
 
     public function getId(): ?int
     {
@@ -77,7 +73,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        $roles[] = Role::ROLE_CONTRIBUTOR;
 
         return array_unique($roles);
     }

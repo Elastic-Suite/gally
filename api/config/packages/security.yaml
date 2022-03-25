@@ -34,9 +34,22 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/docs, roles: PUBLIC_ACCESS } # Allows accessing the Swagger UI
+        - { path: ^/graphql, roles: PUBLIC_ACCESS } # Allows accessing GraphiQL
         - { path: ^/authentication_token, roles: PUBLIC_ACCESS }
-        - { path: ^/graphql, roles: PUBLIC_ACCESS }
-        - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/catalogs, roles: ROLE_ADMIN, methods: [POST, PUT, PATCH] }
+        - { path: ^/documents, roles: ROLE_ADMIN, methods: [POST, PUT, PATCH] }
+        - { path: ^/example_categories, roles: ROLE_ADMIN, methods: [POST, PUT, PATCH] }
+        - { path: ^/example_documents, roles: ROLE_ADMIN, methods: [POST, PUT, PATCH] }
+        - { path: ^/example_indices, roles: ROLE_ADMIN, methods: [POST, PUT, PATCH] }
+        - { path: ^/example_products, roles: ROLE_ADMIN, methods: [POST, PUT, PATCH] }
+        - { path: ^/indices, roles: ROLE_ADMIN, methods: [POST, PUT, PATCH] }
+        - { path: ^/localized_catalogs, roles: ROLE_ADMIN, methods: [POST, PUT, PATCH] }
+        - { path: ^/mapping_statuses, roles: ROLE_ADMIN, methods: [POST, PUT, PATCH] }
+        - { path: ^/metadata, roles: ROLE_ADMIN, methods: [POST, PUT, PATCH] }
+        - { path: ^/source_field_labels, roles: ROLE_ADMIN, methods: [POST, PUT, PATCH] }
+        - { path: ^/source_field_option_labels, roles: ROLE_ADMIN, methods: [POST, PUT, PATCH] }
+        - { path: ^/source_field_options, roles: ROLE_ADMIN, methods: [POST, PUT, PATCH] }
+        - { path: ^/source_fields, roles: ROLE_ADMIN, methods: [POST, PUT, PATCH] }
 
 when@test:
     security:
