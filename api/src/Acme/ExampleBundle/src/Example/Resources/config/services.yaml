@@ -1,0 +1,63 @@
+services:
+    # Declare Dummy service and its interface
+    Acme\Example\Example\Service\DummyInterface: '@Acme\Example\Example\Service\Dummy'
+    Acme\Example\Example\Service\Dummy: ~
+
+    # Declare command elasticsuite:example:mapping-get
+    Acme\Example\Example\Command\MappingCommand:
+        arguments:
+            - '@Acme\Example\Example\Service\DummyInterface'
+            - '@Symfony\Contracts\Translation\TranslatorInterface'
+            - null
+        tags:
+            - { name: console.command }
+
+    # Declare DataFixtures
+    Acme\Example\Example\DataFixtures\ExampleFixtures:
+        arguments:
+            - '@Elasticsuite\Fixture\Service\ElasticsearchFixtures'
+        tags:
+            - { name: doctrine.fixture.orm }
+
+    # Declare repository
+    Acme\Example\Example\Repository\Document\DocumentRepositoryInterface: '@Acme\Example\Example\Repository\Document\DocumentRepository'
+    Acme\Example\Example\Repository\Document\DocumentRepository:
+        arguments:
+            - '@api_platform.elasticsearch.client'
+
+    Acme\Example\Example\Repository\Index\IndexRepositoryInterface: '@Acme\Example\Example\Repository\Index\IndexRepository'
+    Acme\Example\Example\Repository\Index\IndexRepository:
+        arguments:
+            - '@api_platform.elasticsearch.client'
+
+    Acme\Example\Example\Repository\Category\CategoryRepository:
+        arguments:
+            - '@Doctrine\Persistence\ManagerRegistry'
+        tags:
+            - { name: doctrine.repository_service } 
+
+    # Declare denormalizer
+    Acme\Example\Example\Serializer\AttributesDenormalizer:
+        tags:
+            - { name: serializer.normalizer }
+
+    # Declare data persister
+    Acme\Example\Example\DataPersister\DocumentDataPersister:
+        arguments:
+            - '@Acme\Example\Example\Repository\Document\DocumentRepositoryInterface'
+        tags:
+            - { name: api_platform.data_persister }
+
+    Acme\Example\Example\DataPersister\IndexDataPersister:
+        arguments:
+            - '@Acme\Example\Example\Repository\Index\IndexRepositoryInterface'
+        tags:
+            - { name: api_platform.data_persister }
+
+    # Declare data provider
+    Acme\Example\Example\DataProvider\IndexDataProvider:
+        arguments:
+            - '@Acme\Example\Example\Repository\Index\IndexRepositoryInterface'
+        tags:
+            - { name: api_platform.item_data_provider }
+            - { name: api_platform.collection_data_provider }
