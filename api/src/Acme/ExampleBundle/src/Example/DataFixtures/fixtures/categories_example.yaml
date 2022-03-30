@@ -1,0 +1,7 @@
+# Alice documentation: https://github.com/nelmio/alice
+# Faker documentation: https://fakerphp.github.io/formatters/
+# Don't forget to add bundle path in fixtures_path config in Bundle Extension.
+Acme\Example\Example\Model\ExampleCategory:
+    exampleCategory{1..2}:
+        name: Category <current()>
+        description: Description of the category <current()>.
