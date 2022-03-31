@@ -14,13 +14,13 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\Index\DataPersister;
+namespace Elasticsuite\Index\MutationResolver;
 
-use ApiPlatform\Core\DataPersister\DataPersisterInterface;
+use ApiPlatform\Core\GraphQl\Resolver\MutationResolverInterface;
 use Elasticsuite\Index\Model\Index;
 use Elasticsuite\Index\Repository\Index\IndexRepositoryInterface;
 
-class IndexDataPersister implements DataPersisterInterface
+class RefreshIndexMutation implements MutationResolverInterface
 {
     public function __construct(
         private IndexRepositoryInterface $indexRepository
@@ -28,31 +28,16 @@ class IndexDataPersister implements DataPersisterInterface
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function supports($data): bool
-    {
-        return $data instanceof Index;
-    }
-
-    /**
-     * {@inheritdoc}
-     * TODO remove me or disable me ?
+     * @param object|null  $item    The item to be mutated
+     * @param array<mixed> $context Context
      *
-     * @return object|void
+     * @return object|null
      */
-    public function persist($data)
+    public function __invoke($item, array $context)
     {
-        /** @var Index $data */
-        $this->indexRepository->create($data->getName(), [], $data->getAliases());
-    }
+        /** @var Index $item */
+        $this->indexRepository->refresh([$item->getName()]);
 
-    /**
-     * {@inheritdoc}
-     */
-    public function remove($data)
-    {
-        /** @var Index $data */
-        $this->indexRepository->delete($data->getName());
+        return $item;
     }
 }

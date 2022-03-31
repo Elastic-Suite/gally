@@ -18,10 +18,10 @@ namespace Elasticsuite\Index\MutationResolver;
 
 use ApiPlatform\Core\GraphQl\Resolver\MutationResolverInterface;
 use Elasticsuite\Catalog\Repository\LocalizedCatalogRepository;
+use Elasticsuite\Index\Api\IndexSettingsInterface;
 use Elasticsuite\Index\Repository\Index\IndexRepositoryInterface;
 use Elasticsuite\Index\Repository\Metadata\MetadataRepository;
 use Elasticsuite\Index\Service\IndexManager;
-use Elasticsuite\Index\Service\IndexSettings;
 
 class CreateIndexMutation implements MutationResolverInterface
 {
@@ -29,7 +29,7 @@ class CreateIndexMutation implements MutationResolverInterface
         private IndexRepositoryInterface $indexRepository,
         private LocalizedCatalogRepository $catalogRepository,
         private MetadataRepository $metadataRepository,
-        private IndexSettings $indexSettings,
+        private IndexSettingsInterface $indexSettings,
         private IndexManager $indexManager
     ) {
     }
@@ -67,9 +67,17 @@ class CreateIndexMutation implements MutationResolverInterface
         ];
         $indexSettings['settings']['analysis'] = $this->indexSettings->getAnalysisSettings($catalog);
         $indexSettings['mappings'] = $this->indexManager->getMapping($metadata)->asArray();
+        $newIndexAliases = $this->indexSettings->getNewIndexMetadataAliases($entityType, $catalog);
+        if (!empty($newIndexAliases)) {
+            $indexSettings['aliases'] = array_fill_keys($newIndexAliases, ['is_hidden' => true]);
+        }
+
         try {
             $item = $this->indexRepository->create(
-                $this->indexSettings->createIndexNameFromIdentifier($metadata->getEntity(), $catalog),
+                $this->indexSettings->createIndexNameFromIdentifier(
+                    $metadata->getEntity(),
+                    $catalog
+                ),
                 $indexSettings
             );
         } catch (\Exception $exception) {

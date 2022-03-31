@@ -21,6 +21,8 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Elasticsuite\Index\MutationResolver\BulkDeleteIndexMutation;
 use Elasticsuite\Index\MutationResolver\BulkIndexMutation;
 use Elasticsuite\Index\MutationResolver\CreateIndexMutation;
+use Elasticsuite\Index\MutationResolver\InstallIndexMutation;
+use Elasticsuite\Index\MutationResolver\RefreshIndexMutation;
 use Elasticsuite\User\Constant\Role;
 
 #[
@@ -43,6 +45,7 @@ use Elasticsuite\User\Constant\Role;
                 'security' => "is_granted('" . Role::ROLE_ADMIN . "')",
             ],
             'update' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
+            'delete' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
             'bulk' => [
                 'mutation' => BulkIndexMutation::class,
                 'args' => [
@@ -65,7 +68,26 @@ use Elasticsuite\User\Constant\Role;
                 'write' => false,
                 'serialize' => true,
             ],
-            'delete' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
+            'install' => [
+                'mutation' => InstallIndexMutation::class,
+                'args' => [
+                    'name' => ['type' => 'String!', 'description' => 'Full index name'],
+                ],
+                'read' => true,
+                'deserialize' => true,
+                'write' => false,
+                'serialize' => true,
+            ],
+            'refresh' => [
+                'mutation' => RefreshIndexMutation::class,
+                'args' => [
+                    'name' => ['type' => 'String!', 'description' => 'Full index name'],
+                ],
+                'read' => true,
+                'deserialize' => true,
+                'write' => false,
+                'serialize' => true,
+            ],
         ],
         itemOperations: ['get', 'delete'],
         paginationEnabled: false,
@@ -78,14 +100,19 @@ class Index
     )]
     private string $name;
 
-    private string $alias;
+    /** @var string[] */
+    private array $aliases;
 
+    /**
+     * @param string   $name    Index name
+     * @param string[] $aliases Index aliases
+     */
     public function __construct(
         string $name,
-        string $alias = ''
+        array $aliases = []
     ) {
         $this->name = $name;
-        $this->alias = $alias;
+        $this->aliases = $aliases;
     }
 
     public function getName(): string
@@ -98,13 +125,19 @@ class Index
         $this->name = $name;
     }
 
-    public function getAlias(): string
+    /**
+     * @return string[]
+     */
+    public function getAliases(): array
     {
-        return $this->alias;
+        return $this->aliases;
     }
 
-    public function setAlias(string $alias): void
+    /**
+     * @param string[] $aliases index aliases
+     */
+    public function setAliases(array $aliases): void
     {
-        $this->alias = $alias;
+        $this->aliases = $aliases;
     }
 }

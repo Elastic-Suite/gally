@@ -143,7 +143,7 @@ class IndexSettings
     }
 
     /**
-     * Returns the index alias for an identifier (eg. catalog_product) by store.
+     * Returns the index alias for an identifier (eg. product) by catalog.
      *
      * @param string                      $indexIdentifier An index identifier
      * @param int|string|LocalizedCatalog $catalog         The catalog
@@ -154,6 +154,24 @@ class IndexSettings
         $indexAlias = $this->getIndicesSettingsConfigParam('alias');
 
         return sprintf('%s_%s_%s', $indexAlias, $catalogCode, $indexIdentifier);
+    }
+
+    /**
+     * Return the index aliases to set to a newly created index for an identifier (eg. product) by catalog.
+     *
+     * @param string                      $indexIdentifier An index identifier
+     * @param LocalizedCatalog|int|string $catalog         Catalog
+     *
+     * @return string[]
+     */
+    public function getNewIndexMetadataAliases(string $indexIdentifier, LocalizedCatalog|int|string $catalog): array
+    {
+        $catalog = $this->getCatalog($catalog);
+
+        return [
+            sprintf('.entity_%s', $indexIdentifier),
+            sprintf('.catalog_%d', $catalog->getId()),
+        ];
     }
 
     /**
@@ -186,7 +204,7 @@ class IndexSettings
         return [
             'number_of_replicas' => $this->getNumberOfReplicas(),
             'refresh_interval' => self::DIFF_REINDEX_REFRESH_INTERVAL,
-            'translog.durability' => self::DIFF_REINDEX_TRANSLOG_DURABILITY,
+            'translog' => ['durability' => self::DIFF_REINDEX_TRANSLOG_DURABILITY],
         ];
     }
 

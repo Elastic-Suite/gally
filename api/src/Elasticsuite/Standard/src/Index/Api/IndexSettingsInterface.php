@@ -32,7 +32,7 @@ use Elasticsuite\Catalog\Model\LocalizedCatalog;
 interface IndexSettingsInterface
 {
     /**
-     * Returns the index alias for an identifier (eg. catalog_product) by store.
+     * Returns the index alias for an identifier (eg. product) by catalog.
      *
      * @param string                      $indexIdentifier Index identifier
      * @param int|string|LocalizedCatalog $catalog         The catalog
@@ -40,12 +40,22 @@ interface IndexSettingsInterface
     public function getIndexAliasFromIdentifier(string $indexIdentifier, LocalizedCatalog|int|string $catalog): string;
 
     /**
-     * Create a new index for an identifier (eg. catalog_product) by store including current date.
+     * Create a new index for an identifier (eg. product) by catalog including current date.
      *
      * @param string                      $indexIdentifier Index identifier
      * @param int|string|LocalizedCatalog $catalog         The catalog
      */
     public function createIndexNameFromIdentifier(string $indexIdentifier, LocalizedCatalog|int|string $catalog): string;
+
+    /**
+     * Return the index aliases to set to a newly created index for an identifier (eg. product) by catalog.
+     *
+     * @param string                      $indexIdentifier An index identifier
+     * @param LocalizedCatalog|int|string $catalog         Catalog
+     *
+     * @return string[]
+     */
+    public function getNewIndexMetadataAliases(string $indexIdentifier, LocalizedCatalog|int|string $catalog): array;
 
     /**
      * Load analysis settings by catalog.
@@ -92,7 +102,7 @@ interface IndexSettingsInterface
     public function getBatchIndexingSize(): int;
 
     /**
-     * Get dynamic index settings per store (language).
+     * Get dynamic index settings per catalog (language).
      *
      * @param int|string|LocalizedCatalog $catalog Catalog
      *
