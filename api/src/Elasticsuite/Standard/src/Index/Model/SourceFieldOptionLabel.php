@@ -18,8 +18,17 @@ namespace Elasticsuite\Index\Model;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Elasticsuite\Catalog\Model\LocalizedCatalog;
+use Elasticsuite\User\Constant\Role;
 
-#[ApiResource]
+#[ApiResource(
+    graphql: [
+        'item_query',
+        'collection_query',
+        'create' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
+        'update' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
+        'delete' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
+    ],
+)]
 class SourceFieldOptionLabel
 {
     private int $id;

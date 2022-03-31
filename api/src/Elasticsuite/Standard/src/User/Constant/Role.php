@@ -16,11 +16,9 @@ declare(strict_types=1);
 
 namespace Elasticsuite\User\Constant;
 
-final class UserTest
+final class Role
 {
-    public const EMAIL = 'admin@example.com';
+    public const ROLE_ADMIN = 'ROLE_ADMIN';
 
-    public const PASSWORD = 'apassword';
-
-    public const ROLES = [Role::ROLE_ADMIN];
+    public const ROLE_CONTRIBUTOR = 'ROLE_CONTRIBUTOR';
 }

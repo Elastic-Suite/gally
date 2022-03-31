@@ -46,6 +46,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
                         __DIR__ . '/../Example/Model/',
                         __DIR__ . '/../Index/Model/',
                         __DIR__ . '/../Catalog/Model/',
+                        __DIR__ . '/../Security/Model/',
                     ],
                 ],
             ]

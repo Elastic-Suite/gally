@@ -20,10 +20,18 @@ use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Elasticsearch\DataProvider\Filter\TermFilter;
+use Elasticsuite\User\Constant\Role;
 
 #[
     ApiResource(
         collectionOperations: ['get'],
+        graphql: [
+            'item_query',
+            'collection_query',
+            'create' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
+            'update' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
+            'delete' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
+        ],
         itemOperations: ['get'],
         attributes: [
             'elasticsuite_index' => 'catalog_product',
