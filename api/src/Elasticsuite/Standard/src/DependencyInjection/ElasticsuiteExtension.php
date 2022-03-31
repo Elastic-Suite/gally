@@ -44,7 +44,6 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
             [
                 'mapping' => [
                     'paths' => [
-                        __DIR__ . '/../Example/Model/',
                         __DIR__ . '/../Index/Model/',
                         __DIR__ . '/../Catalog/Model/',
                         __DIR__ . '/../Security/Model/',
@@ -77,7 +76,6 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
             'hautelook_alice',
             [
                 'fixtures_path' => [
-                    'src/Example/DataFixtures/fixtures',
                     'src/User/DataFixtures/fixtures',
                     'src/Catalog/DataFixtures/fixtures',
                     'src/Index/DataFixtures/fixtures',
@@ -123,8 +121,6 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
 
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
-        $container->setParameter('elasticsuite.enabled', $config['enabled']);
-        $container->setParameter('elasticsuite.twiter.credentials', $config['twitter']);
         $container->setParameter('elasticsuite.entities', $config['entities'] ?? []);
         $container->setParameter('elasticsuite.indices_settings', $config['indices_settings'] ?? []);
 
