@@ -1,0 +1,10 @@
+elasticsuite:
+    menu:
+        catalog:
+            order: 10
+        product:
+            parent: catalog
+            order: 10
+        category:
+            parent: catalog
+            order: 20
