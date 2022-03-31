@@ -92,6 +92,18 @@ services:
             - '@Elasticsuite\Index\Service\IndexManager'
         tags:
             - {name: api_platform.graphql.mutation_resolver }
+    
+    Elasticsuite\Index\MutationResolver\BulkIndexMutation:
+        arguments:
+            - '@Elasticsuite\Index\Repository\Index\IndexRepositoryInterface'
+        tags:
+            - {name: api_platform.graphql.mutation_resolver }
+    
+    Elasticsuite\Index\MutationResolver\BulkDeleteIndexMutation:
+        arguments:
+            - '@Elasticsuite\Index\Repository\Index\IndexRepositoryInterface'
+        tags:
+            - {name: api_platform.graphql.mutation_resolver }
 
     Elasticsuite\Index\Command\IndexClearCommand:
         arguments:

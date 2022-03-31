@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Elasticsuite\Index\Repository\Index;
 
 use Elasticsearch\Client;
+use Elasticsuite\Index\Dto\Bulk;
 use Elasticsuite\Index\Model\Index;
 
 class IndexRepository implements IndexRepositoryInterface
@@ -1111,6 +1112,14 @@ class IndexRepository implements IndexRepositoryInterface
         }
 
         return $this->findByName($indexName);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function bulk(Index $index, Bulk\Request $request): Bulk\Response
+    {
+        return new Bulk\Response($this->client->bulk(['body' => $request->getOperations()]));
     }
 
     /**

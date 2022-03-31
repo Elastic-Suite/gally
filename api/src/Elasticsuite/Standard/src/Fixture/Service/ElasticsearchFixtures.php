@@ -24,8 +24,6 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ElasticsearchFixtures implements ElasticsearchFixturesInterface
 {
-    public const PREFIX_TEST_INDEX = 'elasticsuite_test__';
-
     /**
      * ElasticsearchFixtures constructor.
      *
@@ -76,8 +74,8 @@ class ElasticsearchFixtures implements ElasticsearchFixturesInterface
             foreach ($indices as $index) {
                 $this->indexRepository->create(
                     $this->getTestIndexName($index['name']),
-                    $index['settings'],
-                    $this->getTestAliasName($index['alias'])
+                    $index['settings'] ?? [],
+                    \array_key_exists('alias', $index) ? $this->getTestAliasName($index['alias']) : null
                 );
             }
         }
