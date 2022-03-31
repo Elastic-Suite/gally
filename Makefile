@@ -70,8 +70,9 @@ qa: ## Run code quality tools
 qa: phpcsfixer
 qa: phpstan
 
-phpunit: ## Run php unit tests
-	@$(PHP_UNIT)
+phpunit: ## Run php unit tests, pass the parameter "p=" to launch tests on a specific path
+	@$(eval p ?=)
+	@$(PHP_UNIT) $(p)
 
 ## —— Symfony 🎵 ———————————————————————————————————————————————————————————————
 sf: ## List all Symfony commands or pass the parameter "c=" to run a given command, example: make sf c=about
