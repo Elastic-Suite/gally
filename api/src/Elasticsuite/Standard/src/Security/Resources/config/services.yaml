@@ -3,3 +3,13 @@ services:
         decorates: api_platform.openapi.factory
         arguments:
             - '@.inner'
+                
+    Elasticsuite\Security\Resolver\AuthenticationMutationResolver:
+        arguments:
+            - '@Elasticsuite\User\Repository\UserRepository'
+            - '@Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface'
+            - '@Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface'
+            - '@Symfony\Component\Validator\Validator\ValidatorInterface'
+            - '@Symfony\Contracts\Translation\TranslatorInterface'
+        tags:
+            - { name: api_platform.graphql.mutation_resolver }

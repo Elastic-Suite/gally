@@ -19,12 +19,11 @@ namespace Elasticsuite\Index\Model;
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Elasticsuite\Index\MutationResolver\CreateIndexMutation;
+use Elasticsuite\User\Constant\Role;
 
 #[
     ApiResource(
         collectionOperations: ['get', 'post'],
-        itemOperations: ['get', 'delete'],
-        paginationEnabled: false,
         graphql: [
             // Auto-generated queries and mutations.
             'item_query',
@@ -39,10 +38,13 @@ use Elasticsuite\Index\MutationResolver\CreateIndexMutation;
                 'deserialize' => false,
                 'write' => false,
                 'serialize' => true,
+                'security' => "is_granted('" . Role::ROLE_ADMIN . "')",
             ],
-            'update',
-            'delete',
+            'update' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
+            'delete' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
         ],
+        itemOperations: ['get', 'delete'],
+        paginationEnabled: false,
     ),
 ]
 class Index

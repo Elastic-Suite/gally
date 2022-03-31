@@ -18,8 +18,17 @@ namespace Elasticsuite\Index\Model;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\Collection;
+use Elasticsuite\User\Constant\Role;
 
-#[ApiResource]
+#[ApiResource(
+    graphql: [
+        'item_query',
+        'collection_query',
+        'create' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
+        'update' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
+        'delete' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
+    ],
+)]
 class SourceFieldOption
 {
     private int $id;

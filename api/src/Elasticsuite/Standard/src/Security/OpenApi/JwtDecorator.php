@@ -47,7 +47,7 @@ final class JwtDecorator implements OpenApiFactoryInterface
             'properties' => [
                 'email' => [
                     'type' => 'string',
-                    'example' => 'johndoe@example.com',
+                    'example' => 'admin@example.com',
                 ],
                 'password' => [
                     'type' => 'string',
@@ -87,6 +87,11 @@ final class JwtDecorator implements OpenApiFactoryInterface
             ),
         );
         $openApi->getPaths()->addPath('/authentication_token', $pathItem);
+
+        // Remove documentation on swagger for GraphQl authentication endpoint.
+        unset($schemas['Authentication']);
+        $path = $openApi->getPaths()->getPath('/authentications/{id}');
+        $openApi->getPaths()->addPath('/authentications/{id}', $path->withGet(null));
 
         return $openApi;
     }

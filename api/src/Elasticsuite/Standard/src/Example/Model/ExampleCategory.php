@@ -17,8 +17,17 @@ declare(strict_types=1);
 namespace Elasticsuite\Example\Model;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Elasticsuite\User\Constant\Role;
 
-#[ApiResource()]
+#[ApiResource(
+    graphql: [
+        'item_query',
+        'collection_query',
+        'create' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
+        'update' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
+        'delete' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
+    ],
+)]
 class ExampleCategory
 {
     private int $id;
