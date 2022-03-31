@@ -1,0 +1,3 @@
+elasticsuite:
+    indices_settings:
+        alias: test_elasticsuite

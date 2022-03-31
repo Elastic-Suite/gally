@@ -56,7 +56,7 @@ abstract class AbstractTest extends ApiTestCase
         $this->elasticFixtures->deleteTestFixtures();
     }
 
-    protected function requestGraphQl(string $query): ResponseInterface
+    protected function requestGraphQl(string $query, array $headers = []): ResponseInterface
     {
         $response = $this->request(
             'POST',
@@ -67,6 +67,7 @@ abstract class AbstractTest extends ApiTestCase
                     'query' => $query,
                     'variables' => [],
                 ],
+                'headers' => $headers,
             ]
         );
         $this->assertResponseHeaderSame('content-type', 'application/json');
@@ -75,9 +76,9 @@ abstract class AbstractTest extends ApiTestCase
         return $response;
     }
 
-    protected function requestRest(string $method, string $path, array $json = []): ResponseInterface
+    protected function requestRest(string $method, string $path, array $json = [], $headers = []): ResponseInterface
     {
-        $data = [];
+        $data = ['headers' => $headers];
         if (\in_array($method, ['POST', 'PUT'], true)) {
             $data['json'] = $json;
         }

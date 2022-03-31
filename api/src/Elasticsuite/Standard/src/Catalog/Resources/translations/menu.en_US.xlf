@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en-US" trgLang="en-US">
+    <file id="menu.en_US">
+        <unit id="elasticsuite.menu.catalog.label">
+            <segment>
+                <source>elasticsuite.menu.catalog.label</source>
+                <target>Catalog</target>
+            </segment>
+        </unit>
+        <unit id="elasticsuite.menu.product.label">
+            <segment>
+                <source>elasticsuite.menu.product.label</source>
+                <target>Products</target>
+            </segment>
+        </unit>
+        <unit id="elasticsuite.menu.category.label">
+            <segment>
+                <source>elasticsuite.menu.category.label</source>
+                <target>Categories</target>
+            </segment>
+        </unit>
+    </file>
+</xliff>

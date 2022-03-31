@@ -1,0 +1,7 @@
+elasticsuite:
+    menu:
+        thesaurus:
+            order: 30
+        optimizer:
+            order: 20
+            css_class: "boost"
