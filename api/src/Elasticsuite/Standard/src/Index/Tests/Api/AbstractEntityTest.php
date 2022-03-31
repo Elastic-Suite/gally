@@ -35,13 +35,13 @@ abstract class AbstractEntityTest extends AbstractTest
     /**
      * @dataProvider validDataProvider
      */
-    public function testCreateValidData(array $validData): void
+    public function testCreateValidData(array $validData, string $validRegex = null): void
     {
         $this->loadFixture($this->getFixtureFiles());
         $response = $this->requestRest('POST', $this->getApiPath(), $validData);
         $this->assertResponseStatusCodeSame(201);
         $this->assertJsonContains($this->getJsonCreationValidation($validData));
-        $this->assertMatchesRegularExpression('~^' . $this->getApiPath() . '/\d+$~', $response->toArray()['@id']);
+        $this->assertMatchesRegularExpression($validRegex ?? '~^' . $this->getApiPath() . '/\d+$~', $response->toArray()['@id']);
         $this->assertMatchesResourceItemJsonSchema($this->getEntityClass());
     }
 
@@ -54,12 +54,17 @@ abstract class AbstractEntityTest extends AbstractTest
     public function testCreateInvalidData(array $invalidData, $message, $code = 422): void
     {
         $this->loadFixture($this->getFixtureFiles());
-        $this->requestRest('POST', $this->getApiPath(), $invalidData);
+        $response = $this->requestRest('POST', $this->getApiPath(), $invalidData);
         $this->assertResponseStatusCodeSame($code);
+        $errorType = 'hydra:Error';
+        $errorContext = 'Error';
+        if (\array_key_exists('violations', $response->toArray(false))) {
+            $errorType = $errorContext = 'ConstraintViolationList';
+        }
         $this->assertJsonContains(
             [
-                '@context' => 400 == $code ? '/contexts/Error' : '/contexts/ConstraintViolationList',
-                '@type' => 400 == $code ? 'hydra:Error' : 'ConstraintViolationList',
+                '@context' => '/contexts/' . $errorContext,
+                '@type' => $errorType,
                 'hydra:title' => 'An error occurred',
                 'hydra:description' => $message,
             ]
