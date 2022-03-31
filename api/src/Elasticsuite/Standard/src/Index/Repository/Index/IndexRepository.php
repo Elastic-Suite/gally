@@ -43,7 +43,7 @@ class IndexRepository implements IndexRepositoryInterface
         foreach ($indices as $index) {
             // @Todo: keep this test to exclude .geoip index or find a way to get _only_ elasticsuite indices.
             if (0 !== strpos($index['index'], '.')) {
-                $collection[] = new Index($index['index'], $this->getIndexAlias($aliases, $index['index']));
+                $collection[] = new Index($index['index'], $this->extractIndexAliases($aliases, $index['index']));
             }
         }
 
@@ -63,10 +63,9 @@ class IndexRepository implements IndexRepositoryInterface
             // Todo: log exception.
         }
 
-        if (null !== $index) {
-            $aliases = $this->client->cat()->aliases();
+        if (\is_array($index) && !empty($index)) {
             $index = reset($index);
-            $item = new Index($index['index'], $this->getIndexAlias($aliases, $index['index']));
+            $item = new Index($index['index'], $this->getIndexAliases($index['index']));
         }
 
         return $item;
@@ -75,7 +74,7 @@ class IndexRepository implements IndexRepositoryInterface
     /**
      * {@inheritDoc}
      */
-    public function create(string $indexName, array $settings = [], string $alias = null): ?Index
+    public function create(string $indexName, array $settings = [], array $aliases = []): ?Index
     {
         // Todo: Add logic to validate params and manage errors.
         /*
@@ -1098,13 +1097,13 @@ class IndexRepository implements IndexRepositoryInterface
             'body' => $settings,
         ]);
 
-        if (!empty($alias)) {
+        if (!empty($aliases)) {
             $this->client->indices()->updateAliases([
                 'body' => [
                     'actions' => [[
                         'add' => [
                             'index' => $indexName,
-                            'alias' => $alias,
+                            'aliases' => $aliases,
                         ],
                     ]],
                 ],
@@ -1127,7 +1126,7 @@ class IndexRepository implements IndexRepositoryInterface
      */
     public function refresh(array $indexNames): void
     {
-        $this->client->indices()->refresh(['index' => implode(', ', $indexNames)]);
+        $this->client->indices()->refresh(['index' => implode(',', $indexNames)]);
     }
 
     /**
@@ -1139,22 +1138,83 @@ class IndexRepository implements IndexRepositoryInterface
     }
 
     /**
-     * Return the alias of a given index.
-     * TODO support multiple aliases per index AND/OR multiple indices per alias (behavioral data).
+     * {@inheritDoc}
+     */
+    public function getIndexAliases(string $indexName, string $alias = '*'): array
+    {
+        $aliases = $this->client->indices()->getAlias(['name' => $alias, 'index' => $indexName]);
+        if (!empty($aliases)) {
+            $aliases = $aliases[$indexName]['aliases'] ?? [];
+            $aliases = array_keys($aliases);
+        }
+
+        return $aliases;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function updateAliases(array $aliasActions): void
+    {
+        $this->client->indices()->updateAliases(['body' => ['actions' => $aliasActions]]);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getMapping(array|string $indexName): array
+    {
+        if (\is_array($indexName)) {
+            $indexName = implode(',', $indexName);
+        }
+
+        return $this->client->indices()->getMapping(['index' => $indexName]);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function aliasExists(string $alias, string $indexName = null): bool
+    {
+        return $this->client->indices()->existsAlias(['name' => $alias, 'index' => $indexName]);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function putSettings(string $indexName, array $indexSettings): void
+    {
+        $this->client->indices()->putSettings(['index' => $indexName, 'body' => $indexSettings]);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function forceMerge(array|string $indexName): void
+    {
+        if (\is_array($indexName)) {
+            $indexName = implode(',', $indexName);
+        }
+        $this->client->indices()->forcemerge(['index' => $indexName]);
+    }
+
+    /**
+     * Extract the aliases for a given index.
      *
      * @param array<mixed> $aliases   all index aliases
      * @param string       $indexName index name
+     *
+     * @return string[]
      */
-    private function getIndexAlias(array $aliases, string $indexName): string
+    private function extractIndexAliases(array $aliases, string $indexName): array
     {
-        $aliasName = '';
+        $indexAliases = [];
         foreach ($aliases as $alias) {
             if ($alias['index'] == $indexName) {
-                $aliasName = $alias['alias'];
-                break;
+                $indexAliases[] = $alias['alias'];
             }
         }
 
-        return $aliasName;
+        return $indexAliases;
     }
 }

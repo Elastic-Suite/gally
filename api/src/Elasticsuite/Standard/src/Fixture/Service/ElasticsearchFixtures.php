@@ -75,7 +75,7 @@ class ElasticsearchFixtures implements ElasticsearchFixturesInterface
                 $this->indexRepository->create(
                     $this->getTestIndexName($index['name']),
                     $index['settings'] ?? [],
-                    \array_key_exists('alias', $index) ? $this->getTestAliasName($index['alias']) : null
+                    \array_key_exists('alias', $index) ? [$this->getTestAliasName($index['alias'])] : []
                 );
             }
         }
