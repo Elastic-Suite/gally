@@ -14,7 +14,9 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\Index\Tests\Api;
+namespace Elasticsuite\Index\Tests\Api\GraphQl;
+
+use Elasticsuite\Standard\src\Test\AbstractTest;
 
 class MappingStatusTest extends AbstractTest
 {
@@ -24,8 +26,8 @@ class MappingStatusTest extends AbstractTest
     public function testGetMappingStatus(string $entity, ?string $status)
     {
         $this->loadFixture([
-            __DIR__ . '/../fixtures/metadata.yaml',
-            __DIR__ . '/../fixtures/source_field.yaml',
+            __DIR__ . '/../../fixtures/metadata.yaml',
+            __DIR__ . '/../../fixtures/source_field.yaml',
         ]);
         $query = <<<GQL
             {

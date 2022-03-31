@@ -25,10 +25,11 @@ declare(strict_types=1);
  *            Unauthorized copying of this file, via any medium, is strictly prohibited.
  */
 
-namespace Elasticsuite\Index\Tests\Api;
+namespace Elasticsuite\Index\Tests\Unit;
 
 use Elasticsuite\Catalog\Model\LocalizedCatalog;
 use Elasticsuite\Index\Service\IndexSettings;
+use Elasticsuite\Standard\src\Test\AbstractTest;
 
 class IndexResolverTest extends AbstractTest
 {

@@ -14,13 +14,14 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\Index\Tests\Api;
+namespace Elasticsuite\Index\Tests\Api\GraphQl;
 
 use Elasticsearch\Client;
 use Elasticsuite\Catalog\Repository\LocalizedCatalogRepository;
 use Elasticsuite\Index\Api\IndexSettingsInterface;
 use Elasticsuite\Index\Model\Index;
 use Elasticsuite\Index\Repository\Index\IndexRepositoryInterface;
+use Elasticsuite\Standard\src\Test\AbstractTest;
 
 class IndexOperationsTest extends AbstractTest
 {
@@ -36,8 +37,8 @@ class IndexOperationsTest extends AbstractTest
     {
         parent::setUp();
         $this->loadFixture([
-            __DIR__ . '/../fixtures/metadata.yaml',
-            __DIR__ . '/../fixtures/catalogs.yaml',
+            __DIR__ . '/../../fixtures/metadata.yaml',
+            __DIR__ . '/../../fixtures/catalogs.yaml',
         ]);
         $this->catalogRepository = static::getContainer()->get(LocalizedCatalogRepository::class);
         $this->indexRepository = static::getContainer()->get(IndexRepositoryInterface::class);

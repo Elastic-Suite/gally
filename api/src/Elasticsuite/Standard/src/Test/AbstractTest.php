@@ -14,7 +14,7 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\Index\Tests\Api;
+namespace Elasticsuite\Standard\src\Test;
 
 use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
 use Elasticsuite\Fixture\Service\ElasticsearchFixtures;

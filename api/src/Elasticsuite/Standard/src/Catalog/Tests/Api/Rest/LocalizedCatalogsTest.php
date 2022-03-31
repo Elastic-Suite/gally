@@ -14,7 +14,7 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\Catalog\Tests\Api;
+namespace Elasticsuite\Catalog\Tests\Api\Rest;
 
 use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
 use Elasticsuite\Catalog\Model\LocalizedCatalog;
@@ -280,7 +280,7 @@ locale: This value should have exactly 5 characters.',
      */
     public function testGetCollection(): void
     {
-        $this->databaseTool->loadAliceFixture([__DIR__ . '/../fixtures/localized_catalogs.yaml']);
+        $this->databaseTool->loadAliceFixture([__DIR__ . '/../../fixtures/localized_catalogs.yaml']);
 
         $client = static::createClient();
 
