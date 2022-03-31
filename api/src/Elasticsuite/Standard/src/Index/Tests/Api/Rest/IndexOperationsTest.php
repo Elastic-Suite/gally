@@ -18,7 +18,7 @@ namespace Elasticsuite\Index\Tests\Api\Rest;
 
 use Elasticsuite\Index\Model\Index;
 use Elasticsuite\Index\Repository\Index\IndexRepositoryInterface;
-use Elasticsuite\Index\Tests\Api\AbstractEntityTest;
+use Elasticsuite\Standard\src\Test\AbstractEntityTest;
 
 class IndexOperationsTest extends AbstractEntityTest
 {

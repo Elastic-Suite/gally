@@ -14,9 +14,10 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\Index\Tests\Api;
+namespace Elasticsuite\Index\Tests\Api\Rest;
 
 use Elasticsuite\Index\Model\SourceField;
+use Elasticsuite\Standard\src\Test\AbstractEntityTest;
 
 class SourceFieldTest extends AbstractEntityTest
 {
@@ -33,8 +34,8 @@ class SourceFieldTest extends AbstractEntityTest
     protected function getFixtureFiles(): array
     {
         return [
-            __DIR__ . '/../fixtures/metadata.yaml',
-            __DIR__ . '/../fixtures/source_field.yaml',
+            __DIR__ . '/../../fixtures/metadata.yaml',
+            __DIR__ . '/../../fixtures/source_field.yaml',
         ];
     }
 

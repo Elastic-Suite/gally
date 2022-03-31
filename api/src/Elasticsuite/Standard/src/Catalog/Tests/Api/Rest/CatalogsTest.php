@@ -14,7 +14,7 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\Catalog\Tests\Api;
+namespace Elasticsuite\Catalog\Tests\Api\Rest;
 
 use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
 use Elasticsuite\Catalog\Model\Catalog;
@@ -128,7 +128,7 @@ class CatalogsTest extends ApiTestCase
      */
     public function testGetCollection(): void
     {
-        $this->databaseTool->loadAliceFixture([__DIR__ . '/../fixtures/catalogs.yaml']);
+        $this->databaseTool->loadAliceFixture([__DIR__ . '/../../fixtures/catalogs.yaml']);
 
         $client = static::createClient();
 

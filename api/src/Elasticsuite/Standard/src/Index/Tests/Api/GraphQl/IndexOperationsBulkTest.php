@@ -14,9 +14,10 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\Index\Tests\Api;
+namespace Elasticsuite\Index\Tests\Api\GraphQl;
 
 use Elasticsuite\Fixture\Service\ElasticsearchFixturesInterface;
+use Elasticsuite\Standard\src\Test\AbstractTest;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class IndexOperationsBulkTest extends AbstractTest
@@ -25,10 +26,10 @@ class IndexOperationsBulkTest extends AbstractTest
     {
         parent::setUp();
         $this->loadElasticsearchIndexFixtures([
-            __DIR__ . '/../fixtures/indices.json',
+            __DIR__ . '/../../fixtures/indices.json',
         ]);
         $this->loadElasticsearchDocumentFixtures([
-            __DIR__ . '/../fixtures/documents.json',
+            __DIR__ . '/../../fixtures/documents.json',
         ]);
     }
 
