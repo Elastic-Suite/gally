@@ -19,8 +19,11 @@
     </php>
 
     <testsuites>
-        <testsuite name="Elasticsuite Standard Test Suite">
-            <directory>src/Elasticsuite/Standard/src/**/Tests/</directory>
+        <testsuite name="Elasticsuite Test Suite">
+            <directory>src/Elasticsuite/**/src/**/Tests/</directory>
+        </testsuite>
+        <testsuite name="Acme Test Suite">
+            <directory>src/Acme/**/src/**/Tests/</directory>
         </testsuite>
     </testsuites>
 

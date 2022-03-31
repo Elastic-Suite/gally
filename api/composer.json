@@ -77,14 +77,13 @@
             "": "src/"
         },
         "psr-4": {
-            "Elasticsuite\\": "src/Elasticsuite/Standard/src/"
+            "Elasticsuite\\": "src/Elasticsuite/Standard/src/",
+            "Acme\\Example\\": "src/Acme/ExampleBundle/src/"
         },
-        "exclude-from-classmap": ["src/Elasticsuite/Standard/src/**/Tests/"]
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Elasticsuite\\Example\\Tests\\": "src/Elasticsuite/Standard/src/Example/Tests/"
-        }
+        "exclude-from-classmap": [
+            "src/Elasticsuite/**/src/**/Tests/",
+            "src/Acme/**/src/**/Tests/"
+        ]
     },
     "replace": {
         "paragonie/random_compat": "2.*",
