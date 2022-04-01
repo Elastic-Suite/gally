@@ -19,6 +19,7 @@ namespace Elasticsuite\Index\Model\Index\Mapping;
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Elasticsuite\Index\DataProvider\MappingStatusDataProvider;
+use Elasticsuite\User\Constant\Role;
 
 #[
     ApiResource(
@@ -29,6 +30,7 @@ use Elasticsuite\Index\DataProvider\MappingStatusDataProvider;
                 'args' => [
                     'entityType' => ['type' => 'String!'],
                 ],
+                'security' => "is_granted('" . Role::ROLE_ADMIN . "')",
             ],
         ],
         itemOperations: [

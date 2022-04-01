@@ -35,6 +35,7 @@ use Elasticsuite\User\Constant\Role;
                 'input' => CreateIndexInput::class,
                 'write' => false,
                 'serialize' => true,
+                'security' => "is_granted('" . Role::ROLE_ADMIN . "')",
             ],
         ],
         graphql: [
@@ -65,6 +66,7 @@ use Elasticsuite\User\Constant\Role;
                 'deserialize' => false,
                 'write' => false,
                 'serialize' => true,
+                'security' => "is_granted('" . Role::ROLE_ADMIN . "')",
             ],
             'bulkDelete' => [
                 'mutation' => BulkDeleteIndexMutation::class,
@@ -76,6 +78,7 @@ use Elasticsuite\User\Constant\Role;
                 'deserialize' => false,
                 'write' => false,
                 'serialize' => true,
+                'security' => "is_granted('" . Role::ROLE_ADMIN . "')",
             ],
             'install' => [
                 'mutation' => InstallIndexMutation::class,
@@ -86,6 +89,7 @@ use Elasticsuite\User\Constant\Role;
                 'deserialize' => true,
                 'write' => false,
                 'serialize' => true,
+                'security' => "is_granted('" . Role::ROLE_ADMIN . "')",
             ],
             'refresh' => [
                 'mutation' => RefreshIndexMutation::class,
@@ -96,9 +100,13 @@ use Elasticsuite\User\Constant\Role;
                 'deserialize' => true,
                 'write' => false,
                 'serialize' => true,
+                'security' => "is_granted('" . Role::ROLE_ADMIN . "')",
             ],
         ],
-        itemOperations: ['get', 'delete'],
+        itemOperations: [
+            'get',
+            'delete' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
+        ],
         paginationEnabled: false,
     ),
 ]
