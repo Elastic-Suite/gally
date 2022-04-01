@@ -22,14 +22,20 @@ use Elasticsuite\User\Constant\Role;
 
 #[
     ApiResource(
-        collectionOperations: ['post', 'get'],
+        collectionOperations: [
+            'get',
+            'post' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
+        ],
         graphql: [
             'item_query',
             'collection_query',
             'create' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
             'delete' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
         ],
-        itemOperations: ['get', 'delete'],
+        itemOperations: [
+            'get',
+            'delete' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
+        ],
         paginationEnabled: false,
     ),
 ]
