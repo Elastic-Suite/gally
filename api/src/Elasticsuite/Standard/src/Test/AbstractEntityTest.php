@@ -14,7 +14,7 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\Index\Tests\Api;
+namespace Elasticsuite\Standard\src\Test;
 
 abstract class AbstractEntityTest extends AbstractTest
 {

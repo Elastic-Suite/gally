@@ -14,11 +14,12 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\Index\Tests\Api;
+namespace Elasticsuite\Index\Tests\Unit;
 
 use Doctrine\Persistence\ObjectManager;
 use Elasticsuite\Index\Repository\Metadata\MetadataRepository;
 use Elasticsuite\Index\Service\IndexManager;
+use Elasticsuite\Standard\src\Test\AbstractTest;
 
 class IndexManagerTest extends AbstractTest
 {

@@ -14,68 +14,62 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\Index\Tests\Api;
+namespace Elasticsuite\Index\Tests\Api\Rest;
 
-use Elasticsuite\Index\Model\Metadata;
+use Elasticsuite\Index\Model\SourceFieldOption;
+use Elasticsuite\Standard\src\Test\AbstractEntityTest;
 
-class MetadataTest extends AbstractEntityTest
+class SourceFieldOptionTest extends AbstractEntityTest
 {
     protected function getEntityClass(): string
     {
-        return Metadata::class;
+        return SourceFieldOption::class;
     }
 
     protected function getApiPath(): string
     {
-        return '/metadata';
+        return '/source_field_options';
     }
 
     protected function getFixtureFiles(): array
     {
-        return [__DIR__ . '/../fixtures/metadata.yaml'];
+        return [
+            __DIR__ . '/../../fixtures/metadata.yaml',
+            __DIR__ . '/../../fixtures/source_field.yaml',
+            __DIR__ . '/../../fixtures/source_field_option.yaml',
+        ];
     }
 
     protected function getJsonCreationValidation(array $validData): array
     {
         return [
-            '@context' => '/contexts/Metadata',
-            '@type' => 'Metadata',
-            'entity' => $validData['entity'],
+            '@context' => '/contexts/SourceFieldOption',
+            '@type' => 'SourceFieldOption',
         ];
     }
 
     protected function getJsonCollectionValidation(): array
     {
         return [
-            '@context' => '/contexts/Metadata',
-            '@id' => '/metadata',
+            '@context' => '/contexts/SourceFieldOption',
+            '@id' => '/source_field_options',
             '@type' => 'hydra:Collection',
-            'hydra:totalItems' => 2,
+            'hydra:totalItems' => 4,
         ];
     }
 
     public function validDataProvider(): array
     {
         return [
-            [['entity' => 'article']],
-            [['entity' => 'author']],
+            [['sourceField' => '/source_fields/4', 'position' => 10]],
+            [['sourceField' => '/source_fields/4']],
         ];
     }
 
     public function invalidDataProvider(): array
     {
         return [
-            [['entity' => ''], 'entity: This value should not be blank.'],
-            [['entity' => 'product'], 'entity: This value is already used.'],
-            [['entity' => 'category'], 'entity: This value is already used.'],
-        ];
-    }
-
-    public function mappingStatusDataProvider(): array
-    {
-        return [
-            ['product', 'green'],
-            ['category', 'red'],
+            [['position' => 3], 'sourceField: This value should not be blank.'],
         ];
     }
 }
