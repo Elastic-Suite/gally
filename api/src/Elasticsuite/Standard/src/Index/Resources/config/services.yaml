@@ -136,6 +136,12 @@ services:
         tags:
             - { name: api_platform.data_transformer }
 
+    Elasticsuite\Index\DataTransformer\InstallIndexDataTransformer:
+        arguments:
+            - '@Elasticsuite\Index\Service\IndexOperation'
+        tags:
+            - { name: api_platform.data_transformer }
+
     Elasticsuite\Index\DataTransformer\RefreshIndexDataTransformer:
         arguments:
             - '@Elasticsuite\Index\Repository\Index\IndexRepositoryInterface'
