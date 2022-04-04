@@ -66,6 +66,12 @@ services:
             - { name: api_platform.item_data_provider }
             - { name: api_platform.collection_data_provider }
 
+    Elasticsuite\Index\DataProvider\Index\RefreshDataProvider:
+        arguments:
+            - '@Elasticsuite\Index\Repository\Index\IndexRepositoryInterface'
+        tags:
+            - { name: api_platform.item_data_provider }
+
     Elasticsuite\Index\Converter\SourceFieldToMappingField: ~
     
     Elasticsuite\Index\Service\IndexManager:
@@ -127,6 +133,12 @@ services:
             - '@Elasticsuite\Catalog\Repository\LocalizedCatalogRepository'
             - '@Elasticsuite\Index\Repository\Metadata\MetadataRepository'
             - '@Elasticsuite\Index\Service\IndexOperation'
+        tags:
+            - { name: api_platform.data_transformer }
+
+    Elasticsuite\Index\DataTransformer\RefreshIndexDataTransformer:
+        arguments:
+            - '@Elasticsuite\Index\Repository\Index\IndexRepositoryInterface'
         tags:
             - { name: api_platform.data_transformer }
 

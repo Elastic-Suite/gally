@@ -53,11 +53,11 @@ interface IndexRepositoryInterface
     public function bulk(Index $index, Bulk\Request $request): Bulk\Response;
 
     /**
-     * Refresh a list of indices.
+     * Refresh an index or a list of indices.
      *
-     * @param string[] $indexNames indices names
+     * @param string[]|string $indexName One or several indices names
      */
-    public function refresh(array $indexNames): void;
+    public function refresh(array|string $indexName): void;
 
     /**
      * Delete a given index.
