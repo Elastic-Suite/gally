@@ -18,6 +18,7 @@ namespace Elasticsuite\Index\Repository\Index;
 
 use Elasticsearch\Client;
 use Elasticsuite\Index\Dto\Bulk;
+use Elasticsuite\Index\Exception\LogicException;
 use Elasticsuite\Index\Model\Index;
 
 class IndexRepository implements IndexRepositoryInterface
@@ -74,7 +75,7 @@ class IndexRepository implements IndexRepositoryInterface
     /**
      * {@inheritDoc}
      */
-    public function create(string $indexName, array $settings = [], array $aliases = []): ?Index
+    public function create(string $indexName, array $settings = [], array $aliases = []): Index
     {
         // Todo: Add logic to validate params and manage errors.
         /*
@@ -1110,7 +1111,12 @@ class IndexRepository implements IndexRepositoryInterface
             ]);
         }
 
-        return $this->findByName($indexName);
+        $index = $this->findByName($indexName);
+        if (null === $index) {
+            throw new LogicException('Index [%s] was created but not found');
+        }
+
+        return $index;
     }
 
     /**
