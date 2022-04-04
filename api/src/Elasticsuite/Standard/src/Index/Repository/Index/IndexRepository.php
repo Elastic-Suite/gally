@@ -1130,9 +1130,12 @@ class IndexRepository implements IndexRepositoryInterface
     /**
      * {@inheritDoc}
      */
-    public function refresh(array $indexNames): void
+    public function refresh(array|string $indexName): void
     {
-        $this->client->indices()->refresh(['index' => implode(',', $indexNames)]);
+        if (\is_array($indexName)) {
+            $indexName = implode(',', $indexName);
+        }
+        $this->client->indices()->refresh(['index' => $indexName]);
     }
 
     /**
