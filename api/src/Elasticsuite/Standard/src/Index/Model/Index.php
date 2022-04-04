@@ -19,6 +19,7 @@ namespace Elasticsuite\Index\Model;
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Elasticsuite\Index\Dto\CreateIndexInput;
+use Elasticsuite\Index\Dto\InstallIndexInput;
 use Elasticsuite\Index\MutationResolver\BulkDeleteIndexMutation;
 use Elasticsuite\Index\MutationResolver\BulkIndexMutation;
 use Elasticsuite\Index\MutationResolver\CreateIndexMutation;
@@ -106,6 +107,20 @@ use Elasticsuite\User\Constant\Role;
         itemOperations: [
             'get',
             'delete' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
+            'install' => [
+                'openapi_context' => [
+                    'description' => 'Installs an Index resource',
+                    'summary' => 'Installs an Index resource',
+                ],
+                'path' => '/indices/install/{name}',
+                'method' => 'PUT',
+                'input' => InstallIndexInput::class, // RefreshIndexInput::class,
+                'deserialize' => true,
+                'read' => true,
+                'write' => false,
+                'serialize' => true,
+                'security' => "is_granted('" . Role::ROLE_ADMIN . "')",
+            ],
         ],
         paginationEnabled: false,
     ),
