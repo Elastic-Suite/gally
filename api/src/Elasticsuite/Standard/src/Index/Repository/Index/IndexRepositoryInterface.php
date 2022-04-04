@@ -42,7 +42,7 @@ interface IndexRepositoryInterface
      * @param array<mixed> $settings  index settings
      * @param string[]     $aliases   index aliases to assign after index creation
      */
-    public function create(string $indexName, array $settings = [], array $aliases = []): ?Index;
+    public function create(string $indexName, array $settings = [], array $aliases = []): Index;
 
     /**
      * Send bulk to index.

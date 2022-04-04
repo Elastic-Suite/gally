@@ -21,19 +21,15 @@ use ApiPlatform\Core\Exception\InvalidArgumentException;
 use Elasticsuite\Catalog\Repository\LocalizedCatalogRepository;
 use Elasticsuite\Index\Dto\CreateIndexInput;
 use Elasticsuite\Index\Model\Index;
-use Elasticsuite\Index\Repository\Index\IndexRepositoryInterface;
 use Elasticsuite\Index\Repository\Metadata\MetadataRepository;
-use Elasticsuite\Index\Service\IndexManager;
-use Elasticsuite\Index\Service\IndexSettings;
+use Elasticsuite\Index\Service\IndexOperation;
 
 class CreateIndexInputDataTransformer implements DataTransformerInterface
 {
     public function __construct(
-        private IndexRepositoryInterface $indexRepository,
         private LocalizedCatalogRepository $catalogRepository,
         private MetadataRepository $metadataRepository,
-        private IndexSettings $indexSettings,
-        private IndexManager $indexManager
+        private IndexOperation $indexOperation,
     ) {
     }
 
@@ -76,20 +72,12 @@ class CreateIndexInputDataTransformer implements DataTransformerInterface
         }
 
         $catalog = $this->catalogRepository->find($catalogId);
-        if (!$catalog) {
+        if (null === $catalog) {
             throw new InvalidArgumentException(sprintf('Catalog of ID [%s] does not exist', $catalogId));
         }
 
-        $indexSettings = [
-            'settings' => $this->indexSettings->getCreateIndexSettings() + $this->indexSettings->getDynamicIndexSettings($catalog),
-        ];
-        $indexSettings['settings']['analysis'] = $this->indexSettings->getAnalysisSettings($catalog);
-        $indexSettings['mappings'] = $this->indexManager->getMapping($metadata)->asArray();
         try {
-            $index = $this->indexRepository->create(
-                $this->indexSettings->createIndexNameFromIdentifier($metadata->getEntity(), $catalog),
-                $indexSettings
-            );
+            $index = $this->indexOperation->createIndex($metadata, $catalog);
         } catch (\Exception $exception) {
             // TODO log error
             throw new \Exception('An error occurred when creating the index');

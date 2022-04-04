@@ -66,7 +66,10 @@ class IndexOperationsTest extends AbstractEntityTest
         return [
             '@context' => '/contexts/Index',
             '@type' => 'Index',
-            'aliases' => [],
+            'aliases' => [
+                '.catalog_' . $validData['catalog'],
+                '.entity_' . $validData['entityType'],
+            ],
         ];
     }
 
