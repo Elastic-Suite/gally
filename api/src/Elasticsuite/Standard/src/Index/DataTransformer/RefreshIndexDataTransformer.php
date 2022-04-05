@@ -39,7 +39,7 @@ class RefreshIndexDataTransformer implements DataTransformerInterface
     public function supportsTransformation($data, string $to, array $context = []): bool
     {
         return
-            Index\Refresh::class === $to
+            Index::class === $to
             && OperationType::ITEM === ($context['operation_type'] ?? '')
             && RefreshIndexInput::class === ($context['input']['class'] ?? '')
             && $context[AbstractNormalizer::OBJECT_TO_POPULATE] instanceof Index;

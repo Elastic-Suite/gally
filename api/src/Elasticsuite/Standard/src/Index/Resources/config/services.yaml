@@ -66,12 +66,6 @@ services:
             - { name: api_platform.item_data_provider }
             - { name: api_platform.collection_data_provider }
 
-    Elasticsuite\Index\DataProvider\Index\RefreshDataProvider:
-        arguments:
-            - '@Elasticsuite\Index\Repository\Index\IndexRepositoryInterface'
-        tags:
-            - { name: api_platform.item_data_provider }
-
     Elasticsuite\Index\Converter\SourceFieldToMappingField: ~
     
     Elasticsuite\Index\Service\IndexManager:
