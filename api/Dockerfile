@@ -92,6 +92,9 @@ WORKDIR /srv/api
 # build for production
 ARG APP_ENV=prod
 
+# copy potential patches to apply before running the composer install
+COPY patches patches/
+
 # prevent the reinstallation of vendors at every changes in the source code
 COPY composer.json composer.lock symfony.lock ./
 RUN set -eux; \
@@ -106,7 +109,6 @@ COPY migrations migrations/
 COPY public public/
 COPY src src/
 COPY templates templates/
-COPY patches patches/
 
 RUN set -eux; \
 	mkdir -p var/cache var/log; \
