@@ -27,7 +27,11 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Index\Service;
 
+use Elasticsuite\Catalog\Model\LocalizedCatalog;
 use Elasticsuite\Index\Api\IndexSettingsInterface;
+use Elasticsuite\Index\Exception\LogicException;
+use Elasticsuite\Index\Model\Index;
+use Elasticsuite\Index\Model\Metadata;
 use Elasticsuite\Index\Repository\Index\IndexRepositoryInterface;
 
 class IndexOperation
@@ -35,7 +39,36 @@ class IndexOperation
     public function __construct(
         private IndexRepositoryInterface $indexRepository,
         private IndexSettingsInterface $indexSettings,
+        private IndexManager $indexManager
     ) {
+    }
+
+    /**
+     * Creates an index for a given entity metadata and catalog.
+     *
+     * @param Metadata                    $metadata Entity metadata
+     * @param int|string|LocalizedCatalog $catalog  Catalog
+     */
+    public function createIndex(Metadata $metadata, LocalizedCatalog|int|string $catalog): Index
+    {
+        if (null === $metadata->getEntity()) {
+            throw new LogicException('Invalid metadata: no entity');
+        }
+
+        $indexSettings = [
+            'settings' => $this->indexSettings->getCreateIndexSettings() + $this->indexSettings->getDynamicIndexSettings($catalog),
+        ];
+        $indexSettings['settings']['analysis'] = $this->indexSettings->getAnalysisSettings($catalog);
+        $indexSettings['mappings'] = $this->indexManager->getMapping($metadata)->asArray();
+        $newIndexAliases = $this->indexSettings->getNewIndexMetadataAliases($metadata->getEntity(), $catalog);
+        if (!empty($newIndexAliases)) {
+            $indexSettings['aliases'] = array_fill_keys($newIndexAliases, ['is_hidden' => true]);
+        }
+
+        return $this->indexRepository->create(
+            $this->indexSettings->createIndexNameFromIdentifier($metadata->getEntity(), $catalog),
+            $indexSettings
+        );
     }
 
     /**

@@ -16,21 +16,19 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Index\MutationResolver;
 
+use ApiPlatform\Core\Exception\InvalidArgumentException;
 use ApiPlatform\Core\GraphQl\Resolver\MutationResolverInterface;
 use Elasticsuite\Catalog\Repository\LocalizedCatalogRepository;
-use Elasticsuite\Index\Api\IndexSettingsInterface;
-use Elasticsuite\Index\Repository\Index\IndexRepositoryInterface;
+use Elasticsuite\Index\Exception\LogicException;
 use Elasticsuite\Index\Repository\Metadata\MetadataRepository;
-use Elasticsuite\Index\Service\IndexManager;
+use Elasticsuite\Index\Service\IndexOperation;
 
 class CreateIndexMutation implements MutationResolverInterface
 {
     public function __construct(
-        private IndexRepositoryInterface $indexRepository,
         private LocalizedCatalogRepository $catalogRepository,
         private MetadataRepository $metadataRepository,
-        private IndexSettingsInterface $indexSettings,
-        private IndexManager $indexManager
+        private IndexOperation $indexOperation,
     ) {
     }
 
@@ -51,36 +49,20 @@ class CreateIndexMutation implements MutationResolverInterface
 
         $metadata = $this->metadataRepository->findOneBy(['entity' => $entityType]);
         if (!$metadata) {
-            throw new \InvalidArgumentException(sprintf('Entity type [%s] does not exist', $entityType));
+            throw new InvalidArgumentException(sprintf('Entity type [%s] does not exist', $entityType));
         }
         if (null === $metadata->getEntity()) {
-            throw new \LogicException(sprintf('Entity type [%s] is not defined', $entityType));
+            throw new LogicException(sprintf('Entity type [%s] is not defined', $entityType));
         }
 
         $catalog = $this->catalogRepository->find($catalogId);
         if (!$catalog) {
-            throw new \InvalidArgumentException(sprintf('Catalog of ID [%s] does not exist', $catalogId));
-        }
-
-        $indexSettings = [
-            'settings' => $this->indexSettings->getCreateIndexSettings() + $this->indexSettings->getDynamicIndexSettings($catalog),
-        ];
-        $indexSettings['settings']['analysis'] = $this->indexSettings->getAnalysisSettings($catalog);
-        $indexSettings['mappings'] = $this->indexManager->getMapping($metadata)->asArray();
-        $newIndexAliases = $this->indexSettings->getNewIndexMetadataAliases($entityType, $catalog);
-        if (!empty($newIndexAliases)) {
-            $indexSettings['aliases'] = array_fill_keys($newIndexAliases, ['is_hidden' => true]);
+            throw new InvalidArgumentException(sprintf('Catalog of ID [%s] does not exist', $catalogId));
         }
 
         try {
-            $item = $this->indexRepository->create(
-                $this->indexSettings->createIndexNameFromIdentifier(
-                    $metadata->getEntity(),
-                    $catalog
-                ),
-                $indexSettings
-            );
-        } catch (\Exception $exception) {
+            $item = $this->indexOperation->createIndex($metadata, $catalog);
+        } catch (\Exception $e) {
             // TODO log error
             throw new \Exception('An error occurred when creating the index');
         }
