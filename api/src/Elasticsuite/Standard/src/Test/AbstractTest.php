@@ -78,7 +78,7 @@ abstract class AbstractTest extends ApiTestCase
     protected function requestRest(string $method, string $path, array $json = []): ResponseInterface
     {
         $data = [];
-        if ('POST' === $method) {
+        if (\in_array($method, ['POST', 'PUT'], true)) {
             $data['json'] = $json;
         }
 
