@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build && next export",
     "start": "next start",
-    "test": "jest"
+    "test": "jest",
+    "eslint": "eslint --fix --max-warnings=0 --ignore-path .gitignore .",
+    "stylelint": "stylelint --fix --max-warnings=0 --ignore-path .gitignore '**/*.{css,scss,sass}'",
+    "prettier": "prettier --write --ignore-unknown --ignore-path .gitignore ."
   },
   "dependencies": {
     "@api-platform/admin": "^2.6.0",
@@ -23,7 +26,18 @@
     "react-dom": "^17.0.0"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": [
+      "react-app",
+      "react-app/jest",
+      "eslint:recommended",
+      "prettier"
+    ]
+  },
+  "stylelint": {
+    "extends": [
+      "stylelint-config-standard",
+      "stylelint-config-prettier"
+    ]
   },
   "browserslist": {
     "production": [
@@ -42,8 +56,16 @@
     "@testing-library/react": "^11.2.2",
     "@types/node": "^14.14.19",
     "@types/react": "^17.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.18.0",
+    "@typescript-eslint/parser": "^5.18.0",
     "babel-jest": "^26.6.3",
+    "eslint": "^8.12.0",
+    "eslint-plugin-react": "^7.29.4",
     "jest": "^26.6.3",
+    "prettier": "^2.6.2",
+    "stylelint": "^14.6.1",
+    "stylelint-config-prettier": "^9.0.3",
+    "stylelint-config-standard": "^25.0.0",
     "typescript": "^4.1.3"
   }
 }
