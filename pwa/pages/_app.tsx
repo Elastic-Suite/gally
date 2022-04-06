@@ -1,10 +1,22 @@
-// import App from "next/app";
 import type { AppProps /*, AppContext */ } from 'next/app'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'
+import 'assets/scss/style.scss'
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+  return (
+    <>
+      <Component {...pageProps} />
+      <script
+        type="module"
+        src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js"
+      />
+      <script
+        noModule
+        src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js"
+      />
+    </>
+  )
 }
 
 // Only uncomment this method if you have blocking data requirements for
