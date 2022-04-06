@@ -1,6 +1,8 @@
 import Head from 'next/head'
 import Link from 'next/link'
 
+/* Depreciated as pages/_middleware.tsx make redirection from / to /admin */
+
 const Welcome = () => (
   <>
     <Head>
