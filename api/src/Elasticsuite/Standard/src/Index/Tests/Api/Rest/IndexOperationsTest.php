@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Index\Tests\Api\Rest;
 
+use Elasticsearch\Client;
 use Elasticsuite\Index\Model\Index;
 use Elasticsuite\Index\Repository\Index\IndexRepositoryInterface;
 use Elasticsuite\Standard\src\Test\AbstractEntityTest;
@@ -26,12 +27,15 @@ class IndexOperationsTest extends AbstractEntityTest
 
     private static int $initialIndicesCount;
 
+    private static Client $elasticsearchClient;
+
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
         \assert(static::getContainer()->get(IndexRepositoryInterface::class) instanceof IndexRepositoryInterface);
         self::$indexRepository = static::getContainer()->get(IndexRepositoryInterface::class);
         self::$initialIndicesCount = \count(self::$indexRepository->findAll());
+        self::$elasticsearchClient = static::getContainer()->get('api_platform.elasticsearch.client.test'); // @phpstan-ignore-line
     }
 
     public static function tearDownAfterClass(): void
@@ -113,5 +117,105 @@ class IndexOperationsTest extends AbstractEntityTest
             [['entityType' => 'product', 'catalog' => 0], 'Catalog of ID [0] does not exist', 400],
             [['entityType' => 'category', 'catalog' => 0], 'Catalog of ID [0] does not exist', 400],
         ];
+    }
+
+    /**
+     * @dataProvider installOrRefreshIndexDataProvider
+     * @depends testCreateValidData
+     *
+     * @param string $indexNamePrefix             Index name prefix
+     * @param string $expectedInstalledIndexAlias Expected installed index alias
+     *
+     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
+     */
+    public function testInstallIndex(string $indexNamePrefix, string $expectedInstalledIndexAlias): void
+    {
+        $index = self::$indexRepository->findByName("{$indexNamePrefix}*");
+        $this->assertNotNull($index);
+        $this->assertInstanceOf(Index::class, $index);
+
+        $this->requestRest('PUT', "/indices/install/{$index->getName()}");
+        $this->assertResponseStatusCodeSame(200);
+        $this->assertJsonContains([
+            '@context' => '/contexts/Index',
+            '@id' => "/indices/{$index->getName()}",
+            '@type' => 'Index',
+            'name' => $index->getName(),
+            // TODO re-instate tests on aliases when the read stage is correctly performed based on name.
+        ]);
+    }
+
+    /**
+     * @dataProvider installOrRefreshIndexDataProvider
+     * @depends testCreateValidData
+     *
+     * @param string $indexNamePrefix             Index name prefix
+     * @param string $expectedInstalledIndexAlias Expected installed index alias
+     *
+     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
+     */
+    public function testRefreshIndex(string $indexNamePrefix, string $expectedInstalledIndexAlias): void
+    {
+        $index = self::$indexRepository->findByName("{$indexNamePrefix}*");
+        $this->assertNotNull($index);
+        $this->assertInstanceOf(Index::class, $index);
+
+        $initialRefreshCount = $this->getRefreshCount($index->getName());
+
+        $this->requestRest('PUT', "/indices/refresh/{$index->getName()}");
+        $this->assertResponseStatusCodeSame(200);
+        $this->assertJsonContains([
+            '@context' => '/contexts/Index',
+            '@id' => "/indices/{$index->getName()}",
+            '@type' => 'Index',
+            'name' => $index->getName(),
+            // TODO re-instate when the read stage is correctly performed based on name.
+        ]);
+
+        $refreshCount = $this->getRefreshCount($index->getName());
+        $this->assertGreaterThan($initialRefreshCount, $refreshCount);
+    }
+
+    public function installOrRefreshIndexDataProvider(): array
+    {
+        $data = [];
+
+        $catalogs = [
+            1 => 'b2c_fr',
+            2 => 'b2c_en',
+            3 => 'b2b_en',
+        ];
+        foreach ($catalogs as $catalogId => $catalogCode) {
+            $data[] = [
+                "test_elasticsuite_{$catalogCode}_product",
+                "test_elasticsuite_{$catalogCode}_product",
+            ];
+            $data[] = [
+                "test_elasticsuite_{$catalogCode}_category",
+                "test_elasticsuite_{$catalogCode}_category",
+            ];
+        }
+
+        return $data;
+    }
+
+    protected function getRefreshCount(string $indexName): int
+    {
+        $refreshMetrics = self::$elasticsearchClient->indices()->stats(['index' => $indexName, 'metric' => 'refresh']);
+        $this->assertNotEmpty($refreshMetrics);
+        $this->assertArrayHasKey('_all', $refreshMetrics);
+        $this->assertArrayHasKey('primaries', $refreshMetrics['_all']);
+        $this->assertArrayHasKey('refresh', $refreshMetrics['_all']['primaries']);
+        $this->assertArrayHasKey('external_total', $refreshMetrics['_all']['primaries']['refresh']);
+
+        return $refreshMetrics['_all']['primaries']['refresh']['external_total'];
     }
 }

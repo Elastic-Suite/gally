@@ -27,11 +27,18 @@ class IndexOperationsTest extends AbstractTest
 {
     private LocalizedCatalogRepository $catalogRepository;
 
-    private IndexRepositoryInterface $indexRepository;
+    private static IndexRepositoryInterface $indexRepository;
 
     private IndexSettingsInterface $indexSettings;
 
     private Client $client;
+
+    public static function setUpBeforeClass(): void
+    {
+        parent::setUpBeforeClass();
+        \assert(static::getContainer()->get(IndexRepositoryInterface::class) instanceof IndexRepositoryInterface);
+        self::$indexRepository = static::getContainer()->get(IndexRepositoryInterface::class);
+    }
 
     protected function setUp(): void
     {
@@ -41,15 +48,14 @@ class IndexOperationsTest extends AbstractTest
             __DIR__ . '/../../fixtures/catalogs.yaml',
         ]);
         $this->catalogRepository = static::getContainer()->get(LocalizedCatalogRepository::class);
-        $this->indexRepository = static::getContainer()->get(IndexRepositoryInterface::class);
         $this->indexSettings = static::getContainer()->get(IndexSettingsInterface::class);
         $this->client = static::getContainer()->get('api_platform.elasticsearch.client.test'); // @phpstan-ignore-line
     }
 
-    protected function tearDown(): void
+    public static function tearDownAfterClass(): void
     {
-        parent::tearDown();
-        $this->indexRepository->delete('test_elasticsuite*');
+        parent::tearDownAfterClass();
+        self::$indexRepository->delete('test_elasticsuite*');
     }
 
     public function testCreateIndex(): void
@@ -77,32 +83,53 @@ class IndexOperationsTest extends AbstractTest
         }
     }
 
+    /**
+     * @depends testCreateIndex
+     */
     public function testInstallIndex(): void
     {
         $data = [];
         $catalogs = $this->catalogRepository->findAll();
         foreach ($catalogs as $catalog) {
             $data[] = [
-                'product',
-                (int) $catalog->getId(),
                 "test_elasticsuite_{$catalog->getCode()}_product",
-                ['.entity_product', ".catalog_{$catalog->getId()}"],
                 "test_elasticsuite_{$catalog->getCode()}_product",
             ];
             $data[] = [
-                'category',
-                (int) $catalog->getId(),
                 "test_elasticsuite_{$catalog->getCode()}_category",
-                ['.entity_category', ".catalog_{$catalog->getId()}"],
                 "test_elasticsuite_{$catalog->getCode()}_category",
             ];
         }
 
         $installIndexSettings = $this->indexSettings->getInstallIndexSettings();
         foreach ($data as $datum) {
-            [$entity, $catalogId, $indexNamePrefix, $aliases, $installedIndexAlias] = $datum;
-            $this->performCreateIndexTest($entity, $catalogId, $indexNamePrefix, $aliases);
+            [$indexNamePrefix, $installedIndexAlias] = $datum;
             $this->performInstallIndexTest($indexNamePrefix, $installedIndexAlias, $installIndexSettings);
+        }
+    }
+
+    /**
+     * @depends testInstallIndex
+     */
+    public function testRefreshIndex(): void
+    {
+        $data = [];
+        $catalogs = $this->catalogRepository->findAll();
+        foreach ($catalogs as $catalog) {
+            $data[] = [
+                "test_elasticsuite_{$catalog->getCode()}_product",
+                "test_elasticsuite_{$catalog->getCode()}_product",
+            ];
+            $data[] = [
+                "test_elasticsuite_{$catalog->getCode()}_category",
+                "test_elasticsuite_{$catalog->getCode()}_category",
+            ];
+        }
+
+        $installIndexSettings = $this->indexSettings->getInstallIndexSettings();
+        foreach ($data as $datum) {
+            [$indexNamePrefix, $installedIndexAlias] = $datum;
+            $this->performRefreshIndexTest($indexNamePrefix, $installedIndexAlias);
         }
     }
 
@@ -163,7 +190,7 @@ class IndexOperationsTest extends AbstractTest
         string $expectedInstalledIndexAlias,
         array $expectedIndexSettings
     ): void {
-        $index = $this->indexRepository->findByName("{$indexNamePrefix}*");
+        $index = self::$indexRepository->findByName("{$indexNamePrefix}*");
         $this->assertNotNull($index);
         $this->assertInstanceOf(Index::class, $index);
 
@@ -183,7 +210,7 @@ class IndexOperationsTest extends AbstractTest
         $response = $this->requestGraphQl($query);
         $responseData = $response->toArray();
 
-        // Check that the index as the install index.
+        // Check that the index has the install index.
         $this->assertNotEmpty($responseData['data']['installIndex']['index']['aliases']);
         $this->assertContains($expectedInstalledIndexAlias, $responseData['data']['installIndex']['index']['aliases']);
 
@@ -191,5 +218,53 @@ class IndexOperationsTest extends AbstractTest
         $settings = $this->client->indices()->getSettings(['index' => $index->getName()]);
         $this->assertNotEmpty($settings[$index->getName()]['settings']['index']);
         $this->assertArraySubset($expectedIndexSettings, $settings[$index->getName()]['settings']['index']);
+    }
+
+    protected function performRefreshIndexTest(
+        string $indexNamePrefix,
+        string $expectedInstalledIndexAlias
+    ): void {
+        $index = self::$indexRepository->findByName("{$indexNamePrefix}*");
+        $this->assertNotNull($index);
+        $this->assertInstanceOf(Index::class, $index);
+
+        $initialRefreshCount = $this->getRefreshCount($index->getName());
+
+        $query = <<<GQL
+            mutation {
+              refreshIndex(input: {
+                name: "{$index->getName()}"
+              }) {
+                index {
+                  id
+                  name
+                  aliases
+                }
+              }
+            }
+        GQL;
+        $response = $this->requestGraphQl($query);
+        $responseData = $response->toArray();
+
+        // Check that the index still has the install index.
+        // TODO re-instate tests on aliases when the read stage is correctly performed based on name.
+        // $this->assertNotEmpty($responseData['data']['refreshIndex']['index']['aliases']);
+        // $this->assertContains($expectedInstalledIndexAlias, $responseData['data']['refreshIndex']['index']['aliases']);
+
+        $refreshCount = $this->getRefreshCount($index->getName());
+
+        $this->assertGreaterThan($initialRefreshCount, $refreshCount);
+    }
+
+    protected function getRefreshCount(string $indexName): int
+    {
+        $refreshMetrics = $this->client->indices()->stats(['index' => $indexName, 'metric' => 'refresh']);
+        $this->assertNotEmpty($refreshMetrics);
+        $this->assertArrayHasKey('_all', $refreshMetrics);
+        $this->assertArrayHasKey('primaries', $refreshMetrics['_all']);
+        $this->assertArrayHasKey('refresh', $refreshMetrics['_all']['primaries']);
+        $this->assertArrayHasKey('external_total', $refreshMetrics['_all']['primaries']['refresh']);
+
+        return $refreshMetrics['_all']['primaries']['refresh']['external_total'];
     }
 }
