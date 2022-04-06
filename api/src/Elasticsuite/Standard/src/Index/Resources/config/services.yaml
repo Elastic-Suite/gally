@@ -87,15 +87,13 @@ services:
         arguments:
             - '@Elasticsuite\Index\Repository\Index\IndexRepositoryInterface'
             - '@Elasticsuite\Index\Api\IndexSettingsInterface'
-            - '@api_platform.elasticsearch.client'
+            - '@Elasticsuite\Index\Service\IndexManager'
 
     Elasticsuite\Index\MutationResolver\CreateIndexMutation:
         arguments:
-            - '@Elasticsuite\Index\Repository\Index\IndexRepositoryInterface'
             - '@Elasticsuite\Catalog\Repository\LocalizedCatalogRepository'
             - '@Elasticsuite\Index\Repository\Metadata\MetadataRepository'
-            - '@Elasticsuite\Index\Api\IndexSettingsInterface'
-            - '@Elasticsuite\Index\Service\IndexManager'
+            - '@Elasticsuite\Index\Service\IndexOperation'
         tags:
             - { name: api_platform.graphql.mutation_resolver }
 
@@ -126,11 +124,21 @@ services:
 
     Elasticsuite\Index\DataTransformer\CreateIndexInputDataTransformer:
         arguments:
-            - '@Elasticsuite\Index\Repository\Index\IndexRepositoryInterface'
             - '@Elasticsuite\Catalog\Repository\LocalizedCatalogRepository'
             - '@Elasticsuite\Index\Repository\Metadata\MetadataRepository'
-            - '@Elasticsuite\Index\Service\IndexSettings'
-            - '@Elasticsuite\Index\Service\IndexManager'
+            - '@Elasticsuite\Index\Service\IndexOperation'
+        tags:
+            - { name: api_platform.data_transformer }
+
+    Elasticsuite\Index\DataTransformer\InstallIndexDataTransformer:
+        arguments:
+            - '@Elasticsuite\Index\Service\IndexOperation'
+        tags:
+            - { name: api_platform.data_transformer }
+
+    Elasticsuite\Index\DataTransformer\RefreshIndexDataTransformer:
+        arguments:
+            - '@Elasticsuite\Index\Repository\Index\IndexRepositoryInterface'
         tags:
             - { name: api_platform.data_transformer }
 

@@ -42,7 +42,7 @@ interface IndexRepositoryInterface
      * @param array<mixed> $settings  index settings
      * @param string[]     $aliases   index aliases to assign after index creation
      */
-    public function create(string $indexName, array $settings = [], array $aliases = []): ?Index;
+    public function create(string $indexName, array $settings = [], array $aliases = []): Index;
 
     /**
      * Send bulk to index.
@@ -53,11 +53,11 @@ interface IndexRepositoryInterface
     public function bulk(Index $index, Bulk\Request $request): Bulk\Response;
 
     /**
-     * Refresh a list of indices.
+     * Refresh an index or a list of indices.
      *
-     * @param string[] $indexNames indices names
+     * @param string[]|string $indexName One or several indices names
      */
-    public function refresh(array $indexNames): void;
+    public function refresh(array|string $indexName): void;
 
     /**
      * Delete a given index.
