@@ -22,10 +22,33 @@ Elasticsuite\Index\Model\SourceField:
     category_description:
         metadata: '@category'
         name: 'description'
+    product_id:
+        metadata: '@product'
+        name: 'id'
+        type: 'int'
+        isSystem: true
+    product_sku:
+        metadata: '@product'
+        name: 'sku'
+        type: 'reference'
+        isSystem: true
     product_price:
         metadata: '@product'
         name: 'price'
         type: 'price'
+        isSystem: true
+    product_stock_status:
+        metadata: '@product'
+        name: 'stock.status'
+        defaultLabel: 'Stock status'
+        type: 'int'
+        isSystem: true
+    product_stock_qty:
+        metadata: '@product'
+        name: 'stock.qty'
+        defaultLabel: 'Stock quantity'
+        type: 'float'
+        isSystem: true
     product_brand:
         metadata: '@product'
         name: 'brand'

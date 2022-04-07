@@ -57,7 +57,7 @@ class IndexOperationsTest extends AbstractEntityTest
         return '/indices';
     }
 
-    protected function getFixtureFiles(): array
+    protected static function getFixtureFiles(): array
     {
         return [
             __DIR__ . '/../../fixtures/metadata.yaml',
@@ -77,7 +77,16 @@ class IndexOperationsTest extends AbstractEntityTest
         ];
     }
 
-    protected function getJsonCollectionValidation(): array
+    protected function getJsonGetValidation(array $expectedData): array
+    {
+        return [
+            '@context' => '/contexts/Index',
+            '@id' => '/indices/' . $expectedData['id'],
+            '@type' => 'Index',
+        ];
+    }
+
+    protected function getJsonGetCollectionValidation(): array
     {
         return [
             '@context' => '/contexts/Index',
@@ -87,7 +96,7 @@ class IndexOperationsTest extends AbstractEntityTest
         ];
     }
 
-    public function validDataProvider(): array
+    public function createValidDataProvider(): array
     {
         $data = [];
 
@@ -110,12 +119,28 @@ class IndexOperationsTest extends AbstractEntityTest
         return $data;
     }
 
-    public function invalidDataProvider(): array
+    public function createInvalidDataProvider(): array
     {
         return [
             [['entityType' => 'string', 'catalog' => 0], 'Entity type [string] does not exist', 400],
             [['entityType' => 'product', 'catalog' => 0], 'Catalog of ID [0] does not exist', 400],
             [['entityType' => 'category', 'catalog' => 0], 'Catalog of ID [0] does not exist', 400],
+        ];
+    }
+
+    public function getDataProvider(): array
+    {
+        return [
+            // Todo: How to get index name ?
+            ['wrong_id', [], 404],
+        ];
+    }
+
+    public function deleteDataProvider(): array
+    {
+        return [
+            // Todo: How to get index name ?
+            ['wrong_id', 404],
         ];
     }
 

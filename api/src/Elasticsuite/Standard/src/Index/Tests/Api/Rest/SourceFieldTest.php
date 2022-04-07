@@ -21,6 +21,14 @@ use Elasticsuite\Standard\src\Test\AbstractEntityTest;
 
 class SourceFieldTest extends AbstractEntityTest
 {
+    protected static function getFixtureFiles(): array
+    {
+        return [
+            __DIR__ . '/../../fixtures/metadata.yaml',
+            __DIR__ . '/../../fixtures/source_field.yaml',
+        ];
+    }
+
     protected function getEntityClass(): string
     {
         return SourceField::class;
@@ -29,14 +37,6 @@ class SourceFieldTest extends AbstractEntityTest
     protected function getApiPath(): string
     {
         return '/source_fields';
-    }
-
-    protected function getFixtureFiles(): array
-    {
-        return [
-            __DIR__ . '/../../fixtures/metadata.yaml',
-            __DIR__ . '/../../fixtures/source_field.yaml',
-        ];
     }
 
     protected function getJsonCreationValidation(array $validData): array
@@ -54,17 +54,27 @@ class SourceFieldTest extends AbstractEntityTest
         return $json;
     }
 
-    protected function getJsonCollectionValidation(): array
+    protected function getJsonGetValidation(array $expectedData): array
+    {
+        return [
+            '@context' => '/contexts/SourceField',
+            '@id' => '/source_fields/' . $expectedData['id'],
+            '@type' => 'SourceField',
+            'name' => $expectedData['name'],
+        ];
+    }
+
+    protected function getJsonGetCollectionValidation(): array
     {
         return [
             '@context' => '/contexts/SourceField',
             '@id' => '/source_fields',
             '@type' => 'hydra:Collection',
-            'hydra:totalItems' => 5,
+            'hydra:totalItems' => 11,
         ];
     }
 
-    public function validDataProvider(): array
+    public function createValidDataProvider(): array
     {
         return [
             [['name' => 'description', 'metadata' => '/metadata/1']],
@@ -74,14 +84,33 @@ class SourceFieldTest extends AbstractEntityTest
         ];
     }
 
-    public function invalidDataProvider(): array
+    public function createInvalidDataProvider(): array
     {
         return [
             [['name' => 'description'], 'metadata: This value should not be blank.'],
             [['metadata' => '/metadata/1'], 'name: This value should not be blank.'],
-            [['name' => 'description', 'metadata' => '/metadata/1', 'type' => 'description'], 'type: The value you selected is not a valid choice.'],
+            [['name' => 'long_description', 'metadata' => '/metadata/1', 'type' => 'description'], 'type: The value you selected is not a valid choice.'],
             [['name' => 'description', 'metadata' => '/metadata/notExist'], 'Item not found for "/metadata/notExist".', 400],
             [['name' => 'name', 'metadata' => '/metadata/1'], 'name: An field with this name already exist for this entity.'],
+        ];
+    }
+
+    public function getDataProvider(): array
+    {
+        return [
+            [1, ['id' => 1, 'name' => 'name'], 200],
+            [10, ['id' => 10, 'name' => 'description'], 200],
+            [20, [], 404],
+        ];
+    }
+
+    public function deleteDataProvider(): array
+    {
+        return [
+            [1, 200],
+            [5, 400], // Can't remove system source field
+            [10, 200],
+            [20, 404],
         ];
     }
 }
