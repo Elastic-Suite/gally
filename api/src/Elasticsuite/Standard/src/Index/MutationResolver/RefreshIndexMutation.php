@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Index\MutationResolver;
 
+use ApiPlatform\Core\Exception\InvalidArgumentException;
 use ApiPlatform\Core\GraphQl\Resolver\MutationResolverInterface;
 use Elasticsuite\Index\Model\Index;
 use Elasticsuite\Index\Repository\Index\IndexRepositoryInterface;
@@ -36,8 +37,13 @@ class RefreshIndexMutation implements MutationResolverInterface
     public function __invoke($item, array $context)
     {
         /** @var Index $item */
-        $this->indexRepository->refresh([$item->getName()]);
+        $index = $this->indexRepository->findByName($item->getName());
+        if (null === $index) {
+            throw new InvalidArgumentException(sprintf('Index [%s] does not exist', $item->getName()));
+        }
 
-        return $item;
+        $this->indexRepository->refresh([$index->getName()]);
+
+        return $index;
     }
 }
