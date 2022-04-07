@@ -18,26 +18,48 @@ namespace Elasticsuite\Standard\src\Test;
 
 abstract class AbstractEntityTest extends AbstractTest
 {
+    public static function setUpBeforeClass(): void
+    {
+        static::loadFixture(static::getFixtureFiles());
+    }
+
+    abstract protected static function getFixtureFiles(): array;
+
     abstract protected function getEntityClass(): string;
 
     abstract protected function getApiPath(): string;
 
-    abstract protected function getFixtureFiles(): array;
-
     abstract protected function getJsonCreationValidation(array $validData): array;
 
-    abstract protected function getJsonCollectionValidation(): array;
+    abstract protected function getJsonGetValidation(array $expectedData): array;
 
-    abstract public function validDataProvider(): array;
+    abstract protected function getJsonGetCollectionValidation(): array;
 
-    abstract public function invalidDataProvider(): array;
+    public function createValidDataProvider(): array
+    {
+        return [];
+    }
+
+    public function createInvalidDataProvider(): array
+    {
+        return [];
+    }
+
+    public function getDataProvider(): array
+    {
+        return [];
+    }
+
+    public function deleteDataProvider(): array
+    {
+        return [];
+    }
 
     /**
-     * @dataProvider validDataProvider
+     * @dataProvider createValidDataProvider
      */
     public function testCreateValidData(array $validData, string $validRegex = null): void
     {
-        $this->loadFixture($this->getFixtureFiles());
         $response = $this->requestRest('POST', $this->getApiPath(), $validData);
         $this->assertResponseStatusCodeSame(201);
         $this->assertJsonContains($this->getJsonCreationValidation($validData));
@@ -46,14 +68,13 @@ abstract class AbstractEntityTest extends AbstractTest
     }
 
     /**
-     * @dataProvider invalidDataProvider
+     * @dataProvider createInvalidDataProvider
      *
      * @param mixed $message
      * @param mixed $code
      */
     public function testCreateInvalidData(array $invalidData, $message, $code = 422): void
     {
-        $this->loadFixture($this->getFixtureFiles());
         $response = $this->requestRest('POST', $this->getApiPath(), $invalidData);
         $this->assertResponseStatusCodeSame($code);
         $errorType = 'hydra:Error';
@@ -71,11 +92,43 @@ abstract class AbstractEntityTest extends AbstractTest
         );
     }
 
+    /**
+     * @dataProvider getDataProvider
+     * @depends testCreateValidData
+     * @depends testCreateInvalidData
+     */
+    public function testGet(int|string $id, array $expectedData, int $statusCode): void
+    {
+        $this->requestRest('GET', "{$this->getApiPath()}/{$id}");
+        if ($statusCode >= 400) {
+            $this->assertResponseStatusCodeSame($statusCode);
+        } else {
+            $this->assertResponseIsSuccessful();
+            $this->assertJsonContains($this->getJsonGetValidation($expectedData));
+        }
+    }
+
+    /**
+     * @dataProvider deleteDataProvider
+     * @depends testGet
+     */
+    public function testDelete(int|string $id, int $statusCode): void
+    {
+        $this->requestRest('DELETE', "{$this->getApiPath()}/{$id}");
+        if ($statusCode >= 400) {
+            $this->assertResponseStatusCodeSame($statusCode);
+        } else {
+            $this->assertResponseIsSuccessful();
+        }
+    }
+
+    /**
+     * @depends testDelete
+     */
     public function testGetCollection(): void
     {
-        $this->loadFixture($this->getFixtureFiles());
         $this->requestRest('GET', $this->getApiPath());
         $this->assertResponseIsSuccessful();
-        $this->assertJsonContains($this->getJsonCollectionValidation());
+        $this->assertJsonContains($this->getJsonGetCollectionValidation());
     }
 }

@@ -21,6 +21,15 @@ use Elasticsuite\Standard\src\Test\AbstractEntityTest;
 
 class SourceFieldOptionTest extends AbstractEntityTest
 {
+    protected static function getFixtureFiles(): array
+    {
+        return [
+            __DIR__ . '/../../fixtures/metadata.yaml',
+            __DIR__ . '/../../fixtures/source_field.yaml',
+            __DIR__ . '/../../fixtures/source_field_option.yaml',
+        ];
+    }
+
     protected function getEntityClass(): string
     {
         return SourceFieldOption::class;
@@ -31,15 +40,6 @@ class SourceFieldOptionTest extends AbstractEntityTest
         return '/source_field_options';
     }
 
-    protected function getFixtureFiles(): array
-    {
-        return [
-            __DIR__ . '/../../fixtures/metadata.yaml',
-            __DIR__ . '/../../fixtures/source_field.yaml',
-            __DIR__ . '/../../fixtures/source_field_option.yaml',
-        ];
-    }
-
     protected function getJsonCreationValidation(array $validData): array
     {
         return [
@@ -48,7 +48,16 @@ class SourceFieldOptionTest extends AbstractEntityTest
         ];
     }
 
-    protected function getJsonCollectionValidation(): array
+    protected function getJsonGetValidation(array $expectedData): array
+    {
+        return [
+            '@context' => '/contexts/SourceFieldOption',
+            '@id' => '/source_field_options/' . $expectedData['id'],
+            '@type' => 'SourceFieldOption',
+        ];
+    }
+
+    protected function getJsonGetCollectionValidation(): array
     {
         return [
             '@context' => '/contexts/SourceFieldOption',
@@ -58,7 +67,7 @@ class SourceFieldOptionTest extends AbstractEntityTest
         ];
     }
 
-    public function validDataProvider(): array
+    public function createValidDataProvider(): array
     {
         return [
             [['sourceField' => '/source_fields/4', 'position' => 10]],
@@ -66,10 +75,28 @@ class SourceFieldOptionTest extends AbstractEntityTest
         ];
     }
 
-    public function invalidDataProvider(): array
+    public function createInvalidDataProvider(): array
     {
         return [
             [['position' => 3], 'sourceField: This value should not be blank.'],
+        ];
+    }
+
+    public function getDataProvider(): array
+    {
+        return [
+            [1, ['id' => 1, 'label' => 'Marque 1'], 200],
+            [2, ['id' => 2, 'label' => 'Brand 1'], 200],
+            [10, [], 404],
+        ];
+    }
+
+    public function deleteDataProvider(): array
+    {
+        return [
+            [1, 200],
+            [2, 200],
+            [10, 404],
         ];
     }
 }

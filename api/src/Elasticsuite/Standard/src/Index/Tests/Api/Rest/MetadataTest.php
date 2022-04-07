@@ -21,6 +21,11 @@ use Elasticsuite\Standard\src\Test\AbstractEntityTest;
 
 class MetadataTest extends AbstractEntityTest
 {
+    protected static function getFixtureFiles(): array
+    {
+        return [__DIR__ . '/../../fixtures/metadata.yaml'];
+    }
+
     protected function getEntityClass(): string
     {
         return Metadata::class;
@@ -29,11 +34,6 @@ class MetadataTest extends AbstractEntityTest
     protected function getApiPath(): string
     {
         return '/metadata';
-    }
-
-    protected function getFixtureFiles(): array
-    {
-        return [__DIR__ . '/../../fixtures/metadata.yaml'];
     }
 
     protected function getJsonCreationValidation(array $validData): array
@@ -45,7 +45,17 @@ class MetadataTest extends AbstractEntityTest
         ];
     }
 
-    protected function getJsonCollectionValidation(): array
+    protected function getJsonGetValidation(array $expectedData): array
+    {
+        return [
+            '@context' => '/contexts/Metadata',
+            '@id' => '/metadata/' . $expectedData['id'],
+            '@type' => 'Metadata',
+            'entity' => $expectedData['entity'],
+        ];
+    }
+
+    protected function getJsonGetCollectionValidation(): array
     {
         return [
             '@context' => '/contexts/Metadata',
@@ -55,7 +65,7 @@ class MetadataTest extends AbstractEntityTest
         ];
     }
 
-    public function validDataProvider(): array
+    public function createValidDataProvider(): array
     {
         return [
             [['entity' => 'article']],
@@ -63,7 +73,7 @@ class MetadataTest extends AbstractEntityTest
         ];
     }
 
-    public function invalidDataProvider(): array
+    public function createInvalidDataProvider(): array
     {
         return [
             [['entity' => ''], 'entity: This value should not be blank.'],
@@ -72,11 +82,21 @@ class MetadataTest extends AbstractEntityTest
         ];
     }
 
-    public function mappingStatusDataProvider(): array
+    public function getDataProvider(): array
     {
         return [
-            ['product', 'green'],
-            ['category', 'red'],
+            [1, ['id' => 1, 'entity' => 'product'], 200],
+            [3, ['id' => 3, 'entity' => 'article'], 200],
+            [5, [], 404],
+        ];
+    }
+
+    public function deleteDataProvider(): array
+    {
+        return [
+            [1, 200],
+            [3, 200],
+            [5, 404],
         ];
     }
 }

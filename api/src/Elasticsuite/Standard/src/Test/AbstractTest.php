@@ -20,40 +20,34 @@ use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
 use Elasticsuite\Fixture\Service\ElasticsearchFixtures;
 use Elasticsuite\User\DataFixtures\LoginTrait;
 use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
-use Liip\TestFixturesBundle\Services\DatabaseTools\AbstractDatabaseTool;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
 abstract class AbstractTest extends ApiTestCase
 {
     use LoginTrait;
 
-    private AbstractDatabaseTool $databaseTool;
-    private ElasticsearchFixtures $elasticFixtures;
-
-    protected function setUp(): void
+    protected static function loadFixture(array $paths)
     {
-        $this->databaseTool = static::getContainer()->get(DatabaseToolCollection::class)->get();
-        $this->elasticFixtures = static::getContainer()->get(ElasticsearchFixtures::class);
+        $databaseTool = static::getContainer()->get(DatabaseToolCollection::class)->get();
+        $databaseTool->loadAliceFixture($paths);
     }
 
-    protected function loadFixture(array $paths)
+    protected static function loadElasticsearchIndexFixtures(array $paths)
     {
-        $this->databaseTool->loadAliceFixture($paths);
+        $elasticFixtures = static::getContainer()->get(ElasticsearchFixtures::class);
+        $elasticFixtures->loadFixturesIndexFiles($paths);
     }
 
-    protected function loadElasticsearchIndexFixtures(array $paths)
+    protected static function loadElasticsearchDocumentFixtures(array $paths)
     {
-        $this->elasticFixtures->loadFixturesIndexFiles($paths);
+        $elasticFixtures = static::getContainer()->get(ElasticsearchFixtures::class);
+        $elasticFixtures->loadFixturesDocumentFiles($paths);
     }
 
-    protected function loadElasticsearchDocumentFixtures(array $paths)
+    protected static function deleteElasticsearchFixtures()
     {
-        $this->elasticFixtures->loadFixturesDocumentFiles($paths);
-    }
-
-    protected function deleteElasticsearchFixtures()
-    {
-        $this->elasticFixtures->deleteTestFixtures();
+        $elasticFixtures = static::getContainer()->get(ElasticsearchFixtures::class);
+        $elasticFixtures->deleteTestFixtures();
     }
 
     protected function requestGraphQl(string $query, array $headers = []): ResponseInterface
@@ -84,7 +78,10 @@ abstract class AbstractTest extends ApiTestCase
         }
 
         $response = $this->request($method, $path, $data);
-        $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
+
+        if ('DELETE' !== $method) {
+            $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
+        }
 
         return $response;
     }
