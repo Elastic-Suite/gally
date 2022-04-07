@@ -117,7 +117,6 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
 
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
-        $container->setParameter('elasticsuite.entities', $config['entities'] ?? []);
         $container->setParameter('elasticsuite.indices_settings', $config['indices_settings'] ?? []);
         $container->setParameter('elasticsuite.menu', $config['menu'] ?? []);
 
@@ -138,7 +137,6 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
         $isTestMode = 'test' === $container->getParameter('kernel.environment');
 
         $configFiles = [
-            __DIR__ . '/../Catalog/Resources/config/elasticsuite.yaml',
             __DIR__ . '/../Index/Resources/config/elasticsuite.yaml',
         ];
 

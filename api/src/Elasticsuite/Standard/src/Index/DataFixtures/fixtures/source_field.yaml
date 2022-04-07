@@ -19,10 +19,6 @@ Elasticsuite\Index\Model\SourceField:
         is_sortable: false
         is_spellchecked: false
         is_used_for_rules: false
-    product_price:
-        metadata: '@product'
-        name: 'price'
-        type: 'price'
     product_brand:
         metadata: '@product'
         name: 'brand'
