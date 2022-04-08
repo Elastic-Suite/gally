@@ -7,6 +7,18 @@
                 <target>Catalog</target>
             </segment>
         </unit>
+        <unit id="elasticsuite.menu.catalog_catalogs_and_locales.label">
+            <segment>
+                <source>elasticsuite.menu.catalog_catalogs_and_locales.label</source>
+                <target>Catalogs and locales</target>
+            </segment>
+        </unit>
+        <unit id="elasticsuite.menu.catalog_attributes_configuration.label">
+            <segment>
+                <source>elasticsuite.menu.catalog_attributes_configuration.label</source>
+                <target>Attributes configuration</target>
+            </segment>
+        </unit>
         <unit id="elasticsuite.menu.product.label">
             <segment>
                 <source>elasticsuite.menu.product.label</source>
