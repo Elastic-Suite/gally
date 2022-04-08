@@ -59,6 +59,12 @@ services:
         tags:
             - { name: api_platform.data_persister }
 
+    Elasticsuite\Index\DataPersister\SourceFieldDataPersister:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: api_platform.data_persister }
+
     Elasticsuite\Index\DataProvider\IndexDataProvider:
         arguments:
             - '@Elasticsuite\Index\Repository\Index\IndexRepositoryInterface'
@@ -71,7 +77,6 @@ services:
     Elasticsuite\Index\Service\IndexManager:
         arguments:
             - '@Elasticsuite\Index\Converter\SourceFieldToMappingField'
-            - '%elasticsuite.entities%'
 
     Elasticsuite\Index\Helper\IndexSettings:
         arguments:

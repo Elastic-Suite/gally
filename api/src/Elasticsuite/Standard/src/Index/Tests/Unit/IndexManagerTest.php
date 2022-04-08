@@ -64,8 +64,8 @@ class IndexManagerTest extends AbstractTest
                         'stock' => [
                             'type' => 'nested',
                             'properties' => [
-                                'status' => ['type' => 'boolean'],
-                                'quantity' => ['type' => 'double'],
+                                'status' => ['type' => 'integer'],
+                                'qty' => ['type' => 'double'],
                             ],
                         ],
                         'name' => ['type' => 'text'],

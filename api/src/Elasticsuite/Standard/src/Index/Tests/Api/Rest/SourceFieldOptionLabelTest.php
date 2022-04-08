@@ -21,17 +21,7 @@ use Elasticsuite\Standard\src\Test\AbstractEntityTest;
 
 class SourceFieldOptionLabelTest extends AbstractEntityTest
 {
-    protected function getEntityClass(): string
-    {
-        return SourceFieldOptionLabel::class;
-    }
-
-    protected function getApiPath(): string
-    {
-        return '/source_field_option_labels';
-    }
-
-    protected function getFixtureFiles(): array
+    protected static function getFixtureFiles(): array
     {
         return [
             __DIR__ . '/../../fixtures/catalogs.yaml',
@@ -40,6 +30,16 @@ class SourceFieldOptionLabelTest extends AbstractEntityTest
             __DIR__ . '/../../fixtures/source_field_option.yaml',
             __DIR__ . '/../../fixtures/source_field_option_label.yaml',
         ];
+    }
+
+    protected function getEntityClass(): string
+    {
+        return SourceFieldOptionLabel::class;
+    }
+
+    protected function getApiPath(): string
+    {
+        return '/source_field_option_labels';
     }
 
     protected function getJsonCreationValidation(array $validData): array
@@ -51,7 +51,16 @@ class SourceFieldOptionLabelTest extends AbstractEntityTest
         ];
     }
 
-    protected function getJsonCollectionValidation(): array
+    protected function getJsonGetValidation(array $expectedData): array
+    {
+        return [
+            '@context' => '/contexts/SourceFieldOptionLabel',
+            '@id' => '/source_field_option_labels/' . $expectedData['id'],
+            '@type' => 'SourceFieldOptionLabel',
+        ];
+    }
+
+    protected function getJsonGetCollectionValidation(): array
     {
         return [
             '@context' => '/contexts/SourceFieldOptionLabel',
@@ -61,7 +70,7 @@ class SourceFieldOptionLabelTest extends AbstractEntityTest
         ];
     }
 
-    public function validDataProvider(): array
+    public function createValidDataProvider(): array
     {
         return [
             [['catalog' => '/localized_catalogs/1', 'sourceFieldOption' => '/source_field_options/3', 'label' => 'Marque 3']],
@@ -69,7 +78,7 @@ class SourceFieldOptionLabelTest extends AbstractEntityTest
         ];
     }
 
-    public function invalidDataProvider(): array
+    public function createInvalidDataProvider(): array
     {
         return [
             [
@@ -98,6 +107,24 @@ class SourceFieldOptionLabelTest extends AbstractEntityTest
                 'Item not found for "/source_field_options/NotExist".',
                 400,
             ],
+        ];
+    }
+
+    public function getDataProvider(): array
+    {
+        return [
+            [1, ['id' => 1, 'label' => 'Marque 1'], 200],
+            [3, ['id' => 3, 'label' => 'Brand 1'], 200],
+            [20, [], 404],
+        ];
+    }
+
+    public function deleteDataProvider(): array
+    {
+        return [
+            [1, 200],
+            [3, 200],
+            [20, 404],
         ];
     }
 }

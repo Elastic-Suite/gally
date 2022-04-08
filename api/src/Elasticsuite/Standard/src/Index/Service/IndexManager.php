@@ -23,12 +23,10 @@ use Elasticsuite\Index\Model\Metadata;
 class IndexManager
 {
     /**
-     * @param SourceFieldToMappingField $fieldConverter        Source field converter
-     * @param array<mixed>              $entitiesConfiguration Entities configuration
+     * @param SourceFieldToMappingField $fieldConverter Source field converter
      */
     public function __construct(
         private SourceFieldToMappingField $fieldConverter,
-        private array $entitiesConfiguration
     ) {
     }
 
@@ -38,22 +36,6 @@ class IndexManager
     public function getMapping(Metadata $metadata): Mapping
     {
         $fields = [];
-        $staticFields = \array_key_exists($metadata->getEntity(), $this->entitiesConfiguration)
-            ? ($this->entitiesConfiguration[$metadata->getEntity()]['static_fields'] ?? [])
-            : [];
-
-        // Static fields
-        // @see elasticsuite.yaml files
-        foreach ($staticFields as $fieldData) {
-            $path = explode('.', $fieldData['name']);
-            unset($path[\count($path) - 1]);
-            $field = new Mapping\Field(
-                $fieldData['name'],
-                $fieldData['type'] ?? Mapping\FieldInterface::FIELD_TYPE_KEYWORD,
-                \count($path) ? implode('.', $path) : null
-            );
-            $fields[$field->getName()] = $field;
-        }
 
         // Dynamic fields
         foreach ($metadata->getSourceFields() as $sourceField) {
