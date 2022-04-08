@@ -63,6 +63,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
                         __DIR__ . '/../Example/Resources/translations',
                         __DIR__ . '/../Menu/Resources/translations',
                         __DIR__ . '/../Catalog/Resources/translations',
+                        __DIR__ . '/../User/Resources/translations',
                     ],
                 ],
                 'validation' => [
@@ -147,8 +148,9 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
             $configFiles = array_merge(
                 $configFiles,
                 [
-                    __DIR__ . '/../Menu/Resources/config/elasticsuite_menu.yaml',
                     __DIR__ . '/../Catalog/Resources/config/elasticsuite_menu.yaml',
+                    __DIR__ . '/../User/Resources/config/elasticsuite_menu.yaml',
+                    __DIR__ . '/../Menu/Resources/config/elasticsuite_menu.yaml',
                 ]
             );
         }

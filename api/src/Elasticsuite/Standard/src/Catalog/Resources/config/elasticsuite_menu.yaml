@@ -1,10 +1,11 @@
 elasticsuite:
     menu:
         catalog:
-            order: 10
-        product:
+            order: 15
+            parent: settings
+        catalog_catalogs_and_locales:
             parent: catalog
             order: 10
-        category:
+        catalog_attributes_configuration:
             parent: catalog
             order: 20
