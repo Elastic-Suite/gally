@@ -36,35 +36,21 @@ class SourceFieldLabelTest extends AbstractEntityTest
         return SourceFieldLabel::class;
     }
 
-    protected function getApiPath(): string
-    {
-        return '/source_field_labels';
-    }
-
     protected function getJsonCreationValidation(array $validData): array
     {
         return [
-            '@context' => '/contexts/SourceFieldLabel',
-            '@type' => 'SourceFieldLabel',
             'label' => $validData['label'],
         ];
     }
 
     protected function getJsonGetValidation(array $expectedData): array
     {
-        return [
-            '@context' => '/contexts/SourceFieldLabel',
-            '@id' => '/source_field_labels/' . $expectedData['id'],
-            '@type' => 'SourceFieldLabel',
-        ];
+        return [];
     }
 
     protected function getJsonGetCollectionValidation(): array
     {
         return [
-            '@context' => '/contexts/SourceFieldLabel',
-            '@id' => '/source_field_labels',
-            '@type' => 'hydra:Collection',
             'hydra:totalItems' => 4,
         ];
     }

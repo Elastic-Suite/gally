@@ -10,3 +10,15 @@ services:
             - '@Doctrine\Persistence\ManagerRegistry'
         tags:
             - { name: doctrine.repository_service }
+            
+    Elasticsuite\Catalog\DataPersister\LocalizedCatalogDataPersister:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@Elasticsuite\Catalog\Repository\LocalizedCatalogRepository'
+        tags:
+            - { name: api_platform.data_persister }
+                
+    Elasticsuite\Catalog\Service\DefaultCatalogProvider:
+        arguments:
+            - '@Elasticsuite\Catalog\Repository\LocalizedCatalogRepository'
+            
