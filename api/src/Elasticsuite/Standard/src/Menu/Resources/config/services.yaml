@@ -1,0 +1,20 @@
+services:
+    Elasticsuite\Menu\Service\MenuBuilder:
+        arguments:
+            - '%elasticsuite.menu%'
+            - '@Symfony\Contracts\Translation\TranslatorInterface'
+            - '@request_stack'
+            
+    Elasticsuite\Menu\Resolver\MenuResolver:
+        arguments:
+            - '@Elasticsuite\Menu\Service\MenuBuilder'
+        tags:
+            - { name: api_platform.graphql.query_resolver } 
+    
+    Elasticsuite\Menu\Controller\MenuController:
+        arguments:
+            - '@Elasticsuite\Menu\Service\MenuBuilder'
+        calls:
+            - [ setContainer, [ '@service_container' ]]
+        tags: 
+            - { name: controller.service_arguments }

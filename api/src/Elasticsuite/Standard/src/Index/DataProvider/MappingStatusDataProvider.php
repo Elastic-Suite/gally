@@ -31,11 +31,21 @@ class MappingStatusDataProvider implements RestrictedDataProviderInterface, Item
     ) {
     }
 
+    /**
+     * @param mixed $item
+     *
+     * @return ?Status
+     */
     public function __invoke($item, array $context)
     {
         return $this->getItem(Status::class, $context['args']['entityType'], null, $context);
     }
 
+    /**
+     * @param mixed $id
+     *
+     * @return ?Status
+     */
     public function getItem(string $resourceClass, $id, string $operationName = null, array $context = [])
     {
         $metadata = $this->metadataRepository->findOneBy(['entity' => $id]);

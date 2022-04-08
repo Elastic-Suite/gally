@@ -38,6 +38,8 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
     {
         $yamlParser ??= new YamlParser(); // @phpstan-ignore-line
         $apiPlatformConfig = $yamlParser->parseFile(__DIR__ . '/../Config/Resources/config/api_platform.yaml', Yaml::PARSE_CONSTANT);
+        $isTestMode = 'test' === $container->getParameter('kernel.environment');
+
         $container->prependExtensionConfig('api_platform', $apiPlatformConfig['api_platform']);
         $container->prependExtensionConfig(
             'api_platform',
@@ -47,6 +49,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
                         __DIR__ . '/../Index/Model/',
                         __DIR__ . '/../Catalog/Model/',
                         __DIR__ . '/../Security/Model/',
+                        __DIR__ . '/../Menu/Model/',
                     ],
                 ],
             ]
@@ -58,6 +61,8 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
                 'translator' => [
                     'paths' => [
                         __DIR__ . '/../Example/Resources/translations',
+                        __DIR__ . '/../Menu/Resources/translations',
+                        __DIR__ . '/../Catalog/Resources/translations',
                     ],
                 ],
                 'validation' => [
@@ -83,17 +88,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
             ]
         );
 
-        $elasticsuiteConfig = array_merge_recursive(
-            $yamlParser->parseFile(__DIR__ . '/../Catalog/Resources/config/elasticsuite.yaml'),
-            $yamlParser->parseFile(__DIR__ . '/../Index/Resources/config/elasticsuite.yaml'),
-        );
-        if (isset($elasticsuiteConfig['elasticsuite']['indices_settings']['alias'])
-            && ('test' === $container->getParameter('kernel.environment'))
-        ) {
-            $elasticsuiteConfig['elasticsuite']['indices_settings']['alias'] =
-                'test_' . $elasticsuiteConfig['elasticsuite']['indices_settings']['alias'];
-        }
-        $container->prependExtensionConfig('elasticsuite', $elasticsuiteConfig['elasticsuite']);
+        $this->loadElasticsuiteConfig($container);
     }
 
     /**
@@ -118,11 +113,13 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
         $loader->load('User/Resources/config/services.yaml');
         $loader->load('Security/Resources/config/services.yaml');
         $loader->load('Cache/Resources/config/services.yaml');
+        $loader->load('Menu/Resources/config/services.yaml');
 
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
         $container->setParameter('elasticsuite.entities', $config['entities'] ?? []);
         $container->setParameter('elasticsuite.indices_settings', $config['indices_settings'] ?? []);
+        $container->setParameter('elasticsuite.menu', $config['menu'] ?? []);
 
         //@Todo : Use this feature https://symfony.com/doc/current/bundles/extension.html ?
 //        $this->addAnnotatedClassesToCompile([
@@ -133,5 +130,36 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
 //
 //            // ...
 //        ]);
+    }
+
+    protected function loadElasticsuiteConfig(ContainerBuilder $container): void
+    {
+        $yamlParser ??= new YamlParser(); // @phpstan-ignore-line
+        $isTestMode = 'test' === $container->getParameter('kernel.environment');
+
+        $configFiles = [
+            __DIR__ . '/../Catalog/Resources/config/elasticsuite.yaml',
+            __DIR__ . '/../Index/Resources/config/elasticsuite.yaml',
+        ];
+
+        if ($isTestMode) {
+            array_unshift($configFiles, __DIR__ . '/../Index/Resources/config/test/elasticsuite.yaml');
+            $configFiles[] = __DIR__ . '/../Menu/Resources/config/test/elasticsuite_menu.yaml';
+        } else {
+            $configFiles = array_merge(
+                $configFiles,
+                [
+                    __DIR__ . '/../Menu/Resources/config/elasticsuite_menu.yaml',
+                    __DIR__ . '/../Catalog/Resources/config/elasticsuite_menu.yaml',
+                ]
+            );
+        }
+
+        foreach ($configFiles as $configFile) {
+            $container->prependExtensionConfig(
+                'elasticsuite',
+                $yamlParser->parseFile($configFile)['elasticsuite'] ?? []
+            );
+        }
     }
 }
