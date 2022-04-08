@@ -20,6 +20,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Elasticsuite\User\Constant\Role;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ApiResource(
     collectionOperations: [
@@ -39,11 +40,14 @@ use Elasticsuite\User\Constant\Role;
         'update' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
         'delete' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
     ],
+    normalizationContext: ['groups' => ['api']],
+    denormalizationContext: ['groups' => ['api']],
 )]
 class SourceField
 {
     private int $id;
     private string $name;
+    private ?string $defaultLabel = null;
     private ?string $type = null;
     private ?int $weight = null;
     private ?bool $isSearchable = null;
@@ -51,6 +55,7 @@ class SourceField
     private ?bool $isSortable = null;
     private ?bool $isSpellchecked = null;
     private ?bool $isUsedForRules = null;
+    private bool $isSystem = false;
 
     private Metadata $metadata;
 
@@ -66,16 +71,19 @@ class SourceField
         $this->options = new ArrayCollection();
     }
 
+    #[Groups(['api'])]
     public function getId(): int
     {
         return $this->id;
     }
 
+    #[Groups(['api'])]
     public function getName(): string
     {
         return $this->name;
     }
 
+    #[Groups(['api'])]
     public function setName(string $name): self
     {
         $this->name = $name;
@@ -83,11 +91,27 @@ class SourceField
         return $this;
     }
 
+    #[Groups(['api'])]
+    public function getDefaultLabel(): string
+    {
+        return $this->defaultLabel ?: ucfirst($this->getName());
+    }
+
+    #[Groups(['api'])]
+    public function setDefaultLabel(string $defaultLabel): self
+    {
+        $this->defaultLabel = $defaultLabel;
+
+        return $this;
+    }
+
+    #[Groups(['api'])]
     public function getType(): ?string
     {
         return $this->type;
     }
 
+    #[Groups(['api'])]
     public function setType(?string $type): self
     {
         $this->type = $type;
@@ -95,11 +119,13 @@ class SourceField
         return $this;
     }
 
+    #[Groups(['api'])]
     public function getWeight(): ?int
     {
         return $this->weight;
     }
 
+    #[Groups(['api'])]
     public function setWeight(?int $weight): self
     {
         $this->weight = $weight;
@@ -107,11 +133,13 @@ class SourceField
         return $this;
     }
 
+    #[Groups(['api'])]
     public function isSearchable(): ?bool
     {
         return $this->isSearchable;
     }
 
+    #[Groups(['api'])]
     public function setIsSearchable(?bool $isSearchable): self
     {
         $this->isSearchable = $isSearchable;
@@ -119,11 +147,13 @@ class SourceField
         return $this;
     }
 
+    #[Groups(['api'])]
     public function isFilterable(): ?bool
     {
         return $this->isFilterable;
     }
 
+    #[Groups(['api'])]
     public function setIsFilterable(?bool $isFilterable): self
     {
         $this->isFilterable = $isFilterable;
@@ -131,11 +161,13 @@ class SourceField
         return $this;
     }
 
+    #[Groups(['api'])]
     public function isSortable(): ?bool
     {
         return $this->isSortable;
     }
 
+    #[Groups(['api'])]
     public function setIsSortable(?bool $isSortable): self
     {
         $this->isSortable = $isSortable;
@@ -143,11 +175,13 @@ class SourceField
         return $this;
     }
 
+    #[Groups(['api'])]
     public function isSpellchecked(): ?bool
     {
         return $this->isSpellchecked;
     }
 
+    #[Groups(['api'])]
     public function setIsSpellchecked(?bool $isSpellchecked): self
     {
         $this->isSpellchecked = $isSpellchecked;
@@ -155,11 +189,13 @@ class SourceField
         return $this;
     }
 
+    #[Groups(['api'])]
     public function isUsedForRules(): ?bool
     {
         return $this->isUsedForRules;
     }
 
+    #[Groups(['api'])]
     public function setIsUsedForRules(?bool $isUsedForRules): self
     {
         $this->isUsedForRules = $isUsedForRules;
@@ -167,11 +203,26 @@ class SourceField
         return $this;
     }
 
+    #[Groups(['api'])]
+    public function isSystem(): bool
+    {
+        return $this->isSystem;
+    }
+
+    public function setIsSystem(bool $isSystem): self
+    {
+        $this->isSystem = $isSystem;
+
+        return $this;
+    }
+
+    #[Groups(['api'])]
     public function getMetadata(): ?Metadata
     {
         return $this->metadata;
     }
 
+    #[Groups(['api'])]
     public function setMetadata(?Metadata $metadata): self
     {
         $this->metadata = $metadata;
@@ -182,6 +233,7 @@ class SourceField
     /**
      * @return Collection<SourceFieldLabel>
      */
+    #[Groups(['api'])]
     public function getLabels(): Collection
     {
         return $this->labels;
@@ -211,6 +263,7 @@ class SourceField
     /**
      * @return Collection<SourceFieldOption>
      */
+    #[Groups(['api'])]
     public function getOptions(): Collection
     {
         return $this->options;

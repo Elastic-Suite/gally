@@ -12,6 +12,7 @@
         </id>
 
         <field name="name" type="string" nullable="false"/>
+        <field name="defaultLabel" type="string" nullable="true"/>
         <field name="type" type="string" nullable="true" />
         <field name="weight" type="integer" nullable="true" />
         <field name="isSearchable" type="boolean" nullable="true" />
@@ -19,6 +20,11 @@
         <field name="isSortable" type="boolean" nullable="true" />
         <field name="isSpellchecked" type="boolean" nullable="true" />
         <field name="isUsedForRules" type="boolean" nullable="true" />
+        <field name="isSystem" type="boolean" nullable="false">
+            <options>
+                <option name="default">false</option>
+            </options>
+        </field>
 
         <many-to-one field="metadata" target-entity="Elasticsuite\Index\Model\Metadata" inversed-by="sourceFields">
             <join-column name="metadata_id" referenced-column-name="id" nullable="false" on-delete="CASCADE" on-update="CASCADE"/>
