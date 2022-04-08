@@ -58,12 +58,17 @@ class MenuItem
 
     public function addChild(self $child): void
     {
-        if ($child->getOrder()) {
-            $this->children[$child->getOrder()] = $child;
-        } else {
-            $this->children[] = $child;
-        }
-        ksort($this->children);
+        $this->children[] = $child;
+
+        usort(
+            $this->children,
+            /**
+             * @param self $childA
+             * @param self $childB
+             */
+            function ($childA, $childB) {
+                return $childA->getOrder() > $childB->getOrder() ? 1 : -1;
+            });
     }
 
     public function asArray(): array
