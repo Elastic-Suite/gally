@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en-US" trgLang="en-US">
+    <file id="menu.en_US">
+        <unit id="elasticsuite.menu.thesaurus.label">
+            <segment>
+                <source>elasticsuite.menu.thesaurus.label</source>
+                <target>Thesaurus</target>
+            </segment>
+        </unit>
+        <unit id="elasticsuite.menu.optimizer.label">
+            <segment>
+                <source>elasticsuite.menu.optimizer.label</source>
+                <target>Optimizer</target>
+            </segment>
+        </unit>
+    </file>
+</xliff>
