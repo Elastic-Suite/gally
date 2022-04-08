@@ -32,4 +32,14 @@ class LocalizedCatalogRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, LocalizedCatalog::class);
     }
+
+    public function unsetDefaultLocalizedCatalog(): void
+    {
+        $this->createQueryBuilder('')
+            ->update(LocalizedCatalog::class, 'lc')
+            ->set('lc.isDefault', ':isDefault')
+            ->setParameter('isDefault', false)
+            ->getQuery()
+            ->execute();
+    }
 }

@@ -52,11 +52,6 @@ class IndexOperationsTest extends AbstractEntityTest
         return Index::class;
     }
 
-    protected function getApiPath(): string
-    {
-        return '/indices';
-    }
-
     protected static function getFixtureFiles(): array
     {
         return [
@@ -68,8 +63,6 @@ class IndexOperationsTest extends AbstractEntityTest
     protected function getJsonCreationValidation(array $validData): array
     {
         return [
-            '@context' => '/contexts/Index',
-            '@type' => 'Index',
             'aliases' => [
                 '.catalog_' . $validData['catalog'],
                 '.entity_' . $validData['entityType'],
@@ -79,19 +72,12 @@ class IndexOperationsTest extends AbstractEntityTest
 
     protected function getJsonGetValidation(array $expectedData): array
     {
-        return [
-            '@context' => '/contexts/Index',
-            '@id' => '/indices/' . $expectedData['id'],
-            '@type' => 'Index',
-        ];
+        return [];
     }
 
     protected function getJsonGetCollectionValidation(): array
     {
         return [
-            '@context' => '/contexts/Index',
-            '@id' => '/indices',
-            '@type' => 'hydra:Collection',
             'hydra:totalItems' => self::$initialIndicesCount + 6,
         ];
     }

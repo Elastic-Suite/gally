@@ -16,8 +16,23 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Standard\src\Test;
 
+use ApiPlatform\Core\Metadata\Resource\Factory\ResourceMetadataFactoryInterface;
+use ApiPlatform\Core\Metadata\Resource\ResourceMetadata;
+use ApiPlatform\Core\Operation\PathSegmentNameGeneratorInterface;
+
 abstract class AbstractEntityTest extends AbstractTest
 {
+    private PathSegmentNameGeneratorInterface $pathGenerator;
+    private ResourceMetadataFactoryInterface $metadataFactory;
+    private ?ResourceMetadata $resource = null;
+
+    public function __construct(?string $name = null, array $data = [], $dataName = '')
+    {
+        parent::__construct($name, $data, $dataName);
+        $this->pathGenerator = static::getContainer()->get('api_platform.path_segment_name_generator');
+        $this->metadataFactory = static::getContainer()->get('api_platform.metadata.resource.metadata_factory');
+    }
+
     public static function setUpBeforeClass(): void
     {
         static::loadFixture(static::getFixtureFiles());
@@ -27,32 +42,32 @@ abstract class AbstractEntityTest extends AbstractTest
 
     abstract protected function getEntityClass(): string;
 
-    abstract protected function getApiPath(): string;
-
     abstract protected function getJsonCreationValidation(array $validData): array;
 
     abstract protected function getJsonGetValidation(array $expectedData): array;
 
     abstract protected function getJsonGetCollectionValidation(): array;
 
-    public function createValidDataProvider(): array
+    abstract public function createValidDataProvider(): array;
+
+    abstract public function createInvalidDataProvider(): array;
+
+    abstract public function getDataProvider(): array;
+
+    abstract public function deleteDataProvider(): array;
+
+    protected function getShortName(): string
     {
-        return [];
+        if (!$this->resource) {
+            $this->resource = $this->metadataFactory->create($this->getEntityClass());
+        }
+
+        return $this->resource->getShortName();
     }
 
-    public function createInvalidDataProvider(): array
+    protected function getApiPath(): string
     {
-        return [];
-    }
-
-    public function getDataProvider(): array
-    {
-        return [];
-    }
-
-    public function deleteDataProvider(): array
-    {
-        return [];
+        return '/' . $this->pathGenerator->getSegmentName($this->getShortName());
     }
 
     /**
@@ -62,7 +77,16 @@ abstract class AbstractEntityTest extends AbstractTest
     {
         $response = $this->requestRest('POST', $this->getApiPath(), $validData);
         $this->assertResponseStatusCodeSame(201);
-        $this->assertJsonContains($this->getJsonCreationValidation($validData));
+        $shortName = $this->getShortName();
+        $this->assertJsonContains(
+            array_merge(
+                [
+                    '@context' => "/contexts/$shortName",
+                    '@type' => $shortName,
+                ],
+                $this->getJsonCreationValidation($validData)
+            )
+        );
         $this->assertMatchesRegularExpression($validRegex ?? '~^' . $this->getApiPath() . '/\d+$~', $response->toArray()['@id']);
         $this->assertMatchesResourceItemJsonSchema($this->getEntityClass());
     }
@@ -104,7 +128,17 @@ abstract class AbstractEntityTest extends AbstractTest
             $this->assertResponseStatusCodeSame($statusCode);
         } else {
             $this->assertResponseIsSuccessful();
-            $this->assertJsonContains($this->getJsonGetValidation($expectedData));
+            $shortName = $this->getShortName();
+            $this->assertJsonContains(
+                array_merge(
+                    [
+                        '@context' => "/contexts/$shortName",
+                        '@type' => $shortName,
+                        '@id' => $this->getApiPath() . '/' . $expectedData['id'],
+                    ],
+                    $this->getJsonGetValidation($expectedData)
+                )
+            );
         }
     }
 
@@ -129,6 +163,16 @@ abstract class AbstractEntityTest extends AbstractTest
     {
         $this->requestRest('GET', $this->getApiPath());
         $this->assertResponseIsSuccessful();
-        $this->assertJsonContains($this->getJsonGetCollectionValidation());
+        $shortName = $this->getShortName();
+        $this->assertJsonContains(
+            array_merge(
+                [
+                    '@context' => "/contexts/$shortName",
+                    '@id' => $this->getApiPath(),
+                    '@type' => 'hydra:Collection',
+                ],
+                $this->getJsonGetCollectionValidation()
+            )
+        );
     }
 }

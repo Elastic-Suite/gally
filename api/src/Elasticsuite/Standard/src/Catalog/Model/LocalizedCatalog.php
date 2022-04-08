@@ -48,6 +48,8 @@ class LocalizedCatalog
 
     private string $locale;
 
+    private bool $isDefault = false;
+
     private Catalog $catalog;
 
     public function getId(): ?int
@@ -87,6 +89,18 @@ class LocalizedCatalog
     public function setLocale(string $locale): self
     {
         $this->locale = $locale;
+
+        return $this;
+    }
+
+    public function isDefault(): bool
+    {
+        return $this->isDefault;
+    }
+
+    public function setIsDefault(bool $isDefault): self
+    {
+        $this->isDefault = $isDefault;
 
         return $this;
     }

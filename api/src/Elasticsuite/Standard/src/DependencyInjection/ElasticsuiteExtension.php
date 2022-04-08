@@ -112,6 +112,9 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
         }
         $loader->load('Fixture/Resources/config/services.yaml');
         $loader->load('Catalog/Resources/config/services.yaml');
+        if ('test' === $container->getParameter('kernel.environment')) {
+            $loader->load('Catalog/Resources/config/test/services.yaml');
+        }
         $loader->load('User/Resources/config/services.yaml');
         $loader->load('Security/Resources/config/services.yaml');
         $loader->load('Cache/Resources/config/services.yaml');
