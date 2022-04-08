@@ -4,3 +4,101 @@ services:
             - '@Doctrine\Persistence\ManagerRegistry'
         tags:
             - { name: doctrine.repository_service }
+
+    Elasticsuite\DependencyInjection\GenericFactory:
+        public: false
+
+    elasticsuite.search.request.query.booleanfactory:
+        parent: Elasticsuite\DependencyInjection\GenericFactory
+        arguments:
+            - 'Elasticsuite\Search\Elasticsearch\Request\Query\Boolean'
+
+    elasticsuite.search.request.query.commonfactory:
+        parent: Elasticsuite\DependencyInjection\GenericFactory
+        arguments:
+            - 'Elasticsuite\Search\Elasticsearch\Request\Query\Common'
+
+    elasticsuite.search.request.query.existsfactory:
+        parent: Elasticsuite\DependencyInjection\GenericFactory
+        arguments:
+            - 'Elasticsuite\Search\Elasticsearch\Request\Query\Exists'
+
+    elasticsuite.search.request.query.filteredfactory:
+        parent: Elasticsuite\DependencyInjection\GenericFactory
+        arguments:
+            - 'Elasticsuite\Search\Elasticsearch\Request\Query\Filtered'
+
+    elasticsuite.search.request.query.functionscorefactory:
+        parent: Elasticsuite\DependencyInjection\GenericFactory
+        arguments:
+            - 'Elasticsuite\Search\Elasticsearch\Request\Query\FunctionScore'
+
+    elasticsuite.search.request.query.matchphraseprefixfactory:
+        parent: Elasticsuite\DependencyInjection\GenericFactory
+        arguments:
+            - 'Elasticsuite\Search\Elasticsearch\Request\Query\MatchPhrasePrefix'
+
+    elasticsuite.search.request.query.matchfactory:
+        parent: Elasticsuite\DependencyInjection\GenericFactory
+        arguments:
+            - 'Elasticsuite\Search\Elasticsearch\Request\Query\MatchQuery'
+
+    elasticsuite.search.request.query.missingfactory:
+        parent: Elasticsuite\DependencyInjection\GenericFactory
+        arguments:
+            - 'Elasticsuite\Search\Elasticsearch\Request\Query\Missing'
+
+    elasticsuite.search.request.query.morelikethisfactory:
+        parent: Elasticsuite\DependencyInjection\GenericFactory
+        arguments:
+            - 'Elasticsuite\Search\Elasticsearch\Request\Query\MoreLikeThis'
+
+    elasticsuite.search.request.query.multimatchfactory:
+        parent: Elasticsuite\DependencyInjection\GenericFactory
+        arguments:
+            - 'Elasticsuite\Search\Elasticsearch\Request\Query\MultiMatch'
+
+    elasticsuite.search.request.query.nestedfactory:
+        parent: Elasticsuite\DependencyInjection\GenericFactory
+        arguments:
+            - 'Elasticsuite\Search\Elasticsearch\Request\Query\Nested'
+
+    elasticsuite.search.request.query.notfactory:
+        parent: Elasticsuite\DependencyInjection\GenericFactory
+        arguments:
+            - 'Elasticsuite\Search\Elasticsearch\Request\Query\Not'
+
+    elasticsuite.search.request.query.rangefactory:
+        parent: Elasticsuite\DependencyInjection\GenericFactory
+        arguments:
+            - 'Elasticsuite\Search\Elasticsearch\Request\Query\Range'
+
+    elasticsuite.search.request.query.termfactory:
+        parent: Elasticsuite\DependencyInjection\GenericFactory
+        arguments:
+            - 'Elasticsuite\Search\Elasticsearch\Request\Query\Term'
+
+    elasticsuite.search.request.query.termsfactory:
+        parent: Elasticsuite\DependencyInjection\GenericFactory
+        arguments:
+            - 'Elasticsuite\Search\Elasticsearch\Request\Query\Terms'
+
+    Elasticsuite\Search\Elasticsearch\Request\QueryFactory:
+        public: true
+        arguments:
+            $factories:
+                boolQuery: '@elasticsuite.search.request.query.booleanfactory'
+                commonQuery: '@elasticsuite.search.request.query.commonfactory'
+                existsQuery: '@elasticsuite.search.request.query.existsfactory'
+                filteredQuery: '@elasticsuite.search.request.query.filteredfactory'
+                functionScore: '@elasticsuite.search.request.query.functionscorefactory'
+                matchPhrasePrefixQuery: '@elasticsuite.search.request.query.matchphraseprefixfactory'
+                matchQuery: '@elasticsuite.search.request.query.matchfactory'
+                missingQuery: '@elasticsuite.search.request.query.missingfactory'
+                moreLikeThisQuery: '@elasticsuite.search.request.query.morelikethisfactory'
+                multiMatchQuery: '@elasticsuite.search.request.query.multimatchfactory'
+                nestedQuery: '@elasticsuite.search.request.query.nestedfactory'
+                notQuery: '@elasticsuite.search.request.query.notfactory'
+                rangeQuery: '@elasticsuite.search.request.query.rangefactory'
+                termQuery: '@elasticsuite.search.request.query.termfactory'
+                termsQuery: '@elasticsuite.search.request.query.termsfactory'

@@ -1,0 +1,106 @@
+<?php
+/**
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Smile ElasticSuite to newer
+ * versions in the future.
+ *
+ * @package   Elasticsuite
+ * @author    ElasticSuite Team <elasticsuite@smile.fr>
+ * @copyright 2022 Smile
+ * @license   Licensed to Smile-SA. All rights reserved. No warranty, explicit or implicit, provided.
+ *            Unauthorized copying of this file, via any medium, is strictly prohibited.
+ */
+
+declare(strict_types=1);
+
+namespace Elasticsuite\Search\Elasticsearch\Request\Query;
+
+use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
+
+/**
+ * match_phrase_prefix query definition implementation.
+ */
+class MatchPhrasePrefix implements QueryInterface
+{
+    private ?string $name;
+
+    private int $boost;
+
+    private string $queryText;
+
+    private string $field;
+
+    private int $maxExpansions;
+
+    /**
+     * Constructor.
+     *
+     * @param string  $queryText     Matched text
+     * @param string  $field         Query field
+     * @param int     $maxExpansions Max expansions
+     * @param ?string $name          Query name
+     * @param int     $boost         Query boost
+     */
+    public function __construct(
+        string $queryText,
+        string $field,
+        int $maxExpansions = 10,
+        ?string $name = null,
+        int $boost = QueryInterface::DEFAULT_BOOST_VALUE
+    ) {
+        $this->name = $name;
+        $this->queryText = $queryText;
+        $this->field = $field;
+        $this->boost = $boost;
+        $this->maxExpansions = $maxExpansions;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getBoost(): int
+    {
+        return $this->boost;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getType(): string
+    {
+        return QueryInterface::TYPE_MATCHPHRASEPREFIX;
+    }
+
+    /**
+     * Query match text.
+     */
+    public function getQueryText(): string
+    {
+        return $this->queryText;
+    }
+
+    /**
+     * Query field.
+     */
+    public function getField(): string
+    {
+        return $this->field;
+    }
+
+    /**
+     * Max expansions.
+     */
+    public function getMaxExpansions(): int
+    {
+        return $this->maxExpansions;
+    }
+}

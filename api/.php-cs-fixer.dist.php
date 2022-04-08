@@ -19,6 +19,7 @@ $finder = PhpCsFixer\Finder::create()
     ->in(__DIR__)
     ->exclude([
         'src/Acme',
+        'src/Elasticsuite/Standard/src/Search/Legacy',
         'src/Core/Bridge/Symfony/Maker/Resources/skeleton',
         'tests/Fixtures/app/var',
     ])
