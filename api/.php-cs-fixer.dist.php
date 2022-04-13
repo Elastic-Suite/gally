@@ -22,15 +22,16 @@ $finder = PhpCsFixer\Finder::create()
         'src/Core/Bridge/Symfony/Maker/Resources/skeleton',
         'tests/Fixtures/app/var',
     ])
+    ->notPath('#src\/Elasticsuite\/.*\/Legacy#')
     ->notPath('src/Symfony/Bundle/DependencyInjection/Configuration.php')
     ->notPath('src/Annotation/ApiFilter.php') // temporary
     ->notPath('src/Annotation/ApiProperty.php') // temporary
     ->notPath('src/Annotation/ApiResource.php') // temporary
     ->notPath('src/Annotation/ApiSubresource.php') // temporary
-    ->notPath('tests/Fixtures/TestBundle/Entity/DummyPhp8.php') // temporary
-    ->append([
-        'tests/Fixtures/app/console',
-    ]);
+    ->notPath('tests/Fixtures/TestBundle/Entity/DummyPhp8.php'); // temporary
+    // ->append([
+    //    'tests/Fixtures/app/console',
+    // ]);
 
 return (new PhpCsFixer\Config())
     ->setRiskyAllowed(true)
