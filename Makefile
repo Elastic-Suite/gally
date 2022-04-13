@@ -56,7 +56,7 @@ db: ## Connect to the DB
 
 phpcsfixer: ## Run php cs fixer, pass the parameter "o=" to ass options, make phpcsfixer o="--dry-run"
 	@$(eval o ?=)
-	@$(PHP_CS_FIXER) fix src/Elasticsuite --diff $(o)
+	@$(PHP_CS_FIXER) fix --path-mode=intersection src/Elasticsuite --diff $(o)
 
 phpcsfixer_dryrun: ## Run php cs fixer wuth dry run optoin
 phpcsfixer_dryrun: o="--dry-run"
