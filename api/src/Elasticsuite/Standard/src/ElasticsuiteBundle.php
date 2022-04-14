@@ -31,7 +31,7 @@ class ElasticsuiteBundle extends Bundle
     {
         $mappings = [
             realpath(__DIR__ . '/Catalog/Resources/config/doctrine') => 'Elasticsuite\Catalog\Model',
-            realpath(__DIR__ . '/Index/Resources/config/doctrine') => 'Elasticsuite\Index\Model',
+            realpath(__DIR__ . '/Metadata/Resources/config/doctrine') => 'Elasticsuite\Metadata\Model',
             realpath(__DIR__ . '/User/Resources/config/doctrine') => 'Elasticsuite\User\Model',
         ];
 

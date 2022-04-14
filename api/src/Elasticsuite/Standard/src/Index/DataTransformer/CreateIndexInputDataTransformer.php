@@ -21,8 +21,8 @@ use ApiPlatform\Core\Exception\InvalidArgumentException;
 use Elasticsuite\Catalog\Repository\LocalizedCatalogRepository;
 use Elasticsuite\Index\Dto\CreateIndexInput;
 use Elasticsuite\Index\Model\Index;
-use Elasticsuite\Index\Repository\Metadata\MetadataRepository;
 use Elasticsuite\Index\Service\IndexOperation;
+use Elasticsuite\Metadata\Repository\MetadataRepository;
 
 class CreateIndexInputDataTransformer implements DataTransformerInterface
 {

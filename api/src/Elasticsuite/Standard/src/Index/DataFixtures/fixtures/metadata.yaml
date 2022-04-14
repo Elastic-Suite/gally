@@ -1,5 +1,0 @@
-Elasticsuite\Index\Model\Metadata:
-    product:
-        entity: product
-    category:
-        entity: category

@@ -31,15 +31,15 @@ use Elasticsuite\Catalog\Model\LocalizedCatalog;
 use Elasticsuite\Index\Api\IndexSettingsInterface;
 use Elasticsuite\Index\Exception\LogicException;
 use Elasticsuite\Index\Model\Index;
-use Elasticsuite\Index\Model\Metadata;
 use Elasticsuite\Index\Repository\Index\IndexRepositoryInterface;
+use Elasticsuite\Metadata\Model\Metadata;
 
 class IndexOperation
 {
     public function __construct(
         private IndexRepositoryInterface $indexRepository,
         private IndexSettingsInterface $indexSettings,
-        private IndexManager $indexManager
+        private MetadataManager $metadataManager
     ) {
     }
 
@@ -59,7 +59,7 @@ class IndexOperation
             'settings' => $this->indexSettings->getCreateIndexSettings() + $this->indexSettings->getDynamicIndexSettings($catalog),
         ];
         $indexSettings['settings']['analysis'] = $this->indexSettings->getAnalysisSettings($catalog);
-        $indexSettings['mappings'] = $this->indexManager->getMapping($metadata)->asArray();
+        $indexSettings['mappings'] = $this->metadataManager->getMapping($metadata)->asArray();
         $newIndexAliases = $this->indexSettings->getNewIndexMetadataAliases($metadata->getEntity(), $catalog);
         if (!empty($newIndexAliases)) {
             $indexSettings['aliases'] = array_fill_keys($newIndexAliases, ['is_hidden' => true]);
