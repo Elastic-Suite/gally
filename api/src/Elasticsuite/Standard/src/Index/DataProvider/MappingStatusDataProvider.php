@@ -20,14 +20,14 @@ use ApiPlatform\Core\DataProvider\ItemDataProviderInterface;
 use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
 use ApiPlatform\Core\GraphQl\Resolver\QueryItemResolverInterface;
 use Elasticsuite\Index\Model\Index\Mapping\Status;
-use Elasticsuite\Index\Repository\Metadata\MetadataRepository;
-use Elasticsuite\Index\Service\IndexManager;
+use Elasticsuite\Index\Service\MetadataManager;
+use Elasticsuite\Metadata\Repository\MetadataRepository;
 
 class MappingStatusDataProvider implements RestrictedDataProviderInterface, ItemDataProviderInterface, QueryItemResolverInterface
 {
     public function __construct(
         private MetadataRepository $metadataRepository,
-        private IndexManager $indexManager
+        private MetadataManager $metadataManager
     ) {
     }
 
@@ -50,7 +50,7 @@ class MappingStatusDataProvider implements RestrictedDataProviderInterface, Item
     {
         $metadata = $this->metadataRepository->findOneBy(['entity' => $id]);
 
-        return $metadata ? $this->indexManager->getMappingStatus($metadata) : null;
+        return $metadata ? $this->metadataManager->getMappingStatus($metadata) : null;
     }
 
     public function supports(string $resourceClass, string $operationName = null, array $context = []): bool

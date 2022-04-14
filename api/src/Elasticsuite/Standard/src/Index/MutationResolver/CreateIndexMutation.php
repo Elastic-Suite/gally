@@ -20,8 +20,8 @@ use ApiPlatform\Core\Exception\InvalidArgumentException;
 use ApiPlatform\Core\GraphQl\Resolver\MutationResolverInterface;
 use Elasticsuite\Catalog\Repository\LocalizedCatalogRepository;
 use Elasticsuite\Index\Exception\LogicException;
-use Elasticsuite\Index\Repository\Metadata\MetadataRepository;
 use Elasticsuite\Index\Service\IndexOperation;
+use Elasticsuite\Metadata\Repository\MetadataRepository;
 
 class CreateIndexMutation implements MutationResolverInterface
 {

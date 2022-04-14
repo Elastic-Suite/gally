@@ -17,20 +17,20 @@ declare(strict_types=1);
 namespace Elasticsuite\Index\Tests\Unit;
 
 use Doctrine\Persistence\ObjectManager;
-use Elasticsuite\Index\Repository\Metadata\MetadataRepository;
-use Elasticsuite\Index\Service\IndexManager;
+use Elasticsuite\Index\Service\MetadataManager;
+use Elasticsuite\Metadata\Repository\MetadataRepository;
 use Elasticsuite\Standard\src\Test\AbstractTest;
 
 class IndexManagerTest extends AbstractTest
 {
-    protected IndexManager $indexManager;
+    protected MetadataManager $metadataManager;
     protected MetadataRepository $metadataRepository;
     protected ObjectManager $entityManager;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->indexManager = static::getContainer()->get(IndexManager::class);
+        $this->metadataManager = static::getContainer()->get(MetadataManager::class);
         $this->metadataRepository = static::getContainer()->get(MetadataRepository::class);
         $this->entityManager = static::getContainer()->get('doctrine')->getManager();
         $this->loadFixture([
@@ -48,7 +48,7 @@ class IndexManagerTest extends AbstractTest
     {
         $metadata = $this->metadataRepository->findOneBy(['entity' => $entity]);
         $this->entityManager->refresh($metadata); // Flush entity in order to avoid empty relations
-        $this->assertEquals($expectedMapping, $this->indexManager->getMapping($metadata)->asArray());
+        $this->assertEquals($expectedMapping, $this->metadataManager->getMapping($metadata)->asArray());
     }
 
     public function mappingDataProvider(): array

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="https://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="https://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="Elasticsuite\Metadata\Model\SourceField"
+            table="source_field"
+            repository-class="Elasticsuite\Metadata\Repository\SourceFieldRepository">
+        <id name="id" type="integer">
+            <generator strategy="AUTO"/>
+        </id>
+
+        <field name="name" type="string" nullable="false"/>
+        <field name="defaultLabel" type="string" nullable="true"/>
+        <field name="type" type="string" nullable="true" />
+        <field name="weight" type="integer" nullable="true" />
+        <field name="isSearchable" type="boolean" nullable="true" />
+        <field name="isFilterable" type="boolean" nullable="true" />
+        <field name="isSortable" type="boolean" nullable="true" />
+        <field name="isSpellchecked" type="boolean" nullable="true" />
+        <field name="isUsedForRules" type="boolean" nullable="true" />
+        <field name="isSystem" type="boolean" nullable="false">
+            <options>
+                <option name="default">false</option>
+            </options>
+        </field>
+
+        <many-to-one field="metadata" target-entity="Elasticsuite\Metadata\Model\Metadata" inversed-by="sourceFields">
+            <join-column name="metadata_id" referenced-column-name="id" nullable="false" on-delete="CASCADE" on-update="CASCADE"/>
+        </many-to-one>
+
+        <one-to-many field="labels" target-entity="Elasticsuite\Metadata\Model\SourceFieldLabel" mapped-by="sourceField">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many field="options" target-entity="Elasticsuite\Metadata\Model\SourceFieldOption" mapped-by="sourceField">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </one-to-many>
+
+        <unique-constraints>
+            <unique-constraint columns="name,metadata_id" name="unique_metadata_code" />
+        </unique-constraints>
+    </entity>
+
+</doctrine-mapping>
