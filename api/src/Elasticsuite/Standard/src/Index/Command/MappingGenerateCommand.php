@@ -16,8 +16,8 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Index\Command;
 
-use Elasticsuite\Index\Repository\Metadata\MetadataRepository;
-use Elasticsuite\Index\Service\IndexManager;
+use Elasticsuite\Index\Service\MetadataManager;
+use Elasticsuite\Metadata\Repository\MetadataRepository;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -28,7 +28,7 @@ class MappingGenerateCommand extends Command
 {
     public function __construct(
         private MetadataRepository $metadataRepository,
-        private IndexManager $indexManager,
+        private MetadataManager $metadataManager,
         string $name
     ) {
         parent::__construct($name);
@@ -55,7 +55,7 @@ class MappingGenerateCommand extends Command
         $ui->writeln("Generate mapping for $entity");
         $metadata = $this->metadataRepository->findOneBy(['entity' => $entity]);
 
-        $mapping = $this->indexManager->getMapping($metadata);
+        $mapping = $this->metadataManager->getMapping($metadata);
         $ui->writeln(json_encode($mapping->asArray(), \JSON_PRETTY_PRINT));
 
         return Command::SUCCESS;

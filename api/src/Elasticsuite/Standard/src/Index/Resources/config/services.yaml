@@ -17,36 +17,6 @@ services:
         arguments:
             - '@api_platform.elasticsearch.client'
 
-    Elasticsuite\Index\Repository\Metadata\MetadataRepository:
-        arguments:
-            - '@Doctrine\Persistence\ManagerRegistry'
-        tags:
-            - { name: doctrine.repository_service }
-
-    Elasticsuite\Index\Repository\Metadata\SourceFieldRepository:
-        arguments:
-            - '@Doctrine\Persistence\ManagerRegistry'
-        tags:
-            - { name: doctrine.repository_service }
-
-    Elasticsuite\Index\Repository\Metadata\SourceFieldLabelRepository:
-        arguments:
-            - '@Doctrine\Persistence\ManagerRegistry'
-        tags:
-            - { name: doctrine.repository_service }
-
-    Elasticsuite\Index\Repository\Metadata\SourceFieldOptionRepository:
-        arguments:
-            - '@Doctrine\Persistence\ManagerRegistry'
-        tags:
-            - { name: doctrine.repository_service }
-
-    Elasticsuite\Index\Repository\Metadata\SourceFieldOptionLabelRepository:
-        arguments:
-            - '@Doctrine\Persistence\ManagerRegistry'
-        tags:
-            - { name: doctrine.repository_service }
-
     Elasticsuite\Index\DataPersister\DocumentDataPersister:
         arguments:
             - '@Elasticsuite\Index\Repository\Document\DocumentRepositoryInterface'
@@ -59,12 +29,6 @@ services:
         tags:
             - { name: api_platform.data_persister }
 
-    Elasticsuite\Index\DataPersister\SourceFieldDataPersister:
-        arguments:
-            - '@doctrine.orm.entity_manager'
-        tags:
-            - { name: api_platform.data_persister }
-
     Elasticsuite\Index\DataProvider\IndexDataProvider:
         arguments:
             - '@Elasticsuite\Index\Repository\Index\IndexRepositoryInterface'
@@ -74,7 +38,7 @@ services:
 
     Elasticsuite\Index\Converter\SourceFieldToMappingField: ~
     
-    Elasticsuite\Index\Service\IndexManager:
+    Elasticsuite\Index\Service\MetadataManager:
         arguments:
             - '@Elasticsuite\Index\Converter\SourceFieldToMappingField'
 
@@ -92,12 +56,12 @@ services:
         arguments:
             - '@Elasticsuite\Index\Repository\Index\IndexRepositoryInterface'
             - '@Elasticsuite\Index\Api\IndexSettingsInterface'
-            - '@Elasticsuite\Index\Service\IndexManager'
+            - '@Elasticsuite\Index\Service\MetadataManager'
 
     Elasticsuite\Index\MutationResolver\CreateIndexMutation:
         arguments:
             - '@Elasticsuite\Catalog\Repository\LocalizedCatalogRepository'
-            - '@Elasticsuite\Index\Repository\Metadata\MetadataRepository'
+            - '@Elasticsuite\Metadata\Repository\MetadataRepository'
             - '@Elasticsuite\Index\Service\IndexOperation'
         tags:
             - { name: api_platform.graphql.mutation_resolver }
@@ -130,7 +94,7 @@ services:
     Elasticsuite\Index\DataTransformer\CreateIndexInputDataTransformer:
         arguments:
             - '@Elasticsuite\Catalog\Repository\LocalizedCatalogRepository'
-            - '@Elasticsuite\Index\Repository\Metadata\MetadataRepository'
+            - '@Elasticsuite\Metadata\Repository\MetadataRepository'
             - '@Elasticsuite\Index\Service\IndexOperation'
         tags:
             - { name: api_platform.data_transformer }
@@ -156,24 +120,24 @@ services:
 
     Elasticsuite\Index\Command\MappingGenerateCommand:
         arguments:
-            - '@Elasticsuite\Index\Repository\Metadata\MetadataRepository'
-            - '@Elasticsuite\Index\Service\IndexManager'
+            - '@Elasticsuite\Metadata\Repository\MetadataRepository'
+            - '@Elasticsuite\Index\Service\MetadataManager'
             - 'elasticsuite:mapping:get'
         tags:
             - { name: console.command }
 
     Elasticsuite\Index\Command\MappingStatusCommand:
         arguments:
-            - '@Elasticsuite\Index\Repository\Metadata\MetadataRepository'
-            - '@Elasticsuite\Index\Service\IndexManager'
+            - '@Elasticsuite\Metadata\Repository\MetadataRepository'
+            - '@Elasticsuite\Index\Service\MetadataManager'
             - 'elasticsuite:mapping:status'
         tags:
             - { name: console.command }           
     
     Elasticsuite\Index\DataProvider\MappingStatusDataProvider:
         arguments:
-            - '@Elasticsuite\Index\Repository\Metadata\MetadataRepository'
-            - '@Elasticsuite\Index\Service\IndexManager'
+            - '@Elasticsuite\Metadata\Repository\MetadataRepository'
+            - '@Elasticsuite\Index\Service\MetadataManager'
         tags:
             - { name: api_platform.item_data_provider }
             - { name: api_platform.graphql.query_resolver }
