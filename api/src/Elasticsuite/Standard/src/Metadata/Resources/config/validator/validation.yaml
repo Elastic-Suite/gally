@@ -1,0 +1,50 @@
+Elasticsuite\Metadata\Model\Metadata:
+    properties:
+        entity:
+            - NotBlank: ~
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: entity
+            
+Elasticsuite\Metadata\Model\SourceField:
+    properties:
+        name:
+            - NotBlank: ~
+        metadata:
+            - NotBlank: ~
+        type:
+            - Choice: { callback: [Elasticsuite\Metadata\Model\SourceField\Type, getAvailableTypes] }
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+              fields: [ name, metadata ]
+              message: 'An field with this name already exist for this entity.'
+            
+Elasticsuite\Metadata\Model\SourceFieldLabel:
+    properties:
+        label:
+            - NotBlank: ~
+        sourceField:
+            - NotBlank: ~
+        catalog:
+            - NotBlank: ~
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+              fields: [ sourceField, catalog ]
+              message: 'A label is already defined for this field and this catalog.'
+            
+Elasticsuite\Metadata\Model\SourceFieldOption:
+    properties:
+        sourceField:
+            - NotBlank: ~
+
+Elasticsuite\Metadata\Model\SourceFieldOptionLabel:
+    properties:
+        label:
+            - NotBlank: ~
+        sourceFieldOption:
+            - NotBlank: ~
+        catalog:
+            - NotBlank: ~
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+              fields: [ sourceFieldOption, catalog ]
+              message: 'A label is already defined for this option and this catalog.'

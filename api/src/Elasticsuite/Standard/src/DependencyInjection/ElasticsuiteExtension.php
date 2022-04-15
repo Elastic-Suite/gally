@@ -38,7 +38,6 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
     {
         $yamlParser ??= new YamlParser(); // @phpstan-ignore-line
         $apiPlatformConfig = $yamlParser->parseFile(__DIR__ . '/../Config/Resources/config/api_platform.yaml', Yaml::PARSE_CONSTANT);
-        $isTestMode = 'test' === $container->getParameter('kernel.environment');
 
         $container->prependExtensionConfig('api_platform', $apiPlatformConfig['api_platform']);
         $container->prependExtensionConfig(
@@ -47,6 +46,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
                 'mapping' => [
                     'paths' => [
                         __DIR__ . '/../Index/Model/',
+                        __DIR__ . '/../Metadata/Model/',
                         __DIR__ . '/../Catalog/Model/',
                         __DIR__ . '/../Security/Model/',
                         __DIR__ . '/../Menu/Model/',
@@ -71,7 +71,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
                     'mapping' => [
                         'paths' => [
                             __DIR__ . '/../Catalog/Resources/config/validator',
-                            __DIR__ . '/../Index/Resources/config/validator',
+                            __DIR__ . '/../Metadata/Resources/config/validator',
                         ],
                     ],
                 ],
@@ -84,7 +84,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
                 'fixtures_path' => [
                     'src/User/DataFixtures/fixtures',
                     'src/Catalog/DataFixtures/fixtures',
-                    'src/Index/DataFixtures/fixtures',
+                    'src/Metadata/DataFixtures/fixtures',
                 ],
             ]
         );
@@ -106,6 +106,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
 
         $loader->load('Example/Resources/config/services.yaml');
         $loader->load('Index/Resources/config/services.yaml');
+        $loader->load('Metadata/Resources/config/services.yaml');
         if ('test' === $container->getParameter('kernel.environment')) {
             $loader->load('Index/Resources/config/test/services.yaml');
         }
@@ -139,6 +140,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
 
         $configFiles = [
             __DIR__ . '/../Index/Resources/config/elasticsuite.yaml',
+            __DIR__ . '/../Metadata/Resources/config/elasticsuite.yaml',
         ];
 
         if ($isTestMode) {

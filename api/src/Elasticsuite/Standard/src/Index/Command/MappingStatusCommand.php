@@ -17,8 +17,8 @@ declare(strict_types=1);
 namespace Elasticsuite\Index\Command;
 
 use Elasticsuite\Index\Model\Index\Mapping\Status;
-use Elasticsuite\Index\Repository\Metadata\MetadataRepository;
-use Elasticsuite\Index\Service\IndexManager;
+use Elasticsuite\Index\Service\MetadataManager;
+use Elasticsuite\Metadata\Repository\MetadataRepository;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -29,7 +29,7 @@ class MappingStatusCommand extends Command
 {
     public function __construct(
         private MetadataRepository $metadataRepository,
-        private IndexManager $indexManager,
+        private MetadataManager $metadataManager,
         string $name
     ) {
         parent::__construct($name);
@@ -55,7 +55,7 @@ class MappingStatusCommand extends Command
         $entity = $input->getArgument('entity');
         $metadata = $this->metadataRepository->findOneBy(['entity' => $entity]);
 
-        $status = $this->indexManager->getMappingStatus($metadata);
+        $status = $this->metadataManager->getMappingStatus($metadata);
         switch ($status) {
             case Status::Green:
                 $ui->writeln('Ok');

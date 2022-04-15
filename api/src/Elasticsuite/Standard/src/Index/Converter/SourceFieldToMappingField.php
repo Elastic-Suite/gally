@@ -17,7 +17,7 @@ declare(strict_types=1);
 namespace Elasticsuite\Index\Converter;
 
 use Elasticsuite\Index\Model\Index\Mapping;
-use Elasticsuite\Index\Model\SourceField;
+use Elasticsuite\Metadata\Model\SourceField;
 
 class SourceFieldToMappingField
 {

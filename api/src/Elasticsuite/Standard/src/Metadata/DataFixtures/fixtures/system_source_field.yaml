@@ -1,27 +1,4 @@
 Elasticsuite\Metadata\Model\SourceField:
-    product_name:
-        metadata: '@product'
-        name: 'name'
-        type: 'text'
-        weight: 10
-        is_searchable: true
-        is_filterable: false
-        is_sortable: false
-        is_spellchecked: false
-        is_used_for_rules: false
-    category_name:
-        metadata: '@category'
-        name: 'name'
-        type: 'text'
-        weight: 10
-        is_searchable: false
-        is_filterable: false
-        is_sortable: false
-        is_spellchecked: false
-        is_used_for_rules: false
-    category_description:
-        metadata: '@category'
-        name: 'description'
     product_id:
         metadata: '@product'
         name: 'id'
@@ -49,7 +26,3 @@ Elasticsuite\Metadata\Model\SourceField:
         defaultLabel: 'Stock quantity'
         type: 'float'
         isSystem: true
-    product_brand:
-        metadata: '@product'
-        name: 'brand'
-        type: 'select'

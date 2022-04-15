@@ -1,0 +1,36 @@
+services:
+    Elasticsuite\Metadata\Repository\MetadataRepository:
+        arguments:
+            - '@Doctrine\Persistence\ManagerRegistry'
+        tags:
+            - { name: doctrine.repository_service }
+
+    Elasticsuite\Metadata\Repository\SourceFieldRepository:
+        arguments:
+            - '@Doctrine\Persistence\ManagerRegistry'
+        tags:
+            - { name: doctrine.repository_service }
+
+    Elasticsuite\Metadata\Repository\SourceFieldLabelRepository:
+        arguments:
+            - '@Doctrine\Persistence\ManagerRegistry'
+        tags:
+            - { name: doctrine.repository_service }
+
+    Elasticsuite\Metadata\Repository\SourceFieldOptionRepository:
+        arguments:
+            - '@Doctrine\Persistence\ManagerRegistry'
+        tags:
+            - { name: doctrine.repository_service }
+
+    Elasticsuite\Metadata\Repository\SourceFieldOptionLabelRepository:
+        arguments:
+            - '@Doctrine\Persistence\ManagerRegistry'
+        tags:
+            - { name: doctrine.repository_service }
+
+    Elasticsuite\Metadata\DataPersister\SourceFieldDataPersister:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: api_platform.data_persister }
