@@ -14,7 +14,7 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\Index\Exception;
+namespace Elasticsuite\Exception;
 
 use ApiPlatform\Core\Exception\ExceptionInterface;
 
