@@ -28,8 +28,8 @@ declare(strict_types=1);
 namespace Elasticsuite\Index\Service;
 
 use Elasticsuite\Catalog\Model\LocalizedCatalog;
+use Elasticsuite\Exception\LogicException;
 use Elasticsuite\Index\Api\IndexSettingsInterface;
-use Elasticsuite\Index\Exception\LogicException;
 use Elasticsuite\Index\Model\Index;
 use Elasticsuite\Index\Repository\Index\IndexRepositoryInterface;
 use Elasticsuite\Metadata\Model\Metadata;

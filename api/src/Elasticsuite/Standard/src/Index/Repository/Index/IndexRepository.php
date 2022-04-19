@@ -17,8 +17,8 @@ declare(strict_types=1);
 namespace Elasticsuite\Index\Repository\Index;
 
 use Elasticsearch\Client;
+use Elasticsuite\Exception\LogicException;
 use Elasticsuite\Index\Dto\Bulk;
-use Elasticsuite\Index\Exception\LogicException;
 use Elasticsuite\Index\Model\Index;
 
 class IndexRepository implements IndexRepositoryInterface
