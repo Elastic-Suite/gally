@@ -1,3 +1,4 @@
 elasticsuite:
     indices_settings:
-        alias: test_elasticsuite
+        prefix: elasticsuite_test__elasticsuite
+        time_before_ghost: 31557600 # one year
