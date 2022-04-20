@@ -152,7 +152,6 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
 
         $configFiles = [
             __DIR__ . '/../Index/Resources/config/elasticsuite.yaml',
-            __DIR__ . '/../Metadata/Resources/config/elasticsuite.yaml',
         ];
 
         if ($isTestMode) {

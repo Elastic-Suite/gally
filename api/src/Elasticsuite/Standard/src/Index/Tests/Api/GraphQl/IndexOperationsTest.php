@@ -55,7 +55,7 @@ class IndexOperationsTest extends AbstractTest
     public static function tearDownAfterClass(): void
     {
         parent::tearDownAfterClass();
-        self::$indexRepository->delete('test_elasticsuite*');
+        self::$indexRepository->delete('elasticsuite_test__elasticsuite_*');
     }
 
     public function testCreateIndex(): void
@@ -66,13 +66,13 @@ class IndexOperationsTest extends AbstractTest
             $data[] = [
                 'product',
                 (int) $catalog->getId(),
-                "test_elasticsuite_{$catalog->getCode()}_product",
+                "elasticsuite_test__elasticsuite_{$catalog->getCode()}_product",
                 ['.entity_product', ".catalog_{$catalog->getId()}"],
             ];
             $data[] = [
                 'category',
                 (int) $catalog->getId(),
-                "test_elasticsuite_{$catalog->getCode()}_category",
+                "elasticsuite_test__elasticsuite_{$catalog->getCode()}_category",
                 ['.entity_category', ".catalog_{$catalog->getId()}"],
             ];
         }
@@ -92,12 +92,12 @@ class IndexOperationsTest extends AbstractTest
         $catalogs = $this->catalogRepository->findAll();
         foreach ($catalogs as $catalog) {
             $data[] = [
-                "test_elasticsuite_{$catalog->getCode()}_product",
-                "test_elasticsuite_{$catalog->getCode()}_product",
+                "elasticsuite_test__elasticsuite_{$catalog->getCode()}_product",
+                "elasticsuite_test__elasticsuite_{$catalog->getCode()}_product",
             ];
             $data[] = [
-                "test_elasticsuite_{$catalog->getCode()}_category",
-                "test_elasticsuite_{$catalog->getCode()}_category",
+                "elasticsuite_test__elasticsuite_{$catalog->getCode()}_category",
+                "elasticsuite_test__elasticsuite_{$catalog->getCode()}_category",
             ];
         }
 
@@ -117,12 +117,12 @@ class IndexOperationsTest extends AbstractTest
         $catalogs = $this->catalogRepository->findAll();
         foreach ($catalogs as $catalog) {
             $data[] = [
-                "test_elasticsuite_{$catalog->getCode()}_product",
-                "test_elasticsuite_{$catalog->getCode()}_product",
+                "elasticsuite_test__elasticsuite_{$catalog->getCode()}_product",
+                "elasticsuite_test__elasticsuite_{$catalog->getCode()}_product",
             ];
             $data[] = [
-                "test_elasticsuite_{$catalog->getCode()}_category",
-                "test_elasticsuite_{$catalog->getCode()}_category",
+                "elasticsuite_test__elasticsuite_{$catalog->getCode()}_category",
+                "elasticsuite_test__elasticsuite_{$catalog->getCode()}_category",
             ];
         }
 

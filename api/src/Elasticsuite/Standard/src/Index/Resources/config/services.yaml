@@ -17,6 +17,7 @@ services:
     Elasticsuite\Index\Repository\Index\IndexRepository:
         arguments:
             - '@api_platform.elasticsearch.client'
+            - '@Elasticsuite\Index\Api\IndexSettingsInterface'
 
     Elasticsuite\Index\DataPersister\DocumentDataPersister:
         arguments:
