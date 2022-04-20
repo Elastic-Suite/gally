@@ -137,50 +137,13 @@ class IndexOperation
     {
         $installIndexAlias = null;
 
-        $indexMetadataAliases = $this->indexRepository->getIndexAliases($indexName, '.*');
-        $entityType = $this->extractEntityFromAliases($indexMetadataAliases);
-        $catalogId = $this->extractCatalogIdFromAliases($indexMetadataAliases);
-        if (!empty($entityType) && !empty($catalogId)) {
-            $installIndexAlias = $this->indexSettings->getIndexAliasFromIdentifier($entityType, $catalogId);
+        $index = $this->indexRepository->findByName($indexName);
+        $entityType = $index->getEntityType();
+        $catalog = $index->getCatalog();
+        if (!empty($entityType) && !empty($catalog)) {
+            $installIndexAlias = $this->indexSettings->getIndexAliasFromIdentifier($entityType, $catalog);
         }
 
         return $installIndexAlias;
-    }
-
-    /**
-     * Extract original entity from index metadata aliases.
-     *
-     * @param string[] $indexMetadataAliases Index metadata aliases
-     */
-    protected function extractEntityFromAliases(array $indexMetadataAliases): string|null
-    {
-        $entityType = preg_filter('#^\.entity_(.+)$#', '$1', $indexMetadataAliases, 1);
-        if (!empty($entityType)) {
-            if (\is_array($entityType)) {
-                $entityType = current($entityType);
-            }
-        }
-
-        return $entityType;
-    }
-
-    /**
-     * Extract original catalog id from index metadata aliases.
-     *
-     * @param string[] $indexMetadataAliases Index metadata aliases
-     */
-    protected function extractCatalogIdFromAliases(array $indexMetadataAliases): int|null
-    {
-        $catalogId = preg_filter('#^\.catalog_(.+)$#', '$1', $indexMetadataAliases, 1);
-        if (!empty($catalogId)) {
-            if (\is_array($catalogId)) {
-                $catalogId = current($catalogId);
-            }
-            $catalogId = (int) $catalogId;
-        } else {
-            $catalogId = null;
-        }
-
-        return $catalogId;
     }
 }

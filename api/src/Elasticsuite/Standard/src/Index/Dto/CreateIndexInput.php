@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Index\Dto;
 
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 final class CreateIndexInput
@@ -24,11 +25,13 @@ final class CreateIndexInput
      * @var string
      */
     #[Assert\NotBlank]
+    #[Groups(['create'])]
     public string $entityType;
 
     /**
      * @var int
      */
     #[Assert\NotBlank]
+    #[Groups(['create'])]
     public int $catalog;
 }
