@@ -34,16 +34,9 @@ class SourceFieldTest extends AbstractEntityTest
         return SourceField::class;
     }
 
-    protected function getApiPath(): string
-    {
-        return '/source_fields';
-    }
-
     protected function getJsonCreationValidation(array $validData): array
     {
         $json = [
-            '@context' => '/contexts/SourceField',
-            '@type' => 'SourceField',
             'name' => $validData['name'],
         ];
 
@@ -57,9 +50,6 @@ class SourceFieldTest extends AbstractEntityTest
     protected function getJsonGetValidation(array $expectedData): array
     {
         return [
-            '@context' => '/contexts/SourceField',
-            '@id' => '/source_fields/' . $expectedData['id'],
-            '@type' => 'SourceField',
             'name' => $expectedData['name'],
         ];
     }
@@ -67,9 +57,6 @@ class SourceFieldTest extends AbstractEntityTest
     protected function getJsonGetCollectionValidation(): array
     {
         return [
-            '@context' => '/contexts/SourceField',
-            '@id' => '/source_fields',
-            '@type' => 'hydra:Collection',
             'hydra:totalItems' => 11,
         ];
     }
