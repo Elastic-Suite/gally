@@ -16,15 +16,100 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Catalog\Tests\Api\Rest;
 
-use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
 use Elasticsuite\Catalog\Model\LocalizedCatalog;
-use Elasticsuite\User\DataFixtures\LoginTrait;
+use Elasticsuite\Standard\src\Test\AbstractEntityTest;
 use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
 use Liip\TestFixturesBundle\Services\DatabaseTools\AbstractDatabaseTool;
 
-class LocalizedCatalogsTest extends ApiTestCase
+class LocalizedCatalogsTest extends AbstractEntityTest
 {
-    use LoginTrait;
+    protected static function getFixtureFiles(): array
+    {
+        return [
+            __DIR__ . '/../../fixtures/catalogs.yaml',
+            __DIR__ . '/../../fixtures/localized_catalogs.yaml',
+        ];
+    }
+
+    protected function getEntityClass(): string
+    {
+        return LocalizedCatalog::class;
+    }
+
+    public function createValidDataProvider(): array
+    {
+        return [
+            [['catalog' => '/catalogs/1', 'code' => 'valid_code', 'name' => 'B2C French catalog', 'locale' => 'fr_FR']],
+            [['catalog' => '/catalogs/1', 'code' => 'empty_name', 'name' => '', 'locale' => 'en_US']],
+            [['catalog' => '/catalogs/1', 'code' => 'missing_name', 'locale' => 'fr_FR']],
+        ];
+    }
+
+    public function createInvalidDataProvider(): array
+    {
+        return [
+            [['code' => 'no_catalog', 'name' => 'B2C French catalog', 'locale' => 'fr_FR'], 'catalog: This value should not be blank.'],
+            [['catalog' => '/catalogs/2', 'code' => 'valid_code', 'locale' => 'fr_FR', 'name' => 'Empty Code'], 'locale: This code and locale couple already exists.'],
+            [['catalog' => '/catalogs/1', 'code' => '', 'locale' => 'en_US', 'name' => 'Empty Code'], 'code: This value should not be blank.'],
+            [['catalog' => '/catalogs/1', 'code' => '', 'locale' => 'en_US'], 'code: This value should not be blank.'],
+            [['catalog' => '/catalogs/1', 'locale' => 'en_US', 'name' => 'Missing Code'], 'code: This value should not be blank.'],
+            [['catalog' => '/catalogs/1', 'code' => 'missing_locale'], 'locale: This value should not be blank.'],
+            [['catalog' => '/catalogs/1', 'code' => 'cat_1_invalid', 'locale' => 'fr-fr'], 'locale: This value is not valid.'],
+            [['catalog' => '/catalogs/1', 'code' => 'cat_1_invalid', 'locale' => 'strin'], 'locale: This value is not valid.'],
+            [['catalog' => '/catalogs/1', 'code' => 'cat_1_invalid', 'locale' => 'too_long_locale'], "locale: This value is not valid.\nlocale: This value should have exactly 5 characters."],
+            [['catalog' => '/catalogs/1', 'code' => 'cat_1_invalid', 'locale' => 'a'], "locale: This value is not valid.\nlocale: This value should have exactly 5 characters."],
+            [['catalog' => '/catalogs/1', 'code' => 'cat_1_invalid', 'locale' => 'abc'], "locale: This value is not valid.\nlocale: This value should have exactly 5 characters."],
+        ];
+    }
+
+    protected function getJsonCreationValidation(array $validData): array
+    {
+        $data = [
+            'code' => $validData['code'],
+            'locale' => $validData['locale'],
+        ];
+        if (isset($validData['name'])) {
+            $data['name'] = $validData['name'];
+        }
+
+        return $data;
+    }
+
+    public function getDataProvider(): array
+    {
+        return [
+            [1, ['id' => 1, 'code' => 'b2c_fr', 'locale' => 'fr_FR', 'name' => 'B2C French Store View'], 200],
+            [5, ['id' => 5, 'code' => 'empty_name', 'locale' => 'en_US'], 200],
+            [10, [], 404],
+        ];
+    }
+
+    protected function getJsonGetValidation(array $expectedData): array
+    {
+        $data = [
+            'code' => $expectedData['code'],
+            'locale' => $expectedData['locale'],
+        ];
+        if (isset($expectedData['name'])) {
+            $data['name'] = $expectedData['name'];
+        }
+
+        return $data;
+    }
+
+    public function deleteDataProvider(): array
+    {
+        return [
+            [1, 200],
+            [5, 200],
+            [10, 404],
+        ];
+    }
+
+    protected function getJsonGetCollectionValidation(): array
+    {
+        return ['hydra:totalItems' => 3];
+    }
 
     private AbstractDatabaseTool $databaseTool;
 
@@ -280,7 +365,7 @@ locale: This value should have exactly 5 characters.',
      */
     public function testGetCollection(): void
     {
-        $this->databaseTool->loadAliceFixture([__DIR__ . '/../../fixtures/localized_catalogs.yaml']);
+        $this->databaseTool->loadAliceFixture([__DIR__ . '/../../fixtures/catalogs.yaml', __DIR__ . '/../../fixtures/localized_catalogs.yaml']);
 
         $client = static::createClient();
 

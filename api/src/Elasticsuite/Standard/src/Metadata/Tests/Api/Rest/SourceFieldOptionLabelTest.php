@@ -37,35 +37,21 @@ class SourceFieldOptionLabelTest extends AbstractEntityTest
         return SourceFieldOptionLabel::class;
     }
 
-    protected function getApiPath(): string
-    {
-        return '/source_field_option_labels';
-    }
-
     protected function getJsonCreationValidation(array $validData): array
     {
         return [
-            '@context' => '/contexts/SourceFieldOptionLabel',
-            '@type' => 'SourceFieldOptionLabel',
             'label' => $validData['label'],
         ];
     }
 
     protected function getJsonGetValidation(array $expectedData): array
     {
-        return [
-            '@context' => '/contexts/SourceFieldOptionLabel',
-            '@id' => '/source_field_option_labels/' . $expectedData['id'],
-            '@type' => 'SourceFieldOptionLabel',
-        ];
+        return [];
     }
 
     protected function getJsonGetCollectionValidation(): array
     {
         return [
-            '@context' => '/contexts/SourceFieldOptionLabel',
-            '@id' => '/source_field_option_labels',
-            '@type' => 'hydra:Collection',
             'hydra:totalItems' => 4,
         ];
     }

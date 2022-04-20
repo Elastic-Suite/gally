@@ -35,34 +35,19 @@ class SourceFieldOptionTest extends AbstractEntityTest
         return SourceFieldOption::class;
     }
 
-    protected function getApiPath(): string
-    {
-        return '/source_field_options';
-    }
-
     protected function getJsonCreationValidation(array $validData): array
     {
-        return [
-            '@context' => '/contexts/SourceFieldOption',
-            '@type' => 'SourceFieldOption',
-        ];
+        return [];
     }
 
     protected function getJsonGetValidation(array $expectedData): array
     {
-        return [
-            '@context' => '/contexts/SourceFieldOption',
-            '@id' => '/source_field_options/' . $expectedData['id'],
-            '@type' => 'SourceFieldOption',
-        ];
+        return [];
     }
 
     protected function getJsonGetCollectionValidation(): array
     {
         return [
-            '@context' => '/contexts/SourceFieldOption',
-            '@id' => '/source_field_options',
-            '@type' => 'hydra:Collection',
             'hydra:totalItems' => 4,
         ];
     }

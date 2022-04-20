@@ -16,63 +16,22 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Catalog\Tests\Api\Rest;
 
-use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
 use Elasticsuite\Catalog\Model\Catalog;
-use Elasticsuite\User\DataFixtures\LoginTrait;
-use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
-use Liip\TestFixturesBundle\Services\DatabaseTools\AbstractDatabaseTool;
+use Elasticsuite\Standard\src\Test\AbstractEntityTest;
 
-class CatalogsTest extends ApiTestCase
+class CatalogsTest extends AbstractEntityTest
 {
-    use LoginTrait;
-
-    private AbstractDatabaseTool $databaseTool;
-
-    protected function setUp(): void
+    protected static function getFixtureFiles(): array
     {
-        $this->databaseTool = static::getContainer()->get(DatabaseToolCollection::class)->get();
+        return [__DIR__ . '/../../fixtures/catalogs.yaml'];
     }
 
-    /**
-     * @dataProvider validCatalogProvider
-     *
-     * @param mixed $validCatalog
-     */
-    public function testCreateValidCatalog($validCatalog): void
+    protected function getEntityClass(): string
     {
-        $client = static::createClient();
-
-        $loginJson = $this->login(
-            $client,
-            static::getContainer()->get('doctrine')->getManager(), // @phpstan-ignore-line
-            static::getContainer()->get('security.user_password_hasher')
-        );
-
-        $response = $client->request('POST', '/catalogs', ['auth_bearer' => $loginJson['token'], 'json' => $validCatalog]);
-
-        $this->assertResponseStatusCodeSame(201);
-        $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
-        $this->assertJsonContains(
-            [
-                '@context' => '/contexts/Catalog',
-                '@type' => 'Catalog',
-                'code' => $validCatalog['code'],
-            ]
-        );
-
-        if (isset($validCatalog['name'])) {
-            $this->assertJsonContains(
-                [
-                    'name' => $validCatalog['name'] ?? '',
-                ]
-            );
-        }
-
-        $this->assertMatchesRegularExpression('~^/catalogs/\d+$~', $response->toArray()['@id']);
-        $this->assertMatchesResourceItemJsonSchema(Catalog::class);
+        return Catalog::class;
     }
 
-    public function validCatalogProvider(): array
+    public function createValidDataProvider(): array
     {
         return [
             [['code' => 'valid_code', 'name' => 'B2C Catalog']],
@@ -81,55 +40,30 @@ class CatalogsTest extends ApiTestCase
         ];
     }
 
-    /**
-     * @dataProvider invalidCatalogProvider
-     *
-     * @param mixed $invalidCatalog
-     */
-    public function testCreateInvalidCatalog($invalidCatalog): void
-    {
-        $client = static::createClient();
-
-        $loginJson = $this->login(
-            $client,
-            static::getContainer()->get('doctrine')->getManager(),// @phpstan-ignore-line
-            static::getContainer()->get('security.user_password_hasher')
-        );
-
-        $client->request('POST', '/catalogs', ['auth_bearer' => $loginJson['token'], 'json' => $invalidCatalog]);
-
-        $this->assertResponseStatusCodeSame(422);
-        $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
-        $this->assertJsonContains(
-            [
-                '@context' => '/contexts/ConstraintViolationList',
-                '@type' => 'ConstraintViolationList',
-                'hydra:title' => 'An error occurred',
-                'hydra:description' => 'code: This value should not be blank.',
-            ]
-        );
-    }
-
-    public function invalidCatalogProvider(): array
+    public function createInvalidDataProvider(): array
     {
         return [
-            [['code' => '', 'name' => 'Empty Code']],
-            [['code' => '']],
-            [['name' => 'Missing Code']],
+            [['code' => '', 'name' => 'Empty Code'], 'code: This value should not be blank.'],
+            [['code' => ''], 'code: This value should not be blank.'],
+            [['name' => 'Missing Code'], 'code: This value should not be blank.'],
         ];
     }
 
-    /**
-     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
-     */
+    protected function getJsonCreationValidation(array $validData): array
+    {
+        $data = [
+            'code' => $validData['code'],
+        ];
+
+        if (isset($validData['name'])) {
+            $data['name'] = $validData['name'];
+        }
+
+        return $data;
+    }
+
     public function testGetCollection(): void
     {
-        $this->databaseTool->loadAliceFixture([__DIR__ . '/../../fixtures/catalogs.yaml']);
-
         $client = static::createClient();
 
         $loginJson = $this->login(
@@ -152,5 +86,38 @@ class CatalogsTest extends ApiTestCase
                 'hydra:totalItems' => 2,
             ]
         );
+    }
+
+    public function getDataProvider(): array
+    {
+        return [
+            [1, ['id' => 1, 'code' => 'b2c_test', 'name' => 'B2C Test Catalog'], 200],
+            [5, ['id' => 5, 'code' => 'missing_name'], 200],
+            [10, [], 404],
+        ];
+    }
+
+    protected function getJsonGetValidation(array $expectedData): array
+    {
+        $data = ['code' => $expectedData['code']];
+        if (isset($expectedData['name'])) {
+            $data['name'] = $expectedData['name'];
+        }
+
+        return $data;
+    }
+
+    public function deleteDataProvider(): array
+    {
+        return [
+            [1, 200],
+            [5, 200],
+            [10, 404],
+        ];
+    }
+
+    protected function getJsonGetCollectionValidation(): array
+    {
+        return ['hydra:totalItems' => 20];
     }
 }

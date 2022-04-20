@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20220407091642 extends AbstractMigration
+final class Version20220408122945 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,14 +20,12 @@ final class Version20220407091642 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE source_field ADD is_system BOOLEAN DEFAULT \'false\' NOT NULL');
-        $this->addSql('ALTER TABLE source_field ADD default_label VARCHAR(255) DEFAULT NULL');
+        $this->addSql('ALTER TABLE localized_catalog ADD is_default BOOLEAN DEFAULT \'false\' NOT NULL');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE source_field DROP is_system');
-        $this->addSql('ALTER TABLE source_field DROP default_label');
+        $this->addSql('ALTER TABLE localized_catalog DROP is_default');
     }
 }

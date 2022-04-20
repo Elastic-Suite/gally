@@ -31,16 +31,9 @@ class MetadataTest extends AbstractEntityTest
         return Metadata::class;
     }
 
-    protected function getApiPath(): string
-    {
-        return '/metadata';
-    }
-
     protected function getJsonCreationValidation(array $validData): array
     {
         return [
-            '@context' => '/contexts/Metadata',
-            '@type' => 'Metadata',
             'entity' => $validData['entity'],
         ];
     }
@@ -48,9 +41,6 @@ class MetadataTest extends AbstractEntityTest
     protected function getJsonGetValidation(array $expectedData): array
     {
         return [
-            '@context' => '/contexts/Metadata',
-            '@id' => '/metadata/' . $expectedData['id'],
-            '@type' => 'Metadata',
             'entity' => $expectedData['entity'],
         ];
     }
@@ -58,9 +48,6 @@ class MetadataTest extends AbstractEntityTest
     protected function getJsonGetCollectionValidation(): array
     {
         return [
-            '@context' => '/contexts/Metadata',
-            '@id' => '/metadata',
-            '@type' => 'hydra:Collection',
             'hydra:totalItems' => 2,
         ];
     }
