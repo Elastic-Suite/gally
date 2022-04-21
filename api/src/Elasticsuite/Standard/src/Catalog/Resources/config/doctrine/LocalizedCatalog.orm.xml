@@ -13,7 +13,7 @@
         <field name="locale" type="string" length="5" nullable="false" unique="false" />
         <field name="isDefault" type="boolean" nullable="false">
             <options>
-                <option name="default">false</option>
+                <option name="default">0</option>
             </options>
         </field>
 

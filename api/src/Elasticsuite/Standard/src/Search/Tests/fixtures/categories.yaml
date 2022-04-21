@@ -1,0 +1,5 @@
+Elasticsuite\Category\Model\Category:
+    categ1:
+        name: Category One
+    categ2:
+        name: Category Two
