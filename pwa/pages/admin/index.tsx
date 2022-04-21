@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { Redirect, Route } from 'react-router-dom'
+import { Navigate, Route } from 'react-router-dom'
 import {
   fetchHydra as baseFetchHydra,
   HydraAdmin,
@@ -33,7 +33,7 @@ const RedirectToLogin = () => {
     introspect()
     return <></>
   }
-  return <Redirect to="/login" />
+  return <Navigate to="/login" replace />
 }
 
 const apiDocumentationParser = async () => {
@@ -52,7 +52,7 @@ const apiDocumentationParser = async () => {
       api,
       response,
       status,
-      customRoutes: [<Route key="/" path="/" component={RedirectToLogin} />],
+      customRoutes: [<Route key="/" path="/" element={<RedirectToLogin />} />],
     }
   }
 }
@@ -100,7 +100,7 @@ const AdminLoader = () => {
 const Admin = () => (
   <>
     <Head>
-      <title>API Platform Admin</title>
+      <title>Blink Admin</title>
     </Head>
 
     <AdminLoader />
