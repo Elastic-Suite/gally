@@ -1,0 +1,6 @@
+services:
+    Elasticsuite\Category\Repository\CategoryRepository:
+        arguments:
+            - '@Doctrine\Persistence\ManagerRegistry'
+        tags:
+            - { name: doctrine.repository_service }
