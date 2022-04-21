@@ -1,6 +1,7 @@
-import { createTheme } from '@material-ui/core/styles'
+import { createTheme } from '@mui/material/styles'
+import { defaultTheme } from 'react-admin'
 
-declare module '@material-ui/core/styles/createPalette' {
+declare module '@mui/material/styles/createPalette' {
   interface Palette {
     neutral: Palette['primary']
   }
@@ -14,6 +15,7 @@ declare module '@material-ui/core/styles/createPalette' {
  * see : https://mui.com/customization/theming/
  */
 const regularTheme = createTheme({
+  ...defaultTheme,
   palette: {
     primary: {
       light: '#FBC0B9',
@@ -42,7 +44,7 @@ const regularTheme = createTheme({
       light: '#E7F4EC',
       main: '#18753C',
     },
-    type: 'light',
+    mode: 'light',
   },
   typography: {
     fontFamily: 'Inter',
