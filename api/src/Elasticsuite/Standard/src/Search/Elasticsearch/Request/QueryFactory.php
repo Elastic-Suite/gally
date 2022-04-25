@@ -26,10 +26,12 @@ class QueryFactory
     /**
      * Constructor.
      *
-     * @param array $factories Query factories by type
+     * @param iterable $factories Query factories by type
      */
-    public function __construct(array $factories = [])
+    public function __construct(iterable $factories = [])
     {
+        $factories = ($factories instanceof \Traversable) ? iterator_to_array($factories) : $factories;
+
         $this->factories = $factories;
     }
 

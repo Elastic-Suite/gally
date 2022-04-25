@@ -30,9 +30,9 @@ class Request implements RequestInterface
     protected QueryInterface $query;
 
     /**
-     * @var SortOrderInterface[]
+     * @var SortOrderInterface[]|null
      */
-    private array $sortOrders;
+    private array|null $sortOrders;
 
     private ?QueryInterface $filter;
 
