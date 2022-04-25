@@ -1,5 +1,6 @@
 import { createTheme } from '@mui/material/styles'
 import { defaultTheme } from 'react-admin'
+import {keyframes} from "@emotion/react";
 
 declare module '@mui/material/styles/createPalette' {
   interface Palette {
@@ -10,6 +11,66 @@ declare module '@mui/material/styles/createPalette' {
       hover
       active
     }
+    colors: {
+      white
+      black
+      primary: {
+        main
+        100
+        200
+        300
+        400
+        500
+        600
+        700
+        800
+        900
+      },
+      secondary: {
+        main
+        100
+        200
+        300
+        400
+        500
+        600
+        700
+        800
+        900
+      },
+      neutral: {
+        100
+        200
+        300
+        400
+        500
+        600
+        700
+        800
+        900
+      },
+      gradient: {
+        default
+        darken
+      },
+      shadow: {
+        neutral: {
+          sm
+          md
+          lg
+        },
+        primaryButton: {
+          sm
+          md
+          lg
+        },
+        secondaryButton: {
+          sm
+          md
+          lg
+        }
+      }
+    }
   }
   interface PaletteOptions {
     neutral: PaletteOptions['primary']
@@ -19,8 +80,79 @@ declare module '@mui/material/styles/createPalette' {
       hover
       active
     }
+    colors: {
+      white
+      black
+      primary: {
+        main
+        100
+        200
+        300
+        400
+        500
+        600
+        700
+        800
+        900
+      },
+      secondary: {
+        main
+        100
+        200
+        300
+        400
+        500
+        600
+        700
+        800
+        900
+      },
+      neutral: {
+        100
+        200
+        300
+        400
+        500
+        600
+        700
+        800
+        900
+      },
+      gradient: {
+        default
+        darken
+      }
+      shadow: {
+        neutral: {
+          sm
+          md
+          lg
+        },
+        primaryButton: {
+          sm
+          md
+          lg
+        },
+        secondaryButton: {
+          sm
+          md
+          lg
+        }
+      }
+    }
   }
 }
+
+export const buttonEnterKeyframe = keyframes`
+    0% {
+      transform: scale(0);
+      opacity: 0.3;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 0.6;
+    }
+  `;
 
 /* Creation of custom light theme
  * There is always scss assets to scss modifications but here is to be used by Material UI
@@ -61,6 +193,67 @@ const regularTheme = createTheme({
       text600: '#212250',
       hover: '#E7E8FF',
       active: '#2C19CD',
+    },
+    colors: {
+      white: '#FFF',
+      black: '#000',
+      primary: {
+        main : '#ED7465',
+        100: '#FFE7E4',
+        200: '#FBC0B9',
+        300: '#F3978C',
+        400: '#ED7465',
+        500: '#E64733',
+        600: '#CC2D19',
+        700: '#A02213',
+        800: '#73170C',
+        900: '#460C05',
+      },
+      secondary: {
+        main : '#2C19CD',
+        100: '#E7E8FF',
+        200: '#BABDFC',
+        300: '#8D8DF3',
+        400: '#6460ED',
+        500: '#3F32E6',
+        600: '#2C19CD',
+        700: '#1812A0',
+        800: '#0D1274',
+        900: '#070F47',
+      },
+      neutral: {
+        100: '#FAFBFE',
+        200: '#F4F7FF',
+        300: '#E2E6F3',
+        400: '#B5B9D9',
+        500: '#8187B9',
+        600: '#424880',
+        700: '#2F3674',
+        800: '#212250',
+        900: '#151A47',
+      },
+      gradient: {
+        default : 'linear-gradient(46.78deg, #E64733 1.79%, #ED7465 98.88%)',
+        darken: 'linear-gradient(46.78deg, #CC2D19 1.79%, #E64733 98.88%)',
+      },
+      shadow: {
+        neutral: {
+          sm : '4px 4px 14px rgba(226, 230, 243, 0.5)',
+          md : '0px -8px 8px rgba(226, 230, 243, 0.2), 0px 5px 8px rgba(107, 113, 166, 0.1), 4px 4px 14px rgba(226, 230, 243, 0.5)',
+          lg : '0px -8px 8px rgba(226, 230, 243, 0.2), 0px 8px 8px rgba(107, 113, 166, 0.2), 4px 4px 14px rgba(226, 230, 243, 0.5)',
+        },
+        primaryButton: {
+          sm : '0px -8px 8px rgba(255, 231, 228, 0.2), 0px 8px 8px rgba(243, 151, 140, 0.2), 4px 4px 14px rgba(255, 231, 228, 0.5)',
+          md : '0px -8px 8px rgba(255, 231, 228, 0.2), 0px 16px 16px rgba(243, 151, 140, 0.2), 4px 4px 14px rgba(255, 231, 228, 0.5)',
+          lg : '0px -8px 8px rgba(255, 231, 228, 0.2), 0px 16px 36px rgba(243, 151, 140, 0.2), 4px 4px 14px rgba(255, 231, 228, 0.5)',
+        },
+        secondaryButton: {
+          sm : '0px -8px 8px rgba(231, 232, 255, 0.2), 0px 8px 8px rgba(186, 189, 252, 0.05), 4px 4px 14px rgba(231, 232, 255, 0.5)',
+          md : '0px -8px 8px rgba(231, 232, 255, 0.2), 0px 16px 16px rgba(186, 189, 252, 0.2), 4px 4px 14px rgba(231, 232, 255, 0.5)',
+          lg : '0px -8px 8px rgba(231, 232, 255, 0.2), 0px 16px 36px rgba(186, 189, 252, 0.4), 4px 4px 14px rgba(231, 232, 255, 0.5)',
+        }
+      }
+
     },
     mode: 'light',
   },
@@ -121,6 +314,192 @@ const regularTheme = createTheme({
         wrapperInner: {
           width: 'inherit',
         },
+      },
+    },
+    MuiButtonBase: {
+      defaultProps: {
+        disableRipple: false,
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          minWidth: 32,
+        },
+      },
+    },
+    MuiCheckbox: {
+      styleOverrides: {
+        root: {
+          transform: 'scale(0.9)',
+          color: '#B5B9D9',
+          '&:hover': {
+            backgroundColor: 'rgba(21, 26, 71, 0.08)',
+
+          },
+          '&:focus': {
+            backgroundColor: 'rgba(21, 26, 71, 0.12)',
+          },
+          '.MuiTouchRipple-child': {
+            backgroundColor: 'rgba(21, 26, 71)',
+          },
+          '&.Mui-checked, &.MuiCheckbox-indeterminate': {
+            '&:hover': {
+              backgroundColor: 'rgba(237, 116, 101, 0.08)',
+            },
+            '&:focus': {
+              backgroundColor: 'rgba(237, 116, 101, 0.12)',
+            },
+            '.MuiTouchRipple-child': {
+              backgroundColor: 'rgba(237, 116, 101)',
+            },
+          },
+          '&.Mui-disabled': {
+            color:'#E2E6F3',
+          }
+        },
+      },
+    },
+    MuiRadio: {
+      styleOverrides: {
+        root: {
+          transform: 'scale(0.9)',
+          color: '#B5B9D9',
+          '&:hover': {
+            backgroundColor: 'rgba(21, 26, 71, 0.08)',
+          },
+          '&:focus': {
+            backgroundColor: 'rgba(21, 26, 71, 0.12)',
+          },
+          '.MuiTouchRipple-child': {
+            backgroundColor: 'rgba(21, 26, 71)',
+          },
+          '&.Mui-checked': {
+            '&:hover': {
+              backgroundColor: 'rgba(237, 116, 101, 0.08)',
+            },
+            '&:focus': {
+              backgroundColor: 'rgba(237, 116, 101, 0.12)',
+            },
+            '.MuiTouchRipple-child': {
+              backgroundColor: 'rgba(237, 116, 101)',
+            },
+          },
+          '&.Mui-disabled': {
+            color:'#E2E6F3',
+          }
+        },
+      },
+    },
+    MuiSwitch: {
+      styleOverrides: {
+        thumb: {
+          background: '#FFF',
+          border: '1px solid #B5B9D9',
+          boxSizing: 'border-box',
+          boxShadow: '0px 6px 10px rgba(0, 0, 0, 0.05)',
+          borderRadius: '22px',
+          width: '19px',
+          height: '19px',
+        },
+        track: {
+          backgroundColor: '#B5B9D9',
+          borderRadius: '22px',
+          opacity: '1',
+          height: '13px',
+        },
+        switchBase : {
+          '&:hover': {
+            backgroundColor: 'rgba(21, 26, 71, 0.08)',
+          },
+          '&:focus': {
+            backgroundColor: 'rgba(21, 26, 71, 0.12)',
+          },
+          '.MuiTouchRipple-child': {
+            backgroundColor: 'rgba(21, 26, 71)',
+          },
+          '&.Mui-checked': {
+            '&:hover': {
+              backgroundColor: 'rgba(237, 116, 101, 0.08)',
+            },
+            '&:focus': {
+              backgroundColor: 'rgba(237, 116, 101, 0.12)',
+            },
+            '.MuiTouchRipple-child': {
+              backgroundColor: 'rgba(237, 116, 101)',
+            },
+            '& .MuiSwitch-thumb': {
+              border: '0',
+              background: 'linear-gradient(46.78deg, #E64733 1.79%, #ED7465 98.88%)',
+              boxShadow: '0px 6px 10px rgba(237, 116, 101, 0.1)',
+            },
+            '& + .MuiSwitch-track': {
+              backgroundColor: '#E64733',
+              opacity: '0.2',
+            },
+          },
+          '&.Mui-disabled': {
+            '+ .MuiSwitch-track':{
+              opacity: 1,
+              backgroundColor: 'rgba(181, 185, 217, 0.3)',
+            },
+            '& .MuiSwitch-thumb': {
+              border: '1px solid rgba(181, 185, 217, 0.3)',
+            },
+            '&.Mui-checked': {
+              '+ .MuiSwitch-track': {
+                opacity: 0.2,
+                backgroundColor: 'rgba(230, 71, 51, 0.3)',
+              },
+              '& .MuiSwitch-thumb': {
+                boxShadow: 'none',
+                opacity: 0.3,
+              },
+            },
+          },
+        }
+      },
+    },
+    MuiFab: {
+      styleOverrides: {
+        root: {
+          color: '#FFF',
+          fontSize:  '26px',
+          background: 'linear-gradient(46.78deg, #E64733 1.79%, #ED7465 98.88%)',
+          boxShadow: '0px -8px 8px rgba(255, 231, 228, 0.2), 0px 16px 16px rgba(243, 151, 140, 0.2), 4px 4px 14px rgba(255, 231, 228, 0.5)',
+          width: '56px',
+          height: '56px',
+          '&:hover': {
+            background: 'linear-gradient(46.78deg, #CC2D19 1.79%, #E64733 98.88%)',
+            boxShadow: '0px -8px 8px rgba(255, 231, 228, 0.2), 0px 16px 36px rgba(243, 151, 140, 0.2), 4px 4px 14px rgba(255, 231, 228, 0.5)',
+          },
+          '&& .MuiTouchRipple-child': {
+            backgroundColor: '#CC2D19',
+            opacity: 1,
+          },
+          '&& .MuiTouchRipple-rippleVisible': {
+            animationName: `${buttonEnterKeyframe}`,
+          },
+          '&.Mui-disabled': {
+            color: '#8187B9',
+            background: '#E2E6F3',
+          },
+        },
+      },
+    },
+    MuiFormControlLabel: {
+      styleOverrides: {
+        root: {
+          color: '#151A47',
+          fontSize: '14px',
+          lineHeight: '20px',
+          fontWeight: 400,
+        },
+        label: {
+          '&.Mui-disabled' : {
+            color: '#8187B9',
+          }
+        }
       },
     },
   },
