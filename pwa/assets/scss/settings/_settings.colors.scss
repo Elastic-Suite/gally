@@ -55,3 +55,13 @@ $error-light: #FFE7E4;
 
 $gradient: linear-gradient(46.78deg, #E64733 1.79%, #ED7465 98.88%);
 $gradient-darken: linear-gradient(46.78deg, #CC2D19 1.79%, #E64733 98.88%);
+
+// Override specific tags on their colors
+
+a {
+  color: inherit;
+}
+
+a:hover {
+  color: inherit;
+}
