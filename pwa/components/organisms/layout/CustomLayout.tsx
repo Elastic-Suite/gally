@@ -1,6 +1,12 @@
-import { AppBar, UserMenu, Notification } from 'react-admin'
+import {
+  AppBar,
+  UserMenu,
+  Notification,
+  LayoutComponent,
+  useSidebarState,
+  useStore,
+} from 'react-admin'
 import IonIcon from 'components/atoms/IonIcon'
-import PropTypes from 'prop-types'
 import { ThemeProvider } from '@mui/material/styles'
 import { makeStyles } from '@mui/styles'
 import RegularTheme from '~/components/atoms/RegularTheme'
@@ -12,29 +18,31 @@ import CustomSidebar from '~/components/molecules/layout/CustomSidebar'
  * See: https://marmelab.com/react-admin/Theming.html#using-a-custom-layout
  */
 
+/*
+ * Use of mui makeStyles to create multiple styles reusing theme fm react-admin
+ * see: https://mui.com/system/styles/basics/
+ */
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
     zIndex: 1,
     minHeight: '100vh',
-    backgroundColor: RegularTheme.palette.background.default,
+    backgroundColor: theme.palette.background.default,
     position: 'relative',
   },
   appFrame: {
     display: 'flex',
     flexDirection: 'row',
     overflowX: 'auto',
-  },
-  sidebar: {
-    display: 'flex',
-    flexDirection: 'column',
+    minHeight: '100vh',
   },
   contentWithAppbar: {
     display: 'flex',
     flexDirection: 'column',
     flexGrow: 1,
     width: 'auto',
+    position: 'relative',
   },
   appbar: {
     display: 'flex',
@@ -46,9 +54,24 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     flexGrow: 2,
-    marginTop: RegularTheme.spacing(2),
-    paddingLeft: RegularTheme.spacing(4),
-    paddingRight: RegularTheme.spacing(4),
+    marginTop: theme.spacing(2),
+    paddingLeft: theme.spacing(4),
+    paddingRight: theme.spacing(4),
+  },
+  buttonCollapse: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    left: theme.spacing(-1.5),
+    top: theme.spacing(6),
+    background: theme.palette.background.paper,
+    border: '1px solid #E2E6F3',
+    boxSizing: 'border-box',
+    borderRadius: theme.spacing(1.5),
+    width: theme.spacing(3),
+    height: theme.spacing(3),
+    cursor: 'pointer',
   },
 }))
 const useStylesAppBar = makeStyles((theme) => ({
@@ -60,15 +83,46 @@ const useStylesAppBar = makeStyles((theme) => ({
   },
 }))
 
-const CustomLayout = ({ children, dashboard, logout, title }) => {
+/*
+ * Component CustomLayout with type LayoutComponent
+ */
+const CustomLayout: LayoutComponent = ({ children, title }) => {
+  /*
+   * useStore from ReactAdmin to store data globally
+   * see: https://marmelab.com/react-admin/doc/4.0/Store.html
+   */
+  const [sidebarState, setSidebarState] = useSidebarState()
+  const [sidebarStateTimeout, setSidebarStateTimeout] = useStore(
+    'sidebarStateTimeout',
+    sidebarState
+  )
+
   const classes = useStyles()
   const appbar = useStylesAppBar()
+
+  /*
+   * Setup function to collapse sidebar when click on button
+   */
+  const collapseSidebar = () => {
+    setSidebarState(!sidebarState)
+    if (sidebarState) {
+      setTimeout(() => {
+        setSidebarStateTimeout(sidebarState)
+      }, 500)
+    } else {
+      setSidebarStateTimeout(sidebarState)
+    }
+  }
+
   return (
     <ThemeProvider theme={RegularTheme}>
       <div className={classes.root}>
         <div className={classes.appFrame}>
-          <CustomSidebar className={classes.sidebar} dashboard={dashboard} />
+          <CustomSidebar />
           <div className={classes.contentWithAppbar}>
+            <div className={classes.buttonCollapse} onClick={collapseSidebar}>
+              <IonIcon name={'resize-menu'} style={{ width: 14, height: 14 }} />
+            </div>
             <AppBar
               classes={appbar}
               userMenu={<UserMenu icon={<IonIcon name="person" />} />}
@@ -80,10 +134,6 @@ const CustomLayout = ({ children, dashboard, logout, title }) => {
       </div>
     </ThemeProvider>
   )
-}
-
-CustomLayout.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
 }
 
 export default CustomLayout
