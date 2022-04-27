@@ -4,6 +4,7 @@ services:
         arguments:
             - '@Elasticsuite\Fixture\Service\ElasticsearchFixtures'
             - '@api_platform.metadata.resource.metadata_factory'
+            - '@Elasticsuite\ResourceMetadata\Service\ResourceMetadataManager'
             - '@.inner'
         decoration_priority: 100
 
