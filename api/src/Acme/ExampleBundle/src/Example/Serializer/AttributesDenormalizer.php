@@ -17,7 +17,7 @@ declare(strict_types=1);
 namespace Acme\Example\Example\Serializer;
 
 use Acme\Example\Example\Model\ExampleProduct;
-use Acme\Example\Example\Model\TextAttribute;
+use Elasticsuite\Entity\Model\Attribute\Type\TextAttribute;
 use Symfony\Component\Serializer\Normalizer\ContextAwareDenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
@@ -26,7 +26,7 @@ class AttributesDenormalizer implements ContextAwareDenormalizerInterface, Denor
 {
     use DenormalizerAwareTrait;
 
-    private const ALREADY_CALLED_DENORMALIZER = 'AttributesDenormalizerCalled';
+    private const ALREADY_CALLED_DENORMALIZER = 'ProductAttributesDenormalizerCalled';
 
     /**
      * {@inheritdoc}
@@ -50,7 +50,10 @@ class AttributesDenormalizer implements ContextAwareDenormalizerInterface, Denor
 
         if (isset($data['_source'])) {
             foreach ($data['_source'] as $attributeCode => $value) {
-                if (!\in_array($attributeCode, ExampleProduct::DEFAULT_ATTRIBUTE, true) && !\is_array($value)) {
+                if (!\in_array($attributeCode, ExampleProduct::DEFAULT_ATTRIBUTE, true)) {
+                    if (\is_array($value)) {
+                        $value = json_encode($value);
+                    }
                     $esProduct->addAttribute(
                         new TextAttribute($attributeCode, $value)
                     );

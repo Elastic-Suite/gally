@@ -1,0 +1,17 @@
+services:
+    Elasticsuite\Entity\Serializer\GraphQl\StitchingNormalizer:
+        arguments:
+            - '@Elasticsuite\Metadata\Repository\MetadataRepository'
+            - '@ApiPlatform\Core\Metadata\Resource\Factory\ResourceMetadataFactoryInterface'
+            - '@Elasticsuite\ResourceMetadata\Service\ResourceMetadataManager'
+        tags:
+            - { name: 'serializer.normalizer' }
+
+    Elasticsuite\Entity\Decoration\GraphQl\Type\StitchingFieldsBuilder:
+        decorates: api_platform.graphql.fields_builder
+        arguments:
+            - '@Elasticsuite\Metadata\Repository\MetadataRepository'
+            - '@ApiPlatform\Core\Metadata\Resource\Factory\ResourceMetadataFactoryInterface'
+            - '@Elasticsuite\ResourceMetadata\Service\ResourceMetadataManager'
+            - '@api_platform.graphql.types_container'
+            - '@.inner'

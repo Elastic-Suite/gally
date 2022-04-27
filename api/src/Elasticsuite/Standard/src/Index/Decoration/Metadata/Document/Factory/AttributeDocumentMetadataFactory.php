@@ -21,6 +21,7 @@ use ApiPlatform\Core\Bridge\Elasticsearch\Metadata\Document\DocumentMetadata;
 use ApiPlatform\Core\Bridge\Elasticsearch\Metadata\Document\Factory\DocumentMetadataFactoryInterface;
 use ApiPlatform\Core\Metadata\Resource\Factory\ResourceMetadataFactoryInterface;
 use Elasticsuite\Fixture\Service\ElasticsearchFixtures;
+use Elasticsuite\ResourceMetadata\Service\ResourceMetadataManager;
 
 /**
  * Creates document's metadata using the attribute configuration elasticsuite_index and elasticsuite_type.
@@ -30,6 +31,7 @@ class AttributeDocumentMetadataFactory implements DocumentMetadataFactoryInterfa
     public function __construct(
         private ElasticsearchFixtures $elasticsearchFixtures,
         private ResourceMetadataFactoryInterface $resourceMetadataFactory,
+        private ResourceMetadataManager $resourceMetadataManager,
         private ?DocumentMetadataFactoryInterface $decorated = null
     ) {
     }
@@ -52,7 +54,8 @@ class AttributeDocumentMetadataFactory implements DocumentMetadataFactoryInterfa
         if (!$documentMetadata || null === $documentMetadata->getIndex()) {
             $resourceMetadata = $this->resourceMetadataFactory->create($resourceClass);
 
-            if (null !== $index = $resourceMetadata->getAttribute('elasticsuite_index')) {
+            $index = $this->resourceMetadataManager->getIndex($resourceMetadata);
+            if (null !== $index) {
                 /**
                  * Todo: call a service to get the index name formatted.
                  */

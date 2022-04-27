@@ -21,6 +21,7 @@ use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Elasticsearch\DataProvider\Filter\TermFilter;
 use Elasticsuite\User\Constant\Role;
+use Elasticsuite\Entity\Model\Attribute\AttributeInterface;
 
 #[
     ApiResource(
@@ -28,13 +29,14 @@ use Elasticsuite\User\Constant\Role;
         graphql: [
             'item_query',
             'collection_query',
-            'create' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
-            'update' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
-            'delete' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
         ],
         itemOperations: ['get'],
         attributes: [
-            'elasticsuite_index' => 'catalog_product',
+            'elasticsuite' => [
+                'index' => 'catalog_product',
+                'stitching' => ['property' => 'attributes'],
+                'metadata' => ['entity' => 'product'],
+            ],
         ],
         paginationItemsPerPage: 2,
         paginationMaximumItemsPerPage: 10,
@@ -81,7 +83,7 @@ class ExampleProduct
      * }
      * }
      */
-    public const DEFAULT_ATTRIBUTE = ['entity_id', 'name', 'type_id', 'sku', 'description', 'created_at', 'updated_at'];
+    public const DEFAULT_ATTRIBUTE = ['entity_id', 'type_id', 'description', 'created_at', 'updated_at'];
 
     #[ApiProperty(
         identifier: true
@@ -89,15 +91,13 @@ class ExampleProduct
     public string $entity_id;
 
     #[ApiProperty(
-        description: 'name',
+        description: 'description',
         openapiContext: [
             'example' => 'description',
         ]
     )]
-    public array $name;
-    public string $type_id;
-    public string $sku;
     public array $description;
+    public string $type_id;
     public string $created_at;
     public string $updated_at;
 
