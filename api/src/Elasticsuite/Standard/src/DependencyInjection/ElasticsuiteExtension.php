@@ -50,6 +50,8 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
                         __DIR__ . '/../Catalog/Model/',
                         __DIR__ . '/../Security/Model/',
                         __DIR__ . '/../Menu/Model/',
+                        __DIR__ . '/../Search/Model/',
+                        __DIR__ . '/../Category/Model/',
                     ],
                 ],
             ]
@@ -72,6 +74,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
                         'paths' => [
                             __DIR__ . '/../Catalog/Resources/config/validator',
                             __DIR__ . '/../Metadata/Resources/config/validator',
+                            __DIR__ . '/../Search/Resources/config/validator',
                         ],
                     ],
                 ],
@@ -85,6 +88,8 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
                     'src/User/DataFixtures/fixtures',
                     'src/Catalog/DataFixtures/fixtures',
                     'src/Metadata/DataFixtures/fixtures',
+                    'src/Category/DataFixtures/fixtures',
+                    'src/Search/DataFixtures/fixtures',
                 ],
             ]
         );
@@ -121,6 +126,8 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
         $loader->load('Menu/Resources/config/services.yaml');
         $loader->load('ResourceMetadata/Resources/config/services.yaml');
         $loader->load('Entity/Resources/config/services.yaml');
+        $loader->load('Search/Resources/config/services.yaml');
+        $loader->load('Category/Resources/config/services.yaml');
 
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);

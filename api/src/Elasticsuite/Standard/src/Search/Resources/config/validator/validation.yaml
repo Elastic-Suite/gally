@@ -1,0 +1,23 @@
+Elasticsuite\Search\Model\Facet\Configuration:
+    properties:
+        sourceField:
+            - NotNull: ~
+            - Elasticsuite\Search\Validator\ProductFieldConstraint: ~
+            - Elasticsuite\Search\Validator\FilterableFieldConstraint: ~
+        displayMode:
+            - Choice: [auto, hidden, displayed]
+        coverageRate:
+            - Range:
+                min: 0
+                max: 100
+                notInRangeMessage: You must set a value between {{ min }}% and {{ max }}%.
+        maxSize:
+            - Positive: ~
+        sortOrder:
+            - Choice: [result_count, admin_sort, name, relevance]
+
+    constraints:   
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+              fields: [ sourceField, category ]
+              message: 'A facet configuration already exist for this field and category.'
+              ignoreNull: false

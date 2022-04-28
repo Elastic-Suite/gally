@@ -1,0 +1,14 @@
+Elasticsuite\Search\Model\Facet\Configuration:
+    facetconfig1:
+        sourceField: '@product_brand'
+        category: null
+        displayMode: 'auto'
+        coverageRate: 10
+        maxSize: 10
+        sortOrder: 'result_count'
+        isRecommendable: false
+        isVirtual: false
+    facetconfig2:
+        sourceField: '@product_brand'
+        category: '@categ1'
+        coverageRate: 20

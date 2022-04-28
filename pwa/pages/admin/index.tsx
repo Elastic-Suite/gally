@@ -89,6 +89,8 @@ const AdminLoader = () => {
           <ResourceGuesser name={'example_categories'} />
           <ResourceGuesser name={'example_indices'} />
           <ResourceGuesser name={'declarative_greetings'} />
+          <ResourceGuesser name={'categories'} />
+          <ResourceGuesser name={'facet_configurations'} />
         </HydraAdmin>
       </>
     )
