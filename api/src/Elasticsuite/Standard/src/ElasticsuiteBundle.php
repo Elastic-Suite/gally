@@ -31,8 +31,10 @@ class ElasticsuiteBundle extends Bundle
     {
         $mappings = [
             realpath(__DIR__ . '/Catalog/Resources/config/doctrine') => 'Elasticsuite\Catalog\Model',
+            realpath(__DIR__ . '/Category/Resources/config/doctrine') => 'Elasticsuite\Category\Model',
             realpath(__DIR__ . '/Metadata/Resources/config/doctrine') => 'Elasticsuite\Metadata\Model',
             realpath(__DIR__ . '/User/Resources/config/doctrine') => 'Elasticsuite\User\Model',
+            realpath(__DIR__ . '/Search/Resources/config/doctrine') => 'Elasticsuite\Search\Model',
         ];
 
         $container->addCompilerPass(
