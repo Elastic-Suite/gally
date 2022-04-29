@@ -77,13 +77,7 @@ abstract class AbstractTest extends ApiTestCase
             $data['json'] = $json;
         }
 
-        $response = $this->request($method, $path, $data);
-
-        if ('DELETE' !== $method) {
-            $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
-        }
-
-        return $response;
+        return $this->request($method, $path, $data);
     }
 
     private function request(string $method, string $path, array $data = []): ResponseInterface

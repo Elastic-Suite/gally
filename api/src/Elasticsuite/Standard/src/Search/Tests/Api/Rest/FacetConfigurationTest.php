@@ -16,187 +16,187 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Search\Tests\Api\Rest;
 
-use Elasticsuite\Search\Model\Facet;
-use Elasticsuite\Standard\src\Test\AbstractEntityTest;
+use Elasticsuite\Standard\src\Test\AbstractTest;
 
-class FacetConfigurationTest extends AbstractEntityTest
+class FacetConfigurationTest extends AbstractTest
 {
-    protected static function getFixtureFiles(): array
+    public static function setUpBeforeClass(): void
     {
-        return [
+        static::loadFixture([
             __DIR__ . '/../../fixtures/catalogs.yaml',
             __DIR__ . '/../../fixtures/categories.yaml',
             __DIR__ . '/../../fixtures/metadata.yaml',
             __DIR__ . '/../../fixtures/source_field.yaml',
-            __DIR__ . '/../../fixtures/facet_configurations.yaml',
-        ];
-    }
-
-    protected function getEntityClass(): string
-    {
-        return Facet\Configuration::class;
-    }
-
-    public function createValidDataProvider(): array
-    {
-        return [
-            [[
-                'sourceField' => '/source_fields/4',
-                'displayMode' => 'auto',
-                'coverageRate' => 20,
-                'sortOrder' => 'name',
-            ]],
-            [[
-                'sourceField' => '/source_fields/4',
-                'category' => '/categories/2',
-                'displayMode' => 'displayed',
-                'sortOrder' => 'admin_sort',
-            ]],
-            [[
-                'sourceField' => '/source_fields/5',
-                'displayMode' => 'hidden',
-                'coverageRate' => 40,
-                'sortOrder' => 'relevance',
-                'isRecommendable' => false,
-                'isVirtual' => false,
-            ]],
-            [[
-                'sourceField' => '/source_fields/6',
-                'coverageRate' => 40,
-            ]],
-        ];
-    }
-
-    public function createInvalidDataProvider(): array
-    {
-        return [
-            [
-                [
-                    'category' => '/categories/2',
-                    'displayMode' => 'auto',
-                ],
-                'sourceField: This value should not be null.',
-            ],
-            [
-                [
-                    'sourceField' => '/source_fields/notValid',
-                ],
-                'Item not found for "/source_fields/notValid".',
-                400,
-            ],
-            [
-                [
-                    'sourceField' => '/source_fields/1',
-                ],
-                'sourceField: The sourceField "name" is not filterable.',
-            ],
-            [
-                [
-                    'sourceField' => '/source_fields/2',
-                ],
-                'sourceField: The sourceField "name" is not linked to a product metadata.',
-            ],
-            [
-                [
-                    'sourceField' => '/source_fields/4',
-                    'category' => '/categories/notValid',
-                    'coverageRate' => 20,
-                ],
-                'Item not found for "/categories/notValid".',
-                400,
-            ],
-            [
-                [
-                    'sourceField' => '/source_fields/4',
-                    'category' => '/categories/2',
-                    'coverageRate' => 30,
-                ],
-                'sourceField: A facet configuration already exist for this field and category.',
-            ],
-            [
-                [
-                    'sourceField' => '/source_fields/4',
-                    'displayMode' => 'auto',
-                    'coverageRate' => 50,
-                ],
-                'sourceField: A facet configuration already exist for this field and category.',
-            ],
-            [
-                [
-                    'sourceField' => '/source_fields/5',
-                    'category' => '/categories/2',
-                    'displayMode' => 'unvalid',
-                ],
-                'displayMode: The value you selected is not a valid choice.',
-            ],
-            [
-                [
-                    'sourceField' => '/source_fields/5',
-                    'category' => '/categories/2',
-                    'coverageRate' => 120,
-                ],
-                'coverageRate: You must set a value between 0% and 100%.',
-            ],
-            [
-                [
-                    'sourceField' => '/source_fields/5',
-                    'category' => '/categories/2',
-                    'maxSize' => -10,
-                ],
-                'maxSize: This value should be positive.',
-            ],
-            [
-                [
-                    'sourceField' => '/source_fields/5',
-                    'category' => '/categories/2',
-                    'sortOrder' => 'unvalid',
-                ],
-                'sortOrder: The value you selected is not a valid choice.',
-            ],
-        ];
-    }
-
-    protected function getJsonCreationValidation(array $validData): array
-    {
-        return array_filter([
-            'sourceField' => $validData['sourceField'] ?? null,
-            'category' => $validData['category'] ?? null,
-            'displayMode' => $validData['displayMode'] ?? null,
-            'coverageRate' => $validData['coverageRate'] ?? null,
-            'maxSize' => $validData['maxSize'] ?? null,
-            'sortOrder' => $validData['sortOrder'] ?? null,
-            'recommendable' => $validData['isRecommendable'] ?? null,
-            'virtual' => $validData['isVirtual'] ?? null,
         ]);
     }
 
-    public function getDataProvider(): array
+    protected function getApiPath(): string
+    {
+        return '/facet_configurations';
+    }
+
+    /**
+     * @dataProvider getCollectionBeforeDataProvider
+     */
+    public function testGetCollectionBefore(?int $categoryId, array $elements): void
+    {
+        $this->testGetCollection($categoryId, $elements);
+    }
+
+    protected function getCollectionBeforeDataProvider(): array
     {
         return [
-            [1, ['id' => 1, 'coverageRate' => 10], 200],
-            [6, ['id' => 6, 'coverageRate' => 40], 200],
-            [20, [], 404],
+            [
+                null,
+                [
+                    ['sourceField' => 3],
+                    ['sourceField' => 4],
+                    ['sourceField' => 5],
+                ],
+            ],
+            [
+                1,
+                [
+                    ['sourceField' => 3, 'category' => 1],
+                    ['sourceField' => 4, 'category' => 1],
+                    ['sourceField' => 5, 'category' => 1],
+                ],
+            ],
+            [
+                2,
+                [
+                    ['sourceField' => 3, 'category' => 2],
+                    ['sourceField' => 4, 'category' => 2],
+                    ['sourceField' => 5, 'category' => 2],
+                ],
+            ],
         ];
     }
 
-    protected function getJsonGetValidation(array $expectedData): array
+    /**
+     * @dataProvider updateDataProvider
+     * @depends testGetCollectionBefore
+     */
+    public function testUpdateValue(string $id, array $newData)
     {
-        return $expectedData;
+        $this->requestRest('PUT', "{$this->getApiPath()}/$id", $newData);
+        $this->assertResponseIsSuccessful();
     }
 
-    public function deleteDataProvider(): array
+    protected function updateDataProvider(): array
     {
         return [
-            [1, 200],
-            [2, 200],
-            [20, 404],
+            ['3-0', ['coverageRate' => 0]],
+            ['3-1', ['coverageRate' => 10]],
+            ['4-1', ['coverageRate' => 10]],
+            ['3-2', ['coverageRate' => 20]],
         ];
     }
 
-    protected function getJsonGetCollectionValidation(): array
+    /**
+     * @dataProvider getCollectionAfterDataProvider
+     * @depends testUpdateValue
+     */
+    public function testGetCollectionAfter(?int $categoryId, array $items): void
+    {
+        $this->testGetCollection($categoryId, $items);
+    }
+
+    protected function getCollectionAfterDataProvider(): array
     {
         return [
-            'hydra:totalItems' => 4,
+            [
+                null,
+                [
+                    ['sourceField' => 3, 'coverageRate' => 0],
+                    ['sourceField' => 4],
+                    ['sourceField' => 5],
+                ],
+            ],
+            [
+                1,
+                [
+                    ['sourceField' => 3, 'category' => 1, 'coverageRate' => 10, 'defaultCoverageRate' => 0],
+                    ['sourceField' => 4, 'category' => 1, 'coverageRate' => 10],
+                    ['sourceField' => 5, 'category' => 1, 'coverageRate' => 90],
+                ],
+            ],
+            [
+                2,
+                [
+                    ['sourceField' => 3, 'category' => 2, 'coverageRate' => 20, 'defaultCoverageRate' => 0],
+                    ['sourceField' => 4, 'category' => 2, 'coverageRate' => 90],
+                    ['sourceField' => 5, 'category' => 2, 'coverageRate' => 90],
+                ],
+            ],
         ];
+    }
+
+    protected function testGetCollection(?int $categoryId, array $items): void
+    {
+        $query = $categoryId ? "category=$categoryId" : '';
+        $response = $this->requestRest('GET', $this->getApiPath() . '?' . $query . '&page=1', []);
+        $this->assertResponseIsSuccessful();
+        $this->assertJsonContains(
+            [
+                '@context' => '/contexts/FacetConfiguration',
+                '@id' => '/facet_configurations',
+                '@type' => 'hydra:Collection',
+                'hydra:totalItems' => 5,
+            ]
+        );
+
+        $responseData = $response->toArray();
+
+        foreach ($items as $item) {
+            $expectedItem = $this->completeContent($item);
+            $item = $this->getById($expectedItem['id'], $responseData['hydra:member']);
+            $this->assertEquals($expectedItem, $item);
+        }
+    }
+
+    protected function completeContent(array $data): array
+    {
+        $sourceFieldId = $data['sourceField'];
+        $categoryId = $data['category'] ?? 0;
+        unset($data['sourceField']);
+        unset($data['category']);
+        $id = implode('-', [$sourceFieldId, $categoryId]);
+
+        $baseData = [
+            '@id' => "/facet_configurations/$id",
+            '@type' => 'FacetConfiguration',
+            'id' => $id,
+            'sourceField' => "/source_fields/$sourceFieldId",
+            'displayMode' => 'auto',
+            'coverageRate' => 90,
+            'maxSize' => 10,
+            'sortOrder' => 'result_count',
+            'isRecommendable' => false,
+            'isVirtual' => false,
+            'defaultDisplayMode' => 'auto',
+            'defaultMaxSize' => 10,
+            'defaultCoverageRate' => 90,
+            'defaultSortOrder' => 'result_count',
+            'defaultIsRecommendable' => false,
+            'defaultIsVirtual' => false,
+        ];
+
+        if ($categoryId) {
+            $baseData['category'] = "/categories/$categoryId";
+        }
+
+        return array_merge($baseData, $data);
+    }
+
+    protected function getById(string $id, array $list): ?array
+    {
+        foreach ($list as $element) {
+            if ($id === $element['id']) {
+                return $element;
+            }
+        }
+
+        return null;
     }
 }

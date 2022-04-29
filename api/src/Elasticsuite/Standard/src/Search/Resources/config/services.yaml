@@ -5,6 +5,45 @@ services:
         tags:
             - { name: doctrine.repository_service }
 
+    # Use to remove eager loading extension from default item data provider.
+    elasticsuite.search.dataprovider.item_data_provider.no_eager_loading:
+        parent: api_platform.doctrine.orm.default.item_data_provider
+        arguments:
+            $itemExtensions: []
+
+    # Use to remove eager loading extension from default item data provider.
+    elasticsuite.search.dataprovider.collection_data_provider.no_eager_loading:
+        parent: api_platform.doctrine.orm.default.collection_data_provider
+        arguments:
+            $collectionExtensions:
+                - '@api_platform.doctrine.orm.query_extension.filter'
+                - '@api_platform.doctrine.orm.query_extension.filter_eager_loading'
+                - '@api_platform.doctrine.orm.query_extension.order'
+                - '@api_platform.doctrine.orm.query_extension.pagination'
+
+    Elasticsuite\Search\DataProvider\Facet\ConfigurationItemDataProvider:
+        arguments:
+            - '@doctrine'
+            - '@elasticsuite.search.dataprovider.item_data_provider.no_eager_loading'
+            - '@api_platform.doctrine.orm.default.item_data_provider'
+        tags:
+            - { name: api_platform.item_data_provider, priority: 2 }
+        autoconfigure: false
+
+    Elasticsuite\Search\DataProvider\Facet\ConfigurationCollectionDataProvider:
+        arguments:
+            - '@doctrine'
+            - '@elasticsuite.search.dataprovider.collection_data_provider.no_eager_loading'
+        tags:
+            - { name: api_platform.collection_data_provider, priority: 2 }
+        autoconfigure: false
+
+    Elasticsuite\Search\DataPersister\Facet\ConfigurationDataPersister:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: api_platform.data_persister }
+
     Elasticsuite\DependencyInjection\GenericFactory:
         public: false
 

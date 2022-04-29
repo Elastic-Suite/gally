@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Elasticsuite\Category\Model;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ApiResource]
 class Category
@@ -35,6 +36,7 @@ class Category
         $this->id = $id;
     }
 
+    #[Groups(['facet_configuration:graphql_read'])]
     public function getName(): string
     {
         return $this->name;
