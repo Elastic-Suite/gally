@@ -40,8 +40,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
         'update' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
         'delete' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
     ],
-    normalizationContext: ['groups' => ['api']],
-    denormalizationContext: ['groups' => ['api']],
+    normalizationContext: ['groups' => ['source_field:api']],
+    denormalizationContext: ['groups' => ['source_field:api']],
 )]
 class SourceField
 {
@@ -71,19 +71,19 @@ class SourceField
         $this->options = new ArrayCollection();
     }
 
-    #[Groups(['api'])]
+    #[Groups(['source_field:api', 'facet_configuration:graphql_read'])]
     public function getId(): int
     {
         return $this->id;
     }
 
-    #[Groups(['api'])]
+    #[Groups(['source_field:api', 'facet_configuration:graphql_read'])]
     public function getName(): string
     {
         return $this->name;
     }
 
-    #[Groups(['api'])]
+    #[Groups(['source_field:api'])]
     public function setName(string $name): self
     {
         $this->name = $name;
@@ -91,13 +91,13 @@ class SourceField
         return $this;
     }
 
-    #[Groups(['api'])]
+    #[Groups(['source_field:api', 'facet_configuration:graphql_read'])]
     public function getDefaultLabel(): string
     {
         return $this->defaultLabel ?: ucfirst($this->getName());
     }
 
-    #[Groups(['api'])]
+    #[Groups(['source_field:api'])]
     public function setDefaultLabel(string $defaultLabel): self
     {
         $this->defaultLabel = $defaultLabel;
@@ -105,13 +105,13 @@ class SourceField
         return $this;
     }
 
-    #[Groups(['api'])]
+    #[Groups(['source_field:api', 'facet_configuration:graphql_read'])]
     public function getType(): ?string
     {
         return $this->type;
     }
 
-    #[Groups(['api'])]
+    #[Groups(['source_field:api'])]
     public function setType(?string $type): self
     {
         $this->type = $type;
@@ -119,13 +119,13 @@ class SourceField
         return $this;
     }
 
-    #[Groups(['api'])]
+    #[Groups(['source_field:api', 'facet_configuration:graphql_read'])]
     public function getWeight(): ?int
     {
         return $this->weight;
     }
 
-    #[Groups(['api'])]
+    #[Groups(['source_field:api'])]
     public function setWeight(?int $weight): self
     {
         $this->weight = $weight;
@@ -133,13 +133,13 @@ class SourceField
         return $this;
     }
 
-    #[Groups(['api'])]
+    #[Groups(['source_field:api', 'facet_configuration:graphql_read'])]
     public function isSearchable(): ?bool
     {
         return $this->isSearchable;
     }
 
-    #[Groups(['api'])]
+    #[Groups(['source_field:api'])]
     public function setIsSearchable(?bool $isSearchable): self
     {
         $this->isSearchable = $isSearchable;
@@ -147,13 +147,13 @@ class SourceField
         return $this;
     }
 
-    #[Groups(['api'])]
+    #[Groups(['source_field:api', 'facet_configuration:graphql_read'])]
     public function isFilterable(): ?bool
     {
         return $this->isFilterable;
     }
 
-    #[Groups(['api'])]
+    #[Groups(['source_field:api'])]
     public function setIsFilterable(?bool $isFilterable): self
     {
         $this->isFilterable = $isFilterable;
@@ -161,13 +161,13 @@ class SourceField
         return $this;
     }
 
-    #[Groups(['api'])]
+    #[Groups(['source_field:api', 'facet_configuration:graphql_read'])]
     public function isSortable(): ?bool
     {
         return $this->isSortable;
     }
 
-    #[Groups(['api'])]
+    #[Groups(['source_field:api'])]
     public function setIsSortable(?bool $isSortable): self
     {
         $this->isSortable = $isSortable;
@@ -175,13 +175,13 @@ class SourceField
         return $this;
     }
 
-    #[Groups(['api'])]
+    #[Groups(['source_field:api', 'facet_configuration:graphql_read'])]
     public function isSpellchecked(): ?bool
     {
         return $this->isSpellchecked;
     }
 
-    #[Groups(['api'])]
+    #[Groups(['source_field:api'])]
     public function setIsSpellchecked(?bool $isSpellchecked): self
     {
         $this->isSpellchecked = $isSpellchecked;
@@ -189,13 +189,13 @@ class SourceField
         return $this;
     }
 
-    #[Groups(['api'])]
+    #[Groups(['source_field:api', 'facet_configuration:graphql_read'])]
     public function isUsedForRules(): ?bool
     {
         return $this->isUsedForRules;
     }
 
-    #[Groups(['api'])]
+    #[Groups(['source_field:api'])]
     public function setIsUsedForRules(?bool $isUsedForRules): self
     {
         $this->isUsedForRules = $isUsedForRules;
@@ -203,7 +203,7 @@ class SourceField
         return $this;
     }
 
-    #[Groups(['api'])]
+    #[Groups(['source_field:api', 'facet_configuration:graphql_read'])]
     public function isSystem(): bool
     {
         return $this->isSystem;
@@ -216,13 +216,13 @@ class SourceField
         return $this;
     }
 
-    #[Groups(['api'])]
+    #[Groups(['source_field:api', 'facet_configuration:graphql_read'])]
     public function getMetadata(): ?Metadata
     {
         return $this->metadata;
     }
 
-    #[Groups(['api'])]
+    #[Groups(['source_field:api'])]
     public function setMetadata(?Metadata $metadata): self
     {
         $this->metadata = $metadata;
@@ -233,7 +233,7 @@ class SourceField
     /**
      * @return Collection<SourceFieldLabel>
      */
-    #[Groups(['api'])]
+    #[Groups(['source_field:api', 'facet_configuration:graphql_read'])]
     public function getLabels(): Collection
     {
         return $this->labels;
@@ -263,7 +263,7 @@ class SourceField
     /**
      * @return Collection<SourceFieldOption>
      */
-    #[Groups(['api'])]
+    #[Groups(['source_field:api', 'facet_configuration:graphql_read'])]
     public function getOptions(): Collection
     {
         return $this->options;
