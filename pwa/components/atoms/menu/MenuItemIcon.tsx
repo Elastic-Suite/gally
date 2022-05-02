@@ -77,16 +77,9 @@ const MenuItemIcon = (props) => {
    * useStore from ReactAdmin to store data globally
    * see: https://marmelab.com/react-admin/doc/4.0/Store.html
    */
-  let [menuItemActive, setMenuItemActive] = useStore(`menuItemActive`, '')
+  let [menuItemActive] = useStore(`menuItemActive`, '')
   const [sidebarState] = useSidebarState()
   const [sidebarStateTimeout] = useStore('sidebarStateTimeout')
-
-  /*
-   * Function to update active menu item
-   */
-  const clickItem = () => {
-    setMenuItemActive(props.code)
-  }
 
   const classes = useStyles()
   let classNameRoot = classes.root
@@ -126,7 +119,6 @@ const MenuItemIcon = (props) => {
         <a
           href={`#/${props.href}`}
           className={classNameRoot}
-          onClick={clickItem}
         >
           <IonIcon name={props.code} style={{ width: 16, height: 16 }} />
           <span

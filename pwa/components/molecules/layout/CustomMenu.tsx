@@ -2,6 +2,8 @@ import { useStore } from 'react-admin'
 import MenuItemIcon from '~/components/atoms/menu/MenuItemIcon'
 import MenuItem from '~/components/atoms/menu/MenuItem'
 import { makeStyles } from '@mui/styles'
+import {useEffect} from "react";
+import {useLocation} from "react-router";
 
 /*
  * Create function to create path from code of the menu item
@@ -57,7 +59,28 @@ const CustomMenu = (props) => {
    * useStore from ReactAdmin to store data globally
    * see: https://marmelab.com/react-admin/doc/4.0/Store.html
    */
-  const [menu] = useStore('menu')
+  const [menu, setMenu] = useStore('menu', { hierarchy: [] })
+  let [menuItemActive, setMenuItemActive] = useStore(`menuItemActive`)
+
+  /*
+   * Function to update menu active item from pathname
+   */
+  const location = useLocation()
+  useEffect(() => {
+    setMenuItemActive(location.pathname.slice(1).replaceAll('/','_'))
+  },[location])
+
+  /*
+   * Fetch data from /menu to get create menu items dynamically
+   */
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch('/menu')
+      const json = await res.json()
+      setMenu(json)
+    }
+    fetchData()
+  }, [setMenu])
 
   const classes = useStyles()
 

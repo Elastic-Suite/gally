@@ -53,20 +53,7 @@ const CustomSidebar = (props) => {
    * useStore from ReactAdmin to store data globally
    * see: https://marmelab.com/react-admin/doc/4.0/Store.html
    */
-  const [menu, setMenu] = useStore('menu', { hierarchy: [] })
   const [sidebarState] = useSidebarState()
-
-  /*
-   * Fetch data from /menu to get create menu items dynamically
-   */
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await fetch('/menu')
-      const json = await res.json()
-      setMenu(json)
-    }
-    fetchData()
-  }, [setMenu])
 
   const classes = useStyles()
 
