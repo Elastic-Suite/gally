@@ -77,7 +77,7 @@ const MenuItem = (props) => {
    * see: https://marmelab.com/react-admin/doc/4.0/Store.html
    */
   let [childOpen, setChildOpen] = useStore(`childOpen${props.code}`, false)
-  let [menuItemActive, setMenuItemActive] = useStore(`menuItemActive`, '')
+  let [menuItemActive] = useStore(`menuItemActive`, '')
   const [sidebarState] = useSidebarState()
   const [sidebarStateTimeout] = useStore('sidebarStateTimeout')
 
@@ -86,13 +86,6 @@ const MenuItem = (props) => {
    */
   const toggleChild = () => {
     setChildOpen(!childOpen)
-  }
-
-  /*
-   * Function to update active menu item
-   */
-  const clickItem = () => {
-    setMenuItemActive(props.code)
   }
 
   const classes = useStyles()
@@ -110,7 +103,6 @@ const MenuItem = (props) => {
             <a
               href={`#/${props.href}`}
               className={classes.line}
-              onClick={clickItem}
             >
               {props.label}
             </a>
