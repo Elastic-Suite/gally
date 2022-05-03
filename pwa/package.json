@@ -8,7 +8,9 @@
     "start": "next start",
     "test": "jest",
     "eslint": "eslint --fix --max-warnings=0 --ignore-path .gitignore .",
-    "stylelint": "stylelint --fix --max-warnings=0 --ignore-path .gitignore '**/*.{css,scss,sass}'",
+    "eslint:ci": "eslint --max-warnings=0 --ignore-path .gitignore .",
+    "stylelint": "stylelint --fix --max-warnings=0 --ignore-path .gitignore '**/*.{css,scss,sass}' --custom-syntax postcss-less",
+    "stylelint:ci": "stylelint --max-warnings=0 --ignore-path .gitignore '**/*.{css,scss,sass}' --custom-syntax postcss-less",
     "prettier": "prettier --write --ignore-unknown --ignore-path .gitignore ."
   },
   "dependencies": {
@@ -28,9 +30,10 @@
   },
   "eslintConfig": {
     "extends": [
-      "react-app",
-      "react-app/jest",
       "eslint:recommended",
+      "plugin:react/recommended",
+      "plugin:jest-react/recommended",
+      "plugin:@typescript-eslint/recommended",
       "prettier"
     ]
   },
@@ -61,13 +64,18 @@
     "@typescript-eslint/parser": "^5.18.0",
     "babel-jest": "^27.5.1",
     "eslint": "^8.12.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-jest-react": "^0.1.0",
     "eslint-plugin-react": "^7.29.4",
     "jest": "^27.5.1",
+    "postcss-scss": "^4.0.4",
     "prettier": "^2.6.2",
     "sass": "^1.49.11",
     "stylelint": "^14.6.1",
     "stylelint-config-prettier": "^9.0.3",
+    "stylelint-config-prettier-scss": "^0.0.1",
     "stylelint-config-standard": "^25.0.0",
+    "stylelint-config-standard-scss": "^3.0.0",
     "typescript": "^4.1.3"
   }
 }

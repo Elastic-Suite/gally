@@ -1,6 +1,6 @@
-import React from 'react'
-import home2 from '~/assets/images/home2.svg'
-import resizeMenu from '~/assets/images/resize-menu.svg'
+import React from "react"
+import home2 from "~/assets/images/home2.svg"
+import resizeMenu from "~/assets/images/resize-menu.svg"
 
 /*
  * Creation of special props to be clean on Typescripts files
@@ -11,22 +11,22 @@ import resizeMenu from '~/assets/images/resize-menu.svg'
 const IonIcon = (props) => {
     let icon = <></>
     switch (props.name) {
-        case 'dashboard':
+        case "dashboard":
             icon = <ion-icon src={home2.src} style={props.style} />
             break
-        case 'analyze':
-            icon = <ion-icon name={'analytics'} style={props.style} />
+        case "analyze":
+            icon = <ion-icon name={"analytics"} style={props.style} />
             break
-        case 'merchandize':
-            icon = <ion-icon name={'funnel-outline'} style={props.style} />
+        case "merchandize":
+            icon = <ion-icon name={"funnel-outline"} style={props.style} />
             break
-        case 'monitoring':
-            icon = <ion-icon name={'list'} style={props.style} />
+        case "monitoring":
+            icon = <ion-icon name={"list"} style={props.style} />
             break
-        case 'settings':
-            icon = <ion-icon name={'settings-outline'} style={props.style} />
+        case "settings":
+            icon = <ion-icon name={"settings-outline"} style={props.style} />
             break
-        case 'resize-menu':
+        case "resize-menu":
             icon = <ion-icon src={resizeMenu.src} style={props.style} />
             break
         default:

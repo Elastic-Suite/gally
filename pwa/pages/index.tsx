@@ -1,5 +1,6 @@
-import Head from 'next/head'
-import Link from 'next/link'
+import React from "react"
+import Head from "next/head"
+import Link from "next/link"
 
 /* Depreciated as pages/_middleware.tsx make redirection from / to /admin */
 
@@ -37,10 +38,11 @@ const Welcome = () => (
           </h1>
           <div className="main__before-starting">
             <p>
-              This container will host your{' '}
+              This container will host your{` `}
               <a href="https://nextjs.org/">
                 <b>Next.js</b>
-              </a>{' '}
+              </a>
+              {` `}
               application. Learn how to create your first API and generate a
               PWA:
             </p>
@@ -106,7 +108,7 @@ const Welcome = () => (
       </div>
 
       <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700|Roboto+Slab:300,700');
+        @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,700|Roboto+Slab:300,700");
 
         body {
           margin: 0;
@@ -117,7 +119,7 @@ const Welcome = () => (
           width: 100vw;
           text-align: center;
           color: #1d1e1c;
-          font-family: 'Open Sans', sans-serif;
+          font-family: "Open Sans", sans-serif;
           font-size: 14px;
           overflow: auto;
           background-color: #ececec;
@@ -130,7 +132,7 @@ const Welcome = () => (
         }
 
         .welcome h1 {
-          font-family: 'Roboto Slab', serif;
+          font-family: "Roboto Slab", serif;
           font-weight: 300;
           font-size: 36px;
           margin: 0 0 10px;
@@ -212,7 +214,7 @@ const Welcome = () => (
         }
 
         .aside__circle:after {
-          content: '';
+          content: "";
           width: 4px;
           left: calc(50% - 5px);
           top: -50%;
@@ -275,7 +277,7 @@ const Welcome = () => (
         }
 
         .buttons__group .buttons__or:before {
-          content: 'or';
+          content: "or";
           font-size: 12px;
           color: #aaa;
           line-height: 18px;
@@ -1559,9 +1561,7 @@ const Mercure = () => (
     xmlSpace="preserve"
   >
     <style>
-      {
-        '.prefix__st1{fill:#fff}.prefix__st2,.prefix__st4{fill:#1e1f1d}.prefix__st4{opacity:.2}.prefix__st5{opacity:.1;fill:#020203}'
-      }
+      {`.prefix__st1{fill:#fff}.prefix__st2,.prefix__st4{fill:#1e1f1d}.prefix__st4{opacity:.2}.prefix__st5{opacity:.1;fill:#020203}`}
     </style>
     <circle
       transform="rotate(-80.781 49.748 50.086)"

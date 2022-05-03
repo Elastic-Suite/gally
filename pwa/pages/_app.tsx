@@ -1,17 +1,20 @@
-import type { AppProps } from 'next/app'
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-icons/font/bootstrap-icons.css'
-import 'assets/scss/style.scss'
-import { Theme } from '@mui/material/styles'
+import React from "react"
+import type { AppProps } from "next/app"
+import "bootstrap/dist/css/bootstrap.css"
+import "bootstrap-icons/font/bootstrap-icons.css"
+import "assets/scss/style.scss"
+import { Theme } from "@mui/material/styles"
 
 /*
  * Correction applied to extend Default theme from our theme actually used
  * see : https://mui.com/material-ui/guides/migration-v4/#types-property-quot-palette-quot-quot-spacing-quot-does-not-exist-on-type-defaulttheme
  */
 
-declare module '@mui/styles/defaultTheme' {
+/* eslint-disable */
+declare module "@mui/styles/defaultTheme" {
   interface DefaultTheme extends Theme {}
 }
+/* eslint-enable */
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

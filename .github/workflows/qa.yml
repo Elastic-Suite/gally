@@ -18,7 +18,7 @@ jobs:
           path: /tmp/composer-cache
           key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
       - uses: php-actions/composer@v6
-        with: 
+        with:
           php_version: "8.1"
           args: --working-dir api
       - name: PHP-CS-Fixer
@@ -27,3 +27,21 @@ jobs:
       - name: PHPStan
         working-directory: api
         run: ./vendor/bin/phpstan analyse src/Elasticsuite
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Cache Yarn dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: Yarn Install dependencies
+        run: yarn
+      - name: EsLint
+        run: yarn eslint
+      - name: StyleLint
+        run: yarn stylelint
+      - name: Prettier
+        run: yarn prettier

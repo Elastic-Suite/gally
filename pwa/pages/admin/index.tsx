@@ -1,3 +1,4 @@
+import React from 'react'
 import Head from 'next/head'
 import { Navigate, Route } from 'react-router-dom'
 import {
@@ -14,9 +15,9 @@ import regularTheme from '~/components/atoms/RegularTheme'
 import CustomLayout from 'components/organisms/layout/CustomLayout'
 
 const getHeaders = () =>
-  localStorage.getItem('token')
+  localStorage.getItem(`token`)
     ? {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        Authorization: `Bearer ${localStorage.getItem(`token`)}`,
       }
     : {}
 
@@ -29,7 +30,7 @@ const fetchHydra = (url, options = {}) =>
 const RedirectToLogin = () => {
   const introspect = useIntrospection()
 
-  if (localStorage.getItem('token')) {
+  if (localStorage.getItem(`token`)) {
     introspect()
     return <></>
   }
@@ -46,7 +47,7 @@ const apiDocumentationParser = async () => {
     }
 
     // Prevent infinite loop if the token is expired
-    localStorage.removeItem('token')
+    localStorage.removeItem(`token`)
 
     return {
       api,
@@ -65,7 +66,7 @@ const dataProvider = baseHydraDataProvider({
 
 /* See https://marmelab.com/react-admin/Admin.html to update HydraAdmin */
 const AdminLoader = () => {
-  if (typeof window !== 'undefined') {
+  if (typeof window !== `undefined`) {
     return (
       <>
         <HydraAdmin
@@ -75,22 +76,20 @@ const AdminLoader = () => {
           theme={regularTheme}
           layout={CustomLayout}
         >
-          <ResourceGuesser name={'indices'} />
-          <ResourceGuesser name={'documents'} />
-          <ResourceGuesser name={'source_field_labels'} />
-          <ResourceGuesser name={'source_field_options'} />
-          <ResourceGuesser name={'metadata'} />
-          <ResourceGuesser name={'source_field_option_labels'} />
-          <ResourceGuesser name={'source_fields'} />
-          <ResourceGuesser name={'catalogs'} />
-          <ResourceGuesser name={'localized_catalogs'} />
-          <ResourceGuesser name={'example_products'} />
-          <ResourceGuesser name={'example_documents'} />
-          <ResourceGuesser name={'example_categories'} />
-          <ResourceGuesser name={'example_indices'} />
-          <ResourceGuesser name={'declarative_greetings'} />
-          <ResourceGuesser name={'categories'} />
-          <ResourceGuesser name={'facet_configurations'} />
+          <ResourceGuesser name={`indices`} />
+          <ResourceGuesser name={`documents`} />
+          <ResourceGuesser name={`source_field_labels`} />
+          <ResourceGuesser name={`source_field_options`} />
+          <ResourceGuesser name={`metadata`} />
+          <ResourceGuesser name={`source_field_option_labels`} />
+          <ResourceGuesser name={`source_fields`} />
+          <ResourceGuesser name={`catalogs`} />
+          <ResourceGuesser name={`localized_catalogs`} />
+          <ResourceGuesser name={`example_products`} />
+          <ResourceGuesser name={`example_documents`} />
+          <ResourceGuesser name={`example_categories`} />
+          <ResourceGuesser name={`example_indices`} />
+          <ResourceGuesser name={`declarative_greetings`} />
         </HydraAdmin>
       </>
     )

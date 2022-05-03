@@ -1,9 +1,10 @@
-import { useStore } from 'react-admin'
-import MenuItemIcon from '~/components/atoms/menu/MenuItemIcon'
-import MenuItem from '~/components/atoms/menu/MenuItem'
-import { makeStyles } from '@mui/styles'
-import {useEffect} from "react";
-import {useLocation} from "react-router";
+import React from "react"
+import { useStore } from "react-admin"
+import MenuItemIcon from "~/components/atoms/menu/MenuItemIcon"
+import MenuItem from "~/components/atoms/menu/MenuItem"
+import { makeStyles } from "@mui/styles"
+import { useEffect } from "react"
+import { useLocation } from "react-router"
 
 /*
  * Create function to create path from code of the menu item
@@ -11,7 +12,7 @@ import {useLocation} from "react-router";
 function slugify(code, depth) {
   let slug = code
   for (let i = 0; i < depth; i++) {
-    slug = slug.replace('_', '/')
+    slug = slug.replace(`_`, `/`)
   }
   return slug
 }
@@ -22,18 +23,18 @@ function slugify(code, depth) {
  */
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex',
-    flexDirection: 'row',
-    width: 'auto',
-    position: 'unset',
+    display: `flex`,
+    flexDirection: `row`,
+    width: `auto`,
+    position: `unset`,
   },
   firstItems: {
-    display: 'flex',
-    flexDirection: 'column',
+    display: `flex`,
+    flexDirection: `column`,
   },
   secondItems: {
-    display: 'flex',
-    flexDirection: 'column',
+    display: `flex`,
+    flexDirection: `column`,
     paddingLeft: theme.spacing(2),
   },
   boldStyle: {
@@ -59,23 +60,23 @@ const CustomMenu = (props) => {
    * useStore from ReactAdmin to store data globally
    * see: https://marmelab.com/react-admin/doc/4.0/Store.html
    */
-  const [menu, setMenu] = useStore('menu', { hierarchy: [] })
-  let [menuItemActive, setMenuItemActive] = useStore(`menuItemActive`)
+  const [menu, setMenu] = useStore(`menu`, { hierarchy: [] })
+  const [, setMenuItemActive] = useStore(`menuItemActive`)
 
   /*
    * Function to update menu active item from pathname
    */
   const location = useLocation()
   useEffect(() => {
-    setMenuItemActive(location.pathname.slice(1).replaceAll('/','_'))
-  },[location])
+    setMenuItemActive(location.pathname.slice(1).replaceAll(`/`, `_`))
+  }, [location])
 
   /*
    * Fetch data from /menu to get create menu items dynamically
    */
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch('/menu')
+      const res = await fetch(`/menu`)
       const json = await res.json()
       setMenu(json)
     }
@@ -88,7 +89,7 @@ const CustomMenu = (props) => {
     <div className={props.className}>
       <div className={classes.firstItems}>
         {menu.hierarchy.map((item) => {
-          if (!(item.code === 'settings') && !(item.code === 'monitoring')) {
+          if (!(item.code === `settings`) && !(item.code === `monitoring`)) {
             return (
               <div className={classes.boldStyle}>
                 <MenuItemIcon
@@ -99,14 +100,14 @@ const CustomMenu = (props) => {
                   childPadding={!!item.children}
                 />
                 <div className={classes.secondItems}>
-                  {item.children?.map((item) => (
-                    <div>
+                  {item.children?.map((item, index) => (
+                    <div key={`${index}-${item.code}`}>
                       <MenuItem
                         href={slugify(item.code, 1)}
                         id={item.code}
                         code={item.code}
                         label={item.label}
-                        children={item.children}
+                        childrens={item.children}
                       />
                     </div>
                   ))}
