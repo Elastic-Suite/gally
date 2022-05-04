@@ -38,10 +38,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
       - name: Yarn Install dependencies
+        working-directory: pwa
         run: yarn
       - name: EsLint
+        working-directory: pwa
         run: yarn eslint
       - name: StyleLint
+        working-directory: pwa
         run: yarn stylelint
       - name: Prettier
+        working-directory: pwa
         run: yarn prettier
