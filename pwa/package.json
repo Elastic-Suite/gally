@@ -68,7 +68,7 @@
     "eslint-plugin-jest-react": "^0.1.0",
     "eslint-plugin-react": "^7.29.4",
     "jest": "^27.5.1",
-    "postcss-scss": "^4.0.4",
+    "postcss-less": "^6.0.0",
     "prettier": "^2.6.2",
     "sass": "^1.49.11",
     "stylelint": "^14.6.1",
