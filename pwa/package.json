@@ -11,7 +11,8 @@
     "eslint:ci": "eslint --max-warnings=0 --ignore-path .gitignore .",
     "stylelint": "stylelint --fix --max-warnings=0 --ignore-path .gitignore '**/*.{css,scss,sass}' --custom-syntax postcss-less",
     "stylelint:ci": "stylelint --max-warnings=0 --ignore-path .gitignore '**/*.{css,scss,sass}' --custom-syntax postcss-less",
-    "prettier": "prettier --write --ignore-unknown --ignore-path .gitignore ."
+    "prettier": "prettier --write --ignore-unknown --ignore-path .gitignore .",
+    "prettier:ci": "prettier --check --ignore-unknown --ignore-path .gitignore ."
   },
   "dependencies": {
     "@api-platform/admin": "^3.0.2",
