@@ -88,10 +88,10 @@ const CustomMenu = (props) => {
   return (
     <div className={props.className}>
       <div className={classes.firstItems}>
-        {menu.hierarchy.map((item) => {
+        {menu.hierarchy.map((item, index) => {
           if (!(item.code === `settings`) && !(item.code === `monitoring`)) {
             return (
-              <div className={classes.boldStyle}>
+              <div key={`${index}-${item.code}`} className={classes.boldStyle}>
                 <MenuItemIcon
                   href={slugify(item.code, 0)}
                   code={item.code}
@@ -116,7 +116,7 @@ const CustomMenu = (props) => {
             )
           } else {
             return (
-              <div>
+              <div key={`${index}-${item.code}`}>
                 <MenuItemIcon
                   href={slugify(item.code, 0)}
                   code={item.code}
