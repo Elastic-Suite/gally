@@ -4,9 +4,21 @@ import { defaultTheme } from 'react-admin'
 declare module '@mui/material/styles/createPalette' {
   interface Palette {
     neutral: Palette['primary']
+    menu: {
+      text500
+      text600
+      hover
+      active
+    }
   }
   interface PaletteOptions {
     neutral: PaletteOptions['primary']
+    menu: {
+      text500
+      text600
+      hover
+      active
+    }
   }
 }
 
@@ -43,6 +55,12 @@ const regularTheme = createTheme({
     success: {
       light: '#E7F4EC',
       main: '#18753C',
+    },
+    menu: {
+      text500: '#424880',
+      text600: '#212250',
+      hover: '#E7E8FF',
+      active: '#2C19CD',
     },
     mode: 'light',
   },
@@ -92,6 +110,18 @@ const regularTheme = createTheme({
       fontSize: 12,
       lineHeight: '18px',
       fontWeight: 400,
+    },
+  },
+  components: {
+    MuiCollapse: {
+      styleOverrides: {
+        wrapper: {
+          width: 'inherit',
+        },
+        wrapperInner: {
+          width: 'inherit',
+        },
+      },
     },
   },
 })
