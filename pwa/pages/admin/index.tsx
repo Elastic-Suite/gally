@@ -1,18 +1,18 @@
-import React from 'react'
-import Head from 'next/head'
-import { Navigate, Route } from 'react-router-dom'
+import React from "react"
+import Head from "next/head"
+import { Navigate, Route } from "react-router-dom"
 import {
   fetchHydra as baseFetchHydra,
   HydraAdmin,
   hydraDataProvider as baseHydraDataProvider,
   ResourceGuesser,
   useIntrospection,
-} from '@api-platform/admin'
-import { parseHydraDocumentation } from '@api-platform/api-doc-parser'
-import authProvider from 'utils/authProvider'
-import { ENTRYPOINT } from 'config/entrypoint'
-import regularTheme from '~/components/atoms/RegularTheme'
-import CustomLayout from 'components/organisms/layout/CustomLayout'
+} from "@api-platform/admin"
+import { parseHydraDocumentation } from "@api-platform/api-doc-parser"
+import authProvider from "utils/authProvider"
+import { ENTRYPOINT } from "config/entrypoint"
+import regularTheme from "~/components/atoms/RegularTheme"
+import CustomLayout from "components/organisms/layout/CustomLayout"
 
 const getHeaders = () =>
   localStorage.getItem(`token`)
