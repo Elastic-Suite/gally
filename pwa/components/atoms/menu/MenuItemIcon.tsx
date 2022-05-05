@@ -107,19 +107,17 @@ const MenuItemIcon = (props) => {
       </div>
     )
   } else {
-    classNameRoot += ' ' + classes.noChildHover
     return (
       <div
         className={
-          menuItemActive === props.code
+          classes.noChildHover +
+          ' ' +
+          (menuItemActive === props.code
             ? classes.lineActive + ' ' + classNameStyle
-            : classNameStyle
+            : classNameStyle)
         }
       >
-        <a
-          href={`#/${props.href}`}
-          className={classNameRoot}
-        >
+        <a href={`#/${props.href}`} className={classNameRoot}>
           <IonIcon name={props.code} style={{ width: 16, height: 16 }} />
           <span
             className={classes.span + (sidebarState ? '' : ' ' + classes.hide)}

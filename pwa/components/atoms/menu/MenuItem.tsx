@@ -40,6 +40,8 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 500,
     fontSize: 14,
     lineHeight: '20px',
+  },
+  lineHover: {
     '&:hover': {
       background: theme.palette.menu.hover,
       borderRadius: theme.spacing(1),
@@ -98,12 +100,13 @@ const MenuItem = (props) => {
       <div className={classes.linePadding}>
         {!props.children && (
           <div
-            className={menuItemActive === props.code ? classes.lineActive : ''}
+            className={
+              classes.lineHover +
+              ' ' +
+              (menuItemActive === props.code ? classes.lineActive : '')
+            }
           >
-            <a
-              href={`#/${props.href}`}
-              className={classes.line}
-            >
+            <a href={`#/${props.href}`} className={classes.line}>
               {props.label}
             </a>
             {menuItemActive === props.code && (
