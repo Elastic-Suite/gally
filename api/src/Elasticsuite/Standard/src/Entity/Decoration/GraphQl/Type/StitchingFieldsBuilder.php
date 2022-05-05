@@ -20,7 +20,9 @@ use ApiPlatform\Core\GraphQl\Type\FieldsBuilderInterface;
 use ApiPlatform\Core\GraphQl\Type\TypesContainerInterface;
 use ApiPlatform\Core\Metadata\Resource\Factory\ResourceMetadataFactoryInterface;
 use ApiPlatform\Core\Metadata\Resource\ResourceMetadata;
+use Doctrine\ORM\EntityNotFoundException;
 use Elasticsuite\Entity\Model\Attribute\GraphQlAttributeInterface;
+use Elasticsuite\Metadata\Model\Metadata;
 use Elasticsuite\Metadata\Model\SourceField;
 use Elasticsuite\Metadata\Model\SourceField\Type as SourceFieldType;
 use Elasticsuite\Metadata\Repository\MetadataRepository;
@@ -92,6 +94,9 @@ class StitchingFieldsBuilder implements FieldsBuilderInterface
         }
 
         $metadata = $this->metadataRepository->findOneBy(['entity' => $metadataEntity]);
+        if (null === $metadata) {
+            throw new EntityNotFoundException(sprintf("Entity of type '%s' for entity '%s' was not found. You should probably run migrations or fixtures?", Metadata::class, $metadataEntity));
+        }
 
         unset($fields[$stitchingProperty]);
         $nonScalarFields = [];
