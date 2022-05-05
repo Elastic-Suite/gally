@@ -69,13 +69,28 @@ phpstan: ## Run phpstan , pass the parameter "o=" to ass options, make phpstan o
 	@$(eval o ?=)
 	@$(PHP_STAN) --memory-limit=-1 analyse $(o)
 
+eslint: ## Run eslint in fix mode
+	@$(DOCKER_COMP) exec pwa yarn eslint
+
+stylelint: ## Run eslint in fix mode
+	@$(DOCKER_COMP) exec pwa yarn stylelint
+
+prettier: ## Run eslint in fix mode
+	@$(DOCKER_COMP) exec pwa yarn prettier
+
 qa: ## Run code quality tools
 qa: phpcsfixer
 qa: phpstan
+qa: eslint
+qa: stylelint
+qa: prettier
 
 phpunit: ## Run php unit tests, pass the parameter "p=" to launch tests on a specific path
 	@$(eval p ?=)
 	@$(PHP_UNIT) $(p)
+
+jest: ## Run jest unit tests
+	@$(DOCKER_COMP) exec pwa yarn jest
 
 ## —— Symfony 🎵 ———————————————————————————————————————————————————————————————
 sf: ## List all Symfony commands or pass the parameter "c=" to run a given command, example: make sf c=about
