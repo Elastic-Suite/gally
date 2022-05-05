@@ -1,0 +1,6 @@
+services:
+    Elasticsuite\Search\Repository\Facet\ConfigurationRepository:
+        arguments:
+            - '@Doctrine\Persistence\ManagerRegistry'
+        tags:
+            - { name: doctrine.repository_service }
