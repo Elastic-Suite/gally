@@ -112,9 +112,9 @@ const MenuItemIcon = (props) => {
       <div
         className={
           classes.noChildHover +
-          " " +
+          ` ` +
           (menuItemActive === props.code
-            ? classes.lineActive + " " + classNameStyle
+            ? classes.lineActive + ` ` + classNameStyle
             : classNameStyle)
         }
       >

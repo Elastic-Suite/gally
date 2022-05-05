@@ -69,13 +69,19 @@ phpstan: ## Run phpstan , pass the parameter "o=" to ass options, make phpstan o
 	@$(eval o ?=)
 	@$(PHP_STAN) --memory-limit=-1 analyse $(o)
 
+yarn: ## Install dependencies on pwa container through yarn
+	@$(DOCKER_COMP) exec pwa yarn
+
 eslint: ## Run eslint in fix mode
+eslint: yarn
 	@$(DOCKER_COMP) exec pwa yarn eslint
 
 stylelint: ## Run eslint in fix mode
+stylelint: yarn
 	@$(DOCKER_COMP) exec pwa yarn stylelint
 
 prettier: ## Run eslint in fix mode
+prettier: yarn
 	@$(DOCKER_COMP) exec pwa yarn prettier
 
 qa: ## Run code quality tools

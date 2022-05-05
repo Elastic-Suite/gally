@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: `inter`,
     fontWeight: 500,
     fontSize: 14,
-    lineHeight: "20px",
+    lineHeight: `20px`,
   },
   lineHover: {
     "&:hover": {
@@ -103,8 +103,8 @@ const MenuItem = (props) => {
           <div
             className={
               classes.lineHover +
-              " " +
-              (menuItemActive === props.code ? classes.lineActive : "")
+              ` ` +
+              (menuItemActive === props.code ? classes.lineActive : ``)
             }
           >
             <a href={`#/${props.href}`} className={classes.line}>
