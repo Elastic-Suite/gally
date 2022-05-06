@@ -63,14 +63,14 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    left: theme.spacing(-1.5),
+    left: theme.spacing(-2),
     top: theme.spacing(6),
     background: theme.palette.background.paper,
     border: '1px solid #E2E6F3',
     boxSizing: 'border-box',
-    borderRadius: theme.spacing(1.5),
-    width: theme.spacing(3),
-    height: theme.spacing(3),
+    borderRadius: theme.spacing(2),
+    width: theme.spacing(4),
+    height: theme.spacing(4),
     cursor: 'pointer',
   },
 }))
@@ -121,7 +121,10 @@ const CustomLayout: LayoutComponent = ({ children, title }) => {
           <CustomSidebar />
           <div className={classes.contentWithAppbar}>
             <div className={classes.buttonCollapse} onClick={collapseSidebar}>
-              <IonIcon name={'resize-menu'} style={{ width: 14, height: 14 }} />
+              <IonIcon
+                name={'code-outline'}
+                style={{ width: 18, height: 18 }}
+              />
             </div>
             <AppBar
               classes={appbar}

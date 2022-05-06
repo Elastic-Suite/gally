@@ -99,7 +99,7 @@ const MenuItemIcon = (props) => {
     classNameRoot += ' ' + classes.childPadding
     return (
       <div className={classNameRoot + ' ' + classNameStyle}>
-        <IonIcon name={props.code} style={{ width: 16, height: 16 }} />
+        <IonIcon name={props.code} style={{ width: 18, height: 18 }} />
         <span
           className={classes.span + (sidebarState ? '' : ' ' + classes.hide)}
           style={sidebarStateTimeout ? { width: 0 } : null}
@@ -119,7 +119,7 @@ const MenuItemIcon = (props) => {
         }
       >
         <a href={`#/${props.href}`} className={classNameRoot}>
-          <IonIcon name={props.code} style={{ width: 16, height: 16 }} />
+          <IonIcon name={props.code} style={{ width: 18, height: 18 }} />
           <span
             className={classes.span + (sidebarState ? '' : ' ' + classes.hide)}
             style={sidebarStateTimeout ? { width: 0 } : null}
