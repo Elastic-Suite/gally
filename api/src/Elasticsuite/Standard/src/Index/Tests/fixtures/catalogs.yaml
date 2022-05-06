@@ -25,3 +25,9 @@ Elasticsuite\Catalog\Model\LocalizedCatalog:
         locale: en_US
         name: B2B English Store View
         isDefault: false
+    catalog2_fr:
+        catalog: '@catalog2'
+        code: b2b_fr
+        locale: fr_FR
+        name: B2B French Store View
+        isDefault: false

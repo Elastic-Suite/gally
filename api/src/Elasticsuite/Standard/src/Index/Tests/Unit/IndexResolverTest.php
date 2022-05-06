@@ -84,12 +84,12 @@ class IndexResolverTest extends AbstractTest
     public function indexAliasDataProvider(): array
     {
         return [
-            ['product', 'b2c_fr', 'test_elasticsuite_b2c_fr_product'],
-            ['product', 'b2c_en', 'test_elasticsuite_b2c_en_product'],
-            ['product', 'b2b_en', 'test_elasticsuite_b2b_en_product'],
-            ['category', 'b2c_fr', 'test_elasticsuite_b2c_fr_category'],
-            ['category', 'b2c_en', 'test_elasticsuite_b2c_en_category'],
-            ['category', 'b2b_en', 'test_elasticsuite_b2b_en_category'],
+            ['product', 'b2c_fr', 'elasticsuite_test__elasticsuite_b2c_fr_product'],
+            ['product', 'b2c_en', 'elasticsuite_test__elasticsuite_b2c_en_product'],
+            ['product', 'b2b_en', 'elasticsuite_test__elasticsuite_b2b_en_product'],
+            ['category', 'b2c_fr', 'elasticsuite_test__elasticsuite_b2c_fr_category'],
+            ['category', 'b2c_en', 'elasticsuite_test__elasticsuite_b2c_en_category'],
+            ['category', 'b2b_en', 'elasticsuite_test__elasticsuite_b2b_en_category'],
         ];
     }
 }

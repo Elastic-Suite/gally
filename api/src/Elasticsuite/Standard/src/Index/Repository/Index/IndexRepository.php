@@ -18,13 +18,16 @@ namespace Elasticsuite\Index\Repository\Index;
 
 use Elasticsearch\Client;
 use Elasticsuite\Exception\LogicException;
+use Elasticsuite\Index\Api\IndexSettingsInterface;
 use Elasticsuite\Index\Dto\Bulk;
 use Elasticsuite\Index\Model\Index;
+use Exception;
 
 class IndexRepository implements IndexRepositoryInterface
 {
     public function __construct(
-        private Client $client
+        private Client $client,
+        private IndexSettingsInterface $indexSettings,
     ) {
     }
 
@@ -41,10 +44,10 @@ class IndexRepository implements IndexRepositoryInterface
             $aliases = $this->client->cat()->aliases();
         }
 
-        foreach ($indices as $index) {
+        foreach ($indices as $indexData) {
             // @Todo: keep this test to exclude .geoip index or find a way to get _only_ elasticsuite indices.
-            if (0 !== strpos($index['index'], '.')) {
-                $collection[] = new Index($index['index'], $this->extractIndexAliases($aliases, $index['index']));
+            if (0 !== strpos($indexData['index'], '.')) {
+                $collection[] = $this->getIndex($indexData, $this->extractIndexAliases($aliases, $indexData['index']));
             }
         }
 
@@ -60,13 +63,13 @@ class IndexRepository implements IndexRepositoryInterface
         $index = null;
         try {
             $index = $this->client->cat()->indices(['index' => $indexName]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // Todo: log exception.
         }
 
         if (\is_array($index) && !empty($index)) {
             $index = reset($index);
-            $item = new Index($index['index'], $this->getIndexAliases($index['index']));
+            $item = $this->getIndexDetails($index, $this->getIndexAliases($index['index']));
         }
 
         return $item;
@@ -1225,5 +1228,56 @@ class IndexRepository implements IndexRepositoryInterface
         }
 
         return $indexAliases;
+    }
+
+    private function getIndex(array $indexData, array $indexAliases): Index
+    {
+        $index = new Index(
+            $indexData['index'],
+            $indexAliases,
+            (int) $indexData['docs.count'],
+            $indexData['store.size'],
+        );
+
+        try {
+            if (!$this->indexSettings->isInternal($index)) {
+                $index->setStatus(Index::STATUS_EXTERNAL);
+            } else {
+                $index->setEntityType($this->indexSettings->extractEntityFromAliases($index));
+                $index->setCatalog($this->indexSettings->extractCatalogFromAliases($index));
+                if ($this->indexSettings->isInstalled($index)) {
+                    $index->setStatus(Index::STATUS_LIVE);
+                } elseif ($this->indexSettings->isObsolete($index)) {
+                    $index->setStatus(Index::STATUS_GHOST);
+                } else {
+                    $index->setStatus(Index::STATUS_INDEXING);
+                }
+            }
+        } catch (Exception) {
+            $index->setStatus(Index::STATUS_INVALID);
+        }
+
+        return $index;
+    }
+
+    private function getIndexDetails(array $indexData, array $indexAliases): Index
+    {
+        $index = $this->getIndex($indexData, $indexAliases);
+        $mapping = [];
+        $settings = [];
+
+        try {
+            $mapping = $this->client->indices()->getMapping(['index' => $index->getName()]);
+            $mapping = $mapping[$index->getName()]['mappings'];
+            $settings = $this->client->indices()->getSettings(['index' => $index->getName()]);
+            $settings = $settings[$index->getName()]['settings'];
+        } catch (Exception $e) {
+            // Todo: log exception.
+        }
+
+        $index->setMapping($mapping);
+        $index->setSettings($settings);
+
+        return $index;
     }
 }
