@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
     display: 'flex',
     flexDirection: 'row',
+    flexGrow: 1,
     alignItems: 'center',
     gap: theme.spacing(2),
     textDecoration: 'unset',
@@ -18,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(1),
     paddingLeft: theme.spacing(1),
+    marginRight: theme.spacing(2),
     '& ion-icon': {
       color: theme.palette.menu.text500,
     },
@@ -107,14 +109,13 @@ const MenuItemIcon = (props) => {
       </div>
     )
   } else {
+    classNameRoot += ' ' + classes.noChildHover
     return (
       <div
         className={
-          classes.noChildHover +
-          ' ' +
-          (menuItemActive === props.code
+          menuItemActive === props.code
             ? classes.lineActive + ' ' + classNameStyle
-            : classNameStyle)
+            : classNameStyle
         }
       >
         <a href={`#/${props.href}`} className={classNameRoot}>

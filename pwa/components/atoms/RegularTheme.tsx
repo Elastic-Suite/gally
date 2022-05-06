@@ -118,9 +118,6 @@ const regularTheme = createTheme({
         wrapper: {
           width: 'inherit',
         },
-        wrapperInner: {
-          width: 'inherit',
-        },
       },
     },
   },

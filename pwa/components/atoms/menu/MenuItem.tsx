@@ -28,11 +28,13 @@ const useStyles = makeStyles((theme) => ({
   line: {
     display: 'flex',
     flexDirection: 'row',
+    flexGrow: 1,
     alignItems: 'center',
     gap: theme.spacing(1),
     paddingLeft: theme.spacing(1),
     paddingBottom: theme.spacing(1),
     paddingTop: theme.spacing(1),
+    marginRight: theme.spacing(2),
     cursor: 'pointer',
     color: 'inherit',
     textDecoration: 'unset',
@@ -40,8 +42,6 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 500,
     fontSize: 14,
     lineHeight: '20px',
-  },
-  lineHover: {
     '&:hover': {
       background: theme.palette.menu.hover,
       borderRadius: theme.spacing(1),
@@ -100,11 +100,7 @@ const MenuItem = (props) => {
       <div className={classes.linePadding}>
         {!props.children && (
           <div
-            className={
-              classes.lineHover +
-              ' ' +
-              (menuItemActive === props.code ? classes.lineActive : '')
-            }
+            className={menuItemActive === props.code ? classes.lineActive : ''}
           >
             <a href={`#/${props.href}`} className={classes.line}>
               {props.label}
