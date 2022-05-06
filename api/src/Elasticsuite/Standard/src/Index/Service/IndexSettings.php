@@ -19,6 +19,7 @@ namespace Elasticsuite\Index\Service;
 use Elasticsuite\Catalog\Model\LocalizedCatalog;
 use Elasticsuite\Index\Api\IndexSettingsInterface;
 use Elasticsuite\Index\Helper\IndexSettings as IndexSettingsHelper;
+use Elasticsuite\Index\Model\Index;
 
 class IndexSettings implements IndexSettingsInterface
 {
@@ -277,5 +278,45 @@ class IndexSettings implements IndexSettingsInterface
         $settings += $ngramDiff ? ['max_ngram_diff' => (int) $ngramDiff] : [];
 
         return $settings;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function extractEntityFromAliases(Index $index): ?string
+    {
+        return $this->indexSettingsHelper->extractEntityFromAliases($index);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function extractCatalogFromAliases(Index $index): ?LocalizedCatalog
+    {
+        return $this->indexSettingsHelper->extractCatalogFromAliases($index);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function isInternal(Index $index): bool
+    {
+        return $this->indexSettingsHelper->isInternal($index);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function isInstalled(Index $index): bool
+    {
+        return $this->indexSettingsHelper->isInstalled($index);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function isObsolete(Index $index): bool
+    {
+        return $this->indexSettingsHelper->isObsolete($index);
     }
 }

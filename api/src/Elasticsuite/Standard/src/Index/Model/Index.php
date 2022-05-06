@@ -18,6 +18,7 @@ namespace Elasticsuite\Index\Model;
 
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Elasticsuite\Catalog\Model\LocalizedCatalog;
 use Elasticsuite\Index\Dto\CreateIndexInput;
 use Elasticsuite\Index\Dto\InstallIndexInput;
 use Elasticsuite\Index\Dto\RefreshIndexInput;
@@ -27,6 +28,7 @@ use Elasticsuite\Index\MutationResolver\CreateIndexMutation;
 use Elasticsuite\Index\MutationResolver\InstallIndexMutation;
 use Elasticsuite\Index\MutationResolver\RefreshIndexMutation;
 use Elasticsuite\User\Constant\Role;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[
     ApiResource(
@@ -38,11 +40,16 @@ use Elasticsuite\User\Constant\Role;
                 'write' => false,
                 'serialize' => true,
                 'security' => "is_granted('" . Role::ROLE_ADMIN . "')",
+                'normalization_context' => ['groups' => ['create']],
+                'denormalization_context' => ['groups' => ['create']],
             ],
         ],
         graphql: [
             // Auto-generated queries and mutations.
-            'item_query',
+            'item_query' => [
+                'normalization_context' => ['groups' => ['details']],
+                'denormalization_context' => ['groups' => ['details']],
+            ],
             'collection_query',
             'create' => [
                 'mutation' => CreateIndexMutation::class,
@@ -55,6 +62,8 @@ use Elasticsuite\User\Constant\Role;
                 'write' => false,
                 'serialize' => true,
                 'security' => "is_granted('" . Role::ROLE_ADMIN . "')",
+                'normalization_context' => ['groups' => ['details']],
+                'denormalization_context' => ['groups' => ['details']],
             ],
             'update' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
             'delete' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
@@ -106,7 +115,10 @@ use Elasticsuite\User\Constant\Role;
             ],
         ],
         itemOperations: [
-            'get',
+            'get' => [
+                'normalization_context' => ['groups' => ['details']],
+                'denormalization_context' => ['groups' => ['details']],
+            ],
             'delete' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
             'install' => [
                 'openapi_context' => [
@@ -137,29 +149,69 @@ use Elasticsuite\User\Constant\Role;
                 'security' => "is_granted('" . Role::ROLE_ADMIN . "')",
             ],
         ],
+        normalizationContext: ['groups' => ['list']],
+        denormalizationContext: ['groups' => ['list']],
         paginationEnabled: false,
     ),
 ]
 class Index
 {
+    public const STATUS_LIVE = 'live';
+    public const STATUS_EXTERNAL = 'external';
+    public const STATUS_GHOST = 'ghost';
+    public const STATUS_INVALID = 'invalid';
+    public const STATUS_INDEXING = 'indexing';
+
     #[ApiProperty(
         identifier: true
     )]
+    #[Groups(['list', 'details', 'create'])]
     private string $name;
 
     /** @var string[] */
+    #[Groups(['list', 'details', 'create'])]
     private array $aliases;
 
+    #[Groups(['list', 'details'])]
+    private int $docsCount;
+
+    #[Groups(['list', 'details'])]
+    private string $size;
+
+    #[Groups(['list', 'details'])]
+    private ?string $entityType;
+
+    #[Groups(['list', 'details'])]
+    private ?LocalizedCatalog $catalog;
+
+    #[Groups(['list', 'details'])]
+    private string $status;
+
+    #[Groups(['details'])]
+    private array $mapping;
+
+    #[Groups(['details'])]
+    private array $settings;
+
     /**
-     * @param string   $name    Index name
-     * @param string[] $aliases Index aliases
+     * @param string   $name      Index name
+     * @param string[] $aliases   Index aliases
+     * @param int      $docsCount Index documents count
+     * @param string   $size      Index size
      */
     public function __construct(
         string $name,
-        array $aliases = []
+        array $aliases = [],
+        int $docsCount = 0,
+        string $size = '',
     ) {
         $this->name = $name;
         $this->aliases = $aliases;
+        $this->docsCount = $docsCount;
+        $this->size = $size;
+        $this->entityType = null;
+        $this->catalog = null;
+        $this->status = self::STATUS_EXTERNAL;
     }
 
     public function getName(): string
@@ -186,5 +238,65 @@ class Index
     public function setAliases(array $aliases): void
     {
         $this->aliases = $aliases;
+    }
+
+    public function getDocsCount(): int
+    {
+        return $this->docsCount;
+    }
+
+    public function getSize(): string
+    {
+        return $this->size;
+    }
+
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): void
+    {
+        $this->status = $status;
+    }
+
+    public function getCatalog(): ?LocalizedCatalog
+    {
+        return $this->catalog;
+    }
+
+    public function setCatalog(?LocalizedCatalog $localizedCatalog): void
+    {
+        $this->catalog = $localizedCatalog;
+    }
+
+    public function getEntityType(): ?string
+    {
+        return $this->entityType;
+    }
+
+    public function setEntityType(?string $entityType): void
+    {
+        $this->entityType = $entityType;
+    }
+
+    public function getMapping(): array
+    {
+        return $this->mapping;
+    }
+
+    public function setMapping(array $mapping): void
+    {
+        $this->mapping = $mapping;
+    }
+
+    public function getSettings(): array
+    {
+        return $this->settings;
+    }
+
+    public function setSettings(array $settings): void
+    {
+        $this->settings = $settings;
     }
 }

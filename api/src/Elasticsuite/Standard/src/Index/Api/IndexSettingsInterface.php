@@ -28,6 +28,7 @@ declare(strict_types=1);
 namespace Elasticsuite\Index\Api;
 
 use Elasticsuite\Catalog\Model\LocalizedCatalog;
+use Elasticsuite\Index\Model\Index;
 
 interface IndexSettingsInterface
 {
@@ -109,4 +110,31 @@ interface IndexSettingsInterface
      * @return array<mixed>
      */
     public function getDynamicIndexSettings(LocalizedCatalog|int|string $catalog): array;
+
+    /**
+     * Extract original entity from index metadata aliases.
+     */
+    public function extractEntityFromAliases(Index $index): ?string;
+
+    /**
+     * Extract original catalog id from index metadata aliases.
+     *
+     * @throws \Exception
+     */
+    public function extractCatalogFromAliases(Index $index): ?LocalizedCatalog;
+
+    /**
+     * Check if index name follow the naming convention.
+     */
+    public function isInternal(Index $index): bool;
+
+    /**
+     * Check if index has been installed.
+     */
+    public function isInstalled(Index $index): bool;
+
+    /**
+     * Check if index is obsolete.
+     */
+    public function isObsolete(Index $index): bool;
 }

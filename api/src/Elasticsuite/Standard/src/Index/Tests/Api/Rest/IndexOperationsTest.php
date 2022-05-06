@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Elasticsuite\Index\Tests\Api\Rest;
 
 use Elasticsearch\Client;
+use Elasticsuite\Fixture\Service\ElasticsearchFixturesInterface;
 use Elasticsuite\Index\Model\Index;
 use Elasticsuite\Index\Repository\Index\IndexRepositoryInterface;
 use Elasticsuite\Standard\src\Test\AbstractEntityTest;
@@ -36,12 +37,16 @@ class IndexOperationsTest extends AbstractEntityTest
         self::$indexRepository = static::getContainer()->get(IndexRepositoryInterface::class);
         self::$initialIndicesCount = \count(self::$indexRepository->findAll());
         self::$elasticsearchClient = static::getContainer()->get('api_platform.elasticsearch.client.test'); // @phpstan-ignore-line
+
+        self::loadElasticsearchIndexFixtures([__DIR__ . '/../../fixtures/indices.json']);
+        self::loadElasticsearchDocumentFixtures([__DIR__ . '/../../fixtures/documents.json']);
     }
 
     public static function tearDownAfterClass(): void
     {
         parent::tearDownAfterClass();
-        self::$indexRepository->delete('test_elasticsuite*');
+        self::$indexRepository->delete('elasticsuite_test__elasticsuite_*');
+        self::deleteElasticsearchFixtures();
     }
 
     /**
@@ -72,13 +77,15 @@ class IndexOperationsTest extends AbstractEntityTest
 
     protected function getJsonGetValidation(array $expectedData): array
     {
-        return [];
+        unset($expectedData['id']);
+
+        return $expectedData;
     }
 
     protected function getJsonGetCollectionValidation(): array
     {
         return [
-            'hydra:totalItems' => self::$initialIndicesCount + 6,
+            'hydra:totalItems' => self::$initialIndicesCount + 11,
         ];
     }
 
@@ -94,11 +101,11 @@ class IndexOperationsTest extends AbstractEntityTest
         foreach ($catalogs as $catalogId => $catalogCode) {
             $data[] = [
                 ['entityType' => 'product', 'catalog' => $catalogId],
-                "#^{$this->getApiPath()}/test_elasticsuite_{$catalogCode}_product_[0-9]{8}_[0-9]{6}$#",
+                "#^{$this->getApiPath()}/elasticsuite_test__elasticsuite_{$catalogCode}_product_[0-9]{8}_[0-9]{6}$#",
             ];
             $data[] = [
                 ['entityType' => 'category', 'catalog' => $catalogId],
-                "#^{$this->getApiPath()}/test_elasticsuite_{$catalogCode}_category_[0-9]{8}_[0-9]{6}$#",
+                "#^{$this->getApiPath()}/elasticsuite_test__elasticsuite_{$catalogCode}_category_[0-9]{8}_[0-9]{6}$#",
             ];
         }
 
@@ -117,15 +124,209 @@ class IndexOperationsTest extends AbstractEntityTest
     public function getDataProvider(): array
     {
         return [
-            // Todo: How to get index name ?
             ['wrong_id', [], 404],
+            [
+                ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_test_fr_product_20220429_153000',
+                [
+                    'id' => ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_test_fr_product_20220429_153000',
+                    'name' => ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_test_fr_product_20220429_153000',
+                    'aliases' => [],
+                    'docsCount' => 2,
+                    'entityType' => 'product',
+                    'catalog' => '/localized_catalogs/4',
+                    'status' => 'indexing',
+                    'mapping' => [
+                        'properties' => [
+                            'entity_id' => [
+                                'type' => 'text',
+                                'fields' => [
+                                    'keyword' => [
+                                        'type' => 'keyword',
+                                        'ignore_above' => 256,
+                                    ],
+                                ],
+                            ],
+                            'name' => [
+                                'type' => 'text',
+                            ],
+                            'size' => [
+                                'type' => 'integer',
+                            ],
+                            'sku' => [
+                                'type' => 'text',
+                                'fields' => [
+                                    'keyword' => [
+                                        'type' => 'keyword',
+                                        'ignore_above' => 256,
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                    'settings' => [
+                        'index' => [
+                            'routing' => [
+                                'allocation' => [
+                                    'include' => [
+                                        '_tier_preference' => 'data_content',
+                                    ],
+                                ],
+                            ],
+                            'number_of_shards' => '1',
+                            'number_of_replicas' => '1',
+                        ],
+                    ],
+                ],
+                200,
+            ],
+            [
+                ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_test_fr_category_20220429_173000',
+                [
+                    'id' => ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_test_fr_category_20220429_173000',
+                    'name' => ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_test_fr_category_20220429_173000',
+                    'aliases' => [],
+                    'docsCount' => 0,
+                    'entityType' => 'category',
+                    'catalog' => '/localized_catalogs/4',
+                    'status' => 'live',
+                    'mapping' => [
+                        'properties' => [
+                            'name' => [
+                                'type' => 'text',
+                            ],
+                            'parent' => [
+                                'type' => 'text',
+                            ],
+                        ],
+                    ],
+                    'settings' => [
+                        'index' => [
+                            'routing' => [
+                                'allocation' => [
+                                    'include' => [
+                                        '_tier_preference' => 'data_content',
+                                    ],
+                                ],
+                            ],
+                            'number_of_shards' => '1',
+                            'number_of_replicas' => '1',
+                        ],
+                    ],
+                ],
+                200,
+            ],
+            [
+                ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_test_fr_category_20210429_173000',
+                [
+                    'id' => ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_test_fr_category_20210429_173000',
+                    'name' => ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_test_fr_category_20210429_173000',
+                    'aliases' => [],
+                    'docsCount' => 0,
+                    'entityType' => 'category',
+                    'catalog' => '/localized_catalogs/4',
+                    'status' => 'ghost',
+                    'mapping' => [
+                        'properties' => [
+                            'name' => [
+                                'type' => 'text',
+                            ],
+                            'parent' => [
+                                'type' => 'text',
+                            ],
+                        ],
+                    ],
+                    'settings' => [
+                        'index' => [
+                            'routing' => [
+                                'allocation' => [
+                                    'include' => [
+                                        '_tier_preference' => 'data_content',
+                                    ],
+                                ],
+                            ],
+                            'number_of_shards' => '1',
+                            'number_of_replicas' => '1',
+                        ],
+                    ],
+                ],
+                200,
+            ],
+            [
+                ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_test_fr_category_20220429_000000',
+                [
+                    'id' => ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_test_fr_category_20220429_000000',
+                    'name' => ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_test_fr_category_20220429_000000',
+                    'aliases' => [],
+                    'docsCount' => 0,
+                    'entityType' => 'category',
+                    'catalog' => null,
+                    'status' => 'invalid',
+                    'mapping' => [
+                        'properties' => [
+                            'name' => [
+                                'type' => 'text',
+                            ],
+                            'parent' => [
+                                'type' => 'text',
+                            ],
+                        ],
+                    ],
+                    'settings' => [
+                        'index' => [
+                            'routing' => [
+                                'allocation' => [
+                                    'include' => [
+                                        '_tier_preference' => 'data_content',
+                                    ],
+                                ],
+                            ],
+                            'number_of_shards' => '1',
+                            'number_of_replicas' => '1',
+                        ],
+                    ],
+                ],
+                200,
+            ],
+            [
+                ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'test',
+                [
+                    'id' => ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'test',
+                    'name' => ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'test',
+                    'aliases' => [],
+                    'docsCount' => 0,
+                    'entityType' => null,
+                    'catalog' => null,
+                    'status' => 'external',
+                    'mapping' => [
+                        'properties' => [
+                            'name' => [
+                                'type' => 'text',
+                            ],
+                        ],
+                    ],
+                    'settings' => [
+                        'index' => [
+                            'routing' => [
+                                'allocation' => [
+                                    'include' => [
+                                        '_tier_preference' => 'data_content',
+                                    ],
+                                ],
+                            ],
+                            'number_of_shards' => '1',
+                            'number_of_replicas' => '1',
+                        ],
+                    ],
+                ],
+                200,
+            ],
         ];
     }
 
     public function deleteDataProvider(): array
     {
         return [
-            // Todo: How to get index name ?
+            [ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_test_fr_product_20220429_153000', 200],
             ['wrong_id', 404],
         ];
     }
@@ -206,12 +407,12 @@ class IndexOperationsTest extends AbstractEntityTest
         ];
         foreach ($catalogs as $catalogId => $catalogCode) {
             $data[] = [
-                "test_elasticsuite_{$catalogCode}_product",
-                "test_elasticsuite_{$catalogCode}_product",
+                "elasticsuite_test__elasticsuite_{$catalogCode}_product",
+                "elasticsuite_test__elasticsuite_{$catalogCode}_product",
             ];
             $data[] = [
-                "test_elasticsuite_{$catalogCode}_category",
-                "test_elasticsuite_{$catalogCode}_category",
+                "elasticsuite_test__elasticsuite_{$catalogCode}_category",
+                "elasticsuite_test__elasticsuite_{$catalogCode}_category",
             ];
         }
 
