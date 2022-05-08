@@ -227,6 +227,8 @@ services:
         arguments:
             - 'Elasticsuite\Search\Elasticsearch\Request'
 
+    Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationFactoryInterface: '@elasticsuite.search.container.configuration.factory'
+
     elasticsuite.search.request.factory:
         class: Elasticsuite\Search\Elasticsearch\RequestFactory
 
@@ -234,4 +236,21 @@ services:
         public: true
         alias: elasticsuite.search.request.factory
 
-    Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationFactoryInterface: '@elasticsuite.search.container.configuration.factory'
+    Elasticsuite\Search\Elasticsearch\Builder\Request\Query\QueryBuilder:
+        arguments:
+            - '@Elasticsuite\Search\Elasticsearch\Request\QueryFactory'
+
+    Elasticsuite\Search\Elasticsearch\Builder\Request\SimpleRequestBuilder:
+        arguments:
+            - '@Elasticsuite\Search\Elasticsearch\RequestFactoryInterface'
+            - '@Elasticsuite\Search\Elasticsearch\Builder\Request\Query\QueryBuilder'
+
+    Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Mapper:
+        arguments:
+            - '@Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Query\Assembler'
+
+    Elasticsuite\Search\Elasticsearch\Adapter:
+        arguments:
+            - '@Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Mapper'
+            - '@api_platform.elasticsearch.client'
+            - '@logger'
