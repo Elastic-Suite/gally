@@ -7,6 +7,7 @@ import {
   ResourceGuesser,
   useIntrospection,
 } from '@api-platform/admin'
+import { Admin as ReactAdmin } from 'react-admin'
 import { parseHydraDocumentation } from '@api-platform/api-doc-parser'
 import authProvider from 'utils/authProvider'
 import { ENTRYPOINT } from 'config/entrypoint'
@@ -68,13 +69,7 @@ const AdminLoader = () => {
   if (typeof window !== 'undefined') {
     return (
       <>
-        <HydraAdmin
-          dataProvider={dataProvider}
-          authProvider={authProvider}
-          entrypoint={window.origin}
-          theme={regularTheme}
-          layout={CustomLayout}
-        >
+        <ReactAdmin theme={regularTheme} layout={CustomLayout}>
           <ResourceGuesser name={'indices'} />
           <ResourceGuesser name={'documents'} />
           <ResourceGuesser name={'source_field_labels'} />
@@ -91,7 +86,7 @@ const AdminLoader = () => {
           <ResourceGuesser name={'declarative_greetings'} />
           <ResourceGuesser name={'categories'} />
           <ResourceGuesser name={'facet_configurations'} />
-        </HydraAdmin>
+        </ReactAdmin>
       </>
     )
   }
