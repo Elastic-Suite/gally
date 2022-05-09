@@ -31,6 +31,9 @@
         <include>
             <directory suffix=".php">src</directory>
         </include>
+        <exclude>
+            <directory suffix=".php">src/**/**/src/**/Tests</directory>
+        </exclude>
     </coverage>
 
     <listeners>
