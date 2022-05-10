@@ -11,6 +11,7 @@ import { ThemeProvider } from '@mui/material/styles'
 import { makeStyles } from '@mui/styles'
 import RegularTheme from '~/components/atoms/RegularTheme'
 import CustomSidebar from '~/components/molecules/layout/CustomSidebar'
+import ButtonsPreview from "~/components/atoms/buttons/ButtonsPreview";
 
 /*
  * TODO: THIBO: Update AppBar
@@ -127,7 +128,10 @@ const CustomLayout: LayoutComponent = ({ children, title }) => {
               classes={appbar}
               userMenu={<UserMenu icon={<IonIcon name="person" />} />}
             />
-            <div className={classes.content}>{children}</div>
+            <div className={classes.content}>
+              {children}
+              <ButtonsPreview />
+            </div>
           </div>
           <Notification />
         </div>
