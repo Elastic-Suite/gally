@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 278,
     minHeight: '100vh',
     background: theme.palette.background.paper,
-    border: '1px solid #E2E6F3',
+    // border: '1px solid #E2E6F3',
   },
   rootCollapsed: {
     width: 'inherit',
@@ -46,6 +46,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
     marginLeft: theme.spacing(2),
   },
+  width50: {
+    width: '50px',
+  },
 }))
 
 const CustomSidebar = (props) => {
@@ -66,7 +69,8 @@ const CustomSidebar = (props) => {
       in={sidebarState}
       orientation={'horizontal'}
       collapsedSize={66}
-      timeout={sidebarState ? 100 : 1000}
+      timeout={sidebarState ? 0 : 200}
+      style={{ borderRight: '1px solid #E2E6F3', boxSizing: 'unset' }}
     >
       <div
         className={
@@ -91,7 +95,9 @@ const CustomSidebar = (props) => {
             alt={LogoCollapse.name}
           />
         </div>
-        <CustomMenu className={classes.menu} />
+        <CustomMenu
+          className={classes.menu + (sidebarState ? '' : ' ' + classes.width50)}
+        />
       </div>
     </Collapse>
   )

@@ -80,6 +80,8 @@ const useStylesAppBar = makeStyles((theme) => ({
     flexDirection: 'row',
     width: 'auto',
     position: 'unset',
+    backgroundColor: 'blue',
+    color: 'white',
   },
 }))
 
@@ -104,14 +106,23 @@ const CustomLayout: LayoutComponent = ({ children, title }) => {
    * Setup function to collapse sidebar when click on button
    */
   const collapseSidebar = () => {
-    setSidebarState(!sidebarState)
     if (sidebarState) {
       setTimeout(() => {
-        setSidebarStateTimeout(sidebarState)
+        setSidebarState(!sidebarState)
       }, 500)
     } else {
-      setSidebarStateTimeout(sidebarState)
+      setSidebarState(!sidebarState)
     }
+
+    // if (sidebarState) {
+    //   setTimeout(() => {
+    setSidebarStateTimeout(sidebarState)
+    //   }, 500)
+    // } else {
+    //   setSidebarStateTimeout(sidebarState)
+    // }
+    console.log(sidebarState)
+    console.log(sidebarStateTimeout)
   }
 
   return (
@@ -126,10 +137,7 @@ const CustomLayout: LayoutComponent = ({ children, title }) => {
                 style={{ width: 18, height: 18 }}
               />
             </div>
-            <AppBar
-              classes={appbar}
-              userMenu={<UserMenu icon={<IonIcon name="person" />} />}
-            />
+            <div className={appbar.root}>grhfgv</div>
             <div className={classes.content}>{children}</div>
           </div>
           <Notification />

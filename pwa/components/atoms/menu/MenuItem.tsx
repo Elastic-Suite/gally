@@ -68,8 +68,36 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: '-2px 0px 4px rgba(63, 50, 230, 0.2)',
     borderRadius: '5px 0px 0px 5px',
   },
-  hide: {
+  // hide: {
+  //   opacity: 1,
+  //   animation: '$opacityZero 200ms forwards',
+  // },
+
+  // '@keyframes opacityZero': {
+  //   from: { opacity: 1 },
+  //   to: { opacity: 0 },
+  // },
+
+  heightZero: {
+    opacity: 1,
+    maxHeight: 'auto',
+    animation: '$heightZero 2000ms forwards',
+  },
+
+  '@keyframes heightZero': {
+    '0%': { maxHeight: 'auto', opacity: 1 },
+    '20%': { maxHeight: 'auto', opacity: 0 },
+    '100%': { maxHeight: 0, opacity: 0 },
+  },
+
+  opacityFull: {
     opacity: 0,
+    animation: '$opacityFull 1000ms forwards',
+  },
+
+  '@keyframes opacityFull': {
+    from: { opacity: 0 },
+    to: { opacity: 1 },
   },
 }))
 
@@ -94,8 +122,13 @@ const MenuItem = (props) => {
 
   return (
     <div
-      className={classes.root + (sidebarState ? '' : ' ' + classes.hide)}
-      style={sidebarStateTimeout ? { height: 0 } : null}
+      className={
+        classes.root +
+        // (sidebarState ? '' : ' ' + classes.hide) +
+        (!sidebarStateTimeout
+          ? ' ' + classes.opacityFull
+          : ' ' + classes.heightZero)
+      }
     >
       <div className={classes.linePadding}>
         {!props.children && (

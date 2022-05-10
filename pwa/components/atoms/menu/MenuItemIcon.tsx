@@ -64,6 +64,26 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: '-2px 0px 4px rgba(63, 50, 230, 0.2)',
     borderRadius: '5px 0px 0px 5px',
   },
+  opacityFull: {
+    opacity: 0,
+    animation: '$opacityFull 1000ms forwards',
+  },
+
+  '@keyframes opacityFull': {
+    from: { opacity: 0 },
+    to: { opacity: 1 },
+  },
+
+  opacityFullDeux: {
+    opacity: 0,
+    animation: '$opacityFullDeux 1000ms forwards',
+  },
+
+  '@keyframes opacityFullDeux': {
+    from: { opacity: 0 },
+    to: { opacity: 1 },
+  },
+
   span: {
     opacity: 1,
     transition: 'all 500ms',
@@ -71,6 +91,18 @@ const useStyles = makeStyles((theme) => ({
   hide: {
     opacity: 0,
     height: 0,
+  },
+  heightZero: {
+    opacity: 1,
+    maxHeight: 'initial',
+    animation: '$heightZero 1400ms forwards',
+    display: 'none',
+  },
+
+  '@keyframes heightZero': {
+    '0%': { maxHeight: 'initial', opacity: 1 },
+    '20%': { maxHeight: 'initial', opacity: 0 },
+    '100%': { maxHeight: 0, opacity: 0 },
   },
 }))
 
@@ -82,6 +114,9 @@ const MenuItemIcon = (props) => {
   let [menuItemActive] = useStore(`menuItemActive`, '')
   const [sidebarState] = useSidebarState()
   const [sidebarStateTimeout] = useStore('sidebarStateTimeout')
+
+  const words = menuItemActive.split('_')
+  const wordIndexOne = words[0]
 
   const classes = useStyles()
   let classNameRoot = classes.root
@@ -100,9 +135,24 @@ const MenuItemIcon = (props) => {
     return (
       <div className={classNameRoot + ' ' + classNameStyle}>
         <IonIcon name={props.code} style={{ width: 18, height: 18 }} />
+        {sidebarStateTimeout && wordIndexOne === props.code ? (
+          <div
+            className={
+              classes.indicatorLineActive + ' ' + classes.opacityFullDeux
+            }
+            style={{ right: '-16px' }}
+          />
+        ) : (
+          ''
+        )}
+
         <span
-          className={classes.span + (sidebarState ? '' : ' ' + classes.hide)}
-          style={sidebarStateTimeout ? { width: 0 } : null}
+          className={
+            classes.span +
+            (!sidebarStateTimeout
+              ? ' ' + classes.opacityFull
+              : ' ' + classes.heightZero)
+          }
         >
           {props.label}
         </span>
@@ -120,16 +170,28 @@ const MenuItemIcon = (props) => {
       >
         <a href={`#/${props.href}`} className={classNameRoot}>
           <IonIcon name={props.code} style={{ width: 18, height: 18 }} />
+          {sidebarStateTimeout && wordIndexOne === props.code ? (
+            <div
+              className={
+                classes.indicatorLineActive + ' ' + classes.opacityFullDeux
+              }
+              style={{ right: '-16px' }}
+            />
+          ) : (
+            ''
+          )}
+
           <span
-            className={classes.span + (sidebarState ? '' : ' ' + classes.hide)}
-            style={sidebarStateTimeout ? { width: 0 } : null}
+            className={
+              classes.span +
+              (!sidebarStateTimeout
+                ? ' ' + classes.opacityFull
+                : ' ' + classes.heightZero)
+            }
           >
             {props.label}
           </span>
         </a>
-        {menuItemActive === props.code && (
-          <div className={classes.indicatorLineActive} />
-        )}
       </div>
     )
   }
