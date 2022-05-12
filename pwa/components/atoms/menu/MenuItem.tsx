@@ -48,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   linePadding: {
+    marginRight: '10px',
     paddingLeft: theme.spacing(2),
     color: theme.palette.menu.text500,
   },
@@ -58,18 +59,52 @@ const useStyles = makeStyles((theme) => ({
     transition: 'all 1000ms',
   },
   lineActive: {
+    position: 'relative',
     display: 'flex',
     justifyContent: 'space-between',
     color: theme.palette.menu.active,
   },
   indicatorLineActive: {
+    position: 'absolute',
+    right: '-10px',
+    top: 0,
+    height: '100%',
     width: 3,
     background: theme.palette.menu.active,
     boxShadow: '-2px 0px 4px rgba(63, 50, 230, 0.2)',
     borderRadius: '5px 0px 0px 5px',
   },
-  hide: {
+  heightZero: {
+    opacity: 1,
+    maxHeight: 'auto',
+    animation: '$heightZero 2000ms forwards',
+  },
+
+  '@keyframes heightZero': {
+    '0%': { maxHeight: 'auto', opacity: 1 },
+    '20%': { maxHeight: 'auto', opacity: 0 },
+    '100%': { maxHeight: 0, opacity: 0 },
+  },
+
+  opacityFull: {
     opacity: 0,
+    animation: '$opacityFull 1000ms forwards',
+  },
+
+  '@keyframes opacityFull': {
+    from: { opacity: 0 },
+    to: { opacity: 1 },
+  },
+
+  opacityFullDeux: {
+    opacity: 0,
+    animation: '$opacityFullDeux 500ms forwards',
+  },
+
+  '@keyframes opacityFullDeux': {
+    '0%': { opacity: 0 },
+    '45%': { opacity: 0 },
+    '100%': { opacity: 1 },
   },
 }))
 
@@ -80,6 +115,9 @@ const MenuItem = (props) => {
    */
   let [childOpen, setChildOpen] = useStore(`childOpen${props.code}`, false)
   let [menuItemActive] = useStore(`menuItemActive`, '')
+  const words = menuItemActive.split('_')
+  const wordIndexOne = words[0] + '_' + words[1]
+
   const [sidebarState] = useSidebarState()
   const [sidebarStateTimeout] = useStore('sidebarStateTimeout')
 
@@ -94,8 +132,12 @@ const MenuItem = (props) => {
 
   return (
     <div
-      className={classes.root + (sidebarState ? '' : ' ' + classes.hide)}
-      style={sidebarStateTimeout ? { height: 0 } : null}
+      className={
+        classes.root +
+        (!sidebarStateTimeout
+          ? ' ' + classes.opacityFull
+          : ' ' + classes.heightZero)
+      }
     >
       <div className={classes.linePadding}>
         {!props.children && (
@@ -117,7 +159,7 @@ const MenuItem = (props) => {
         {!!props.children && (
           <div
             className={classes.line}
-            style={{ transition: 'all 500ms' }}
+            style={{ transition: 'all 500ms', position: 'relative' }}
             onClick={toggleChild}
           >
             {props.label}
@@ -129,13 +171,26 @@ const MenuItem = (props) => {
                   : { transition: 'all 500ms' }
               }
             />
+            {!childOpen &&
+            wordIndexOne === props.code &&
+            words[2] !== 'boosts' ? (
+              <div
+                className={
+                  classes.indicatorLineActive + ' ' + classes.opacityFullDeux
+                }
+                style={{ height: '32px' }}
+              />
+            ) : (
+              ''
+            )}
           </div>
         )}
       </div>
       {!!props.children && (
         <Collapse className={classes.children} in={childOpen}>
-          {props.children.map((item) => (
+          {props.children.map((item, key) => (
             <MenuItem
+              key={key}
               href={slugify(item.code, 2)}
               label={item.label}
               code={item.code}
