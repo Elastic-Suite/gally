@@ -1,6 +1,6 @@
 import { createTheme } from '@mui/material/styles'
 import { defaultTheme } from 'react-admin'
-import {keyframes} from "@emotion/react";
+import { keyframes } from '@emotion/react'
 
 declare module '@mui/material/styles/createPalette' {
   interface Palette {
@@ -25,7 +25,7 @@ declare module '@mui/material/styles/createPalette' {
         700
         800
         900
-      },
+      }
       secondary: {
         main
         100
@@ -37,7 +37,7 @@ declare module '@mui/material/styles/createPalette' {
         700
         800
         900
-      },
+      }
       neutral: {
         100
         200
@@ -48,22 +48,22 @@ declare module '@mui/material/styles/createPalette' {
         700
         800
         900
-      },
+      }
       gradient: {
         default
         darken
-      },
+      }
       shadow: {
         neutral: {
           sm
           md
           lg
-        },
+        }
         primaryButton: {
           sm
           md
           lg
-        },
+        }
         secondaryButton: {
           sm
           md
@@ -94,7 +94,7 @@ declare module '@mui/material/styles/createPalette' {
         700
         800
         900
-      },
+      }
       secondary: {
         main
         100
@@ -106,7 +106,7 @@ declare module '@mui/material/styles/createPalette' {
         700
         800
         900
-      },
+      }
       neutral: {
         100
         200
@@ -117,7 +117,7 @@ declare module '@mui/material/styles/createPalette' {
         700
         800
         900
-      },
+      }
       gradient: {
         default
         darken
@@ -127,12 +127,12 @@ declare module '@mui/material/styles/createPalette' {
           sm
           md
           lg
-        },
+        }
         primaryButton: {
           sm
           md
           lg
-        },
+        }
         secondaryButton: {
           sm
           md
@@ -152,7 +152,7 @@ export const buttonEnterKeyframe = keyframes`
       transform: scale(1);
       opacity: 0.6;
     }
-  `;
+  `
 
 /* Creation of custom light theme
  * There is always scss assets to scss modifications but here is to be used by Material UI
@@ -198,7 +198,7 @@ const regularTheme = createTheme({
       white: '#FFF',
       black: '#000',
       primary: {
-        main : '#ED7465',
+        main: '#ED7465',
         100: '#FFE7E4',
         200: '#FBC0B9',
         300: '#F3978C',
@@ -210,7 +210,7 @@ const regularTheme = createTheme({
         900: '#460C05',
       },
       secondary: {
-        main : '#2C19CD',
+        main: '#2C19CD',
         100: '#E7E8FF',
         200: '#BABDFC',
         300: '#8D8DF3',
@@ -233,27 +233,26 @@ const regularTheme = createTheme({
         900: '#151A47',
       },
       gradient: {
-        default : 'linear-gradient(46.78deg, #E64733 1.79%, #ED7465 98.88%)',
+        default: 'linear-gradient(46.78deg, #E64733 1.79%, #ED7465 98.88%)',
         darken: 'linear-gradient(46.78deg, #CC2D19 1.79%, #E64733 98.88%)',
       },
       shadow: {
         neutral: {
-          sm : '4px 4px 14px rgba(226, 230, 243, 0.5)',
-          md : '0px -8px 8px rgba(226, 230, 243, 0.2), 0px 5px 8px rgba(107, 113, 166, 0.1), 4px 4px 14px rgba(226, 230, 243, 0.5)',
-          lg : '0px -8px 8px rgba(226, 230, 243, 0.2), 0px 8px 8px rgba(107, 113, 166, 0.2), 4px 4px 14px rgba(226, 230, 243, 0.5)',
+          sm: '4px 4px 14px rgba(226, 230, 243, 0.5)',
+          md: '0px -8px 8px rgba(226, 230, 243, 0.2), 0px 5px 8px rgba(107, 113, 166, 0.1), 4px 4px 14px rgba(226, 230, 243, 0.5)',
+          lg: '0px -8px 8px rgba(226, 230, 243, 0.2), 0px 8px 8px rgba(107, 113, 166, 0.2), 4px 4px 14px rgba(226, 230, 243, 0.5)',
         },
         primaryButton: {
-          sm : '0px -8px 8px rgba(255, 231, 228, 0.2), 0px 8px 8px rgba(243, 151, 140, 0.2), 4px 4px 14px rgba(255, 231, 228, 0.5)',
-          md : '0px -8px 8px rgba(255, 231, 228, 0.2), 0px 16px 16px rgba(243, 151, 140, 0.2), 4px 4px 14px rgba(255, 231, 228, 0.5)',
-          lg : '0px -8px 8px rgba(255, 231, 228, 0.2), 0px 16px 36px rgba(243, 151, 140, 0.2), 4px 4px 14px rgba(255, 231, 228, 0.5)',
+          sm: '0px -8px 8px rgba(255, 231, 228, 0.2), 0px 8px 8px rgba(243, 151, 140, 0.2), 4px 4px 14px rgba(255, 231, 228, 0.5)',
+          md: '0px -8px 8px rgba(255, 231, 228, 0.2), 0px 16px 16px rgba(243, 151, 140, 0.2), 4px 4px 14px rgba(255, 231, 228, 0.5)',
+          lg: '0px -8px 8px rgba(255, 231, 228, 0.2), 0px 16px 36px rgba(243, 151, 140, 0.2), 4px 4px 14px rgba(255, 231, 228, 0.5)',
         },
         secondaryButton: {
-          sm : '0px -8px 8px rgba(231, 232, 255, 0.2), 0px 8px 8px rgba(186, 189, 252, 0.05), 4px 4px 14px rgba(231, 232, 255, 0.5)',
-          md : '0px -8px 8px rgba(231, 232, 255, 0.2), 0px 16px 16px rgba(186, 189, 252, 0.2), 4px 4px 14px rgba(231, 232, 255, 0.5)',
-          lg : '0px -8px 8px rgba(231, 232, 255, 0.2), 0px 16px 36px rgba(186, 189, 252, 0.4), 4px 4px 14px rgba(231, 232, 255, 0.5)',
-        }
-      }
-
+          sm: '0px -8px 8px rgba(231, 232, 255, 0.2), 0px 8px 8px rgba(186, 189, 252, 0.05), 4px 4px 14px rgba(231, 232, 255, 0.5)',
+          md: '0px -8px 8px rgba(231, 232, 255, 0.2), 0px 16px 16px rgba(186, 189, 252, 0.2), 4px 4px 14px rgba(231, 232, 255, 0.5)',
+          lg: '0px -8px 8px rgba(231, 232, 255, 0.2), 0px 16px 36px rgba(186, 189, 252, 0.4), 4px 4px 14px rgba(231, 232, 255, 0.5)',
+        },
+      },
     },
     mode: 'light',
   },
@@ -309,10 +308,10 @@ const regularTheme = createTheme({
     MuiCollapse: {
       styleOverrides: {
         wrapper: {
-          width: 'inherit',
+          width: '100%',
         },
         wrapperInner: {
-          width: 'inherit',
+          width: '100%',
         },
       },
     },
@@ -335,7 +334,6 @@ const regularTheme = createTheme({
           color: '#B5B9D9',
           '&:hover': {
             backgroundColor: 'rgba(21, 26, 71, 0.08)',
-
           },
           '&:focus': {
             backgroundColor: 'rgba(21, 26, 71, 0.12)',
@@ -355,8 +353,8 @@ const regularTheme = createTheme({
             },
           },
           '&.Mui-disabled': {
-            color:'#E2E6F3',
-          }
+            color: '#E2E6F3',
+          },
         },
       },
     },
@@ -386,8 +384,8 @@ const regularTheme = createTheme({
             },
           },
           '&.Mui-disabled': {
-            color:'#E2E6F3',
-          }
+            color: '#E2E6F3',
+          },
         },
       },
     },
@@ -408,7 +406,7 @@ const regularTheme = createTheme({
           opacity: '1',
           height: '13px',
         },
-        switchBase : {
+        switchBase: {
           '&:hover': {
             backgroundColor: 'rgba(21, 26, 71, 0.08)',
           },
@@ -430,7 +428,8 @@ const regularTheme = createTheme({
             },
             '& .MuiSwitch-thumb': {
               border: '0',
-              background: 'linear-gradient(46.78deg, #E64733 1.79%, #ED7465 98.88%)',
+              background:
+                'linear-gradient(46.78deg, #E64733 1.79%, #ED7465 98.88%)',
               boxShadow: '0px 6px 10px rgba(237, 116, 101, 0.1)',
             },
             '& + .MuiSwitch-track': {
@@ -439,7 +438,7 @@ const regularTheme = createTheme({
             },
           },
           '&.Mui-disabled': {
-            '+ .MuiSwitch-track':{
+            '+ .MuiSwitch-track': {
               opacity: 1,
               backgroundColor: 'rgba(181, 185, 217, 0.3)',
             },
@@ -457,21 +456,25 @@ const regularTheme = createTheme({
               },
             },
           },
-        }
+        },
       },
     },
     MuiFab: {
       styleOverrides: {
         root: {
           color: '#FFF',
-          fontSize:  '26px',
-          background: 'linear-gradient(46.78deg, #E64733 1.79%, #ED7465 98.88%)',
-          boxShadow: '0px -8px 8px rgba(255, 231, 228, 0.2), 0px 16px 16px rgba(243, 151, 140, 0.2), 4px 4px 14px rgba(255, 231, 228, 0.5)',
+          fontSize: '26px',
+          background:
+            'linear-gradient(46.78deg, #E64733 1.79%, #ED7465 98.88%)',
+          boxShadow:
+            '0px -8px 8px rgba(255, 231, 228, 0.2), 0px 16px 16px rgba(243, 151, 140, 0.2), 4px 4px 14px rgba(255, 231, 228, 0.5)',
           width: '56px',
           height: '56px',
           '&:hover': {
-            background: 'linear-gradient(46.78deg, #CC2D19 1.79%, #E64733 98.88%)',
-            boxShadow: '0px -8px 8px rgba(255, 231, 228, 0.2), 0px 16px 36px rgba(243, 151, 140, 0.2), 4px 4px 14px rgba(255, 231, 228, 0.5)',
+            background:
+              'linear-gradient(46.78deg, #CC2D19 1.79%, #E64733 98.88%)',
+            boxShadow:
+              '0px -8px 8px rgba(255, 231, 228, 0.2), 0px 16px 36px rgba(243, 151, 140, 0.2), 4px 4px 14px rgba(255, 231, 228, 0.5)',
           },
           '&& .MuiTouchRipple-child': {
             backgroundColor: '#CC2D19',
@@ -496,10 +499,10 @@ const regularTheme = createTheme({
           fontWeight: 400,
         },
         label: {
-          '&.Mui-disabled' : {
+          '&.Mui-disabled': {
             color: '#8187B9',
-          }
-        }
+          },
+        },
       },
     },
   },
