@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Elasticsuite\Search\Tests\Unit\Elasticsearch\Adapter\Common\Response;
 
 use Elasticsuite\Search\Elasticsearch\Adapter\Common\Response;
+use Elasticsuite\Search\Elasticsearch\DocumentInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class QueryResponseTest extends KernelTestCase
@@ -31,7 +32,7 @@ class QueryResponseTest extends KernelTestCase
     {
         $queryResponse = new Response\QueryResponse($searchResponse);
         $this->assertCount($expectedDocsCount, $queryResponse);
-        $this->assertContainsOnlyInstancesOf(Response\Document::class, $queryResponse);
+        $this->assertContainsOnlyInstancesOf(DocumentInterface::class, $queryResponse);
     }
 
     public function queryResponseDocumentsOnlyDataProvider(): array
@@ -42,7 +43,7 @@ class QueryResponseTest extends KernelTestCase
                     'hits' => [
                         'hits' => [
                             [
-                                'id' => '1',
+                                '_id' => '1',
                                 '_score' => 1.0,
                                 '_source' => [
                                     ['field' => 'value'],
@@ -59,14 +60,14 @@ class QueryResponseTest extends KernelTestCase
                     'hits' => [
                         'hits' => [
                             [
-                                'id' => '1',
+                                '_id' => '1',
                                 '_score' => 1.1,
                                 '_source' => [
                                     ['field' => 'value'],
                                 ],
                             ],
                             [
-                                'id' => '2',
+                                '_id' => '2',
                                 '_score' => 1.0,
                                 '_source' => [
                                     ['field1' => 'value1', 'field2' => 'value2'],
