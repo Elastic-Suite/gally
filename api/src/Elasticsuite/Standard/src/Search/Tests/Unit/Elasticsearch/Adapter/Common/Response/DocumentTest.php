@@ -16,7 +16,7 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Search\Tests\Unit\Elasticsearch\Adapter\Common\Response;
 
-use Elasticsuite\Search\Elasticsearch\Adapter\Common\Response;
+use Elasticsuite\Search\Model\Document;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class DocumentTest extends KernelTestCase
@@ -24,18 +24,24 @@ class DocumentTest extends KernelTestCase
     /**
      * @dataProvider instantiateDocumentDataProvider
      *
-     * @param string|null $documentId Document ID
+     * @param string      $documentId Document ID
+     * @param string      $indexName  Index name
+     * @param string|null $docType    Document type
      * @param float|null  $score      Document score
      * @param array|null  $source     Document source
      */
     public function testInstantiate(
-        ?string $documentId,
+        string $documentId,
+        string $indexName,
+        ?string $docType,
         ?float $score,
         ?array $source,
         ?array $additionalData
     ) {
         $documentData = [
-            'id' => $documentId,
+            '_id' => $documentId,
+            '_index' => $indexName,
+            '_type' => $docType,
             '_score' => $score,
             '_source' => $source,
         ];
@@ -45,9 +51,15 @@ class DocumentTest extends KernelTestCase
                 return \is_array($param) ? !empty($param) : (null !== $param && \strlen((string) $param));
             }
         );
-        $document = new Response\Document($documentData);
+        $document = new Document($documentData);
 
         $this->assertEquals($documentId, $document->getId());
+        $this->assertEquals($indexName, $document->getIndex());
+        if (null !== $docType) {
+            $this->assertEquals($docType, $document->getType());
+        } else {
+            $this->assertEquals('_doc', $document->getType());
+        }
         if (null !== $score) {
             $this->assertEquals($score, $document->getScore());
         } else {
@@ -70,18 +82,24 @@ class DocumentTest extends KernelTestCase
         return [
             [
                 '1',
+                'myIndex',
+                '_doc',
                 1.0,
                 ['field' => 'value'],
                 ['some' => ['other' => 'data']],
             ],
             [
                 '2',
+                'myOtherIndex',
+                'deprecated_type',
                 1.1,
                 ['field1' => 'value1', 'field2' => 'value2'],
                 ['some' => ['yet' => ['other' => 'data']]],
             ],
             [
                 'La2Zp4ABuOhxRrxyUe2a',
+                'theIndex',
+                null,
                 null,
                 [
                     'field1' => 'value1',
@@ -95,6 +113,8 @@ class DocumentTest extends KernelTestCase
             ],
             [
                 'Lq2Zp4ABuOhxRrxy2O34',
+                'theIndex',
+                null,
                 null,
                 null,
                 null,
