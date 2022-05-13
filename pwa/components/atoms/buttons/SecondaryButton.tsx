@@ -1,10 +1,10 @@
 import Button from '@mui/material/Button'
 import CommonButtonStyle from "~/components/atoms/buttons/CommonButtonStyle";
 import RegularTheme from '~/components/atoms/RegularTheme'
-import _ from "lodash";
+import _ from 'lodash';
 
 const secondaryButtonStyle = _.merge(
-  { ...CommonButtonStyle },
+  JSON.parse(JSON.stringify(CommonButtonStyle)),
   {
     color: RegularTheme.palette.colors.secondary['600'],
     background: RegularTheme.palette.colors.secondary['100'],
