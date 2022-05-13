@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     width: 278,
     minHeight: '100vh',
     background: theme.palette.background.paper,
-    paddingBottom: '24px',
+    paddingBottom: theme.spacing(3),
   },
   rootCollapsed: {
     width: 'inherit',
