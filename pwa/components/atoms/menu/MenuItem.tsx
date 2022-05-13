@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   linePadding: {
-    marginRight: '10px',
+    marginRight: theme.spacing(2),
     paddingLeft: theme.spacing(2),
     color: theme.palette.menu.text500,
   },
