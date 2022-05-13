@@ -161,7 +161,7 @@ const CustomLayout: LayoutComponent = ({ children, title }) => {
               <IonIcon name={'resize-menu'} style={{ width: 14, height: 14 }} />
             </div>
             <div className={appbar.root} style={{ zIndex: 99 }}>
-              grhfgv
+              WIP : TO DO
             </div>
             <div className={classes.content}>
               {children}
