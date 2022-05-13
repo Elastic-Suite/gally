@@ -15,10 +15,10 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     position: 'relative',
     flexDirection: 'column',
-    maxWidth: 278,
+    width: 278,
     minHeight: '100vh',
     background: theme.palette.background.paper,
-    border: '1px solid #E2E6F3',
+    paddingBottom: theme.spacing(3),
   },
   rootCollapsed: {
     width: 'inherit',
@@ -46,6 +46,22 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
     marginLeft: theme.spacing(2),
   },
+  widthCollapse: {
+    width: '50px', // 50px + 16px padding = 66px
+  },
+  leftBar: {
+    borderRight: '1px solid #E2E6F3',
+    boxSizing: 'unset',
+    height: '100vh',
+    overflowY: 'scroll',
+    position: 'fixed',
+    left: '0',
+    top: '0',
+    scrollbarWidth: 'none',
+    '&::-webkit-scrollbar': {
+      width: 0,
+    },
+  },
 }))
 
 const CustomSidebar = (props) => {
@@ -54,6 +70,7 @@ const CustomSidebar = (props) => {
    * see: https://marmelab.com/react-admin/doc/4.0/Store.html
    */
   const [sidebarState] = useSidebarState()
+  const [sidebarStateTimeout] = useStore('sidebarStateTimeout')
 
   const classes = useStyles()
 
@@ -65,8 +82,9 @@ const CustomSidebar = (props) => {
     <Collapse
       in={sidebarState}
       orientation={'horizontal'}
-      collapsedSize={66}
-      timeout={sidebarState ? 100 : 1000}
+      collapsedSize={sidebarState ? 278 : 66}
+      timeout={sidebarState ? 0 : 200}
+      className={classes.leftBar}
     >
       <div
         className={
@@ -78,20 +96,21 @@ const CustomSidebar = (props) => {
             src={LogoExtended.src}
             className={
               classes.imgExtended +
-              (sidebarState ? '' : ' ' + classes.imgNotActive)
+              (!sidebarStateTimeout ? '' : ' ' + classes.imgNotActive)
             }
             alt={LogoExtended.name}
           />
           <img
             src={LogoCollapse.src}
-            className={
-              classes.imgCollapse +
-              (sidebarState ? ' ' + classes.imgNotActive : '')
-            }
+            className={classes.imgCollapse}
             alt={LogoCollapse.name}
           />
         </div>
-        <CustomMenu className={classes.menu} />
+        <CustomMenu
+          className={
+            classes.menu + (sidebarState ? '' : ' ' + classes.widthCollapse)
+          }
+        />
       </div>
     </Collapse>
   )

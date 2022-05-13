@@ -2,8 +2,8 @@ import { useStore } from 'react-admin'
 import MenuItemIcon from '~/components/atoms/menu/MenuItemIcon'
 import MenuItem from '~/components/atoms/menu/MenuItem'
 import { makeStyles } from '@mui/styles'
-import {useEffect} from "react";
-import {useLocation} from "react-router";
+import { useEffect } from 'react'
+import { useLocation } from 'react-router'
 
 /*
  * Create function to create path from code of the menu item
@@ -67,8 +67,8 @@ const CustomMenu = (props) => {
    */
   const location = useLocation()
   useEffect(() => {
-    setMenuItemActive(location.pathname.slice(1).replaceAll('/','_'))
-  },[location])
+    setMenuItemActive(location.pathname.slice(1).replaceAll('/', '_'))
+  }, [location])
 
   /*
    * Fetch data from /menu to get create menu items dynamically

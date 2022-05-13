@@ -15,9 +15,7 @@ const useStyles = makeStyles((theme) => ({
     gap: theme.spacing(2),
     textDecoration: 'unset',
     color: 'inherit',
-    paddingTop: theme.spacing(1),
-    paddingBottom: theme.spacing(1),
-    paddingLeft: theme.spacing(1),
+    padding: theme.spacing(1),
     '& ion-icon': {
       color: theme.palette.menu.text500,
     },
@@ -48,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   lineActive: {
+    position: 'relative',
     display: 'flex',
     justifyContent: 'space-between',
     color: theme.palette.menu.active,
@@ -57,11 +56,38 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     right: 0,
     width: 3,
-    height: 36,
     background: theme.palette.menu.active,
     boxShadow: '-2px 0px 4px rgba(63, 50, 230, 0.2)',
     borderRadius: '5px 0px 0px 5px',
   },
+
+  indicatorLineActiveTwo: {
+    width: 3,
+    background: theme.palette.menu.active,
+    boxShadow: '-2px 0px 4px rgba(63, 50, 230, 0.2)',
+    borderRadius: '5px 0px 0px 5px',
+  },
+  opacityFull: {
+    opacity: 0,
+    animation: '$opacityFull 1000ms forwards',
+  },
+
+  '@keyframes opacityFull': {
+    from: { opacity: 0 },
+    to: { opacity: 1 },
+  },
+
+  opacityFullDeux: {
+    opacity: 0,
+    animation: '$opacityFullDeux 1200ms forwards',
+  },
+
+  '@keyframes opacityFullDeux': {
+    '0%': { opacity: 0 },
+    '45%': { opacity: 0 },
+    '100%': { opacity: 1 },
+  },
+
   span: {
     opacity: 1,
     transition: 'all 500ms',
@@ -69,6 +95,29 @@ const useStyles = makeStyles((theme) => ({
   hide: {
     opacity: 0,
     height: 0,
+  },
+  heightZero: {
+    opacity: 1,
+    maxHeight: 'initial',
+    maxWidth: 'initial',
+    animation: '$heightZero 1400ms forwards',
+    position: 'relative',
+  },
+
+  '@keyframes heightZero': {
+    '0%': {
+      maxHeight: 'initial',
+      maxWidth: 'initial',
+      opacity: 1,
+      position: 'relative',
+    },
+    '20%': {
+      maxHeight: 'initial',
+      maxWidth: 'initial',
+      opacity: 0,
+      position: 'relative',
+    },
+    '100%': { maxHeight: 0, maxWidth: 0, opacity: 0, position: 'absolute' },
   },
 }))
 
@@ -80,6 +129,9 @@ const MenuItemIcon = (props) => {
   let [menuItemActive] = useStore(`menuItemActive`, '')
   const [sidebarState] = useSidebarState()
   const [sidebarStateTimeout] = useStore('sidebarStateTimeout')
+
+  const words = menuItemActive.split('_')
+  const wordIndexOne = words[0]
 
   const classes = useStyles()
   let classNameRoot = classes.root
@@ -98,9 +150,24 @@ const MenuItemIcon = (props) => {
     return (
       <div className={classNameRoot + ' ' + classNameStyle}>
         <IonIcon name={props.code} style={{ width: 16, height: 16 }} />
+        {sidebarStateTimeout && wordIndexOne === props.code ? (
+          <div
+            className={
+              classes.indicatorLineActive + ' ' + classes.opacityFullDeux
+            }
+            style={{ height: '32px' }}
+          />
+        ) : (
+          ''
+        )}
+
         <span
-          className={classes.span + (sidebarState ? '' : ' ' + classes.hide)}
-          style={sidebarStateTimeout ? { width: 0 } : null}
+          className={
+            classes.span +
+            (!sidebarStateTimeout
+              ? ' ' + classes.opacityFull
+              : ' ' + classes.heightZero)
+          }
         >
           {props.label}
         </span>
@@ -110,24 +177,40 @@ const MenuItemIcon = (props) => {
     return (
       <div
         className={
-          classes.noChildHover +
-          ' ' +
-          (menuItemActive === props.code
+          menuItemActive === props.code
             ? classes.lineActive + ' ' + classNameStyle
-            : classNameStyle)
+            : classNameStyle
         }
       >
-        <a href={`#/${props.href}`} className={classNameRoot}>
+        <a
+          href={`#/${props.href}`}
+          className={classNameRoot + ' ' + classes.noChildHover}
+          style={
+            sidebarState
+              ? { width: `calc(100% - 10px)` }
+              : { width: 'fit-content' }
+          }
+        >
           <IonIcon name={props.code} style={{ width: 16, height: 16 }} />
+
           <span
-            className={classes.span + (sidebarState ? '' : ' ' + classes.hide)}
-            style={sidebarStateTimeout ? { width: 0 } : null}
+            className={
+              classes.span +
+              (!sidebarStateTimeout
+                ? ' ' + classes.opacityFull
+                : ' ' + classes.heightZero)
+            }
           >
             {props.label}
           </span>
         </a>
         {menuItemActive === props.code && (
-          <div className={classes.indicatorLineActive} />
+          <div
+            className={
+              classes.indicatorLineActiveTwo +
+              (sidebarStateTimeout ? ' ' + classes.opacityFullDeux : '')
+            }
+          />
         )}
       </div>
     )
