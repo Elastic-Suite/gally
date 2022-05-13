@@ -11,7 +11,7 @@ import { ThemeProvider } from '@mui/material/styles'
 import { makeStyles } from '@mui/styles'
 import RegularTheme from '~/components/atoms/RegularTheme'
 import CustomSidebar from '~/components/molecules/layout/CustomSidebar'
-import ButtonsPreview from "~/components/atoms/buttons/ButtonsPreview";
+import ButtonsPreview from '~/components/atoms/buttons/ButtonsPreview'
 
 /*
  * TODO: THIBO: Update AppBar
@@ -63,8 +63,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    position: 'absolute',
-    left: theme.spacing(-1.5),
+    position: 'fixed',
     top: theme.spacing(6),
     background: theme.palette.background.paper,
     border: '1px solid #E2E6F3',
@@ -73,14 +72,39 @@ const useStyles = makeStyles((theme) => ({
     width: theme.spacing(3),
     height: theme.spacing(3),
     cursor: 'pointer',
+    zIndex: '99',
+  },
+  rightBar: {
+    borderRight: '1px solid #E2E6F3',
+    boxSizing: 'unset',
+    height: '100vh',
+    overflowY: 'scroll',
+    position: 'fixed',
+    top: '0',
+    scrollbarWidth: 'none',
+    '&::-webkit-scrollbar': {
+      width: 0,
+    },
+  },
+
+  toClose: {
+    left: `calc(66px - 12px)`,
+    transition: 'left linear',
+  },
+
+  toOpen: {
+    left: `calc(279px - 12px)`,
+    transition: 'left linear',
   },
 }))
 const useStylesAppBar = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'row',
-    width: 'auto',
-    position: 'unset',
+    backgroundColor: 'blue',
+    color: 'white',
+    position: 'fixed',
+    width: '100%',
   },
 }))
 
@@ -105,14 +129,14 @@ const CustomLayout: LayoutComponent = ({ children, title }) => {
    * Setup function to collapse sidebar when click on button
    */
   const collapseSidebar = () => {
-    setSidebarState(!sidebarState)
     if (sidebarState) {
       setTimeout(() => {
-        setSidebarStateTimeout(sidebarState)
+        setSidebarState(!sidebarState)
       }, 500)
     } else {
-      setSidebarStateTimeout(sidebarState)
+      setSidebarState(!sidebarState)
     }
+    setSidebarStateTimeout(sidebarState)
   }
 
   return (
@@ -120,14 +144,25 @@ const CustomLayout: LayoutComponent = ({ children, title }) => {
       <div className={classes.root}>
         <div className={classes.appFrame}>
           <CustomSidebar />
-          <div className={classes.contentWithAppbar}>
-            <div className={classes.buttonCollapse} onClick={collapseSidebar}>
+          <div
+            className={classes.contentWithAppbar + ' ' + classes.rightBar}
+            style={{
+              left: sidebarState ? '279px' : '66px',
+            }}
+          >
+            <div
+              className={
+                classes.buttonCollapse +
+                ' ' +
+                (!sidebarState ? classes.toClose : classes.toOpen)
+              }
+              onClick={collapseSidebar}
+            >
               <IonIcon name={'resize-menu'} style={{ width: 14, height: 14 }} />
             </div>
-            <AppBar
-              classes={appbar}
-              userMenu={<UserMenu icon={<IonIcon name="person" />} />}
-            />
+            <div className={appbar.root} style={{ zIndex: 99 }}>
+              WIP : TO DO
+            </div>
             <div className={classes.content}>
               {children}
               <ButtonsPreview />
