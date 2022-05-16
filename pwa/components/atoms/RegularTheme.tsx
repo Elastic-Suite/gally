@@ -332,6 +332,7 @@ const regularTheme = createTheme({
         root: {
           transform: 'scale(0.9)',
           color: '#B5B9D9',
+          transition: 'all 0.3s linear',
           '&:hover': {
             backgroundColor: 'rgba(21, 26, 71, 0.08)',
           },
@@ -363,6 +364,7 @@ const regularTheme = createTheme({
         root: {
           transform: 'scale(0.9)',
           color: '#B5B9D9',
+          transition: 'all 0.3s linear',
           '&:hover': {
             backgroundColor: 'rgba(21, 26, 71, 0.08)',
           },
@@ -407,6 +409,7 @@ const regularTheme = createTheme({
           height: '13px',
         },
         switchBase: {
+          transition: 'all 0.3s linear',
           '&:hover': {
             backgroundColor: 'rgba(21, 26, 71, 0.08)',
           },
@@ -470,11 +473,31 @@ const regularTheme = createTheme({
             '0px -8px 8px rgba(255, 231, 228, 0.2), 0px 16px 16px rgba(243, 151, 140, 0.2), 4px 4px 14px rgba(255, 231, 228, 0.5)',
           width: '56px',
           height: '56px',
-          '&:hover': {
+          zIndex: 1,
+          '&::before': {
+            position: 'absolute',
+            content: '""',
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+            borderRadius: '50%',
             background:
               'linear-gradient(46.78deg, #CC2D19 1.79%, #E64733 98.88%)',
             boxShadow:
               '0px -8px 8px rgba(255, 231, 228, 0.2), 0px 16px 36px rgba(243, 151, 140, 0.2), 4px 4px 14px rgba(255, 231, 228, 0.5)',
+            zIndex: -1,
+            transition: 'opacity 0.3s linear',
+            opacity: 0,
+          },
+          '&:hover::before': {
+            opacity: 1,
+          },
+          '&:hover': {
+            background:
+              'linear-gradient(46.78deg, #E64733 1.79%, #ED7465 98.88%)',
+            boxShadow:
+              '0px -8px 8px rgba(255, 231, 228, 0.2), 0px 16px 16px rgba(243, 151, 140, 0.2), 4px 4px 14px rgba(255, 231, 228, 0.5)',
           },
           '&& .MuiTouchRipple-child': {
             backgroundColor: '#CC2D19',
