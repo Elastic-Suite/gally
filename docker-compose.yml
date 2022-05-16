@@ -48,6 +48,7 @@ services:
       VARNISH_UPSTREAM: varnish:80
       # MERCURE_PUBLISHER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET:-!ChangeMe!}
       # MERCURE_SUBSCRIBER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET:-!ChangeMe!}
+      CADDY_TRUSTED_PROXIES: ${CADDY_TRUSTED_PROXIES:-127.0.0.0/8 10.0.0.0/8 172.16.0.0/12 192.168.0.0/16}
     restart: unless-stopped
     volumes:
       - php_socket:/var/run/php
