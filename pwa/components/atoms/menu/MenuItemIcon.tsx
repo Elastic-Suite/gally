@@ -149,7 +149,7 @@ const MenuItemIcon = (props) => {
     classNameRoot += ' ' + classes.childPadding
     return (
       <div className={classNameRoot + ' ' + classNameStyle}>
-        <IonIcon name={props.code} style={{ width: 16, height: 16 }} />
+        <IonIcon name={props.code} style={{ width: 18, height: 18 }} />
         {sidebarStateTimeout && wordIndexOne === props.code ? (
           <div
             className={
@@ -191,7 +191,7 @@ const MenuItemIcon = (props) => {
               : { width: 'fit-content' }
           }
         >
-          <IonIcon name={props.code} style={{ width: 16, height: 16 }} />
+          <IonIcon name={props.code} style={{ width: 18, height: 18 }} />
 
           <span
             className={

@@ -1,33 +1,34 @@
 import Button from '@mui/material/Button'
-import CommonButtonStyle from "~/components/atoms/buttons/CommonButtonStyle";
-import RegularTheme from '~/components/atoms/RegularTheme'
-import _ from 'lodash';
+import useCommonButtonStyle from '~/components/atoms/buttons/CommonButtonStyle'
+import { makeStyles } from '@mui/styles'
 
-const secondaryButtonStyle = _.merge(
-  JSON.parse(JSON.stringify(CommonButtonStyle)),
-  {
-    color: RegularTheme.palette.colors.secondary['600'],
-    background: RegularTheme.palette.colors.secondary['100'],
-    boxShadow: RegularTheme.palette.colors.shadow.secondaryButton.sm,
+const useSecondaryButtonStyle = makeStyles((theme) => ({
+  root: {
+    color: theme.palette.colors.secondary['600'],
+    background: theme.palette.colors.secondary['100'],
+    boxShadow: theme.palette.colors.shadow.secondaryButton.sm,
     '&::before': {
-      background: RegularTheme.palette.colors.secondary['200'],
-      boxShadow: RegularTheme.palette.colors.shadow.secondaryButton.md,
+      background: theme.palette.colors.secondary['200'],
+      boxShadow: theme.palette.colors.shadow.secondaryButton.md,
     },
     '&:hover': {
-      background: RegularTheme.palette.colors.secondary['100'],
-      boxShadow: RegularTheme.palette.colors.shadow.secondaryButton.sm
+      background: theme.palette.colors.secondary['100'],
+      boxShadow: theme.palette.colors.shadow.secondaryButton.sm,
     },
     '&& .MuiTouchRipple-child': {
-      backgroundColor: RegularTheme.palette.colors.secondary['300'],
+      backgroundColor: theme.palette.colors.secondary['300'],
     },
-  }
-);
+  },
+}))
 
 const SecondaryButton = (props) => {
+  const CommonButtonStyle = useCommonButtonStyle()
+  const secondaryButtonStyle = useSecondaryButtonStyle()
   return (
-    <Button {...props}
-            sx={secondaryButtonStyle}
-            variant="contained"
+    <Button
+      {...props}
+      className={CommonButtonStyle.root + ' ' + secondaryButtonStyle.root}
+      variant="contained"
     >
       {props.children}
     </Button>

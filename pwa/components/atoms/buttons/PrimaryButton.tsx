@@ -1,12 +1,10 @@
 import Button from '@mui/material/Button'
-import CommonButtonStyle from "~/components/atoms/buttons/CommonButtonStyle";
+import useCommonButtonStyle from '~/components/atoms/buttons/CommonButtonStyle'
 
 const PrimaryButton = (props) => {
+  const CommonButtonStyle = useCommonButtonStyle()
   return (
-    <Button {...props}
-      sx={CommonButtonStyle}
-      variant="contained"
-    >
+    <Button {...props} className={CommonButtonStyle.root} variant="contained">
       {props.children}
     </Button>
   )
