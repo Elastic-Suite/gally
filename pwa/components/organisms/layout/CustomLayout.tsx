@@ -68,9 +68,9 @@ const useStyles = makeStyles((theme) => ({
     background: theme.palette.background.paper,
     border: '1px solid #E2E6F3',
     boxSizing: 'border-box',
-    borderRadius: theme.spacing(1.5),
-    width: theme.spacing(3),
-    height: theme.spacing(3),
+    borderRadius: theme.spacing(2),
+    width: theme.spacing(4),
+    height: theme.spacing(4),
     cursor: 'pointer',
     zIndex: '99',
   },
@@ -88,12 +88,12 @@ const useStyles = makeStyles((theme) => ({
   },
 
   toClose: {
-    left: `calc(66px - 12px)`,
+    left: `calc(66px - 16px)`,
     transition: 'left linear',
   },
 
   toOpen: {
-    left: `calc(279px - 12px)`,
+    left: `calc(279px - 16px)`,
     transition: 'left linear',
   },
 }))
@@ -158,7 +158,10 @@ const CustomLayout: LayoutComponent = ({ children, title }) => {
               }
               onClick={collapseSidebar}
             >
-              <IonIcon name={'resize-menu'} style={{ width: 14, height: 14 }} />
+              <IonIcon
+                name={'code-outline'}
+                style={{ width: 18, height: 18 }}
+              />
             </div>
             <div className={appbar.root} style={{ zIndex: 99 }}>
               WIP : TO DO
