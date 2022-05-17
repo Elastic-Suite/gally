@@ -66,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
   },
   indicatorLineActive: {
     position: 'absolute',
-    right: '-10px',
+    right: theme.spacing(-2),
     top: 0,
     height: '100%',
     width: 3,
@@ -158,7 +158,7 @@ const MenuItem = (props) => {
         )}
         {!!props.children && (
           <div
-            className={classes.line}
+            className={classes.line + ' ' + classes.lineHover}
             style={{ transition: 'all 500ms', position: 'relative' }}
             onClick={toggleChild}
           >

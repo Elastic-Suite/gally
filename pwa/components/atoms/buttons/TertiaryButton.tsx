@@ -1,16 +1,14 @@
 import Button from '@mui/material/Button'
-import CommonButtonStyle from "~/components/atoms/buttons/CommonButtonStyle";
-import RegularTheme from '~/components/atoms/RegularTheme'
-import _ from 'lodash';
+import useCommonButtonStyle from '~/components/atoms/buttons/CommonButtonStyle'
+import { makeStyles } from '@mui/styles'
 
-const tertiaryButtonStyle = _.merge(
-  JSON.parse(JSON.stringify(CommonButtonStyle)),
-  {
-    color: RegularTheme.palette.colors.neutral['900'],
+const useTertiaryButtonStyle = makeStyles((theme) => ({
+  root: {
+    color: theme.palette.colors.neutral['900'],
     background: 'none',
     boxShadow: 'none',
     '&::before': {
-      background: RegularTheme.palette.colors.neutral['200'],
+      background: theme.palette.colors.neutral['200'],
       boxShadow: 'none',
     },
     '&:hover': {
@@ -18,16 +16,19 @@ const tertiaryButtonStyle = _.merge(
       boxShadow: 'none',
     },
     '&& .MuiTouchRipple-child': {
-      backgroundColor: RegularTheme.palette.colors.neutral['300'],
+      backgroundColor: theme.palette.colors.neutral['300'],
     },
-  }
-);
+  },
+}))
 
 const TertiaryButton = (props) => {
+  const CommonButtonStyle = useCommonButtonStyle()
+  const tertiaryButtonStyle = useTertiaryButtonStyle()
   return (
-    <Button {...props}
-            sx={tertiaryButtonStyle}
-            variant="contained"
+    <Button
+      {...props}
+      className={CommonButtonStyle.root + ' ' + tertiaryButtonStyle.root}
+      variant="contained"
     >
       {props.children}
     </Button>
