@@ -18,7 +18,7 @@ namespace Elasticsuite\Standard\src\Test;
 
 use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
 use Elasticsuite\Fixture\Service\ElasticsearchFixtures;
-use Elasticsuite\User\DataFixtures\LoginTrait;
+use Elasticsuite\User\Test\LoginTrait;
 use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
@@ -29,7 +29,7 @@ abstract class AbstractTest extends ApiTestCase
     protected static function loadFixture(array $paths)
     {
         $databaseTool = static::getContainer()->get(DatabaseToolCollection::class)->get();
-        $databaseTool->loadAliceFixture($paths);
+        $databaseTool->loadAliceFixture(array_merge(static::getUserFixtures(), $paths));
     }
 
     protected static function loadElasticsearchIndexFixtures(array $paths)
@@ -50,48 +50,54 @@ abstract class AbstractTest extends ApiTestCase
         $elasticFixtures->deleteTestFixtures();
     }
 
-    protected function requestGraphQl(string $query, array $headers = []): ResponseInterface
-    {
-        $response = $this->request(
-            'POST',
-            '/graphql',
-            [
-                'json' => [
-                    'operationName' => null,
-                    'query' => $query,
-                    'variables' => [],
-                ],
-                'headers' => $headers,
-            ]
-        );
-        $this->assertResponseHeaderSame('content-type', 'application/json');
-        $this->assertResponseStatusCodeSame(200);
-
-        return $response;
-    }
-
-    protected function requestRest(string $method, string $path, array $json = [], $headers = []): ResponseInterface
-    {
-        $data = ['headers' => $headers];
-        if (\in_array($method, ['POST', 'PUT'], true)) {
-            $data['json'] = $json;
-        }
-
-        return $this->request($method, $path, $data);
-    }
-
-    private function request(string $method, string $path, array $data = []): ResponseInterface
+    protected function request(RequestToTest $request): ResponseInterface
     {
         $client = static::createClient();
+        $data = ['headers' => $request->getHeaders()];
+        if (\in_array($request->getMethod(), ['POST', 'PUT'], true)) {
+            $data['json'] = $request->getData();
+        }
 
-        $loginJson = $this->login(
-            $client,
-            static::getContainer()->get('doctrine')->getManager(), // @phpstan-ignore-line
-            static::getContainer()->get('security.user_password_hasher')
-        );
+        if ($request->getUser()) {
+            $data['auth_bearer'] = $this->loginRest($client, $request->getUser());
+        }
 
-        $data['auth_bearer'] = $loginJson['token'];
+        return $client->request($request->getMethod(), $request->getPath(), $data);
+    }
 
-        return $client->request($method, $path, $data);
+    protected function validateApiCall(RequestToTest $request, ExpectedResponse $expectedResponse): void
+    {
+        $response = $this->request($request);
+        $this->assertResponseStatusCodeSame($expectedResponse->getResponseCode());
+
+        if ($expectedResponse->getResponseCode() >= 400) {
+            $errorType = 'hydra:Error';
+            $errorContext = 'Error';
+            if (\array_key_exists('violations', $response->toArray(false))) {
+                $errorType = $errorContext = 'ConstraintViolationList';
+            }
+
+            if ($expectedResponse->getMessage()) {
+                $this->assertJsonContains(
+                    [
+                        '@context' => "/contexts/$errorContext",
+                        '@type' => "$errorType",
+                        'hydra:title' => 'An error occurred',
+                        'hydra:description' => $expectedResponse->getMessage(),
+                    ]
+                );
+            } else {
+                $this->assertJsonContains(['@context' => "/contexts/$errorContext", '@type' => "$errorType"]);
+            }
+        } elseif (204 != $expectedResponse->getResponseCode() && $expectedResponse->getValidateResponseCallback()) {
+            $expectedResponse->getValidateResponseCallback()($response);
+        } elseif (204 != $expectedResponse->getResponseCode()) {
+            $data = $response->toArray();
+            $this->assertArrayNotHasKey(
+                'errors',
+                $data,
+                isset($data['errors']) ? $data['errors'][0]['message'] : ''
+            );
+        }
     }
 }

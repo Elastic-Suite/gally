@@ -21,6 +21,10 @@ use Elasticsuite\Fixture\Service\ElasticsearchFixturesInterface;
 use Elasticsuite\Index\Model\Index;
 use Elasticsuite\Index\Repository\Index\IndexRepositoryInterface;
 use Elasticsuite\Standard\src\Test\AbstractEntityTest;
+use Elasticsuite\Standard\src\Test\ExpectedResponse;
+use Elasticsuite\Standard\src\Test\RequestToTest;
+use Elasticsuite\User\Constant\Role;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class IndexOperationsTest extends AbstractEntityTest
 {
@@ -65,67 +69,70 @@ class IndexOperationsTest extends AbstractEntityTest
         ];
     }
 
-    protected function getJsonCreationValidation(array $validData): array
+    /**
+     * {@inheritDoc}
+     */
+    public function createDataProvider(): iterable
     {
-        return [
-            'aliases' => [
-                '.catalog_' . $validData['catalog'],
-                '.entity_' . $validData['entityType'],
-            ],
-        ];
-    }
-
-    protected function getJsonGetValidation(array $expectedData): array
-    {
-        unset($expectedData['id']);
-
-        return $expectedData;
-    }
-
-    protected function getJsonGetCollectionValidation(): array
-    {
-        return [
-            'hydra:totalItems' => self::$initialIndicesCount + 11,
-        ];
-    }
-
-    public function createValidDataProvider(): array
-    {
-        $data = [];
-
+        $adminUser = $this->getUser(Role::ROLE_ADMIN);
         $catalogs = [
             1 => 'b2c_fr',
             2 => 'b2c_en',
             3 => 'b2b_en',
         ];
+        $data = [
+            [$this->getUser(Role::ROLE_CONTRIBUTOR), ['entityType' => 'product', 'catalog' => 1], 403],
+            [$this->getUser(Role::ROLE_CONTRIBUTOR), ['entityType' => 'category', 'catalog' => 1], 403],
+        ];
+
         foreach ($catalogs as $catalogId => $catalogCode) {
             $data[] = [
+                $adminUser,
                 ['entityType' => 'product', 'catalog' => $catalogId],
+                201,
+                null,
                 "#^{$this->getApiPath()}/elasticsuite_test__elasticsuite_{$catalogCode}_product_[0-9]{8}_[0-9]{6}$#",
             ];
             $data[] = [
+                $adminUser,
                 ['entityType' => 'category', 'catalog' => $catalogId],
+                201,
+                null,
                 "#^{$this->getApiPath()}/elasticsuite_test__elasticsuite_{$catalogCode}_category_[0-9]{8}_[0-9]{6}$#",
             ];
         }
 
-        return $data;
+        return array_merge(
+            $data,
+            [
+                [$adminUser, ['entityType' => 'string', 'catalog' => 0], 400, 'Entity type [string] does not exist'],
+                [$adminUser, ['entityType' => 'product', 'catalog' => 0], 400, 'Catalog of ID [0] does not exist'],
+                [$adminUser, ['entityType' => 'category', 'catalog' => 0], 400, 'Catalog of ID [0] does not exist'],
+            ]
+        );
     }
 
-    public function createInvalidDataProvider(): array
+    protected function getJsonCreationValidation(array $expectedData): array
     {
         return [
-            [['entityType' => 'string', 'catalog' => 0], 'Entity type [string] does not exist', 400],
-            [['entityType' => 'product', 'catalog' => 0], 'Catalog of ID [0] does not exist', 400],
-            [['entityType' => 'category', 'catalog' => 0], 'Catalog of ID [0] does not exist', 400],
+            'aliases' => [
+                '.catalog_' . $expectedData['catalog'],
+                '.entity_' . $expectedData['entityType'],
+            ],
         ];
     }
 
-    public function getDataProvider(): array
+    /**
+     * {@inheritDoc}
+     */
+    public function getDataProvider(): iterable
     {
+        $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
+
         return [
-            ['wrong_id', [], 404],
+            [$user, 'wrong_id', [], 404],
             [
+                $user,
                 ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_test_fr_product_20220429_153000',
                 [
                     'id' => ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_test_fr_product_20220429_153000',
@@ -180,6 +187,7 @@ class IndexOperationsTest extends AbstractEntityTest
                 200,
             ],
             [
+                $user,
                 ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_test_fr_category_20220429_173000',
                 [
                     'id' => ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_test_fr_category_20220429_173000',
@@ -216,6 +224,7 @@ class IndexOperationsTest extends AbstractEntityTest
                 200,
             ],
             [
+                $user,
                 ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_test_fr_category_20210429_173000',
                 [
                     'id' => ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_test_fr_category_20210429_173000',
@@ -252,6 +261,7 @@ class IndexOperationsTest extends AbstractEntityTest
                 200,
             ],
             [
+                $user,
                 ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_test_fr_category_20220429_000000',
                 [
                     'id' => ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_test_fr_category_20220429_000000',
@@ -288,6 +298,7 @@ class IndexOperationsTest extends AbstractEntityTest
                 200,
             ],
             [
+                $user,
                 ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'test',
                 [
                     'id' => ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'test',
@@ -323,97 +334,120 @@ class IndexOperationsTest extends AbstractEntityTest
         ];
     }
 
-    public function deleteDataProvider(): array
+    protected function getJsonGetValidation(array $expectedData): array
     {
+        unset($expectedData['id']);
+
+        return $expectedData;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function deleteDataProvider(): iterable
+    {
+        $adminUser = $this->getUser(Role::ROLE_ADMIN);
+
         return [
-            [ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_test_fr_product_20220429_153000', 200],
-            ['wrong_id', 404],
+            [$this->getUser(Role::ROLE_CONTRIBUTOR), ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_test_fr_product_20220429_153000', 403],
+            [$adminUser, ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_test_fr_product_20220429_153000', 204],
+            [$adminUser, 'wrong_id', 404],
         ];
     }
 
     /**
-     * @dataProvider installOrRefreshIndexDataProvider
-     * @depends testCreateValidData
-     *
-     * @param string $indexNamePrefix             Index name prefix
-     * @param string $expectedInstalledIndexAlias Expected installed index alias
-     *
-     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
+     * {@inheritDoc}
      */
-    public function testInstallIndex(string $indexNamePrefix, string $expectedInstalledIndexAlias): void
+    public function getCollectionDataProvider(): iterable
     {
-        $index = self::$indexRepository->findByName("{$indexNamePrefix}*");
-        $this->assertNotNull($index);
-        $this->assertInstanceOf(Index::class, $index);
+        return [
+            [$this->getUser(Role::ROLE_CONTRIBUTOR), 11, 200],
+        ];
+    }
 
-        $this->requestRest('PUT', "/indices/install/{$index->getName()}");
-        $this->assertResponseStatusCodeSame(200);
-        $this->assertJsonContains([
-            '@context' => '/contexts/Index',
-            '@id' => "/indices/{$index->getName()}",
-            '@type' => 'Index',
-            'name' => $index->getName(),
-            // TODO re-instate tests on aliases when the read stage is correctly performed based on name.
-        ]);
+    protected function getJsonGetCollectionValidation(): array
+    {
+        return ['hydra:totalItems' => self::$initialIndicesCount + 11];
     }
 
     /**
      * @dataProvider installOrRefreshIndexDataProvider
-     * @depends testCreateValidData
+     * @depends testCreate
      *
-     * @param string $indexNamePrefix             Index name prefix
-     * @param string $expectedInstalledIndexAlias Expected installed index alias
-     *
-     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
+     * @param string $indexNamePrefix Index name prefix
      */
-    public function testRefreshIndex(string $indexNamePrefix, string $expectedInstalledIndexAlias): void
+    public function testInstallIndex(string $indexNamePrefix): void
     {
         $index = self::$indexRepository->findByName("{$indexNamePrefix}*");
         $this->assertNotNull($index);
         $this->assertInstanceOf(Index::class, $index);
 
+        $this->validateApiCall(
+            new RequestToTest('PUT', "/indices/install/{$index->getName()}", $this->getUser(Role::ROLE_CONTRIBUTOR)),
+            new ExpectedResponse(403, null)
+        );
+        $this->validateApiCall(
+            new RequestToTest('PUT', "/indices/install/{$index->getName()}", $this->getUser(Role::ROLE_ADMIN)),
+            new ExpectedResponse(
+                200,
+                function (ResponseInterface $response) use ($index) {
+                    $this->assertJsonContains([
+                        '@context' => '/contexts/Index',
+                        '@id' => "/indices/{$index->getName()}",
+                        '@type' => 'Index',
+                        'name' => $index->getName(),
+                        // TODO re-instate tests on aliases when the read stage is correctly performed based on name.
+                    ]);
+                }
+            )
+        );
+    }
+
+    /**
+     * @dataProvider installOrRefreshIndexDataProvider
+     * @depends      testCreate
+     *
+     * @param string $indexNamePrefix Index name prefix
+     */
+    public function testRefreshIndex(string $indexNamePrefix): void
+    {
+        $index = self::$indexRepository->findByName("{$indexNamePrefix}*");
+        $this->assertNotNull($index);
+        $this->assertInstanceOf(Index::class, $index);
         $initialRefreshCount = $this->getRefreshCount($index->getName());
 
-        $this->requestRest('PUT', "/indices/refresh/{$index->getName()}");
-        $this->assertResponseStatusCodeSame(200);
-        $this->assertJsonContains([
-            '@context' => '/contexts/Index',
-            '@id' => "/indices/{$index->getName()}",
-            '@type' => 'Index',
-            'name' => $index->getName(),
-            // TODO re-instate when the read stage is correctly performed based on name.
-        ]);
+        $this->validateApiCall(
+            new RequestToTest('PUT', "/indices/refresh/{$index->getName()}", $this->getUser(Role::ROLE_CONTRIBUTOR)),
+            new ExpectedResponse(403, null)
+        );
+        $this->validateApiCall(
+            new RequestToTest('PUT', "/indices/refresh/{$index->getName()}", $this->getUser(Role::ROLE_ADMIN)),
+            new ExpectedResponse(
+                200,
+                function (ResponseInterface $response) use ($index, $initialRefreshCount) {
+                    $this->assertJsonContains([
+                        '@context' => '/contexts/Index',
+                        '@id' => "/indices/{$index->getName()}",
+                        '@type' => 'Index',
+                        'name' => $index->getName(),
+                        // TODO re-instate tests on aliases when the read stage is correctly performed based on name.
+                    ]);
 
-        $refreshCount = $this->getRefreshCount($index->getName());
-        $this->assertGreaterThan($initialRefreshCount, $refreshCount);
+                    $refreshCount = $this->getRefreshCount($index->getName());
+                    $this->assertGreaterThan($initialRefreshCount, $refreshCount);
+                }
+            )
+        );
     }
 
     public function installOrRefreshIndexDataProvider(): array
     {
         $data = [];
+        $catalogs = ['b2c_fr', 'b2c_en', 'b2b_en'];
 
-        $catalogs = [
-            1 => 'b2c_fr',
-            2 => 'b2c_en',
-            3 => 'b2b_en',
-        ];
-        foreach ($catalogs as $catalogId => $catalogCode) {
-            $data[] = [
-                "elasticsuite_test__elasticsuite_{$catalogCode}_product",
-                "elasticsuite_test__elasticsuite_{$catalogCode}_product",
-            ];
-            $data[] = [
-                "elasticsuite_test__elasticsuite_{$catalogCode}_category",
-                "elasticsuite_test__elasticsuite_{$catalogCode}_category",
-            ];
+        foreach ($catalogs as $catalogCode) {
+            $data[] = ["elasticsuite_test__elasticsuite_{$catalogCode}_product"];
+            $data[] = ["elasticsuite_test__elasticsuite_{$catalogCode}_category"];
         }
 
         return $data;

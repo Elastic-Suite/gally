@@ -18,6 +18,7 @@ namespace Elasticsuite\Metadata\Tests\Api\Rest;
 
 use Elasticsuite\Metadata\Model\SourceFieldOptionLabel;
 use Elasticsuite\Standard\src\Test\AbstractEntityTest;
+use Elasticsuite\User\Constant\Role;
 
 class SourceFieldOptionLabelTest extends AbstractEntityTest
 {
@@ -37,80 +38,92 @@ class SourceFieldOptionLabelTest extends AbstractEntityTest
         return SourceFieldOptionLabel::class;
     }
 
-    protected function getJsonCreationValidation(array $validData): array
+    /**
+     * {@inheritDoc}
+     */
+    public function createDataProvider(): iterable
     {
-        return [
-            'label' => $validData['label'],
-        ];
-    }
+        $adminUser = $this->getUser(Role::ROLE_ADMIN);
 
-    protected function getJsonGetValidation(array $expectedData): array
-    {
-        return [];
-    }
-
-    protected function getJsonGetCollectionValidation(): array
-    {
         return [
-            'hydra:totalItems' => 4,
-        ];
-    }
-
-    public function createValidDataProvider(): array
-    {
-        return [
-            [['catalog' => '/localized_catalogs/1', 'sourceFieldOption' => '/source_field_options/3', 'label' => 'Marque 3']],
-            [['catalog' => '/localized_catalogs/2', 'sourceFieldOption' => '/source_field_options/3', 'label' => 'Brand 3']],
-        ];
-    }
-
-    public function createInvalidDataProvider(): array
-    {
-        return [
+            [$this->getUser(Role::ROLE_CONTRIBUTOR), ['catalog' => '/localized_catalogs/1', 'sourceFieldOption' => '/source_field_options/3', 'label' => 'Marque 3'], 403],
+            [$adminUser, ['catalog' => '/localized_catalogs/1', 'sourceFieldOption' => '/source_field_options/3', 'label' => 'Marque 3'], 201],
+            [$adminUser, ['catalog' => '/localized_catalogs/2', 'sourceFieldOption' => '/source_field_options/3', 'label' => 'Brand 3'], 201],
             [
+                $adminUser,
                 ['catalog' => '/localized_catalogs/1', 'sourceFieldOption' => '/source_field_options/4'],
+                422,
                 'label: This value should not be blank.',
             ],
             [
+                $adminUser,
                 ['catalog' => '/localized_catalogs/1', 'sourceFieldOption' => '/source_field_options/1', 'label' => 'Marque 1 Update'],
+                422,
                 'sourceFieldOption: A label is already defined for this option and this catalog.',
             ],
             [
+                $adminUser,
                 ['sourceFieldOption' => '/source_field_options/4', 'label' => 'Marque'],
+                422,
                 'catalog: This value should not be blank.',
             ],
             [
+                $adminUser,
                 ['catalog' => '/localized_catalogs/1', 'label' => 'Marque'],
+                422,
                 'sourceFieldOption: This value should not be blank.',
             ],
             [
+                $adminUser,
                 ['catalog' => '/localized_catalogs/NotExist', 'sourceFieldOption' => '/source_field_options/4', 'label' => 'Marque 3'],
-                'Item not found for "/localized_catalogs/NotExist".',
                 400,
+                'Item not found for "/localized_catalogs/NotExist".',
             ],
             [
+                $adminUser,
                 ['catalog' => '/localized_catalogs/1', 'sourceFieldOption' => '/source_field_options/NotExist', 'label' => 'Marque 3'],
-                'Item not found for "/source_field_options/NotExist".',
                 400,
+                'Item not found for "/source_field_options/NotExist".',
             ],
         ];
     }
 
-    public function getDataProvider(): array
+    /**
+     * {@inheritDoc}
+     */
+    public function getDataProvider(): iterable
     {
+        $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
+
         return [
-            [1, ['id' => 1, 'label' => 'Marque 1'], 200],
-            [3, ['id' => 3, 'label' => 'Brand 1'], 200],
-            [20, [], 404],
+            [$user, 1, ['id' => 1, 'label' => 'Marque 1'], 200],
+            [$user, 3, ['id' => 3, 'label' => 'Brand 1'], 200],
+            [$user, 20, [], 404],
         ];
     }
 
-    public function deleteDataProvider(): array
+    /**
+     * {@inheritDoc}
+     */
+    public function deleteDataProvider(): iterable
+    {
+        $adminUser = $this->getUser(Role::ROLE_ADMIN);
+
+        return [
+            [$this->getUser(Role::ROLE_CONTRIBUTOR), 1, 403],
+            [$adminUser, 1, 204],
+            [$adminUser, 3, 204],
+            [$adminUser, 20, 404],
+        ];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getCollectionDataProvider(): iterable
     {
         return [
-            [1, 200],
-            [3, 200],
-            [20, 404],
+            [$this->getUser(Role::ROLE_CONTRIBUTOR), 4, 200],
         ];
     }
 }

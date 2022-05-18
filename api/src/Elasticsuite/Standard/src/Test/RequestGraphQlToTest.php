@@ -14,13 +14,23 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\User\Constant;
+namespace Elasticsuite\Standard\src\Test;
 
-final class UserTest
+use Elasticsuite\User\Model\User;
+
+class RequestGraphQlToTest extends RequestToTest
 {
-    public const EMAIL = 'admin@example.com';
-
-    public const PASSWORD = 'apassword';
-
-    public const ROLES = [Role::ROLE_ADMIN];
+    public function __construct(
+        string $query,
+        ?User $user,
+        array $headers = [],
+    ) {
+        parent::__construct(
+            'POST',
+            '/graphql',
+            $user,
+            ['operationName' => null, 'query' => $query, 'variables' => []],
+            $headers
+        );
+    }
 }

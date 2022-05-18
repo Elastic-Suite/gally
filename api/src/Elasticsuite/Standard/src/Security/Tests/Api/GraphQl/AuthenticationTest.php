@@ -17,7 +17,9 @@ declare(strict_types=1);
 namespace Elasticsuite\Security\Tests\Api\GraphQl;
 
 use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
-use Elasticsuite\User\DataFixtures\LoginTrait;
+use Elasticsuite\User\Constant\Role;
+use Elasticsuite\User\Model\User;
+use Elasticsuite\User\Test\LoginTrait;
 
 class AuthenticationTest extends ApiTestCase
 {
@@ -26,91 +28,59 @@ class AuthenticationTest extends ApiTestCase
     public function testLogin(): void
     {
         $client = self::createClient();
-        $loginJson = $this->loginGraphQl(
-            $client,
-            static::getContainer()->get('doctrine')->getManager(), // @phpstan-ignore-line
-            static::getContainer()->get('security.user_password_hasher')
-        );
+        $listQuery = [
+            'operationName' => null,
+            'variables' => [],
+            'query' => <<<GQL
+                { catalogs { edges { node { id } } } }
+            GQL,
+        ];
+        $createQuery = [
+            'operationName' => null,
+            'variables' => [],
+            'query' => <<<GQL
+                mutation { createCatalog (input: { code: "test", name: "Test" }) { catalog { id } } }
+            GQL,
+        ];
 
+        // Test before login
+        $client->request('POST', '/graphql', ['json' => $listQuery]);
+        $this->assertJsonContains(['data' => []]);
+        $response = $client->request('POST', '/graphql', ['json' => $createQuery]);
+        $this->assertEquals('Access Denied.', $response->toArray()['errors'][0]['message']);
+
+        // Log contributor
+        $token = $this->loginGraphQl($client, $this->getUser(Role::ROLE_CONTRIBUTOR));
         $this->assertResponseIsSuccessful();
-        $this->assertArrayHasKey('token', $loginJson);
-
-        $catalog = ['code' => 'login_graphql_catalog', 'name' => 'Login GraphQL catalog'];
-        $query = <<<GQL
-            mutation {
-              createCatalog(input: { code:"{$catalog['code']}", name: "{$catalog['name']}"}) {
-                catalog {
-                  code
-                  name
-                }
-              }
-            }
-        GQL;
+        $this->assertNotEmpty($token);
 
         // Test not authorized.
-        $response = $client->request(
-            'POST',
-            '/graphql',
-            [
-                'json' => [
-                    'operationName' => null,
-                    'query' => $query,
-                    'variables' => [],
-                ],
-            ]
-        );
-        $this->assertStringContainsString('"debugMessage":"Access Denied."', $response->getContent());
+        $client->request('POST', '/graphql', ['json' => $listQuery]);
+        $this->assertJsonContains(['data' => []]);
+        $client->request('POST', '/graphql', ['auth_bearer' => $token, 'json' => $createQuery]);
+        $this->assertEquals('Access Denied.', $response->toArray()['errors'][0]['message']);
+
+        // Log admin
+        $token = $this->loginGraphQl($client, $this->getUser(Role::ROLE_ADMIN));
+        $this->assertResponseIsSuccessful();
+        $this->assertNotEmpty($token);
 
         // Test authorized.
-        $client->request(
-            'POST',
-            '/graphql',
-            [
-                'json' => [
-                    'operationName' => null,
-                    'query' => $query,
-                    'variables' => [],
-                ],
-                'auth_bearer' => $loginJson['token'],
-            ]
-        );
+        $client->request('POST', '/graphql', ['json' => $listQuery]);
+        $this->assertJsonContains(['data' => []]);
+        $client->request('POST', '/graphql', ['auth_bearer' => $token, 'json' => $createQuery]);
+        $this->assertJsonContains(['data' => []]);
 
-        $this->assertJsonContains([
-            'data' => [
-                'createCatalog' => [
-                    'catalog' => [
-                        'code' => $catalog['code'],
-                        'name' => $catalog['name'],
-                    ],
-                ],
-            ],
-        ]);
+        $this->logout();
     }
 
     public function testLoginInvalidCredentials(): void
     {
-        $query = <<<GQL
-            mutation {
-              tokenAuthentication(input: {email: "fake_user@test.com", password: "fake_password"}) {
-                authentication {
-                  code
-                  message
-                }
-              }
-            }
-        GQL;
-
-        self::createClient()->request(
-            'POST',
-            '/graphql',
-            [
-                'json' => [
-                    'operationName' => null,
-                    'query' => $query,
-                    'variables' => [],
-                ],
-            ]
-        );
+        $client = self::createClient();
+        $user = new User();
+        $user->setEmail('fake@test.com', )
+            ->setPassword('fakepassword');
+        $this->loginGraphQl($client, $user);
 
         $this->assertJsonContains([
             'data' => [
