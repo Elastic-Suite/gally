@@ -18,6 +18,7 @@ namespace Elasticsuite\Catalog\Tests\Api\Rest;
 
 use Elasticsuite\Catalog\Model\Catalog;
 use Elasticsuite\Standard\src\Test\AbstractEntityTest;
+use Elasticsuite\User\Constant\Role;
 
 class CatalogsTest extends AbstractEntityTest
 {
@@ -31,93 +32,60 @@ class CatalogsTest extends AbstractEntityTest
         return Catalog::class;
     }
 
-    public function createValidDataProvider(): array
+    /**
+     * {@inheritDoc}
+     */
+    public function createDataProvider(): iterable
+    {
+        $adminUser = $this->getUser(Role::ROLE_ADMIN);
+
+        return [
+            [$adminUser, ['code' => 'valid_code', 'name' => 'B2C Catalog'], 201],
+            [$adminUser, ['code' => 'empty_name', 'name' => ''], 201],
+            [$adminUser, ['code' => 'missing_name'], 201],
+            [$this->getUser(Role::ROLE_CONTRIBUTOR), ['code' => 'valid_code', 'name' => 'Unauthorized user'], 403],
+            [$adminUser, ['code' => '', 'name' => 'Empty Code'], 422, 'code: This value should not be blank.'],
+            [$adminUser, ['code' => ''], 422, 'code: This value should not be blank.'],
+            [$adminUser, ['name' => 'Missing Code'], 422, 'code: This value should not be blank.'],
+        ];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getDataProvider(): iterable
+    {
+        $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
+
+        return [
+            [$user, 1, ['id' => 1, 'code' => 'b2c_test', 'name' => 'B2C Test Catalog'], 200],
+            [$user, 5, ['id' => 5, 'code' => 'missing_name'], 200],
+            [$user, 10, [], 404],
+        ];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function deleteDataProvider(): iterable
+    {
+        $adminUser = $this->getUser(Role::ROLE_ADMIN);
+
+        return [
+            [$this->getUser(Role::ROLE_CONTRIBUTOR), 1, 403],
+            [$adminUser, 1, 204],
+            [$adminUser, 5, 204],
+            [$adminUser, 10, 404],
+        ];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getCollectionDataProvider(): iterable
     {
         return [
-            [['code' => 'valid_code', 'name' => 'B2C Catalog']],
-            [['code' => 'empty_name', 'name' => '']],
-            [['code' => 'missing_name']],
+            [$this->getUser(Role::ROLE_CONTRIBUTOR), 3, 200],
         ];
-    }
-
-    public function createInvalidDataProvider(): array
-    {
-        return [
-            [['code' => '', 'name' => 'Empty Code'], 'code: This value should not be blank.'],
-            [['code' => ''], 'code: This value should not be blank.'],
-            [['name' => 'Missing Code'], 'code: This value should not be blank.'],
-        ];
-    }
-
-    protected function getJsonCreationValidation(array $validData): array
-    {
-        $data = [
-            'code' => $validData['code'],
-        ];
-
-        if (isset($validData['name'])) {
-            $data['name'] = $validData['name'];
-        }
-
-        return $data;
-    }
-
-    public function testGetCollection(): void
-    {
-        $client = static::createClient();
-
-        $loginJson = $this->login(
-            $client,
-            static::getContainer()->get('doctrine')->getManager(),// @phpstan-ignore-line
-            static::getContainer()->get('security.user_password_hasher')
-        );
-
-        $client->request('GET', '/catalogs', ['auth_bearer' => $loginJson['token']]);
-
-        $this->assertResponseIsSuccessful();
-
-        $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
-
-        $this->assertJsonContains(
-            [
-                '@context' => '/contexts/Catalog',
-                '@id' => '/catalogs',
-                '@type' => 'hydra:Collection',
-                'hydra:totalItems' => 2,
-            ]
-        );
-    }
-
-    public function getDataProvider(): array
-    {
-        return [
-            [1, ['id' => 1, 'code' => 'b2c_test', 'name' => 'B2C Test Catalog'], 200],
-            [5, ['id' => 5, 'code' => 'missing_name'], 200],
-            [10, [], 404],
-        ];
-    }
-
-    protected function getJsonGetValidation(array $expectedData): array
-    {
-        $data = ['code' => $expectedData['code']];
-        if (isset($expectedData['name'])) {
-            $data['name'] = $expectedData['name'];
-        }
-
-        return $data;
-    }
-
-    public function deleteDataProvider(): array
-    {
-        return [
-            [1, 200],
-            [5, 200],
-            [10, 404],
-        ];
-    }
-
-    protected function getJsonGetCollectionValidation(): array
-    {
-        return ['hydra:totalItems' => 20];
     }
 }

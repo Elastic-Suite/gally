@@ -17,15 +17,26 @@ declare(strict_types=1);
 namespace Elasticsuite\Index\Tests\Api\Rest;
 
 use Elasticsuite\Index\Tests\Api\AbstractMenuTest;
+use Elasticsuite\Standard\src\Test\ExpectedResponse;
+use Elasticsuite\Standard\src\Test\RequestToTest;
+use Elasticsuite\User\Constant\Role;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class GetMenuTest extends AbstractMenuTest
 {
     /**
      * @dataProvider menuDataProvider
      */
-    public function testGetMenu(string $local, array $response): void
+    public function testGetMenu(string $local, array $expectedResponse): void
     {
-        $this->requestRest('GET', 'menu', [], ['Accept-Language' => $local]);
-        $this->assertJsonContains($response);
+        $this->validateApiCall(
+            new RequestToTest('GET', 'menu', $this->getUser(Role::ROLE_CONTRIBUTOR), [], ['Accept-Language' => $local]),
+            new ExpectedResponse(
+                200,
+                function (ResponseInterface $response) use ($expectedResponse) {
+                    $this->assertJsonContains($expectedResponse);
+                }
+            )
+        );
     }
 }

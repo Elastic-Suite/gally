@@ -17,40 +17,48 @@ declare(strict_types=1);
 namespace Elasticsuite\Index\Tests\Api\GraphQl;
 
 use Elasticsuite\Standard\src\Test\AbstractTest;
+use Elasticsuite\Standard\src\Test\ExpectedResponse;
+use Elasticsuite\Standard\src\Test\RequestGraphQlToTest;
+use Elasticsuite\User\Constant\Role;
+use Elasticsuite\User\Model\User;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class MappingStatusTest extends AbstractTest
 {
     /**
      * @dataProvider mappingStatusDataProvider
      */
-    public function testGetMappingStatus(string $entity, ?string $status)
+    public function testGetMappingStatus(User $user, string $entity, array $expectedData)
     {
         $this->loadFixture([
             __DIR__ . '/../../fixtures/metadata.yaml',
             __DIR__ . '/../../fixtures/source_field.yaml',
         ]);
-        $query = <<<GQL
-            {
-              getMappingStatus(entityType: "{$entity}") {
-                    status
-              }
-            }
-        GQL;
-
-        $this->requestGraphQl($query);
-        $this->assertJsonContains([
-            'data' => [
-                'getMappingStatus' => $status ? ['status' => $status] : null,
-            ],
-        ]);
+        $this->validateApiCall(
+            new RequestGraphQlToTest(
+                <<<GQL
+                    { getMappingStatus(entityType: "{$entity}") { status } }
+                GQL,
+                $user
+            ),
+            new ExpectedResponse(
+                200,
+                function (ResponseInterface $response) use ($expectedData) {
+                    $this->assertJsonContains($expectedData);
+                }
+            )
+        );
     }
 
     public function mappingStatusDataProvider(): array
     {
+        $admin = $this->getUser(Role::ROLE_ADMIN);
+
         return [
-            ['product', 'green'],
-            ['category', 'red'],
-            ['cms', null],
+            [$this->getUser(Role::ROLE_CONTRIBUTOR), 'product', ['errors' => [['debugMessage' => 'Access Denied.']]]],
+            [$admin, 'product', ['data' => ['getMappingStatus' => ['status' => 'green']]]],
+            [$admin, 'category', ['data' => ['getMappingStatus' => ['status' => 'red']]]],
+            [$admin, 'cms', ['data' => ['getMappingStatus' => null]]],
         ];
     }
 }

@@ -18,6 +18,7 @@ namespace Elasticsuite\Metadata\Tests\Api\Rest;
 
 use Elasticsuite\Metadata\Model\SourceField;
 use Elasticsuite\Standard\src\Test\AbstractEntityTest;
+use Elasticsuite\User\Constant\Role;
 
 class SourceFieldTest extends AbstractEntityTest
 {
@@ -34,70 +35,92 @@ class SourceFieldTest extends AbstractEntityTest
         return SourceField::class;
     }
 
-    protected function getJsonCreationValidation(array $validData): array
+    /**
+     * {@inheritDoc}
+     */
+    public function createDataProvider(): iterable
+    {
+        $adminUser = $this->getUser(Role::ROLE_ADMIN);
+
+        return [
+            [$this->getUser(Role::ROLE_CONTRIBUTOR), ['code' => 'description', 'metadata' => '/metadata/1'], 403],
+            [$adminUser, ['code' => 'description', 'metadata' => '/metadata/1'], 201],
+            [$adminUser, ['code' => 'weight', 'metadata' => '/metadata/1'], 201],
+            [$adminUser, ['code' => 'image', 'metadata' => '/metadata/2'], 201],
+            [$adminUser, ['code' => 'length', 'isSearchable' => true, 'metadata' => '/metadata/1'], 201],
+            [$adminUser, ['code' => 'description'], 422, 'metadata: This value should not be blank.'],
+            [$adminUser, ['metadata' => '/metadata/1'], 422, 'code: This value should not be blank.'],
+            [
+                $adminUser,
+                ['code' => 'long_description', 'metadata' => '/metadata/1', 'type' => 'description'],
+                422,
+                'type: The value you selected is not a valid choice.',
+            ],
+            [
+                $adminUser,
+                ['code' => 'description', 'metadata' => '/metadata/notExist'],
+                400,
+                'Item not found for "/metadata/notExist".',
+            ],
+            [
+                $adminUser,
+                ['code' => 'name', 'metadata' => '/metadata/1'],
+                422,
+                'code: An field with this code already exist for this entity.',
+            ],
+        ];
+    }
+
+    protected function getJsonCreationValidation(array $expectedData): array
     {
         $json = [
-            'code' => $validData['code'],
+            'code' => $expectedData['code'],
         ];
 
-        if (isset($validData['isSearchable'])) {
-            $json['searchable'] = $validData['isSearchable'];
+        if (isset($expectedData['isSearchable'])) {
+            $json['searchable'] = $expectedData['isSearchable'];
         }
 
         return $json;
     }
 
-    protected function getJsonGetValidation(array $expectedData): array
+    /**
+     * {@inheritDoc}
+     */
+    public function getDataProvider(): iterable
     {
+        $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
+
         return [
-            'code' => $expectedData['code'],
+            [$user, 1, ['id' => 1, 'code' => 'name'], 200],
+            [$user, 10, ['id' => 10, 'code' => 'description'], 200],
+            [$user, 20, [], 404],
         ];
     }
 
-    protected function getJsonGetCollectionValidation(): array
+    /**
+     * {@inheritDoc}
+     */
+    public function deleteDataProvider(): iterable
     {
+        $adminUser = $this->getUser(Role::ROLE_ADMIN);
+
         return [
-            'hydra:totalItems' => 11,
+            [$this->getUser(Role::ROLE_CONTRIBUTOR), 1, 403],
+            [$adminUser, 1, 204],
+            [$adminUser, 5, 400], // Can't remove system source field
+            [$adminUser, 10, 204],
+            [$adminUser, 20, 404],
         ];
     }
 
-    public function createValidDataProvider(): array
+    /**
+     * {@inheritDoc}
+     */
+    public function getCollectionDataProvider(): iterable
     {
         return [
-            [['code' => 'description', 'metadata' => '/metadata/1']],
-            [['code' => 'weight', 'metadata' => '/metadata/1']],
-            [['code' => 'image', 'metadata' => '/metadata/2']],
-            [['code' => 'length', 'isSearchable' => true, 'metadata' => '/metadata/1']],
-        ];
-    }
-
-    public function createInvalidDataProvider(): array
-    {
-        return [
-            [['code' => 'description'], 'metadata: This value should not be blank.'],
-            [['metadata' => '/metadata/1'], 'code: This value should not be blank.'],
-            [['code' => 'long_description', 'metadata' => '/metadata/1', 'type' => 'description'], 'type: The value you selected is not a valid choice.'],
-            [['code' => 'description', 'metadata' => '/metadata/notExist'], 'Item not found for "/metadata/notExist".', 400],
-            [['code' => 'name', 'metadata' => '/metadata/1'], 'code: An field with this code already exist for this entity.'],
-        ];
-    }
-
-    public function getDataProvider(): array
-    {
-        return [
-            [1, ['id' => 1, 'code' => 'name'], 200],
-            [10, ['id' => 10, 'code' => 'description'], 200],
-            [20, [], 404],
-        ];
-    }
-
-    public function deleteDataProvider(): array
-    {
-        return [
-            [1, 200],
-            [5, 400], // Can't remove system source field
-            [10, 200],
-            [20, 404],
+            [$this->getUser(Role::ROLE_CONTRIBUTOR), 11, 200],
         ];
     }
 }

@@ -17,6 +17,11 @@ declare(strict_types=1);
 namespace Elasticsuite\Search\Tests\Api\GraphQl;
 
 use Elasticsuite\Search\Tests\Api\Rest\FacetConfigurationTest as RestFacetConfigurationTest;
+use Elasticsuite\Standard\src\Test\ExpectedResponse;
+use Elasticsuite\Standard\src\Test\RequestGraphQlToTest;
+use Elasticsuite\User\Constant\Role;
+use Elasticsuite\User\Model\User;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class FacetConfigurationTest extends RestFacetConfigurationTest
 {
@@ -24,74 +29,89 @@ class FacetConfigurationTest extends RestFacetConfigurationTest
      * @dataProvider updateDataProvider
      * @depends testGetCollectionBefore
      */
-    public function testUpdateValue(string $id, array $newData)
+    public function testUpdateValue(User $user, string $id, array $newData, int $expectedStatus)
     {
         $query = '';
         foreach ($newData as $key => $value) {
             $query .= "\n$key: " . (\is_string($value) ? "\"$value\"" : $value);
         }
 
-        $this->requestGraphQl(<<<GQL
-            mutation {
-              updateFacetConfiguration(input: {
-                id: "{$this->getApiPath()}/$id" $query
-              }) {
-                facetConfiguration {
-                  id
-                  coverageRate
-                }
-              }
-            }
-        GQL);
+        $expectedResponse = 403 == $expectedStatus
+            ? new ExpectedResponse(200, function (ResponseInterface $response) {
+                $this->assertJsonContains(['errors' => [['debugMessage' => 'Access Denied.']]]);
+            })
+            : new ExpectedResponse(200);
 
-        $this->assertResponseIsSuccessful();
+        $this->validateApiCall(
+            new RequestGraphQlToTest(
+                <<<GQL
+                    mutation {
+                      updateFacetConfiguration(input: {
+                        id: "{$this->getApiPath()}/$id" $query
+                      }) {
+                        facetConfiguration { id coverageRate }
+                      }
+                    }
+                GQL,
+                $user
+            ),
+            $expectedResponse
+        );
     }
 
     protected function testGetCollection(?int $categoryId, array $items): void
     {
         $query = $categoryId ? "(category: \"/categories/$categoryId\")" : '';
-        $response = $this->requestGraphQl(<<<GQL
-            {
-              facetConfigurations $query {
-                pageInfo { hasNextPage }
-                totalCount
-                edges {
-                  node {
-                    id
-                    displayMode
-                    coverageRate
-                    maxSize
-                    isVirtual
-                    defaultCoverageRate
-                    category { id }
-                    sourceField { id }
-                  }
+        $this->validateApiCall(
+            new RequestGraphQlToTest(
+                <<<GQL
+                    {
+                      facetConfigurations $query {
+                        pageInfo { hasNextPage }
+                        totalCount
+                        edges {
+                          node {
+                            id
+                            displayMode
+                            coverageRate
+                            maxSize
+                            isVirtual
+                            defaultCoverageRate
+                            category { id }
+                            sourceField { id }
+                          }
+                        }
+                      }
+                    }
+                GQL,
+                $this->getUser(Role::ROLE_CONTRIBUTOR)
+            ),
+            new ExpectedResponse(
+                200,
+                function (ResponseInterface $response) use ($items) {
+                    $this->assertJsonContains(
+                        [
+                            'data' => [
+                                'facetConfigurations' => [
+                                    'pageInfo' => ['hasNextPage' => false],
+                                    'totalCount' => 5,
+                                ],
+                            ],
+                        ]
+                    );
+
+                    $responseData = $response->toArray();
+
+                    foreach ($items as $item) {
+                        $item = $this->completeContent($item);
+                        $this->assertEquals(
+                            $item,
+                            $this->getById($item['id'], $responseData['data']['facetConfigurations']['edges'])
+                        );
+                    }
                 }
-              }
-            }
-        GQL);
-
-        $this->assertResponseIsSuccessful();
-        $this->assertJsonContains(
-            [
-                'data' => [
-                    'facetConfigurations' => [
-                        'pageInfo' => ['hasNextPage' => false],
-                        'totalCount' => 5,
-                    ],
-                ],
-            ]
+            )
         );
-
-        $responseData = $response->toArray();
-
-        foreach ($items as $item) {
-            $item = $this->completeContent($item);
-            $this->assertEquals(
-                $item,
-                $this->getById($item['id'], $responseData['data']['facetConfigurations']['edges'])
-            );
-        }
     }
 
     protected function completeContent(array $data): array
