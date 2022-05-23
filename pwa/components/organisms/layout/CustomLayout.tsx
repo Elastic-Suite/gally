@@ -10,6 +10,7 @@ import {
   useAppDispatch,
   useAppSelector,
 } from '~/store'
+import AppBarMenu from '~/components/appBar/AppBar'
 
 /*
  * TODO: THIBO: Update AppBar
@@ -111,7 +112,6 @@ const CustomLayout = ({ children }) => {
   const sidebarState = useAppSelector(selectSidebarState)
 
   const classes = useStyles()
-  const appbar = useStylesAppBar()
 
   /*
    * Setup function to collapse sidebar when click on button
@@ -151,10 +151,10 @@ const CustomLayout = ({ children }) => {
                 style={{ width: 18, height: 18 }}
               />
             </div>
-            <div className={appbar.root} style={{ zIndex: 99 }}>
-              WIP : TO DO
+            <AppBarMenu />
+            <div className={classes.content}>
+              {children}
             </div>
-            <div className={classes.content}>{children}</div>
           </div>
           {/*<Notification /> TODO: Set here Notification component*/}
         </div>
