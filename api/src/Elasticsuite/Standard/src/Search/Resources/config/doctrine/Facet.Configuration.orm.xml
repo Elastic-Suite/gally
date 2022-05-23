@@ -8,15 +8,13 @@
             table="facet_configuration"
             repository-class="Elasticsuite\Search\Repository\Facet\ConfigurationRepository">
 
-        <id name="id" type="integer">
-            <generator strategy="AUTO"/>
-        </id>
+        <id name="id" type="string" length="255"/>
 
-        <many-to-one field="sourceField" target-entity="Elasticsuite\Metadata\Model\SourceField">
+        <many-to-one field="sourceField" target-entity="Elasticsuite\Metadata\Model\SourceField" fetch="EAGER">
             <join-column name="source_field_id" referenced-column-name="id" nullable="false" on-delete="CASCADE" on-update="CASCADE"/>
         </many-to-one>
 
-        <many-to-one field="category" target-entity="Elasticsuite\Category\Model\Category">
+        <many-to-one field="category" target-entity="Elasticsuite\Category\Model\Category" fetch="EAGER">
             <join-column name="category_id" referenced-column-name="id" nullable="true" on-delete="CASCADE" on-update="CASCADE"/>
         </many-to-one>
 
