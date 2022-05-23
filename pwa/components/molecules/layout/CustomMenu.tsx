@@ -3,7 +3,7 @@ import MenuItemIcon from '~/components/atoms/menu/MenuItemIcon'
 import MenuItem from '~/components/atoms/menu/MenuItem'
 import { makeStyles } from '@mui/styles'
 import { useEffect } from 'react'
-import { useLocation } from 'react-router'
+import { useRouter } from 'next/router'
 
 /*
  * Create function to create path from code of the menu item
@@ -65,10 +65,11 @@ const CustomMenu = (props) => {
   /*
    * Function to update menu active item from pathname
    */
-  const location = useLocation()
+  const router = useRouter()
+  const { slug } = router.query
   useEffect(() => {
-    setMenuItemActive(location.pathname.slice(1).replaceAll('/', '_'))
-  }, [location])
+    setMenuItemActive(typeof slug !== 'string' ? slug?.join('_') : slug)
+  }, [slug])
 
   /*
    * Fetch data from /menu to get create menu items dynamically
@@ -87,10 +88,10 @@ const CustomMenu = (props) => {
   return (
     <div className={props.className}>
       <div className={classes.firstItems}>
-        {menu.hierarchy.map((item) => {
+        {menu.hierarchy.map((item, index) => {
           if (!(item.code === 'settings') && !(item.code === 'monitoring')) {
             return (
-              <div className={classes.boldStyle}>
+              <div key={`${index}-${item.code}`} className={classes.boldStyle}>
                 <MenuItemIcon
                   href={slugify(item.code, 0)}
                   code={item.code}
@@ -99,8 +100,8 @@ const CustomMenu = (props) => {
                   childPadding={!!item.children}
                 />
                 <div className={classes.secondItems}>
-                  {item.children?.map((item) => (
-                    <div>
+                  {item.children?.map((item, index) => (
+                    <div key={`${index}-${item.code}`}>
                       <MenuItem
                         href={slugify(item.code, 1)}
                         id={item.code}
@@ -115,7 +116,7 @@ const CustomMenu = (props) => {
             )
           } else {
             return (
-              <div>
+              <div key={`${index}-${item.code}`}>
                 <MenuItemIcon
                   href={slugify(item.code, 0)}
                   code={item.code}

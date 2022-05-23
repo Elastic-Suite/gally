@@ -69,6 +69,9 @@
 {$SERVER_NAME} {
     log
 
+    # Temporary patch to help next preflight call on himself that's catch by caddy
+    # TODO : Analyze Api-platform to see any other way to help routing in next or caddy
+    rewrite /admin/*  /
     # named matchers
     @do_varnish_pass {
         header !X-Caddy-Forwarded

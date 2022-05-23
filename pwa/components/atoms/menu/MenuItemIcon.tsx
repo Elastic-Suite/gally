@@ -1,6 +1,7 @@
 import IonIcon from '~/components/atoms/IonIcon'
 import { makeStyles } from '@mui/styles'
 import { useSidebarState, useStore } from 'react-admin'
+import Link from 'next/link'
 
 /*
  * Use of mui makeStyles to create multiple styles reusing theme fm react-admin
@@ -60,7 +61,6 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: '-2px 0px 4px rgba(63, 50, 230, 0.2)',
     borderRadius: '5px 0px 0px 5px',
   },
-
   indicatorLineActiveTwo: {
     width: 3,
     background: theme.palette.menu.active,
@@ -71,23 +71,19 @@ const useStyles = makeStyles((theme) => ({
     opacity: 0,
     animation: '$opacityFull 1000ms forwards',
   },
-
   '@keyframes opacityFull': {
     from: { opacity: 0 },
     to: { opacity: 1 },
   },
-
   opacityFullDeux: {
     opacity: 0,
     animation: '$opacityFullDeux 1200ms forwards',
   },
-
   '@keyframes opacityFullDeux': {
     '0%': { opacity: 0 },
     '45%': { opacity: 0 },
     '100%': { opacity: 1 },
   },
-
   span: {
     opacity: 1,
     transition: 'all 500ms',
@@ -103,7 +99,6 @@ const useStyles = makeStyles((theme) => ({
     animation: '$heightZero 1400ms forwards',
     position: 'relative',
   },
-
   '@keyframes heightZero': {
     '0%': {
       maxHeight: 'initial',
@@ -182,28 +177,29 @@ const MenuItemIcon = (props) => {
             : classNameStyle
         }
       >
-        <a
-          href={`#/${props.href}`}
-          className={classNameRoot + ' ' + classes.noChildHover}
-          style={
-            sidebarState
-              ? { width: `calc(100% - 10px)` }
-              : { width: 'fit-content' }
-          }
-        >
-          <IonIcon name={props.code} style={{ width: 18, height: 18 }} />
-
-          <span
-            className={
-              classes.span +
-              (!sidebarStateTimeout
-                ? ' ' + classes.opacityFull
-                : ' ' + classes.heightZero)
+        <Link href="/admin/[[...slug]]" as={`/admin/${props.href}`}>
+          <a
+            className={classNameRoot + ' ' + classes.noChildHover}
+            style={
+              sidebarState
+                ? { width: `calc(100% - 10px)` }
+                : { width: 'fit-content' }
             }
           >
-            {props.label}
-          </span>
-        </a>
+            <IonIcon name={props.code} style={{ width: 18, height: 18 }} />
+
+            <span
+              className={
+                classes.span +
+                (!sidebarStateTimeout
+                  ? ' ' + classes.opacityFull
+                  : ' ' + classes.heightZero)
+              }
+            >
+              {props.label}
+            </span>
+          </a>
+        </Link>
         {menuItemActive === props.code && (
           <div
             className={

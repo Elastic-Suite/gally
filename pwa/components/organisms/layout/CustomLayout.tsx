@@ -1,17 +1,13 @@
 import {
-  AppBar,
-  UserMenu,
   Notification,
   LayoutComponent,
   useSidebarState,
   useStore,
 } from 'react-admin'
 import IonIcon from 'components/atoms/IonIcon'
-import { ThemeProvider } from '@mui/material/styles'
 import { makeStyles } from '@mui/styles'
-import RegularTheme from '~/components/atoms/RegularTheme'
 import CustomSidebar from '~/components/molecules/layout/CustomSidebar'
-import ButtonsPreview from '~/components/atoms/buttons/ButtonsPreview'
+import { StyledEngineProvider } from '@mui/styled-engine'
 
 /*
  * TODO: THIBO: Update AppBar
@@ -86,12 +82,10 @@ const useStyles = makeStyles((theme) => ({
       width: 0,
     },
   },
-
   toClose: {
     left: `calc(66px - 16px)`,
     transition: 'left linear',
   },
-
   toOpen: {
     left: `calc(279px - 16px)`,
     transition: 'left linear',
@@ -107,7 +101,6 @@ const useStylesAppBar = makeStyles((theme) => ({
     width: '100%',
   },
 }))
-
 /*
  * Component CustomLayout with type LayoutComponent
  */
@@ -140,7 +133,7 @@ const CustomLayout: LayoutComponent = ({ children, title }) => {
   }
 
   return (
-    <ThemeProvider theme={RegularTheme}>
+    <StyledEngineProvider injectFirst>
       <div className={classes.root}>
         <div className={classes.appFrame}>
           <CustomSidebar />
@@ -166,15 +159,12 @@ const CustomLayout: LayoutComponent = ({ children, title }) => {
             <div className={appbar.root} style={{ zIndex: 99 }}>
               WIP : TO DO
             </div>
-            <div className={classes.content}>
-              {children}
-              <ButtonsPreview />
-            </div>
+            <div className={classes.content}>{children}</div>
           </div>
           <Notification />
         </div>
       </div>
-    </ThemeProvider>
+    </StyledEngineProvider>
   )
 }
 
