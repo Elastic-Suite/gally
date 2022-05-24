@@ -18,8 +18,8 @@ const useStylesAppBar = makeStyles((theme) => ({
         '&::before': {
             content: '""',
             position: 'absolute',
-            height: '1px',
-            background: theme.palette.colors.neutral['300'],
+            border: '1px solid',
+            borderColor: theme.palette.colors.neutral['300'],
             bottom: 0,
             width: `calc(100% - 64px)`,
         },
