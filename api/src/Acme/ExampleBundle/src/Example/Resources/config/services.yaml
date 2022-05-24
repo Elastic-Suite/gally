@@ -61,3 +61,31 @@ services:
         tags:
             - { name: api_platform.item_data_provider }
             - { name: api_platform.collection_data_provider }
+
+    # Start - POC Custom GraphQL types
+    Acme\Example\Example\Repository\ResultDocument\ResultDocumentRepositoryInterface: '@Acme\Example\Example\Repository\ResultDocument\ResultDocumentRepository'
+    Acme\Example\Example\Repository\ResultDocument\ResultDocumentRepository:
+        arguments:
+            - '@api_platform.elasticsearch.client'
+    
+    Acme\Example\Example\DataProvider\ResultDocumentDataProvider:
+        arguments:
+            - '@serializer'
+            - '@api_platform.pagination'
+            - '@Acme\Example\Example\Repository\ResultDocument\ResultDocumentRepositoryInterface'
+        tags:
+            - { name: api_platform.collection_data_provider }
+
+    Acme\Example\Example\Resolver\DummyCollectionResolver:
+        tags:
+            - { name: api_platform.graphql.query_resolver }
+
+    Acme\Example\Example\Serializer\ResultDocumentDenormalizer:
+        tags:
+            - { name: serializer.normalizer }
+
+    # Define a new GraphQL type
+    Acme\Example\Example\GraphQl\Type\Definition\ExampleFieldFilterInputType:
+        tags:
+            - { name: api_platform.graphql.type }
+    # End - POC Custom GrapQL types
