@@ -22,3 +22,10 @@ api_platform:
         stateless: true
         cache_headers:
             vary: ['Content-Type', 'Authorization', 'Origin']
+    collection:
+        pagination:
+            client_enabled: true # Enabled by default because this value cannot be specified by GraphQL endpoint
+            client_items_per_page: true # Enabled by default because this value cannot be specified by GraphQL endpoint
+            page_parameter_name: currentPage
+            items_per_page_parameter_name: pageSize
+            items_per_page: 20
