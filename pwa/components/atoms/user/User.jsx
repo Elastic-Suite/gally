@@ -10,11 +10,13 @@ const useStylesUserMenu = makeStyles((theme) => ({
         border: '1px solid',
         borderRadius: '8px',
         borderColor: theme.palette.colors.neutral['300'],
-        padding: '8px 12px',
+        paddingTop: theme.spacing(1),
+        paddingBottom: theme.spacing(1),
+        paddingRight: theme.spacing(1.25),
+        paddingLeft: theme.spacing(1.25),
         backgroundColor: '#fafafb',
         width: '206px',
         cursor: 'initial',
-        padding: '8px 12px',
     },
     typoTexte: {
         fontStyle: 'normal',
@@ -23,7 +25,7 @@ const useStylesUserMenu = makeStyles((theme) => ({
         lineHeight: '18px',
         display: 'flex',
         flexDirection: 'column',
-        gap: '8px',
+        gap: theme.spacing(1),
     },
     typoUsername: {
         fontWeight: '600',
@@ -162,20 +164,22 @@ const User = () => {
                 onMouseOver={() => setHelpVisible(true)}
                 onMouseLeave={() => setHelpVisible(false)}
             >
-                <IonIcon name="help" style={{ width: '14,67px' }} />
+                <IonIcon
+                    name="help-circle-outline"
+                    style={{ width: '14,67px' }}
+                />
                 {helpVisible && (
                     <div className={userstyle.helpVisible}>{<HelpOver />}</div>
                 )}
-                {console.log(helpVisible)}
             </div>
             <div
                 className={userstyle.user}
                 onClick={() => setOpenUserMenu(!openUserMenu)}
             >
-                <IonIcon name="user" style={{ width: '13px' }} />
+                <IonIcon name="person-outline" style={{ width: '13px' }} />
                 <div className={userstyle.userName}>Admin Name</div>
                 <IonIcon
-                    name="arrow"
+                    name="chevron-down"
                     style={
                         openUserMenu
                             ? { transform: 'rotate(180deg)', width: '13px' }
