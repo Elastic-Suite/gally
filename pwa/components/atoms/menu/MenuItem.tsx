@@ -2,6 +2,7 @@ import IonIcon from '~/components/atoms/IonIcon'
 import { makeStyles } from '@mui/styles'
 import { useSidebarState, useStore } from 'react-admin'
 import Collapse from '@mui/material/Collapse'
+import Link from 'next/link'
 
 /*
  * Create function to create path from code of the menu item
@@ -79,28 +80,23 @@ const useStyles = makeStyles((theme) => ({
     maxHeight: 'auto',
     animation: '$heightZero 2000ms forwards',
   },
-
   '@keyframes heightZero': {
     '0%': { maxHeight: 'auto', opacity: 1 },
     '20%': { maxHeight: 'auto', opacity: 0 },
     '100%': { maxHeight: 0, opacity: 0 },
   },
-
   opacityFull: {
     opacity: 0,
     animation: '$opacityFull 1000ms forwards',
   },
-
   '@keyframes opacityFull': {
     from: { opacity: 0 },
     to: { opacity: 1 },
   },
-
   opacityFullDeux: {
     opacity: 0,
     animation: '$opacityFullDeux 500ms forwards',
   },
-
   '@keyframes opacityFullDeux': {
     '0%': { opacity: 0 },
     '45%': { opacity: 0 },
@@ -148,9 +144,9 @@ const MenuItem = (props) => {
               (menuItemActive === props.code ? classes.lineActive : '')
             }
           >
-            <a href={`#/${props.href}`} className={classes.line}>
-              {props.label}
-            </a>
+            <Link href="/admin/[[...slug]]" as={`/admin/${props.href}`}>
+              <a className={classes.line}>{props.label}</a>
+            </Link>
             {menuItemActive === props.code && (
               <div className={classes.indicatorLineActive} />
             )}
@@ -188,9 +184,9 @@ const MenuItem = (props) => {
       </div>
       {!!props.children && (
         <Collapse className={classes.children} in={childOpen}>
-          {props.children.map((item, key) => (
+          {props.children.map((item, index) => (
             <MenuItem
-              key={key}
+              key={`${index}-${item.code}`}
               href={slugify(item.code, 2)}
               label={item.label}
               code={item.code}

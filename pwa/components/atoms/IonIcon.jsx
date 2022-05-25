@@ -1,6 +1,5 @@
 import React from 'react'
 import home2 from '~/assets/images/home2.svg'
-import resizeMenu from '~/assets/images/resize-menu.svg'
 
 /*
  * Creation of special props to be clean on Typescripts files
@@ -25,9 +24,6 @@ const IonIcon = (props) => {
             break
         case 'settings':
             icon = <ion-icon name={'settings-outline'} style={props.style} />
-            break
-        case 'resize-menu':
-            icon = <ion-icon src={resizeMenu.src} style={props.style} />
             break
         default:
             icon = <ion-icon name={props.name} style={props.style} />

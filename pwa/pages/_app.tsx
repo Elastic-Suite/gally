@@ -2,7 +2,19 @@ import type { AppProps } from 'next/app'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import 'assets/scss/style.scss'
-import { Theme } from '@mui/material/styles'
+import dynamic from 'next/dynamic'
+import { Theme, ThemeProvider } from '@mui/material/styles'
+import RegularTheme from '~/components/atoms/RegularTheme'
+
+/*
+ * Resolve for "Prop className did not match" between Server side and Client side
+ * see solution here : https://github.com/vercel/next.js/issues/7322#issuecomment-1003545233
+ */
+
+const CustomLayoutWithNoSSR = dynamic(
+  () => import('~/components/organisms/layout/CustomLayout'),
+  { ssr: false }
+)
 
 /*
  * Correction applied to extend Default theme from our theme actually used
@@ -16,7 +28,11 @@ declare module '@mui/styles/defaultTheme' {
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
-      <Component {...pageProps} />
+      <ThemeProvider theme={RegularTheme}>
+        <CustomLayoutWithNoSSR>
+          <Component {...pageProps} />
+        </CustomLayoutWithNoSSR>
+      </ThemeProvider>
       <script
         type="module"
         src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js"
