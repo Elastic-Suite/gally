@@ -1,10 +1,10 @@
 import { useSidebarState, useStore } from 'react-admin'
-import { useEffect } from 'react'
 import CustomMenu from '~/components/molecules/layout/CustomMenu'
 import LogoExtended from '~/assets/images/LogoBlinkExtended.svg'
 import LogoCollapse from '~/assets/images/LogoBlinkCollapse.svg'
 import { makeStyles } from '@mui/styles'
 import { Collapse } from '@mui/material'
+import Link from 'next/link'
 
 /*
  * Use of mui makeStyles to create multiple styles reusing theme fm react-admin
@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: theme.spacing(6),
     paddingTop: theme.spacing(3),
     paddingLeft: theme.spacing(2.5),
+    cursor: 'pointer',
   },
   imgExtended: {
     position: 'absolute',
@@ -91,21 +92,23 @@ const CustomSidebar = (props) => {
           classes.root + (sidebarState ? '' : ' ' + classes.rootCollapsed)
         }
       >
-        <div className={classes.imgContainer}>
-          <img
-            src={LogoExtended.src}
-            className={
-              classes.imgExtended +
-              (!sidebarStateTimeout ? '' : ' ' + classes.imgNotActive)
-            }
-            alt={LogoExtended.name}
-          />
-          <img
-            src={LogoCollapse.src}
-            className={classes.imgCollapse}
-            alt={LogoCollapse.name}
-          />
-        </div>
+        <Link href={'/'} as={'/'}>
+          <div className={classes.imgContainer}>
+            <img
+              src={LogoExtended.src}
+              className={
+                classes.imgExtended +
+                (!sidebarStateTimeout ? '' : ' ' + classes.imgNotActive)
+              }
+              alt={LogoExtended.name}
+            />
+            <img
+              src={LogoCollapse.src}
+              className={classes.imgCollapse}
+              alt={LogoCollapse.name}
+            />
+          </div>
+        </Link>
         <CustomMenu
           className={
             classes.menu + (sidebarState ? '' : ' ' + classes.widthCollapse)
