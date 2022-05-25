@@ -1,19 +1,24 @@
 import { makeStyles } from '@mui/styles'
-import BreadCrumb from '~/components/appBar/breadcrumb/BreadCrum'
-import User from '~/components/appBar/user/User'
+import BreadCrumb from '~/components/atoms/breadcrumb/BreadCrumb'
+import User from '~/components/atoms/user/User'
 import { useSidebarState } from 'react-admin'
+
 const useStylesAppBar = makeStyles((theme) => ({
     root: {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: '10px 32px',
+        paddingTop: theme.spacing(1.25),
+        paddingBottom: theme.spacing(1.25),
+        paddingRight: theme.spacing(4),
+        paddingLeft: theme.spacing(4),
         position: 'fixed',
         right: 0,
         zIndex: '9',
-        height: '65px',
+        height: theme.spacing(8),
         backgroundColor: '#fafafb',
+        left: 'inherit',
 
         '&::before': {
             content: '""',
@@ -31,12 +36,7 @@ const AppBar = () => {
 
     const appbarstyle = useStylesAppBar()
     return (
-        <div
-            className={appbarstyle.root}
-            style={{
-                left: sidebarState ? '279px' : '66px',
-            }}
-        >
+        <div className={appbarstyle.root}>
             <BreadCrumb />
             <User />
         </div>
