@@ -10,7 +10,7 @@ import {
   useAppDispatch,
   useAppSelector,
 } from '~/store'
-import AppBarMenu from '~/components/appBar/AppBar'
+import AppBarMenu from '~/components/molecules/layout/appBar/AppBar'
 
 /*
  * TODO: THIBO: Update AppBar
@@ -135,7 +135,7 @@ const CustomLayout = ({ children }) => {
           <div
             className={classes.contentWithAppbar + ' ' + classes.rightBar}
             style={{
-              left: sidebarState ? '279px' : '66px',
+              left: sidebarState ? '279px' : '67px',
             }}
           >
             <div
