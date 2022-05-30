@@ -21,27 +21,21 @@ namespace Elasticsuite\Search\Elasticsearch\Request\Aggregation\Pipeline;
  */
 class BucketSelector extends AbstractPipeline
 {
-    private string $script;
-
-    private string $gapPolicy;
-
     /**
      * BucketSelector constructor.
      *
-     * @param string                   $name        Pipeline name
-     * @param array<mixed>|string|null $bucketsPath Pipeline buckets path
-     * @param string                   $script      Pipeline script
-     * @param string                   $gapPolicy   Pipeline gap policy
+     * @param string            $name        Pipeline name
+     * @param array|string|null $bucketsPath Pipeline buckets path
+     * @param string            $script      Pipeline script
+     * @param string            $gapPolicy   Pipeline gap policy
      */
     public function __construct(
         string $name,
         array|string|null $bucketsPath,
-        string $script,
-        string $gapPolicy = self::GAP_POLICY_SKIP
+        private string $script,
+        private string $gapPolicy = self::GAP_POLICY_SKIP
     ) {
         parent::__construct($name, $bucketsPath);
-        $this->script = $script;
-        $this->gapPolicy = $gapPolicy;
     }
 
     /**

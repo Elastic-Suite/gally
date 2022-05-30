@@ -16,7 +16,9 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Search\Elasticsearch\Request;
 
+use Elasticsuite\Catalog\Model\LocalizedCatalog;
 use Elasticsuite\Index\Model\Index\MappingInterface;
+use Elasticsuite\Metadata\Model\Metadata;
 use Elasticsuite\Search\Elasticsearch\Request\Container\RelevanceConfigurationInterface;
 
 /**
@@ -50,9 +52,14 @@ interface ContainerConfigurationInterface
     public function getRelevanceConfig(): RelevanceConfigurationInterface;
 
     /**
-     * Current container store id.
+     * Current container store.
      */
-    public function getCatalogId(): int;
+    public function getCatalog(): LocalizedCatalog;
+
+    /**
+     * Current metadata.
+     */
+    public function getMetadata(): Metadata;
 
     /**
      * Retrieve filters for the container (visibility, in stock, etc ...) and the current search Context.

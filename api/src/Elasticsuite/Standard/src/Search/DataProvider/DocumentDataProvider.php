@@ -19,7 +19,6 @@ namespace Elasticsuite\Search\DataProvider;
 use ApiPlatform\Core\DataProvider\ContextAwareCollectionDataProviderInterface;
 use ApiPlatform\Core\DataProvider\Pagination;
 use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
-use ApiPlatform\Core\Exception\InvalidArgumentException;
 use Elasticsuite\Catalog\Repository\LocalizedCatalogRepository;
 use Elasticsuite\Metadata\Repository\MetadataRepository;
 use Elasticsuite\Search\Elasticsearch\Adapter;
@@ -53,23 +52,8 @@ class DocumentDataProvider implements ContextAwareCollectionDataProviderInterfac
      */
     public function getCollection(string $resourceClass, string $operationName = null, array $context = []): iterable
     {
-        $entityType = $context['filters']['entityType'];
-        $catalogId = $context['filters']['catalogId'];
-        $metadata = $this->metadataRepository->findOneBy(['entity' => $entityType]);
-        if (!$metadata) {
-            throw new InvalidArgumentException(sprintf('Entity type [%s] does not exist', $entityType));
-        }
-        if (null === $metadata->getEntity()) {
-            throw new InvalidArgumentException(sprintf('Entity type [%s] is not defined', $entityType));
-        }
-        if (is_numeric($catalogId)) {
-            $catalog = $this->catalogRepository->find($catalogId);
-        } else {
-            $catalog = $this->catalogRepository->findOneBy(['code' => $catalogId]);
-        }
-        if (null === $catalog) {
-            throw new InvalidArgumentException(sprintf('Missing catalog [%s]', $catalogId));
-        }
+        $metadata = $this->metadataRepository->findByEntity($context['filters']['entityType']);
+        $catalog = $this->catalogRepository->findByCodeOrId($context['filters']['catalogId']);
 
         $sortOrders = [];
         if (\array_key_exists('sort', $context['filters'])) {
@@ -83,11 +67,14 @@ class DocumentDataProvider implements ContextAwareCollectionDataProviderInterfac
 
         $request = $this->requestBuilder->create(
             $metadata,
-            $catalog->getId(),
+            $catalog,
             $offset,
             $limit,
             null,
-            $sortOrders
+            $sortOrders,
+            [],
+            [],
+            ($context['need_aggregations'] ?? false) ? [] : null
         );
         $response = $this->adapter->search($request);
 
