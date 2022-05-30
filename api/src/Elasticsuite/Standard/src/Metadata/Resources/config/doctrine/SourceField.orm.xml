@@ -11,7 +11,7 @@
             <generator strategy="AUTO"/>
         </id>
 
-        <field name="name" type="string" nullable="false"/>
+        <field name="code" type="string" nullable="false"/>
         <field name="defaultLabel" type="string" nullable="true"/>
         <field name="type" type="string" nullable="true" />
         <field name="weight" type="integer" nullable="true" />
@@ -43,7 +43,7 @@
         </one-to-many>
 
         <unique-constraints>
-            <unique-constraint columns="name,metadata_id" name="unique_metadata_code" />
+            <unique-constraint columns="code,metadata_id" name="unique_metadata_code" />
         </unique-constraints>
     </entity>
 

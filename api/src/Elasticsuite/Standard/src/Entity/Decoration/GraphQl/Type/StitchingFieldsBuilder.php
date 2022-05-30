@@ -102,7 +102,7 @@ class StitchingFieldsBuilder implements FieldsBuilderInterface
         $nonScalarFields = [];
         /** @var SourceField $sourceField */
         foreach ($metadata->getSourceFields() as $sourceField) {
-            if (!isset($fields[$sourceField->getName()])) {
+            if (!isset($fields[$sourceField->getCode()])) {
                 /** @var GraphQlAttributeInterface|string|null $attributeClassType */
                 $attributeClassType = self::STITCHING_ATTRIBUTE_CLASS_TYPE[$sourceField->getType()] ?? null;
 
@@ -110,12 +110,12 @@ class StitchingFieldsBuilder implements FieldsBuilderInterface
                     throw new \LogicException(sprintf("The class '%s' doesn't implement the interface '%s'", $attributeClassType, GraphQlAttributeInterface::class));
                 }
 
-                if (false === str_contains($sourceField->getName(), '.')) {
-                    $fields[$sourceField->getName()] = $this->getField($attributeClassType);
+                if (false === str_contains($sourceField->getCode(), '.')) {
+                    $fields[$sourceField->getCode()] = $this->getField($attributeClassType);
                 } else {
                     // There are max two levels.
                     // 'stock.qty' become $nonScalarFields['stock']['qty'].
-                    $attributeHierarchy = explode('.', $sourceField->getName());
+                    $attributeHierarchy = explode('.', $sourceField->getCode());
                     $nonScalarFields[$attributeHierarchy[0]][$attributeHierarchy[1]]['source_field'] = $sourceField;
                     $nonScalarFields[$attributeHierarchy[0]][$attributeHierarchy[1]]['class_type'] = $attributeClassType;
                 }

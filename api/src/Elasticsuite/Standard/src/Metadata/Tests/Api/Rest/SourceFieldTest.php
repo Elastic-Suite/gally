@@ -37,7 +37,7 @@ class SourceFieldTest extends AbstractEntityTest
     protected function getJsonCreationValidation(array $validData): array
     {
         $json = [
-            'name' => $validData['name'],
+            'code' => $validData['code'],
         ];
 
         if (isset($validData['isSearchable'])) {
@@ -50,7 +50,7 @@ class SourceFieldTest extends AbstractEntityTest
     protected function getJsonGetValidation(array $expectedData): array
     {
         return [
-            'name' => $expectedData['name'],
+            'code' => $expectedData['code'],
         ];
     }
 
@@ -64,29 +64,29 @@ class SourceFieldTest extends AbstractEntityTest
     public function createValidDataProvider(): array
     {
         return [
-            [['name' => 'description', 'metadata' => '/metadata/1']],
-            [['name' => 'weight', 'metadata' => '/metadata/1']],
-            [['name' => 'image', 'metadata' => '/metadata/2']],
-            [['name' => 'length', 'isSearchable' => true, 'metadata' => '/metadata/1']],
+            [['code' => 'description', 'metadata' => '/metadata/1']],
+            [['code' => 'weight', 'metadata' => '/metadata/1']],
+            [['code' => 'image', 'metadata' => '/metadata/2']],
+            [['code' => 'length', 'isSearchable' => true, 'metadata' => '/metadata/1']],
         ];
     }
 
     public function createInvalidDataProvider(): array
     {
         return [
-            [['name' => 'description'], 'metadata: This value should not be blank.'],
-            [['metadata' => '/metadata/1'], 'name: This value should not be blank.'],
-            [['name' => 'long_description', 'metadata' => '/metadata/1', 'type' => 'description'], 'type: The value you selected is not a valid choice.'],
-            [['name' => 'description', 'metadata' => '/metadata/notExist'], 'Item not found for "/metadata/notExist".', 400],
-            [['name' => 'name', 'metadata' => '/metadata/1'], 'name: An field with this name already exist for this entity.'],
+            [['code' => 'description'], 'metadata: This value should not be blank.'],
+            [['metadata' => '/metadata/1'], 'code: This value should not be blank.'],
+            [['code' => 'long_description', 'metadata' => '/metadata/1', 'type' => 'description'], 'type: The value you selected is not a valid choice.'],
+            [['code' => 'description', 'metadata' => '/metadata/notExist'], 'Item not found for "/metadata/notExist".', 400],
+            [['code' => 'name', 'metadata' => '/metadata/1'], 'code: An field with this code already exist for this entity.'],
         ];
     }
 
     public function getDataProvider(): array
     {
         return [
-            [1, ['id' => 1, 'name' => 'name'], 200],
-            [10, ['id' => 10, 'name' => 'description'], 200],
+            [1, ['id' => 1, 'code' => 'name'], 200],
+            [10, ['id' => 10, 'code' => 'description'], 200],
             [20, [], 404],
         ];
     }

@@ -46,7 +46,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class SourceField
 {
     private int $id;
-    private string $name;
+    private string $code;
     private ?string $defaultLabel = null;
     private ?string $type = null;
     private ?int $weight = null;
@@ -78,15 +78,15 @@ class SourceField
     }
 
     #[Groups(['source_field:api', 'facet_configuration:graphql_read'])]
-    public function getName(): string
+    public function getCode(): string
     {
-        return $this->name;
+        return $this->code;
     }
 
     #[Groups(['source_field:api'])]
-    public function setName(string $name): self
+    public function setCode(string $code): self
     {
-        $this->name = $name;
+        $this->code = $code;
 
         return $this;
     }
@@ -94,7 +94,7 @@ class SourceField
     #[Groups(['source_field:api', 'facet_configuration:graphql_read'])]
     public function getDefaultLabel(): string
     {
-        return $this->defaultLabel ?: ucfirst($this->getName());
+        return $this->defaultLabel ?: ucfirst($this->getCode());
     }
 
     #[Groups(['source_field:api'])]

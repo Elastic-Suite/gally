@@ -76,12 +76,12 @@ class StitchingNormalizer implements ContextAwareNormalizerInterface, Normalizer
         $productMetadata = $this->metadataRepository->findOneBy(['entity' => $metadataEntity]);
         /** @var SourceField $sourceField */
         foreach ($productMetadata->getSourceFields() as $sourceField) {
-            if (true === str_contains($sourceField->getName(), '.')) {
+            if (true === str_contains($sourceField->getCode(), '.')) {
                 // 'stock.qty' become $sourceFieldNames = ['stock' => [0 => 'qty']].
-                $attributeHierarchy = explode('.', $sourceField->getName());
+                $attributeHierarchy = explode('.', $sourceField->getCode());
                 $sourceFieldNames[$attributeHierarchy[0]][] = $attributeHierarchy[1];
             }
-            $sourceFieldNames[$sourceField->getName()] = true;
+            $sourceFieldNames[$sourceField->getCode()] = true;
         }
 
         foreach ($object->{$stitchingProperty} as $attribute) {

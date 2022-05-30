@@ -36,7 +36,7 @@ class FilterableFieldConstraintValidator extends ConstraintValidator
 
         if ($value && !$value->isFilterable()) {
             $this->context->buildViolation($constraint->message)
-                ->setParameter('{{ sourceFieldCode }}', $value->getName())
+                ->setParameter('{{ sourceFieldCode }}', $value->getCode())
                 ->addViolation();
         }
     }
