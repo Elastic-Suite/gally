@@ -16,6 +16,8 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Search\Elasticsearch;
 
+use Elasticsuite\Search\Elasticsearch\Adapter\Common\Response\AggregationInterface;
+
 interface ResponseInterface extends \IteratorAggregate, \Countable
 {
     /**
@@ -23,7 +25,10 @@ interface ResponseInterface extends \IteratorAggregate, \Countable
      */
     public function getTotalItems(): int;
 
-    // public function getAggregations(): array;
-
-    // public function getMetrics(): array;
+    /**
+     * Get aggregations.
+     *
+     * @return AggregationInterface[]
+     */
+    public function getAggregations(): array;
 }

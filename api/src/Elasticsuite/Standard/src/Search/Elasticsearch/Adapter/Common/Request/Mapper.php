@@ -16,11 +16,10 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Search\Elasticsearch\Adapter\Common\Request;
 
+use Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler as AggregationAssembler;
 use Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Query\Assembler as QueryAssembler;
 use Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\SortOrder\Assembler as SortOrderAssembler;
 use Elasticsuite\Search\Elasticsearch\RequestInterface;
-
-// use Elasticsuite\Search\Adapter\Elasticsearch\Request\Aggregation\Assembler as AggregationAssembler;
 
 /**
  * Map a search request into an ES Search query.
@@ -31,27 +30,23 @@ class Mapper
 
     private SortOrderAssembler $sortOrderAssembler;
 
-    // private AggregationAssembler $aggregationAssembler;
+    private AggregationAssembler $aggregationAssembler;
 
     /**
      * Constructor.
-     * TODO support $aggregationAssembler.
      *
-     * @param QueryAssembler     $queryAssembler     Adapter query assembler
-     * @param SortOrderAssembler $sortOrderAssembler Adapter sort orders assembler
-     *
-     * -param AggregationAssembler $aggregationAssembler Adapter aggregations assembler
+     * @param QueryAssembler       $queryAssembler       Adapter query assembler
+     * @param SortOrderAssembler   $sortOrderAssembler   Adapter sort orders assembler
+     * @param AggregationAssembler $aggregationAssembler Adapter aggregations assembler
      */
     public function __construct(
         QueryAssembler $queryAssembler,
-        SortOrderAssembler $sortOrderAssembler/*,
-        AggregationAssembler $aggregationAssembler */
+        SortOrderAssembler $sortOrderAssembler,
+        AggregationAssembler $aggregationAssembler
     ) {
         $this->queryAssembler = $queryAssembler;
         $this->sortOrderAssembler = $sortOrderAssembler;
-        /*
         $this->aggregationAssembler = $aggregationAssembler;
-        */
     }
 
     /**
@@ -75,19 +70,15 @@ class Mapper
             $searchRequest['query'] = $query;
         }
 
-        /*
         $filter = $this->getRootFilter($request);
         if ($filter) {
             $searchRequest['post_filter'] = $filter;
         }
-        */
 
-        /*
         $aggregations = $this->getAggregations($request);
         if (!empty($aggregations)) {
             $searchRequest['aggregations'] = $aggregations;
         }
-        */
 
         $searchRequest['track_total_hits'] = $request->getTrackTotalHits();
 
@@ -109,8 +100,7 @@ class Mapper
      *
      * @param RequestInterface $request Search request
      */
-    /*
-    private function getRootFilter(RequestInterface $request): array
+    private function getRootFilter(RequestInterface $request): ?array
     {
         $filter = null;
 
@@ -120,7 +110,6 @@ class Mapper
 
         return $filter;
     }
-    */
 
     /**
      * Extract and assemble sort orders of the search request.
@@ -143,16 +132,14 @@ class Mapper
      *
      * @param RequestInterface $request Search request
      */
-    /*
     private function getAggregations(RequestInterface $request): array
     {
         $aggregations = [];
 
-        if ($request->getAggregation()) {
-            $aggregations = $this->aggregationAssembler->assembleAggregations($request->getAggregation());
+        if ($request->getAggregations()) {
+            $aggregations = $this->aggregationAssembler->assembleAggregations($request->getAggregations());
         }
 
         return $aggregations;
     }
-    */
 }

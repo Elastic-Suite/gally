@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Catalog\Repository;
 
+use ApiPlatform\Core\Exception\InvalidArgumentException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Elasticsuite\Catalog\Model\LocalizedCatalog;
@@ -28,6 +29,8 @@ use Elasticsuite\Catalog\Model\LocalizedCatalog;
  */
 class LocalizedCatalogRepository extends ServiceEntityRepository
 {
+    private array $cache;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, LocalizedCatalog::class);
@@ -41,5 +44,22 @@ class LocalizedCatalogRepository extends ServiceEntityRepository
             ->setParameter('isDefault', false)
             ->getQuery()
             ->execute();
+    }
+
+    public function findByCodeOrId(int|string $identifier): ?LocalizedCatalog
+    {
+        if (!isset($this->cache[$identifier])) {
+            if (is_numeric($identifier)) {
+                $catalog = $this->find($identifier);
+            } else {
+                $catalog = $this->findOneBy(['code' => $identifier]);
+            }
+            if (null === $catalog) {
+                throw new InvalidArgumentException(sprintf('Missing catalog [%s]', $identifier));
+            }
+            $this->cache[$identifier] = $catalog;
+        }
+
+        return $this->cache[$identifier];
     }
 }

@@ -16,11 +16,9 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Search\Elasticsearch\Adapter\Common\Response;
 
+use Elasticsuite\Search\Elasticsearch\Builder\Response\AggregationBuilder;
 use Elasticsuite\Search\Elasticsearch\ResponseInterface;
 use Elasticsuite\Search\Model\Document;
-
-// use Elasticsuite\Search\Adapter\Elasticsearch\Response\AggregationFactory;
-// use Elasticsuite\Search\Adapter\Elasticsearch\Response\MetricFactory;
 
 class QueryResponse implements ResponseInterface
 {
@@ -47,24 +45,17 @@ class QueryResponse implements ResponseInterface
     protected array $aggregations;
 
     /**
-     * Metrics collection.
-     */
-    protected array $metrics;
-
-    /**
      * Constructor.
      *
-     * @param array $searchResponse Engine raw response
+     * @param array              $searchResponse     Engine raw response
+     * @param AggregationBuilder $aggregationBuilder aggregation builder
      */
     public function __construct(
-        // DocumentFactory $documentFactory,
-        // AggregationFactory $aggregationFactory,
-        // MetricFactory $metricFactory,
-        array $searchResponse
+        array $searchResponse,
+        AggregationBuilder $aggregationBuilder
     ) {
         $this->prepareDocuments($searchResponse);
-        // $this->prepareAggregations($searchResponse, $aggregationFactory);
-        // $this->prepareMetrics($searchResponse, $metricFactory);
+        $this->prepareAggregations($searchResponse, $aggregationBuilder);
     }
 
     /**
@@ -89,15 +80,22 @@ class QueryResponse implements ResponseInterface
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public function getAggregations(): array
+    {
+        return $this->aggregations;
+    }
+
+    /**
      * Build document list from the engine raw search response.
      *
      * @param array $searchResponse Engine raw search response
-     *
-     * @return void
      */
-    private function prepareDocuments(array $searchResponse)
+    private function prepareDocuments(array $searchResponse): void
     {
         $this->documents = [];
+        $this->totalItems = 0;
 
         if (isset($searchResponse['hits'])) {
             $hits = $searchResponse['hits']['hits'];
@@ -106,10 +104,22 @@ class QueryResponse implements ResponseInterface
                 $this->documents[] = new Document($hit);
             }
             $this->count = \count($this->documents);
+            $this->totalItems = $searchResponse['hits']['total']['value'] ?? 0;
+        }
+    }
 
-            $this->totalItems = \is_array($searchResponse['hits']['total'])
-                ? ($searchResponse['hits']['total']['value'] ?? 0)
-                : ($searchResponse['hits']['total'] ?? 0);
+    /**
+     * Build aggregations from the engine raw search response.
+     *
+     * @param array              $searchResponse     Engine raw search response
+     * @param AggregationBuilder $aggregationBuilder aggregation builder
+     */
+    private function prepareAggregations(array $searchResponse, AggregationBuilder $aggregationBuilder): void
+    {
+        $this->aggregations = [];
+        foreach ($searchResponse['aggregations'] ?? [] as $field => $aggregationData) {
+            $aggregation = $aggregationBuilder->create($field, $aggregationData);
+            $this->aggregations[$aggregation->getName()] = $aggregation;
         }
     }
 }

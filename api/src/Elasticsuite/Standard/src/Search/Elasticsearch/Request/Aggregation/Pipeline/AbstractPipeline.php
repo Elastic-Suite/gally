@@ -23,23 +23,14 @@ use Elasticsuite\Search\Elasticsearch\Request\PipelineInterface;
  */
 abstract class AbstractPipeline implements PipelineInterface
 {
-    private string $name;
-
-    /**
-     * @var array<mixed>|string|null
-     */
-    private array|string|null $bucketsPath;
-
     /**
      * Pipeline constructor.
      *
-     * @param string                   $name        Pipeline name
-     * @param array<mixed>|string|null $bucketsPath Pipeline buckets path
+     * @param string            $name        Pipeline name
+     * @param array|string|null $bucketsPath Pipeline buckets path
      */
-    public function __construct(string $name, array|string $bucketsPath = null)
+    public function __construct(private string $name, private array|string|null $bucketsPath = null)
     {
-        $this->name = $name;
-        $this->bucketsPath = $bucketsPath;
     }
 
     /**

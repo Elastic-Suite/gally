@@ -19,6 +19,7 @@ namespace Elasticsuite\Search\Elasticsearch;
 use Elasticsearch\Client;
 use Elasticsuite\Search\Elasticsearch\Adapter\Common\Request;
 use Elasticsuite\Search\Elasticsearch\Adapter\Common\Response;
+use Elasticsuite\Search\Elasticsearch\Builder\Response\AggregationBuilder;
 use Exception;
 use Psr\Log\LoggerInterface;
 
@@ -27,6 +28,7 @@ class Adapter
     public function __construct(
         private Request\Mapper $requestMapper,
         private Client $client,
+        private AggregationBuilder $aggregationBuilder,
         private LoggerInterface $logger
     ) {
     }
@@ -44,6 +46,6 @@ class Adapter
             $this->logger->error($e->getMessage());
         }
 
-        return new Response\QueryResponse($searchResponse);
+        return new Response\QueryResponse($searchResponse, $this->aggregationBuilder);
     }
 }
