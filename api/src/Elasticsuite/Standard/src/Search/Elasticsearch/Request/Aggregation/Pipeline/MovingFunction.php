@@ -24,32 +24,23 @@ use Elasticsuite\Search\Elasticsearch\Request\PipelineInterface;
  */
 class MovingFunction extends AbstractPipeline
 {
-    private string $script;
-
-    private string $gapPolicy;
-
-    private int $window;
-
     /**
      * MovingFunction constructor.
      *
-     * @param string                   $name        Pipeline name
-     * @param array<mixed>|string|null $bucketsPath Pipeline buckets path
-     * @param string                   $script      Pipeline script
-     * @param int                      $window      Pipeline window
-     * @param string                   $gapPolicy   Pipeline gap policy
+     * @param string            $name        Pipeline name
+     * @param array|string|null $bucketsPath Pipeline buckets path
+     * @param string            $script      Pipeline script
+     * @param int               $window      Pipeline window
+     * @param string            $gapPolicy   Pipeline gap policy
      */
     public function __construct(
         string $name,
         array|string|null $bucketsPath,
-        string $script,
-        int $window = 10,
-        string $gapPolicy = self::GAP_POLICY_SKIP
+        private string $script,
+        private int $window = 10,
+        private string $gapPolicy = self::GAP_POLICY_SKIP
     ) {
         parent::__construct($name, $bucketsPath);
-        $this->script = $script;
-        $this->gapPolicy = $gapPolicy;
-        $this->window = $window;
     }
 
     /**

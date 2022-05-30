@@ -19,7 +19,7 @@ namespace Elasticsuite\Search\Elasticsearch\Request;
 /**
  * Interface for pipeline aggregations.
  */
-interface PipelineInterface
+interface PipelineInterface extends AggregationInterface
 {
     /**
      * Available pipeline types.
@@ -35,19 +35,12 @@ interface PipelineInterface
     public const GAP_POLICY_INSERT_ZEROS = 'insert_zeros';
 
     /**
-     * Get pipeline type.
-     */
-    public function getType(): string;
-
-    /**
-     * Get pipeline name.
-     */
-    public function getName(): string;
-
-    /**
      * Get (optional) pipeline buckets path.
-     *
-     * @return array<mixed>|string|null
      */
     public function getBucketsPath(): array|string|null;
+
+    /**
+     * Check if pipeline has buckets path.
+     */
+    public function hasBucketsPath(): bool;
 }

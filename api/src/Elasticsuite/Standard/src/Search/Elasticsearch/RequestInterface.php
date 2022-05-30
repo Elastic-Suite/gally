@@ -16,7 +16,7 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Search\Elasticsearch;
 
-use Elasticsuite\Search\Elasticsearch\Request\BucketInterface;
+use Elasticsuite\Search\Elasticsearch\Request\AggregationInterface;
 use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
 
 /**
@@ -43,7 +43,7 @@ interface RequestInterface
     /**
      * Get aggregations.
      *
-     * @return BucketInterface[]
+     * @return AggregationInterface[]
      */
     public function getAggregations(): array;
 

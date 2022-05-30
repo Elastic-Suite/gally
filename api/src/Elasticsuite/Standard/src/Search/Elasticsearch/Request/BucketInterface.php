@@ -19,7 +19,7 @@ namespace Elasticsuite\Search\Elasticsearch\Request;
 /**
  * Bucket aggregation interface with support for nested and filtered aggregations.
  */
-interface BucketInterface
+interface BucketInterface extends AggregationInterface
 {
     public const TYPE_TERM = 'termBucket';
     public const TYPE_RANGE = 'rangeBucket';
@@ -30,8 +30,6 @@ interface BucketInterface
     public const TYPE_QUERY_GROUP = 'queryGroupBucket';
     public const TYPE_SIGNIFICANT_TERM = 'significantTermBucket';
     public const TYPE_REVERSE_NESTED = 'reverseNestedBucket';
-    public const TYPE_TOP_HITS = 'topHitsBucket';
-    public const TYPE_METRIC = 'metricBucket';
 
     public const SORT_ORDER_COUNT = '_count';
     public const SORT_ORDER_TERM = '_term';
@@ -46,26 +44,9 @@ interface BucketInterface
     public const MAX_BUCKET_SIZE = 100000;
 
     /**
-     * Get aggregation type.
-     */
-    public function getType(): string;
-
-    /**
-     * Get aggregation target field.
+     * Bucket field.
      */
     public function getField(): string;
-
-    /**
-     * Get bucket metrics.
-     *
-     * @return array<mixed>
-     */
-    public function getMetrics(): array;
-
-    /**
-     * Get aggregation name.
-     */
-    public function getName(): string;
 
     /**
      * Indicates if the aggregation is nested.
@@ -88,16 +69,9 @@ interface BucketInterface
     public function getFilter(): ?QueryInterface;
 
     /**
-     * Returns child buckets.
+     * Returns child aggregations.
      *
-     * @return BucketInterface[]
+     * @return AggregationInterface[]
      */
-    public function getChildBuckets(): array;
-
-    /**
-     * Returns child pipeline aggregations.
-     *
-     * @return PipelineInterface[]
-     */
-    public function getPipelines(): array;
+    public function getChildAggregations(): array;
 }

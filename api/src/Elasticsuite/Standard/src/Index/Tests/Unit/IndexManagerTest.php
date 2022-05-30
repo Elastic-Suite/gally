@@ -68,8 +68,24 @@ class IndexManagerTest extends AbstractTest
                                 'qty' => ['type' => 'double'],
                             ],
                         ],
-                        'name' => ['type' => 'text'],
-                        'brand' => ['type' => 'text'],
+                        'name' => [
+                            'type' => 'text',
+                            'fields' => [
+                                'untouched' => [
+                                    'type' => 'keyword',
+                                    'ignore_above' => 256,
+                                ],
+                            ],
+                        ],
+                        'brand' => [
+                            'type' => 'text',
+                            'fields' => [
+                                'untouched' => [
+                                    'type' => 'keyword',
+                                    'ignore_above' => 256,
+                                ],
+                            ],
+                        ],
                     ],
                 ],
             ],
@@ -78,8 +94,24 @@ class IndexManagerTest extends AbstractTest
                 [
                     'properties' => [
                         'id' => ['type' => 'integer'],
-                        'name' => ['type' => 'text'],
-                        'description' => ['type' => 'text'],
+                        'name' => [
+                            'type' => 'text',
+                            'fields' => [
+                                'untouched' => [
+                                    'type' => 'keyword',
+                                    'ignore_above' => 256,
+                                ],
+                            ],
+                        ],
+                        'description' => [
+                            'type' => 'text',
+                            'fields' => [
+                                'untouched' => [
+                                    'type' => 'keyword',
+                                    'ignore_above' => 256,
+                                ],
+                            ],
+                        ],
                     ],
                 ],
             ],

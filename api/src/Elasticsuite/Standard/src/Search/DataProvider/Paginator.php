@@ -18,6 +18,7 @@ namespace Elasticsuite\Search\DataProvider;
 
 use ApiPlatform\Core\Bridge\Elasticsearch\Serializer\ItemNormalizer;
 use ApiPlatform\Core\DataProvider\PaginatorInterface;
+use Elasticsuite\Search\Elasticsearch\Adapter\Common\Response\AggregationInterface;
 use Elasticsuite\Search\Elasticsearch\DocumentInterface;
 use Elasticsuite\Search\Elasticsearch\ResponseInterface;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
@@ -116,5 +117,15 @@ class Paginator implements \IteratorAggregate, PaginatorInterface
 
             yield $object;
         }
+    }
+
+    /**
+     * Get aggregations.
+     *
+     * @return AggregationInterface[]
+     */
+    public function getAggregations(): array
+    {
+        return $this->response->getAggregations();
     }
 }

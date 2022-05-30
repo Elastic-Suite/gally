@@ -16,9 +16,8 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Search\Elasticsearch\Request\Aggregation\Bucket;
 
+use Elasticsuite\Search\Elasticsearch\Request\AggregationInterface;
 use Elasticsuite\Search\Elasticsearch\Request\BucketInterface;
-use Elasticsuite\Search\Elasticsearch\Request\MetricInterface;
-use Elasticsuite\Search\Elasticsearch\Request\PipelineInterface;
 use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
 
 /**
@@ -27,34 +26,24 @@ use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
 class QueryGroup extends AbstractBucket
 {
     /**
-     * @var QueryInterface[]
-     */
-    private array $queries;
-
-    /**
      * Constructor.
      *
-     * @param string              $name         Bucket name
-     * @param QueryInterface[]    $queries      Query group children queries
-     * @param MetricInterface[]   $metrics      Bucket metrics
-     * @param BucketInterface[]   $childBuckets Child buckets
-     * @param PipelineInterface[] $pipelines    Bucket pipelines
-     * @param ?string             $nestedPath   Nested path for nested bucket
-     * @param ?QueryInterface     $filter       Bucket filter
-     * @param ?QueryInterface     $nestedFilter Nested filter for the bucket
+     * @param string                 $name              Bucket name
+     * @param QueryInterface[]       $queries           Query group children queries
+     * @param AggregationInterface[] $childAggregations Child aggregations
+     * @param ?string                $nestedPath        Nested path for nested bucket
+     * @param ?QueryInterface        $filter            Bucket filter
+     * @param ?QueryInterface        $nestedFilter      Nested filter for the bucket
      */
     public function __construct(
         string $name,
-        array $queries,
-        array $metrics = [],
-        array $childBuckets = [],
-        array $pipelines = [],
+        private array $queries,
+        array $childAggregations = [],
         ?string $nestedPath = null,
         ?QueryInterface $filter = null,
         ?QueryInterface $nestedFilter = null
     ) {
-        parent::__construct($name, $name, $metrics, $childBuckets, $pipelines, $nestedPath, $filter, $nestedFilter);
-        $this->queries = $queries;
+        parent::__construct($name, $name, $childAggregations, $nestedPath, $filter, $nestedFilter);
     }
 
     /**

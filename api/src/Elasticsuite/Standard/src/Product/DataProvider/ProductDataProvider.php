@@ -97,7 +97,7 @@ class ProductDataProvider implements ContextAwareCollectionDataProviderInterface
 
         $request = $this->requestBuilder->create(
             $metadata,
-            $catalog->getId(),
+            $catalog,
             $offset,
             $limit,
             null,
