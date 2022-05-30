@@ -36,7 +36,7 @@ class ProductFieldConstraintValidator extends ConstraintValidator
 
         if ($value && 'product' !== $value->getMetadata()->getEntity()) {
             $this->context->buildViolation($constraint->message)
-                ->setParameter('{{ sourceFieldCode }}', $value->getName())
+                ->setParameter('{{ sourceFieldCode }}', $value->getCode())
                 ->addViolation();
         }
     }
