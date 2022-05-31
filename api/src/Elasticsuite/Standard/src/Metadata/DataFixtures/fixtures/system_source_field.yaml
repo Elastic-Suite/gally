@@ -1,28 +1,28 @@
 Elasticsuite\Metadata\Model\SourceField:
     product_id:
         metadata: '@product'
-        name: 'id'
+        code: 'id'
         type: 'int'
         isSystem: true
     product_sku:
         metadata: '@product'
-        name: 'sku'
+        code: 'sku'
         type: 'reference'
         isSystem: true
     product_price:
         metadata: '@product'
-        name: 'price'
+        code: 'price'
         type: 'price'
         isSystem: true
     product_stock_status:
         metadata: '@product'
-        name: 'stock.status'
+        code: 'stock.status'
         defaultLabel: 'Stock status'
         type: 'int'
         isSystem: true
     product_stock_qty:
         metadata: '@product'
-        name: 'stock.qty'
+        code: 'stock.qty'
         defaultLabel: 'Stock quantity'
         type: 'float'
         isSystem: true

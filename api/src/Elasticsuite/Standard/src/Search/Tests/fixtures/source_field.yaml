@@ -1,7 +1,7 @@
 Elasticsuite\Metadata\Model\SourceField:
     product_name:
         metadata: '@product'
-        name: 'name'
+        code: 'name'
         type: 'text'
         weight: 10
         is_searchable: true
@@ -11,7 +11,7 @@ Elasticsuite\Metadata\Model\SourceField:
         is_used_for_rules: false
     category_name:
         metadata: '@category'
-        name: 'name'
+        code: 'name'
         type: 'text'
         weight: 10
         is_searchable: false
@@ -21,26 +21,26 @@ Elasticsuite\Metadata\Model\SourceField:
         is_used_for_rules: false
     product_brand:
         metadata: '@product'
-        name: 'brand'
+        code: 'brand'
         type: 'select'
         is_filterable: true
     product_color:
         metadata: '@product'
-        name: 'color'
+        code: 'color'
         type: 'select'
         is_filterable: true
     product_length:
         metadata: '@product'
-        name: 'length'
+        code: 'length'
         type: 'int'
         is_filterable: true
     product_size:
         metadata: '@product'
-        name: 'size'
+        code: 'size'
         type: 'int'
         is_filterable: true
     product_weight:
         metadata: '@product'
-        name: 'weight'
+        code: 'weight'
         type: 'int'
         is_filterable: true

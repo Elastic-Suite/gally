@@ -37,11 +37,11 @@ class SourceFieldToMappingField
      */
     public function convert(SourceField $sourceField): Mapping\FieldInterface
     {
-        $fieldName = $sourceField->getName();
+        $fieldCode = $sourceField->getCode();
 
         $fieldType = $this->typeMapping[$sourceField->getType() ?: SourceField\Type::TYPE_TEXT];
 
-        $path = explode('.', $fieldName);
+        $path = explode('.', $fieldCode);
         unset($path[\count($path) - 1]);
         $path = \count($path) ? implode('.', $path) : null;
 
@@ -55,6 +55,6 @@ class SourceFieldToMappingField
             $fieldConfig['is_used_in_spellcheck'] = true;
         }
 
-        return new Mapping\Field($fieldName, $fieldType, $path, $fieldConfig);
+        return new Mapping\Field($fieldCode, $fieldType, $path, $fieldConfig);
     }
 }

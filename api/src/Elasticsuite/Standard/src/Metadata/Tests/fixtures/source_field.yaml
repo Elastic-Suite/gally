@@ -1,7 +1,7 @@
 Elasticsuite\Metadata\Model\SourceField:
     product_name:
         metadata: '@product'
-        name: 'name'
+        code: 'name'
         type: 'text'
         weight: 10
         is_searchable: true
@@ -11,7 +11,7 @@ Elasticsuite\Metadata\Model\SourceField:
         is_used_for_rules: false
     category_name:
         metadata: '@category'
-        name: 'name'
+        code: 'name'
         type: 'text'
         weight: 10
         is_searchable: false
@@ -21,35 +21,35 @@ Elasticsuite\Metadata\Model\SourceField:
         is_used_for_rules: false
     category_description:
         metadata: '@category'
-        name: 'description'
+        code: 'description'
     product_id:
         metadata: '@product'
-        name: 'id'
+        code: 'id'
         type: 'int'
         isSystem: true
     product_sku:
         metadata: '@product'
-        name: 'sku'
+        code: 'sku'
         type: 'reference'
         isSystem: true
     product_price:
         metadata: '@product'
-        name: 'price'
+        code: 'price'
         type: 'price'
         isSystem: true
     product_stock_status:
         metadata: '@product'
-        name: 'stock.status'
+        code: 'stock.status'
         defaultLabel: 'Stock status'
         type: 'int'
         isSystem: true
     product_stock_qty:
         metadata: '@product'
-        name: 'stock.qty'
+        code: 'stock.qty'
         defaultLabel: 'Stock quantity'
         type: 'float'
         isSystem: true
     product_brand:
         metadata: '@product'
-        name: 'brand'
+        code: 'brand'
         type: 'select'
