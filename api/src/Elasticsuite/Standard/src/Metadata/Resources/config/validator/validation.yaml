@@ -7,7 +7,7 @@ Elasticsuite\Metadata\Model\Metadata:
             
 Elasticsuite\Metadata\Model\SourceField:
     properties:
-        name:
+        code:
             - NotBlank: ~
         metadata:
             - NotBlank: ~
@@ -15,8 +15,8 @@ Elasticsuite\Metadata\Model\SourceField:
             - Choice: { callback: [Elasticsuite\Metadata\Model\SourceField\Type, getAvailableTypes] }
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
-              fields: [ name, metadata ]
-              message: 'An field with this name already exist for this entity.'
+              fields: [ code, metadata ]
+              message: 'An field with this code already exist for this entity.'
             
 Elasticsuite\Metadata\Model\SourceFieldLabel:
     properties:
