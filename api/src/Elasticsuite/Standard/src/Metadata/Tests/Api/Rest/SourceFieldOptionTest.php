@@ -18,6 +18,7 @@ namespace Elasticsuite\Metadata\Tests\Api\Rest;
 
 use Elasticsuite\Metadata\Model\SourceFieldOption;
 use Elasticsuite\Standard\src\Test\AbstractEntityTest;
+use Elasticsuite\User\Constant\Role;
 
 class SourceFieldOptionTest extends AbstractEntityTest
 {
@@ -35,53 +36,57 @@ class SourceFieldOptionTest extends AbstractEntityTest
         return SourceFieldOption::class;
     }
 
-    protected function getJsonCreationValidation(array $validData): array
+    /**
+     * {@inheritDoc}
+     */
+    public function createDataProvider(): iterable
     {
-        return [];
-    }
+        $adminUser = $this->getUser(Role::ROLE_ADMIN);
 
-    protected function getJsonGetValidation(array $expectedData): array
-    {
-        return [];
-    }
-
-    protected function getJsonGetCollectionValidation(): array
-    {
         return [
-            'hydra:totalItems' => 4,
+            [$this->getUser(Role::ROLE_CONTRIBUTOR), ['sourceField' => '/source_fields/4', 'position' => 10], 403],
+            [$adminUser, ['sourceField' => '/source_fields/4', 'position' => 10], 201],
+            [$adminUser, ['sourceField' => '/source_fields/4'], 201],
+            [$adminUser, ['position' => 3], 422, 'sourceField: This value should not be blank.'],
         ];
     }
 
-    public function createValidDataProvider(): array
+    /**
+     * {@inheritDoc}
+     */
+    public function getDataProvider(): iterable
     {
+        $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
+
         return [
-            [['sourceField' => '/source_fields/4', 'position' => 10]],
-            [['sourceField' => '/source_fields/4']],
+            [$user, 1, ['id' => 1], 200],
+            [$user, 2, ['id' => 2], 200],
+            [$user, 10, [], 404],
         ];
     }
 
-    public function createInvalidDataProvider(): array
+    /**
+     * {@inheritDoc}
+     */
+    public function deleteDataProvider(): iterable
     {
+        $adminUser = $this->getUser(Role::ROLE_ADMIN);
+
         return [
-            [['position' => 3], 'sourceField: This value should not be blank.'],
+            [$this->getUser(Role::ROLE_CONTRIBUTOR), 1, 403],
+            [$adminUser, 1, 204],
+            [$adminUser, 2, 204],
+            [$adminUser, 10, 404],
         ];
     }
 
-    public function getDataProvider(): array
+    /**
+     * {@inheritDoc}
+     */
+    public function getCollectionDataProvider(): iterable
     {
         return [
-            [1, ['id' => 1, 'label' => 'Marque 1'], 200],
-            [2, ['id' => 2, 'label' => 'Brand 1'], 200],
-            [10, [], 404],
-        ];
-    }
-
-    public function deleteDataProvider(): array
-    {
-        return [
-            [1, 200],
-            [2, 200],
-            [10, 404],
+            [$this->getUser(Role::ROLE_CONTRIBUTOR), 4, 200],
         ];
     }
 }

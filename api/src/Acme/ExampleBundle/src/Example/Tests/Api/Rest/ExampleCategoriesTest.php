@@ -17,7 +17,8 @@ declare(strict_types=1);
 namespace Acme\Example\Example\Tests\Api\Rest;
 
 use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
-use Elasticsuite\User\DataFixtures\LoginTrait;
+use Elasticsuite\User\Constant\Role;
+use Elasticsuite\User\Test\LoginTrait;
 use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
 use Liip\TestFixturesBundle\Services\DatabaseTools\AbstractDatabaseTool;
 
@@ -37,16 +38,10 @@ class ExampleCategoriesTest extends ApiTestCase
 
     public function testGetCollection(): void
     {
-        $this->databaseTool->loadAliceFixture([__DIR__ . '/../../fixtures/categories_example.yaml']);
+        $this->databaseTool->loadAliceFixture(array_merge([__DIR__ . '/../../fixtures/categories_example.yaml'], $this->getUserFixtures()));
         $client = static::createClient();
 
-        $loginJson = $this->login(
-            $client,
-            static::getContainer()->get('doctrine')->getManager(), // @phpstan-ignore-line
-            static::getContainer()->get('security.user_password_hasher')
-        );
-
-        $response = $client->request('GET', '/example_categories', ['auth_bearer' => $loginJson['token']]);
+        $client->request('GET', '/example_categories', ['auth_bearer' => $this->loginRest($client, $this->getUser(Role::ROLE_CONTRIBUTOR))]);
         $this->assertResponseIsSuccessful();
         $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
         $this->assertJsonContains([

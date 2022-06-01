@@ -22,6 +22,11 @@ use Elasticsuite\Index\Api\IndexSettingsInterface;
 use Elasticsuite\Index\Model\Index;
 use Elasticsuite\Index\Repository\Index\IndexRepositoryInterface;
 use Elasticsuite\Standard\src\Test\AbstractTest;
+use Elasticsuite\Standard\src\Test\ExpectedResponse;
+use Elasticsuite\Standard\src\Test\RequestGraphQlToTest;
+use Elasticsuite\User\Constant\Role;
+use Elasticsuite\User\Model\User;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class IndexOperationsTest extends AbstractTest
 {
@@ -38,16 +43,15 @@ class IndexOperationsTest extends AbstractTest
         parent::setUpBeforeClass();
         \assert(static::getContainer()->get(IndexRepositoryInterface::class) instanceof IndexRepositoryInterface);
         self::$indexRepository = static::getContainer()->get(IndexRepositoryInterface::class);
+        self::loadFixture([
+            __DIR__ . '/../../fixtures/metadata.yaml',
+            __DIR__ . '/../../fixtures/catalogs.yaml',
+        ]);
     }
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->loadFixture([
-            __DIR__ . '/../../fixtures/metadata.yaml',
-            __DIR__ . '/../../fixtures/catalogs.yaml',
-        ]);
-        $this->catalogRepository = static::getContainer()->get(LocalizedCatalogRepository::class);
         $this->indexSettings = static::getContainer()->get(IndexSettingsInterface::class);
         $this->client = static::getContainer()->get('api_platform.elasticsearch.client.test'); // @phpstan-ignore-line
     }
@@ -58,202 +62,206 @@ class IndexOperationsTest extends AbstractTest
         self::$indexRepository->delete('elasticsuite_test__elasticsuite_*');
     }
 
-    public function testCreateIndex(): void
+    /**
+     * @dataProvider createIndexDataProvider
+     */
+    public function testCreateIndex(User $user, string $entityType, int $catalogId, array $expectedData): void
     {
-        $data = [];
-        $catalogs = $this->catalogRepository->findAll();
-        foreach ($catalogs as $catalog) {
-            $data[] = [
+        $this->validateApiCall(
+            new RequestGraphQlToTest(
+                <<<GQL
+                    mutation {
+                      createIndex(input: {
+                        entityType: "{$entityType}",
+                        catalog: {$catalogId}
+                      }) {
+                        index {
+                          id
+                          name
+                          aliases
+                        }
+                      }
+                    }
+                GQL,
+                $user,
+            ),
+            new ExpectedResponse(
+                200,
+                function (ResponseInterface $response) use ($expectedData) {
+                    if (isset($expectedData['errors'])) {
+                        $this->assertJsonContains($expectedData);
+                    } else {
+                        $this->assertStringContainsString('"id":"\/indices\/' . $expectedData['name'], $response->getContent());
+                        $this->assertStringContainsString('"name":"' . $expectedData['name'], $response->getContent());
+                        $this->assertStringContainsString('"aliases":[', $response->getContent());
+                        foreach ($expectedData['aliases'] as $expectedAlias) {
+                            $this->assertStringContainsString('"' . $expectedAlias . '"', $response->getContent());
+                        }
+                    }
+                }
+            )
+        );
+    }
+
+    public function createIndexDataProvider(): iterable
+    {
+        self::loadFixture([
+            __DIR__ . '/../../fixtures/metadata.yaml',
+            __DIR__ . '/../../fixtures/catalogs.yaml',
+        ]);
+        $this->catalogRepository = static::getContainer()->get(LocalizedCatalogRepository::class);
+        $admin = $this->getUser(Role::ROLE_ADMIN);
+
+        yield [
+            $this->getUser(Role::ROLE_CONTRIBUTOR),
+            'product',
+            1,
+            ['errors' => [['debugMessage' => 'Access Denied.']]],
+        ];
+
+        foreach ($this->catalogRepository->findAll() as $catalog) {
+            yield [
+                $admin,
                 'product',
                 (int) $catalog->getId(),
-                "elasticsuite_test__elasticsuite_{$catalog->getCode()}_product",
-                ['.entity_product', ".catalog_{$catalog->getId()}"],
+                [
+                    'name' => "elasticsuite_test__elasticsuite_{$catalog->getCode()}_product",
+                    'aliases' => ['.entity_product', ".catalog_{$catalog->getId()}"],
+                ],
             ];
-            $data[] = [
+            yield [
+                $admin,
                 'category',
                 (int) $catalog->getId(),
-                "elasticsuite_test__elasticsuite_{$catalog->getCode()}_category",
-                ['.entity_category', ".catalog_{$catalog->getId()}"],
+                [
+                    'name' => "elasticsuite_test__elasticsuite_{$catalog->getCode()}_category",
+                    'aliases' => ['.entity_category', ".catalog_{$catalog->getId()}"],
+                ],
             ];
-        }
-
-        foreach ($data as $datum) {
-            [$entity, $catalogId, $expectedNamePrefix, $aliases] = $datum;
-            $this->performCreateIndexTest($entity, $catalogId, $expectedNamePrefix, $aliases);
         }
     }
 
     /**
      * @depends testCreateIndex
+     * @dataProvider installIndexDataProvider
      */
-    public function testInstallIndex(): void
+    public function testInstallIndex(User $user, string $indexNamePrefix, array $expectedData): void
     {
-        $data = [];
-        $catalogs = $this->catalogRepository->findAll();
-        foreach ($catalogs as $catalog) {
-            $data[] = [
-                "elasticsuite_test__elasticsuite_{$catalog->getCode()}_product",
-                "elasticsuite_test__elasticsuite_{$catalog->getCode()}_product",
-            ];
-            $data[] = [
-                "elasticsuite_test__elasticsuite_{$catalog->getCode()}_category",
-                "elasticsuite_test__elasticsuite_{$catalog->getCode()}_category",
-            ];
-        }
-
         $installIndexSettings = $this->indexSettings->getInstallIndexSettings();
-        foreach ($data as $datum) {
-            [$indexNamePrefix, $installedIndexAlias] = $datum;
-            $this->performInstallIndexTest($indexNamePrefix, $installedIndexAlias, $installIndexSettings);
+        $index = self::$indexRepository->findByName("{$indexNamePrefix}*");
+        $this->validateApiCall(
+            new RequestGraphQlToTest(
+                <<<GQL
+                    mutation {
+                      installIndex(input: {
+                        name: "{$index->getName()}"
+                      }) {
+                        index {
+                          id
+                          name
+                          aliases
+                        }
+                      }
+                    }
+                GQL,
+                $user,
+            ),
+            new ExpectedResponse(
+                200,
+                function (ResponseInterface $response) use ($index, $expectedData, $installIndexSettings) {
+                    if (isset($expectedData['errors'])) {
+                        $this->assertJsonContains($expectedData);
+                    } else {
+                        $responseData = $response->toArray();
+
+                        // Check that the index has the install index.
+                        $this->assertNotEmpty($responseData['data']['installIndex']['index']['aliases']);
+                        $this->assertContains($expectedData['alias'], $responseData['data']['installIndex']['index']['aliases']);
+
+                        // Check that the index has the proper installed index settings.
+                        $settings = $this->client->indices()->getSettings(['index' => $index->getName()]);
+                        $this->assertNotEmpty($settings[$index->getName()]['settings']['index']);
+                        $this->assertArraySubset($installIndexSettings, $settings[$index->getName()]['settings']['index']);
+                    }
+                }
+            )
+        );
+    }
+
+    public function installIndexDataProvider(): iterable
+    {
+        self::loadFixture([
+            __DIR__ . '/../../fixtures/metadata.yaml',
+            __DIR__ . '/../../fixtures/catalogs.yaml',
+        ]);
+        $this->catalogRepository = static::getContainer()->get(LocalizedCatalogRepository::class);
+        $admin = $this->getUser(Role::ROLE_ADMIN);
+
+        yield [
+            $this->getUser(Role::ROLE_CONTRIBUTOR),
+            'elasticsuite_test__elasticsuite_b2c_fr_product',
+            ['errors' => [['debugMessage' => 'Access Denied.']]],
+        ];
+
+        foreach ($this->catalogRepository->findAll() as $catalog) {
+            yield [
+                $admin,
+                "elasticsuite_test__elasticsuite_{$catalog->getCode()}_product",
+                ['alias' => "elasticsuite_test__elasticsuite_{$catalog->getCode()}_product"],
+            ];
+            yield [
+                $admin,
+                "elasticsuite_test__elasticsuite_{$catalog->getCode()}_category",
+                ['alias' => "elasticsuite_test__elasticsuite_{$catalog->getCode()}_category"],
+            ];
         }
     }
 
     /**
      * @depends testInstallIndex
+     * @dataProvider installIndexDataProvider
      */
-    public function testRefreshIndex(): void
+    public function testRefreshIndex(User $user, string $indexNamePrefix, array $expectedData): void
     {
-        $data = [];
-        $catalogs = $this->catalogRepository->findAll();
-        foreach ($catalogs as $catalog) {
-            $data[] = [
-                "elasticsuite_test__elasticsuite_{$catalog->getCode()}_product",
-                "elasticsuite_test__elasticsuite_{$catalog->getCode()}_product",
-            ];
-            $data[] = [
-                "elasticsuite_test__elasticsuite_{$catalog->getCode()}_category",
-                "elasticsuite_test__elasticsuite_{$catalog->getCode()}_category",
-            ];
-        }
-
-        $installIndexSettings = $this->indexSettings->getInstallIndexSettings();
-        foreach ($data as $datum) {
-            [$indexNamePrefix, $installedIndexAlias] = $datum;
-            $this->performRefreshIndexTest($indexNamePrefix, $installedIndexAlias);
-        }
-    }
-
-    /**
-     * @param string   $entityType         Entity type
-     * @param int      $catalogId          Catalog ID
-     * @param string   $expectedNamePrefix Expected index name prefix
-     * @param string[] $expectedAliases    Expected index aliases
-     *
-     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
-     */
-    protected function performCreateIndexTest(
-        string $entityType,
-        int $catalogId,
-        string $expectedNamePrefix,
-        array $expectedAliases
-    ): void {
-        $query = <<<GQL
-            mutation {
-              createIndex(input: {
-                entityType: "{$entityType}",
-                catalog: {$catalogId}
-              }) {
-                index {
-                  id
-                  name
-                  aliases
-                }
-              }
-            }
-        GQL;
-
-        $response = $this->requestGraphQl($query);
-        $this->assertStringContainsString('"id":"\/indices\/' . $expectedNamePrefix, $response->getContent());
-        $this->assertStringContainsString('"name":"' . $expectedNamePrefix, $response->getContent());
-        $this->assertStringContainsString('"aliases":[', $response->getContent());
-        foreach ($expectedAliases as $expectedAlias) {
-            $this->assertStringContainsString('"' . $expectedAlias . '"', $response->getContent());
-        }
-    }
-
-    /**
-     * @param string       $indexNamePrefix             Index name prefix
-     * @param string       $expectedInstalledIndexAlias Expected index alias when installed
-     * @param array<mixed> $expectedIndexSettings       Expected index settings
-     *
-     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
-     */
-    protected function performInstallIndexTest(
-        string $indexNamePrefix,
-        string $expectedInstalledIndexAlias,
-        array $expectedIndexSettings
-    ): void {
         $index = self::$indexRepository->findByName("{$indexNamePrefix}*");
-        $this->assertNotNull($index);
-        $this->assertInstanceOf(Index::class, $index);
-
-        $query = <<<GQL
-            mutation {
-              installIndex(input: {
-                name: "{$index->getName()}"
-              }) {
-                index {
-                  id
-                  name
-                  aliases
-                }
-              }
-            }
-        GQL;
-        $response = $this->requestGraphQl($query);
-        $responseData = $response->toArray();
-
-        // Check that the index has the install index.
-        $this->assertNotEmpty($responseData['data']['installIndex']['index']['aliases']);
-        $this->assertContains($expectedInstalledIndexAlias, $responseData['data']['installIndex']['index']['aliases']);
-
-        // Check that the index has the proper installed index settings.
-        $settings = $this->client->indices()->getSettings(['index' => $index->getName()]);
-        $this->assertNotEmpty($settings[$index->getName()]['settings']['index']);
-        $this->assertArraySubset($expectedIndexSettings, $settings[$index->getName()]['settings']['index']);
-    }
-
-    protected function performRefreshIndexTest(
-        string $indexNamePrefix,
-        string $expectedInstalledIndexAlias
-    ): void {
-        $index = self::$indexRepository->findByName("{$indexNamePrefix}*");
-        $this->assertNotNull($index);
-        $this->assertInstanceOf(Index::class, $index);
-
         $initialRefreshCount = $this->getRefreshCount($index->getName());
 
-        $query = <<<GQL
-            mutation {
-              refreshIndex(input: {
-                name: "{$index->getName()}"
-              }) {
-                index {
-                  id
-                  name
-                  aliases
+        $this->assertNotNull($index);
+        $this->assertInstanceOf(Index::class, $index);
+        $this->validateApiCall(
+            new RequestGraphQlToTest(
+                <<<GQL
+                    mutation {
+                      refreshIndex(input: {
+                        name: "{$index->getName()}"
+                      }) {
+                        index {
+                          id
+                          name
+                          aliases
+                        }
+                      }
+                    }
+                GQL,
+                $user,
+            ),
+            new ExpectedResponse(
+                200,
+                function (ResponseInterface $response) use ($index, $expectedData, $initialRefreshCount) {
+                    if (isset($expectedData['errors'])) {
+                        $this->assertJsonContains($expectedData);
+                    } else {
+                        // Check that the index still has the install index.
+                        // TODO re-instate tests on aliases when the read stage is correctly performed based on name.
+                        // $this->assertNotEmpty($responseData['data']['refreshIndex']['index']['aliases']);
+                        // $this->assertContains($expectedInstalledIndexAlias, $responseData['data']['refreshIndex']['index']['aliases']);
+
+                        $refreshCount = $this->getRefreshCount($index->getName());
+                        $this->assertGreaterThan($initialRefreshCount, $refreshCount);
+                    }
                 }
-              }
-            }
-        GQL;
-        $response = $this->requestGraphQl($query);
-        $responseData = $response->toArray();
-
-        // Check that the index still has the install index.
-        // TODO re-instate tests on aliases when the read stage is correctly performed based on name.
-        // $this->assertNotEmpty($responseData['data']['refreshIndex']['index']['aliases']);
-        // $this->assertContains($expectedInstalledIndexAlias, $responseData['data']['refreshIndex']['index']['aliases']);
-
-        $refreshCount = $this->getRefreshCount($index->getName());
-
-        $this->assertGreaterThan($initialRefreshCount, $refreshCount);
+            )
+        );
     }
 
     protected function getRefreshCount(string $indexName): int
