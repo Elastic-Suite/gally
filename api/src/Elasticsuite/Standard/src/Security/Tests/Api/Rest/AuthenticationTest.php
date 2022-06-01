@@ -16,33 +16,49 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Security\Tests\Api\Rest;
 
-use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
-use Elasticsuite\User\DataFixtures\LoginTrait;
+use Elasticsuite\Standard\src\Test\AbstractTest;
+use Elasticsuite\User\Constant\Role;
+use Elasticsuite\User\Test\LoginTrait;
 
-class AuthenticationTest extends ApiTestCase
+class AuthenticationTest extends AbstractTest
 {
     use LoginTrait;
 
-    public function testLogin(): void
+    public function testLoginRest(): void
     {
+        $this->loadFixture([]);
+
         $client = self::createClient();
-        $loginJson = $this->login(
-            $client,
-            static::getContainer()->get('doctrine')->getManager(), // @phpstan-ignore-line
-            static::getContainer()->get('security.user_password_hasher')
-        );
-
-        $this->assertResponseIsSuccessful();
-        $this->assertArrayHasKey('token', $loginJson);
-
         $catalog = ['code' => 'login_rest_catalog', 'name' => 'Login Rest catalog'];
 
-        // Test not authorized.
+        // Test before login
+        $client->request('GET', '/catalogs');
+        $this->assertResponseStatusCodeSame(200);
         $client->request('POST', '/catalogs', ['json' => $catalog]);
         $this->assertResponseStatusCodeSame(401);
 
+        // Log contributor
+        $token = $this->loginRest($client, $this->getUser(Role::ROLE_CONTRIBUTOR));
+        $this->assertResponseIsSuccessful();
+        $this->assertNotEmpty($token);
+
+        // Test not authorized.
+        $client->request('GET', '/catalogs');
+        $this->assertResponseStatusCodeSame(200);
+        $client->request('POST', '/catalogs', ['auth_bearer' => $token, 'json' => $catalog]);
+        $this->assertResponseStatusCodeSame(403);
+
+        // Log admin
+        $token = $this->loginRest($client, $this->getUser(Role::ROLE_ADMIN));
+        $this->assertResponseIsSuccessful();
+        $this->assertNotEmpty($token);
+
         // Test authorized.
-        $client->request('POST', '/catalogs', ['auth_bearer' => $loginJson['token'], 'json' => $catalog]);
+        $client->request('GET', '/catalogs');
+        $this->assertResponseStatusCodeSame(200);
+        $client->request('POST', '/catalogs', ['auth_bearer' => $token, 'json' => $catalog]);
         $this->assertResponseStatusCodeSame(201);
+
+        $this->logout();
     }
 }

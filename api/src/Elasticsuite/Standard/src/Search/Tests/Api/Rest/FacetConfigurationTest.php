@@ -17,6 +17,11 @@ declare(strict_types=1);
 namespace Elasticsuite\Search\Tests\Api\Rest;
 
 use Elasticsuite\Standard\src\Test\AbstractTest;
+use Elasticsuite\Standard\src\Test\ExpectedResponse;
+use Elasticsuite\Standard\src\Test\RequestToTest;
+use Elasticsuite\User\Constant\Role;
+use Elasticsuite\User\Model\User;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class FacetConfigurationTest extends AbstractTest
 {
@@ -77,19 +82,24 @@ class FacetConfigurationTest extends AbstractTest
      * @dataProvider updateDataProvider
      * @depends testGetCollectionBefore
      */
-    public function testUpdateValue(string $id, array $newData)
+    public function testUpdateValue(User $user, string $id, array $newData, int $expectedStatus)
     {
-        $this->requestRest('PUT', "{$this->getApiPath()}/$id", $newData);
-        $this->assertResponseIsSuccessful();
+        $this->validateApiCall(
+            new RequestToTest('PUT', "{$this->getApiPath()}/$id", $user, $newData),
+            new ExpectedResponse($expectedStatus)
+        );
     }
 
     protected function updateDataProvider(): array
     {
+        $admin = $this->getUser(Role::ROLE_ADMIN);
+
         return [
-            ['3-0', ['coverageRate' => 0]],
-            ['3-1', ['coverageRate' => 10]],
-            ['4-1', ['coverageRate' => 10]],
-            ['3-2', ['coverageRate' => 20]],
+            [$this->getUser(Role::ROLE_CONTRIBUTOR), '3-0', ['coverageRate' => 0], 403],
+            [$admin, '3-0', ['coverageRate' => 0], 200],
+            [$admin, '3-1', ['coverageRate' => 10], 200],
+            [$admin, '4-1', ['coverageRate' => 10], 200],
+            [$admin, '3-2', ['coverageRate' => 20], 200],
         ];
     }
 
@@ -135,24 +145,30 @@ class FacetConfigurationTest extends AbstractTest
     protected function testGetCollection(?int $categoryId, array $items): void
     {
         $query = $categoryId ? "category=$categoryId" : '';
-        $response = $this->requestRest('GET', $this->getApiPath() . '?' . $query . '&page=1', []);
-        $this->assertResponseIsSuccessful();
-        $this->assertJsonContains(
-            [
-                '@context' => '/contexts/FacetConfiguration',
-                '@id' => '/facet_configurations',
-                '@type' => 'hydra:Collection',
-                'hydra:totalItems' => 5,
-            ]
+        $this->validateApiCall(
+            new RequestToTest('GET', $this->getApiPath() . '?' . $query . '&page=1', $this->getUser(Role::ROLE_CONTRIBUTOR)),
+            new ExpectedResponse(
+                200,
+                function (ResponseInterface $response) use ($items) {
+                    $this->assertJsonContains(
+                        [
+                            '@context' => '/contexts/FacetConfiguration',
+                            '@id' => '/facet_configurations',
+                            '@type' => 'hydra:Collection',
+                            'hydra:totalItems' => 5,
+                        ]
+                    );
+
+                    $responseData = $response->toArray();
+
+                    foreach ($items as $item) {
+                        $expectedItem = $this->completeContent($item);
+                        $item = $this->getById($expectedItem['id'], $responseData['hydra:member']);
+                        $this->assertEquals($expectedItem, $item);
+                    }
+                }
+            )
         );
-
-        $responseData = $response->toArray();
-
-        foreach ($items as $item) {
-            $expectedItem = $this->completeContent($item);
-            $item = $this->getById($expectedItem['id'], $responseData['hydra:member']);
-            $this->assertEquals($expectedItem, $item);
-        }
     }
 
     protected function completeContent(array $data): array

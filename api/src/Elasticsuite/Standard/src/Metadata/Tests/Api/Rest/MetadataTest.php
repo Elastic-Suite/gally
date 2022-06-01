@@ -18,6 +18,7 @@ namespace Elasticsuite\Metadata\Tests\Api\Rest;
 
 use Elasticsuite\Metadata\Model\Metadata;
 use Elasticsuite\Standard\src\Test\AbstractEntityTest;
+use Elasticsuite\User\Constant\Role;
 
 class MetadataTest extends AbstractEntityTest
 {
@@ -31,59 +32,59 @@ class MetadataTest extends AbstractEntityTest
         return Metadata::class;
     }
 
-    protected function getJsonCreationValidation(array $validData): array
+    /**
+     * {@inheritDoc}
+     */
+    public function createDataProvider(): iterable
     {
+        $adminUser = $this->getUser(Role::ROLE_ADMIN);
+
         return [
-            'entity' => $validData['entity'],
+            [$this->getUser(Role::ROLE_CONTRIBUTOR), ['entity' => 'article'], 403],
+            [$adminUser, ['entity' => 'article']],
+            [$adminUser, ['entity' => 'author']],
+            [$adminUser, ['entity' => ''], 422, 'entity: This value should not be blank.'],
+            [$adminUser, ['entity' => 'product'], 422, 'entity: This value is already used.'],
+            [$adminUser, ['entity' => 'category'], 422, 'entity: This value is already used.'],
         ];
     }
 
-    protected function getJsonGetValidation(array $expectedData): array
+    /**
+     * {@inheritDoc}
+     */
+    public function getDataProvider(): iterable
     {
+        $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
+
         return [
-            'entity' => $expectedData['entity'],
+            [$user, 1, ['id' => 1, 'entity' => 'product'], 200],
+            [$user, 3, ['id' => 3, 'entity' => 'article'], 200],
+            [$user, 5, [], 404],
         ];
     }
 
-    protected function getJsonGetCollectionValidation(): array
+    /**
+     * {@inheritDoc}
+     */
+    public function deleteDataProvider(): iterable
     {
+        $adminUser = $this->getUser(Role::ROLE_ADMIN);
+
         return [
-            'hydra:totalItems' => 2,
+            [$this->getUser(Role::ROLE_CONTRIBUTOR), 1, 403],
+            [$adminUser, 1, 204],
+            [$adminUser, 3, 204],
+            [$adminUser, 5, 404],
         ];
     }
 
-    public function createValidDataProvider(): array
+    /**
+     * {@inheritDoc}
+     */
+    public function getCollectionDataProvider(): iterable
     {
         return [
-            [['entity' => 'article']],
-            [['entity' => 'author']],
-        ];
-    }
-
-    public function createInvalidDataProvider(): array
-    {
-        return [
-            [['entity' => ''], 'entity: This value should not be blank.'],
-            [['entity' => 'product'], 'entity: This value is already used.'],
-            [['entity' => 'category'], 'entity: This value is already used.'],
-        ];
-    }
-
-    public function getDataProvider(): array
-    {
-        return [
-            [1, ['id' => 1, 'entity' => 'product'], 200],
-            [3, ['id' => 3, 'entity' => 'article'], 200],
-            [5, [], 404],
-        ];
-    }
-
-    public function deleteDataProvider(): array
-    {
-        return [
-            [1, 200],
-            [3, 200],
-            [5, 404],
+            [$this->getUser(Role::ROLE_CONTRIBUTOR), 2, 200],
         ];
     }
 }

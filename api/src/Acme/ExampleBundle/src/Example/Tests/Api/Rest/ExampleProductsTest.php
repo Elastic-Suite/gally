@@ -18,7 +18,9 @@ namespace Acme\Example\Example\Tests\Api\Rest;
 
 use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
 use Elasticsuite\Fixture\Service\ElasticsearchFixtures;
-use Elasticsuite\User\DataFixtures\LoginTrait;
+use Elasticsuite\User\Constant\Role;
+use Elasticsuite\User\Test\LoginTrait;
+use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
 
 /**
  * Documentation: https://api-platform.com/docs/distribution/testing/.
@@ -31,6 +33,8 @@ class ExampleProductsTest extends ApiTestCase
 
     protected function setUp(): void
     {
+        $databaseTool = static::getContainer()->get(DatabaseToolCollection::class)->get();
+        $databaseTool->loadAliceFixture($this->getUserFixtures());
         $this->elasticsearchFixtures = static::getContainer()->get(ElasticsearchFixtures::class);
         $this->elasticsearchFixtures->deleteTestFixtures();
         $this->elasticsearchFixtures->loadFixturesIndexFiles([__DIR__ . '/../../fixtures/index_example.json']);
@@ -40,13 +44,7 @@ class ExampleProductsTest extends ApiTestCase
     public function testGetCollection(): void
     {
         $client = static::createClient();
-        $loginJson = $this->login(
-            $client,
-            static::getContainer()->get('doctrine')->getManager(), // @phpstan-ignore-line
-            static::getContainer()->get('security.user_password_hasher')
-        );
-
-        $response = $client->request('GET', '/example_products', ['auth_bearer' => $loginJson['token']]);
+        $client->request('GET', '/example_products', ['auth_bearer' => $this->loginRest($client, $this->getUser(Role::ROLE_CONTRIBUTOR))]);
         $this->assertResponseIsSuccessful();
         $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
         $this->assertJsonContains([

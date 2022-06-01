@@ -18,29 +18,59 @@ namespace Elasticsuite\Index\Tests\Api\GraphQl;
 
 use Elasticsuite\Fixture\Service\ElasticsearchFixturesInterface;
 use Elasticsuite\Standard\src\Test\AbstractTest;
+use Elasticsuite\Standard\src\Test\ExpectedResponse;
+use Elasticsuite\Standard\src\Test\RequestGraphQlToTest;
+use Elasticsuite\User\Constant\Role;
+use Elasticsuite\User\Model\User;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class IndexOperationsBulkTest extends AbstractTest
 {
-    protected function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        parent::setUp();
-        $this->loadElasticsearchIndexFixtures([
-            __DIR__ . '/../../fixtures/indices.json',
-        ]);
-        $this->loadElasticsearchDocumentFixtures([
-            __DIR__ . '/../../fixtures/documents.json',
-        ]);
+        parent::setUpBeforeClass();
+        self::loadElasticsearchIndexFixtures([__DIR__ . '/../../fixtures/indices.json']);
+        self::loadElasticsearchDocumentFixtures([__DIR__ . '/../../fixtures/documents.json']);
     }
 
-    protected function tearDown(): void
+    public static function tearDownAfterClass(): void
     {
-        parent::tearDown();
-        $this->deleteElasticsearchFixtures();
+        parent::tearDownAfterClass();
+        self::deleteElasticsearchFixtures();
     }
 
-    public function testBulkIndex(): void
+    /**
+     * @dataProvider bulkIndexDataProvider
+     */
+    public function testBulkIndex(string $indexName, array $data, User $user, array $expectedData): void
     {
+        $data = addslashes(json_encode($data));
+        $this->validateApiCall(
+            new RequestGraphQlToTest(
+                <<<GQL
+                    mutation {
+                      bulkIndex(input: {
+                        indexName: "{$indexName}",
+                        data: "{$data}"
+                      }) {
+                        index { name }
+                      }
+                    }
+                GQL,
+                $user
+            ),
+            new ExpectedResponse(
+                200,
+                function (ResponseInterface $response) use ($expectedData) {
+                    $this->assertJsonContains($expectedData);
+                }
+            )
+        );
+    }
+
+    public function bulkIndexDataProvider(): iterable
+    {
+        $admin = $this->getUser(Role::ROLE_ADMIN);
         $indexName = ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'index_product';
         $documents = [
             'id1' => ['name' => 'Test doc 1', 'size' => 12],
@@ -48,16 +78,11 @@ class IndexOperationsBulkTest extends AbstractTest
             'id3' => ['name' => 'Test doc 3', 'size' => 5],
         ];
 
-        $this->performBulkIndexTest($indexName, $documents);
-        $this->assertJsonContains(['data' => ['bulkIndex' => ['index' => ['name' => $indexName]]]]);
-
-        $this->performBulkIndexTest('wrongName', $documents);
-        $this->assertJsonContains(
-            ['errors' => [['debugMessage' => 'Index with name [wrongName] does not exist']]]
-        );
+        yield [$indexName, $documents, $this->getUser(Role::ROLE_CONTRIBUTOR), ['errors' => [['debugMessage' => 'Access Denied.']]]];
+        yield [$indexName, $documents, $admin, ['data' => ['bulkIndex' => ['index' => ['name' => $indexName]]]]];
+        yield ['wrongName', $documents, $admin, ['errors' => [['debugMessage' => 'Index with name [wrongName] does not exist']]]];
 
         $documents['id2'] = ['name' => 'Test doc 2', 'size' => 'wrongSize'];
-        $this->performBulkIndexTest($indexName, $documents);
         $message = sprintf(
             'Bulk index operation failed %d times in index %s. ' .
             'Error (mapper_parsing_exception) : failed to parse field [size] of type [integer] in document with id \'id2\'. ' .
@@ -65,58 +90,49 @@ class IndexOperationsBulkTest extends AbstractTest
             1,
             $indexName
         );
-        $this->assertJsonContains(['errors' => [['debugMessage' => $message]]]);
+        yield [$indexName, $documents, $admin, ['errors' => [['debugMessage' => $message]]]];
     }
 
-    protected function performBulkIndexTest(string $indexName, array $data): ResponseInterface
+    /**
+     * @dataProvider bulkDeleteDataProvider
+     */
+    public function testBulkDeleteIndex(string $indexName, array $ids, User $user, array $expectedData): void
     {
-        $data = addslashes(json_encode($data));
-        $query = <<<GQL
-            mutation {
-              bulkIndex(input: {
-                indexName: "{$indexName}",
-                data: "{$data}"
-              }) {
-                index { name }
-              }
-            }
-        GQL;
-
-        return $this->requestGraphQl($query);
+        $ids = json_encode($ids);
+        $this->validateApiCall(
+            new RequestGraphQlToTest(
+                <<<GQL
+                    mutation {
+                      bulkDeleteIndex(input: {
+                        indexName: "{$indexName}",
+                        ids: $ids
+                      }) {
+                        index { name }
+                      }
+                    }
+                GQL,
+                $user
+            ),
+            new ExpectedResponse(
+                200,
+                function (ResponseInterface $response) use ($expectedData) {
+                    $this->assertJsonContains($expectedData);
+                }
+            )
+        );
     }
 
-    public function testBulkDeleteIndex(): void
+    public function bulkDeleteDataProvider(): iterable
     {
+        $admin = $this->getUser(Role::ROLE_ADMIN);
         $indexName = ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'index_product';
         $ids = ['test_1', 'test_2', 'test_3'];
 
-        $this->performBulkDeleteIndexTest($indexName, $ids);
-        $this->assertJsonContains(['data' => ['bulkDeleteIndex' => ['index' => ['name' => $indexName]]]]);
+        yield [$indexName, $ids, $this->getUser(Role::ROLE_CONTRIBUTOR), ['errors' => [['debugMessage' => 'Access Denied.']]]];
+        yield [$indexName, $ids, $admin, ['data' => ['bulkDeleteIndex' => ['index' => ['name' => $indexName]]]]];
+        yield ['wrongName', $ids, $admin, ['errors' => [['debugMessage' => 'Index with name [wrongName] does not exist']]]];
 
-        $this->performBulkDeleteIndexTest('wrongName', $ids);
-        $this->assertJsonContains(
-            ['errors' => [['debugMessage' => 'Index with name [wrongName] does not exist']]]
-        );
-
-        $documents[] = 'test_wrongId';
-        $this->performBulkDeleteIndexTest($indexName, $documents);
-        $this->assertJsonContains(['data' => ['bulkDeleteIndex' => ['index' => ['name' => $indexName]]]]);
-    }
-
-    protected function performBulkDeleteIndexTest(string $indexName, array $ids): ResponseInterface
-    {
-        $ids = json_encode($ids);
-        $query = <<<GQL
-            mutation {
-              bulkDeleteIndex(input: {
-                indexName: "{$indexName}",
-                ids: $ids
-              }) {
-                index { name }
-              }
-            }
-        GQL;
-
-        return $this->requestGraphQl($query);
+        $ids[] = 'test_wrongId';
+        yield [$indexName, $ids, $admin, ['data' => ['bulkDeleteIndex' => ['index' => ['name' => $indexName]]]]];
     }
 }

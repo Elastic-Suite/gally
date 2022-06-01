@@ -19,6 +19,8 @@ namespace Elasticsuite\Standard\src\Test;
 use ApiPlatform\Core\Metadata\Resource\Factory\ResourceMetadataFactoryInterface;
 use ApiPlatform\Core\Metadata\Resource\ResourceMetadata;
 use ApiPlatform\Core\Operation\PathSegmentNameGeneratorInterface;
+use Elasticsuite\User\Model\User;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 
 abstract class AbstractEntityTest extends AbstractTest
 {
@@ -35,6 +37,7 @@ abstract class AbstractEntityTest extends AbstractTest
 
     public static function setUpBeforeClass(): void
     {
+        parent::setUpBeforeClass();
         static::loadFixture(static::getFixtureFiles());
     }
 
@@ -42,19 +45,174 @@ abstract class AbstractEntityTest extends AbstractTest
 
     abstract protected function getEntityClass(): string;
 
-    abstract protected function getJsonCreationValidation(array $validData): array;
+    /**
+     * @dataProvider createDataProvider
+     */
+    public function testCreate(
+        User $user,
+        array $data,
+        int $responseCode = 201,
+        ?string $message = null,
+        string $validRegex = null
+    ): void {
+        $request = new RequestToTest('POST', $this->getApiPath(), $user, $data);
+        $expectedResponse = new ExpectedResponse(
+            $responseCode,
+            function (ResponseInterface $response) use ($data, $validRegex) {
+                $shortName = $this->getShortName();
+                $this->assertJsonContains(
+                    array_merge(
+                        ['@context' => "/contexts/$shortName", '@type' => $shortName],
+                        $this->getJsonCreationValidation($data)
+                    )
+                );
+                $this->assertMatchesRegularExpression($validRegex ?? '~^' . $this->getApiPath() . '/\d+$~', $response->toArray()['@id']);
+                $this->assertMatchesResourceItemJsonSchema($this->getEntityClass());
+            },
+            $message
+        );
 
-    abstract protected function getJsonGetValidation(array $expectedData): array;
+        $this->validateApiCall($request, $expectedResponse);
+    }
 
-    abstract protected function getJsonGetCollectionValidation(): array;
+    /**
+     * Data provider for entity creation api call
+     * The data provider should return test case with :
+     * - User $user: user to use in the api call
+     * - array $data: post data
+     * - (optional) int $responseCode: expected response code
+     * - (optional) string $message: expected error message
+     * - (optional) string $validRegex: a regexp used to validate generated id.
+     */
+    abstract public function createDataProvider(): iterable;
 
-    abstract public function createValidDataProvider(): array;
+    protected function getJsonCreationValidation(array $expectedData): array
+    {
+        return $expectedData;
+    }
 
-    abstract public function createInvalidDataProvider(): array;
+    /**
+     * @dataProvider getDataProvider
+     * @depends testCreate
+     */
+    public function testGet(User $user, int|string $id, array $expectedData, int $responseCode): void
+    {
+        $request = new RequestToTest('GET', "{$this->getApiPath()}/{$id}", $user);
+        $expectedResponse = new ExpectedResponse(
+            $responseCode,
+            function (ResponseInterface $response) use ($expectedData) {
+                $shortName = $this->getShortName();
+                if ($response->getStatusCode() < 400) {
+                    $this->assertJsonContains(
+                        array_merge(
+                            [
+                                '@context' => "/contexts/$shortName",
+                                '@type' => $shortName,
+                                '@id' => $this->getApiPath() . '/' . $expectedData['id'],
+                            ],
+                            $this->getJsonGetValidation($expectedData)
+                        )
+                    );
+                } else {
+                    $this->assertJsonContains(['@context' => "/contexts/$shortName", '@type' => $shortName]);
+                }
+            }
+        );
 
-    abstract public function getDataProvider(): array;
+        $this->validateApiCall($request, $expectedResponse);
+    }
 
-    abstract public function deleteDataProvider(): array;
+    /**
+     * Data provider for entity get api call
+     * The data provider should return test case with :
+     * - User $user: user to use in the api call
+     * - int|string $id: id of the entity to get
+     * - array $expectedData: expected data of the entity
+     * - int $responseCode: expected response code.
+     */
+    abstract public function getDataProvider(): iterable;
+
+    protected function getJsonGetValidation(array $expectedData): array
+    {
+        return $expectedData;
+    }
+
+    /**
+     * @dataProvider deleteDataProvider
+     * @depends testGet
+     */
+    public function testDelete(User $user, int|string $id, int $responseCode): void
+    {
+        $this->validateApiCall(
+            new RequestToTest('DELETE', "{$this->getApiPath()}/{$id}", $user),
+            new ExpectedResponse(
+                $responseCode,
+                function (ResponseInterface $response) {
+                    $this->assertJsonContains($this->getJsonDeleteValidation());
+                }
+            )
+        );
+    }
+
+    /**
+     * Data provider for delete entity api call
+     * The data provider should return test case with :
+     * - User $user: user to use in the api call
+     * - int|string $id: id of the entity to delete
+     * - int $responseCode: expected response code.
+     */
+    abstract public function deleteDataProvider(): iterable;
+
+    protected function getJsonDeleteValidation(): array
+    {
+        return [];
+    }
+
+    /**
+     * @dataProvider getCollectionDataProvider
+     * @depends testDelete
+     */
+    public function testGetCollection(User $user, int $expectedItemNumber, int $responseCode): void
+    {
+        $request = new RequestToTest('GET', $this->getApiPath(), $user);
+        $expectedResponse = new ExpectedResponse(
+            $responseCode,
+            function (ResponseInterface $response) use ($expectedItemNumber) {
+                $shortName = $this->getShortName();
+                if ($response->getStatusCode() < 400) {
+                    $this->assertJsonContains(
+                        array_merge(
+                            [
+                                '@context' => "/contexts/$shortName",
+                                '@id' => $this->getApiPath(),
+                                '@type' => 'hydra:Collection',
+                                'hydra:totalItems' => $expectedItemNumber,
+                            ],
+                            $this->getJsonGetCollectionValidation()
+                        )
+                    );
+                } else {
+                    $this->assertJsonContains(['@context' => "/contexts/$shortName", '@type' => 'hydra:Collection']);
+                }
+            }
+        );
+
+        $this->validateApiCall($request, $expectedResponse);
+    }
+
+    /**
+     * Data provider for collection api call
+     * The data provider should return test case with :
+     * - User $user: user to use in the api call
+     * - int $expectedItemNumber: the expected number of item in the collection
+     * - int $responseCode: expected response code.
+     */
+    abstract public function getCollectionDataProvider(): iterable;
+
+    protected function getJsonGetCollectionValidation(): array
+    {
+        return [];
+    }
 
     protected function getShortName(): string
     {
@@ -68,111 +226,5 @@ abstract class AbstractEntityTest extends AbstractTest
     protected function getApiPath(): string
     {
         return '/' . $this->pathGenerator->getSegmentName($this->getShortName());
-    }
-
-    /**
-     * @dataProvider createValidDataProvider
-     */
-    public function testCreateValidData(array $validData, string $validRegex = null): void
-    {
-        $response = $this->requestRest('POST', $this->getApiPath(), $validData);
-        $this->assertResponseStatusCodeSame(201);
-        $shortName = $this->getShortName();
-        $this->assertJsonContains(
-            array_merge(
-                [
-                    '@context' => "/contexts/$shortName",
-                    '@type' => $shortName,
-                ],
-                $this->getJsonCreationValidation($validData)
-            )
-        );
-        $this->assertMatchesRegularExpression($validRegex ?? '~^' . $this->getApiPath() . '/\d+$~', $response->toArray()['@id']);
-        $this->assertMatchesResourceItemJsonSchema($this->getEntityClass());
-    }
-
-    /**
-     * @dataProvider createInvalidDataProvider
-     *
-     * @param mixed $message
-     * @param mixed $code
-     */
-    public function testCreateInvalidData(array $invalidData, $message, $code = 422): void
-    {
-        $response = $this->requestRest('POST', $this->getApiPath(), $invalidData);
-        $this->assertResponseStatusCodeSame($code);
-        $errorType = 'hydra:Error';
-        $errorContext = 'Error';
-        if (\array_key_exists('violations', $response->toArray(false))) {
-            $errorType = $errorContext = 'ConstraintViolationList';
-        }
-        $this->assertJsonContains(
-            [
-                '@context' => '/contexts/' . $errorContext,
-                '@type' => $errorType,
-                'hydra:title' => 'An error occurred',
-                'hydra:description' => $message,
-            ]
-        );
-    }
-
-    /**
-     * @dataProvider getDataProvider
-     * @depends testCreateValidData
-     * @depends testCreateInvalidData
-     */
-    public function testGet(int|string $id, array $expectedData, int $statusCode): void
-    {
-        $this->requestRest('GET', "{$this->getApiPath()}/{$id}");
-        if ($statusCode >= 400) {
-            $this->assertResponseStatusCodeSame($statusCode);
-        } else {
-            $this->assertResponseIsSuccessful();
-            $shortName = $this->getShortName();
-            $this->assertJsonContains(
-                array_merge(
-                    [
-                        '@context' => "/contexts/$shortName",
-                        '@type' => $shortName,
-                        '@id' => $this->getApiPath() . '/' . $expectedData['id'],
-                    ],
-                    $this->getJsonGetValidation($expectedData)
-                )
-            );
-        }
-    }
-
-    /**
-     * @dataProvider deleteDataProvider
-     * @depends testGet
-     */
-    public function testDelete(int|string $id, int $statusCode): void
-    {
-        $this->requestRest('DELETE', "{$this->getApiPath()}/{$id}");
-        if ($statusCode >= 400) {
-            $this->assertResponseStatusCodeSame($statusCode);
-        } else {
-            $this->assertResponseIsSuccessful();
-        }
-    }
-
-    /**
-     * @depends testDelete
-     */
-    public function testGetCollection(): void
-    {
-        $this->requestRest('GET', $this->getApiPath());
-        $this->assertResponseIsSuccessful();
-        $shortName = $this->getShortName();
-        $this->assertJsonContains(
-            array_merge(
-                [
-                    '@context' => "/contexts/$shortName",
-                    '@id' => $this->getApiPath(),
-                    '@type' => 'hydra:Collection',
-                ],
-                $this->getJsonGetCollectionValidation()
-            )
-        );
     }
 }
