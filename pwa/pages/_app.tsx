@@ -5,6 +5,7 @@ import 'assets/scss/style.scss'
 import dynamic from 'next/dynamic'
 import { Theme, ThemeProvider } from '@mui/material/styles'
 import RegularTheme from '~/components/atoms/RegularTheme'
+import Head from 'next/head'
 
 /*
  * Resolve for "Prop className did not match" between Server side and Client side
@@ -28,6 +29,10 @@ declare module '@mui/styles/defaultTheme' {
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
+      <Head>
+        <title>Blink Admin</title>
+      </Head>
+
       <ThemeProvider theme={RegularTheme}>
         <CustomLayoutWithNoSSR>
           <Component {...pageProps} />

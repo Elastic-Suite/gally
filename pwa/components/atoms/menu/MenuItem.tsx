@@ -1,6 +1,6 @@
 import IonIcon from '~/components/atoms/IonIcon'
 import { makeStyles } from '@mui/styles'
-import { useSidebarState, useStore } from 'react-admin'
+import { useStore } from 'react-admin'
 import Collapse from '@mui/material/Collapse'
 import Link from 'next/link'
 
@@ -114,7 +114,6 @@ const MenuItem = (props) => {
   const words = menuItemActive.split('_')
   const wordIndexOne = words[0] + '_' + words[1]
 
-  const [sidebarState] = useSidebarState()
   const [sidebarStateTimeout] = useStore('sidebarStateTimeout')
 
   /*
