@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+// import { useEffect } from "react";
 
 /*
  * This function is to prevent reload once client is loaded
@@ -24,20 +24,10 @@ export async function getStaticProps() {
 
 export async function getStaticPaths() {
   // Call an external API endpoint to get products
-
   let menu = { hierarchy: [] }
-
-  /*
-   * Fetch data from /menu to get create menu items dynamically
-   */
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await fetch('/menu')
-      const json = await res.json()
-      menu = { ...json }
-    }
-    fetchData(), [menu]
-  })
+  const res = await fetch('/menu')
+  const json = await res.json()
+  menu = { ...json }
   // Get the paths we want to pre-render based on posts
   const paths = menu.hierarchy.map(mappingMenu)
   // We'll pre-render only these paths at build time.
@@ -49,6 +39,7 @@ export async function getStaticPaths() {
 const Admin = () => {
   const router = useRouter()
   const { slug } = router.query
+
   return (
     <>
       <div>

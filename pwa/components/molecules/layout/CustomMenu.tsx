@@ -1,9 +1,15 @@
-import { useStore } from 'react-admin'
 import MenuItemIcon from '~/components/atoms/menu/MenuItemIcon'
 import MenuItem from '~/components/atoms/menu/MenuItem'
 import { makeStyles } from '@mui/styles'
+import { Theme } from '@mui/material/styles'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
+import {
+  setMenu,
+  setMenuItemActive,
+  useAppDispatch,
+  useAppSelector,
+} from '~/store'
 
 /*
  * Create function to create path from code of the menu item
@@ -20,7 +26,7 @@ function slugify(code, depth) {
  * Use of mui makeStyles to create multiple styles reusing theme fm react-admin
  * see: https://mui.com/system/styles/basics/
  */
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'row',
@@ -55,12 +61,8 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const CustomMenu = (props) => {
-  /*
-   * useStore from ReactAdmin to store data globally
-   * see: https://marmelab.com/react-admin/doc/4.0/Store.html
-   */
-  const [menu, setMenu] = useStore('menu', { hierarchy: [] })
-  let [menuItemActive, setMenuItemActive] = useStore(`menuItemActive`)
+  const dispatch = useAppDispatch()
+  const menu = useAppSelector((state) => state.menu.menu)
 
   /*
    * Function to update menu active item from pathname
@@ -68,8 +70,10 @@ const CustomMenu = (props) => {
   const router = useRouter()
   const { slug } = router.query
   useEffect(() => {
-    setMenuItemActive(typeof slug !== 'string' ? slug?.join('_') : slug)
-  }, [slug])
+    dispatch(
+      setMenuItemActive(typeof slug !== 'string' ? slug?.join('_') : slug)
+    )
+  }, [dispatch, slug])
 
   /*
    * Fetch data from /menu to get create menu items dynamically
@@ -78,10 +82,10 @@ const CustomMenu = (props) => {
     const fetchData = async () => {
       const res = await fetch('/menu')
       const json = await res.json()
-      setMenu(json)
+      dispatch(setMenu(json))
     }
     fetchData()
-  }, [setMenu])
+  }, [dispatch])
 
   const classes = useStyles()
 

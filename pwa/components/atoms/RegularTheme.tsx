@@ -1,7 +1,7 @@
 import { createTheme } from '@mui/material/styles'
 import { keyframes } from '@emotion/react'
 
-declare module '@mui/material/styles/createPalette' {
+declare module '@mui/material/styles' {
   interface Palette {
     neutral: Palette['primary']
     menu: {

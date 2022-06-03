@@ -1,13 +1,14 @@
 import IonIcon from '~/components/atoms/IonIcon'
 import { makeStyles } from '@mui/styles'
-import { useSidebarState, useStore } from 'react-admin'
+import { Theme } from '@mui/material/styles'
 import Link from 'next/link'
+import { useAppSelector } from '~/store'
 
 /*
  * Use of mui makeStyles to create multiple styles reusing theme fm react-admin
  * see: https://mui.com/system/styles/basics/
  */
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
     position: 'relative',
     display: 'flex',
@@ -117,13 +118,12 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const MenuItemIcon = (props) => {
-  /*
-   * useStore from ReactAdmin to store data globally
-   * see: https://marmelab.com/react-admin/doc/4.0/Store.html
-   */
-  let [menuItemActive] = useStore(`menuItemActive`, '')
-  const [sidebarState] = useSidebarState()
-  const [sidebarStateTimeout] = useStore('sidebarStateTimeout')
+  const menuItemActive =
+    useAppSelector((state) => state.menu.menuItemActive) || ''
+  const sidebarState = useAppSelector((state) => state.menu.sidebarState)
+  const sidebarStateTimeout = useAppSelector(
+    (state) => state.menu.sidebarStateTimeout
+  )
 
   const words = menuItemActive.split('_')
   const wordIndexOne = words[0]
@@ -182,7 +182,7 @@ const MenuItemIcon = (props) => {
             className={classNameRoot + ' ' + classes.noChildHover}
             style={
               sidebarState
-                ? { width: `calc(100% - 10px)` }
+                ? { width: 'calc(100% - 10px)' }
                 : { width: 'fit-content' }
             }
           >

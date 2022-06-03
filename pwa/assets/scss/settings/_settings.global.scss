@@ -5,32 +5,44 @@
 /* Box Shadows
 ========================================================================== */
 $box-shadow-sm: 4px 4px 14px rgba(226, 230, 243, 0.5);
-$box-shadow-md: 0px -8px 8px rgba(226, 230, 243, 0.2), 0px 5px 8px rgba(107, 113, 166, 0.1), 4px 4px 14px rgba(226, 230, 243, 0.5);
-$box-shadow-lg: 0px -8px 8px rgba(226, 230, 243, 0.2), 0px 8px 8px rgba(107, 113, 166, 0.2), 4px 4px 14px rgba(226, 230, 243, 0.5);
-$box-shadow-primary-sm: 0px -8px 8px rgba(255, 231, 228, 0.2), 0px 8px 8px rgba(243, 151, 140, 0.2), 4px 4px 14px rgba(255, 231, 228, 0.5);
-$box-shadow-primary-md: 0px -8px 8px rgba(255, 231, 228, 0.2), 0px 16px 16px rgba(243, 151, 140, 0.2), 4px 4px 14px rgba(255, 231, 228, 0.5);
-$box-shadow-primary-lg: 0px -8px 8px rgba(255, 231, 228, 0.2), 0px 16px 36px rgba(243, 151, 140, 0.2), 4px 4px 14px rgba(255, 231, 228, 0.5);
-$box-shadow-secondary-sm: 0px -8px 8px rgba(231, 232, 255, 0.2), 0px 8px 8px rgba(186, 189, 252, 0.05), 4px 4px 14px rgba(231, 232, 255, 0.5);
-$box-shadow-secondary-md: 0px -8px 8px rgba(231, 232, 255, 0.2), 0px 16px 16px rgba(186, 189, 252, 0.2), 4px 4px 14px rgba(231, 232, 255, 0.5);
-$box-shadow-secondary-lg: 0px -8px 8px rgba(231, 232, 255, 0.2), 0px 16px 36px rgba(186, 189, 252, 0.4), 4px 4px 14px rgba(231, 232, 255, 0.5);
+$box-shadow-md: 0px -8px 8px rgba(226, 230, 243, 0.2),
+    0px 5px 8px rgba(107, 113, 166, 0.1), 4px 4px 14px rgba(226, 230, 243, 0.5);
+$box-shadow-lg: 0px -8px 8px rgba(226, 230, 243, 0.2),
+    0px 8px 8px rgba(107, 113, 166, 0.2), 4px 4px 14px rgba(226, 230, 243, 0.5);
+$box-shadow-primary-sm: 0px -8px 8px rgba(255, 231, 228, 0.2),
+    0px 8px 8px rgba(243, 151, 140, 0.2), 4px 4px 14px rgba(255, 231, 228, 0.5);
+$box-shadow-primary-md: 0px -8px 8px rgba(255, 231, 228, 0.2),
+    0px 16px 16px rgba(243, 151, 140, 0.2),
+    4px 4px 14px rgba(255, 231, 228, 0.5);
+$box-shadow-primary-lg: 0px -8px 8px rgba(255, 231, 228, 0.2),
+    0px 16px 36px rgba(243, 151, 140, 0.2),
+    4px 4px 14px rgba(255, 231, 228, 0.5);
+$box-shadow-secondary-sm: 0px -8px 8px rgba(231, 232, 255, 0.2),
+    0px 8px 8px rgba(186, 189, 252, 0.05), 4px 4px 14px rgba(231, 232, 255, 0.5);
+$box-shadow-secondary-md: 0px -8px 8px rgba(231, 232, 255, 0.2),
+    0px 16px 16px rgba(186, 189, 252, 0.2),
+    4px 4px 14px rgba(231, 232, 255, 0.5);
+$box-shadow-secondary-lg: 0px -8px 8px rgba(231, 232, 255, 0.2),
+    0px 16px 36px rgba(186, 189, 252, 0.4),
+    4px 4px 14px rgba(231, 232, 255, 0.5);
 
 /* Spacings variables.
    ========================================================================== */
-$global-spacing-unit-0-5:        4px;
-$global-spacing-unit-1:          8px;
-$global-spacing-unit-1-5:        12px;
-$global-spacing-unit-2:          16px;
-$global-spacing-unit-3:          24px;
-$global-spacing-site-4:          32px;
-$global-spacing-site-5:          40px;
-$global-spacing-site-6:          48px;
-$global-spacing-site-7:          56px;
-$global-spacing-site-8:          64px;
-$global-spacing-site-9:          72px;
-$global-spacing-site-10:         80px;
-$global-spacing-site-11:         88px;
-$global-spacing-site-12:         96px;
-$global-spacing-site-13:         104px;
+$global-spacing-unit-0-5: 4px;
+$global-spacing-unit-1: 8px;
+$global-spacing-unit-1-5: 12px;
+$global-spacing-unit-2: 16px;
+$global-spacing-unit-3: 24px;
+$global-spacing-site-4: 32px;
+$global-spacing-site-5: 40px;
+$global-spacing-site-6: 48px;
+$global-spacing-site-7: 56px;
+$global-spacing-site-8: 64px;
+$global-spacing-site-9: 72px;
+$global-spacing-site-10: 80px;
+$global-spacing-site-11: 88px;
+$global-spacing-site-12: 96px;
+$global-spacing-site-13: 104px;
 
-$global-width-menu-open:         278px;
-$global-width-menu-close:        66px;
+$global-width-menu-open: 278px;
+$global-width-menu-close: 66px;
