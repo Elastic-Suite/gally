@@ -1,8 +1,9 @@
 import IonIcon from '~/components/atoms/IonIcon'
 import { makeStyles } from '@mui/styles'
-import { useStore } from 'react-admin'
+import { Theme } from '@mui/material/styles'
 import Collapse from '@mui/material/Collapse'
 import Link from 'next/link'
+import { setChildState, useAppDispatch, useAppSelector } from '~/store'
 
 /*
  * Create function to create path from code of the menu item
@@ -19,7 +20,7 @@ function slugify(code, depth) {
  * Use of mui makeStyles to create multiple styles reusing theme fm react-admin
  * see: https://mui.com/system/styles/basics/
  */
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
@@ -105,22 +106,23 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const MenuItem = (props) => {
-  /*
-   * useStore from ReactAdmin to store data globally
-   * see: https://marmelab.com/react-admin/doc/4.0/Store.html
-   */
-  let [childOpen, setChildOpen] = useStore(`childOpen${props.code}`, false)
-  let [menuItemActive] = useStore(`menuItemActive`, '')
+  const dispatch = useAppDispatch()
+  const childState = useAppSelector(
+    (state) => state.menu.childrenState[props.code]
+  )
+  const menuItemActive =
+    useAppSelector((state) => state.menu.menuItemActive) || ''
+  const sidebarStateTimeout = useAppSelector(
+    (state) => state.menu.sidebarStateTimeout
+  )
   const words = menuItemActive.split('_')
   const wordIndexOne = words[0] + '_' + words[1]
-
-  const [sidebarStateTimeout] = useStore('sidebarStateTimeout')
 
   /*
    * Function to collapse or not children
    */
   const toggleChild = () => {
-    setChildOpen(!childOpen)
+    dispatch(setChildState({ code: props.code, value: !childState }))
   }
 
   const classes = useStyles()
@@ -161,12 +163,12 @@ const MenuItem = (props) => {
             <IonIcon
               name={'chevron-down'}
               style={
-                childOpen
+                childState
                   ? { transform: 'rotate(-180deg)', transition: 'all 500ms' }
                   : { transition: 'all 500ms' }
               }
             />
-            {!childOpen &&
+            {!childState &&
             wordIndexOne === props.code &&
             words[2] !== 'boosts' ? (
               <div
@@ -182,7 +184,7 @@ const MenuItem = (props) => {
         )}
       </div>
       {!!props.children && (
-        <Collapse className={classes.children} in={childOpen}>
+        <Collapse className={classes.children} in={childState}>
           {props.children.map((item, index) => (
             <MenuItem
               key={`${index}-${item.code}`}

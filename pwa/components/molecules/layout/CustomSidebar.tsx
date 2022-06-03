@@ -1,16 +1,18 @@
-import { useSidebarState, useStore } from 'react-admin'
 import CustomMenu from '~/components/molecules/layout/CustomMenu'
 import LogoExtended from '~/assets/images/LogoBlinkExtended.svg'
 import LogoCollapse from '~/assets/images/LogoBlinkCollapse.svg'
 import { makeStyles } from '@mui/styles'
+import { Theme } from '@mui/material/styles'
 import { Collapse } from '@mui/material'
 import Link from 'next/link'
+import Image from 'next/image'
+import { useAppSelector } from '~/store'
 
 /*
  * Use of mui makeStyles to create multiple styles reusing theme fm react-admin
  * see: https://mui.com/system/styles/basics/
  */
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
     display: 'flex',
     position: 'relative',
@@ -66,12 +68,10 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const CustomSidebar = (props) => {
-  /*
-   * useStore from ReactAdmin to store data globally
-   * see: https://marmelab.com/react-admin/doc/4.0/Store.html
-   */
-  const [sidebarState] = useSidebarState()
-  const [sidebarStateTimeout] = useStore('sidebarStateTimeout')
+  const sidebarState = useAppSelector((state) => state.menu.sidebarState)
+  const sidebarStateTimeout = useAppSelector(
+    (state) => state.menu.sidebarStateTimeout
+  )
 
   const classes = useStyles()
 
@@ -94,18 +94,22 @@ const CustomSidebar = (props) => {
       >
         <Link href={'/'} as={'/'}>
           <div className={classes.imgContainer}>
-            <img
+            <Image
               src={LogoExtended.src}
               className={
                 classes.imgExtended +
                 (!sidebarStateTimeout ? '' : ' ' + classes.imgNotActive)
               }
               alt={LogoExtended.name}
+              width="104"
+              height="29"
             />
-            <img
+            <Image
               src={LogoCollapse.src}
               className={classes.imgCollapse}
               alt={LogoCollapse.name}
+              width="31"
+              height="29"
             />
           </div>
         </Link>
