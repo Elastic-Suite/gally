@@ -385,6 +385,97 @@ const regularTheme = createTheme({
         },
       },
     },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          WebkitTransform: 'none',
+          transform: 'none',
+          fontWeight: 500,
+          lineHeight: '20px',
+          color: '#151A47',
+          '&.Mui-focused': {
+            color: '#151A47',
+          },
+        },
+        shrink: {
+          fontSize: 14,
+          color: '#151A47',
+        },
+        asterisk: {
+          color: '#CC2D19',
+        },
+      },
+    },
+    MuiFormHelperText: {
+      styleOverrides: {
+        root: {
+          display: 'flex',
+          color: '#424880',
+          fontWeight: 400,
+          fontSize: '12px',
+          lineHeight: '18px',
+          margin: '8px 0 0 0',
+          '.MuiInputBase-colorSuccess + &': {
+            color: '#18753C',
+          },
+          '.MuiInputBase-colorError + &, .textarea--error + &': {
+            color: '#A02213',
+          },
+        },
+      },
+    },
+    MuiFormControl: {
+      styleOverrides: {
+        root: {
+          textarea: {
+            fontFamily: 'Inter',
+            borderColor: '#E2E6F3',
+            borderStyle: 'solid',
+            borderWidth: '1px',
+            borderRadius: 8,
+            background: '#FFF',
+            color: '#151A47',
+            fontWeight: 400,
+            fontSize: 14,
+            lineHeight: '20px',
+            padding: 16,
+            transition: 'border-color 0.3s linear',
+            '&:hover': {
+              borderColor: '#B5B9D9',
+            },
+            '&.textarea--filled': {
+              borderColor: '#B5B9D9',
+            },
+            '&:focus': {
+              borderColor: '#424880',
+            },
+            '&.textarea--error': {
+              borderColor: '#A02213',
+            },
+            '&:disabled': {
+              pointerEvents: 'none',
+              color: '#424880',
+              background: '#E2E6F3',
+              borderColor: '#E2E6F3',
+            },
+            '&:focus-visible': {
+              outline: 'none',
+            },
+            '&::placeholder': {
+              fontFamily: 'Inter',
+              color: '#424880',
+              opacity: 1,
+            },
+            '&::-webkit-resizer': {
+              background: `no-repeat 100% 100%/150% url(/images/corner-expand.svg)`,
+            },
+          },
+          'label + textarea': {
+            marginTop: 24,
+          },
+        },
+      },
+    },
   },
 })
 
