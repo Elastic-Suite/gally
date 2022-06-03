@@ -1,9 +1,4 @@
-import {
-  Notification,
-  LayoutComponent,
-  useSidebarState,
-  useStore,
-} from 'react-admin'
+import { useSidebarState, useStore } from 'react-admin'
 import IonIcon from 'components/atoms/IonIcon'
 import { makeStyles } from '@mui/styles'
 import CustomSidebar from '~/components/molecules/layout/CustomSidebar'
@@ -102,9 +97,9 @@ const useStylesAppBar = makeStyles((theme) => ({
   },
 }))
 /*
- * Component CustomLayout with type LayoutComponent
+ * Component CustomLayout
  */
-const CustomLayout: LayoutComponent = ({ children, title }) => {
+const CustomLayout = ({ children, title }) => {
   /*
    * useStore from ReactAdmin to store data globally
    * see: https://marmelab.com/react-admin/doc/4.0/Store.html
@@ -161,7 +156,7 @@ const CustomLayout: LayoutComponent = ({ children, title }) => {
             </div>
             <div className={classes.content}>{children}</div>
           </div>
-          <Notification />
+          {/*<Notification /> TODO: Set here Notification component*/}
         </div>
       </div>
     </StyledEngineProvider>

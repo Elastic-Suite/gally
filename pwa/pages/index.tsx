@@ -1,14 +1,7 @@
-import Head from 'next/head'
 import Link from 'next/link'
-
-/* Depreciated as pages/_middleware.tsx make redirection from / to /admin */
 
 const Welcome = () => (
   <>
-    <Head>
-      <title>Welcome to API Platform!</title>
-    </Head>
-
     <div className="welcome">
       <section className="welcome__main">
         <div className="main__content">
