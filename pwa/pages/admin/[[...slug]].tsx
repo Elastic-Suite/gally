@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { fetchJsonld, useAppSelector, useAppDispatch, selectJsonld } from '~/store'
+import { fetchDocs, useAppSelector, useAppDispatch, selectDocs } from '~/store'
 import { LoadStatus } from '~/types'
 
 export async function getStaticProps() {
@@ -19,18 +19,18 @@ const Admin = () => {
   const { slug } = router.query
 
   const dispatch = useAppDispatch()
-  const jsonld = useAppSelector(selectJsonld)
+  const docs = useAppSelector(selectDocs)
 
   // Fetch jsonld
   useEffect(() => {
-    if (jsonld.status === LoadStatus.IDLE) {
-      dispatch(fetchJsonld())
+    if (docs.status === LoadStatus.IDLE) {
+      dispatch(fetchDocs())
     }
-  }, [dispatch, jsonld.status])
+  }, [dispatch, docs.status])
 
-  if (jsonld.error) {
-    return jsonld.error
-  } else if (!jsonld.data) {
+  if (docs.error) {
+    return docs.error
+  } else if (!docs.json && docs.jsonld) {
     return null
   }
 
