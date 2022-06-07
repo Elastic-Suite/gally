@@ -5,6 +5,7 @@ import { Theme } from '@mui/material/styles'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import {
+  selectMenu,
   setMenu,
   setMenuItemActive,
   useAppDispatch,
@@ -62,7 +63,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const CustomMenu = (props) => {
   const dispatch = useAppDispatch()
-  const menu = useAppSelector((state) => state.menu.menu)
+  const menu = useAppSelector(selectMenu)
 
   /*
    * Function to update menu active item from pathname

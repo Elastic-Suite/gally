@@ -3,7 +3,7 @@ import { makeStyles } from '@mui/styles'
 import { Theme } from '@mui/material/styles'
 import Collapse from '@mui/material/Collapse'
 import Link from 'next/link'
-import { setChildState, useAppDispatch, useAppSelector } from '~/store'
+import { selectChildrenState, selectMenuItemActive, selectSidebarStateTimeout, setChildState, useAppDispatch, useAppSelector } from '~/store'
 
 /*
  * Create function to create path from code of the menu item
@@ -107,14 +107,9 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const MenuItem = (props) => {
   const dispatch = useAppDispatch()
-  const childState = useAppSelector(
-    (state) => state.menu.childrenState[props.code]
-  )
-  const menuItemActive =
-    useAppSelector((state) => state.menu.menuItemActive) || ''
-  const sidebarStateTimeout = useAppSelector(
-    (state) => state.menu.sidebarStateTimeout
-  )
+  const childState = useAppSelector((state) => selectChildrenState(state, props.code))
+  const menuItemActive = useAppSelector(selectMenuItemActive) || ''
+  const sidebarStateTimeout = useAppSelector(selectSidebarStateTimeout)
   const words = menuItemActive.split('_')
   const wordIndexOne = words[0] + '_' + words[1]
 

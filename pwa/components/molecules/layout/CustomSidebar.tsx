@@ -6,7 +6,7 @@ import { Theme } from '@mui/material/styles'
 import { Collapse } from '@mui/material'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useAppSelector } from '~/store'
+import { selectSidebarState, selectSidebarStateTimeout, useAppSelector } from '~/store'
 
 /*
  * Use of mui makeStyles to create multiple styles reusing theme fm react-admin
@@ -68,10 +68,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 }))
 
 const CustomSidebar = (props) => {
-  const sidebarState = useAppSelector((state) => state.menu.sidebarState)
-  const sidebarStateTimeout = useAppSelector(
-    (state) => state.menu.sidebarStateTimeout
-  )
+  const sidebarState = useAppSelector(selectSidebarState)
+  const sidebarStateTimeout = useAppSelector(selectSidebarStateTimeout)
 
   const classes = useStyles()
 

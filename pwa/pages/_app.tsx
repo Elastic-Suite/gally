@@ -1,3 +1,4 @@
+import { FunctionComponent } from 'react'
 import type { AppProps } from 'next/app'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'
@@ -18,7 +19,7 @@ import { store } from '~/store'
 const CustomLayoutWithNoSSR = dynamic(
   () => import('~/components/organisms/layout/CustomLayout'),
   { ssr: false }
-)
+) as FunctionComponent
 
 /*
  * Correction applied to extend Default theme from our theme actually used
@@ -29,7 +30,9 @@ declare module '@mui/styles/defaultTheme' {
   type DefaultTheme = Theme
 }
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp(props: AppProps) {
+  const { pageProps } = props;
+  const Component = props.Component as FunctionComponent
   return (
     <>
       <Head>

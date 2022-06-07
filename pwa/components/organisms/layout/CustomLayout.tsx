@@ -4,6 +4,7 @@ import { Theme } from '@mui/material/styles'
 import CustomSidebar from '~/components/molecules/layout/CustomSidebar'
 import { StyledEngineProvider } from '@mui/styled-engine'
 import {
+  selectSidebarState,
   setSidebarState,
   setSidebarStateTimeout,
   useAppDispatch,
@@ -107,7 +108,7 @@ const useStylesAppBar = makeStyles((theme: Theme) => ({
  */
 const CustomLayout = ({ children }) => {
   const dispatch = useAppDispatch()
-  const sidebarState = useAppSelector((state) => state.menu.sidebarState)
+  const sidebarState = useAppSelector(selectSidebarState)
 
   const classes = useStyles()
   const appbar = useStylesAppBar()
