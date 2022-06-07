@@ -39,7 +39,7 @@ use Elasticsuite\User\Constant\Role;
         paginationEnabled: false,
     ),
 ]
-class Document
+class IndexDocument
 {
     #[ApiProperty(
         identifier: true

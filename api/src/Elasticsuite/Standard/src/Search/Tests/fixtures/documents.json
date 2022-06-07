@@ -1,0 +1,169 @@
+[
+  {
+    "index_name": "elasticsuite_test_b2c_en_product_20220429_153000",
+    "documents": [
+      {
+        "entity_id": "1",
+        "sku": "24-MB01",
+        "name": "Joust Duffle Bag",
+        "size" : 12
+      },
+      {
+        "entity_id": "2",
+        "sku": "24-MB04",
+        "name": "Strive Shoulder Pack",
+        "size" : 5
+      },
+      {
+        "entity_id": "3",
+        "sku": "24-MB03",
+        "name": "Crown Summit Backpack",
+        "size" : 8
+      },
+      {
+        "entity_id": "4",
+        "sku": "24-MB05",
+        "name": "Wayfarer Messenger Bag",
+        "size" : 7
+      },
+      {
+        "entity_id": "5",
+        "sku": "24-MB06",
+        "name": "Rival Field Messenger",
+        "size" : 2
+      },
+      {
+        "entity_id": "6",
+        "sku": "24-MB02",
+        "name": "Fusion Backpack",
+        "size" : 9
+      },
+      {
+        "entity_id": "7",
+        "sku": "24-UB02",
+        "name": "Impulse Duffle",
+        "size" : 11
+      },
+      {
+        "entity_id": "8",
+        "sku": "24-WB01",
+        "name": "Voyage Yoga Bag",
+        "size" : 4
+      },
+      {
+        "entity_id": "9",
+        "sku": "24-WB02",
+        "name": "Compete Track Tote",
+        "size" : 11
+      },
+      {
+        "entity_id": "10",
+        "sku": "24-WB05",
+        "name": "Savvy Shoulder Tote",
+        "size" : 2
+      },
+      {
+        "entity_id": "11",
+        "sku": "24-WB06",
+        "name": "Endeavor Daytrip Backpack",
+        "size" : 5
+      },
+      {
+        "entity_id": "12",
+        "sku": "24-WB03",
+        "name": "Driven Backpack",
+        "size" : 12
+      },
+      {
+        "entity_id": "13",
+        "sku": "24-WB07",
+        "name": "Overnight Duffle",
+        "size" : 10
+      },
+      {
+        "entity_id": "14",
+        "sku": "24-WB04",
+        "name": "Push It Messenger Bag",
+        "size" : 9
+      }
+    ]
+  },
+  {
+    "index_name": "elasticsuite_test_b2b_fr_product_20220601_171005",
+    "documents": [
+      {
+        "entity_id": "1",
+        "sku": "24-MB01",
+        "name": "Sac de sport Jout",
+        "size" : 12
+      },
+      {
+        "entity_id": "2",
+        "sku": "24-MB04",
+        "name": "Sac à bandoulière Strive",
+        "size" : 5
+      },
+      {
+        "entity_id": "3",
+        "sku": "24-MB03",
+        "name": "Sac à dos Crown Summit",
+        "size" : 8
+      },
+      {
+        "entity_id": "4",
+        "sku": "24-MB05",
+        "name": "Sac messager Wayfarer",
+        "size" : 7
+      },
+      {
+        "entity_id": "5",
+        "sku": "24-MB06",
+        "name": "Messager de terrain rival",
+        "size" : 2
+      },
+      {
+        "entity_id": "6",
+        "sku": "24-MB02",
+        "name": "Sac à dos Fusion",
+        "size" : 9
+      },
+      {
+        "entity_id": "7",
+        "sku": "24-UB02",
+        "name": "Sac de sport Impulse",
+        "size" : 11
+      },
+      {
+        "entity_id": "8",
+        "sku": "24-WB01",
+        "name": "Sac de voyage Yoga",
+        "size" : 4
+      },
+      {
+        "entity_id": "9",
+        "sku": "24-WB02",
+        "name": "Fourre-tout Compete Track",
+        "size" : 11
+      },
+      {
+        "entity_id": "10",
+        "sku": "24-WB05",
+        "name": "Fourre-tout à bandoulière avisé",
+        "size" : 2
+      },
+      {
+        "entity_id": "11",
+        "sku": "24-WB06",
+        "name": "Sac à dos d'excursion d'une journée Endeavour",
+        "size" : 5
+      },
+      {
+        "entity_id": "12",
+        "sku": "24-WB03",
+        "name": "Sac à dos piloté",
+        "size" : 12
+      }
+    ]
+  }
+]
+

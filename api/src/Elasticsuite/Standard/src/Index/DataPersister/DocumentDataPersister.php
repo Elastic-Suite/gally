@@ -17,7 +17,7 @@ declare(strict_types=1);
 namespace Elasticsuite\Index\DataPersister;
 
 use ApiPlatform\Core\DataPersister\DataPersisterInterface;
-use Elasticsuite\Index\Model\Document;
+use Elasticsuite\Index\Model\IndexDocument;
 use Elasticsuite\Index\Repository\Document\DocumentRepositoryInterface;
 
 class DocumentDataPersister implements DataPersisterInterface
@@ -32,7 +32,7 @@ class DocumentDataPersister implements DataPersisterInterface
      */
     public function supports($data): bool
     {
-        return $data instanceof Document;
+        return $data instanceof IndexDocument;
     }
 
     /**
@@ -42,7 +42,7 @@ class DocumentDataPersister implements DataPersisterInterface
      */
     public function persist($data)
     {
-        /** @var Document $data */
+        /** @var IndexDocument $data */
         $this->documentRepository->index($data->getIndexName(), $data->getDocuments());
     }
 
@@ -51,7 +51,7 @@ class DocumentDataPersister implements DataPersisterInterface
      */
     public function remove($data)
     {
-        /** @var Document $data */
+        /** @var IndexDocument $data */
         // Todo: not working, documents parameter should be added.
         $this->documentRepository->delete($data->getIndexName(), $data->getDocuments());
     }
