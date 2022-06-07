@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Elasticsuite\Search\Elasticsearch\Adapter\Common\Response;
 
 use Elasticsuite\Search\Elasticsearch\ResponseInterface;
+use Elasticsuite\Search\Model\Document;
 
 // use Elasticsuite\Search\Adapter\Elasticsearch\Response\AggregationFactory;
 // use Elasticsuite\Search\Adapter\Elasticsearch\Response\MetricFactory;
@@ -31,9 +32,14 @@ class QueryResponse implements ResponseInterface
     protected array $documents = [];
 
     /**
-     * Documents count.
+     * Documents count in response.
      */
     protected int $count = 0;
+
+    /**
+     * Total documents count.
+     */
+    protected int $totalItems = 0;
 
     /**
      * Aggregations collection.
@@ -77,6 +83,11 @@ class QueryResponse implements ResponseInterface
         return $this->count;
     }
 
+    public function getTotalItems(): int
+    {
+        return $this->totalItems;
+    }
+
     /**
      * Build document list from the engine raw search response.
      *
@@ -94,10 +105,11 @@ class QueryResponse implements ResponseInterface
             foreach ($hits as $hit) {
                 $this->documents[] = new Document($hit);
             }
+            $this->count = \count($this->documents);
 
-            $this->count = \is_array($searchResponse['hits']['total'])
-                ? $searchResponse['hits']['total']['value']
-                : $searchResponse['hits']['total'];
+            $this->totalItems = \is_array($searchResponse['hits']['total'])
+                ? ($searchResponse['hits']['total']['value'] ?? 0)
+                : ($searchResponse['hits']['total'] ?? 0);
         }
     }
 }
