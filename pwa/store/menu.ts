@@ -1,16 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-interface MenuChild {
+export interface MenuChild {
   code: string
   label: string
   children: MenuChild[]
 }
 
-interface Menu {
+export interface Menu {
   hierarchy: MenuChild[]
 }
 
-interface MenuState {
+export interface MenuState {
   menu: Menu
   menuItemActive: string
   sidebarState: boolean
@@ -61,3 +61,9 @@ export const {
   setSidebarStateTimeout,
 } = menuSlice.actions
 export const menuReducer = menuSlice.reducer
+
+export const selectChildrenState = (state, code: string) => state.menu.childrenState[code]
+export const selectMenu = (state) => state.menu.menu
+export const selectMenuItemActive = (state) => state.menu.menuItemActive
+export const selectSidebarState = (state) => state.menu.sidebarState
+export const selectSidebarStateTimeout = (state) => state.menu.sidebarStateTimeout

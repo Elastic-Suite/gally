@@ -2,7 +2,7 @@ import IonIcon from '~/components/atoms/IonIcon'
 import { makeStyles } from '@mui/styles'
 import { Theme } from '@mui/material/styles'
 import Link from 'next/link'
-import { useAppSelector } from '~/store'
+import { selectMenuItemActive, selectSidebarState, selectSidebarStateTimeout, useAppSelector } from '~/store'
 
 /*
  * Use of mui makeStyles to create multiple styles reusing theme fm react-admin
@@ -118,12 +118,9 @@ const useStyles = makeStyles((theme: Theme) => ({
 }))
 
 const MenuItemIcon = (props) => {
-  const menuItemActive =
-    useAppSelector((state) => state.menu.menuItemActive) || ''
-  const sidebarState = useAppSelector((state) => state.menu.sidebarState)
-  const sidebarStateTimeout = useAppSelector(
-    (state) => state.menu.sidebarStateTimeout
-  )
+  const menuItemActive = useAppSelector(selectMenuItemActive) || ''
+  const sidebarState = useAppSelector(selectSidebarState)
+  const sidebarStateTimeout = useAppSelector(selectSidebarStateTimeout)
 
   const words = menuItemActive.split('_')
   const wordIndexOne = words[0]
