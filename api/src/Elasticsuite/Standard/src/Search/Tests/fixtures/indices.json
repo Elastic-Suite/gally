@@ -1,0 +1,93 @@
+[
+  {
+    "name": "elasticsuite_test_b2c_en_category_20210429_173000",
+    "settings": {
+      "aliases": {
+        ".catalog_2": { "is_hidden": true },
+        ".entity_category": { "is_hidden": true }
+      },
+      "mappings": {
+        "properties": {
+          "name": {
+            "type": "text"
+          },
+          "parent": {
+            "type": "text"
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "elasticsuite_test_b2b_fr_category_20220429_173000",
+    "alias": "elasticsuite_b2b_fr_category",
+    "settings": {
+      "aliases": {
+        ".catalog_4": { "is_hidden": true },
+        ".entity_category": { "is_hidden": true }
+      },
+      "mappings": {
+        "properties": {
+          "name": {
+            "type": "text"
+          },
+          "parent": {
+            "type": "text"
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "elasticsuite_test_b2c_en_product_20220429_153000",
+    "alias": "elasticsuite_b2c_en_product",
+    "settings": {
+      "aliases": {
+        ".catalog_2": { "is_hidden": true },
+        ".entity_product": { "is_hidden": true }
+      },
+      "mappings": {
+        "properties": {
+          "name": {
+            "type": "text"
+          },
+          "length": {
+            "type": "integer"
+          },
+          "size": {
+            "type": "integer"
+          },
+          "weight": {
+            "type": "integer"
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "elasticsuite_test_b2b_fr_product_20220601_171005",
+    "alias": "elasticsuite_b2b_fr_product",
+    "settings": {
+      "aliases": {
+        ".catalog_4": { "is_hidden": true },
+        ".entity_product": { "is_hidden": true }
+      },
+      "mappings": {
+        "properties": {
+          "name": {
+            "type": "text"
+          },
+          "length": {
+            "type": "integer"
+          },
+          "size": {
+            "type": "integer"
+          },
+          "weight": {
+            "type": "integer"
+          }
+        }
+      }
+    }
+  }
+]

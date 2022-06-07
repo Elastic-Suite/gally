@@ -14,16 +14,14 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\Search\Elasticsearch;
+namespace Elasticsuite\Search\Resolver;
 
-interface ResponseInterface extends \IteratorAggregate, \Countable
+use ApiPlatform\Core\GraphQl\Resolver\QueryCollectionResolverInterface;
+
+class DummyDocumentResolver implements QueryCollectionResolverInterface
 {
-    /**
-     * Returns the total number of documents in the response.
-     */
-    public function getTotalItems(): int;
-
-    // public function getAggregations(): array;
-
-    // public function getMetrics(): array;
+    public function __invoke(iterable $collection, array $context): iterable
+    {
+        return $collection;
+    }
 }

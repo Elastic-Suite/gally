@@ -21,7 +21,22 @@ interface DocumentInterface
     /**
      * Get document ID.
      */
-    public function getId(): string;
+    public function getId(): ?string;
+
+    /**
+     * Get document internal ID.
+     */
+    public function getInternalId(): string;
+
+    /**
+     * Get document index name.
+     */
+    public function getIndex(): string;
+
+    /**
+     * Get document type.
+     */
+    public function getType(): string;
 
     /**
      * Get document score if defined or 0.
