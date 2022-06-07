@@ -1,2 +1,4 @@
+export * from './docsJson'
+export * from './docsJsonld'
 export * from './fetch'
-export * from './jsonld'
+export * from './hydra'
