@@ -26,3 +26,8 @@ Elasticsuite\Metadata\Model\SourceField:
         defaultLabel: 'Stock quantity'
         type: 'float'
         isSystem: true
+    category_id:
+        metadata: '@category'
+        code: 'id'
+        type: 'int'
+        isSystem: true

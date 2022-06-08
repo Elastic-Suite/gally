@@ -260,6 +260,10 @@ services:
         public: true
         lazy: true
         arguments: [!tagged_iterator { tag: 'elasticsuite.search.request.query.assembler', index_by: 'queryType' }]
+    
+    Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\SortOrder\Assembler:
+        arguments:
+            - '@Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Query\Assembler'
 
     elasticsuite.search.container.configuration.factory:
         parent: Elasticsuite\DependencyInjection\GenericFactory
@@ -267,6 +271,9 @@ services:
             - 'Elasticsuite\Search\Elasticsearch\Request'
 
     Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationFactoryInterface: '@elasticsuite.search.container.configuration.factory'
+
+    Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\GenericContainerConfigurationFactory:
+        public: false
 
     elasticsuite.search.request.factory:
         class: Elasticsuite\Search\Elasticsearch\RequestFactory
@@ -279,14 +286,27 @@ services:
         arguments:
             - '@Elasticsuite\Search\Elasticsearch\Request\QueryFactory'
 
+    Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder:
+        arguments:
+            - '@Elasticsuite\Search\Elasticsearch\Request\QueryFactory'
+
+    Elasticsuite\Search\Elasticsearch\Builder\Request\SortOrder\SortOrderBuilder:
+        arguments:
+            - '@Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
+
     Elasticsuite\Search\Elasticsearch\Builder\Request\SimpleRequestBuilder:
         arguments:
             - '@Elasticsuite\Search\Elasticsearch\RequestFactoryInterface'
             - '@Elasticsuite\Search\Elasticsearch\Builder\Request\Query\QueryBuilder'
+            - '@Elasticsuite\Search\Elasticsearch\Builder\Request\SortOrder\SortOrderBuilder'
+            - '@Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\GenericContainerConfigurationFactory'
+            - '@Elasticsuite\Index\Service\IndexSettings'
+            - '@Elasticsuite\Index\Service\MetadataManager'
 
     Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Mapper:
         arguments:
             - '@Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Query\Assembler'
+            - '@Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\SortOrder\Assembler'
 
     Elasticsuite\Search\Elasticsearch\Adapter:
         arguments:
@@ -294,12 +314,20 @@ services:
             - '@api_platform.elasticsearch.client'
             - '@logger'
 
+    Elasticsuite\Search\Type\Definition\SortEnumType:
+        tags:
+            - { name: api_platform.graphql.type }
+
+    Elasticsuite\Search\Type\Definition\SortInputType:
+        tags:
+            - { name: api_platform.graphql.type }
+
     Elasticsuite\Search\DataProvider\DocumentDataProvider:
         arguments:
             - '@serializer'
             - '@api_platform.pagination'
             - '@Elasticsuite\Metadata\Repository\MetadataRepository'
-            - '@Elasticsuite\Index\Service\IndexSettings'
+            - '@Elasticsuite\Catalog\Repository\LocalizedCatalogRepository'
             - '@Elasticsuite\Search\Elasticsearch\Builder\Request\SimpleRequestBuilder'
             - '@Elasticsuite\Search\Elasticsearch\Adapter'
         tags:

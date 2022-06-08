@@ -118,9 +118,9 @@ class FacetConfigurationTest extends AbstractTest
             [
                 null,
                 [
-                    ['sourceField' => 3, 'coverageRate' => 0],
-                    ['sourceField' => 4],
-                    ['sourceField' => 5],
+                    ['sourceField' => 3, 'coverageRate' => 0], // product_brand.
+                    ['sourceField' => 4], // product_color.
+                    ['sourceField' => 5], // product_length.
                 ],
             ],
             [

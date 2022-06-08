@@ -18,7 +18,6 @@ namespace Elasticsuite\Search\Elasticsearch;
 
 use Elasticsuite\Search\Elasticsearch\Request\BucketInterface;
 use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
-use Elasticsuite\Search\Elasticsearch\Request\SortOrderInterface;
 
 /**
  * ElasticSuite search requests interface.
@@ -72,9 +71,7 @@ interface RequestInterface
     public function getFilter(): ?QueryInterface;
 
     /**
-     * Request sort order.
-     *
-     * @return SortOrderInterface[]
+     * Request sort order specifications.
      */
     public function getSortOrders(): array;
 

@@ -17,9 +17,9 @@ declare(strict_types=1);
 namespace Elasticsuite\Search\Elasticsearch\Adapter\Common\Request;
 
 use Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Query\Assembler as QueryAssembler;
+use Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\SortOrder\Assembler as SortOrderAssembler;
 use Elasticsuite\Search\Elasticsearch\RequestInterface;
 
-// use Elasticsuite\Search\Adapter\Elasticsearch\Request\SortOrder\Assembler as SortOrderAssembler;
 // use Elasticsuite\Search\Adapter\Elasticsearch\Request\Aggregation\Assembler as AggregationAssembler;
 
 /**
@@ -29,27 +29,27 @@ class Mapper
 {
     private QueryAssembler $queryAssembler;
 
-    // private SortOrderAssembler $sortOrderAssembler;
+    private SortOrderAssembler $sortOrderAssembler;
 
     // private AggregationAssembler $aggregationAssembler;
 
     /**
      * Constructor.
-     * TODO support $sortOrderAssembler and $aggregationAssembler.
+     * TODO support $aggregationAssembler.
      *
-     * @param QueryAssembler $queryAssembler Adapter query assembler
+     * @param QueryAssembler     $queryAssembler     Adapter query assembler
+     * @param SortOrderAssembler $sortOrderAssembler Adapter sort orders assembler
      *
-     * -param SortOrderAssembler   $sortOrderAssembler   Adapter sort orders assembler
      * -param AggregationAssembler $aggregationAssembler Adapter aggregations assembler
      */
     public function __construct(
-        QueryAssembler $queryAssembler/* ,
-        SortOrderAssembler $sortOrderAssembler,
+        QueryAssembler $queryAssembler,
+        SortOrderAssembler $sortOrderAssembler/*,
         AggregationAssembler $aggregationAssembler */
     ) {
         $this->queryAssembler = $queryAssembler;
+        $this->sortOrderAssembler = $sortOrderAssembler;
         /*
-        $this->sortOrderAssembler   = $sortOrderAssembler;
         $this->aggregationAssembler = $aggregationAssembler;
         */
     }
@@ -129,14 +129,13 @@ class Mapper
      */
     private function getSortOrders(RequestInterface $request): array
     {
-        return $sortOrders = [];
-        /*
+        $sortOrders = [];
+
         if ($request->getSortOrders()) {
             $sortOrders = $this->sortOrderAssembler->assembleSortOrders($request->getSortOrders());
         }
 
         return $sortOrders;
-        */
     }
 
     /*
