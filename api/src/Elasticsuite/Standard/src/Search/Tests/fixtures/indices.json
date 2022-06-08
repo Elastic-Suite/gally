@@ -74,6 +74,9 @@
       },
       "mappings": {
         "properties": {
+          "id": {
+            "type": "integer"
+          },
           "name": {
             "type": "text"
           },
@@ -85,6 +88,20 @@
           },
           "weight": {
             "type": "integer"
+          },
+          "price": {
+            "type": "nested",
+            "properties": {
+              "group_id": {
+                "type": "integer"
+              },
+              "base_price": {
+                "type": "double"
+              },
+              "final_price": {
+                "type": "double"
+              }
+            }
           }
         }
       }

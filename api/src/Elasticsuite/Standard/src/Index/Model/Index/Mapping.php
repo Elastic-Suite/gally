@@ -34,6 +34,10 @@ class Mapping implements MappingInterface
     public function __construct(array $fields = [])
     {
         $this->fields = $this->prepareFields($fields);
+
+        if (!isset($this->fields[self::ID_FIELD])) {
+            throw new \InvalidArgumentException(sprintf('Invalid id field %s : field is not declared.', self::ID_FIELD));
+        }
     }
 
     public function asArray(): array
@@ -64,6 +68,11 @@ class Mapping implements MappingInterface
         }
 
         return $this->fields[$name];
+    }
+
+    public function getIdField(): FieldInterface
+    {
+        return $this->getField(self::ID_FIELD);
     }
 
     /**

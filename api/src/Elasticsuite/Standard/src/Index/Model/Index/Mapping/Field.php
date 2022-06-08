@@ -16,6 +16,8 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Index\Model\Index\Mapping;
 
+use Elasticsuite\Search\Elasticsearch\Request\SortOrderInterface;
+
 /**
  * Default implementation for ES mapping field (Smile\ElasticsuiteCore\Api\Index\Mapping\FieldInterface).
  */
@@ -33,6 +35,8 @@ class Field implements FieldInterface
         'is_used_for_sort_by' => false,
         'is_used_in_spellcheck' => false,
         'search_weight' => 1,
+        'default_search_analyzer' => self::ANALYZER_STANDARD,
+        'filter_logical_operator' => self::FILTER_LOGICAL_OPERATOR_OR,
     ];
 
     /**
@@ -115,5 +119,75 @@ class Field implements FieldInterface
     public function getMappingPropertyConfig(): array
     {
         return ['type' => $this->getType()];
+    }
+
+    public function getMappingProperty(string $analyzer = self::ANALYZER_UNTOUCHED): ?string
+    {
+        $fieldName = $this->getName();
+        $propertyName = $fieldName;
+        $property = $this->getMappingPropertyConfig();
+
+        if (isset($property['fields'])) {
+            $propertyName = null;
+
+            if (isset($property['fields'][$analyzer])) {
+                $property = $property['fields'][$analyzer];
+                $propertyName = sprintf('%s.%s', $fieldName, $analyzer);
+            }
+        }
+
+        if (!$this->checkAnalyzer($property, $analyzer)) {
+            $propertyName = null;
+        }
+
+        return $propertyName;
+    }
+
+    public function getDefaultSearchAnalyzer(): string
+    {
+        return $this->config['default_search_analyzer'];
+    }
+
+    public function getSortMissing(string $direction = SortOrderInterface::SORT_ASC): mixed
+    {
+        $direction = strtolower($direction);
+
+        $missing = SortOrderInterface::SORT_ASC === $direction ? SortOrderInterface::MISSING_LAST : SortOrderInterface::MISSING_FIRST;
+
+        if (SortOrderInterface::SORT_ASC === $direction && isset($this->config['sort_order_asc_missing'])) {
+            $missing = $this->config['sort_order_asc_missing'];
+        } elseif (SortOrderInterface::SORT_DESC === $direction && isset($this->config['sort_order_desc_missing'])) {
+            $missing = $this->config['sort_order_desc_missing'];
+        }
+
+        return $missing;
+    }
+
+    public function getFilterLogicalOperator(): int
+    {
+        return (int) $this->config['filter_logical_operator'];
+    }
+
+    /**
+     * Check if an ES property has the right analyzer.
+     *
+     * @param array  $property         ES Property
+     * @param string $expectedAnalyzer Analyzer expected for the property
+     */
+    private function checkAnalyzer(array $property, string $expectedAnalyzer): bool
+    {
+        $isAnalyzerCorrect = true;
+
+        if (self::FIELD_TYPE_TEXT === $property['type'] || self::FIELD_TYPE_KEYWORD === $property['type']) {
+            $isAnalyzed = self::ANALYZER_UNTOUCHED !== $expectedAnalyzer;
+
+            if ($isAnalyzed && (!isset($property['analyzer']) || $property['analyzer'] !== $expectedAnalyzer)) {
+                $isAnalyzerCorrect = false;
+            } elseif (!$isAnalyzed && self::FIELD_TYPE_KEYWORD !== $property['type']) {
+                $isAnalyzerCorrect = false;
+            }
+        }
+
+        return $isAnalyzerCorrect;
     }
 }

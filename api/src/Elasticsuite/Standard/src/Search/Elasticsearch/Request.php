@@ -29,10 +29,7 @@ class Request implements RequestInterface
 
     protected QueryInterface $query;
 
-    /**
-     * @var SortOrderInterface[]|null
-     */
-    private array|null $sortOrders;
+    private array $sortOrders;
 
     private ?QueryInterface $filter;
 
@@ -81,7 +78,7 @@ class Request implements RequestInterface
         $this->index = $indexName;
         $this->query = $query;
         $this->filter = $filter;
-        $this->sortOrders = $sortOrders;
+        $this->sortOrders = $sortOrders ?? [];
         $this->from = $from;
         $this->size = $size;
         $this->buckets = $buckets;

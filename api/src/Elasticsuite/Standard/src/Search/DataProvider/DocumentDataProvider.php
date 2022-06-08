@@ -20,10 +20,11 @@ use ApiPlatform\Core\DataProvider\ContextAwareCollectionDataProviderInterface;
 use ApiPlatform\Core\DataProvider\Pagination;
 use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
 use ApiPlatform\Core\Exception\InvalidArgumentException;
-use Elasticsuite\Index\Api\IndexSettingsInterface;
+use Elasticsuite\Catalog\Repository\LocalizedCatalogRepository;
 use Elasticsuite\Metadata\Repository\MetadataRepository;
 use Elasticsuite\Search\Elasticsearch\Adapter;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\SimpleRequestBuilder as RequestBuilder;
+use Elasticsuite\Search\Elasticsearch\Request\SortOrderInterface;
 use Elasticsuite\Search\Model\Document;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
@@ -33,7 +34,7 @@ class DocumentDataProvider implements ContextAwareCollectionDataProviderInterfac
         private DenormalizerInterface $denormalizer,
         private Pagination $pagination,
         private MetadataRepository $metadataRepository,
-        private IndexSettingsInterface $indexSettings,
+        private LocalizedCatalogRepository $catalogRepository,
         private RequestBuilder $requestBuilder,
         private Adapter $adapter,
     ) {
@@ -61,18 +62,32 @@ class DocumentDataProvider implements ContextAwareCollectionDataProviderInterfac
         if (null === $metadata->getEntity()) {
             throw new InvalidArgumentException(sprintf('Entity type [%s] is not defined', $entityType));
         }
+        if (is_numeric($catalogId)) {
+            $catalog = $this->catalogRepository->find($catalogId);
+        } else {
+            $catalog = $this->catalogRepository->findOneBy(['code' => $catalogId]);
+        }
+        if (null === $catalog) {
+            throw new InvalidArgumentException(sprintf('Missing catalog [%s]', $catalogId));
+        }
 
-        $indexName = $this->indexSettings->getIndexAliasFromIdentifier(
-            $metadata->getEntity(),
-            $catalogId
-        );
+        $sortOrders = [];
+        if (\array_key_exists('sort', $context['filters'])) {
+            $field = $context['filters']['sort']['field'];
+            $direction = $context['filters']['sort']['direction'] ?? SortOrderInterface::DEFAULT_SORT_DIRECTION;
+            $sortOrders = [$field => ['direction' => $direction]];
+        }
+
         $limit = $this->pagination->getLimit($resourceClass, $operationName, $context);
         $offset = $this->pagination->getOffset($resourceClass, $operationName, $context);
 
         $request = $this->requestBuilder->create(
-            $indexName,
+            $metadata,
+            $catalog->getId(),
             $offset,
             $limit,
+            null,
+            $sortOrders
         );
         $response = $this->adapter->search($request);
 

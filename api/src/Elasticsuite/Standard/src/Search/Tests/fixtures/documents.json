@@ -95,69 +95,92 @@
         "entity_id": "1",
         "sku": "24-MB01",
         "name": "Sac de sport Jout",
-        "size" : 12
+        "size" : 12,
+        "price": [
+          {"group_id": 0, "base_price": 11.99, "final_price": 10.99},
+          {"group_id": 1, "base_price": 11.99, "final_price": 10.99}
+        ]
       },
       {
+        "id": "2",
         "entity_id": "2",
         "sku": "24-MB04",
         "name": "Sac à bandoulière Strive",
-        "size" : 5
+        "size" : 5,
+        "price": [
+          {"group_id": 0, "base_price": 17.99, "final_price": 8.99},
+          {"group_id": 1, "base_price": 17.99, "final_price": 17.99}
+        ]
       },
       {
+        "id": "3",
         "entity_id": "3",
         "sku": "24-MB03",
         "name": "Sac à dos Crown Summit",
-        "size" : 8
+        "size" : 8,
+        "price": [
+          {"group_id": 0, "base_price": 25.99, "final_price": 25.99},
+          {"group_id": 1, "base_price": 25.99, "final_price": 20.99}
+        ]
       },
       {
+        "id": "4",
         "entity_id": "4",
         "sku": "24-MB05",
         "name": "Sac messager Wayfarer",
         "size" : 7
       },
       {
+        "id": "5",
         "entity_id": "5",
         "sku": "24-MB06",
         "name": "Messager de terrain rival",
         "size" : 2
       },
       {
+        "id": "6",
         "entity_id": "6",
         "sku": "24-MB02",
         "name": "Sac à dos Fusion",
         "size" : 9
       },
       {
+        "id": "7",
         "entity_id": "7",
         "sku": "24-UB02",
         "name": "Sac de sport Impulse",
         "size" : 11
       },
       {
+        "id": "8",
         "entity_id": "8",
         "sku": "24-WB01",
         "name": "Sac de voyage Yoga",
         "size" : 4
       },
       {
+        "id": "9",
         "entity_id": "9",
         "sku": "24-WB02",
         "name": "Fourre-tout Compete Track",
         "size" : 11
       },
       {
+        "id": "10",
         "entity_id": "10",
         "sku": "24-WB05",
         "name": "Fourre-tout à bandoulière avisé",
         "size" : 2
       },
       {
+        "id": "11",
         "entity_id": "11",
         "sku": "24-WB06",
         "name": "Sac à dos d'excursion d'une journée Endeavour",
         "size" : 5
       },
       {
+        "id": "12",
         "entity_id": "12",
         "sku": "24-WB03",
         "name": "Sac à dos piloté",
