@@ -1,7 +1,7 @@
 import jwtDecode from 'jwt-decode'
 import { ENTRYPOINT } from 'config/entrypoint'
 
-export default {
+const authProvider = {
   login: ({ username, password }) => {
     const request = new Request(`${ENTRYPOINT}/authentication_token`, {
       method: 'POST',
@@ -19,7 +19,7 @@ export default {
         localStorage.setItem('token', token)
         // @Todo: Ugly fix awaiting the real front of the application.
         // Allows to reload the page after the authentication, to avoid infinite loading message.
-        location.reload()
+        window.location.reload()
       })
   },
   logout: () => {
@@ -31,8 +31,8 @@ export default {
       if (
         !localStorage.getItem('token') ||
         new Date().getTime() / 1000 >
-          // @ts-ignore
-          jwtDecode(localStorage.getItem('token'))?.exp
+          (jwtDecode(localStorage.getItem('token')) as Record<string, number>)
+            ?.exp
       ) {
         return Promise.reject()
       }
@@ -51,3 +51,5 @@ export default {
   },
   getPermissions: () => Promise.resolve(),
 }
+
+export default authProvider

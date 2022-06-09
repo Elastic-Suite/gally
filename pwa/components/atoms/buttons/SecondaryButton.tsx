@@ -1,8 +1,9 @@
 import Button from '@mui/material/Button'
 import useCommonButtonStyle from '~/components/atoms/buttons/CommonButtonStyle'
 import { makeStyles } from '@mui/styles'
+import { Theme } from '@mui/material/styles'
 
-const useSecondaryButtonStyle = makeStyles((theme) => ({
+const useSecondaryButtonStyle = makeStyles((theme: Theme) => ({
   root: {
     color: theme.palette.colors.secondary['600'],
     background: theme.palette.colors.secondary['100'],

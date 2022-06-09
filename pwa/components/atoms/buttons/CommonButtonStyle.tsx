@@ -1,6 +1,7 @@
 import { makeStyles } from '@mui/styles'
+import { Theme } from '@mui/material/styles'
 
-const useCommonButtonStyle = makeStyles((theme) => ({
+const useCommonButtonStyle = makeStyles((theme: Theme) => ({
   root: {
     color: theme.palette.colors.white,
     lineHeight: '24px',
@@ -48,7 +49,7 @@ const useCommonButtonStyle = makeStyles((theme) => ({
       backgroundColor: theme.palette.colors.primary['600'],
     },
     '&& .MuiTouchRipple-rippleVisible': {
-      animationName: `$buttonEnterKeyframe`,
+      animationName: '$buttonEnterKeyframe',
       animationDuration: '500ms',
     },
     '&.Mui-disabled': {

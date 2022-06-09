@@ -5,11 +5,12 @@ module.exports = {
     node: true,
   },
   extends: [
-    'eslint:recommended',
-    'react/recommended',
-    'react-app:jest',
-    'plugin:@typescript-eslint/recommended',
+    'react-app',
+    'react-app/jest',
     'prettier',
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:@next/next/recommended',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -21,8 +22,6 @@ module.exports = {
   },
   plugins: ['react', '@typescript-eslint'],
   rules: {
-    semi: ['warn', 'always'],
-    quotes: ['error', 'double'],
-    'no-console': 0,
+    'jsx-a11y/anchor-is-valid': 0,
   },
 }

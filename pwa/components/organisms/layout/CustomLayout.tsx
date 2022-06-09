@@ -1,13 +1,15 @@
-import {
-  Notification,
-  LayoutComponent,
-  useSidebarState,
-  useStore,
-} from 'react-admin'
 import IonIcon from 'components/atoms/IonIcon'
 import { makeStyles } from '@mui/styles'
+import { Theme } from '@mui/material/styles'
 import CustomSidebar from '~/components/molecules/layout/CustomSidebar'
 import { StyledEngineProvider } from '@mui/styled-engine'
+import {
+  selectSidebarState,
+  setSidebarState,
+  setSidebarStateTimeout,
+  useAppDispatch,
+  useAppSelector,
+} from '~/store'
 
 /*
  * TODO: THIBO: Update AppBar
@@ -19,7 +21,7 @@ import { StyledEngineProvider } from '@mui/styled-engine'
  * Use of mui makeStyles to create multiple styles reusing theme fm react-admin
  * see: https://mui.com/system/styles/basics/
  */
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
@@ -83,15 +85,15 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   toClose: {
-    left: `calc(66px - 16px)`,
+    left: 'calc(66px - 16px)',
     transition: 'left linear',
   },
   toOpen: {
-    left: `calc(279px - 16px)`,
+    left: 'calc(279px - 16px)',
     transition: 'left linear',
   },
 }))
-const useStylesAppBar = makeStyles((theme) => ({
+const useStylesAppBar = makeStyles((theme: Theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'row',
@@ -102,18 +104,11 @@ const useStylesAppBar = makeStyles((theme) => ({
   },
 }))
 /*
- * Component CustomLayout with type LayoutComponent
+ * Component CustomLayout
  */
-const CustomLayout: LayoutComponent = ({ children, title }) => {
-  /*
-   * useStore from ReactAdmin to store data globally
-   * see: https://marmelab.com/react-admin/doc/4.0/Store.html
-   */
-  const [sidebarState, setSidebarState] = useSidebarState()
-  const [sidebarStateTimeout, setSidebarStateTimeout] = useStore(
-    'sidebarStateTimeout',
-    sidebarState
-  )
+const CustomLayout = ({ children }) => {
+  const dispatch = useAppDispatch()
+  const sidebarState = useAppSelector(selectSidebarState)
 
   const classes = useStyles()
   const appbar = useStylesAppBar()
@@ -124,12 +119,12 @@ const CustomLayout: LayoutComponent = ({ children, title }) => {
   const collapseSidebar = () => {
     if (sidebarState) {
       setTimeout(() => {
-        setSidebarState(!sidebarState)
+        dispatch(setSidebarState(!sidebarState))
       }, 500)
     } else {
-      setSidebarState(!sidebarState)
+      dispatch(setSidebarState(!sidebarState))
     }
-    setSidebarStateTimeout(sidebarState)
+    dispatch(setSidebarStateTimeout(sidebarState))
   }
 
   return (
@@ -161,7 +156,7 @@ const CustomLayout: LayoutComponent = ({ children, title }) => {
             </div>
             <div className={classes.content}>{children}</div>
           </div>
-          <Notification />
+          {/*<Notification /> TODO: Set here Notification component*/}
         </div>
       </div>
     </StyledEngineProvider>
