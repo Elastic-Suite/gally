@@ -6,62 +6,62 @@ $black: #000;
 
 //Primary
 
-$primary: #ED7465;
-$primary-100: #FFE7E4;
-$primary-200: #FBC0B9;
-$primary-300: #F3978C;
-$primary-400: #ED7465;
-$primary-500: #E64733;
-$primary-600: #CC2D19;
-$primary-700: #A02213;
-$primary-800: #73170C;
-$primary-900: #460C05;
+$primary: #ed7465;
+$primary-100: #ffe7e4;
+$primary-200: #fbc0b9;
+$primary-300: #f3978c;
+$primary-400: #ed7465;
+$primary-500: #e64733;
+$primary-600: #cc2d19;
+$primary-700: #a02213;
+$primary-800: #73170c;
+$primary-900: #460c05;
 
 //Secondary
 
-$secondary: #2C19CD;
-$secondary-100: #E7E8FF;
-$secondary-200: #BABDFC;
-$secondary-300: #8D8DF3;
-$secondary-400: #6460ED;
-$secondary-500: #3F32E6;
-$secondary-600: #2C19CD;
-$secondary-700: #1812A0;
-$secondary-800: #0D1274;
-$secondary-900: #070F47;
+$secondary: #2c19cd;
+$secondary-100: #e7e8ff;
+$secondary-200: #babdfc;
+$secondary-300: #8d8df3;
+$secondary-400: #6460ed;
+$secondary-500: #3f32e6;
+$secondary-600: #2c19cd;
+$secondary-700: #1812a0;
+$secondary-800: #0d1274;
+$secondary-900: #070f47;
 
 //Neutral
 
-$neutral-100: #FAFBFE;
-$neutral-200: #F4F7FF;
-$neutral-300: #E2E6F3;
-$neutral-400: #B5B9D9;
-$neutral-500: #8187B9;
+$neutral-100: #fafbfe;
+$neutral-200: #f4f7ff;
+$neutral-300: #e2e6f3;
+$neutral-400: #b5b9d9;
+$neutral-500: #8187b9;
 $neutral-600: #424880;
-$neutral-700: #2F3674;
+$neutral-700: #2f3674;
 $neutral-800: #212250;
-$neutral-900: #151A47;
+$neutral-900: #151a47;
 
 //System
 
-$success-strong: #18753C;
-$success-light: #E7F4EC;
-$warning-strong: #60590D;
-$warning-light: #FEF9D0;
-$error-strong: #A02213;
-$error-light: #FFE7E4;
+$success-strong: #18753c;
+$success-light: #e7f4ec;
+$warning-strong: #60590d;
+$warning-light: #fef9d0;
+$error-strong: #a02213;
+$error-light: #ffe7e4;
 
 //Gradient
 
-$gradient: linear-gradient(46.78deg, #E64733 1.79%, #ED7465 98.88%);
-$gradient-darken: linear-gradient(46.78deg, #CC2D19 1.79%, #E64733 98.88%);
+$gradient: linear-gradient(46.78deg, #e64733 1.79%, #ed7465 98.88%);
+$gradient-darken: linear-gradient(46.78deg, #cc2d19 1.79%, #e64733 98.88%);
 
 // Override specific tags on their colors
 
 a {
-  color: inherit;
+    color: inherit;
 }
 
 a:hover {
-  color: inherit;
+    color: inherit;
 }

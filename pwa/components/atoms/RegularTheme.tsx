@@ -1,8 +1,7 @@
 import { createTheme } from '@mui/material/styles'
-import { defaultTheme } from 'react-admin'
 import { keyframes } from '@emotion/react'
 
-declare module '@mui/material/styles/createPalette' {
+declare module '@mui/material/styles' {
   interface Palette {
     neutral: Palette['primary']
     menu: {
@@ -159,7 +158,6 @@ export const buttonEnterKeyframe = keyframes`
  * see : https://mui.com/customization/theming/
  */
 const regularTheme = createTheme({
-  ...defaultTheme,
   palette: {
     primary: {
       light: '#FBC0B9',

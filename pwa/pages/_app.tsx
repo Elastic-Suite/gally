@@ -1,3 +1,4 @@
+import { FunctionComponent } from 'react'
 import type { AppProps } from 'next/app'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'
@@ -5,6 +6,10 @@ import 'assets/scss/style.scss'
 import dynamic from 'next/dynamic'
 import { Theme, ThemeProvider } from '@mui/material/styles'
 import RegularTheme from '~/components/atoms/RegularTheme'
+import Head from 'next/head'
+import Script from 'next/script'
+import { Provider } from 'react-redux'
+import { store } from '~/store'
 
 /*
  * Resolve for "Prop className did not match" between Server side and Client side
@@ -14,7 +19,7 @@ import RegularTheme from '~/components/atoms/RegularTheme'
 const CustomLayoutWithNoSSR = dynamic(
   () => import('~/components/organisms/layout/CustomLayout'),
   { ssr: false }
-)
+) as FunctionComponent
 
 /*
  * Correction applied to extend Default theme from our theme actually used
@@ -22,22 +27,30 @@ const CustomLayoutWithNoSSR = dynamic(
  */
 
 declare module '@mui/styles/defaultTheme' {
-  interface DefaultTheme extends Theme {}
+  type DefaultTheme = Theme
 }
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp(props: AppProps) {
+  const { pageProps } = props;
+  const Component = props.Component as FunctionComponent
   return (
     <>
-      <ThemeProvider theme={RegularTheme}>
-        <CustomLayoutWithNoSSR>
-          <Component {...pageProps} />
-        </CustomLayoutWithNoSSR>
-      </ThemeProvider>
-      <script
+      <Head>
+        <title>Blink Admin</title>
+      </Head>
+
+      <Provider store={store}>
+        <ThemeProvider theme={RegularTheme}>
+          <CustomLayoutWithNoSSR>
+            <Component {...pageProps} />
+          </CustomLayoutWithNoSSR>
+        </ThemeProvider>
+      </Provider>
+      <Script
         type="module"
         src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js"
       />
-      <script
+      <Script
         noModule
         src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js"
       />
