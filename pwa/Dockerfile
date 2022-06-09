@@ -12,11 +12,9 @@ EXPOSE 3000
 
 WORKDIR /usr/src/pwa
 
-ENV NEXT_TELEMETRY_DISABLED 1
-
 # prevent the reinstallation of node modules at every changes in the source code
 COPY package.json yarn.lock ./
-RUN yarn
+RUN yarn install
 
 COPY . ./
 
@@ -26,9 +24,6 @@ VOLUME /usr/src/pwa/node_modules
 # "development" stage
 # depends on the "common" stage above
 FROM api_platform_pwa_common AS api_platform_pwa_dev
-
-ENV API_PLATFORM_CLIENT_GENERATOR_OUTPUT .
-RUN yarn global add @api-platform/client-generator
 
 CMD ["yarn", "dev"]
 
