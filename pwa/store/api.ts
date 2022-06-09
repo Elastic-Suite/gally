@@ -23,8 +23,8 @@ const initialState: ApiState = {
 
 export const fetchDocs = createAsyncThunk('api/docs.jsonld', async () => {
   const results = await Promise.all([
-    fetch('docs.json').then(response => response.json()),
-    fetch('docs.jsonld').then(response => response.json()),
+    fetch('/docs.json').then(response => response.json()),
+    fetch('/docs.jsonld').then(response => response.json()),
   ])
   return results
 })
