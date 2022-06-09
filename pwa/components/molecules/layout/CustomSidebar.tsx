@@ -92,23 +92,25 @@ const CustomSidebar = (props) => {
       >
         <Link href={'/'} as={'/'}>
           <div className={classes.imgContainer}>
-            <Image
-              src={LogoExtended.src}
-              className={
-                classes.imgExtended +
-                (!sidebarStateTimeout ? '' : ' ' + classes.imgNotActive)
-              }
-              alt={LogoExtended.name}
-              width="104"
-              height="29"
-            />
-            <Image
-              src={LogoCollapse.src}
-              className={classes.imgCollapse}
-              alt={LogoCollapse.name}
-              width="31"
-              height="29"
-            />
+            <div className={
+              classes.imgExtended +
+              (!sidebarStateTimeout ? '' : ' ' + classes.imgNotActive)
+            }>
+              <Image
+                src={LogoExtended.src}
+                alt={LogoExtended.name}
+                width="104"
+                height="29"
+              />
+            </div>
+            <div className={classes.imgCollapse}>
+              <Image
+                src={LogoCollapse.src}
+                alt={LogoCollapse.name}
+                width="31"
+                height="29"
+              />
+            </div>
           </div>
         </Link>
         <CustomMenu
