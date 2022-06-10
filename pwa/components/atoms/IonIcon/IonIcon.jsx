@@ -1,5 +1,16 @@
 import React from 'react'
+import ionIcons from 'ionicons/dist/ionicons.json'
 import home2 from '~/assets/images/home2.svg'
+
+export const customIcons = [
+    'dashboard',
+    'analyze',
+    'merchandize',
+    'monitoring',
+    'settings'
+]
+
+export const icons = ionIcons.icons.map(icon => icon.name).concat(customIcons).sort()
 
 /*
  * Creation of special props to be clean on Typescripts files
