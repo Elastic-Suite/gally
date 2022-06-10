@@ -1,5 +1,5 @@
 import PrimaryButton from '~/components/atoms/buttons/PrimaryButton'
-import IonIcon from '~/components/atoms/IonIcon'
+import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import {
   Grid,
   RadioGroup,
