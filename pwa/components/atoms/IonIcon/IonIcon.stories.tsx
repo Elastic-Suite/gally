@@ -1,9 +1,9 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import IonIcon, { icons } from './IonIcon';
+import { icons } from '../../../constants';
 
-console.log(icons)
+import IonIcon from './IonIcon';
 
 export default {
   title: 'Atoms/IonIcon',
