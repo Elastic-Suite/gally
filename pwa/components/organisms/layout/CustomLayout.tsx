@@ -10,7 +10,7 @@ import {
   useAppDispatch,
   useAppSelector,
 } from '~/store'
-import AppBarMenu from '~/components/molecules/layout/appBar/AppBar'
+import AppBarMenu from '~/components/molecules/layout/appBar/AppBar.tsx'
 
 /*
  * TODO: THIBO: Update AppBar
