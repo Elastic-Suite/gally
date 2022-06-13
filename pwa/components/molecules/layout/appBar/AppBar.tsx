@@ -1,6 +1,6 @@
 import { makeStyles } from '@mui/styles'
 import BreadCrumb from '~/components/atoms/breadcrumb/BreadCrumb.tsx'
-import User from '~/components/atoms/user/User.tsx'
+import User from '~/components/molecules/layout/user/User.tsx'
 import { Theme } from '@mui/material/styles'
 
 const useStylesAppBar = makeStyles((theme: Theme) => ({
@@ -17,7 +17,7 @@ const useStylesAppBar = makeStyles((theme: Theme) => ({
     right: 0,
     zIndex: '9',
     height: theme.spacing(8),
-    backgroundColor: '#fafafb',
+    backgroundColor: theme.palette.colors.neutral['100'],
     left: 'inherit',
 
     '&::before': {
