@@ -6,7 +6,11 @@ import { Theme } from '@mui/material/styles'
 import { Collapse } from '@mui/material'
 import Link from 'next/link'
 import Image from 'next/image'
-import { selectSidebarState, selectSidebarStateTimeout, useAppSelector } from '~/store'
+import {
+  selectSidebarState,
+  selectSidebarStateTimeout,
+  useAppSelector,
+} from '~/store'
 
 /*
  * Use of mui makeStyles to create multiple styles reusing theme fm react-admin
@@ -92,10 +96,12 @@ const CustomSidebar = (props) => {
       >
         <Link href={'/'} as={'/'}>
           <div className={classes.imgContainer}>
-            <div className={
-              classes.imgExtended +
-              (!sidebarStateTimeout ? '' : ' ' + classes.imgNotActive)
-            }>
+            <div
+              className={
+                classes.imgExtended +
+                (!sidebarStateTimeout ? '' : ' ' + classes.imgNotActive)
+              }
+            >
               <Image
                 src={LogoExtended.src}
                 alt={LogoExtended.name}
