@@ -30,6 +30,8 @@ abstract class AbstractTest extends ApiTestCase
     {
         $databaseTool = static::getContainer()->get(DatabaseToolCollection::class)->get();
         $databaseTool->loadAliceFixture(array_merge(static::getUserFixtures(), $paths));
+        $entityManager = static::getContainer()->get('doctrine')->getManager();
+        $entityManager->clear();
     }
 
     protected static function loadElasticsearchIndexFixtures(array $paths)
