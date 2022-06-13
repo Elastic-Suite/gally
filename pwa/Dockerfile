@@ -12,6 +12,8 @@ EXPOSE 3000
 
 WORKDIR /usr/src/pwa
 
+ENV NEXT_TELEMETRY_DISABLED 1
+
 # prevent the reinstallation of node modules at every changes in the source code
 COPY package.json yarn.lock ./
 RUN yarn install
