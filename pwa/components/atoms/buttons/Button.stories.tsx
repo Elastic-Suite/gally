@@ -1,6 +1,7 @@
 import React from 'react';
 import { ComponentMeta } from '@storybook/react';
-import IonIcon, { icons } from '~/components/atoms/IonIcon/IonIcon'
+import IonIcon from '~/components/atoms/IonIcon/IonIcon'
+import { icons } from '~/constants';
 
 import ButtonsPreview from './ButtonsPreview';
 import PrimaryButton from './PrimaryButton';
