@@ -42,6 +42,11 @@ const useStylesHelp = makeStyles((theme: Theme) => ({
     padding: theme.spacing(1),
     borderColor: theme.palette.colors.neutral['300'],
     cursor: 'pointer',
+    background: theme.palette.colors.white,
+    transition: 'background 500ms',
+    '&:hover': {
+      background: theme.palette.colors.neutral[300],
+    },
     '&::before': {
       content: "''",
       position: 'absolute',
