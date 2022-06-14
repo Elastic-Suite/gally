@@ -12,6 +12,7 @@
 
 # production
 /build
+/storybook-static
 
 # debug
 npm-debug.log*
