@@ -1,5 +1,7 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next';
+
 import { fetchDocs, useAppSelector, useAppDispatch, selectDocs } from '~/store'
 import { LoadStatus } from '~/types'
 
@@ -15,6 +17,7 @@ export async function getStaticPaths() {
 
 /* This page was created through dynamic routes from NextJS : https://nextjs.org/docs/routing/dynamic-routes */
 const Admin = () => {
+  const { t } = useTranslation('common')
   const router = useRouter()
   const { slug } = router.query
 
@@ -36,7 +39,7 @@ const Admin = () => {
 
   return (
     <div>
-      Temporaire ! Voici le slug codifié :{' '}
+      {t('temporary-slug')}{' '}
       {typeof slug !== 'string' ? slug?.join('_') : slug}
     </div>
   )
