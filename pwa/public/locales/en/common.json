@@ -1,3 +1,6 @@
 {
-  "temporary-slug": "Temporary! Here is the coded slug:"
+  "temporary-slug": "Temporary! Here is the coded slug:",
+  "massiveselection.all": "All",
+  "massiveselection.allOnCurrentPage": "All on this page",
+  "massiveselection.none": "None"
 }
