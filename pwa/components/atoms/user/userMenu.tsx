@@ -58,6 +58,11 @@ const useStylesUserMenu = makeStyles((theme: Theme) => ({
     gap: theme.spacing(1),
     borderColor: theme.palette.colors.neutral['300'],
     cursor: 'pointer',
+    background: theme.palette.colors.white,
+    transition: 'background 500ms',
+    '&:hover': {
+      background: theme.palette.colors.neutral[300],
+    },
   },
   userName: {
     color: theme.palette.colors.neutral['800'],
