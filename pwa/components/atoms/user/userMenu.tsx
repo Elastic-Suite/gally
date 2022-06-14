@@ -58,7 +58,7 @@ const useStylesUserMenu = makeStyles((theme: Theme) => ({
     gap: theme.spacing(1),
     borderColor: theme.palette.colors.neutral['300'],
     cursor: 'pointer',
-    background: theme.palette.colors.white,
+    background: theme.palette.background.default,
     transition: 'background 500ms',
     '&:hover': {
       background: theme.palette.colors.neutral[300],
@@ -96,7 +96,7 @@ const useStylesUserMenu = makeStyles((theme: Theme) => ({
     paddingBottom: theme.spacing(1),
     paddingRight: theme.spacing(1.25),
     paddingLeft: theme.spacing(1.25),
-    backgroundColor: theme.palette.background.default,
+    background: theme.palette.background.default,
     width: '206px',
     cursor: 'initial',
   },
