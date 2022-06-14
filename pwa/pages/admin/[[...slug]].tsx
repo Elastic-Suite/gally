@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { fetchDocs, useAppSelector, useAppDispatch, selectDocs } from '~/store'
 import { LoadStatus } from '~/types'
+import ModalsPreview from '~/components/atoms/modals/ModalsPreview'
 
 export async function getStaticProps() {
   return {
@@ -38,6 +39,9 @@ const Admin = () => {
     <div>
       Temporaire ! Voici le slug codifié :{' '}
       {typeof slug !== 'string' ? slug?.join('_') : slug}
+      <br />
+      <br />
+      <ModalsPreview />
     </div>
   )
 }

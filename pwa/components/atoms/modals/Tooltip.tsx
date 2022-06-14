@@ -1,6 +1,4 @@
-import { makeStyles } from '@mui/styles'
-import Button from '@mui/material/Button'
-import { Theme, styled } from '@mui/material/styles'
+import { styled } from '@mui/material/styles'
 import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip'
 import PropTypes from 'prop-types'
 
@@ -13,6 +11,7 @@ const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
     fontSize: 12,
     padding: theme.spacing(2),
     borderRadius: theme.spacing(1),
+    boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',
   },
   [`& .${tooltipClasses.arrow}`]: {
     color: theme.palette.common.white,
@@ -34,6 +33,6 @@ Tooltips.propTypes = {
 }
 
 Tooltips.defaultProps = {
-  placement: 'left', // show all possibility of placement : https://codesandbox.io/s/43zvk1?file=/demo.tsx
+  placement: 'left',
 }
 export default Tooltips

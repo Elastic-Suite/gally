@@ -1,5 +1,6 @@
 import React from 'react'
 import home2 from '~/assets/images/home2.svg'
+import close from '~/assets/images/close.svg'
 
 /*
  * Creation of special props to be clean on Typescripts files
@@ -25,6 +26,10 @@ const IonIcon = (props) => {
         case 'settings':
             icon = <ion-icon name={'settings-outline'} style={props.style} />
             break
+        case 'close':
+            icon = <ion-icon src={close.src} style={props.style} />
+            break
+
         default:
             icon = <ion-icon name={props.name} style={props.style} />
     }
