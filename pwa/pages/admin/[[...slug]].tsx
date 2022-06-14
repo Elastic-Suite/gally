@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
+
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-
-import { fetchDocs, selectDocs, useAppDispatch, useAppSelector } from '~/store'
+import { fetchDocs, useAppSelector, useAppDispatch, selectDocs } from '~/store'
 import { LoadStatus } from '~/types'
 
 export async function getStaticProps() {
