@@ -23,6 +23,9 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Contracts\Cache\TagAwareCacheInterface;
 
+/**
+ * @codeCoverageIgnore
+ */
 class InvalidateTagsInjectedCommand extends Command
 {
     /** @var TagAwareCacheInterface[] */

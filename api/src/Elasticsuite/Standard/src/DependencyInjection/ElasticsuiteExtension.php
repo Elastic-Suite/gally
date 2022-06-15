@@ -27,6 +27,9 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\Yaml\Parser as YamlParser;
 use Symfony\Component\Yaml\Yaml;
 
+/**
+ * @codeCoverageIgnore
+ */
 class ElasticsuiteExtension extends Extension implements PrependExtensionInterface
 {
     /**

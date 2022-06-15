@@ -23,6 +23,9 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * @codeCoverageIgnore
+ */
 class ClearTagsCommand extends Command
 {
     protected static $defaultName = 'elasticsuite:cache:clear-tags';
