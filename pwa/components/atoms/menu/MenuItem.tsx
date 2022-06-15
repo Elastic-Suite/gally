@@ -1,4 +1,4 @@
-import IonIcon from '~/components/atoms/IonIcon'
+import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import { makeStyles } from '@mui/styles'
 import { Theme } from '@mui/material/styles'
 import Collapse from '@mui/material/Collapse'
