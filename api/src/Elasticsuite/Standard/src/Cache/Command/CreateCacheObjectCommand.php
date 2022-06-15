@@ -23,6 +23,9 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * @codeCoverageIgnore
+ */
 class CreateCacheObjectCommand extends Command
 {
     protected static $defaultName = 'elasticsuite:cache:create-cache-object';

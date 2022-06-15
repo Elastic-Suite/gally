@@ -35,6 +35,9 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Contracts\Cache\TagAwareCacheInterface;
 
+/**
+ * @codeCoverageIgnore
+ */
 class InvalidateTagsCommand extends Command
 {
     private array $poolNames;

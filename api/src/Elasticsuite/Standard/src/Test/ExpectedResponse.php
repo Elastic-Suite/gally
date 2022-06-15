@@ -16,6 +16,9 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Standard\src\Test;
 
+/**
+ * @codeCoverageIgnore
+ */
 class ExpectedResponse
 {
     private ?\Closure $validateResponseCallback;

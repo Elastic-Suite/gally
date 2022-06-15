@@ -22,6 +22,9 @@ use Elasticsuite\User\Test\LoginTrait;
 use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
+/**
+ * @codeCoverageIgnore
+ */
 abstract class AbstractTest extends ApiTestCase
 {
     use LoginTrait;
