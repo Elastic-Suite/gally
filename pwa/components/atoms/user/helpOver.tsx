@@ -1,6 +1,6 @@
 import { Theme } from '@mui/material/styles'
 import { makeStyles } from '@mui/styles'
-import IonIcon from '~/components/atoms/IonIcon'
+import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import { useState, useRef } from 'react'
 
 const useStylesHelpOver = makeStyles((theme: Theme) => ({
