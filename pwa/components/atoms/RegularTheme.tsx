@@ -526,6 +526,34 @@ const regularTheme = createTheme({
         },
       },
     },
+    MuiAlert: {
+      styleOverrides: {
+        icon: {
+          display: 'none',
+          marginRight: 0,
+        },
+        message: {
+          padding: 0,
+          fontWeight: 400,
+          fontSize: '12px',
+          lineHeight: '18px',
+        },
+        root: {
+          padding: 16,
+          background: '#F4F7FF',
+          border: '1px solid #E2E6F3',
+          color: '#424880',
+          borderRadius: 8,
+          alignItems: 'center',
+        },
+        action: {
+          paddingLeft: '10px',
+          paddingTop: 0,
+          paddingBottom: 0,
+          paddingRight: 0,
+        },
+      },
+    },
   },
 })
 

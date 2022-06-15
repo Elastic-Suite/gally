@@ -27,6 +27,7 @@ const IonIcon = (props) => {
             return <ion-icon name={'list'} style={props.style} />
         case 'settings':
             return <ion-icon name={'settings-outline'} style={props.style} />
+
         default:
             return <ion-icon name={props.name} style={props.style} />
     }
