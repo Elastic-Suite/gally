@@ -18,6 +18,9 @@ namespace Elasticsuite\Standard\src\Test;
 
 use Elasticsuite\User\Model\User;
 
+/**
+ * @codeCoverageIgnore
+ */
 class RequestToTest
 {
     public function __construct(
