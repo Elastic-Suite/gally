@@ -35,4 +35,5 @@ Tooltips.propTypes = {
 Tooltips.defaultProps = {
   placement: 'left',
 }
+
 export default Tooltips
