@@ -22,6 +22,9 @@ use ApiPlatform\Core\Operation\PathSegmentNameGeneratorInterface;
 use Elasticsuite\User\Model\User;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
+/**
+ * @codeCoverageIgnore
+ */
 abstract class AbstractEntityTest extends AbstractTest
 {
     private PathSegmentNameGeneratorInterface $pathGenerator;
