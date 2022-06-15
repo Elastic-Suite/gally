@@ -1,0 +1,39 @@
+import React, { useState } from 'react'
+import { ComponentStory, ComponentMeta } from '@storybook/react'
+import Tooltips from './Tooltip'
+
+export default {
+  title: 'Atoms/Modals',
+  component: Tooltips,
+  argTypes: {
+    placement: {
+      description: "if position can't be, she",
+      options: [
+        'top-start',
+        'top-end',
+        'left-start',
+        'left-start',
+        'left',
+        'left-end',
+        'right-start',
+        'right',
+        'right-end',
+        'bottom-start',
+        'bottom',
+        'bottom-end',
+      ],
+      control: { type: 'select' },
+    },
+  },
+} as ComponentMeta<typeof Tooltips>
+
+const Template: ComponentStory<typeof Tooltips> = (args) => (
+  <Tooltips {...args} />
+)
+
+export const ToolTips = Template.bind({})
+ToolTips.args = {
+  hoverDesc: 'Les attributs affichés ont été déclarés comme étant filtrables.',
+  placement: 'right',
+  desc: 'Passez votre souris sur moi',
+}
