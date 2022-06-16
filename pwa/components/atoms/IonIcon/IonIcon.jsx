@@ -16,7 +16,7 @@ export const customIcons = [
  * Setup switch for special names that need svg or have another name in ion-icons
  */
 const IonIcon = (props) => {
-    const propsCleaned = {...props}
+    const propsCleaned = { ...props }
     delete propsCleaned.name
     switch (props.name) {
         case 'dashboard':

@@ -80,7 +80,7 @@ export interface DocsJson {
   info: DocsJsonInfo
   servers: DocsJsonServer[]
   paths: Record<string, DocsJsonPath>
-  components: any
+  components: Record<string, unknown>
   security: DocsJsonSecurity[]
   tags: string[]
 }
