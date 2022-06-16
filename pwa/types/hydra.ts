@@ -1,4 +1,4 @@
-import { Method } from "./fetch"
+import { Method } from './fetch'
 
 export enum HydraType {
   ARRAY = 'array',
@@ -40,7 +40,8 @@ export interface HydraPropertyTypeString {
   nullable?: boolean
 }
 
-export type HydraPropertyType = HydraPropertyTypeRef
+export type HydraPropertyType =
+  | HydraPropertyTypeRef
   | HydraPropertyTypeArray
   | HydraPropertyTypeBoolean
   | HydraPropertyTypeInteger
@@ -76,7 +77,9 @@ export interface HydraSupportedOperation extends DocsJsonldType {
 
 export interface HydraProperty extends DocsJsonldBase {
   domain: string
-  'hydra:supportedOperation'?: HydraSupportedOperation | HydraSupportedOperation[]
+  'hydra:supportedOperation'?:
+    | HydraSupportedOperation
+    | HydraSupportedOperation[]
   'owl:maxCardinality'?: number
   range?: string
   'rdfs:label': string
@@ -94,9 +97,11 @@ export interface HydraSupportedProperty extends DocsJsonldType {
 
 export interface HydraSupportedClass extends DocsJsonldBase {
   'hydra:description'?: string
-  'hydra:supportedOperation'?: HydraSupportedOperation | HydraSupportedOperation[]
+  'hydra:supportedOperation'?:
+    | HydraSupportedOperation
+    | HydraSupportedOperation[]
   'hydra:supportedProperty': HydraSupportedProperty[]
   'hydra:title': string
   'rdfs:label'?: string
-  'subClassOf'?: string
+  subClassOf?: string
 }

@@ -1,7 +1,7 @@
 import { makeStyles } from '@mui/styles'
 import { Theme } from '@mui/material/styles'
-import HelpOver from '~/components/atoms/user/helpOver.tsx'
-import UserMenu from '~/components/atoms/user/userMenu.tsx'
+import HelpOver from '~/components/atoms/user/helpOver'
+import UserMenu from '~/components/atoms/user/userMenu'
 
 const useStylesUser = makeStyles((theme: Theme) => ({
   root: {

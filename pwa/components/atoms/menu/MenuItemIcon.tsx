@@ -2,7 +2,12 @@ import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import { makeStyles } from '@mui/styles'
 import { Theme } from '@mui/material/styles'
 import Link from 'next/link'
-import { selectMenuItemActive, selectSidebarState, selectSidebarStateTimeout, useAppSelector } from '~/store'
+import {
+  selectMenuItemActive,
+  selectSidebarState,
+  selectSidebarStateTimeout,
+  useAppSelector,
+} from '~/store'
 
 /*
  * Use of mui makeStyles to create multiple styles reusing theme fm react-admin

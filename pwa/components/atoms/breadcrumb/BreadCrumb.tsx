@@ -37,7 +37,7 @@ const BreadCrumb = () => {
     if (slug) {
       setMocksBreadCrumd(slug)
     }
-  }, [router.query])
+  }, [slug])
 
   return (
     <div>
