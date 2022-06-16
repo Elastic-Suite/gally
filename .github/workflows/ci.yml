@@ -47,7 +47,7 @@ jobs:
         run: docker-compose exec -e XDEBUG_MODE=off -T php bin/phpunit
       - name: Coverage
         run: docker-compose exec -e XDEBUG_MODE=coverage -T php bin/phpunit --coverage-clover=coverage.xml src/Elasticsuite
-      - name: Send API code coverage report to Codecov.io
+      - name: Send code coverage report to Codecov.io
         uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
@@ -57,12 +57,6 @@ jobs:
         run: docker-compose exec -e XDEBUG_MODE=off -T php bin/console doctrine:schema:validate --skip-sync
       - name: Jest
         run: docker-compose exec -T pwa yarn test --ci --passWithNoTests
-      - name: Send PWA code coverage report to Codecov.io
-        uses: codecov/codecov-actions@v2
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: cobertura-coverage.xml
-          directory: pwa/coverage
 
   Deploy:
     needs: tests
