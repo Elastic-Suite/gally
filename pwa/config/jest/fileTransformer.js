@@ -1,4 +1,4 @@
-import path from 'path'
+const path = import('path')
 
 module.exports = {
   process(sourceText, sourcePath) {
