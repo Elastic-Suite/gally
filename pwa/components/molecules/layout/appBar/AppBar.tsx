@@ -1,6 +1,6 @@
 import { makeStyles } from '@mui/styles'
-import BreadCrumb from '~/components/atoms/breadcrumb/BreadCrumb.tsx'
-import User from '~/components/molecules/layout/user/User.tsx'
+import BreadCrumb from '~/components/atoms/breadcrumb/BreadCrumb'
+import User from '~/components/molecules/layout/user/User'
 import { Theme } from '@mui/material/styles'
 
 const useStylesAppBar = makeStyles((theme: Theme) => ({

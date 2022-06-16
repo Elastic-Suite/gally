@@ -10,7 +10,7 @@ import {
   useAppDispatch,
   useAppSelector,
 } from '~/store'
-import AppBarMenu from '~/components/molecules/layout/appBar/AppBar.tsx'
+import AppBarMenu from '~/components/molecules/layout/appBar/AppBar'
 
 /*
  * TODO: THIBO: Update AppBar
@@ -94,16 +94,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     transition: 'left linear',
   },
 }))
-const useStylesAppBar = makeStyles((theme: Theme) => ({
-  root: {
-    display: 'flex',
-    flexDirection: 'row',
-    backgroundColor: 'blue',
-    color: 'white',
-    position: 'fixed',
-    width: '100%',
-  },
-}))
+
 /*
  * Component CustomLayout
  */
@@ -152,9 +143,7 @@ const CustomLayout = ({ children }) => {
               />
             </div>
             <AppBarMenu />
-            <div className={classes.content}>
-              {children}
-            </div>
+            <div className={classes.content}>{children}</div>
           </div>
           {/*<Notification /> TODO: Set here Notification component*/}
         </div>

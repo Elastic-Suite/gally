@@ -1,12 +1,12 @@
-import React from 'react';
-import { ComponentMeta } from '@storybook/react';
+import React from 'react'
+import { ComponentMeta } from '@storybook/react'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
-import { icons } from '~/constants';
+import { icons } from '~/constants'
 
-import ButtonsPreview from './ButtonsPreview';
-import PrimaryButton from './PrimaryButton';
-import SecondaryButton from './SecondaryButton';
-import TertiaryButton from './TertiaryButton';
+import ButtonsPreview from './ButtonsPreview'
+import PrimaryButton from './PrimaryButton'
+import SecondaryButton from './SecondaryButton'
+import TertiaryButton from './TertiaryButton'
 
 export default {
   title: 'Atoms/Buttons',
@@ -21,7 +21,7 @@ export default {
     icon: {
       options: [''].concat(icons),
       control: { type: 'select' },
-      description: 'override the "children" props in this story'
+      description: 'override the "children" props in this story',
     },
     size: {
       options: ['small', 'medium', 'large'],
@@ -32,19 +32,28 @@ export default {
       control: { type: 'select' },
     },
   },
-} as ComponentMeta<typeof PrimaryButton>;
+} as ComponentMeta<typeof PrimaryButton>
 
-const Template = ({ Component, children, icon, endIcon, startIcon, ...props }) => (
+const Template = ({
+  Component,
+  children,
+  icon,
+  endIcon,
+  startIcon,
+  ...props
+}) => (
   <Component
     {...props}
     endIcon={endIcon && <IonIcon name={endIcon} style={{ fontSize: 24 }} />}
-    startIcon={startIcon && <IonIcon name={startIcon} style={{ fontSize: 24 }} />}
+    startIcon={
+      startIcon && <IonIcon name={startIcon} style={{ fontSize: 24 }} />
+    }
   >
     {icon ? <IonIcon name={icon} style={{ fontSize: 24 }} /> : children}
   </Component>
-);
+)
 
-export const Primary = Template.bind({});
+export const Primary = Template.bind({})
 Primary.args = {
   Component: PrimaryButton,
   children: 'Label',
@@ -53,9 +62,9 @@ Primary.args = {
   icon: '',
   size: 'medium',
   startIcon: '',
-};
+}
 
-export const Secondary =  Template.bind({});
+export const Secondary = Template.bind({})
 Secondary.args = {
   Component: SecondaryButton,
   children: 'Label',
@@ -64,9 +73,9 @@ Secondary.args = {
   icon: '',
   size: 'medium',
   startIcon: '',
-};
+}
 
-export const Tertiary =  Template.bind({});
+export const Tertiary = Template.bind({})
 Tertiary.args = {
   Component: TertiaryButton,
   children: 'Label',
@@ -75,9 +84,9 @@ Tertiary.args = {
   icon: '',
   size: 'medium',
   startIcon: '',
-};
+}
 
-export const Preview = (args) => <ButtonsPreview {...args} />;
+export const Preview = (args) => <ButtonsPreview {...args} />
 Preview.args = {
   controls: { hideNoControlsWarning: true },
-};
+}
