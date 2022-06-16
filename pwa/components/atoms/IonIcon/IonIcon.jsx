@@ -2,11 +2,11 @@ import React from 'react'
 import home2 from '~/assets/images/home2.svg'
 
 export const customIcons = [
-  'dashboard',
-  'analyze',
-  'merchandize',
-  'monitoring',
-  'settings'
+    'dashboard',
+    'analyze',
+    'merchandize',
+    'monitoring',
+    'settings',
 ]
 
 /*

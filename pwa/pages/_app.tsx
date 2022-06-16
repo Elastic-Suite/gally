@@ -31,7 +31,7 @@ declare module '@mui/styles/defaultTheme' {
 }
 
 function MyApp(props: AppProps) {
-  const { pageProps } = props;
+  const { pageProps } = props
   const Component = props.Component as FunctionComponent
   return (
     <>

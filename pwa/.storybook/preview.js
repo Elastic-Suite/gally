@@ -7,7 +7,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css'
 import '~/assets/scss/style.scss'
 
 export const parameters = {
-  actions: { argTypesRegex: "^on[A-Z].*" },
+  actions: { argTypesRegex: '^on[A-Z].*' },
   controls: {
     expanded: true,
     matchers: {
@@ -25,4 +25,4 @@ export const decorators = [
       </StyledEngineProvider>
     </ThemeProvider>
   ),
-];
+]

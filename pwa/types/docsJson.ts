@@ -1,5 +1,5 @@
-import { HttpCode, Method } from "./fetch"
-import { HydraPropertyType } from "./hydra"
+import { HttpCode, Method } from './fetch'
+import { HydraPropertyType } from './hydra'
 
 export interface DocsJsonContent {
   schema: HydraPropertyType
@@ -7,7 +7,7 @@ export interface DocsJsonContent {
 
 export interface DocsJsonBody {
   description: string
-  content: Record<string, DocsJsonContent>,
+  content: Record<string, DocsJsonContent>
   required: boolean
 }
 
@@ -18,7 +18,7 @@ export interface DocsJsonParameter {
   required: boolean
   deprecated: boolean
   allowEmptyValue: boolean
-  schema: HydraPropertyType,
+  schema: HydraPropertyType
   style: string
   explode: boolean
   allowReserved: boolean
@@ -77,7 +77,7 @@ export interface DocsJsonInfo {
 
 export interface DocsJson {
   openapi: string
-  info: DocsJsonInfo,
+  info: DocsJsonInfo
   servers: DocsJsonServer[]
   paths: Record<string, DocsJsonPath>
   components: any
