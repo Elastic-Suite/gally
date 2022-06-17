@@ -44,3 +44,25 @@ Elasticsuite\Metadata\Model\SourceField:
         code: 'weight'
         type: 'int'
         is_filterable: true
+    product_id:
+        metadata: '@product'
+        code: 'id'
+        type: 'int'
+        isSystem: true
+    product_price_group_id:
+        metadata: '@product'
+        code: 'price.group_id'
+        type: 'int'
+    product_price_base_price:
+        metadata: '@product'
+        code: 'price.base_price'
+        type: 'float'
+    product_price_final_price:
+        metadata: '@product'
+        code: 'price.final_price'
+        type: 'float'
+    category_id:
+        metadata: '@category'
+        code: 'id'
+        type: 'int'
+        isSystem: true

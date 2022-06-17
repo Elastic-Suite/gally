@@ -33,6 +33,7 @@ use Elasticsuite\Search\Resolver\DummyDocumentResolver;
                     'catalogId' => ['type' => 'String!', 'description' => 'Catalog ID'],
                     'currentPage' => ['type' => 'Int'],
                     'pageSize' => ['type' => 'Int'],
+                    'sort' => ['type' => 'SortInput'],
                 ],
                 'read' => true, // Required so the dataprovider is called.
                 'deserialize' => true,

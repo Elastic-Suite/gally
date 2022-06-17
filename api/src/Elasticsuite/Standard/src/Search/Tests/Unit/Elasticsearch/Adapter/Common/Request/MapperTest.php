@@ -18,12 +18,12 @@ namespace Elasticsuite\Search\Tests\Unit\Elasticsearch\Adapter\Common\Request;
 
 use Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Mapper;
 use Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Query\Assembler as QueryAssembler;
+use Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\SortOrder\Assembler as SortOrderAssembler;
 use Elasticsuite\Search\Elasticsearch\Request;
 use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 // use Elasticsuite\Search\Adapter\Elasticsearch\Request\Aggregation\Assembler as AggregationAssembler;
-// use Elasticsuite\Search\Adapter\Elasticsearch\Request\SortOrder\Assembler as SortOrderAssembler;
 
 /**
  * Search adapter query mapper test case.
@@ -106,14 +106,14 @@ class MapperTest extends KernelTestCase
         $queryAssemblerMock = $this->getMockBuilder(QueryAssembler::class)->disableOriginalConstructor()->getMock();
         $queryAssemblerMock->method('assembleQuery')->willReturn(['mockQuery']);
 
-        /*
         $sortOrderAssemblerMock = $this->getMockBuilder(SortOrderAssembler::class)->disableOriginalConstructor()->getMock();
-        $sortOrderAssemblerMock->method('assembleSortOrders')->will($this->returnValue('sortOrders'));
+        $sortOrderAssemblerMock->method('assembleSortOrders')->willReturn([]);
 
+        /*
         $aggregationAssemblerMock = $this->getMockBuilder(AggregationAssembler::class)->disableOriginalConstructor()->getMock();
         $aggregationAssemblerMock->method('assembleAggregations')->will($this->returnValue('aggregations'));
         */
 
-        return new Mapper($queryAssemblerMock/*, $sortOrderAssemblerMock, $aggregationAssemblerMock*/);
+        return new Mapper($queryAssemblerMock, $sortOrderAssemblerMock/*, $aggregationAssemblerMock*/);
     }
 }

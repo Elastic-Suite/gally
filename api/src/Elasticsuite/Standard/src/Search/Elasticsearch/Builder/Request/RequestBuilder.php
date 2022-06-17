@@ -18,6 +18,7 @@ namespace Elasticsuite\Search\Elasticsearch\Builder\Request;
 
 // use Elasticsuite\Search\Elasticsearch\Request\ContainerConfiguration\AggregationResolverInterface;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\Query\QueryBuilder;
+use Elasticsuite\Search\Elasticsearch\Builder\Request\SortOrder\SortOrderBuilder;
 use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationFactoryInterface;
 use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
 use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
@@ -26,14 +27,10 @@ use Elasticsuite\Search\Elasticsearch\RequestInterface;
 use Elasticsuite\Search\Elasticsearch\SpellcheckerInterface;
 
 // use Elasticsuite\Search\Request\Aggregation\AggregationBuilder;
-// use Elasticsuite\Search\Request\SortOrder\SortOrderBuilder;
-
 // use Elasticsuite\Search\Elasticsearch\Spellchecker\RequestInterfaceFactory as SpellcheckRequestFactory;
 
 /**
  * ElasticSuite search requests builder.
- *
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class RequestBuilder
 {
@@ -41,7 +38,7 @@ class RequestBuilder
 
     private QueryBuilder $queryBuilder;
 
-    // private SortOrderBuilder $sortOrderBuilder;
+    private SortOrderBuilder $sortOrderBuilder;
 
     // private AggregationBuilder $aggregationBuilder;
 
@@ -55,18 +52,18 @@ class RequestBuilder
 
     /**
      * Constructor.
-     * TODO add support for $sortOrderBuilder, $aggregationBuilder, $spellcheckRequestFactory, $spellchecker
-     * and $aggregationResolver.
+     * TODO add support for $aggregationBuilder, $spellcheckRequestFactory, $spellchecker and $aggregationResolver.
      *
      * @param RequestFactoryInterface                $requestFactory         Factory used to build the request
      * @param QueryBuilder                           $queryBuilder           Builder for the query part of the request
+     * @param SortOrderBuilder                       $sortOrderBuilder       Builder for the sort order(s) part of the request
      * @param ContainerConfigurationFactoryInterface $containerConfigFactory Container configuration factory
      */
     public function __construct(
         RequestFactoryInterface $requestFactory,
         QueryBuilder $queryBuilder,
-        /*
         SortOrderBuilder $sortOrderBuilder,
+        /*
         AggregationBuilder $aggregationBuilder, */
         ContainerConfigurationFactoryInterface $containerConfigFactory/*,
         SpellcheckRequestFactory $spellcheckRequestFactory,
@@ -76,7 +73,7 @@ class RequestBuilder
     ) {
         $this->requestFactory = $requestFactory;
         $this->queryBuilder = $queryBuilder;
-        // $this->sortOrderBuilder = $sortOrderBuilder;
+        $this->sortOrderBuilder = $sortOrderBuilder;
         // $this->aggregationBuilder = $aggregationBuilder;
         $this->containerConfigFactory = $containerConfigFactory;
         // $this->spellcheckRequestFactory = $spellcheckRequestFactory;
@@ -133,7 +130,7 @@ class RequestBuilder
             'size' => $size,
             // 'query'        => $this->queryBuilder->createQuery($containerConfig, $query, $queryFilters, $spellingType),
             'query' => $this->queryBuilder->createQuery($query),
-            // 'sortOrders'   => $this->sortOrderBuilder->buildSordOrders($containerConfig, $sortOrders),
+            'sortOrders' => $this->sortOrderBuilder->buildSortOrders($containerConfig, $sortOrders),
             // 'buckets'      => $this->aggregationBuilder->buildAggregations($containerConfig, $facets, $facetFilters),
             'spellingType' => $spellingType,
             // 'trackTotalHits' => $containerConfig->getTrackTotalHits(),
