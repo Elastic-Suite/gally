@@ -45,3 +45,18 @@ RUN set -eux; \
 	yarn build
 
 CMD ["yarn", "start"]
+
+
+# "build" stage
+# depends on the "common" stage above
+FROM api_platform_pwa_common AS api_platform_pwa_int
+
+ENV NODE_ENV production
+ARG NEXT_PUBLIC_ENTRYPOINT
+
+RUN set -eux; \
+	yarn build; \
+	yarn build-storybook; \
+	mv storybook-static public/
+
+CMD ["yarn", "start"]

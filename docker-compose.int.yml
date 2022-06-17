@@ -18,3 +18,8 @@ services:
   database:
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+
+  pwa:
+    build:
+      context: ./pwa
+      target: api_platform_pwa_int
