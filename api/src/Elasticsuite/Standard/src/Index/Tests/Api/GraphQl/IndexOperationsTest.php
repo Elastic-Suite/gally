@@ -46,6 +46,7 @@ class IndexOperationsTest extends AbstractTest
         self::loadFixture([
             __DIR__ . '/../../fixtures/metadata.yaml',
             __DIR__ . '/../../fixtures/catalogs.yaml',
+            __DIR__ . '/../../fixtures/source_field.yaml',
         ]);
     }
 

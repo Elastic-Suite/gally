@@ -44,7 +44,7 @@ interface SortOrderInterface
     /**
      * Sort order name.
      */
-    public function getName(): string;
+    public function getName(): ?string;
 
     /**
      * Field used for sort.

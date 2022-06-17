@@ -52,7 +52,7 @@ interface ContainerConfigurationInterface
     /**
      * Current container store id.
      */
-    public function getStoreId(): int;
+    public function getCatalogId(): int;
 
     /**
      * Retrieve filters for the container (visibility, in stock, etc ...) and the current search Context.

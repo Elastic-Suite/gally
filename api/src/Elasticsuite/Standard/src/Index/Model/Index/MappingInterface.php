@@ -23,6 +23,8 @@ use Elasticsuite\Index\Model\Index\Mapping\FieldInterface;
  */
 interface MappingInterface
 {
+    public const ID_FIELD = 'id';
+
     /**
      * List of the properties of the mapping.
      */
@@ -44,4 +46,9 @@ interface MappingInterface
      * Return the mapping as an array you can put into ES through the mapping API.
      */
     public function asArray(): array;
+
+    /**
+     * Field used as unique id for the doc.
+     */
+    public function getIdField(): FieldInterface;
 }

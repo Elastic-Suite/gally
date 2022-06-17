@@ -22,6 +22,11 @@ Elasticsuite\Metadata\Model\SourceField:
     category_description:
         metadata: '@category'
         code: 'description'
+    category_id:
+        metadata: '@category'
+        code: 'id'
+        type: 'int'
+        isSystem: true
     product_id:
         metadata: '@product'
         code: 'id'
