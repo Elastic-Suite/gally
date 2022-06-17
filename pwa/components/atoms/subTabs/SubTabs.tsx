@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 import { makeStyles } from '@mui/styles'
 import { Theme } from '@mui/material'
-import ScopeActivesLocales from '~/components/atoms/catalog/scope/subScope/scopeActivesLocales'
-import ScopeCatalogs from '~/components/atoms/catalog/scope/subScope/scopeCatalogs'
 
 const useStylesCatalog = makeStyles((theme: Theme) => ({
   root: {
@@ -53,6 +51,7 @@ const useStylesCatalog = makeStyles((theme: Theme) => ({
       transform: 'translateY(-50%)',
       height: '32px',
       width: 3,
+      opacity: 0,
       background: theme.palette.menu.active,
       boxShadow: '-2px 0px 4px rgba(63, 50, 230, 0.2)',
       borderRadius: '5px 0px 0px 5px',
@@ -70,40 +69,40 @@ const useStylesCatalog = makeStyles((theme: Theme) => ({
   },
 }))
 
-const Scope = () => {
+const SubTabs = ({ labels, contents }) => {
   const stylecatalog = useStylesCatalog()
-
-  const [subTabsAct, setSubTabsAct] = useState(true)
+  const [active, setActive] = useState(0)
 
   return (
     <>
       <div className={stylecatalog.root}>
         <div className={stylecatalog.rootSubTabs}>
-          <div
-            className={
-              stylecatalog.subTabs +
-              ' ' +
-              (subTabsAct && stylecatalog.subTabsActive)
-            }
-            onClick={() => setSubTabsAct(!subTabsAct)}
-          >
-            Catalogs
-          </div>
-          <div
-            className={
-              stylecatalog.subTabs +
-              ' ' +
-              (!subTabsAct && stylecatalog.subTabsActive)
-            }
-            onClick={() => setSubTabsAct(!subTabsAct)}
-          >
-            Active locales
-          </div>
+          {labels.map((item: any, key: number) =>
+            key === active ? (
+              <div
+                key={key}
+                className={
+                  stylecatalog.subTabs + ' ' + stylecatalog.subTabsActive
+                }
+                onClick={() => setActive(key)}
+              >
+                {item}
+              </div>
+            ) : (
+              <div
+                key={key}
+                className={stylecatalog.subTabs}
+                onClick={() => setActive(key)}
+              >
+                {item}
+              </div>
+            )
+          )}
         </div>
-        {subTabsAct ? <ScopeCatalogs /> : <ScopeActivesLocales />}
+        {contents.map((item: any, key: number) => key === active && item)}
       </div>
     </>
   )
 }
 
-export default Scope
+export default SubTabs
