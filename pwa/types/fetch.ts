@@ -21,3 +21,9 @@ export enum LoadStatus {
   LOADING,
   SUCCESSDED,
 }
+
+export interface Fetch<D> {
+  data?: D
+  error?: Error
+  loading: boolean
+}

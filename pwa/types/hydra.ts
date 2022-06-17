@@ -48,26 +48,30 @@ export type HydraPropertyType =
   | HydraPropertyTypeObject
   | HydraPropertyTypeString
 
-export interface DocsJsonldType {
+export interface JsonldContext {
+  '@context': string
+}
+
+export interface JsonldType {
   '@type': string | string[]
 }
 
-export interface DocsJsonldId {
+export interface JsonldId {
   '@id': string
 }
 
-export interface DocsJsonldBase extends DocsJsonldType, DocsJsonldId {}
+export interface JsonldBase extends JsonldType, JsonldId {}
 
 export interface OwlEquivalentClass {
-  'owl:onProperty': DocsJsonldId
-  'owl:allValuesFrom': DocsJsonldId
+  'owl:onProperty': JsonldId
+  'owl:allValuesFrom': JsonldId
 }
 
 export interface RdfsRange {
   'owl:equivalentClass': OwlEquivalentClass
 }
 
-export interface HydraSupportedOperation extends DocsJsonldType {
+export interface HydraSupportedOperation extends JsonldType {
   expects?: string
   'hydra:method': Method
   'hydra:title'?: string
@@ -75,7 +79,7 @@ export interface HydraSupportedOperation extends DocsJsonldType {
   returns: string
 }
 
-export interface HydraProperty extends DocsJsonldBase {
+export interface HydraProperty extends JsonldBase {
   domain: string
   'hydra:supportedOperation'?:
     | HydraSupportedOperation
@@ -83,10 +87,10 @@ export interface HydraProperty extends DocsJsonldBase {
   'owl:maxCardinality'?: number
   range?: string
   'rdfs:label': string
-  'rdfs:range'?: (DocsJsonldId | RdfsRange)[]
+  'rdfs:range'?: (JsonldId | RdfsRange)[]
 }
 
-export interface HydraSupportedProperty extends DocsJsonldType {
+export interface HydraSupportedProperty extends JsonldType {
   'hydra:description'?: string
   'hydra:property': HydraProperty
   'hydra:readable': boolean
@@ -95,7 +99,7 @@ export interface HydraSupportedProperty extends DocsJsonldType {
   'hydra:writeable': boolean
 }
 
-export interface HydraSupportedClass extends DocsJsonldBase {
+export interface HydraSupportedClass extends JsonldBase {
   'hydra:description'?: string
   'hydra:supportedOperation'?:
     | HydraSupportedOperation
@@ -104,4 +108,26 @@ export interface HydraSupportedClass extends DocsJsonldBase {
   'hydra:title': string
   'rdfs:label'?: string
   subClassOf?: string
+}
+
+export interface HydraMember extends JsonldType, JsonldId {
+  code: string
+  defaultLabel: string
+  filterable?: boolean
+  id: number
+  labels: string[]
+  metadata: string
+  options: string[]
+  searchable?: boolean
+  sortable?: boolean
+  spellchecked?: boolean
+  system: boolean
+  type: string
+  usedForRules?: boolean
+  weight?: number
+}
+
+export interface HydraResponse extends JsonldContext, JsonldType, JsonldId {
+  'hydra:member': HydraMember[]
+  'hydra:totalItems': number
 }
