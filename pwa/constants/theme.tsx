@@ -522,6 +522,23 @@ const theme = createTheme({
         },
       },
     },
+    MuiTab: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none',
+          fontSize: '16px',
+          lineHeight: '24px',
+          fontWeight: '500',
+          '&.Mui-selected': { color: '#2C19CD' },
+        },
+      },
+    },
+
+    MuiTabs: {
+      styleOverrides: {
+        indicator: { backgroundColor: '#2C19CD' },
+      },
+    },
   },
 })
 
