@@ -14,6 +14,6 @@ Pop_In.args = {
   title: 'salut à tous',
   btnCancel: 'Annuler',
   btnConfirm: 'Confirmer',
-  func: () => alert('Ma function ...'),
-  close: () => alert('Pop In fermé'),
+  onFunc: () => alert('Ma function ...'),
+  onClose: () => alert('Pop In fermé'),
 }

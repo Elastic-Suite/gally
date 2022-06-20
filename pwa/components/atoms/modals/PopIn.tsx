@@ -1,7 +1,6 @@
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import { makeStyles } from '@mui/styles'
 import { Theme } from '@mui/material/styles'
-import PropTypes from 'prop-types'
 import PrimaryButton from '~/components/atoms/buttons/PrimaryButton'
 import TertiaryButton from '~/components/atoms/buttons/TertiaryButton'
 
@@ -83,36 +82,42 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }))
 
-const PopIn = ({ title, func, btnCancel, btnConfirm, close }) => {
+interface PopInProps {
+  title: string
+  onFunc: Function
+  btnCancel: string
+  btnConfirm: string
+  onClose: Function
+}
+
+const PopIn = ({
+  title,
+  onFunc,
+  btnCancel,
+  btnConfirm,
+  onClose,
+}: PopInProps) => {
   const classes = useStyles()
 
   return (
     <>
       <div className={classes.root}></div>
       <div className={classes.popIn}>
-        <div className={classes.close} onClick={() => close()}>
+        <div className={classes.close} onClick={() => onClose()}>
           <IonIcon name="close" style={{ fontSize: '17.85px' }} />
         </div>
         <div className={classes.title}>{title}</div>
         <div className={classes.action}>
-          <div onClick={() => close()}>
+          <div onClick={() => onClose()}>
             <TertiaryButton size="large">{btnCancel}</TertiaryButton>
           </div>
-          <div onClick={() => (close(), func())}>
+          <div onClick={() => (onClose(), onFunc())}>
             <PrimaryButton size="large">{btnConfirm}</PrimaryButton>
           </div>
         </div>
       </div>
     </>
   )
-}
-
-PopIn.propTypes = {
-  title: PropTypes.string,
-  func: PropTypes.func,
-  btnCancel: PropTypes.string,
-  btnConfirm: PropTypes.string,
-  close: PropTypes.func,
 }
 
 PopIn.defaultProps = {

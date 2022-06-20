@@ -45,10 +45,10 @@ const ModalsPreview = () => {
         {visiblePopIn && (
           <PopIn
             title="Êtes-vous sûr de vouloir désactiver toutes les règles associées à l’attribut virtuel ?"
-            func={() => maFunction()}
+            onFunc={() => maFunction()}
             btnCancel={'Annuler'}
             btnConfirm={'Confirmer'}
-            close={() => setVisiblePopIn(false)}
+            onClose={() => setVisiblePopIn(false)}
           />
         )}
       </div>
