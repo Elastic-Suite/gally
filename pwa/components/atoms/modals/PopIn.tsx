@@ -30,6 +30,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 
   popIn: {
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%,-50%)',
     background: theme.palette.background.default,
     borderRadius: theme.spacing(1),
     padding: theme.spacing(4),
@@ -37,15 +41,24 @@ const useStyles = makeStyles((theme: Theme) => ({
     flexDirection: 'column',
     width: '600px',
     minHeight: '268px',
-    position: 'relative',
+    zIndex: 9999999,
+    animation: '$opacity 1000ms forwards',
+    opacity: 0,
   },
 
   close: {
     position: 'absolute',
     display: 'flex',
-    top: theme.spacing(3),
-    right: theme.spacing(3),
+    top: theme.spacing(2),
+    right: theme.spacing(2),
     cursor: 'pointer',
+    transition: 'all 500ms',
+    padding: theme.spacing(1),
+    borderRadius: theme.spacing(1),
+    color: theme.palette.colors.neutral['900'],
+    '&:hover': {
+      background: theme.palette.colors.neutral['200'],
+    },
   },
 
   title: {
@@ -74,12 +87,11 @@ const PopIn = ({ title, func, btnCancel, btnConfirm, close }) => {
   const classes = useStyles()
 
   return (
-    <div className={classes.root}>
+    <>
+      <div className={classes.root}></div>
       <div className={classes.popIn}>
         <div className={classes.close} onClick={() => close()}>
-          <TertiaryButton size="small" style={{ padding: '4px' }}>
-            <IonIcon name="close" style={{ fontSize: 12 }} />
-          </TertiaryButton>
+          <IonIcon name="close" style={{ fontSize: '17.85px' }} />
         </div>
         <div className={classes.title}>{title}</div>
         <div className={classes.action}>
@@ -91,7 +103,7 @@ const PopIn = ({ title, func, btnCancel, btnConfirm, close }) => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 
