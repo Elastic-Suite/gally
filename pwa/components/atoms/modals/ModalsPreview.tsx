@@ -2,6 +2,7 @@ import AlertInfoMessage from '~/components/atoms/modals/AlertInfoMessage'
 import Tooltip from '~/components/atoms/modals/Tooltip'
 import PopIn from '~/components/atoms/modals/PopIn'
 import PrimaryButton from '~/components/atoms/buttons/PrimaryButton'
+import CloseComponent from '../closeComponent/CloseComponent'
 
 import { useState } from 'react'
 
@@ -35,19 +36,24 @@ const ModalsPreview = () => {
 
       <h1>Pop in</h1>
 
-      <div onClick={() => setVisiblePopIn(true)}>
-        <PrimaryButton size="large">
-          Ajouter au panier (test popIn)
-        </PrimaryButton>
+      <div style={{ zIndex: 9999999 }}>
+        <div onClick={() => setVisiblePopIn(true)}>
+          <PrimaryButton size="large">
+            Ajouter au panier (test popIn)
+          </PrimaryButton>
+        </div>
+        {visiblePopIn && (
+          <PopIn
+            title="Êtes-vous sûr de vouloir désactiver toutes les règles associées à l’attribut virtuel ?"
+            func={() => maFunction()}
+            btnCancel={'Annuler'}
+            btnConfirm={'Confirmer'}
+            close={() => setVisiblePopIn(false)}
+          />
+        )}
       </div>
       {visiblePopIn && (
-        <PopIn
-          title="Êtes-vous sûr de vouloir désactiver toutes les règles associées à l’attribut virtuel ?"
-          func={() => maFunction()}
-          btnCancel={'Annuler'}
-          btnConfirm={'Confirmer'}
-          close={() => setVisiblePopIn(false)}
-        />
+        <CloseComponent close={() => setVisiblePopIn(false)}></CloseComponent>
       )}
     </div>
   )
