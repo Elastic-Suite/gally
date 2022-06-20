@@ -42,6 +42,7 @@ const useStylesHelp = makeStyles((theme: Theme) => ({
     padding: theme.spacing(1),
     borderColor: theme.palette.colors.neutral['300'],
     cursor: 'pointer',
+    zIndex: 99999999,
     background: theme.palette.background.default,
     transition: 'background 500ms',
     '&:hover': {
@@ -70,7 +71,6 @@ const useStylesHelp = makeStyles((theme: Theme) => ({
     height: 0,
     overflow: 'hidden',
     transition: 'opacity 500ms ,height 500ms',
-    zIndex: 999,
   },
 
   helpVisible: {
