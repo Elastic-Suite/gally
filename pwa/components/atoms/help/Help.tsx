@@ -15,7 +15,11 @@ const useStylesHelp = makeStyles((theme: Theme) => ({
     padding: theme.spacing(1),
     borderColor: theme.palette.colors.neutral['300'],
     cursor: 'pointer',
+<<<<<<< HEAD:pwa/components/atoms/help/Help.tsx
     zIndex: 9999,
+=======
+    zIndex: 99999999,
+>>>>>>> update css PopIn + add new component : closeComponent:pwa/components/atoms/user/helpOver.tsx
     background: theme.palette.background.default,
     transition: 'background 500ms',
     '&:hover': {
