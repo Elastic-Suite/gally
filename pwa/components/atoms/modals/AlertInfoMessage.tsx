@@ -4,17 +4,24 @@ import Alert from '@mui/material/Alert'
 import IconButton from '@mui/material/IconButton'
 import Collapse from '@mui/material/Collapse'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
-import PropTypes from 'prop-types'
 import Button from '@mui/material/Button'
 
-export default function AlertInfoMessage({ title, dev }) {
+interface AlertInfoMessageProps {
+  title: string
+  dev: boolean
+}
+
+export default function AlertInfoMessage({
+  title,
+  dev,
+}: AlertInfoMessageProps) {
   const [open, setOpen] = useState(true)
 
   return (
     <Box sx={{ width: '100%' }}>
       <Collapse in={open}>
         <Alert
-          sx={{ mb: 0 }} // add Margin Bottom
+          sx={{ mb: 0 }}
           action={
             <IconButton
               aria-label="close"
@@ -45,11 +52,6 @@ export default function AlertInfoMessage({ title, dev }) {
       )}
     </Box>
   )
-}
-
-AlertInfoMessage.propTypes = {
-  title: PropTypes.string,
-  dev: PropTypes.bool,
 }
 
 AlertInfoMessage.defaultProps = {
