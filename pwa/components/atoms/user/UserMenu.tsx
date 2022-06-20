@@ -2,6 +2,7 @@ import { useRef, useState } from 'react'
 import { Theme } from '@mui/material/styles'
 import { makeStyles } from '@mui/styles'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
+import CloseComponent from '../closeComponent/CloseComponent'
 
 import UserMenuShow from './UserMenuShow'
 
@@ -18,6 +19,7 @@ const useStylesUserMenu = makeStyles((theme: Theme) => ({
     cursor: 'pointer',
     background: theme.palette.background.default,
     transition: 'background 500ms',
+    zIndex: 9999999,
     '&:hover': {
       background: theme.palette.colors.neutral[300],
     },
@@ -57,6 +59,7 @@ const useStylesUserMenu = makeStyles((theme: Theme) => ({
     background: theme.palette.background.default,
     width: '206px',
     cursor: 'initial',
+    zIndex: 9999999,
   },
 
   userMenuVisible: {
@@ -70,36 +73,41 @@ function UserMenu() {
   const useMenu = useRef(null)
 
   return (
-    <div style={{ position: 'relative' }}>
-      <button
-        className={usermenustyle.user}
-        onClick={() => setOpenUserMenu(!openUserMenu)}
-      >
-        <IonIcon name="person-outline" style={{ width: '13px' }} />
-        <div className={usermenustyle.userName}>Admin Name</div>
+    <>
+      <div style={{ position: 'relative' }}>
         <div
-          className={
-            usermenustyle.arrow +
-            ' ' +
-            (openUserMenu && usermenustyle.arrowRotate)
-          }
+          className={usermenustyle.user}
+          onClick={() => setOpenUserMenu(!openUserMenu)}
         >
-          <IonIcon name="chevron-down" style={{ width: '16px' }} />
+          <IonIcon name="person-outline" style={{ width: '13px' }} />
+          <div className={usermenustyle.userName}>Admin Name</div>
+          <div
+            className={
+              usermenustyle.arrow +
+              ' ' +
+              (openUserMenu && usermenustyle.arrowRotate)
+            }
+          >
+            <IonIcon name="chevron-down" style={{ width: '16px' }} />
+          </div>
         </div>
-      </button>
 
-      <div
-        ref={useMenu}
-        className={
-          usermenustyle.userMenu +
-          ' ' +
-          (openUserMenu && usermenustyle.userMenuVisible)
-        }
-        style={openUserMenu ? { height: useMenu?.current?.scrollHeight } : {}}
-      >
-        <UserMenuShow />
+        <div
+          ref={useMenu}
+          className={
+            usermenustyle.userMenu +
+            ' ' +
+            (openUserMenu && usermenustyle.userMenuVisible)
+          }
+          style={openUserMenu ? { height: useMenu?.current?.scrollHeight } : {}}
+        >
+          <UserMenuShow />
+        </div>
       </div>
-    </div>
+      {openUserMenu && (
+        <CloseComponent close={() => setOpenUserMenu(!openUserMenu)} />
+      )}
+    </>
   )
 }
 
