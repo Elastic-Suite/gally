@@ -1,6 +1,5 @@
 import { styled } from '@mui/material/styles'
 import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip'
-import PropTypes from 'prop-types'
 
 const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -24,12 +23,6 @@ const Tooltips = ({ hoverDesc, placement, desc }) => {
       <span>{desc}</span>
     </LightTooltip>
   )
-}
-
-Tooltips.propTypes = {
-  hoverDesc: PropTypes.string,
-  placement: PropTypes.string,
-  desc: PropTypes.any,
 }
 
 Tooltips.defaultProps = {
