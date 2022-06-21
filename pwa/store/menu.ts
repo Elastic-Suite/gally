@@ -1,25 +1,25 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Fetch } from '~/types'
+import { IFetch } from '~/types'
 
-export interface MenuChild {
+export interface IMenuChild {
   code: string
   label: string
-  children: MenuChild[]
+  children: IMenuChild[]
 }
 
-export interface Menu {
-  hierarchy: MenuChild[]
+export interface IMenu {
+  hierarchy: IMenuChild[]
 }
 
-export interface MenuState {
-  menu: Fetch<Menu>
+export interface IMenuState {
+  menu: IFetch<IMenu>
   menuItemActive: string
   sidebarState: boolean
   sidebarStateTimeout: boolean
   childrenState: Record<string, boolean>
 }
 
-const initialState: MenuState = {
+const initialState: IMenuState = {
   menu: {
     loading: false,
     data: {
@@ -42,7 +42,7 @@ const menuSlice = createSlice({
     ) {
       state.childrenState[action.payload.code] = action.payload.value
     },
-    setMenu(state, action: PayloadAction<Fetch<Menu>>) {
+    setMenu(state, action: PayloadAction<IFetch<IMenu>>) {
       state.menu = {
         ...state.menu,
         ...action.payload,

@@ -3,7 +3,7 @@ import { ActionCreatorWithOptionalPayload } from '@reduxjs/toolkit'
 import { useTranslation } from 'next-i18next'
 
 import { useAppDispatch } from '~/store'
-import { Fetch } from '~/types'
+import { IFetch } from '~/types'
 
 export function fetchApi(
   language: string,
@@ -22,8 +22,8 @@ export function fetchApi(
 export function useApiFetch<T>(
   url: RequestInfo | URL,
   options: RequestInit = {}
-): [Fetch<T>, Dispatch<SetStateAction<Fetch<T>>>] {
-  const [response, setResponse] = useState<Fetch<T>>({ loading: false })
+): [IFetch<T>, Dispatch<SetStateAction<IFetch<T>>>] {
+  const [response, setResponse] = useState<IFetch<T>>({ loading: false })
   const { i18n } = useTranslation('common')
 
   useEffect(() => {
@@ -37,7 +37,7 @@ export function useApiFetch<T>(
 }
 
 export function useApiDispatch<T>(
-  action: ActionCreatorWithOptionalPayload<Fetch<T>>,
+  action: ActionCreatorWithOptionalPayload<IFetch<T>>,
   url: RequestInfo | URL,
   options: RequestInit = {}
 ) {

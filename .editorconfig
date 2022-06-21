@@ -15,7 +15,7 @@ charset = utf-8
 trim_trailing_whitespace = true
 insert_final_newline = true
 
-[*.{js,html,ts,tsx}]
+[*.{html,js,jsx,ts,tsx,css,scss,sass}]
 indent_style = space
 indent_size = 2
 

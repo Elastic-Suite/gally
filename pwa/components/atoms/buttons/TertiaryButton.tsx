@@ -1,7 +1,9 @@
+import { ReactChild } from 'react'
 import Button from '@mui/material/Button'
-import useCommonButtonStyle from '~/components/atoms/buttons/CommonButtonStyle'
 import { makeStyles } from '@mui/styles'
 import { Theme } from '@mui/material/styles'
+
+import useCommonButtonStyle from '~/components/atoms/buttons/CommonButtonStyle'
 
 const useTertiaryButtonStyle = makeStyles((theme: Theme) => ({
   root: {
@@ -22,16 +24,23 @@ const useTertiaryButtonStyle = makeStyles((theme: Theme) => ({
   },
 }))
 
-const TertiaryButton = (props) => {
+interface IProps {
+  children: ReactChild
+}
+
+const TertiaryButton = (props: IProps) => {
+  const { children } = props
+
   const CommonButtonStyle = useCommonButtonStyle()
   const tertiaryButtonStyle = useTertiaryButtonStyle()
+
   return (
     <Button
       {...props}
       className={CommonButtonStyle.root + ' ' + tertiaryButtonStyle.root}
       variant="contained"
     >
-      {props.children}
+      {children}
     </Button>
   )
 }
