@@ -3,6 +3,8 @@ import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import { Theme } from '@mui/material/styles'
+import { selectMenu, useAppSelector } from '~/store'
 
 const breadcrumbGlobalStyle = {
   fontWeight: '500',
@@ -11,7 +13,6 @@ const breadcrumbGlobalStyle = {
 }
 
 /*
- * separator by default is "/"
  * see: https://mui.com/material-ui/react-breadcrumbs/
  */
 
@@ -19,7 +20,7 @@ function BreadCrumb() {
   const [MocksBreadCrumd, setMocksBreadCrumd] = useState(null)
   const router = useRouter()
   const { slug } = router.query
-
+  const menu = useAppSelector(selectMenu)
   useEffect(() => {
     if (slug) {
       setMocksBreadCrumd(slug)
