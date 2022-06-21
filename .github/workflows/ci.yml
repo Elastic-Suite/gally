@@ -43,21 +43,29 @@ jobs:
         run: |
           docker-compose exec -e XDEBUG_MODE=off -T php bin/console -e test doctrine:database:create
           docker-compose exec -e XDEBUG_MODE=off -T php bin/console -e test doctrine:migrations:migrate --no-interaction
+      - name: Doctrine Schema Validator
+        run: docker-compose exec -e XDEBUG_MODE=off -T php bin/console doctrine:schema:validate --skip-sync          
       - name: PHPUnit
         run: docker-compose exec -e XDEBUG_MODE=off -T php bin/phpunit
       - name: Coverage
         run: docker-compose exec -e XDEBUG_MODE=coverage -T php bin/phpunit --coverage-clover=coverage.xml src/Elasticsuite
-      - name: Send code coverage report to Codecov.io
+      - name: Send PHP code coverage report to Codecov.io
         uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: coverage.xml
           directory: api
-      - name: Doctrine Schema Validator
-        run: docker-compose exec -e XDEBUG_MODE=off -T php bin/console doctrine:schema:validate --skip-sync
+          flags: backend
       - name: Jest
         run: docker-compose exec -T pwa yarn test --ci --passWithNoTests
-
+      - name: Send Frontend code coverage report to Codecov.io
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: coverage/cobertura-coverage.xml
+          directory: pwa
+          flags: frontend
+          
   Deploy:
     needs: tests
     if: github.ref == 'refs/heads/master'
