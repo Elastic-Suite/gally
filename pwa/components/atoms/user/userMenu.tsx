@@ -61,7 +61,7 @@ const useStylesUserMenu = makeStyles((theme: Theme) => ({
     cursor: 'pointer',
     background: theme.palette.background.default,
     transition: 'background 500ms',
-    zIndex: 9999999,
+    zIndex: 999,
     '&:hover': {
       background: theme.palette.colors.neutral[300],
     },
@@ -101,7 +101,7 @@ const useStylesUserMenu = makeStyles((theme: Theme) => ({
     background: theme.palette.background.default,
     width: '206px',
     cursor: 'initial',
-    zIndex: 9999999,
+    zIndex: 999,
   },
 
   userMenuVisible: {
@@ -147,7 +147,7 @@ const UserMenu = () => {
         </div>
       </div>
       {openUserMenu && (
-        <CloseComponent close={() => setOpenUserMenu(!openUserMenu)} />
+        <CloseComponent onClose={() => setOpenUserMenu(false)} />
       )}
     </>
   )
