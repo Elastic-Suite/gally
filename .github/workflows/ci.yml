@@ -55,7 +55,7 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: coverage.xml
           directory: api
-          flags: php, backend
+          flags: backend
       - name: Jest
         run: docker-compose exec -T pwa yarn test --ci --passWithNoTests
       - name: Send Frontend code coverage report to Codecov.io
@@ -64,7 +64,7 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: coverage/cobertura-coverage.xml
           directory: pwa
-          flags: pwa, frontend
+          flags: frontend
           
   Deploy:
     needs: tests
