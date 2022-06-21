@@ -27,16 +27,12 @@ const useStyleTitle = makeStyles((theme: Theme) => ({
   },
 }))
 
-export const Title = ({ name }) => {
-  const titlestyle = useStyleTitle()
-
-  return (
-    <>
-      <h1 className={titlestyle.root}>{name}</h1>
-    </>
-  )
+interface IProps {
+  name: string
 }
 
-Title.propTypes = {
-  name: PropTypes.string,
+export const Title = ({ name }: IProps) => {
+  const titlestyle = useStyleTitle()
+
+  return <h1 className={titlestyle.root}>{name}</h1>
 }
