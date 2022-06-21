@@ -11,9 +11,9 @@ const Template: ComponentStory<typeof PopIn> = (args) => <PopIn {...args} />
 
 export const Pop_In = Template.bind({})
 Pop_In.args = {
-  title: 'salut à tous',
-  btnCancel: 'Annuler',
-  btnConfirm: 'Confirmer',
-  onFunc: () => alert('Ma function ...'),
-  onClose: () => alert('Pop In fermé'),
+  title: 'Hello World',
+  btnCancel: 'Cancel',
+  btnConfirm: 'Confirm',
+  onFunc: () => alert('My function ...'),
+  onClose: () => alert('Pop In close'),
 }
