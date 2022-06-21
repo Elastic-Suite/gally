@@ -7,7 +7,6 @@ export default {
   component: AlertInfoMessage,
   argTypes: {
     dev: {
-      description: 'for see in prod make false',
       control: { type: 'boolean' },
     },
   },
@@ -19,6 +18,6 @@ const Template: ComponentStory<typeof AlertInfoMessage> = (args) => (
 
 export const AlertInfoMessages = Template.bind({})
 AlertInfoMessages.args = {
-  title: 'salut à tous',
+  title: 'Hello World',
   dev: true,
 }

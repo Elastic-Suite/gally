@@ -33,7 +33,7 @@ const Template: ComponentStory<typeof Tooltips> = (args) => (
 
 export const ToolTips = Template.bind({})
 ToolTips.args = {
-  hoverDesc: 'Les attributs affichés ont été déclarés comme étant filtrables.',
+  hoverDesc: 'Hello World',
   placement: 'right',
-  desc: 'Passez votre souris sur moi',
+  desc: 'Hover me',
 }
