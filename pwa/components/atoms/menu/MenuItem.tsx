@@ -1,9 +1,10 @@
-import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import { makeStyles } from '@mui/styles'
 import { Theme } from '@mui/material/styles'
 import Collapse from '@mui/material/Collapse'
 import Link from 'next/link'
+
 import {
+  IMenuChild,
   selectChildrenState,
   selectMenuItemActive,
   selectSidebarStateTimeout,
@@ -11,6 +12,7 @@ import {
   useAppDispatch,
   useAppSelector,
 } from '~/store'
+import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 
 /*
  * Create function to create path from code of the menu item
@@ -112,11 +114,18 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }))
 
-const MenuItem = (props) => {
+interface IProps {
+  code: string
+  href: string
+  label: string
+  children?: IMenuChild[]
+}
+
+const MenuItem = (props: IProps) => {
+  const { children, code, href, label } = props
+
   const dispatch = useAppDispatch()
-  const childState = useAppSelector((state) =>
-    selectChildrenState(state, props.code)
-  )
+  const childState = useAppSelector((state) => selectChildrenState(state, code))
   const menuItemActive = useAppSelector(selectMenuItemActive) || ''
   const sidebarStateTimeout = useAppSelector(selectSidebarStateTimeout)
   const words = menuItemActive.split('_')
@@ -126,7 +135,7 @@ const MenuItem = (props) => {
    * Function to collapse or not children
    */
   const toggleChild = () => {
-    dispatch(setChildState({ code: props.code, value: !childState }))
+    dispatch(setChildState({ code: code, value: !childState }))
   }
 
   const classes = useStyles()
@@ -141,24 +150,24 @@ const MenuItem = (props) => {
       }
     >
       <div className={classes.linePadding}>
-        {!props.children && (
+        {!children && (
           <div
             className={
               classes.lineHover +
               ' ' +
-              (menuItemActive === props.code ? classes.lineActive : '')
+              (menuItemActive === code ? classes.lineActive : '')
             }
           >
-            <Link href="/admin/[[...slug]]" as={`/admin/${props.href}`}>
-              <a className={classes.line}>{props.label}</a>
+            <Link href="/admin/[[...slug]]" as={`/admin/${href}`}>
+              <a className={classes.line}>{label}</a>
             </Link>
-            {menuItemActive === props.code && (
+            {menuItemActive === code && (
               <div className={classes.indicatorLineActive} />
             )}
           </div>
         )}
-        {!!props.children && (
-          <div
+        {!!children && (
+          <button
             className={classes.line + ' ' + classes.lineHover}
             style={{ transition: 'all 500ms', position: 'relative' }}
             onClick={toggleChild}
@@ -184,12 +193,12 @@ const MenuItem = (props) => {
             ) : (
               ''
             )}
-          </div>
+          </button>
         )}
       </div>
-      {!!props.children && (
+      {!!children && (
         <Collapse className={classes.children} in={childState}>
-          {props.children.map((item, index) => (
+          {children.map((item, index) => (
             <MenuItem
               key={`${index}-${item.code}`}
               href={slugify(item.code, 2)}

@@ -2,6 +2,7 @@ import { createTheme } from '@mui/material/styles'
 import { keyframes } from '@emotion/react'
 
 declare module '@mui/material/styles' {
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   interface Palette {
     neutral: Palette['primary']
     menu: {
@@ -71,6 +72,7 @@ declare module '@mui/material/styles' {
       }
     }
   }
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   interface PaletteOptions {
     neutral: PaletteOptions['primary']
     menu: {

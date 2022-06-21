@@ -43,4 +43,12 @@ module.exports = {
       },
     ],
   },
+  overrides: [
+    {
+      files: ['**/*.stories.*'],
+      rules: {
+        'react/prop-types': 0,
+      },
+    },
+  ],
 }

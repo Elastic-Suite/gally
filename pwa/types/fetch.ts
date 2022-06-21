@@ -22,7 +22,7 @@ export enum LoadStatus {
   SUCCESSDED,
 }
 
-export interface Fetch<D> {
+export interface IFetch<D> {
   data?: D
   error?: Error
   loading: boolean

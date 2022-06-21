@@ -1,23 +1,23 @@
-import { JsonldBase, HydraSupportedClass } from './hydra'
+import { IJsonldBase, IHydraSupportedClass } from './hydra'
 
-export interface DocsJsonldContext {
+export interface IDocsJsonldContext {
   '@vocab': string
-  domain: JsonldBase
-  expects: JsonldBase
+  domain: IJsonldBase
+  expects: IJsonldBase
   hydra: string
   owl: string
-  range: JsonldBase
+  range: IJsonldBase
   rdf: string
   rdfs: string
-  returns: JsonldBase
+  returns: IJsonldBase
   schema: string
-  subClassOf: JsonldBase
+  subClassOf: IJsonldBase
   xmls: string
 }
 
-export interface DocsJsonld extends JsonldBase {
-  '@context': DocsJsonldContext
+export interface IDocsJsonld extends IJsonldBase {
+  '@context': IDocsJsonldContext
   'hydra:entrypoint': string
-  'hydra:supportedClass': HydraSupportedClass[]
+  'hydra:supportedClass': IHydraSupportedClass[]
   'hydra:title': string
 }
