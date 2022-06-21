@@ -69,39 +69,34 @@ const useStylesCatalog = makeStyles((theme: Theme) => ({
   },
 }))
 
-const SubTabs = ({ labels, contents }) => {
+interface IProps {
+  labels: Array<string>
+  contents: any
+}
+
+const SubTabs = ({ labels, contents }: IProps) => {
   const stylecatalog = useStylesCatalog()
   const [active, setActive] = useState(0)
 
   return (
-    <>
-      <div className={stylecatalog.root}>
-        <div className={stylecatalog.rootSubTabs}>
-          {labels.map((item: any, key: number) =>
-            key === active ? (
-              <div
-                key={key}
-                className={
-                  stylecatalog.subTabs + ' ' + stylecatalog.subTabsActive
-                }
-                onClick={() => setActive(key)}
-              >
-                {item}
-              </div>
-            ) : (
-              <div
-                key={key}
-                className={stylecatalog.subTabs}
-                onClick={() => setActive(key)}
-              >
-                {item}
-              </div>
-            )
-          )}
-        </div>
-        {contents.map((item: any, key: number) => key === active && item)}
+    <div className={stylecatalog.root}>
+      <div className={stylecatalog.rootSubTabs}>
+        {labels.map((item: any, key: number) => (
+          <div
+            key={key}
+            className={
+              (key === active && stylecatalog.subTabsActive) +
+              ' ' +
+              stylecatalog.subTabs
+            }
+            onClick={() => setActive(key)}
+          >
+            {item}
+          </div>
+        ))}
       </div>
-    </>
+      {contents.map((item: any, key: number) => key === active && item)}
+    </div>
   )
 }
 
