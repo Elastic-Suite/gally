@@ -75,6 +75,23 @@ export interface DocsJsonInfo {
   version: string
 }
 
+export interface DocsJsonSecuritySchemes {
+  type: string
+  description: string
+  name: string
+  in: string
+}
+
+export interface DocsJsonComponents {
+  schemas: Record<string, HydraPropertyType>
+  responses: DocsJsonResponses
+  parameters: Record<string, unknown> // FIXME
+  examples: Record<string, unknown> // FIXME
+  requestBodies: Record<string, unknown> // FIXME
+  headers: Record<string, unknown> // FIXME
+  securitySchemes: Record<string, DocsJsonSecuritySchemes>
+}
+
 export interface DocsJson {
   openapi: string
   info: DocsJsonInfo
