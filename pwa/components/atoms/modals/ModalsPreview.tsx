@@ -36,11 +36,9 @@ const ModalsPreview = () => {
 
       <h1>Pop in</h1>
 
-      <div style={{ zIndex: 9999999 }}>
+      <div>
         <div onClick={() => setVisiblePopIn(true)}>
-          <PrimaryButton size="large">
-            Ajouter au panier (test popIn)
-          </PrimaryButton>
+          <PrimaryButton size="large">Hello World (test popIn)</PrimaryButton>
         </div>
         {visiblePopIn && (
           <PopIn
@@ -53,7 +51,7 @@ const ModalsPreview = () => {
         )}
       </div>
       {visiblePopIn && (
-        <CloseComponent close={() => setVisiblePopIn(false)}></CloseComponent>
+        <CloseComponent onClose={() => setVisiblePopIn(false)}></CloseComponent>
       )}
     </div>
   )
