@@ -7,7 +7,6 @@ export default {
   component: Tooltips,
   argTypes: {
     placement: {
-      description: "if position can't be, she",
       options: [
         'top-start',
         'top-end',
