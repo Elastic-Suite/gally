@@ -1,0 +1,300 @@
+[
+  {
+    "name": "elasticsuite_com_fr_category_20220603_095414",
+    "alias": "elasticsuite_com_fr_category",
+    "settings": {
+      "aliases": {
+        "elasticsuite_com_fr_category": { "is_hidden": false },
+        ".catalog_1": { "is_hidden": true },
+        ".entity_category": { "is_hidden": true }
+      },
+      "settings": {
+        "mapping": {
+          "total_fields": {
+            "limit": "20000"
+          }
+        },
+        "refresh_interval": "1s",
+        "translog": {
+          "durability": "request"
+        },
+        "max_result_window": "100000",
+        "requests": {
+          "cache": {
+            "enable": "true"
+          }
+        },
+        "analysis": {
+          "filter": {
+            "stemmer": {
+              "type": "stemmer",
+              "language": "french"
+            },
+            "phonetic": {
+              "languageset": "french",
+              "type": "phonetic",
+              "encoder": "beider_morse"
+            },
+            "lowercase": {
+              "type": "lowercase"
+            },
+            "trim": {
+              "type": "trim"
+            },
+            "reference_word_delimiter": {
+              "split_on_numerics": "true",
+              "generate_word_parts": "true",
+              "preserve_original": "false",
+              "catenate_words": "false",
+              "catenate_all": "false",
+              "split_on_case_change": "true",
+              "type": "word_delimiter",
+              "catenate_numbers": "false"
+            },
+            "standard_override": {
+              "type": "stemmer_override",
+              "rules": [
+                "clous => clou",
+                "verrous => verrou",
+                "ecrous => ecrou"
+              ]
+            },
+            "ascii_folding": {
+              "type": "asciifolding",
+              "preserve_original": "false"
+            },
+            "elision": {
+              "type": "elision",
+              "articles": [
+                "l",
+                "m",
+                "t",
+                "qu",
+                "n",
+                "s",
+                "j",
+                "d",
+                "c"
+              ]
+            },
+            "shingle": {
+              "max_shingle_size": "2",
+              "min_shingle_size": "2",
+              "output_unigrams": "true",
+              "type": "shingle"
+            },
+            "truncate_to_max": {
+              "length": "8192",
+              "type": "truncate"
+            },
+            "reference_shingle": {
+              "max_shingle_size": "10",
+              "min_shingle_size": "2",
+              "token_separator": "",
+              "output_unigrams": "true",
+              "type": "shingle"
+            },
+            "word_delimiter": {
+              "split_on_numerics": "true",
+              "generate_word_parts": "true",
+              "preserve_original": "true",
+              "catenate_words": "true",
+              "catenate_all": "true",
+              "split_on_case_change": "true",
+              "type": "word_delimiter",
+              "catenate_numbers": "true"
+            }
+          },
+          "analyzer": {
+            "reference": {
+              "filter": [
+                "ascii_folding",
+                "trim",
+                "reference_word_delimiter",
+                "lowercase",
+                "elision",
+                "reference_shingle"
+              ],
+              "char_filter": [
+                "html_strip"
+              ],
+              "type": "custom",
+              "tokenizer": "standard"
+            },
+            "standard": {
+              "filter": [
+                "ascii_folding",
+                "trim",
+                "word_delimiter",
+                "lowercase",
+                "elision",
+                "standard_override",
+                "stemmer"
+              ],
+              "char_filter": [
+                "html_strip"
+              ],
+              "type": "custom",
+              "tokenizer": "standard"
+            },
+            "phonetic": {
+              "filter": [
+                "ascii_folding",
+                "trim",
+                "word_delimiter",
+                "lowercase",
+                "elision",
+                "phonetic"
+              ],
+              "char_filter": [
+                "html_strip"
+              ],
+              "type": "custom",
+              "tokenizer": "standard"
+            },
+            "shingle": {
+              "filter": [
+                "ascii_folding",
+                "trim",
+                "word_delimiter",
+                "lowercase",
+                "elision",
+                "shingle"
+              ],
+              "char_filter": [
+                "html_strip"
+              ],
+              "type": "custom",
+              "tokenizer": "whitespace"
+            },
+            "sortable": {
+              "filter": [
+                "ascii_folding",
+                "trim",
+                "lowercase"
+              ],
+              "char_filter": [
+                "html_strip"
+              ],
+              "type": "custom",
+              "tokenizer": "keyword"
+            },
+            "keyword": {
+              "filter": [
+                "truncate_to_max"
+              ],
+              "char_filter": [
+
+              ],
+              "type": "custom",
+              "tokenizer": "keyword"
+            },
+            "whitespace": {
+              "filter": [
+                "ascii_folding",
+                "trim",
+                "word_delimiter",
+                "lowercase",
+                "elision"
+              ],
+              "char_filter": [
+                "html_strip"
+              ],
+              "type": "custom",
+              "tokenizer": "standard"
+            }
+          },
+          "char_filter": {
+            "html_strip": {
+              "type": "html_strip"
+            }
+          }
+        },
+        "number_of_replicas": "0",
+        "codec": "best_compression",
+        "routing": {
+          "allocation": {
+            "include": {
+              "_tier_preference": "data_content"
+            }
+          }
+        },
+        "number_of_shards": "1",
+        "max_shingle_diff": "9",
+        "merge": {
+          "scheduler": {
+            "max_thread_count": "1"
+          }
+        }
+      },
+      "mappings": {
+        "properties": {
+          "autocomplete": {
+            "type": "text",
+            "fields": {
+              "shingle": {
+                "type": "text",
+                "analyzer": "shingle"
+              },
+              "whitespace": {
+                "type": "text",
+                "analyzer": "whitespace"
+              }
+            },
+            "analyzer": "standard"
+          },
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "text",
+            "fields": {
+              "standard": {
+                "type": "text",
+                "analyzer": "standard"
+              }
+            },
+            "copy_to": [
+              "search",
+              "spelling"
+            ],
+            "norms": false,
+            "analyzer": "keyword"
+          },
+          "search": {
+            "type": "text",
+            "fields": {
+              "shingle": {
+                "type": "text",
+                "analyzer": "shingle"
+              },
+              "whitespace": {
+                "type": "text",
+                "analyzer": "whitespace"
+              }
+            },
+            "analyzer": "standard"
+          },
+          "spelling": {
+            "type": "text",
+            "fields": {
+              "phonetic": {
+                "type": "text",
+                "analyzer": "phonetic"
+              },
+              "shingle": {
+                "type": "text",
+                "analyzer": "shingle"
+              },
+              "whitespace": {
+                "type": "text",
+                "analyzer": "whitespace"
+              }
+            },
+            "analyzer": "standard"
+          }
+        }
+      }
+    }
+  }
+]

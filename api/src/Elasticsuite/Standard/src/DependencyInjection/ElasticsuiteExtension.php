@@ -55,6 +55,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
                         __DIR__ . '/../Menu/Model/',
                         __DIR__ . '/../Search/Model/',
                         __DIR__ . '/../Category/Model/',
+                        __DIR__ . '/../Product/Model/',
                     ],
                 ],
             ]
@@ -131,6 +132,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
         $loader->load('Entity/Resources/config/services.yaml');
         $loader->load('Search/Resources/config/services.yaml');
         $loader->load('Category/Resources/config/services.yaml');
+        $loader->load('Product/Resources/config/services.yaml');
 
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
