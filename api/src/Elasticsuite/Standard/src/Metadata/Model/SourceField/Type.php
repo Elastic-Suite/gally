@@ -21,6 +21,7 @@ class Type
     public const TYPE_TEXT = 'text';
     public const TYPE_SELECT = 'select';
     public const TYPE_INT = 'int';
+    public const TYPE_BOOLEAN = 'boolean';
     public const TYPE_FLOAT = 'float';
     public const TYPE_PRICE = 'price';
     public const TYPE_REFERENCE = 'reference';
@@ -33,6 +34,7 @@ class Type
             self::TYPE_TEXT,
             self::TYPE_SELECT,
             self::TYPE_INT,
+            self::TYPE_BOOLEAN,
             self::TYPE_FLOAT,
             self::TYPE_PRICE,
             self::TYPE_REFERENCE,

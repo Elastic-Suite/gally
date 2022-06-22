@@ -25,6 +25,7 @@ class SourceFieldToMappingField
         SourceField\Type::TYPE_TEXT => Mapping\FieldInterface::FIELD_TYPE_TEXT,
         SourceField\Type::TYPE_SELECT => Mapping\FieldInterface::FIELD_TYPE_TEXT,
         SourceField\Type::TYPE_INT => Mapping\FieldInterface::FIELD_TYPE_INTEGER,
+        SourceField\Type::TYPE_BOOLEAN => Mapping\FieldInterface::FIELD_TYPE_BOOLEAN,
         SourceField\Type::TYPE_FLOAT => Mapping\FieldInterface::FIELD_TYPE_DOUBLE,
         SourceField\Type::TYPE_PRICE => Mapping\FieldInterface::FIELD_TYPE_DOUBLE,
         SourceField\Type::TYPE_REFERENCE => Mapping\FieldInterface::FIELD_TYPE_KEYWORD,

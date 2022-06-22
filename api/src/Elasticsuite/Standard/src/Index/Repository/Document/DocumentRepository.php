@@ -34,7 +34,7 @@ class DocumentRepository implements DocumentRepositoryInterface
             $params['body'][] = [
                 'index' => [
                     '_index' => $indexName,
-                    '_id' => $document['entity_id'],
+                    '_id' => $document['entity_id'] ?? $document['id'],
                 ],
             ];
 
@@ -58,7 +58,7 @@ class DocumentRepository implements DocumentRepositoryInterface
         foreach ($documents as $document) { // @phpstan-ignore-line
             $response = $this->client->delete([
                 'index' => $indexName,
-                'id' => $document['entity_id'],
+                'id' => $document['entity_id'] ?? $document['id'],
             ]);
         }
     }

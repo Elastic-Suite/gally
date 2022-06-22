@@ -4,3 +4,10 @@ services:
             - '@Doctrine\Persistence\ManagerRegistry'
         tags:
             - { name: doctrine.repository_service }
+
+    # Declare DataFixtures
+    Elasticsuite\Category\DataFixtures\ElasticsearchCategoryFixtures:
+        arguments:
+            - '@Elasticsuite\Fixture\Service\ElasticsearchFixtures'
+        tags:
+            - { name: doctrine.fixture.orm }
