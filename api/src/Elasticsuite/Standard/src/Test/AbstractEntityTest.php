@@ -98,9 +98,10 @@ abstract class AbstractEntityTest extends AbstractTest
      * @dataProvider getDataProvider
      * @depends testCreate
      */
-    public function testGet(User $user, int|string $id, array $expectedData, int $responseCode): void
+    public function testGet(User $user, int|string $id, array $expectedData, int $responseCode, ?string $locale = null): void
     {
-        $request = new RequestToTest('GET', "{$this->getApiPath()}/{$id}", $user);
+        $headers = null !== $locale ? ['Accept-Language' => $locale] : [];
+        $request = new RequestToTest('GET', "{$this->getApiPath()}/{$id}", $user, [], $headers);
         $expectedResponse = new ExpectedResponse(
             $responseCode,
             function (ResponseInterface $response) use ($expectedData) {

@@ -20,6 +20,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Elasticsuite\User\Constant\Role;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ApiResource(
     collectionOperations: [
@@ -39,16 +40,21 @@ use Elasticsuite\User\Constant\Role;
         'update' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
         'delete' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
     ],
+    normalizationContext: ['groups' => 'catalog:read']
 )]
 class Catalog
 {
+    #[Groups('catalog:read')]
     private int $id;
 
+    #[Groups('catalog:read')]
     private string $code;
 
+    #[Groups('catalog:read')]
     private string|null $name;
 
     /** @var \Doctrine\Common\Collections\Collection&iterable<\Elasticsuite\Catalog\Model\LocalizedCatalog> */
+    #[Groups('catalog:read')]
     private Collection $localizedCatalogs;
 
     public function __construct()
