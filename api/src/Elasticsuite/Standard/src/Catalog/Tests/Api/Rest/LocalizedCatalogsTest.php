@@ -69,8 +69,8 @@ class LocalizedCatalogsTest extends AbstractEntityTest
         $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
 
         return [
-            [$user, 1, ['id' => 1, 'code' => 'b2c_fr', 'locale' => 'fr_FR', 'name' => 'B2C French Store View'], 200],
-            [$user, 5, ['id' => 5, 'code' => 'empty_name', 'locale' => 'en_US'], 200],
+            [$user, 1, ['id' => 1, 'code' => 'b2c_fr', 'locale' => 'fr_FR', 'name' => 'B2C French Store View', 'isDefault' => false, 'localName' => 'français (France)'], 200, 'fr_FR'],
+            [$user, 5, ['id' => 5, 'code' => 'empty_name', 'locale' => 'en_US', 'localName' => 'English (United States)'], 200, 'en_US'],
             [$user, 10, [], 404],
         ];
     }

@@ -24,7 +24,10 @@ class CatalogsTest extends AbstractEntityTest
 {
     protected static function getFixtureFiles(): array
     {
-        return [__DIR__ . '/../../fixtures/catalogs.yaml'];
+        return [
+            __DIR__ . '/../../fixtures/catalogs.yaml',
+            __DIR__ . '/../../fixtures/localized_catalogs.yaml',
+        ];
     }
 
     protected function getEntityClass(): string
@@ -59,6 +62,56 @@ class CatalogsTest extends AbstractEntityTest
 
         return [
             [$user, 1, ['id' => 1, 'code' => 'b2c_test', 'name' => 'B2C Test Catalog'], 200],
+            [
+                $user,
+                1,
+                [
+                    'id' => 1,
+                    'code' => 'b2c_test',
+                    'name' => 'B2C Test Catalog',
+                    'localizedCatalogs' => [
+                        [
+                            '@id' => '/localized_catalogs/1',
+                            '@type' => 'LocalizedCatalog',
+                            'id' => 1,
+                            'name' => 'B2C French Store View',
+                            'code' => 'b2c_fr',
+                            'locale' => 'fr_FR',
+                            'isDefault' => false,
+                            'localName' => 'French (France)',
+                        ],
+                        [
+                            '@id' => '/localized_catalogs/2',
+                            '@type' => 'LocalizedCatalog',
+                            'id' => 2,
+                            'name' => 'B2C English Store View',
+                            'code' => 'b2c_en',
+                            'locale' => 'en_US',
+                            'isDefault' => false,
+                            'localName' => 'English (United States)',
+                        ],
+                    ],
+                ],
+                200,
+                'en_US',
+            ],
+            [
+                $user,
+                1,
+                [
+                    'id' => 1,
+                    'localizedCatalogs' => [
+                        [
+                            'localName' => 'français (France)',
+                        ],
+                        [
+                            'localName' => 'anglais (États-Unis)',
+                        ],
+                    ],
+                ],
+                200,
+                'fr_FR',
+            ],
             [$user, 5, ['id' => 5, 'code' => 'missing_name'], 200],
             [$user, 10, [], 404],
         ];
