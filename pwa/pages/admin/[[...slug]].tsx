@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-i18next'
 
 import { fetchDocs, useAppSelector, useAppDispatch, selectDocs } from '~/store'
 import { LoadStatus } from '~/types'
@@ -39,8 +39,7 @@ const Admin = () => {
 
   return (
     <div>
-      {t('temporary-slug')}{' '}
-      {typeof slug !== 'string' ? slug?.join('_') : slug}
+      {t('temporary-slug')} {typeof slug !== 'string' ? slug?.join('_') : slug}
     </div>
   )
 }

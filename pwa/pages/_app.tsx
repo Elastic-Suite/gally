@@ -5,7 +5,7 @@ import { Theme, ThemeProvider } from '@mui/material/styles'
 import Head from 'next/head'
 import Script from 'next/script'
 import { Provider } from 'react-redux'
-import { appWithTranslation } from 'next-i18next';
+import { appWithTranslation } from 'next-i18next'
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'
