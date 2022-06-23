@@ -1,59 +1,10 @@
+import React, { useState } from 'react'
+import Dialog from '@mui/material/Dialog'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
-import { keyframes } from '@mui/material/styles'
 import { styled } from '@mui/material/styles'
 import TitleScope from '~/components/atoms/scope/TitleScope'
 import NbActiveLocales from '~/components/atoms/scope/NbActiveLocales'
 import Language from '~/components/atoms/scope/Language'
-
-const Opacity = keyframes({
-  from: {
-    opacity: 0,
-  },
-
-  to: {
-    opacity: 1,
-  },
-})
-
-const CustomFullRoot = styled('div')({
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  width: '100vw',
-  height: '100vh',
-  zIndex: 99,
-  background: 'rgba(21, 26, 71, 0.6)',
-  animation: `${Opacity} 1000ms forwards`,
-  opacity: 0,
-})
-
-const CustomRoot = styled('div')(({ theme }) => ({
-  width: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-  gap: theme.spacing(3),
-  background: theme.palette.colors.neutral[0],
-  borderRadius: theme.spacing(1),
-}))
-
-const CustomPopIn = styled('div')(({ theme }) => ({
-  position: 'fixed',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%,-50%)',
-  background: theme.palette.background.default,
-  borderRadius: theme.spacing(1),
-  padding: theme.spacing(4),
-  display: 'flex',
-  flexDirection: 'column',
-  width: '600px',
-  zIndex: 999,
-  animation: `${Opacity} 1000ms forwards`,
-  opacity: 0,
-}))
 
 const CustomClose = styled('div')(({ theme }) => ({
   position: 'absolute',
@@ -70,17 +21,59 @@ const CustomClose = styled('div')(({ theme }) => ({
   },
 }))
 
+const CustumOtherLanguage = styled('div')(({ theme }) => ({
+  textAlign: 'center',
+  lineHeight: '18px',
+  paddingTop: theme.spacing(0.5),
+  paddingBottom: theme.spacing(0.5),
+  paddingRight: theme.spacing(1.5),
+  paddingLeft: theme.spacing(1.5),
+  fontSize: '12px',
+  fontWeight: '600',
+  fontFamily: 'Inter',
+  background: theme.palette.colors.neutral[300],
+  borderRadius: '99px',
+  color: theme.palette.colors.secondary[600],
+  cursor: 'pointer',
+}))
+
+const CustomRoot = styled('div')(({ theme }) => ({
+  width: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: theme.spacing(3),
+  background: theme.palette.colors.neutral[0],
+  borderRadius: theme.spacing(1),
+}))
+
 interface PopInProps {
   content: any
-  onClose: Function
+  title: number
 }
 
-const PopInCatalogs = ({ content, onClose }: PopInProps) => {
+const PopInCatalogs = ({ content, title }: PopInProps) => {
+  const [open, setOpen] = useState(false)
+
+  const handleClickOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+
   return (
     <>
-      <CustomFullRoot></CustomFullRoot>
-      <CustomPopIn>
-        <CustomClose onClick={() => onClose()}>
+      <CustumOtherLanguage onClick={handleClickOpen}>
+        {title}
+      </CustumOtherLanguage>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <CustomClose onClick={handleClose}>
           <IonIcon name="close" style={{ fontSize: '17.85px' }} />
         </CustomClose>
         <CustomRoot>
@@ -88,7 +81,7 @@ const PopInCatalogs = ({ content, onClose }: PopInProps) => {
           <NbActiveLocales number={content.nbActiveLocales} />
           <Language language={content.language} limit={false} />
         </CustomRoot>
-      </CustomPopIn>
+      </Dialog>
     </>
   )
 }
