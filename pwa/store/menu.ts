@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { Fetch } from '~/types'
 
 export interface MenuChild {
   code: string
@@ -11,7 +12,7 @@ export interface Menu {
 }
 
 export interface MenuState {
-  menu: Menu
+  menu: Fetch<Menu>
   menuItemActive: string
   sidebarState: boolean
   sidebarStateTimeout: boolean
@@ -20,7 +21,10 @@ export interface MenuState {
 
 const initialState: MenuState = {
   menu: {
-    hierarchy: [],
+    loading: false,
+    data: {
+      hierarchy: [],
+    },
   },
   menuItemActive: '',
   sidebarState: true,
@@ -38,8 +42,11 @@ const menuSlice = createSlice({
     ) {
       state.childrenState[action.payload.code] = action.payload.value
     },
-    setMenu(state, action: PayloadAction<Menu>) {
-      state.menu = action.payload
+    setMenu(state, action: PayloadAction<Fetch<Menu>>) {
+      state.menu = {
+        ...state.menu,
+        ...action.payload,
+      }
     },
     setMenuItemActive(state, action: PayloadAction<string>) {
       state.menuItemActive = action.payload
@@ -64,7 +71,7 @@ export const menuReducer = menuSlice.reducer
 
 export const selectChildrenState = (state, code: string) =>
   state.menu.childrenState[code]
-export const selectMenu = (state) => state.menu.menu
+export const selectMenu = (state) => state.menu.menu.data
 export const selectMenuItemActive = (state) => state.menu.menuItemActive
 export const selectSidebarState = (state) => state.menu.sidebarState
 export const selectSidebarStateTimeout = (state) =>
