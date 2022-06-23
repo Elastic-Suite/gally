@@ -1,5 +1,3 @@
-import MenuItemIcon from '~/components/atoms/menu/MenuItemIcon'
-import MenuItem from '~/components/atoms/menu/MenuItem'
 import { makeStyles } from '@mui/styles'
 import { Theme } from '@mui/material/styles'
 import { useEffect } from 'react'
@@ -13,6 +11,8 @@ import {
   useAppSelector,
 } from '~/store'
 import { useApiDispatch } from '~/hooks/useApi'
+import MenuItemIcon from '~/components/atoms/menu/MenuItemIcon'
+import MenuItem from '~/components/atoms/menu/MenuItem'
 
 /*
  * Create function to create path from code of the menu item
@@ -63,7 +63,13 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }))
 
-const CustomMenu = (props) => {
+interface IProps {
+  className?: string
+}
+
+const CustomMenu = (props: IProps) => {
+  const { className } = props
+
   const dispatch = useAppDispatch()
   const menu = useAppSelector(selectMenu)
 
@@ -86,7 +92,7 @@ const CustomMenu = (props) => {
   const classes = useStyles()
 
   return (
-    <div className={props.className}>
+    <div className={className}>
       <div className={classes.firstItems}>
         {menu?.hierarchy.map((item, index) => {
           if (!(item.code === 'settings') && !(item.code === 'monitoring')) {
@@ -104,11 +110,11 @@ const CustomMenu = (props) => {
                     <div key={`${index}-${item.code}`}>
                       <MenuItem
                         href={slugify(item.code, 1)}
-                        id={item.code}
                         code={item.code}
                         label={item.label}
-                        children={item.children}
-                      />
+                      >
+                        {item.children}
+                      </MenuItem>
                     </div>
                   ))}
                 </div>

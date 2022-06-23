@@ -8,70 +8,70 @@ export enum HydraType {
   STRING = 'string',
 }
 
-export interface HydraPropertyTypeRef {
+export interface IHydraPropertyTypeRef {
   $ref?: string
 }
 
-export interface HydraPropertyTypeArray {
+export interface IHydraPropertyTypeArray {
   type: HydraType.ARRAY
   items: HydraPropertyType
 }
 
-export interface HydraPropertyTypeBoolean {
+export interface IHydraPropertyTypeBoolean {
   type: HydraType.BOOLEAN
 }
 
-export interface HydraPropertyTypeInteger {
+export interface IHydraPropertyTypeInteger {
   type: HydraType.INTEGER
   default?: number
   minimum?: number
   maximum?: number
 }
 
-export interface HydraPropertyTypeObject {
+export interface IHydraPropertyTypeObject {
   type: HydraType.OBJECT
   properties: Record<string, HydraPropertyType>
   required?: string[]
 }
 
-export interface HydraPropertyTypeString {
+export interface IHydraPropertyTypeString {
   type: HydraType.STRING
   format?: string
   nullable?: boolean
 }
 
 export type HydraPropertyType =
-  | HydraPropertyTypeRef
-  | HydraPropertyTypeArray
-  | HydraPropertyTypeBoolean
-  | HydraPropertyTypeInteger
-  | HydraPropertyTypeObject
-  | HydraPropertyTypeString
+  | IHydraPropertyTypeRef
+  | IHydraPropertyTypeArray
+  | IHydraPropertyTypeBoolean
+  | IHydraPropertyTypeInteger
+  | IHydraPropertyTypeObject
+  | IHydraPropertyTypeString
 
-export interface JsonldContext {
+export interface IJsonldContext {
   '@context': string
 }
 
-export interface JsonldType {
+export interface IJsonldType {
   '@type': string | string[]
 }
 
-export interface JsonldId {
+export interface IJsonldId {
   '@id': string
 }
 
-export interface JsonldBase extends JsonldType, JsonldId {}
+export interface IJsonldBase extends IJsonldType, IJsonldId {}
 
-export interface OwlEquivalentClass {
-  'owl:onProperty': JsonldId
-  'owl:allValuesFrom': JsonldId
+export interface IOwlEquivalentClass {
+  'owl:onProperty': IJsonldId
+  'owl:allValuesFrom': IJsonldId
 }
 
-export interface RdfsRange {
-  'owl:equivalentClass': OwlEquivalentClass
+export interface IRdfsRange {
+  'owl:equivalentClass': IOwlEquivalentClass
 }
 
-export interface HydraSupportedOperation extends JsonldType {
+export interface IHydraSupportedOperation extends IJsonldType {
   expects?: string
   'hydra:method': Method
   'hydra:title'?: string
@@ -79,38 +79,38 @@ export interface HydraSupportedOperation extends JsonldType {
   returns: string
 }
 
-export interface HydraProperty extends JsonldBase {
+export interface IHydraProperty extends IJsonldBase {
   domain: string
   'hydra:supportedOperation'?:
-    | HydraSupportedOperation
-    | HydraSupportedOperation[]
+    | IHydraSupportedOperation
+    | IHydraSupportedOperation[]
   'owl:maxCardinality'?: number
   range?: string
   'rdfs:label': string
-  'rdfs:range'?: (JsonldId | RdfsRange)[]
+  'rdfs:range'?: (IJsonldId | IRdfsRange)[]
 }
 
-export interface HydraSupportedProperty extends JsonldType {
+export interface IHydraSupportedProperty extends IJsonldType {
   'hydra:description'?: string
-  'hydra:property': HydraProperty
+  'hydra:property': IHydraProperty
   'hydra:readable': boolean
   'hydra:required'?: boolean
   'hydra:title': string
   'hydra:writeable': boolean
 }
 
-export interface HydraSupportedClass extends JsonldBase {
+export interface IHydraSupportedClass extends IJsonldBase {
   'hydra:description'?: string
   'hydra:supportedOperation'?:
-    | HydraSupportedOperation
-    | HydraSupportedOperation[]
-  'hydra:supportedProperty': HydraSupportedProperty[]
+    | IHydraSupportedOperation
+    | IHydraSupportedOperation[]
+  'hydra:supportedProperty': IHydraSupportedProperty[]
   'hydra:title': string
   'rdfs:label'?: string
   subClassOf?: string
 }
 
-export interface HydraMember extends JsonldType, JsonldId {
+export interface IHydraMember extends IJsonldType, IJsonldId {
   code: string
   defaultLabel: string
   filterable?: boolean
@@ -127,7 +127,7 @@ export interface HydraMember extends JsonldType, JsonldId {
   weight?: number
 }
 
-export interface HydraResponse extends JsonldContext, JsonldType, JsonldId {
-  'hydra:member': HydraMember[]
+export interface IHydraResponse extends IJsonldContext, IJsonldType, IJsonldId {
+  'hydra:member': IHydraMember[]
   'hydra:totalItems': number
 }

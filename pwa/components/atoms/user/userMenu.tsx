@@ -113,7 +113,7 @@ const UserMenu = () => {
 
   return (
     <div style={{ position: 'relative' }}>
-      <div
+      <button
         className={usermenustyle.user}
         onClick={() => setOpenUserMenu(!openUserMenu)}
       >
@@ -128,7 +128,7 @@ const UserMenu = () => {
         >
           <IonIcon name="chevron-down" style={{ width: '16px' }} />
         </div>
-      </div>
+      </button>
 
       <div
         ref={useMenu}
