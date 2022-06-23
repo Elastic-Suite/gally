@@ -9,7 +9,7 @@ const CustomRoot = styled('div')(({ theme }) => ({
   padding: theme.spacing(4),
   background: theme.palette.colors.neutral[0],
   border: '1px solid #E2E6F3',
-  borderRadius: theme.spacing(1),
+  borderRadius: 8,
 }))
 
 interface IProps {
