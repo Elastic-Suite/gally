@@ -510,7 +510,6 @@ const theme = createTheme({
           borderRadius: 8,
           padding: 32,
           width: '600px',
-          minHeight: '268px',
         },
       },
     },
