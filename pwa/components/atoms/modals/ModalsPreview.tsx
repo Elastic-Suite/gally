@@ -2,16 +2,8 @@ import AlertInfoMessage from '~/components/atoms/modals/AlertInfoMessage'
 import Tooltip from '~/components/atoms/modals/Tooltip'
 import PopIn from '~/components/atoms/modals/PopIn'
 import PrimaryButton from '~/components/atoms/buttons/PrimaryButton'
-import CloseComponent from '../closeComponent/CloseComponent'
-
-import { useState } from 'react'
-
-const maFunction = () => {
-  return alert('Produit ajouté au panier !')
-}
 
 const ModalsPreview = () => {
-  const [visiblePopIn, setVisiblePopIn] = useState(false)
   return (
     <div>
       <h1>Tooltip</h1>
