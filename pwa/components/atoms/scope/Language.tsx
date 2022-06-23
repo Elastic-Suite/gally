@@ -24,11 +24,6 @@ const CustomLanguage = styled('div')(({ theme }) => ({
   borderRadius: '99px',
 }))
 
-const CustumOtherLanguage = styled(CustomLanguage)(({ theme }) => ({
-  color: theme.palette.colors.secondary[600],
-  cursor: 'pointer',
-}))
-
 interface IProps {
   language: any
   limit: boolean
@@ -40,40 +35,29 @@ const Language = ({ language, order, limit, content }: IProps) => {
   const newLanguage = limit
     ? [...new Set(language.language)]
     : [...new Set(language)]
-  const [visible, setVisible] = useState(null)
 
   return (
-    <>
-      <CustomRoot>
-        {newLanguage &&
-          newLanguage.map((item: any, key: number) => (
-            <div key={key}>
-              {limit === true ? (
-                <>
-                  {key === 3 ? (
-                    <CustumOtherLanguage
-                      key={key}
-                      onClick={() => setVisible(order + 1)}
-                    >
-                      +{newLanguage.length}
-                    </CustumOtherLanguage>
-                  ) : (
-                    key < 3 && <CustomLanguage key={key}>{item}</CustomLanguage>
-                  )}
-                </>
-              ) : (
-                <CustomLanguage key={key}>{item}</CustomLanguage>
-              )}
-            </div>
-          ))}
-      </CustomRoot>
-      {visible && (
-        <PopInCatalogs
-          content={content[visible - 1]}
-          onClose={() => setVisible(null)}
-        />
-      )}
-    </>
+    <CustomRoot>
+      {newLanguage &&
+        newLanguage.map((item: any, key: number) => (
+          <div key={key}>
+            {limit === true ? (
+              <>
+                {key === 3 ? (
+                  <PopInCatalogs
+                    content={content[order]}
+                    title={newLanguage.length}
+                  />
+                ) : (
+                  key < 3 && <CustomLanguage key={key}>{item}</CustomLanguage>
+                )}
+              </>
+            ) : (
+              <CustomLanguage key={key}>{item}</CustomLanguage>
+            )}
+          </div>
+        ))}
+    </CustomRoot>
   )
 }
 
