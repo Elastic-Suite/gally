@@ -21,6 +21,7 @@
         || {path} == "/robots.txt"
         || {path}.startsWith("/_next")
         || {path}.startsWith("/sitemap")
+        || {path}.startsWith("/locales")
         || {path}.startsWith("/storybook-static")`
 
 

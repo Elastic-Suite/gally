@@ -1,15 +1,19 @@
 import { FunctionComponent } from 'react'
 import type { AppProps } from 'next/app'
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-icons/font/bootstrap-icons.css'
-import 'assets/scss/style.scss'
 import dynamic from 'next/dynamic'
 import { Theme, ThemeProvider } from '@mui/material/styles'
-import RegularTheme from '~/components/atoms/RegularTheme'
 import Head from 'next/head'
 import Script from 'next/script'
 import { Provider } from 'react-redux'
+import { appWithTranslation } from 'next-i18next'
+
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-icons/font/bootstrap-icons.css'
+import 'assets/scss/style.scss'
+
+import nextI18nConfig from '~/next-i18next.config'
 import { store } from '~/store'
+import RegularTheme from '~/components/atoms/RegularTheme'
 
 /*
  * Resolve for "Prop className did not match" between Server side and Client side
@@ -70,4 +74,4 @@ function MyApp(props: AppProps) {
 //   return { ...appProps }
 // }
 
-export default MyApp
+export default appWithTranslation(MyApp, nextI18nConfig)

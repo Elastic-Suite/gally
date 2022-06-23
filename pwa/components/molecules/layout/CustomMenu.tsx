@@ -4,6 +4,7 @@ import { makeStyles } from '@mui/styles'
 import { Theme } from '@mui/material/styles'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
+
 import {
   selectMenu,
   setMenu,
@@ -11,6 +12,7 @@ import {
   useAppDispatch,
   useAppSelector,
 } from '~/store'
+import { useApiDispatch } from '~/hooks/useApi'
 
 /*
  * Create function to create path from code of the menu item
@@ -79,21 +81,14 @@ const CustomMenu = (props) => {
   /*
    * Fetch data from /menu to get create menu items dynamically
    */
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await fetch('/menu')
-      const json = await res.json()
-      dispatch(setMenu(json))
-    }
-    fetchData()
-  }, [dispatch])
+  useApiDispatch(setMenu, '/menu')
 
   const classes = useStyles()
 
   return (
     <div className={props.className}>
       <div className={classes.firstItems}>
-        {menu.hierarchy.map((item, index) => {
+        {menu?.hierarchy.map((item, index) => {
           if (!(item.code === 'settings') && !(item.code === 'monitoring')) {
             return (
               <div key={`${index}-${item.code}`} className={classes.boldStyle}>
