@@ -24,7 +24,7 @@ const initialState: MenuState = {
     loading: false,
     data: {
       hierarchy: [],
-    }
+    },
   },
   menuItemActive: '',
   sidebarState: true,
@@ -45,7 +45,7 @@ const menuSlice = createSlice({
     setMenu(state, action: PayloadAction<Fetch<Menu>>) {
       state.menu = {
         ...state.menu,
-        ...action.payload
+        ...action.payload,
       }
     },
     setMenuItemActive(state, action: PayloadAction<string>) {

@@ -5,18 +5,24 @@ import { useTranslation } from 'next-i18next'
 import { useAppDispatch } from '~/store'
 import { Fetch } from '~/types'
 
-export function fetchApi(language: string, url: RequestInfo | URL, options: RequestInit = {}) {
+export function fetchApi(
+  language: string,
+  url: RequestInfo | URL,
+  options: RequestInit = {}
+) {
   return fetch(url, {
     ...options,
     headers: {
       ...options.headers,
       'Accept-Language': language,
     },
-  })
-  .then((response) => response.json())
+  }).then((response) => response.json())
 }
 
-export function useApiFetch<T>(url: RequestInfo | URL, options: RequestInit = {}): [Fetch<T>, Dispatch<SetStateAction<Fetch<T>>>] {
+export function useApiFetch<T>(
+  url: RequestInfo | URL,
+  options: RequestInit = {}
+): [Fetch<T>, Dispatch<SetStateAction<Fetch<T>>>] {
   const [response, setResponse] = useState<Fetch<T>>({ loading: false })
   const { i18n } = useTranslation('common')
 
@@ -30,7 +36,11 @@ export function useApiFetch<T>(url: RequestInfo | URL, options: RequestInit = {}
   return [response, setResponse]
 }
 
-export function useApiDispatch<T>(action: ActionCreatorWithOptionalPayload<Fetch<T>>, url: RequestInfo | URL, options: RequestInit = {}) {
+export function useApiDispatch<T>(
+  action: ActionCreatorWithOptionalPayload<Fetch<T>>,
+  url: RequestInfo | URL,
+  options: RequestInit = {}
+) {
   const dispatch = useAppDispatch()
   const { i18n } = useTranslation('common')
 

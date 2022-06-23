@@ -1,4 +1,4 @@
-import { JsonldBase, HydraSupportedClass } from "./hydra"
+import { JsonldBase, HydraSupportedClass } from './hydra'
 
 export interface DocsJsonldContext {
   '@vocab': string
