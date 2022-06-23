@@ -1,7 +1,7 @@
 import { Box } from '@mui/material'
 
 interface IProps {
-  onClose: Function
+  onClose: () => void
 }
 
 const CloseComponent = ({ onClose }: IProps) => {
@@ -15,7 +15,7 @@ const CloseComponent = ({ onClose }: IProps) => {
         left: '0',
         top: '0',
       }}
-      onClick={() => onClose()}
+      onClick={onClose}
     ></Box>
   )
 }
