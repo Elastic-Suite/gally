@@ -31,8 +31,7 @@ const authProvider = {
       if (
         !localStorage.getItem('token') ||
         new Date().getTime() / 1000 >
-          (jwtDecode(localStorage.getItem('token')) as Record<string, number>)
-            ?.exp
+          jwtDecode(localStorage.getItem('token'))?.exp
       ) {
         return Promise.reject()
       }

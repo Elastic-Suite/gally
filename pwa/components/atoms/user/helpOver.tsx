@@ -77,16 +77,19 @@ const useStylesHelp = makeStyles((theme: Theme) => ({
     opacity: 1,
   },
 }))
+
 const Help = () => {
   const helpstyle = useStylesHelp()
   const [helpVisible, setHelpVisible] = useState(false)
   const useHelp = useRef(null)
 
   return (
-    <div
+    <button
       className={helpstyle.help}
       onMouseOver={() => setHelpVisible(true)}
       onMouseLeave={() => setHelpVisible(false)}
+      onFocus={() => setHelpVisible(true)}
+      onBlur={() => setHelpVisible(false)}
     >
       <IonIcon name="help-circle-outline" style={{ width: '14,67px' }} />
       <div
@@ -98,7 +101,7 @@ const Help = () => {
       >
         {<HelpOver />}
       </div>
-    </div>
+    </button>
   )
 }
 

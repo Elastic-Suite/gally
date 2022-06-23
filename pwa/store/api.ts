@@ -1,18 +1,18 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { DocsJson, DocsJsonld, LoadStatus } from '~/types'
+import { IDocsJson, IDocsJsonld, LoadStatus } from '~/types'
 
-export interface docsFetch {
-  json: DocsJson
-  jsonld: DocsJsonld
+export interface IDocsFetch {
+  json: IDocsJson
+  jsonld: IDocsJsonld
   error: string
   status: LoadStatus
 }
 
-export interface ApiState {
-  docs: docsFetch
+export interface IApiState {
+  docs: IDocsFetch
 }
 
-const initialState: ApiState = {
+const initialState: IApiState = {
   docs: {
     json: null,
     jsonld: null,

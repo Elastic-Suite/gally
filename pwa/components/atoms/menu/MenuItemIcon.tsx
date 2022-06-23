@@ -122,7 +122,17 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }))
 
-const MenuItemIcon = (props) => {
+interface IProps {
+  childPadding?: boolean
+  code: string
+  href: string
+  label: string
+  lightStyle?: boolean
+}
+
+const MenuItemIcon = (props: IProps) => {
+  const { childPadding, code, href, label, lightStyle } = props
+
   const menuItemActive = useAppSelector(selectMenuItemActive) || ''
   const sidebarState = useAppSelector(selectSidebarState)
   const sidebarStateTimeout = useAppSelector(selectSidebarStateTimeout)
@@ -133,7 +143,7 @@ const MenuItemIcon = (props) => {
   const classes = useStyles()
   let classNameRoot = classes.root
   let classNameStyle = ''
-  if (props.lightStyle) {
+  if (lightStyle) {
     classNameStyle += classes.lightStyle
   } else {
     classNameStyle += classes.boldStyle
@@ -142,12 +152,12 @@ const MenuItemIcon = (props) => {
   /*
    * Verification and return of specific data if the item has children
    */
-  if (props.childPadding) {
+  if (childPadding) {
     classNameRoot += ' ' + classes.childPadding
     return (
       <div className={classNameRoot + ' ' + classNameStyle}>
-        <IonIcon name={props.code} style={{ width: 18, height: 18 }} />
-        {sidebarStateTimeout && wordIndexOne === props.code ? (
+        <IonIcon name={code} style={{ width: 18, height: 18 }} />
+        {sidebarStateTimeout && wordIndexOne === code ? (
           <div
             className={
               classes.indicatorLineActive + ' ' + classes.opacityFullDeux
@@ -166,7 +176,7 @@ const MenuItemIcon = (props) => {
               : ' ' + classes.heightZero)
           }
         >
-          {props.label}
+          {label}
         </span>
       </div>
     )
@@ -174,12 +184,12 @@ const MenuItemIcon = (props) => {
     return (
       <div
         className={
-          menuItemActive === props.code
+          menuItemActive === code
             ? classes.lineActive + ' ' + classNameStyle
             : classNameStyle
         }
       >
-        <Link href="/admin/[[...slug]]" as={`/admin/${props.href}`}>
+        <Link href="/admin/[[...slug]]" as={`/admin/${href}`}>
           <a
             className={classNameRoot + ' ' + classes.noChildHover}
             style={
@@ -188,7 +198,7 @@ const MenuItemIcon = (props) => {
                 : { width: 'fit-content' }
             }
           >
-            <IonIcon name={props.code} style={{ width: 18, height: 18 }} />
+            <IonIcon name={code} style={{ width: 18, height: 18 }} />
 
             <span
               className={
@@ -198,11 +208,11 @@ const MenuItemIcon = (props) => {
                   : ' ' + classes.heightZero)
               }
             >
-              {props.label}
+              {label}
             </span>
           </a>
         </Link>
-        {menuItemActive === props.code && (
+        {menuItemActive === code && (
           <div
             className={
               classes.indicatorLineActiveTwo +

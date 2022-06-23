@@ -1,7 +1,6 @@
-import IonIcon from '~/components/atoms/IonIcon/IonIcon'
+import { ReactChild } from 'react'
 import { makeStyles } from '@mui/styles'
 import { Theme } from '@mui/material/styles'
-import CustomSidebar from '~/components/molecules/layout/CustomSidebar'
 import { StyledEngineProvider } from '@mui/styled-engine'
 import {
   selectSidebarState,
@@ -11,6 +10,8 @@ import {
   useAppSelector,
 } from '~/store'
 import AppBarMenu from '~/components/molecules/layout/appBar/AppBar'
+import CustomSidebar from '~/components/molecules/layout/CustomSidebar'
+import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 
 /*
  * TODO: THIBO: Update AppBar
@@ -95,10 +96,14 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }))
 
+interface IProps {
+  children: ReactChild
+}
+
 /*
  * Component CustomLayout
  */
-const CustomLayout = ({ children }) => {
+const CustomLayout = ({ children }: IProps) => {
   const dispatch = useAppDispatch()
   const sidebarState = useAppSelector(selectSidebarState)
 
@@ -129,7 +134,7 @@ const CustomLayout = ({ children }) => {
               left: sidebarState ? '279px' : '67px',
             }}
           >
-            <div
+            <button
               className={
                 classes.buttonCollapse +
                 ' ' +
@@ -141,7 +146,7 @@ const CustomLayout = ({ children }) => {
                 name={'code-outline'}
                 style={{ width: 18, height: 18 }}
               />
-            </div>
+            </button>
             <AppBarMenu />
             <div className={classes.content}>{children}</div>
           </div>

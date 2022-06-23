@@ -1,17 +1,17 @@
 import { HttpCode, Method } from './fetch'
 import { HydraPropertyType } from './hydra'
 
-export interface DocsJsonContent {
+export interface IDocsJsonContent {
   schema: HydraPropertyType
 }
 
-export interface DocsJsonBody {
+export interface IDocsJsonBody {
   description: string
-  content: Record<string, DocsJsonContent>
+  content: Record<string, IDocsJsonContent>
   required: boolean
 }
 
-export interface DocsJsonParameter {
+export interface IDocsJsonParameter {
   name: string
   in: string
   description: string
@@ -24,80 +24,80 @@ export interface DocsJsonParameter {
   allowReserved: boolean
 }
 
-export interface DocsJsonLink {
+export interface IDocsJsonLink {
   operationId: string
   parameters: Record<string, string>
   description: string
 }
 
-export interface DocsJsonResponse {
-  content?: Record<string, DocsJsonContent>
+export interface IDocsJsonResponse {
+  content?: Record<string, IDocsJsonContent>
   description: string
-  links?: Record<string, DocsJsonLink>
+  links?: Record<string, IDocsJsonLink>
 }
 
 export type DocsJsonResponses = {
-  [code in HttpCode]?: DocsJsonResponse
+  [code in HttpCode]?: IDocsJsonResponse
 }
 
-export interface DocsJsonOperation {
+export interface IDocsJsonOperation {
   operationId?: string
   tags?: string[]
   responses?: DocsJsonResponses
   summary?: string
   description?: string
-  parameters: DocsJsonParameter[]
-  requestBody?: DocsJsonBody
+  parameters: IDocsJsonParameter[]
+  requestBody?: IDocsJsonBody
   deprecated?: boolean
 }
 
 export type DocsJsonMethods = {
-  [method in Lowercase<Method>]?: DocsJsonOperation
+  [method in Lowercase<Method>]?: IDocsJsonOperation
 }
 
-export interface DocsJsonPath extends DocsJsonMethods {
+export interface IDocsJsonPath extends DocsJsonMethods {
   parameters: string[]
   ref?: string
 }
 
-export interface DocsJsonSecurity {
+export interface IDocsJsonSecurity {
   apiKey: string[]
 }
 
-export interface DocsJsonServer {
+export interface IDocsJsonServer {
   url: string
   description: string
 }
 
-export interface DocsJsonInfo {
+export interface IDocsJsonInfo {
   title: string
   description: string
   version: string
 }
 
-export interface DocsJsonSecuritySchemes {
+export interface IDocsJsonSecuritySchemes {
   type: string
   description: string
   name: string
   in: string
 }
 
-export interface DocsJsonComponents {
+export interface IDocsJsonComponents {
   schemas: Record<string, HydraPropertyType>
   responses: DocsJsonResponses
   parameters: Record<string, unknown> // FIXME
   examples: Record<string, unknown> // FIXME
   requestBodies: Record<string, unknown> // FIXME
   headers: Record<string, unknown> // FIXME
-  securitySchemes: Record<string, DocsJsonSecuritySchemes>
+  securitySchemes: Record<string, IDocsJsonSecuritySchemes>
 }
 
-export interface DocsJson {
+export interface IDocsJson {
   openapi: string
-  info: DocsJsonInfo
-  servers: DocsJsonServer[]
-  paths: Record<string, DocsJsonPath>
+  info: IDocsJsonInfo
+  servers: IDocsJsonServer[]
+  paths: Record<string, IDocsJsonPath>
   components: Record<string, unknown>
-  security: DocsJsonSecurity[]
+  security: IDocsJsonSecurity[]
   tags: string[]
 }
