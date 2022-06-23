@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { ReactChild, useState } from 'react'
 import { makeStyles } from '@mui/styles'
 import { Theme } from '@mui/material'
 
@@ -10,7 +10,7 @@ const useStylesCatalog = makeStyles((theme: Theme) => ({
 
   rootSubTabs: {
     border: '1px solid #E2E6F3',
-    borderRadius: theme.spacing(1),
+    borderRadius: 8,
     display: 'flex',
     flexDirection: 'column',
     width: '232px',
@@ -18,7 +18,7 @@ const useStylesCatalog = makeStyles((theme: Theme) => ({
 
   subTabs: {
     padding: theme.spacing(1),
-    borderRadius: theme.spacing(1),
+    borderRadius: 8,
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(2),
     fontSize: '14px',
@@ -70,8 +70,8 @@ const useStylesCatalog = makeStyles((theme: Theme) => ({
 }))
 
 interface IProps {
-  labels: Array<string>
-  contents: any
+  labels: string[]
+  contents: ReactChild[]
 }
 
 const SubTabs = ({ labels, contents }: IProps) => {
@@ -95,7 +95,10 @@ const SubTabs = ({ labels, contents }: IProps) => {
           </div>
         ))}
       </div>
-      {contents.map((item: any, key: number) => key === active && item)}
+      {contents.map(
+        (item: any, key: number) =>
+          key === active && <div key={key}>{item}</div>
+      )}
     </div>
   )
 }

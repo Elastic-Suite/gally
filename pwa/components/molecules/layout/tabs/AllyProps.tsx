@@ -1,7 +1,7 @@
-function AllyProps(index: number) {
+function AllyProps(ariaName: string, index: number) {
   return {
     id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    'aria-controls': `${ariaName + '-' + index}`,
   }
 }
 

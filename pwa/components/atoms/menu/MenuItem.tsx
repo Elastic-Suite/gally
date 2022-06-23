@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   lineHover: {
     '&:hover': {
       background: theme.palette.menu.hover,
-      borderRadius: theme.spacing(1),
+      borderRadius: 8,
     },
   },
   linePadding: {

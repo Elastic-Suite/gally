@@ -26,7 +26,11 @@ export default function CustomTabs({ labels, contents }: IProps) {
           aria-label="basic tabs example"
         >
           {labels.map((item: any, key: number) => (
-            <Tab key={key} label={item} {...AllyProps(key)} />
+            <Tab
+              key={key}
+              label={item}
+              {...AllyProps('simple-tabpanel', key)}
+            />
           ))}
         </Tabs>
       </Box>

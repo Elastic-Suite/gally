@@ -19,7 +19,7 @@ const useStyleTitle = makeStyles((theme: Theme) => ({
       position: 'absolute',
       bottom: '-14px',
       left: '0px',
-      borderRadius: theme.spacing(1),
+      borderRadius: 8,
       background: theme.palette.colors.primary['400'],
       width: '56px',
       height: '4px',
