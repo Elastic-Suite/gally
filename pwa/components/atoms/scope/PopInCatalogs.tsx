@@ -14,7 +14,7 @@ const CustomClose = styled('div')(({ theme }) => ({
   cursor: 'pointer',
   transition: 'all 500ms',
   padding: theme.spacing(1),
-  borderRadius: theme.spacing(1),
+  borderRadius: 8,
   color: theme.palette.colors.neutral['900'],
   '&:hover': {
     background: theme.palette.colors.neutral['200'],
@@ -43,7 +43,7 @@ const CustomRoot = styled('div')(({ theme }) => ({
   flexDirection: 'column',
   gap: theme.spacing(3),
   background: theme.palette.colors.neutral[0],
-  borderRadius: theme.spacing(1),
+  borderRadius: 8,
 }))
 
 interface PopInProps {
