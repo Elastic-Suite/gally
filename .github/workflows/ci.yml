@@ -7,11 +7,12 @@ on:
   pull_request:
     branches:
       - master
-    types: [review_requested, ready_for_review]
+    types: [review_requested, ready_for_review, synchronize]
   workflow_dispatch: ~
 
 jobs:
   tests:
+    if: github.event.pull_request.draft == false
     name: Tests
     runs-on: ubuntu-latest
     steps:
