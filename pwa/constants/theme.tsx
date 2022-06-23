@@ -504,6 +504,25 @@ const theme = createTheme({
         },
       },
     },
+    MuiDialog: {
+      styleOverrides: {
+        paper: {
+          borderRadius: 8,
+          padding: 32,
+          width: '600px',
+          minHeight: '268px',
+        },
+      },
+    },
+    MuiDialogActions: {
+      styleOverrides: {
+        root: {
+          '> :not(:first-of-type)': {
+            marginLeft: 0,
+          },
+        },
+      },
+    },
   },
 })
 

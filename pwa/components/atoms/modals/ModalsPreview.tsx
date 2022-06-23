@@ -2,16 +2,8 @@ import AlertInfoMessage from '~/components/atoms/modals/AlertInfoMessage'
 import Tooltip from '~/components/atoms/modals/Tooltip'
 import PopIn from '~/components/atoms/modals/PopIn'
 import PrimaryButton from '~/components/atoms/buttons/PrimaryButton'
-import CloseComponent from '../closeComponent/CloseComponent'
-
-import { useState } from 'react'
-
-const maFunction = () => {
-  return alert('Produit ajouté au panier !')
-}
 
 const ModalsPreview = () => {
-  const [visiblePopIn, setVisiblePopIn] = useState(false)
   return (
     <div>
       <h1>Tooltip</h1>
@@ -36,23 +28,13 @@ const ModalsPreview = () => {
 
       <h1>Pop in</h1>
 
-      <div>
-        <div onClick={() => setVisiblePopIn(true)}>
-          <PrimaryButton size="large">Hello World (test popIn)</PrimaryButton>
-        </div>
-        {visiblePopIn && (
-          <PopIn
-            title="Hello World"
-            onFunc={() => maFunction()}
-            btnCancel={'Cancel'}
-            btnConfirm={'Confirm'}
-            onClose={() => setVisiblePopIn(false)}
-          />
-        )}
-      </div>
-      {visiblePopIn && (
-        <CloseComponent onClose={() => setVisiblePopIn(false)}></CloseComponent>
-      )}
+      <PopIn
+        title={<PrimaryButton size="large">Click on me !</PrimaryButton>}
+        onConfirm={() => alert('salut')}
+        cancelName={'Cancel'}
+        confirmName={'Confirm'}
+        titlePopIn="Hello World"
+      />
     </div>
   )
 }
