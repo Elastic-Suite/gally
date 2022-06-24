@@ -1,9 +1,9 @@
 import { Checkbox, Grid, Switch } from '@mui/material'
-import { HydraResponse } from '~/types'
+import { IHydraResponse } from '~/types'
 import { useApiFetch } from '~/hooks/useApi'
 
-const Attributes = () => {
-  const [sourceFields] = useApiFetch<HydraResponse>('/source_fields')
+function Attributes() {
+  const [sourceFields] = useApiFetch<IHydraResponse>('/source_fields')
 
   if (sourceFields.error) {
     return sourceFields.error.toString()

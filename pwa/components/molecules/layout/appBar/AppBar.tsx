@@ -31,7 +31,7 @@ const useStylesAppBar = makeStyles((theme: Theme) => ({
   },
 }))
 
-const AppBar = () => {
+function AppBar() {
   const appbarstyle = useStylesAppBar()
   return (
     <div className={appbarstyle.root}>

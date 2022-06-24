@@ -130,7 +130,7 @@ interface IProps {
   lightStyle?: boolean
 }
 
-const MenuItemIcon = (props: IProps) => {
+function MenuItemIcon(props: IProps) {
   const { childPadding, code, href, label, lightStyle } = props
 
   const menuItemActive = useAppSelector(selectMenuItemActive) || ''

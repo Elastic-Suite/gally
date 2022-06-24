@@ -1,7 +1,7 @@
 import { Theme } from '@mui/material/styles'
 import { makeStyles } from '@mui/styles'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
-import { useState, useRef } from 'react'
+import { useRef, useState } from 'react'
 
 const useStylesHelpOver = makeStyles((theme: Theme) => ({
   root: {
@@ -22,7 +22,7 @@ const useStylesHelpOver = makeStyles((theme: Theme) => ({
   },
 }))
 
-const HelpOver = () => {
+function HelpOver() {
   const helpoverstyle = useStylesHelpOver()
 
   return (
@@ -78,7 +78,7 @@ const useStylesHelp = makeStyles((theme: Theme) => ({
   },
 }))
 
-const Help = () => {
+function Help() {
   const helpstyle = useStylesHelp()
   const [helpVisible, setHelpVisible] = useState(false)
   const useHelp = useRef(null)
@@ -99,7 +99,7 @@ const Help = () => {
         }
         style={helpVisible ? { height: useHelp?.current?.scrollHeight } : {}}
       >
-        {<HelpOver />}
+        <HelpOver />
       </div>
     </button>
   )

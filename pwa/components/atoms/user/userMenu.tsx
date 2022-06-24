@@ -1,7 +1,7 @@
 import { Theme } from '@mui/material/styles'
 import { makeStyles } from '@mui/styles'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
-import { useState, useRef } from 'react'
+import { useRef, useState } from 'react'
 
 const useStylesUserMenuShow = makeStyles((theme: Theme) => ({
   typoTexte: {
@@ -33,7 +33,7 @@ const useStylesUserMenuShow = makeStyles((theme: Theme) => ({
   },
 }))
 
-const UserMenuShow = () => {
+function UserMenuShow() {
   const usermenushowstyle = useStylesUserMenuShow()
 
   return (
@@ -106,7 +106,7 @@ const useStylesUserMenu = makeStyles((theme: Theme) => ({
   },
 }))
 
-const UserMenu = () => {
+function UserMenu() {
   const usermenustyle = useStylesUserMenu()
   const [openUserMenu, setOpenUserMenu] = useState(false)
   const useMenu = useRef(null)

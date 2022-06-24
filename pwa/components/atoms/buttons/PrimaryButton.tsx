@@ -1,17 +1,22 @@
 import { ReactChild } from 'react'
-import Button from '@mui/material/Button'
+import Button, { ButtonProps } from '@mui/material/Button'
 
 import useCommonButtonStyle from '~/components/atoms/buttons/CommonButtonStyle'
 
-interface IProps {
+interface IProps extends ButtonProps {
   children: ReactChild
 }
 
-const PrimaryButton = (props: IProps) => {
+function PrimaryButton(props: IProps) {
+  const { children, ...buttonProps } = props
   const CommonButtonStyle = useCommonButtonStyle()
   return (
-    <Button {...props} className={CommonButtonStyle.root} variant="contained">
-      {props.children}
+    <Button
+      {...buttonProps}
+      className={CommonButtonStyle.root}
+      variant="contained"
+    >
+      {children}
     </Button>
   )
 }
