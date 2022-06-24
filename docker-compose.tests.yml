@@ -3,24 +3,6 @@ version: "3.4"
 
 # Production environment override
 services:
-  php:
-    build:
-      target: api_platform_php_dev
-    environment:
-      APP_ENV: dev # Needed for fixtures bundles to work.
-      APP_SECRET: ${APP_SECRET}
-      # MERCURE_JWT_SECRET: ${CADDY_MERCURE_JWT_SECRET}
-      XDEBUG_MODE: 'off'
-
-  # caddy:
-    # environment:
-      # MERCURE_PUBLISHER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET}
-      # MERCURE_SUBSCRIBER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET}
-
-  database:
-    environment:
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-
   pwa:
     build:
       context: ./pwa
