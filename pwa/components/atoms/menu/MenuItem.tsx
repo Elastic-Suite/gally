@@ -121,7 +121,7 @@ interface IProps {
   children?: IMenuChild[]
 }
 
-const MenuItem = (props: IProps) => {
+function MenuItem(props: IProps) {
   const { children, code, href, label } = props
 
   const dispatch = useAppDispatch()
@@ -174,7 +174,7 @@ const MenuItem = (props: IProps) => {
           >
             {props.label}
             <IonIcon
-              name={'chevron-down'}
+              name="chevron-down"
               style={
                 childState
                   ? { transform: 'rotate(-180deg)', transition: 'all 500ms' }

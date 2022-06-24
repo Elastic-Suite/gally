@@ -18,7 +18,7 @@ describe('MenuItemIcon', () => {
         href="settings"
         code="settings"
         label="Settings"
-        lightStyle={true}
+        lightStyle
         childPadding={false}
       />,
       { wrapper }
@@ -34,7 +34,7 @@ describe('MenuItemIcon', () => {
         code="analyze"
         label="Analyze"
         lightStyle={false}
-        childPadding={true}
+        childPadding
       />,
       { wrapper }
     )

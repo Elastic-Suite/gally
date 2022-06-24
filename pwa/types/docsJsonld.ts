@@ -1,4 +1,4 @@
-import { IJsonldBase, IHydraSupportedClass } from './hydra'
+import { IHydraSupportedClass, IJsonldBase } from './hydra'
 
 export interface IDocsJsonldContext {
   '@vocab': string

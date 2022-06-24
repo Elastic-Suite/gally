@@ -28,10 +28,10 @@ const authProvider = {
   },
   checkAuth: () => {
     try {
+      const token = localStorage.getItem('token')
       if (
-        !localStorage.getItem('token') ||
-        new Date().getTime() / 1000 >
-          jwtDecode(localStorage.getItem('token'))?.exp
+        !token ||
+        new Date().getTime() / 1000 > jwtDecode<{ exp: number }>(token)?.exp
       ) {
         return Promise.reject()
       }

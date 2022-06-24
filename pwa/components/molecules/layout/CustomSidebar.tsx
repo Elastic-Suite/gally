@@ -1,6 +1,4 @@
 import CustomMenu from '~/components/molecules/layout/CustomMenu'
-import LogoExtended from '~/assets/images/LogoBlinkExtended.svg'
-import LogoCollapse from '~/assets/images/LogoBlinkCollapse.svg'
 import { makeStyles } from '@mui/styles'
 import { Theme } from '@mui/material/styles'
 import { Collapse } from '@mui/material'
@@ -71,7 +69,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }))
 
-const CustomSidebar = (props) => {
+function CustomSidebar() {
   const sidebarState = useAppSelector(selectSidebarState)
   const sidebarStateTimeout = useAppSelector(selectSidebarStateTimeout)
 
@@ -84,7 +82,7 @@ const CustomSidebar = (props) => {
   return (
     <Collapse
       in={sidebarState}
-      orientation={'horizontal'}
+      orientation="horizontal"
       collapsedSize={sidebarState ? 278 : 66}
       timeout={sidebarState ? 0 : 200}
       className={classes.leftBar}
@@ -94,7 +92,7 @@ const CustomSidebar = (props) => {
           classes.root + (sidebarState ? '' : ' ' + classes.rootCollapsed)
         }
       >
-        <Link href={'/'} as={'/'}>
+        <Link href="/" as="/">
           <div className={classes.imgContainer}>
             <div
               className={
@@ -103,16 +101,16 @@ const CustomSidebar = (props) => {
               }
             >
               <Image
-                src={LogoExtended.src}
-                alt={LogoExtended.name}
+                src="/images/LogoBlinkExtended.svg"
+                alt="Logo"
                 width="104"
                 height="29"
               />
             </div>
             <div className={classes.imgCollapse}>
               <Image
-                src={LogoCollapse.src}
-                alt={LogoCollapse.name}
+                src="/images/LogoBlinkCollapse.svg"
+                alt="Logo"
                 width="31"
                 height="29"
               />

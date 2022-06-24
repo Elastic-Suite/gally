@@ -1,5 +1,5 @@
 import { ReactChild } from 'react'
-import Button from '@mui/material/Button'
+import Button, { ButtonProps } from '@mui/material/Button'
 import { makeStyles } from '@mui/styles'
 import { Theme } from '@mui/material/styles'
 
@@ -24,19 +24,19 @@ const useTertiaryButtonStyle = makeStyles((theme: Theme) => ({
   },
 }))
 
-interface IProps {
+interface IProps extends ButtonProps {
   children: ReactChild
 }
 
-const TertiaryButton = (props: IProps) => {
-  const { children } = props
+function TertiaryButton(props: IProps) {
+  const { children, ...buttonProps } = props
 
   const CommonButtonStyle = useCommonButtonStyle()
   const tertiaryButtonStyle = useTertiaryButtonStyle()
 
   return (
     <Button
-      {...props}
+      {...buttonProps}
       className={CommonButtonStyle.root + ' ' + tertiaryButtonStyle.root}
       variant="contained"
     >

@@ -1,18 +1,18 @@
 import PrimaryButton from '~/components/atoms/buttons/PrimaryButton'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import {
-  Grid,
-  RadioGroup,
-  Fab,
-  Switch,
-  Radio,
   Checkbox,
+  Fab,
   FormControlLabel,
+  Grid,
+  Radio,
+  RadioGroup,
+  Switch,
 } from '@mui/material'
 import SecondaryButton from '~/components/atoms/buttons/SecondaryButton'
 import TertiaryButton from '~/components/atoms/buttons/TertiaryButton'
 
-const ButtonsPreview = () => {
+function ButtonsPreview() {
   const label = { inputProps: { 'aria-label': 'Switch demo' } }
 
   return (
@@ -380,7 +380,7 @@ const ButtonsPreview = () => {
             label="Label"
           />
           <FormControlLabel
-            control={<Checkbox indeterminate={true} />}
+            control={<Checkbox indeterminate />}
             label="Label"
           />
         </Grid>
@@ -393,7 +393,7 @@ const ButtonsPreview = () => {
           />
           <FormControlLabel
             disabled
-            control={<Checkbox indeterminate={true} />}
+            control={<Checkbox indeterminate />}
             label="Label"
           />
         </Grid>
@@ -406,7 +406,7 @@ const ButtonsPreview = () => {
             label="Label"
           />
           <FormControlLabel
-            control={<Checkbox indeterminate={true} />}
+            control={<Checkbox indeterminate />}
             label="Label"
           />
         </Grid>
@@ -419,7 +419,7 @@ const ButtonsPreview = () => {
           />
           <FormControlLabel
             disabled
-            control={<Checkbox indeterminate={true} />}
+            control={<Checkbox indeterminate />}
             label="Label"
           />
         </Grid>
