@@ -11,7 +11,7 @@ const useStylesUser = makeStyles((theme: Theme) => ({
   },
 }))
 
-const User = () => {
+function User() {
   const userstyle = useStylesUser()
 
   return (

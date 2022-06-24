@@ -103,7 +103,7 @@ interface IProps {
 /*
  * Component CustomLayout
  */
-const CustomLayout = ({ children }: IProps) => {
+function CustomLayout({ children }: IProps) {
   const dispatch = useAppDispatch()
   const sidebarState = useAppSelector(selectSidebarState)
 
@@ -142,10 +142,7 @@ const CustomLayout = ({ children }: IProps) => {
               }
               onClick={collapseSidebar}
             >
-              <IonIcon
-                name={'code-outline'}
-                style={{ width: 18, height: 18 }}
-              />
+              <IonIcon name="code-outline" style={{ width: 18, height: 18 }} />
             </button>
             <AppBarMenu />
             <div className={classes.content}>{children}</div>

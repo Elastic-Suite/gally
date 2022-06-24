@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { IDocsJson, IDocsJsonld, LoadStatus } from '~/types'
 
 export interface IDocsFetch {

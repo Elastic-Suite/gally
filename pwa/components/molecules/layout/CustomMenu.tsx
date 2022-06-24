@@ -67,7 +67,7 @@ interface IProps {
   className?: string
 }
 
-const CustomMenu = (props: IProps) => {
+function CustomMenu(props: IProps) {
   const { className } = props
 
   const dispatch = useAppDispatch()
@@ -127,7 +127,7 @@ const CustomMenu = (props: IProps) => {
                   href={slugify(item.code, 0)}
                   code={item.code}
                   label={item.label}
-                  lightStyle={true}
+                  lightStyle
                   childPadding={false}
                 />
               </div>
