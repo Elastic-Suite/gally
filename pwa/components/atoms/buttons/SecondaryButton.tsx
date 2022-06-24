@@ -1,5 +1,5 @@
 import { ReactChild } from 'react'
-import Button from '@mui/material/Button'
+import Button, { ButtonProps } from '@mui/material/Button'
 import { makeStyles } from '@mui/styles'
 import { Theme } from '@mui/material/styles'
 
@@ -24,19 +24,19 @@ const useSecondaryButtonStyle = makeStyles((theme: Theme) => ({
   },
 }))
 
-interface IProps {
+interface IProps extends ButtonProps {
   children: ReactChild
 }
 
-const SecondaryButton = (props: IProps) => {
-  const { children } = props
+function SecondaryButton(props: IProps) {
+  const { children, ...buttonProps } = props
 
   const CommonButtonStyle = useCommonButtonStyle()
   const secondaryButtonStyle = useSecondaryButtonStyle()
 
   return (
     <Button
-      {...props}
+      {...buttonProps}
       className={CommonButtonStyle.root + ' ' + secondaryButtonStyle.root}
       variant="contained"
     >

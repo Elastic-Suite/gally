@@ -33,24 +33,21 @@ export default {
   },
 } as ComponentMeta<typeof PrimaryButton>
 
-const Template = ({
-  Component,
-  children,
-  icon,
-  endIcon,
-  startIcon,
-  ...props
-}) => (
-  <Component
-    {...props}
-    endIcon={endIcon && <IonIcon name={endIcon} style={{ fontSize: 24 }} />}
-    startIcon={
-      startIcon && <IonIcon name={startIcon} style={{ fontSize: 24 }} />
-    }
-  >
-    {icon ? <IonIcon name={icon} style={{ fontSize: 24 }} /> : children}
-  </Component>
-)
+function Template({ Component, children, icon, endIcon, startIcon, ...props }) {
+  return (
+    <Component
+      {...props}
+      endIcon={
+        endIcon ? <IonIcon name={endIcon} style={{ fontSize: 24 }} /> : null
+      }
+      startIcon={
+        startIcon ? <IonIcon name={startIcon} style={{ fontSize: 24 }} /> : null
+      }
+    >
+      {icon ? <IonIcon name={icon} style={{ fontSize: 24 }} /> : children}
+    </Component>
+  )
+}
 
 export const Primary = Template.bind({})
 Primary.args = {
@@ -85,7 +82,9 @@ Tertiary.args = {
   startIcon: '',
 }
 
-export const Preview = (args) => <ButtonsPreview {...args} />
+export function Preview(args) {
+  return <ButtonsPreview {...args} />
+}
 Preview.args = {
   controls: { hideNoControlsWarning: true },
 }

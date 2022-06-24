@@ -22,6 +22,7 @@
         || {path}.startsWith("/_next")
         || {path}.startsWith("/sitemap")
         || {path}.startsWith("/locales")
+        || {path}.startsWith("/images")
         || {path}.startsWith("/storybook-static")`
 
 

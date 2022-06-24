@@ -39,7 +39,10 @@ jobs:
             ${{ runner.os }}-yarn-
       - name: Yarn Install dependencies
         working-directory: pwa
-        run: yarn
+        run: yarn --frozen-lockfile
+      - name: Typescript
+        working-directory: pwa
+        run: yarn typescript:ci
       - name: EsLint
         working-directory: pwa
         run: yarn eslint:ci

@@ -27,7 +27,7 @@ const useStylesBreadCrumb = makeStyles((theme: Theme) => ({
  * see: https://mui.com/material-ui/react-breadcrumbs/
  */
 
-const BreadCrumb = () => {
+function BreadCrumb() {
   const breadcrumbstyle = useStylesBreadCrumb()
   const [MocksBreadCrumd, setMocksBreadCrumd] = useState(null)
   const router = useRouter()
@@ -41,7 +41,7 @@ const BreadCrumb = () => {
 
   return (
     <div>
-      {MocksBreadCrumd && (
+      {MocksBreadCrumd ? (
         <Breadcrumbs
           aria-label="breadcrumb"
           className={breadcrumbstyle.breadCrumbColorClassique}
@@ -89,7 +89,7 @@ const BreadCrumb = () => {
             }
           })}
         </Breadcrumbs>
-      )}
+      ) : null}
     </div>
   )
 }

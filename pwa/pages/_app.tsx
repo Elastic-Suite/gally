@@ -9,7 +9,7 @@ import { appWithTranslation } from 'next-i18next'
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'
-import 'assets/scss/style.scss'
+import '~/assets/scss/style.scss'
 
 import nextI18nConfig from '~/next-i18next.config'
 import { store } from '~/store'
