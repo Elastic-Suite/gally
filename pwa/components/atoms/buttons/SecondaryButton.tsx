@@ -1,4 +1,4 @@
-import { ReactChild } from 'react'
+import { ReactNode } from 'react'
 import Button, { ButtonProps } from '@mui/material/Button'
 import { makeStyles } from '@mui/styles'
 import { Theme } from '@mui/material/styles'
@@ -25,7 +25,7 @@ const useSecondaryButtonStyle = makeStyles((theme: Theme) => ({
 }))
 
 interface IProps extends ButtonProps {
-  children: ReactChild
+  children: ReactNode
 }
 
 function SecondaryButton(props: IProps) {
