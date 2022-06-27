@@ -2,8 +2,6 @@ import { StyledEngineProvider } from '@mui/styled-engine'
 import { ThemeProvider } from '@mui/material/styles'
 import RegularTheme from '~/components/atoms/RegularTheme'
 
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-icons/font/bootstrap-icons.css'
 import '~/assets/scss/style.scss'
 
 export const parameters = {

@@ -1,10 +1,10 @@
-import { ReactChild } from 'react'
+import { ReactNode } from 'react'
 import Button, { ButtonProps } from '@mui/material/Button'
 
 import useCommonButtonStyle from '~/components/atoms/buttons/CommonButtonStyle'
 
 interface IProps extends ButtonProps {
-  children: ReactChild
+  children: ReactNode
 }
 
 function PrimaryButton(props: IProps) {

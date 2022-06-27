@@ -1,3 +1,6 @@
 {
-  "temporary-slug": "Temporaire ! Voici le slug codifié :"
+  "temporary-slug": "Temporaire ! Voici le slug codifié :",
+  "massiveselection.all": "Toutes",
+  "massiveselection.allOnCurrentPage": "Toute sur la page",
+  "massiveselection.none": "Aucune"
 }
