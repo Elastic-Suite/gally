@@ -72,21 +72,26 @@ phpstan: ## Run phpstan , pass the parameter "o=" to ass options, make phpstan o
 yarn: ## Install dependencies on pwa container through yarn
 	@$(DOCKER_COMP) exec pwa yarn install
 
+typescript: ## Run typescript
+typescript: yarn
+	@$(DOCKER_COMP) exec pwa yarn typescript
+
 eslint: ## Run eslint in fix mode
 eslint: yarn
 	@$(DOCKER_COMP) exec pwa yarn eslint
 
-stylelint: ## Run eslint in fix mode
+stylelint: ## Run stylelint
 stylelint: yarn
 	@$(DOCKER_COMP) exec pwa yarn stylelint
 
-prettier: ## Run eslint in fix mode
+prettier: ## Run prettier
 prettier: yarn
 	@$(DOCKER_COMP) exec pwa yarn prettier
 
 qa: ## Run code quality tools
 qa: phpcsfixer
 qa: phpstan
+qa: typescript
 qa: eslint
 qa: stylelint
 qa: prettier

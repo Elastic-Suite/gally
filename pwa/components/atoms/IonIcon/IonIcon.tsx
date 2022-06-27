@@ -1,12 +1,15 @@
 /* eslint-disable @typescript-eslint/no-namespace */
-import { CSSProperties } from 'react'
+import { CSSProperties, MouseEvent } from 'react'
 import { JSX as IonIconJSX } from 'ionicons'
 import { JSXBase } from 'ionicons/dist/types/stencil-public-runtime'
 
-type IIonIconProps = Omit<
+export type IIonIconProps = Omit<
   IonIconJSX.IonIcon & JSXBase.HTMLAttributes<HTMLIonIconElement>,
-  'style'
-> & { style?: CSSProperties }
+  'style' | 'onClick'
+> & {
+  style?: CSSProperties
+  onClick?: (event: MouseEvent<IIonIconProps>) => void
+}
 
 declare global {
   namespace JSX {

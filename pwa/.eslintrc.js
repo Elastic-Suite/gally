@@ -30,6 +30,7 @@ module.exports = {
     'prettier',
   ],
   rules: {
+    'react/prop-types': ['error', { ignore: ['children'] }],
     'jsx-a11y/anchor-is-valid': 0,
     '@typescript-eslint/naming-convention': [
       2,
