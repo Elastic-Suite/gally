@@ -1,0 +1,80 @@
+Elasticsuite\Metadata\Model\SourceField:
+    product_id:
+        metadata: '@product'
+        code: 'id'
+        type: 'int'
+        isSystem: true
+    product_stock_status:
+        metadata: '@product'
+        code: 'stock.status'
+        defaultLabel: 'Stock status'
+        type: 'boolean'
+        isSystem: true
+    product_stock_qty:
+        metadata: '@product'
+        code: 'stock.qty'
+        defaultLabel: 'Stock quantity'
+        type: 'float'
+        isSystem: true
+    product_name:
+        metadata: '@product'
+        code: 'name'
+        type: 'text'
+        weight: 10
+        is_searchable: true
+        is_filterable: false
+        is_sortable: false
+        is_spellchecked: false
+        is_used_for_rules: false
+    product_brand:
+        metadata: '@product'
+        code: 'brand'
+        type: 'select'
+        is_filterable: true
+    product_color:
+        metadata: '@product'
+        code: 'color'
+        type: 'select'
+        is_filterable: true
+    product_length:
+        metadata: '@product'
+        code: 'length'
+        type: 'int'
+        is_filterable: true
+    product_size:
+        metadata: '@product'
+        code: 'size'
+        type: 'int'
+        is_filterable: true
+    product_weight:
+        metadata: '@product'
+        code: 'weight'
+        type: 'int'
+        is_filterable: true
+    product_price_group_id:
+        metadata: '@product'
+        code: 'price.group_id'
+        type: 'int'
+    product_price_base_price:
+        metadata: '@product'
+        code: 'price.base_price'
+        type: 'float'
+    product_price_final_price:
+        metadata: '@product'
+        code: 'price.final_price'
+        type: 'float'
+    category_id:
+        metadata: '@category'
+        code: 'id'
+        type: 'int'
+        isSystem: true
+    category_name:
+        metadata: '@category'
+        code: 'name'
+        type: 'text'
+        weight: 10
+        is_searchable: false
+        is_filterable: true
+        is_sortable: false
+        is_spellchecked: false
+        is_used_for_rules: false

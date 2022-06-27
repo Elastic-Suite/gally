@@ -1,0 +1,24 @@
+services:
+    Elasticsuite\Product\DataProvider\ProductDataProvider:
+        arguments:
+            - '@serializer'
+            - '@api_platform.pagination'
+            - '@api_platform.metadata.resource.metadata_factory.cached'
+            - '@Elasticsuite\ResourceMetadata\Service\ResourceMetadataManager'
+            - '@Elasticsuite\Metadata\Repository\MetadataRepository'
+            - '@Elasticsuite\Catalog\Repository\LocalizedCatalogRepository'
+            - '@Elasticsuite\Search\Elasticsearch\Builder\Request\SimpleRequestBuilder'
+            - '@Elasticsuite\Search\Elasticsearch\Adapter'
+        tags:
+            - { name: api_platform.collection_data_provider }
+
+    Elasticsuite\Product\Serializer\ProductDenormalizer:
+        tags:
+            - { name: serializer.normalizer }
+
+    # Declare DataFixtures
+    Elasticsuite\Product\DataFixtures\ElasticsearchProductFixtures:
+        arguments:
+            - '@Elasticsuite\Fixture\Service\ElasticsearchFixtures'
+        tags:
+            - { name: doctrine.fixture.orm }

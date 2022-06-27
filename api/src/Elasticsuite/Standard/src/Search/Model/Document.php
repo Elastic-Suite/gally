@@ -99,7 +99,9 @@ class Document implements DocumentInterface
     {
         $source = $this->getSource();
 
-        return $source[self::ID] ?? $this->getInternalId();
+        $id = $source[self::ID] ?? $this->getInternalId();
+
+        return (string) $id;
     }
 
     /**
@@ -107,7 +109,7 @@ class Document implements DocumentInterface
      */
     public function getInternalId(): string
     {
-        return $this->data[self::INTERNAL_ID];
+        return (string) $this->data[self::INTERNAL_ID];
     }
 
     /**
