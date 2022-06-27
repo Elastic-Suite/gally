@@ -1,39 +1,69 @@
-import { useEffect, useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
+
+import { DragDropContext } from 'react-beautiful-dnd'
 
 import StickyBar from '~/components/molecules/CustomTable/StickyBar/StickyBar'
 import {
   StyledTable,
   TableContainerWithCustomScrollbar,
 } from '~/components/organisms/CustomTable/CustomTable.styled'
-import CustomTableBody from '~/components/organisms/CustomTable/CustomTableBody/CustomTableBody'
-import CustomTableHeader from '~/components/organisms/CustomTable/CustomTableHeader/CustomTableHeader'
 
-import { ITableHeader, ITableRow, MassiveSelectionType } from '~/types'
+import CustomTableHeader from '~/components/organisms/CustomTable/CustomTableHeader/CustomTableHeader'
+import DraggableRow from '~/components/organisms/CustomTable/CustomTableRow/DraggableRow'
+import { MassiveSelectionType, ITableRow, ITableHeader } from '~/types'
+import {
+  reorderingColumnWidth,
+  selectionColumnWidth,
+  stickyColunWidth,
+} from '~/constants'
+import NonDraggableRow from '~/components/organisms/CustomTable/CustomTableRow/NonDraggableRow'
+import NonDraggableBody from '~/components/organisms/CustomTable/CustomTableBody/NonDraggableBody'
+import DraggableBody from '~/components/organisms/CustomTable/CustomTableBody/DraggableBody'
+import { useIsHorizontalOverflow } from '~/hooks/useIsHorizontalOverflow'
 
 interface IProps {
   tableHeaders: ITableHeader[]
   tableRows: ITableRow[]
-  onMassiveAction?: (action: string) => void
+  withSelection: boolean
+  draggable: boolean
+  // onMassiveAction: (actions: Action[]) => void
+  // onReordering: (ordRows: ITableRow[] => void)
+  // onSingleAction: (action: Action) => void
 }
 
 function CustomTable(props: IProps): JSX.Element {
-  const { tableHeaders, tableRows, onMassiveAction } = props
-  const [selectedRows, setSelectedRows] = useState<string[]>(null)
+  const { tableHeaders, tableRows, withSelection, draggable } = props
 
+  const [selectedRows, setSelectedRows] = useState<string[]>([])
+  const [scrollLength, setScrollLength] = useState<number>(0)
   const [currentMassiveSelection, setCurrentMassiveSelection] = useState(
     MassiveSelectionType.NONE
   )
+  const [currentRows, setCurrentRows] = useState<ITableRow[]>(tableRows)
+  const tableRef = useRef()
+  const { isOverflow, shadow } = useIsHorizontalOverflow(tableRef)
 
-  const allowMassiveSelection = Boolean(onMassiveAction)
+  /**
+   * Compute the length of the sticky part.
+   * For now, each sticky colun have a fixed width of 200px but it could ( maybe should ) be improve by seeting an array of width provide by props if needed.
+   */
+  let stickyLength = 0
+  tableHeaders
+    .filter((header) => header.sticky)
+    .forEach(() => (stickyLength = stickyLength + stickyColunWidth))
 
   let handleMassiveSelection = null
   let massiveSelectionState = null
+  let massiveSelectionIndeterminate = false
   let showStickyBar = null
-  if (allowMassiveSelection) {
-    // TODO : add intermediate state
+  if (withSelection) {
+    // TODO : add intermediate state for checkboxes
     massiveSelectionState = selectedRows
       ? selectedRows.length === tableRows.length
       : false
+
+    massiveSelectionIndeterminate =
+      selectedRows.length > 0 ? selectedRows.length < tableRows.length : false
 
     showStickyBar =
       Boolean(selectedRows && selectedRows.length > 0) ||
@@ -51,47 +81,130 @@ function CustomTable(props: IProps): JSX.Element {
     }
   }
 
-  useEffect(() => {
-    if (allowMassiveSelection) {
-      setSelectedRows([])
+  let handleDragEnd = null
+  if (draggable) {
+    handleDragEnd = (e) => {
+      if (!e.destination) return
+      const tempData = Array.from(currentRows)
+      const [source_data] = tempData.splice(e.source.index, 1)
+      tempData.splice(e.destination.index, 0, source_data)
+      setCurrentRows(tempData)
     }
-  }, [allowMassiveSelection])
+  }
+
+  /**
+   * Compute the CSS left values for the sticky part of the table.
+   * It return an array of all successive left value to use in CustomTableHeader.tsx, DraggableTableRow.tsx and CustomTableRows.tsx
+   * It gonna be provide by context CSSContext to each row component.
+   */
+  const computeLeftCSSValues = () => {
+    const stickyHeaders = tableHeaders.filter((header) => header.sticky)
+    const result: number[] = [0]
+    let eachLeftvalues: number[] = [0]
+    if (draggable) {
+      eachLeftvalues.push(reorderingColumnWidth)
+    }
+    if (withSelection) {
+      eachLeftvalues.push(selectionColumnWidth)
+    }
+    if (stickyHeaders.length > 0) {
+      eachLeftvalues = eachLeftvalues.concat(
+        Array(stickyHeaders.length).fill(stickyColunWidth)
+      )
+    }
+    eachLeftvalues.reduce(
+      (leftPrevious, leftCurrent, i) => (result[i] = leftPrevious + leftCurrent)
+    )
+    return result
+  }
+  const cSSLeftValues = computeLeftCSSValues()
+
+  useEffect(() => {
+    if (withSelection) {
+      setScrollLength(selectionColumnWidth + stickyLength)
+      if (draggable) {
+        setScrollLength(
+          selectionColumnWidth + reorderingColumnWidth + stickyLength
+        )
+      }
+    } else if (draggable) {
+      setScrollLength(reorderingColumnWidth)
+    } else {
+      setScrollLength(stickyLength)
+    }
+  }, [withSelection, stickyLength, draggable])
+
+  useEffect(() => {
+    if (selectedRows.length === 0) {
+      setCurrentMassiveSelection(MassiveSelectionType.NONE)
+    }
+  }, [selectedRows])
 
   return (
     <>
-      <TableContainerWithCustomScrollbar
-        sx={{
-          ...(onMassiveAction && {
+      <DragDropContext onDragEnd={handleDragEnd}>
+        <TableContainerWithCustomScrollbar
+          ref={tableRef}
+          sx={{
             '&::-webkit-scrollbar-track': {
-              marginLeft: '100px',
+              marginLeft: `${scrollLength}px`,
             },
             '&::-webkit-scrollbar-thumb': {
-              marginLeft: '100px',
+              marginLeft: `${scrollLength}px`,
             },
-          }),
-        }}
-      >
-        <StyledTable>
-          <CustomTableHeader
-            tableHeaders={tableHeaders}
-            onMassiveSelection={handleMassiveSelection}
-            massiveSelectionState={massiveSelectionState}
-          />
-          <CustomTableBody
-            tableRows={tableRows}
-            tableHeaders={tableHeaders}
-            setSelectedRows={setSelectedRows}
-            selectedRows={selectedRows}
-          />
-        </StyledTable>
-      </TableContainerWithCustomScrollbar>
-      {onMassiveAction ? (
-        <StickyBar
-          show={showStickyBar}
-          onMassiveSelection={handleMassiveSelection}
-          massiveSelectionState={massiveSelectionState}
-        />
-      ) : null}
+          }}
+        >
+          <StyledTable>
+            <CustomTableHeader
+              tableHeaders={tableHeaders}
+              withSelection={withSelection}
+              onMassiveSelection={handleMassiveSelection}
+              massiveSelectionState={massiveSelectionState}
+              draggable={draggable}
+              cSSLeftValues={cSSLeftValues}
+              isHorizontalOverflow={isOverflow}
+              shadow={shadow}
+              massiveSelectionIndeterminate={massiveSelectionIndeterminate}
+            />
+            {!draggable && (
+              <NonDraggableBody
+                tableRows={currentRows}
+                setTableRows={setCurrentRows}
+                tableHeaders={tableHeaders}
+                withSelection={withSelection}
+                setSelectedRows={setSelectedRows}
+                selectedRows={selectedRows}
+                cSSLeftValues={cSSLeftValues}
+                isHorizontalOverflow={isOverflow}
+                shadow={shadow}
+              >
+                <NonDraggableRow />
+              </NonDraggableBody>
+            )}
+            {draggable && (
+              <DraggableBody
+                tableRows={currentRows}
+                setTableRows={setCurrentRows}
+                tableHeaders={tableHeaders}
+                withSelection={withSelection}
+                setSelectedRows={setSelectedRows}
+                selectedRows={selectedRows}
+                cSSLeftValues={cSSLeftValues}
+                isHorizontalOverflow={isOverflow}
+                shadow={shadow}
+              >
+                <DraggableRow />
+              </DraggableBody>
+            )}
+          </StyledTable>
+        </TableContainerWithCustomScrollbar>
+      </DragDropContext>
+      <StickyBar
+        show={showStickyBar}
+        onMassiveSelection={handleMassiveSelection}
+        massiveSelectionState={massiveSelectionState}
+        massiveSelectionIndeterminate={massiveSelectionIndeterminate}
+      />
     </>
   )
 }

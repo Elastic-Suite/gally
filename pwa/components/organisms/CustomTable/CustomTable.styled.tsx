@@ -4,6 +4,8 @@ import { styled } from '@mui/system'
 export const TableContainerWithCustomScrollbar = styled(TableContainer)(
   ({ theme }) => ({
     '&::-webkit-scrollbar': {
+      position: 'sticky',
+      bottom: '150px',
       height: '4px',
     },
     '&::-webkit-scrollbar-track': {
@@ -25,10 +27,32 @@ export const StyledTable = styled(Table)({
   borderCollapse: 'separate',
 })
 
-export const StickyTableCell = styled(TableCell)({
+export const BaseTableCell = styled(TableCell)({
+  height: '48px',
+  maxHeight: '80px',
+  maxWidth: '200px',
+  textOverflow: 'ellipsis',
+  overflow: 'hidden',
+})
+
+export const StickyTableCell = styled(BaseTableCell)({
   position: 'sticky',
   left: 0,
   padding: 0,
   height: '100%',
-  borderRight: '1px solid black',
+  '&:last-of-type': {
+    borderRight: '2px solid',
+    borderRightColor: 'colors.neutral.600',
+  },
 })
+
+export const stickyBorderStyle = (shadow: boolean) => {
+  return {
+    borderRight: '2px solid',
+    borderRightColor: 'colors.neutral.600',
+    ...(shadow && {
+      boxShadow: '5px 0 460px -10px',
+      clipPath: 'inset(0px -15px 0px 0px)',
+    }),
+  }
+}
