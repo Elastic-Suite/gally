@@ -529,6 +529,9 @@
     "symfony/http-kernel": {
         "version": "v6.0.2"
     },
+    "symfony/intl": {
+        "version": "v6.0.8"
+    },
     "symfony/maker-bundle": {
         "version": "1.0",
         "recipe": {

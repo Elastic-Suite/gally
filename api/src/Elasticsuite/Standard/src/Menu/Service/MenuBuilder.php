@@ -19,7 +19,6 @@ namespace Elasticsuite\Menu\Service;
 use ApiPlatform\Core\Exception\InvalidArgumentException;
 use Elasticsuite\Menu\Model\Menu;
 use Elasticsuite\Menu\Model\MenuItem;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class MenuBuilder
@@ -27,20 +26,18 @@ class MenuBuilder
     public function __construct(
         private array $menuConfiguration,
         private TranslatorInterface $translator,
-        private RequestStack $requestStack,
     ) {
     }
 
     public function build(): ?Menu
     {
         $menuItems = ['root' => new MenuItem('root')];
-        $locale = $this->requestStack->getCurrentRequest()->getPreferredLanguage();
 
         foreach ($this->menuConfiguration as $entry => $data) {
             $parentCode = $data['parent'] ?? 'root';
             $item = new MenuItem(
                 $entry,
-                $this->translator->trans("elasticsuite.menu.$entry.label", [], 'menu', $locale),
+                $this->translator->trans("elasticsuite.menu.$entry.label", [], 'menu'),
                 $data['order'] ?? null,
                 $data['css_class'] ?? null,
             );

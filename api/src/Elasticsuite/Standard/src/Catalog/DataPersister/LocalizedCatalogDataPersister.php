@@ -46,7 +46,7 @@ class LocalizedCatalogDataPersister implements DataPersisterInterface
      */
     public function persist($data)
     {
-        if ($data->isDefault()) {
+        if ($data->getIsDefault()) {
             $this->localizedCatalogRepository->unsetDefaultLocalizedCatalog();
         }
         $this->entityManager->persist($data);
