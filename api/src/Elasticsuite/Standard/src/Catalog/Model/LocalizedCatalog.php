@@ -18,6 +18,8 @@ namespace Elasticsuite\Catalog\Model;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Elasticsuite\User\Constant\Role;
+use Symfony\Component\Intl\Locales;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ApiResource(
     collectionOperations: [
@@ -37,19 +39,26 @@ use Elasticsuite\User\Constant\Role;
         'update' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
         'delete' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
     ],
+    normalizationContext: ['groups' => 'localizedCatalog:read']
 )]
 class LocalizedCatalog
 {
+    #[Groups(['localizedCatalog:read', 'catalog:read'])]
     private int $id;
 
+    #[Groups(['localizedCatalog:read', 'catalog:read'])]
     private string|null $name;
 
+    #[Groups(['localizedCatalog:read', 'catalog:read'])]
     private string $code;
 
+    #[Groups(['localizedCatalog:read', 'catalog:read'])]
     private string $locale;
 
+    #[Groups(['localizedCatalog:read', 'catalog:read'])]
     private bool $isDefault = false;
 
+    #[Groups('localizedCatalog:read')]
     private Catalog $catalog;
 
     public function getId(): ?int
@@ -93,7 +102,12 @@ class LocalizedCatalog
         return $this;
     }
 
-    public function isDefault(): bool
+    /**
+     * It's important to keep the getter for isDefault property,
+     * otherwise Api Platform will be not able to get the value in the response,
+     * in other words don't rename by IsDefault().
+     */
+    public function getIsDefault(): bool
     {
         return $this->isDefault;
     }
@@ -115,5 +129,11 @@ class LocalizedCatalog
         $this->catalog = $catalog;
 
         return $this;
+    }
+
+    #[Groups(['localizedCatalog:read', 'catalog:read'])]
+    public function getLocalName(): string
+    {
+        return Locales::getName($this->getLocale());
     }
 }
