@@ -1,7 +1,7 @@
 import { makeStyles } from '@mui/styles'
 import { Theme } from '@mui/material/styles'
-import HelpOver from '~/components/atoms/user/helpOver'
-import UserMenu from '~/components/atoms/user/userMenu'
+import Help from '~/components/atoms/help/Help'
+import UserMenu from '~/components/atoms/user/UserMenu'
 
 const useStylesUser = makeStyles((theme: Theme) => ({
   root: {
@@ -16,7 +16,7 @@ function User() {
 
   return (
     <div className={userstyle.root}>
-      <HelpOver />
+      <Help />
       <UserMenu />
     </div>
   )
