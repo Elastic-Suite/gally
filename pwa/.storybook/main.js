@@ -12,6 +12,7 @@ module.exports = {
   core: {
     builder: '@storybook/builder-webpack5',
   },
+  staticDirs: ['../public'],
   webpackFinal: async (config) => {
     config.resolve.extensions = [...config.resolve.extensions, '.css', '.scss']
     config.resolve.alias = {
