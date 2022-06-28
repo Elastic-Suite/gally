@@ -1,15 +1,15 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 
-import StickyBar from './StickyBar'
+import StickyBarComponent from './StickyBar'
 
 export default {
   title: 'molecules/CustomTable/StickyBar',
-  component: StickyBar,
-} as ComponentMeta<typeof StickyBar>
+  component: StickyBarComponent,
+} as ComponentMeta<typeof StickyBarComponent>
 
-const Template: ComponentStory<typeof StickyBar> = (args) => (
-  <StickyBar {...args} />
+const Template: ComponentStory<typeof StickyBarComponent> = (args) => (
+  <StickyBarComponent {...args} />
 )
 
-export const Default = Template.bind({})
-Default.args = {}
+export const StickyBar = Template.bind({})
+StickyBar.args = {}
