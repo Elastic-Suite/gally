@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { fetchDocs, useAppSelector, useAppDispatch, selectDocs } from '~/store'
+import { useAppSelector, useAppDispatch, selectDocs, fetchDocs } from '~/store'
 import { LoadStatus } from '~/types'
 
 export async function getStaticProps() {
@@ -24,7 +24,7 @@ function Admin() {
   const dispatch = useAppDispatch()
   const docs = useAppSelector(selectDocs)
 
-  // Fetch jsonld
+  // Fetch docs
   useEffect(() => {
     if (docs.status === LoadStatus.IDLE) {
       dispatch(fetchDocs())
