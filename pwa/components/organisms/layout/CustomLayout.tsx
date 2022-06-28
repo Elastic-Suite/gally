@@ -1,7 +1,6 @@
 import { ReactChild } from 'react'
 import { makeStyles } from '@mui/styles'
 import { Theme } from '@mui/material/styles'
-import { StyledEngineProvider } from '@mui/styled-engine'
 import {
   selectSidebarState,
   setSidebarState,
@@ -124,33 +123,31 @@ function CustomLayout({ children }: IProps) {
   }
 
   return (
-    <StyledEngineProvider injectFirst>
-      <div className={classes.root}>
-        <div className={classes.appFrame}>
-          <CustomSidebar />
-          <div
-            className={classes.contentWithAppbar + ' ' + classes.rightBar}
-            style={{
-              left: sidebarState ? '279px' : '67px',
-            }}
+    <div className={classes.root}>
+      <div className={classes.appFrame}>
+        <CustomSidebar />
+        <div
+          className={classes.contentWithAppbar + ' ' + classes.rightBar}
+          style={{
+            left: sidebarState ? '279px' : '67px',
+          }}
+        >
+          <button
+            className={
+              classes.buttonCollapse +
+              ' ' +
+              (!sidebarState ? classes.toClose : classes.toOpen)
+            }
+            onClick={collapseSidebar}
           >
-            <button
-              className={
-                classes.buttonCollapse +
-                ' ' +
-                (!sidebarState ? classes.toClose : classes.toOpen)
-              }
-              onClick={collapseSidebar}
-            >
-              <IonIcon name="code-outline" style={{ width: 18, height: 18 }} />
-            </button>
-            <AppBarMenu />
-            <div className={classes.content}>{children}</div>
-          </div>
-          {/*<Notification /> TODO: Set here Notification component*/}
+            <IonIcon name="code-outline" style={{ width: 18, height: 18 }} />
+          </button>
+          <AppBarMenu />
+          <div className={classes.content}>{children}</div>
         </div>
+        {/*<Notification /> TODO: Set here Notification component*/}
       </div>
-    </StyledEngineProvider>
+    </div>
   )
 }
 
