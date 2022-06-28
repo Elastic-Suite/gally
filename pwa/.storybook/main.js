@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path')
 
 module.exports = {
@@ -17,6 +18,14 @@ module.exports = {
       ...config.resolve.alias,
       '~': path.resolve(__dirname, '..'),
       '/assets': path.resolve(__dirname, '..', 'assets'),
+    }
+    config.resolve.fallback = {
+      fs: false,
+      tls: false,
+      net: false,
+      module: false,
+      path: require.resolve('path-browserify'),
+      loadPath: '/locales/en/common.json',
     }
     config.module.rules.push({
       test: /\.scss$/,

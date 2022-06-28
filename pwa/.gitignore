@@ -27,3 +27,6 @@ yarn-error.log*
 
 # build
 *.tsbuildinfo
+
+# storybook
+!.storybook
