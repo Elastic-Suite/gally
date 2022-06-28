@@ -19,11 +19,11 @@ export enum LoadStatus {
   FAILED,
   IDLE,
   LOADING,
-  SUCCESSDED,
+  SUCCEEDED,
 }
 
 export interface IFetch<D> {
   data?: D
-  error?: Error
-  loading: boolean
+  error?: Error | string
+  status: LoadStatus
 }

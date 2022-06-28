@@ -1,16 +1,16 @@
-import { FunctionComponent } from 'react'
+import { FunctionComponent, useEffect } from 'react'
 import type { AppProps } from 'next/app'
 import dynamic from 'next/dynamic'
 import { Theme, ThemeProvider } from '@mui/material/styles'
 import Head from 'next/head'
 import Script from 'next/script'
 import { Provider } from 'react-redux'
-import { appWithTranslation } from 'next-i18next'
+import { appWithTranslation, useTranslation } from 'next-i18next'
 
 import 'assets/scss/style.scss'
 
 import nextI18nConfig from '~/next-i18next.config'
-import { store } from '~/store'
+import { setLanguage, store } from '~/store'
 import RegularTheme from '~/components/atoms/RegularTheme'
 
 /*
@@ -35,6 +35,14 @@ declare module '@mui/styles/defaultTheme' {
 function MyApp(props: AppProps) {
   const { pageProps } = props
   const Component = props.Component as FunctionComponent
+
+  const { i18n } = useTranslation('common')
+  useEffect(() => {
+    if (i18n.language) {
+      setLanguage(i18n.language)
+    }
+  }, [i18n.language])
+
   return (
     <>
       <Head>
