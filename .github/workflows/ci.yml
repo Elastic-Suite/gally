@@ -69,6 +69,11 @@ jobs:
           with-chart: false
           file: api/coverage/coverage.xml
           base-file: coverage/base/coverage.xml
+          max-line-coverage-decrease: 10.0
+          max-method-coverage-decrease: 10.0
+          min-line-coverage: 75
+          min-method-coverage: 75
+          signature: "Coverage compared to target branch"
 
       - name: Coverage Report as Comment (Clean)
         uses: lucassabreu/comment-coverage-clover@v0.3.0
@@ -76,6 +81,7 @@ jobs:
         with:
           with-chart: false
           file: api/coverage/coverage.xml
+          signature: "Coverage of this branch"
 
       - uses: actions/upload-artifact@v2
         with:
