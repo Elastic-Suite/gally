@@ -60,7 +60,7 @@ jobs:
           workflow: .github/workflows/ci.yml
           branch: ${{ github.base_ref }}
           name: coverage-report
-          path: api/coverage/base
+          path: coverage/base # Retrieve previous coverage file at the root directory, not inside api/coverage
 
       - name: Coverage Report as Comment (Compared to a base)
         if: ${{ github.event_name == 'pull_request' && steps.base_coverage_report.outcome == 'success' }}
@@ -68,7 +68,7 @@ jobs:
         with:
           with-chart: false
           file: api/coverage/coverage.xml
-          base-file: api/coverage/base/coverage.xml
+          base-file: coverage/base/coverage.xml
 
       - name: Coverage Report as Comment (Clean)
         uses: lucassabreu/comment-coverage-clover@v0.3.0
