@@ -1,26 +1,14 @@
-import { makeStyles } from '@mui/styles'
 import Breadcrumbs from '@mui/material/Breadcrumbs'
 import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import { Theme } from '@mui/material/styles'
 
-const useStylesBreadCrumb = makeStyles((theme: Theme) => ({
-  breadCrumb: {
-    fontWeight: '500',
-    fontSize: '12px',
-    lineHeight: '18px',
-  },
-
-  breadCrumbColorClassique: {
-    color: theme.palette.colors.neutral['500'],
-  },
-
-  breadCrumbColorLast: {
-    color: theme.palette.colors.neutral['800'],
-  },
-}))
+const breadcrumbGlobalStyle = {
+  fontWeight: '500',
+  fontSize: '12px',
+  lineHeight: '18px',
+}
 
 /*
  * separator by default is "/"
@@ -28,7 +16,6 @@ const useStylesBreadCrumb = makeStyles((theme: Theme) => ({
  */
 
 function BreadCrumb() {
-  const breadcrumbstyle = useStylesBreadCrumb()
   const [MocksBreadCrumd, setMocksBreadCrumd] = useState(null)
   const router = useRouter()
   const { slug } = router.query
@@ -44,7 +31,7 @@ function BreadCrumb() {
       {MocksBreadCrumd ? (
         <Breadcrumbs
           aria-label="breadcrumb"
-          className={breadcrumbstyle.breadCrumbColorClassique}
+          sx={{ color: 'colors.neutral.500' }}
         >
           {MocksBreadCrumd.map((key, i, item) => {
             let hrefLink = '/admin'
@@ -63,11 +50,7 @@ function BreadCrumb() {
                 <Link
                   key={key}
                   underline="hover"
-                  className={
-                    breadcrumbstyle.breadCrumbColorClassique +
-                    ' ' +
-                    breadcrumbstyle.breadCrumb
-                  }
+                  sx={{ color: 'colors.neutral.500', ...breadcrumbGlobalStyle }}
                   href={hrefLink}
                 >
                   {item}
@@ -77,11 +60,7 @@ function BreadCrumb() {
               return (
                 <Typography
                   key={key}
-                  className={
-                    breadcrumbstyle.breadCrumbColorLast +
-                    ' ' +
-                    breadcrumbstyle.breadCrumb
-                  }
+                  sx={{ color: 'colors.neutral.800', ...breadcrumbGlobalStyle }}
                 >
                   {item}
                 </Typography>

@@ -1,8 +1,5 @@
 import { useState, useEffect } from 'react'
 
-import { ThemeProvider } from '@mui/material'
-
-import regularTheme from '~/components/atoms/RegularTheme'
 import StickyBar from '~/components/molecules/CustomTable/StickyBar/StickyBar'
 import {
   StyledTable,
@@ -61,7 +58,7 @@ const CustomTable = (props: IProps) => {
   }, [allowMassiveSelection])
 
   return (
-    <ThemeProvider theme={regularTheme}>
+    <>
       <TableContainerWithCustomScrollbar
         sx={{
           ...(onMassiveAction && {
@@ -94,7 +91,7 @@ const CustomTable = (props: IProps) => {
           massiveSelectionState={massiveSelectionState}
         />
       )}
-    </ThemeProvider>
+    </>
   )
 }
 
