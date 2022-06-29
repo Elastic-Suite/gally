@@ -65,6 +65,7 @@ jobs:
       - name: Coverage Report as Comment (Compared to a base)
         if: ${{ github.event_name == 'pull_request' && steps.base_coverage_report.outcome == 'success' }}
         uses: lucassabreu/comment-coverage-clover@main
+        continue-on-error: true
         with:
           with-chart: false
           file: api/coverage/coverage.xml
