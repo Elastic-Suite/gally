@@ -51,7 +51,7 @@ jobs:
       - name: Coverage
         run: docker-compose exec -e XDEBUG_MODE=coverage -T php bin/phpunit --coverage-clover=coverage.xml src/Elasticsuite
       - name: Generate code coverage report
-        uses: romainruaud/clover-reporter-action@v0.2.19-clover-alpha2
+        uses: romainruaud/clover-reporter-action@v0.2.19-clover-alpha3
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           clover-file: ./api/coverage.xml        
