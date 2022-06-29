@@ -49,13 +49,45 @@ jobs:
       - name: PHPUnit
         run: docker-compose exec -e XDEBUG_MODE=off -T php bin/phpunit
       - name: Coverage
-        run: docker-compose exec -e XDEBUG_MODE=coverage -T php bin/phpunit --coverage-clover=coverage.xml src/Elasticsuite
+        run: docker-compose exec -e XDEBUG_MODE=coverage -T php bin/phpunit --coverage-clover=coverage/coverage.xml src/Elasticsuite
+        
+      - if: ${{ github.event_name == 'pull_request' }}
+        name: Download artifact
+        uses: dawidd6/action-download-artifact@v2.14.1
+        continue-on-error: true
+        id: base_coverage_report
+        with:
+          workflow: .github/workflows/ci.yml
+          branch: ${{ github.base_ref }}
+          name: coverage-report
+          path: api/coverage/base
+
+      - name: Coverage Report as Comment (Compared to a base)
+        if: ${{ github.event_name == 'pull_request' && steps.base_coverage_report.outcome == 'success' }}
+        uses: lucassabreu/comment-coverage-clover@main
+        with:
+          with-chart: false
+          file: api/coverage/coverage.xml
+          base-file: api/coverage/base/coverage.xml
+
+      - name: Coverage Report as Comment (Clean)
+        uses: lucassabreu/comment-coverage-clover@v0.3.0
+        if: ${{ github.event_name == 'pull_request' }}
+        with:
+          with-chart: false
+          file: api/coverage/coverage.xml
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: coverage-report
+          path: api/coverage/coverage.xml
+          
       - name: Send PHP code coverage report to Codecov.io
         uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: coverage.xml
-          directory: api
+          directory: api/coverage
           flags: backend
       - name: Jest
         run: docker-compose exec -T pwa yarn test --ci --passWithNoTests
