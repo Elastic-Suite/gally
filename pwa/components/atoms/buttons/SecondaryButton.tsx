@@ -1,26 +1,23 @@
 import { ReactNode } from 'react'
-import Button, { ButtonProps } from '@mui/material/Button'
-import { makeStyles } from '@mui/styles'
-import { Theme } from '@mui/material/styles'
+import { ButtonProps } from '@mui/material/Button'
+import { styled } from '@mui/system'
 
-import useCommonButtonStyle from '~/components/atoms/buttons/CommonButtonStyle'
+import CommonStyledButton from './CommonButtonStyle'
 
-const useSecondaryButtonStyle = makeStyles((theme: Theme) => ({
-  root: {
-    color: theme.palette.colors.secondary['600'],
+const SecondaryStyledButton = styled(CommonStyledButton)(({ theme }) => ({
+  color: theme.palette.colors.secondary['600'],
+  background: theme.palette.colors.secondary['100'],
+  boxShadow: theme.palette.colors.shadow.secondaryButton.sm,
+  '&::before': {
+    background: theme.palette.colors.secondary['200'],
+    boxShadow: theme.palette.colors.shadow.secondaryButton.md,
+  },
+  '&:hover': {
     background: theme.palette.colors.secondary['100'],
     boxShadow: theme.palette.colors.shadow.secondaryButton.sm,
-    '&::before': {
-      background: theme.palette.colors.secondary['200'],
-      boxShadow: theme.palette.colors.shadow.secondaryButton.md,
-    },
-    '&:hover': {
-      background: theme.palette.colors.secondary['100'],
-      boxShadow: theme.palette.colors.shadow.secondaryButton.sm,
-    },
-    '&& .MuiTouchRipple-child': {
-      backgroundColor: theme.palette.colors.secondary['300'],
-    },
+  },
+  '&& .MuiTouchRipple-child': {
+    backgroundColor: theme.palette.colors.secondary['300'],
   },
 }))
 
@@ -31,17 +28,10 @@ interface IProps extends ButtonProps {
 function SecondaryButton(props: IProps) {
   const { children, ...buttonProps } = props
 
-  const CommonButtonStyle = useCommonButtonStyle()
-  const secondaryButtonStyle = useSecondaryButtonStyle()
-
   return (
-    <Button
-      {...buttonProps}
-      className={CommonButtonStyle.root + ' ' + secondaryButtonStyle.root}
-      variant="contained"
-    >
+    <SecondaryStyledButton {...buttonProps} variant="contained">
       {children}
-    </Button>
+    </SecondaryStyledButton>
   )
 }
 

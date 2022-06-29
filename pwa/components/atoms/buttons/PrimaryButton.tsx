@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
-import Button, { ButtonProps } from '@mui/material/Button'
+import { ButtonProps } from '@mui/material/Button'
 
-import useCommonButtonStyle from '~/components/atoms/buttons/CommonButtonStyle'
+import CommonStyledButton from '~/components/atoms/buttons/CommonButtonStyle'
 
 interface IProps extends ButtonProps {
   children: ReactNode
@@ -9,15 +9,11 @@ interface IProps extends ButtonProps {
 
 function PrimaryButton(props: IProps) {
   const { children, ...buttonProps } = props
-  const CommonButtonStyle = useCommonButtonStyle()
+
   return (
-    <Button
-      {...buttonProps}
-      className={CommonButtonStyle.root}
-      variant="contained"
-    >
+    <CommonStyledButton {...buttonProps} variant="contained">
       {children}
-    </Button>
+    </CommonStyledButton>
   )
 }
 
