@@ -16,7 +16,11 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Search\Elasticsearch\Request\Container\Configuration;
 
+use Elasticsuite\Catalog\Model\LocalizedCatalog;
+use Elasticsuite\Index\Model\Index\Mapping\FieldInterface;
 use Elasticsuite\Index\Model\Index\MappingInterface;
+use Elasticsuite\Metadata\Model\Metadata;
+use Elasticsuite\Search\Elasticsearch\Request;
 use Elasticsuite\Search\Elasticsearch\Request\Container\RelevanceConfiguration\GenericRelevanceConfiguration;
 use Elasticsuite\Search\Elasticsearch\Request\Container\RelevanceConfigurationInterface;
 use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
@@ -29,7 +33,8 @@ class GenericContainerConfiguration implements ContainerConfigurationInterface
     public function __construct(
         private string $containerName,
         private string $indexName,
-        private int $catalogId,
+        private LocalizedCatalog $catalog,
+        private Metadata $metadata,
         private MappingInterface $mapping
     ) {
         $this->relevanceConfiguration = new GenericRelevanceConfiguration();
@@ -78,9 +83,17 @@ class GenericContainerConfiguration implements ContainerConfigurationInterface
     /**
      * {@inheritDoc}
      */
-    public function getCatalogId(): int
+    public function getCatalog(): LocalizedCatalog
     {
-        return $this->catalogId;
+        return $this->catalog;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getMetadata(): Metadata
+    {
+        return $this->metadata;
     }
 
     /**
@@ -96,7 +109,18 @@ class GenericContainerConfiguration implements ContainerConfigurationInterface
      */
     public function getAggregations(QueryInterface|string|null $query = null, array $filters = [], array $queryFilters = []): array
     {
-        return [];
+        $aggregations = [];
+
+        foreach ($this->getMapping()->getFields() as $field) {
+            if ($field->isFilterable()) {
+                $aggregationConfig = $this->getAggregationConfig($field);
+                if (!empty($aggregationConfig) && isset($aggregationConfig['name'])) {
+                    $aggregations[$aggregationConfig['name']] = $aggregationConfig;
+                }
+            }
+        }
+
+        return $aggregations;
     }
 
     /**
@@ -105,5 +129,26 @@ class GenericContainerConfiguration implements ContainerConfigurationInterface
     public function getTrackTotalHits(): int|bool
     {
         return true;
+    }
+
+    private function getAggregationConfig(FieldInterface $field): array
+    {
+        return match ($field->getType()) {
+            FieldInterface::FIELD_TYPE_DOUBLE, FieldInterface::FIELD_TYPE_LONG, FieldInterface::FIELD_TYPE_INTEGER => [
+                'name' => $field->getName(),
+                'type' => Request\BucketInterface::TYPE_HISTOGRAM,
+                'minDocCount' => 1,
+                'size' => 2, //TODO remove
+            ],
+            FieldInterface::FIELD_TYPE_DATE => [
+                'name' => $field->getName(),
+                'type' => Request\BucketInterface::TYPE_DATE_HISTOGRAM,
+                'minDocCount' => 1,
+            ],
+            default => [
+                'name' => $field->getName(),
+                'type' => Request\BucketInterface::TYPE_TERM,
+            ],
+        };
     }
 }

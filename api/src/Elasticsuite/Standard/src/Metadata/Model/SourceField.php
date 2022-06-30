@@ -239,6 +239,17 @@ class SourceField
         return $this->labels;
     }
 
+    public function getLabel(int $catalogId): string
+    {
+        foreach ($this->getLabels() as $label) {
+            if ($catalogId === $label->getCatalog()->getId()) {
+                return $label->getLabel();
+            }
+        }
+
+        return $this->getDefaultLabel();
+    }
+
     public function addLabel(SourceFieldLabel $label): self
     {
         if (!$this->labels->contains($label)) {

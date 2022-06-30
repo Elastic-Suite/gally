@@ -436,4 +436,95 @@ class SearchDocumentsTest extends AbstractTest
             ],
         ];
     }
+
+    /**
+     * @dataProvider searchWithAggregationDataProvider
+     *
+     * @param string $entityType         Entity Type
+     * @param string $catalogId          Catalog ID or code
+     * @param int    $pageSize           Pagination size
+     * @param int    $currentPage        Current page
+     * @param array  $sortOrders         Sort order specifications
+     * @param string $documentIdentifier Document identifier to check ordered results
+     */
+    public function testSearchDocumentsWithAggregation(
+        string $entityType,
+        string $catalogId,
+        int $pageSize,
+        int $currentPage,
+        array $sortOrders,
+        string $documentIdentifier,
+    ): void {
+        $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
+
+        $arguments = sprintf(
+            'entityType: "%s", catalogId: "%s", pageSize: %d, currentPage: %d',
+            $entityType,
+            $catalogId,
+            $pageSize,
+            $currentPage
+        );
+
+        $this->validateApiCall(
+            new RequestGraphQlToTest(
+                <<<GQL
+                    {
+                        searchDocuments({$arguments}) {
+                            collection {
+                              id
+                              score
+                              source
+                            }
+                            aggregations {
+                              field
+                              count
+                              label
+                              options {
+                                label
+                                value
+                                count
+                              }
+                            }
+                        }
+                    }
+                GQL,
+                $user
+            ),
+            new ExpectedResponse(
+                200,
+                function (ResponseInterface $response) {
+                    $responseData = $response->toArray();
+                    $this->assertIsArray($responseData['data']['searchDocuments']['aggregations']);
+                    foreach ($responseData['data']['searchDocuments']['aggregations'] as $data) {
+                        $this->assertArrayHasKey('field', $data);
+                        $this->assertArrayHasKey('count', $data);
+                        $this->assertArrayHasKey('label', $data);
+                        $this->assertArrayHasKey('options', $data);
+                    }
+                }
+            )
+        );
+    }
+
+    public function searchWithAggregationDataProvider(): array
+    {
+        return [
+            [
+                'product',  // entity type.
+                'b2c_en',   // catalog ID.
+                10,     // page size.
+                1,      // current page.
+                [],     // sort order specifications.
+                'entity_id', // document data identifier.
+            ],
+            [
+                'product',  // entity type.
+                'b2b_fr',   // catalog ID.
+                10,     // page size.
+                1,      // current page.
+                [],     // sort order specifications.
+                'id', // document data identifier.
+            ],
+        ];
+    }
 }

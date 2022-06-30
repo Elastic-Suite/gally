@@ -21,27 +21,21 @@ namespace Elasticsuite\Search\Elasticsearch\Request\Aggregation\Pipeline;
  */
 class MaxBucket extends AbstractPipeline
 {
-    private string $gapPolicy;
-
-    private string $format;
-
     /**
      * MaxBucket constructor.
      *
-     * @param string                   $name        Pipeline name
-     * @param array<mixed>|string|null $bucketsPath Pipeline buckets path
-     * @param string                   $gapPolicy   Pipeline gap policy
-     * @param string                   $format      Pipeline format
+     * @param string            $name        Pipeline name
+     * @param array|string|null $bucketsPath Pipeline buckets path
+     * @param string            $gapPolicy   Pipeline gap policy
+     * @param string            $format      Pipeline format
      */
     public function __construct(
         string $name,
         array|string|null $bucketsPath,
-        string $gapPolicy = self::GAP_POLICY_SKIP,
-        string $format = ''
+        private string $gapPolicy = self::GAP_POLICY_SKIP,
+        private string $format = ''
     ) {
         parent::__construct($name, $bucketsPath);
-        $this->gapPolicy = $gapPolicy;
-        $this->format = $format;
     }
 
     /**

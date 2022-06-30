@@ -118,7 +118,18 @@ class Field implements FieldInterface
 
     public function getMappingPropertyConfig(): array
     {
-        return ['type' => $this->getType()];
+        $data = ['type' => $this->getType()];
+        // @Todo add condition about analyzer for untouched field
+        if (self::FIELD_TYPE_TEXT == $this->getType()) {
+            $data['fields'] = [
+                'untouched' => [
+                    'type' => 'keyword',
+                    'ignore_above' => 256,
+                ],
+            ];
+        }
+
+        return $data;
     }
 
     public function getMappingProperty(string $analyzer = self::ANALYZER_UNTOUCHED): ?string

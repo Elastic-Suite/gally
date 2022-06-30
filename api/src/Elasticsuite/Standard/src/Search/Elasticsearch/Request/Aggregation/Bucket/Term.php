@@ -16,9 +16,8 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Search\Elasticsearch\Request\Aggregation\Bucket;
 
+use Elasticsuite\Search\Elasticsearch\Request\AggregationInterface;
 use Elasticsuite\Search\Elasticsearch\Request\BucketInterface;
-use Elasticsuite\Search\Elasticsearch\Request\MetricInterface;
-use Elasticsuite\Search\Elasticsearch\Request\PipelineInterface;
 use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
 
 /**
@@ -26,66 +25,37 @@ use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
  */
 class Term extends AbstractBucket
 {
-    private int $size;
-
-    private string $sortOrder;
-
-    /**
-     * @var string[]
-     */
-    private array $include;
-
-    /**
-     * @var string[]
-     */
-    private array $exclude;
-
-    /**
-     * @var int
-     */
-    private ?int $minDocCount;
-
     /**
      * Constructor.
      *
-     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
-     *
-     * @param string              $name         Bucket name
-     * @param string              $field        Bucket field
-     * @param MetricInterface[]   $metrics      Bucket metrics
-     * @param BucketInterface[]   $childBuckets Child buckets
-     * @param PipelineInterface[] $pipelines    Bucket pipelines
-     * @param ?string             $nestedPath   Nested path for nested bucket
-     * @param ?QueryInterface     $filter       Bucket filter
-     * @param ?QueryInterface     $nestedFilter Nested filter for the bucket
-     * @param int                 $size         Nucket size
-     * @param string              $sortOrder    Nucket sort order
-     * @param string[]            $include      Include bucket filter
-     * @param string[]            $exclude      Exclude bucket filter
-     * @param ?int                $minDocCount  Min doc count bucket filter
+     * @param string                 $name              Bucket name
+     * @param string                 $field             Bucket field
+     * @param AggregationInterface[] $childAggregations Child aggregations
+     * @param ?string                $nestedPath        Nested path for nested bucket
+     * @param ?QueryInterface        $filter            Bucket filter
+     * @param ?QueryInterface        $nestedFilter      Nested filter for the bucket
+     * @param int                    $size              Bucket size
+     * @param string|string[]        $sortOrder         Bucket sort order
+     * @param string[]               $include           Include bucket filter
+     * @param string[]               $exclude           Exclude bucket filter
+     * @param ?int                   $minDocCount       Min doc count bucket filter
      */
     public function __construct(
         string $name,
         string $field,
-        array $metrics = [],
-        array $childBuckets = [],
-        array $pipelines = [],
+        array $childAggregations = [],
         ?string $nestedPath = null,
         ?QueryInterface $filter = null,
         ?QueryInterface $nestedFilter = null,
-        int $size = 0,
-        string $sortOrder = BucketInterface::SORT_ORDER_COUNT,
-        array $include = [],
-        array $exclude = [],
-        ?int $minDocCount = null
+        private int $size = 0,
+        private string|array $sortOrder = BucketInterface::SORT_ORDER_COUNT,
+        private array $include = [],
+        private array $exclude = [],
+        private ?int $minDocCount = null
     ) {
-        parent::__construct($name, $field, $metrics, $childBuckets, $pipelines, $nestedPath, $filter, $nestedFilter);
+        parent::__construct($name, $field, $childAggregations, $nestedPath, $filter, $nestedFilter);
 
         $this->size = $size > 0 && $size < self::MAX_BUCKET_SIZE ? $size : self::MAX_BUCKET_SIZE;
-        $this->sortOrder = $sortOrder;
-        $this->include = $include;
-        $this->exclude = $exclude;
-        $this->minDocCount = $minDocCount;
     }
 
     /**
@@ -107,7 +77,7 @@ class Term extends AbstractBucket
     /**
      * Bucket sort order.
      */
-    public function getSortOrder(): string
+    public function getSortOrder(): string|array
     {
         return $this->sortOrder;
     }

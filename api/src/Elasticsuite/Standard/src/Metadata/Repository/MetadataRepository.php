@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Metadata\Repository;
 
+use ApiPlatform\Core\Exception\InvalidArgumentException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Elasticsuite\Metadata\Model\Metadata;
@@ -28,8 +29,26 @@ use Elasticsuite\Metadata\Model\Metadata;
  */
 class MetadataRepository extends ServiceEntityRepository
 {
+    private array $cache;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Metadata::class);
+    }
+
+    public function findByEntity(string $entityType): ?Metadata
+    {
+        if (!isset($this->cache[$entityType])) {
+            $metadata = $this->findOneBy(['entity' => $entityType]);
+            if (!$metadata) {
+                throw new InvalidArgumentException(sprintf('Entity type [%s] does not exist', $entityType));
+            }
+            if (null === $metadata->getEntity()) {
+                throw new InvalidArgumentException(sprintf('Entity type [%s] is not defined', $entityType));
+            }
+            $this->cache[$entityType] = $metadata;
+        }
+
+        return $this->cache[$entityType];
     }
 }

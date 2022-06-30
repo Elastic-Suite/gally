@@ -17,7 +17,11 @@ declare(strict_types=1);
 namespace Elasticsuite\Search\Tests\Unit\Elasticsearch\Adapter\Common\Response;
 
 use Elasticsuite\Search\Elasticsearch\Adapter\Common\Response;
+use Elasticsuite\Search\Elasticsearch\Adapter\Common\Response\Aggregation;
+use Elasticsuite\Search\Elasticsearch\Adapter\Common\Response\BucketValue;
+use Elasticsuite\Search\Elasticsearch\Builder\Response\AggregationBuilder;
 use Elasticsuite\Search\Elasticsearch\DocumentInterface;
+use Elasticsuite\Search\Model\Document;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class QueryResponseTest extends KernelTestCase
@@ -25,18 +29,52 @@ class QueryResponseTest extends KernelTestCase
     /**
      * @dataProvider queryResponseDocumentsOnlyDataProvider
      *
-     * @param array $searchResponse    Raw search response from Elasticsearch
-     * @param int   $expectedDocsCount Expected documents count in the query response
+     * @param array                           $searchResponse       Raw search response from Elasticsearch
+     * @param int                             $expectedDocsCount    Expected documents count in the query response
+     * @param Document[]                      $expectedDocuments    Expected documents in the query response
+     * @param Response\AggregationInterface[] $expectedAggregations Expected aggregations in the query response
+     * @param int                             $expectedTotalItems   Expected total item count in the query response
+     *
+     * @throws \Exception
      */
-    public function testTraversableCountable(array $searchResponse, int $expectedDocsCount): void
-    {
-        $queryResponse = new Response\QueryResponse($searchResponse);
-        $this->assertCount($expectedDocsCount, $queryResponse);
-        $this->assertContainsOnlyInstancesOf(DocumentInterface::class, $queryResponse);
+    public function testTraversableCountable(
+        array $searchResponse,
+        int $expectedDocsCount,
+        array $expectedDocuments,
+        array $expectedAggregations,
+        int $expectedTotalItems
+    ): void {
+        $response = new Response\QueryResponse($searchResponse, new AggregationBuilder());
+        $this->assertContainsOnlyInstancesOf(DocumentInterface::class, $response);
+        $this->assertEquals($expectedDocsCount, $response->count());
+        $this->assertContainsOnlyInstancesOf(DocumentInterface::class, $response);
+        $this->assertEquals($expectedDocuments, iterator_to_array($response->getIterator()));
+        $this->assertEquals($expectedAggregations, $response->getAggregations());
+        $this->assertEquals($expectedTotalItems, $response->getTotalItems());
     }
 
     public function queryResponseDocumentsOnlyDataProvider(): array
     {
+        $docTest1 = new Document(
+            [
+                '_id' => '1',
+                '_score' => 1.0,
+                '_source' => [['field' => 'value']],
+            ]
+        );
+        $docTest2 = new Document(
+            [
+                '_id' => '2',
+                '_score' => 1.1,
+                '_source' => [['field1' => 'value1', 'field2' => 'value2']],
+            ]
+        );
+        $aggregation = new Aggregation(
+            'brand',
+            ['Brand1' => new BucketValue('Brand1', 3, []), '__other_docs' => new BucketValue('__other_docs', 2, [])],
+            5
+        );
+
         return [
             [
                 [
@@ -50,9 +88,12 @@ class QueryResponseTest extends KernelTestCase
                                 ],
                             ],
                         ],
-                        'total' => 1,
+                        'total' => ['value' => 1],
                     ],
                 ],
+                1,
+                [$docTest1],
+                [],
                 1,
             ],
             [
@@ -61,14 +102,14 @@ class QueryResponseTest extends KernelTestCase
                         'hits' => [
                             [
                                 '_id' => '1',
-                                '_score' => 1.1,
+                                '_score' => 1.0,
                                 '_source' => [
                                     ['field' => 'value'],
                                 ],
                             ],
                             [
                                 '_id' => '2',
-                                '_score' => 1.0,
+                                '_score' => 1.1,
                                 '_source' => [
                                     ['field1' => 'value1', 'field2' => 'value2'],
                                 ],
@@ -77,6 +118,45 @@ class QueryResponseTest extends KernelTestCase
                         'total' => ['value' => 2],
                     ],
                 ],
+                2,
+                [$docTest1, $docTest2],
+                [],
+                2,
+            ],
+            [
+                [
+                    'hits' => [
+                        'hits' => [
+                            [
+                                '_id' => '1',
+                                '_score' => 1.0,
+                                '_source' => [
+                                    ['field' => 'value'],
+                                ],
+                            ],
+                            [
+                                '_id' => '2',
+                                '_score' => 1.1,
+                                '_source' => [
+                                    ['field1' => 'value1', 'field2' => 'value2'],
+                                ],
+                            ],
+                        ],
+                        'total' => ['value' => 2],
+                    ],
+                    'aggregations' => [
+                        'brand' => [
+                            'doc_count_error_upper_bound' => 0,
+                            'sum_other_doc_count' => 2,
+                            'buckets' => [
+                                ['key' => 'Brand1', 'doc_count' => 3],
+                            ],
+                        ],
+                    ],
+                ],
+                2,
+                [$docTest1, $docTest2],
+                ['brand' => $aggregation],
                 2,
             ],
             [
@@ -87,8 +167,14 @@ class QueryResponseTest extends KernelTestCase
                     ],
                 ],
                 0,
+                [],
+                [],
+                0,
             ],
             [
+                [],
+                0,
+                [],
                 [],
                 0,
             ],

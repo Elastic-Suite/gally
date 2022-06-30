@@ -19,24 +19,20 @@ namespace Elasticsuite\Search\Elasticsearch\Request;
 /**
  * Interface for metrics.
  */
-interface MetricInterface
+interface MetricInterface extends AggregationInterface
 {
     /**
      * Available metric types.
      */
-    public const TYPE_AVG = 'avg';
-    public const TYPE_MIN = 'min';
-    public const TYPE_MAX = 'max';
-    public const TYPE_SUM = 'sum';
-    public const TYPE_STATS = 'stats';
-    public const TYPE_EXTENDED_STATS = 'extended_stats';
-    public const TYPE_CARDINALITY = 'cardinality';
-    public const TYPE_PERCENTILES = 'percentiles';
-
-    /**
-     * Metric type.
-     */
-    public function getType(): string;
+    public const TYPE_AVG = 'avgMetric';
+    public const TYPE_MIN = 'minMetric';
+    public const TYPE_MAX = 'maxMetric';
+    public const TYPE_SUM = 'sumMetric';
+    public const TYPE_STATS = 'statsMetric';
+    public const TYPE_EXTENDED_STATS = 'extendedStatsMetric';
+    public const TYPE_CARDINALITY = 'cardinalityMetric';
+    public const TYPE_PERCENTILES = 'percentilesMetric';
+    public const TYPE_TOP_HITS = 'topHitsMetric';
 
     /**
      * Metric field.
@@ -44,14 +40,7 @@ interface MetricInterface
     public function getField(): string;
 
     /**
-     * Metric name.
-     */
-    public function getName(): string;
-
-    /**
      * Metric extra config.
-     *
-     * @return array<mixed>
      */
     public function getConfig(): array;
 }
