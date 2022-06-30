@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { fetchApi } from '~/services/api'
 import { IDocsJson, IDocsJsonld, IFetch, LoadStatus } from '~/types'
 
-import { IThunkApi } from './store'
+import { IThunkApi, RootState } from './store'
 
 export interface IDocs {
   json: IDocsJson
@@ -61,4 +61,4 @@ const apiSlice = createSlice({
 // export const { } = apiSlice.actions
 export const apiReducer = apiSlice.reducer
 
-export const selectDocs = (state) => state.api.docs
+export const selectDocs = (state: RootState) => state.api.docs

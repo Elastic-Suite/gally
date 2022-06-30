@@ -15,10 +15,9 @@ import 'assets/scss/style.scss'
  * Resolve for "Prop className did not match" between Server side and Client side
  * see solution here : https://github.com/vercel/next.js/issues/7322#issuecomment-1003545233
  */
-const CustomLayoutWithNoSSR = dynamic(
-  () => import('~/components/organisms/layout/CustomLayout'),
-  { ssr: false }
-) as FunctionComponent
+const Layout = dynamic(() => import('~/components/stateful/layout/Layout'), {
+  ssr: false,
+}) as FunctionComponent
 
 function MyApp(props: AppProps) {
   const { pageProps } = props
@@ -38,9 +37,9 @@ function MyApp(props: AppProps) {
       </Head>
 
       <AppProvider>
-        <CustomLayoutWithNoSSR>
+        <Layout>
           <Component {...pageProps} />
-        </CustomLayoutWithNoSSR>
+        </Layout>
       </AppProvider>
       <Script
         type="module"
