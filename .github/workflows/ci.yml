@@ -50,6 +50,9 @@ jobs:
         run: docker-compose exec -e XDEBUG_MODE=off -T php bin/phpunit
       - name: Coverage
         run: docker-compose exec -e XDEBUG_MODE=coverage -T php bin/phpunit --coverage-clover=coverage/coverage.xml src/Elasticsuite
+      
+      - name: Cleanup coverage file
+        run: docker-compose exec -T php sed -i 's:<file name="/srv/:<file name="/:' coverage/coverage.xml
         
       - if: ${{ github.event_name == 'pull_request' }}
         name: Download artifact
