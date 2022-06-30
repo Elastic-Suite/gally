@@ -1,18 +1,18 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 
-import Pagination from './Pagination'
+import PaginationComponent from './Pagination'
 
 export default {
-  title: 'molecules/CustomTable/Pagination',
-  component: Pagination,
-} as ComponentMeta<typeof Pagination>
+  title: 'molecules/CustomTable',
+  component: PaginationComponent,
+} as ComponentMeta<typeof PaginationComponent>
 
-const Template: ComponentStory<typeof Pagination> = (args) => (
-  <Pagination {...args} />
+const Template: ComponentStory<typeof PaginationComponent> = (args) => (
+  <PaginationComponent {...args} />
 )
 
-export const Default = Template.bind({})
-Default.args = {
+export const Pagination = Template.bind({})
+Pagination.args = {
   isBottom: 'true',
   totalPages: 100,
   rowsPerPage: 10,

@@ -1,0 +1,201 @@
+{
+  "@context": "/contexts/Menu",
+  "@id": "/menu?code=menu",
+  "@type": "Menu",
+  "code": "menu",
+  "hierarchy": [
+    {
+      "code": "dashboard",
+      "label": "Tableau de bord",
+      "order": 10
+    },
+    {
+      "code": "analyze",
+      "label": "Analyse",
+      "order": 20,
+      "children": [
+        {
+          "code": "analyze_catalog_structure",
+          "label": "Structure du catalogue",
+          "order": 10
+        },
+        {
+          "code": "analyze_search_usage",
+          "label": "Utilisation de la recherche",
+          "order": 20
+        },
+        {
+          "code": "analyze_ab_testing",
+          "label": "Tests A/B",
+          "order": 30
+        }
+      ]
+    },
+    {
+      "code": "merchandize",
+      "label": "Merchandising",
+      "order": 30,
+      "children": [
+        {
+          "code": "merchandize_categories",
+          "label": "Catégories",
+          "order": 10
+        },
+        {
+          "code": "merchandize_search_results",
+          "label": "Résultats de recherche",
+          "order": 20
+        },
+        {
+          "code": "merchandize_recommender",
+          "label": "Recommendations",
+          "order": 30,
+          "children": [
+            {
+              "code": "merchandize_recommender_configuration",
+              "label": "Configuration générale",
+              "order": 10
+            },
+            {
+              "code": "merchandize_recommender_manual_recommenders",
+              "label": "Recommendations manuelles",
+              "order": 20
+            },
+            {
+              "code": "merchandize_recommender_auto_recommenders",
+              "label": "Recommendations automatiques",
+              "order": 30
+            },
+            {
+              "code": "merchandize_recommender_behavioral_recommenders",
+              "label": "Recommendations comportementales",
+              "order": 30
+            }
+          ]
+        },
+        {
+          "code": "merchandize_recommender_boosts",
+          "label": "Boosts",
+          "order": 40
+        }
+      ]
+    },
+    {
+      "code": "search",
+      "label": "Recherche",
+      "order": 40,
+      "children": [
+        {
+          "code": "search_configuration",
+          "label": "Configuration",
+          "order": 10,
+          "children": [
+            {
+              "code": "search_configuration_relevance",
+              "label": "Pertinence",
+              "order": 10
+            },
+            {
+              "code": "search_configuration_autocompletion",
+              "label": "Autocomplétion",
+              "order": 20
+            },
+            {
+              "code": "search_configuration_attributes",
+              "label": "Attributs",
+              "order": 30
+            }
+          ]
+        },
+        {
+          "code": "search_facets",
+          "label": "Facettes",
+          "order": 20
+        },
+        {
+          "code": "search_thesasurus",
+          "label": "Thésaurus",
+          "order": 30
+        }
+      ]
+    },
+    {
+      "code": "monitoring",
+      "label": "Monitoring",
+      "order": 50,
+      "children": [
+        {
+          "code": "monitoring_index",
+          "label": "Index",
+          "order": 10
+        },
+        {
+          "code": "monitoring_imports",
+          "label": "Imports",
+          "order": 20
+        }
+      ]
+    },
+    {
+      "code": "settings",
+      "label": "Paramètres",
+      "order": 100,
+      "children": [
+        {
+          "code": "settings_global_configuration",
+          "label": "Configuration globale",
+          "order": 10
+        },
+        {
+          "code": "catalog",
+          "label": "Catalogue",
+          "order": 15,
+          "children": [
+            {
+              "code": "catalog_catalogs_and_locales",
+              "label": "Catalogues et langues",
+              "order": 10
+            },
+            {
+              "code": "catalog_attributes_configuration",
+              "label": "Configuration des attributs",
+              "order": 20
+            }
+          ]
+        },
+        {
+          "code": "settings_data_collection",
+          "label": "Collecte des données",
+          "order": 20,
+          "children": [
+            {
+              "code": "settings_data_collection_behavioral_data_configuration",
+              "label": "Configuration des données comportementales",
+              "order": 10
+            },
+            {
+              "code": "settings_data_collection_tracking",
+              "label": "Tracking",
+              "order": 20
+            },
+            {
+              "code": "settings_data_collection_telemetry_beacon",
+              "label": "Télémétrie et balise",
+              "order": 30
+            }
+          ]
+        },
+        {
+          "code": "settings_interfaces",
+          "label": "Interfaces",
+          "order": 100
+        },
+        {
+          "code": "users",
+          "label": "Utilisateurs",
+          "order": 110
+        }
+      ]
+    }
+  ]
+}

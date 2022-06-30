@@ -51,6 +51,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     fontWeight: 500,
     fontSize: 14,
     lineHeight: '20px',
+    background: 'transparent',
+    border: 0,
   },
   lineHover: {
     '&:hover': {

@@ -1,33 +1,42 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { IDocsJson, IDocsJsonld, LoadStatus } from '~/types'
+import { fetchApi } from '~/services/api'
+import { IDocsJson, IDocsJsonld, IFetch, LoadStatus } from '~/types'
 
-export interface IDocsFetch {
+import { IThunkApi } from './store'
+
+export interface IDocs {
   json: IDocsJson
   jsonld: IDocsJsonld
-  error: string
-  status: LoadStatus
 }
 
 export interface IApiState {
-  docs: IDocsFetch
+  docs: IFetch<IDocs>
 }
 
 const initialState: IApiState = {
   docs: {
-    json: null,
-    jsonld: null,
+    data: {
+      json: null,
+      jsonld: null,
+    },
     error: null,
     status: LoadStatus.IDLE,
   },
 }
 
-export const fetchDocs = createAsyncThunk('api/docs.jsonld', async () => {
-  const results = await Promise.all([
-    fetch('/docs.json').then((response) => response.json()),
-    fetch('/docs.jsonld').then((response) => response.json()),
-  ])
-  return results
-})
+export const fetchDocs = createAsyncThunk<IDocs, void, IThunkApi>(
+  'api/docs.jsonld',
+  async (_, { getState }) => {
+    const {
+      i18n: { language },
+    } = getState()
+    const results = await Promise.all([
+      fetchApi(language, '/docs.json').then((response) => response.json()),
+      fetchApi(language, '/docs.jsonld').then((response) => response.json()),
+    ])
+    return { json: results[0], jsonld: results[0] }
+  }
+)
 
 const apiSlice = createSlice({
   name: 'api',
@@ -39,9 +48,8 @@ const apiSlice = createSlice({
         state.docs.status = LoadStatus.LOADING
       })
       .addCase(fetchDocs.fulfilled, (state, action) => {
-        state.docs.status = LoadStatus.SUCCESSDED
-        state.docs.json = action.payload[0]
-        state.docs.jsonld = action.payload[1]
+        state.docs.status = LoadStatus.SUCCEEDED
+        state.docs.data = action.payload
       })
       .addCase(fetchDocs.rejected, (state, action) => {
         state.docs.status = LoadStatus.FAILED
@@ -50,7 +58,7 @@ const apiSlice = createSlice({
   },
 })
 
-// export const {} = apiSlice.actions
+// export const { } = apiSlice.actions
 export const apiReducer = apiSlice.reducer
 
 export const selectDocs = (state) => state.api.docs
