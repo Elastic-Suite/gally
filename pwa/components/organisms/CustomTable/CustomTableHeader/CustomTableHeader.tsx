@@ -1,10 +1,10 @@
 import { TableCell, TableHead, TableRow } from '@mui/material'
 import { StickyTableCell } from '~/components/organisms/CustomTable/CustomTable.styled'
-import { MassiveSelectionType } from '~/types'
+import { ITableHeader, MassiveSelectionType } from '~/types'
 import MassiveSelection from '../../../molecules/CustomTable/MassiveSelection/MassiveSelection'
 
 interface IProps {
-  tableHeaders: string[]
+  tableHeaders: ITableHeader[]
   onMassiveSelection?: (selection: MassiveSelectionType) => void
   massiveSelectionState?: boolean
 }
@@ -36,10 +36,11 @@ const CustomTableHeader = (props: IProps) => {
           <TableCell
             sx={{
               backgroundColor: 'neutral-light',
+              whiteSpace: 'nowrap',
             }}
-            key={header}
+            key={header.field}
           >
-            {header}
+            {header.headerName}
           </TableCell>
         ))}
       </TableRow>

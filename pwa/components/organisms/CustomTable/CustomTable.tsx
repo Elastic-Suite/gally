@@ -8,10 +8,10 @@ import {
 import CustomTableBody from '~/components/organisms/CustomTable/CustomTableBody/CustomTableBody'
 import CustomTableHeader from '~/components/organisms/CustomTable/CustomTableHeader/CustomTableHeader'
 
-import { MassiveSelectionType, ITableRow } from '~/types'
+import { MassiveSelectionType, ITableRow, ITableHeader } from '~/types'
 
 interface IProps {
-  tableHeaders: string[]
+  tableHeaders: ITableHeader[]
   tableRows: ITableRow[]
   onMassiveAction?: (action: string) => void
 }
@@ -79,6 +79,7 @@ const CustomTable = (props: IProps) => {
           />
           <CustomTableBody
             tableRows={tableRows}
+            tableHeaders={tableHeaders}
             setSelectedRows={setSelectedRows}
             selectedRows={selectedRows}
           />

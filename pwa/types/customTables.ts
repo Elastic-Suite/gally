@@ -3,18 +3,20 @@ export enum MassiveSelectionType {
   ALL_ON_CURRENT_PAGE = 'massiveselection.allOnCurrentPage',
   NONE = 'massiveselection.none',
 }
-export interface ITableRow {
-  id: string
-  cells: ITableCell[]
+
+export interface ITableHeader {
+  field: string
+  headerName: string
+  type: DataContentType
+  editable: boolean
 }
 
 export enum DataContentType {
   STRING = 'string',
   BOOLEAN = 'boolean',
 }
-export interface ITableCell {
+
+export interface ITableRow {
   id: string
-  value: string | boolean
-  type: DataContentType
-  isEditable: boolean
+  [key: string]: string | boolean | number
 }
