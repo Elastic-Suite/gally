@@ -1,17 +1,17 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 
-import MassiveSelection from './MassiveSelection'
+import MassiveSelectionComponent from './MassiveSelection'
 
 export default {
-  title: 'Molecules/CustomTable/MassiveSelection',
-  component: MassiveSelection,
-} as ComponentMeta<typeof MassiveSelection>
+  title: 'Molecules/CustomTable',
+  component: MassiveSelectionComponent,
+} as ComponentMeta<typeof MassiveSelectionComponent>
 
-const Template: ComponentStory<typeof MassiveSelection> = (args) => (
-  <MassiveSelection {...args} />
+const Template: ComponentStory<typeof MassiveSelectionComponent> = (args) => (
+  <MassiveSelectionComponent {...args} />
 )
 
-export const Default = Template.bind({})
-Default.args = {
+export const MassiveSelection = Template.bind({})
+MassiveSelection.args = {
   selectionState: false,
 }

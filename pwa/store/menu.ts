@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { IFetch } from '~/types'
+import { IFetch, LoadStatus } from '~/types'
 
 export interface IMenuChild {
   code: string
@@ -21,7 +21,7 @@ export interface IMenuState {
 
 const initialState: IMenuState = {
   menu: {
-    loading: false,
+    status: LoadStatus.IDLE,
     data: {
       hierarchy: [],
     },
