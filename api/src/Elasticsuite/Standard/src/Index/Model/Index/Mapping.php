@@ -26,6 +26,27 @@ class Mapping implements MappingInterface
     /** @var FieldInterface[] */
     private array $fields;
 
+    /** List of default fields and associated analyzers. */
+    private array $defaultMappingFields = [
+        self::DEFAULT_SEARCH_FIELD => [
+            FieldInterface::ANALYZER_STANDARD,
+            FieldInterface::ANALYZER_WHITESPACE,
+            FieldInterface::ANALYZER_SHINGLE,
+        ],
+        self::DEFAULT_SPELLING_FIELD => [
+            FieldInterface::ANALYZER_STANDARD,
+            FieldInterface::ANALYZER_WHITESPACE,
+            FieldInterface::ANALYZER_SHINGLE,
+            FieldInterface::ANALYZER_PHONETIC,
+        ],
+    ];
+
+    /** List of target field for copy to by field configuration. */
+    private array $copyFieldMap = [
+        'isSearchable' => self::DEFAULT_SEARCH_FIELD,
+        'isUsedInSpellcheck' => self::DEFAULT_SPELLING_FIELD,
+    ];
+
     /**
      * Instantiate a new mapping.
      *
@@ -48,6 +69,10 @@ class Mapping implements MappingInterface
     public function getProperties(): array
     {
         $properties = [];
+
+        foreach ($this->defaultMappingFields as $fieldName => $analyzers) {
+            $properties[$fieldName] = $this->getProperty(FieldInterface::FIELD_TYPE_TEXT, $analyzers);
+        }
 
         foreach ($this->getFields() as $currentField) {
             $properties = $this->addField($properties, $currentField);
@@ -94,6 +119,22 @@ class Mapping implements MappingInterface
     }
 
     /**
+     * Append a new properties into a properties list and returned the updated map.
+     */
+    private function getProperty(string $propertyType, array $analyzers = []): array
+    {
+        $property = ['type' => $propertyType, 'analyzer' => FieldInterface::ANALYZER_STANDARD];
+
+        foreach ($analyzers as $analyzer) {
+            if (FieldInterface::ANALYZER_STANDARD !== $analyzer) {
+                $property['fields'][$analyzer] = ['type' => $propertyType, 'analyzer' => $analyzer];
+            }
+        }
+
+        return $property;
+    }
+
+    /**
      * Append a field to a mapping properties list.
      * The field is appended and the new properties list is returned.
      *
@@ -124,8 +165,38 @@ class Mapping implements MappingInterface
             $fieldRoot = &$fieldRoot[$fieldPathArray[$i]]['properties'];
         }
 
+        /*
+         * Retrieving location where the property has to be copied to.
+         * Ex : searchable fields are copied to default "search" field.
+         */
+        $copyToProperties = $this->getFieldCopyToProperties($field);
+
+        if (!empty($copyToProperties)) {
+            // For normal fields, copy_to is appended at the property root.
+            $copyToRoot = &$property;
+            $copyToRoot['copy_to'] = $copyToProperties;
+        }
+
         $fieldRoot[end($fieldPathArray)] = $property;
 
         return $properties;
+    }
+
+    /**
+     * Get the list of default fields where the current field must be copied.
+     * Example : searchable fields are copied into the default "search" field.
+     *
+     * @param FieldInterface $field field to be checked
+     */
+    private function getFieldCopyToProperties(FieldInterface $field): array
+    {
+        $copyTo = [];
+        foreach ($this->copyFieldMap as $method => $targetField) {
+            if ($field->{$method}()) {
+                $copyTo[] = $targetField;
+            }
+        }
+
+        return $copyTo;
     }
 }
