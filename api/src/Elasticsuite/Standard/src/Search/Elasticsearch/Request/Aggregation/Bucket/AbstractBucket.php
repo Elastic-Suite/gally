@@ -16,9 +16,8 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Search\Elasticsearch\Request\Aggregation\Bucket;
 
+use Elasticsuite\Search\Elasticsearch\Request\AggregationInterface;
 use Elasticsuite\Search\Elasticsearch\Request\BucketInterface;
-use Elasticsuite\Search\Elasticsearch\Request\MetricInterface;
-use Elasticsuite\Search\Elasticsearch\Request\PipelineInterface;
 use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
 
 /**
@@ -31,19 +30,9 @@ abstract class AbstractBucket implements BucketInterface
     private string $field;
 
     /**
-     * @var MetricInterface[]
+     * @var AggregationInterface[]
      */
-    private array $metrics;
-
-    /**
-     * @var BucketInterface[]
-     */
-    private array $childBuckets;
-
-    /**
-     * @var PipelineInterface[]
-     */
-    private array $pipelines;
+    private array $childAggregations;
 
     private ?string $nestedPath;
 
@@ -54,30 +43,24 @@ abstract class AbstractBucket implements BucketInterface
     /**
      * Constructor.
      *
-     * @param string              $name         Bucket name
-     * @param string              $field        Bucket field
-     * @param MetricInterface[]   $metrics      Bucket metrics
-     * @param BucketInterface[]   $childBuckets Child buckets
-     * @param PipelineInterface[] $pipelines    Bucket pipelines
-     * @param ?string             $nestedPath   Nested path for nested bucket
-     * @param ?QueryInterface     $filter       Bucket filter
-     * @param ?QueryInterface     $nestedFilter Nested filter for the bucket
+     * @param string                 $name              Bucket name
+     * @param string                 $field             Bucket field
+     * @param AggregationInterface[] $childAggregations Child aggregations
+     * @param ?string                $nestedPath        Nested path for nested bucket
+     * @param ?QueryInterface        $filter            Bucket filter
+     * @param ?QueryInterface        $nestedFilter      Nested filter for the bucket
      */
     public function __construct(
         string $name,
         string $field,
-        array $metrics = [],
-        array $childBuckets = [],
-        array $pipelines = [],
+        array $childAggregations = [],
         ?string $nestedPath = null,
         ?QueryInterface $filter = null,
         ?QueryInterface $nestedFilter = null
     ) {
         $this->name = $name;
         $this->field = $field;
-        $this->metrics = $metrics;
-        $this->childBuckets = $childBuckets;
-        $this->pipelines = $pipelines;
+        $this->childAggregations = $childAggregations;
         $this->nestedPath = $nestedPath;
         $this->filter = $filter;
         $this->nestedFilter = $nestedFilter;
@@ -89,14 +72,6 @@ abstract class AbstractBucket implements BucketInterface
     public function getField(): string
     {
         return $this->field;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getMetrics(): array
-    {
-        return $this->metrics;
     }
 
     /**
@@ -142,16 +117,8 @@ abstract class AbstractBucket implements BucketInterface
     /**
      * {@inheritDoc}
      */
-    public function getChildBuckets(): array
+    public function getChildAggregations(): array
     {
-        return $this->childBuckets;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getPipelines(): array
-    {
-        return $this->pipelines;
+        return $this->childAggregations;
     }
 }

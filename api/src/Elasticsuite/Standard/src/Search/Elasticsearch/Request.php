@@ -17,7 +17,7 @@ declare(strict_types=1);
 namespace Elasticsuite\Search\Elasticsearch;
 
 use Elasticsuite\Index\Helper\IndexSettings;
-use Elasticsuite\Search\Elasticsearch\Request\BucketInterface;
+use Elasticsuite\Search\Elasticsearch\Request\AggregationInterface;
 use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
 use Elasticsuite\Search\Elasticsearch\Request\SortOrderInterface;
 
@@ -31,16 +31,13 @@ class Request implements RequestInterface
 
     private array $sortOrders;
 
+    private ?int $from;
+
+    private ?int $size;
+
+    private array $aggregations;
+
     private ?QueryInterface $filter;
-
-    protected int|null $from;
-
-    protected int|null $size;
-
-    /**
-     * @var BucketInterface[]
-     */
-    protected array $buckets;
 
     private int $spellingType = SpellcheckerInterface::SPELLING_TYPE_EXACT;
 
@@ -51,16 +48,16 @@ class Request implements RequestInterface
      *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      *
-     * @param string               $name           Search request name
-     * @param string               $indexName      Index name
-     * @param QueryInterface       $query          Search query
-     * @param ?QueryInterface      $filter         Search filter
-     * @param SortOrderInterface[] $sortOrders     Sort orders specification
-     * @param int|null             $from           Pagination from clause
-     * @param int|null             $size           Pagination page size clause
-     * @param BucketInterface[]    $buckets        Search request aggregations definition
-     * @param int|null             $spellingType   For fulltext query : the type of spellchecked applied
-     * @param bool|int|null        $trackTotalHits Value of the 'track_total_hits' ES parameter
+     * @param string                 $name           Search request name
+     * @param string                 $indexName      Index name
+     * @param QueryInterface         $query          Search query
+     * @param ?QueryInterface        $filter         Search filter
+     * @param SortOrderInterface[]   $sortOrders     Sort orders specification
+     * @param int|null               $from           Pagination from clause
+     * @param int|null               $size           Pagination page size clause
+     * @param AggregationInterface[] $aggregations   Search request aggregations definition
+     * @param int|null               $spellingType   For fulltext query : the type of spellchecked applied
+     * @param bool|int|null          $trackTotalHits Value of the 'track_total_hits' ES parameter
      */
     public function __construct(
         string $name,
@@ -68,11 +65,11 @@ class Request implements RequestInterface
         QueryInterface $query,
         ?QueryInterface $filter = null,
         array $sortOrders = null,
-        int $from = null,
-        int $size = null,
-        array $buckets = [],
+        ?int $from = null,
+        ?int $size = null,
+        array $aggregations = [],
         int $spellingType = null,
-        bool|int $trackTotalHits = null
+        bool|int $trackTotalHits = null,
     ) {
         $this->name = $name;
         $this->index = $indexName;
@@ -81,7 +78,7 @@ class Request implements RequestInterface
         $this->sortOrders = $sortOrders ?? [];
         $this->from = $from;
         $this->size = $size;
-        $this->buckets = $buckets;
+        $this->aggregations = $aggregations;
 
         if (null !== $spellingType) {
             $this->spellingType = $spellingType;
@@ -113,7 +110,7 @@ class Request implements RequestInterface
      */
     public function getAggregations(): array
     {
-        return $this->buckets;
+        return $this->aggregations;
     }
 
     /**

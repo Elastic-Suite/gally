@@ -16,14 +16,13 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Search\Tests\Unit\Elasticsearch\Adapter\Common\Request;
 
+use Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler as AggregationAssembler;
 use Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Mapper;
 use Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Query\Assembler as QueryAssembler;
 use Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\SortOrder\Assembler as SortOrderAssembler;
 use Elasticsuite\Search\Elasticsearch\Request;
 use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-
-// use Elasticsuite\Search\Adapter\Elasticsearch\Request\Aggregation\Assembler as AggregationAssembler;
 
 /**
  * Search adapter query mapper test case.
@@ -50,36 +49,33 @@ class MapperTest extends KernelTestCase
     /**
      * Test mapping a query using a filter.
      */
-    /*
     public function testFilteredQueryMapping(): void
     {
-        $mapper  = $this->getMapper();
-        $query   = $this->getMockBuilder(QueryInterface::class)->getMock();
-        $filter  = $this->getMockBuilder(QueryInterface::class)->getMock();
+        $mapper = $this->getMapper();
+        $query = $this->getMockBuilder(QueryInterface::class)->getMock();
+        $filter = $this->getMockBuilder(QueryInterface::class)->getMock();
         $searchRequest = new Request('requestName', 'indexName', $query, $filter);
 
         $mappedRequest = $mapper->assembleSearchRequest($searchRequest);
 
-        $this->assertEquals('query', $mappedRequest['post_filter']);
+        $this->assertEquals(['mockQuery'], $mappedRequest['post_filter']);
     }
-    */
 
     /**
      * Test aggregations mapping.
      */
-    /*
     public function testAggregationsMapping(): void
     {
-        $mapper  = $this->getMapper();
-        $query   = $this->getMockBuilder(QueryInterface::class)->getMock();
+        $mapper = $this->getMapper();
+        $query = $this->getMockBuilder(QueryInterface::class)->getMock();
+        $aggs = $this->getMockBuilder(Request\AggregationInterface::class)->getMock();
 
-        $searchRequest = new Request('requestName', 'indexName', $query, null, null, 0, 1, [], ['agg' => 'agg']);
+        $searchRequest = new Request('requestName', 'indexName', $query, null, null, 0, 1, [$aggs]);
 
         $mappedRequest = $mapper->assembleSearchRequest($searchRequest);
 
-        $this->assertEquals('aggregations', $mappedRequest['aggregations']);
+        $this->assertEquals(['aggregations'], $mappedRequest['aggregations']);
     }
-    */
 
     /**
      * Test sort orders mapping.
@@ -109,11 +105,9 @@ class MapperTest extends KernelTestCase
         $sortOrderAssemblerMock = $this->getMockBuilder(SortOrderAssembler::class)->disableOriginalConstructor()->getMock();
         $sortOrderAssemblerMock->method('assembleSortOrders')->willReturn([]);
 
-        /*
         $aggregationAssemblerMock = $this->getMockBuilder(AggregationAssembler::class)->disableOriginalConstructor()->getMock();
-        $aggregationAssemblerMock->method('assembleAggregations')->will($this->returnValue('aggregations'));
-        */
+        $aggregationAssemblerMock->method('assembleAggregations')->willReturn(['aggregations']);
 
-        return new Mapper($queryAssemblerMock, $sortOrderAssemblerMock/*, $aggregationAssemblerMock*/);
+        return new Mapper($queryAssemblerMock, $sortOrderAssemblerMock, $aggregationAssemblerMock);
     }
 }

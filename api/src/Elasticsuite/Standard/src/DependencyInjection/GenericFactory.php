@@ -28,6 +28,15 @@ class GenericFactory
             throw new \InvalidArgumentException('Class to instantiate is not defined');
         }
 
+        $class = new \ReflectionClass($this->instanceName);
+        $availableParameters = array_map(
+            function ($parameter) {
+                return $parameter->getName();
+            },
+            $class->getConstructor()->getParameters()
+        );
+        $data = array_intersect_key($data, array_flip($availableParameters));
+
         return new $this->instanceName(...$data);
     }
 }

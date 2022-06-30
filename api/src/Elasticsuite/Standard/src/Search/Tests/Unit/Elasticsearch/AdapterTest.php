@@ -20,6 +20,7 @@ use Elasticsearch\Client;
 use Elasticsuite\Search\Elasticsearch\Adapter;
 use Elasticsuite\Search\Elasticsearch\Adapter\Common\Request;
 use Elasticsuite\Search\Elasticsearch\Adapter\Common\Response;
+use Elasticsuite\Search\Elasticsearch\Builder\Response\AggregationBuilder;
 use Elasticsuite\Search\Elasticsearch\RequestInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Log\LoggerInterface;
@@ -31,6 +32,7 @@ class AdapterTest extends KernelTestCase
     {
         $mapper = $this->getMockMapper();
         $client = $this->getMockClient();
+        $aggregationBuilder = $this->getMockAggregationBuilder();
         $logger = $this->getMockLogger();
         $request = $this->getMockRequest();
 
@@ -57,9 +59,10 @@ class AdapterTest extends KernelTestCase
                 ],
             ]
         );
+
         $logger->expects($this->never())->method('error');
 
-        $adapter = new Adapter($mapper, $client, $logger);
+        $adapter = new Adapter($mapper, $client, $aggregationBuilder, $logger);
         $response = $adapter->search($request);
 
         $this->assertInstanceOf(Response\QueryResponse::class, $response);
@@ -70,6 +73,7 @@ class AdapterTest extends KernelTestCase
     {
         $mapper = $this->getMockMapper();
         $client = $this->getMockClient();
+        $aggregationBuilder = $this->getMockAggregationBuilder();
         $logger = $this->getMockLogger();
         $request = $this->getMockRequest();
 
@@ -78,7 +82,7 @@ class AdapterTest extends KernelTestCase
         $client->method('search')->willThrowException(new \Exception($fakeExceptionMessage));
         $logger->expects($this->once())->method('error')->with($fakeExceptionMessage);
 
-        $adapter = new Adapter($mapper, $client, $logger);
+        $adapter = new Adapter($mapper, $client, $aggregationBuilder, $logger);
         $response = $adapter->search($request);
 
         $this->assertInstanceOf(Response\QueryResponse::class, $response);
@@ -92,12 +96,17 @@ class AdapterTest extends KernelTestCase
             ->getMock();
     }
 
-    private function getMockMapper(): Request\Mapper
+    private function getMockMapper(): Request\Mapper|MockObject
     {
         $mockMapper = $this->getMockBuilder(Request\Mapper::class)->disableOriginalConstructor()->getMock();
         $mockMapper->method('assembleSearchRequest')->willReturn(['mock' => ['elasticsearch' => 'query']]);
 
         return $mockMapper;
+    }
+
+    private function getMockAggregationBuilder(): AggregationBuilder|MockObject
+    {
+        return $this->getMockBuilder(AggregationBuilder::class)->disableOriginalConstructor()->getMock();
     }
 
     private function getMockLogger(): LoggerInterface|MockObject

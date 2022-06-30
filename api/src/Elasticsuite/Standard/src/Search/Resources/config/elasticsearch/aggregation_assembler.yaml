@@ -1,0 +1,128 @@
+services:
+    
+    Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Metric:
+        public: false
+    
+    elasticsuite.search.request.aggregation.assembler.metric.avg:
+        parent: Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Metric
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'elasticsuite.search.request.aggregation.assembler', aggregationType: 'avgMetric' }
+    
+    elasticsuite.search.request.aggregation.assembler.metric.min:
+        parent: Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Metric
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'elasticsuite.search.request.aggregation.assembler', aggregationType: 'minMetric' }
+    
+    elasticsuite.search.request.aggregation.assembler.metric.max:
+        parent: Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Metric
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'elasticsuite.search.request.aggregation.assembler', aggregationType: 'maxMetric' }
+    
+    elasticsuite.search.request.aggregation.assembler.metric.sum:
+        parent: Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Metric
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'elasticsuite.search.request.aggregation.assembler', aggregationType: 'sumMetric' }
+    
+    elasticsuite.search.request.aggregation.assembler.metric.stats:
+        parent: Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Metric
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'elasticsuite.search.request.aggregation.assembler', aggregationType: 'statsMetric' }
+    
+    elasticsuite.search.request.aggregation.assembler.metric.extended_stats:
+        parent: Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Metric
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'elasticsuite.search.request.aggregation.assembler', aggregationType: 'extendedStatsMetric' }
+    
+    elasticsuite.search.request.aggregation.assembler.metric.cardinality:
+        parent: Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Metric
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'elasticsuite.search.request.aggregation.assembler', aggregationType: 'cardinalityMetric' }
+    
+    elasticsuite.search.request.aggregation.assembler.metric.percentiles:
+        parent: Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Metric
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'elasticsuite.search.request.aggregation.assembler', aggregationType: 'percentilesMetric' }
+    
+    elasticsuite.search.request.aggregation.assembler.metric.top_hits:
+        parent: Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Metric
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'elasticsuite.search.request.aggregation.assembler', aggregationType: 'topHitsMetric' }
+    
+    Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Bucket\DateHistogram:
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'elasticsuite.search.request.aggregation.assembler', aggregationType: 'dateHistogramBucket' }
+    
+    Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Bucket\Histogram:
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'elasticsuite.search.request.aggregation.assembler', aggregationType: 'histogramBucket' }
+    
+    Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Bucket\QueryGroup:
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'elasticsuite.search.request.aggregation.assembler', aggregationType: 'queryGroupBucket' }
+    
+    Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Bucket\ReverseNested:
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'elasticsuite.search.request.aggregation.assembler', aggregationType: 'reverseNestedBucket' }
+    
+    Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Bucket\SignificantTerm:
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'elasticsuite.search.request.aggregation.assembler', aggregationType: 'significantTermBucket' }
+    
+    Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Bucket\Term:
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'elasticsuite.search.request.aggregation.assembler', aggregationType: 'termBucket' }
+    
+    Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Pipeline\BucketSelector:
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'elasticsuite.search.request.aggregation.assembler', aggregationType: 'bucketSelectorPipeline' }
+    
+    Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Pipeline\MaxBucket:
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'elasticsuite.search.request.aggregation.assembler', aggregationType: 'maxBucketPipeline' }
+    
+    Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Pipeline\MovingFunction:
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'elasticsuite.search.request.aggregation.assembler', aggregationType: 'movingFunctionPipeline' }
+
+    Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler:
+        public: true
+        lazy: true
+        arguments: 
+            - '@Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Query\Assembler'
+            - !tagged_iterator { tag: 'elasticsuite.search.request.aggregation.assembler', index_by: 'aggregationType' }

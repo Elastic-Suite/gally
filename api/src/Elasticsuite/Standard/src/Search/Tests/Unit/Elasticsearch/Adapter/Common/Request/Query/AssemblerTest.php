@@ -19,6 +19,7 @@ namespace Elasticsuite\Search\Tests\Unit\Elasticsearch\Adapter\Common\Request\Qu
 use Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Query\Assembler as QueryAssembler;
 use Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Query\AssemblerInterface;
 use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
+use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
@@ -55,6 +56,8 @@ class AssemblerTest extends KernelTestCase
      */
     private function getQueryAssembler(): QueryAssembler
     {
+        $databaseTool = static::getContainer()->get(DatabaseToolCollection::class)->get();
+
         $queryAssemblerMock = $this->getMockBuilder(AssemblerInterface::class)->getMock();
 
         $assembleQueryCallback = function (QueryInterface $query) {

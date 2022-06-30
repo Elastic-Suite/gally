@@ -16,9 +16,10 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Search\Elasticsearch\Builder\Request;
 
-// use Elasticsuite\Search\Elasticsearch\Request\ContainerConfiguration\AggregationResolverInterface;
+use Elasticsuite\Search\Elasticsearch\Builder\Request\Aggregation\AggregationBuilder;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\Query\QueryBuilder;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\SortOrder\SortOrderBuilder;
+use Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\AggregationResolverInterface;
 use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationFactoryInterface;
 use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
 use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
@@ -26,7 +27,6 @@ use Elasticsuite\Search\Elasticsearch\RequestFactoryInterface;
 use Elasticsuite\Search\Elasticsearch\RequestInterface;
 use Elasticsuite\Search\Elasticsearch\SpellcheckerInterface;
 
-// use Elasticsuite\Search\Request\Aggregation\AggregationBuilder;
 // use Elasticsuite\Search\Elasticsearch\Spellchecker\RequestInterfaceFactory as SpellcheckRequestFactory;
 
 /**
@@ -34,25 +34,9 @@ use Elasticsuite\Search\Elasticsearch\SpellcheckerInterface;
  */
 class RequestBuilder
 {
-    private ContainerConfigurationFactoryInterface $containerConfigFactory;
-
-    private QueryBuilder $queryBuilder;
-
-    private SortOrderBuilder $sortOrderBuilder;
-
-    // private AggregationBuilder $aggregationBuilder;
-
-    private RequestFactoryInterface $requestFactory;
-
-    // private SpellcheckRequestFactory $spellcheckRequestFactory;
-
-    // private SpellcheckerInterface $spellchecker;
-
-    // private AggregationResolverInterface $aggregationResolver;
-
     /**
      * Constructor.
-     * TODO add support for $aggregationBuilder, $spellcheckRequestFactory, $spellchecker and $aggregationResolver.
+     * TODO add support for $spellcheckRequestFactory and $spellchecker.
      *
      * @param RequestFactoryInterface                $requestFactory         Factory used to build the request
      * @param QueryBuilder                           $queryBuilder           Builder for the query part of the request
@@ -60,25 +44,15 @@ class RequestBuilder
      * @param ContainerConfigurationFactoryInterface $containerConfigFactory Container configuration factory
      */
     public function __construct(
-        RequestFactoryInterface $requestFactory,
-        QueryBuilder $queryBuilder,
-        SortOrderBuilder $sortOrderBuilder,
-        /*
-        AggregationBuilder $aggregationBuilder, */
-        ContainerConfigurationFactoryInterface $containerConfigFactory/*,
-        SpellcheckRequestFactory $spellcheckRequestFactory,
-        SpellcheckerInterface $spellchecker,
-        AggregationResolverInterface $aggregationResolver
-        */
+        private RequestFactoryInterface $requestFactory,
+        private QueryBuilder $queryBuilder,
+        private SortOrderBuilder $sortOrderBuilder,
+        private AggregationBuilder $aggregationBuilder,
+        private ContainerConfigurationFactoryInterface $containerConfigFactory,
+//        private SpellcheckRequestFactory $spellcheckRequestFactory,
+//        private SpellcheckerInterface $spellchecker,
+        private AggregationResolverInterface $aggregationResolver,
     ) {
-        $this->requestFactory = $requestFactory;
-        $this->queryBuilder = $queryBuilder;
-        $this->sortOrderBuilder = $sortOrderBuilder;
-        // $this->aggregationBuilder = $aggregationBuilder;
-        $this->containerConfigFactory = $containerConfigFactory;
-        // $this->spellcheckRequestFactory = $spellcheckRequestFactory;
-        // $this->spellchecker = $spellchecker;
-        // $this->aggregationResolver = $aggregationResolver;
     }
 
     /**
@@ -92,7 +66,7 @@ class RequestBuilder
      * @param array                      $sortOrders    Search request sort orders
      * @param array                      $filters       Search request filters
      * @param QueryInterface[]           $queryFilters  Search request filters prebuilt as QueryInterface
-     * @param array                      $facets        Search request facets
+     * @param array|null                 $facets        Search request facets
      */
     public function create(
         int $catalogId,
@@ -103,15 +77,15 @@ class RequestBuilder
         array $sortOrders = [],
         array $filters = [],
         array $queryFilters = [],
-        array $facets = []
+        ?array $facets = []
     ): RequestInterface {
         $containerConfig = $this->getRequestContainerConfiguration($catalogId, $containerName);
-        /*
-        $containerFilters = $this->getContainerFilters($containerConfig);
-        $containerAggs    = $this->getContainerAggregations($containerConfig, $query, $filters, $queryFilters);
+        $facetFilters = array_intersect_key($filters, $facets ?? []);
+        $facets = \is_array($facets)
+            ? array_merge($facets, $this->aggregationResolver->getContainerAggregations($containerConfig, $query, $filters, $queryFilters))
+            : [];
 
-        $facets       = array_merge($facets, $containerAggs);
-        $facetFilters = array_intersect_key($filters, $facets);
+        /*
         $queryFilters = array_merge($queryFilters, $containerFilters, array_diff_key($filters, $facetFilters));
         */
 
@@ -131,9 +105,9 @@ class RequestBuilder
             // 'query'        => $this->queryBuilder->createQuery($containerConfig, $query, $queryFilters, $spellingType),
             'query' => $this->queryBuilder->createQuery($query),
             'sortOrders' => $this->sortOrderBuilder->buildSortOrders($containerConfig, $sortOrders),
-            // 'buckets'      => $this->aggregationBuilder->buildAggregations($containerConfig, $facets, $facetFilters),
+            'aggregations' => $this->aggregationBuilder->buildAggregations($containerConfig, $facets, $facetFilters),
             'spellingType' => $spellingType,
-            // 'trackTotalHits' => $containerConfig->getTrackTotalHits(),
+            'trackTotalHits' => $containerConfig->getTrackTotalHits(),
         ];
 
         /*
