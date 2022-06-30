@@ -23,6 +23,8 @@ use Elasticsuite\Search\Elasticsearch\Request\SortOrderInterface;
  */
 class Field implements FieldInterface
 {
+    private const IGNORE_ABOVE_COUNT = 256;
+
     private string $name;
 
     private string $type;
@@ -38,6 +40,9 @@ class Field implements FieldInterface
         'default_search_analyzer' => self::ANALYZER_STANDARD,
         'filter_logical_operator' => self::FILTER_LOGICAL_OPERATOR_OR,
     ];
+
+    /** Date formats used by the indices. */
+    private array $dateFormats = ['yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd'];
 
     /**
      * Constructor.
@@ -118,18 +123,18 @@ class Field implements FieldInterface
 
     public function getMappingPropertyConfig(): array
     {
-        $data = ['type' => $this->getType()];
-        // @Todo add condition about analyzer for untouched field
-        if (self::FIELD_TYPE_TEXT == $this->getType()) {
-            $data['fields'] = [
-                'untouched' => [
-                    'type' => 'keyword',
-                    'ignore_above' => 256,
-                ],
-            ];
+        $property = $this->getPropertyConfig();
+
+        if (self::FIELD_TYPE_TEXT === $this->getType()) {
+            $analyzers = $this->getFieldAnalyzers();
+            $property = $this->getPropertyConfig(current($analyzers));
+
+            if (\count($analyzers) > 1) {
+                $property = $this->getMultiFieldMappingPropertyConfig($analyzers);
+            }
         }
 
-        return $data;
+        return $property;
     }
 
     public function getMappingProperty(string $analyzer = self::ANALYZER_UNTOUCHED): ?string
@@ -200,5 +205,88 @@ class Field implements FieldInterface
         }
 
         return $isAnalyzerCorrect;
+    }
+
+    /**
+     * Build a multi_field configuration from an analyzers list.
+     * Standard analyzer is used as default subfield and should always be present.
+     *
+     * If the standard analyzer is not present, no default subfield is defined.
+     *
+     * @param array $analyzers list of analyzers used as subfields
+     */
+    private function getMultiFieldMappingPropertyConfig(array $analyzers): array
+    {
+        // Setting the field type to "multi_field".
+        $property = [];
+
+        foreach ($analyzers as $analyzer) {
+            if ($analyzer === $this->getDefaultSearchAnalyzer()) {
+                $property = array_merge($property, $this->getPropertyConfig($analyzer));
+            } else {
+                $property['fields'][$analyzer] = $this->getPropertyConfig($analyzer);
+            }
+        }
+
+        return $property;
+    }
+
+    /**
+     * Retrieve analyzers used with the current field depending on the field configuration.
+     */
+    private function getFieldAnalyzers(): array
+    {
+        $analyzers = [];
+
+        if ($this->isSearchable() || $this->isUsedForSortBy()) {
+            // Default search analyzer.
+            $analyzers = [$this->getDefaultSearchAnalyzer()];
+        }
+        if ($this->isSearchable() && $this->getSearchWeight() > 1) {
+            $analyzers[] = self::ANALYZER_WHITESPACE;
+            $analyzers[] = self::ANALYZER_SHINGLE;
+        }
+
+        if (empty($analyzers) || $this->isFilterable()) {
+            // For filterable fields or fields without analyzer : append the untouched analyzer.
+            $analyzers[] = self::ANALYZER_UNTOUCHED;
+        }
+
+        if ($this->isUsedForSortBy()) {
+            $analyzers[] = self::ANALYZER_SORTABLE;
+        }
+
+        return $analyzers;
+    }
+
+    /**
+     * Build the property config from the field type and an optional
+     * analyzer (used for string and detected through getAnalyzers).
+     *
+     * @param string|null $analyzer used analyzer
+     */
+    private function getPropertyConfig(?string $analyzer = self::ANALYZER_UNTOUCHED): array
+    {
+        $fieldMapping = ['type' => $this->getType()];
+
+        switch ($this->getType()) {
+            case self::FIELD_TYPE_TEXT:
+                if (self::ANALYZER_UNTOUCHED === $analyzer) {
+                    $fieldMapping['type'] = self::FIELD_TYPE_KEYWORD;
+                    $fieldMapping['ignore_above'] = self::IGNORE_ABOVE_COUNT;
+                }
+                if (self::ANALYZER_UNTOUCHED !== $analyzer) {
+                    $fieldMapping['analyzer'] = $analyzer;
+                    if (self::ANALYZER_SORTABLE === $analyzer) {
+                        $fieldMapping['fielddata'] = true;
+                    }
+                }
+                break;
+            case self::FIELD_TYPE_DATE:
+                $fieldMapping['format'] = implode('||', $this->dateFormats);
+                break;
+        }
+
+        return $fieldMapping;
     }
 }
