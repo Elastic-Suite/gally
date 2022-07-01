@@ -25,6 +25,9 @@ interface MappingInterface
 {
     public const ID_FIELD = 'id';
 
+    public const DEFAULT_SEARCH_FIELD = 'search';
+    public const DEFAULT_SPELLING_FIELD = 'spelling';
+
     /**
      * List of the properties of the mapping.
      */

@@ -71,18 +71,51 @@ class IndexManagerTest extends AbstractTest
                         'name' => [
                             'type' => 'text',
                             'fields' => [
-                                'untouched' => [
-                                    'type' => 'keyword',
-                                    'ignore_above' => 256,
+                                'whitespace' => [
+                                    'type' => 'text',
+                                    'analyzer' => 'whitespace',
+                                ],
+                                'shingle' => [
+                                    'type' => 'text',
+                                    'analyzer' => 'shingle',
+                                ],
+                            ],
+                            'analyzer' => 'standard',
+                            'copy_to' => ['search'],
+                        ],
+                        'brand' => [
+                            'type' => 'keyword',
+                            'ignore_above' => 256,
+                        ],
+                        'search' => [
+                            'type' => 'text',
+                            'analyzer' => 'standard',
+                            'fields' => [
+                                'whitespace' => [
+                                    'type' => 'text',
+                                    'analyzer' => 'whitespace',
+                                ],
+                                'shingle' => [
+                                    'type' => 'text',
+                                    'analyzer' => 'shingle',
                                 ],
                             ],
                         ],
-                        'brand' => [
+                        'spelling' => [
                             'type' => 'text',
+                            'analyzer' => 'standard',
                             'fields' => [
-                                'untouched' => [
-                                    'type' => 'keyword',
-                                    'ignore_above' => 256,
+                                'whitespace' => [
+                                    'type' => 'text',
+                                    'analyzer' => 'whitespace',
+                                ],
+                                'shingle' => [
+                                    'type' => 'text',
+                                    'analyzer' => 'shingle',
+                                ],
+                                'phonetic' => [
+                                    'type' => 'text',
+                                    'analyzer' => 'phonetic',
                                 ],
                             ],
                         ],
@@ -95,20 +128,43 @@ class IndexManagerTest extends AbstractTest
                     'properties' => [
                         'id' => ['type' => 'integer'],
                         'name' => [
-                            'type' => 'text',
-                            'fields' => [
-                                'untouched' => [
-                                    'type' => 'keyword',
-                                    'ignore_above' => 256,
-                                ],
-                            ],
+                            'type' => 'keyword',
+                            'ignore_above' => 256,
                         ],
                         'description' => [
                             'type' => 'text',
+                            'analyzer' => 'standard',
+                            'copy_to' => ['search', 'spelling'],
+                        ],
+                        'search' => [
+                            'type' => 'text',
+                            'analyzer' => 'standard',
                             'fields' => [
-                                'untouched' => [
-                                    'type' => 'keyword',
-                                    'ignore_above' => 256,
+                                'whitespace' => [
+                                    'type' => 'text',
+                                    'analyzer' => 'whitespace',
+                                ],
+                                'shingle' => [
+                                    'type' => 'text',
+                                    'analyzer' => 'shingle',
+                                ],
+                            ],
+                        ],
+                        'spelling' => [
+                            'type' => 'text',
+                            'analyzer' => 'standard',
+                            'fields' => [
+                                'whitespace' => [
+                                    'type' => 'text',
+                                    'analyzer' => 'whitespace',
+                                ],
+                                'shingle' => [
+                                    'type' => 'text',
+                                    'analyzer' => 'shingle',
+                                ],
+                                'phonetic' => [
+                                    'type' => 'text',
+                                    'analyzer' => 'phonetic',
                                 ],
                             ],
                         ],
