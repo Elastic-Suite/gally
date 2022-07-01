@@ -13,48 +13,55 @@ const Template: ComponentStory<typeof CustomTable> = (args) => (
 
 const mockedHeadersAndRows = {
   tableHeaders: [
-    'testHeader1',
-    'testHeader2',
-    'testHeader3',
-    'testHeader4',
-    'testHeader5',
+    {
+      field: 'field',
+      headerName: 'Test header 1',
+      type: 'boolean',
+      editable: false,
+    },
+    {
+      field: 'field2',
+      headerName: 'Test header 2',
+      type: 'string',
+      editable: false,
+    },
+    {
+      field: 'field3',
+      headerName: 'Test header 3',
+      type: 'string',
+      editable: false,
+    },
+    {
+      field: 'field4',
+      headerName: 'Test header 4',
+      type: 'string',
+      editable: false,
+    },
+    {
+      field: 'field5',
+      headerName: 'Test header 5',
+      type: 'string',
+      editable: false,
+    },
   ],
   tableRows: [
     {
-      id: 'idLine1',
-      cells: [
-        {
-          id: 'id1',
-          value: 'valueName',
-          type: 'string',
-          isEditable: false,
-        },
-        {
-          id: 'id2',
-          value: 'valueame',
-          type: 'string',
-          isEditable: false,
-        },
-        {
-          id: 'id3',
-          value:
-            'Loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong',
-          type: 'string',
-          isEditable: false,
-        },
-        {
-          id: 'id4',
-          value: 'value1Code',
-          type: 'string',
-          isEditable: false,
-        },
-        {
-          id: 'id5',
-          value: true,
-          type: 'boolean',
-          isEditable: false,
-        },
-      ],
+      id: 1,
+      field: true,
+      field2: 'hello1',
+      field3:
+        'Loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong',
+      field4: 'One field',
+      field5: 'one other field',
+    },
+    {
+      id: 2,
+      field: true,
+      field2: 'hello2',
+      field3:
+        'Loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong',
+      field4: 'One field',
+      field5: 'one other field',
     },
   ],
 }
