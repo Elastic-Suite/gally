@@ -6,17 +6,24 @@ import {
 
 interface IProps extends CheckboxProps {
   label?: string
-  noPadding?: boolean
+  list?: boolean
 }
 
 function Checkbox(props: IProps) {
-  const { disabled, label, noPadding, ...checkboxProps } = props
+  const { disabled, label, list, ...checkboxProps } = props
   return (
     <FormControlLabel
+      componentsProps={{ typography: { variant: list ? 'caption' : 'body2' } }}
       control={
         <MuiCheckbox
           {...checkboxProps}
-          sx={noPadding && { marginBottom: '-9px', marginTop: '-9px' }}
+          sx={
+            list && {
+              marginBottom: '-9px',
+              marginTop: '-9px',
+              fontSize: '12px',
+            }
+          }
         />
       }
       disabled={disabled}

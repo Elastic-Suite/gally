@@ -1,4 +1,10 @@
 {
+  "filter.no": "Non",
+  "filter.yes": "Oui",
+  "filters.apply": "Appliquer",
+  "filters.clearAll": "Réinitialiser",
+  "filters.filter": "Filtrer",
+  "filters.search": "Chercher",
   "temporary-slug": "Temporaire ! Voici le slug codifié :",
   "massiveselection.all": "Toutes",
   "massiveselection.allOnCurrentPage": "Toute sur la page",

@@ -64,9 +64,9 @@ export interface IMultiSelectProps
   multiple: true
 }
 
-type IProps = ISelectProps | IMultiSelectProps
+export type IDropDownProps = ISelectProps | IMultiSelectProps
 
-export default function DropDown(props: IProps) {
+export default function DropDown(props: IDropDownProps) {
   const { label, multiple, options, required, value, ...selectProps } = props
   const [listboxOpen, setlistboxOpen] = useState(false)
   const ignoreClick = useRef(false)
@@ -103,7 +103,7 @@ export default function DropDown(props: IProps) {
               <Checkbox
                 checked={value.includes(option.value)}
                 label={option.label}
-                noPadding
+                list
                 onMouseDown={handleCheckboxMouseDown}
               />
             </Option>
