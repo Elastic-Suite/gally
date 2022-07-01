@@ -1,11 +1,10 @@
-import InputBase from '@mui/material/InputBase'
+import { ChangeEvent, ReactChild } from 'react'
+import InputBase, { InputBaseProps } from '@mui/material/InputBase/InputBase'
 import { styled } from '@mui/material/styles'
 import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel'
 import FormHelperText from '@mui/material/FormHelperText'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
-import { ReactChild } from 'react'
-import { InputBaseProps } from '@mui/material/InputBase/InputBase'
 
 interface IUnstyledInputText extends InputBaseProps {
   value: string
@@ -82,15 +81,24 @@ const InputTextStyled = styled(UnstyledInputText)(({ theme }) => ({
   },
 }))
 
-interface IProps extends InputBaseProps {
+interface IProps extends Omit<InputBaseProps, 'onChange'> {
   label?: string
   helperText?: ReactChild
   helperIcon?: string
+  onChange?: (value: string) => void
   value: string
 }
 
 const InputText = (props: IProps) => {
-  const { label, id, required, helperText, helperIcon, ...other } = props
+  const { id, label, onChange, helperText, helperIcon, required, ...other } =
+    props
+
+  function handleChange(
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
+    onChange(event.target.value)
+  }
+
   return (
     <FormControl variant="standard">
       {label && (
@@ -98,7 +106,12 @@ const InputText = (props: IProps) => {
           {label}
         </InputLabel>
       )}
-      <InputTextStyled {...other} id={id} required={required} />
+      <InputTextStyled
+        {...other}
+        id={id}
+        onChange={handleChange}
+        required={required}
+      />
       {helperText && (
         <FormHelperText>
           {helperIcon ? (
