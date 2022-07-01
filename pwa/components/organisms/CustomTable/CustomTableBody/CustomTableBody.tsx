@@ -1,23 +1,24 @@
 import { ChangeEvent } from 'react'
 import { Checkbox, Switch, TableBody, TableCell, TableRow } from '@mui/material'
 import { StickyTableCell } from '~/components/organisms/CustomTable/CustomTable.styled'
-import { DataContentType, ITableCell, ITableRow } from '~/types/customTables'
+import { DataContentType, ITableRow, ITableHeader } from '~/types/customTables'
 
 interface IProps {
   tableRows: ITableRow[]
+  tableHeaders: ITableHeader[]
   selectedRows?: string[]
   setSelectedRows?: (arr: string[]) => void
 }
 
 const CustomTableBody = (props: IProps) => {
-  const { tableRows, setSelectedRows, selectedRows } = props
+  const { tableRows, tableHeaders, setSelectedRows, selectedRows } = props
 
-  const rowDisplayAccordingToType = (cell: ITableCell) => {
-    switch (cell.type) {
+  const rowDisplayAccordingToType = (header: ITableHeader, row: ITableRow) => {
+    switch (header.type) {
       case DataContentType.STRING:
-        return cell.value
+        return row[header.field]
       case DataContentType.BOOLEAN:
-        return <Switch defaultChecked={cell.value as boolean} />
+        return <Switch defaultChecked={row[header.field] as boolean} />
     }
   }
 
@@ -42,9 +43,12 @@ const CustomTableBody = (props: IProps) => {
             </StickyTableCell>
           )}
 
-          {tableRow.cells.map((cell) => (
-            <TableCell sx={{ backgroundColor: 'colors.white' }} key={cell.id}>
-              {rowDisplayAccordingToType(cell)}
+          {tableHeaders.map((header) => (
+            <TableCell
+              sx={{ backgroundColor: 'colors.white' }}
+              key={header.field}
+            >
+              {rowDisplayAccordingToType(header, tableRow)}
             </TableCell>
           ))}
         </TableRow>
