@@ -10,7 +10,6 @@ const CommonStyledButton = styled(Button)(({ theme }) => ({
   background: `${theme.palette.colors.gradient.default}`,
   boxShadow: `${theme.palette.colors.shadow.primaryButton.sm}`,
   borderRadius: '8px',
-  zIndex: 1,
   '&::before': {
     position: 'absolute',
     content: '""',

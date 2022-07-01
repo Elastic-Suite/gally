@@ -22,5 +22,5 @@ export const Checkbox = Template.bind({})
 Checkbox.args = {
   indeterminate: false,
   label: 'Label',
-  noPadding: false,
+  list: false,
 }
