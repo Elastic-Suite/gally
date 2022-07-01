@@ -33,7 +33,7 @@ function Admin() {
 
   if (docs.error) {
     return docs.error
-  } else if (!docs.json && docs.jsonld) {
+  } else if (!docs.data) {
     return null
   }
 
