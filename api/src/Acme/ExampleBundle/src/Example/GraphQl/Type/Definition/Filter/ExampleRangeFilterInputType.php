@@ -14,37 +14,34 @@
 
 declare(strict_types=1);
 
-namespace Acme\Example\Example\GraphQl\Type\Definition;
+namespace Acme\Example\Example\GraphQl\Type\Definition\Filter;
 
-use GraphQL\Error\Error;
-use GraphQL\Type\Definition\ScalarType;
-use GraphQL\Utils\Utils;
 use GraphQL\Type\Definition\InputObjectType;
 use ApiPlatform\Core\GraphQl\Type\Definition\TypeInterface;
 use GraphQL\Type\Definition\Type;
 
 /**
- * Represents an InputProduct type.
+ * Represents an ExampleRangeFilterInput type.
  */
-class ExampleFieldFilterInputType extends InputObjectType implements TypeInterface
+class ExampleRangeFilterInputType extends InputObjectType implements TypeInterface
 {
+    public const NAME = 'ExampleRangeFilterInput';
+
     public function __construct()
     {
-        $this->name = 'ExampleFieldFilterInput';
+        $this->name = self::NAME;
 
         parent::__construct($this->getConfig());
     }
 
-    /**
-     * @see https://webonyx.github.io/graphql-php/type-definitions/
-     */
-    public function getConfig() {
+    public function getConfig(): array
+    {
         return  [
-            'description' => 'Field filter input description.',
+            'description' => 'Range filter input description.',
             'fields' => [
                 'field' => ['type' => Type::nonNull(Type::string()), 'description' => 'Field.'],
-                'operator' => ['type' => Type::nonNull(Type::string()), 'description' => 'Operator.'],
-                'value' => ['type' => Type::nonNull(Type::string()), 'description' => 'Value.'],
+                'from' => Type::string(),
+                'to' => Type::string(),
             ]
         ];
     }
