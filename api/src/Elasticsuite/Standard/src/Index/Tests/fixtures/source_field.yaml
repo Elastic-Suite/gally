@@ -22,6 +22,8 @@ Elasticsuite\Metadata\Model\SourceField:
     category_description:
         metadata: '@category'
         code: 'description'
+        is_searchable: true
+        is_spellchecked: true
     category_id:
         metadata: '@category'
         code: 'id'
