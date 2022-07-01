@@ -1,87 +1,14 @@
-import { forwardRef } from 'react'
-import SelectUnstyled, {
-  SelectUnstyledProps,
-  selectUnstyledClasses,
-} from '@mui/base/SelectUnstyled'
+import { useRef, useState } from 'react'
+import { SelectUnstyledProps } from '@mui/base/SelectUnstyled'
+import { MultiSelectUnstyledProps } from '@mui/base/MultiSelectUnstyled'
 import OptionUnstyled, { optionUnstyledClasses } from '@mui/base/OptionUnstyled'
-import PopperUnstyled from '@mui/base/PopperUnstyled'
 import { styled } from '@mui/system'
-import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import InputLabel from '@mui/material/InputLabel'
 import FormControl from '@mui/material/FormControl'
 
-const ButtonWithIcon = forwardRef<HTMLButtonElement>(function ButtonWithIcon(
-  props,
-  ref
-) {
-  return (
-    <button {...props} ref={ref}>
-      {props.children}
-      <IonIcon name="chevron-down" />
-    </button>
-  )
-})
-
-const StyledButton = styled(ButtonWithIcon)(({ theme }) => ({
-  fontFamily: 'Inter',
-  padding: '10px 16px',
-  background: theme.palette.colors.white,
-  width: 180,
-  height: 40,
-  borderColor: theme.palette.colors.neutral['300'],
-  borderStyle: 'solid',
-  borderWidth: 1,
-  borderRadius: 8,
-  fontWeight: 400,
-  fontSize: 14,
-  lineHeight: '20px',
-  color: theme.palette.colors.neutral['600'],
-  textAlign: 'left',
-  transition: 'border-color 0.3s linear',
-  'label + &': {
-    marginTop: theme.spacing(3),
-  },
-  '& ion-icon': {
-    float: 'right',
-  },
-  '&:hover': {
-    borderColor: theme.palette.colors.neutral['400'],
-  },
-  '&:focus, &:focus-within': {
-    borderColor: theme.palette.colors.neutral['600'],
-  },
-  '&.Mui-disabled': {
-    borderColor: theme.palette.colors.neutral['300'],
-    background: theme.palette.colors.neutral['300'],
-    '& ion-icon': {
-      color: theme.palette.colors.neutral['400'],
-    },
-  },
-
-  [`&.${selectUnstyledClasses.focusVisible}`]: {
-    outline: '3px solid pink',
-  },
-
-  [`&.${selectUnstyledClasses.expanded}`]: {
-    borderColor: theme.palette.colors.neutral['600'],
-    '& ion-icon': {
-      transform: 'rotate(180deg)',
-    },
-  },
-}))
-
-const StyledListbox = styled('ul')(({ theme }) => ({
-  position: 'relative',
-  padding: 0,
-  background: theme.palette.colors.white,
-  width: 180,
-  border: '1px solid ' + theme.palette.colors.neutral['300'],
-  borderRadius: 8,
-  overflow: 'auto',
-  boxSizing: 'border-box',
-  margin: '4px 0',
-  outline: 0,
-}))
+import Checkbox from './Checkbox'
+import MultiSelect from './MultiSelect'
+import Select from './Select'
 
 const Option = styled(OptionUnstyled)(({ theme }) => ({
   fontFamily: 'Inter',
@@ -96,55 +23,66 @@ const Option = styled(OptionUnstyled)(({ theme }) => ({
     borderBottom: 'none',
   },
   [`&.${optionUnstyledClasses.selected}`]: {
-    backgroundColor: theme.palette.colors.neutral['200'],
+    fontWeight: 'bold',
   },
   [`&.${optionUnstyledClasses.highlighted}`]: {
     backgroundColor: theme.palette.colors.neutral['200'],
   },
-  [`&.${optionUnstyledClasses.highlighted}.${optionUnstyledClasses.selected}`]:
-    {
-      backgroundColor: theme.palette.colors.neutral['200'],
-    },
-
   [`&.${optionUnstyledClasses.disabled}`]: {
-    backgroundColor: theme.palette.colors.neutral['200'],
+    color: theme.palette.colors.neutral['400'],
   },
   [`&:hover:not(.${optionUnstyledClasses.disabled})`]: {
     backgroundColor: theme.palette.colors.neutral['200'],
   },
 }))
 
-const StyledPopper = styled(PopperUnstyled)(() => ({
-  zIndex: 1,
-}))
-
-function Select(props: SelectUnstyledProps<number>) {
-  const components: SelectUnstyledProps<number>['components'] = {
-    Root: StyledButton,
-    Listbox: StyledListbox,
-    Popper: StyledPopper,
-    ...props.components,
-  }
-
-  return <SelectUnstyled {...props} components={components} />
-}
-
 export interface IOption {
+  disabled?: boolean
+  id?: string
   label: string
-  value: number
+  value: unknown
 }
 
 export type IOptions = IOption[]
 
-interface IProps extends SelectUnstyledProps<number> {
+interface ICommonProps {
   label?: string
-  required?: boolean
+  multiple?: boolean
   options: IOptions
-  disabled?: boolean
+  required?: boolean
 }
 
+export interface ISelectProps
+  extends Omit<SelectUnstyledProps<unknown>, 'components'>,
+    ICommonProps {
+  multiple?: false
+}
+
+export interface IMultiSelectProps
+  extends Omit<MultiSelectUnstyledProps<unknown>, 'components'>,
+    ICommonProps {
+  multiple: true
+}
+
+type IProps = ISelectProps | IMultiSelectProps
+
 export default function DropDown(props: IProps) {
-  const { label, options, value, required, disabled, ...other } = props
+  const { label, multiple, options, required, value, ...selectProps } = props
+  const [listboxOpen, setlistboxOpen] = useState(false)
+  const ignoreClick = useRef(false)
+
+  function handleCheckboxMouseDown() {
+    if (listboxOpen) {
+      ignoreClick.current = true
+    }
+  }
+
+  function handleListOpenChange(state) {
+    if (!ignoreClick.current) {
+      setlistboxOpen(state)
+    }
+    ignoreClick.current = false
+  }
 
   return (
     <FormControl variant="standard">
@@ -153,13 +91,34 @@ export default function DropDown(props: IProps) {
           {label}
         </InputLabel>
       )}
-      <Select {...other} value={value} disabled={disabled}>
-        {options.map((option) => (
-          <Option key={option.value} value={option.value}>
-            {option.label}
-          </Option>
-        ))}
-      </Select>
+      {multiple ? (
+        <MultiSelect
+          listboxOpen={listboxOpen}
+          onListboxOpenChange={handleListOpenChange}
+          {...(selectProps as IMultiSelectProps)}
+          value={value}
+        >
+          {options.map((option) => (
+            <Option key={option.id || String(option.value)} {...option}>
+              <Checkbox
+                checked={value.includes(option.value)}
+                label={option.label}
+                noPadding
+                onMouseDown={handleCheckboxMouseDown}
+              />
+            </Option>
+          ))}
+        </MultiSelect>
+      ) : (
+        <Select {...(selectProps as ISelectProps)} value={value}>
+          {!required && <Option value="">&nbsp;</Option>}
+          {options.map((option) => (
+            <Option key={option.id || String(option.value)} {...option}>
+              {option.label}
+            </Option>
+          ))}
+        </Select>
+      )}
     </FormControl>
   )
 }
