@@ -11,3 +11,36 @@ services:
             - '@Elasticsuite\Fixture\Service\ElasticsearchFixtures'
         tags:
             - { name: doctrine.fixture.orm }
+
+    Elasticsuite\Category\Service\CategorySynchronizer:
+        arguments:
+            - '@Elasticsuite\Category\Repository\CategoryRepository'
+            - '@Elasticsuite\Search\Elasticsearch\RequestFactoryInterface'
+            - '@Elasticsuite\Search\Elasticsearch\Builder\Request\Query\QueryBuilder'
+            - '@Elasticsuite\Search\Elasticsearch\Adapter'
+            - '@doctrine.orm.entity_manager'
+            
+    Elasticsuite\Category\Decoration\SyncCategoryDataAfterBulk:
+        decorates: Elasticsuite\Index\MutationResolver\BulkIndexMutation
+        arguments:
+            - '@.inner'
+            - '@Elasticsuite\Index\Service\IndexSettings'
+            - '@Elasticsuite\Index\Repository\Index\IndexRepository'
+            - '@Elasticsuite\Category\Service\CategorySynchronizer'
+        decoration_priority: 100
+            
+    Elasticsuite\Category\Decoration\SyncCategoryDataAfterBulkDelete:
+        decorates: Elasticsuite\Index\MutationResolver\BulkDeleteIndexMutation
+        arguments:
+            - '@.inner'
+            - '@Elasticsuite\Index\Service\IndexSettings'
+            - '@Elasticsuite\Index\Repository\Index\IndexRepository'
+            - '@Elasticsuite\Category\Service\CategorySynchronizer'
+        decoration_priority: 100
+            
+    Elasticsuite\Category\Decoration\SyncCategoryDataAfterInstall:
+        decorates: Elasticsuite\Index\MutationResolver\InstallIndexMutation
+        arguments:
+            - '@.inner'
+            - '@Elasticsuite\Category\Service\CategorySynchronizer'
+        decoration_priority: 100

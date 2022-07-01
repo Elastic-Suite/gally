@@ -9,18 +9,18 @@ Elasticsuite\Metadata\Model\SourceField:
         is_sortable: false
         is_spellchecked: false
         is_used_for_rules: false
-    category_name:
-        metadata: '@category'
-        code: 'name'
-        type: 'text'
-        weight: 10
-        is_searchable: false
-        is_filterable: false
-        is_sortable: false
-        is_spellchecked: false
-        is_used_for_rules: false
     product_brand:
         metadata: '@product'
         code: 'brand'
         type: 'select'
+        is_filterable: true
+    product_color:
+        metadata: '@product'
+        code: 'color'
+        type: 'select'
+        is_filterable: true
+    product_size:
+        metadata: '@product'
+        code: 'size'
+        type: 'int'
         is_filterable: true

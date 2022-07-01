@@ -3,12 +3,25 @@
     "index_name": "elasticsuite_com_fr_category_20220603_095414",
     "documents": [
       {
-        "id": 1,
+        "id": "1",
+        "parentId" : "",
+        "level" : 1,
+        "path" : "1",
         "name": "Category One"
       },
       {
-        "id": 2,
+        "id": "2",
+        "parentId" : "",
+        "level" : 1,
+        "path" : "2",
         "name": "Category Two"
+      },
+      {
+        "id": "3",
+        "parentId" : "1",
+        "level" : 2,
+        "path" : "1/3",
+        "name": "Category Three"
       }
     ]
   }
