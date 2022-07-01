@@ -11,8 +11,19 @@
             <generator strategy="AUTO"/>
         </id>
 
-        <field name="name" type="string" length="255" nullable="false" />
+        <field name="categoryId" type="string" length="255" nullable="false" />
+        <many-to-one field="catalog" target-entity="Elasticsuite\Catalog\Model\LocalizedCatalog">
+            <join-column name="catalog_id" referenced-column-name="id" nullable="false" on-delete="CASCADE" on-update="CASCADE"/>
+        </many-to-one>
+        <unique-constraints>
+            <unique-constraint columns="category_id,catalog_id" name="unique_id_catalog" />
+        </unique-constraints>
 
+        <field name="parentId" type="string" length="255" nullable="true" />
+        <field name="level" type="integer" nullable="false" />
+        <field name="path" type="string" length="255" nullable="false" />
+        <field name="name" type="string" length="255" nullable="false" />
+        <field name="isVirtual" type="boolean" nullable="false" default="false" />
     </entity>
 
 </doctrine-mapping>

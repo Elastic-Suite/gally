@@ -1,5 +1,15 @@
 Elasticsuite\Category\Model\Category:
     categ1:
+        id: 1
+        categoryId: one
+        catalog: '@catalog1_fr'
+        level: 1
+        path: 1
         name: Category One
     categ2:
+        id: 2
+        categoryId: two
+        catalog: '@catalog1_fr'
+        level: 1
+        path: 2
         name: Category Two
