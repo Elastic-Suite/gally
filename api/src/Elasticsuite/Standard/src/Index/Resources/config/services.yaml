@@ -53,6 +53,7 @@ services:
     Elasticsuite\Index\Service\IndexSettings:
         arguments:
             - '@Elasticsuite\Index\Helper\IndexSettings'
+            - '@Elasticsuite\Analysis\Service\Config'
 
     Elasticsuite\Index\Service\IndexOperation:
         arguments:

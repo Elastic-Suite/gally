@@ -133,11 +133,13 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
         $loader->load('Search/Resources/config/services.yaml');
         $loader->load('Category/Resources/config/services.yaml');
         $loader->load('Product/Resources/config/services.yaml');
+        $loader->load('Analysis/Resources/config/services.yaml');
 
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
         $container->setParameter('elasticsuite.indices_settings', $config['indices_settings'] ?? []);
         $container->setParameter('elasticsuite.menu', $config['menu'] ?? []);
+        $container->setParameter('elasticsuite.analysis', $config['analysis'] ?? []);
 
         //@Todo : Use this feature https://symfony.com/doc/current/bundles/extension.html ?
 //        $this->addAnnotatedClassesToCompile([
@@ -157,6 +159,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
 
         $configFiles = [
             __DIR__ . '/../Index/Resources/config/elasticsuite.yaml',
+            __DIR__ . '/../Analysis/Resources/config/elasticsuite_analysis.yaml',
         ];
 
         if ($isTestMode) {
