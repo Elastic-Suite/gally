@@ -17,16 +17,18 @@ const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
   },
 }))
 
-const Tooltips = ({ hoverDesc, placement, desc }) => {
+interface IProps {
+  hoverDesc: string
+  placement?: any
+  desc: string
+}
+
+const Tooltips = ({ hoverDesc, placement, desc }: IProps) => {
   return (
     <LightTooltip title={hoverDesc} placement={placement}>
       <span>{desc}</span>
     </LightTooltip>
   )
-}
-
-Tooltips.defaultProps = {
-  placement: 'left',
 }
 
 export default Tooltips

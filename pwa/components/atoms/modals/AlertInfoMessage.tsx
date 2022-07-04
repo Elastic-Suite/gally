@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Box from '@mui/material/Box'
 import Alert from '@mui/material/Alert'
 import IconButton from '@mui/material/IconButton'
@@ -6,15 +6,12 @@ import Collapse from '@mui/material/Collapse'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import Button from '@mui/material/Button'
 
-interface AlertInfoMessageProps {
+interface IProps {
   title: string
   dev: boolean
 }
 
-export default function AlertInfoMessage({
-  title,
-  dev,
-}: AlertInfoMessageProps) {
+export default function AlertInfoMessage({ title, dev }: IProps) {
   const [open, setOpen] = useState(true)
 
   return (

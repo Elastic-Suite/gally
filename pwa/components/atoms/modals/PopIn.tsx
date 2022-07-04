@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 
@@ -6,6 +6,7 @@ import { styled } from '@mui/material/styles'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import PrimaryButton from '~/components/atoms/buttons/PrimaryButton'
 import TertiaryButton from '~/components/atoms/buttons/TertiaryButton'
+import { Box } from '@mui/material'
 
 const CustomClose = styled('div')(({ theme }) => ({
   position: 'absolute',
@@ -35,7 +36,7 @@ const CustomTitle = styled('div')(({ theme }) => ({
 
 interface IProps {
   onConfirm: () => void
-  title: any
+  title: string[]
   cancelName: string
   confirmName: string
   titlePopIn: string
@@ -65,7 +66,7 @@ const PopIn = ({
 
   return (
     <div style={{ position: 'relative' }}>
-      <div onClick={handleClickOpen}>{title}</div>
+      <Box onClick={handleClickOpen}>{title}</Box>
 
       <Dialog
         open={open}
@@ -81,12 +82,12 @@ const PopIn = ({
         <DialogActions
           sx={{ padding: 0, marginLeft: 0, justifyContent: 'center', gap: 1 }}
         >
-          <div onClick={handleClose}>
+          <Box onClick={handleClose}>
             <TertiaryButton size="large">{cancelName}</TertiaryButton>
-          </div>
-          <div onClick={handleConfirm}>
+          </Box>
+          <Box onClick={handleConfirm}>
             <PrimaryButton size="large">{confirmName}</PrimaryButton>
-          </div>
+          </Box>
         </DialogActions>
       </Dialog>
     </div>

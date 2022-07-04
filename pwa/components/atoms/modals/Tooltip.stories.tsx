@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 import Tooltips from './Tooltip'
 
@@ -33,6 +32,6 @@ const Template: ComponentStory<typeof Tooltips> = (args) => (
 export const ToolTips = Template.bind({})
 ToolTips.args = {
   hoverDesc: 'Hello World',
-  placement: 'right',
+  placement: 'bottom',
   desc: 'Hover me',
 }
