@@ -3,29 +3,27 @@ import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 import Box from '@mui/material/Box'
 import TabPanel from './TabPanel'
-import AllyProps from './AllyProps'
+import { AllyProps } from './AllyProps'
 
 interface IProps {
   labels: Array<string>
-  contents: any
+  contents: string[]
 }
-
 export default function CustomTabs({ labels, contents }: IProps) {
-  const [value, setValue] = useState(0)
-
+  const [activeTabIndex, setActiveTabIndex] = useState(0)
   const handleChange = (event: SyntheticEvent, newValue: number) => {
-    setValue(newValue)
+    setActiveTabIndex(newValue)
   }
 
   return (
     <Box sx={{ width: '100%', marginTop: '-12px' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs
-          value={value}
+          value={activeTabIndex}
           onChange={handleChange}
           aria-label="basic tabs example"
         >
-          {labels.map((item: any, key: number) => (
+          {labels.map((item: string, key: number) => (
             <Tab
               key={key}
               label={item}
@@ -34,8 +32,8 @@ export default function CustomTabs({ labels, contents }: IProps) {
           ))}
         </Tabs>
       </Box>
-      {contents.map((item: any, key: number) => (
-        <TabPanel key={key} value={value} index={key}>
+      {contents.map((item: string, key: number) => (
+        <TabPanel key={key} value={activeTabIndex} index={key}>
           {item}
         </TabPanel>
       ))}
