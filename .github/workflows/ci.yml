@@ -65,8 +65,8 @@ jobs:
           name: coverage-report
           path: coverage/base # Retrieve previous coverage file at the root directory, not inside api/coverage
 
-      - name: Coverage Report as Comment (Compared to a base)
-        if: ${{ github.event_name == 'pull_request' && steps.base_coverage_report.outcome == 'success' }}
+      - name: Backend Coverage Report as Comment (Compared to a base)
+        if: ${{ github.event_name == 'pull_request' && steps.base_coverage_report.outcome == 'success' && github.event.label.name == 'backend' }}
         uses: lucassabreu/comment-coverage-clover@main
         continue-on-error: true
         with:
@@ -77,15 +77,15 @@ jobs:
           max-method-coverage-decrease: 10.0
           min-line-coverage: 75
           min-method-coverage: 75
-          signature: "Coverage compared to target branch"
+          signature: "Backend Coverage compared to target branch"
 
-      - name: Coverage Report as Comment (Clean)
+      - name: Backend Coverage Report as Comment (Clean)
         uses: lucassabreu/comment-coverage-clover@v0.3.0
-        if: ${{ github.event_name == 'pull_request' }}
+        if: ${{ github.event_name == 'pull_request' && github.event.label.name == 'backend' }}
         with:
           with-chart: false
           file: api/coverage/coverage.xml
-          signature: "Coverage of this branch"
+          signature: "Backend Coverage of this branch"
 
       - uses: actions/upload-artifact@v2
         with:
@@ -99,8 +99,19 @@ jobs:
           files: coverage.xml
           directory: api/coverage
           flags: backend
+          
       - name: Jest
         run: docker-compose exec -T pwa yarn test --ci --passWithNoTests
+
+      - name: Frontend Coverage Report as Comment (Clean)
+        uses: 5monkeys/cobertura-action@v12
+        if: ${{ github.event_name == 'pull_request' && github.event.label.name == 'frontend' }}
+        with:
+          report_name: "Frontend Coverage of this branch"
+          path: pwa/coverage/cobertura-coverage.xml
+          minimum_coverage: 1
+          fail_below_threshold: false
+        
       - name: Send Frontend code coverage report to Codecov.io
         uses: codecov/codecov-action@v2
         with:
