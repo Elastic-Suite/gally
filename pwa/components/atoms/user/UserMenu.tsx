@@ -3,6 +3,7 @@ import { Theme } from '@mui/material/styles'
 import { makeStyles } from '@mui/styles'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import CloseComponent from '../closeComponent/CloseComponent'
+import { Box } from '@mui/material'
 
 const useStylesUserMenuShow = makeStyles((theme: Theme) => ({
   typoTexte: {
@@ -119,7 +120,7 @@ function UserMenu() {
   return (
     <>
       <div style={{ position: 'relative' }}>
-        <div
+        <Box
           className={usermenustyle.user}
           onClick={() => setOpenUserMenu(!openUserMenu)}
         >
@@ -140,7 +141,7 @@ function UserMenu() {
               style={{ fontSize: '15px', color: '#8187B9' }}
             />
           </div>
-        </div>
+        </Box>
 
         <div
           ref={useMenu}
