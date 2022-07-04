@@ -4,7 +4,50 @@ import { makeStyles } from '@mui/styles'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import CloseComponent from '../closeComponent/CloseComponent'
 
-import UserMenuShow from './UserMenuShow'
+const useStylesUserMenuShow = makeStyles((theme: Theme) => ({
+  typoTexte: {
+    fontStyle: 'normal',
+    fontWeight: 600,
+    fontSize: '12px',
+    lineHeight: '18px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: theme.spacing(1),
+    fontFamily: 'Inter',
+  },
+  typoUsername: {
+    fontWeight: '600',
+    color: theme.palette.colors.neutral['800'],
+  },
+  typoEmail: {
+    fontWeight: '400',
+    color: theme.palette.colors.neutral['600'],
+  },
+  typoBasic: {
+    fontWeight: '400',
+    color: theme.palette.colors.neutral['800'],
+  },
+  hr: {
+    width: '100%',
+    border: '1px solid',
+    margin: 0,
+    borderColor: theme.palette.colors.neutral['300'],
+  },
+}))
+
+function UserMenuShow() {
+  const usermenushowstyle = useStylesUserMenuShow()
+
+  return (
+    <div className={usermenushowstyle.typoTexte}>
+      <div className={usermenushowstyle.typoUsername}>Admin name</div>
+      <div className={usermenushowstyle.typoEmail}>adminame@mail.com</div>
+      <hr className={usermenushowstyle.hr} />
+      <div className={usermenushowstyle.typoBasic}>Account</div>
+      <div className={usermenushowstyle.typoBasic}>Log out</div>
+    </div>
+  )
+}
 
 const useStylesUserMenu = makeStyles((theme: Theme) => ({
   user: {
@@ -30,6 +73,7 @@ const useStylesUserMenu = makeStyles((theme: Theme) => ({
     fontWeight: 600,
     fontSize: '12px',
     lineHeight: '18px',
+    fontFamily: 'Inter',
   },
 
   arrow: {
@@ -79,7 +123,10 @@ function UserMenu() {
           className={usermenustyle.user}
           onClick={() => setOpenUserMenu(!openUserMenu)}
         >
-          <IonIcon name="person-outline" style={{ width: '13px' }} />
+          <IonIcon
+            name="person-outline"
+            style={{ fontSize: '15px', color: '#8187B9' }}
+          />
           <div className={usermenustyle.userName}>Admin Name</div>
           <div
             className={
@@ -88,7 +135,10 @@ function UserMenu() {
               (openUserMenu && usermenustyle.arrowRotate)
             }
           >
-            <IonIcon name="chevron-down" style={{ width: '16px' }} />
+            <IonIcon
+              name="chevron-down"
+              style={{ fontSize: '15px', color: '#8187B9' }}
+            />
           </div>
         </div>
 
@@ -99,7 +149,7 @@ function UserMenu() {
             ' ' +
             (openUserMenu && usermenustyle.userMenuVisible)
           }
-          style={openUserMenu ? { height: useMenu?.current?.scrollHeight } : {}}
+          style={openUserMenu ? { height: useMenu?.current?.scrollTopMax } : {}}
         >
           <UserMenuShow />
         </div>

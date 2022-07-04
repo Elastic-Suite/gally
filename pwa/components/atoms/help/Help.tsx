@@ -8,6 +8,7 @@ import HelpOver from './HelpOver'
 const useStylesHelp = makeStyles((theme: Theme) => ({
   help: {
     display: 'flex',
+    alignItems: 'center',
     position: 'relative',
     border: '1px solid',
     borderRadius: theme.spacing(1),
@@ -63,7 +64,10 @@ function Help() {
       onFocus={() => setHelpVisible(true)}
       onBlur={() => setHelpVisible(false)}
     >
-      <IonIcon name="help-circle-outline" style={{ width: '14,67px' }} />
+      <IonIcon
+        name="help-circle-outline"
+        style={{ fontSize: '18px', color: '#8187B9' }}
+      />
       <div
         ref={useHelp}
         className={
