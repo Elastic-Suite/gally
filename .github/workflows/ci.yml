@@ -66,7 +66,7 @@ jobs:
           path: coverage/base # Retrieve previous coverage file at the root directory, not inside api/coverage
 
       - name: Backend Coverage Report as Comment (Compared to a base)
-        if: ${{ github.event_name == 'pull_request' && steps.base_coverage_report.outcome == 'success' && github.event.label.name == 'backend' }}
+        if: ${{ github.event_name == 'pull_request' && steps.base_coverage_report.outcome == 'success' }}
         uses: lucassabreu/comment-coverage-clover@main
         continue-on-error: true
         with:
@@ -81,7 +81,7 @@ jobs:
 
       - name: Backend Coverage Report as Comment (Clean)
         uses: lucassabreu/comment-coverage-clover@v0.3.0
-        if: ${{ github.event_name == 'pull_request' && github.event.label.name == 'backend' }}
+        if: ${{ github.event_name == 'pull_request' }}
         with:
           with-chart: false
           file: api/coverage/coverage.xml
@@ -105,7 +105,7 @@ jobs:
 
       - name: Frontend Coverage Report as Comment (Clean)
         uses: 5monkeys/cobertura-action@v12
-        if: ${{ github.event_name == 'pull_request' && github.event.label.name == 'frontend' }}
+        if: ${{ github.event_name == 'pull_request' }}
         with:
           report_name: "Frontend Coverage of this branch"
           path: pwa/coverage/cobertura-coverage.xml
