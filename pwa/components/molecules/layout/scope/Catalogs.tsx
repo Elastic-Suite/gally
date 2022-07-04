@@ -27,7 +27,6 @@ const CustomRoot = styled('div')(({ theme }) => ({
 }))
 
 const CustomCatalogs = styled('div')(({ theme }) => ({
-  width: '100%',
   display: 'flex',
   flexDirection: 'column',
   padding: theme.spacing(4),
