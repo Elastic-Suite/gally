@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   noChildHover: {
     '&:hover': {
       background: theme.palette.menu.hover,
-      borderRadius: theme.spacing(1),
+      borderRadius: 8,
     },
   },
   lineActive: {
