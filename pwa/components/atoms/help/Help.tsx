@@ -8,12 +8,14 @@ import HelpOver from './HelpOver'
 const useStylesHelp = makeStyles((theme: Theme) => ({
   help: {
     display: 'flex',
+    alignItems: 'center',
     position: 'relative',
     border: '1px solid',
     borderRadius: theme.spacing(1),
     padding: theme.spacing(1),
     borderColor: theme.palette.colors.neutral['300'],
     cursor: 'pointer',
+    zIndex: 9999,
     background: theme.palette.background.default,
     transition: 'background 500ms',
     '&:hover': {
@@ -42,7 +44,6 @@ const useStylesHelp = makeStyles((theme: Theme) => ({
     height: 0,
     overflow: 'hidden',
     transition: 'opacity 500ms ,height 500ms',
-    zIndex: 999,
   },
 
   helpVisible: {
@@ -63,7 +64,10 @@ function Help() {
       onFocus={() => setHelpVisible(true)}
       onBlur={() => setHelpVisible(false)}
     >
-      <IonIcon name="help-circle-outline" style={{ width: '14,67px' }} />
+      <IonIcon
+        name="help-circle-outline"
+        style={{ fontSize: '18px', color: '#8187B9' }}
+      />
       <div
         ref={useHelp}
         className={
