@@ -24,18 +24,14 @@ const CustomLanguage = styled('div')(({ theme }) => ({
 }))
 
 interface IProps {
-  language: any
+  language: string[]
   limit: boolean
-  content?: any
+  content?: { name: string; nbActiveLocales: number; language: Array<string> }[]
   order?: number
 }
 
 const Language = ({ language, order, limit, content }: IProps) => {
-  const newLanguage = limit
-    ? [...new Set(language.language)]
-    : [...new Set(language)]
-  console.log(language)
-
+  const newLanguage = [...new Set(language)]
   return (
     <CustomRoot>
       {newLanguage &&

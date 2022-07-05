@@ -36,7 +36,7 @@ const CustomCatalogs = styled('div')(({ theme }) => ({
 }))
 
 interface IProps {
-  content: any
+  content: { name: string; nbActiveLocales: number; language: Array<string> }[]
 }
 
 const Catalogs = ({ content }: IProps) => {
@@ -44,13 +44,13 @@ const Catalogs = ({ content }: IProps) => {
     <CustomFullRoot>
       <CustomNbCatalogs>{content.length} catalogs</CustomNbCatalogs>
       <CustomRoot>
-        {content.map((item: any, key: number) => (
+        {content.map((item, key: number) => (
           <CustomCatalogs key={key}>
             <TitleScope name={item.name} />
             <NbActiveLocales number={item.nbActiveLocales} />
             <Language
               order={key}
-              language={item}
+              language={item.language}
               content={content}
               limit={true}
             />

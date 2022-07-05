@@ -12,13 +12,13 @@ const CustomRoot = styled('div')(({ theme }) => ({
 }))
 
 interface IProps {
-  content: Array<string>
+  content: string[]
 }
 
 const ActiveLocales = ({ content }: IProps) => {
   return (
     <CustomRoot>
-      {content.map((item: any, key: number) => (
+      {content.map((item: string, key: number) => (
         <div key={key}>{item}</div>
       ))}
     </CustomRoot>
