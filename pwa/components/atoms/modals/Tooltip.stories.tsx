@@ -32,6 +32,5 @@ const Template: ComponentStory<typeof Tooltips> = (args) => (
 export const ToolTips = Template.bind({})
 ToolTips.args = {
   hoverDesc: 'Hello World',
-  placement: 'bottom',
   desc: 'Hover me',
 }
