@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Dialog from '@mui/material/Dialog'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import { styled } from '@mui/material/styles'
@@ -46,12 +46,16 @@ const CustomRoot = styled('div')(({ theme }) => ({
   borderRadius: 8,
 }))
 
-interface PopInProps {
-  content: any
+interface IProps {
+  content: {
+    name: string
+    nbActiveLocales: number
+    language: string[]
+  }
   title: number
 }
 
-const PopInCatalogs = ({ content, title }: PopInProps) => {
+const PopInCatalogs = ({ content, title }: IProps) => {
   const [open, setOpen] = useState(false)
 
   const handleClickOpen = () => {

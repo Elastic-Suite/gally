@@ -1,4 +1,3 @@
-import React from 'react'
 import { styled } from '@mui/material/styles'
 import PopInCatalogs from './PopInCatalogs'
 
@@ -27,7 +26,7 @@ const CustomLanguage = styled('div')(({ theme }) => ({
 interface IProps {
   language: any
   limit: boolean
-  content?: Array<string>
+  content?: any
   order?: number
 }
 
@@ -35,11 +34,12 @@ const Language = ({ language, order, limit, content }: IProps) => {
   const newLanguage = limit
     ? [...new Set(language.language)]
     : [...new Set(language)]
+  console.log(language)
 
   return (
     <CustomRoot>
       {newLanguage &&
-        newLanguage.map((item: any, key: number) => (
+        newLanguage.map((item: string, key: number) => (
           <div key={key}>
             {limit === true ? (
               <>

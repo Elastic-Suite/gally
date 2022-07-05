@@ -1,4 +1,3 @@
-import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 import ActiveLocales from './ActiveLocales'
 import TitleScope from '~/components/atoms/scope/TitleScope'
@@ -26,8 +25,8 @@ const Template: ComponentStory<typeof ActiveLocales> = (args) => (
 export const Active_Locales = Template.bind({})
 Active_Locales.args = {
   content: [
-    <TitleScope name="Total" />,
-    <NbActiveLocales number={25} />,
-    <Language language={ArrayActiveLocales} limit={false} />,
+    <TitleScope key="TitleScope" name="Total" />,
+    <NbActiveLocales key="NbActiveLocales" number={25} />,
+    <Language key="Language" language={ArrayActiveLocales} limit={false} />,
   ],
 }

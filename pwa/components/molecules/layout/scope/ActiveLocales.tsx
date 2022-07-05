@@ -1,4 +1,3 @@
-import React from 'react'
 import { styled } from '@mui/material/styles'
 
 const CustomRoot = styled('div')(({ theme }) => ({
@@ -13,7 +12,7 @@ const CustomRoot = styled('div')(({ theme }) => ({
 }))
 
 interface IProps {
-  content: Array<any>
+  content: Array<string>
 }
 
 const ActiveLocales = ({ content }: IProps) => {
