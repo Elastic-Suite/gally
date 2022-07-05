@@ -15,8 +15,8 @@ services:
     healthcheck:
       interval: 10s
       timeout: 3s
-      retries: 3
-      start_period: 30s
+      retries: 6
+      start_period: 60s
     environment:
       DATABASE_URL: postgresql://${POSTGRES_USER:-api-platform}:${POSTGRES_PASSWORD:-!ChangeMe!}@database:5432/${POSTGRES_DB:-api}?serverVersion=${POSTGRES_VERSION:-13}
       TRUSTED_PROXIES: ${TRUSTED_PROXIES:-127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16}
