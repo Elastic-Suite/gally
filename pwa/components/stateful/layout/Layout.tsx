@@ -1,17 +1,26 @@
-import { ReactChild } from 'react'
+import { ReactChild, useCallback, useEffect } from 'react'
 import { makeStyles } from '@mui/styles'
 import { Theme } from '@mui/material/styles'
-import { StyledEngineProvider } from '@mui/styled-engine'
+import { useRouter } from 'next/router'
+
 import {
+  selectChildrenState,
+  selectMenu,
+  selectMenuItemActive,
   selectSidebarState,
+  selectSidebarStateTimeout,
+  setChildState,
+  setMenu,
+  setMenuItemActive,
   setSidebarState,
   setSidebarStateTimeout,
   useAppDispatch,
   useAppSelector,
 } from '~/store'
 import AppBarMenu from '~/components/molecules/layout/appBar/AppBar'
-import CustomSidebar from '~/components/molecules/layout/CustomSidebar'
+import Sidebar from '~/components/molecules/layout/Sidebar/Sidebar'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
+import { useApiDispatch } from '~/hooks/useApi'
 
 /*
  * TODO: THIBO: Update AppBar
@@ -100,18 +109,27 @@ interface IProps {
   children: ReactChild
 }
 
-/*
- * Component CustomLayout
- */
-function CustomLayout({ children }: IProps) {
+function Layout({ children }: IProps) {
   const dispatch = useAppDispatch()
   const sidebarState = useAppSelector(selectSidebarState)
-
+  const sidebarStateTimeout = useAppSelector(selectSidebarStateTimeout)
+  const menuItemActive = useAppSelector(selectMenuItemActive) || ''
+  const childrenState = useAppSelector(selectChildrenState)
+  const menu = useAppSelector(selectMenu)
+  const router = useRouter()
+  const { slug } = router.query
   const classes = useStyles()
 
-  /*
-   * Setup function to collapse sidebar when click on button
-   */
+  // fetch menu
+  useApiDispatch(setMenu, '/menu')
+
+  useEffect(() => {
+    dispatch(
+      setMenuItemActive(typeof slug !== 'string' ? slug?.join('_') : slug)
+    )
+  }, [dispatch, slug])
+
+  // function to collapse sidebar when click on button
   const collapseSidebar = () => {
     if (sidebarState) {
       setTimeout(() => {
@@ -123,35 +141,48 @@ function CustomLayout({ children }: IProps) {
     dispatch(setSidebarStateTimeout(sidebarState))
   }
 
+  // Function to collapse or not children
+  const toggleChild = useCallback(
+    (code: string, childState: boolean) => {
+      dispatch(setChildState({ code: code, value: childState }))
+    },
+    [dispatch]
+  )
+
   return (
-    <StyledEngineProvider injectFirst>
-      <div className={classes.root}>
-        <div className={classes.appFrame}>
-          <CustomSidebar />
-          <div
-            className={classes.contentWithAppbar + ' ' + classes.rightBar}
-            style={{
-              left: sidebarState ? '279px' : '67px',
-            }}
+    <div className={classes.root}>
+      <div className={classes.appFrame}>
+        <Sidebar
+          childrenState={childrenState}
+          menu={menu}
+          menuItemActive={menuItemActive}
+          onChildToggle={toggleChild}
+          sidebarState={sidebarState}
+          sidebarStateTimeout={sidebarStateTimeout}
+        />
+        <div
+          className={classes.contentWithAppbar + ' ' + classes.rightBar}
+          style={{
+            left: sidebarState ? '279px' : '67px',
+          }}
+        >
+          <button
+            className={
+              classes.buttonCollapse +
+              ' ' +
+              (!sidebarState ? classes.toClose : classes.toOpen)
+            }
+            onClick={collapseSidebar}
           >
-            <button
-              className={
-                classes.buttonCollapse +
-                ' ' +
-                (!sidebarState ? classes.toClose : classes.toOpen)
-              }
-              onClick={collapseSidebar}
-            >
-              <IonIcon name="code-outline" style={{ width: 18, height: 18 }} />
-            </button>
-            <AppBarMenu />
-            <div className={classes.content}>{children}</div>
-          </div>
-          {/*<Notification /> TODO: Set here Notification component*/}
+            <IonIcon name="code-outline" style={{ width: 18, height: 18 }} />
+          </button>
+          <AppBarMenu />
+          <div className={classes.content}>{children}</div>
         </div>
+        {/*<Notification /> TODO: Set here Notification component*/}
       </div>
-    </StyledEngineProvider>
+    </div>
   )
 }
 
-export default CustomLayout
+export default Layout

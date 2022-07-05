@@ -16,7 +16,7 @@ export const buttonEnterKeyframe = keyframes`
  * There is always scss assets to scss modifications but here is to be used by Material UI
  * see : https://mui.com/customization/theming/
  */
-const regularTheme = createTheme({
+const theme = createTheme({
   palette: {
     primary: {
       light: '#FBC0B9',
@@ -479,4 +479,4 @@ const regularTheme = createTheme({
   },
 })
 
-export default regularTheme
+export default theme

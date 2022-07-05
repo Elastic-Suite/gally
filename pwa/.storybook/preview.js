@@ -1,7 +1,5 @@
 import { Suspense } from 'react'
-import { StyledEngineProvider } from '@mui/styled-engine'
-import { ThemeProvider } from '@mui/material/styles'
-import RegularTheme from '~/components/atoms/RegularTheme'
+import AppProvider from '~/components/AppProvider'
 
 import I18nProvider from './I18nProvider'
 
@@ -22,13 +20,11 @@ export const decorators = [
   (Story, context) => {
     return (
       <I18nProvider locale={context.globals.locale}>
-        <ThemeProvider theme={RegularTheme}>
-          <StyledEngineProvider injectFirst>
-            <Suspense fallback="">
-              <Story />
-            </Suspense>
-          </StyledEngineProvider>
-        </ThemeProvider>
+        <AppProvider>
+          <Suspense fallback="">
+            <Story />
+          </Suspense>
+        </AppProvider>
       </I18nProvider>
     )
   },

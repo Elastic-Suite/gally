@@ -1,14 +1,11 @@
-import CustomMenu from '~/components/molecules/layout/CustomMenu'
 import { makeStyles } from '@mui/styles'
 import { Theme } from '@mui/material/styles'
 import { Collapse } from '@mui/material'
 import Link from 'next/link'
 import Image from 'next/image'
-import {
-  selectSidebarState,
-  selectSidebarStateTimeout,
-  useAppSelector,
-} from '~/store'
+
+import Menu from '~/components/molecules/layout/Menu/Menu'
+import { IMenu } from '~/store'
 
 /*
  * Use of mui makeStyles to create multiple styles reusing theme fm react-admin
@@ -69,10 +66,24 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }))
 
-function CustomSidebar() {
-  const sidebarState = useAppSelector(selectSidebarState)
-  const sidebarStateTimeout = useAppSelector(selectSidebarStateTimeout)
+interface IProps {
+  childrenState: Record<string, boolean>
+  menu: IMenu
+  menuItemActive: string
+  onChildToggle: (code: string, childState: boolean) => void
+  sidebarState?: boolean
+  sidebarStateTimeout?: boolean
+}
 
+function Sidebar(props: IProps) {
+  const {
+    childrenState,
+    menu,
+    menuItemActive,
+    onChildToggle,
+    sidebarState,
+    sidebarStateTimeout,
+  } = props
   const classes = useStyles()
 
   /*
@@ -117,14 +128,20 @@ function CustomSidebar() {
             </div>
           </div>
         </Link>
-        <CustomMenu
+        <Menu
+          childrenState={childrenState}
           className={
             classes.menu + (sidebarState ? '' : ' ' + classes.widthCollapse)
           }
+          menu={menu}
+          menuItemActive={menuItemActive}
+          onChildToggle={onChildToggle}
+          sidebarState={sidebarState}
+          sidebarStateTimeout={sidebarStateTimeout}
         />
       </div>
     </Collapse>
   )
 }
 
-export default CustomSidebar
+export default Sidebar

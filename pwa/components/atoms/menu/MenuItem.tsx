@@ -3,15 +3,7 @@ import { Theme } from '@mui/material/styles'
 import Collapse from '@mui/material/Collapse'
 import Link from 'next/link'
 
-import {
-  IMenuChild,
-  selectChildrenState,
-  selectMenuItemActive,
-  selectSidebarStateTimeout,
-  setChildState,
-  useAppDispatch,
-  useAppSelector,
-} from '~/store'
+import { IMenuChild } from '~/store'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 
 /*
@@ -117,30 +109,37 @@ const useStyles = makeStyles((theme: Theme) => ({
 }))
 
 interface IProps {
+  childrenState: Record<string, boolean>
   code: string
   href: string
+  isActive?: boolean
+  isBoosts?: boolean
   label: string
-  children?: IMenuChild[]
+  menuChildren?: IMenuChild[]
+  onToggle: (code: string, childState: boolean) => void
+  sidebarStateTimeout?: boolean
+  words: string[]
 }
 
 function MenuItem(props: IProps) {
-  const { children, code, href, label } = props
-
-  const dispatch = useAppDispatch()
-  const childState = useAppSelector((state) => selectChildrenState(state, code))
-  const menuItemActive = useAppSelector(selectMenuItemActive) || ''
-  const sidebarStateTimeout = useAppSelector(selectSidebarStateTimeout)
-  const words = menuItemActive.split('_')
-  const wordIndexOne = words[0] + '_' + words[1]
-
-  /*
-   * Function to collapse or not children
-   */
-  const toggleChild = () => {
-    dispatch(setChildState({ code: code, value: !childState }))
-  }
-
+  const {
+    childrenState,
+    code,
+    href,
+    isActive,
+    isBoosts,
+    label,
+    menuChildren,
+    onToggle,
+    sidebarStateTimeout,
+    words,
+  } = props
+  const childState = childrenState[code]
   const classes = useStyles()
+
+  function toggleChild() {
+    onToggle(code, !childState)
+  }
 
   return (
     <div
@@ -152,29 +151,25 @@ function MenuItem(props: IProps) {
       }
     >
       <div className={classes.linePadding}>
-        {!children && (
+        {!menuChildren && (
           <div
             className={
-              classes.lineHover +
-              ' ' +
-              (menuItemActive === code ? classes.lineActive : '')
+              classes.lineHover + ' ' + (isActive ? classes.lineActive : '')
             }
           >
             <Link href="/admin/[[...slug]]" as={`/admin/${href}`}>
               <a className={classes.line}>{label}</a>
             </Link>
-            {menuItemActive === code && (
-              <div className={classes.indicatorLineActive} />
-            )}
+            {isActive && <div className={classes.indicatorLineActive} />}
           </div>
         )}
-        {!!children && (
+        {!!menuChildren && (
           <button
             className={classes.line + ' ' + classes.lineHover}
             style={{ transition: 'all 500ms', position: 'relative' }}
             onClick={toggleChild}
           >
-            {props.label}
+            {label}
             <IonIcon
               name="chevron-down"
               style={
@@ -183,9 +178,7 @@ function MenuItem(props: IProps) {
                   : { transition: 'all 500ms' }
               }
             />
-            {!childState &&
-            wordIndexOne === props.code &&
-            words[2] !== 'boosts' ? (
+            {!childState && isBoosts ? (
               <div
                 className={
                   classes.indicatorLineActive + ' ' + classes.opacityFullDeux
@@ -198,14 +191,19 @@ function MenuItem(props: IProps) {
           </button>
         )}
       </div>
-      {!!children && (
+      {!!menuChildren && (
         <Collapse className={classes.children} in={childState}>
-          {children.map((item, index) => (
+          {menuChildren.map((item, index) => (
             <MenuItem
               key={`${index}-${item.code}`}
-              href={slugify(item.code, 2)}
-              label={item.label}
+              childrenState={childrenState}
               code={item.code}
+              href={slugify(item.code, 2)}
+              isActive={words.join('_') === item.code}
+              label={item.label}
+              onToggle={onToggle}
+              sidebarStateTimeout={sidebarStateTimeout}
+              words={words}
             />
           ))}
         </Collapse>

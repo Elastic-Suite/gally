@@ -1,16 +1,7 @@
 import { makeStyles } from '@mui/styles'
 import { Theme } from '@mui/material/styles'
-import { useEffect } from 'react'
-import { useRouter } from 'next/router'
 
-import {
-  selectMenu,
-  setMenu,
-  setMenuItemActive,
-  useAppDispatch,
-  useAppSelector,
-} from '~/store'
-import { useApiDispatch } from '~/hooks/useApi'
+import { IMenu } from '~/store'
 import MenuItemIcon from '~/components/atoms/menu/MenuItemIcon'
 import MenuItem from '~/components/atoms/menu/MenuItem'
 
@@ -64,31 +55,26 @@ const useStyles = makeStyles((theme: Theme) => ({
 }))
 
 interface IProps {
+  childrenState: Record<string, boolean>
   className?: string
+  menu: IMenu
+  menuItemActive: string
+  onChildToggle: (code: string, childState: boolean) => void
+  sidebarState?: boolean
+  sidebarStateTimeout?: boolean
 }
 
-function CustomMenu(props: IProps) {
-  const { className } = props
-
-  const dispatch = useAppDispatch()
-  const menu = useAppSelector(selectMenu)
-
-  /*
-   * Function to update menu active item from pathname
-   */
-  const router = useRouter()
-  const { slug } = router.query
-  useEffect(() => {
-    dispatch(
-      setMenuItemActive(typeof slug !== 'string' ? slug?.join('_') : slug)
-    )
-  }, [dispatch, slug])
-
-  /*
-   * Fetch data from /menu to get create menu items dynamically
-   */
-  useApiDispatch(setMenu, '/menu')
-
+function Menu(props: IProps) {
+  const {
+    childrenState,
+    className,
+    menu,
+    menuItemActive,
+    onChildToggle,
+    sidebarState,
+    sidebarStateTimeout,
+  } = props
+  const words = menuItemActive.split('_')
   const classes = useStyles()
 
   return (
@@ -99,22 +85,35 @@ function CustomMenu(props: IProps) {
             return (
               <div key={`${index}-${item.code}`} className={classes.boldStyle}>
                 <MenuItemIcon
-                  href={slugify(item.code, 0)}
                   code={item.code}
+                  href={slugify(item.code, 0)}
+                  isActive={menuItemActive === item.code}
+                  isRoot={words[0] === item.code}
                   label={item.label}
                   lightStyle={false}
                   childPadding={!!item.children}
+                  sidebarState={sidebarState}
+                  sidebarStateTimeout={sidebarStateTimeout}
                 />
                 <div className={classes.secondItems}>
                   {item.children?.map((item, index) => (
                     <div key={`${index}-${item.code}`}>
                       <MenuItem
-                        href={slugify(item.code, 1)}
+                        childrenState={childrenState}
                         code={item.code}
+                        href={slugify(item.code, 1)}
+                        isActive={menuItemActive === item.code}
+                        isBoosts={
+                          words.length > 2 &&
+                          words.slice(0, 2).join('_') === item.code &&
+                          words[2] !== 'boosts'
+                        }
                         label={item.label}
-                      >
-                        {item.children}
-                      </MenuItem>
+                        menuChildren={item.children}
+                        onToggle={onChildToggle}
+                        sidebarStateTimeout={sidebarStateTimeout}
+                        words={words}
+                      />
                     </div>
                   ))}
                 </div>
@@ -124,11 +123,15 @@ function CustomMenu(props: IProps) {
             return (
               <div key={`${index}-${item.code}`}>
                 <MenuItemIcon
-                  href={slugify(item.code, 0)}
                   code={item.code}
+                  href={slugify(item.code, 0)}
+                  isActive={menuItemActive === item.code}
+                  isRoot={words[0] === item.code}
                   label={item.label}
                   lightStyle
                   childPadding={false}
+                  sidebarState={sidebarState}
+                  sidebarStateTimeout={sidebarStateTimeout}
                 />
               </div>
             )
@@ -139,4 +142,4 @@ function CustomMenu(props: IProps) {
   )
 }
 
-export default CustomMenu
+export default Menu
