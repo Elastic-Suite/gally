@@ -19,13 +19,12 @@ const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
 
 interface IProps {
   hoverDesc: string
-  placement?: any
   desc: string
 }
 
-const Tooltips = ({ hoverDesc, placement, desc }: IProps) => {
+const Tooltips = ({ hoverDesc, desc }: IProps) => {
   return (
-    <LightTooltip title={hoverDesc} placement={placement}>
+    <LightTooltip title={hoverDesc} placement="left">
       <span>{desc}</span>
     </LightTooltip>
   )
