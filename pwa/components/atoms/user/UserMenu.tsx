@@ -2,7 +2,8 @@ import { useRef, useState } from 'react'
 import { Theme } from '@mui/material/styles'
 import { makeStyles } from '@mui/styles'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
-
+import CloseComponent from '../closeComponent/CloseComponent'
+import { Box } from '@mui/material'
 import UserMenuShow from './UserMenuShow'
 
 const useStylesUserMenu = makeStyles((theme: Theme) => ({
@@ -18,6 +19,7 @@ const useStylesUserMenu = makeStyles((theme: Theme) => ({
     cursor: 'pointer',
     background: theme.palette.background.default,
     transition: 'background 500ms',
+    zIndex: 999,
     '&:hover': {
       background: theme.palette.colors.neutral[300],
     },
@@ -28,6 +30,7 @@ const useStylesUserMenu = makeStyles((theme: Theme) => ({
     fontWeight: 600,
     fontSize: '12px',
     lineHeight: '18px',
+    fontFamily: 'Inter',
   },
 
   arrow: {
@@ -57,6 +60,7 @@ const useStylesUserMenu = makeStyles((theme: Theme) => ({
     background: theme.palette.background.default,
     width: '206px',
     cursor: 'initial',
+    zIndex: 999,
   },
 
   userMenuVisible: {
@@ -70,36 +74,47 @@ function UserMenu() {
   const useMenu = useRef(null)
 
   return (
-    <div style={{ position: 'relative' }}>
-      <button
-        className={usermenustyle.user}
-        onClick={() => setOpenUserMenu(!openUserMenu)}
-      >
-        <IonIcon name="person-outline" style={{ width: '13px' }} />
-        <div className={usermenustyle.userName}>Admin Name</div>
-        <div
-          className={
-            usermenustyle.arrow +
-            ' ' +
-            (openUserMenu && usermenustyle.arrowRotate)
-          }
+    <>
+      <div style={{ position: 'relative' }}>
+        <Box
+          className={usermenustyle.user}
+          onClick={() => setOpenUserMenu(!openUserMenu)}
         >
-          <IonIcon name="chevron-down" style={{ width: '16px' }} />
-        </div>
-      </button>
+          <IonIcon
+            name="person-outline"
+            style={{ fontSize: '15px', color: '#8187B9' }}
+          />
+          <div className={usermenustyle.userName}>Admin Name</div>
+          <div
+            className={
+              usermenustyle.arrow +
+              ' ' +
+              (openUserMenu && usermenustyle.arrowRotate)
+            }
+          >
+            <IonIcon
+              name="chevron-down"
+              style={{ fontSize: '15px', color: '#8187B9' }}
+            />
+          </div>
+        </Box>
 
-      <div
-        ref={useMenu}
-        className={
-          usermenustyle.userMenu +
-          ' ' +
-          (openUserMenu && usermenustyle.userMenuVisible)
-        }
-        style={openUserMenu ? { height: useMenu?.current?.scrollHeight } : {}}
-      >
-        <UserMenuShow />
+        <div
+          ref={useMenu}
+          className={
+            usermenustyle.userMenu +
+            ' ' +
+            (openUserMenu && usermenustyle.userMenuVisible)
+          }
+          style={openUserMenu ? { height: useMenu?.current?.scrollTopMax } : {}}
+        >
+          <UserMenuShow />
+        </div>
       </div>
-    </div>
+      {openUserMenu && (
+        <CloseComponent onClose={() => setOpenUserMenu(false)} />
+      )}
+    </>
   )
 }
 
