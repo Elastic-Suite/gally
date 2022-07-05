@@ -107,6 +107,7 @@ jobs:
         uses: 5monkeys/cobertura-action@v12
         if: ${{ github.event_name == 'pull_request' }}
         with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
           report_name: "Frontend Coverage of this branch"
           path: pwa/coverage/cobertura-coverage.xml
           minimum_coverage: 1
