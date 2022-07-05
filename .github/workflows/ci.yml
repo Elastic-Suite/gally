@@ -128,6 +128,8 @@ jobs:
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} "
             cd /home/ubuntu/standalone &&
+            docker system prune -a &&
+            docker rmi $(docker images -qa -f dangling=true) &&
             docker-compose down &&
             git checkout master &&
             git fetch --all &&
