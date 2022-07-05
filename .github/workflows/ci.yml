@@ -103,7 +103,7 @@ jobs:
       - name: Jest
         run: docker-compose exec -T pwa yarn test --ci --passWithNoTests
 
-      - name: Frontend Coverage Report as Comment (Clean)
+      - name: Frontend Coverage Report
         uses: 5monkeys/cobertura-action@v12
         if: ${{ github.event_name == 'pull_request' }}
         with:
