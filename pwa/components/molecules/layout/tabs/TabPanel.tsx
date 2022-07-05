@@ -1,4 +1,4 @@
-import React, { ReactChild } from 'react'
+import { ReactChild } from 'react'
 import Box from '@mui/material/Box'
 
 interface IProps {

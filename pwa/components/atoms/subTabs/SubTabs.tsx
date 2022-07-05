@@ -1,4 +1,4 @@
-import React, { ReactChild, useState } from 'react'
+import { ReactChild, useState } from 'react'
 import { styled, keyframes } from '@mui/system'
 
 const CustomRoot = styled('div')(({ theme }) => ({
