@@ -12,6 +12,7 @@ interface IProps {
 export default function CustomTabs({ labels, contents }: IProps) {
   const [activeTabIndex, setActiveTabIndex] = useState(0)
   const handleChange = (event: SyntheticEvent, newValue: number) => {
+    event.preventDefault()
     setActiveTabIndex(newValue)
   }
 
