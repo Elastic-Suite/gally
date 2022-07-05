@@ -1,36 +1,23 @@
 import { FunctionComponent, useEffect } from 'react'
 import type { AppProps } from 'next/app'
 import dynamic from 'next/dynamic'
-import { Theme, ThemeProvider } from '@mui/material/styles'
 import Head from 'next/head'
 import Script from 'next/script'
-import { Provider } from 'react-redux'
 import { appWithTranslation, useTranslation } from 'next-i18next'
 
-import 'assets/scss/style.scss'
-
+import AppProvider from '~/components/AppProvider'
 import nextI18nConfig from '~/next-i18next.config'
-import { setLanguage, store } from '~/store'
-import RegularTheme from '~/components/atoms/RegularTheme'
+import { setLanguage } from '~/store'
+
+import 'assets/scss/style.scss'
 
 /*
  * Resolve for "Prop className did not match" between Server side and Client side
  * see solution here : https://github.com/vercel/next.js/issues/7322#issuecomment-1003545233
  */
-
-const CustomLayoutWithNoSSR = dynamic(
-  () => import('~/components/organisms/layout/CustomLayout'),
-  { ssr: false }
-) as FunctionComponent
-
-/*
- * Correction applied to extend Default theme from our theme actually used
- * see : https://mui.com/material-ui/guides/migration-v4/#types-property-quot-palette-quot-quot-spacing-quot-does-not-exist-on-type-defaulttheme
- */
-
-declare module '@mui/styles/defaultTheme' {
-  type DefaultTheme = Theme
-}
+const Layout = dynamic(() => import('~/components/stateful/layout/Layout'), {
+  ssr: false,
+}) as FunctionComponent
 
 function MyApp(props: AppProps) {
   const { pageProps } = props
@@ -49,13 +36,11 @@ function MyApp(props: AppProps) {
         <title>Blink Admin</title>
       </Head>
 
-      <Provider store={store}>
-        <ThemeProvider theme={RegularTheme}>
-          <CustomLayoutWithNoSSR>
-            <Component {...pageProps} />
-          </CustomLayoutWithNoSSR>
-        </ThemeProvider>
-      </Provider>
+      <AppProvider>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </AppProvider>
       <Script
         type="module"
         src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js"

@@ -1,4 +1,5 @@
 import '@mui/material/styles'
+import { Theme } from '@mui/styles/defaultTheme'
 
 declare module '@mui/material/styles' {
   // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -141,4 +142,12 @@ declare module '@mui/material/styles' {
       }
     }
   }
+}
+
+/*
+ * Correction applied to extend Default theme from our theme actually used
+ * see : https://mui.com/material-ui/guides/migration-v4/#types-property-quot-palette-quot-quot-spacing-quot-does-not-exist-on-type-defaulttheme
+ */
+declare module '@mui/styles/defaultTheme' {
+  type DefaultTheme = Theme
 }

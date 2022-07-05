@@ -1,5 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { IFetch, LoadStatus } from '~/types'
+import { RootState } from './store'
 
 export interface IMenuChild {
   code: string
@@ -69,10 +70,11 @@ export const {
 } = menuSlice.actions
 export const menuReducer = menuSlice.reducer
 
-export const selectChildrenState = (state, code: string) =>
-  state.menu.childrenState[code]
-export const selectMenu = (state) => state.menu.menu.data
-export const selectMenuItemActive = (state) => state.menu.menuItemActive
-export const selectSidebarState = (state) => state.menu.sidebarState
-export const selectSidebarStateTimeout = (state) =>
+export const selectChildrenState = (state: RootState) =>
+  state.menu.childrenState
+export const selectMenu = (state: RootState) => state.menu.menu.data
+export const selectMenuItemActive = (state: RootState) =>
+  state.menu.menuItemActive
+export const selectSidebarState = (state: RootState) => state.menu.sidebarState
+export const selectSidebarStateTimeout = (state: RootState) =>
   state.menu.sidebarStateTimeout

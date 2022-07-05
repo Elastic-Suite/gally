@@ -2,7 +2,6 @@ import { ComponentMeta } from '@storybook/react'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import { icons } from '~/constants'
 
-import ButtonsPreview from './ButtonsPreview'
 import PrimaryButton from './PrimaryButton'
 import SecondaryButton from './SecondaryButton'
 import TertiaryButton from './TertiaryButton'
@@ -80,11 +79,4 @@ Tertiary.args = {
   icon: '',
   size: 'medium',
   startIcon: '',
-}
-
-export function Preview(args) {
-  return <ButtonsPreview {...args} />
-}
-Preview.args = {
-  controls: { hideNoControlsWarning: true },
 }

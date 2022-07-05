@@ -2,12 +2,6 @@ import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import { makeStyles } from '@mui/styles'
 import { Theme } from '@mui/material/styles'
 import Link from 'next/link'
-import {
-  selectMenuItemActive,
-  selectSidebarState,
-  selectSidebarStateTimeout,
-  useAppSelector,
-} from '~/store'
 
 /*
  * Use of mui makeStyles to create multiple styles reusing theme fm react-admin
@@ -126,19 +120,26 @@ interface IProps {
   childPadding?: boolean
   code: string
   href: string
+  isActive?: boolean
+  isRoot?: boolean
   label: string
   lightStyle?: boolean
+  sidebarState?: boolean
+  sidebarStateTimeout?: boolean
 }
 
 function MenuItemIcon(props: IProps) {
-  const { childPadding, code, href, label, lightStyle } = props
-
-  const menuItemActive = useAppSelector(selectMenuItemActive) || ''
-  const sidebarState = useAppSelector(selectSidebarState)
-  const sidebarStateTimeout = useAppSelector(selectSidebarStateTimeout)
-
-  const words = menuItemActive.split('_')
-  const wordIndexOne = words[0]
+  const {
+    childPadding,
+    code,
+    href,
+    isActive,
+    isRoot,
+    label,
+    lightStyle,
+    sidebarState,
+    sidebarStateTimeout,
+  } = props
 
   const classes = useStyles()
   let classNameRoot = classes.root
@@ -157,7 +158,7 @@ function MenuItemIcon(props: IProps) {
     return (
       <div className={classNameRoot + ' ' + classNameStyle}>
         <IonIcon name={code} style={{ width: 18, height: 18 }} />
-        {sidebarStateTimeout && wordIndexOne === code ? (
+        {sidebarStateTimeout && isRoot ? (
           <div
             className={
               classes.indicatorLineActive + ' ' + classes.opacityFullDeux
@@ -184,9 +185,7 @@ function MenuItemIcon(props: IProps) {
     return (
       <div
         className={
-          menuItemActive === code
-            ? classes.lineActive + ' ' + classNameStyle
-            : classNameStyle
+          isActive ? classes.lineActive + ' ' + classNameStyle : classNameStyle
         }
       >
         <Link href="/admin/[[...slug]]" as={`/admin/${href}`}>
@@ -212,7 +211,7 @@ function MenuItemIcon(props: IProps) {
             </span>
           </a>
         </Link>
-        {menuItemActive === code && (
+        {isActive && (
           <div
             className={
               classes.indicatorLineActiveTwo +
