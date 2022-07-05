@@ -1,4 +1,3 @@
-import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 import CustomTabs from '~/components/molecules/layout/tabs/CustomTabs'
 import SubTabs from '~/components/atoms/subTabs/SubTabs'
@@ -19,6 +18,7 @@ Default.args = {
   labels: ['Scope', 'Searchable and filtrable attributes'],
   contents: [
     <SubTabs
+      key="labels"
       labels={[
         'Catalogs',
         'Actives locales',
@@ -27,6 +27,7 @@ Default.args = {
       ]}
       contents={[
         <TertiaryButton
+          key="contents"
           size="medium"
           endIcon={<IonIcon name="add-outline" style={{ fontSize: 24 }} />}
         >

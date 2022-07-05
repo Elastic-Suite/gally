@@ -1,7 +1,5 @@
-import React from 'react'
 import { makeStyles } from '@mui/styles'
 import { Theme } from '@mui/material'
-import PropTypes from 'prop-types'
 
 const useStyleTitle = makeStyles((theme: Theme) => ({
   root: {
