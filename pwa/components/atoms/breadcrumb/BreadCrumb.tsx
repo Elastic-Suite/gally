@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { Theme } from '@mui/material/styles'
 import { selectMenu, useAppSelector } from '~/store'
+import menuData from './MenuData'
+import BreadCrumData from './BreadCrumbData'
 
 const breadcrumbGlobalStyle = {
   fontWeight: '500',
