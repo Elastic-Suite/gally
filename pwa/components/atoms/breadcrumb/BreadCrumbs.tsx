@@ -20,12 +20,14 @@ const CustomBreadCrumbColorLast = styled(CustomBreadCrumb)(({ theme }) => ({
 
 interface IProps {
   slug: string[]
-  menu: { hierarchy: [] }
+  menu: any
 }
 
 const BreadCrumbs = ({ slug, menu }: IProps) => {
+  console.log(menu)
+
   let labelData = []
-  function findIn(find: string, data: Object) {
+  function findIn(find: string, data: { code: string; label: string }) {
     if (typeof data === 'object') {
       for (const valueObject in data) {
         if (data[valueObject].code === find) {
