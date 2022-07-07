@@ -113,6 +113,9 @@ const theme = createTheme({
     },
     mode: 'light',
   },
+  shape: {
+    borderRadius: 8,
+  },
   typography: {
     fontFamily: 'Inter',
     h1: {

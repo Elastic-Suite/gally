@@ -38,7 +38,7 @@ export const customIcons = [
  *
  * Setup switch for special names that need svg or have another name in ion-icons
  */
-function Icon(props: IProps) {
+function IonIcon(props: IProps) {
   const { name, ...iconProps } = props
   switch (name) {
     case 'dashboard':
@@ -56,4 +56,4 @@ function Icon(props: IProps) {
   }
 }
 
-export default Icon
+export default IonIcon
