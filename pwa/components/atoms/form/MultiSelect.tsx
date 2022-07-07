@@ -4,7 +4,7 @@ import MultiSelectUnstyled, {
 } from '@mui/base/MultiSelectUnstyled'
 import { StyledButton, StyledListbox, StyledPopper } from './Select.styled'
 
-const Select = forwardRef(function Select(
+const MultiSelect = forwardRef(function Select(
   props: MultiSelectUnstyledProps<unknown>,
   ref: ForwardedRef<HTMLElement>
 ) {
@@ -17,4 +17,4 @@ const Select = forwardRef(function Select(
   return <MultiSelectUnstyled {...props} components={components} ref={ref} />
 })
 
-export default Select
+export default MultiSelect
