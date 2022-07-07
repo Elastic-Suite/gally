@@ -1,25 +1,6 @@
 import { MouseEvent, ReactChild } from 'react'
-import IonIcon, { IIonIconProps } from '~/components/atoms/IonIcon/IonIcon'
+import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import { styled } from '@mui/system'
-
-export interface IProps {
-  children: ReactChild
-  onIconClick?: (event: MouseEvent<IIonIconProps>) => void
-  color?: string
-}
-
-const Tag = ({ children, onIconClick, color = 'neutral' }: IProps) => {
-  return (
-    <TagContainer className={'tag--color__' + color}>
-      <span className="tag--label">{children}</span>
-      {onIconClick ? (
-        <IonIcon name="close" class={'tag--icon'} onClick={onIconClick} />
-      ) : (
-        ''
-      )}
-    </TagContainer>
-  )
-}
 
 const TagContainer = styled('span')(({ theme }) => ({
   display: 'inline-flex',
@@ -38,11 +19,36 @@ const TagContainer = styled('span')(({ theme }) => ({
     color: theme.palette.colors.secondary['600'],
     background: theme.palette.colors.secondary['100'],
   },
-  '& .tag--icon': {
-    cursor: 'pointer',
-    fontSize: 16,
-    marginLeft: theme.spacing(0.5),
-  },
 }))
+
+const Button = styled('button')(({ theme }) => ({
+  cursor: 'pointer',
+  fontSize: 16,
+  marginLeft: theme.spacing(0.5),
+  borderRadius: '50%',
+  padding: 0,
+  border: 0,
+  backgroundColor: 'transparent',
+  display: 'flex',
+}))
+
+export interface IProps {
+  children: ReactChild
+  onIconClick?: (event: MouseEvent<HTMLButtonElement>) => void
+  color?: string
+}
+
+const Tag = ({ children, onIconClick, color = 'neutral' }: IProps) => {
+  return (
+    <TagContainer className={'tag--color__' + color}>
+      <span className="tag--label">{children}</span>
+      {onIconClick && (
+        <Button onClick={onIconClick}>
+          <IonIcon name="close" />
+        </Button>
+      )}
+    </TagContainer>
+  )
+}
 
 export default Tag

@@ -29,7 +29,7 @@ export default {
 
 const Template: ComponentStory<typeof InputTextComponent> = (args) => {
   const [value, setValue] = useState('')
-  const handleChange = (event) => setValue(event.target.value)
+  const handleChange = (value) => setValue(value)
 
   return (
     <InputTextComponent
