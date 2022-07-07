@@ -1,24 +1,19 @@
-import { makeStyles } from '@mui/styles'
-import { Theme } from '@mui/material/styles'
 import Help from '~/components/atoms/help/Help'
 import UserMenu from '~/components/atoms/user/UserMenu'
+import { styled } from '@mui/system'
 
-const useStylesUser = makeStyles((theme: Theme) => ({
-  root: {
-    display: 'flex',
-    flexDirection: 'row',
-    gap: theme.spacing(1),
-  },
+const CustomRoot = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'row',
+  gap: theme.spacing(1),
 }))
 
 function User() {
-  const userstyle = useStylesUser()
-
   return (
-    <div className={userstyle.root}>
+    <CustomRoot>
       <Help />
       <UserMenu />
-    </div>
+    </CustomRoot>
   )
 }
 
