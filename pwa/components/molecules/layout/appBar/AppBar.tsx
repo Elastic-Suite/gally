@@ -30,7 +30,7 @@ const CustomRoot = styled('div')(({ theme }) => ({
 }))
 
 interface IProps {
-  stories: boolean
+  stories?: boolean
   slug?: string[]
   menu?: IMenu
 }
