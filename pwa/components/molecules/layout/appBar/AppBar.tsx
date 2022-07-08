@@ -1,6 +1,8 @@
 import BreadCrumb from '~/components/molecules/layout/breadcrumb/BreadCrumb'
+import BreadCrumbs from '~/components/atoms/breadcrumb/BreadCrumbs'
 import User from '~/components/molecules/layout/user/User'
 import { styled } from '@mui/system'
+import { IMenu } from '~/store'
 
 const CustomRoot = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -26,10 +28,23 @@ const CustomRoot = styled('div')(({ theme }) => ({
     width: `calc(100% - 64px)`,
   },
 }))
-const AppBar = () => {
+
+interface IProps {
+  stories: boolean
+  slug?: string[]
+  menu?: IMenu
+}
+
+const AppBar = ({ stories = false, slug, menu }: IProps) => {
   return (
-    <CustomRoot>
-      <BreadCrumb />
+    <CustomRoot
+      style={
+        stories
+          ? { width: '100%', boxSizing: 'border-box', height: '84px' }
+          : {}
+      }
+    >
+      {stories ? <BreadCrumbs slug={slug} menu={menu} /> : <BreadCrumb />}
       <User />
     </CustomRoot>
   )
