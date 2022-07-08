@@ -16,6 +16,8 @@ declare(strict_types=1);
 
 namespace Acme\Example\Example\Model;
 
+use Acme\Example\Example\GraphQl\Type\Definition\ExampleFieldFilterOperatorInputType;
+use Acme\Example\Example\GraphQl\Type\Definition\ExampleFieldFilterCompositeInputType;
 use Acme\Example\Example\Resolver\DummyCollectionResolver;
 use ApiPlatform\Core\Action\NotFoundAction;
 use ApiPlatform\Core\Annotation\ApiProperty;
@@ -33,7 +35,8 @@ use ApiPlatform\Core\Annotation\ApiResource;
                     'search' => ['type' => 'String'],
                     'pageSize' => ['type' => 'Int'],
                     'currentPage' => ['type' => 'Int'],
-                    'filter' => ['type' => '[ExampleFieldFilterInput]'],
+                    'filterByOperator' => ['type' => ExampleFieldFilterOperatorInputType::NAME],
+                    'filterByType' => ['type' => ExampleFieldFilterCompositeInputType::NAME],
                 ],
             ]
         ],
