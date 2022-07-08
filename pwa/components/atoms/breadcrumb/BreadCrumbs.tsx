@@ -28,13 +28,13 @@ const BreadCrumbs = (props: IProps) => {
   const { menu, slug } = props
 
   let labelData = []
-  function findIn(find: string, data: IMenuChild[]) {
-    if (typeof data === 'object') {
-      for (const valueObject in data) {
-        if (data[valueObject].code === find) {
-          labelData = [...labelData, data[valueObject].label]
+  function findIn(find: string, menu: IMenuChild[]) {
+    if (typeof menu === 'object') {
+      for (const menuChild in menu) {
+        if (menu[menuChild].code === find) {
+          labelData = [...labelData, menu[menuChild].label]
         }
-        findIn(find, data[valueObject].children)
+        findIn(find, menu[menuChild].children)
       }
       return labelData
     } else return null
