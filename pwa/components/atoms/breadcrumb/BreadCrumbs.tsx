@@ -41,7 +41,7 @@ const BreadCrumbs = (props: IProps) => {
   }
 
   return (
-    <Breadcrumbs aria-label="breadcrumb" sx={{ color: '#8187B9' }}>
+    <Breadcrumbs aria-label="breadcrumb" sx={{ color: 'colors.neutral.500' }}>
       {slug.map((item: string, key: number) => (
         <Typography key={key}>
           {slug.length > key + 1 ? (
