@@ -1,10 +1,10 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
-import AppBar from './AppBar'
+import BreadCrumbs from '~/components/atoms/breadcrumb/BreadCrumbs'
 
 export default {
-  title: 'Molecules/AppBar',
-  component: AppBar,
-} as ComponentMeta<typeof AppBar>
+  title: 'Molecules/BreadCrumb',
+  component: BreadCrumbs,
+} as ComponentMeta<typeof BreadCrumbs>
 
 const slug = ['search', 'configuration', 'autocompletion']
 
@@ -217,11 +217,12 @@ function NewSlug(data: string[]) {
   return newBreadCrumbData
 }
 
-const Template: ComponentStory<typeof AppBar> = (args) => <AppBar {...args} />
+const Template: ComponentStory<typeof BreadCrumbs> = (args) => (
+  <BreadCrumbs {...args} />
+)
 
 export const Default = Template.bind({})
 Default.args = {
-  stories: true,
   slug: NewSlug(slug),
   menu: menu,
 }
