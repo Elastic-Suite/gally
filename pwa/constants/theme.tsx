@@ -532,6 +532,7 @@ const theme = createTheme({
           fontSize: '16px',
           lineHeight: '24px',
           fontWeight: '500',
+          color: '#424880',
           '&.Mui-selected': { color: '#2C19CD' },
         },
       },
