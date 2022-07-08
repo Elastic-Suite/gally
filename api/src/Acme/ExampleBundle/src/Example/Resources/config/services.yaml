@@ -34,7 +34,7 @@ services:
         arguments:
             - '@Doctrine\Persistence\ManagerRegistry'
         tags:
-            - { name: doctrine.repository_service } 
+            - { name: doctrine.repository_service }
 
     # Declare denormalizer
     Acme\Example\Example\Serializer\AttributesDenormalizer:
@@ -85,7 +85,31 @@ services:
             - { name: serializer.normalizer }
 
     # Define a new GraphQL type
-    Acme\Example\Example\GraphQl\Type\Definition\ExampleFieldFilterInputType:
+    #Solution #1
+    Acme\Example\Example\GraphQl\Type\Definition\ExampleFieldFilterOperatorInputType:
+        tags:
+            - { name: api_platform.graphql.type }
+    
+    #Solution #2
+    Acme\Example\Example\GraphQl\Type\Definition\ExampleFieldFilterCompositeInputType:
+        arguments:
+            - '@Acme\Example\Example\GraphQl\Type\Definition\Filter\ExampleBoolFilterInputType'
+            - '@Acme\Example\Example\GraphQl\Type\Definition\Filter\ExampleEqualTypeFilterInputType'
+            - '@Acme\Example\Example\GraphQl\Type\Definition\Filter\ExampleRangeFilterInputType'
+        tags:
+            - { name: api_platform.graphql.type }
+ 
+    Acme\Example\Example\GraphQl\Type\Definition\Filter\ExampleBoolFilterInputType:
+        arguments:
+            - '@api_platform.graphql.types_container'
+        tags:
+            - { name: api_platform.graphql.type }
+    
+    Acme\Example\Example\GraphQl\Type\Definition\Filter\ExampleEqualTypeFilterInputType:
+        tags:
+            - { name: api_platform.graphql.type }
+
+    Acme\Example\Example\GraphQl\Type\Definition\Filter\ExampleRangeFilterInputType:
         tags:
             - { name: api_platform.graphql.type }
     # End - POC Custom GrapQL types
