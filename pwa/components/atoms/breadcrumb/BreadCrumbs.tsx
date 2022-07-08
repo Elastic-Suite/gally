@@ -1,6 +1,7 @@
 import Breadcrumbs from '@mui/material/Breadcrumbs'
 import Typography from '@mui/material/Typography'
 import { styled } from '@mui/system'
+import { IMenu, IMenuChild } from '~/store'
 
 const CustomBreadCrumb = styled('span')({
   fontWeight: '500',
@@ -20,14 +21,14 @@ const CustomBreadCrumbColorLast = styled(CustomBreadCrumb)(({ theme }) => ({
 
 interface IProps {
   slug: string[]
-  menu: any
+  menu: IMenu
 }
 
-const BreadCrumbs = ({ slug, menu }: IProps) => {
-  console.log(menu)
+const BreadCrumbs = (props: IProps) => {
+  const { menu, slug } = props
 
   let labelData = []
-  function findIn(find: string, data: { code: string; label: string }) {
+  function findIn(find: string, data: IMenuChild[]) {
     if (typeof data === 'object') {
       for (const valueObject in data) {
         if (data[valueObject].code === find) {
