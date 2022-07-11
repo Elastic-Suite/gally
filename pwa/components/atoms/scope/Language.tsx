@@ -26,12 +26,21 @@ const CustomLanguage = styled('div')(({ theme }) => ({
 interface IProps {
   language: string[]
   limit: boolean
-  content?: { name: string; nbActiveLocales: number; language: Array<string> }[]
+  content?: {
+    name: string
+    language: string[]
+  }
   order?: number
 }
 
 const Language = ({ language, order, limit, content }: IProps) => {
   const newLanguage = [...new Set(language)]
+  const nbActiveLocalesByWebSite = 5
+
+  function FirstLetterUppercase(item) {
+    return item[0].toUpperCase() + item.slice(1)
+  }
+
   return (
     <CustomRoot>
       {newLanguage &&
@@ -39,17 +48,27 @@ const Language = ({ language, order, limit, content }: IProps) => {
           <div key={key}>
             {limit === true ? (
               <>
-                {key === 3 ? (
-                  <PopInCatalogs
-                    content={content[order]}
-                    title={newLanguage.length}
-                  />
+                {key === nbActiveLocalesByWebSite ? (
+                  <div>
+                    <PopInCatalogs
+                      content={content[order]}
+                      title={
+                        '+' + (newLanguage.length - nbActiveLocalesByWebSite)
+                      }
+                    />
+                  </div>
                 ) : (
-                  key < 3 && <CustomLanguage key={key}>{item}</CustomLanguage>
+                  key < 5 && (
+                    <CustomLanguage key={key}>
+                      {FirstLetterUppercase(item)}
+                    </CustomLanguage>
+                  )
                 )}
               </>
             ) : (
-              <CustomLanguage key={key}>{item}</CustomLanguage>
+              <CustomLanguage key={key}>
+                {FirstLetterUppercase(item)}
+              </CustomLanguage>
             )}
           </div>
         ))}

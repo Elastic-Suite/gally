@@ -31,7 +31,9 @@ const NbActiveLocales = ({ number }: IProps) => {
   return (
     <CustomRoot>
       <CustomNbActiveLocales>{number}</CustomNbActiveLocales>
-      <CustomTexteActiveLocales>active locales</CustomTexteActiveLocales>
+      <CustomTexteActiveLocales>
+        {number > 1 ? 'active locales' : 'active locale'}
+      </CustomTexteActiveLocales>
     </CustomRoot>
   )
 }
