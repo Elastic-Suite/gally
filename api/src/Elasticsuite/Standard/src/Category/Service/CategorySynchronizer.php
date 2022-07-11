@@ -26,8 +26,10 @@ use Elasticsuite\Category\Model\Category;
 use Elasticsuite\Category\Repository\CategoryConfigurationRepository;
 use Elasticsuite\Category\Repository\CategoryRepository;
 use Elasticsuite\Index\Model\Index;
+use Elasticsuite\Metadata\Repository\MetadataRepository;
 use Elasticsuite\Search\Elasticsearch\Adapter;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\Query\QueryBuilder;
+use Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider;
 use Elasticsuite\Search\Elasticsearch\RequestFactoryInterface;
 use Elasticsuite\Search\Model\Document;
 
@@ -44,6 +46,8 @@ class CategorySynchronizer
         private RequestFactoryInterface $requestFactory,
         private QueryBuilder $queryBuilder,
         private Adapter $adapter,
+        private ContainerConfigurationProvider $containerConfigurationProvider,
+        private MetadataRepository $metadataRepository,
         private EntityManagerInterface $entityManager,
     ) {
     }
@@ -152,11 +156,15 @@ class CategorySynchronizer
         $page = 0;
         $pageSize = 10000;
 
+        $containerConfig = $this->containerConfigurationProvider->get(
+            $this->metadataRepository->findOneBy(['entity' => $index->getEntityType()]),
+            $index->getCatalog()
+        );
         do {
             $request = $this->requestFactory->create([
                 'name' => 'test',
                 'indexName' => $index->getName(),
-                'query' => $this->queryBuilder->createQuery(null),
+                'query' => $this->queryBuilder->createQuery($containerConfig, null, [], null),
                 'from' => $page * $pageSize,
                 'size' => $pageSize,
             ]);
