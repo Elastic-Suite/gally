@@ -9,6 +9,7 @@ interface IProps {
   labels: string[]
   contents: ReactChild[]
 }
+
 export default function CustomTabs({ labels, contents }: IProps): JSX.Element {
   const [activeTabIndex, setActiveTabIndex] = useState(0)
   const handleChange = (event: SyntheticEvent, newValue: number): void => {
