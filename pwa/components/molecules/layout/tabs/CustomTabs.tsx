@@ -6,8 +6,8 @@ import TabPanel from './TabPanel'
 import { a11yProps } from './a11yProps'
 
 interface IProps {
-  labels: Array<string>
-  contents: string[]
+  labels: string[]
+  contents: any
 }
 export default function CustomTabs({ labels, contents }: IProps): JSX.Element {
   const [activeTabIndex, setActiveTabIndex] = useState(0)
