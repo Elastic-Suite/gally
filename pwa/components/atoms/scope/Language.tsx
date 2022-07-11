@@ -26,32 +26,52 @@ const CustomLanguage = styled('div')(({ theme }) => ({
 interface IProps {
   language: string[]
   limit: boolean
-  content?: { name: string; nbActiveLocales: number; language: Array<string> }[]
+  content?: {
+    name: string
+    language: string[]
+  }
   order?: number
 }
 
 function Language({ language, order, limit, content }: IProps): JSX.Element {
   const newLanguage = [...new Set(language)]
+  const nbActiveLocalesByWebSite = 5
+
+  function FirstLetterUppercase(item) {
+    return item[0].toUpperCase() + item.slice(1)
+  }
+
   return (
     <CustomRoot>
-      {newLanguage
-        ? newLanguage.map((item: string, key: number) => (
-            <div key={item}>
-              {limit === true ? (
-                key === 3 ? (
-                  <PopInCatalogs
-                    content={content[order]}
-                    title={newLanguage.length}
-                  />
+      {newLanguage &&
+        newLanguage.map((item: string, key: number) => (
+          <div key={item}>
+            {limit === true ? (
+              <>
+                {key === nbActiveLocalesByWebSite ? (
+                  <div>
+                    <PopInCatalogs
+                      content={content[order]}
+                      title={
+                        '+' + (newLanguage.length - nbActiveLocalesByWebSite)
+                      }
+                    />
+                  </div>
                 ) : (
-                  key < 3 && <CustomLanguage key={item}>{item}</CustomLanguage>
-                )
-              ) : (
-                <CustomLanguage key={item}>{item}</CustomLanguage>
-              )}
-            </div>
-          ))
-        : null}
+                  key < 5 && (
+                    <CustomLanguage key={item}>
+                      {FirstLetterUppercase(item)}
+                    </CustomLanguage>
+                  )
+                )}
+              </>
+            ) : (
+              <CustomLanguage key={item}>
+                {FirstLetterUppercase(item)}
+              </CustomLanguage>
+            )}
+          </div>
+        ))}
     </CustomRoot>
   )
 }

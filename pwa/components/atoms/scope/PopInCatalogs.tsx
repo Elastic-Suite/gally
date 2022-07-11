@@ -47,12 +47,17 @@ const CustomRoot = styled('div')(({ theme }) => ({
 }))
 
 interface IProps {
-  content: {
-    name: string
-    nbActiveLocales: number
-    language: string[]
-  }
-  title: number
+  content: ILocalizedCatalogs
+  title: string
+}
+
+interface ILocalName {
+  localName: string
+}
+
+interface ILocalizedCatalogs {
+  localizedCatalogs: ILocalName[]
+  name: string
 }
 
 function PopInCatalogs({ content, title }: IProps): JSX.Element {
@@ -64,6 +69,14 @@ function PopInCatalogs({ content, title }: IProps): JSX.Element {
 
   function handleClose(): void {
     setOpen(false)
+  }
+
+  function Languages(data: ILocalizedCatalogs) {
+    let Languages = []
+    for (const localizedCatalogsContent of data.localizedCatalogs) {
+      Languages = [...Languages, localizedCatalogsContent.localName]
+    }
+    return (Languages = [...new Set(Languages)])
   }
 
   return (
@@ -82,8 +95,8 @@ function PopInCatalogs({ content, title }: IProps): JSX.Element {
         </CustomClose>
         <CustomRoot>
           <TitleScope name={content.name} />
-          <NbActiveLocales number={content.nbActiveLocales} />
-          <Language language={content.language} limit={false} />
+          <NbActiveLocales number={[...new Set(Languages(content))].length} />
+          <Language language={[...new Set(Languages(content))]} limit={false} />
         </CustomRoot>
       </Dialog>
     </>
