@@ -26,14 +26,24 @@ const CustomLanguage = styled('div')(({ theme }) => ({
 interface IProps {
   language: string[]
   limit: boolean
-  content?: { name: string; nbActiveLocales: number; language: Array<string> }[]
+  content?: {
+    name: string
+    language: string[]
+  }
   order?: number
 }
 
 function Language({ language, order, limit, content }: IProps): JSX.Element {
   const newLanguage = [...new Set(language)]
+  const nbActiveLocalesByWebSite = 5
+
+  function FirstLetterUppercase(item) {
+    return item[0].toUpperCase() + item.slice(1)
+  }
+
   return (
     <CustomRoot>
+<<<<<<< HEAD
       {newLanguage
         ? newLanguage.map((item: string, key: number) => (
             <div key={item}>
@@ -52,6 +62,37 @@ function Language({ language, order, limit, content }: IProps): JSX.Element {
             </div>
           ))
         : null}
+=======
+      {newLanguage &&
+        newLanguage.map((item: string, key: number) => (
+          <div key={key}>
+            {limit === true ? (
+              <>
+                {key === nbActiveLocalesByWebSite ? (
+                  <div>
+                    <PopInCatalogs
+                      content={content[order]}
+                      title={
+                        '+' + (newLanguage.length - nbActiveLocalesByWebSite)
+                      }
+                    />
+                  </div>
+                ) : (
+                  key < 5 && (
+                    <CustomLanguage key={key}>
+                      {FirstLetterUppercase(item)}
+                    </CustomLanguage>
+                  )
+                )}
+              </>
+            ) : (
+              <CustomLanguage key={key}>
+                {FirstLetterUppercase(item)}
+              </CustomLanguage>
+            )}
+          </div>
+        ))}
+>>>>>>> ESPP_174 : fix for api
     </CustomRoot>
   )
 }

@@ -36,13 +36,26 @@ const CustomCatalogs = styled('div')(({ theme }) => ({
 }))
 
 interface IProps {
-  content: { name: string; nbActiveLocales: number; language: Array<string> }[]
+  content: string[]
+}
+
+interface ILocalName {
+  localName: string
+}
+
+interface ILocalizedCatalogs {
+  localizedCatalogs: ILocalName[]
+  name: string
 }
 
 function Catalogs({ content }: IProps): JSX.Element {
   return (
     <CustomFullRoot>
-      <CustomNbCatalogs>{content.length} catalogs</CustomNbCatalogs>
+      <CustomNbCatalogs>
+        {content['hydra:member'].length +
+          ' ' +
+          (content['hydra:member'].length > 1 ? 'catalogs' : 'catalog')}
+      </CustomNbCatalogs>
       <CustomRoot>
         {content.map((item, key: number) => (
           <CustomCatalogs key={item.name}>
