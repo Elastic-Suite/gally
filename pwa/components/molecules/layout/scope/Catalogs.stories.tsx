@@ -1,4 +1,4 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react'
+import { ComponentMeta, ComponentStory } from '@storybook/react'
 import Catalogs from '~/components/molecules/layout/scope/Catalogs'
 
 const ObjectCalogs = [
@@ -70,7 +70,7 @@ const ObjectCalogs = [
 ]
 
 export default {
-  title: 'Atoms/Scopes',
+  title: 'Molecules/Scopes',
   component: Catalogs,
 } as ComponentMeta<typeof Catalogs>
 

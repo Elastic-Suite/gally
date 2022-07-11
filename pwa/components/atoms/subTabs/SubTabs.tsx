@@ -1,5 +1,5 @@
 import { ReactChild, useState } from 'react'
-import { styled, keyframes } from '@mui/system'
+import { keyframes, styled } from '@mui/system'
 
 const CustomRoot = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -72,7 +72,7 @@ interface IProps {
   contents: ReactChild[]
 }
 
-const SubTabs = ({ labels, contents }: IProps) => {
+function SubTabs({ labels, contents }: IProps): JSX.Element {
   const [active, setActive] = useState(0)
 
   return (
@@ -80,11 +80,14 @@ const SubTabs = ({ labels, contents }: IProps) => {
       <CustumRootSubTabs>
         {labels.map((item: string, key: number) =>
           key === active ? (
-            <CustomSubTabsActive key={key} onClick={() => setActive(key)}>
+            <CustomSubTabsActive
+              key={item}
+              onClick={(): void => setActive(key)}
+            >
               {item}
             </CustomSubTabsActive>
           ) : (
-            <CustomSubTabs key={key} onClick={() => setActive(key)}>
+            <CustomSubTabs key={item} onClick={(): void => setActive(key)}>
               {item}
             </CustomSubTabs>
           )
@@ -92,7 +95,7 @@ const SubTabs = ({ labels, contents }: IProps) => {
       </CustumRootSubTabs>
       {contents.map(
         (item: string, key: number) =>
-          key === active && <div key={key}>{item}</div>
+          key === active && <div key={item}>{item}</div>
       )}
     </CustomRoot>
   )

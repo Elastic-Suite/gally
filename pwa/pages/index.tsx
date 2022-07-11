@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-function Welcome() {
+function Welcome(): JSX.Element {
   return (
     <div className="welcome">
       <section className="welcome__main">
@@ -361,7 +361,7 @@ function Welcome() {
 }
 export default Welcome
 
-function Admin() {
+function Admin(): JSX.Element {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -1220,7 +1220,7 @@ function Admin() {
   )
 }
 
-function Api() {
+function Api(): JSX.Element {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -1678,7 +1678,7 @@ function Api() {
   )
 }
 
-function Mercure() {
+function Mercure(): JSX.Element {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

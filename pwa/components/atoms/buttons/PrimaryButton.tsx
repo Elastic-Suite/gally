@@ -7,7 +7,7 @@ interface IProps extends ButtonProps {
   children: ReactNode
 }
 
-function PrimaryButton(props: IProps) {
+function PrimaryButton(props: IProps): JSX.Element {
   const { children, ...buttonProps } = props
 
   return (

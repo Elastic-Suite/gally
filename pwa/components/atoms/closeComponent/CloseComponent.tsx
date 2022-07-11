@@ -4,7 +4,7 @@ interface IProps {
   onClose: () => void
 }
 
-const CloseComponent = ({ onClose }: IProps) => {
+function CloseComponent({ onClose }: IProps): JSX.Element {
   return (
     <Box
       sx={{
@@ -16,7 +16,7 @@ const CloseComponent = ({ onClose }: IProps) => {
         top: '0',
       }}
       onClick={onClose}
-    ></Box>
+    />
   )
 }
 

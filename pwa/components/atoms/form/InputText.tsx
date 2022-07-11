@@ -10,7 +10,7 @@ interface IUnstyledInputText extends InputBaseProps {
   value: string
 }
 
-const UnstyledInputText = (props: IUnstyledInputText) => {
+function UnstyledInputText(props: IUnstyledInputText): JSX.Element {
   const { value } = props
 
   return (
@@ -89,30 +89,30 @@ interface IProps extends Omit<InputBaseProps, 'onChange'> {
   value: string
 }
 
-const InputText = (props: IProps) => {
+function InputText(props: IProps): JSX.Element {
   const { id, label, onChange, helperText, helperIcon, required, ...other } =
     props
 
   function handleChange(
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) {
+  ): void {
     onChange(event.target.value)
   }
 
   return (
     <FormControl variant="standard">
-      {label && (
+      {label ? (
         <InputLabel shrink htmlFor={id} required={required}>
           {label}
         </InputLabel>
-      )}
+      ) : null}
       <InputTextStyled
         {...other}
         id={id}
         onChange={handleChange}
         required={required}
       />
-      {helperText && (
+      {helperText ? (
         <FormHelperText>
           {helperIcon ? (
             <IonIcon
@@ -124,7 +124,7 @@ const InputText = (props: IProps) => {
           )}
           {helperText}
         </FormHelperText>
-      )}
+      ) : null}
     </FormControl>
   )
 }

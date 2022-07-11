@@ -17,7 +17,7 @@ import {
   useAppDispatch,
   useAppSelector,
 } from '~/store'
-import AppBarMenu from '~/components/molecules/layout/appBar/AppBar'
+import AppBar from '~/components/molecules/layout/appBar/AppBar'
 import Sidebar from '~/components/molecules/layout/Sidebar/Sidebar'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import { useApiDispatch } from '~/hooks/useApi'
@@ -109,7 +109,7 @@ interface IProps {
   children: ReactChild
 }
 
-function Layout({ children }: IProps) {
+function Layout({ children }: IProps): JSX.Element {
   const dispatch = useAppDispatch()
   const sidebarState = useAppSelector(selectSidebarState)
   const sidebarStateTimeout = useAppSelector(selectSidebarStateTimeout)
@@ -130,7 +130,7 @@ function Layout({ children }: IProps) {
   }, [dispatch, slug])
 
   // function to collapse sidebar when click on button
-  const collapseSidebar = () => {
+  function collapseSidebar(): void {
     if (sidebarState) {
       setTimeout(() => {
         dispatch(setSidebarState(!sidebarState))
@@ -144,7 +144,7 @@ function Layout({ children }: IProps) {
   // Function to collapse or not children
   const toggleChild = useCallback(
     (code: string, childState: boolean) => {
-      dispatch(setChildState({ code: code, value: childState }))
+      dispatch(setChildState({ code, value: childState }))
     },
     [dispatch]
   )
@@ -161,22 +161,21 @@ function Layout({ children }: IProps) {
           sidebarStateTimeout={sidebarStateTimeout}
         />
         <div
-          className={classes.contentWithAppbar + ' ' + classes.rightBar}
+          className={`${classes.contentWithAppbar} ${classes.rightBar}`}
           style={{
             left: sidebarState ? '279px' : '67px',
           }}
         >
           <button
-            className={
-              classes.buttonCollapse +
-              ' ' +
-              (!sidebarState ? classes.toClose : classes.toOpen)
-            }
+            className={`${classes.buttonCollapse} ${
+              !sidebarState ? classes.toClose : classes.toOpen
+            }`}
             onClick={collapseSidebar}
+            type="button"
           >
             <IonIcon name="code-outline" style={{ width: 18, height: 18 }} />
           </button>
-          <AppBarMenu />
+          <AppBar menu={menu} slug={slug} />
           <div className={classes.content}>{children}</div>
         </div>
         {/*<Notification /> TODO: Set here Notification component*/}

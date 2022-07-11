@@ -1,22 +1,19 @@
 import { useEffect } from 'react'
-
+import { GetStaticPaths, GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { useAppSelector, useAppDispatch, selectDocs, fetchDocs } from '~/store'
+import { fetchDocs, selectDocs, useAppDispatch, useAppSelector } from '~/store'
 import { LoadStatus } from '~/types'
 
-export async function getStaticProps() {
-  return {
-    props: {},
-  }
-}
+export const getStaticProps: GetStaticProps = () => ({ props: {} })
 
-export async function getStaticPaths() {
-  return { paths: [], fallback: true }
-}
+export const getStaticPaths: GetStaticPaths = () => ({
+  paths: [],
+  fallback: true,
+})
 
 /* This page was created through dynamic routes from NextJS : https://nextjs.org/docs/routing/dynamic-routes */
-function Admin() {
+function Admin(): JSX.Element | string {
   const { t } = useTranslation('common')
   const router = useRouter()
   const { slug } = router.query
@@ -32,7 +29,7 @@ function Admin() {
   }, [dispatch, docs.status])
 
   if (docs.error) {
-    return docs.error
+    return docs.error.toString()
   } else if (!docs.data) {
     return null
   }

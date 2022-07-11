@@ -44,16 +44,16 @@ const CustomHelpInit = styled('div')(({ theme }) => ({
   transition: 'opacity 500ms ,height 500ms',
 }))
 
-function Help() {
+function Help(): JSX.Element {
   const [helpVisible, setHelpVisible] = useState(false)
   const useHelp = useRef(null)
 
   return (
     <CustomHelp
-      onMouseOver={() => setHelpVisible(true)}
-      onMouseLeave={() => setHelpVisible(false)}
-      onFocus={() => setHelpVisible(true)}
-      onBlur={() => setHelpVisible(false)}
+      onMouseOver={(): void => setHelpVisible(true)}
+      onMouseLeave={(): void => setHelpVisible(false)}
+      onFocus={(): void => setHelpVisible(true)}
+      onBlur={(): void => setHelpVisible(false)}
     >
       <IonIcon
         name="help-circle-outline"

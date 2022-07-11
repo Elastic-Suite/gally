@@ -10,7 +10,7 @@ interface IProps {
   children: ReactChild
 }
 
-function AppProvider(props: IProps) {
+function AppProvider(props: IProps): JSX.Element {
   const { children } = props
   return (
     <Provider store={store}>

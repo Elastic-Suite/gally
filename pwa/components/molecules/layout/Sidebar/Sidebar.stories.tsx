@@ -15,7 +15,7 @@ export default {
 
 const Template: ComponentStory<typeof Sidebar> = (args) => {
   const [childrenState, setChildrenState] = useState({})
-  function toggleChild(code, state) {
+  function toggleChild(code: string, state: boolean): void {
     setChildrenState({
       ...childrenState,
       [code]: state,

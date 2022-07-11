@@ -27,7 +27,7 @@ interface IProps {
   number: number
 }
 
-const NbActiveLocales = ({ number }: IProps) => {
+function NbActiveLocales({ number }: IProps): JSX.Element {
   return (
     <CustomRoot>
       <CustomNbActiveLocales>{number}</CustomNbActiveLocales>

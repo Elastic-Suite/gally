@@ -33,7 +33,7 @@ const CustomHr = styled('div')(({ theme }) => ({
   borderColor: theme.palette.colors.neutral['300'],
 }))
 
-function UserMenuShow() {
+function UserMenuShow(): JSX.Element {
   return (
     <CustomTypoTexte>
       <CustomTypoUsername>Admin name</CustomTypoUsername>

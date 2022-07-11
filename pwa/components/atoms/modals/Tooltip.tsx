@@ -22,7 +22,7 @@ interface IProps {
   desc: string
 }
 
-const Tooltips = ({ hoverDesc, desc }: IProps) => {
+function Tooltips({ hoverDesc, desc }: IProps): JSX.Element {
   return (
     <LightTooltip title={hoverDesc} placement="left">
       <span>{desc}</span>

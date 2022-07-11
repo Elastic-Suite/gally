@@ -12,12 +12,12 @@ import {
   ContentForm,
   FacetteBox,
   FilterBox,
+  FilterSecondaryButton,
   FilterTertiaryButton,
   FiltersBox,
   FiltersPaper,
   HeaderBox,
   SearchBox,
-  FilterSecondaryButton,
 } from './Filters.styled'
 import Filter, { FilterType, IFilter } from './Filter'
 
@@ -40,7 +40,7 @@ interface IProps {
   showSearch?: boolean
 }
 
-function getActiveFilterLabel(filter: IFilter, value: unknown) {
+function getActiveFilterLabel(filter: IFilter, value: unknown): string {
   let label = `${filter?.label}: ${value}`
   if (filter?.options) {
     const option = filter?.options.find((option) => option.value === value)
@@ -49,11 +49,14 @@ function getActiveFilterLabel(filter: IFilter, value: unknown) {
   return label
 }
 
-function getActiveFilter(filter: IFilter, value: unknown) {
+function getActiveFilter(
+  filter: IFilter,
+  value: unknown
+): { filter: IFilter; label: string; value: unknown } {
   return { filter, label: getActiveFilterLabel(filter, value), value }
 }
 
-function Filters(props: IProps) {
+function Filters(props: IProps): JSX.Element {
   const {
     activeValues,
     filters,
@@ -80,7 +83,7 @@ function Filters(props: IProps) {
         : filter.options,
   }))
 
-  const filterMap: Map<string, IFilter> = new Map(
+  const filterMap = new Map<string, IFilter>(
     augmentedFilters.map((filter) => [filter.id, filter])
   )
   const activeFilters = Object.entries(activeValues)
@@ -96,11 +99,11 @@ function Filters(props: IProps) {
       return acc
     }, [])
 
-  function toggleFilters() {
+  function toggleFilters(): void {
     setOpen((prevState) => !prevState)
   }
 
-  function handleClear(filter: IFilter, value: unknown) {
+  function handleClear(filter: IFilter, value: unknown): void {
     const filterValue = filterValues[filter.id]
     if (filter.multiple) {
       onClear(
@@ -112,7 +115,7 @@ function Filters(props: IProps) {
     }
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault()
     onApply()
   }
@@ -120,7 +123,7 @@ function Filters(props: IProps) {
   return (
     <FiltersPaper elevation={0}>
       <HeaderBox>
-        {showSearch && (
+        {showSearch ? (
           <SearchBox>
             <InputText
               endAdornment={
@@ -133,7 +136,7 @@ function Filters(props: IProps) {
               value={searchValue}
             />
           </SearchBox>
-        )}
+        ) : null}
         <FilterBox>
           <FilterSecondaryButton onClick={toggleFilters}>
             {t('filters.filter')}
@@ -143,7 +146,7 @@ function Filters(props: IProps) {
             {activeFilters.map(({ filter, label, value }) => (
               <Tag
                 key={`${filter.id}-${value}`}
-                onIconClick={() => handleClear(filter, value)}
+                onIconClick={(): void => handleClear(filter, value)}
               >
                 {label}
               </Tag>
