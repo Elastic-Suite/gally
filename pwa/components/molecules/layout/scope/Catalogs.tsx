@@ -2,6 +2,7 @@ import { styled } from '@mui/material/styles'
 import TitleScope from '~/components/atoms/scope/TitleScope'
 import NbActiveLocales from '~/components/atoms/scope/NbActiveLocales'
 import Language from '~/components/atoms/scope/Language'
+import { IHydraResponse } from '~/types'
 
 const CustomFullRoot = styled('div')(({ theme }) => ({
   width: '100%',
@@ -36,7 +37,7 @@ const CustomCatalogs = styled('div')(({ theme }) => ({
 }))
 
 interface IProps {
-  content: string[]
+  content: IHydraResponse | IHydraResponse[]
 }
 
 interface ILocalName {

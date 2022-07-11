@@ -162,9 +162,11 @@ function Layout({ children }: IProps) {
         />
         <div
           className={classes.contentWithAppbar + ' ' + classes.rightBar}
-          style={{
-            left: sidebarState ? '279px' : '67px',
-          }}
+          style={
+            sidebarState
+              ? { left: '279px', width: 'calc(100% - 279px)' }
+              : { left: '67px', width: 'calc(100% - 67px)' }
+          }
         >
           <button
             className={

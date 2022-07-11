@@ -11,7 +11,9 @@ const CustumRootSubTabs = styled('div')({
   borderRadius: 8,
   display: 'flex',
   flexDirection: 'column',
-  width: '232px',
+  minWidth: '232px',
+  boxSizing: 'border-box',
+  height: 'max-content',
 })
 
 const CustomSubTabs = styled('div')(({ theme }) => ({
@@ -92,7 +94,11 @@ const SubTabs = ({ labels, contents }: IProps) => {
       </CustumRootSubTabs>
       {contents.map(
         (item: string, key: number) =>
-          key === active && <div key={key}>{item}</div>
+          key === active && (
+            <div style={{ width: '100%' }} key={key}>
+              {item}
+            </div>
+          )
       )}
     </CustomRoot>
   )

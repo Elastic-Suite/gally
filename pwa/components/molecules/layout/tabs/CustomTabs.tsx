@@ -6,8 +6,8 @@ import TabPanel from './TabPanel'
 import { AllyProps } from './AllyProps'
 
 interface IProps {
-  labels: Array<string>
-  contents: string[]
+  labels: string[]
+  contents: any
 }
 export default function CustomTabs({ labels, contents }: IProps) {
   const [activeTabIndex, setActiveTabIndex] = useState(0)
