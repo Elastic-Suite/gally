@@ -1,4 +1,3 @@
-import BreadCrumb from '~/components/molecules/layout/breadcrumb/BreadCrumb'
 import BreadCrumbs from '~/components/atoms/breadcrumb/BreadCrumbs'
 import User from '~/components/molecules/layout/user/User'
 import { styled } from '@mui/system'
@@ -30,21 +29,14 @@ const CustomRoot = styled('div')(({ theme }) => ({
 }))
 
 interface IProps {
-  stories?: boolean
-  slug?: string[]
+  slug?: string | string[]
   menu?: IMenu
 }
 
-const AppBar = ({ stories = false, slug, menu }: IProps) => {
+function AppBar({ slug, menu }: IProps): JSX.Element {
   return (
-    <CustomRoot
-      style={
-        stories
-          ? { width: '100%', boxSizing: 'border-box', height: '84px' }
-          : {}
-      }
-    >
-      {stories ? <BreadCrumbs slug={slug} menu={menu} /> : <BreadCrumb />}
+    <CustomRoot>
+      <BreadCrumbs slug={slug} menu={menu} />
       <User />
     </CustomRoot>
   )

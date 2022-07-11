@@ -7,7 +7,7 @@ interface IProps {
   value: number
 }
 
-function TabPanel(props: IProps) {
+function TabPanel(props: IProps): JSX.Element {
   const { children, value, index, ...other } = props
 
   return (

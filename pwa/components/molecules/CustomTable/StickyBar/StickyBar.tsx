@@ -11,7 +11,7 @@ interface IProps {
   massiveSelectionState: boolean
 }
 
-const StickyBar = (props: IProps) => {
+function StickyBar(props: IProps): JSX.Element {
   const { show, onMassiveSelection, massiveSelectionState } = props
 
   if (!show) {

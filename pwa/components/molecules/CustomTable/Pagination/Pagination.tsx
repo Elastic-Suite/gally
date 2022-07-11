@@ -11,7 +11,7 @@ interface IProps {
   onPageChange: () => void
 }
 
-const Pagination = (props: IProps) => {
+function Pagination(props: IProps): JSX.Element {
   const {
     isBottom,
     totalPages,

@@ -1,7 +1,7 @@
 import { ChangeEvent } from 'react'
 import { Checkbox, Switch, TableBody, TableCell, TableRow } from '@mui/material'
 import { StickyTableCell } from '~/components/organisms/CustomTable/CustomTable.styled'
-import { DataContentType, ITableRow, ITableHeader } from '~/types/customTables'
+import { DataContentType, ITableHeader, ITableRow } from '~/types/customTables'
 
 interface IProps {
   tableRows: ITableRow[]
@@ -10,10 +10,13 @@ interface IProps {
   setSelectedRows?: (arr: string[]) => void
 }
 
-const CustomTableBody = (props: IProps) => {
+function CustomTableBody(props: IProps): JSX.Element {
   const { tableRows, tableHeaders, setSelectedRows, selectedRows } = props
 
-  const rowDisplayAccordingToType = (header: ITableHeader, row: ITableRow) => {
+  function rowDisplayAccordingToType(
+    header: ITableHeader,
+    row: ITableRow
+  ): JSX.Element | string | boolean | number {
     switch (header.type) {
       case DataContentType.STRING:
         return row[header.field]
@@ -22,9 +25,9 @@ const CustomTableBody = (props: IProps) => {
     }
   }
 
-  const handleSingleRow = (e: ChangeEvent<HTMLInputElement>, rowId: string) => {
+  function handleSingleRow(checked: boolean, rowId: string): void {
     setSelectedRows(
-      e.target.checked
+      checked
         ? selectedRows.concat(rowId)
         : selectedRows.filter((value) => value !== rowId)
     )
@@ -34,14 +37,16 @@ const CustomTableBody = (props: IProps) => {
     <TableBody>
       {tableRows.map((tableRow) => (
         <TableRow key={tableRow.id}>
-          {selectedRows && (
+          {selectedRows ? (
             <StickyTableCell sx={{ backgroundColor: 'colors.white' }}>
               <Checkbox
                 checked={selectedRows.includes(tableRow.id)}
-                onChange={(value) => handleSingleRow(value, tableRow.id)}
+                onChange={(event: ChangeEvent<HTMLInputElement>): void =>
+                  handleSingleRow(event.target.checked, tableRow.id)
+                }
               />
             </StickyTableCell>
-          )}
+          ) : null}
 
           {tableHeaders.map((header) => (
             <TableCell

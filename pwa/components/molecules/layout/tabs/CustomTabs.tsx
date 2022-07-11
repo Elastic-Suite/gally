@@ -3,15 +3,15 @@ import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 import Box from '@mui/material/Box'
 import TabPanel from './TabPanel'
-import { AllyProps } from './AllyProps'
+import { a11yProps } from './a11yProps'
 
 interface IProps {
   labels: Array<string>
   contents: string[]
 }
-export default function CustomTabs({ labels, contents }: IProps) {
+export default function CustomTabs({ labels, contents }: IProps): JSX.Element {
   const [activeTabIndex, setActiveTabIndex] = useState(0)
-  const handleChange = (event: SyntheticEvent, newValue: number) => {
+  const handleChange = (event: SyntheticEvent, newValue: number): void => {
     event.preventDefault()
     setActiveTabIndex(newValue)
   }
@@ -26,15 +26,15 @@ export default function CustomTabs({ labels, contents }: IProps) {
         >
           {labels.map((item: string, key: number) => (
             <Tab
-              key={key}
+              key={item}
               label={item}
-              {...AllyProps('simple-tabpanel', key)}
+              {...a11yProps('simple-tabpanel', key)}
             />
           ))}
         </Tabs>
       </Box>
       {contents.map((item: string, key: number) => (
-        <TabPanel key={key} value={activeTabIndex} index={key}>
+        <TabPanel key={item} value={activeTabIndex} index={key}>
           {item}
         </TabPanel>
       ))}

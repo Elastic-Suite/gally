@@ -27,6 +27,6 @@ interface IProps {
   name: string
 }
 
-export const Title = ({ name }: IProps) => {
+export function Title({ name }: IProps): JSX.Element {
   return <CustomRoot>{name}</CustomRoot>
 }

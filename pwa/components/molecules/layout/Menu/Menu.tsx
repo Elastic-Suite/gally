@@ -8,7 +8,7 @@ import MenuItem from '~/components/atoms/menu/MenuItem'
 /*
  * Create function to create path from code of the menu item
  */
-function slugify(code, depth) {
+function slugify(code: string, depth: number): string {
   let slug = code
   for (let i = 0; i < depth; i++) {
     slug = slug.replace('_', '/')
@@ -64,7 +64,7 @@ interface IProps {
   sidebarStateTimeout?: boolean
 }
 
-function Menu(props: IProps) {
+function Menu(props: IProps): JSX.Element {
   const {
     childrenState,
     className,
@@ -80,10 +80,10 @@ function Menu(props: IProps) {
   return (
     <div className={className}>
       <div className={classes.firstItems}>
-        {menu?.hierarchy.map((item, index) => {
+        {menu?.hierarchy.map((item) => {
           if (!(item.code === 'settings') && !(item.code === 'monitoring')) {
             return (
-              <div key={`${index}-${item.code}`} className={classes.boldStyle}>
+              <div key={item.code} className={classes.boldStyle}>
                 <MenuItemIcon
                   code={item.code}
                   href={slugify(item.code, 0)}
@@ -91,13 +91,13 @@ function Menu(props: IProps) {
                   isRoot={words[0] === item.code}
                   label={item.label}
                   lightStyle={false}
-                  childPadding={!!item.children}
+                  childPadding={Boolean(item.children)}
                   sidebarState={sidebarState}
                   sidebarStateTimeout={sidebarStateTimeout}
                 />
                 <div className={classes.secondItems}>
-                  {item.children?.map((item, index) => (
-                    <div key={`${index}-${item.code}`}>
+                  {item.children?.map((item) => (
+                    <div key={item.code}>
                       <MenuItem
                         childrenState={childrenState}
                         code={item.code}
@@ -105,8 +105,9 @@ function Menu(props: IProps) {
                         isActive={menuItemActive === item.code}
                         isBoosts={
                           words.length > 2 &&
-                          words.slice(0, 2).join('_') === item.code &&
-                          words[2] !== 'boosts'
+                          words.slice(0, 2).join('_') === item.code
+                            ? words[2] !== 'boosts'
+                            : null
                         }
                         label={item.label}
                         menuChildren={item.children}
@@ -119,23 +120,22 @@ function Menu(props: IProps) {
                 </div>
               </div>
             )
-          } else {
-            return (
-              <div key={`${index}-${item.code}`}>
-                <MenuItemIcon
-                  code={item.code}
-                  href={slugify(item.code, 0)}
-                  isActive={menuItemActive === item.code}
-                  isRoot={words[0] === item.code}
-                  label={item.label}
-                  lightStyle
-                  childPadding={false}
-                  sidebarState={sidebarState}
-                  sidebarStateTimeout={sidebarStateTimeout}
-                />
-              </div>
-            )
           }
+          return (
+            <div key={item.code}>
+              <MenuItemIcon
+                code={item.code}
+                href={slugify(item.code, 0)}
+                isActive={menuItemActive === item.code}
+                isRoot={words[0] === item.code}
+                label={item.label}
+                lightStyle
+                childPadding={false}
+                sidebarState={sidebarState}
+                sidebarStateTimeout={sidebarStateTimeout}
+              />
+            </div>
+          )
         })}
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { TableContainer, TableCell, Table } from '@mui/material'
+import { Table, TableCell, TableContainer } from '@mui/material'
 import { styled } from '@mui/system'
 
 export const TableContainerWithCustomScrollbar = styled(TableContainer)(

@@ -1,7 +1,7 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { useCallback, useEffect, useState } from 'react'
 
-import { FilterType } from './Filter'
+import { FilterType, IFilter } from './Filter'
 import Filters from './Filters'
 
 export default {
@@ -10,12 +10,13 @@ export default {
 } as ComponentMeta<typeof Filters>
 
 const Template: ComponentStory<typeof Filters> = (args) => {
+  const { filters } = args
   const initValues = useCallback(
-    () =>
+    (): Record<string, unknown | unknown[]> =>
       Object.fromEntries(
-        args.filters.map((filter) => [filter.id, filter.multiple ? [] : ''])
+        filters.map((filter) => [filter.id, filter.multiple ? [] : ''])
       ),
-    [args.filters]
+    [filters]
   )
   const [activeValues, setActiveValues] = useState({})
   const [searchValue, setSearchValue] = useState('')
@@ -24,13 +25,13 @@ const Template: ComponentStory<typeof Filters> = (args) => {
   useEffect(() => {
     setFilterValues(initValues())
     setActiveValues([])
-  }, [args.filters, initValues])
+  }, [initValues])
 
-  function handleApply() {
+  function handleApply(): void {
     setActiveValues(filterValues)
   }
 
-  function handleClear(filter, value) {
+  function handleClear(filter: IFilter, value: unknown): void {
     setFilterValues((prevState) => ({
       ...prevState,
       [filter.id]: value,
@@ -41,13 +42,13 @@ const Template: ComponentStory<typeof Filters> = (args) => {
     }))
   }
 
-  function handleClearAll() {
+  function handleClearAll(): void {
     setSearchValue('')
     setFilterValues(initValues())
     setActiveValues({})
   }
 
-  function handleFilterChange(filter, value) {
+  function handleFilterChange(filter: IFilter, value: unknown): void {
     setFilterValues((prevState) => ({
       ...prevState,
       [filter.id]: value,

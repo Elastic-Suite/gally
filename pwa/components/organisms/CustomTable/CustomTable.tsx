@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import StickyBar from '~/components/molecules/CustomTable/StickyBar/StickyBar'
 import {
@@ -8,7 +8,7 @@ import {
 import CustomTableBody from '~/components/organisms/CustomTable/CustomTableBody/CustomTableBody'
 import CustomTableHeader from '~/components/organisms/CustomTable/CustomTableHeader/CustomTableHeader'
 
-import { MassiveSelectionType, ITableRow, ITableHeader } from '~/types'
+import { ITableHeader, ITableRow, MassiveSelectionType } from '~/types'
 
 interface IProps {
   tableHeaders: ITableHeader[]
@@ -16,7 +16,7 @@ interface IProps {
   onMassiveAction?: (action: string) => void
 }
 
-const CustomTable = (props: IProps) => {
+function CustomTable(props: IProps): JSX.Element {
   const { tableHeaders, tableRows, onMassiveAction } = props
   const [selectedRows, setSelectedRows] = useState<string[]>(null)
 
@@ -36,10 +36,10 @@ const CustomTable = (props: IProps) => {
       : false
 
     showStickyBar =
-      (selectedRows && selectedRows.length > 0 ? true : false) ||
-      (currentMassiveSelection !== MassiveSelectionType.NONE ? true : false)
+      Boolean(selectedRows && selectedRows.length > 0) ||
+      currentMassiveSelection !== MassiveSelectionType.NONE
 
-    handleMassiveSelection = (selection: MassiveSelectionType) => {
+    handleMassiveSelection = (selection: MassiveSelectionType): void => {
       setCurrentMassiveSelection(selection)
       switch (selection) {
         case MassiveSelectionType.ALL:
@@ -85,13 +85,13 @@ const CustomTable = (props: IProps) => {
           />
         </StyledTable>
       </TableContainerWithCustomScrollbar>
-      {onMassiveAction && (
+      {onMassiveAction ? (
         <StickyBar
           show={showStickyBar}
           onMassiveSelection={handleMassiveSelection}
           massiveSelectionState={massiveSelectionState}
         />
-      )}
+      ) : null}
     </>
   )
 }

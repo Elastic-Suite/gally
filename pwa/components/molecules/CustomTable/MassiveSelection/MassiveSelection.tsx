@@ -9,7 +9,7 @@ interface IProps {
   selectionState: boolean
 }
 
-const MassiveSelection = (props: IProps) => {
+function MassiveSelection(props: IProps): JSX.Element {
   const { onSelection, selectionState } = props
 
   const { t } = useTranslation('common')
@@ -17,18 +17,20 @@ const MassiveSelection = (props: IProps) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement>(null)
   const open = Boolean(anchorEl)
 
-  const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
+  function handleClick(e: MouseEvent<HTMLButtonElement>): void {
     setAnchorEl(e.currentTarget)
   }
 
-  const handleClose = (key: string) => {
-    if (MassiveSelectionType[key]) {
-      onSelection(MassiveSelectionType[key])
+  function handleClose(key: string): void {
+    const massiveSelectionType =
+      MassiveSelectionType[key as keyof typeof MassiveSelectionType]
+    if (massiveSelectionType) {
+      onSelection(massiveSelectionType)
     }
-    setAnchorEl(undefined)
+    setAnchorEl(null)
   }
 
-  const handleMassiveSelection = (e: ChangeEvent<HTMLInputElement>) => {
+  function handleMassiveSelection(e: ChangeEvent<HTMLInputElement>): void {
     onSelection(
       e.target.checked
         ? MassiveSelectionType.ALL_ON_CURRENT_PAGE
@@ -43,11 +45,15 @@ const MassiveSelection = (props: IProps) => {
         <IonIcon name="chevron-down-outline" />
       </Button>
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-        {Object.keys(MassiveSelectionType).map((key) => (
-          <MenuItem onClick={() => handleClose(key)} key={key}>
-            {t(MassiveSelectionType[key])}
-          </MenuItem>
-        ))}
+        {Object.keys(MassiveSelectionType).map((key: string) => {
+          const massiveSelectionType =
+            MassiveSelectionType[key as keyof typeof MassiveSelectionType]
+          return (
+            <MenuItem onClick={(): void => handleClose(key)} key={key}>
+              {t(massiveSelectionType)}
+            </MenuItem>
+          )
+        })}
       </Menu>
     </>
   )

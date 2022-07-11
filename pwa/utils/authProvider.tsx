@@ -2,7 +2,13 @@ import jwtDecode from 'jwt-decode'
 import { ENTRYPOINT } from 'config/entrypoint'
 
 const authProvider = {
-  login: ({ username, password }) => {
+  login: ({
+    username,
+    password,
+  }: {
+    username: string
+    password: string
+  }): Promise<unknown> => {
     const request = new Request(`${ENTRYPOINT}/authentication_token`, {
       method: 'POST',
       body: JSON.stringify({ email: username, password }),
@@ -22,33 +28,36 @@ const authProvider = {
         window.location.reload()
       })
   },
-  logout: () => {
+  logout: (): Promise<void> => {
     localStorage.removeItem('token')
     return Promise.resolve()
   },
-  checkAuth: () => {
+  checkAuth: (): Promise<void | Error> => {
     try {
       const token = localStorage.getItem('token')
       if (
         !token ||
         new Date().getTime() / 1000 > jwtDecode<{ exp: number }>(token)?.exp
       ) {
-        return Promise.reject()
+        return Promise.reject(new Error('Token has expired'))
       }
       return Promise.resolve()
     } catch (e) {
       // override possible jwtDecode error
-      return Promise.reject()
+      return Promise.reject(new Error('Could not decode token'))
     }
   },
-  checkError: (err) => {
+  checkError: (err: {
+    status?: number
+    response?: { status?: number }
+  }): Promise<void | Error> => {
     if ([401, 403].includes(err?.status || err?.response?.status)) {
       localStorage.removeItem('token')
-      return Promise.reject()
+      return Promise.reject(new Error('Unauthorized/Forbidden'))
     }
     return Promise.resolve()
   },
-  getPermissions: () => Promise.resolve(),
+  getPermissions: (): Promise<void> => Promise.resolve(),
 }
 
 export default authProvider

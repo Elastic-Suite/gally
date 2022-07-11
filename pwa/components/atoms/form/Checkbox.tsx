@@ -1,7 +1,7 @@
 import {
-  Checkbox as MuiCheckbox,
   CheckboxProps,
   FormControlLabel,
+  Checkbox as MuiCheckbox,
 } from '@mui/material'
 
 interface IProps extends CheckboxProps {
@@ -9,7 +9,7 @@ interface IProps extends CheckboxProps {
   list?: boolean
 }
 
-function Checkbox(props: IProps) {
+function Checkbox(props: IProps): JSX.Element {
   const { disabled, label, list, ...checkboxProps } = props
   return (
     <FormControlLabel
@@ -18,11 +18,13 @@ function Checkbox(props: IProps) {
         <MuiCheckbox
           {...checkboxProps}
           sx={
-            list && {
-              marginBottom: '-9px',
-              marginTop: '-9px',
-              fontSize: '12px',
-            }
+            list
+              ? {
+                  marginBottom: '-9px',
+                  marginTop: '-9px',
+                  fontSize: '12px',
+                }
+              : null
           }
         />
       }

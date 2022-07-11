@@ -1,22 +1,24 @@
-import { forwardRef } from 'react'
+import { ForwardedRef, HTMLProps, forwardRef } from 'react'
 import { selectUnstyledClasses } from '@mui/base/SelectUnstyled'
 import PopperUnstyled from '@mui/base/PopperUnstyled'
 import { styled } from '@mui/system'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 
-const ButtonWithIcon = forwardRef<HTMLButtonElement>(function ButtonWithIcon(
-  props,
-  ref
-) {
+function ButtonWithIcon(
+  props: HTMLProps<HTMLButtonElement>,
+  ref: ForwardedRef<HTMLButtonElement>
+): JSX.Element {
+  const { children } = props
   return (
-    <button {...props} ref={ref}>
-      {props.children}
+    <button {...props} ref={ref} type="button">
+      {children}
       <IonIcon name="chevron-down" />
     </button>
   )
-})
+}
+const ButtonWithIconRef = forwardRef<HTMLButtonElement>(ButtonWithIcon)
 
-export const StyledButton = styled(ButtonWithIcon)(({ theme }) => ({
+export const StyledButton = styled(ButtonWithIconRef)(({ theme }) => ({
   fontFamily: 'Inter',
   padding: '10px 16px',
   background: theme.palette.colors.white,
@@ -69,7 +71,7 @@ export const StyledListbox = styled('ul')(({ theme }) => ({
   padding: 0,
   background: theme.palette.colors.white,
   width: 180,
-  border: '1px solid ' + theme.palette.colors.neutral['300'],
+  border: `1px solid ${theme.palette.colors.neutral['300']}`,
   borderRadius: 8,
   overflow: 'auto',
   boxSizing: 'border-box',

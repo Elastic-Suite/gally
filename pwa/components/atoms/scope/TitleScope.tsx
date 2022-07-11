@@ -12,7 +12,7 @@ interface IProps {
   name: string
 }
 
-const TitleScope = ({ name }: IProps) => {
+function TitleScope({ name }: IProps): JSX.Element {
   return <CustomTitleScope>{name}</CustomTitleScope>
 }
 

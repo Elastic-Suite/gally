@@ -8,7 +8,7 @@ const CustomRoot = styled('div')(({ theme }) => ({
   gap: theme.spacing(1),
 }))
 
-function User() {
+function User(): JSX.Element {
   return (
     <CustomRoot>
       <Help />
