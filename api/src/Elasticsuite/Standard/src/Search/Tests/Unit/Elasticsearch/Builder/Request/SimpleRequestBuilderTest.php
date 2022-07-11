@@ -70,8 +70,8 @@ class SimpleRequestBuilderTest extends AbstractTest
         self::$requestFactory = static::getContainer()->get(RequestFactoryInterface::class);
         \assert(static::getContainer()->get(QueryFactory::class) instanceof QueryFactory);
         self::$queryFactory = static::getContainer()->get(QueryFactory::class);
-        self::$queryBuilder = new QueryBuilder(self::$queryFactory);
         self::$filterQueryBuilder = new FilterQueryBuilder(self::$queryFactory);
+        self::$queryBuilder = new QueryBuilder(self::$queryFactory, self::$filterQueryBuilder);
         self::$sortOrderBuilder = new SortOrderBuilder(self::$filterQueryBuilder);
         \assert(static::getContainer()->get(AggregationFactory::class) instanceof AggregationFactory);
         self::$aggregationFactory = static::getContainer()->get(AggregationFactory::class);

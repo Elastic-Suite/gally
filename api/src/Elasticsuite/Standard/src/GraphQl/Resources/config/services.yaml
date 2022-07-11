@@ -1,0 +1,12 @@
+services:
+    Elasticsuite\GraphQl\Decoration\Resolver\Stage\ReadStage:
+        decorates: api_platform.graphql.resolver.stage.read
+        arguments:
+            - '@api_platform.metadata.resource.metadata_factory'
+            - '@.inner'
+
+    Elasticsuite\GraphQl\Decoration\Serializer\SerializerContextBuilder:
+        decorates: api_platform.graphql.serializer.context_builder
+        arguments:
+            - '%api_platform.graphql.nesting_separator%'
+            - '@.inner'

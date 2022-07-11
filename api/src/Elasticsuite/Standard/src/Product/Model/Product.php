@@ -19,6 +19,7 @@ namespace Elasticsuite\Product\Model;
 use ApiPlatform\Core\Action\NotFoundAction;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Elasticsuite\Entity\Model\Attribute\AttributeInterface;
+use Elasticsuite\Search\GraphQl\Type\Definition\SortInputType;
 use Elasticsuite\Search\Model\Document;
 use Elasticsuite\Search\Resolver\DummyDocumentResolver;
 
@@ -33,7 +34,7 @@ use Elasticsuite\Search\Resolver\DummyDocumentResolver;
                     'catalogId' => ['type' => 'String!', 'description' => 'Catalog ID'],
                     'currentPage' => ['type' => 'Int'],
                     'pageSize' => ['type' => 'Int'],
-                    'sort' => ['type' => 'SortInput'],
+                    'sort' => ['type' => SortInputType::NAME],
                 ],
                 'read' => true, // Required so the dataprovider is called.
                 'deserialize' => true,

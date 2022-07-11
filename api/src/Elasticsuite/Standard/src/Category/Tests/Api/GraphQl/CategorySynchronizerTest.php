@@ -37,8 +37,10 @@ use Elasticsuite\Index\MutationResolver\InstallIndexMutation;
 use Elasticsuite\Index\Repository\Index\IndexRepository;
 use Elasticsuite\Index\Repository\Index\IndexRepositoryInterface;
 use Elasticsuite\Index\Service\IndexSettings;
+use Elasticsuite\Metadata\Repository\MetadataRepository;
 use Elasticsuite\Search\Elasticsearch\Adapter;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\Query\QueryBuilder;
+use Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider;
 use Elasticsuite\Search\Elasticsearch\RequestFactoryInterface;
 use Elasticsuite\Standard\src\Test\AbstractTest;
 use Elasticsuite\Standard\src\Test\ExpectedResponse;
@@ -388,6 +390,8 @@ class CategorySynchronizerTest extends AbstractTest
             static::getContainer()->get(RequestFactoryInterface::class),
             static::getContainer()->get(QueryBuilder::class),
             static::getContainer()->get(Adapter::class),
+            static::getContainer()->get(ContainerConfigurationProvider::class),
+            static::getContainer()->get(MetadataRepository::class),
             $entityManagerMock,
         );
     }

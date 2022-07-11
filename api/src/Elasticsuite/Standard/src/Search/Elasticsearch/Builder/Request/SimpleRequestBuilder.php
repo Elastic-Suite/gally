@@ -81,9 +81,7 @@ class SimpleRequestBuilder
             ? array_merge($facets, $this->aggregationResolver->getContainerAggregations($containerConfig, $query, $filters, $queryFilters))
             : [];
 
-        /*
         $queryFilters = array_merge($queryFilters, array_diff_key($filters, $facetFilters));
-        */
 
         $spellingType = SpellcheckerInterface::SPELLING_TYPE_EXACT;
         /*
@@ -97,8 +95,7 @@ class SimpleRequestBuilder
             'indexName' => $containerConfig->getIndexName(),
             'from' => $from,
             'size' => $size,
-            // 'query'        => $this->queryBuilder->createQuery($containerConfig, $query, $queryFilters, $spellingType),
-            'query' => $this->queryBuilder->createQuery($query),
+            'query' => $this->queryBuilder->createQuery($containerConfig, $query, $queryFilters, $spellingType),
             'sortOrders' => $this->sortOrderBuilder->buildSortOrders($containerConfig, $sortOrders),
             'aggregations' => $this->aggregationBuilder->buildAggregations($containerConfig, $facets, $facetFilters),
             'spellingType' => $spellingType,
