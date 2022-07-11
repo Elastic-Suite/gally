@@ -1,7 +1,11 @@
 import { styled } from '@mui/material/styles'
+import TitleScope from '~/components/atoms/scope/TitleScope'
+import NbActiveLocales from '~/components/atoms/scope/NbActiveLocales'
+import Language from '~/components/atoms/scope/Language'
 
 const CustomRoot = styled('div')(({ theme }) => ({
   width: '100%',
+  boxSizing: 'border-box',
   display: 'flex',
   flexDirection: 'column',
   gap: theme.spacing(3),
@@ -16,11 +20,19 @@ interface IProps {
 }
 
 function ActiveLocales({ content }: IProps): JSX.Element {
+  let Languages = []
+  for (const hydraContent of content['hydra:member']) {
+    for (const localizedCatalogsContent of hydraContent.localizedCatalogs) {
+      Languages = [...Languages, localizedCatalogsContent.localName]
+    }
+  }
+  Languages = [...new Set(Languages)]
+
   return (
     <CustomRoot>
-      {content.map((item: string) => (
-        <div key={item}>{item}</div>
-      ))}
+      <TitleScope name="Total" />
+      <NbActiveLocales number={Languages.length} />
+      <Language language={Languages} limit={false} />
     </CustomRoot>
   )
 }

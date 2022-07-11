@@ -36,26 +36,49 @@ const CustomCatalogs = styled('div')(({ theme }) => ({
 }))
 
 interface IProps {
-  content: { name: string; nbActiveLocales: number; language: Array<string> }[]
+  content: string[]
+}
+
+interface ILocalName {
+  localName: string
+}
+
+interface ILocalizedCatalogs {
+  localizedCatalogs: ILocalName[]
+  name: string
 }
 
 function Catalogs({ content }: IProps): JSX.Element {
+  function Languages(data: ILocalizedCatalogs) {
+    let Languages = []
+    for (const localizedCatalogsContent of data.localizedCatalogs) {
+      Languages = [...Languages, localizedCatalogsContent.localName]
+    }
+    return (Languages = [...new Set(Languages)])
+  }
+
   return (
     <CustomFullRoot>
-      <CustomNbCatalogs>{content.length} catalogs</CustomNbCatalogs>
+      <CustomNbCatalogs>
+        {content['hydra:member'].length +
+          ' ' +
+          (content['hydra:member'].length > 1 ? 'catalogs' : 'catalog')}
+      </CustomNbCatalogs>
       <CustomRoot>
-        {content.map((item, key: number) => (
-          <CustomCatalogs key={item.name}>
-            <TitleScope name={item.name} />
-            <NbActiveLocales number={item.nbActiveLocales} />
-            <Language
-              order={key}
-              language={item.language}
-              content={content}
-              limit
-            />
-          </CustomCatalogs>
-        ))}
+        {content['hydra:member'].map(
+          (item: ILocalizedCatalogs, key: number) => (
+            <CustomCatalogs key={item.name}>
+              <TitleScope name={item.name} />
+              <NbActiveLocales number={[...new Set(Languages(item))].length} />
+              <Language
+                order={key}
+                language={Languages(item)}
+                content={content['hydra:member']}
+                limit
+              />
+            </CustomCatalogs>
+          )
+        )}
       </CustomRoot>
     </CustomFullRoot>
   )
