@@ -25,8 +25,11 @@ const Scope = () => {
             key="labels"
             labels={['Catalogs', 'Actives locales']}
             contents={[
-              <Catalogs content={catalogsFields.data} />,
-              <ActiveLocales content={catalogsFields.data} />,
+              <Catalogs key={'Catalogs'} content={catalogsFields.data} />,
+              <ActiveLocales
+                key={'ActiveLocales'}
+                content={catalogsFields.data}
+              />,
             ]}
           />,
           'Content of Searchable and filtrable attributes',
