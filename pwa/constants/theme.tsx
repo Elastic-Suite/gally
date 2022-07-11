@@ -516,6 +516,13 @@ const theme = createTheme({
         },
       },
     },
+    MuiBackdrop: {
+      styleOverrides: {
+        root: {
+          background: 'rgba(21, 26, 71, 0.6)',
+        },
+      },
+    },
     MuiDialogActions: {
       styleOverrides: {
         root: {
