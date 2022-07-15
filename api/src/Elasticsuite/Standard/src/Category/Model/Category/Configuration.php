@@ -16,10 +16,73 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Category\Model\Category;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Elasticsuite\Catalog\Model\Catalog;
 use Elasticsuite\Catalog\Model\LocalizedCatalog;
+use Elasticsuite\Category\Controller\CategoryConfigurationGet;
 use Elasticsuite\Category\Model\Category;
+use Elasticsuite\Category\Resolver\ConfigurationResolver;
+use Elasticsuite\User\Constant\Role;
 
+#[ApiResource(
+    collectionOperations: [
+        'get' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
+        'post' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
+    ],
+    itemOperations: [
+        'get' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
+        'get_by_context' => [
+            'security' => "is_granted('" . Role::ROLE_ADMIN . "')",
+            'method' => 'GET',
+            'path' => '/category_configurations/category/{categoryId}',
+            'controller' => CategoryConfigurationGet::class,
+            'read' => false,
+            'openapi_context' => [
+                'parameters' => [
+                    [
+                        'name' => 'categoryId',
+                        'in' => 'path',
+                        'type' => 'Category',
+                        'required' => true,
+                    ],
+                    [
+                        'name' => 'catalogId',
+                        'in' => 'query',
+                        'type' => 'int',
+                    ],
+                    [
+                        'name' => 'localizedCatalogId',
+                        'in' => 'query',
+                        'type' => 'int',
+                    ],
+                ],
+            ],
+        ],
+        'put' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
+        'patch' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
+        'delete' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
+    ],
+    graphql: [
+        'update' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
+        'delete' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
+        'item_query' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
+        'collection_query' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
+        'get' => [
+            'item_query' => ConfigurationResolver::class,
+            'args' => [
+                'categoryId' => ['type' => 'String!'],
+                'catalogId' => ['type' => 'Int'],
+                'localizedCatalogId' => ['type' => 'Int'],
+            ],
+        ],
+    ],
+    shortName: 'CategoryConfiguration',
+)]
+#[ApiFilter(SearchFilter::class, properties: ['category' => 'exact'])]
+#[ApiFilter(SearchFilter::class, properties: ['catalog' => 'exact'])]
+#[ApiFilter(SearchFilter::class, properties: ['localized_catalog' => 'exact'])]
 class Configuration
 {
     private int $id;
@@ -33,6 +96,10 @@ class Configuration
     private ?string $name = null;
 
     private ?bool $isVirtual = null;
+
+    private ?bool $useNameInProductSearch = false;
+
+    private ?string $defaultSorting = null;
 
     public function getId(): int
     {
@@ -84,6 +151,16 @@ class Configuration
         $this->name = $name;
     }
 
+    public function getUseNameInProductSearch(): ?bool
+    {
+        return $this->useNameInProductSearch;
+    }
+
+    public function setUseNameInProductSearch(?bool $useNameInProductSearch): void
+    {
+        $this->useNameInProductSearch = $useNameInProductSearch;
+    }
+
     public function getIsVirtual(): ?bool
     {
         return $this->isVirtual;
@@ -92,5 +169,15 @@ class Configuration
     public function setIsVirtual(?bool $isVirtual): void
     {
         $this->isVirtual = $isVirtual;
+    }
+
+    public function getDefaultSorting(): ?string
+    {
+        return $this->defaultSorting;
+    }
+
+    public function setDefaultSorting(?string $defaultSorting): void
+    {
+        $this->defaultSorting = $defaultSorting;
     }
 }

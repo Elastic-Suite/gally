@@ -1,4 +1,9 @@
 Elasticsuite\Metadata\Model\SourceField:
+    product_name:
+        metadata: '@product'
+        code: 'name'
+        type: 'text'
+        is_sortable: true
     category_id:
         metadata: '@category'
         code: 'id'

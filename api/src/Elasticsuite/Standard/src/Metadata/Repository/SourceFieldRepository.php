@@ -28,8 +28,21 @@ use Elasticsuite\Metadata\Model\SourceField;
  */
 class SourceFieldRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, private MetadataRepository $metadataRepository)
     {
         parent::__construct($registry, SourceField::class);
+    }
+
+    /**
+     * @return SourceField[]
+     */
+    public function getSortableFields(string $entityCode): array
+    {
+        return $this->findBy(
+            [
+                'metadata' => $this->metadataRepository->findBy(['entity' => $entityCode]),
+                'isSortable' => true,
+            ]
+        );
     }
 }

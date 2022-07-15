@@ -1,14 +1,4 @@
 Elasticsuite\Metadata\Model\SourceField:
-    product_name:
-        metadata: '@product'
-        code: 'name'
-        type: 'text'
-        weight: 10
-        is_searchable: true
-        is_filterable: false
-        is_sortable: false
-        is_spellchecked: false
-        is_used_for_rules: false
     product_brand:
         metadata: '@product'
         code: 'brand'
