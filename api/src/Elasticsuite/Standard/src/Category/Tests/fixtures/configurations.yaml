@@ -1,0 +1,19 @@
+Elasticsuite\Category\Model\Category\Configuration:
+    conf1:
+        category: '@categ1'
+        catalog: '@catalog1'
+        localizedCatalog: '@catalog1_fr'
+        name: 'Un'
+        isVirtual: true
+    conf2:
+        category: '@categ1'
+        catalog: '@catalog1'
+        localizedCatalog: '@catalog1_en'
+        name: 'One'
+    conf3:
+        category: '@categ1'
+        catalog: '@catalog1'
+        isVirtual: false
+    conf4:
+        category: '@categ1'
+        isVirtual: true

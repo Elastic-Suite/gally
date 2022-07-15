@@ -34,6 +34,13 @@ class CategoryConfigurationRepository extends ServiceEntityRepository
         parent::__construct($registry, Category\Configuration::class);
     }
 
+    public function findByContext(string $categoryId, ?int $catalogId, ?int $localizedCatalogId): ?Category\Configuration
+    {
+        return $this->findOneBy(
+            ['category' => $categoryId, 'catalog' => $catalogId, 'localizedCatalog' => $localizedCatalogId]
+        );
+    }
+
     /**
      * @return Category\Configuration[]
      */

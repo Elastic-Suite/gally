@@ -17,8 +17,27 @@ declare(strict_types=1);
 namespace Elasticsuite\Category\Model;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Elasticsuite\User\Constant\Role;
 
-#[ApiResource]
+#[ApiResource(
+    collectionOperations: [
+        'get' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
+        'post' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
+    ],
+    itemOperations: [
+        'get' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
+        'put' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
+        'patch' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
+        'delete' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
+    ],
+    graphql: [
+        'create' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
+        'update' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
+        'delete' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
+        'item_query' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
+        'collection_query' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
+    ],
+)]
 class Category
 {
     private string $id;

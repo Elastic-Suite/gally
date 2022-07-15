@@ -51,3 +51,30 @@ services:
             - '@.inner'
             - '@Elasticsuite\Category\Service\CategorySynchronizer'
         decoration_priority: 100
+        
+    Elasticsuite\Category\DataProvider\CategorySortingOptionDataProvider:
+        arguments:
+            - '@Elasticsuite\Metadata\Repository\SourceFieldRepository'
+        tags:
+            - { name: api_platform.collection_data_provider }
+        
+    Elasticsuite\Category\Validator\DefaultSortingFieldConstraintValidator:
+        arguments:
+            - '@Elasticsuite\Category\DataProvider\CategorySortingOptionDataProvider'
+        tags:
+            - { name: validator.constraint_validator } 
+    
+    Elasticsuite\Category\Controller\CategoryConfigurationGet:
+        arguments:
+            - '@Elasticsuite\Category\Repository\CategoryConfigurationRepository'
+            - '@request_stack'
+        calls:
+            - [ setContainer, [ '@service_container' ] ]
+        tags:
+            - { name: controller.service_arguments }
+    
+    Elasticsuite\Category\Resolver\ConfigurationResolver:
+        arguments:
+            - '@Elasticsuite\Category\Repository\CategoryConfigurationRepository'
+        tags:
+            - { name: api_platform.graphql.query_resolver } 
