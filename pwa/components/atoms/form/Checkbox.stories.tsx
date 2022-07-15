@@ -1,5 +1,5 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react'
-import { useState } from 'react'
+import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { ChangeEvent, useState } from 'react'
 
 import CheckboxComponent from './Checkbox'
 
@@ -10,7 +10,7 @@ export default {
 
 const Template: ComponentStory<typeof CheckboxComponent> = (args) => {
   const [checked, setChecked] = useState(false)
-  function handleChange(event) {
+  function handleChange(event: ChangeEvent<HTMLInputElement>): void {
     setChecked(event.target.checked)
   }
   return (

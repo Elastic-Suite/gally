@@ -97,7 +97,7 @@ export interface IDocsJson {
   info: IDocsJsonInfo
   servers: IDocsJsonServer[]
   paths: Record<string, IDocsJsonPath>
-  components: Record<string, unknown>
+  components: Record<string, IDocsJsonComponents>
   security: IDocsJsonSecurity[]
   tags: string[]
 }

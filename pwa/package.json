@@ -9,10 +9,10 @@
     "start": "next start",
     "test": "jest",
     "test:update": "jest --update-snapshot",
-    "eslint": "eslint --fix --max-warnings=0 --ignore-path .gitignore .",
-    "eslint:ci": "eslint --max-warnings=0 --ignore-path .gitignore .",
-    "stylelint": "stylelint --fix --max-warnings=0 --ignore-path .gitignore '**/*.{css,scss,sass}'",
-    "stylelint:ci": "stylelint --max-warnings=0 --ignore-path .gitignore '**/*.{css,scss,sass}'",
+    "eslint": "eslint --fix --ignore-path .gitignore .",
+    "eslint:ci": "eslint --ignore-path .gitignore .",
+    "stylelint": "stylelint --fix --ignore-path .gitignore '**/*.{css,scss,sass}'",
+    "stylelint:ci": "stylelint --ignore-path .gitignore '**/*.{css,scss,sass}'",
     "prettier": "prettier --write --ignore-unknown --ignore-path .gitignore .",
     "prettier:ci": "prettier --check --ignore-unknown --ignore-path .gitignore .",
     "typescript": "tsc --noEmit",
@@ -101,7 +101,7 @@
   "lint-staged": {
     "*": "prettier --write --ignore-unknown --ignore-path .gitignore",
     "*.{ts,tsx}": "tsc-files --noEmit global.d.ts",
-    "*.{js,jsx,ts,tsx}": "eslint --fix --max-warnings=0 --ignore-path .gitignore",
-    "*.{css,scss,sass}": "stylelint --fix --max-warnings=0 --ignore-path .gitignore"
+    "*.{js,jsx,ts,tsx}": "eslint --fix --ignore-path .gitignore",
+    "*.{css,scss,sass}": "stylelint --fix --ignore-path .gitignore"
   }
 }

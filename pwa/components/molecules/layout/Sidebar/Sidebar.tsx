@@ -75,7 +75,7 @@ interface IProps {
   sidebarStateTimeout?: boolean
 }
 
-function Sidebar(props: IProps) {
+function Sidebar(props: IProps): JSX.Element {
   const {
     childrenState,
     menu,
@@ -100,7 +100,7 @@ function Sidebar(props: IProps) {
     >
       <div
         className={
-          classes.root + (sidebarState ? '' : ' ' + classes.rootCollapsed)
+          classes.root + (sidebarState ? '' : ` ${classes.rootCollapsed}`)
         }
       >
         <Link href="/" as="/">
@@ -108,7 +108,7 @@ function Sidebar(props: IProps) {
             <div
               className={
                 classes.imgExtended +
-                (!sidebarStateTimeout ? '' : ' ' + classes.imgNotActive)
+                (!sidebarStateTimeout ? '' : ` ${classes.imgNotActive}`)
               }
             >
               <Image
@@ -131,7 +131,7 @@ function Sidebar(props: IProps) {
         <Menu
           childrenState={childrenState}
           className={
-            classes.menu + (sidebarState ? '' : ' ' + classes.widthCollapse)
+            classes.menu + (sidebarState ? '' : ` ${classes.widthCollapse}`)
           }
           menu={menu}
           menuItemActive={menuItemActive}

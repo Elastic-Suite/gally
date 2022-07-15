@@ -128,7 +128,7 @@ interface IProps {
   sidebarStateTimeout?: boolean
 }
 
-function MenuItemIcon(props: IProps) {
+function MenuItemIcon(props: IProps): JSX.Element {
   const {
     childPadding,
     code,
@@ -154,15 +154,13 @@ function MenuItemIcon(props: IProps) {
    * Verification and return of specific data if the item has children
    */
   if (childPadding) {
-    classNameRoot += ' ' + classes.childPadding
+    classNameRoot += ` ${classes.childPadding}`
     return (
-      <div className={classNameRoot + ' ' + classNameStyle}>
+      <div className={`${classNameRoot} ${classNameStyle}`}>
         <IonIcon name={code} style={{ width: 18, height: 18 }} />
         {sidebarStateTimeout && isRoot ? (
           <div
-            className={
-              classes.indicatorLineActive + ' ' + classes.opacityFullDeux
-            }
+            className={`${classes.indicatorLineActive} ${classes.opacityFullDeux}`}
             style={{ height: '32px' }}
           />
         ) : (
@@ -173,55 +171,54 @@ function MenuItemIcon(props: IProps) {
           className={
             classes.span +
             (!sidebarStateTimeout
-              ? ' ' + classes.opacityFull
-              : ' ' + classes.heightZero)
+              ? ` ${classes.opacityFull}`
+              : ` ${classes.heightZero}`)
           }
         >
           {label}
         </span>
       </div>
     )
-  } else {
-    return (
-      <div
-        className={
-          isActive ? classes.lineActive + ' ' + classNameStyle : classNameStyle
-        }
-      >
-        <Link href="/admin/[[...slug]]" as={`/admin/${href}`}>
-          <a
-            className={classNameRoot + ' ' + classes.noChildHover}
-            style={
-              sidebarState
-                ? { width: 'calc(100% - 10px)' }
-                : { width: 'fit-content' }
+  }
+  return (
+    <div
+      className={
+        isActive ? `${classes.lineActive} ${classNameStyle}` : classNameStyle
+      }
+    >
+      <Link href="/admin/[[...slug]]" as={`/admin/${href}`}>
+        <a
+          className={`${classNameRoot} ${classes.noChildHover}`}
+          style={
+            sidebarState
+              ? { width: 'calc(100% - 10px)' }
+              : { width: 'fit-content' }
+          }
+        >
+          <IonIcon name={code} style={{ width: 18, height: 18 }} />
+
+          <span
+            className={
+              classes.span +
+              (!sidebarStateTimeout
+                ? ` ${classes.opacityFull}`
+                : ` ${classes.heightZero}`)
             }
           >
-            <IonIcon name={code} style={{ width: 18, height: 18 }} />
-
-            <span
-              className={
-                classes.span +
-                (!sidebarStateTimeout
-                  ? ' ' + classes.opacityFull
-                  : ' ' + classes.heightZero)
-              }
-            >
-              {label}
-            </span>
-          </a>
-        </Link>
-        {isActive && (
-          <div
-            className={
-              classes.indicatorLineActiveTwo +
-              (sidebarStateTimeout ? ' ' + classes.opacityFullDeux : '')
-            }
-          />
-        )}
-      </div>
-    )
-  }
+            {label}
+          </span>
+        </a>
+      </Link>
+      {isActive ? (
+        <div
+          className={
+            classes.indicatorLineActiveTwo +
+            (sidebarStateTimeout ? ` ${classes.opacityFullDeux}` : '')
+          }
+        />
+      ) : null}
+    </div>
+  )
 }
 
 export default MenuItemIcon

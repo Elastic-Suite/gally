@@ -16,7 +16,7 @@ const CustomRoot = styled('div')(({ theme }) => ({
   lineHeight: '18px',
 }))
 
-function HelpOver() {
+function HelpOver(): JSX.Element {
   return (
     <CustomRoot>
       <div>Helpdesk</div>

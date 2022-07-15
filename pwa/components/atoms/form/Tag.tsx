@@ -38,15 +38,19 @@ export interface IProps {
   color?: string
 }
 
-const Tag = ({ children, onIconClick, color = 'neutral' }: IProps) => {
+function Tag({
+  children,
+  onIconClick,
+  color = 'neutral',
+}: IProps): JSX.Element {
   return (
-    <TagContainer className={'tag--color__' + color}>
+    <TagContainer className={`tag--color__${color}`}>
       <span className="tag--label">{children}</span>
-      {onIconClick && (
+      {onIconClick ? (
         <Button onClick={onIconClick}>
           <IonIcon name="close" />
         </Button>
-      )}
+      ) : null}
     </TagContainer>
   )
 }

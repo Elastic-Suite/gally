@@ -1,4 +1,4 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react'
+import { ComponentMeta, ComponentStory } from '@storybook/react'
 import CustomTabs from '~/components/molecules/layout/tabs/CustomTabs'
 import SubTabs from '~/components/atoms/subTabs/SubTabs'
 import TertiaryButton from '~/components/atoms/buttons/TertiaryButton'

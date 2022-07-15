@@ -31,10 +31,10 @@ export const fetchDocs = createAsyncThunk<IDocs, void, IThunkApi>(
       i18n: { language },
     } = getState()
     const results = await Promise.all([
-      fetchApi(language, '/docs.json').then((response) => response.json()),
-      fetchApi(language, '/docs.jsonld').then((response) => response.json()),
+      fetchApi<IDocsJson>(language, '/docs.json'),
+      fetchApi<IDocsJsonld>(language, '/docs.jsonld'),
     ])
-    return { json: results[0], jsonld: results[0] }
+    return { json: results[0], jsonld: results[1] }
   }
 )
 
@@ -61,4 +61,4 @@ const apiSlice = createSlice({
 // export const { } = apiSlice.actions
 export const apiReducer = apiSlice.reducer
 
-export const selectDocs = (state: RootState) => state.api.docs
+export const selectDocs = (state: RootState): IFetch<IDocs> => state.api.docs

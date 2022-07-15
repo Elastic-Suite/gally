@@ -12,18 +12,18 @@ interface IProps extends TextareaAutosizeProps {
   error?: boolean
 }
 
-const Textarea = (props: IProps) => {
+function Textarea(props: IProps): JSX.Element {
   const { label, id, required, maxLength, resizable, error, value, ...other } =
     props
   const maxLengthValue = maxLength ?? 250
   const valueString = String(value ?? '')
   return (
     <FormControl variant="standard">
-      {label && (
+      {label ? (
         <InputLabel shrink htmlFor={id} required={required}>
           {label}
         </InputLabel>
-      )}
+      ) : null}
       <TextareaAutosize
         {...other}
         id={id}

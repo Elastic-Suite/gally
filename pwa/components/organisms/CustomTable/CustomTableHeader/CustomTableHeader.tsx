@@ -9,13 +9,13 @@ interface IProps {
   massiveSelectionState?: boolean
 }
 
-const CustomTableHeader = (props: IProps) => {
+function CustomTableHeader(props: IProps): JSX.Element {
   const { tableHeaders, onMassiveSelection, massiveSelectionState } = props
 
   return (
     <TableHead>
       <TableRow sx={{ backgroundColor: 'neutral.light' }}>
-        {onMassiveSelection && (
+        {onMassiveSelection ? (
           <StickyTableCell
             sx={{
               backgroundColor: 'neutral.light',
@@ -23,14 +23,14 @@ const CustomTableHeader = (props: IProps) => {
               width: '100px',
               minWidth: '100px',
             }}
-            key={'header-massiveselection'}
+            key="header-massiveselection"
           >
             <MassiveSelection
               onSelection={onMassiveSelection}
               selectionState={massiveSelectionState}
             />
           </StickyTableCell>
-        )}
+        ) : null}
 
         {tableHeaders.map((header) => (
           <TableCell

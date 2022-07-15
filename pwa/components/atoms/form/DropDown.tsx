@@ -66,31 +66,31 @@ export interface IMultiSelectProps
 
 export type IDropDownProps = ISelectProps | IMultiSelectProps
 
-export default function DropDown(props: IDropDownProps) {
+export default function DropDown(props: IDropDownProps): JSX.Element {
   const { label, multiple, options, required, value, ...selectProps } = props
-  const [listboxOpen, setlistboxOpen] = useState(false)
+  const [listboxOpen, setListboxOpen] = useState(false)
   const ignoreClick = useRef(false)
 
-  function handleCheckboxMouseDown() {
+  function handleCheckboxMouseDown(): void {
     if (listboxOpen) {
       ignoreClick.current = true
     }
   }
 
-  function handleListOpenChange(state) {
+  function handleListOpenChange(state: boolean): void {
     if (!ignoreClick.current) {
-      setlistboxOpen(state)
+      setListboxOpen(state)
     }
     ignoreClick.current = false
   }
 
   return (
     <FormControl variant="standard">
-      {label && (
+      {label ? (
         <InputLabel shrink required={required}>
           {label}
         </InputLabel>
-      )}
+      ) : null}
       {multiple ? (
         <MultiSelect
           listboxOpen={listboxOpen}

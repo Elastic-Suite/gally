@@ -7,16 +7,10 @@ export default {
   component: DropDownComponent,
 } as ComponentMeta<typeof DropDownComponent>
 
-export const Dropdown = (args) => {
+export function Dropdown(args: ISelectProps): JSX.Element {
   const [value, setValue] = useState('')
-  const handleChange = (value) => setValue(value)
-  return (
-    <DropDownComponent
-      {...(args as ISelectProps)}
-      onChange={handleChange}
-      value={value}
-    />
-  )
+  const handleChange = (value: string): void => setValue(value)
+  return <DropDownComponent {...args} onChange={handleChange} value={value} />
 }
 Dropdown.args = {
   disabled: false,
@@ -30,12 +24,12 @@ Dropdown.args = {
   required: false,
 }
 
-export const DropdownMultiple = (args) => {
+export function DropdownMultiple(args: IMultiSelectProps): JSX.Element {
   const [multiValue, setMultiValue] = useState([])
-  const handleChange = (value) => setMultiValue(value)
+  const handleChange = (value: string[]): void => setMultiValue(value)
   return (
     <DropDownComponent
-      {...(args as IMultiSelectProps)}
+      {...args}
       multiple
       onChange={handleChange}
       value={multiValue}

@@ -17,7 +17,7 @@ export function useApiFetch<T>(
 
   useEffect(() => {
     setResponse({ status: LoadStatus.LOADING })
-    fetchApi(i18n.language, url, options)
+    fetchApi<T>(i18n.language, url, options)
       .then((json) => setResponse({ data: json, status: LoadStatus.SUCCEEDED }))
       .catch((error) => setResponse({ error, status: LoadStatus.FAILED }))
   }, [i18n, options, url])
@@ -29,13 +29,13 @@ export function useApiDispatch<T>(
   action: ActionCreatorWithOptionalPayload<IFetch<T>>,
   url: RequestInfo | URL,
   options?: RequestInit
-) {
+): void {
   const dispatch = useAppDispatch()
   const { i18n } = useTranslation('common')
 
   useEffect(() => {
     dispatch(action({ status: LoadStatus.LOADING }))
-    fetchApi(i18n.language, url, options)
+    fetchApi<T>(i18n.language, url, options)
       .then((json) =>
         dispatch(action({ data: json, status: LoadStatus.SUCCEEDED }))
       )

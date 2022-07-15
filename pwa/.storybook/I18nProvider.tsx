@@ -8,7 +8,7 @@ interface IProps {
   locale: string
 }
 
-function I18nProvider(props: IProps) {
+function I18nProvider(props: IProps): JSX.Element {
   const { children, locale } = props
 
   useEffect(() => {
