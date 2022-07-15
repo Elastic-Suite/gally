@@ -51,6 +51,11 @@ function IonIcon(props: IProps): JSX.Element {
       return <ion-icon name="list" {...iconProps} />
     case 'settings':
       return <ion-icon name="settings-outline" {...iconProps} />
+    case 'more':
+      return <ion-icon name="add-circle" {...iconProps} />
+    case 'minus':
+      return <ion-icon src="/images/removeCircle.svg" {...iconProps} />
+
     default:
       return <ion-icon name={name} {...iconProps} />
   }
