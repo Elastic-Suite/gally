@@ -1,4 +1,4 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react'
+import { ComponentMeta, ComponentStory } from '@storybook/react'
 import ActiveLocales from './ActiveLocales'
 import TitleScope from '~/components/atoms/scope/TitleScope'
 import NbActiveLocales from '~/components/atoms/scope/NbActiveLocales'
@@ -14,7 +14,7 @@ const ArrayActiveLocales = [
   'French',
 ]
 export default {
-  title: 'Atoms/Scopes',
+  title: 'Molecules/Scopes',
   component: ActiveLocales,
 } as ComponentMeta<typeof ActiveLocales>
 

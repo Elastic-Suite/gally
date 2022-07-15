@@ -29,7 +29,7 @@ const CustomCatalogs = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   padding: theme.spacing(4),
-  background: theme.palette.colors.neutral[0],
+  background: theme.palette.colors.white,
   border: '1px solid #E2E6F3',
   borderRadius: 8,
   gap: theme.spacing(3),
@@ -39,20 +39,20 @@ interface IProps {
   content: { name: string; nbActiveLocales: number; language: Array<string> }[]
 }
 
-const Catalogs = ({ content }: IProps) => {
+function Catalogs({ content }: IProps): JSX.Element {
   return (
     <CustomFullRoot>
       <CustomNbCatalogs>{content.length} catalogs</CustomNbCatalogs>
       <CustomRoot>
         {content.map((item, key: number) => (
-          <CustomCatalogs key={key}>
+          <CustomCatalogs key={item.name}>
             <TitleScope name={item.name} />
             <NbActiveLocales number={item.nbActiveLocales} />
             <Language
               order={key}
               language={item.language}
               content={content}
-              limit={true}
+              limit
             />
           </CustomCatalogs>
         ))}

@@ -6,9 +6,9 @@ interface IProps {
   color?: string
 }
 
-const Badge = ({ children, color = 'secondary' }: IProps) => {
+function Badge({ children, color = 'secondary' }: IProps): JSX.Element {
   return (
-    <BadgeContainer className={'badge--color__' + color}>
+    <BadgeContainer className={`badge--color__${color}`}>
       <span className="badge--label">{children}</span>
     </BadgeContainer>
   )

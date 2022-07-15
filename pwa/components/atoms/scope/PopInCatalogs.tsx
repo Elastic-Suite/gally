@@ -42,7 +42,7 @@ const CustomRoot = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: theme.spacing(3),
-  background: theme.palette.colors.neutral[0],
+  background: theme.palette.colors.white,
   borderRadius: 8,
 }))
 
@@ -55,14 +55,14 @@ interface IProps {
   title: number
 }
 
-const PopInCatalogs = ({ content, title }: IProps) => {
+function PopInCatalogs({ content, title }: IProps): JSX.Element {
   const [open, setOpen] = useState(false)
 
-  const handleClickOpen = () => {
+  function handleClickOpen(): void {
     setOpen(true)
   }
 
-  const handleClose = () => {
+  function handleClose(): void {
     setOpen(false)
   }
 

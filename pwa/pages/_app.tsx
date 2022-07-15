@@ -19,9 +19,9 @@ const Layout = dynamic(() => import('~/components/stateful/layout/Layout'), {
   ssr: false,
 }) as FunctionComponent
 
-function MyApp(props: AppProps) {
-  const { pageProps } = props
-  const Component = props.Component as FunctionComponent
+function MyApp(props: AppProps): JSX.Element {
+  const { Component, pageProps } = props
+  const Cmp = Component as FunctionComponent
 
   const { i18n } = useTranslation('common')
   useEffect(() => {
@@ -38,7 +38,7 @@ function MyApp(props: AppProps) {
 
       <AppProvider>
         <Layout>
-          <Component {...pageProps} />
+          <Cmp {...pageProps} />
         </Layout>
       </AppProvider>
       <Script

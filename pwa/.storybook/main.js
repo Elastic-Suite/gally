@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable @typescript-eslint/no-require-imports */
+
 const path = require('path')
 
 module.exports = {
@@ -13,7 +15,7 @@ module.exports = {
     builder: '@storybook/builder-webpack5',
   },
   staticDirs: ['../public'],
-  webpackFinal: async (config) => {
+  webpackFinal: (config) => {
     config.resolve.extensions = [...config.resolve.extensions, '.css', '.scss']
     config.resolve.alias = {
       ...config.resolve.alias,

@@ -70,11 +70,13 @@ export const {
 } = menuSlice.actions
 export const menuReducer = menuSlice.reducer
 
-export const selectChildrenState = (state: RootState) =>
-  state.menu.childrenState
-export const selectMenu = (state: RootState) => state.menu.menu.data
-export const selectMenuItemActive = (state: RootState) =>
+export const selectChildrenState = (
+  state: RootState
+): Record<string, boolean> => state.menu.childrenState
+export const selectMenu = (state: RootState): IMenu => state.menu.menu.data
+export const selectMenuItemActive = (state: RootState): string =>
   state.menu.menuItemActive
-export const selectSidebarState = (state: RootState) => state.menu.sidebarState
-export const selectSidebarStateTimeout = (state: RootState) =>
+export const selectSidebarState = (state: RootState): boolean =>
+  state.menu.sidebarState
+export const selectSidebarStateTimeout = (state: RootState): boolean =>
   state.menu.sidebarStateTimeout

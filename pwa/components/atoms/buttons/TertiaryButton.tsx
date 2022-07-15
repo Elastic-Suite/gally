@@ -25,7 +25,7 @@ interface IProps extends ButtonProps {
   children: ReactNode
 }
 
-function TertiaryButton(props: IProps) {
+function TertiaryButton(props: IProps): JSX.Element {
   const { children, ...buttonProps } = props
 
   return (

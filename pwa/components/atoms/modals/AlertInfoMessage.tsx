@@ -11,7 +11,7 @@ interface IProps {
   dev: boolean
 }
 
-export default function AlertInfoMessage({ title, dev }: IProps) {
+export default function AlertInfoMessage({ title, dev }: IProps): JSX.Element {
   const [open, setOpen] = useState(true)
 
   return (
@@ -24,9 +24,7 @@ export default function AlertInfoMessage({ title, dev }: IProps) {
               aria-label="close"
               color="inherit"
               size="small"
-              onClick={() => {
-                setOpen(false)
-              }}
+              onClick={(): void => setOpen(false)}
             >
               <IonIcon name="close" style={{ fontSize: 12, padding: '0px' }} />
             </IconButton>
@@ -35,23 +33,21 @@ export default function AlertInfoMessage({ title, dev }: IProps) {
           {title}
         </Alert>
       </Collapse>
-      {dev && (
+      {dev ? (
         <Button
           style={{ marginTop: '10px' }}
           disabled={open}
           variant="outlined"
-          onClick={() => {
-            setOpen(true)
-          }}
+          onClick={(): void => setOpen(true)}
         >
           Re-open
         </Button>
-      )}
+      ) : null}
     </Box>
   )
 }
 
 AlertInfoMessage.defaultProps = {
-  title: '',
   dev: false,
+  title: '',
 }

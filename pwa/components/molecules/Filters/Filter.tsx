@@ -21,12 +21,12 @@ interface IProps {
   onFilterChange: (filter: IFilter, value: unknown) => void
 }
 
-function Filter(props: IProps) {
+function Filter(props: IProps): JSX.Element {
   const { filter, filterValues, onFilterChange } = props
   const { id, multiple, options, type, ...formProps } = filter
   const value = filterValues[filter.id]
 
-  function handleChange(value) {
+  function handleChange(value: unknown): void {
     onFilterChange(filter, value)
   }
 

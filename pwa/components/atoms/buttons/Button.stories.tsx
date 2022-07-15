@@ -1,10 +1,13 @@
 import { ComponentMeta } from '@storybook/react'
+import { ButtonProps } from '@mui/material/Button'
+
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import { icons } from '~/constants'
 
 import PrimaryButton from './PrimaryButton'
 import SecondaryButton from './SecondaryButton'
 import TertiaryButton from './TertiaryButton'
+import { FunctionComponent } from 'react'
 
 export default {
   title: 'Atoms/Buttons',
@@ -32,7 +35,15 @@ export default {
   },
 } as ComponentMeta<typeof PrimaryButton>
 
-function Template({ Component, children, icon, endIcon, startIcon, ...props }) {
+interface IProps extends ButtonProps {
+  Component: FunctionComponent<ButtonProps>
+  endIcon: string
+  icon: string
+  startIcon: string
+}
+
+function Template(args: IProps): JSX.Element {
+  const { Component, children, icon, endIcon, startIcon, ...props } = args
   return (
     <Component
       {...props}

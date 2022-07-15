@@ -30,29 +30,28 @@ interface IProps {
   order?: number
 }
 
-const Language = ({ language, order, limit, content }: IProps) => {
+function Language({ language, order, limit, content }: IProps): JSX.Element {
   const newLanguage = [...new Set(language)]
   return (
     <CustomRoot>
-      {newLanguage &&
-        newLanguage.map((item: string, key: number) => (
-          <div key={key}>
-            {limit === true ? (
-              <>
-                {key === 3 ? (
+      {newLanguage
+        ? newLanguage.map((item: string, key: number) => (
+            <div key={item}>
+              {limit === true ? (
+                key === 3 ? (
                   <PopInCatalogs
                     content={content[order]}
                     title={newLanguage.length}
                   />
                 ) : (
-                  key < 3 && <CustomLanguage key={key}>{item}</CustomLanguage>
-                )}
-              </>
-            ) : (
-              <CustomLanguage key={key}>{item}</CustomLanguage>
-            )}
-          </div>
-        ))}
+                  key < 3 && <CustomLanguage key={item}>{item}</CustomLanguage>
+                )
+              ) : (
+                <CustomLanguage key={item}>{item}</CustomLanguage>
+              )}
+            </div>
+          ))
+        : null}
     </CustomRoot>
   )
 }

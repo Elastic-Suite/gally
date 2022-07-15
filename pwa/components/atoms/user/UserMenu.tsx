@@ -57,14 +57,14 @@ const CustomUserMenu = styled('div')(({ theme }) => ({
   zIndex: 999,
 }))
 
-function UserMenu() {
+function UserMenu(): JSX.Element {
   const [openUserMenu, setOpenUserMenu] = useState(false)
   const useMenu = useRef(null)
 
   return (
     <>
       <div style={{ position: 'relative' }}>
-        <CustomUser onClick={() => setOpenUserMenu(!openUserMenu)}>
+        <CustomUser onClick={(): void => setOpenUserMenu(!openUserMenu)}>
           <IonIcon
             name="person-outline"
             style={{ fontSize: '15px', color: '#8187B9' }}
@@ -91,9 +91,9 @@ function UserMenu() {
           <UserMenuShow />
         </CustomUserMenu>
       </div>
-      {openUserMenu && (
-        <CloseComponent onClose={() => setOpenUserMenu(false)} />
-      )}
+      {openUserMenu ? (
+        <CloseComponent onClose={(): void => setOpenUserMenu(false)} />
+      ) : null}
     </>
   )
 }

@@ -20,15 +20,26 @@ const CustomBreadCrumbColorLast = styled(CustomBreadCrumb)(({ theme }) => ({
 }))
 
 interface IProps {
-  slug: string[]
+  slug: string | string[]
   menu: IMenu
 }
 
-const BreadCrumbs = (props: IProps) => {
+function newSlug(data: string[] | string): string[] {
+  let newBreadCrumbData = [data[0]]
+  for (let index = 0; index < data.length - 1; index++) {
+    newBreadCrumbData = [
+      ...newBreadCrumbData,
+      [newBreadCrumbData.pop()].concat(data[index + 1]).join('_'),
+    ]
+  }
+  return newBreadCrumbData
+}
+
+function BreadCrumbs(props: IProps): JSX.Element {
   const { menu, slug } = props
 
-  let labelData = []
-  function findIn(find: string, menu: IMenuChild[]) {
+  let labelData: string[] = []
+  function findIn(find: string, menu: IMenuChild[]): string[] {
     if (typeof menu === 'object') {
       for (const menuChild in menu) {
         if (menu[menuChild].code === find) {
@@ -37,14 +48,20 @@ const BreadCrumbs = (props: IProps) => {
         findIn(find, menu[menuChild].children)
       }
       return labelData
-    } else return null
+    }
+    return null
   }
 
+  if (!slug || slug.length === 0) {
+    return null
+  }
+
+  const slugArray = newSlug(slug)
   return (
     <Breadcrumbs aria-label="breadcrumb" sx={{ color: 'colors.neutral.500' }}>
-      {slug.map((item: string, key: number) => (
-        <Typography key={key}>
-          {slug.length > key + 1 ? (
+      {slugArray.map((item: string, key: number) => (
+        <Typography key={item}>
+          {slugArray.length > key + 1 ? (
             <CustomBreadCrumbColorClassique>
               {findIn(item, menu.hierarchy)[key]}
             </CustomBreadCrumbColorClassique>

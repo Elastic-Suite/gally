@@ -1,4 +1,4 @@
-import { Story, ComponentMeta } from '@storybook/react'
+import { ComponentMeta, Story } from '@storybook/react'
 import TagComponent, { IProps } from './Tag'
 
 export default {
@@ -19,7 +19,7 @@ const Template: Story<IProps & { showIcon: boolean }> = ({
   showIcon,
   onIconClick,
   ...args
-}) => <TagComponent {...args} onIconClick={showIcon && onIconClick} />
+}) => <TagComponent {...args} onIconClick={showIcon ? onIconClick : null} />
 
 export const Tag = Template.bind({})
 Tag.args = {

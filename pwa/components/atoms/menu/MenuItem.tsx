@@ -9,7 +9,7 @@ import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 /*
  * Create function to create path from code of the menu item
  */
-function slugify(code, depth) {
+function slugify(code: string, depth: number): string {
   let slug = code
   for (let i = 0; i < depth; i++) {
     slug = slug.replace('_', '/')
@@ -45,6 +45,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     lineHeight: '20px',
     background: 'transparent',
     border: 0,
+    width: '100%',
   },
   lineHover: {
     '&:hover': {
@@ -121,7 +122,7 @@ interface IProps {
   words: string[]
 }
 
-function MenuItem(props: IProps) {
+function MenuItem(props: IProps): JSX.Element {
   const {
     childrenState,
     code,
@@ -137,7 +138,7 @@ function MenuItem(props: IProps) {
   const childState = childrenState[code]
   const classes = useStyles()
 
-  function toggleChild() {
+  function toggleChild(): void {
     onToggle(code, !childState)
   }
 
@@ -146,28 +147,29 @@ function MenuItem(props: IProps) {
       className={
         classes.root +
         (!sidebarStateTimeout
-          ? ' ' + classes.opacityFull
-          : ' ' + classes.heightZero)
+          ? ` ${classes.opacityFull}`
+          : ` ${classes.heightZero}`)
       }
     >
       <div className={classes.linePadding}>
         {!menuChildren && (
           <div
-            className={
-              classes.lineHover + ' ' + (isActive ? classes.lineActive : '')
-            }
+            className={`${classes.lineHover} ${
+              isActive ? classes.lineActive : ''
+            }`}
           >
             <Link href="/admin/[[...slug]]" as={`/admin/${href}`}>
               <a className={classes.line}>{label}</a>
             </Link>
-            {isActive && <div className={classes.indicatorLineActive} />}
+            {isActive ? <div className={classes.indicatorLineActive} /> : null}
           </div>
         )}
-        {!!menuChildren && (
+        {Boolean(menuChildren) && (
           <button
-            className={classes.line + ' ' + classes.lineHover}
+            className={`${classes.line} ${classes.lineHover}`}
             style={{ transition: 'all 500ms', position: 'relative' }}
             onClick={toggleChild}
+            type="button"
           >
             {label}
             <IonIcon
@@ -180,9 +182,7 @@ function MenuItem(props: IProps) {
             />
             {!childState && isBoosts ? (
               <div
-                className={
-                  classes.indicatorLineActive + ' ' + classes.opacityFullDeux
-                }
+                className={`${classes.indicatorLineActive} ${classes.opacityFullDeux}`}
                 style={{ height: '32px' }}
               />
             ) : (
@@ -191,11 +191,11 @@ function MenuItem(props: IProps) {
           </button>
         )}
       </div>
-      {!!menuChildren && (
+      {Boolean(menuChildren) && (
         <Collapse className={classes.children} in={childState}>
-          {menuChildren.map((item, index) => (
+          {menuChildren.map((item) => (
             <MenuItem
-              key={`${index}-${item.code}`}
+              key={item.code}
               childrenState={childrenState}
               code={item.code}
               href={slugify(item.code, 2)}

@@ -42,24 +42,24 @@ interface IProps {
   titlePopIn: string
 }
 
-const PopIn = ({
+function PopIn({
   onConfirm,
   title,
   titlePopIn,
   cancelName,
   confirmName,
-}: IProps) => {
+}: IProps): JSX.Element {
   const [open, setOpen] = useState(false)
 
-  const handleClickOpen = () => {
+  function handleClickOpen(): void {
     setOpen(true)
   }
 
-  const handleClose = () => {
+  function handleClose(): void {
     setOpen(false)
   }
 
-  const handleConfirm = () => {
+  function handleConfirm(): void {
     setOpen(false)
     onConfirm()
   }

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ComponentStory, ComponentMeta } from '@storybook/react'
+import { ComponentMeta, ComponentStory } from '@storybook/react'
 import InputTextComponent from './InputText'
 import InputAdornment from '@mui/material/InputAdornment'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
@@ -28,15 +28,15 @@ export default {
 } as ComponentMeta<typeof InputTextComponent>
 
 const Template: ComponentStory<typeof InputTextComponent> = (args) => {
+  const { endAdornment, ...props } = args
   const [value, setValue] = useState('')
-  const handleChange = (value) => setValue(value)
-
+  const handleChange = (value: string): void => setValue(value)
   return (
     <InputTextComponent
-      {...args}
+      {...props}
       value={value}
       onChange={handleChange}
-      endAdornment={args.endAdornment}
+      endAdornment={endAdornment}
     />
   )
 }

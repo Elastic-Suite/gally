@@ -1,8 +1,8 @@
-export function fetchApi(
+export function fetchApi<T>(
   language: string,
   url: RequestInfo | URL,
   options: RequestInit = {}
-) {
+): Promise<T> {
   if (process.env.NEXT_PUBLIC_LOCAL) {
     if (!String(url).startsWith('/')) {
       url = `/${url}`
