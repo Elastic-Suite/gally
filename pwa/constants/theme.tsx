@@ -18,6 +18,9 @@ export const buttonEnterKeyframe = keyframes`
  */
 const theme = createTheme({
   palette: {
+    background: {
+      page: '#FAFBFE',
+    },
     primary: {
       light: '#FBC0B9',
       main: '#ED7465',

@@ -10,9 +10,9 @@ export interface ITableHeader {
   field: string
   headerName: string
   type: DataContentType
-  editable: boolean
-  sticky: boolean
-  options: IOptions | null
+  editable?: boolean
+  sticky?: boolean
+  options?: IOptions | null
 }
 
 export interface IBaseStyle {
@@ -57,7 +57,7 @@ export enum DataContentType {
 }
 
 export interface ITableRow {
-  id: string
+  id: string | number
   [key: string]: string | boolean | number
 }
 

@@ -74,6 +74,9 @@ function CustomTableHeader(props: IProps): JSX.Element {
               ...(isHorizontalOverflow &&
                 stickyHeaders.length === 0 &&
                 stickyBorderStyle(shadow)),
+              // borderTopColor: 'colors.neutral.300',
+              // borderTopWidth: '1px',
+              // borderTopStyle: 'solid',
             }}
             key="header-massiveselection"
           >
@@ -97,6 +100,9 @@ function CustomTableHeader(props: IProps): JSX.Element {
               ...(stickyHeader.isLastSticky && {
                 ...stickyBorderStyle(shadow),
               }),
+              // borderTopColor: 'colors.neutral.300',
+              // borderTopWidth: '1px',
+              // borderTopStyle: 'solid',
             }}
           >
             {stickyHeader.headerName}

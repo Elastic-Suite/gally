@@ -12,7 +12,7 @@ export interface IFilter {
   label: string
   multiple?: boolean
   options?: IOptions
-  type: FilterType
+  type?: FilterType
 }
 
 interface IProps {
