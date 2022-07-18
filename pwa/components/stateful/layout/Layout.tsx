@@ -159,7 +159,7 @@ function Layout({ children }: IProps): JSX.Element {
           <Collapse onClick={collapseSidebar}>
             <IonIcon name="code-outline" style={{ width: 18, height: 18 }} />
           </Collapse>
-          <AppBar />
+          <AppBar slug={slug} menu={menu} />
           <CustomContent>{children}</CustomContent>
         </CustomContentWithAppBar>
         {/*<Notification /> TODO: Set here Notification component*/}
