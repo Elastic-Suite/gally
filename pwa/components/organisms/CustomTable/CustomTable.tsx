@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
-import { DragDropContext } from 'react-beautiful-dnd'
+import { DragDropContext, DropResult } from 'react-beautiful-dnd'
 
 import StickyBar from '~/components/molecules/CustomTable/StickyBar/StickyBar'
 import {
@@ -9,14 +9,12 @@ import {
 } from '~/components/organisms/CustomTable/CustomTable.styled'
 
 import CustomTableHeader from '~/components/organisms/CustomTable/CustomTableHeader/CustomTableHeader'
-import DraggableRow from '~/components/organisms/CustomTable/CustomTableRow/DraggableRow'
-import { MassiveSelectionType, ITableRow, ITableHeader } from '~/types'
+import { ITableHeader, ITableRow, MassiveSelectionType } from '~/types'
 import {
   reorderingColumnWidth,
   selectionColumnWidth,
   stickyColunWidth,
 } from '~/constants'
-import NonDraggableRow from '~/components/organisms/CustomTable/CustomTableRow/NonDraggableRow'
 import NonDraggableBody from '~/components/organisms/CustomTable/CustomTableBody/NonDraggableBody'
 import DraggableBody from '~/components/organisms/CustomTable/CustomTableBody/DraggableBody'
 import { useIsHorizontalOverflow } from '~/hooks/useIsHorizontalOverflow'
@@ -24,11 +22,10 @@ import { useIsHorizontalOverflow } from '~/hooks/useIsHorizontalOverflow'
 interface IProps {
   tableHeaders: ITableHeader[]
   tableRows: ITableRow[]
-  withSelection: boolean
-  draggable: boolean
-  // onMassiveAction: (actions: Action[]) => void
-  // onReordering: (ordRows: ITableRow[] => void)
-  // onSingleAction: (action: Action) => void
+  withSelection?: boolean
+  draggable?: boolean
+  // onMassiveAction?: (actions: string) => void
+  // onReordering?: (ordRows: ITableRow[]) => void
 }
 
 function CustomTable(props: IProps): JSX.Element {
@@ -40,24 +37,21 @@ function CustomTable(props: IProps): JSX.Element {
     MassiveSelectionType.NONE
   )
   const [currentRows, setCurrentRows] = useState<ITableRow[]>(tableRows)
-  const tableRef = useRef()
+  const tableRef = useRef<HTMLDivElement>()
   const { isOverflow, shadow } = useIsHorizontalOverflow(tableRef)
 
   /**
    * Compute the length of the sticky part.
    * For now, each sticky colun have a fixed width of 200px but it could ( maybe should ) be improve by seeting an array of width provide by props if needed.
    */
-  let stickyLength = 0
-  tableHeaders
-    .filter((header) => header.sticky)
-    .forEach(() => (stickyLength = stickyLength + stickyColunWidth))
+  const stickyLength =
+    tableHeaders.filter((header) => header.sticky).length * stickyColunWidth
 
   let handleMassiveSelection = null
   let massiveSelectionState = null
   let massiveSelectionIndeterminate = false
   let showStickyBar = null
   if (withSelection) {
-    // TODO : add intermediate state for checkboxes
     massiveSelectionState = selectedRows
       ? selectedRows.length === tableRows.length
       : false
@@ -83,7 +77,7 @@ function CustomTable(props: IProps): JSX.Element {
 
   let handleDragEnd = null
   if (draggable) {
-    handleDragEnd = (e) => {
+    handleDragEnd = (e: DropResult): void => {
       if (!e.destination) return
       const tempData = Array.from(currentRows)
       const [source_data] = tempData.splice(e.source.index, 1)
@@ -97,7 +91,7 @@ function CustomTable(props: IProps): JSX.Element {
    * It return an array of all successive left value to use in CustomTableHeader.tsx, DraggableTableRow.tsx and CustomTableRows.tsx
    * It gonna be provide by context CSSContext to each row component.
    */
-  const computeLeftCSSValues = () => {
+  function computeLeftCSSValues(): number[] {
     const stickyHeaders = tableHeaders.filter((header) => header.sticky)
     const result: number[] = [0]
     let eachLeftvalues: number[] = [0]
@@ -166,7 +160,7 @@ function CustomTable(props: IProps): JSX.Element {
               shadow={shadow}
               massiveSelectionIndeterminate={massiveSelectionIndeterminate}
             />
-            {!draggable && (
+            {Boolean(!draggable) && (
               <NonDraggableBody
                 tableRows={currentRows}
                 setTableRows={setCurrentRows}
@@ -177,11 +171,9 @@ function CustomTable(props: IProps): JSX.Element {
                 cSSLeftValues={cSSLeftValues}
                 isHorizontalOverflow={isOverflow}
                 shadow={shadow}
-              >
-                <NonDraggableRow />
-              </NonDraggableBody>
+              />
             )}
-            {draggable && (
+            {Boolean(draggable) && (
               <DraggableBody
                 tableRows={currentRows}
                 setTableRows={setCurrentRows}
@@ -192,9 +184,7 @@ function CustomTable(props: IProps): JSX.Element {
                 cSSLeftValues={cSSLeftValues}
                 isHorizontalOverflow={isOverflow}
                 shadow={shadow}
-              >
-                <DraggableRow />
-              </DraggableBody>
+              />
             )}
           </StyledTable>
         </TableContainerWithCustomScrollbar>

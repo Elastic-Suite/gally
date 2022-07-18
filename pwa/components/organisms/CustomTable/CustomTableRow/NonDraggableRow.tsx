@@ -1,45 +1,61 @@
+import { ChangeEvent } from 'react'
 import { Checkbox, TableRow } from '@mui/material'
-import { useContext } from 'react'
 import {
   BaseTableCell,
   StickyTableCell,
 } from '~/components/organisms/CustomTable/CustomTable.styled'
-import { handleSingleRow } from '../CustomTable.service'
-import { NonDraggableContext } from '../CustomTableBody/NonDraggableBody'
+import {
+  ITableHeader,
+  ITableHeaderSticky,
+  ITableRow,
+} from '~/types/customTables'
+import { handleSingleRow, manageStickyHeaders } from '../CustomTable.service'
 import EditableContent from '../CustomTableCell/EditableContent'
 import NonEditableContent from '../CustomTableCell/NonEditableContent'
 import { nonStickyStyle, selectionStyle, stickyStyle } from './Row.styled'
 
-const NonDraggableRow = () => {
+interface IProps {
+  tableRow: ITableRow
+  updateRow: (row: ITableRow) => void
+  tableHeaders: ITableHeader[]
+  withSelection: boolean
+  selectedRows: string[]
+  setSelectedRows: (arr: string[]) => void
+  cSSLeftValuesIterator: IterableIterator<[number, number]>
+  isHorizontalOverflow: boolean
+  shadow: boolean
+}
+
+function NonDraggableRow(props: IProps): JSX.Element {
   const {
     tableRow,
     updateRow,
+    tableHeaders,
     selectedRows,
     setSelectedRows,
-    stickyHeaders,
-    nonStickyHeaders,
     withSelection,
-    cSSLeftValues,
+    cSSLeftValuesIterator,
     isHorizontalOverflow,
     shadow,
-  } = useContext(NonDraggableContext)
+  } = props
 
-  const CSSLeftValuesIterator = cSSLeftValues.entries()
+  const stickyHeaders: ITableHeaderSticky[] = manageStickyHeaders(tableHeaders)
+  const nonStickyHeaders = tableHeaders.filter((header) => !header.sticky)
 
   return (
     <TableRow key={tableRow.id}>
-      {withSelection && (
+      {Boolean(withSelection) && (
         <StickyTableCell
           sx={selectionStyle(
             isHorizontalOverflow,
-            CSSLeftValuesIterator.next().value[1],
+            cSSLeftValuesIterator.next().value[1],
             shadow,
             stickyHeaders.length
           )}
         >
           <Checkbox
             checked={selectedRows ? selectedRows.includes(tableRow.id) : false}
-            onChange={(value) =>
+            onChange={(value: ChangeEvent<HTMLInputElement>): void =>
               handleSingleRow(value, tableRow.id, setSelectedRows, selectedRows)
             }
           />
@@ -50,19 +66,19 @@ const NonDraggableRow = () => {
         <StickyTableCell
           key={stickyHeader.field}
           sx={stickyStyle(
-            CSSLeftValuesIterator.next().value[1],
+            cSSLeftValuesIterator.next().value[1],
             shadow,
             stickyHeader.isLastSticky,
             stickyHeader.type
           )}
         >
-          {stickyHeader.editable && (
+          {stickyHeader.editable ? (
             <EditableContent
               header={stickyHeader}
               row={tableRow}
               onRowUpdate={updateRow}
             />
-          )}
+          ) : null}
           {!stickyHeader.editable && (
             <NonEditableContent header={stickyHeader} row={tableRow} />
           )}
@@ -71,13 +87,13 @@ const NonDraggableRow = () => {
 
       {nonStickyHeaders.map((header) => (
         <BaseTableCell sx={nonStickyStyle(header.type)} key={header.field}>
-          {header.editable && (
+          {header.editable ? (
             <EditableContent
               header={header}
               row={tableRow}
               onRowUpdate={updateRow}
             />
-          )}
+          ) : null}
           {!header.editable && (
             <NonEditableContent header={header} row={tableRow} />
           )}

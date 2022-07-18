@@ -15,6 +15,39 @@ export interface ITableHeader {
   options: IOptions | null
 }
 
+export interface IBaseStyle {
+  left: string
+  backgroundColor: string
+  zIndex: string
+}
+
+export interface INonStickyStyle {
+  backgroundColor: string
+  overflow?: string
+}
+
+export interface ISelectionStyle extends IBaseStyle {
+  stickyBorderStyle?: IStickyBorderStyle
+}
+
+export interface IStickyStyle extends IBaseStyle {
+  minWidth: string
+  stickyBorderStyle?: IStickyBorderStyle
+  overflow?: string
+}
+export interface IDraggableColumnStyle extends IBaseStyle {
+  minWidth: string
+  borderRight?: string
+  stickyBorderStyle?: IStickyBorderStyle
+}
+
+export interface IStickyBorderStyle {
+  borderRight: string
+  borderRightColor: string
+  boxShadow?: string
+  clipPath?: string
+}
+
 export enum DataContentType {
   STRING = 'string',
   BOOLEAN = 'boolean',

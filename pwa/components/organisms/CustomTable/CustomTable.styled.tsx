@@ -1,5 +1,6 @@
 import { Table, TableCell, TableContainer } from '@mui/material'
 import { styled } from '@mui/system'
+import { IStickyBorderStyle } from '~/types'
 
 export const TableContainerWithCustomScrollbar = styled(TableContainer)(
   ({ theme }) => ({
@@ -46,7 +47,7 @@ export const StickyTableCell = styled(BaseTableCell)({
   },
 })
 
-export const stickyBorderStyle = (shadow: boolean) => {
+export function stickyBorderStyle(shadow: boolean): IStickyBorderStyle {
   return {
     borderRight: '2px solid',
     borderRightColor: 'colors.neutral.600',

@@ -1,28 +1,30 @@
 import { ChangeEvent } from 'react'
 import { ITableHeader, ITableHeaderSticky } from '~/types'
 
-export const manageStickyHeaders = (tableHeaders: ITableHeader[]) => {
+export function manageStickyHeaders(
+  tableHeaders: ITableHeader[]
+): ITableHeaderSticky[] {
   const stickyHeaders: ITableHeaderSticky[] = []
   const stickyColumnCount = tableHeaders.filter(
     (header) => header.sticky
   ).length
   tableHeaders
     .filter((header) => header.sticky)
-    .forEach((stickyHeader, index) =>
+    .map((stickyHeader: ITableHeader, index: number) =>
       stickyHeaders.push({
-        isLastSticky: index < stickyColumnCount - 1 ? false : true,
+        isLastSticky: !(index < stickyColumnCount - 1),
         ...stickyHeader,
       })
     )
   return stickyHeaders
 }
 
-export const handleSingleRow = (
+export function handleSingleRow(
   e: ChangeEvent<HTMLInputElement>,
   rowId: string,
   setSelectedRows: (arr: string[]) => void,
   selectedRows: string[]
-) => {
+): void {
   setSelectedRows(
     e.target.checked
       ? selectedRows.concat(rowId)

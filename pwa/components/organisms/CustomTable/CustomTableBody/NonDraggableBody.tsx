@@ -1,14 +1,7 @@
-import { createContext } from 'react'
 import { TableBody } from '@mui/material'
 
-import {
-  ITableRow,
-  ITableHeader,
-  ITableHeaderSticky,
-} from '~/types/customTables'
-import { manageStickyHeaders } from '../CustomTable.service'
-
-export const NonDraggableContext = createContext(null)
+import { ITableHeader, ITableRow } from '~/types/customTables'
+import NonDraggableRow from '../CustomTableRow/NonDraggableRow'
 
 interface IProps {
   tableRows: ITableRow[]
@@ -18,12 +11,11 @@ interface IProps {
   selectedRows: string[]
   setSelectedRows: (arr: string[]) => void
   cSSLeftValues: number[]
-  children: React.ReactElement
   isHorizontalOverflow: boolean
   shadow: boolean
 }
 
-const NonDraggableBody = (props: IProps) => {
+function NonDraggableBody(props: IProps): JSX.Element {
   const {
     tableRows,
     setTableRows,
@@ -32,15 +24,11 @@ const NonDraggableBody = (props: IProps) => {
     setSelectedRows,
     selectedRows,
     cSSLeftValues,
-    children,
     isHorizontalOverflow,
     shadow,
   } = props
 
-  const stickyHeaders: ITableHeaderSticky[] = manageStickyHeaders(tableHeaders)
-  const nonStickyHeaders = tableHeaders.filter((header) => !header.sticky)
-
-  const updateRow = (currentRow: ITableRow) => {
+  const updateRow = (currentRow: ITableRow): void => {
     const updatedTableRows: ITableRow[] = []
     tableRows.forEach((tableRow) => {
       if (tableRow.id === currentRow.id) {
@@ -55,24 +43,18 @@ const NonDraggableBody = (props: IProps) => {
   return (
     <TableBody>
       {tableRows.map((tableRow) => (
-        <NonDraggableContext.Provider
+        <NonDraggableRow
           key={tableRow.id}
-          value={{
-            tableRow,
-            updateRow,
-            setTableRows,
-            selectedRows,
-            setSelectedRows,
-            stickyHeaders,
-            nonStickyHeaders,
-            withSelection,
-            cSSLeftValues,
-            isHorizontalOverflow,
-            shadow,
-          }}
-        >
-          {children}
-        </NonDraggableContext.Provider>
+          tableRow={tableRow}
+          updateRow={updateRow}
+          tableHeaders={tableHeaders}
+          withSelection={withSelection}
+          selectedRows={selectedRows}
+          setSelectedRows={setSelectedRows}
+          cSSLeftValuesIterator={cSSLeftValues.entries()}
+          isHorizontalOverflow={isHorizontalOverflow}
+          shadow={shadow}
+        />
       ))}
     </TableBody>
   )
