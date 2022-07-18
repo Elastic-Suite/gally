@@ -2,8 +2,8 @@ import { TableHead, TableRow } from '@mui/material'
 import MassiveSelection from '~/components/molecules/CustomTable/MassiveSelection/MassiveSelection'
 import {
   BaseTableCell,
-  stickyBorderStyle,
   StickyTableCell,
+  stickyBorderStyle,
 } from '~/components/organisms/CustomTable/CustomTable.styled'
 import {
   reorderingColumnWidth,
@@ -25,16 +25,7 @@ interface IProps {
   massiveSelectionIndeterminate: boolean
 }
 
-<<<<<<< HEAD
 function CustomTableHeader(props: IProps): JSX.Element {
-  const { tableHeaders, onMassiveSelection, massiveSelectionState } = props
-
-  return (
-    <TableHead>
-      <TableRow sx={{ backgroundColor: 'neutral.light' }}>
-        {onMassiveSelection ? (
-=======
-const CustomTableHeader = (props: IProps) => {
   const {
     tableHeaders,
     withSelection,
@@ -58,22 +49,22 @@ const CustomTableHeader = (props: IProps) => {
           backgroundColor: 'neutral.light',
         }}
       >
-        {draggable && (
->>>>>>> 5e22b42... feat/ESPP-213-draggable-table-design-system
+        {Boolean(draggable) && (
           <StickyTableCell
             sx={{
               minWidth: `${reorderingColumnWidth}px`,
               backgroundColor: 'neutral.light',
               ...(!isOnlyDraggable && { borderRight: 'none' }),
               ...(isOnlyDraggable &&
-                isHorizontalOverflow && { ...stickyBorderStyle(shadow) }),
+                isHorizontalOverflow &&
+                stickyBorderStyle(shadow)),
               zIndex: '1',
               left: `${CSSLeftValuesIterator.next().value[1]}px`,
             }}
           />
         )}
 
-        {withSelection && (
+        {Boolean(withSelection) && (
           <StickyTableCell
             sx={{
               backgroundColor: 'neutral.light',
@@ -81,7 +72,8 @@ const CustomTableHeader = (props: IProps) => {
               minWidth: `${selectionColumnWidth}px`,
               left: `${CSSLeftValuesIterator.next().value[1]}px`,
               ...(isHorizontalOverflow &&
-                stickyHeaders.length === 0 && { ...stickyBorderStyle(shadow) }),
+                stickyHeaders.length === 0 &&
+                stickyBorderStyle(shadow)),
             }}
             key="header-massiveselection"
           >
@@ -91,7 +83,7 @@ const CustomTableHeader = (props: IProps) => {
               indeterminateState={massiveSelectionIndeterminate}
             />
           </StickyTableCell>
-        ) : null}
+        )}
 
         {stickyHeaders.map((stickyHeader) => (
           <StickyTableCell

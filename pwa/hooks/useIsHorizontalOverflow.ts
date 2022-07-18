@@ -1,27 +1,30 @@
-import { useState, useLayoutEffect } from 'react'
+import { MutableRefObject, useLayoutEffect, useState } from 'react'
 import { IHorizontalOverflow } from '~/types'
 
-export const useIsHorizontalOverflow = (ref) => {
-  const [isOverflow, setIsOverflow] = useState(undefined)
+export const useIsHorizontalOverflow = (
+  ref: MutableRefObject<HTMLDivElement>
+): IHorizontalOverflow => {
+  const [isOverflow, setIsOverflow] = useState(false)
   const [shadow, setShadow] = useState(false)
+  const { current } = ref
 
   useLayoutEffect(() => {
-    const { current } = ref
-
-    const trigger = () => {
-      const hasOverflow = current.scrollWidth > current.clientWidth
-      setIsOverflow(hasOverflow)
-      if (hasOverflow) {
-        current.addEventListener('scroll', (event) => {
-          setShadow(event.srcElement.scrollLeft > 0)
-        })
+    function trigger(): () => void {
+      if (current) {
+        const hasOverflow = current.scrollWidth > current.clientWidth
+        setIsOverflow(hasOverflow)
+        if (hasOverflow) {
+          const handleScroll = (event: UIEvent): void => {
+            setShadow((event.target as HTMLTableElement).scrollLeft > 0)
+          }
+          current.addEventListener('scroll', handleScroll)
+          return () => current.removeEventListener('scroll', handleScroll)
+        }
       }
     }
 
     trigger()
-  }, [ref])
+  }, [current])
 
-  const result: IHorizontalOverflow = { isOverflow, shadow }
-
-  return result
+  return { isOverflow, shadow }
 }

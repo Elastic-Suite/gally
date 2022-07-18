@@ -1,14 +1,7 @@
 import { TableBody } from '@mui/material'
-import { createContext } from 'react'
 import { Draggable, Droppable } from 'react-beautiful-dnd'
-import {
-  ITableHeader,
-  ITableHeaderSticky,
-  ITableRow,
-} from '~/types/customTables'
-import { manageStickyHeaders } from '../CustomTable.service'
-
-export const DraggableContext = createContext(null)
+import { ITableHeader, ITableRow } from '~/types/customTables'
+import DraggableRow from '../CustomTableRow/DraggableRow'
 
 interface IProps {
   tableRows: ITableRow[]
@@ -18,12 +11,11 @@ interface IProps {
   selectedRows: string[]
   setSelectedRows: (arr: string[]) => void
   cSSLeftValues: number[]
-  children: React.ReactElement
   isHorizontalOverflow: boolean
   shadow: boolean
 }
 
-const DraggableBody = (props: IProps) => {
+function DraggableBody(props: IProps): JSX.Element {
   const {
     tableRows,
     setTableRows,
@@ -32,15 +24,11 @@ const DraggableBody = (props: IProps) => {
     setSelectedRows,
     selectedRows,
     cSSLeftValues,
-    children,
     isHorizontalOverflow,
     shadow,
   } = props
 
-  const stickyHeaders: ITableHeaderSticky[] = manageStickyHeaders(tableHeaders)
-  const nonStickyHeaders = tableHeaders.filter((header) => !header.sticky)
-
-  const updateRow = (currentRow: ITableRow) => {
+  function updateRow(currentRow: ITableRow): void {
     const updatedTableRows: ITableRow[] = []
     tableRows.forEach((tableRow) => {
       if (tableRow.id === currentRow.id) {
@@ -53,8 +41,8 @@ const DraggableBody = (props: IProps) => {
   }
 
   return (
-    <Droppable droppableId="droppable">
-      {(provider) => (
+    <Droppable droppableId="droppableTable">
+      {(provider): JSX.Element => (
         <TableBody ref={provider.innerRef} {...provider.droppableProps}>
           {tableRows.map((tableRow, index) => (
             <Draggable
@@ -62,24 +50,19 @@ const DraggableBody = (props: IProps) => {
               draggableId={tableRow.id}
               index={index}
             >
-              {(provider) => (
-                <DraggableContext.Provider
-                  value={{
-                    tableRow,
-                    updateRow,
-                    selectedRows,
-                    setSelectedRows,
-                    provider,
-                    stickyHeaders,
-                    nonStickyHeaders,
-                    withSelection,
-                    cSSLeftValues,
-                    isHorizontalOverflow,
-                    shadow,
-                  }}
-                >
-                  {children}
-                </DraggableContext.Provider>
+              {(provider): JSX.Element => (
+                <DraggableRow
+                  tableRow={tableRow}
+                  updateRow={updateRow}
+                  tableHeaders={tableHeaders}
+                  selectedRows={selectedRows}
+                  setSelectedRows={setSelectedRows}
+                  provider={provider}
+                  withSelection={withSelection}
+                  cSSLeftValuesIterator={cSSLeftValues.entries()}
+                  isHorizontalOverflow={isHorizontalOverflow}
+                  shadow={shadow}
+                />
               )}
             </Draggable>
           ))}

@@ -1,23 +1,24 @@
 import { reorderingColumnWidth, stickyColunWidth } from '~/constants'
-import { DataContentType } from '~/types'
+import {
+  DataContentType,
+  IDraggableColumnStyle,
+  INonStickyStyle,
+  ISelectionStyle,
+  IStickyStyle,
+} from '~/types'
 import { stickyBorderStyle } from '../CustomTable.styled'
 
-export const draggableColumnStyle = (
+export function draggableColumnStyle(
   isOnlyDraggable: boolean,
   leftValue: string,
   isHorizontalOverflow: boolean,
   shadow: boolean
-) => {
+): IDraggableColumnStyle {
   return {
     minWidth: `${reorderingColumnWidth}px`,
     ...(!isOnlyDraggable && { borderRight: 'none' }),
-    ...(isOnlyDraggable &&
-      isHorizontalOverflow && { ...stickyBorderStyle(shadow) }),
+    ...(isOnlyDraggable && isHorizontalOverflow && stickyBorderStyle(shadow)),
     backgroundColor: 'colors.white',
-    '&:hover': {
-      color: 'colors.neutral.500',
-      cursor: 'default',
-    },
     zIndex: '1',
     left: `${leftValue}px`,
   }
@@ -39,38 +40,39 @@ export const reorderIconStyle = {
   },
 }
 
-export const stickyStyle = (
+export function stickyStyle(
   leftValue: string,
   shadow: boolean,
   isLastSticky: boolean,
   type: DataContentType
-) => {
+): IStickyStyle {
   return {
     zIndex: '1',
     minWidth: `${stickyColunWidth}px`,
     left: `${leftValue}px`,
     backgroundColor: 'colors.white',
-    ...(isLastSticky && { ...stickyBorderStyle(shadow) }),
+    ...(isLastSticky && stickyBorderStyle(shadow)),
     ...(type === DataContentType.DROPDOWN && { overflow: 'visible' }),
   }
 }
 
-export const selectionStyle = (
+export function selectionStyle(
   isHorizontalOverflow: boolean,
   leftValue: string,
   shadow: boolean,
   stickyColumnCount: number
-) => {
+): ISelectionStyle {
   return {
     left: `${leftValue}px`,
     backgroundColor: 'colors.white',
     zIndex: '1',
     ...(isHorizontalOverflow &&
-      stickyColumnCount === 0 && { ...stickyBorderStyle(shadow) }),
+      stickyColumnCount === 0 &&
+      stickyBorderStyle(shadow)),
   }
 }
 
-export const nonStickyStyle = (type: DataContentType) => {
+export function nonStickyStyle(type: DataContentType): INonStickyStyle {
   return {
     backgroundColor: 'colors.white',
     ...(type === DataContentType.DROPDOWN && { overflow: 'visible' }),

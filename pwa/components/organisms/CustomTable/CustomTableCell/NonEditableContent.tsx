@@ -7,15 +7,18 @@ interface IProps {
   row: ITableRow
 }
 
-const NonEditableContent = (props: IProps) => {
+function NonEditableContent(props: IProps): JSX.Element {
   const { header, row } = props
 
-  const rowDisplayAccordingToType = (header: ITableHeader, row: ITableRow) => {
+  function rowDisplayAccordingToType(
+    header: ITableHeader,
+    row: ITableRow
+  ): JSX.Element | number | boolean | string {
     switch (header.type) {
       case DataContentType.STRING:
         return row[header.field]
       case DataContentType.BOOLEAN:
-        return <Switch defaultChecked={row[header.field] as boolean} />
+        return <Switch disabled defaultChecked={row[header.field] as boolean} />
       case DataContentType.TAG:
         return <Tag color="neutral">{row[header.field] as string}</Tag>
     }
