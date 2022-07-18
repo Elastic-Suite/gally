@@ -1,6 +1,6 @@
 import Collapse from '@mui/material/Collapse'
 import Link from 'next/link'
-import { styled, keyframes } from '@mui/system'
+import { keyframes, styled } from '@mui/system'
 import { IMenuChild } from '~/store'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 
@@ -208,10 +208,10 @@ function MenuItem(props: IProps): JSX.Element {
               <Link href="/admin/[[...slug]]" as={`/admin/${href}`}>
                 <CustomLineAHref>{label}</CustomLineAHref>
               </Link>
-              {isActive && <CustomIndicatorLineActive />}
+              {isActive ? <CustomIndicatorLineActive /> : null}
             </Line>
           )}
-          {!!menuChildren && (
+          {Boolean(menuChildren) && (
             <CustomLineButton
               style={{ transition: 'all 500ms', position: 'relative' }}
               onClick={toggleChild}
@@ -227,13 +227,13 @@ function MenuItem(props: IProps): JSX.Element {
               />
             </CustomLineButton>
           )}
-          {!childState && isBoosts && <CustomIndicatorLineActiveTwo />}
+          {!childState && isBoosts ? <CustomIndicatorLineActiveTwo /> : null}
         </CustomLinePadding>
-        {!!menuChildren && (
+        {Boolean(menuChildren) && (
           <CustomChildren in={childState}>
-            {menuChildren.map((item, index) => (
+            {menuChildren.map((item: IMenuChild) => (
               <MenuItem
-                key={`${index}-${item.code}`}
+                key={item.code}
                 childrenState={childrenState}
                 code={item.code}
                 href={slugify(item.code, 2)}
