@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { styled, keyframes } from '@mui/system'
 import IonIcon from '../IonIcon/IonIcon'
-import Link from 'next/link'
+import { ICategoriesPropsItem } from './CategoriesProps'
 
 const CustomRoot = styled('ul')({
   margin: 0,
@@ -21,7 +21,6 @@ to {
 `
 const CustomLi = styled('li')(({ theme }) => ({
   listStyleType: 'none',
-  marginLeft: theme.spacing(2),
   marginBottom: theme.spacing(1),
   marginTop: theme.spacing(1),
   opacity: 0,
@@ -42,6 +41,20 @@ const CustomTitle = styled('div')(({ theme }) => ({
     top: '100%',
     fontSize: '12px',
     background: theme.palette.colors.secondary[600],
+  },
+}))
+
+const CustomTitleBase = styled('div')(({ theme }) => ({
+  color: theme.palette.colors.neutral[900],
+  position: 'relative',
+  '&:hover::before': {
+    content: '""',
+    position: 'absolute',
+    width: '100%',
+    height: '1px',
+    top: '100%',
+    fontSize: '12px',
+    background: theme.palette.colors.neutral[900],
   },
 }))
 
@@ -78,27 +91,24 @@ const CustomBtn = styled('span')(({ theme }) => ({
   },
 }))
 
-interface IPropsItem {
-  isVirtual: boolean
-  name: string
-  path: string
-  children?: IPropsItem[]
-  level: number
-}
+const CustomLink = styled('a')({
+  textDecoration: 'none',
+})
 
 interface IProps {
-  items: IPropsItem[]
+  data: ICategoriesPropsItem[]
 }
 
-const Categories = ({ items }: IProps) => {
+const Categories = ({ data }: IProps) => {
   const [displayChildren, setDisplayChildren] = useState({})
 
   return (
     <CustomRoot>
-      {items.map((item, key) => {
+      {data.map((item, key) => {
+        const Title = item.level === 1 ? CustomTitleBase : CustomTitle
         return (
-          <CustomLi key={key}>
-            <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
+          <CustomLi style={{ marginLeft: item.level === 1 ? 0 : 30 }} key={key}>
+            <div style={{ display: 'flex', gap: '2px', alignItems: 'center' }}>
               {item.children && (
                 <CustomBtn
                   onClick={() => {
@@ -122,11 +132,7 @@ const Categories = ({ items }: IProps) => {
                   justifyContent: 'center',
                 }}
               >
-                <CustomTitle
-                  style={{
-                    marginLeft: !item.children && 23.5,
-                    color: item.level === 1 && '#151A47',
-                  }}
+                <Title
                   onClick={() => {
                     setDisplayChildren({
                       ...displayChildren,
@@ -135,20 +141,16 @@ const Categories = ({ items }: IProps) => {
                   }}
                 >
                   {!item.children ? (
-                    <>
-                      <Link style={{ textDecoration: 'none' }} href={item.path}>
-                        {item.name}
-                      </Link>
-                    </>
+                    <CustomLink href={item.path}>{item.name}</CustomLink>
                   ) : (
                     item.name
                   )}
-                </CustomTitle>
+                </Title>
                 {item.isVirtual && <CustomVirtual>virtual</CustomVirtual>}
               </div>
             </div>
             {displayChildren[item.name] && item.children && (
-              <Categories items={item.children} />
+              <Categories data={item.children} />
             )}
           </CustomLi>
         )
