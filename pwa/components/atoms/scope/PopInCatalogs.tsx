@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import Dialog from '@mui/material/Dialog'
-import IonIcon from '~/components/atoms/IonIcon/IonIcon'
+import { Dialog } from '@mui/material'
 import { styled } from '@mui/material/styles'
+
+import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import TitleScope from '~/components/atoms/scope/TitleScope'
 import NbActiveLocales from '~/components/atoms/scope/NbActiveLocales'
 import Language from '~/components/atoms/scope/Language'

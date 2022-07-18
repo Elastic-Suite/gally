@@ -1,5 +1,5 @@
 import { styled } from '@mui/material/styles'
-import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip'
+import { Tooltip, TooltipProps, tooltipClasses } from '@mui/material'
 
 const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />

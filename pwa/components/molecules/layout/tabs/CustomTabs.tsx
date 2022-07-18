@@ -1,7 +1,6 @@
 import { ReactChild, SyntheticEvent, useState } from 'react'
-import Tabs from '@mui/material/Tabs'
-import Tab from '@mui/material/Tab'
-import Box from '@mui/material/Box'
+import { Box, Tab, Tabs } from '@mui/material'
+
 import TabPanel from './TabPanel'
 import { a11yProps } from './a11yProps'
 
