@@ -133,6 +133,7 @@ function Filters(props: IProps): JSX.Element {
               }
               onChange={onSearch}
               placeholder={t('filters.search')}
+              style={{ width: '220px' }}
               value={searchValue}
             />
           </SearchBox>

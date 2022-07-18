@@ -48,12 +48,12 @@ const CustomContentWithAppBar = styled('div')({
   flexDirection: 'column',
   flexGrow: 1,
   width: 'auto',
-  borderRight: '1px solid #E2E6F3',
   boxSizing: 'border-box',
   height: '100vh',
   overflowY: 'scroll',
   position: 'fixed',
   top: '0',
+  right: '0',
   scrollbarWidth: 'none',
   '&::-webkit-scrollbar': {
     width: 0,
@@ -64,9 +64,10 @@ const CustomContent = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   flexGrow: 2,
-  marginTop: theme.spacing(8),
+  paddingTop: '156px',
   paddingLeft: theme.spacing(4),
   paddingRight: theme.spacing(4),
+  backgroundColor: theme.palette.background.page,
 }))
 
 const CustomButtonCollapse = styled('button')(({ theme }) => ({
