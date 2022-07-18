@@ -6,7 +6,7 @@ import { styled } from '@mui/system'
 /*
  * Create function to create path from code of the menu item
  */
-function slugify(code: string, depth: number) {
+function slugify(code: string, depth: number): string {
   let slug = code
   for (let i = 0; i < depth; i++) {
     slug = slug.replace('_', '/')
@@ -54,10 +54,10 @@ function Menu(props: IProps): JSX.Element {
   return (
     <div className={className}>
       <CustomFirstItems>
-        {menu?.hierarchy.map((item: IMenuChild, index: number) => {
+        {menu?.hierarchy.map((item: IMenuChild) => {
           if (!(item.code === 'settings') && !(item.code === 'monitoring')) {
             return (
-              <CustomBoldStyle key={`${index}-${item.code}`}>
+              <CustomBoldStyle key={item.code}>
                 <MenuItemIcon
                   code={item.code}
                   href={slugify(item.code, 0)}
@@ -70,8 +70,8 @@ function Menu(props: IProps): JSX.Element {
                   sidebarStateTimeout={sidebarStateTimeout}
                 />
                 <CustomSecondItems>
-                  {item.children?.map((item, index: number) => (
-                    <div key={`${index}-${item.code}`}>
+                  {item.children?.map((item: IMenuChild) => (
+                    <div key={item.code}>
                       <MenuItem
                         childrenState={childrenState}
                         code={item.code}

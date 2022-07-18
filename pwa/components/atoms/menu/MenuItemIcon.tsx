@@ -1,6 +1,6 @@
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import Link from 'next/link'
-import { styled, keyframes } from '@mui/system'
+import { keyframes, styled } from '@mui/system'
 
 const CustomIndicatorLineActiveTwo = styled('div')(({ theme }) => ({
   width: 3,
@@ -196,27 +196,26 @@ function MenuItemIcon(props: IProps): JSX.Element {
         <Label>{label}</Label>
       </CustomClassNameStyleRoot>
     )
-  } else {
-    return (
-      <CustomClassNameStyle lightStyle={!lightStyle} isActive={isActive}>
-        <Link href="/admin/[[...slug]]" as={`/admin/${href}`}>
-          <CustomNoChildHover sidebarState={sidebarState}>
-            <IonIcon
-              name={code}
-              style={{
-                width: 18,
-                height: 18,
-                color: isActive ? '#2C19CD' : '',
-              }}
-            />
-
-            <Label>{label}</Label>
-          </CustomNoChildHover>
-        </Link>
-        {isActive && <IndicatorLineActive />}
-      </CustomClassNameStyle>
-    )
   }
+  return (
+    <CustomClassNameStyle lightStyle={!lightStyle} isActive={isActive}>
+      <Link href="/admin/[[...slug]]" as={`/admin/${href}`}>
+        <CustomNoChildHover sidebarState={sidebarState}>
+          <IonIcon
+            name={code}
+            style={{
+              width: 18,
+              height: 18,
+              color: isActive ? '#2C19CD' : '',
+            }}
+          />
+
+          <Label>{label}</Label>
+        </CustomNoChildHover>
+      </Link>
+      {isActive ? <IndicatorLineActive /> : null}
+    </CustomClassNameStyle>
+  )
 }
 
 export default MenuItemIcon
