@@ -1,7 +1,6 @@
 import { useState } from 'react'
-import { styled, keyframes } from '@mui/system'
+import { keyframes, styled } from '@mui/system'
 import IonIcon from '../IonIcon/IonIcon'
-import { ICategoriesPropsItem } from './CategoriesProps'
 
 const CustomRoot = styled('ul')({
   margin: 0,
@@ -95,36 +94,50 @@ const CustomLink = styled('a')({
   textDecoration: 'none',
 })
 
-interface IProps {
-  data: ICategoriesPropsItem[]
+interface ITreeItem {
+  id: number
+  isVirtual: boolean
+  name: string
+  path: string
+  children?: ITreeItem[]
+  level: number
 }
 
-const Categories = ({ data }: IProps) => {
-  const [displayChildren, setDisplayChildren] = useState({})
+interface IProps {
+  data: ITreeItem[]
+}
+
+function Tree({ data }: IProps): JSX.Element {
+  const [displayChildren, setDisplayChildren] = useState<
+    Record<string, boolean>
+  >({})
 
   return (
     <CustomRoot>
-      {data.map((item, key) => {
+      {data.map((item: ITreeItem) => {
         const Title = item.level === 1 ? CustomTitleBase : CustomTitle
         return (
-          <CustomLi style={{ marginLeft: item.level === 1 ? 0 : 30 }} key={key}>
+          <CustomLi
+            style={{ marginLeft: item.level === 1 ? 0 : 30 }}
+            key={item.id}
+          >
             <div style={{ display: 'flex', gap: '2px', alignItems: 'center' }}>
-              {item.children && (
+              {item.children ? (
                 <CustomBtn
-                  onClick={() => {
+                  onClick={(): void => {
                     setDisplayChildren({
                       ...displayChildren,
-                      [item.name]: !displayChildren[item.name],
+                      [item.id]: !displayChildren[item.id],
                     })
                   }}
                 >
-                  {displayChildren[item.name] ? (
+                  {displayChildren[item.id] ? (
                     <IonIcon name="minus" />
                   ) : (
                     <IonIcon name="more" />
                   )}
                 </CustomBtn>
-              )}
+              ) : null}
               <div
                 style={{
                   display: 'flex',
@@ -133,10 +146,10 @@ const Categories = ({ data }: IProps) => {
                 }}
               >
                 <Title
-                  onClick={() => {
+                  onClick={(): void => {
                     setDisplayChildren({
                       ...displayChildren,
-                      [item.name]: !displayChildren[item.name],
+                      [item.id]: !displayChildren[item.id],
                     })
                   }}
                 >
@@ -146,12 +159,12 @@ const Categories = ({ data }: IProps) => {
                     item.name
                   )}
                 </Title>
-                {item.isVirtual && <CustomVirtual>virtual</CustomVirtual>}
+                {item.isVirtual ? <CustomVirtual>virtual</CustomVirtual> : null}
               </div>
             </div>
-            {displayChildren[item.name] && item.children && (
-              <Categories data={item.children} />
-            )}
+            {displayChildren[item.id] && item.children ? (
+              <Tree data={item.children} />
+            ) : null}
           </CustomLi>
         )
       })}
@@ -159,4 +172,4 @@ const Categories = ({ data }: IProps) => {
   )
 }
 
-export default Categories
+export default Tree
