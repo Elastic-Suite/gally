@@ -1,0 +1,80 @@
+import { reorderingColumnWidth, stickyColunWidth } from '~/constants'
+import {
+  DataContentType,
+  IDraggableColumnStyle,
+  INonStickyStyle,
+  ISelectionStyle,
+  IStickyStyle,
+} from '~/types'
+import { stickyBorderStyle } from '../CustomTable.styled'
+
+export function draggableColumnStyle(
+  isOnlyDraggable: boolean,
+  leftValue: string,
+  isHorizontalOverflow: boolean,
+  shadow: boolean
+): IDraggableColumnStyle {
+  return {
+    minWidth: `${reorderingColumnWidth}px`,
+    ...(!isOnlyDraggable && { borderRight: 'none' }),
+    ...(isOnlyDraggable && isHorizontalOverflow && stickyBorderStyle(shadow)),
+    backgroundColor: 'colors.white',
+    zIndex: '1',
+    left: `${leftValue}px`,
+  }
+}
+
+export const reorderIconStyle = {
+  fontSize: 'x-large',
+  position: 'absolute',
+  left: '18.75%',
+  right: '18.75%',
+  top: '36.33%',
+  bottom: '36.33%',
+  color: 'colors.white',
+  display: 'flex',
+  alignItems: 'center',
+  '&:hover': {
+    color: 'colors.neutral.500',
+    cursor: 'grab',
+  },
+}
+
+export function stickyStyle(
+  leftValue: string,
+  shadow: boolean,
+  isLastSticky: boolean,
+  type: DataContentType
+): IStickyStyle {
+  return {
+    zIndex: '1',
+    minWidth: `${stickyColunWidth}px`,
+    left: `${leftValue}px`,
+    backgroundColor: 'colors.white',
+    ...(isLastSticky && stickyBorderStyle(shadow)),
+    ...(type === DataContentType.DROPDOWN && { overflow: 'visible' }),
+  }
+}
+
+export function selectionStyle(
+  isHorizontalOverflow: boolean,
+  leftValue: string,
+  shadow: boolean,
+  stickyColumnCount: number
+): ISelectionStyle {
+  return {
+    left: `${leftValue}px`,
+    backgroundColor: 'colors.white',
+    zIndex: '1',
+    ...(isHorizontalOverflow &&
+      stickyColumnCount === 0 &&
+      stickyBorderStyle(shadow)),
+  }
+}
+
+export function nonStickyStyle(type: DataContentType): INonStickyStyle {
+  return {
+    backgroundColor: 'colors.white',
+    ...(type === DataContentType.DROPDOWN && { overflow: 'visible' }),
+  }
+}
