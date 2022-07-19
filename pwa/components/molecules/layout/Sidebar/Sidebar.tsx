@@ -1,70 +1,58 @@
-import { makeStyles } from '@mui/styles'
-import { Theme } from '@mui/material/styles'
 import { Collapse } from '@mui/material'
 import Link from 'next/link'
 import Image from 'next/image'
-
 import Menu from '~/components/molecules/layout/Menu/Menu'
 import { IMenu } from '~/store'
+import { styled } from '@mui/system'
 
-/*
- * Use of mui makeStyles to create multiple styles reusing theme fm react-admin
- * see: https://mui.com/system/styles/basics/
- */
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    display: 'flex',
-    position: 'relative',
-    flexDirection: 'column',
-    width: 278,
-    minHeight: '100vh',
-    background: theme.palette.background.paper,
-    paddingBottom: theme.spacing(3),
-  },
-  rootCollapsed: {
-    width: 'inherit',
-  },
-  imgContainer: {
-    position: 'relative',
-    paddingBottom: theme.spacing(6),
-    paddingTop: theme.spacing(3),
-    paddingLeft: theme.spacing(2.5),
-    cursor: 'pointer',
-  },
-  imgExtended: {
-    position: 'absolute',
-    width: 104,
-    transition: 'opacity 500ms',
-  },
-  imgCollapse: {
-    position: 'absolute',
-    width: 31,
-    transition: 'opacity 500ms',
-  },
-  imgNotActive: {
-    opacity: 0,
-  },
-  menu: {
-    marginTop: theme.spacing(2),
-    marginLeft: theme.spacing(2),
-  },
-  widthCollapse: {
-    width: '50px', // 50px + 16px padding = 66px
-  },
-  leftBar: {
-    borderRight: '1px solid #E2E6F3',
-    boxSizing: 'unset',
-    height: '100vh',
-    overflowY: 'scroll',
-    position: 'fixed',
-    left: '0',
-    top: '0',
-    scrollbarWidth: 'none',
-    '&::-webkit-scrollbar': {
-      width: 0,
-    },
-  },
+const CustomImgCollapse = styled('div')({
+  position: 'absolute',
+  width: 31,
+  transition: 'opacity 500ms',
+})
+
+const CustomImgContainer = styled('div')(({ theme }) => ({
+  position: 'relative',
+  paddingBottom: theme.spacing(6),
+  paddingTop: theme.spacing(3),
+  paddingLeft: theme.spacing(2.5),
+  cursor: 'pointer',
 }))
+
+const CustomLeftBar = styled(Collapse)({
+  borderRight: '1px solid #E2E6F3',
+  boxSizing: 'unset',
+  height: '100vh',
+  overflowY: 'scroll',
+  position: 'fixed',
+  left: '0',
+  top: '0',
+  scrollbarWidth: 'none',
+  '&::-webkit-scrollbar': {
+    width: 0,
+  },
+})
+
+const CustomRoot = styled('div')(({ theme }) => ({
+  display: 'flex',
+  position: 'relative',
+  flexDirection: 'column',
+  width: 278,
+  minHeight: '100vh',
+  background: theme.palette.background.paper,
+  paddingBottom: theme.spacing(3),
+}))
+
+const CustomMenu = styled(Menu)(({ theme }) => ({
+  marginTop: theme.spacing(2),
+  marginLeft: theme.spacing(2),
+}))
+
+const CustomImgExtended = styled('div')({
+  position: 'absolute',
+  width: 104,
+  transition: 'opacity 500ms',
+})
 
 interface IProps {
   childrenState: Record<string, boolean>
@@ -84,32 +72,24 @@ function Sidebar(props: IProps): JSX.Element {
     sidebarState,
     sidebarStateTimeout,
   } = props
-  const classes = useStyles()
 
   /*
    * Use of Collapse from mui to collapse sidebar when button is clicked
    * see: https://mui.com/material-ui/transitions/#collapse
    */
+
   return (
-    <Collapse
+    <CustomLeftBar
       in={sidebarState}
       orientation="horizontal"
       collapsedSize={sidebarState ? 278 : 66}
       timeout={sidebarState ? 0 : 200}
-      className={classes.leftBar}
     >
-      <div
-        className={
-          classes.root + (sidebarState ? '' : ` ${classes.rootCollapsed}`)
-        }
-      >
+      <CustomRoot style={sidebarState ? {} : { width: 'inherit' }}>
         <Link href="/" as="/">
-          <div className={classes.imgContainer}>
-            <div
-              className={
-                classes.imgExtended +
-                (!sidebarStateTimeout ? '' : ` ${classes.imgNotActive}`)
-              }
+          <CustomImgContainer>
+            <CustomImgExtended
+              style={!sidebarStateTimeout ? {} : { opacity: 0 }}
             >
               <Image
                 src="/images/LogoBlinkExtended.svg"
@@ -117,30 +97,27 @@ function Sidebar(props: IProps): JSX.Element {
                 width="104"
                 height="29"
               />
-            </div>
-            <div className={classes.imgCollapse}>
+            </CustomImgExtended>
+            <CustomImgCollapse>
               <Image
                 src="/images/LogoBlinkCollapse.svg"
                 alt="Logo"
                 width="31"
                 height="29"
               />
-            </div>
-          </div>
+            </CustomImgCollapse>
+          </CustomImgContainer>
         </Link>
-        <Menu
+        <CustomMenu
           childrenState={childrenState}
-          className={
-            classes.menu + (sidebarState ? '' : ` ${classes.widthCollapse}`)
-          }
           menu={menu}
           menuItemActive={menuItemActive}
           onChildToggle={onChildToggle}
           sidebarState={sidebarState}
           sidebarStateTimeout={sidebarStateTimeout}
         />
-      </div>
-    </Collapse>
+      </CustomRoot>
+    </CustomLeftBar>
   )
 }
 
