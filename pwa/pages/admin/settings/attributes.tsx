@@ -1,7 +1,7 @@
 import { MouseEvent, useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'next-i18next'
 
-import { DataContentType, IHydraMember, IHydraResponse, ITableRow } from '~/types'
+import { IHydraMember, IHydraResponse } from '~/types'
 
 import { useApiFetch } from '~/hooks/useApi'
 
@@ -11,7 +11,7 @@ import PrimaryButton from '~/components/atoms/buttons/PrimaryButton'
 import Filters from '~/components/molecules/Filters/Filters'
 import { FilterType, IFilter } from '~/components/molecules/Filters/Filter'
 
-import CustomTable from '~/components/organisms/CustomTable/CustomTable'
+import ApiTable from '~/components/stateful/ApiTable/ApiTable'
 
 function Attributes(): JSX.Element | string {
   const [sourceFields] = useApiFetch<IHydraResponse<IHydraMember>>('/source_fields')
@@ -104,47 +104,6 @@ function Attributes(): JSX.Element | string {
     return null
   }
 
-  console.log(sourceFields)
-
-  const tableHeaders = [
-    {
-      field: 'code',
-      headerName: t('attributes.attributeCode'),
-      type: DataContentType.STRING,
-      editable: false,
-    },
-    {
-      field: 'defaultLabel',
-      headerName: t('attributes.attributeLabel'),
-      type: DataContentType.STRING,
-      editable: false,
-    },
-    {
-      field: 'type',
-      headerName: t('attributes.attributeType'),
-      type: DataContentType.STRING,
-      editable: false,
-    },
-    {
-      field: 'filterable',
-      headerName: t('attributes.filterable'),
-      type: DataContentType.BOOLEAN,
-      editable: false,
-    },
-    {
-      field: 'searchable',
-      headerName: t('attributes.searchable'),
-      type: DataContentType.BOOLEAN,
-      editable: false,
-    },
-    {
-      field: 'sortable',
-      headerName: t('attributes.sortable'),
-      type: DataContentType.BOOLEAN,
-      editable: false,
-    },
-  ]
-
   return (
     <>
       <PageTile title={t('page.title')}>
@@ -162,16 +121,10 @@ function Attributes(): JSX.Element | string {
         searchValue={searchValue}
         showSearch
       />
-      <CustomTable
-        currentPage={0}
+      <ApiTable
+        api="/source_fields"
         onMassiveAction={handleMassiveAction}
         onPageChange={handlePageChange}
-        rowsPerPage={50}
-        rowsPerPageOptions={[]}
-        tableHeaders={tableHeaders}
-        tableRows={sourceFields.data['hydra:member'] as unknown as ITableRow[]}
-        totalPages={sourceFields.data['hydra:totalItems']}
-        withSelection
       />
     </>
   )
