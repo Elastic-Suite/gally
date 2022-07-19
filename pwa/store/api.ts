@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { fetchApi } from '~/services/api'
+import { fetchApi } from '~/services'
 import { IDocsJson, IDocsJsonld, IFetch, LoadStatus } from '~/types'
 
 import { IThunkApi, RootState } from './store'

@@ -131,7 +131,6 @@ module.exports = {
     'react/jsx-no-constructed-context-values': 'error',
     'react/jsx-no-leaked-render': 'error',
     'react/jsx-no-script-url': 'error',
-    'react/jsx-no-useless-fragment': 'error',
     'react/jsx-pascal-case': 'error',
     'react/jsx-sort-default-props': 'error',
     'react/no-access-state-in-setstate': 'error',

@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { ActionCreatorWithOptionalPayload } from '@reduxjs/toolkit'
 import { useTranslation } from 'next-i18next'
 
-import { fetchApi } from '~/services/api'
+import { fetchApi } from '~/services'
 import { useAppDispatch } from '~/store'
 import { IFetch, LoadStatus } from '~/types'
 
