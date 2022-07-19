@@ -9,10 +9,16 @@ interface IProps {
   show: boolean
   onMassiveSelection: (selection: MassiveSelectionType) => void
   massiveSelectionState: boolean
+  massiveSelectionIndeterminate: boolean
 }
 
 function StickyBar(props: IProps): JSX.Element {
-  const { show, onMassiveSelection, massiveSelectionState } = props
+  const {
+    show,
+    onMassiveSelection,
+    massiveSelectionState,
+    massiveSelectionIndeterminate,
+  } = props
 
   if (!show) {
     return null
@@ -23,17 +29,19 @@ function StickyBar(props: IProps): JSX.Element {
       sx={{
         display: 'flex',
         borderRadius: '15px',
-        position: 'sticky',
-        bottom: '50px',
+        position: 'fixed',
+        bottom: '0',
         height: '64px',
         bgcolor: 'colors.white',
         border: 'solid',
         borderColor: 'neutral.light',
+        zIndex: '2',
       }}
     >
       <MassiveSelection
         onSelection={onMassiveSelection}
         selectionState={massiveSelectionState}
+        indeterminateState={massiveSelectionIndeterminate}
       />
       <TertiaryButton
         sx={{

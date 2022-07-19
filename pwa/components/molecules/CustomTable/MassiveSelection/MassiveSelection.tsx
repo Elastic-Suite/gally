@@ -7,10 +7,11 @@ import { useTranslation } from 'next-i18next'
 interface IProps {
   onSelection: (selection: MassiveSelectionType) => void
   selectionState: boolean
+  indeterminateState: boolean
 }
 
 function MassiveSelection(props: IProps): JSX.Element {
-  const { onSelection, selectionState } = props
+  const { onSelection, selectionState, indeterminateState } = props
 
   const { t } = useTranslation('common')
 
@@ -40,8 +41,12 @@ function MassiveSelection(props: IProps): JSX.Element {
 
   return (
     <>
-      <Checkbox checked={selectionState} onChange={handleMassiveSelection} />
-      <Button onClick={handleClick} color="inherit">
+      <Checkbox
+        indeterminate={indeterminateState}
+        checked={selectionState}
+        onChange={handleMassiveSelection}
+      />
+      <Button sx={{ paddingLeft: '0' }} onClick={handleClick} color="inherit">
         <IonIcon name="chevron-down-outline" />
       </Button>
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
