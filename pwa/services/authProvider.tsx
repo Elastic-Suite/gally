@@ -1,5 +1,6 @@
 import jwtDecode from 'jwt-decode'
-import { ENTRYPOINT } from 'config/entrypoint'
+
+import { ENTRYPOINT } from '~/config/entrypoint'
 
 const authProvider = {
   login: ({

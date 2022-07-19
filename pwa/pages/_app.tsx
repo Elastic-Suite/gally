@@ -7,7 +7,7 @@ import { appWithTranslation, useTranslation } from 'next-i18next'
 
 import AppProvider from '~/components/AppProvider'
 import nextI18nConfig from '~/next-i18next.config'
-import { setLanguage } from '~/store'
+import { setLanguage, setupStore } from '~/store'
 
 import 'assets/scss/style.scss'
 
@@ -22,6 +22,7 @@ const Layout = dynamic(() => import('~/components/stateful/layout/Layout'), {
 function MyApp(props: AppProps): JSX.Element {
   const { Component, pageProps } = props
   const Cmp = Component as FunctionComponent
+  const store = setupStore()
 
   const { i18n } = useTranslation('common')
   useEffect(() => {
@@ -36,7 +37,7 @@ function MyApp(props: AppProps): JSX.Element {
         <title>Blink Admin</title>
       </Head>
 
-      <AppProvider>
+      <AppProvider store={store}>
         <Layout>
           <Cmp {...pageProps} />
         </Layout>
