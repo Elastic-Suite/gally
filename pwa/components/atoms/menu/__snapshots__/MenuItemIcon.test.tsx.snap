@@ -3,7 +3,7 @@
 exports[`MenuItemIcon match snapshot with boldStyle and child (Analyze) 1`] = `
 <div>
   <div
-    class="makeStyles-root-17 makeStyles-childPadding-18 makeStyles-boldStyle-19"
+    class="css-lalpws"
   >
     <ion-icon
       name="analytics"
@@ -11,7 +11,7 @@ exports[`MenuItemIcon match snapshot with boldStyle and child (Analyze) 1`] = `
     />
     
     <span
-      class="makeStyles-span-29 makeStyles-opacityFull-25"
+      class="css-1skr4lk"
     >
       Analyze
     </span>
