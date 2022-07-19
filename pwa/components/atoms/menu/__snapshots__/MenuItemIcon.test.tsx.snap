@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MenuItemIcon match snapshot with boldStyle and child (Analyze) 1`] = `
+exports[`MenuItemIcon match snapshot 1`] = `
 <div>
   <div
     class="css-lalpws"

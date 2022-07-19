@@ -3,6 +3,8 @@ import AppProvider from '~/components/AppProvider'
 
 import I18nProvider from './I18nProvider'
 
+import { setupStore } from '~/store'
+
 import '~/assets/scss/style.scss'
 
 export const parameters = {
@@ -18,9 +20,10 @@ export const parameters = {
 
 export const decorators = [
   (Story, context) => {
+    const store = setupStore()
     return (
       <I18nProvider locale={context.globals.locale}>
-        <AppProvider>
+        <AppProvider store={store}>
           <Suspense fallback="">
             <Story />
           </Suspense>
