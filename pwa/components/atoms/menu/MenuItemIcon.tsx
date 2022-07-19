@@ -1,119 +1,146 @@
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
-import { makeStyles } from '@mui/styles'
-import { Theme } from '@mui/material/styles'
 import Link from 'next/link'
+import { keyframes, styled } from '@mui/system'
 
-/*
- * Use of mui makeStyles to create multiple styles reusing theme fm react-admin
- * see: https://mui.com/system/styles/basics/
- */
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {
+const CustomIndicatorLineActiveTwo = styled('div')(({ theme }) => ({
+  width: 3,
+  background: theme.palette.menu.active,
+  boxShadow: '-2px 0px 4px rgba(63, 50, 230, 0.2)',
+  borderRadius: '5px 0px 0px 5px',
+}))
+
+const CustomRoot = styled('a')(({ theme }) => ({
+  position: 'relative',
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
+  textDecoration: 'unset',
+  color: 'inherit',
+  padding: theme.spacing(1),
+  '& ion-icon': {
+    color: theme.palette.menu.text500,
+  },
+}))
+
+const CustomIndicatorLineActive = styled('div')(({ theme }) => ({
+  position: 'absolute',
+  right: 0,
+  width: 3,
+  height: '32px',
+  background: theme.palette.menu.active,
+  boxShadow: '-2px 0px 4px rgba(63, 50, 230, 0.2)',
+  borderRadius: '5px 0px 0px 5px',
+}))
+
+const CustomNoChildHover = styled(CustomRoot)<{ sidebarState: boolean }>(
+  ({ theme, sidebarState }) => ({
+    width: sidebarState ? '100%' : 'fit-content',
+    '&:hover': {
+      background: theme.palette.menu.hover,
+      borderRadius: 8,
+    },
+    gap: sidebarState ? theme.spacing(2) : 0,
+    marginRight: sidebarState && theme.spacing(2),
+  })
+)
+
+const opacityFullDeux = keyframes`
+  0% { opacity: 0 },
+  45% { opacity: 0 },
+  100% { opacity: 1 },
+`
+
+const opacityFull = keyframes`
+  from { opacity: 0 },
+  to { opacity: 1 },
+`
+
+const CustomSpan = styled('span')({ opacity: 1, transition: 'all 500ms' })
+
+const CustomOpacityFull = styled(CustomSpan)({
+  opacity: 0,
+  animation: `${opacityFull} 1000ms forwards`,
+})
+
+const heightZero = keyframes`
+  0% {
+    height: 'auto';
+    width: 'auto';
+    opacity: 1;
+    position: 'relative';
+  },
+  20% {
+    height: 'auto';
+    width: 'auto';
+    opacity: 0;
+    position: 'relative';
+  },
+  100% { height: 0; width: 0; opacity: 0; position: 'absolute' },
+`
+
+const CustomHeightZero = styled(CustomSpan)({
+  opacity: 1,
+  height: 'auto',
+  width: 'auto',
+  animation: `${heightZero} 1400ms forwards`,
+  position: 'relative',
+})
+
+const CustomIndicatorLineActiveOpacityFullDeux = styled(
+  CustomIndicatorLineActive
+)({
+  opacity: 0,
+  animation: `${opacityFullDeux} 1200ms forwards`,
+})
+
+const CustomIndicatorLineActiveTwoOpacityFullDeux = styled(
+  CustomIndicatorLineActive
+)({
+  opacity: 0,
+  animation: `${opacityFullDeux} 1200ms forwards`,
+})
+
+const CustomClassNameStyleRoot = styled('div')<{ lightStyle?: boolean }>(
+  ({ theme, lightStyle }) => ({
+    fontFamily: 'inter',
+    fontWeight: lightStyle ? 600 : 500,
+    fontSize: lightStyle ? 13 : 14,
+    lineHeight: '20px',
+    letterSpacing: lightStyle ? 0.5 : 'initial',
+    textTransform: lightStyle ? 'uppercase' : 'initial',
+    color: lightStyle ? theme.palette.menu.text600 : theme.palette.menu.text500,
     position: 'relative',
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     gap: theme.spacing(2),
     textDecoration: 'unset',
-    color: 'inherit',
     padding: theme.spacing(1),
     '& ion-icon': {
       color: theme.palette.menu.text500,
     },
+  })
+)
+const CustomClassNameStyle = styled('div')<{
+  isActive: boolean
+  lightStyle?: boolean
+}>(({ theme, lightStyle, isActive }) => ({
+  display: 'flex',
+  fontFamily: 'inter',
+  fontWeight: lightStyle ? 600 : 500,
+  fontSize: lightStyle ? 13 : 14,
+  lineHeight: '20px',
+  letterSpacing: lightStyle ? 0.5 : 'initial',
+  textTransform: lightStyle ? 'uppercase' : 'initial',
+  color: isActive
+    ? theme.palette.colors.secondary['600']
+    : lightStyle
+    ? theme.palette.menu.text600
+    : theme.palette.menu.text500,
+  '&:hover': {
+    cursor: 'pointer',
   },
-  childPadding: {
-    paddingBottom: theme.spacing(1),
-  },
-  boldStyle: {
-    fontFamily: 'inter',
-    fontWeight: 600,
-    fontSize: 13,
-    lineHeight: '20px',
-    letterSpacing: 0.5,
-    textTransform: 'uppercase',
-    color: theme.palette.menu.text600,
-  },
-  lightStyle: {
-    fontFamily: 'inter',
-    fontWeight: 500,
-    fontSize: 14,
-    lineHeight: '20px',
-    color: theme.palette.menu.text500,
-  },
-  noChildHover: {
-    '&:hover': {
-      background: theme.palette.menu.hover,
-      borderRadius: 8,
-    },
-  },
-  lineActive: {
-    position: 'relative',
-    display: 'flex',
-    justifyContent: 'space-between',
-    color: theme.palette.menu.active,
-    flex: 1,
-  },
-  indicatorLineActive: {
-    position: 'absolute',
-    right: 0,
-    width: 3,
-    background: theme.palette.menu.active,
-    boxShadow: '-2px 0px 4px rgba(63, 50, 230, 0.2)',
-    borderRadius: '5px 0px 0px 5px',
-  },
-  indicatorLineActiveTwo: {
-    width: 3,
-    background: theme.palette.menu.active,
-    boxShadow: '-2px 0px 4px rgba(63, 50, 230, 0.2)',
-    borderRadius: '5px 0px 0px 5px',
-  },
-  opacityFull: {
-    opacity: 0,
-    animation: '$opacityFull 1000ms forwards',
-  },
-  '@keyframes opacityFull': {
-    from: { opacity: 0 },
-    to: { opacity: 1 },
-  },
-  opacityFullDeux: {
-    opacity: 0,
-    animation: '$opacityFullDeux 1200ms forwards',
-  },
-  '@keyframes opacityFullDeux': {
-    '0%': { opacity: 0 },
-    '45%': { opacity: 0 },
-    '100%': { opacity: 1 },
-  },
-  span: {
-    opacity: 1,
-    transition: 'all 500ms',
-  },
-  hide: {
-    opacity: 0,
-    height: 0,
-  },
-  heightZero: {
-    opacity: 1,
-    maxHeight: 'initial',
-    maxWidth: 'initial',
-    animation: '$heightZero 1400ms forwards',
-    position: 'relative',
-  },
-  '@keyframes heightZero': {
-    '0%': {
-      maxHeight: 'initial',
-      maxWidth: 'initial',
-      opacity: 1,
-      position: 'relative',
-    },
-    '20%': {
-      maxHeight: 'initial',
-      maxWidth: 'initial',
-      opacity: 0,
-      position: 'relative',
-    },
-    '100%': { maxHeight: 0, maxWidth: 0, opacity: 0, position: 'absolute' },
-  },
+  justifyContent: isActive && 'space-between',
 }))
 
 interface IProps {
@@ -141,83 +168,53 @@ function MenuItemIcon(props: IProps): JSX.Element {
     sidebarStateTimeout,
   } = props
 
-  const classes = useStyles()
-  let classNameRoot = classes.root
-  let classNameStyle = ''
-  if (lightStyle) {
-    classNameStyle += classes.lightStyle
-  } else {
-    classNameStyle += classes.boldStyle
-  }
+  const Label = !sidebarStateTimeout ? CustomOpacityFull : CustomHeightZero
+  const IndicatorLineActive = sidebarStateTimeout
+    ? CustomIndicatorLineActiveTwoOpacityFullDeux
+    : CustomIndicatorLineActiveTwo
 
   /*
    * Verification and return of specific data if the item has children
    */
   if (childPadding) {
-    classNameRoot += ` ${classes.childPadding}`
     return (
-      <div className={`${classNameRoot} ${classNameStyle}`}>
-        <IonIcon name={code} style={{ width: 18, height: 18 }} />
+      <CustomClassNameStyleRoot lightStyle={!lightStyle}>
+        <IonIcon
+          name={code}
+          style={{
+            width: 18,
+            height: 18,
+            color: isRoot && sidebarStateTimeout && '#2C19CD',
+          }}
+        />
         {sidebarStateTimeout && isRoot ? (
-          <div
-            className={`${classes.indicatorLineActive} ${classes.opacityFullDeux}`}
-            style={{ height: '32px' }}
-          />
+          <CustomIndicatorLineActiveOpacityFullDeux />
         ) : (
           ''
         )}
 
-        <span
-          className={
-            classes.span +
-            (!sidebarStateTimeout
-              ? ` ${classes.opacityFull}`
-              : ` ${classes.heightZero}`)
-          }
-        >
-          {label}
-        </span>
-      </div>
+        <Label>{label}</Label>
+      </CustomClassNameStyleRoot>
     )
   }
   return (
-    <div
-      className={
-        isActive ? `${classes.lineActive} ${classNameStyle}` : classNameStyle
-      }
-    >
+    <CustomClassNameStyle lightStyle={!lightStyle} isActive={isActive}>
       <Link href="/admin/[[...slug]]" as={`/admin/${href}`}>
-        <a
-          className={`${classNameRoot} ${classes.noChildHover}`}
-          style={
-            sidebarState
-              ? { width: 'calc(100% - 10px)' }
-              : { width: 'fit-content' }
-          }
-        >
-          <IonIcon name={code} style={{ width: 18, height: 18 }} />
+        <CustomNoChildHover sidebarState={sidebarState}>
+          <IonIcon
+            name={code}
+            style={{
+              width: 18,
+              height: 18,
+              color: isActive ? '#2C19CD' : '',
+            }}
+          />
 
-          <span
-            className={
-              classes.span +
-              (!sidebarStateTimeout
-                ? ` ${classes.opacityFull}`
-                : ` ${classes.heightZero}`)
-            }
-          >
-            {label}
-          </span>
-        </a>
+          <Label>{label}</Label>
+        </CustomNoChildHover>
       </Link>
-      {isActive ? (
-        <div
-          className={
-            classes.indicatorLineActiveTwo +
-            (sidebarStateTimeout ? ` ${classes.opacityFullDeux}` : '')
-          }
-        />
-      ) : null}
-    </div>
+      {isActive ? <IndicatorLineActive /> : null}
+    </CustomClassNameStyle>
   )
 }
 

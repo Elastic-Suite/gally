@@ -1,9 +1,7 @@
-import { makeStyles } from '@mui/styles'
-import { Theme } from '@mui/material/styles'
-
-import { IMenu } from '~/store'
+import { IMenu, IMenuChild } from '~/store'
 import MenuItemIcon from '~/components/atoms/menu/MenuItemIcon'
 import MenuItem from '~/components/atoms/menu/MenuItem'
+import { styled } from '@mui/system'
 
 /*
  * Create function to create path from code of the menu item
@@ -16,42 +14,19 @@ function slugify(code: string, depth: number): string {
   return slug
 }
 
-/*
- * Use of mui makeStyles to create multiple styles reusing theme fm react-admin
- * see: https://mui.com/system/styles/basics/
- */
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    display: 'flex',
-    flexDirection: 'row',
-    width: 'auto',
-    position: 'unset',
-  },
-  firstItems: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  secondItems: {
-    display: 'flex',
-    flexDirection: 'column',
-    paddingLeft: theme.spacing(2),
-  },
-  boldStyle: {
-    paddingBottom: theme.spacing(3),
-  },
-  lightStyle: {
-    paddingTop: theme.spacing(2),
-  },
-  boldStyleCollapsed: {
-    paddingLeft: theme.spacing(1),
-    paddingBottom: theme.spacing(2),
-    color: theme.palette.menu.text500,
-  },
-  lightStyleCollapsed: {
-    paddingLeft: theme.spacing(1),
-    paddingTop: theme.spacing(1),
-    color: theme.palette.menu.text500,
-  },
+const CustomFirstItems = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
+})
+
+const CustomBoldStyle = styled('div')(({ theme }) => ({
+  paddingBottom: theme.spacing(3),
+}))
+
+const CustomSecondItems = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  paddingLeft: theme.spacing(2),
 }))
 
 interface IProps {
@@ -75,15 +50,14 @@ function Menu(props: IProps): JSX.Element {
     sidebarStateTimeout,
   } = props
   const words = menuItemActive.split('_')
-  const classes = useStyles()
 
   return (
     <div className={className}>
-      <div className={classes.firstItems}>
-        {menu?.hierarchy.map((item) => {
+      <CustomFirstItems>
+        {menu?.hierarchy.map((item: IMenuChild) => {
           if (!(item.code === 'settings') && !(item.code === 'monitoring')) {
             return (
-              <div key={item.code} className={classes.boldStyle}>
+              <CustomBoldStyle key={item.code}>
                 <MenuItemIcon
                   code={item.code}
                   href={slugify(item.code, 0)}
@@ -95,8 +69,8 @@ function Menu(props: IProps): JSX.Element {
                   sidebarState={sidebarState}
                   sidebarStateTimeout={sidebarStateTimeout}
                 />
-                <div className={classes.secondItems}>
-                  {item.children?.map((item) => (
+                <CustomSecondItems>
+                  {item.children?.map((item: IMenuChild) => (
                     <div key={item.code}>
                       <MenuItem
                         childrenState={childrenState}
@@ -117,8 +91,8 @@ function Menu(props: IProps): JSX.Element {
                       />
                     </div>
                   ))}
-                </div>
-              </div>
+                </CustomSecondItems>
+              </CustomBoldStyle>
             )
           }
           return (
@@ -137,7 +111,7 @@ function Menu(props: IProps): JSX.Element {
             </div>
           )
         })}
-      </div>
+      </CustomFirstItems>
     </div>
   )
 }
