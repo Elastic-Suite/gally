@@ -39,20 +39,16 @@ const CustomCatalogs = styled('div')(({ theme }) => ({
   gap: theme.spacing(3),
 }))
 
-interface IProps {
-  content: IHydraResponse | IHydraResponse[]
-}
-
 interface ILocalName {
   localName: string
 }
 
-interface ILocalizedCatalogs {
-  localizedCatalogs: ILocalName[]
-  name: string
+interface IProps {
+  content: any
 }
 
 function Catalogs({ content }: IProps): JSX.Element {
+  const { t } = useTranslation('common')
   return (
     <CustomFullRoot>
       <CustomNbCatalogs>
@@ -61,7 +57,7 @@ function Catalogs({ content }: IProps): JSX.Element {
           t('catalog', { count: content['hydra:member'].length })}
       </CustomNbCatalogs>
       <CustomRoot>
-        {content.map((item, key: number) => (
+        {content.map((item: any, key: number) => (
           <CustomCatalogs key={item.name}>
             <TitleScope name={item.name} />
             <NbActiveLocales number={item.nbActiveLocales} />

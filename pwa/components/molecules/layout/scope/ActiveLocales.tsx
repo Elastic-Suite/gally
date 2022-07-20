@@ -5,7 +5,7 @@ import Language from '~/components/atoms/scope/Language'
 import { IHydraResponse } from '~/types'
 
 const CustomRoot = styled('div')(({ theme }) => ({
-  width: '671px',
+  width: '100%',
   boxSizing: 'border-box',
   display: 'flex',
   flexDirection: 'column',
@@ -21,11 +21,18 @@ interface IProps {
 }
 
 function ActiveLocales({ content }: IProps): JSX.Element {
+  let Languages = []
+  for (const hydraContent of content['hydra:member']) {
+    for (const localizedCatalogsContent of hydraContent.localizedCatalogs) {
+      Languages = [...Languages, localizedCatalogsContent.localName]
+    }
+  }
+  Languages = [...new Set(Languages)]
   return (
     <CustomRoot>
-      {content.map((item: string) => (
-        <div key={item}>{item}</div>
-      ))}
+      <TitleScope name="Total" />
+      <NbActiveLocales number={Languages.length} />
+      <Language language={Languages} limit={false} />
     </CustomRoot>
   )
 }

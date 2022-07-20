@@ -27,39 +27,15 @@ const CustomLanguage = styled('div')(({ theme }) => ({
 interface IProps {
   language: string[]
   limit: boolean
-  content?: {
-    name: string
-    language: string[]
-  }
+  content?: any
   order?: number
 }
 
-function Language({ language, order, limit, content }: IProps): JSX.Element {
+const Language = ({ language, order, limit, content }: IProps) => {
   const newLanguage = [...new Set(language)]
   const nbActiveLocalesByWebSite = 5
-
   return (
     <CustomRoot>
-<<<<<<< HEAD
-      {newLanguage
-        ? newLanguage.map((item: string, key: number) => (
-            <div key={item}>
-              {limit === true ? (
-                key === 3 ? (
-                  <PopInCatalogs
-                    content={content[order]}
-                    title={newLanguage.length}
-                  />
-                ) : (
-                  key < 3 && <CustomLanguage key={item}>{item}</CustomLanguage>
-                )
-              ) : (
-                <CustomLanguage key={item}>{item}</CustomLanguage>
-              )}
-            </div>
-          ))
-        : null}
-=======
       {newLanguage &&
         newLanguage.map((item: string, key: number) => (
           <div key={key}>
@@ -89,7 +65,6 @@ function Language({ language, order, limit, content }: IProps): JSX.Element {
             )}
           </div>
         ))}
->>>>>>> ESPP_174 : fix for api
     </CustomRoot>
   )
 }

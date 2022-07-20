@@ -97,15 +97,7 @@ function SubTabs({ labels, contents }: IProps): JSX.Element {
       </CustumRootSubTabs>
       {contents.map(
         (item: string, key: number) =>
-<<<<<<< HEAD
           key === active && <div key={item}>{item}</div>
-=======
-          key === active && (
-            <div style={{ width: '100%' }} key={key}>
-              {item}
-            </div>
-          )
->>>>>>> ESPP_174 update : add pages catalog
       )}
     </CustomRoot>
   )

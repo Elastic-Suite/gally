@@ -9,12 +9,8 @@ interface IProps {
   labels: string[]
   contents: ReactChild[]
 }
-<<<<<<< HEAD
-export default function CustomTabs({ labels, contents }: IProps): JSX.Element {
-=======
 
-export default function CustomTabs({ labels, contents }: IProps) {
->>>>>>> ESPP_342 update : delete console.log
+export function CustomTabs({ labels, contents }: IProps): JSX.Element {
   const [activeTabIndex, setActiveTabIndex] = useState(0)
   const handleChange = (event: SyntheticEvent, newValue: number): void => {
     event.preventDefault()

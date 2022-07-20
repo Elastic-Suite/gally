@@ -5,7 +5,6 @@ import { styled } from '@mui/material/styles'
 import TitleScope from '~/components/atoms/scope/TitleScope'
 import NbActiveLocales from '~/components/atoms/scope/NbActiveLocales'
 import Language from '~/components/atoms/scope/Language'
-import { ILocalizedCatalogs } from '~/types/scope'
 import { getUniqueLocalName } from '~/services/local'
 
 const CustomClose = styled('div')(({ theme }) => ({
