@@ -3,6 +3,8 @@ import TitleScope from '~/components/atoms/scope/TitleScope'
 import NbActiveLocales from '~/components/atoms/scope/NbActiveLocales'
 import Language from '~/components/atoms/scope/Language'
 import { IHydraResponse } from '~/types'
+import { getUniqueLocalName } from '~/services/local'
+import { useTranslation } from 'next-i18next'
 
 const CustomFullRoot = styled('div')(({ theme }) => ({
   width: '100%',
@@ -50,30 +52,22 @@ interface ILocalizedCatalogs {
 }
 
 function Catalogs({ content }: IProps): JSX.Element {
-  function Languages(data: ILocalizedCatalogs) {
-    let Languages = []
-    for (const localizedCatalogsContent of data.localizedCatalogs) {
-      Languages = [...Languages, localizedCatalogsContent.localName]
-    }
-    return (Languages = [...new Set(Languages)])
-  }
-
+  const { t } = useTranslation()
   return (
     <CustomFullRoot>
       <CustomNbCatalogs>
-        {content['hydra:member'].length +
-          ' ' +
-          (content['hydra:member'].length > 1 ? 'catalogs' : 'catalog')}
+        {content['hydra:member'].length}{' '}
+        {t('catalog', { count: content['hydra:member'].length })}
       </CustomNbCatalogs>
       <CustomRoot>
         {content['hydra:member'].map(
           (item: ILocalizedCatalogs, key: number) => (
             <CustomCatalogs key={item.name}>
               <TitleScope name={item.name} />
-              <NbActiveLocales number={[...new Set(Languages(item))].length} />
+              <NbActiveLocales number={getUniqueLocalName(item).length} />
               <Language
                 order={key}
-                language={Languages(item)}
+                language={getUniqueLocalName(item)}
                 content={content['hydra:member']}
                 limit
               />

@@ -1,5 +1,6 @@
 import { styled } from '@mui/material/styles'
 import PopInCatalogs from './PopInCatalogs'
+import { firstLetterUppercase } from '~/services/format'
 
 const CustomRoot = styled('div')(({ theme }) => ({
   gap: theme.spacing(1),
@@ -32,14 +33,10 @@ interface IProps {
   }
   order?: number
 }
+const NB_ACTIVE_LOCALES_BY_WEBSITE = 5
 
 function Language({ language, order, limit, content }: IProps): JSX.Element {
   const newLanguage = [...new Set(language)]
-  const nbActiveLocalesByWebSite = 5
-
-  function FirstLetterUppercase(item) {
-    return item[0].toUpperCase() + item.slice(1)
-  }
 
   return (
     <CustomRoot>
@@ -48,26 +45,27 @@ function Language({ language, order, limit, content }: IProps): JSX.Element {
           <div key={item}>
             {limit === true ? (
               <>
-                {key === nbActiveLocalesByWebSite ? (
+                {key === NB_ACTIVE_LOCALES_BY_WEBSITE ? (
                   <div>
                     <PopInCatalogs
                       content={content[order]}
                       title={
-                        '+' + (newLanguage.length - nbActiveLocalesByWebSite)
+                        '+' +
+                        (newLanguage.length - NB_ACTIVE_LOCALES_BY_WEBSITE)
                       }
                     />
                   </div>
                 ) : (
                   key < 5 && (
                     <CustomLanguage key={item}>
-                      {FirstLetterUppercase(item)}
+                      {firstLetterUppercase(item)}
                     </CustomLanguage>
                   )
                 )}
               </>
             ) : (
               <CustomLanguage key={item}>
-                {FirstLetterUppercase(item)}
+                {firstLetterUppercase(item)}
               </CustomLanguage>
             )}
           </div>
