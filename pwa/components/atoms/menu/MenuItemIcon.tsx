@@ -100,28 +100,35 @@ const CustomIndicatorLineActiveTwoOpacityFullDeux = styled(
   animation: `${opacityFullDeux} 1200ms forwards`,
 })
 
-const CustomClassNameStyleRoot = styled('div')<{ lightStyle?: boolean }>(
-  ({ theme, lightStyle }) => ({
-    fontFamily: 'inter',
-    fontWeight: lightStyle ? 600 : 500,
-    fontSize: lightStyle ? 13 : 14,
-    lineHeight: '20px',
-    letterSpacing: lightStyle ? 0.5 : 'initial',
-    textTransform: lightStyle ? 'uppercase' : 'initial',
-    color: lightStyle ? theme.palette.menu.text600 : theme.palette.menu.text500,
-    position: 'relative',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: theme.spacing(2),
-    textDecoration: 'unset',
-    padding: theme.spacing(1),
-    '& ion-icon': {
-      color: theme.palette.menu.text500,
-    },
-  })
-)
-const CustomClassNameStyle = styled('div')<{
+const customClassNameStyleRootProps = ['lightStyle']
+const CustomClassNameStyleRoot = styled('div', {
+  shouldForwardProp: (prop: string) =>
+    !customClassNameStyleRootProps.includes(prop),
+})<{ lightStyle?: boolean }>(({ theme, lightStyle }) => ({
+  fontFamily: 'inter',
+  fontWeight: lightStyle ? 600 : 500,
+  fontSize: lightStyle ? 13 : 14,
+  lineHeight: '20px',
+  letterSpacing: lightStyle ? 0.5 : 'initial',
+  textTransform: lightStyle ? 'uppercase' : 'initial',
+  color: lightStyle ? theme.palette.menu.text600 : theme.palette.menu.text500,
+  position: 'relative',
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
+  gap: theme.spacing(2),
+  textDecoration: 'unset',
+  padding: theme.spacing(1),
+  '& ion-icon': {
+    color: theme.palette.menu.text500,
+  },
+}))
+
+const customClassNameStyleProps = ['lightStyle', 'isActive']
+const CustomClassNameStyle = styled('div', {
+  shouldForwardProp: (prop: string) =>
+    !customClassNameStyleProps.includes(prop),
+})<{
   isActive: boolean
   lightStyle?: boolean
 }>(({ theme, lightStyle, isActive }) => ({
