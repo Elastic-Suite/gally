@@ -1,9 +1,10 @@
 import { Checkbox, Grid, Switch } from '@mui/material'
-import { IHydraResponse } from '~/types'
+import { IHydraMember, IHydraResponse } from '~/types'
 import { useApiFetch } from '~/hooks/useApi'
 
 function Attributes(): JSX.Element | string {
-  const [sourceFields] = useApiFetch<IHydraResponse>('/source_fields')
+  const [sourceFields] =
+    useApiFetch<IHydraResponse<IHydraMember>>('/source_fields')
 
   if (sourceFields.error) {
     return sourceFields.error.toString()
@@ -39,7 +40,7 @@ function Attributes(): JSX.Element | string {
           Sortable
         </Grid>
       </Grid>
-      {sourceFields.data['hydra:member'].map((member) => (
+      {sourceFields.data['hydra:member'].map((member: IHydraMember) => (
         <Grid
           key={member.code}
           container

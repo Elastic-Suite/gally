@@ -3,14 +3,15 @@ import CustomTabs from '~/components/molecules/layout/tabs/CustomTabs'
 import SubTabs from '~/components/atoms/subTabs/SubTabs'
 import ActiveLocales from '~/components/molecules/layout/scope/ActiveLocales'
 import Catalogs from '~/components/molecules/layout/scope/Catalogs'
-import { IHydraResponse } from '~/types'
+import { ICatalog, IHydraResponse } from '~/types'
 import { useApiFetch } from '~/hooks/useApi'
 import { firstLetterUppercase } from '~/services/format'
 import { useTranslation } from 'next-i18next'
 
-const Scope = () => {
-  const [catalogsFields] = useApiFetch<IHydraResponse>('/catalogs')
+function Scope(): JSX.Element | string {
+  const [catalogsFields] = useApiFetch<IHydraResponse<ICatalog>>('/catalogs')
   const { t } = useTranslation('common')
+
   if (catalogsFields.error) {
     return catalogsFields.error.toString()
   } else if (!catalogsFields.data) {
@@ -30,9 +31,9 @@ const Scope = () => {
               firstLetterUppercase(t('activeLocale_other')),
             ]}
             contents={[
-              <Catalogs key={'Catalogs'} content={catalogsFields.data} />,
+              <Catalogs key="Catalogs" content={catalogsFields.data} />,
               <ActiveLocales
-                key={'ActiveLocales'}
+                key="ActiveLocales"
                 content={catalogsFields.data}
               />,
             ]}
