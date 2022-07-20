@@ -79,6 +79,16 @@
           "locale": "en_US",
           "isDefault": false,
           "localName": "deutGFDsh (États-Unis)"
+        },
+        {
+          "@id": "/localaized_catalogs/2",
+          "@type": "LocaalizedCatalog",
+          "id": 9,
+          "name": "COM Enaglish Catalog",
+          "code": "com_aen",
+          "locale": "en_aUS",
+          "isDefault": false,
+          "localName": "deutGFDsh (États-Unis)"
         }
       ]
     },

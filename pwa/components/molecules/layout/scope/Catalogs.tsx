@@ -3,6 +3,9 @@ import TitleScope from '~/components/atoms/scope/TitleScope'
 import NbActiveLocales from '~/components/atoms/scope/NbActiveLocales'
 import Language from '~/components/atoms/scope/Language'
 import { IHydraResponse } from '~/types'
+import { ILocalizedCatalogs } from '~/types/scope'
+import { getUniqueLocalName } from '~/services/local'
+import { useTranslation } from 'next-i18next'
 
 const CustomFullRoot = styled('div')(({ theme }) => ({
   width: '100%',
@@ -55,7 +58,7 @@ function Catalogs({ content }: IProps): JSX.Element {
       <CustomNbCatalogs>
         {content['hydra:member'].length +
           ' ' +
-          (content['hydra:member'].length > 1 ? 'catalogs' : 'catalog')}
+          t('catalog', { count: content['hydra:member'].length })}
       </CustomNbCatalogs>
       <CustomRoot>
         {content.map((item, key: number) => (

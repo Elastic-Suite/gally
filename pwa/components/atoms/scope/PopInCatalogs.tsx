@@ -5,6 +5,8 @@ import { styled } from '@mui/material/styles'
 import TitleScope from '~/components/atoms/scope/TitleScope'
 import NbActiveLocales from '~/components/atoms/scope/NbActiveLocales'
 import Language from '~/components/atoms/scope/Language'
+import { ILocalizedCatalogs } from '~/types/scope'
+import { getUniqueLocalName } from '~/services/local'
 
 const CustomClose = styled('div')(({ theme }) => ({
   position: 'absolute',
@@ -71,14 +73,6 @@ function PopInCatalogs({ content, title }: IProps): JSX.Element {
     setOpen(false)
   }
 
-  function Languages(data: ILocalizedCatalogs) {
-    let Languages = []
-    for (const localizedCatalogsContent of data.localizedCatalogs) {
-      Languages = [...Languages, localizedCatalogsContent.localName]
-    }
-    return (Languages = [...new Set(Languages)])
-  }
-
   return (
     <>
       <CustumOtherLanguage onClick={handleClickOpen}>
@@ -95,8 +89,8 @@ function PopInCatalogs({ content, title }: IProps): JSX.Element {
         </CustomClose>
         <CustomRoot>
           <TitleScope name={content.name} />
-          <NbActiveLocales number={[...new Set(Languages(content))].length} />
-          <Language language={[...new Set(Languages(content))]} limit={false} />
+          <NbActiveLocales number={getUniqueLocalName(content).length} />
+          <Language language={getUniqueLocalName(content)} limit={false} />
         </CustomRoot>
       </Dialog>
     </>

@@ -8,5 +8,9 @@
   "temporary-slug": "Temporaire ! Voici le slug codifié :",
   "massiveselection.all": "Toutes",
   "massiveselection.allOnCurrentPage": "Toute sur la page",
-  "massiveselection.none": "Aucune"
+  "massiveselection.none": "Aucune",
+  "catalog_one": "catalogue",
+  "catalog_other": "catalogues",
+  "activeLocale_one": "parametre activé",
+  "activeLocale_other": "parametres activé"
 }
