@@ -20,42 +20,58 @@ to {
 `
 const CustomLi = styled('li')(({ theme }) => ({
   listStyleType: 'none',
-  marginBottom: theme.spacing(1),
-  marginTop: theme.spacing(1),
+  paddingTop: theme.spacing(0.5),
   opacity: 0,
   animation: `${opacity} 1000ms forwards`,
+}))
+
+const CustomTitle = styled('button')(({ theme }) => ({
+  color: theme.palette.colors.secondary[600],
+  position: 'relative',
+  border: 'none',
+  background: 'none',
+  padding: 0,
+  '&:hover::before': {
+    content: '""',
+    position: 'absolute',
+    width: '100%',
+    height: '1px',
+    top: `calc(100% + 1px)`,
+    fontSize: '12px',
+    background: theme.palette.colors.secondary[600],
+  },
   '&:hover': {
     cursor: 'pointer',
   },
 }))
 
-const CustomTitle = styled('div')(({ theme }) => ({
-  color: theme.palette.colors.secondary[600],
+const CustomTitleBase = styled('button')(({ theme }) => ({
+  color: theme.palette.colors.neutral[900],
   position: 'relative',
+  border: 'none',
+  padding: 0,
+  background: 'none',
   '&:hover::before': {
     content: '""',
     position: 'absolute',
     width: '100%',
     height: '1px',
-    top: '100%',
+    top: `calc(100% + 1px)`,
     fontSize: '12px',
-    background: theme.palette.colors.secondary[600],
+    background: 'black',
+  },
+  '&:hover': {
+    cursor: 'pointer',
   },
 }))
 
-const CustomTitleBase = styled('div')(({ theme }) => ({
-  color: theme.palette.colors.neutral[900],
-  position: 'relative',
-  '&:hover::before': {
-    content: '""',
-    position: 'absolute',
-    width: '100%',
-    height: '1px',
-    top: '100%',
-    fontSize: '12px',
-    background: theme.palette.colors.neutral[900],
-  },
-}))
+const CustomContainer = styled('div')({
+  marginTop: 1,
+  marginBottom: 1,
+  display: 'flex',
+  alignItems: 'center',
+  gap: '4px',
+})
 
 const CustomVirtual = styled('span')(({ theme }) => ({
   color: theme.palette.colors.neutral['900'],
@@ -71,19 +87,23 @@ const CustomVirtual = styled('span')(({ theme }) => ({
   marginLeft: theme.spacing(0.75),
 }))
 
-const CustomBtn = styled('span')(({ theme }) => ({
+const CustomBtn = styled('button')(({ theme }) => ({
   color: theme.palette.colors.neutral['500'],
   borderRadius: '11px',
-  width: '28px',
+  width: '24px',
   boxSizing: 'border-box',
-  height: '28px',
-  fontSize: '28px',
+  height: '24px',
+  textDecoration: 'none',
+  border: 'none',
+  fontSize: '24px',
   transition: 'transform 100ms linear',
   display: 'flex',
   justifyContent: 'center',
   padding: '2px',
   alignItems: 'center',
+  background: 'none',
   '&:hover': {
+    cursor: 'pointer',
     transform: 'rotate(180deg)',
     color: theme.palette.colors.secondary['600'],
     background: theme.palette.colors.secondary['100'],
@@ -118,10 +138,14 @@ function Tree({ data }: IProps): JSX.Element {
         const Title = item.level === 1 ? CustomTitleBase : CustomTitle
         return (
           <CustomLi
-            style={{ marginLeft: item.level === 1 ? 0 : 30 }}
+            style={{ marginLeft: item.level === 1 ? 0 : 20 }}
             key={item.id}
           >
-            <div style={{ display: 'flex', gap: '2px', alignItems: 'center' }}>
+            <CustomContainer
+              style={{
+                marginLeft: item.level === 1 ? 0 : item.children ? 0 : 20,
+              }}
+            >
               {item.children ? (
                 <CustomBtn
                   onClick={(): void => {
@@ -131,11 +155,7 @@ function Tree({ data }: IProps): JSX.Element {
                     })
                   }}
                 >
-                  {displayChildren[item.id] ? (
-                    <IonIcon name="minus" />
-                  ) : (
-                    <IonIcon name="more" />
-                  )}
+                  <IonIcon name={displayChildren[item.id] ? 'minus' : 'more'} />
                 </CustomBtn>
               ) : null}
               <div
@@ -161,7 +181,7 @@ function Tree({ data }: IProps): JSX.Element {
                 </Title>
                 {item.isVirtual ? <CustomVirtual>virtual</CustomVirtual> : null}
               </div>
-            </div>
+            </CustomContainer>
             {displayChildren[item.id] && item.children ? (
               <Tree data={item.children} />
             ) : null}
