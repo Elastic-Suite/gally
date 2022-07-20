@@ -1,6 +1,7 @@
 import { styled } from '@mui/material/styles'
 import PopInCatalogs from './PopInCatalogs'
 import { firstLetterUppercase } from '~/services/format'
+import { ICatalog } from '~/types'
 
 const CustomRoot = styled('div')(({ theme }) => ({
   gap: theme.spacing(1),
@@ -27,10 +28,7 @@ const CustomLanguage = styled('div')(({ theme }) => ({
 interface IProps {
   language: string[]
   limit: boolean
-  content?: {
-    name: string
-    language: string[]
-  }
+  content?: ICatalog[]
   order?: number
 }
 const NB_ACTIVE_LOCALES_BY_WEBSITE = 5
@@ -40,19 +38,17 @@ function Language({ language, order, limit, content }: IProps): JSX.Element {
 
   return (
     <CustomRoot>
-      {newLanguage &&
-        newLanguage.map((item: string, key: number) => (
-          <div key={item}>
-            {limit === true ? (
-              <>
-                {key === NB_ACTIVE_LOCALES_BY_WEBSITE ? (
+      {newLanguage
+        ? newLanguage.map((item: string, key: number) => (
+            <div key={item}>
+              {limit === true ? (
+                key === NB_ACTIVE_LOCALES_BY_WEBSITE ? (
                   <div>
                     <PopInCatalogs
                       content={content[order]}
-                      title={
-                        '+' +
-                        (newLanguage.length - NB_ACTIVE_LOCALES_BY_WEBSITE)
-                      }
+                      title={`+${
+                        newLanguage.length - NB_ACTIVE_LOCALES_BY_WEBSITE
+                      }`}
                     />
                   </div>
                 ) : (
@@ -61,15 +57,15 @@ function Language({ language, order, limit, content }: IProps): JSX.Element {
                       {firstLetterUppercase(item)}
                     </CustomLanguage>
                   )
-                )}
-              </>
-            ) : (
-              <CustomLanguage key={item}>
-                {firstLetterUppercase(item)}
-              </CustomLanguage>
-            )}
-          </div>
-        ))}
+                )
+              ) : (
+                <CustomLanguage key={item}>
+                  {firstLetterUppercase(item)}
+                </CustomLanguage>
+              )}
+            </div>
+          ))
+        : null}
     </CustomRoot>
   )
 }

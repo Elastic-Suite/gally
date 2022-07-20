@@ -6,6 +6,7 @@ import TitleScope from '~/components/atoms/scope/TitleScope'
 import NbActiveLocales from '~/components/atoms/scope/NbActiveLocales'
 import Language from '~/components/atoms/scope/Language'
 import { getUniqueLocalName } from '~/services/local'
+import { ICatalog } from '~/types'
 
 const CustomClose = styled('div')(({ theme }) => ({
   position: 'absolute',
@@ -48,17 +49,8 @@ const CustomRoot = styled('div')(({ theme }) => ({
 }))
 
 interface IProps {
-  content: ILocalizedCatalogs
+  content: ICatalog
   title: string
-}
-
-interface ILocalName {
-  localName: string
-}
-
-interface ILocalizedCatalogs {
-  localizedCatalogs: ILocalName[]
-  name: string
 }
 
 function PopInCatalogs({ content, title }: IProps): JSX.Element {

@@ -2,7 +2,7 @@ import { styled } from '@mui/material/styles'
 import TitleScope from '~/components/atoms/scope/TitleScope'
 import NbActiveLocales from '~/components/atoms/scope/NbActiveLocales'
 import Language from '~/components/atoms/scope/Language'
-import { IHydraResponse } from '~/types'
+import { ICatalog, IHydraResponse } from '~/types'
 import { getUniqueLocalName } from '~/services/local'
 import { useTranslation } from 'next-i18next'
 
@@ -39,16 +39,7 @@ const CustomCatalogs = styled('div')(({ theme }) => ({
 }))
 
 interface IProps {
-  content: IHydraResponse | IHydraResponse[]
-}
-
-interface ILocalName {
-  localName: string
-}
-
-interface ILocalizedCatalogs {
-  localizedCatalogs: ILocalName[]
-  name: string
+  content: IHydraResponse<ICatalog>
 }
 
 function Catalogs({ content }: IProps): JSX.Element {
@@ -60,20 +51,18 @@ function Catalogs({ content }: IProps): JSX.Element {
         {t('catalog', { count: content['hydra:member'].length })}
       </CustomNbCatalogs>
       <CustomRoot>
-        {content['hydra:member'].map(
-          (item: ILocalizedCatalogs, key: number) => (
-            <CustomCatalogs key={item.name}>
-              <TitleScope name={item.name} />
-              <NbActiveLocales number={getUniqueLocalName(item).length} />
-              <Language
-                order={key}
-                language={getUniqueLocalName(item)}
-                content={content['hydra:member']}
-                limit
-              />
-            </CustomCatalogs>
-          )
-        )}
+        {content['hydra:member'].map((item: ICatalog, key: number) => (
+          <CustomCatalogs key={item.name}>
+            <TitleScope name={item.name} />
+            <NbActiveLocales number={getUniqueLocalName(item).length} />
+            <Language
+              order={key}
+              language={getUniqueLocalName(item)}
+              content={content['hydra:member']}
+              limit
+            />
+          </CustomCatalogs>
+        ))}
       </CustomRoot>
     </CustomFullRoot>
   )
