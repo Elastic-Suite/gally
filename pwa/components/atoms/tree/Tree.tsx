@@ -110,6 +110,12 @@ const CustomBtn = styled('button')(({ theme }) => ({
   },
 }))
 
+const CustomBtnTitle = styled('div')({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+})
+
 const CustomLink = styled('a')({
   textDecoration: 'none',
 })
@@ -158,13 +164,7 @@ function Tree({ data }: IProps): JSX.Element {
                   <IonIcon name={displayChildren[item.id] ? 'minus' : 'more'} />
                 </CustomBtn>
               ) : null}
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
+              <CustomBtnTitle>
                 <Title
                   onClick={(): void => {
                     setDisplayChildren({
@@ -180,7 +180,7 @@ function Tree({ data }: IProps): JSX.Element {
                   )}
                 </Title>
                 {item.isVirtual ? <CustomVirtual>virtual</CustomVirtual> : null}
-              </div>
+              </CustomBtnTitle>
             </CustomContainer>
             {displayChildren[item.id] && item.children ? (
               <Tree data={item.children} />
