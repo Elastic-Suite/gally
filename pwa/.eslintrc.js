@@ -75,7 +75,6 @@ module.exports = {
     'no-self-compare': 'error',
     'no-sequences': 'error',
     'no-throw-literal': 'error',
-    'no-undefined': 'error',
     'no-underscore-dangle': 'error',
     'no-unneeded-ternary': 'error',
     'no-unreachable-loop': 'error',
