@@ -12,7 +12,7 @@ import {
 import { handleSingleRow, manageStickyHeaders } from '../CustomTable.service'
 import EditableContent from '../CustomTableCell/EditableContent'
 import NonEditableContent from '../CustomTableCell/NonEditableContent'
-import { nonStickyStyle, selectionStyle, stickyStyle } from './Row.styled'
+import { nonStickyStyle, selectionStyle, stickyStyle } from './Row.service'
 
 interface IProps {
   tableRow: ITableRow
@@ -54,6 +54,7 @@ function NonDraggableRow(props: IProps): JSX.Element {
           )}
         >
           <Checkbox
+            data-testid="non-draggable-single-row-selection"
             checked={selectedRows ? selectedRows.includes(tableRow.id) : false}
             onChange={(value: ChangeEvent<HTMLInputElement>): void =>
               handleSingleRow(value, tableRow.id, setSelectedRows, selectedRows)

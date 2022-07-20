@@ -6,7 +6,7 @@ import {
   ISelectionStyle,
   IStickyStyle,
 } from '~/types'
-import { stickyBorderStyle } from '../CustomTable.styled'
+import { stickyBorderStyle } from '../CustomTable.service'
 
 export function draggableColumnStyle(
   isOnlyDraggable: boolean,
