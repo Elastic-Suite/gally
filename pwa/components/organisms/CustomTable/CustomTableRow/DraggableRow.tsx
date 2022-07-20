@@ -19,7 +19,7 @@ import {
   reorderIconStyle,
   selectionStyle,
   stickyStyle,
-} from './Row.styled'
+} from './Row.service'
 import { DraggableProvided } from 'react-beautiful-dnd'
 
 interface IProps {
@@ -90,6 +90,7 @@ function DraggableRow(props: IProps): JSX.Element {
           )}
         >
           <Checkbox
+            data-testid="draggable-single-row-selection"
             checked={selectedRows ? selectedRows.includes(tableRow.id) : false}
             onChange={(value: ChangeEvent<HTMLInputElement>): void =>
               handleSingleRow(value, tableRow.id, setSelectedRows, selectedRows)

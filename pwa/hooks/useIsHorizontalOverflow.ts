@@ -1,12 +1,11 @@
-import { MutableRefObject, useLayoutEffect, useState } from 'react'
+import { useLayoutEffect, useState } from 'react'
 import { IHorizontalOverflow } from '~/types'
 
 export const useIsHorizontalOverflow = (
-  ref: MutableRefObject<HTMLDivElement>
+  current: HTMLDivElement
 ): IHorizontalOverflow => {
   const [isOverflow, setIsOverflow] = useState(false)
   const [shadow, setShadow] = useState(false)
-  const { current } = ref
 
   useLayoutEffect(() => {
     function trigger(): () => void {

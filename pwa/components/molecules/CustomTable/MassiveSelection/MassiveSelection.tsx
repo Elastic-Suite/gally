@@ -42,14 +42,25 @@ function MassiveSelection(props: IProps): JSX.Element {
   return (
     <>
       <Checkbox
+        data-testid="massive-selection"
         indeterminate={indeterminateState}
         checked={selectionState}
         onChange={handleMassiveSelection}
       />
-      <Button sx={{ paddingLeft: '0' }} onClick={handleClick} color="inherit">
+      <Button
+        data-testid="massive-selection-dropdown"
+        sx={{ paddingLeft: '0' }}
+        onClick={handleClick}
+        color="inherit"
+      >
         <IonIcon name="chevron-down-outline" />
       </Button>
-      <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+      <Menu
+        data-testid="massive-selection-dropdown-open"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+      >
         {Object.keys(MassiveSelectionType).map((key: string) => {
           const massiveSelectionType =
             MassiveSelectionType[key as keyof typeof MassiveSelectionType]
