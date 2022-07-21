@@ -115,10 +115,16 @@ export interface IHydraMember extends IJsonldType, IJsonldId {
   id: number
 }
 
-export interface IHydraMapping extends IJsonldId {
+export interface IHydraMapping extends IJsonldType {
   variable: string
   property: string
   required: boolean
+}
+
+export interface IHydraSearch extends IJsonldType {
+  'hydra:mapping': IHydraMapping[]
+  'hydra:template': string
+  'hydra:variableRepresentation': string
 }
 
 export interface IHydraResponse<Member extends IHydraMember>
@@ -126,6 +132,6 @@ export interface IHydraResponse<Member extends IHydraMember>
     IJsonldType,
     IJsonldId {
   'hydra:member': Member[]
-  'hydra:mapping'?: IHydraMapping[]
+  'hydra:search'?: IHydraSearch
   'hydra:totalItems': number
 }

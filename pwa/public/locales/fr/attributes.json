@@ -1,10 +1,4 @@
 {
   "action.import": "Importer",
-  "attributes.attributeCode": "Code attribut",
-  "attributes.attributeLabel": "Etiquette attribute",
-  "attributes.attributeType": "Type attribute",
-  "attributes.filterable": "Filtrable",
-  "attributes.searchable": "Consultable",
-  "attributes.sortable": "Triable",
   "page.title": "Attributs consultable & filtrable"
 }

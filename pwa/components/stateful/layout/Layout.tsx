@@ -19,7 +19,7 @@ import {
 import AppBar from '~/components/molecules/layout/appBar/AppBar'
 import Sidebar from '~/components/molecules/layout/Sidebar/Sidebar'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
-import { useApiDispatch } from '~/hooks/useApi'
+import { useApiDispatch } from '~/hooks'
 
 /*
  * TODO: THIBO: Update AppBar

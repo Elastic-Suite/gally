@@ -1,10 +1,4 @@
 {
   "action.import": "Import",
-  "attributes.attributeCode": "Attribute code",
-  "attributes.attributeLabel": "Label attribute",
-  "attributes.attributeType": "Attribute type",
-  "attributes.filterable": "Filterable",
-  "attributes.searchable": "Searchable",
-  "attributes.sortable": "Sortable",
   "page.title": "Searchable & filterable attributes"
 }

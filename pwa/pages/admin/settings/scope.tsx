@@ -4,7 +4,7 @@ import SubTabs from '~/components/atoms/subTabs/SubTabs'
 import ActiveLocales from '~/components/molecules/layout/scope/ActiveLocales'
 import Catalogs from '~/components/molecules/layout/scope/Catalogs'
 import { ICatalog, IHydraResponse } from '~/types'
-import { useApiFetch } from '~/hooks/useApi'
+import { useApiFetch } from '~/hooks'
 import { firstLetterUppercase } from '~/services/format'
 import { useTranslation } from 'next-i18next'
 

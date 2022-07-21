@@ -2,6 +2,8 @@ import { FormEvent, useState } from 'react'
 import { useTranslation } from 'next-i18next'
 import { Collapse, InputAdornment, Stack } from '@mui/material'
 
+import { FilterType, IFilter } from '~/types'
+
 import PrimaryButton from '~/components/atoms/buttons/PrimaryButton'
 import TertiaryButton from '~/components/atoms/buttons/TertiaryButton'
 import InputText from '~/components/atoms/form/InputText'
@@ -19,7 +21,7 @@ import {
   HeaderBox,
   SearchBox,
 } from './Filters.styled'
-import Filter, { FilterType, IFilter } from './Filter'
+import Filter from './Filter'
 
 interface IActiveFilter {
   filter: IFilter
