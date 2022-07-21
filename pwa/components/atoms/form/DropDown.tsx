@@ -5,6 +5,8 @@ import OptionUnstyled, { optionUnstyledClasses } from '@mui/base/OptionUnstyled'
 import { styled } from '@mui/system'
 import { FormControl, InputLabel } from '@mui/material'
 
+import { IOptions } from '~/types'
+
 import Checkbox from './Checkbox'
 import MultiSelect from './MultiSelect'
 import Select from './Select'
@@ -34,15 +36,6 @@ const Option = styled(OptionUnstyled)(({ theme }) => ({
     backgroundColor: theme.palette.colors.neutral['200'],
   },
 }))
-
-export interface IOption {
-  disabled?: boolean
-  id?: string
-  label: string
-  value: unknown
-}
-
-export type IOptions = IOption[]
 
 interface ICommonProps {
   label?: string

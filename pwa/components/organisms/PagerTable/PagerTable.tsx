@@ -13,12 +13,10 @@ const Root = styled('div')(({ theme }) => ({
 
 interface IProps extends ICustomTableProps {
   currentPage: number
-  // onMassiveAction?: (action: string) => void
   onPageChange: (
     event: MouseEvent<HTMLButtonElement> | null,
     page: number
   ) => void
-  // onReordering?: (ordRows: ITableRow[]) => void
   onRowsPerPageChange?: (
     event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => void

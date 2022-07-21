@@ -1,16 +1,24 @@
+import { TFunction } from 'react-i18next'
+
 import { IDocs } from '~/store'
 import {
   DataContentType,
+  FilterType,
   HydraPropertyType,
   HydraType,
   IDocsJsonOperation,
   IFetch,
+  IFilter,
+  IHydraMember,
   IHydraPropertyTypeObject,
   IHydraPropertyTypeRef,
+  IHydraResponse,
   IHydraSupportedProperty,
   ITableHeader,
   Method,
 } from '~/types'
+
+import { getFieldLabelTranslationArgs } from './format'
 
 export function isRefProperty(
   apiProperty: HydraPropertyType
@@ -106,12 +114,28 @@ export function getPropertyType(
 }
 
 export function getPropertyHeader(
-  property: IHydraSupportedProperty
+  property: IHydraSupportedProperty,
+  t: TFunction
 ): ITableHeader {
   return {
     field: property['hydra:title'],
-    headerName: property['hydra:title'], // t('attributes.attributeCode'),
+    headerName: t(...getFieldLabelTranslationArgs(property['hydra:title'])),
     type: getPropertyType(property),
     editable: property['hydra:writeable'],
   }
+}
+
+export function getFilters<T extends IHydraMember>(
+  apiData: IHydraResponse<T>,
+  t: TFunction
+): IFilter[] {
+  return apiData?.['hydra:search']['hydra:mapping']?.map((mapping) => {
+    return {
+      id: mapping.property,
+      label: t(...getFieldLabelTranslationArgs(mapping.property)),
+      type: /^is[A-Z]/.test(mapping.property)
+        ? FilterType.BOOLEAN
+        : FilterType.TEXT,
+    }
+  })
 }

@@ -1,33 +1,24 @@
 import { MouseEvent } from 'react'
 
-import { useApiFetch } from '~/hooks/useApi'
 import { IHydraMember, IHydraResponse, ITableRow } from '~/types'
 import { selectDocs, useAppSelector } from '~/store'
 
 import PagerTable from '~/components/organisms/PagerTable/PagerTable'
-import { getApiReadableProperties, getPropertyHeader } from '~/services'
+import { useApiHeaders } from '~/hooks'
 
-interface IProps {
+interface IProps<T extends IHydraMember> {
   api: string
+  apiData: IHydraResponse<T>
   onPageChange: (
     event: MouseEvent<HTMLButtonElement> | null,
     page: number
   ) => void
 }
 
-function ApiTable<T extends IHydraMember>(props: IProps): JSX.Element {
-  const { api, onPageChange } = props
-  const [apiData] = useApiFetch<IHydraResponse<T>>(api)
+function ApiTable<T extends IHydraMember>(props: IProps<T>): JSX.Element {
+  const { api, apiData, onPageChange } = props
   const docs = useAppSelector(selectDocs)
-
-  if (apiData.error) {
-    return <>{apiData.error.toString()}</>
-  } else if (!apiData.data) {
-    return null
-  }
-
-  const properties = getApiReadableProperties(docs, api, 'get')
-  const tableHeaders = properties.map(getPropertyHeader)
+  const tableHeaders = useApiHeaders(docs, api)
 
   return (
     <PagerTable
@@ -36,8 +27,8 @@ function ApiTable<T extends IHydraMember>(props: IProps): JSX.Element {
       rowsPerPage={50}
       rowsPerPageOptions={[]}
       tableHeaders={tableHeaders}
-      tableRows={apiData.data['hydra:member'] as unknown as ITableRow[]}
-      totalPages={apiData.data['hydra:totalItems']}
+      tableRows={apiData['hydra:member'] as unknown as ITableRow[]}
+      totalPages={apiData['hydra:totalItems']}
       withSelection
     />
   )

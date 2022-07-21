@@ -1,17 +1,18 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 
-import { FilterType, IFilter } from '~/types'
+import { useApiFilters } from '~/hooks'
+import { IFilter, IHydraMember, IHydraResponse } from '~/types'
 
-import Filters from './Filters'
+import Filters from '~/components/molecules/Filters/Filters'
 
-export default {
-  title: 'Atoms/Filters',
-  component: Filters,
-} as ComponentMeta<typeof Filters>
+interface IProps<T extends IHydraMember> {
+  apiData: IHydraResponse<T>
+}
 
-const Template: ComponentStory<typeof Filters> = (args) => {
-  const { filters } = args
+function ApiFilters<T extends IHydraMember>(props: IProps<T>): JSX.Element {
+  const { apiData } = props
+  const filters: IFilter[] = useApiFilters(apiData)
+
   const initValues = useCallback(
     (): Record<string, unknown | unknown[]> =>
       Object.fromEntries(
@@ -22,11 +23,6 @@ const Template: ComponentStory<typeof Filters> = (args) => {
   const [activeValues, setActiveValues] = useState({})
   const [searchValue, setSearchValue] = useState('')
   const [filterValues, setFilterValues] = useState(initValues())
-
-  useEffect(() => {
-    setFilterValues(initValues())
-    setActiveValues([])
-  }, [initValues])
 
   function handleApply(): void {
     setActiveValues(filterValues)
@@ -58,8 +54,8 @@ const Template: ComponentStory<typeof Filters> = (args) => {
 
   return (
     <Filters
-      {...args}
       activeValues={activeValues}
+      filters={filters}
       filterValues={filterValues}
       onApply={handleApply}
       onClear={handleClear}
@@ -67,38 +63,9 @@ const Template: ComponentStory<typeof Filters> = (args) => {
       onFilterChange={handleFilterChange}
       onSearch={setSearchValue}
       searchValue={searchValue}
+      showSearch
     />
   )
 }
 
-export const Default = Template.bind({})
-Default.args = {
-  filters: [
-    { id: 'code', label: 'Attribute code' },
-    { id: 'label', label: 'Label attribute' },
-    {
-      id: 'type',
-      label: 'Attribute type',
-      multiple: true,
-      options: [
-        { label: 'One', value: 1 },
-        { label: 'Two', value: 2 },
-        { label: 'Three', value: 3 },
-        { label: 'Four', value: 4 },
-        { label: 'Five', value: 5 },
-      ],
-      type: FilterType.SELECT,
-    },
-    {
-      id: 'filterable',
-      label: 'Filterable',
-      type: FilterType.BOOLEAN,
-    },
-    {
-      id: 'searchable',
-      label: 'Searchable',
-      type: FilterType.BOOLEAN,
-    },
-  ],
-  showSearch: false,
-}
+export default ApiFilters

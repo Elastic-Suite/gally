@@ -1,23 +1,22 @@
 import { useEffect, useRef, useState } from 'react'
 import { DragDropContext, DropResult } from 'react-beautiful-dnd'
 
-import StickyBar from '~/components/molecules/CustomTable/StickyBar/StickyBar'
-
-import {
-  StyledTable,
-  TableContainerWithCustomScrollbar,
-} from '~/components/organisms/CustomTable/CustomTable.styled'
-
-import CustomTableHeader from '~/components/organisms/CustomTable/CustomTableHeader/CustomTableHeader'
-import { ITableHeader, ITableRow, MassiveSelectionType } from '~/types'
 import {
   reorderingColumnWidth,
   selectionColumnWidth,
   stickyColunWidth,
 } from '~/constants'
+import { useIsHorizontalOverflow } from '~/hooks'
+import { ITableHeader, ITableRow, MassiveSelectionType } from '~/types'
+
+import StickyBar from '~/components/molecules/CustomTable/StickyBar/StickyBar'
+import {
+  StyledTable,
+  TableContainerWithCustomScrollbar,
+} from '~/components/organisms/CustomTable/CustomTable.styled'
+import CustomTableHeader from '~/components/organisms/CustomTable/CustomTableHeader/CustomTableHeader'
 import NonDraggableBody from '~/components/organisms/CustomTable/CustomTableBody/NonDraggableBody'
 import DraggableBody from '~/components/organisms/CustomTable/CustomTableBody/DraggableBody'
-import { useIsHorizontalOverflow } from '~/hooks/useIsHorizontalOverflow'
 
 export interface IProps {
   // onMassiveAction?: (action: string) => void

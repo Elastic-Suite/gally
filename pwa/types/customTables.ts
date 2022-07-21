@@ -1,4 +1,4 @@
-import { IOptions } from '~/components/atoms/form/DropDown'
+import { IOptions } from '~/types'
 
 export enum MassiveSelectionType {
   ALL = 'massiveselection.all',
