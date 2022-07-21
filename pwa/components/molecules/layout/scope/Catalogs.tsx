@@ -2,6 +2,9 @@ import { styled } from '@mui/material/styles'
 import TitleScope from '~/components/atoms/scope/TitleScope'
 import NbActiveLocales from '~/components/atoms/scope/NbActiveLocales'
 import Language from '~/components/atoms/scope/Language'
+import { ICatalog, IHydraResponse } from '~/types'
+import { getUniqueLocalName } from '~/services/local'
+import { useTranslation } from 'next-i18next'
 
 const CustomFullRoot = styled('div')(({ theme }) => ({
   width: '100%',
@@ -36,22 +39,26 @@ const CustomCatalogs = styled('div')(({ theme }) => ({
 }))
 
 interface IProps {
-  content: { name: string; nbActiveLocales: number; language: Array<string> }[]
+  content: IHydraResponse<ICatalog>
 }
 
 function Catalogs({ content }: IProps): JSX.Element {
+  const { t } = useTranslation()
   return (
     <CustomFullRoot>
-      <CustomNbCatalogs>{content.length} catalogs</CustomNbCatalogs>
+      <CustomNbCatalogs>
+        {content['hydra:member'].length}{' '}
+        {t('catalog', { count: content['hydra:member'].length })}
+      </CustomNbCatalogs>
       <CustomRoot>
-        {content.map((item, key: number) => (
+        {content['hydra:member'].map((item: ICatalog, key: number) => (
           <CustomCatalogs key={item.name}>
             <TitleScope name={item.name} />
-            <NbActiveLocales number={item.nbActiveLocales} />
+            <NbActiveLocales number={getUniqueLocalName(item).length} />
             <Language
               order={key}
-              language={item.language}
-              content={content}
+              language={getUniqueLocalName(item)}
+              content={content['hydra:member']}
               limit
             />
           </CustomCatalogs>

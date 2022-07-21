@@ -1,5 +1,7 @@
 import { styled } from '@mui/material/styles'
 import PopInCatalogs from './PopInCatalogs'
+import { firstLetterUppercase } from '~/services/format'
+import { ICatalog } from '~/types'
 
 const CustomRoot = styled('div')(({ theme }) => ({
   gap: theme.spacing(1),
@@ -26,28 +28,40 @@ const CustomLanguage = styled('div')(({ theme }) => ({
 interface IProps {
   language: string[]
   limit: boolean
-  content?: { name: string; nbActiveLocales: number; language: Array<string> }[]
+  content?: ICatalog[]
   order?: number
 }
+const NB_ACTIVE_LOCALES_BY_WEBSITE = 5
 
 function Language({ language, order, limit, content }: IProps): JSX.Element {
   const newLanguage = [...new Set(language)]
+
   return (
     <CustomRoot>
       {newLanguage
         ? newLanguage.map((item: string, key: number) => (
             <div key={item}>
               {limit === true ? (
-                key === 3 ? (
-                  <PopInCatalogs
-                    content={content[order]}
-                    title={newLanguage.length}
-                  />
+                key === NB_ACTIVE_LOCALES_BY_WEBSITE ? (
+                  <div>
+                    <PopInCatalogs
+                      content={content[order]}
+                      title={`+${
+                        newLanguage.length - NB_ACTIVE_LOCALES_BY_WEBSITE
+                      }`}
+                    />
+                  </div>
                 ) : (
-                  key < 3 && <CustomLanguage key={item}>{item}</CustomLanguage>
+                  key < 5 && (
+                    <CustomLanguage key={item}>
+                      {firstLetterUppercase(item)}
+                    </CustomLanguage>
+                  )
                 )
               ) : (
-                <CustomLanguage key={item}>{item}</CustomLanguage>
+                <CustomLanguage key={item}>
+                  {firstLetterUppercase(item)}
+                </CustomLanguage>
               )}
             </div>
           ))

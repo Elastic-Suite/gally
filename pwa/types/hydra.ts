@@ -112,22 +112,25 @@ export interface IHydraSupportedClass extends IJsonldBase {
 
 export interface IHydraMember extends IJsonldType, IJsonldId {
   code: string
-  defaultLabel: string
+  defaultLabel?: string
   filterable?: boolean
   id: number
-  labels: string[]
-  metadata: string
-  options: string[]
+  labels?: string[]
+  metadata?: string
+  options?: string[]
   searchable?: boolean
   sortable?: boolean
   spellchecked?: boolean
-  system: boolean
-  type: string
+  system?: boolean
+  type?: string
   usedForRules?: boolean
   weight?: number
 }
 
-export interface IHydraResponse extends IJsonldContext, IJsonldType, IJsonldId {
-  'hydra:member': IHydraMember[]
+export interface IHydraResponse<Member extends IHydraMember>
+  extends IJsonldContext,
+    IJsonldType,
+    IJsonldId {
+  'hydra:member': Member[]
   'hydra:totalItems': number
 }

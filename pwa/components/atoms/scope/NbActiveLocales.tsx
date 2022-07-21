@@ -1,4 +1,5 @@
 import { styled } from '@mui/material/styles'
+import { useTranslation } from 'next-i18next'
 
 const CustomRoot = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -28,10 +29,13 @@ interface IProps {
 }
 
 function NbActiveLocales({ number }: IProps): JSX.Element {
+  const { t } = useTranslation('common')
   return (
     <CustomRoot>
       <CustomNbActiveLocales>{number}</CustomNbActiveLocales>
-      <CustomTexteActiveLocales>active locales</CustomTexteActiveLocales>
+      <CustomTexteActiveLocales>
+        {t('activeLocale', { count: number })}
+      </CustomTexteActiveLocales>
     </CustomRoot>
   )
 }
