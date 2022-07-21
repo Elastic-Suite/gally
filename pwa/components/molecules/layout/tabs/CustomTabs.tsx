@@ -1,4 +1,4 @@
-import { SyntheticEvent, useState } from 'react'
+import { ReactChild, SyntheticEvent, useState } from 'react'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 import Box from '@mui/material/Box'
@@ -6,9 +6,10 @@ import TabPanel from './TabPanel'
 import { a11yProps } from './a11yProps'
 
 interface IProps {
-  labels: Array<string>
-  contents: string[]
+  labels: string[]
+  contents: ReactChild[]
 }
+
 export default function CustomTabs({ labels, contents }: IProps): JSX.Element {
   const [activeTabIndex, setActiveTabIndex] = useState(0)
   const handleChange = (event: SyntheticEvent, newValue: number): void => {

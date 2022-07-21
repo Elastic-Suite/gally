@@ -1,0 +1,189 @@
+{
+  "@context": "/contexts/Catalog",
+  "@id": "/catalogs",
+  "@type": "hydra:Collection",
+  "hydra:member": [
+    {
+      "@id": "/catalogs/1",
+      "@type": "Catalog",
+      "id": 1,
+      "code": "com",
+      "name": "COM Catalog",
+      "localizedCatalogs": [
+        {
+          "@id": "/localized_catalogs/1",
+          "@type": "LocalizedCatalog",
+          "id": 1,
+          "name": "COM French Catalog",
+          "code": "com_fr",
+          "locale": "fr_FR",
+          "isDefault": false,
+          "localName": "testUn (France)"
+        },
+        {
+          "@id": "/localized_catalogs/1",
+          "@type": "LocalizedCatalog",
+          "id": 1,
+          "name": "COM French Catalog",
+          "code": "com_fr",
+          "locale": "fr_FR",
+          "isDefault": false,
+          "localName": "testUnAA (France)"
+        },
+        {
+          "@id": "/localized_catalogs/1",
+          "@type": "LocalizedCatalog",
+          "id": 1,
+          "name": "COM French Catalog",
+          "code": "com_fr",
+          "locale": "fr_FR",
+          "isDefault": false,
+          "localName": "testAAUn (France)"
+        },
+        {
+          "@id": "/localized_catalogs/1",
+          "@type": "LocalizedCatalog",
+          "id": 1,
+          "name": "COM French Catalog",
+          "code": "com_fr",
+          "locale": "fr_FR",
+          "isDefault": false,
+          "localName": "tAAestUn (France)"
+        },
+        {
+          "@id": "/localized_catalogs/1",
+          "@type": "LocalizedCatalog",
+          "id": 1,
+          "name": "COM French Catalog",
+          "code": "com_fr",
+          "locale": "fr_FR",
+          "isDefault": false,
+          "localName": "tesAEFtUn (France)"
+        },
+        {
+          "@id": "/localized_catalogs/1",
+          "@type": "LocalizedCatalog",
+          "id": 1,
+          "name": "COM French Catalog",
+          "code": "com_fr",
+          "locale": "fr_FR",
+          "isDefault": false,
+          "localName": "tesRDGFCDeux (France)"
+        },
+        {
+          "@id": "/localized_catalogs/2",
+          "@type": "LocalizedCatalog",
+          "id": 2,
+          "name": "COM English Catalog",
+          "code": "com_en",
+          "locale": "en_US",
+          "isDefault": false,
+          "localName": "deutGFDsh (États-Unis)"
+        },
+        {
+          "@id": "/localaized_catalogs/2",
+          "@type": "LocaalizedCatalog",
+          "id": 9,
+          "name": "COM Enaglish Catalog",
+          "code": "com_aen",
+          "locale": "en_aUS",
+          "isDefault": false,
+          "localName": "deutGFDsh (États-Unis)"
+        }
+      ]
+    },
+    {
+      "@id": "/catalogs/2",
+      "@type": "Catalog",
+      "id": 2,
+      "code": "fr",
+      "name": "FR Catalog",
+      "localizedCatalogs": [
+        {
+          "@id": "/localized_catalogs/3",
+          "@type": "LocalizedCatalog",
+          "id": 3,
+          "name": "FR French Catalog",
+          "code": "fr_fr",
+          "locale": "fr_FR",
+          "isDefault": false,
+          "localName": "français (France)"
+        },
+        {
+          "@id": "/localized_catalogs/4",
+          "@type": "LocalizedCatalog",
+          "id": 4,
+          "name": "FR English Catalog",
+          "code": "fr_en",
+          "locale": "en_US",
+          "isDefault": false,
+          "localName": "anglais (États-Unis)"
+        },
+        {
+          "@id": "/localized_catalogs/1",
+          "@type": "LocalizedCatalog",
+          "id": 1,
+          "name": "COM French Catalog",
+          "code": "com_fr",
+          "locale": "fr_FR",
+          "isDefault": false,
+          "localName": "tAAestUn (France)"
+        },
+        {
+          "@id": "/localized_catalogs/1",
+          "@type": "LocalizedCatalog",
+          "id": 1,
+          "name": "COM French Catalog",
+          "code": "com_fr",
+          "locale": "fr_FR",
+          "isDefault": false,
+          "localName": "tesAEFtUn (France)"
+        },
+        {
+          "@id": "/localized_catalogs/1",
+          "@type": "LocalizedCatalog",
+          "id": 1,
+          "name": "COM French Catalog",
+          "code": "com_fr",
+          "locale": "fr_FR",
+          "isDefault": false,
+          "localName": "tesRDGFCDeux (France)"
+        },
+        {
+          "@id": "/localized_catalogs/2",
+          "@type": "LocalizedCatalog",
+          "id": 2,
+          "name": "COM English Catalog",
+          "code": "com_en",
+          "locale": "en_US",
+          "isDefault": false,
+          "localName": "deutGFDsh (États-Unis)"
+        }
+      ]
+    },
+    {
+      "@id": "/catalogs/3",
+      "@type": "Catalog",
+      "id": 3,
+      "code": "uk",
+      "name": "UK Catalog",
+      "localizedCatalogs": [
+        {
+          "@id": "/localized_catalogs/5",
+          "@type": "LocalizedCatalog",
+          "id": 5,
+          "name": "EN French Catalog",
+          "code": "en_fr",
+          "locale": "fr_FR",
+          "isDefault": false,
+          "localName": "français (France)"
+        }
+      ]
+    }
+  ],
+  "hydra:totalItems": 3,
+  "hydra:view": {
+    "@id": "/catalogs?pageSize=30",
+    "@type": "hydra:PartialCollectionView"
+  }
+}

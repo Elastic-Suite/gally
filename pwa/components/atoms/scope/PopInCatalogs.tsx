@@ -5,6 +5,8 @@ import { styled } from '@mui/material/styles'
 import TitleScope from '~/components/atoms/scope/TitleScope'
 import NbActiveLocales from '~/components/atoms/scope/NbActiveLocales'
 import Language from '~/components/atoms/scope/Language'
+import { getUniqueLocalName } from '~/services/local'
+import { ICatalog } from '~/types'
 
 const CustomClose = styled('div')(({ theme }) => ({
   position: 'absolute',
@@ -47,12 +49,8 @@ const CustomRoot = styled('div')(({ theme }) => ({
 }))
 
 interface IProps {
-  content: {
-    name: string
-    nbActiveLocales: number
-    language: string[]
-  }
-  title: number
+  content: ICatalog
+  title: string
 }
 
 function PopInCatalogs({ content, title }: IProps): JSX.Element {
@@ -82,8 +80,8 @@ function PopInCatalogs({ content, title }: IProps): JSX.Element {
         </CustomClose>
         <CustomRoot>
           <TitleScope name={content.name} />
-          <NbActiveLocales number={content.nbActiveLocales} />
-          <Language language={content.language} limit={false} />
+          <NbActiveLocales number={getUniqueLocalName(content).length} />
+          <Language language={getUniqueLocalName(content)} limit={false} />
         </CustomRoot>
       </Dialog>
     </>
