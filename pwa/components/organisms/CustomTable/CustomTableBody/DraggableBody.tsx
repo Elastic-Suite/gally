@@ -47,7 +47,7 @@ function DraggableBody(props: IProps): JSX.Element {
           {tableRows.map((tableRow, index) => (
             <Draggable
               key={tableRow.id}
-              draggableId={tableRow.id}
+              draggableId={String(tableRow.id)}
               index={index}
             >
               {(provider): JSX.Element => (

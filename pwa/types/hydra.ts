@@ -112,19 +112,13 @@ export interface IHydraSupportedClass extends IJsonldBase {
 
 export interface IHydraMember extends IJsonldType, IJsonldId {
   code: string
-  defaultLabel?: string
-  filterable?: boolean
   id: number
-  labels?: string[]
-  metadata?: string
-  options?: string[]
-  searchable?: boolean
-  sortable?: boolean
-  spellchecked?: boolean
-  system?: boolean
-  type?: string
-  usedForRules?: boolean
-  weight?: number
+}
+
+export interface IHydraMapping extends IJsonldId {
+  variable: string
+  property: string
+  required: boolean
 }
 
 export interface IHydraResponse<Member extends IHydraMember>
@@ -132,5 +126,6 @@ export interface IHydraResponse<Member extends IHydraMember>
     IJsonldType,
     IJsonldId {
   'hydra:member': Member[]
+  'hydra:mapping'?: IHydraMapping[]
   'hydra:totalItems': number
 }

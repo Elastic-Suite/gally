@@ -3,7 +3,7 @@ import { ThemeProvider } from '@mui/material/styles'
 import { StyledEngineProvider } from '@mui/styled-engine'
 import { Provider } from 'react-redux'
 
-import theme from '~/constants/theme'
+import { theme } from '~/constants'
 import { AppStore } from '~/store'
 
 interface IProps {

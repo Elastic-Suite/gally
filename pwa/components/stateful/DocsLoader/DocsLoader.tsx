@@ -20,7 +20,7 @@ function DocsLoader(props: IProps): JSX.Element {
 
   if (docs.error) {
     return <>{docs.error.toString()}</>
-  } else if (!docs.data) {
+  } else if (!docs.data.json && !docs.data.jsonld) {
     return null
   }
 
