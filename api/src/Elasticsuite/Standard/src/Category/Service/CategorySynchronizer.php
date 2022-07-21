@@ -60,7 +60,7 @@ class CategorySynchronizer
 
         $localizedCatalog = $index->getCatalog();
         $elasticCategories = $this->getCategoriesInElastic($index);
-        $sqlCategories = $this->getCategoriesInSql();
+        $sqlCategories = $this->categoryRepository->findAllIndexedById();
         $sqlCategoryConfigurations = $this->getCategoryConfigurationsInSql($index);
 
         $elasticCategoryIds = array_keys($elasticCategories);
@@ -124,23 +124,6 @@ class CategorySynchronizer
             $this->entityManager->getConnection()->rollBack();
             throw new SyncCategoryException($e->getMessage());
         }
-    }
-
-    /**
-     * @return Category[]
-     */
-    private function getCategoriesInSql(): array
-    {
-        $categories = [];
-        $configurations = $this->categoryRepository->findAll();
-        array_walk(
-            $configurations,
-            function (Category $category) use (&$categories) {
-                $categories[$category->getId()] = $category;
-            }
-        );
-
-        return $categories;
     }
 
     /**
@@ -221,7 +204,8 @@ class CategorySynchronizer
         $this->attachedEntities[] = $entity;
         ++$this->currentBatchSize;
         if ($this->currentBatchSize > self::MAX_SAVE_BATCH_SIZE) {
-            $this->flush(); // @codeCoverageIgnore The batch max size will not be reached during testing
+            // The batch max size will not be reached during testing
+            $this->flush(); // @codeCoverageIgnore
         }
     }
 
