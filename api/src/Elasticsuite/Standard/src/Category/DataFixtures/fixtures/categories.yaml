@@ -12,3 +12,30 @@ Elasticsuite\Category\Model\Category:
         parentId: one
         level: 2
         path: one/three
+        
+Elasticsuite\Category\Model\Category\Configuration:
+    config1:
+        category: '@categ1'
+        catalog: '@catalog1'
+        localizedCatalog: '@localized_catalog1'
+        name: 'Catégorie Une'
+    config2:
+        category: '@categ2'
+        catalog: '@catalog1'
+        localizedCatalog: '@localized_catalog1'
+        name: 'Catégorie Deux'
+    config3:
+        category: '@categ3'
+        catalog: '@catalog1'
+        localizedCatalog: '@localized_catalog1'
+        name: 'Catégorie Trois'
+    config4:
+        category: '@categ1'
+        catalog: '@catalog1'
+        localizedCatalog: '@localized_catalog2'
+        name: 'Category One'
+    config5:
+        category: '@categ2'
+        catalog: '@catalog1'
+        localizedCatalog: '@localized_catalog2'
+        name: 'Category Two'

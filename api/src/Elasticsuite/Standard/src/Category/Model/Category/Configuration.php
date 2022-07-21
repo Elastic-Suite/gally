@@ -101,14 +101,11 @@ class Configuration
 
     private ?string $defaultSorting = null;
 
+    private bool $isActive = true;
+
     public function getId(): int
     {
         return $this->id;
-    }
-
-    public function setId(int $id): void
-    {
-        $this->id = $id;
     }
 
     public function getCategory(): Category
@@ -179,5 +176,15 @@ class Configuration
     public function setDefaultSorting(?string $defaultSorting): void
     {
         $this->defaultSorting = $defaultSorting;
+    }
+
+    public function getIsActive(): bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(bool $isActive): void
+    {
+        $this->isActive = $isActive;
     }
 }
