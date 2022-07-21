@@ -1,3 +1,5 @@
+import { apiUrl } from '~/constants'
+
 export function fetchApi<T>(
   language: string,
   url: RequestInfo | URL,
@@ -12,6 +14,7 @@ export function fetchApi<T>(
     }
     url = `/mocks${url}`
   }
+  url = `${apiUrl}${url}`
   return fetch(url, {
     ...options,
     headers: {

@@ -1,9 +1,7 @@
-import { ChangeEvent, MouseEvent, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { DragDropContext, DropResult } from 'react-beautiful-dnd'
-import { styled } from '@mui/system'
 
 import StickyBar from '~/components/molecules/CustomTable/StickyBar/StickyBar'
-import Pagination from '~/components/molecules/CustomTable/Pagination/Pagination'
 
 import {
   StyledTable,
@@ -21,25 +19,9 @@ import NonDraggableBody from '~/components/organisms/CustomTable/CustomTableBody
 import DraggableBody from '~/components/organisms/CustomTable/CustomTableBody/DraggableBody'
 import { useIsHorizontalOverflow } from '~/hooks/useIsHorizontalOverflow'
 
-const Root = styled('div')(({ theme }) => ({
-  borderRadius: theme.shape.borderRadius,
-  border: `1px solid ${theme.palette.colors.neutral[300]}`,
-}))
-
-interface IProps {
-  currentPage: number
+export interface IProps {
   // onMassiveAction?: (action: string) => void
-  onPageChange: (
-    event: MouseEvent<HTMLButtonElement> | null,
-    page: number
-  ) => void
   // onReordering?: (ordRows: ITableRow[]) => void
-  onRowsPerPageChange?: (
-    event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-  ) => void
-  rowsPerPage: number
-  rowsPerPageOptions: number[]
-  totalPages: number
   tableHeaders: ITableHeader[]
   tableRows: ITableRow[]
   withSelection?: boolean
@@ -47,7 +29,7 @@ interface IProps {
 }
 
 function CustomTable(props: IProps): JSX.Element {
-  const { currentPage, draggable, onPageChange, onRowsPerPageChange, rowsPerPage, rowsPerPageOptions, tableHeaders, tableRows, totalPages, withSelection } = props
+  const { draggable, tableHeaders, tableRows, withSelection } = props
 
   const [selectedRows, setSelectedRows] = useState<(string | number)[]>([])
   const [scrollLength, setScrollLength] = useState<number>(0)
@@ -154,78 +136,59 @@ function CustomTable(props: IProps): JSX.Element {
 
   return (
     <>
-      <Root>
-        <Pagination
-          currentPage={currentPage}
-          onPageChange={onPageChange}
-          onRowsPerPageChange={onRowsPerPageChange}
-          rowsPerPage={rowsPerPage}
-          rowsPerPageOptions={rowsPerPageOptions}
-          totalPages={totalPages}
-        />
-        <DragDropContext onDragEnd={handleDragEnd}>
-          <TableContainerWithCustomScrollbar
-            ref={tableRef}
-            sx={{
-              '&::-webkit-scrollbar-track': {
-                marginLeft: `${scrollLength}px`,
-              },
-              '&::-webkit-scrollbar-thumb': {
-                marginLeft: `${scrollLength}px`,
-              },
-            }}
-          >
-            <StyledTable>
-              <CustomTableHeader
+      <DragDropContext onDragEnd={handleDragEnd}>
+        <TableContainerWithCustomScrollbar
+          ref={tableRef}
+          sx={{
+            '&::-webkit-scrollbar-track': {
+              marginLeft: `${scrollLength}px`,
+            },
+            '&::-webkit-scrollbar-thumb': {
+              marginLeft: `${scrollLength}px`,
+            },
+          }}
+        >
+          <StyledTable>
+            <CustomTableHeader
+              tableHeaders={tableHeaders}
+              withSelection={withSelection}
+              onMassiveSelection={handleMassiveSelection}
+              massiveSelectionState={massiveSelectionState}
+              draggable={draggable}
+              cSSLeftValues={cSSLeftValues}
+              isHorizontalOverflow={isOverflow}
+              shadow={shadow}
+              massiveSelectionIndeterminate={massiveSelectionIndeterminate}
+            />
+            {Boolean(!draggable) && (
+              <NonDraggableBody
+                tableRows={currentRows}
+                setTableRows={setCurrentRows}
                 tableHeaders={tableHeaders}
                 withSelection={withSelection}
-                onMassiveSelection={handleMassiveSelection}
-                massiveSelectionState={massiveSelectionState}
-                draggable={draggable}
+                setSelectedRows={setSelectedRows}
+                selectedRows={selectedRows}
                 cSSLeftValues={cSSLeftValues}
                 isHorizontalOverflow={isOverflow}
                 shadow={shadow}
-                massiveSelectionIndeterminate={massiveSelectionIndeterminate}
               />
-              {Boolean(!draggable) && (
-                <NonDraggableBody
-                  tableRows={currentRows}
-                  setTableRows={setCurrentRows}
-                  tableHeaders={tableHeaders}
-                  withSelection={withSelection}
-                  setSelectedRows={setSelectedRows}
-                  selectedRows={selectedRows}
-                  cSSLeftValues={cSSLeftValues}
-                  isHorizontalOverflow={isOverflow}
-                  shadow={shadow}
-                />
-              )}
-              {Boolean(draggable) && (
-                <DraggableBody
-                  tableRows={currentRows}
-                  setTableRows={setCurrentRows}
-                  tableHeaders={tableHeaders}
-                  withSelection={withSelection}
-                  setSelectedRows={setSelectedRows}
-                  selectedRows={selectedRows}
-                  cSSLeftValues={cSSLeftValues}
-                  isHorizontalOverflow={isOverflow}
-                  shadow={shadow}
-                />
-              )}
-            </StyledTable>
-          </TableContainerWithCustomScrollbar>
-        </DragDropContext>
-        <Pagination
-          currentPage={currentPage}
-          isBottom
-          onPageChange={onPageChange}
-          onRowsPerPageChange={onRowsPerPageChange}
-          rowsPerPage={rowsPerPage}
-          rowsPerPageOptions={rowsPerPageOptions}
-          totalPages={totalPages}
-        />
-      </Root>
+            )}
+            {Boolean(draggable) && (
+              <DraggableBody
+                tableRows={currentRows}
+                setTableRows={setCurrentRows}
+                tableHeaders={tableHeaders}
+                withSelection={withSelection}
+                setSelectedRows={setSelectedRows}
+                selectedRows={selectedRows}
+                cSSLeftValues={cSSLeftValues}
+                isHorizontalOverflow={isOverflow}
+                shadow={shadow}
+              />
+            )}
+          </StyledTable>
+        </TableContainerWithCustomScrollbar>
+      </DragDropContext>
       <StickyBar
         show={showStickyBar}
         onMassiveSelection={handleMassiveSelection}

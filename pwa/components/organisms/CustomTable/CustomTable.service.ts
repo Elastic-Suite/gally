@@ -21,9 +21,9 @@ export function manageStickyHeaders(
 
 export function handleSingleRow(
   e: ChangeEvent<HTMLInputElement>,
-  rowId: string,
-  setSelectedRows: (arr: string[]) => void,
-  selectedRows: string[]
+  rowId: string | number,
+  setSelectedRows: (arr: (string | number)[]) => void,
+  selectedRows: (string | number)[]
 ): void {
   setSelectedRows(
     e.target.checked

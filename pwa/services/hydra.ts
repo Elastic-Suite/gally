@@ -39,7 +39,7 @@ export function getApiSchema(
   api: string,
   verb: Lowercase<Method>
 ): IDocsJsonOperation {
-  return docs.data.json.paths?.[api]?.[verb]
+  return docs.data.json?.paths?.[api]?.[verb]
 }
 
 export function getApiProperties(

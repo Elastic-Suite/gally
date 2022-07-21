@@ -1,5 +1,5 @@
 import { RenderOptions, render } from '@testing-library/react'
-import { renderHook } from '@testing-library/react-hooks'
+import { renderHook } from '@testing-library/react-hooks/dom'
 import { PreloadedState } from '@reduxjs/toolkit'
 import { ReactChild } from 'react'
 

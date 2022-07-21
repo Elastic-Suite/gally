@@ -1,5 +1,3 @@
-import { renderHook } from '@testing-library/react-hooks'
-
 import { renderHookWithProviders } from '~/services'
 import { LoadStatus } from '~/types'
 import { useApiDispatch, useApiFetch } from './useApi'
@@ -10,7 +8,7 @@ jest.mock('~/services/api')
 describe('useApi', () => {
   describe('useApiFetch', () => {
     it('calls and return the api result', async () => {
-      const { result, waitForNextUpdate } = renderHook(() =>
+      const { result, waitForNextUpdate } = renderHookWithProviders(() =>
         useApiFetch('/test')
       )
       expect(result.current[0]).toEqual({

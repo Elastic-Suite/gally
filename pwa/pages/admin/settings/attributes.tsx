@@ -1,7 +1,7 @@
 import { MouseEvent, useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'next-i18next'
 
-import { IHydraMember, IHydraResponse } from '~/types'
+import { IHydraResponse, ISourceField } from '~/types'
 
 import { useApiFetch } from '~/hooks/useApi'
 
@@ -14,7 +14,8 @@ import { FilterType, IFilter } from '~/components/molecules/Filters/Filter'
 import ApiTable from '~/components/stateful/ApiTable/ApiTable'
 
 function Attributes(): JSX.Element | string {
-  const [sourceFields] = useApiFetch<IHydraResponse<IHydraMember>>('/source_fields')
+  const [sourceFields] =
+    useApiFetch<IHydraResponse<ISourceField>>('/source_fields')
   const { t } = useTranslation('attributes')
 
   const filters = useMemo(
@@ -87,10 +88,6 @@ function Attributes(): JSX.Element | string {
     }))
   }
 
-  function handleMassiveAction(action: string): void {
-    console.log(action)
-  }
-
   function handlePageChange(
     _: MouseEvent<HTMLButtonElement> | null,
     page: number
@@ -121,11 +118,7 @@ function Attributes(): JSX.Element | string {
         searchValue={searchValue}
         showSearch
       />
-      <ApiTable
-        api="/source_fields"
-        onMassiveAction={handleMassiveAction}
-        onPageChange={handlePageChange}
-      />
+      <ApiTable api="/source_fields" onPageChange={handlePageChange} />
     </>
   )
 }

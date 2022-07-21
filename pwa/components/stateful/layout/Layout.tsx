@@ -65,6 +65,7 @@ const CustomContent = styled('div')(({ theme }) => ({
   flexDirection: 'column',
   flexGrow: 2,
   paddingTop: '156px',
+  paddingBottom: theme.spacing(5),
   paddingLeft: theme.spacing(4),
   paddingRight: theme.spacing(4),
   backgroundColor: theme.palette.background.page,

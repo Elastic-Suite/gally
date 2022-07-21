@@ -69,5 +69,42 @@
       "system": false
     }
   ],
-  "hydra:totalItems": 4
+  "hydra:totalItems": 4,
+  "hydra:search": {
+    "@type": "hydra:IriTemplate",
+    "hydra:template": "/source_fields{?isSearchable,isFilterable,code,defaultLabel,type}",
+    "hydra:variableRepresentation": "BasicRepresentation",
+    "hydra:mapping": [
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "isSearchable",
+        "property": "isSearchable",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "isFilterable",
+        "property": "isFilterable",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "code",
+        "property": "code",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "defaultLabel",
+        "property": "defaultLabel",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "type",
+        "property": "type",
+        "required": false
+      }
+    ]
+  }
 }
