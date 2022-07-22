@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Index\Model\Index;
 
+use Elasticsuite\Index\Model\Index\Mapping\FieldFilterInterface;
 use Elasticsuite\Index\Model\Index\Mapping\FieldInterface;
 
 /**
@@ -98,6 +99,71 @@ class Mapping implements MappingInterface
     public function getIdField(): FieldInterface
     {
         return $this->getField(self::ID_FIELD);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getWeightedSearchProperties(
+        ?string $analyzer = null,
+        ?string $defaultField = null,
+        float $boost = 1,
+        ?FieldFilterInterface $fieldFilter = null
+    ): array {
+        $weightedFields = [];
+        $fields = $this->getFields();
+
+        if ($defaultField) {
+            $defaultSearchProperty = $this->getDefaultSearchProperty($defaultField, $analyzer);
+            $weightedFields[$defaultSearchProperty] = $boost;
+        }
+
+        if (null !== $fieldFilter) {
+            $fields = array_filter($fields, [$fieldFilter, 'filterField']);
+        }
+
+        foreach ($fields as $field) {
+            $currentAnalyzer = $analyzer;
+            $canAddField = null === $defaultField || 1 !== $field->getSearchWeight();
+
+            if (null === $analyzer) {
+                $currentAnalyzer = $field->getDefaultSearchAnalyzer();
+                $canAddField = $canAddField || (FieldInterface::ANALYZER_STANDARD !== $currentAnalyzer);
+            }
+
+            $property = $field->getMappingProperty($currentAnalyzer);
+
+            if ($property && $canAddField) {
+                $weightedFields[$property] = $boost * $field->getSearchWeight();
+            }
+        }
+
+        return $weightedFields;
+    }
+
+    /**
+     * Return the search property for a field present in defaultMappingFields.
+     *
+     * @param string      $field    field
+     * @param string|null $analyzer required analyzer
+     */
+    private function getDefaultSearchProperty(string $field = self::DEFAULT_SEARCH_FIELD, ?string $analyzer = null): string
+    {
+        if (!isset($this->defaultMappingFields[$field])) {
+            throw new \InvalidArgumentException("Unable to find field {$field}.");
+        }
+
+        $property = $field;
+
+        if (null !== $analyzer) {
+            if (!\in_array($analyzer, $this->defaultMappingFields[$field], true)) {
+                throw new \InvalidArgumentException("Unable to find analyzer {$analyzer} for field {$field}.");
+            }
+
+            $property = sprintf('%s.%s', $field, $analyzer);
+        }
+
+        return $property;
     }
 
     /**

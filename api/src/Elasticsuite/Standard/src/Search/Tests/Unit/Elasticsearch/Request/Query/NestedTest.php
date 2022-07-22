@@ -126,14 +126,14 @@ class NestedTest extends KernelTestCase
      * @param QueryInterface|null $originalQuery Nested query
      * @param string|null         $scoreMode     Score mode of the nested query
      * @param string|null         $name          Query name
-     * @param int|null            $boost         Query boost
+     * @param float|null          $boost         Query boost
      */
     private function performCreateComplexParams(
         string $path,
         ?QueryInterface $originalQuery,
         ?string $scoreMode,
         ?string $name,
-        ?int $boost
+        ?float $boost
     ): void {
         // TODO: use reflection to build mapping ?
         $queryParams = [
@@ -183,7 +183,7 @@ class NestedTest extends KernelTestCase
         if ($query->getName()) {
             $this->assertIsString($query->getName());
         }
-        $this->assertIsInt($query->getBoost());
+        $this->assertIsFloat($query->getBoost());
 
         /** @var Nested $query */
         $this->assertIsString($query->getPath());

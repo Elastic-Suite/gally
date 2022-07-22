@@ -53,13 +53,13 @@ class FilteredQueryTest extends KernelTestCase
      * @param ?QueryInterface $query  Query part of the filtered query
      * @param ?QueryInterface $filter Filter part of the filtered query
      * @param ?string         $name   Query name
-     * @param int             $boost  Query boost
+     * @param float           $boost  Query boost
      */
     public function testCreate(
         ?QueryInterface $query,
         ?QueryInterface $filter,
         ?string $name,
-        int $boost
+        float $boost
     ): void {
         $this->performCreateParamsTests($query, $filter, $name, $boost);
     }
@@ -120,20 +120,20 @@ class FilteredQueryTest extends KernelTestCase
         if (null !== $filteredQuery->getFilter()) {
             $this->assertInstanceOf(QueryInterface::class, $filteredQuery->getFilter());
         }
-        $this->assertIsInt($filteredQuery->getBoost());
+        $this->assertIsFloat($filteredQuery->getBoost());
     }
 
     /**
      * @param ?QueryInterface $query  Query part of the filtered query
      * @param ?QueryInterface $filter Filter part of the filtered query
      * @param ?string         $name   Query name
-     * @param int             $boost  Query boost
+     * @param float           $boost  Query boost
      */
     private function performCreateParamsTests(
         ?QueryInterface $query,
         ?QueryInterface $filter,
         ?string $name,
-        int $boost
+        float $boost
     ): void {
         // TODO: use reflection to build mapping ?
         $queryParams = [

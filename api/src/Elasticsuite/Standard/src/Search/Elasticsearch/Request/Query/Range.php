@@ -23,7 +23,7 @@ use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
  */
 class Range implements QueryInterface
 {
-    private int $boost;
+    private float $boost;
 
     private ?string $name;
 
@@ -38,13 +38,13 @@ class Range implements QueryInterface
      * @param string  $field  Query field
      * @param array   $bounds Range filter bounds (authorized entries : gt, lt, lte, gte)
      * @param ?string $name   Query name
-     * @param int     $boost  Query boost
+     * @param float   $boost  Query boost
      */
     public function __construct(
         string $field,
         array $bounds = [],
         ?string $name = null,
-        int $boost = QueryInterface::DEFAULT_BOOST_VALUE
+        float $boost = QueryInterface::DEFAULT_BOOST_VALUE
     ) {
         $this->name = $name;
         $this->boost = $boost;
@@ -55,7 +55,7 @@ class Range implements QueryInterface
     /**
      * {@inheritDoc}
      */
-    public function getBoost(): int
+    public function getBoost(): float
     {
         return $this->boost;
     }

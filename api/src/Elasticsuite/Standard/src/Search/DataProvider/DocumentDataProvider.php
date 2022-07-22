@@ -61,6 +61,7 @@ class DocumentDataProvider implements ContextAwareCollectionDataProviderInterfac
         $metadata = $this->metadataRepository->findByEntity($context['filters']['entityType']);
         $catalog = $this->catalogRepository->findByCodeOrId($context['filters']['catalogId']);
         $containerConfig = $this->containerConfigurationProvider->get($metadata, $catalog);
+        $searchQuery = $context['filters']['search'] ?? null;
 
         $sortOrders = [];
         if (\array_key_exists('sort', $context['filters'])) {
@@ -77,7 +78,7 @@ class DocumentDataProvider implements ContextAwareCollectionDataProviderInterfac
             $catalog,
             $offset,
             $limit,
-            null,
+            $searchQuery,
             $sortOrders,
             $this->filterManager->formatFilters($context, $containerConfig),
             [],

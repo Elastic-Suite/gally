@@ -41,7 +41,7 @@ class MultiMatch implements QueryInterface
 
     private ?string $name;
 
-    private int $boost;
+    private float $boost;
 
     private string $queryText;
 
@@ -63,7 +63,7 @@ class MultiMatch implements QueryInterface
      * @param string                           $minimumShouldMatch minimum should match for the match query
      * @param float                            $tieBreaker         tie breaker for the multi_match query
      * @param ?string                          $name               query name
-     * @param int                              $boost              query boost
+     * @param float                            $boost              query boost
      * @param ?FuzzinessConfigurationInterface $fuzzinessConfig    The fuzziness Configuration
      * @param ?float                           $cutoffFrequency    cutoff frequency
      * @param string                           $matchType          the match type
@@ -74,7 +74,7 @@ class MultiMatch implements QueryInterface
         string $minimumShouldMatch = self::DEFAULT_MINIMUM_SHOULD_MATCH,
         float $tieBreaker = self::DEFAULT_TIE_BREAKER,
         ?string $name = null,
-        int $boost = QueryInterface::DEFAULT_BOOST_VALUE,
+        float $boost = QueryInterface::DEFAULT_BOOST_VALUE,
         ?FuzzinessConfigurationInterface $fuzzinessConfig = null,
         ?float $cutoffFrequency = null,
         string $matchType = self::DEFAULT_MATCH_TYPE
@@ -101,7 +101,7 @@ class MultiMatch implements QueryInterface
     /**
      * {@inheritDoc}
      */
-    public function getBoost(): int
+    public function getBoost(): float
     {
         return $this->boost;
     }

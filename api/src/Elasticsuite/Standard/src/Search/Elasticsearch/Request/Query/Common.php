@@ -38,7 +38,7 @@ class Common extends MatchQuery
      * @param float   $cutoffFrequency    Cutoff frequency
      * @param string  $minimumShouldMatch Minimum should match for the match query
      * @param ?string $name               Query name
-     * @param int     $boost              Query boost
+     * @param float   $boost              Query boost
      */
     public function __construct(
         string $queryText,
@@ -46,7 +46,7 @@ class Common extends MatchQuery
         float $cutoffFrequency = self::DEFAULT_CUTOFF_FREQUENCY,
         string $minimumShouldMatch = self::DEFAULT_MINIMUM_SHOULD_MATCH,
         ?string $name = null,
-        int $boost = QueryInterface::DEFAULT_BOOST_VALUE
+        float $boost = QueryInterface::DEFAULT_BOOST_VALUE
     ) {
         parent::__construct($queryText, $field, $minimumShouldMatch, $name, $boost);
         $this->cutoffFrequency = $cutoffFrequency;

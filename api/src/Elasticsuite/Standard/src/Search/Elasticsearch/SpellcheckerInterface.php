@@ -28,7 +28,7 @@ interface SpellcheckerInterface
     public const SPELLING_TYPE_PURE_STOPWORDS = 5;
 
     /**
-     * Returns the type of spelling of a fultext query :
+     * Returns the type of spelling of a fulltext query :
      * - SPELLING_TYPE_EXACT          : All terms of the text query exist and are exactly spelled.
      * - SPELLING_TYPE_MOST_EXACT     : All terms of the text quest exist but some are matched using an analyzed form.
      * - SPELLING_TYPE_MOST_FUZZY     : At least one term of the text query exists in the index.

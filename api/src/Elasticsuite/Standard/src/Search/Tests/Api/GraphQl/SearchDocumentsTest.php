@@ -434,20 +434,16 @@ class SearchDocumentsTest extends AbstractTest
     /**
      * @dataProvider searchWithAggregationDataProvider
      *
-     * @param string $entityType         Entity Type
-     * @param string $catalogId          Catalog ID or code
-     * @param int    $pageSize           Pagination size
-     * @param int    $currentPage        Current page
-     * @param array  $sortOrders         Sort order specifications
-     * @param string $documentIdentifier Document identifier to check ordered results
+     * @param string $entityType  Entity Type
+     * @param string $catalogId   Catalog ID or code
+     * @param int    $pageSize    Pagination size
+     * @param int    $currentPage Current page
      */
     public function testSearchDocumentsWithAggregation(
         string $entityType,
         string $catalogId,
         int $pageSize,
         int $currentPage,
-        array $sortOrders,
-        string $documentIdentifier,
     ): void {
         $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
 
@@ -508,16 +504,12 @@ class SearchDocumentsTest extends AbstractTest
                 'b2c_en',   // catalog ID.
                 10,     // page size.
                 1,      // current page.
-                [],     // sort order specifications.
-                'entity_id', // document data identifier.
             ],
             [
                 'product',  // entity type.
                 'b2b_fr',   // catalog ID.
                 10,     // page size.
                 1,      // current page.
-                [],     // sort order specifications.
-                'id', // document data identifier.
             ],
         ];
     }
@@ -866,6 +858,163 @@ class SearchDocumentsTest extends AbstractTest
                 GQL, // filter.
                 'entity_id', // document data identifier.
                 [11, 12], // expected ordered document IDs
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider searchWithQueryDataProvider
+     *
+     * @param string   $entityType          Entity Type
+     * @param string   $catalogId           Catalog ID or code
+     * @param string   $query               Query text
+     * @param int      $expectedResultCount Expected result count
+     * @param string[] $expectedResultNames Expected result names
+     */
+    public function testSearchDocumentsWithQuery(
+        string $entityType,
+        string $catalogId,
+        string $query,
+        int $expectedResultCount,
+        array $expectedResultNames,
+    ): void {
+        $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
+
+        $arguments = sprintf(
+            'entityType: "%s", catalogId: "%s", pageSize: %d, currentPage: %d, search: "%s"',
+            $entityType,
+            $catalogId,
+            10,
+            1,
+            $query
+        );
+
+        $this->validateApiCall(
+            new RequestGraphQlToTest(
+                <<<GQL
+                    {
+                        searchDocuments({$arguments}) {
+                            collection {
+                              id
+                              score
+                              source
+                            }
+                        }
+                    }
+                GQL,
+                $user
+            ),
+            new ExpectedResponse(
+                200,
+                function (ResponseInterface $response) use ($expectedResultCount, $expectedResultNames) {
+                    $responseData = $response->toArray();
+                    $results = $responseData['data']['searchDocuments']['collection'];
+                    $names = array_map(fn (array $item) => $item['source']['name'], $results);
+                    $this->assertCount($expectedResultCount, $results);
+                    $this->assertEquals($expectedResultNames, $names);
+                }
+            )
+        );
+    }
+
+    public function searchWithQueryDataProvider(): array
+    {
+        return [
+            // Search reference field
+            [
+                'product',          // entity type.
+                'b2c_en',           // catalog ID.
+                'striveshoulder',   // query.
+                1,                  // expected result count.
+                [                   // expected result name.
+                    'Strive Shoulder Pack',
+                ],
+            ],
+
+            // Search a word
+            [
+                'product',          // entity type.
+                'b2c_en',           // catalog ID.
+                'bag',              // query.
+                7,                  // expected result count.
+                [                   // expected result name.
+                    'Wayfarer Messenger Bag',
+                    'Joust Duffle Bag',
+                    'Voyage Yoga Bag',
+                    'Push It Messenger Bag',
+                    'Rival Field Messenger',
+                    'Strive Shoulder Pack',
+                    'Crown Summit Backpack',
+                ],
+            ],
+
+            // Search a non-existing word
+            [
+                'product',          // entity type.
+                'b2c_fr',           // catalog ID.
+                'bag',              // query.
+                0,                  // expected result count.
+                [],                // expected result name.
+            ],
+
+            // Search in description field
+            [
+                'product',          // entity type.
+                'b2c_en',           // catalog ID.
+                'summer',           // query.
+                2,                  // expected result count.
+                [                   // expected result name.
+                    'Rival Field Messenger',
+                    'Crown Summit Backpack',
+                ],
+            ],
+
+            // Search in multiple field
+            [
+                'product',          // entity type.
+                'b2c_en',           // catalog ID.
+                'yoga',             // query.
+                2,                  // expected result count.
+                [                   // expected result name.
+                    'Voyage Yoga Bag',
+                    'Crown Summit Backpack',
+                ],
+            ],
+
+            // Search with multiple words
+            [
+                'product',          // entity type.
+                'b2c_en',           // catalog ID.
+                'bag autumn',       // query.
+                1,                  // expected result count.
+                [                   // expected result name.
+                    'Wayfarer Messenger Bag',
+                ],
+            ],
+
+            // Search with misspelled word
+            [
+                'product',          // entity type.
+                'b2c_en',           // catalog ID.
+                'bag automn',       // query.
+                1,                  // expected result count.
+                [                   // expected result name.
+                    'Wayfarer Messenger Bag',
+                ],
+            ],
+
+            // Search with word with same phonetic
+            [
+                'product',          // entity type.
+                'b2c_en',           // catalog ID.
+                'bohqpaq',          // query.
+                4,                  // expected result count.
+                [                   // expected result name.
+                    'Fusion Backpack',
+                    'Driven Backpack',
+                    'Endeavor Daytrip Backpack',
+                    'Crown Summit Backpack',
+                ],
             ],
         ];
     }

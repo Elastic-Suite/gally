@@ -59,12 +59,12 @@ class ExistsQueryTest extends KernelTestCase
      *
      * @param string  $field Field to test existence of
      * @param ?string $name  Query name
-     * @param int     $boost Query boost
+     * @param float   $boost Query boost
      */
     public function testCreate(
         string $field,
         ?string $name,
-        int $boost
+        float $boost
     ): void {
         $this->performCreateParamsTests($field, $name, $boost);
     }
@@ -90,18 +90,18 @@ class ExistsQueryTest extends KernelTestCase
         /** @var ExistsQuery $existsQuery */
         $this->assertEquals(QueryInterface::TYPE_EXISTS, $existsQuery->getType());
         $this->assertIsString($existsQuery->getField());
-        $this->assertIsInt($existsQuery->getBoost());
+        $this->assertIsFloat($existsQuery->getBoost());
     }
 
     /**
      * @param string  $field Field to test existence of
      * @param ?string $name  Query name
-     * @param int     $boost Query boost
+     * @param float   $boost Query boost
      */
     private function performCreateParamsTests(
         string $field,
         ?string $name,
-        int $boost
+        float $boost
     ): void {
         // TODO: use reflection to build mapping ?
         $queryParams = [

@@ -14,8 +14,9 @@ Elasticsuite\Metadata\Model\SourceField:
         code: 'name'
         type: 'text'
         weight: 10
-        is_searchable: true
-        is_sortable: true
+        isSearchable: true
+        isSortable: true
+        isSpellchecked: true
     product_price:
         metadata: '@product'
         code: 'price'

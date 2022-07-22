@@ -67,7 +67,7 @@ class CommonQueryTest extends KernelTestCase
      * @param float   $cutoffFrequency    Cutoff frequency
      * @param string  $minimumShouldMatch Minimum should match for the match query
      * @param ?string $name               Query name
-     * @param int     $boost              Query boost
+     * @param float   $boost              Query boost
      */
     public function testCreate(
         string $queryText,
@@ -75,7 +75,7 @@ class CommonQueryTest extends KernelTestCase
         float $cutoffFrequency,
         string $minimumShouldMatch,
         ?string $name,
-        int $boost
+        float $boost
     ): void {
         $this->performCreateParamsTests($queryText, $field, $cutoffFrequency, $minimumShouldMatch, $name, $boost);
     }
@@ -110,7 +110,7 @@ class CommonQueryTest extends KernelTestCase
         $this->assertIsString($commonQuery->getField());
         $this->assertIsFloat($commonQuery->getCutoffFrequency());
         $this->assertIsString($commonQuery->getMinimumShouldMatch());
-        $this->assertIsInt($commonQuery->getBoost());
+        $this->assertIsFloat($commonQuery->getBoost());
     }
 
     /**
@@ -119,7 +119,7 @@ class CommonQueryTest extends KernelTestCase
      * @param float   $cutoffFrequency    Cutoff frequency
      * @param string  $minimumShouldMatch Minimum should match for the match query
      * @param ?string $name               Query name
-     * @param int     $boost              Query boost
+     * @param float   $boost              Query boost
      */
     private function performCreateParamsTests(
         string $queryText,
@@ -127,7 +127,7 @@ class CommonQueryTest extends KernelTestCase
         float $cutoffFrequency,
         string $minimumShouldMatch,
         ?string $name,
-        int $boost
+        float $boost
     ): void {
         // TODO: use reflection to build mapping ?
         $queryParams = [
