@@ -1,9 +1,7 @@
 {
   "@context": {
-    "@vocab": "https://localhost/docs.jsonld#",
+    "@vocab": "http://localhost:3000/mocks/docs.jsonld#",
     "hydra": "http://www.w3.org/ns/hydra/core#",
-    "metadata": { "@id": "Entrypoint/metadata", "@type": "@id" },
-    "sourceField": { "@id": "Entrypoint/sourceField", "@type": "@id" },
     "index": { "@id": "Entrypoint/index", "@type": "@id" },
     "mappingStatus": { "@id": "Entrypoint/mappingStatus", "@type": "@id" },
     "indexDocument": { "@id": "Entrypoint/indexDocument", "@type": "@id" },
@@ -11,10 +9,12 @@
       "@id": "Entrypoint/sourceFieldOption",
       "@type": "@id"
     },
+    "sourceField": { "@id": "Entrypoint/sourceField", "@type": "@id" },
     "sourceFieldOptionLabel": {
       "@id": "Entrypoint/sourceFieldOptionLabel",
       "@type": "@id"
     },
+    "metadata": { "@id": "Entrypoint/metadata", "@type": "@id" },
     "sourceFieldLabel": {
       "@id": "Entrypoint/sourceFieldLabel",
       "@type": "@id"

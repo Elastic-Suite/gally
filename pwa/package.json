@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "local": "NEXT_PUBLIC_LOCAL=true next dev",
+    "local": "NEXT_PUBLIC_LOCAL=true NEXT_PUBLIC_API_URL=http://localhost:3000/ next dev",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",

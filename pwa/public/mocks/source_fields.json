@@ -72,7 +72,7 @@
   "hydra:totalItems": 4,
   "hydra:search": {
     "@type": "hydra:IriTemplate",
-    "hydra:template": "/source_fields{?isSearchable,isFilterable,code,defaultLabel,type}",
+    "hydra:template": "/source_fields{?isSearchable,isFilterable,code,defaultLabel,type,metadata,metadata[]}",
     "hydra:variableRepresentation": "BasicRepresentation",
     "hydra:mapping": [
       {
@@ -103,6 +103,18 @@
         "@type": "IriTemplateMapping",
         "variable": "type",
         "property": "type",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "metadata",
+        "property": "metadata",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "metadata[]",
+        "property": "metadata",
         "required": false
       }
     ]

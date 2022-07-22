@@ -14,7 +14,6 @@ interface IProps<T extends IHydraMember> {
 function FiltersGuesser<T extends IHydraMember>(props: IProps<T>): JSX.Element {
   const { apiData, resource } = props
   const filters: IFilter[] = useApiFilters(apiData, resource)
-  console.log(filters)
 
   const initValues = useCallback(
     (): Record<string, unknown | unknown[]> =>
