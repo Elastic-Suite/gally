@@ -47,7 +47,7 @@ final class ConfigurationCollectionDataProvider implements ContextAwareCollectio
         // Manually manage category filter to load default value if no category is selected.
         if (isset($context['filters']['category'])) {
             $category = explode('/', $context['filters']['category']);
-            $category = (int) end($category);
+            $category = end($category);
             unset($context['filters']['category']);
         }
 

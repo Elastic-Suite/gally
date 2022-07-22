@@ -56,13 +56,11 @@ class Mapper
      */
     public function assembleSearchRequest(RequestInterface $request): array
     {
-        $searchRequest = [];
+        $searchRequest = [
+            'size' => $request->getSize(),
+        ];
 
-        if (null !== $request->getSize()) {
-            $searchRequest['size'] = $request->getSize();
-        }
-
-        if (isset($searchRequest['size']) && $searchRequest['size'] > 0) {
+        if ($searchRequest['size'] > 0) {
             $searchRequest['sort'] = $this->getSortOrders($request);
             $searchRequest['from'] = $request->getFrom();
         }

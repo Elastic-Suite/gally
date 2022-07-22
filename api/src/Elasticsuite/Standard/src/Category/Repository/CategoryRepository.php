@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Elasticsuite\Category\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 use Elasticsuite\Category\Model\Category;
 
@@ -31,5 +32,35 @@ class CategoryRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Category::class);
+    }
+
+    /**
+     * @return Category\Configuration[]
+     */
+    public function getUnusedCategory(): array
+    {
+        $exprBuilder = $this->getEntityManager()->getExpressionBuilder();
+
+        $unusedCategory = $this->createQueryBuilder('category')
+            ->where(
+                $exprBuilder->notIn(
+                    'category.id',
+                    $this->getEntityManager()
+                        ->createQueryBuilder()
+                        ->select('category_with_config')
+                        ->from($this->getClassName(), 'category_with_config')
+                        ->join(
+                            Category\Configuration::class,
+                            'localized_catalog_conf',
+                            Join::WITH,
+                            $exprBuilder->eq('category_with_config', 'localized_catalog_conf.category')
+                        )
+                        ->distinct()
+                        ->getDQL()
+                )
+            )
+            ->distinct();
+
+        return $unusedCategory->getQuery()->getResult();
     }
 }

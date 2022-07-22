@@ -16,20 +16,21 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Entity\Model\Doctrine;
 
+use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder as BaseQueryBuilder;
 
 class QueryBuilder extends BaseQueryBuilder
 {
-    private string $hydratationMode;
+    private string|int $hydratationMode = AbstractQuery::HYDRATE_OBJECT;
     private array $forcedRootAliases = [];
 
-    public function getHydratationMode(): string
+    public function getHydratationMode(): string|int
     {
         return $this->hydratationMode;
     }
 
-    public function setHydratationMode(string $hydratationMode): void
+    public function setHydratationMode(string|int $hydratationMode): void
     {
         $this->hydratationMode = $hydratationMode;
     }

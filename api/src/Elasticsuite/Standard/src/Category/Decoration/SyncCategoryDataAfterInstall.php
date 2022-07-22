@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Elasticsuite\Category\Decoration;
 
 use ApiPlatform\Core\GraphQl\Resolver\MutationResolverInterface;
+use Elasticsuite\Category\Exception\SyncCategoryException;
 use Elasticsuite\Category\Service\CategorySynchronizer;
 use Elasticsuite\Index\Model\Index;
 use Elasticsuite\Index\MutationResolver\InstallIndexMutation;
@@ -40,7 +41,12 @@ class SyncCategoryDataAfterInstall implements MutationResolverInterface
         $index = $this->decorated->__invoke($item, $context);
 
         if ('category' === $index->getEntityType()) { // Synchronize sql data for category entity
-            $this->synchronizer->synchronize($index);
+            try {
+                $this->synchronizer->synchronize($index);
+            } catch (SyncCategoryException) {
+                // If sync failed, retry sync once, then log the error.
+                $this->synchronizer->synchronize($index);
+            }
         }
 
         return $index;

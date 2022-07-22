@@ -5,6 +5,12 @@ services:
         tags:
             - { name: doctrine.repository_service }
 
+    Elasticsuite\Category\Repository\CategoryConfigurationRepository:
+        arguments:
+            - '@Doctrine\Persistence\ManagerRegistry'
+        tags:
+            - { name: doctrine.repository_service }
+
     # Declare DataFixtures
     Elasticsuite\Category\DataFixtures\ElasticsearchCategoryFixtures:
         arguments:
@@ -15,6 +21,7 @@ services:
     Elasticsuite\Category\Service\CategorySynchronizer:
         arguments:
             - '@Elasticsuite\Category\Repository\CategoryRepository'
+            - '@Elasticsuite\Category\Repository\CategoryConfigurationRepository'
             - '@Elasticsuite\Search\Elasticsearch\RequestFactoryInterface'
             - '@Elasticsuite\Search\Elasticsearch\Builder\Request\Query\QueryBuilder'
             - '@Elasticsuite\Search\Elasticsearch\Adapter'
@@ -24,18 +31,18 @@ services:
         decorates: Elasticsuite\Index\MutationResolver\BulkIndexMutation
         arguments:
             - '@.inner'
+            - '@Elasticsuite\Category\Service\CategorySynchronizer'
             - '@Elasticsuite\Index\Service\IndexSettings'
             - '@Elasticsuite\Index\Repository\Index\IndexRepository'
-            - '@Elasticsuite\Category\Service\CategorySynchronizer'
         decoration_priority: 100
             
     Elasticsuite\Category\Decoration\SyncCategoryDataAfterBulkDelete:
         decorates: Elasticsuite\Index\MutationResolver\BulkDeleteIndexMutation
         arguments:
             - '@.inner'
+            - '@Elasticsuite\Category\Service\CategorySynchronizer'
             - '@Elasticsuite\Index\Service\IndexSettings'
             - '@Elasticsuite\Index\Repository\Index\IndexRepository'
-            - '@Elasticsuite\Category\Service\CategorySynchronizer'
         decoration_priority: 100
             
     Elasticsuite\Category\Decoration\SyncCategoryDataAfterInstall:
