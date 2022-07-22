@@ -48,23 +48,83 @@ use Symfony\Component\Serializer\Annotation\Groups;
     denormalizationContext: ['groups' => ['source_field:api']],
 )]
 #[ApiFilter(BooleanFilter::class, properties: ['isSearchable', 'isFilterable'])]
-#[ApiFilter(SearchFilter::class, properties: ['code' => 'partial', 'defaultLabel' => 'partial', 'type' => 'partial'])]
+#[ApiFilter(SearchFilter::class, properties: ['code' => 'partial', 'defaultLabel' => 'partial', 'type' => 'partial', 'metadata' => 'exact'])]
 class SourceField
 {
     private int $id;
 
     #[ApiProperty(
-        openapiContext: [
-            'label' => 'Attribute code',
+        attributes: [
+            'hydra:supportedProperty' => [
+                'hydra:property' => [
+                    'rdfs:label' => 'Attribute code',
+                    'showable' => true,
+                ],
+            ],
         ],
     )]
     private string $code;
+
+    #[ApiProperty(
+        attributes: [
+            'hydra:supportedProperty' => [
+                'hydra:property' => [
+                    'rdfs:label' => 'Attribute label',
+                    'showable' => true,
+                ],
+            ],
+        ],
+    )]
     private ?string $defaultLabel = null;
+
+    #[ApiProperty(
+        attributes: [
+            'hydra:supportedProperty' => [
+                'hydra:property' => [
+                    'rdfs:label' => 'Attribute type',
+                    'showable' => true,
+                ],
+            ],
+        ],
+    )]
     private ?string $type = null;
-    private ?int $weight = null;
-    private ?bool $isSearchable = null;
+    #[ApiProperty(
+        attributes: [
+            'hydra:supportedProperty' => [
+                'hydra:property' => [
+                    'rdfs:label' => 'Filterable',
+                    'showable' => true,
+                ],
+            ],
+        ],
+    )]
     private ?bool $isFilterable = null;
+
+    #[ApiProperty(
+        attributes: [
+            'hydra:supportedProperty' => [
+                'hydra:property' => [
+                    'rdfs:label' => 'Searchable',
+                    'showable' => true,
+                ],
+            ],
+        ],
+    )]
+    private ?bool $isSearchable = null;
+
+    #[ApiProperty(
+        attributes: [
+            'hydra:supportedProperty' => [
+                'hydra:property' => [
+                    'rdfs:label' => 'Sortable',
+                    'showable' => true,
+                ],
+            ],
+        ],
+    )]
     private ?bool $isSortable = null;
+
+    private ?int $weight = null;
     private ?bool $isSpellchecked = null;
     private ?bool $isUsedForRules = null;
     private bool $isSystem = false;
