@@ -34,7 +34,7 @@ use Elasticsuite\Search\Model\Facet;
  */
 class ConfigurationRepository extends ServiceEntityRepository
 {
-    private ?int $categoryId;
+    private ?string $categoryId;
 
     public function __construct(
         ManagerRegistry $registry
@@ -42,12 +42,12 @@ class ConfigurationRepository extends ServiceEntityRepository
         parent::__construct($registry, Facet\Configuration::class);
     }
 
-    public function getCategoryId(): ?int
+    public function getCategoryId(): ?string
     {
-        return $this->categoryId ?: 0;
+        return $this->categoryId ?: '0';
     }
 
-    public function setCategoryId(?int $categoryId): void
+    public function setCategoryId(?string $categoryId): void
     {
         $this->categoryId = $categoryId;
     }
@@ -63,13 +63,14 @@ class ConfigurationRepository extends ServiceEntityRepository
             ->select([
                 "{$alias}",
                 'sf.id AS source_field_id',
-                "CONCAT(sf.id, '-', '$category') AS id",
+                "CONCAT(sf.id, '-', :category) AS id",
             ])
             ->from(SourceField::class, 'sf', $indexBy)
             ->leftJoin(Metadata::class, 'metadata', Join::WITH, 'sf.metadata = metadata.id')
             ->where('sf.isFilterable = true')
             ->andWhere('metadata.entity = :entity')
-            ->setParameter('entity', 'product');
+            ->setParameter('entity', 'product')
+            ->setParameter('category', $category);
 
         if ($category) {
             $queryBuilder->leftJoin(
@@ -86,8 +87,7 @@ class ConfigurationRepository extends ServiceEntityRepository
                 )
                 ->addSelect('default')
                 ->leftJoin(Category::class, 'category', Join::WITH, "{$alias}.category = category.id")
-                ->addSelect($category . ' AS category_id')
-                ->setParameter('category', $category);
+                ->addSelect("CONCAT('', :category) as category_id");
         } else {
             $queryBuilder->leftJoin(
                 $this->_entityName,

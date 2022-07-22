@@ -101,7 +101,7 @@ abstract class AbstractTest extends ApiTestCase
             $this->assertArrayNotHasKey(
                 'errors',
                 $data,
-                isset($data['errors']) ? $data['errors'][0]['message'] : ''
+                isset($data['errors']) ? $data['errors'][0]['debugMessage'] : ''
             );
         }
     }

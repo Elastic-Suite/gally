@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Elasticsuite\Category\Decoration;
 
 use ApiPlatform\Core\GraphQl\Resolver\MutationResolverInterface;
+use Elasticsuite\Category\Exception\SyncCategoryException;
 use Elasticsuite\Category\Model\Category;
 use Elasticsuite\Category\Service\CategorySynchronizer;
 use Elasticsuite\Index\Api\IndexSettingsInterface;
@@ -28,9 +29,9 @@ class SyncCategoryDataAfterBulk implements MutationResolverInterface
 {
     public function __construct(
         private BulkIndexMutation $decorated,
+        private CategorySynchronizer $synchronizer,
         private IndexSettingsInterface $indexSettings,
         private IndexRepositoryInterface $indexRepository,
-        private CategorySynchronizer $synchronizer,
     ) {
     }
 
@@ -48,7 +49,12 @@ class SyncCategoryDataAfterBulk implements MutationResolverInterface
             && $this->indexSettings->isInstalled($index)    // Don't synchronize if index is not installed
         ) {
             $this->indexRepository->refresh($index->getName()); // Force refresh to avoid missing data
-            $this->synchronizer->synchronize($index, json_decode($context['args']['input']['data'], true));
+            try {
+                $this->synchronizer->synchronize($index, json_decode($context['args']['input']['data'], true));
+            } catch (SyncCategoryException) {
+                // If sync failed, retry sync once, then log the error.
+                $this->synchronizer->synchronize($index, json_decode($context['args']['input']['data'], true));
+            }
         }
 
         return $index;
