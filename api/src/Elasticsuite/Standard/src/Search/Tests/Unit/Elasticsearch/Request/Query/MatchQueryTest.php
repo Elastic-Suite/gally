@@ -64,14 +64,14 @@ class MatchQueryTest extends KernelTestCase
      * @param string      $field              Target field
      * @param string|null $minimumShouldMatch Minimum should match
      * @param string|null $name               Optional query name
-     * @param int|null    $boost              Query boost
+     * @param float|null  $boost              Query boost
      */
     public function testCreateComplexParams(
         string $queryText,
         string $field,
         ?string $minimumShouldMatch,
         ?string $name,
-        ?int $boost
+        ?float $boost
     ): void {
         $queryParams = [
             'queryText' => $queryText,
@@ -139,7 +139,7 @@ class MatchQueryTest extends KernelTestCase
         if ($query->getName()) {
             $this->assertIsString($query->getName());
         }
-        $this->assertIsInt($query->getBoost());
+        $this->assertIsFloat($query->getBoost());
 
         /** @var MatchQuery $query */
         $this->assertIsString($query->getQueryText());

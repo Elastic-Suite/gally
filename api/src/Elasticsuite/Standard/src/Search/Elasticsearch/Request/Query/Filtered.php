@@ -25,7 +25,7 @@ class Filtered implements QueryInterface
 {
     private ?string $name;
 
-    private int $boost;
+    private float $boost;
 
     private ?QueryInterface $filter;
 
@@ -37,13 +37,13 @@ class Filtered implements QueryInterface
      * @param ?QueryInterface $query  Query part of the filtered query
      * @param ?QueryInterface $filter Filter part of the filtered query
      * @param ?string         $name   Query name
-     * @param int             $boost  Query boost
+     * @param float           $boost  Query boost
      */
     public function __construct(
         ?QueryInterface $query = null,
         ?QueryInterface $filter = null,
         ?string $name = null,
-        int $boost = QueryInterface::DEFAULT_BOOST_VALUE
+        float $boost = QueryInterface::DEFAULT_BOOST_VALUE
     ) {
         $this->name = $name;
         $this->boost = $boost;
@@ -62,7 +62,7 @@ class Filtered implements QueryInterface
     /**
      * {@inheritDoc}
      */
-    public function getBoost(): int
+    public function getBoost(): float
     {
         return $this->boost;
     }

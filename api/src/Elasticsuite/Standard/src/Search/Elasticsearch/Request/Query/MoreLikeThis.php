@@ -29,9 +29,9 @@ class MoreLikeThis implements QueryInterface
     public const DEFAULT_MINIMUM_SHOULD_MATCH = '1';
 
     /**
-     * @var int
+     * @var float
      */
-    public const DEFAULT_BOOST_TERMS = 1;
+    public const DEFAULT_BOOST_TERMS = 1.0;
 
     /**
      * @var int
@@ -55,7 +55,7 @@ class MoreLikeThis implements QueryInterface
 
     private ?string $name;
 
-    private int $boost;
+    private float $boost;
 
     private array $fields;
 
@@ -63,7 +63,7 @@ class MoreLikeThis implements QueryInterface
 
     private string $minimumShouldMatch;
 
-    private int $boostTerms;
+    private float $boostTerms;
 
     private int $minTermFreq;
 
@@ -84,27 +84,27 @@ class MoreLikeThis implements QueryInterface
      * @param array        $fields              used fields
      * @param array|string $like                MLT like clause (doc ids or query string)
      * @param string       $minimumShouldMatch  minimum should match in query generated
-     * @param int          $boostTerms          TF-IDF term boosting value
+     * @param float        $boostTerms          TF-IDF term boosting value
      * @param int          $minTermFreq         minimum term freq for a term to be considered
      * @param int          $minDocFreq          minimum doc freq for a term to be considered
      * @param int          $maxDocFreq          maximum doc freq for a term to be considered
      * @param int          $maxQueryTerms       maximum number of terms in generated queries
      * @param bool         $includeOriginalDocs whether to include original doc in the result set
      * @param ?string      $name                query name
-     * @param int          $boost               query boost
+     * @param float        $boost               query boost
      */
     public function __construct(
         array $fields,
         array|string $like,
         string $minimumShouldMatch = self::DEFAULT_MINIMUM_SHOULD_MATCH,
-        int $boostTerms = self::DEFAULT_BOOST_TERMS,
+        float $boostTerms = self::DEFAULT_BOOST_TERMS,
         int $minTermFreq = self::DEFAULT_MIN_TERM_FREQ,
         int $minDocFreq = self::DEFAULT_MIN_DOC_FREQ,
         int $maxDocFreq = self::DEFAULT_MAX_DOC_FREQ,
         int $maxQueryTerms = self::DEFAULT_MAX_QUERY_TERMS,
         bool $includeOriginalDocs = false,
         ?string $name = null,
-        int $boost = QueryInterface::DEFAULT_BOOST_VALUE
+        float $boost = QueryInterface::DEFAULT_BOOST_VALUE
     ) {
         $this->fields = $fields;
         $this->like = $like;
@@ -130,7 +130,7 @@ class MoreLikeThis implements QueryInterface
     /**
      * {@inheritDoc}
      */
-    public function getBoost(): int
+    public function getBoost(): float
     {
         return $this->boost;
     }
@@ -170,7 +170,7 @@ class MoreLikeThis implements QueryInterface
     /**
      * Value of the TF-IDF term boost.
      */
-    public function getBoostTerms(): int
+    public function getBoostTerms(): float
     {
         return $this->boostTerms;
     }

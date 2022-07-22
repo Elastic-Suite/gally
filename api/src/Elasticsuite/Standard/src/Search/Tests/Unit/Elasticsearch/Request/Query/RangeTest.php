@@ -62,13 +62,13 @@ class RangeTest extends KernelTestCase
      * @param string      $field  Query field
      * @param array       $bounds Range filter bounds (authorized entries : gt, lt, lte, gte)
      * @param string|null $name   Query name
-     * @param int|null    $boost  Query boost
+     * @param float|null  $boost  Query boost
      */
     public function testCreateComplexParams(
         string $field,
         array $bounds,
         ?string $name,
-        ?int $boost
+        ?float $boost
     ): void {
         // TODO: use reflection to build mapping ?
         $queryParams = [
@@ -141,7 +141,7 @@ class RangeTest extends KernelTestCase
         if ($query->getName()) {
             $this->assertIsString($query->getName());
         }
-        $this->assertIsInt($query->getBoost());
+        $this->assertIsFloat($query->getBoost());
 
         /** @var Range $query */
         $this->assertIsString($query->getField());

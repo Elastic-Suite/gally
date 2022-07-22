@@ -72,27 +72,27 @@ class MoreLikeThisTest extends KernelTestCase
      * @param array        $fields              used fields
      * @param array|string $like                MLT like clause (doc ids or query string)
      * @param string|null  $minimumShouldMatch  minimum should match
-     * @param int|null     $boostTerms          TF-IDF term boosting value
+     * @param float|null   $boostTerms          TF-IDF term boosting value
      * @param int|null     $minTermFreq         minimum term freq for a term to be considered
      * @param int|null     $minDocFreq          minimum doc freq for a term to be considered
      * @param int|null     $maxDocFreq          maximum doc freq for a term to be considered
      * @param int|null     $maxQueryTerms       maximum number of terms in generated queries
      * @param bool|null    $includeOriginalDocs whether to include original doc in the result set
      * @param string|null  $name                query name
-     * @param int|null     $boost               query boost
+     * @param float|null   $boost               query boost
      */
     public function testCreateComplexParams(
         array $fields,
         array|string $like,
         ?string $minimumShouldMatch,
-        ?int $boostTerms,
+        ?float $boostTerms,
         ?int $minTermFreq,
         ?int $minDocFreq,
         ?int $maxDocFreq,
         ?int $maxQueryTerms,
         ?bool $includeOriginalDocs,
         ?string $name,
-        ?int $boost
+        ?float $boost
     ): void {
         // TODO: use reflection to build mapping ?
         $queryParams = [
@@ -315,13 +315,13 @@ class MoreLikeThisTest extends KernelTestCase
         if ($query->getName()) {
             $this->assertIsString($query->getName());
         }
-        $this->assertIsInt($query->getBoost());
+        $this->assertIsFloat($query->getBoost());
 
         /** @var MoreLikeThis $query */
         $this->assertIsArray($query->getFields());
         $this->assertThat($query->getLike(), LogicalOr::fromConstraints(new IsType('string'), new IsType('array')));
 
-        $this->assertIsInt($query->getBoostTerms());
+        $this->assertIsFloat($query->getBoostTerms());
         $this->assertIsInt($query->getMinTermFreq());
         $this->assertIsInt($query->getMinDocFreq());
         $this->assertIsInt($query->getMaxDocFreq());

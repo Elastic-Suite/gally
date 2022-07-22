@@ -17,58 +17,52 @@ declare(strict_types=1);
 namespace Elasticsuite\Search\Elasticsearch\Builder\Request\Query;
 
 use Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder;
+use Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Fulltext\FulltextQueryBuilder;
 use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
 use Elasticsuite\Search\Elasticsearch\Request\QueryFactory;
 use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
-
-// use Elasticsuite\Search\Request\Query\Fulltext\QueryBuilder as FulltextQueryBuilder;
-// use Elasticsuite\Search\Request\Query\Filter\QueryBuilder as FilterQueryBuilder;
-// use Elasticsuite\Api\Search\Request\ContainerConfigurationInterface;
+use Elasticsuite\Search\Elasticsearch\SpellcheckerInterface;
 
 /**
  * Builder for query part of the search request.
  */
 class QueryBuilder
 {
-    // private FulltextQueryBuilder $fulltextQueryBuilder;
-
-    // private FilterQueryBuilder $filterQueryBuilder;
-
     /**
      * Constructor.
-     * TODO add support for $fulltextQueryBuilder and $filterQuerybuilder.
      *
      * @param QueryFactory $queryFactory Factory used to build sub-queries
      */
     public function __construct(
         private QueryFactory $queryFactory,
-//        FulltextQueryBuilder $fulltextQueryBuilder,
+        private FulltextQueryBuilder $fulltextQueryBuilder,
         private FilterQueryBuilder $filterQueryBuilder,
     ) {
     }
 
     /**
-     * Create a filtered query with an optional fulltext query part
-     * TODO add support for ContainerConfigureInterface, $filters and $spellingType.
+     * Create a filtered query with an optional fulltext query part.
      *
-     * @param ContainerConfigurationInterface $containerConfiguration Search request configuration
-     * @param string|QueryInterface|null      $query                  Search query
-     * @param array                           $filters                Filter part of the query
-     * @param ?int                            $spellingType           For fulltext query : the type of spellchecked applied
+     * @param ContainerConfigurationInterface  $containerConfiguration Search request configuration
+     * @param string|array|QueryInterface|null $query                  Search query
+     * @param array                            $filters                Filter part of the query
+     * @param int                              $spellingType           For fulltext query : the type of spellchecked applied
      */
-    public function createQuery(ContainerConfigurationInterface $containerConfiguration, string|null|QueryInterface $query, array $filters, $spellingType): QueryInterface
-    {
+    public function createQuery(
+        ContainerConfigurationInterface $containerConfiguration,
+        string|array|null|QueryInterface $query,
+        array $filters,
+        int $spellingType = SpellcheckerInterface::SPELLING_TYPE_EXACT
+    ): QueryInterface {
         $queryParams = [];
 
         if ($query) {
             if (\is_object($query)) {
                 $queryParams['query'] = $query;
             }
-            /*
-            if (is_string($query) || is_array($query)) {
+            if (\is_string($query) || \is_array($query)) {
                 $queryParams['query'] = $this->createFulltextQuery($containerConfiguration, $query, $spellingType);
             }
-            */
         }
 
         if (!empty($filters)) {
@@ -93,17 +87,16 @@ class QueryBuilder
      * Create a query from a search text query.
      *
      * @param ContainerConfigurationInterface $containerConfiguration Search request container configuration.
-     * @param string|null                     $queryText              Fulltext query.
-     * @param string                          $spellingType           For fulltext query : the type of spellchecked applied.
-     *
-     * @return QueryInterface
+     * @param string                     $queryText              Fulltext query.
+     * @param string                     $spellingType           For fulltext query : the type of spellchecked applied.
      */
-    /*
-    public function createFulltextQuery(ContainerConfigurationInterface $containerConfiguration, $queryText, $spellingType)
-    {
+    public function createFulltextQuery(
+        ContainerConfigurationInterface $containerConfiguration,
+        string $queryText,
+        int $spellingType
+    ): QueryInterface {
         return $this->fulltextQueryBuilder->create($containerConfiguration, $queryText, $spellingType);
     }
-    */
 
     /*
      * Create a query from filters passed as arguments.
@@ -112,11 +105,9 @@ class QueryBuilder
      *
      * @param ContainerConfigurationInterface $containerConfiguration Search request container configuration.
      * @param array                           $filters                Filters used to build the query.
-     *
-     * @return QueryInterface
      */
     /*
-    public function createFilters(ContainerConfigurationInterface $containerConfiguration, array $filters)
+    public function createFilters(ContainerConfigurationInterface $containerConfiguration, array $filters): QueryInterface
     {
         return $this->createFilterQuery($containerConfiguration, $filters);
     }

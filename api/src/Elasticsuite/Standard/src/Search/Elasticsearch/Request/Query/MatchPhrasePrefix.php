@@ -25,7 +25,7 @@ class MatchPhrasePrefix implements QueryInterface
 {
     private ?string $name;
 
-    private int $boost;
+    private float $boost;
 
     private string $queryText;
 
@@ -40,14 +40,14 @@ class MatchPhrasePrefix implements QueryInterface
      * @param string  $field         Query field
      * @param int     $maxExpansions Max expansions
      * @param ?string $name          Query name
-     * @param int     $boost         Query boost
+     * @param float   $boost         Query boost
      */
     public function __construct(
         string $queryText,
         string $field,
         int $maxExpansions = 10,
         ?string $name = null,
-        int $boost = QueryInterface::DEFAULT_BOOST_VALUE
+        float $boost = QueryInterface::DEFAULT_BOOST_VALUE
     ) {
         $this->name = $name;
         $this->queryText = $queryText;
@@ -67,7 +67,7 @@ class MatchPhrasePrefix implements QueryInterface
     /**
      * {@inheritDoc}
      */
-    public function getBoost(): int
+    public function getBoost(): float|null
     {
         return $this->boost;
     }
