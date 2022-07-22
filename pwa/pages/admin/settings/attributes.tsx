@@ -8,8 +8,8 @@ import { useApiFetch } from '~/hooks'
 import PageTile from '~/components/atoms/PageTitle/PageTitle'
 import PrimaryButton from '~/components/atoms/buttons/PrimaryButton'
 
-import ApiFilters from '~/components/stateful/ApiFilters/ApiFilters'
-import ApiTable from '~/components/stateful/ApiTable/ApiTable'
+import FiltersGuesser from '~/components/stateful/FiltersGuesser/FiltersGuesser'
+import TableGuesser from '~/components/stateful/TableGuesser/TableGuesser'
 
 function Attributes(): JSX.Element | string {
   const [sourceFields] =
@@ -36,8 +36,8 @@ function Attributes(): JSX.Element | string {
       <PageTile title={t('page.title')}>
         <PrimaryButton>{t('action.import')} (xlsx)</PrimaryButton>
       </PageTile>
-      <ApiFilters apiData={sourceFields.data} />
-      <ApiTable
+      <FiltersGuesser api={api} apiData={sourceFields.data} />
+      <TableGuesser
         api={api}
         apiData={sourceFields.data}
         onPageChange={handlePageChange}
