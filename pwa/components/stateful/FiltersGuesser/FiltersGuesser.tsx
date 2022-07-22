@@ -6,12 +6,13 @@ import { IFilter, IHydraMember, IHydraResponse } from '~/types'
 import Filters from '~/components/molecules/Filters/Filters'
 
 interface IProps<T extends IHydraMember> {
+  api: string
   apiData: IHydraResponse<T>
 }
 
-function ApiFilters<T extends IHydraMember>(props: IProps<T>): JSX.Element {
-  const { apiData } = props
-  const filters: IFilter[] = useApiFilters(apiData)
+function FiltersGuesser<T extends IHydraMember>(props: IProps<T>): JSX.Element {
+  const { api, apiData } = props
+  const filters: IFilter[] = useApiFilters(api, apiData)
 
   const initValues = useCallback(
     (): Record<string, unknown | unknown[]> =>
@@ -68,4 +69,4 @@ function ApiFilters<T extends IHydraMember>(props: IProps<T>): JSX.Element {
   )
 }
 
-export default ApiFilters
+export default FiltersGuesser

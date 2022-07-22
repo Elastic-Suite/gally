@@ -1,7 +1,6 @@
 import { MouseEvent } from 'react'
 
 import { IHydraMember, IHydraResponse, ITableRow } from '~/types'
-import { selectDocs, useAppSelector } from '~/store'
 
 import PagerTable from '~/components/organisms/PagerTable/PagerTable'
 import { useApiHeaders } from '~/hooks'
@@ -15,10 +14,9 @@ interface IProps<T extends IHydraMember> {
   ) => void
 }
 
-function ApiTable<T extends IHydraMember>(props: IProps<T>): JSX.Element {
+function TableGuesser<T extends IHydraMember>(props: IProps<T>): JSX.Element {
   const { api, apiData, onPageChange } = props
-  const docs = useAppSelector(selectDocs)
-  const tableHeaders = useApiHeaders(docs, api)
+  const tableHeaders = useApiHeaders(api)
 
   return (
     <PagerTable
@@ -34,4 +32,4 @@ function ApiTable<T extends IHydraMember>(props: IProps<T>): JSX.Element {
   )
 }
 
-export default ApiTable
+export default TableGuesser

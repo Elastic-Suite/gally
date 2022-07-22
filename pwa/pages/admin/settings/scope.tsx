@@ -5,7 +5,7 @@ import ActiveLocales from '~/components/molecules/layout/scope/ActiveLocales'
 import Catalogs from '~/components/molecules/layout/scope/Catalogs'
 import { ICatalog, IHydraResponse } from '~/types'
 import { useApiFetch } from '~/hooks'
-import { firstLetterUppercase } from '~/services/format'
+import { firstLetterUppercase } from '~/services'
 import { useTranslation } from 'next-i18next'
 
 function Scope(): JSX.Element | string {
