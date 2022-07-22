@@ -1,91 +1,54 @@
-import { IDocs } from '~/store'
-import {
-  DataContentType,
-  HydraPropertyType,
-  HydraType,
-  IDocsJsonOperation,
-  IFetch,
-  IHydraPropertyTypeObject,
-  IHydraPropertyTypeRef,
-  IHydraSupportedProperty,
-  Method,
-} from '~/types'
+import { Api, Field, Resource } from '@api-platform/api-doc-parser'
 
-import { getJsonldClassRef } from './jsonld'
+import { IHydraMember, IHydraResponse, IOptions } from '~/types'
 
-export function isRefProperty(
-  apiProperty: HydraPropertyType
-): apiProperty is IHydraPropertyTypeRef {
-  return '$ref' in apiProperty
+export function getResource(doc: Api, resourceName: string): Resource {
+  return doc.resources?.find((resource) => resource.name === resourceName)
 }
 
-export function getApiSchema(
-  docs: IFetch<IDocs>,
-  api: string,
-  verb: Lowercase<Method>
-): IDocsJsonOperation {
-  return docs.data.json?.paths?.[api]?.[verb]
-}
+// See https://github.com/api-platform/admin/blob/main/src/hydra/schemaAnalyzer.ts
+export function getFieldType(field: Field): string {
+  switch (field.id) {
+    case 'http://schema.org/identifier':
+      return field.range === 'http://www.w3.org/2001/XMLSchema#integer'
+        ? 'integer_id'
+        : 'id'
+    case 'http://schema.org/email':
+      return 'email'
+    case 'http://schema.org/url':
+      return 'url'
+    default:
+  }
 
-export function getApiProperties(
-  docs: IFetch<IDocs>,
-  api: string,
-  verb: Lowercase<Method>
-): HydraPropertyType {
-  const apiSchema = getApiSchema(docs, api, verb)
-  return apiSchema?.responses?.[200]?.content?.['application/ld+json'].schema
-}
+  if (field.embedded !== null && field.maxCardinality !== 1) {
+    return 'array'
+  }
 
-export function getApiProperty(
-  docs: IFetch<IDocs>,
-  api: string,
-  verb: Lowercase<Method>,
-  property = 'hydra:member'
-): HydraPropertyType {
-  const apiProperties = getApiProperties(
-    docs,
-    api,
-    verb
-  ) as IHydraPropertyTypeObject
-  return apiProperties?.properties?.[property]
-}
-
-export function getApiJsonldClass(
-  docs: IFetch<IDocs>,
-  api: string,
-  verb: Lowercase<Method>,
-  property = 'hydra:member'
-): IHydraSupportedProperty[] {
-  const apiProperty = getApiProperty(docs, api, verb, property)
-  if (isRefProperty(apiProperty)) {
-    return getJsonldClassRef(docs, apiProperty)
-  } else if (
-    apiProperty.type === HydraType.ARRAY &&
-    isRefProperty(apiProperty.items)
-  ) {
-    return getJsonldClassRef(docs, apiProperty.items)
+  switch (field.range) {
+    case 'http://www.w3.org/2001/XMLSchema#array':
+      return 'array'
+    case 'http://www.w3.org/2001/XMLSchema#integer':
+      return 'integer'
+    case 'http://www.w3.org/2001/XMLSchema#decimal':
+    case 'http://www.w3.org/2001/XMLSchema#float':
+      return 'float'
+    case 'http://www.w3.org/2001/XMLSchema#boolean':
+      return 'boolean'
+    case 'http://www.w3.org/2001/XMLSchema#date':
+      return 'date'
+    case 'http://www.w3.org/2001/XMLSchema#dateTime':
+      return 'dateTime'
+    default:
+      return 'text'
   }
 }
 
-export function getApiReadableProperties(
-  docs: IFetch<IDocs>,
-  api: string,
-  verb: Lowercase<Method>,
-  property = 'hydra:member'
-): IHydraSupportedProperty[] {
-  const hydraClass = getApiJsonldClass(docs, api, verb, property)
-  return hydraClass.filter(
-    (property) =>
-      property['hydra:readable'] &&
-      property['hydra:property']['@type'] !== 'hydra:Link'
-  )
-}
-
-export function getPropertyType(
-  property: IHydraSupportedProperty
-): DataContentType {
-  if (property['hydra:property']?.range === 'xmls:boolean') {
-    return DataContentType.BOOLEAN
-  }
-  return DataContentType.STRING
+export function getOptionsFromApi<T extends IHydraMember>(
+  response: IHydraResponse<T>
+): IOptions {
+  return response['hydra:member'].map((member) => ({
+    id: member.id,
+    label: member['@id'],
+    value: member.id,
+  }))
 }

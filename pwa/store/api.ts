@@ -1,40 +1,28 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { fetchApi } from '~/services'
-import { IDocsJson, IDocsJsonld, IFetch, LoadStatus } from '~/types'
+import { Api, parseHydraDocumentation } from '@api-platform/api-doc-parser'
+
+import { getApiUrl } from '~/services'
+import { IFetch, LoadStatus } from '~/types'
 
 import { IThunkApi, RootState } from './store'
 
-export interface IDocs {
-  json: IDocsJson
-  jsonld: IDocsJsonld
-}
-
 export interface IApiState {
-  docs: IFetch<IDocs>
+  doc: IFetch<Api>
 }
 
 const initialState: IApiState = {
-  docs: {
-    data: {
-      json: null,
-      jsonld: null,
-    },
+  doc: {
+    data: null,
     error: null,
     status: LoadStatus.IDLE,
   },
 }
 
-export const fetchDocs = createAsyncThunk<IDocs, void, IThunkApi>(
-  'api/docs.jsonld',
-  async (_, { getState }) => {
-    const {
-      i18n: { language },
-    } = getState()
-    const results = await Promise.all([
-      fetchApi<IDocsJson>(language, '/docs.json'),
-      fetchApi<IDocsJsonld>(language, '/docs.jsonld'),
-    ])
-    return { json: results[0], jsonld: results[1] }
+export const fetchDoc = createAsyncThunk<Api, void, IThunkApi>(
+  'api/doc',
+  async () => {
+    const { api } = await parseHydraDocumentation(getApiUrl())
+    return api
   }
 )
 
@@ -44,16 +32,16 @@ const apiSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(fetchDocs.pending, (state) => {
-        state.docs.status = LoadStatus.LOADING
+      .addCase(fetchDoc.pending, (state) => {
+        state.doc.status = LoadStatus.LOADING
       })
-      .addCase(fetchDocs.fulfilled, (state, action) => {
-        state.docs.status = LoadStatus.SUCCEEDED
-        state.docs.data = action.payload
+      .addCase(fetchDoc.fulfilled, (state, action) => {
+        state.doc.status = LoadStatus.SUCCEEDED
+        state.doc.data = action.payload
       })
-      .addCase(fetchDocs.rejected, (state, action) => {
-        state.docs.status = LoadStatus.FAILED
-        state.docs.error = action.error.message
+      .addCase(fetchDoc.rejected, (state, action) => {
+        state.doc.status = LoadStatus.FAILED
+        state.doc.error = action.error.message
       })
   },
 })
@@ -61,4 +49,4 @@ const apiSlice = createSlice({
 // export const { } = apiSlice.actions
 export const apiReducer = apiSlice.reducer
 
-export const selectDocs = (state: RootState): IFetch<IDocs> => state.api.docs
+export const selectDoc = (state: RootState): IFetch<Api> => state.api.doc

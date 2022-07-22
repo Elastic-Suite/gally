@@ -4,6 +4,10 @@ export function firstLetterUppercase(item: string): string {
   return item[0].toUpperCase() + item.slice(1)
 }
 
+export function firstLetterLowercase(item: string): string {
+  return item[0].toLowerCase() + item.slice(1)
+}
+
 export function humanize(label: string): string {
   return inflection.transform(label, ['underscore', 'humanize'])
 }

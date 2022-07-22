@@ -112,7 +112,7 @@ function Layout({ children }: IProps): JSX.Element {
   const { slug } = router.query
 
   // fetch menu
-  useApiDispatch(setMenu, '/menu')
+  useApiDispatch(setMenu, 'menu')
 
   useEffect(() => {
     dispatch(

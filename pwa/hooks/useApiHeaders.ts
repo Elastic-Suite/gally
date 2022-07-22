@@ -1,16 +1,15 @@
 import { useMemo } from 'react'
 import { useTranslation } from 'next-i18next'
+import { Resource } from '@api-platform/api-doc-parser'
 
-import { getApiReadableProperties, getPropertyHeader } from '~/services'
+import { getFieldHeader } from '~/services'
 import { ITableHeader } from '~/types'
-import { selectDocs, useAppSelector } from '~/store'
 
-export function useApiHeaders(api: string): ITableHeader[] {
+export function useApiHeaders(resource: Resource): ITableHeader[] {
   const { t } = useTranslation('api')
-  const docs = useAppSelector(selectDocs)
-
   return useMemo(() => {
-    const properties = getApiReadableProperties(docs, api, 'get')
-    return properties.map((property) => getPropertyHeader(property, t))
-  }, [api, docs, t])
+    return resource.readableFields
+      .filter((field) => !field.reference)
+      .map((field) => getFieldHeader(field, t))
+  }, [resource, t])
 }

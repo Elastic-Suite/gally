@@ -1,6 +1,6 @@
 import { ReactNode, useEffect } from 'react'
 
-import { fetchDocs, selectDocs, useAppDispatch, useAppSelector } from '~/store'
+import { fetchDoc, selectDoc, useAppDispatch, useAppSelector } from '~/store'
 import { LoadStatus } from '~/types'
 
 interface IProps {
@@ -10,17 +10,17 @@ interface IProps {
 function DocsLoader(props: IProps): JSX.Element {
   const { children } = props
   const dispatch = useAppDispatch()
-  const docs = useAppSelector(selectDocs)
+  const doc = useAppSelector(selectDoc)
 
   useEffect(() => {
-    if (docs.status === LoadStatus.IDLE) {
-      dispatch(fetchDocs())
+    if (doc.status === LoadStatus.IDLE) {
+      dispatch(fetchDoc())
     }
-  }, [dispatch, docs.status])
+  }, [dispatch, doc.status])
 
-  if (docs.error) {
-    return <>{docs.error.toString()}</>
-  } else if (!docs.data.json && !docs.data.jsonld) {
+  if (doc.error) {
+    return <>{doc.error.toString()}</>
+  } else if (!doc.data) {
     return null
   }
 

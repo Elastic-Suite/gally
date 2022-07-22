@@ -1,1 +1,1 @@
-export const booleanRegexp = /^is[A-Z]/
+export const booleanRegexp = /^is([A-Z][a-zA-Z]+)/

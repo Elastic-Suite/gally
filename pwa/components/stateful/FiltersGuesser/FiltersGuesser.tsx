@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react'
+import { Resource } from '@api-platform/api-doc-parser'
 
 import { useApiFilters } from '~/hooks'
 import { IFilter, IHydraMember, IHydraResponse } from '~/types'
@@ -6,13 +7,14 @@ import { IFilter, IHydraMember, IHydraResponse } from '~/types'
 import Filters from '~/components/molecules/Filters/Filters'
 
 interface IProps<T extends IHydraMember> {
-  api: string
   apiData: IHydraResponse<T>
+  resource: Resource
 }
 
 function FiltersGuesser<T extends IHydraMember>(props: IProps<T>): JSX.Element {
-  const { api, apiData } = props
-  const filters: IFilter[] = useApiFilters(api, apiData)
+  const { apiData, resource } = props
+  const filters: IFilter[] = useApiFilters(apiData, resource)
+  console.log(filters)
 
   const initValues = useCallback(
     (): Record<string, unknown | unknown[]> =>

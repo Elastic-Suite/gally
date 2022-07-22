@@ -1,6 +1,6 @@
 export interface IOption {
   disabled?: boolean
-  id?: string
+  id?: string | number
   label: string
   value: unknown
 }

@@ -1,6 +1,7 @@
 import { IHydraMember } from './hydra'
 
 export interface ISourceField extends IHydraMember {
+  code: string
   defaultLabel?: string
   filterable?: boolean
   labels?: string[]
