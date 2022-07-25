@@ -8,8 +8,8 @@ interface IProps {
   setTableRows: (arr: ITableRow[]) => void
   tableHeaders: ITableHeader[]
   withSelection: boolean
-  selectedRows: string[]
-  setSelectedRows: (arr: string[]) => void
+  selectedRows: (string | number)[]
+  setSelectedRows: (arr: (string | number)[]) => void
   cSSLeftValues: number[]
   isHorizontalOverflow: boolean
   shadow: boolean
@@ -47,7 +47,7 @@ function DraggableBody(props: IProps): JSX.Element {
           {tableRows.map((tableRow, index) => (
             <Draggable
               key={tableRow.id}
-              draggableId={tableRow.id}
+              draggableId={String(tableRow.id)}
               index={index}
             >
               {(provider): JSX.Element => (

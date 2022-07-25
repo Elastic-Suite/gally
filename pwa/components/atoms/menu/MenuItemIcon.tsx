@@ -32,17 +32,18 @@ const CustomIndicatorLineActive = styled('div')(({ theme }) => ({
   borderRadius: '5px 0px 0px 5px',
 }))
 
-const CustomNoChildHover = styled(CustomRoot)<{ sidebarState: boolean }>(
-  ({ theme, sidebarState }) => ({
-    width: sidebarState ? '100%' : 'fit-content',
-    '&:hover': {
-      background: theme.palette.menu.hover,
-      borderRadius: 8,
-    },
-    gap: sidebarState ? theme.spacing(2) : 0,
-    marginRight: sidebarState && theme.spacing(2),
-  })
-)
+const customNoChildHoverProps = ['sidebarState']
+const CustomNoChildHover = styled(CustomRoot, {
+  shouldForwardProp: (prop: string) => !customNoChildHoverProps.includes(prop),
+})<{ sidebarState: boolean }>(({ theme, sidebarState }) => ({
+  width: sidebarState ? '100%' : 'fit-content',
+  '&:hover': {
+    background: theme.palette.menu.hover,
+    borderRadius: 8,
+  },
+  gap: sidebarState ? theme.spacing(2) : 0,
+  marginRight: sidebarState && theme.spacing(2),
+}))
 
 const opacityFullDeux = keyframes`
   0% { opacity: 0 },

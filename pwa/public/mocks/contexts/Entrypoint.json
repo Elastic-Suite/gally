@@ -1,0 +1,49 @@
+{
+  "@context": {
+    "@vocab": "http://localhost:3000/mocks/docs.jsonld#",
+    "hydra": "http://www.w3.org/ns/hydra/core#",
+    "index": { "@id": "Entrypoint/index", "@type": "@id" },
+    "mappingStatus": { "@id": "Entrypoint/mappingStatus", "@type": "@id" },
+    "indexDocument": { "@id": "Entrypoint/indexDocument", "@type": "@id" },
+    "sourceFieldOption": {
+      "@id": "Entrypoint/sourceFieldOption",
+      "@type": "@id"
+    },
+    "sourceField": { "@id": "Entrypoint/sourceField", "@type": "@id" },
+    "sourceFieldOptionLabel": {
+      "@id": "Entrypoint/sourceFieldOptionLabel",
+      "@type": "@id"
+    },
+    "metadata": { "@id": "Entrypoint/metadata", "@type": "@id" },
+    "sourceFieldLabel": {
+      "@id": "Entrypoint/sourceFieldLabel",
+      "@type": "@id"
+    },
+    "catalog": { "@id": "Entrypoint/catalog", "@type": "@id" },
+    "localizedCatalog": {
+      "@id": "Entrypoint/localizedCatalog",
+      "@type": "@id"
+    },
+    "authentication": { "@id": "Entrypoint/authentication", "@type": "@id" },
+    "menu": { "@id": "Entrypoint/menu", "@type": "@id" },
+    "facetConfiguration": {
+      "@id": "Entrypoint/facetConfiguration",
+      "@type": "@id"
+    },
+    "document": { "@id": "Entrypoint/document", "@type": "@id" },
+    "category": { "@id": "Entrypoint/category", "@type": "@id" },
+    "product": { "@id": "Entrypoint/product", "@type": "@id" },
+    "exampleDocument": { "@id": "Entrypoint/exampleDocument", "@type": "@id" },
+    "exampleProduct": { "@id": "Entrypoint/exampleProduct", "@type": "@id" },
+    "exampleCategory": { "@id": "Entrypoint/exampleCategory", "@type": "@id" },
+    "exampleIndex": { "@id": "Entrypoint/exampleIndex", "@type": "@id" },
+    "exampleResultDocument": {
+      "@id": "Entrypoint/exampleResultDocument",
+      "@type": "@id"
+    },
+    "declarativeGreeting": {
+      "@id": "Entrypoint/declarativeGreeting",
+      "@type": "@id"
+    }
+  }
+}

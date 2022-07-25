@@ -49,6 +49,7 @@ export const StickyTableCell = styled(BaseTableCell)({
 
 export function stickyBorderStyle(shadow: boolean): IStickyBorderStyle {
   return {
+    borderBottomColor: 'colors.neutral.300',
     borderRight: '2px solid',
     borderRightColor: 'colors.neutral.600',
     ...(shadow && {

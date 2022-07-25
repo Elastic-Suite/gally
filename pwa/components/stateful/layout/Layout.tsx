@@ -19,7 +19,7 @@ import {
 import AppBar from '~/components/molecules/layout/appBar/AppBar'
 import Sidebar from '~/components/molecules/layout/Sidebar/Sidebar'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
-import { useApiDispatch } from '~/hooks/useApi'
+import { useApiDispatch } from '~/hooks'
 
 /*
  * TODO: THIBO: Update AppBar
@@ -48,12 +48,12 @@ const CustomContentWithAppBar = styled('div')({
   flexDirection: 'column',
   flexGrow: 1,
   width: 'auto',
-  borderRight: '1px solid #E2E6F3',
   boxSizing: 'border-box',
   height: '100vh',
   overflowY: 'scroll',
   position: 'fixed',
   top: '0',
+  right: '0',
   scrollbarWidth: 'none',
   '&::-webkit-scrollbar': {
     width: 0,
@@ -64,9 +64,11 @@ const CustomContent = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   flexGrow: 2,
-  marginTop: theme.spacing(8),
+  paddingTop: '156px',
+  paddingBottom: theme.spacing(5),
   paddingLeft: theme.spacing(4),
   paddingRight: theme.spacing(4),
+  backgroundColor: theme.palette.background.page,
 }))
 
 const CustomButtonCollapse = styled('button')(({ theme }) => ({
@@ -110,7 +112,7 @@ function Layout({ children }: IProps): JSX.Element {
   const { slug } = router.query
 
   // fetch menu
-  useApiDispatch(setMenu, '/menu')
+  useApiDispatch(setMenu, 'menu')
 
   useEffect(() => {
     dispatch(

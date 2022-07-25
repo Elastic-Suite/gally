@@ -53,6 +53,10 @@ function CustomTableHeader(props: IProps): JSX.Element {
           <StickyTableCell
             sx={{
               minWidth: `${reorderingColumnWidth}px`,
+              borderBottomColor: 'colors.neutral.300',
+              borderTopColor: 'colors.neutral.300',
+              borderTopWidth: '1px',
+              borderTopStyle: 'solid',
               backgroundColor: 'neutral.light',
               ...(!isOnlyDraggable && { borderRight: 'none' }),
               ...(isOnlyDraggable &&
@@ -67,6 +71,10 @@ function CustomTableHeader(props: IProps): JSX.Element {
         {Boolean(withSelection) && (
           <StickyTableCell
             sx={{
+              borderBottomColor: 'colors.neutral.300',
+              borderTopColor: 'colors.neutral.300',
+              borderTopWidth: '1px',
+              borderTopStyle: 'solid',
               backgroundColor: 'neutral.light',
               width: `${selectionColumnWidth}px`,
               minWidth: `${selectionColumnWidth}px`,
@@ -90,13 +98,15 @@ function CustomTableHeader(props: IProps): JSX.Element {
             key={stickyHeader.field}
             sx={{
               left: `${CSSLeftValuesIterator.next().value[1]}px`,
+              borderBottomColor: 'colors.neutral.300',
+              borderTopColor: 'colors.neutral.300',
+              borderTopWidth: '1px',
+              borderTopStyle: 'solid',
               backgroundColor: 'neutral.light',
               zIndex: '1',
               minWidth: `${stickyColunWidth}px`,
               borderLeft: 'none',
-              ...(stickyHeader.isLastSticky && {
-                ...stickyBorderStyle(shadow),
-              }),
+              ...(stickyHeader.isLastSticky && stickyBorderStyle(shadow)),
             }}
           >
             {stickyHeader.headerName}
@@ -108,7 +118,11 @@ function CustomTableHeader(props: IProps): JSX.Element {
           .map((header) => (
             <BaseTableCell
               sx={{
-                backgroundColor: 'neutral-light',
+                borderBottomColor: 'colors.neutral.300',
+                borderTopColor: 'colors.neutral.300',
+                borderTopWidth: '1px',
+                borderTopStyle: 'solid',
+                backgroundColor: 'neutral.light',
                 whiteSpace: 'nowrap',
               }}
               key={header.field}

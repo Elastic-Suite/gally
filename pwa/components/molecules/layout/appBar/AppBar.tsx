@@ -16,7 +16,7 @@ const CustomRoot = styled('div')(({ theme }) => ({
   right: 0,
   zIndex: '9',
   height: theme.spacing(8),
-  backgroundColor: theme.palette.colors.neutral['100'],
+  backgroundColor: theme.palette.background.page,
   left: 'inherit',
   '&::before': {
     content: '""',
