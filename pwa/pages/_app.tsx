@@ -5,7 +5,6 @@ import Head from 'next/head'
 import Script from 'next/script'
 import { appWithTranslation, useTranslation } from 'next-i18next'
 
-import AppProvider from '~/components/AppProvider'
 import DocsLoader from '~/components/stateful/DocsLoader/DocsLoader'
 import nextI18nConfig from '~/next-i18next.config'
 import { setLanguage, setupStore } from '~/store'
@@ -40,13 +39,11 @@ function MyApp(props: AppProps): JSX.Element {
         <title>Blink Admin</title>
       </Head>
 
-      <AppProvider store={store}>
-        <DocsLoader>
-          <Layout>
-            <Cmp {...pageProps} />
-          </Layout>
-        </DocsLoader>
-      </AppProvider>
+      <DocsLoader store={store}>
+        <Layout>
+          <Cmp {...pageProps} />
+        </Layout>
+      </DocsLoader>
       <Script
         type="module"
         src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js"

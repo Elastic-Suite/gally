@@ -1,28 +1,17 @@
-import { ReactNode, useEffect, useState } from 'react'
-import { Api, parseHydraDocumentation } from '@api-platform/api-doc-parser'
+import { ReactChild } from 'react'
 
-import { resourcesContext } from '~/contexts'
-import { getApiUrl } from '~/services'
-import { IFetch, LoadStatus } from '~/types'
+import AppProvider from '~/components/AppProvider'
+import { AppStore } from '~/store'
+import { useDocLoader } from '~/hooks'
 
 interface IProps {
-  children: ReactNode
+  children: ReactChild
+  store: AppStore
 }
 
 function DocsLoader(props: IProps): JSX.Element {
-  const { children } = props
-  const [api, setApi] = useState<IFetch<Api>>({
-    status: LoadStatus.IDLE,
-  })
-
-  useEffect(() => {
-    if (api.status === LoadStatus.IDLE) {
-      setApi({ status: LoadStatus.LOADING })
-      parseHydraDocumentation(getApiUrl())
-        .then(({ api }) => setApi({ status: LoadStatus.SUCCEEDED, data: api }))
-        .catch((error) => setApi({ error, status: LoadStatus.FAILED }))
-    }
-  }, [api.status])
+  const { children, store } = props
+  const api = useDocLoader()
 
   if (api.error) {
     return <>{api.error.toString()}</>
@@ -31,9 +20,9 @@ function DocsLoader(props: IProps): JSX.Element {
   }
 
   return (
-    <resourcesContext.Provider value={api.data}>
+    <AppProvider api={api.data} store={store}>
       {children}
-    </resourcesContext.Provider>
+    </AppProvider>
   )
 }
 
