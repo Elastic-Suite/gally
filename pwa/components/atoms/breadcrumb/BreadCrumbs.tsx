@@ -1,5 +1,4 @@
-import Breadcrumbs from '@mui/material/Breadcrumbs'
-import Typography from '@mui/material/Typography'
+import { Breadcrumbs, Typography } from '@mui/material'
 import { styled } from '@mui/system'
 import { IMenu, IMenuChild } from '~/store'
 

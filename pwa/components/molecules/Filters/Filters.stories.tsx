@@ -1,7 +1,8 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { useCallback, useEffect, useState } from 'react'
 
-import { FilterType, IFilter } from './Filter'
+import { FilterType, IFilter } from '~/types'
+
 import Filters from './Filters'
 
 export default {

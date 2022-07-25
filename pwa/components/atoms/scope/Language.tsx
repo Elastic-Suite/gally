@@ -1,6 +1,6 @@
 import { styled } from '@mui/material/styles'
 import PopInCatalogs from './PopInCatalogs'
-import { firstLetterUppercase } from '~/services/format'
+import { firstLetterUppercase } from '~/services'
 import { ICatalog } from '~/types'
 
 const CustomRoot = styled('div')(({ theme }) => ({

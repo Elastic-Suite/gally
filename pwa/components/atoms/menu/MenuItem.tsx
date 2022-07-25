@@ -1,4 +1,4 @@
-import Collapse from '@mui/material/Collapse'
+import { Collapse } from '@mui/material'
 import Link from 'next/link'
 import { keyframes, styled } from '@mui/system'
 import { IMenuChild } from '~/store'
@@ -127,18 +127,18 @@ const CustomIndicatorLineActiveTwo = styled('div')(({ theme }) => ({
 }))
 
 const heightZero = keyframes`
-  0% { 
-    height: 'auto'; 
-    opacity: 1 
+  0% {
+    height: 'auto';
+    opacity: 1
   },
 
-  20% { 
-    height: 'auto'; 
+  20% {
+    height: 'auto';
     opacity: 0
   },
 
-  100% { 
-    height: 0; 
+  100% {
+    height: 0;
     opacity: 0
   },
 `
@@ -150,12 +150,12 @@ const CustomHeightZero = styled('div')({
 })
 
 const opacityFull = keyframes`
-  from { 
-    opacity: 0 
+  from {
+    opacity: 0
   },
 
   to {
-    opacity: 1 
+    opacity: 1
   },
 `
 

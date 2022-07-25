@@ -50,6 +50,7 @@ export function stickyStyle(
     zIndex: '1',
     minWidth: `${stickyColunWidth}px`,
     left: `${leftValue}px`,
+    borderBottomColor: 'colors.neutral.300',
     backgroundColor: 'colors.white',
     ...(isLastSticky && stickyBorderStyle(shadow)),
     ...(type === DataContentType.DROPDOWN && { overflow: 'visible' }),
@@ -64,6 +65,7 @@ export function selectionStyle(
 ): ISelectionStyle {
   return {
     left: `${leftValue}px`,
+    borderBottomColor: 'colors.neutral.300',
     backgroundColor: 'colors.white',
     zIndex: '1',
     ...(isHorizontalOverflow &&
@@ -75,6 +77,7 @@ export function selectionStyle(
 export function nonStickyStyle(type: DataContentType): INonStickyStyle {
   return {
     backgroundColor: 'colors.white',
+    borderBottomColor: 'colors.neutral.300',
     ...(type === DataContentType.DROPDOWN && { overflow: 'visible' }),
   }
 }

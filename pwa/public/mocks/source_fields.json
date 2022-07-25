@@ -1,0 +1,122 @@
+{
+  "@context": "/contexts/SourceField",
+  "@id": "/source_fields",
+  "@type": "hydra:Collection",
+  "hydra:member": [
+    {
+      "@id": "/source_fields/1",
+      "@type": "SourceField",
+      "id": 1,
+      "code": "name",
+      "defaultLabel": "Name",
+      "type": "text",
+      "weight": 10,
+      "metadata": "/metadata/1",
+      "labels": ["/source_field_labels/1", "/source_field_labels/2"],
+      "options": [],
+      "searchable": true,
+      "filterable": false,
+      "sortable": false,
+      "spellchecked": false,
+      "usedForRules": false,
+      "system": false
+    },
+    {
+      "@id": "/source_fields/2",
+      "@type": "SourceField",
+      "id": 2,
+      "code": "name",
+      "defaultLabel": "Name",
+      "type": "text",
+      "weight": 10,
+      "metadata": "/metadata/2",
+      "labels": [],
+      "options": [],
+      "searchable": false,
+      "filterable": false,
+      "sortable": false,
+      "spellchecked": false,
+      "usedForRules": false,
+      "system": false
+    },
+    {
+      "@id": "/source_fields/3",
+      "@type": "SourceField",
+      "id": 3,
+      "code": "price",
+      "defaultLabel": "Price",
+      "type": "price",
+      "metadata": "/metadata/1",
+      "labels": [],
+      "options": [],
+      "system": false
+    },
+    {
+      "@id": "/source_fields/4",
+      "@type": "SourceField",
+      "id": 4,
+      "code": "brand",
+      "defaultLabel": "Brand",
+      "type": "select",
+      "metadata": "/metadata/1",
+      "labels": [],
+      "options": [
+        "/source_field_options/1",
+        "/source_field_options/2",
+        "/source_field_options/3",
+        "/source_field_options/4"
+      ],
+      "system": false
+    }
+  ],
+  "hydra:totalItems": 4,
+  "hydra:search": {
+    "@type": "hydra:IriTemplate",
+    "hydra:template": "/source_fields{?isSearchable,isFilterable,code,defaultLabel,type,metadata,metadata[]}",
+    "hydra:variableRepresentation": "BasicRepresentation",
+    "hydra:mapping": [
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "isSearchable",
+        "property": "isSearchable",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "isFilterable",
+        "property": "isFilterable",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "code",
+        "property": "code",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "defaultLabel",
+        "property": "defaultLabel",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "type",
+        "property": "type",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "metadata",
+        "property": "metadata",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "metadata[]",
+        "property": "metadata",
+        "required": false
+      }
+    ]
+  }
+}

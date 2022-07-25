@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 import InputTextComponent from './InputText'
-import InputAdornment from '@mui/material/InputAdornment'
+import { InputAdornment } from '@mui/material'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 
 export default {

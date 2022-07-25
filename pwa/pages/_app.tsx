@@ -5,7 +5,7 @@ import Head from 'next/head'
 import Script from 'next/script'
 import { appWithTranslation, useTranslation } from 'next-i18next'
 
-import AppProvider from '~/components/AppProvider'
+import DocsLoader from '~/components/stateful/DocsLoader/DocsLoader'
 import nextI18nConfig from '~/next-i18next.config'
 import { setLanguage, setupStore } from '~/store'
 
@@ -25,6 +25,8 @@ function MyApp(props: AppProps): JSX.Element {
   const store = setupStore()
 
   const { i18n } = useTranslation('common')
+
+  // Set language
   useEffect(() => {
     if (i18n.language) {
       setLanguage(i18n.language)
@@ -37,11 +39,11 @@ function MyApp(props: AppProps): JSX.Element {
         <title>Blink Admin</title>
       </Head>
 
-      <AppProvider store={store}>
+      <DocsLoader store={store}>
         <Layout>
           <Cmp {...pageProps} />
         </Layout>
-      </AppProvider>
+      </DocsLoader>
       <Script
         type="module"
         src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js"

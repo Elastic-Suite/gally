@@ -19,8 +19,8 @@ interface IProps {
   updateRow: (row: ITableRow) => void
   tableHeaders: ITableHeader[]
   withSelection: boolean
-  selectedRows: string[]
-  setSelectedRows: (arr: string[]) => void
+  selectedRows: (string | number)[]
+  setSelectedRows: (arr: (string | number)[]) => void
   cSSLeftValuesIterator: IterableIterator<[number, number]>
   isHorizontalOverflow: boolean
   shadow: boolean
