@@ -1,10 +1,10 @@
-import { useMemo } from 'react'
+import { useContext, useMemo } from 'react'
 import { Resource } from '@api-platform/api-doc-parser'
 
+import { resourcesContext } from '~/contexts'
 import { getResource } from '~/services'
-import { selectDoc, useAppSelector } from '~/store'
 
 export function useResource(resourceName: string): Resource {
-  const doc = useAppSelector(selectDoc)
-  return useMemo(() => getResource(doc.data, resourceName), [doc, resourceName])
+  const api = useContext(resourcesContext)
+  return useMemo(() => getResource(api, resourceName), [api, resourceName])
 }
