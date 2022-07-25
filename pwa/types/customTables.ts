@@ -22,6 +22,7 @@ export interface IBaseStyle {
 }
 
 export interface INonStickyStyle {
+  borderBottomColor: string
   backgroundColor: string
   overflow?: string
 }
@@ -42,6 +43,7 @@ export interface IDraggableColumnStyle extends IBaseStyle {
 }
 
 export interface IStickyBorderStyle {
+  borderBottomColor: string
   borderRight: string
   borderRightColor: string
   boxShadow?: string
