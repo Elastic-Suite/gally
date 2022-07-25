@@ -61,6 +61,7 @@ function DraggableRow(props: IProps): JSX.Element {
     >
       <StickyTableCell
         sx={{
+          borderBottomColor: 'colors.neutral.300',
           '&:hover': {
             color: 'colors.neutral.500',
             cursor: 'default',
