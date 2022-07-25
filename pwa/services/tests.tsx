@@ -4,6 +4,7 @@ import { PreloadedState } from '@reduxjs/toolkit'
 import { ReactChild } from 'react'
 
 import AppProvider from '~/components/AppProvider'
+import { api } from '~/mocks'
 import { AppStore, RootState, setupStore } from '~/store'
 
 export interface IExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
@@ -25,7 +26,11 @@ export function renderWithProviders(
   }: IExtendedRenderOptions = {}
 ) {
   function Wrapper({ children }: { children: ReactChild }): JSX.Element {
-    return <AppProvider store={store}>{children}</AppProvider>
+    return (
+      <AppProvider api={api} store={store}>
+        {children}
+      </AppProvider>
+    )
   }
   return { store, ...render(ui, { wrapper: Wrapper, ...renderOptions }) }
 }
@@ -41,7 +46,11 @@ export function renderHookWithProviders<R>(
   }: IExtendedRenderOptions = {}
 ) {
   function Wrapper({ children }: { children: ReactChild }): JSX.Element {
-    return <AppProvider store={store}>{children}</AppProvider>
+    return (
+      <AppProvider api={api} store={store}>
+        {children}
+      </AppProvider>
+    )
   }
   return { store, ...renderHook(hook, { wrapper: Wrapper, ...renderOptions }) }
 }
