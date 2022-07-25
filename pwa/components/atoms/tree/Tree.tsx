@@ -71,6 +71,7 @@ const CustomContainer = styled('div')({
   display: 'flex',
   alignItems: 'center',
   gap: '4px',
+  height: '24px',
 })
 
 const CustomVirtual = styled('span')(({ theme }) => ({
@@ -121,12 +122,14 @@ const CustomLink = styled('a')({
 })
 
 interface ITreeItem {
-  id: number
-  isVirtual: boolean
-  name: string
-  path: string
+  catalogCode?: string
+  catalogName?: string
+  categories?: ITreeItem[]
+  isVirtual?: boolean
+  name?: string
+  path?: string
+  id?: string
   children?: ITreeItem[]
-  level: number
 }
 
 interface IProps {
@@ -141,27 +144,38 @@ function Tree({ data }: IProps): JSX.Element {
   return (
     <CustomRoot>
       {data.map((item: ITreeItem) => {
-        const Title = item.level === 1 ? CustomTitleBase : CustomTitle
+        const Title = item.categories ? CustomTitleBase : CustomTitle
         return (
           <CustomLi
-            style={{ marginLeft: item.level === 1 ? 0 : 20 }}
-            key={item.id}
+            style={{ marginLeft: item.categories ? 0 : 20 }}
+            key={item.catalogCode ? item.catalogCode : item.id}
           >
             <CustomContainer
               style={{
-                marginLeft: item.level === 1 ? 0 : item.children ? 0 : 20,
+                marginLeft: item.categories ? 0 : item.children ? 0 : 20,
               }}
             >
-              {item.children ? (
+              {item.children || item.categories ? (
                 <CustomBtn
                   onClick={(): void => {
                     setDisplayChildren({
                       ...displayChildren,
-                      [item.id]: !displayChildren[item.id],
+                      [item.catalogCode ? item.catalogCode : item.id]:
+                        !displayChildren[
+                          item.catalogCode ? item.catalogCode : item.id
+                        ],
                     })
                   }}
                 >
-                  <IonIcon name={displayChildren[item.id] ? 'minus' : 'more'} />
+                  <IonIcon
+                    name={
+                      displayChildren[
+                        item.catalogCode ? item.catalogCode : item.id
+                      ]
+                        ? 'minus'
+                        : 'more'
+                    }
+                  />
                 </CustomBtn>
               ) : null}
               <CustomBtnTitle>
@@ -169,12 +183,17 @@ function Tree({ data }: IProps): JSX.Element {
                   onClick={(): void => {
                     setDisplayChildren({
                       ...displayChildren,
-                      [item.id]: !displayChildren[item.id],
+                      [item.catalogCode ? item.catalogCode : item.id]:
+                        !displayChildren[
+                          item.catalogCode ? item.catalogCode : item.id
+                        ],
                     })
                   }}
                 >
-                  {!item.children ? (
+                  {!item.children && !item.categories ? (
                     <CustomLink href={item.path}>{item.name}</CustomLink>
+                  ) : item.catalogName ? (
+                    item.catalogName
                   ) : (
                     item.name
                   )}
@@ -182,8 +201,13 @@ function Tree({ data }: IProps): JSX.Element {
                 {item.isVirtual ? <CustomVirtual>virtual</CustomVirtual> : null}
               </CustomBtnTitle>
             </CustomContainer>
-            {displayChildren[item.id] && item.children ? (
-              <Tree data={item.children} />
+            {displayChildren[item.catalogCode ? item.catalogCode : item.id] &&
+            (item.children || item.categories) ? (
+              item.categories ? (
+                <Tree data={item.categories} />
+              ) : (
+                <Tree data={item.children} />
+              )
             ) : null}
           </CustomLi>
         )

@@ -1,100 +1,59 @@
-[
-  {
-    "id": "1",
-    "name": "Categ 1",
-    "level": 1,
-    "path": "1",
-    "isVirtual": false,
-    "children": [
+{
+  "data": {
+    "categoryTrees": [
       {
-        "id": "11",
-        "name": "Categ 11",
-        "level": 2,
-        "path": "1/11",
-        "isVirtual": true
-      },
-      {
-        "id": "12",
-        "name": "Categ 12",
-        "level": 2,
-        "path": "1/12",
-        "isVirtual": true
-      }
-    ]
-  },
-  {
-    "id": "2",
-    "name": "Categ 2",
-    "level": 1,
-    "path": "2",
-    "isVirtual": false,
-    "children": [
-      {
-        "id": "21",
-        "name": "Categ 21",
-        "level": 2,
-        "path": "1/21",
-        "isVirtual": true,
-        "children": [
+        "catalogCode": "com_fr",
+        "catalogName": "COM French Catalog",
+        "categories": [
           {
-            "id": "212",
-            "name": "Categ 212",
-            "level": 3,
-            "path": "1/21/212",
-            "isVirtual": true
-          },
-          {
-            "id": "211",
-            "name": "Categ 211",
-            "level": 3,
-            "path": "1/21/211",
+            "id": "one",
+            "name": "Category One",
+            "level": 1,
+            "path": "1",
             "isVirtual": false,
-
             "children": [
               {
-                "id": "2111",
-                "name": "Categ 2111",
-                "level": 4,
-                "path": "1/21/211/2111",
-                "isVirtual": true
+                "id": "three",
+                "name": "Category Three",
+                "level": 2,
+                "path": "1/3",
+                "isVirtual": false,
+                "children": [
+                  {
+                    "id": "threeThree",
+                    "name": "Category Three",
+                    "level": 2,
+                    "path": "1/3",
+                    "isVirtual": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "catalogCode": "com_en",
+        "catalogName": "COM English Catalog",
+        "categories": [
+          {
+            "id": "one",
+            "name": "Category One",
+            "level": 1,
+            "path": "1",
+            "isVirtual": false,
+            "children": [
+              {
+                "id": "three",
+                "name": "Category Three",
+                "level": 2,
+                "path": "1/3",
+                "isVirtual": false
               }
             ]
           }
         ]
       }
     ]
-  },
-  {
-    "id": "3",
-    "name": "Categ 3",
-    "level": 1,
-    "path": "3",
-    "isVirtual": false,
-    "children": [
-      {
-        "id": "212",
-        "name": "Categ 212",
-        "level": 3,
-        "path": "1/21/212",
-        "isVirtual": true
-      },
-      {
-        "id": "211",
-        "name": "Categ 211",
-        "level": 3,
-        "path": "1/21/211",
-        "isVirtual": false,
-
-        "children": [
-          {
-            "id": "2111",
-            "name": "Categ 2111",
-            "level": 4,
-            "path": "1/21/211/2111",
-            "isVirtual": true
-          }
-        ]
-      }
-    ]
   }
-]
+}
