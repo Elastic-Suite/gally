@@ -2,7 +2,7 @@ import fetchMock from 'fetch-mock-jest'
 
 import { resource } from '~/mocks'
 
-import { fetchApi, getApiUrl, removeEmptyParameters } from './api'
+import { fetchApi, getApiUrl, getUrl, removeEmptyParameters } from './api'
 
 describe('Api service', () => {
   describe('getApiUrl', () => {
@@ -34,6 +34,18 @@ describe('Api service', () => {
       expect(getApiUrl('http://localhost/test')).toEqual(
         'http://localhost/test.json'
       )
+    })
+  })
+
+  describe('getUrl', () => {
+    it('should return an URL object', () => {
+      const url = getUrl('http://localhost/test')
+      expect(url.href).toEqual('http://localhost/test')
+    })
+
+    it('should return an URL object with parameters', () => {
+      const url = getUrl('http://localhost/test', { foo: 'bar' })
+      expect(url.href).toEqual('http://localhost/test?foo=bar')
     })
   })
 

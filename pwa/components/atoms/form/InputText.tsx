@@ -99,9 +99,7 @@ function InputText(props: IProps): JSX.Element {
   function handleChange(
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ): void {
-    if (onChange) {
-      onChange(event.target.value)
-    }
+    onChange(event.target.value)
   }
 
   return (
