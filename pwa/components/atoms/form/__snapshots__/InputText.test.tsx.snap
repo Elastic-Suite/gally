@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BadgeDisabledFalse match snapshot 1`] = `
+<div>
+  <div
+    class="MuiFormControl-root css-1c9gikl-MuiFormControl-root"
+  >
+    <label
+      class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-root MuiFormLabel-colorPrimary MuiFormLabel-filled css-ssr94h-MuiFormLabel-root-MuiInputLabel-root"
+      data-shrink="true"
+      for="input-text"
+    >
+      Label
+    </label>
+    <div
+      class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-lp7epm-MuiInputBase-root"
+    >
+      <input
+        aria-invalid="false"
+        class="MuiInputBase-input css-yz9k0d-MuiInputBase-input"
+        id="input-text"
+        placeholder="Name"
+        type="text"
+        value="hello world"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`BadgeDisabledFalseRequired&disabledTrue match snapshot 1`] = `
+<div>
+  <div
+    class="MuiFormControl-root css-1c9gikl-MuiFormControl-root"
+  >
+    <label
+      class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-root MuiFormLabel-colorPrimary MuiFormLabel-filled Mui-required css-ssr94h-MuiFormLabel-root-MuiInputLabel-root"
+      data-shrink="true"
+      for="input-text"
+    >
+      Label
+      <span
+        aria-hidden="true"
+        class="MuiInputLabel-asterisk MuiFormLabel-asterisk css-1ufxisk-MuiFormLabel-asterisk"
+      >
+         
+        *
+      </span>
+    </label>
+    <div
+      class="MuiInputBase-root MuiInputBase-colorPrimary Mui-disabled MuiInputBase-formControl css-lp7epm-MuiInputBase-root"
+      required=""
+    >
+      <input
+        aria-invalid="false"
+        class="MuiInputBase-input Mui-disabled css-yz9k0d-MuiInputBase-input"
+        disabled=""
+        id="input-text"
+        placeholder="Name"
+        required=""
+        type="text"
+        value="hello world"
+      />
+    </div>
+  </div>
+</div>
+`;
