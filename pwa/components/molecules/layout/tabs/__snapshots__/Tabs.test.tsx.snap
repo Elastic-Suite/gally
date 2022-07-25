@@ -68,7 +68,7 @@ exports[`TabsAndSubTabs match snapshot 1`] = `
           class="css-13t3iqc"
         >
           <div
-            class="css-1n8gd2i"
+            class="css-jve40n"
           >
             <div
               class="css-9wk4uw"
@@ -91,7 +91,9 @@ exports[`TabsAndSubTabs match snapshot 1`] = `
               Actives locales 2
             </div>
           </div>
-          <div>
+          <div
+            style="width: 100%;"
+          >
             <button
               class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root css-tvac2b-MuiButtonBase-root-MuiButton-root"
               tabindex="0"
