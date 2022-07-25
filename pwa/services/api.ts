@@ -1,6 +1,7 @@
 import { Resource } from '@api-platform/api-doc-parser'
 
 import { apiUrl } from '~/constants'
+import { ISearchParameters } from '~/types'
 
 export function getApiUrl(url = ''): string {
   if (process.env.NEXT_PUBLIC_LOCAL) {
@@ -26,18 +27,44 @@ export function getApiUrl(url = ''): string {
   return url
 }
 
+export function getUrl(
+  resource: Resource | string,
+  searchParameters: ISearchParameters = {}
+): URL {
+  const stringUrl =
+    typeof resource === 'string' ? getApiUrl(resource) : getApiUrl(resource.url)
+  const url = new URL(stringUrl)
+
+  Object.entries(searchParameters).forEach(([key, value]) => {
+    if (value instanceof Array) {
+      value.forEach((value) => url.searchParams.append(key, String(value)))
+    } else {
+      url.searchParams.append(key, String(value))
+    }
+  })
+
+  return url
+}
+
 export function fetchApi<T>(
   language: string,
   resource: Resource | string,
+  searchParameters: ISearchParameters = {},
   options: RequestInit = {}
 ): Promise<T> {
-  const url =
-    typeof resource === 'string' ? getApiUrl(resource) : getApiUrl(resource.url)
-  return fetch(url, {
+  return fetch(getUrl(resource, searchParameters), {
     ...options,
     headers: {
       ...options.headers,
       'Accept-Language': language,
     },
   }).then((response) => response.json())
+}
+
+export function removeEmptyParameters(
+  searchParameters: ISearchParameters = {}
+): ISearchParameters {
+  return Object.fromEntries(
+    Object.entries(searchParameters).filter(([_, value]) => value !== '')
+  )
 }

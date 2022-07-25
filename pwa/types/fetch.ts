@@ -27,3 +27,8 @@ export interface IFetch<D> {
   error?: Error | string
   status: LoadStatus
 }
+
+export type ISearchParameters = Record<
+  string,
+  string | number | boolean | (string | number | boolean)[]
+>
