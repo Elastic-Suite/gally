@@ -56,13 +56,14 @@ export function useApiDispatch<T>(
 }
 
 export function useApiList<T>(
-  resource: Resource,
+  resource: Resource | string,
   page: number | false = 0,
   searchParameters?: ISearchParameters
 ): [IFetch<T>, Dispatch<SetStateAction<IFetch<T>>>] {
   const parameters = useMemo(() => {
     if (typeof page === 'number') {
       return removeEmptyParameters({
+        [usePagination]: true,
         [pageSize]: defaultPageSize,
         [currentPage]: page + 1,
         ...searchParameters,
