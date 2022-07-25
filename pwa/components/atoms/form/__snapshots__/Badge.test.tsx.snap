@@ -8,7 +8,7 @@ exports[`Badge match snapshot 1`] = `
     <span
       class="badge--label"
     >
-      Text
+      Hello world
     </span>
   </span>
 </div>
@@ -22,7 +22,7 @@ exports[`BadgeError match snapshot 1`] = `
     <span
       class="badge--label"
     >
-      Text
+      Hello world
     </span>
   </span>
 </div>
@@ -36,7 +36,7 @@ exports[`BadgeSuccess match snapshot 1`] = `
     <span
       class="badge--label"
     >
-      Text
+      Hello world
     </span>
   </span>
 </div>
@@ -50,7 +50,7 @@ exports[`BadgeWarning match snapshot 1`] = `
     <span
       class="badge--label"
     >
-      Text
+      Hello world
     </span>
   </span>
 </div>

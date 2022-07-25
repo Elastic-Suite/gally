@@ -8,7 +8,7 @@ exports[`PrimaryButton match snapshot 1`] = `
     type="button"
   >
     
-    Label
+    Hello world
     
     <span
       class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
@@ -26,7 +26,7 @@ exports[`PrimaryButtonDisabledTrue match snapshot 1`] = `
     type="button"
   >
     
-    Label
+    Hello world
     
   </button>
 </div>
@@ -40,7 +40,7 @@ exports[`SecondaryButton match snapshot 1`] = `
     type="button"
   >
     
-    Label
+    Hello world
     
     <span
       class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
@@ -58,7 +58,7 @@ exports[`SecondaryButtonDisabledTrue match snapshot 1`] = `
     type="button"
   >
     
-    Label
+    Hello world
     
   </button>
 </div>
@@ -72,7 +72,7 @@ exports[`TertiaryButton match snapshot 1`] = `
     type="button"
   >
     
-    Label
+    Hello world
     
     <span
       class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
@@ -90,7 +90,7 @@ exports[`TertiaryButtonDisabledTrue match snapshot 1`] = `
     type="button"
   >
     
-    Label
+    Hello world
     
   </button>
 </div>

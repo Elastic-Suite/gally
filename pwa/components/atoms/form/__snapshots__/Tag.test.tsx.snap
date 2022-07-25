@@ -8,7 +8,7 @@ exports[`Tag match snapshot 1`] = `
     <span
       class="tag--label"
     >
-      hello world
+      Hello world
     </span>
   </span>
 </div>
@@ -22,7 +22,7 @@ exports[`TagColor match snapshot 1`] = `
     <span
       class="tag--label"
     >
-      hello world
+      Hello world
     </span>
   </span>
 </div>
@@ -36,7 +36,7 @@ exports[`TagOnIconClick match snapshot 1`] = `
     <span
       class="tag--label"
     >
-      hello world
+      Hello world
     </span>
     <button
       class="css-azzcl5"
