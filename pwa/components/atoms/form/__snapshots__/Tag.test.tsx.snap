@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tag match snapshot 1`] = `
+<div>
+  <span
+    class="tag--color__neutral css-1laa4dw"
+  >
+    <span
+      class="tag--label"
+    >
+      hello world
+    </span>
+  </span>
+</div>
+`;
+
+exports[`TagColor match snapshot 1`] = `
+<div>
+  <span
+    class="tag--color__red css-1laa4dw"
+  >
+    <span
+      class="tag--label"
+    >
+      hello world
+    </span>
+  </span>
+</div>
+`;
+
+exports[`TagOnIconClick match snapshot 1`] = `
+<div>
+  <span
+    class="tag--color__neutral css-1laa4dw"
+  >
+    <span
+      class="tag--label"
+    >
+      hello world
+    </span>
+    <button
+      class="css-azzcl5"
+    >
+      <ion-icon
+        name="close"
+      />
+    </button>
+  </span>
+</div>
+`;

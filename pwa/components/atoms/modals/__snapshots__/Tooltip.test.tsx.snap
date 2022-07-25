@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TooltipBottom match snapshot 1`] = `
+<div>
+  <span
+    aria-label="Hello World"
+    class=""
+    data-mui-internal-clone-element="true"
+  >
+    Hello World
+  </span>
+</div>
+`;
+
+exports[`TooltipLeft match snapshot 1`] = `
+<div>
+  <span
+    aria-label="Hello World"
+    class=""
+    data-mui-internal-clone-element="true"
+  >
+    Hello World
+  </span>
+</div>
+`;
+
+exports[`TooltipRight match snapshot 1`] = `
+<div>
+  <span
+    aria-label="Hello World"
+    class=""
+    data-mui-internal-clone-element="true"
+  >
+    Hello World
+  </span>
+</div>
+`;
+
+exports[`TooltipTop match snapshot 1`] = `
+<div>
+  <span
+    aria-label="Hello World"
+    class=""
+    data-mui-internal-clone-element="true"
+  >
+    Hello World
+  </span>
+</div>
+`;

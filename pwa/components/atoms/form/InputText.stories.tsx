@@ -50,7 +50,7 @@ InputText.args = {
   disabled: false,
   helperText: '',
   helperIcon: '',
-  color: 'none',
+  color: 'primary',
   endAdornment: null,
 }
 
@@ -63,7 +63,7 @@ SearchInputText.args = {
   disabled: false,
   helperText: '',
   helperIcon: '',
-  color: 'none',
+  color: 'primary',
   endAdornment: (
     <InputAdornment position="end">
       <IonIcon name="search" />

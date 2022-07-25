@@ -1,0 +1,198 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Catalogs match snapshot 1`] = `
+<div>
+  <div
+    class="css-flbvz9"
+  >
+    <div
+      class="css-1dez2od"
+    >
+      3
+       
+      catalog
+    </div>
+    <div
+      class="css-x8pnl5"
+    >
+      <div
+        class="css-djnyj7"
+      >
+        <div
+          class="css-1tdvoqh"
+        >
+          COM Catalog
+        </div>
+        <div
+          class="css-1un2rp5"
+        >
+          <div
+            class="css-13ehox3"
+          >
+            7
+          </div>
+          <div
+            class="css-ry2e12"
+          >
+            activeLocale
+          </div>
+        </div>
+        <div
+          class="css-1sfqhqu"
+        >
+          <div>
+            <div
+              class="css-1tq682i"
+            >
+              TestUn (France)
+            </div>
+          </div>
+          <div>
+            <div
+              class="css-1tq682i"
+            >
+              TestUnAA (France)
+            </div>
+          </div>
+          <div>
+            <div
+              class="css-1tq682i"
+            >
+              TestAAUn (France)
+            </div>
+          </div>
+          <div>
+            <div
+              class="css-1tq682i"
+            >
+              TAAestUn (France)
+            </div>
+          </div>
+          <div>
+            <div
+              class="css-1tq682i"
+            >
+              TesAEFtUn (France)
+            </div>
+          </div>
+          <div>
+            <div>
+              <div
+                class="css-o05r58"
+              >
+                +2
+              </div>
+            </div>
+          </div>
+          <div />
+        </div>
+      </div>
+      <div
+        class="css-djnyj7"
+      >
+        <div
+          class="css-1tdvoqh"
+        >
+          FR Catalog
+        </div>
+        <div
+          class="css-1un2rp5"
+        >
+          <div
+            class="css-13ehox3"
+          >
+            6
+          </div>
+          <div
+            class="css-ry2e12"
+          >
+            activeLocale
+          </div>
+        </div>
+        <div
+          class="css-1sfqhqu"
+        >
+          <div>
+            <div
+              class="css-1tq682i"
+            >
+              Français (France)
+            </div>
+          </div>
+          <div>
+            <div
+              class="css-1tq682i"
+            >
+              Anglais (États-Unis)
+            </div>
+          </div>
+          <div>
+            <div
+              class="css-1tq682i"
+            >
+              TAAestUn (France)
+            </div>
+          </div>
+          <div>
+            <div
+              class="css-1tq682i"
+            >
+              TesAEFtUn (France)
+            </div>
+          </div>
+          <div>
+            <div
+              class="css-1tq682i"
+            >
+              TesRDGFCDeux (France)
+            </div>
+          </div>
+          <div>
+            <div>
+              <div
+                class="css-o05r58"
+              >
+                +1
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="css-djnyj7"
+      >
+        <div
+          class="css-1tdvoqh"
+        >
+          UK Catalog
+        </div>
+        <div
+          class="css-1un2rp5"
+        >
+          <div
+            class="css-13ehox3"
+          >
+            1
+          </div>
+          <div
+            class="css-ry2e12"
+          >
+            activeLocale
+          </div>
+        </div>
+        <div
+          class="css-1sfqhqu"
+        >
+          <div>
+            <div
+              class="css-1tq682i"
+            >
+              Français (France)
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

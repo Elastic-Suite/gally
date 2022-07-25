@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PageTitle match snapshot 1`] = `
+<div>
+  <div
+    class="css-k008qs"
+  >
+    <h1
+      class="MuiTypography-root MuiTypography-h1 css-5ukfbz-MuiTypography-root"
+    >
+      Hello World
+    </h1>
+  </div>
+</div>
+`;
+
+exports[`PageTitleH2 match snapshot 1`] = `
+<div>
+  <div
+    class="css-k008qs"
+  >
+    <h2
+      class="MuiTypography-root MuiTypography-h2 css-179nbwd-MuiTypography-root"
+    >
+      Hello World
+    </h2>
+  </div>
+</div>
+`;
+
+exports[`PageTitleH3WithChildren match snapshot 1`] = `
+<div>
+  <div
+    class="css-k008qs"
+  >
+    <h3
+      class="MuiTypography-root MuiTypography-h3 css-1v3h5o1-MuiTypography-root"
+    >
+      Hello World
+    </h3>
+    <div>
+      <button
+        class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root css-13u4ebv-MuiButtonBase-root-MuiButton-root"
+        tabindex="0"
+        type="button"
+      >
+        Import (xlsx)
+        <span
+          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+        />
+      </button>
+    </div>
+  </div>
+</div>
+`;
