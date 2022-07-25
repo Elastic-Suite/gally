@@ -70,7 +70,7 @@ const opacity = keyframes`
 `
 
 interface IProps {
-  labels: string[]
+  labels: any
   contents: ReactChild[]
 }
 

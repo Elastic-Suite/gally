@@ -11,5 +11,5 @@ const Template: ComponentStory<typeof Tree> = (args) => <Tree {...args} />
 
 export const Default = Template.bind({})
 Default.args = {
-  data: categories,
+  data: categories.data.categoryTrees,
 }
