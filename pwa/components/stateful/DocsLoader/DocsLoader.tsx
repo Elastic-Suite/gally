@@ -1,7 +1,9 @@
-import { ReactNode, useEffect } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
+import { Api, parseHydraDocumentation } from '@api-platform/api-doc-parser'
 
-import { fetchDoc, selectDoc, useAppDispatch, useAppSelector } from '~/store'
-import { LoadStatus } from '~/types'
+import { resourcesContext } from '~/contexts'
+import { getApiUrl } from '~/services'
+import { IFetch, LoadStatus } from '~/types'
 
 interface IProps {
   children: ReactNode
@@ -9,22 +11,30 @@ interface IProps {
 
 function DocsLoader(props: IProps): JSX.Element {
   const { children } = props
-  const dispatch = useAppDispatch()
-  const doc = useAppSelector(selectDoc)
+  const [api, setApi] = useState<IFetch<Api>>({
+    status: LoadStatus.IDLE,
+  })
 
   useEffect(() => {
-    if (doc.status === LoadStatus.IDLE) {
-      dispatch(fetchDoc())
+    if (api.status === LoadStatus.IDLE) {
+      setApi({ status: LoadStatus.LOADING })
+      parseHydraDocumentation(getApiUrl())
+        .then(({ api }) => setApi({ status: LoadStatus.SUCCEEDED, data: api }))
+        .catch((error) => setApi({ error, status: LoadStatus.FAILED }))
     }
-  }, [dispatch, doc.status])
+  }, [api.status])
 
-  if (doc.error) {
-    return <>{doc.error.toString()}</>
-  } else if (!doc.data) {
+  if (api.error) {
+    return <>{api.error.toString()}</>
+  } else if (!api.data) {
     return null
   }
 
-  return <>{children}</>
+  return (
+    <resourcesContext.Provider value={api.data}>
+      {children}
+    </resourcesContext.Provider>
+  )
 }
 
 export default DocsLoader
