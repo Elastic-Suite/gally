@@ -1,7 +1,10 @@
 module.exports = {
   collectCoverageFrom: [
-    '<rootDir>/components/**/*.{jsx,tsx}',
-    '<rootDir>/pages/**/*.{jsx,tsx}',
+    '<rootDir>/components/**/*.{jsx,tsx,js,ts}',
+    '<rootDir>/hooks/**/*.{jsx,tsx,js,ts}',
+    // '<rootDir>/pages/**/*.{jsx,tsx,js,ts}',
+    '<rootDir>/services/**/*.{jsx,tsx,js,ts}',
+    '<rootDir>/store/**/*.{jsx,tsx,js,ts}',
   ],
   setupFilesAfterEnv: ['./setupTests.js'],
   testPathIgnorePatterns: ['/node_modules/', '/.next/'],

@@ -1,3 +1,5 @@
+import { act } from '@testing-library/react'
+
 import { resourceWithRef } from '~/mocks'
 import sourceFields from '~/public/mocks/source_fields.json'
 import { renderHookWithProviders } from '~/services'
@@ -49,14 +51,14 @@ describe('useApiFilters', () => {
         type: 1,
       },
       {
-        id: 'metadata',
+        id: 'metadata[]',
         label: 'fields.metadata',
         multiple: true,
         options: [],
         type: 2,
       },
     ])
-    await waitForNextUpdate()
+    await act(() => waitForNextUpdate())
     expect(result.current[5].options).toEqual([
       {
         id: 1,

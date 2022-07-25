@@ -1,6 +1,7 @@
 import { renderHookWithProviders } from '~/services'
+import { fetchApi } from '~/services/api'
 import { LoadStatus } from '~/types'
-import { useApiDispatch, useApiFetch } from './useApi'
+import { useApiDispatch, useApiFetch, useApiList } from './useApi'
 
 jest.mock('react-i18next')
 jest.mock('~/services/api')
@@ -8,6 +9,7 @@ jest.mock('~/services/api')
 describe('useApi', () => {
   describe('useApiFetch', () => {
     it('calls and return the api result', async () => {
+      ;(fetchApi as jest.Mock).mockClear()
       const { result, waitForNextUpdate } = renderHookWithProviders(() =>
         useApiFetch('/test')
       )
@@ -19,6 +21,7 @@ describe('useApi', () => {
         status: LoadStatus.SUCCEEDED,
         data: { hello: 'world' },
       })
+      expect(fetchApi).toHaveBeenCalledWith('en', '/test', undefined, undefined)
     })
   })
 
@@ -28,6 +31,51 @@ describe('useApi', () => {
       // @ts-expect-error use spy
       renderHookWithProviders(() => useApiDispatch(action, '/test'))
       expect(action).toHaveBeenCalledWith({ status: LoadStatus.LOADING })
+    })
+  })
+
+  describe('useApiList', () => {
+    it('calls and return the list result with pagination disabled', async () => {
+      ;(fetchApi as jest.Mock).mockClear()
+      const { waitForNextUpdate } = renderHookWithProviders(() =>
+        useApiList('/list', false)
+      )
+      await waitForNextUpdate()
+      expect(fetchApi).toHaveBeenCalledWith(
+        'en',
+        '/list',
+        { pagination: false },
+        undefined
+      )
+    })
+
+    it('calls and return the list result with pagination enabled', async () => {
+      ;(fetchApi as jest.Mock).mockClear()
+      const { waitForNextUpdate } = renderHookWithProviders(() =>
+        useApiList('/list')
+      )
+      await waitForNextUpdate()
+      expect(fetchApi).toHaveBeenCalledWith(
+        'en',
+        '/list',
+        { pagination: true, pageSize: 50, currentPage: 1 },
+        undefined
+      )
+    })
+
+    it('calls and return the list result with page and filters', async () => {
+      ;(fetchApi as jest.Mock).mockClear()
+      const params = { foo: 'bar' }
+      const { waitForNextUpdate } = renderHookWithProviders(() =>
+        useApiList('/list', 2, params)
+      )
+      await waitForNextUpdate()
+      expect(fetchApi).toHaveBeenCalledWith(
+        'en',
+        '/list',
+        { pagination: true, pageSize: 50, currentPage: 3, foo: 'bar' },
+        undefined
+      )
     })
   })
 })

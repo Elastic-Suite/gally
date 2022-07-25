@@ -65,6 +65,8 @@ export function removeEmptyParameters(
   searchParameters: ISearchParameters = {}
 ): ISearchParameters {
   return Object.fromEntries(
-    Object.entries(searchParameters).filter(([_, value]) => value !== '')
+    Object.entries(searchParameters).filter(
+      ([_, value]) => (value ?? '') !== ''
+    )
   )
 }
