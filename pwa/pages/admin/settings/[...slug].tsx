@@ -1,8 +1,9 @@
-import { useMemo } from 'react'
+import { useContext, useEffect, useMemo } from 'react'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 
+import { breadcrumbContext } from '~/contexts'
 import { IRouterTab } from '~/types'
 
 import PageTile from '~/components/atoms/PageTitle/PageTitle'
@@ -14,6 +15,13 @@ import SettingsScope from '~/components/stateful-pages/SettingsScope/SettingsSco
 function Settings(): JSX.Element {
   const { t } = useTranslation('settings')
   const router = useRouter()
+  const [, setBreadcrumb] = useContext(breadcrumbContext)
+
+  useEffect(() => {
+    const { slug } = router.query
+    setBreadcrumb(['settings', ...slug])
+  }, [router.query, setBreadcrumb])
+
   const routerTabs: IRouterTab[] = useMemo(
     () => [
       {
