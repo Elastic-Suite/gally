@@ -10,10 +10,7 @@ interface IProps {
   onRowsPerPageChange?: (
     event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => void
-  onPageChange: (
-    event: MouseEvent<HTMLButtonElement> | null,
-    page: number
-  ) => void
+  onPageChange: (page: number) => void
 }
 
 function Pagination(props: IProps): JSX.Element {
@@ -26,6 +23,13 @@ function Pagination(props: IProps): JSX.Element {
     onRowsPerPageChange,
     onPageChange,
   } = props
+
+  function handlePageChange(
+    _: MouseEvent<HTMLButtonElement> | null,
+    page: number
+  ): void {
+    onPageChange(page)
+  }
 
   return (
     <Box
@@ -44,7 +48,7 @@ function Pagination(props: IProps): JSX.Element {
         component="div"
         count={totalPages}
         page={currentPage}
-        onPageChange={onPageChange}
+        onPageChange={handlePageChange}
         rowsPerPage={rowsPerPage}
         onRowsPerPageChange={onRowsPerPageChange}
       />

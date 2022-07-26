@@ -65,7 +65,7 @@ export function getFieldFromMapping(
 export function getFilter(mapping: IMapping, t: TFunction): IFilter {
   const type = getFilterType(mapping)
   return {
-    id: mapping.property,
+    id: mapping.variable,
     label: t(...getFieldLabelTranslationArgs(mapping.property)),
     multiple: mapping.multiple,
     options: mapping.options,

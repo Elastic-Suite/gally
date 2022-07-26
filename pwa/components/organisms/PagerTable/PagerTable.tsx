@@ -1,4 +1,4 @@
-import { ChangeEvent, MouseEvent } from 'react'
+import { ChangeEvent } from 'react'
 import { styled } from '@mui/system'
 
 import Pagination from '~/components/molecules/CustomTable/Pagination/Pagination'
@@ -13,10 +13,7 @@ const Root = styled('div')(({ theme }) => ({
 
 interface IProps extends ICustomTableProps {
   currentPage: number
-  onPageChange: (
-    event: MouseEvent<HTMLButtonElement> | null,
-    page: number
-  ) => void
+  onPageChange: (page: number) => void
   onRowsPerPageChange?: (
     event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => void

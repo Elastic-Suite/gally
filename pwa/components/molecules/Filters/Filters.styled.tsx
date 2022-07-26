@@ -41,6 +41,7 @@ export const FilterBox = styled('div')(({ theme }) => ({
 }))
 
 export const FilterSecondaryButton = styled(SecondaryButton)(() => ({
+  flexShrink: 0,
   whiteSpace: 'nowrap',
 }))
 
