@@ -19,7 +19,7 @@ Default.args = {
 }
 
 export const WithButtons = Template.bind({})
-Default.args = {
+WithButtons.args = {
   children: <PrimaryButton>Import (xlsx)</PrimaryButton>,
   title: 'Page title',
 }

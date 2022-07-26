@@ -77,7 +77,7 @@ function Filters(props: IProps): JSX.Element {
   const augmentedFilters = filters.map((filter) => ({
     ...filter,
     options:
-      filter.type === FilterType.BOOLEAN && filter.options?.length === 0
+      filter.type === FilterType.BOOLEAN && !filter.options?.length
         ? [
             { label: t('filter.yes'), value: true },
             { label: t('filter.no'), value: false },
