@@ -1,7 +1,7 @@
 import { useTranslation } from 'next-i18next'
 
 import { ICatalog, IHydraResponse } from '~/types'
-import { useApiFetch, useResource } from '~/hooks'
+import { useApiList, useResource } from '~/hooks'
 import { firstLetterUppercase } from '~/services'
 
 import { Title } from '~/components/atoms/title/Title'
@@ -13,7 +13,7 @@ import Catalogs from '~/components/molecules/layout/scope/Catalogs'
 function Scope(): JSX.Element | string {
   const resourceName = 'catalogs'
   const resource = useResource(resourceName)
-  const [catalogsFields] = useApiFetch<IHydraResponse<ICatalog>>(resource)
+  const [catalogsFields] = useApiList<IHydraResponse<ICatalog>>(resource, false)
   const { t } = useTranslation('common')
 
   if (catalogsFields.error) {

@@ -35,9 +35,14 @@ function CustomTable(props: IProps): JSX.Element {
   const [currentMassiveSelection, setCurrentMassiveSelection] = useState(
     MassiveSelectionType.NONE
   )
+  // todo: Should we keep this state or should we let the parent manage it ?
   const [currentRows, setCurrentRows] = useState<ITableRow[]>(tableRows)
   const tableRef = useRef<HTMLDivElement>()
   const { isOverflow, shadow } = useIsHorizontalOverflow(tableRef.current)
+
+  useEffect(() => {
+    setCurrentRows(tableRows)
+  }, [tableRows])
 
   /**
    * Compute the length of the sticky part.
