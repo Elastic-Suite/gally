@@ -1,6 +1,7 @@
 import {
   firstLetterLowercase,
   firstLetterUppercase,
+  formatPrice,
   getFieldLabelTranslationArgs,
   humanize,
 } from './format'
@@ -34,6 +35,13 @@ describe('Format service', () => {
         'resources.metadata.fields.defaultLabel',
         'Default label',
       ])
+    })
+  })
+
+  describe('formatPrice', () => {
+    it('Should format price', () => {
+      expect(formatPrice(100, 'USD', 'fr-FR')).toContain('100,00')
+      expect(formatPrice(100, 'USD', 'fr-FR')).toContain('$US')
     })
   })
 })

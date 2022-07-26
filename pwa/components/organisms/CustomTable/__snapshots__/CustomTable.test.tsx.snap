@@ -15,7 +15,7 @@ exports[`CustomTable match snapshot with editable content 1`] = `
           class="MuiTableRow-root MuiTableRow-head css-1u1grnd-MuiTableRow-root"
         >
           <th
-            class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1d8zdlv-MuiTableCell-root"
+            class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-18neeob-MuiTableCell-root"
             scope="col"
           />
           <th
@@ -23,7 +23,7 @@ exports[`CustomTable match snapshot with editable content 1`] = `
             scope="col"
           >
             <span
-              class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
+              class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
               data-testid="massive-selection"
             >
               <input
@@ -47,7 +47,7 @@ exports[`CustomTable match snapshot with editable content 1`] = `
               />
             </span>
             <button
-              class="MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButtonBase-root  css-poyljr-MuiButtonBase-root-MuiButton-root"
+              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit  css-poyljr-MuiButtonBase-root-MuiButton-root"
               data-testid="massive-selection-dropdown"
               tabindex="0"
               type="button"
@@ -105,7 +105,7 @@ exports[`CustomTable match snapshot with editable content 1`] = `
             class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-k8d3t5-MuiTableCell-root"
           >
             <span
-              class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
+              class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
               data-testid="draggable-single-row-selection"
             >
               <input
@@ -136,11 +136,11 @@ exports[`CustomTable match snapshot with editable content 1`] = `
               class="MuiSwitch-root MuiSwitch-sizeMedium css-tnsvld-MuiSwitch-root"
             >
               <span
-                class="MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-checked MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-checked PrivateSwitchBase-root Mui-checked css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
+                class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-checked PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-checked Mui-checked css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
               >
                 <input
                   checked=""
-                  class="MuiSwitch-input PrivateSwitchBase-input css-1m9pwf3"
+                  class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
                   type="checkbox"
                   value="true"
                 />
@@ -201,7 +201,7 @@ exports[`CustomTable match snapshot with selection, with draggable, with sticky 
           class="MuiTableRow-root MuiTableRow-head css-1u1grnd-MuiTableRow-root"
         >
           <th
-            class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1d8zdlv-MuiTableCell-root"
+            class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-18neeob-MuiTableCell-root"
             scope="col"
           />
           <th
@@ -209,7 +209,7 @@ exports[`CustomTable match snapshot with selection, with draggable, with sticky 
             scope="col"
           >
             <span
-              class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
+              class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
               data-testid="massive-selection"
             >
               <input
@@ -233,7 +233,7 @@ exports[`CustomTable match snapshot with selection, with draggable, with sticky 
               />
             </span>
             <button
-              class="MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButtonBase-root  css-poyljr-MuiButtonBase-root-MuiButton-root"
+              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit  css-poyljr-MuiButtonBase-root-MuiButton-root"
               data-testid="massive-selection-dropdown"
               tabindex="0"
               type="button"
@@ -291,7 +291,7 @@ exports[`CustomTable match snapshot with selection, with draggable, with sticky 
             class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-k8d3t5-MuiTableCell-root"
           >
             <span
-              class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
+              class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
               data-testid="draggable-single-row-selection"
             >
               <input
@@ -323,12 +323,12 @@ exports[`CustomTable match snapshot with selection, with draggable, with sticky 
             >
               <span
                 aria-disabled="true"
-                class="MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled MuiButtonBase-root Mui-disabled MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled PrivateSwitchBase-root Mui-checked Mui-disabled css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
+                class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled Mui-disabled PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled Mui-checked Mui-disabled css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
                 tabindex="-1"
               >
                 <input
                   checked=""
-                  class="MuiSwitch-input PrivateSwitchBase-input css-1m9pwf3"
+                  class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
                   disabled=""
                   type="checkbox"
                 />
@@ -349,11 +349,11 @@ exports[`CustomTable match snapshot with selection, with draggable, with sticky 
             >
               <span
                 aria-disabled="true"
-                class="MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled MuiButtonBase-root Mui-disabled MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled PrivateSwitchBase-root Mui-disabled css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
+                class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled Mui-disabled PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled Mui-disabled css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
                 tabindex="-1"
               >
                 <input
-                  class="MuiSwitch-input PrivateSwitchBase-input css-1m9pwf3"
+                  class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
                   disabled=""
                   type="checkbox"
                 />
@@ -388,7 +388,7 @@ exports[`CustomTable match snapshot with selection, with draggable, without stic
           class="MuiTableRow-root MuiTableRow-head css-1u1grnd-MuiTableRow-root"
         >
           <th
-            class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1d8zdlv-MuiTableCell-root"
+            class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-18neeob-MuiTableCell-root"
             scope="col"
           />
           <th
@@ -396,7 +396,7 @@ exports[`CustomTable match snapshot with selection, with draggable, without stic
             scope="col"
           >
             <span
-              class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
+              class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
               data-testid="massive-selection"
             >
               <input
@@ -420,7 +420,7 @@ exports[`CustomTable match snapshot with selection, with draggable, without stic
               />
             </span>
             <button
-              class="MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButtonBase-root  css-poyljr-MuiButtonBase-root-MuiButton-root"
+              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit  css-poyljr-MuiButtonBase-root-MuiButton-root"
               data-testid="massive-selection-dropdown"
               tabindex="0"
               type="button"
@@ -478,7 +478,7 @@ exports[`CustomTable match snapshot with selection, with draggable, without stic
             class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-k8d3t5-MuiTableCell-root"
           >
             <span
-              class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
+              class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
               data-testid="draggable-single-row-selection"
             >
               <input
@@ -510,12 +510,12 @@ exports[`CustomTable match snapshot with selection, with draggable, without stic
             >
               <span
                 aria-disabled="true"
-                class="MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled MuiButtonBase-root Mui-disabled MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled PrivateSwitchBase-root Mui-checked Mui-disabled css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
+                class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled Mui-disabled PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled Mui-checked Mui-disabled css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
                 tabindex="-1"
               >
                 <input
                   checked=""
-                  class="MuiSwitch-input PrivateSwitchBase-input css-1m9pwf3"
+                  class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
                   disabled=""
                   type="checkbox"
                 />
@@ -536,11 +536,11 @@ exports[`CustomTable match snapshot with selection, with draggable, without stic
             >
               <span
                 aria-disabled="true"
-                class="MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled MuiButtonBase-root Mui-disabled MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled PrivateSwitchBase-root Mui-disabled css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
+                class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled Mui-disabled PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled Mui-disabled css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
                 tabindex="-1"
               >
                 <input
-                  class="MuiSwitch-input PrivateSwitchBase-input css-1m9pwf3"
+                  class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
                   disabled=""
                   type="checkbox"
                 />
@@ -579,7 +579,7 @@ exports[`CustomTable match snapshot with selection, without draggable, with stic
             scope="col"
           >
             <span
-              class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
+              class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
               data-testid="massive-selection"
             >
               <input
@@ -603,7 +603,7 @@ exports[`CustomTable match snapshot with selection, without draggable, with stic
               />
             </span>
             <button
-              class="MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButtonBase-root  css-poyljr-MuiButtonBase-root-MuiButton-root"
+              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit  css-poyljr-MuiButtonBase-root-MuiButton-root"
               data-testid="massive-selection-dropdown"
               tabindex="0"
               type="button"
@@ -640,7 +640,7 @@ exports[`CustomTable match snapshot with selection, without draggable, with stic
             class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-ydjr87-MuiTableCell-root"
           >
             <span
-              class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
+              class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
               data-testid="non-draggable-single-row-selection"
             >
               <input
@@ -672,12 +672,12 @@ exports[`CustomTable match snapshot with selection, without draggable, with stic
             >
               <span
                 aria-disabled="true"
-                class="MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled MuiButtonBase-root Mui-disabled MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled PrivateSwitchBase-root Mui-checked Mui-disabled css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
+                class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled Mui-disabled PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled Mui-checked Mui-disabled css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
                 tabindex="-1"
               >
                 <input
                   checked=""
-                  class="MuiSwitch-input PrivateSwitchBase-input css-1m9pwf3"
+                  class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
                   disabled=""
                   type="checkbox"
                 />
@@ -698,11 +698,11 @@ exports[`CustomTable match snapshot with selection, without draggable, with stic
             >
               <span
                 aria-disabled="true"
-                class="MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled MuiButtonBase-root Mui-disabled MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled PrivateSwitchBase-root Mui-disabled css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
+                class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled Mui-disabled PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled Mui-disabled css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
                 tabindex="-1"
               >
                 <input
-                  class="MuiSwitch-input PrivateSwitchBase-input css-1m9pwf3"
+                  class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
                   disabled=""
                   type="checkbox"
                 />
@@ -741,7 +741,7 @@ exports[`CustomTable match snapshot with selection, without draggable, without s
             scope="col"
           >
             <span
-              class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
+              class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
               data-testid="massive-selection"
             >
               <input
@@ -765,7 +765,7 @@ exports[`CustomTable match snapshot with selection, without draggable, without s
               />
             </span>
             <button
-              class="MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButtonBase-root  css-poyljr-MuiButtonBase-root-MuiButton-root"
+              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit  css-poyljr-MuiButtonBase-root-MuiButton-root"
               data-testid="massive-selection-dropdown"
               tabindex="0"
               type="button"
@@ -802,7 +802,7 @@ exports[`CustomTable match snapshot with selection, without draggable, without s
             class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-ydjr87-MuiTableCell-root"
           >
             <span
-              class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
+              class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
               data-testid="non-draggable-single-row-selection"
             >
               <input
@@ -834,12 +834,12 @@ exports[`CustomTable match snapshot with selection, without draggable, without s
             >
               <span
                 aria-disabled="true"
-                class="MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled MuiButtonBase-root Mui-disabled MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled PrivateSwitchBase-root Mui-checked Mui-disabled css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
+                class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled Mui-disabled PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled Mui-checked Mui-disabled css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
                 tabindex="-1"
               >
                 <input
                   checked=""
-                  class="MuiSwitch-input PrivateSwitchBase-input css-1m9pwf3"
+                  class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
                   disabled=""
                   type="checkbox"
                 />
@@ -860,11 +860,11 @@ exports[`CustomTable match snapshot with selection, without draggable, without s
             >
               <span
                 aria-disabled="true"
-                class="MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled MuiButtonBase-root Mui-disabled MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled PrivateSwitchBase-root Mui-disabled css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
+                class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled Mui-disabled PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled Mui-disabled css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
                 tabindex="-1"
               >
                 <input
-                  class="MuiSwitch-input PrivateSwitchBase-input css-1m9pwf3"
+                  class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
                   disabled=""
                   type="checkbox"
                 />
@@ -903,7 +903,7 @@ exports[`CustomTable match snapshot without selection, without draggable, with s
             scope="col"
           >
             <span
-              class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
+              class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
               data-testid="massive-selection"
             >
               <input
@@ -927,7 +927,7 @@ exports[`CustomTable match snapshot without selection, without draggable, with s
               />
             </span>
             <button
-              class="MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButtonBase-root  css-poyljr-MuiButtonBase-root-MuiButton-root"
+              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit  css-poyljr-MuiButtonBase-root-MuiButton-root"
               data-testid="massive-selection-dropdown"
               tabindex="0"
               type="button"
@@ -964,7 +964,7 @@ exports[`CustomTable match snapshot without selection, without draggable, with s
             class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-ydjr87-MuiTableCell-root"
           >
             <span
-              class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
+              class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
               data-testid="non-draggable-single-row-selection"
             >
               <input
@@ -996,12 +996,12 @@ exports[`CustomTable match snapshot without selection, without draggable, with s
             >
               <span
                 aria-disabled="true"
-                class="MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled MuiButtonBase-root Mui-disabled MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled PrivateSwitchBase-root Mui-checked Mui-disabled css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
+                class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled Mui-disabled PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled Mui-checked Mui-disabled css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
                 tabindex="-1"
               >
                 <input
                   checked=""
-                  class="MuiSwitch-input PrivateSwitchBase-input css-1m9pwf3"
+                  class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
                   disabled=""
                   type="checkbox"
                 />
@@ -1022,11 +1022,11 @@ exports[`CustomTable match snapshot without selection, without draggable, with s
             >
               <span
                 aria-disabled="true"
-                class="MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled MuiButtonBase-root Mui-disabled MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled PrivateSwitchBase-root Mui-disabled css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
+                class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled Mui-disabled PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled Mui-disabled css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
                 tabindex="-1"
               >
                 <input
-                  class="MuiSwitch-input PrivateSwitchBase-input css-1m9pwf3"
+                  class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
                   disabled=""
                   type="checkbox"
                 />
@@ -1088,12 +1088,12 @@ exports[`CustomTable match snapshot without selection, without draggable, withou
             >
               <span
                 aria-disabled="true"
-                class="MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled MuiButtonBase-root Mui-disabled MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled PrivateSwitchBase-root Mui-checked Mui-disabled css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
+                class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled Mui-disabled PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled Mui-checked Mui-disabled css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
                 tabindex="-1"
               >
                 <input
                   checked=""
-                  class="MuiSwitch-input PrivateSwitchBase-input css-1m9pwf3"
+                  class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
                   disabled=""
                   type="checkbox"
                 />
@@ -1114,11 +1114,11 @@ exports[`CustomTable match snapshot without selection, without draggable, withou
             >
               <span
                 aria-disabled="true"
-                class="MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled MuiButtonBase-root Mui-disabled MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled PrivateSwitchBase-root Mui-disabled css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
+                class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled Mui-disabled PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled Mui-disabled css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
                 tabindex="-1"
               >
                 <input
-                  class="MuiSwitch-input PrivateSwitchBase-input css-1m9pwf3"
+                  class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
                   disabled=""
                   type="checkbox"
                 />

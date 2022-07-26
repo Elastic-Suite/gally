@@ -10,7 +10,7 @@ describe('Tag match snapshot', () => {
 
   it('TagColor', () => {
     const { container } = renderWithProviders(
-      <Tag color="red">Hello world</Tag>
+      <Tag color="success">Hello world</Tag>
     )
     expect(container).toMatchSnapshot()
   })

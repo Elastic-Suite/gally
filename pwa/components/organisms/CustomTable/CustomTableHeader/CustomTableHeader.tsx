@@ -52,6 +52,7 @@ function CustomTableHeader(props: IProps): JSX.Element {
           <StickyTableCell
             sx={{
               minWidth: `${reorderingColumnWidth}px`,
+              width: `${reorderingColumnWidth}px`,
               borderBottomColor: 'colors.neutral.300',
               borderTopColor: 'colors.neutral.300',
               borderTopWidth: '1px',
