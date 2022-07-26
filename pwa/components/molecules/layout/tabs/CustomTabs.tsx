@@ -1,14 +1,10 @@
-import { ReactChild, SyntheticEvent, useState } from 'react'
+import { SyntheticEvent, useState } from 'react'
 import { Box, Tab, Tabs } from '@mui/material'
+
+import { ITab } from '~/types'
 
 import TabPanel from './TabPanel'
 import { a11yProps } from './a11yProps'
-
-export interface ITab {
-  content: ReactChild | string
-  id: number
-  label: string
-}
 
 interface IProps {
   defaultActiveId?: number
@@ -19,6 +15,7 @@ interface IProps {
 export default function CustomTabs(props: IProps): JSX.Element {
   const { defaultActiveId, onChange, tabs } = props
   const [activeId, setActiveId] = useState(defaultActiveId ?? tabs[0].id)
+
   const handleChange = (event: SyntheticEvent, id: number): void => {
     event.preventDefault()
     setActiveId(id)
