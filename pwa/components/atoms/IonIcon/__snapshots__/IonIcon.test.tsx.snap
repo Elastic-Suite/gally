@@ -1,9 +1,66 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`IonIcon match snapshot 1`] = `
+exports[`IonIcon render properly analyze & match snapshot 1`] = `
+<div>
+  <ion-icon
+    name="analytics"
+  />
+</div>
+`;
+
+exports[`IonIcon render properly dashboard & match snapshot 1`] = `
+<div>
+  <ion-icon
+    src="/images/home2.svg"
+  />
+</div>
+`;
+
+exports[`IonIcon render properly home & match snapshot 1`] = `
 <div>
   <ion-icon
     name="home"
+  />
+</div>
+`;
+
+exports[`IonIcon render properly information & match snapshot 1`] = `
+<div>
+  <ion-icon
+    name="information-circle-outline"
+  />
+</div>
+`;
+
+exports[`IonIcon render properly information with tooltip & match snapshot 1`] = `
+<div>
+  <ion-icon
+    name="information-circle-outline"
+    style="color: rgb(129, 135, 185); width: 20px; height: 20px; display: flex;"
+  />
+</div>
+`;
+
+exports[`IonIcon render properly merchandize & match snapshot 1`] = `
+<div>
+  <ion-icon
+    name="funnel-outline"
+  />
+</div>
+`;
+
+exports[`IonIcon render properly monitoring & match snapshot 1`] = `
+<div>
+  <ion-icon
+    name="list"
+  />
+</div>
+`;
+
+exports[`IonIcon render properly settings & match snapshot 1`] = `
+<div>
+  <ion-icon
+    name="settings-outline"
   />
 </div>
 `;
