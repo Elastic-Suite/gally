@@ -22,10 +22,11 @@ const Layout = dynamic(
   }
 ) as FunctionComponent
 
+const store = setupStore()
+
 function MyApp(props: AppProps): JSX.Element {
   const { Component, pageProps } = props
   const Cmp = Component as FunctionComponent
-  const store = setupStore()
 
   const { i18n } = useTranslation('common')
 
