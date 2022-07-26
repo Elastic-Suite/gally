@@ -3,22 +3,22 @@ import { Box } from '@mui/material'
 
 interface IProps {
   children?: ReactChild
-  index: number
+  id: number
   value: number
 }
 
 function TabPanel(props: IProps): JSX.Element {
-  const { children, value, index, ...other } = props
+  const { children, value, id, ...other } = props
 
   return (
     <div
       role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
+      hidden={value !== id}
+      id={`simple-tabpanel-${id}`}
+      aria-labelledby={`simple-tab-${id}`}
       {...other}
     >
-      {value === index && (
+      {value === id && (
         <Box
           sx={{
             paddingTop: 4,

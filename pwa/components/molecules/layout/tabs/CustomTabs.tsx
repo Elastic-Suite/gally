@@ -4,38 +4,45 @@ import { Box, Tab, Tabs } from '@mui/material'
 import TabPanel from './TabPanel'
 import { a11yProps } from './a11yProps'
 
-interface IProps {
-  labels: string[]
-  contents: ReactChild[]
+export interface ITab {
+  content: ReactChild | string
+  id: number
+  label: string
 }
 
-export default function CustomTabs({ labels, contents }: IProps): JSX.Element {
-  const [activeTabIndex, setActiveTabIndex] = useState(0)
-  const handleChange = (event: SyntheticEvent, newValue: number): void => {
+interface IProps {
+  defaultActiveId?: number
+  onChange?: (id: number) => void
+  tabs: ITab[]
+}
+
+export default function CustomTabs(props: IProps): JSX.Element {
+  const { defaultActiveId, onChange, tabs } = props
+  const [activeId, setActiveId] = useState(defaultActiveId ?? tabs[0].id)
+  const handleChange = (event: SyntheticEvent, id: number): void => {
     event.preventDefault()
-    setActiveTabIndex(newValue)
+    setActiveId(id)
+    if (onChange) {
+      onChange(id)
+    }
   }
 
   return (
     <Box sx={{ width: '100%', marginTop: '-12px' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs
-          value={activeTabIndex}
+          value={activeId}
           onChange={handleChange}
           aria-label="basic tabs example"
         >
-          {labels.map((item: string, key: number) => (
-            <Tab
-              key={item}
-              label={item}
-              {...a11yProps('simple-tabpanel', key)}
-            />
+          {tabs.map(({ id, label }) => (
+            <Tab key={id} label={label} {...a11yProps('simple-tabpanel', id)} />
           ))}
         </Tabs>
       </Box>
-      {contents.map((item: string, key: number) => (
-        <TabPanel key={item} value={activeTabIndex} index={key}>
-          {item}
+      {tabs.map(({ id, content }) => (
+        <TabPanel key={id} value={activeId} id={id}>
+          {content}
         </TabPanel>
       ))}
     </Box>

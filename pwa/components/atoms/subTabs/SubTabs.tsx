@@ -28,11 +28,11 @@ const CustomSubTabs = styled('div')(({ theme }) => ({
   transition: 'all 500ms',
   cursor: 'pointer',
 
-  '&:nth-child(1)': {
+  '&:nth-of-type(1)': {
     marginTop: theme.spacing(2),
   },
 
-  '&:nth-last-child(1)': {
+  '&:nth-last-of-type(1)': {
     marginBottom: theme.spacing(2),
   },
   '&:hover': {
