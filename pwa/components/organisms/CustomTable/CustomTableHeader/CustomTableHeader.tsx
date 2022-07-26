@@ -3,7 +3,6 @@ import MassiveSelection from '~/components/molecules/CustomTable/MassiveSelectio
 import {
   BaseTableCell,
   StickyTableCell,
-  stickyBorderStyle,
 } from '~/components/organisms/CustomTable/CustomTable.styled'
 import {
   reorderingColumnWidth,
@@ -11,7 +10,7 @@ import {
   stickyColunWidth,
 } from '~/constants'
 import { ITableHeader, ITableHeaderSticky, MassiveSelectionType } from '~/types'
-import { manageStickyHeaders } from '../CustomTable.service'
+import { manageStickyHeaders, stickyBorderStyle } from '../CustomTable.service'
 
 interface IProps {
   tableHeaders: ITableHeader[]

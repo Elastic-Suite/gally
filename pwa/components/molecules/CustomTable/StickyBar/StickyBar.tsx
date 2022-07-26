@@ -26,6 +26,7 @@ function StickyBar(props: IProps): JSX.Element {
 
   return (
     <Box
+      data-testid="sticky-bar"
       sx={{
         display: 'flex',
         borderRadius: '15px',

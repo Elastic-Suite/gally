@@ -37,7 +37,7 @@ function CustomTable(props: IProps): JSX.Element {
   )
   const [currentRows, setCurrentRows] = useState<ITableRow[]>(tableRows)
   const tableRef = useRef<HTMLDivElement>()
-  const { isOverflow, shadow } = useIsHorizontalOverflow(tableRef)
+  const { isOverflow, shadow } = useIsHorizontalOverflow(tableRef.current)
 
   /**
    * Compute the length of the sticky part.
@@ -88,7 +88,7 @@ function CustomTable(props: IProps): JSX.Element {
   /**
    * Compute the CSS left values for the sticky part of the table.
    * It return an array of all successive left value to use in CustomTableHeader.tsx, DraggableTableRow.tsx and CustomTableRows.tsx
-   * It gonna be provide by context CSSContext to each row component.
+   * It gonna be provide to each row component.
    */
   function computeLeftCSSValues(): number[] {
     const stickyHeaders = tableHeaders.filter((header) => header.sticky)
