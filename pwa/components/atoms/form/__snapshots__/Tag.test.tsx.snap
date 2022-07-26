@@ -27,3 +27,24 @@ exports[`Tag match snapshot TagColor 1`] = `
   </span>
 </div>
 `;
+
+exports[`Tag match snapshot TagOnIconClick 1`] = `
+<div>
+  <span
+    class="tag--color__undefined css-172fwkx"
+  >
+    <span
+      class="tag--label"
+    >
+      Hello world
+    </span>
+    <button
+      class="css-azzcl5"
+    >
+      <ion-icon
+        name="close"
+      />
+    </button>
+  </span>
+</div>
+`;
