@@ -1,4 +1,4 @@
-import { ReactChild } from 'react'
+import { ReactChild, useEffect, useState } from 'react'
 import { Box } from '@mui/material'
 
 interface IProps {
@@ -9,6 +9,13 @@ interface IProps {
 
 function TabPanel(props: IProps): JSX.Element {
   const { children, value, id, ...other } = props
+  const [isLoaded, setIsLoaded] = useState(false)
+
+  useEffect(() => {
+    if (value === id) {
+      setIsLoaded(true)
+    }
+  }, [value, id])
 
   return (
     <div
@@ -18,7 +25,7 @@ function TabPanel(props: IProps): JSX.Element {
       aria-labelledby={`simple-tab-${id}`}
       {...other}
     >
-      {value === id && (
+      {(value === id || Boolean(isLoaded)) && (
         <Box
           sx={{
             paddingTop: 4,
