@@ -1,20 +1,15 @@
+import { useMemo } from 'react'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 
+import { IRouterTab } from '~/types'
+
 import PageTile from '~/components/atoms/PageTitle/PageTitle'
 import PrimaryButton from '~/components/atoms/buttons/PrimaryButton'
-import CustomTabs, { ITab } from '~/components/molecules/layout/tabs/CustomTabs'
+import CustomTabs from '~/components/molecules/layout/tabs/CustomTabs'
 import SettingsAttributes from '~/components/stateful-pages/SettingsAttributes/SettingsAttributes'
-import SettingsCatalog from '~/components/stateful-pages/SettingsCatalog/SettingsCatalog'
-import { useMemo } from 'react'
-
-interface IRouterTab extends ITab {
-  actions?: JSX.Element
-  default?: true
-  title: string
-  url: string
-}
+import SettingsScope from '~/components/stateful-pages/SettingsScope/SettingsScope'
 
 function Settings(): JSX.Element {
   const { t } = useTranslation('settings')
@@ -22,7 +17,7 @@ function Settings(): JSX.Element {
   const routerTabs: IRouterTab[] = useMemo(
     () => [
       {
-        content: <SettingsCatalog />,
+        content: <SettingsScope />,
         default: true,
         id: 0,
         label: t('tabs.scope'),

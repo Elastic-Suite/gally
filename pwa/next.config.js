@@ -36,6 +36,11 @@ module.exports = {
         destination: '/admin/settings/scope',
         permanent: true,
       },
+      {
+        source: '/admin/settings/scope',
+        destination: '/admin/settings/scope/catalogs',
+        permanent: true,
+      },
     ]
   },
   serverRuntimeConfig: {

@@ -1,5 +1,7 @@
-import { ReactChild, useState } from 'react'
+import { useState } from 'react'
 import { keyframes, styled } from '@mui/system'
+
+import { ITab } from '~/types'
 
 const CustomRoot = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -16,7 +18,7 @@ const CustumRootSubTabs = styled('div')({
   height: 'max-content',
 })
 
-const CustomSubTabs = styled('div')(({ theme }) => ({
+const CustomSubTabs = styled('button')(({ theme }) => ({
   padding: theme.spacing(1),
   borderRadius: 8,
   marginLeft: theme.spacing(2),
@@ -27,6 +29,10 @@ const CustomSubTabs = styled('div')(({ theme }) => ({
   color: theme.palette.colors.neutral[600],
   transition: 'all 500ms',
   cursor: 'pointer',
+  background: 'transparent',
+  border: 0,
+  textAlign: 'left',
+  fontFamily: 'Inter',
 
   '&:nth-of-type(1)': {
     marginTop: theme.spacing(2),
@@ -70,36 +76,45 @@ const opacity = keyframes`
 `
 
 interface IProps {
-  labels: string[]
-  contents: ReactChild[]
+  defaultActiveId: number
+  onChange?: (id: number) => void
+  tabs: ITab[]
 }
 
-function SubTabs({ labels, contents }: IProps): JSX.Element {
-  const [active, setActive] = useState(0)
+function SubTabs(props: IProps): JSX.Element {
+  const { defaultActiveId, onChange, tabs } = props
+  const [active, setActive] = useState(defaultActiveId)
+
+  function handleChange(id: number): void {
+    setActive(id)
+    if (onChange) {
+      onChange(id)
+    }
+  }
 
   return (
     <CustomRoot>
       <CustumRootSubTabs>
-        {labels.map((item: string, key: number) =>
-          key === active ? (
+        {tabs.map(({ label, id }) =>
+          id === active ? (
             <CustomSubTabsActive
-              key={item}
-              onClick={(): void => setActive(key)}
+              key={id}
+              onClick={(): void => handleChange(id)}
             >
-              {item}
+              {label}
             </CustomSubTabsActive>
           ) : (
-            <CustomSubTabs key={item} onClick={(): void => setActive(key)}>
-              {item}
+            <CustomSubTabs key={id} onClick={(): void => handleChange(id)}>
+              {label}
             </CustomSubTabs>
           )
         )}
       </CustumRootSubTabs>
-      {contents.map(
-        (item: string, key: number) =>
-          key === active && (
-            <div style={{ width: '100%' }} key={item}>
-              {item}
+      {tabs.map(
+        ({ content, id }) =>
+          id === active && (
+            <div style={{ width: '100%' }} key={id}>
+              {content}
             </div>
           )
       )}
