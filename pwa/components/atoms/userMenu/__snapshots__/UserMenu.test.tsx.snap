@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`UserMenu match snapshot 1`] = `
+exports[`UserMenu match snapshot UserMenu 1`] = `
 <div>
   <div
     style="position: relative;"

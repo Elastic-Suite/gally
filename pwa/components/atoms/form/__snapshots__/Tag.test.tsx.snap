@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Tag match snapshot 1`] = `
+exports[`Tag match snapshot Tag simple 1`] = `
 <div>
   <span
     class="tag--color__neutral css-1laa4dw"
@@ -14,7 +14,7 @@ exports[`Tag match snapshot 1`] = `
 </div>
 `;
 
-exports[`TagColor match snapshot 1`] = `
+exports[`Tag match snapshot TagColor 1`] = `
 <div>
   <span
     class="tag--color__red css-1laa4dw"
@@ -28,7 +28,7 @@ exports[`TagColor match snapshot 1`] = `
 </div>
 `;
 
-exports[`TagOnIconClick match snapshot 1`] = `
+exports[`Tag match snapshot TagOnIconClick 1`] = `
 <div>
   <span
     class="tag--color__neutral css-1laa4dw"

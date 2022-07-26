@@ -1,8 +1,8 @@
 import InputText from './InputText'
 import { renderWithProviders } from '~/services'
 
-describe('BadgeDisabledFalse', () => {
-  it('match snapshot', () => {
+describe('InputText match snapshot', () => {
+  it('BadgeDisabledFalse', () => {
     const { container } = renderWithProviders(
       <InputText
         id="input-text"
@@ -19,10 +19,8 @@ describe('BadgeDisabledFalse', () => {
     )
     expect(container).toMatchSnapshot()
   })
-})
 
-describe('BadgeDisabledFalseRequired&disabledTrue', () => {
-  it('match snapshot', () => {
+  it('BadgeDisabledFalseRequired', () => {
     const { container } = renderWithProviders(
       <InputText
         id="input-text"

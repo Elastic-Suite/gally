@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CheckboxIndeterminateFalse match snapshot 1`] = `
+exports[`Checkbox match snapshot CheckboxIndeterminateFalse 1`] = `
 <div>
   <label
     class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fbz9fk-MuiFormControlLabel-root"
@@ -32,7 +32,7 @@ exports[`CheckboxIndeterminateFalse match snapshot 1`] = `
 </div>
 `;
 
-exports[`CheckboxIndeterminateTrue match snapshot 1`] = `
+exports[`Checkbox match snapshot CheckboxIndeterminateTrue 1`] = `
 <div>
   <label
     class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fbz9fk-MuiFormControlLabel-root"
@@ -64,7 +64,7 @@ exports[`CheckboxIndeterminateTrue match snapshot 1`] = `
 </div>
 `;
 
-exports[`CheckboxLabel match snapshot 1`] = `
+exports[`Checkbox match snapshot CheckboxLabel 1`] = `
 <div>
   <label
     class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fbz9fk-MuiFormControlLabel-root"
@@ -101,7 +101,7 @@ exports[`CheckboxLabel match snapshot 1`] = `
 </div>
 `;
 
-exports[`CheckboxLabelAndList match snapshot 1`] = `
+exports[`Checkbox match snapshot CheckboxLabelAndList 1`] = `
 <div>
   <label
     class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fbz9fk-MuiFormControlLabel-root"
@@ -138,7 +138,7 @@ exports[`CheckboxLabelAndList match snapshot 1`] = `
 </div>
 `;
 
-exports[`CheckboxListFalse match snapshot 1`] = `
+exports[`Checkbox match snapshot CheckboxListFalse 1`] = `
 <div>
   <label
     class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fbz9fk-MuiFormControlLabel-root"
@@ -170,7 +170,7 @@ exports[`CheckboxListFalse match snapshot 1`] = `
 </div>
 `;
 
-exports[`CheckboxListTrue match snapshot 1`] = `
+exports[`Checkbox match snapshot CheckboxListTrue 1`] = `
 <div>
   <label
     class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fbz9fk-MuiFormControlLabel-root"

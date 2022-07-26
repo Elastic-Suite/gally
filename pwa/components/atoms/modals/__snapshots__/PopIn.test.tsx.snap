@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PopIn match snapshot 1`] = `
+exports[`PopIn match snapshot PopIn simple 1`] = `
 <div>
   <div
     style="position: relative;"

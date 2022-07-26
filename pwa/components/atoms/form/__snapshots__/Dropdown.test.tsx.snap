@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`BadgeDisabledFalse match snapshot 1`] = `
+exports[`DropDown match snapshot BadgeDisabledFalse 1`] = `
 <div>
   <div
     class="MuiFormControl-root css-1c9gikl-MuiFormControl-root"
@@ -20,7 +20,7 @@ exports[`BadgeDisabledFalse match snapshot 1`] = `
 </div>
 `;
 
-exports[`BadgeDisabledTrue match snapshot 1`] = `
+exports[`DropDown match snapshot BadgeDisabledTrue 1`] = `
 <div>
   <div
     class="MuiFormControl-root css-1c9gikl-MuiFormControl-root"
@@ -41,7 +41,7 @@ exports[`BadgeDisabledTrue match snapshot 1`] = `
 </div>
 `;
 
-exports[`BadgeLabel match snapshot 1`] = `
+exports[`DropDown match snapshot BadgeLabel 1`] = `
 <div>
   <div
     class="MuiFormControl-root css-1c9gikl-MuiFormControl-root"
@@ -67,7 +67,7 @@ exports[`BadgeLabel match snapshot 1`] = `
 </div>
 `;
 
-exports[`BadgeMultiple match snapshot 1`] = `
+exports[`DropDown match snapshot BadgeMultiple 1`] = `
 <div>
   <div
     class="MuiFormControl-root css-1c9gikl-MuiFormControl-root"
@@ -93,7 +93,7 @@ exports[`BadgeMultiple match snapshot 1`] = `
 </div>
 `;
 
-exports[`BadgeRequiredFalse match snapshot 1`] = `
+exports[`DropDown match snapshot BadgeRequiredFalse 1`] = `
 <div>
   <div
     class="MuiFormControl-root css-1c9gikl-MuiFormControl-root"
@@ -113,7 +113,7 @@ exports[`BadgeRequiredFalse match snapshot 1`] = `
 </div>
 `;
 
-exports[`BadgeRequiredTrue match snapshot 1`] = `
+exports[`DropDown match snapshot BadgeRequiredTrue 1`] = `
 <div>
   <div
     class="MuiFormControl-root css-1c9gikl-MuiFormControl-root"

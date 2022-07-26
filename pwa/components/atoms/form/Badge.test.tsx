@@ -1,33 +1,27 @@
 import Badge from './Badge'
 import { renderWithProviders } from '~/services'
 
-describe('Badge', () => {
-  it('match snapshot', () => {
+describe('Badge match snapshot', () => {
+  it('Badge simple', () => {
     const { container } = renderWithProviders(<Badge>Hello world</Badge>)
     expect(container).toMatchSnapshot()
   })
-})
 
-describe('BadgeSuccess', () => {
-  it('match snapshot', () => {
+  it('Badge color success', () => {
     const { container } = renderWithProviders(
       <Badge color="success">Hello world</Badge>
     )
     expect(container).toMatchSnapshot()
   })
-})
 
-describe('BadgeWarning', () => {
-  it('match snapshot', () => {
+  it('Badge color warning', () => {
     const { container } = renderWithProviders(
       <Badge color="warning">Hello world</Badge>
     )
     expect(container).toMatchSnapshot()
   })
-})
 
-describe('BadgeError', () => {
-  it('match snapshot', () => {
+  it('Badge color error', () => {
     const { container } = renderWithProviders(
       <Badge color="error">Hello world</Badge>
     )

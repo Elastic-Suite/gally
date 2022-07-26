@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PrimaryButton match snapshot 1`] = `
+exports[`Button match snapshot PrimaryButton 1`] = `
 <div>
   <button
     class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root css-13u4ebv-MuiButtonBase-root-MuiButton-root"
@@ -17,7 +17,7 @@ exports[`PrimaryButton match snapshot 1`] = `
 </div>
 `;
 
-exports[`PrimaryButtonDisabledTrue match snapshot 1`] = `
+exports[`Button match snapshot PrimaryButtonDisabledTrue 1`] = `
 <div>
   <button
     class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root Mui-disabled css-13u4ebv-MuiButtonBase-root-MuiButton-root"
@@ -32,7 +32,7 @@ exports[`PrimaryButtonDisabledTrue match snapshot 1`] = `
 </div>
 `;
 
-exports[`SecondaryButton match snapshot 1`] = `
+exports[`Button match snapshot SecondaryButton 1`] = `
 <div>
   <button
     class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root css-wby1ea-MuiButtonBase-root-MuiButton-root"
@@ -49,7 +49,7 @@ exports[`SecondaryButton match snapshot 1`] = `
 </div>
 `;
 
-exports[`SecondaryButtonDisabledTrue match snapshot 1`] = `
+exports[`Button match snapshot SecondaryButtonDisabledTrue 1`] = `
 <div>
   <button
     class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root Mui-disabled css-wby1ea-MuiButtonBase-root-MuiButton-root"
@@ -64,7 +64,7 @@ exports[`SecondaryButtonDisabledTrue match snapshot 1`] = `
 </div>
 `;
 
-exports[`TertiaryButton match snapshot 1`] = `
+exports[`Button match snapshot TertiaryButton 1`] = `
 <div>
   <button
     class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root css-13yl9aj-MuiButtonBase-root-MuiButton-root"
@@ -81,7 +81,7 @@ exports[`TertiaryButton match snapshot 1`] = `
 </div>
 `;
 
-exports[`TertiaryButtonDisabledTrue match snapshot 1`] = `
+exports[`Button match snapshot TertiaryButtonDisabledTrue 1`] = `
 <div>
   <button
     class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root Mui-disabled css-13yl9aj-MuiButtonBase-root-MuiButton-root"
