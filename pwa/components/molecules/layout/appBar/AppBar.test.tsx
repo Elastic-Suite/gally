@@ -2,26 +2,22 @@ import AppBar from './AppBar'
 import { renderWithProviders } from '~/services'
 import menu from '../../../../public/mocks/menu.json'
 
-describe('AppBar', () => {
-  it('match snapshot', () => {
+describe('AppBar match snapshot', () => {
+  it('AppBar simple', () => {
     const { container } = renderWithProviders(
       <AppBar slug={['search']} menu={menu} />
     )
     expect(container).toMatchSnapshot()
   })
-})
 
-describe('AppBarTwoSlug', () => {
-  it('match snapshot', () => {
+  it('AppBarTwoSlug', () => {
     const { container } = renderWithProviders(
       <AppBar slug={['search', 'configuration']} menu={menu} />
     )
     expect(container).toMatchSnapshot()
   })
-})
 
-describe('AppBarThreeSlug', () => {
-  it('match snapshot', () => {
+  it('AppBarThreeSlug', () => {
     const { container } = renderWithProviders(
       <AppBar
         slug={['search', 'configuration', 'autocompletion']}

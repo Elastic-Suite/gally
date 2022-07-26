@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`BadgeDisabledFalse match snapshot 1`] = `
+exports[`InputText match snapshot BadgeDisabledFalse 1`] = `
 <div>
   <div
     class="MuiFormControl-root css-1c9gikl-MuiFormControl-root"
@@ -28,7 +28,7 @@ exports[`BadgeDisabledFalse match snapshot 1`] = `
 </div>
 `;
 
-exports[`BadgeDisabledFalseRequired&disabledTrue match snapshot 1`] = `
+exports[`InputText match snapshot BadgeDisabledFalseRequired 1`] = `
 <div>
   <div
     class="MuiFormControl-root css-1c9gikl-MuiFormControl-root"

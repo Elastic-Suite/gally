@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AppBar match snapshot 1`] = `
+exports[`AppBar match snapshot AppBar simple 1`] = `
 <div>
   <div
     class="css-19ii7w2"
@@ -113,7 +113,7 @@ exports[`AppBar match snapshot 1`] = `
 </div>
 `;
 
-exports[`AppBarThreeSlug match snapshot 1`] = `
+exports[`AppBar match snapshot AppBarThreeSlug 1`] = `
 <div>
   <div
     class="css-19ii7w2"
@@ -264,7 +264,7 @@ exports[`AppBarThreeSlug match snapshot 1`] = `
 </div>
 `;
 
-exports[`AppBarTwoSlug match snapshot 1`] = `
+exports[`AppBar match snapshot AppBarTwoSlug 1`] = `
 <div>
   <div
     class="css-19ii7w2"

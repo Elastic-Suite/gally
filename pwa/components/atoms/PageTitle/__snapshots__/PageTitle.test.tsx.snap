@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PageTitle match snapshot 1`] = `
+exports[`PageTitle match snapshot PageTitle simple 1`] = `
 <div>
   <div
     class="css-k008qs"
@@ -14,7 +14,7 @@ exports[`PageTitle match snapshot 1`] = `
 </div>
 `;
 
-exports[`PageTitleH2 match snapshot 1`] = `
+exports[`PageTitle match snapshot PageTitleH2 1`] = `
 <div>
   <div
     class="css-k008qs"
@@ -28,7 +28,7 @@ exports[`PageTitleH2 match snapshot 1`] = `
 </div>
 `;
 
-exports[`PageTitleH3WithChildren match snapshot 1`] = `
+exports[`PageTitle match snapshot PageTitleH3WithChildren 1`] = `
 <div>
   <div
     class="css-k008qs"

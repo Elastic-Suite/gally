@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ActiveLocales match snapshot 1`] = `
+exports[`ActiveLocales match snapshot ActiveLocales simple 1`] = `
 <div>
   <div
     class="css-18qndi"

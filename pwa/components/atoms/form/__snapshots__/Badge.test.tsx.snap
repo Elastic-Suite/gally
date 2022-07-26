@@ -1,20 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Badge match snapshot 1`] = `
-<div>
-  <span
-    class="badge--color__secondary css-18ccxod"
-  >
-    <span
-      class="badge--label"
-    >
-      Hello world
-    </span>
-  </span>
-</div>
-`;
-
-exports[`BadgeError match snapshot 1`] = `
+exports[`Badge match snapshot Badge color error 1`] = `
 <div>
   <span
     class="badge--color__error css-18ccxod"
@@ -28,7 +14,7 @@ exports[`BadgeError match snapshot 1`] = `
 </div>
 `;
 
-exports[`BadgeSuccess match snapshot 1`] = `
+exports[`Badge match snapshot Badge color success 1`] = `
 <div>
   <span
     class="badge--color__success css-18ccxod"
@@ -42,10 +28,24 @@ exports[`BadgeSuccess match snapshot 1`] = `
 </div>
 `;
 
-exports[`BadgeWarning match snapshot 1`] = `
+exports[`Badge match snapshot Badge color warning 1`] = `
 <div>
   <span
     class="badge--color__warning css-18ccxod"
+  >
+    <span
+      class="badge--label"
+    >
+      Hello world
+    </span>
+  </span>
+</div>
+`;
+
+exports[`Badge match snapshot Badge simple 1`] = `
+<div>
+  <span
+    class="badge--color__secondary css-18ccxod"
   >
     <span
       class="badge--label"

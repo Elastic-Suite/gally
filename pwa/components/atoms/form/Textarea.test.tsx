@@ -1,8 +1,8 @@
 import Textarea from './Textarea'
 import { renderWithProviders } from '~/services'
 
-describe('TextareaAllFalse', () => {
-  it('match snapshot', () => {
+describe('Textarea match snapshot', () => {
+  it('TextareaAllFalse', () => {
     const { container } = renderWithProviders(
       <Textarea
         id="textarea"
@@ -17,10 +17,8 @@ describe('TextareaAllFalse', () => {
     )
     expect(container).toMatchSnapshot()
   })
-})
 
-describe('TextareaAllTrue', () => {
-  it('match snapshot', () => {
+  it('TextareaAllTrue', () => {
     const { container } = renderWithProviders(
       <Textarea
         id="textarea"

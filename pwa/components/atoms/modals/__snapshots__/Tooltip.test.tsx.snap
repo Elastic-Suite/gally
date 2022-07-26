@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`TooltipBottom match snapshot 1`] = `
+exports[`Tooltip match snapshot TooltipBottom 1`] = `
 <div>
   <span
     aria-label="Hello World"
@@ -12,7 +12,7 @@ exports[`TooltipBottom match snapshot 1`] = `
 </div>
 `;
 
-exports[`TooltipLeft match snapshot 1`] = `
+exports[`Tooltip match snapshot TooltipLeft 1`] = `
 <div>
   <span
     aria-label="Hello World"
@@ -24,7 +24,7 @@ exports[`TooltipLeft match snapshot 1`] = `
 </div>
 `;
 
-exports[`TooltipRight match snapshot 1`] = `
+exports[`Tooltip match snapshot TooltipRight 1`] = `
 <div>
   <span
     aria-label="Hello World"
@@ -36,7 +36,7 @@ exports[`TooltipRight match snapshot 1`] = `
 </div>
 `;
 
-exports[`TooltipTop match snapshot 1`] = `
+exports[`Tooltip match snapshot TooltipTop 1`] = `
 <div>
   <span
     aria-label="Hello World"

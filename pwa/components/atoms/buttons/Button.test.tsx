@@ -3,8 +3,8 @@ import SecondaryButton from './SecondaryButton'
 import TertiaryButton from './TertiaryButton'
 import { renderWithProviders } from '~/services'
 
-describe('PrimaryButton', () => {
-  it('match snapshot', () => {
+describe('Button match snapshot', () => {
+  it('PrimaryButton', () => {
     const { container } = renderWithProviders(
       <PrimaryButton disabled={false} endIcon="" size="medium" startIcon="">
         Hello world
@@ -12,10 +12,8 @@ describe('PrimaryButton', () => {
     )
     expect(container).toMatchSnapshot()
   })
-})
 
-describe('SecondaryButton', () => {
-  it('match snapshot', () => {
+  it('SecondaryButton', () => {
     const { container } = renderWithProviders(
       <SecondaryButton disabled={false} endIcon="" size="medium" startIcon="">
         Hello world
@@ -23,10 +21,8 @@ describe('SecondaryButton', () => {
     )
     expect(container).toMatchSnapshot()
   })
-})
 
-describe('TertiaryButton', () => {
-  it('match snapshot', () => {
+  it('TertiaryButton', () => {
     const { container } = renderWithProviders(
       <TertiaryButton disabled={false} endIcon="" size="medium" startIcon="">
         Hello world
@@ -34,10 +30,8 @@ describe('TertiaryButton', () => {
     )
     expect(container).toMatchSnapshot()
   })
-})
 
-describe('PrimaryButtonDisabledTrue', () => {
-  it('match snapshot', () => {
+  it('PrimaryButtonDisabledTrue', () => {
     const { container } = renderWithProviders(
       <PrimaryButton disabled endIcon="" size="medium" startIcon="">
         Hello world
@@ -45,10 +39,8 @@ describe('PrimaryButtonDisabledTrue', () => {
     )
     expect(container).toMatchSnapshot()
   })
-})
 
-describe('SecondaryButtonDisabledTrue', () => {
-  it('match snapshot', () => {
+  it('SecondaryButtonDisabledTrue', () => {
     const { container } = renderWithProviders(
       <SecondaryButton disabled endIcon="" size="medium" startIcon="">
         Hello world
@@ -56,10 +48,8 @@ describe('SecondaryButtonDisabledTrue', () => {
     )
     expect(container).toMatchSnapshot()
   })
-})
 
-describe('TertiaryButtonDisabledTrue', () => {
-  it('match snapshot', () => {
+  it('TertiaryButtonDisabledTrue', () => {
     const { container } = renderWithProviders(
       <TertiaryButton disabled endIcon="" size="medium" startIcon="">
         Hello world

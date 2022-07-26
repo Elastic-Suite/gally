@@ -2,8 +2,8 @@ import Sidebar from './Sidebar'
 import { renderWithProviders } from '~/services'
 import menu from '../../../../public/mocks/menu.json'
 
-describe('SideBarStateTrue', () => {
-  it('match snapshot', () => {
+describe('SideBar match snapshot', () => {
+  it('SideBarStateTrue', () => {
     const { container } = renderWithProviders(
       <Sidebar
         menu={menu}
@@ -16,10 +16,8 @@ describe('SideBarStateTrue', () => {
     )
     expect(container).toMatchSnapshot()
   })
-})
 
-describe('SideBarStateFalse', () => {
-  it('match snapshot', () => {
+  it('SideBarStateFalse', () => {
     const { container } = renderWithProviders(
       <Sidebar
         menu={menu}

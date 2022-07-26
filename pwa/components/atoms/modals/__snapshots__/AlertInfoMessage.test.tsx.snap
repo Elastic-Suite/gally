@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AlertInfoMessageDevFalse match snapshot 1`] = `
+exports[`AlertInfoMessage match snapshot AlertInfoMessageDevFalse 1`] = `
 <div>
   <div
     class="MuiBox-root css-8atqhb"
@@ -65,7 +65,7 @@ exports[`AlertInfoMessageDevFalse match snapshot 1`] = `
 </div>
 `;
 
-exports[`AlertInfoMessageDevTrue match snapshot 1`] = `
+exports[`AlertInfoMessage match snapshot AlertInfoMessageDevTrue 1`] = `
 <div>
   <div
     class="MuiBox-root css-8atqhb"

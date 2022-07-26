@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SideBarStateFalse match snapshot 1`] = `
+exports[`SideBar match snapshot SideBarStateFalse 1`] = `
 <div>
   <div
     class="MuiCollapse-root MuiCollapse-horizontal css-10p581u-MuiCollapse-root"
@@ -640,7 +640,7 @@ exports[`SideBarStateFalse match snapshot 1`] = `
 </div>
 `;
 
-exports[`SideBarStateTrue match snapshot 1`] = `
+exports[`SideBar match snapshot SideBarStateTrue 1`] = `
 <div>
   <div
     class="MuiCollapse-root MuiCollapse-horizontal MuiCollapse-entered css-1huht6y-MuiCollapse-root"

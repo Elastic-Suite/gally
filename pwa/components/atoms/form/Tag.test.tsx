@@ -1,15 +1,13 @@
 import Tag from './Tag'
 import { renderWithProviders } from '~/services'
 
-describe('Tag', () => {
-  it('match snapshot', () => {
+describe('Tag match snapshot', () => {
+  it('Tag simple', () => {
     const { container } = renderWithProviders(<Tag>Hello world</Tag>)
     expect(container).toMatchSnapshot()
   })
-})
 
-describe('TagOnIconClick', () => {
-  it('match snapshot', () => {
+  it('TagOnIconClick', () => {
     const { container } = renderWithProviders(
       <Tag onIconClick={(): void => console.log('Hello world')}>
         Hello world
@@ -17,10 +15,8 @@ describe('TagOnIconClick', () => {
     )
     expect(container).toMatchSnapshot()
   })
-})
 
-describe('TagColor', () => {
-  it('match snapshot', () => {
+  it('TagColor', () => {
     const { container } = renderWithProviders(
       <Tag color="red">Hello world</Tag>
     )

@@ -1,8 +1,8 @@
 import DropDown from './DropDown'
 import { renderWithProviders } from '~/services'
 
-describe('BadgeDisabledFalse', () => {
-  it('match snapshot', () => {
+describe('DropDown match snapshot', () => {
+  it('BadgeDisabledFalse', () => {
     const { container } = renderWithProviders(
       <DropDown
         disabled={false}
@@ -16,10 +16,8 @@ describe('BadgeDisabledFalse', () => {
     )
     expect(container).toMatchSnapshot()
   })
-})
 
-describe('BadgeDisabledTrue', () => {
-  it('match snapshot', () => {
+  it('BadgeDisabledTrue', () => {
     const { container } = renderWithProviders(
       <DropDown
         disabled
@@ -33,10 +31,8 @@ describe('BadgeDisabledTrue', () => {
     )
     expect(container).toMatchSnapshot()
   })
-})
 
-describe('BadgeLabel', () => {
-  it('match snapshot', () => {
+  it('BadgeLabel', () => {
     const { container } = renderWithProviders(
       <DropDown
         label="Label"
@@ -50,10 +46,8 @@ describe('BadgeLabel', () => {
     )
     expect(container).toMatchSnapshot()
   })
-})
 
-describe('BadgeRequiredFalse', () => {
-  it('match snapshot', () => {
+  it('BadgeRequiredFalse', () => {
     const { container } = renderWithProviders(
       <DropDown
         required={false}
@@ -67,10 +61,8 @@ describe('BadgeRequiredFalse', () => {
     )
     expect(container).toMatchSnapshot()
   })
-})
 
-describe('BadgeRequiredTrue', () => {
-  it('match snapshot', () => {
+  it('BadgeRequiredTrue', () => {
     const { container } = renderWithProviders(
       <DropDown
         required
@@ -84,10 +76,8 @@ describe('BadgeRequiredTrue', () => {
     )
     expect(container).toMatchSnapshot()
   })
-})
 
-describe('BadgeMultiple', () => {
-  it('match snapshot', () => {
+  it('BadgeMultiple', () => {
     const { container } = renderWithProviders(
       <DropDown
         onChange={(): void => console.log('Hello world')}
