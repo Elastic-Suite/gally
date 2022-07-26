@@ -19,6 +19,14 @@ const TagContainer = styled('span')(({ theme }) => ({
     color: theme.palette.colors.secondary['600'],
     background: theme.palette.colors.secondary['100'],
   },
+  '&.tag--color__success': {
+    color: theme.palette.success.main,
+    background: theme.palette.success.light,
+  },
+  '&.tag--color__error': {
+    color: theme.palette.error.main,
+    background: theme.palette.error.light,
+  },
 }))
 
 const Button = styled('button')(({ theme }) => ({
@@ -38,11 +46,7 @@ export interface IProps {
   color?: string
 }
 
-function Tag({
-  children,
-  onIconClick,
-  color = 'neutral',
-}: IProps): JSX.Element {
+function Tag({ children, onIconClick, color }: IProps): JSX.Element {
   return (
     <TagContainer className={`tag--color__${color}`}>
       <span className="tag--label">{children}</span>

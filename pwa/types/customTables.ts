@@ -13,6 +13,7 @@ export interface ITableHeader {
   editable?: boolean
   sticky?: boolean
   options?: IOptions | null
+  boostInfos?: IBoost
 }
 
 export interface IBaseStyle {
@@ -56,11 +57,16 @@ export enum DataContentType {
   TAG = 'tag',
   LABEL = 'label',
   DROPDOWN = 'dropdown',
+  IMAGE = 'image',
+  SCORE = 'score',
+  STOCK = 'stock',
+  PRICE = 'price',
+  NUMBER = 'number',
 }
 
 export interface ITableRow {
   id: string | number
-  [key: string]: string | boolean | number
+  [key: string]: string | boolean | number | IScore
 }
 
 export interface IHorizontalOverflow {
@@ -71,3 +77,16 @@ export interface IHorizontalOverflow {
 export interface ITableHeaderSticky extends ITableHeader {
   isLastSticky: boolean
 }
+
+export interface IBoost {
+  type: 'up' | 'down' | 'no boost'
+  boostNumber: number
+  boostMultiplicator: number
+}
+
+export interface IScore {
+  scoreValue: number
+  boostInfos?: IBoost
+}
+
+export type BoostType = 'up' | 'down' | 'no boost'

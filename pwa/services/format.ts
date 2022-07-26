@@ -55,3 +55,14 @@ function onlyDigits(s: string): boolean {
   }
   return true
 }
+
+export function formatPrice(
+  price: number,
+  currency: string,
+  countryCode: string
+): string {
+  return new Intl.NumberFormat(countryCode, {
+    style: 'currency',
+    currency: `${currency}`,
+  }).format(price)
+}

@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TopProductsBanner Should match snapschot 1`] = `
+<div>
+  <div
+    class="MuiBox-root css-1ndjkvn"
+  >
+    <ion-icon
+      name="trending-up-outline"
+    />
+    <div
+      class="MuiBox-root css-x43z6g"
+    >
+      hello
+    </div>
+  </div>
+</div>
+`;

@@ -3,7 +3,7 @@
 exports[`MassiveSelection should match snapshot with indeterminate state 1`] = `
 <div>
   <span
-    class="MuiCheckbox-root MuiCheckbox-indeterminate MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-indeterminate MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
+    class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-indeterminate MuiCheckbox-colorPrimary PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-indeterminate MuiCheckbox-colorPrimary Mui-checked css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
     data-testid="massive-selection"
   >
     <input
@@ -28,7 +28,7 @@ exports[`MassiveSelection should match snapshot with indeterminate state 1`] = `
     />
   </span>
   <button
-    class="MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButtonBase-root  css-poyljr-MuiButtonBase-root-MuiButton-root"
+    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit  css-poyljr-MuiButtonBase-root-MuiButton-root"
     data-testid="massive-selection-dropdown"
     tabindex="0"
     type="button"
@@ -46,7 +46,7 @@ exports[`MassiveSelection should match snapshot with indeterminate state 1`] = `
 exports[`MassiveSelection should match snapshot without indeterminate state 1`] = `
 <div>
   <span
-    class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
+    class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary Mui-checked css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
     data-testid="massive-selection"
   >
     <input
@@ -71,7 +71,7 @@ exports[`MassiveSelection should match snapshot without indeterminate state 1`] 
     />
   </span>
   <button
-    class="MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButtonBase-root  css-poyljr-MuiButtonBase-root-MuiButton-root"
+    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit  css-poyljr-MuiButtonBase-root-MuiButton-root"
     data-testid="massive-selection-dropdown"
     tabindex="0"
     type="button"
