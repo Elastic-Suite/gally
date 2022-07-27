@@ -99,6 +99,23 @@ export function castFieldParameter(
   }
 }
 
+export function isFieldValueValid(field: Field, value: unknown): boolean {
+  if (value instanceof Array) {
+    return value.every((value) => isFieldValueValid(field, value))
+  }
+  if (field.reference) {
+    return typeof value === 'number' && !isNaN(value)
+  }
+  switch (field.type) {
+    case 'integer':
+      return typeof value === 'number' && !isNaN(value)
+    case 'boolean':
+      return typeof value === 'boolean'
+    default:
+      return typeof value === 'string'
+  }
+}
+
 export function getFilterParameters(
   resource: Resource,
   parameters: ISearchParameters
@@ -107,7 +124,10 @@ export function getFilterParameters(
     Object.entries(parameters).reduce((acc, [key, value]) => {
       const field = getReadableField(resource, key)
       if (field) {
-        acc.push([key, castFieldParameter(field, value as string | string[])])
+        const fieldValue = castFieldParameter(field, value as string | string[])
+        if (isFieldValueValid(field, fieldValue)) {
+          acc.push([key, fieldValue])
+        }
       }
       return acc
     }, [])
