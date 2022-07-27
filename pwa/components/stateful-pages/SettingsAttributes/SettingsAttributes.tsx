@@ -1,16 +1,12 @@
 import { useState } from 'react'
-import { useTranslation } from 'next-i18next'
 
 import { useApiList, useResource } from '~/hooks'
 import { IHydraResponse, ISearchParameters, ISourceField } from '~/types'
 
-import PageTile from '~/components/atoms/PageTitle/PageTitle'
-import PrimaryButton from '~/components/atoms/buttons/PrimaryButton'
-
 import FiltersGuesser from '~/components/stateful/FiltersGuesser/FiltersGuesser'
 import TableGuesser from '~/components/stateful/TableGuesser/TableGuesser'
 
-function Attributes(): JSX.Element | string {
+function SettingsAttributes(): JSX.Element {
   const resourceName = 'source_fields'
   const resource = useResource(resourceName)
 
@@ -23,10 +19,9 @@ function Attributes(): JSX.Element | string {
     page,
     activeFilters
   )
-  const { t } = useTranslation('attributes')
 
   if (sourceFields.error) {
-    return sourceFields.error.toString()
+    return <pre>{JSON.stringify(sourceFields.error, null, 2)}</pre>
   } else if (!sourceFields.data) {
     return null
   }
@@ -43,9 +38,6 @@ function Attributes(): JSX.Element | string {
 
   return (
     <>
-      <PageTile title={t('page.title')}>
-        <PrimaryButton>{t('action.import')} (xlsx)</PrimaryButton>
-      </PageTile>
       <FiltersGuesser
         activeFilters={activeFilters}
         apiData={sourceFields.data}
@@ -64,4 +56,4 @@ function Attributes(): JSX.Element | string {
   )
 }
 
-export default Attributes
+export default SettingsAttributes

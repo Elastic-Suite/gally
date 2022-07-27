@@ -31,6 +31,16 @@ module.exports = {
         destination: '/mocks/index.json',
         permanent: true,
       },
+      {
+        source: '/admin/settings',
+        destination: '/admin/settings/scope',
+        permanent: true,
+      },
+      {
+        source: '/admin/settings/scope',
+        destination: '/admin/settings/scope/catalogs',
+        permanent: true,
+      },
     ]
   },
   serverRuntimeConfig: {

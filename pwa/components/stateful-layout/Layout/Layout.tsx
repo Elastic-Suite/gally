@@ -1,6 +1,8 @@
-import { ReactChild, useCallback, useEffect } from 'react'
-import { useRouter } from 'next/router'
+import { ReactChild, useCallback, useContext, useEffect } from 'react'
 import { styled } from '@mui/system'
+
+import { useApiDispatch } from '~/hooks'
+import { breadcrumbContext } from '~/contexts'
 
 import {
   selectChildrenState,
@@ -19,7 +21,6 @@ import {
 import AppBar from '~/components/molecules/layout/appBar/AppBar'
 import Sidebar from '~/components/molecules/layout/Sidebar/Sidebar'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
-import { useApiDispatch } from '~/hooks'
 
 /*
  * TODO: THIBO: Update AppBar
@@ -108,17 +109,14 @@ function Layout({ children }: IProps): JSX.Element {
   const menuItemActive = useAppSelector(selectMenuItemActive) || ''
   const childrenState = useAppSelector(selectChildrenState)
   const menu = useAppSelector(selectMenu)
-  const router = useRouter()
-  const { slug } = router.query
+  const [breadcrumb] = useContext(breadcrumbContext)
 
   // fetch menu
   useApiDispatch(setMenu, 'menu')
 
   useEffect(() => {
-    dispatch(
-      setMenuItemActive(typeof slug !== 'string' ? slug?.join('_') : slug)
-    )
-  }, [dispatch, slug])
+    dispatch(setMenuItemActive(breadcrumb?.join('_')))
+  }, [dispatch, breadcrumb])
 
   // function to collapse sidebar when click on button
   function collapseSidebar(): void {
@@ -161,7 +159,7 @@ function Layout({ children }: IProps): JSX.Element {
           <Collapse onClick={collapseSidebar}>
             <IonIcon name="code-outline" style={{ width: 18, height: 18 }} />
           </Collapse>
-          <AppBar slug={slug} menu={menu} />
+          <AppBar slug={breadcrumb} menu={menu} />
           <CustomContent>{children}</CustomContent>
         </CustomContentWithAppBar>
         {/*<Notification /> TODO: Set here Notification component*/}
