@@ -1,11 +1,11 @@
-import BreadCrumbs from './BreadCrumbs'
+import Breadcrumbs from './Breadcrumbs'
 import { renderWithProviders } from '~/services'
 import menu from '../../../public/mocks/menu.json'
 
-describe('BreadCrumbs', () => {
+describe('Breadcrumbs', () => {
   it('match snapshot', () => {
     const { container } = renderWithProviders(
-      <BreadCrumbs
+      <Breadcrumbs
         slug={['search', 'configuration', 'autocompletion']}
         menu={menu}
       />
