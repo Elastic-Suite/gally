@@ -1,0 +1,59 @@
+{
+  "data": {
+    "categoryTrees": [
+      {
+        "catalogCode": "com_fr",
+        "catalogName": "COM French Catalog",
+        "categories": [
+          {
+            "id": "one",
+            "name": "Category One",
+            "level": 1,
+            "path": "1",
+            "isVirtual": false,
+            "children": [
+              {
+                "id": "three",
+                "name": "Category Three",
+                "level": 2,
+                "path": "1/3",
+                "isVirtual": false,
+                "children": [
+                  {
+                    "id": "threeThree",
+                    "name": "Category Three",
+                    "level": 2,
+                    "path": "1/3",
+                    "isVirtual": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "catalogCode": "com_en",
+        "catalogName": "COM English Catalog",
+        "categories": [
+          {
+            "id": "one",
+            "name": "Category One",
+            "level": 1,
+            "path": "1",
+            "isVirtual": false,
+            "children": [
+              {
+                "id": "three",
+                "name": "Category Three",
+                "level": 2,
+                "path": "1/3",
+                "isVirtual": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

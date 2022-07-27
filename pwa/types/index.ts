@@ -1,4 +1,5 @@
 export * from './catalog'
+export * from './categories'
 export * from './customTables'
 export * from './docsJson'
 export * from './docsJsonld'
