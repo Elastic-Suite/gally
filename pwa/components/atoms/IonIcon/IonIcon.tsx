@@ -40,7 +40,16 @@ export const customIcons = [
  * Setup switch for special names that need svg or have another name in ion-icons
  */
 function IonIcon(props: IProps): JSX.Element {
-  const { name, tooltip, ...iconProps } = props
+  const { name, tooltip, ...other } = props
+  const style = tooltip
+    ? {
+        color: '#8187B9',
+        width: '20px',
+        height: '20px',
+        display: 'flex',
+      }
+    : {}
+  const iconProps = { ...other, style: { ...style, ...other.style } }
   switch (name) {
     case 'dashboard':
       return <ion-icon src="/images/home2.svg" {...iconProps} />
@@ -53,21 +62,7 @@ function IonIcon(props: IProps): JSX.Element {
     case 'settings':
       return <ion-icon name="settings-outline" {...iconProps} />
     case 'information':
-      return (
-        <ion-icon
-          name="information-circle-outline"
-          style={
-            tooltip
-              ? {
-                  color: '#8187B9',
-                  width: '20px',
-                  height: '20px',
-                  display: 'flex',
-                }
-              : { ...iconProps }
-          }
-        />
-      )
+      return <ion-icon name="information-circle-outline" />
     default:
       return <ion-icon name={name} {...iconProps} />
   }
