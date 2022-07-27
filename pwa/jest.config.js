@@ -5,6 +5,8 @@ module.exports = {
     // '<rootDir>/pages/**/*.{jsx,tsx,js,ts}',
     '<rootDir>/services/**/*.{jsx,tsx,js,ts}',
     '<rootDir>/store/**/*.{jsx,tsx,js,ts}',
+    '!<rootDir>/components/stateful*/**/*.{jsx,tsx,js,ts}',
+    '!<rootDir>/**/*.stories.{jsx,tsx,js,ts}',
   ],
   setupFilesAfterEnv: ['./setupTests.js'],
   testPathIgnorePatterns: ['/node_modules/', '/.next/'],
