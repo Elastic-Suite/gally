@@ -29,7 +29,7 @@ exports[`TabsAndSubTabs match snapshot 1`] = `
               tabindex="0"
               type="button"
             >
-              Scope
+              Tab 1
               <span
                 class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
               />
@@ -43,7 +43,35 @@ exports[`TabsAndSubTabs match snapshot 1`] = `
               tabindex="-1"
               type="button"
             >
-              Searchable and filtrable attributes
+              Tab 2
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
+            <button
+              aria-controls="simple-tabpanel-2"
+              aria-selected="false"
+              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-v7gylc-MuiButtonBase-root-MuiTab-root"
+              id="simple-tab-2"
+              role="tab"
+              tabindex="-1"
+              type="button"
+            >
+              Tab 3
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
+            <button
+              aria-controls="simple-tabpanel-3"
+              aria-selected="false"
+              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-v7gylc-MuiButtonBase-root-MuiTab-root"
+              id="simple-tab-3"
+              role="tab"
+              tabindex="-1"
+              type="button"
+            >
+              Tab 4
               <span
                 class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
               />
@@ -64,62 +92,25 @@ exports[`TabsAndSubTabs match snapshot 1`] = `
       <div
         class="MuiBox-root css-ed63to"
       >
-        <div
-          class="css-13t3iqc"
-        >
-          <div
-            class="css-jve40n"
-          >
-            <div
-              class="css-9wk4uw"
-            >
-              Catalogs
-            </div>
-            <div
-              class="css-56xlw1"
-            >
-              Actives locales
-            </div>
-            <div
-              class="css-56xlw1"
-            >
-              Actives locales 1
-            </div>
-            <div
-              class="css-56xlw1"
-            >
-              Actives locales 2
-            </div>
-          </div>
-          <div
-            style="width: 100%;"
-          >
-            <button
-              class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root css-13yl9aj-MuiButtonBase-root-MuiButton-root"
-              tabindex="0"
-              type="button"
-            >
-              Button text
-              <span
-                class="MuiButton-endIcon MuiButton-iconSizeMedium css-1gnd1fd-MuiButton-endIcon"
-              >
-                <ion-icon
-                  name="add-outline"
-                  style="font-size: 24px;"
-                />
-              </span>
-              <span
-                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-              />
-            </button>
-          </div>
-        </div>
+        Hello World 1
       </div>
     </div>
     <div
       aria-labelledby="simple-tab-1"
       hidden=""
       id="simple-tabpanel-1"
+      role="tabpanel"
+    />
+    <div
+      aria-labelledby="simple-tab-2"
+      hidden=""
+      id="simple-tabpanel-2"
+      role="tabpanel"
+    />
+    <div
+      aria-labelledby="simple-tab-3"
+      hidden=""
+      id="simple-tabpanel-3"
       role="tabpanel"
     />
   </div>
