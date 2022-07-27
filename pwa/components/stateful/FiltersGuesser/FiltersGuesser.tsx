@@ -27,13 +27,18 @@ function FiltersGuesser<T extends IHydraMember>(props: IProps<T>): JSX.Element {
   const filters: IFilter[] = useApiFilters(apiData, resource)
 
   const initValues = useCallback(
-    (): Record<string, unknown | unknown[]> =>
+    (
+      fallback: Record<string, unknown | unknown[]> = {}
+    ): Record<string, unknown | unknown[]> =>
       Object.fromEntries(
-        filters.map((filter) => [filter.id, filter.multiple ? [] : ''])
+        filters.map((filter) => [
+          filter.id,
+          fallback[filter.id] ?? (filter.multiple ? [] : ''),
+        ])
       ),
     [filters]
   )
-  const [filterValues, setFilterValues] = useState(initValues())
+  const [filterValues, setFilterValues] = useState(initValues(activeFilters))
 
   function handleApply(): void {
     onFilterChange(filterValues)

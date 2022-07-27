@@ -1,9 +1,33 @@
 import { Api, Field, Resource } from '@api-platform/api-doc-parser'
 
-import { IHydraMember, IHydraResponse, IOptions } from '~/types'
+import { booleanRegexp } from '~/constants'
+import {
+  IHydraMember,
+  IHydraResponse,
+  IOptions,
+  ISearchParameters,
+} from '~/types'
+
+import { firstLetterLowercase } from './format'
+
+export function getFieldName(property: string): string {
+  const result = booleanRegexp.exec(property)
+  if (result?.[1]) {
+    return firstLetterLowercase(result[1])
+  }
+  if (property.endsWith('[]')) {
+    return property.slice(0, -2)
+  }
+  return property
+}
 
 export function getResource(doc: Api, resourceName: string): Resource {
   return doc.resources?.find((resource) => resource.name === resourceName)
+}
+
+export function getReadableField(resource: Resource, name: string): Field {
+  const fieldName = getFieldName(name)
+  return resource.readableFields.find((field) => field.name === fieldName)
 }
 
 // See https://github.com/api-platform/admin/blob/main/src/hydra/schemaAnalyzer.ts
@@ -51,4 +75,41 @@ export function getOptionsFromApi<T extends IHydraMember>(
     label: member['@id'],
     value: member.id,
   }))
+}
+
+export function castFieldParameter(
+  field: Field,
+  value: string | string[]
+): string | number | boolean | (string | number | boolean)[] {
+  if (value instanceof Array) {
+    return value.map(
+      (value) => castFieldParameter(field, value) as string | number | boolean
+    )
+  }
+  if (field.reference) {
+    return Number(value)
+  }
+  switch (field.type) {
+    case 'integer':
+      return Number(value)
+    case 'boolean':
+      return value === 'true'
+    default:
+      return value
+  }
+}
+
+export function getFilterParameters(
+  resource: Resource,
+  parameters: ISearchParameters
+): ISearchParameters {
+  return Object.fromEntries(
+    Object.entries(parameters).reduce((acc, [key, value]) => {
+      const field = getReadableField(resource, key)
+      if (field) {
+        acc.push([key, castFieldParameter(field, value as string | string[])])
+      }
+      return acc
+    }, [])
+  )
 }
