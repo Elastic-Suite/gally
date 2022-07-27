@@ -14,7 +14,7 @@ function DocsLoader(props: IProps): JSX.Element {
   const api = useDocLoader()
 
   if (api.error) {
-    return <>{api.error.toString()}</>
+    return <pre>{JSON.stringify(api.error, null, 2)}</pre>
   } else if (!api.data) {
     return null
   }
