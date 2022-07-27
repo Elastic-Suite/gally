@@ -1,41 +1,28 @@
-import CustomTabs from '~/components/molecules/layout/tabs/CustomTabs'
 import SubTabs from '~/components/atoms/subTabs/SubTabs'
-import TertiaryButton from '~/components/atoms/buttons/TertiaryButton'
-import IonIcon from '~/components/atoms/IonIcon/IonIcon'
+import CustomTabs from '~/components/molecules/layout/tabs/CustomTabs'
 import { renderWithProviders } from '~/services'
+import { ITab } from '~/types/tabs'
 
 describe('TabsAndSubTabs', () => {
   it('match snapshot', () => {
+    const tabsSubTabs: ITab[] = [
+      {
+        id: 1,
+        content: 'test',
+        label: 'Scope',
+      },
+    ]
+
+    const tabsCustomTabs: ITab[] = [
+      {
+        id: 1,
+        content: <SubTabs defaultActiveId={1} tabs={tabsSubTabs} />,
+        label: 'Scope',
+      },
+    ]
+
     const { container } = renderWithProviders(
-      <CustomTabs
-        labels={['Scope', 'Searchable and filtrable attributes']}
-        contents={[
-          <SubTabs
-            key="labels"
-            labels={[
-              'Catalogs',
-              'Actives locales',
-              'Actives locales 1',
-              'Actives locales 2',
-            ]}
-            contents={[
-              <TertiaryButton
-                key="contents"
-                size="medium"
-                endIcon={
-                  <IonIcon name="add-outline" style={{ fontSize: 24 }} />
-                }
-              >
-                Button text
-              </TertiaryButton>,
-              'Hello World Deux',
-              'Hello World Trois',
-              'Hello World Quatre',
-            ]}
-          />,
-          'Content of Searchable and filtrable attributes',
-        ]}
-      />
+      <CustomTabs tabs={tabsCustomTabs} />
     )
     expect(container).toMatchSnapshot()
   })
