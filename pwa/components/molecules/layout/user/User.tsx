@@ -1,5 +1,5 @@
 import Help from '~/components/atoms/help/Help'
-import UserMenu from '~/components/atoms/user/UserMenu'
+import UserMenu from '~/components/atoms/userMenu/UserMenu'
 import { styled } from '@mui/system'
 
 const CustomRoot = styled('div')(({ theme }) => ({

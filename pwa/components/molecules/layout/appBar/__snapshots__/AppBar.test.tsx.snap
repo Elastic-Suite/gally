@@ -1,0 +1,397 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppBar match snapshot AppBar simple 1`] = `
+<div>
+  <div
+    class="css-19ii7w2"
+  >
+    <nav
+      aria-label="breadcrumb"
+      class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1sglq17-MuiTypography-root-MuiBreadcrumbs-root"
+    >
+      <ol
+        class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
+      >
+        <li
+          class="MuiBreadcrumbs-li"
+        >
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-zhuy6w-MuiTypography-root"
+          >
+            <span
+              class="css-6nl1o3"
+            >
+              Recherche
+            </span>
+          </p>
+        </li>
+      </ol>
+    </nav>
+    <div
+      class="css-5ax1kt"
+    >
+      <div
+        class="css-l3v3zn"
+      >
+        <ion-icon
+          name="help-circle-outline"
+          style="font-size: 18px; color: rgb(129, 135, 185);"
+        />
+        <div
+          class="css-1g5ufcu"
+        >
+          <div
+            class="css-ykyq1f"
+          >
+            <div>
+              Helpdesk
+            </div>
+            <div>
+              User guide
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        style="position: relative;"
+      >
+        <div
+          class="css-1gbhtbv"
+        >
+          <ion-icon
+            name="person-outline"
+            style="font-size: 15px; color: rgb(129, 135, 185);"
+          />
+          <div
+            class="css-1cn3y7o"
+          >
+            Admin Name
+          </div>
+          <div
+            class="css-1tg3i43"
+          >
+            <ion-icon
+              name="chevron-down"
+              style="font-size: 15px; color: rgb(129, 135, 185);"
+            />
+          </div>
+        </div>
+        <div
+          class="css-1q0ifi4"
+        >
+          <div
+            class="css-9inyfk"
+          >
+            <div
+              class="css-1bt56fy"
+            >
+              Admin name
+            </div>
+            <div
+              class="css-3lsmy"
+            >
+              adminame@mail.com
+            </div>
+            <div
+              class="css-1772pc6"
+            />
+            <div
+              class="css-12w2p0s"
+            >
+              Account
+            </div>
+            <div
+              class="css-12w2p0s"
+            >
+              Log out
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`AppBar match snapshot AppBarThreeSlug 1`] = `
+<div>
+  <div
+    class="css-19ii7w2"
+  >
+    <nav
+      aria-label="breadcrumb"
+      class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1sglq17-MuiTypography-root-MuiBreadcrumbs-root"
+    >
+      <ol
+        class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
+      >
+        <li
+          class="MuiBreadcrumbs-li"
+        >
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-zhuy6w-MuiTypography-root"
+          >
+            <span
+              class="css-1epdhd3"
+            >
+              Recherche
+            </span>
+          </p>
+        </li>
+        <li
+          aria-hidden="true"
+          class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+        >
+          /
+        </li>
+        <li
+          class="MuiBreadcrumbs-li"
+        >
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-zhuy6w-MuiTypography-root"
+          >
+            <span
+              class="css-1epdhd3"
+            >
+              Configuration
+            </span>
+          </p>
+        </li>
+        <li
+          aria-hidden="true"
+          class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+        >
+          /
+        </li>
+        <li
+          class="MuiBreadcrumbs-li"
+        >
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-zhuy6w-MuiTypography-root"
+          >
+            <span
+              class="css-6nl1o3"
+            >
+              Autocomplétion
+            </span>
+          </p>
+        </li>
+      </ol>
+    </nav>
+    <div
+      class="css-5ax1kt"
+    >
+      <div
+        class="css-l3v3zn"
+      >
+        <ion-icon
+          name="help-circle-outline"
+          style="font-size: 18px; color: rgb(129, 135, 185);"
+        />
+        <div
+          class="css-1g5ufcu"
+        >
+          <div
+            class="css-ykyq1f"
+          >
+            <div>
+              Helpdesk
+            </div>
+            <div>
+              User guide
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        style="position: relative;"
+      >
+        <div
+          class="css-1gbhtbv"
+        >
+          <ion-icon
+            name="person-outline"
+            style="font-size: 15px; color: rgb(129, 135, 185);"
+          />
+          <div
+            class="css-1cn3y7o"
+          >
+            Admin Name
+          </div>
+          <div
+            class="css-1tg3i43"
+          >
+            <ion-icon
+              name="chevron-down"
+              style="font-size: 15px; color: rgb(129, 135, 185);"
+            />
+          </div>
+        </div>
+        <div
+          class="css-1q0ifi4"
+        >
+          <div
+            class="css-9inyfk"
+          >
+            <div
+              class="css-1bt56fy"
+            >
+              Admin name
+            </div>
+            <div
+              class="css-3lsmy"
+            >
+              adminame@mail.com
+            </div>
+            <div
+              class="css-1772pc6"
+            />
+            <div
+              class="css-12w2p0s"
+            >
+              Account
+            </div>
+            <div
+              class="css-12w2p0s"
+            >
+              Log out
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`AppBar match snapshot AppBarTwoSlug 1`] = `
+<div>
+  <div
+    class="css-19ii7w2"
+  >
+    <nav
+      aria-label="breadcrumb"
+      class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1sglq17-MuiTypography-root-MuiBreadcrumbs-root"
+    >
+      <ol
+        class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
+      >
+        <li
+          class="MuiBreadcrumbs-li"
+        >
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-zhuy6w-MuiTypography-root"
+          >
+            <span
+              class="css-1epdhd3"
+            >
+              Recherche
+            </span>
+          </p>
+        </li>
+        <li
+          aria-hidden="true"
+          class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+        >
+          /
+        </li>
+        <li
+          class="MuiBreadcrumbs-li"
+        >
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-zhuy6w-MuiTypography-root"
+          >
+            <span
+              class="css-6nl1o3"
+            >
+              Configuration
+            </span>
+          </p>
+        </li>
+      </ol>
+    </nav>
+    <div
+      class="css-5ax1kt"
+    >
+      <div
+        class="css-l3v3zn"
+      >
+        <ion-icon
+          name="help-circle-outline"
+          style="font-size: 18px; color: rgb(129, 135, 185);"
+        />
+        <div
+          class="css-1g5ufcu"
+        >
+          <div
+            class="css-ykyq1f"
+          >
+            <div>
+              Helpdesk
+            </div>
+            <div>
+              User guide
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        style="position: relative;"
+      >
+        <div
+          class="css-1gbhtbv"
+        >
+          <ion-icon
+            name="person-outline"
+            style="font-size: 15px; color: rgb(129, 135, 185);"
+          />
+          <div
+            class="css-1cn3y7o"
+          >
+            Admin Name
+          </div>
+          <div
+            class="css-1tg3i43"
+          >
+            <ion-icon
+              name="chevron-down"
+              style="font-size: 15px; color: rgb(129, 135, 185);"
+            />
+          </div>
+        </div>
+        <div
+          class="css-1q0ifi4"
+        >
+          <div
+            class="css-9inyfk"
+          >
+            <div
+              class="css-1bt56fy"
+            >
+              Admin name
+            </div>
+            <div
+              class="css-3lsmy"
+            >
+              adminame@mail.com
+            </div>
+            <div
+              class="css-1772pc6"
+            />
+            <div
+              class="css-12w2p0s"
+            >
+              Account
+            </div>
+            <div
+              class="css-12w2p0s"
+            >
+              Log out
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
