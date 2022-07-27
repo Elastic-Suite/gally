@@ -98,6 +98,8 @@ export function getParametersFromUrl(url: URL): ISearchParameters {
         } else {
           acc.push([key, [value]])
         }
+      } else {
+        acc.push([key, value])
       }
       return acc
     }, [])
