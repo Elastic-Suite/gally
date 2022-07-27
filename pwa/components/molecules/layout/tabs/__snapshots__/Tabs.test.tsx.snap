@@ -1,0 +1,127 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TabsAndSubTabs match snapshot 1`] = `
+<div>
+  <div
+    class="MuiBox-root css-e3slrw"
+  >
+    <div
+      class="MuiBox-root css-1gsv261"
+    >
+      <div
+        class="MuiTabs-root css-1xt4903-MuiTabs-root"
+      >
+        <div
+          class="MuiTabs-scroller MuiTabs-fixed css-kqhgxw-MuiTabs-scroller"
+          style="overflow: hidden; margin-bottom: 0px;"
+        >
+          <div
+            aria-label="basic tabs example"
+            class="MuiTabs-flexContainer css-1pyy021-MuiTabs-flexContainer"
+            role="tablist"
+          >
+            <button
+              aria-controls="simple-tabpanel-0"
+              aria-selected="true"
+              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary Mui-selected css-v7gylc-MuiButtonBase-root-MuiTab-root"
+              id="simple-tab-0"
+              role="tab"
+              tabindex="0"
+              type="button"
+            >
+              Scope
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
+            <button
+              aria-controls="simple-tabpanel-1"
+              aria-selected="false"
+              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-v7gylc-MuiButtonBase-root-MuiTab-root"
+              id="simple-tab-1"
+              role="tab"
+              tabindex="-1"
+              type="button"
+            >
+              Searchable and filtrable attributes
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
+          </div>
+          <span
+            class="MuiTabs-indicator css-1bftaej-MuiTabs-indicator"
+            style="left: 0px; width: 0px;"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      aria-labelledby="simple-tab-0"
+      id="simple-tabpanel-0"
+      role="tabpanel"
+    >
+      <div
+        class="MuiBox-root css-ed63to"
+      >
+        <div
+          class="css-13t3iqc"
+        >
+          <div
+            class="css-jve40n"
+          >
+            <div
+              class="css-9wk4uw"
+            >
+              Catalogs
+            </div>
+            <div
+              class="css-56xlw1"
+            >
+              Actives locales
+            </div>
+            <div
+              class="css-56xlw1"
+            >
+              Actives locales 1
+            </div>
+            <div
+              class="css-56xlw1"
+            >
+              Actives locales 2
+            </div>
+          </div>
+          <div
+            style="width: 100%;"
+          >
+            <button
+              class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root css-13yl9aj-MuiButtonBase-root-MuiButton-root"
+              tabindex="0"
+              type="button"
+            >
+              Button text
+              <span
+                class="MuiButton-endIcon MuiButton-iconSizeMedium css-1gnd1fd-MuiButton-endIcon"
+              >
+                <ion-icon
+                  name="add-outline"
+                  style="font-size: 24px;"
+                />
+              </span>
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      aria-labelledby="simple-tab-1"
+      hidden=""
+      id="simple-tabpanel-1"
+      role="tabpanel"
+    />
+  </div>
+</div>
+`;
