@@ -62,7 +62,7 @@ function IonIcon(props: IProps): JSX.Element {
     case 'settings':
       return <ion-icon name="settings-outline" {...iconProps} />
     case 'information':
-      return <ion-icon name="information-circle-outline" />
+      return <ion-icon name="information-circle-outline" {...iconProps} />
     default:
       return <ion-icon name={name} {...iconProps} />
   }
