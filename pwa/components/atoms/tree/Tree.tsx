@@ -111,7 +111,7 @@ const CustomBtn = styled('button')(({ theme }) => ({
   },
 }))
 
-const CustomBtnTitle = styled('div')({
+const CustomTitleContainer = styled('div')({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -178,7 +178,7 @@ function Tree({ data }: IProps): JSX.Element {
                   />
                 </CustomBtn>
               ) : null}
-              <CustomBtnTitle>
+              <CustomTitleContainer>
                 <Title
                   onClick={(): void => {
                     setDisplayChildren({
@@ -199,7 +199,7 @@ function Tree({ data }: IProps): JSX.Element {
                   )}
                 </Title>
                 {item.isVirtual ? <CustomVirtual>virtual</CustomVirtual> : null}
-              </CustomBtnTitle>
+              </CustomTitleContainer>
             </CustomContainer>
             {displayChildren[item.catalogCode ? item.catalogCode : item.id] &&
             (item.children || item.categories) ? (
