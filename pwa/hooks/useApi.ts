@@ -3,15 +3,9 @@ import { ActionCreatorWithOptionalPayload } from '@reduxjs/toolkit'
 import { Resource } from '@api-platform/api-doc-parser'
 import { useTranslation } from 'next-i18next'
 
-import { fetchApi, removeEmptyParameters } from '~/services'
+import { fetchApi, getListApiParameters } from '~/services'
 import { useAppDispatch } from '~/store'
 import { IFetch, ISearchParameters, LoadStatus } from '~/types'
-import {
-  currentPage,
-  defaultPageSize,
-  pageSize,
-  usePagination,
-} from '~/constants'
 
 export function useApiFetch<T>(
   resource: Resource | string,
@@ -58,21 +52,12 @@ export function useApiDispatch<T>(
 export function useApiList<T>(
   resource: Resource | string,
   page: number | false = 0,
-  searchParameters?: ISearchParameters
+  searchParameters?: ISearchParameters,
+  searchValue?: string
 ): [IFetch<T>, Dispatch<SetStateAction<IFetch<T>>>] {
-  const parameters = useMemo(() => {
-    if (typeof page === 'number') {
-      return removeEmptyParameters({
-        [usePagination]: true,
-        [pageSize]: defaultPageSize,
-        [currentPage]: page + 1,
-        ...searchParameters,
-      })
-    }
-    return removeEmptyParameters({
-      [usePagination]: false,
-      ...searchParameters,
-    })
-  }, [searchParameters, page])
+  const parameters = useMemo(
+    () => getListApiParameters(page, searchParameters, searchValue),
+    [page, searchParameters, searchValue]
+  )
   return useApiFetch<T>(resource, parameters)
 }
