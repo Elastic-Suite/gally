@@ -44,7 +44,7 @@ describe('useApi', () => {
       expect(fetchApi).toHaveBeenCalledWith(
         'en',
         '/list',
-        { pagination: false },
+        { pagination: false, search: '' },
         undefined
       )
     })
@@ -58,7 +58,7 @@ describe('useApi', () => {
       expect(fetchApi).toHaveBeenCalledWith(
         'en',
         '/list',
-        { pagination: true, pageSize: 50, currentPage: 1 },
+        { pagination: true, pageSize: 50, currentPage: 1, search: '' },
         undefined
       )
     })
@@ -73,7 +73,13 @@ describe('useApi', () => {
       expect(fetchApi).toHaveBeenCalledWith(
         'en',
         '/list',
-        { pagination: true, pageSize: 50, currentPage: 3, foo: 'bar' },
+        {
+          pagination: true,
+          pageSize: 50,
+          currentPage: 3,
+          foo: 'bar',
+          search: '',
+        },
         undefined
       )
     })

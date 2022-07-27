@@ -6,7 +6,6 @@ import {
   getFieldDataContentType,
   getFieldFromMapping,
   getFieldHeader,
-  getFieldNameFromMapping,
   getFilter,
   getFilterType,
   getMappings,
@@ -67,27 +66,6 @@ describe('Table service', () => {
           multiple: true,
         })
       ).toEqual(FilterType.SELECT)
-    })
-  })
-
-  describe('getFieldNameFromMapping', () => {
-    it('should return the field name', () => {
-      expect(
-        getFieldNameFromMapping({
-          '@type': 'IriTemplateMapping',
-          variable: 'code',
-          property: 'code',
-          required: false,
-        })
-      ).toEqual('code')
-      expect(
-        getFieldNameFromMapping({
-          '@type': 'IriTemplateMapping',
-          variable: 'isSearchable',
-          property: 'isSearchable',
-          required: false,
-        })
-      ).toEqual('searchable')
     })
   })
 
