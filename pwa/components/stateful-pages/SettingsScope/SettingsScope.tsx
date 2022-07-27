@@ -46,7 +46,7 @@ function SettingsScope(): JSX.Element {
   const { id, title } = activeTab
 
   if (catalogsFields.error) {
-    return <>{catalogsFields.error.toString()}</>
+    return <pre>{JSON.stringify(catalogsFields.error, null, 2)}</pre>
   } else if (!catalogsFields.data) {
     return null
   }

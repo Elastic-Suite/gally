@@ -21,7 +21,7 @@ function SettingsAttributes(): JSX.Element {
   )
 
   if (sourceFields.error) {
-    return <>{sourceFields.error.toString()}</>
+    return <pre>{JSON.stringify(sourceFields.error, null, 2)}</pre>
   } else if (!sourceFields.data) {
     return null
   }
