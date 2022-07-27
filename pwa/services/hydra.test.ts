@@ -1,14 +1,46 @@
-import { api, fieldBoolean, fieldInteger, fieldString } from '~/mocks'
+import {
+  api,
+  fieldBoolean,
+  fieldInteger,
+  fieldRef,
+  fieldString,
+  resourceWithRef,
+} from '~/mocks'
 import metadata from '~/public/mocks/metadata.json'
 
-import { getFieldType, getOptionsFromApi, getResource } from './hydra'
+import {
+  castFieldParameter,
+  getFieldName,
+  getFieldType,
+  getFilterParameters,
+  getOptionsFromApi,
+  getReadableField,
+  getResource,
+  isFieldValueValid,
+} from './hydra'
 
 describe('Hydra service', () => {
-  describe('firstLetterUppercase', () => {
+  describe('getFieldName', () => {
+    it('should return the field name', () => {
+      expect(getFieldName('code')).toEqual('code')
+      expect(getFieldName('isSearchable')).toEqual('searchable')
+      expect(getFieldName('metadata[]')).toEqual('metadata')
+    })
+  })
+
+  describe('getResource', () => {
     it('Should return the resource', () => {
       expect(getResource(api, 'source_fields')).toMatchObject({
         name: 'source_fields',
       })
+    })
+  })
+
+  describe('getReadableField', () => {
+    it('Should return the field', () => {
+      expect(getReadableField(resourceWithRef, 'code')).toMatchObject(
+        fieldString
+      )
     })
   })
 
@@ -34,6 +66,44 @@ describe('Hydra service', () => {
           value: 2,
         },
       ])
+    })
+  })
+
+  describe('castFieldParameter', () => {
+    it('Should cast the field value', () => {
+      expect(castFieldParameter(fieldString, 'foo')).toEqual('foo')
+      expect(castFieldParameter(fieldBoolean, 'true')).toEqual(true)
+      expect(castFieldParameter(fieldBoolean, 'false')).toEqual(false)
+      expect(castFieldParameter(fieldInteger, '42')).toEqual(42)
+      expect(castFieldParameter(fieldRef, '42')).toEqual(42)
+      expect(castFieldParameter(fieldRef, ['1', '2', '3'])).toEqual([1, 2, 3])
+    })
+  })
+
+  describe('isFieldValueValid', () => {
+    it('Should validate the field value', () => {
+      expect(isFieldValueValid(fieldString, 'foo')).toEqual(true)
+      expect(isFieldValueValid(fieldBoolean, true)).toEqual(true)
+      expect(isFieldValueValid(fieldInteger, 42)).toEqual(true)
+      expect(isFieldValueValid(fieldInteger, NaN)).toEqual(false)
+      expect(isFieldValueValid(fieldRef, 42)).toEqual(true)
+      expect(isFieldValueValid(fieldRef, [1, 2, 3])).toEqual(true)
+    })
+  })
+
+  describe('getFilterParameters', () => {
+    it('Should get only filter parameters', () => {
+      expect(
+        getFilterParameters(resourceWithRef, {
+          code: 'foo',
+          'metadata[]': ['1'],
+          foo: 'bar', // Does not exist on resourceWithRef
+          weight: 'baz', // Wrong type
+        })
+      ).toEqual({
+        code: 'foo',
+        'metadata[]': [1],
+      })
     })
   })
 })

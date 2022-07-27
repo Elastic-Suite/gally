@@ -1,0 +1,101 @@
+import { useRouter } from 'next/router'
+
+import { resourceWithRef } from '~/mocks'
+import { renderHookWithProviders } from '~/services'
+
+import {
+  useFilters,
+  useFiltersRedirect,
+  usePage,
+  useSearch,
+} from './useFilters'
+
+jest.mock('next/router')
+
+describe('useFilters', () => {
+  describe('useFiltersRedirect', () => {
+    it('should redirect with default parameters', () => {
+      const router = useRouter()
+      const pushSpy = router.push as jest.Mock
+      pushSpy.mockClear()
+      renderHookWithProviders(() => useFiltersRedirect())
+      expect(pushSpy).toHaveBeenCalledWith(
+        'http://localhost/test?currentPage=0',
+        undefined,
+        { shallow: true }
+      )
+    })
+
+    it('should redirect with parameters', () => {
+      const router = useRouter()
+      const pushSpy = router.push as jest.Mock
+      pushSpy.mockClear()
+      renderHookWithProviders(() =>
+        useFiltersRedirect(1, { foo: 'bar' }, 'baz')
+      )
+      expect(pushSpy).toHaveBeenCalledWith(
+        'http://localhost/test?foo=bar&currentPage=1&search=baz',
+        undefined,
+        { shallow: true }
+      )
+    })
+  })
+
+  describe('usePage', () => {
+    it('should get the default page state', () => {
+      const { result } = renderHookWithProviders(() => usePage())
+      expect(result.current[0]).toEqual(0)
+    })
+
+    it('should get the page state initialized from router parameter', () => {
+      const router = useRouter()
+      const oldPath = router.asPath
+      router.asPath = '/test?currentPage=42'
+      const { result } = renderHookWithProviders(() => usePage())
+      expect(result.current[0]).toEqual(42)
+      router.asPath = oldPath
+    })
+  })
+
+  describe('useFilters', () => {
+    it('should get the default filters state', () => {
+      const { result } = renderHookWithProviders(() =>
+        useFilters(resourceWithRef)
+      )
+      expect(result.current[0]).toEqual({})
+    })
+
+    it('should get the filters state initialized from router parameter', () => {
+      const router = useRouter()
+      const oldPath = router.asPath
+      router.asPath =
+        '/test?code=foo&metadata[]=1&metadata[]=2&isSearchable=true'
+      const { result } = renderHookWithProviders(() =>
+        useFilters(resourceWithRef)
+      )
+      console.log(result.current[0])
+      expect(result.current[0]).toEqual({
+        code: 'foo',
+        'metadata[]': [1, 2],
+        isSearchable: true,
+      })
+      router.asPath = oldPath
+    })
+  })
+
+  describe('useSearch', () => {
+    it('should get the default search state', () => {
+      const { result } = renderHookWithProviders(() => useSearch())
+      expect(result.current[0]).toEqual('')
+    })
+
+    it('should get the search state initialized from router parameter', () => {
+      const router = useRouter()
+      const oldPath = router.asPath
+      router.asPath = '/test?search=foo'
+      const { result } = renderHookWithProviders(() => useSearch())
+      expect(result.current[0]).toEqual('foo')
+      router.asPath = oldPath
+    })
+  })
+})
