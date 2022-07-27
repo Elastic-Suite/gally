@@ -36,6 +36,7 @@ exports[`IonIcon render properly information with tooltip & match snapshot 1`] =
 <div>
   <ion-icon
     name="information-circle-outline"
+    style="color: rgb(129, 135, 185); width: 20px; height: 20px; display: flex;"
   />
 </div>
 `;
