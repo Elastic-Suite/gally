@@ -81,7 +81,7 @@ jobs:
 
       - name: Backend Coverage Report as Comment (Clean)
         uses: lucassabreu/comment-coverage-clover@v0.3.0
-        if: ${{ github.event_name == 'pull_request' }}
+        if: ${{ (github.event_name == 'pull_request' && steps.base_coverage_report.outcome != 'success') || github.event_name == 'push'}}
         with:
           with-chart: false
           file: api/coverage/coverage.xml
@@ -91,15 +91,7 @@ jobs:
         with:
           name: coverage-report
           path: api/coverage/coverage.xml
-          
-      - name: Send PHP code coverage report to Codecov.io
-        uses: codecov/codecov-action@v2
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: coverage.xml
-          directory: api/coverage
-          flags: backend
-          
+                  
       - name: Jest
         run: docker-compose exec -T pwa yarn test --ci --passWithNoTests
 
@@ -112,14 +104,6 @@ jobs:
           path: pwa/coverage/cobertura-coverage.xml
           minimum_coverage: 1
           fail_below_threshold: false
-        
-      - name: Send Frontend code coverage report to Codecov.io
-        uses: codecov/codecov-action@v2
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: coverage/cobertura-coverage.xml
-          directory: pwa
-          flags: frontend
           
   Deploy:
     needs: tests
