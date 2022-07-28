@@ -10,6 +10,7 @@ export interface ILocalizedCatalog extends IJsonldType, IJsonldId {
 }
 
 export interface ICatalog extends IHydraMember {
+  code: string
   name: string
   localizedCatalogs: ILocalizedCatalog[]
 }

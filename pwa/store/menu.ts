@@ -5,7 +5,7 @@ import { RootState } from './store'
 export interface IMenuChild {
   code: string
   label: string
-  children: IMenuChild[]
+  children?: IMenuChild[]
 }
 
 export interface IMenu {

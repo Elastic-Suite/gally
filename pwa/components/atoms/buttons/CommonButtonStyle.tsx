@@ -1,15 +1,19 @@
 import { styled } from '@mui/system'
-import Button from '@mui/material/Button'
+import { Button } from '@mui/material'
 
 const CommonStyledButton = styled(Button)(({ theme }) => ({
   color: `${theme.palette.colors.white}`,
   lineHeight: '24px',
-  textTransform: 'capitalize',
+  textTransform: 'none',
   letterSpacing: '0.2px',
   fontWeight: 500,
   background: `${theme.palette.colors.gradient.default}`,
   boxShadow: `${theme.palette.colors.shadow.primaryButton.sm}`,
   borderRadius: '8px',
+  marginLeft: theme.spacing(2),
+  '&:first-of-type': {
+    marginLeft: 0,
+  },
   '&::before': {
     position: 'absolute',
     content: '""',

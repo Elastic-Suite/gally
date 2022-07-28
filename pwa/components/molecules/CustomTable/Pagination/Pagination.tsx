@@ -1,14 +1,16 @@
-import { Box } from '@mui/material'
-import TablePagination from '@mui/material/TablePagination'
+import { ChangeEvent, MouseEvent } from 'react'
+import { Box, TablePagination } from '@mui/material'
 
 interface IProps {
-  isBottom: boolean
+  isBottom?: boolean
   totalPages: number
   currentPage: number
   rowsPerPage: number
   rowsPerPageOptions: number[]
-  onRowsPerPageChange: () => void
-  onPageChange: () => void
+  onRowsPerPageChange?: (
+    event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => void
+  onPageChange: (page: number) => void
 }
 
 function Pagination(props: IProps): JSX.Element {
@@ -21,6 +23,13 @@ function Pagination(props: IProps): JSX.Element {
     onRowsPerPageChange,
     onPageChange,
   } = props
+
+  function handlePageChange(
+    _: MouseEvent<HTMLButtonElement> | null,
+    page: number
+  ): void {
+    onPageChange(page)
+  }
 
   return (
     <Box
@@ -39,7 +48,7 @@ function Pagination(props: IProps): JSX.Element {
         component="div"
         count={totalPages}
         page={currentPage}
-        onPageChange={onPageChange}
+        onPageChange={handlePageChange}
         rowsPerPage={rowsPerPage}
         onRowsPerPageChange={onRowsPerPageChange}
       />

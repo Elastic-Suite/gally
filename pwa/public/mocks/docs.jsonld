@@ -1,2763 +1,2763 @@
 {
-    "@context": {
-      "@vocab": "https://localhost/docs.jsonld#",
-      "hydra": "http://www.w3.org/ns/hydra/core#",
-      "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-      "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
-      "xmls": "http://www.w3.org/2001/XMLSchema#",
-      "owl": "http://www.w3.org/2002/07/owl#",
-      "schema": "http://schema.org/",
-      "domain": {
-        "@id": "rdfs:domain",
-        "@type": "@id"
-      },
-      "range": {
-        "@id": "rdfs:range",
-        "@type": "@id"
-      },
-      "subClassOf": {
-        "@id": "rdfs:subClassOf",
-        "@type": "@id"
-      },
-      "expects": {
-        "@id": "hydra:expects",
-        "@type": "@id"
-      },
-      "returns": {
-        "@id": "hydra:returns",
-        "@type": "@id"
+  "@context": {
+    "@vocab": "http://localhost:3000/mocks/docs.jsonld#",
+    "hydra": "http://www.w3.org/ns/hydra/core#",
+    "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xmls": "http://www.w3.org/2001/XMLSchema#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "schema": "http://schema.org/",
+    "domain": {
+      "@id": "rdfs:domain",
+      "@type": "@id"
+    },
+    "range": {
+      "@id": "rdfs:range",
+      "@type": "@id"
+    },
+    "subClassOf": {
+      "@id": "rdfs:subClassOf",
+      "@type": "@id"
+    },
+    "expects": {
+      "@id": "hydra:expects",
+      "@type": "@id"
+    },
+    "returns": {
+      "@id": "hydra:returns",
+      "@type": "@id"
+    }
+  },
+  "@id": "/docs.jsonld",
+  "@type": "hydra:ApiDocumentation",
+  "hydra:title": "Elasticsuite API",
+  "hydra:entrypoint": "/",
+  "hydra:supportedClass": [
+    {
+      "@id": "#Index",
+      "@type": "hydra:Class",
+      "rdfs:label": "Index",
+      "hydra:title": "Index",
+      "hydra:supportedProperty": [
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Index/name",
+            "@type": "rdf:Property",
+            "rdfs:label": "name",
+            "domain": "#Index",
+            "range": "xmls:string"
+          },
+          "hydra:title": "name",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Index/aliases",
+            "@type": "rdf:Property",
+            "rdfs:label": "aliases",
+            "domain": "#Index",
+            "range": "xmls:string"
+          },
+          "hydra:title": "aliases",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Index/docsCount",
+            "@type": "rdf:Property",
+            "rdfs:label": "docsCount",
+            "domain": "#Index",
+            "range": "xmls:integer"
+          },
+          "hydra:title": "docsCount",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Index/size",
+            "@type": "rdf:Property",
+            "rdfs:label": "size",
+            "domain": "#Index",
+            "range": "xmls:string"
+          },
+          "hydra:title": "size",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Index/entityType",
+            "@type": "rdf:Property",
+            "rdfs:label": "entityType",
+            "domain": "#Index",
+            "range": "xmls:string"
+          },
+          "hydra:title": "entityType",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Index/catalog",
+            "@type": "hydra:Link",
+            "rdfs:label": "catalog",
+            "domain": "#Index",
+            "owl:maxCardinality": 1,
+            "range": "#LocalizedCatalog"
+          },
+          "hydra:title": "catalog",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Index/status",
+            "@type": "rdf:Property",
+            "rdfs:label": "status",
+            "domain": "#Index",
+            "range": "xmls:string"
+          },
+          "hydra:title": "status",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        }
+      ],
+      "hydra:supportedOperation": [
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:FindAction"
+          ],
+          "hydra:method": "GET",
+          "hydra:title": "Retrieves Index resource.",
+          "rdfs:label": "Retrieves Index resource.",
+          "returns": "#Index"
+        },
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:DeleteAction"
+          ],
+          "hydra:method": "DELETE",
+          "hydra:title": "Deletes the Index resource.",
+          "rdfs:label": "Deletes the Index resource.",
+          "returns": "owl:Nothing"
+        },
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:ReplaceAction"
+          ],
+          "expects": "#Index",
+          "hydra:method": "PUT",
+          "hydra:title": "Replaces the Index resource.",
+          "rdfs:label": "Replaces the Index resource.",
+          "returns": "#Index"
+        },
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:ReplaceAction"
+          ],
+          "expects": "#Index",
+          "hydra:method": "PUT",
+          "hydra:title": "Replaces the Index resource.",
+          "rdfs:label": "Replaces the Index resource.",
+          "returns": "#Index"
+        }
+      ]
+    },
+    {
+      "@id": "#MappingStatus",
+      "@type": "hydra:Class",
+      "rdfs:label": "MappingStatus",
+      "hydra:title": "MappingStatus",
+      "hydra:supportedProperty": [],
+      "hydra:supportedOperation": [
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:FindAction"
+          ],
+          "hydra:method": "GET",
+          "hydra:title": "Retrieves MappingStatus resource.",
+          "rdfs:label": "Retrieves MappingStatus resource.",
+          "returns": "#MappingStatus"
+        }
+      ]
+    },
+    {
+      "@id": "#IndexDocument",
+      "@type": "hydra:Class",
+      "rdfs:label": "IndexDocument",
+      "hydra:title": "IndexDocument",
+      "hydra:supportedProperty": [
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#IndexDocument/indexName",
+            "@type": "rdf:Property",
+            "rdfs:label": "indexName",
+            "domain": "#IndexDocument",
+            "range": "xmls:string"
+          },
+          "hydra:title": "indexName",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#IndexDocument/documents",
+            "@type": "rdf:Property",
+            "rdfs:label": "documents",
+            "domain": "#IndexDocument",
+            "range": "xmls:string"
+          },
+          "hydra:title": "documents",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        }
+      ],
+      "hydra:supportedOperation": [
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:FindAction"
+          ],
+          "hydra:method": "GET",
+          "hydra:title": "Retrieves IndexDocument resource.",
+          "rdfs:label": "Retrieves IndexDocument resource.",
+          "returns": "#IndexDocument"
+        },
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:DeleteAction"
+          ],
+          "hydra:method": "DELETE",
+          "hydra:title": "Deletes the IndexDocument resource.",
+          "rdfs:label": "Deletes the IndexDocument resource.",
+          "returns": "owl:Nothing"
+        }
+      ]
+    },
+    {
+      "@id": "#SourceFieldOption",
+      "@type": "hydra:Class",
+      "rdfs:label": "SourceFieldOption",
+      "hydra:title": "SourceFieldOption",
+      "hydra:supportedProperty": [
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#SourceFieldOption/sourceField",
+            "@type": "hydra:Link",
+            "rdfs:label": "sourceField",
+            "domain": "#SourceFieldOption",
+            "owl:maxCardinality": 1,
+            "range": "#SourceField"
+          },
+          "hydra:title": "sourceField",
+          "hydra:required": true,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#SourceFieldOption/position",
+            "@type": "rdf:Property",
+            "rdfs:label": "position",
+            "domain": "#SourceFieldOption",
+            "range": "xmls:integer"
+          },
+          "hydra:title": "position",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#SourceFieldOption/labels",
+            "@type": "hydra:Link",
+            "rdfs:label": "labels",
+            "domain": "#SourceFieldOption",
+            "range": "#SourceFieldOptionLabel"
+          },
+          "hydra:title": "labels",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        }
+      ],
+      "hydra:supportedOperation": [
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:FindAction"
+          ],
+          "hydra:method": "GET",
+          "hydra:title": "Retrieves SourceFieldOption resource.",
+          "rdfs:label": "Retrieves SourceFieldOption resource.",
+          "returns": "#SourceFieldOption"
+        },
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:ReplaceAction"
+          ],
+          "expects": "#SourceFieldOption",
+          "hydra:method": "PUT",
+          "hydra:title": "Replaces the SourceFieldOption resource.",
+          "rdfs:label": "Replaces the SourceFieldOption resource.",
+          "returns": "#SourceFieldOption"
+        },
+        {
+          "@type": "hydra:Operation",
+          "expects": "#SourceFieldOption",
+          "hydra:method": "PATCH",
+          "hydra:title": "Updates the SourceFieldOption resource.",
+          "rdfs:label": "Updates the SourceFieldOption resource.",
+          "returns": "#SourceFieldOption"
+        },
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:DeleteAction"
+          ],
+          "hydra:method": "DELETE",
+          "hydra:title": "Deletes the SourceFieldOption resource.",
+          "rdfs:label": "Deletes the SourceFieldOption resource.",
+          "returns": "owl:Nothing"
+        }
+      ]
+    },
+    {
+      "@id": "#SourceField",
+      "@type": "hydra:Class",
+      "rdfs:label": "SourceField",
+      "hydra:title": "SourceField",
+      "hydra:supportedProperty": [
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#SourceField/code",
+            "@type": "rdf:Property",
+            "rdfs:label": "code",
+            "domain": "#SourceField",
+            "range": "xmls:string"
+          },
+          "hydra:title": "code",
+          "hydra:required": true,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#SourceField/defaultLabel",
+            "@type": "rdf:Property",
+            "rdfs:label": "defaultLabel",
+            "domain": "#SourceField",
+            "range": "xmls:string"
+          },
+          "hydra:title": "defaultLabel",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#SourceField/type",
+            "@type": "rdf:Property",
+            "rdfs:label": "type",
+            "domain": "#SourceField",
+            "range": "xmls:string"
+          },
+          "hydra:title": "type",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#SourceField/weight",
+            "@type": "rdf:Property",
+            "rdfs:label": "weight",
+            "domain": "#SourceField",
+            "range": "xmls:integer"
+          },
+          "hydra:title": "weight",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#SourceField/isSearchable",
+            "@type": "rdf:Property",
+            "rdfs:label": "isSearchable",
+            "domain": "#SourceField",
+            "range": "xmls:boolean"
+          },
+          "hydra:title": "isSearchable",
+          "hydra:required": false,
+          "hydra:readable": false,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#SourceField/isFilterable",
+            "@type": "rdf:Property",
+            "rdfs:label": "isFilterable",
+            "domain": "#SourceField",
+            "range": "xmls:boolean"
+          },
+          "hydra:title": "isFilterable",
+          "hydra:required": false,
+          "hydra:readable": false,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#SourceField/isSortable",
+            "@type": "rdf:Property",
+            "rdfs:label": "isSortable",
+            "domain": "#SourceField",
+            "range": "xmls:boolean"
+          },
+          "hydra:title": "isSortable",
+          "hydra:required": false,
+          "hydra:readable": false,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#SourceField/isSpellchecked",
+            "@type": "rdf:Property",
+            "rdfs:label": "isSpellchecked",
+            "domain": "#SourceField",
+            "range": "xmls:boolean"
+          },
+          "hydra:title": "isSpellchecked",
+          "hydra:required": false,
+          "hydra:readable": false,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#SourceField/isUsedForRules",
+            "@type": "rdf:Property",
+            "rdfs:label": "isUsedForRules",
+            "domain": "#SourceField",
+            "range": "xmls:boolean"
+          },
+          "hydra:title": "isUsedForRules",
+          "hydra:required": false,
+          "hydra:readable": false,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#SourceField/metadata",
+            "@type": "hydra:Link",
+            "rdfs:label": "metadata",
+            "domain": "#SourceField",
+            "owl:maxCardinality": 1,
+            "range": "#Metadata"
+          },
+          "hydra:title": "metadata",
+          "hydra:required": true,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#SourceField/labels",
+            "@type": "hydra:Link",
+            "rdfs:label": "labels",
+            "domain": "#SourceField",
+            "range": "#SourceFieldLabel"
+          },
+          "hydra:title": "labels",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#SourceField/options",
+            "@type": "hydra:Link",
+            "rdfs:label": "options",
+            "domain": "#SourceField",
+            "range": "#SourceFieldOption"
+          },
+          "hydra:title": "options",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#SourceField/searchable",
+            "@type": "rdf:Property",
+            "rdfs:label": "searchable",
+            "domain": "#SourceField",
+            "range": "xmls:boolean"
+          },
+          "hydra:title": "searchable",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": false
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#SourceField/filterable",
+            "@type": "rdf:Property",
+            "rdfs:label": "filterable",
+            "domain": "#SourceField",
+            "range": "xmls:boolean"
+          },
+          "hydra:title": "filterable",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": false
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#SourceField/sortable",
+            "@type": "rdf:Property",
+            "rdfs:label": "sortable",
+            "domain": "#SourceField",
+            "range": "xmls:boolean"
+          },
+          "hydra:title": "sortable",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": false
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#SourceField/spellchecked",
+            "@type": "rdf:Property",
+            "rdfs:label": "spellchecked",
+            "domain": "#SourceField",
+            "range": "xmls:boolean"
+          },
+          "hydra:title": "spellchecked",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": false
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#SourceField/usedForRules",
+            "@type": "rdf:Property",
+            "rdfs:label": "usedForRules",
+            "domain": "#SourceField",
+            "range": "xmls:boolean"
+          },
+          "hydra:title": "usedForRules",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": false
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#SourceField/system",
+            "@type": "rdf:Property",
+            "rdfs:label": "system",
+            "domain": "#SourceField",
+            "range": "xmls:boolean"
+          },
+          "hydra:title": "system",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": false
+        }
+      ],
+      "hydra:supportedOperation": [
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:FindAction"
+          ],
+          "hydra:method": "GET",
+          "hydra:title": "Retrieves SourceField resource.",
+          "rdfs:label": "Retrieves SourceField resource.",
+          "returns": "#SourceField"
+        },
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:ReplaceAction"
+          ],
+          "expects": "#SourceField",
+          "hydra:method": "PUT",
+          "hydra:title": "Replaces the SourceField resource.",
+          "rdfs:label": "Replaces the SourceField resource.",
+          "returns": "#SourceField"
+        },
+        {
+          "@type": "hydra:Operation",
+          "expects": "#SourceField",
+          "hydra:method": "PATCH",
+          "hydra:title": "Updates the SourceField resource.",
+          "rdfs:label": "Updates the SourceField resource.",
+          "returns": "#SourceField"
+        },
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:DeleteAction"
+          ],
+          "hydra:method": "DELETE",
+          "hydra:title": "Deletes the SourceField resource.",
+          "rdfs:label": "Deletes the SourceField resource.",
+          "returns": "owl:Nothing"
+        }
+      ]
+    },
+    {
+      "@id": "#SourceFieldOptionLabel",
+      "@type": "hydra:Class",
+      "rdfs:label": "SourceFieldOptionLabel",
+      "hydra:title": "SourceFieldOptionLabel",
+      "hydra:supportedProperty": [
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#SourceFieldOptionLabel/sourceFieldOption",
+            "@type": "hydra:Link",
+            "rdfs:label": "sourceFieldOption",
+            "domain": "#SourceFieldOptionLabel",
+            "owl:maxCardinality": 1,
+            "range": "#SourceFieldOption"
+          },
+          "hydra:title": "sourceFieldOption",
+          "hydra:required": true,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#SourceFieldOptionLabel/catalog",
+            "@type": "hydra:Link",
+            "rdfs:label": "catalog",
+            "domain": "#SourceFieldOptionLabel",
+            "owl:maxCardinality": 1,
+            "range": "#LocalizedCatalog"
+          },
+          "hydra:title": "catalog",
+          "hydra:required": true,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#SourceFieldOptionLabel/label",
+            "@type": "rdf:Property",
+            "rdfs:label": "label",
+            "domain": "#SourceFieldOptionLabel",
+            "range": "xmls:string"
+          },
+          "hydra:title": "label",
+          "hydra:required": true,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        }
+      ],
+      "hydra:supportedOperation": [
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:FindAction"
+          ],
+          "hydra:method": "GET",
+          "hydra:title": "Retrieves SourceFieldOptionLabel resource.",
+          "rdfs:label": "Retrieves SourceFieldOptionLabel resource.",
+          "returns": "#SourceFieldOptionLabel"
+        },
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:ReplaceAction"
+          ],
+          "expects": "#SourceFieldOptionLabel",
+          "hydra:method": "PUT",
+          "hydra:title": "Replaces the SourceFieldOptionLabel resource.",
+          "rdfs:label": "Replaces the SourceFieldOptionLabel resource.",
+          "returns": "#SourceFieldOptionLabel"
+        },
+        {
+          "@type": "hydra:Operation",
+          "expects": "#SourceFieldOptionLabel",
+          "hydra:method": "PATCH",
+          "hydra:title": "Updates the SourceFieldOptionLabel resource.",
+          "rdfs:label": "Updates the SourceFieldOptionLabel resource.",
+          "returns": "#SourceFieldOptionLabel"
+        },
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:DeleteAction"
+          ],
+          "hydra:method": "DELETE",
+          "hydra:title": "Deletes the SourceFieldOptionLabel resource.",
+          "rdfs:label": "Deletes the SourceFieldOptionLabel resource.",
+          "returns": "owl:Nothing"
+        }
+      ]
+    },
+    {
+      "@id": "#Metadata",
+      "@type": "hydra:Class",
+      "rdfs:label": "Metadata",
+      "hydra:title": "Metadata",
+      "hydra:supportedProperty": [
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Metadata/entity",
+            "@type": "rdf:Property",
+            "rdfs:label": "entity",
+            "domain": "#Metadata",
+            "range": "xmls:string"
+          },
+          "hydra:title": "entity",
+          "hydra:required": true,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Metadata/sourceFields",
+            "@type": "hydra:Link",
+            "rdfs:label": "sourceFields",
+            "domain": "#Metadata",
+            "range": "#SourceField"
+          },
+          "hydra:title": "sourceFields",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        }
+      ],
+      "hydra:supportedOperation": [
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:FindAction"
+          ],
+          "hydra:method": "GET",
+          "hydra:title": "Retrieves Metadata resource.",
+          "rdfs:label": "Retrieves Metadata resource.",
+          "returns": "#Metadata"
+        },
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:ReplaceAction"
+          ],
+          "expects": "#Metadata",
+          "hydra:method": "PUT",
+          "hydra:title": "Replaces the Metadata resource.",
+          "rdfs:label": "Replaces the Metadata resource.",
+          "returns": "#Metadata"
+        },
+        {
+          "@type": "hydra:Operation",
+          "expects": "#Metadata",
+          "hydra:method": "PATCH",
+          "hydra:title": "Updates the Metadata resource.",
+          "rdfs:label": "Updates the Metadata resource.",
+          "returns": "#Metadata"
+        },
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:DeleteAction"
+          ],
+          "hydra:method": "DELETE",
+          "hydra:title": "Deletes the Metadata resource.",
+          "rdfs:label": "Deletes the Metadata resource.",
+          "returns": "owl:Nothing"
+        }
+      ]
+    },
+    {
+      "@id": "#SourceFieldLabel",
+      "@type": "hydra:Class",
+      "rdfs:label": "SourceFieldLabel",
+      "hydra:title": "SourceFieldLabel",
+      "hydra:supportedProperty": [
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#SourceFieldLabel/sourceField",
+            "@type": "hydra:Link",
+            "rdfs:label": "sourceField",
+            "domain": "#SourceFieldLabel",
+            "owl:maxCardinality": 1,
+            "range": "#SourceField"
+          },
+          "hydra:title": "sourceField",
+          "hydra:required": true,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#SourceFieldLabel/catalog",
+            "@type": "hydra:Link",
+            "rdfs:label": "catalog",
+            "domain": "#SourceFieldLabel",
+            "owl:maxCardinality": 1,
+            "range": "#LocalizedCatalog"
+          },
+          "hydra:title": "catalog",
+          "hydra:required": true,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#SourceFieldLabel/label",
+            "@type": "rdf:Property",
+            "rdfs:label": "label",
+            "domain": "#SourceFieldLabel",
+            "range": "xmls:string"
+          },
+          "hydra:title": "label",
+          "hydra:required": true,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        }
+      ],
+      "hydra:supportedOperation": [
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:FindAction"
+          ],
+          "hydra:method": "GET",
+          "hydra:title": "Retrieves SourceFieldLabel resource.",
+          "rdfs:label": "Retrieves SourceFieldLabel resource.",
+          "returns": "#SourceFieldLabel"
+        },
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:ReplaceAction"
+          ],
+          "expects": "#SourceFieldLabel",
+          "hydra:method": "PUT",
+          "hydra:title": "Replaces the SourceFieldLabel resource.",
+          "rdfs:label": "Replaces the SourceFieldLabel resource.",
+          "returns": "#SourceFieldLabel"
+        },
+        {
+          "@type": "hydra:Operation",
+          "expects": "#SourceFieldLabel",
+          "hydra:method": "PATCH",
+          "hydra:title": "Updates the SourceFieldLabel resource.",
+          "rdfs:label": "Updates the SourceFieldLabel resource.",
+          "returns": "#SourceFieldLabel"
+        },
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:DeleteAction"
+          ],
+          "hydra:method": "DELETE",
+          "hydra:title": "Deletes the SourceFieldLabel resource.",
+          "rdfs:label": "Deletes the SourceFieldLabel resource.",
+          "returns": "owl:Nothing"
+        }
+      ]
+    },
+    {
+      "@id": "#Catalog",
+      "@type": "hydra:Class",
+      "rdfs:label": "Catalog",
+      "hydra:title": "Catalog",
+      "hydra:supportedProperty": [
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Catalog/code",
+            "@type": "rdf:Property",
+            "rdfs:label": "code",
+            "domain": "#Catalog",
+            "range": "xmls:string"
+          },
+          "hydra:title": "code",
+          "hydra:required": true,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Catalog/name",
+            "@type": "rdf:Property",
+            "rdfs:label": "name",
+            "domain": "#Catalog",
+            "range": "xmls:string"
+          },
+          "hydra:title": "name",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Catalog/localizedCatalogs",
+            "@type": "rdf:Property",
+            "rdfs:label": "localizedCatalogs",
+            "domain": "#Catalog",
+            "range": "#LocalizedCatalog"
+          },
+          "hydra:title": "localizedCatalogs",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        }
+      ],
+      "hydra:supportedOperation": [
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:FindAction"
+          ],
+          "hydra:method": "GET",
+          "hydra:title": "Retrieves Catalog resource.",
+          "rdfs:label": "Retrieves Catalog resource.",
+          "returns": "#Catalog"
+        },
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:ReplaceAction"
+          ],
+          "expects": "#Catalog",
+          "hydra:method": "PUT",
+          "hydra:title": "Replaces the Catalog resource.",
+          "rdfs:label": "Replaces the Catalog resource.",
+          "returns": "#Catalog"
+        },
+        {
+          "@type": "hydra:Operation",
+          "expects": "#Catalog",
+          "hydra:method": "PATCH",
+          "hydra:title": "Updates the Catalog resource.",
+          "rdfs:label": "Updates the Catalog resource.",
+          "returns": "#Catalog"
+        },
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:DeleteAction"
+          ],
+          "hydra:method": "DELETE",
+          "hydra:title": "Deletes the Catalog resource.",
+          "rdfs:label": "Deletes the Catalog resource.",
+          "returns": "owl:Nothing"
+        }
+      ]
+    },
+    {
+      "@id": "#LocalizedCatalog",
+      "@type": "hydra:Class",
+      "rdfs:label": "LocalizedCatalog",
+      "hydra:title": "LocalizedCatalog",
+      "hydra:supportedProperty": [
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#LocalizedCatalog/name",
+            "@type": "rdf:Property",
+            "rdfs:label": "name",
+            "domain": "#LocalizedCatalog",
+            "range": "xmls:string"
+          },
+          "hydra:title": "name",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#LocalizedCatalog/code",
+            "@type": "rdf:Property",
+            "rdfs:label": "code",
+            "domain": "#LocalizedCatalog",
+            "range": "xmls:string"
+          },
+          "hydra:title": "code",
+          "hydra:required": true,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#LocalizedCatalog/locale",
+            "@type": "rdf:Property",
+            "rdfs:label": "locale",
+            "domain": "#LocalizedCatalog",
+            "range": "xmls:string"
+          },
+          "hydra:title": "locale",
+          "hydra:required": true,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#LocalizedCatalog/isDefault",
+            "@type": "rdf:Property",
+            "rdfs:label": "isDefault",
+            "domain": "#LocalizedCatalog",
+            "range": "xmls:boolean"
+          },
+          "hydra:title": "isDefault",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true,
+          "hydra:description": "It's important to keep the getter for isDefault property,\notherwise Api Platform will be not able to get the value in the response,\nin other words don't rename by IsDefault()."
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#LocalizedCatalog/catalog",
+            "@type": "hydra:Link",
+            "rdfs:label": "catalog",
+            "domain": "#LocalizedCatalog",
+            "owl:maxCardinality": 1,
+            "range": "#Catalog"
+          },
+          "hydra:title": "catalog",
+          "hydra:required": true,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#LocalizedCatalog/localName",
+            "@type": "rdf:Property",
+            "rdfs:label": "localName",
+            "domain": "#LocalizedCatalog",
+            "range": "xmls:string"
+          },
+          "hydra:title": "localName",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": false
+        }
+      ],
+      "hydra:supportedOperation": [
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:FindAction"
+          ],
+          "hydra:method": "GET",
+          "hydra:title": "Retrieves LocalizedCatalog resource.",
+          "rdfs:label": "Retrieves LocalizedCatalog resource.",
+          "returns": "#LocalizedCatalog"
+        },
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:ReplaceAction"
+          ],
+          "expects": "#LocalizedCatalog",
+          "hydra:method": "PUT",
+          "hydra:title": "Replaces the LocalizedCatalog resource.",
+          "rdfs:label": "Replaces the LocalizedCatalog resource.",
+          "returns": "#LocalizedCatalog"
+        },
+        {
+          "@type": "hydra:Operation",
+          "expects": "#LocalizedCatalog",
+          "hydra:method": "PATCH",
+          "hydra:title": "Updates the LocalizedCatalog resource.",
+          "rdfs:label": "Updates the LocalizedCatalog resource.",
+          "returns": "#LocalizedCatalog"
+        },
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:DeleteAction"
+          ],
+          "hydra:method": "DELETE",
+          "hydra:title": "Deletes the LocalizedCatalog resource.",
+          "rdfs:label": "Deletes the LocalizedCatalog resource.",
+          "returns": "owl:Nothing"
+        }
+      ]
+    },
+    {
+      "@id": "#Authentication",
+      "@type": "hydra:Class",
+      "rdfs:label": "Authentication",
+      "hydra:title": "Authentication",
+      "hydra:supportedProperty": [],
+      "hydra:supportedOperation": [
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:FindAction"
+          ],
+          "hydra:method": "GET",
+          "hydra:title": "Retrieves Authentication resource.",
+          "rdfs:label": "Retrieves Authentication resource.",
+          "returns": "owl:Nothing"
+        }
+      ]
+    },
+    {
+      "@id": "#Menu",
+      "@type": "hydra:Class",
+      "rdfs:label": "Menu",
+      "hydra:title": "Menu",
+      "hydra:supportedProperty": [],
+      "hydra:supportedOperation": [
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:FindAction"
+          ],
+          "hydra:method": "GET",
+          "hydra:title": "Retrieves Menu resource.",
+          "rdfs:label": "Retrieves Menu resource.",
+          "returns": "#Menu"
+        }
+      ]
+    },
+    {
+      "@id": "#FacetConfiguration",
+      "@type": "hydra:Class",
+      "rdfs:label": "FacetConfiguration",
+      "hydra:title": "FacetConfiguration",
+      "hydra:supportedProperty": [
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#FacetConfiguration/sourceField",
+            "@type": "hydra:Link",
+            "rdfs:label": "sourceField",
+            "domain": "#FacetConfiguration",
+            "owl:maxCardinality": 1,
+            "range": "#SourceField"
+          },
+          "hydra:title": "sourceField",
+          "hydra:required": true,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#FacetConfiguration/category",
+            "@type": "hydra:Link",
+            "rdfs:label": "category",
+            "domain": "#FacetConfiguration",
+            "owl:maxCardinality": 1,
+            "range": "#Category"
+          },
+          "hydra:title": "category",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#FacetConfiguration/displayMode",
+            "@type": "rdf:Property",
+            "rdfs:label": "displayMode",
+            "domain": "#FacetConfiguration",
+            "range": "xmls:string"
+          },
+          "hydra:title": "displayMode",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#FacetConfiguration/coverageRate",
+            "@type": "rdf:Property",
+            "rdfs:label": "coverageRate",
+            "domain": "#FacetConfiguration",
+            "range": "xmls:integer"
+          },
+          "hydra:title": "coverageRate",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#FacetConfiguration/maxSize",
+            "@type": "rdf:Property",
+            "rdfs:label": "maxSize",
+            "domain": "#FacetConfiguration",
+            "range": "xmls:integer"
+          },
+          "hydra:title": "maxSize",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#FacetConfiguration/sortOrder",
+            "@type": "rdf:Property",
+            "rdfs:label": "sortOrder",
+            "domain": "#FacetConfiguration",
+            "range": "xmls:string"
+          },
+          "hydra:title": "sortOrder",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#FacetConfiguration/isRecommendable",
+            "@type": "rdf:Property",
+            "rdfs:label": "isRecommendable",
+            "domain": "#FacetConfiguration",
+            "range": "xmls:boolean"
+          },
+          "hydra:title": "isRecommendable",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#FacetConfiguration/isVirtual",
+            "@type": "rdf:Property",
+            "rdfs:label": "isVirtual",
+            "domain": "#FacetConfiguration",
+            "range": "xmls:boolean"
+          },
+          "hydra:title": "isVirtual",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#FacetConfiguration/defaultDisplayMode",
+            "@type": "rdf:Property",
+            "rdfs:label": "defaultDisplayMode",
+            "domain": "#FacetConfiguration",
+            "range": "xmls:string"
+          },
+          "hydra:title": "defaultDisplayMode",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": false
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#FacetConfiguration/defaultCoverageRate",
+            "@type": "rdf:Property",
+            "rdfs:label": "defaultCoverageRate",
+            "domain": "#FacetConfiguration",
+            "range": "xmls:integer"
+          },
+          "hydra:title": "defaultCoverageRate",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": false
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#FacetConfiguration/defaultMaxSize",
+            "@type": "rdf:Property",
+            "rdfs:label": "defaultMaxSize",
+            "domain": "#FacetConfiguration",
+            "range": "xmls:integer"
+          },
+          "hydra:title": "defaultMaxSize",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": false
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#FacetConfiguration/defaultSortOrder",
+            "@type": "rdf:Property",
+            "rdfs:label": "defaultSortOrder",
+            "domain": "#FacetConfiguration",
+            "range": "xmls:string"
+          },
+          "hydra:title": "defaultSortOrder",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": false
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#FacetConfiguration/defaultIsRecommendable",
+            "@type": "rdf:Property",
+            "rdfs:label": "defaultIsRecommendable",
+            "domain": "#FacetConfiguration",
+            "range": "xmls:boolean"
+          },
+          "hydra:title": "defaultIsRecommendable",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": false
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#FacetConfiguration/defaultIsVirtual",
+            "@type": "rdf:Property",
+            "rdfs:label": "defaultIsVirtual",
+            "domain": "#FacetConfiguration",
+            "range": "xmls:boolean"
+          },
+          "hydra:title": "defaultIsVirtual",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": false
+        }
+      ],
+      "hydra:supportedOperation": [
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:FindAction"
+          ],
+          "hydra:method": "GET",
+          "hydra:title": "Retrieves FacetConfiguration resource.",
+          "rdfs:label": "Retrieves FacetConfiguration resource.",
+          "returns": "#FacetConfiguration"
+        },
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:ReplaceAction"
+          ],
+          "expects": "#FacetConfiguration",
+          "hydra:method": "PUT",
+          "hydra:title": "Replaces the FacetConfiguration resource.",
+          "rdfs:label": "Replaces the FacetConfiguration resource.",
+          "returns": "#FacetConfiguration"
+        },
+        {
+          "@type": "hydra:Operation",
+          "expects": "#FacetConfiguration",
+          "hydra:method": "PATCH",
+          "hydra:title": "Updates the FacetConfiguration resource.",
+          "rdfs:label": "Updates the FacetConfiguration resource.",
+          "returns": "#FacetConfiguration"
+        },
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:DeleteAction"
+          ],
+          "hydra:method": "DELETE",
+          "hydra:title": "Deletes the FacetConfiguration resource.",
+          "rdfs:label": "Deletes the FacetConfiguration resource.",
+          "returns": "owl:Nothing"
+        }
+      ]
+    },
+    {
+      "@id": "#Document",
+      "@type": "hydra:Class",
+      "rdfs:label": "Document",
+      "hydra:title": "Document",
+      "hydra:supportedProperty": [],
+      "hydra:supportedOperation": [
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:FindAction"
+          ],
+          "hydra:method": "GET",
+          "hydra:title": "Retrieves Document resource.",
+          "rdfs:label": "Retrieves Document resource.",
+          "returns": "owl:Nothing"
+        }
+      ]
+    },
+    {
+      "@id": "#Category",
+      "@type": "hydra:Class",
+      "rdfs:label": "Category",
+      "hydra:title": "Category",
+      "hydra:supportedProperty": [
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Category/name",
+            "@type": "rdf:Property",
+            "rdfs:label": "name",
+            "domain": "#Category",
+            "range": "xmls:string"
+          },
+          "hydra:title": "name",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        }
+      ],
+      "hydra:supportedOperation": [
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:FindAction"
+          ],
+          "hydra:method": "GET",
+          "hydra:title": "Retrieves Category resource.",
+          "rdfs:label": "Retrieves Category resource.",
+          "returns": "#Category"
+        },
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:DeleteAction"
+          ],
+          "hydra:method": "DELETE",
+          "hydra:title": "Deletes the Category resource.",
+          "rdfs:label": "Deletes the Category resource.",
+          "returns": "owl:Nothing"
+        },
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:ReplaceAction"
+          ],
+          "expects": "#Category",
+          "hydra:method": "PUT",
+          "hydra:title": "Replaces the Category resource.",
+          "rdfs:label": "Replaces the Category resource.",
+          "returns": "#Category"
+        },
+        {
+          "@type": "hydra:Operation",
+          "expects": "#Category",
+          "hydra:method": "PATCH",
+          "hydra:title": "Updates the Category resource.",
+          "rdfs:label": "Updates the Category resource.",
+          "returns": "#Category"
+        }
+      ]
+    },
+    {
+      "@id": "#Product",
+      "@type": "hydra:Class",
+      "rdfs:label": "Product",
+      "hydra:title": "Product",
+      "hydra:supportedProperty": [],
+      "hydra:supportedOperation": [
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:FindAction"
+          ],
+          "hydra:method": "GET",
+          "hydra:title": "Retrieves Product resource.",
+          "rdfs:label": "Retrieves Product resource.",
+          "returns": "owl:Nothing"
+        }
+      ]
+    },
+    {
+      "@id": "#ExampleDocument",
+      "@type": "hydra:Class",
+      "rdfs:label": "ExampleDocument",
+      "hydra:title": "ExampleDocument",
+      "hydra:supportedProperty": [
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#ExampleDocument/indexName",
+            "@type": "rdf:Property",
+            "rdfs:label": "indexName",
+            "domain": "#ExampleDocument",
+            "range": "xmls:string"
+          },
+          "hydra:title": "indexName",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#ExampleDocument/documents",
+            "@type": "rdf:Property",
+            "rdfs:label": "documents",
+            "domain": "#ExampleDocument",
+            "range": "xmls:string"
+          },
+          "hydra:title": "documents",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        }
+      ],
+      "hydra:supportedOperation": [
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:FindAction"
+          ],
+          "hydra:method": "GET",
+          "hydra:title": "Retrieves ExampleDocument resource.",
+          "rdfs:label": "Retrieves ExampleDocument resource.",
+          "returns": "#ExampleDocument"
+        },
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:DeleteAction"
+          ],
+          "hydra:method": "DELETE",
+          "hydra:title": "Deletes the ExampleDocument resource.",
+          "rdfs:label": "Deletes the ExampleDocument resource.",
+          "returns": "owl:Nothing"
+        }
+      ]
+    },
+    {
+      "@id": "#ExampleProduct",
+      "@type": "hydra:Class",
+      "rdfs:label": "ExampleProduct",
+      "hydra:title": "ExampleProduct",
+      "hydra:supportedProperty": [
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#ExampleProduct/entity_id",
+            "@type": "rdf:Property",
+            "rdfs:label": "entity_id",
+            "domain": "#ExampleProduct",
+            "range": "xmls:string"
+          },
+          "hydra:title": "entity_id",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#ExampleProduct/description",
+            "@type": "rdf:Property",
+            "rdfs:label": "description",
+            "domain": "#ExampleProduct"
+          },
+          "hydra:title": "description",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true,
+          "hydra:description": "description"
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#ExampleProduct/type_id",
+            "@type": "rdf:Property",
+            "rdfs:label": "type_id",
+            "domain": "#ExampleProduct",
+            "range": "xmls:string"
+          },
+          "hydra:title": "type_id",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#ExampleProduct/created_at",
+            "@type": "rdf:Property",
+            "rdfs:label": "created_at",
+            "domain": "#ExampleProduct",
+            "range": "xmls:string"
+          },
+          "hydra:title": "created_at",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#ExampleProduct/updated_at",
+            "@type": "rdf:Property",
+            "rdfs:label": "updated_at",
+            "domain": "#ExampleProduct",
+            "range": "xmls:string"
+          },
+          "hydra:title": "updated_at",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#ExampleProduct/attributes",
+            "@type": "rdf:Property",
+            "rdfs:label": "attributes",
+            "domain": "#ExampleProduct"
+          },
+          "hydra:title": "attributes",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        }
+      ],
+      "hydra:supportedOperation": [
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:FindAction"
+          ],
+          "hydra:method": "GET",
+          "hydra:title": "Retrieves ExampleProduct resource.",
+          "rdfs:label": "Retrieves ExampleProduct resource.",
+          "returns": "#ExampleProduct"
+        }
+      ]
+    },
+    {
+      "@id": "#ExampleCategory",
+      "@type": "hydra:Class",
+      "rdfs:label": "ExampleCategory",
+      "hydra:title": "ExampleCategory",
+      "hydra:supportedProperty": [
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#ExampleCategory/name",
+            "@type": "rdf:Property",
+            "rdfs:label": "name",
+            "domain": "#ExampleCategory",
+            "range": "xmls:string"
+          },
+          "hydra:title": "name",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#ExampleCategory/description",
+            "@type": "rdf:Property",
+            "rdfs:label": "description",
+            "domain": "#ExampleCategory",
+            "range": "xmls:string"
+          },
+          "hydra:title": "description",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        }
+      ],
+      "hydra:supportedOperation": [
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:FindAction"
+          ],
+          "hydra:method": "GET",
+          "hydra:title": "Retrieves ExampleCategory resource.",
+          "rdfs:label": "Retrieves ExampleCategory resource.",
+          "returns": "#ExampleCategory"
+        },
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:ReplaceAction"
+          ],
+          "expects": "#ExampleCategory",
+          "hydra:method": "PUT",
+          "hydra:title": "Replaces the ExampleCategory resource.",
+          "rdfs:label": "Replaces the ExampleCategory resource.",
+          "returns": "#ExampleCategory"
+        },
+        {
+          "@type": "hydra:Operation",
+          "expects": "#ExampleCategory",
+          "hydra:method": "PATCH",
+          "hydra:title": "Updates the ExampleCategory resource.",
+          "rdfs:label": "Updates the ExampleCategory resource.",
+          "returns": "#ExampleCategory"
+        },
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:DeleteAction"
+          ],
+          "hydra:method": "DELETE",
+          "hydra:title": "Deletes the ExampleCategory resource.",
+          "rdfs:label": "Deletes the ExampleCategory resource.",
+          "returns": "owl:Nothing"
+        }
+      ]
+    },
+    {
+      "@id": "#ExampleIndex",
+      "@type": "hydra:Class",
+      "rdfs:label": "ExampleIndex",
+      "hydra:title": "ExampleIndex",
+      "hydra:supportedProperty": [
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#ExampleIndex/name",
+            "@type": "rdf:Property",
+            "rdfs:label": "name",
+            "domain": "#ExampleIndex",
+            "range": "xmls:string"
+          },
+          "hydra:title": "name",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#ExampleIndex/health",
+            "@type": "rdf:Property",
+            "rdfs:label": "health",
+            "domain": "#ExampleIndex",
+            "range": "xmls:string"
+          },
+          "hydra:title": "health",
+          "hydra:required": false,
+          "hydra:readable": true,
+          "hydra:writeable": true,
+          "hydra:description": "health"
+        }
+      ],
+      "hydra:supportedOperation": [
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:FindAction"
+          ],
+          "hydra:method": "GET",
+          "hydra:title": "Retrieves ExampleIndex resource.",
+          "rdfs:label": "Retrieves ExampleIndex resource.",
+          "returns": "#ExampleIndex"
+        },
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:DeleteAction"
+          ],
+          "hydra:method": "DELETE",
+          "hydra:title": "Deletes the ExampleIndex resource.",
+          "rdfs:label": "Deletes the ExampleIndex resource.",
+          "returns": "owl:Nothing"
+        }
+      ]
+    },
+    {
+      "@id": "#ExampleResultDocument",
+      "@type": "hydra:Class",
+      "rdfs:label": "ExampleResultDocument",
+      "hydra:title": "ExampleResultDocument",
+      "hydra:supportedProperty": [],
+      "hydra:supportedOperation": [
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:FindAction"
+          ],
+          "hydra:method": "GET",
+          "hydra:title": "Retrieves ExampleResultDocument resource.",
+          "rdfs:label": "Retrieves ExampleResultDocument resource.",
+          "returns": "owl:Nothing"
+        }
+      ]
+    },
+    {
+      "@id": "Declarative Greeting",
+      "@type": "hydra:Class",
+      "rdfs:label": "DeclarativeGreeting",
+      "hydra:title": "DeclarativeGreeting",
+      "hydra:supportedProperty": [
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#DeclarativeGreeting/name",
+            "@type": "rdf:Property",
+            "rdfs:label": "name",
+            "domain": "Declarative Greeting",
+            "range": "xmls:string"
+          },
+          "hydra:title": "name",
+          "hydra:required": true,
+          "hydra:readable": true,
+          "hydra:writeable": true,
+          "hydra:description": "A nice person."
+        }
+      ],
+      "hydra:supportedOperation": [
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:FindAction"
+          ],
+          "hydra:method": "GET",
+          "hydra:title": "Retrieves DeclarativeGreeting resource.",
+          "rdfs:label": "Retrieves DeclarativeGreeting resource.",
+          "returns": "Declarative Greeting"
+        },
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:DeleteAction"
+          ],
+          "hydra:method": "DELETE",
+          "hydra:title": "Deletes the DeclarativeGreeting resource.",
+          "rdfs:label": "Deletes the DeclarativeGreeting resource.",
+          "returns": "owl:Nothing"
+        },
+        {
+          "@type": [
+            "hydra:Operation",
+            "schema:ReplaceAction"
+          ],
+          "expects": "Declarative Greeting",
+          "hydra:method": "PUT",
+          "hydra:title": "Replaces the DeclarativeGreeting resource.",
+          "rdfs:label": "Replaces the DeclarativeGreeting resource.",
+          "returns": "Declarative Greeting"
+        },
+        {
+          "@type": "hydra:Operation",
+          "expects": "Declarative Greeting",
+          "hydra:method": "PATCH",
+          "hydra:title": "Updates the DeclarativeGreeting resource.",
+          "rdfs:label": "Updates the DeclarativeGreeting resource.",
+          "returns": "Declarative Greeting"
+        }
+      ],
+      "hydra:description": "Description of declarative greetings (description)"
+    },
+    {
+      "@id": "#Entrypoint",
+      "@type": "hydra:Class",
+      "hydra:title": "The API entrypoint",
+      "hydra:supportedProperty": [
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Entrypoint/index",
+            "@type": "hydra:Link",
+            "domain": "#Entrypoint",
+            "rdfs:label": "The collection of Index resources",
+            "rdfs:range": [
+              {
+                "@id": "hydra:Collection"
+              },
+              {
+                "owl:equivalentClass": {
+                  "owl:onProperty": {
+                    "@id": "hydra:member"
+                  },
+                  "owl:allValuesFrom": {
+                    "@id": "#Index"
+                  }
+                }
+              }
+            ],
+            "hydra:supportedOperation": [
+              {
+                "@type": [
+                  "hydra:Operation",
+                  "schema:FindAction"
+                ],
+                "hydra:method": "GET",
+                "hydra:title": "Retrieves the collection of Index resources.",
+                "rdfs:label": "Retrieves the collection of Index resources.",
+                "returns": "hydra:Collection"
+              },
+              {
+                "@type": [
+                  "hydra:Operation",
+                  "schema:CreateAction"
+                ],
+                "expects": "#Index",
+                "hydra:method": "POST",
+                "hydra:title": "Creates a Index resource.",
+                "rdfs:label": "Creates a Index resource.",
+                "returns": "#Index"
+              }
+            ]
+          },
+          "hydra:title": "The collection of Index resources",
+          "hydra:readable": true,
+          "hydra:writeable": false
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Entrypoint/indexDocument",
+            "@type": "hydra:Link",
+            "domain": "#Entrypoint",
+            "rdfs:label": "The collection of IndexDocument resources",
+            "rdfs:range": [
+              {
+                "@id": "hydra:Collection"
+              },
+              {
+                "owl:equivalentClass": {
+                  "owl:onProperty": {
+                    "@id": "hydra:member"
+                  },
+                  "owl:allValuesFrom": {
+                    "@id": "#IndexDocument"
+                  }
+                }
+              }
+            ],
+            "hydra:supportedOperation": [
+              {
+                "@type": [
+                  "hydra:Operation",
+                  "schema:FindAction"
+                ],
+                "hydra:method": "GET",
+                "hydra:title": "Retrieves the collection of IndexDocument resources.",
+                "rdfs:label": "Retrieves the collection of IndexDocument resources.",
+                "returns": "hydra:Collection"
+              },
+              {
+                "@type": [
+                  "hydra:Operation",
+                  "schema:CreateAction"
+                ],
+                "expects": "#IndexDocument",
+                "hydra:method": "POST",
+                "hydra:title": "Creates a IndexDocument resource.",
+                "rdfs:label": "Creates a IndexDocument resource.",
+                "returns": "#IndexDocument"
+              }
+            ]
+          },
+          "hydra:title": "The collection of IndexDocument resources",
+          "hydra:readable": true,
+          "hydra:writeable": false
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Entrypoint/sourceFieldOption",
+            "@type": "hydra:Link",
+            "domain": "#Entrypoint",
+            "rdfs:label": "The collection of SourceFieldOption resources",
+            "rdfs:range": [
+              {
+                "@id": "hydra:Collection"
+              },
+              {
+                "owl:equivalentClass": {
+                  "owl:onProperty": {
+                    "@id": "hydra:member"
+                  },
+                  "owl:allValuesFrom": {
+                    "@id": "#SourceFieldOption"
+                  }
+                }
+              }
+            ],
+            "hydra:supportedOperation": [
+              {
+                "@type": [
+                  "hydra:Operation",
+                  "schema:FindAction"
+                ],
+                "hydra:method": "GET",
+                "hydra:title": "Retrieves the collection of SourceFieldOption resources.",
+                "rdfs:label": "Retrieves the collection of SourceFieldOption resources.",
+                "returns": "hydra:Collection"
+              },
+              {
+                "@type": [
+                  "hydra:Operation",
+                  "schema:CreateAction"
+                ],
+                "expects": "#SourceFieldOption",
+                "hydra:method": "POST",
+                "hydra:title": "Creates a SourceFieldOption resource.",
+                "rdfs:label": "Creates a SourceFieldOption resource.",
+                "returns": "#SourceFieldOption"
+              }
+            ]
+          },
+          "hydra:title": "The collection of SourceFieldOption resources",
+          "hydra:readable": true,
+          "hydra:writeable": false
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Entrypoint/sourceField",
+            "@type": "hydra:Link",
+            "domain": "#Entrypoint",
+            "rdfs:label": "The collection of SourceField resources",
+            "rdfs:range": [
+              {
+                "@id": "hydra:Collection"
+              },
+              {
+                "owl:equivalentClass": {
+                  "owl:onProperty": {
+                    "@id": "hydra:member"
+                  },
+                  "owl:allValuesFrom": {
+                    "@id": "#SourceField"
+                  }
+                }
+              }
+            ],
+            "hydra:supportedOperation": [
+              {
+                "@type": [
+                  "hydra:Operation",
+                  "schema:FindAction"
+                ],
+                "hydra:method": "GET",
+                "hydra:title": "Retrieves the collection of SourceField resources.",
+                "rdfs:label": "Retrieves the collection of SourceField resources.",
+                "returns": "hydra:Collection"
+              },
+              {
+                "@type": [
+                  "hydra:Operation",
+                  "schema:CreateAction"
+                ],
+                "expects": "#SourceField",
+                "hydra:method": "POST",
+                "hydra:title": "Creates a SourceField resource.",
+                "rdfs:label": "Creates a SourceField resource.",
+                "returns": "#SourceField"
+              }
+            ]
+          },
+          "hydra:title": "The collection of SourceField resources",
+          "hydra:readable": true,
+          "hydra:writeable": false
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Entrypoint/sourceFieldOptionLabel",
+            "@type": "hydra:Link",
+            "domain": "#Entrypoint",
+            "rdfs:label": "The collection of SourceFieldOptionLabel resources",
+            "rdfs:range": [
+              {
+                "@id": "hydra:Collection"
+              },
+              {
+                "owl:equivalentClass": {
+                  "owl:onProperty": {
+                    "@id": "hydra:member"
+                  },
+                  "owl:allValuesFrom": {
+                    "@id": "#SourceFieldOptionLabel"
+                  }
+                }
+              }
+            ],
+            "hydra:supportedOperation": [
+              {
+                "@type": [
+                  "hydra:Operation",
+                  "schema:FindAction"
+                ],
+                "hydra:method": "GET",
+                "hydra:title": "Retrieves the collection of SourceFieldOptionLabel resources.",
+                "rdfs:label": "Retrieves the collection of SourceFieldOptionLabel resources.",
+                "returns": "hydra:Collection"
+              },
+              {
+                "@type": [
+                  "hydra:Operation",
+                  "schema:CreateAction"
+                ],
+                "expects": "#SourceFieldOptionLabel",
+                "hydra:method": "POST",
+                "hydra:title": "Creates a SourceFieldOptionLabel resource.",
+                "rdfs:label": "Creates a SourceFieldOptionLabel resource.",
+                "returns": "#SourceFieldOptionLabel"
+              }
+            ]
+          },
+          "hydra:title": "The collection of SourceFieldOptionLabel resources",
+          "hydra:readable": true,
+          "hydra:writeable": false
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Entrypoint/metadata",
+            "@type": "hydra:Link",
+            "domain": "#Entrypoint",
+            "rdfs:label": "The collection of Metadata resources",
+            "rdfs:range": [
+              {
+                "@id": "hydra:Collection"
+              },
+              {
+                "owl:equivalentClass": {
+                  "owl:onProperty": {
+                    "@id": "hydra:member"
+                  },
+                  "owl:allValuesFrom": {
+                    "@id": "#Metadata"
+                  }
+                }
+              }
+            ],
+            "hydra:supportedOperation": [
+              {
+                "@type": [
+                  "hydra:Operation",
+                  "schema:FindAction"
+                ],
+                "hydra:method": "GET",
+                "hydra:title": "Retrieves the collection of Metadata resources.",
+                "rdfs:label": "Retrieves the collection of Metadata resources.",
+                "returns": "hydra:Collection"
+              },
+              {
+                "@type": [
+                  "hydra:Operation",
+                  "schema:CreateAction"
+                ],
+                "expects": "#Metadata",
+                "hydra:method": "POST",
+                "hydra:title": "Creates a Metadata resource.",
+                "rdfs:label": "Creates a Metadata resource.",
+                "returns": "#Metadata"
+              }
+            ]
+          },
+          "hydra:title": "The collection of Metadata resources",
+          "hydra:readable": true,
+          "hydra:writeable": false
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Entrypoint/sourceFieldLabel",
+            "@type": "hydra:Link",
+            "domain": "#Entrypoint",
+            "rdfs:label": "The collection of SourceFieldLabel resources",
+            "rdfs:range": [
+              {
+                "@id": "hydra:Collection"
+              },
+              {
+                "owl:equivalentClass": {
+                  "owl:onProperty": {
+                    "@id": "hydra:member"
+                  },
+                  "owl:allValuesFrom": {
+                    "@id": "#SourceFieldLabel"
+                  }
+                }
+              }
+            ],
+            "hydra:supportedOperation": [
+              {
+                "@type": [
+                  "hydra:Operation",
+                  "schema:FindAction"
+                ],
+                "hydra:method": "GET",
+                "hydra:title": "Retrieves the collection of SourceFieldLabel resources.",
+                "rdfs:label": "Retrieves the collection of SourceFieldLabel resources.",
+                "returns": "hydra:Collection"
+              },
+              {
+                "@type": [
+                  "hydra:Operation",
+                  "schema:CreateAction"
+                ],
+                "expects": "#SourceFieldLabel",
+                "hydra:method": "POST",
+                "hydra:title": "Creates a SourceFieldLabel resource.",
+                "rdfs:label": "Creates a SourceFieldLabel resource.",
+                "returns": "#SourceFieldLabel"
+              }
+            ]
+          },
+          "hydra:title": "The collection of SourceFieldLabel resources",
+          "hydra:readable": true,
+          "hydra:writeable": false
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Entrypoint/catalog",
+            "@type": "hydra:Link",
+            "domain": "#Entrypoint",
+            "rdfs:label": "The collection of Catalog resources",
+            "rdfs:range": [
+              {
+                "@id": "hydra:Collection"
+              },
+              {
+                "owl:equivalentClass": {
+                  "owl:onProperty": {
+                    "@id": "hydra:member"
+                  },
+                  "owl:allValuesFrom": {
+                    "@id": "#Catalog"
+                  }
+                }
+              }
+            ],
+            "hydra:supportedOperation": [
+              {
+                "@type": [
+                  "hydra:Operation",
+                  "schema:FindAction"
+                ],
+                "hydra:method": "GET",
+                "hydra:title": "Retrieves the collection of Catalog resources.",
+                "rdfs:label": "Retrieves the collection of Catalog resources.",
+                "returns": "hydra:Collection"
+              },
+              {
+                "@type": [
+                  "hydra:Operation",
+                  "schema:CreateAction"
+                ],
+                "expects": "#Catalog",
+                "hydra:method": "POST",
+                "hydra:title": "Creates a Catalog resource.",
+                "rdfs:label": "Creates a Catalog resource.",
+                "returns": "#Catalog"
+              }
+            ]
+          },
+          "hydra:title": "The collection of Catalog resources",
+          "hydra:readable": true,
+          "hydra:writeable": false
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Entrypoint/localizedCatalog",
+            "@type": "hydra:Link",
+            "domain": "#Entrypoint",
+            "rdfs:label": "The collection of LocalizedCatalog resources",
+            "rdfs:range": [
+              {
+                "@id": "hydra:Collection"
+              },
+              {
+                "owl:equivalentClass": {
+                  "owl:onProperty": {
+                    "@id": "hydra:member"
+                  },
+                  "owl:allValuesFrom": {
+                    "@id": "#LocalizedCatalog"
+                  }
+                }
+              }
+            ],
+            "hydra:supportedOperation": [
+              {
+                "@type": [
+                  "hydra:Operation",
+                  "schema:FindAction"
+                ],
+                "hydra:method": "GET",
+                "hydra:title": "Retrieves the collection of LocalizedCatalog resources.",
+                "rdfs:label": "Retrieves the collection of LocalizedCatalog resources.",
+                "returns": "hydra:Collection"
+              },
+              {
+                "@type": [
+                  "hydra:Operation",
+                  "schema:CreateAction"
+                ],
+                "expects": "#LocalizedCatalog",
+                "hydra:method": "POST",
+                "hydra:title": "Creates a LocalizedCatalog resource.",
+                "rdfs:label": "Creates a LocalizedCatalog resource.",
+                "returns": "#LocalizedCatalog"
+              }
+            ]
+          },
+          "hydra:title": "The collection of LocalizedCatalog resources",
+          "hydra:readable": true,
+          "hydra:writeable": false
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Entrypoint/facetConfiguration",
+            "@type": "hydra:Link",
+            "domain": "#Entrypoint",
+            "rdfs:label": "The collection of FacetConfiguration resources",
+            "rdfs:range": [
+              {
+                "@id": "hydra:Collection"
+              },
+              {
+                "owl:equivalentClass": {
+                  "owl:onProperty": {
+                    "@id": "hydra:member"
+                  },
+                  "owl:allValuesFrom": {
+                    "@id": "#FacetConfiguration"
+                  }
+                }
+              }
+            ],
+            "hydra:supportedOperation": [
+              {
+                "@type": [
+                  "hydra:Operation",
+                  "schema:FindAction"
+                ],
+                "hydra:method": "GET",
+                "hydra:title": "Retrieves the collection of FacetConfiguration resources.",
+                "rdfs:label": "Retrieves the collection of FacetConfiguration resources.",
+                "returns": "hydra:Collection"
+              }
+            ]
+          },
+          "hydra:title": "The collection of FacetConfiguration resources",
+          "hydra:readable": true,
+          "hydra:writeable": false
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Entrypoint/category",
+            "@type": "hydra:Link",
+            "domain": "#Entrypoint",
+            "rdfs:label": "The collection of Category resources",
+            "rdfs:range": [
+              {
+                "@id": "hydra:Collection"
+              },
+              {
+                "owl:equivalentClass": {
+                  "owl:onProperty": {
+                    "@id": "hydra:member"
+                  },
+                  "owl:allValuesFrom": {
+                    "@id": "#Category"
+                  }
+                }
+              }
+            ],
+            "hydra:supportedOperation": [
+              {
+                "@type": [
+                  "hydra:Operation",
+                  "schema:FindAction"
+                ],
+                "hydra:method": "GET",
+                "hydra:title": "Retrieves the collection of Category resources.",
+                "rdfs:label": "Retrieves the collection of Category resources.",
+                "returns": "hydra:Collection"
+              },
+              {
+                "@type": [
+                  "hydra:Operation",
+                  "schema:CreateAction"
+                ],
+                "expects": "#Category",
+                "hydra:method": "POST",
+                "hydra:title": "Creates a Category resource.",
+                "rdfs:label": "Creates a Category resource.",
+                "returns": "#Category"
+              }
+            ]
+          },
+          "hydra:title": "The collection of Category resources",
+          "hydra:readable": true,
+          "hydra:writeable": false
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Entrypoint/exampleDocument",
+            "@type": "hydra:Link",
+            "domain": "#Entrypoint",
+            "rdfs:label": "The collection of ExampleDocument resources",
+            "rdfs:range": [
+              {
+                "@id": "hydra:Collection"
+              },
+              {
+                "owl:equivalentClass": {
+                  "owl:onProperty": {
+                    "@id": "hydra:member"
+                  },
+                  "owl:allValuesFrom": {
+                    "@id": "#ExampleDocument"
+                  }
+                }
+              }
+            ],
+            "hydra:supportedOperation": [
+              {
+                "@type": [
+                  "hydra:Operation",
+                  "schema:FindAction"
+                ],
+                "hydra:method": "GET",
+                "hydra:title": "Retrieves the collection of ExampleDocument resources.",
+                "rdfs:label": "Retrieves the collection of ExampleDocument resources.",
+                "returns": "hydra:Collection"
+              },
+              {
+                "@type": [
+                  "hydra:Operation",
+                  "schema:CreateAction"
+                ],
+                "expects": "#ExampleDocument",
+                "hydra:method": "POST",
+                "hydra:title": "Creates a ExampleDocument resource.",
+                "rdfs:label": "Creates a ExampleDocument resource.",
+                "returns": "#ExampleDocument"
+              }
+            ]
+          },
+          "hydra:title": "The collection of ExampleDocument resources",
+          "hydra:readable": true,
+          "hydra:writeable": false
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Entrypoint/exampleProduct",
+            "@type": "hydra:Link",
+            "domain": "#Entrypoint",
+            "rdfs:label": "The collection of ExampleProduct resources",
+            "rdfs:range": [
+              {
+                "@id": "hydra:Collection"
+              },
+              {
+                "owl:equivalentClass": {
+                  "owl:onProperty": {
+                    "@id": "hydra:member"
+                  },
+                  "owl:allValuesFrom": {
+                    "@id": "#ExampleProduct"
+                  }
+                }
+              }
+            ],
+            "hydra:supportedOperation": [
+              {
+                "@type": [
+                  "hydra:Operation",
+                  "schema:FindAction"
+                ],
+                "hydra:method": "GET",
+                "hydra:title": "Retrieves the collection of ExampleProduct resources.",
+                "rdfs:label": "Retrieves the collection of ExampleProduct resources.",
+                "returns": "hydra:Collection"
+              }
+            ]
+          },
+          "hydra:title": "The collection of ExampleProduct resources",
+          "hydra:readable": true,
+          "hydra:writeable": false
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Entrypoint/exampleCategory",
+            "@type": "hydra:Link",
+            "domain": "#Entrypoint",
+            "rdfs:label": "The collection of ExampleCategory resources",
+            "rdfs:range": [
+              {
+                "@id": "hydra:Collection"
+              },
+              {
+                "owl:equivalentClass": {
+                  "owl:onProperty": {
+                    "@id": "hydra:member"
+                  },
+                  "owl:allValuesFrom": {
+                    "@id": "#ExampleCategory"
+                  }
+                }
+              }
+            ],
+            "hydra:supportedOperation": [
+              {
+                "@type": [
+                  "hydra:Operation",
+                  "schema:FindAction"
+                ],
+                "hydra:method": "GET",
+                "hydra:title": "Retrieves the collection of ExampleCategory resources.",
+                "rdfs:label": "Retrieves the collection of ExampleCategory resources.",
+                "returns": "hydra:Collection"
+              },
+              {
+                "@type": [
+                  "hydra:Operation",
+                  "schema:CreateAction"
+                ],
+                "expects": "#ExampleCategory",
+                "hydra:method": "POST",
+                "hydra:title": "Creates a ExampleCategory resource.",
+                "rdfs:label": "Creates a ExampleCategory resource.",
+                "returns": "#ExampleCategory"
+              }
+            ]
+          },
+          "hydra:title": "The collection of ExampleCategory resources",
+          "hydra:readable": true,
+          "hydra:writeable": false
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Entrypoint/exampleIndex",
+            "@type": "hydra:Link",
+            "domain": "#Entrypoint",
+            "rdfs:label": "The collection of ExampleIndex resources",
+            "rdfs:range": [
+              {
+                "@id": "hydra:Collection"
+              },
+              {
+                "owl:equivalentClass": {
+                  "owl:onProperty": {
+                    "@id": "hydra:member"
+                  },
+                  "owl:allValuesFrom": {
+                    "@id": "#ExampleIndex"
+                  }
+                }
+              }
+            ],
+            "hydra:supportedOperation": [
+              {
+                "@type": [
+                  "hydra:Operation",
+                  "schema:FindAction"
+                ],
+                "hydra:method": "GET",
+                "hydra:title": "Retrieves the collection of ExampleIndex resources.",
+                "rdfs:label": "Retrieves the collection of ExampleIndex resources.",
+                "returns": "hydra:Collection"
+              },
+              {
+                "@type": [
+                  "hydra:Operation",
+                  "schema:CreateAction"
+                ],
+                "expects": "#ExampleIndex",
+                "hydra:method": "POST",
+                "hydra:title": "Creates a ExampleIndex resource.",
+                "rdfs:label": "Creates a ExampleIndex resource.",
+                "returns": "#ExampleIndex"
+              }
+            ]
+          },
+          "hydra:title": "The collection of ExampleIndex resources",
+          "hydra:readable": true,
+          "hydra:writeable": false
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#Entrypoint/declarativeGreeting",
+            "@type": "hydra:Link",
+            "domain": "#Entrypoint",
+            "rdfs:label": "The collection of DeclarativeGreeting resources",
+            "rdfs:range": [
+              {
+                "@id": "hydra:Collection"
+              },
+              {
+                "owl:equivalentClass": {
+                  "owl:onProperty": {
+                    "@id": "hydra:member"
+                  },
+                  "owl:allValuesFrom": {
+                    "@id": "Declarative Greeting"
+                  }
+                }
+              }
+            ],
+            "hydra:supportedOperation": [
+              {
+                "@type": [
+                  "hydra:Operation",
+                  "schema:FindAction"
+                ],
+                "hydra:method": "GET",
+                "hydra:title": "Retrieves the collection of DeclarativeGreeting resources.",
+                "rdfs:label": "Retrieves the collection of DeclarativeGreeting resources.",
+                "returns": "hydra:Collection"
+              },
+              {
+                "@type": [
+                  "hydra:Operation",
+                  "schema:CreateAction"
+                ],
+                "expects": "Declarative Greeting",
+                "hydra:method": "POST",
+                "hydra:title": "Creates a DeclarativeGreeting resource.",
+                "rdfs:label": "Creates a DeclarativeGreeting resource.",
+                "returns": "Declarative Greeting"
+              }
+            ]
+          },
+          "hydra:title": "The collection of DeclarativeGreeting resources",
+          "hydra:readable": true,
+          "hydra:writeable": false
+        }
+      ],
+      "hydra:supportedOperation": {
+        "@type": "hydra:Operation",
+        "hydra:method": "GET",
+        "rdfs:label": "The API entrypoint.",
+        "returns": "#EntryPoint"
       }
     },
-    "@id": "/docs.jsonld",
-    "@type": "hydra:ApiDocumentation",
-    "hydra:title": "Elasticsuite API",
-    "hydra:entrypoint": "/",
-    "hydra:supportedClass": [
-      {
-        "@id": "#Index",
-        "@type": "hydra:Class",
-        "rdfs:label": "Index",
-        "hydra:title": "Index",
-        "hydra:supportedProperty": [
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#Index/name",
-              "@type": "rdf:Property",
-              "rdfs:label": "name",
-              "domain": "#Index",
-              "range": "xmls:string"
-            },
-            "hydra:title": "name",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#Index/aliases",
-              "@type": "rdf:Property",
-              "rdfs:label": "aliases",
-              "domain": "#Index",
-              "range": "xmls:string"
-            },
-            "hydra:title": "aliases",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#Index/docsCount",
-              "@type": "rdf:Property",
-              "rdfs:label": "docsCount",
-              "domain": "#Index",
-              "range": "xmls:integer"
-            },
-            "hydra:title": "docsCount",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#Index/size",
-              "@type": "rdf:Property",
-              "rdfs:label": "size",
-              "domain": "#Index",
-              "range": "xmls:string"
-            },
-            "hydra:title": "size",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#Index/entityType",
-              "@type": "rdf:Property",
-              "rdfs:label": "entityType",
-              "domain": "#Index",
-              "range": "xmls:string"
-            },
-            "hydra:title": "entityType",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#Index/catalog",
-              "@type": "hydra:Link",
-              "rdfs:label": "catalog",
-              "domain": "#Index",
-              "owl:maxCardinality": 1,
-              "range": "#LocalizedCatalog"
-            },
-            "hydra:title": "catalog",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#Index/status",
-              "@type": "rdf:Property",
-              "rdfs:label": "status",
-              "domain": "#Index",
-              "range": "xmls:string"
-            },
-            "hydra:title": "status",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          }
-        ],
-        "hydra:supportedOperation": [
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:FindAction"
-            ],
-            "hydra:method": "GET",
-            "hydra:title": "Retrieves Index resource.",
-            "rdfs:label": "Retrieves Index resource.",
-            "returns": "#Index"
-          },
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:DeleteAction"
-            ],
-            "hydra:method": "DELETE",
-            "hydra:title": "Deletes the Index resource.",
-            "rdfs:label": "Deletes the Index resource.",
-            "returns": "owl:Nothing"
-          },
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:ReplaceAction"
-            ],
-            "expects": "#Index",
-            "hydra:method": "PUT",
-            "hydra:title": "Replaces the Index resource.",
-            "rdfs:label": "Replaces the Index resource.",
-            "returns": "#Index"
-          },
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:ReplaceAction"
-            ],
-            "expects": "#Index",
-            "hydra:method": "PUT",
-            "hydra:title": "Replaces the Index resource.",
-            "rdfs:label": "Replaces the Index resource.",
-            "returns": "#Index"
-          }
-        ]
-      },
-      {
-        "@id": "#MappingStatus",
-        "@type": "hydra:Class",
-        "rdfs:label": "MappingStatus",
-        "hydra:title": "MappingStatus",
-        "hydra:supportedProperty": [],
-        "hydra:supportedOperation": [
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:FindAction"
-            ],
-            "hydra:method": "GET",
-            "hydra:title": "Retrieves MappingStatus resource.",
-            "rdfs:label": "Retrieves MappingStatus resource.",
-            "returns": "#MappingStatus"
-          }
-        ]
-      },
-      {
-        "@id": "#IndexDocument",
-        "@type": "hydra:Class",
-        "rdfs:label": "IndexDocument",
-        "hydra:title": "IndexDocument",
-        "hydra:supportedProperty": [
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#IndexDocument/indexName",
-              "@type": "rdf:Property",
-              "rdfs:label": "indexName",
-              "domain": "#IndexDocument",
-              "range": "xmls:string"
-            },
-            "hydra:title": "indexName",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#IndexDocument/documents",
-              "@type": "rdf:Property",
-              "rdfs:label": "documents",
-              "domain": "#IndexDocument",
-              "range": "xmls:string"
-            },
-            "hydra:title": "documents",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          }
-        ],
-        "hydra:supportedOperation": [
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:FindAction"
-            ],
-            "hydra:method": "GET",
-            "hydra:title": "Retrieves IndexDocument resource.",
-            "rdfs:label": "Retrieves IndexDocument resource.",
-            "returns": "#IndexDocument"
-          },
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:DeleteAction"
-            ],
-            "hydra:method": "DELETE",
-            "hydra:title": "Deletes the IndexDocument resource.",
-            "rdfs:label": "Deletes the IndexDocument resource.",
-            "returns": "owl:Nothing"
-          }
-        ]
-      },
-      {
-        "@id": "#SourceFieldOption",
-        "@type": "hydra:Class",
-        "rdfs:label": "SourceFieldOption",
-        "hydra:title": "SourceFieldOption",
-        "hydra:supportedProperty": [
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#SourceFieldOption/sourceField",
-              "@type": "hydra:Link",
-              "rdfs:label": "sourceField",
-              "domain": "#SourceFieldOption",
-              "owl:maxCardinality": 1,
-              "range": "#SourceField"
-            },
-            "hydra:title": "sourceField",
-            "hydra:required": true,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#SourceFieldOption/position",
-              "@type": "rdf:Property",
-              "rdfs:label": "position",
-              "domain": "#SourceFieldOption",
-              "range": "xmls:integer"
-            },
-            "hydra:title": "position",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#SourceFieldOption/labels",
-              "@type": "hydra:Link",
-              "rdfs:label": "labels",
-              "domain": "#SourceFieldOption",
-              "range": "#SourceFieldOptionLabel"
-            },
-            "hydra:title": "labels",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          }
-        ],
-        "hydra:supportedOperation": [
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:FindAction"
-            ],
-            "hydra:method": "GET",
-            "hydra:title": "Retrieves SourceFieldOption resource.",
-            "rdfs:label": "Retrieves SourceFieldOption resource.",
-            "returns": "#SourceFieldOption"
-          },
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:ReplaceAction"
-            ],
-            "expects": "#SourceFieldOption",
-            "hydra:method": "PUT",
-            "hydra:title": "Replaces the SourceFieldOption resource.",
-            "rdfs:label": "Replaces the SourceFieldOption resource.",
-            "returns": "#SourceFieldOption"
-          },
-          {
-            "@type": "hydra:Operation",
-            "expects": "#SourceFieldOption",
-            "hydra:method": "PATCH",
-            "hydra:title": "Updates the SourceFieldOption resource.",
-            "rdfs:label": "Updates the SourceFieldOption resource.",
-            "returns": "#SourceFieldOption"
-          },
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:DeleteAction"
-            ],
-            "hydra:method": "DELETE",
-            "hydra:title": "Deletes the SourceFieldOption resource.",
-            "rdfs:label": "Deletes the SourceFieldOption resource.",
-            "returns": "owl:Nothing"
-          }
-        ]
-      },
-      {
-        "@id": "#SourceField",
-        "@type": "hydra:Class",
-        "rdfs:label": "SourceField",
-        "hydra:title": "SourceField",
-        "hydra:supportedProperty": [
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#SourceField/code",
-              "@type": "rdf:Property",
-              "rdfs:label": "code",
-              "domain": "#SourceField",
-              "range": "xmls:string"
-            },
-            "hydra:title": "code",
-            "hydra:required": true,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#SourceField/defaultLabel",
-              "@type": "rdf:Property",
-              "rdfs:label": "defaultLabel",
-              "domain": "#SourceField",
-              "range": "xmls:string"
-            },
-            "hydra:title": "defaultLabel",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#SourceField/type",
-              "@type": "rdf:Property",
-              "rdfs:label": "type",
-              "domain": "#SourceField",
-              "range": "xmls:string"
-            },
-            "hydra:title": "type",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#SourceField/weight",
-              "@type": "rdf:Property",
-              "rdfs:label": "weight",
-              "domain": "#SourceField",
-              "range": "xmls:integer"
-            },
-            "hydra:title": "weight",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#SourceField/isSearchable",
-              "@type": "rdf:Property",
-              "rdfs:label": "isSearchable",
-              "domain": "#SourceField",
-              "range": "xmls:boolean"
-            },
-            "hydra:title": "isSearchable",
-            "hydra:required": false,
-            "hydra:readable": false,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#SourceField/isFilterable",
-              "@type": "rdf:Property",
-              "rdfs:label": "isFilterable",
-              "domain": "#SourceField",
-              "range": "xmls:boolean"
-            },
-            "hydra:title": "isFilterable",
-            "hydra:required": false,
-            "hydra:readable": false,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#SourceField/isSortable",
-              "@type": "rdf:Property",
-              "rdfs:label": "isSortable",
-              "domain": "#SourceField",
-              "range": "xmls:boolean"
-            },
-            "hydra:title": "isSortable",
-            "hydra:required": false,
-            "hydra:readable": false,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#SourceField/isSpellchecked",
-              "@type": "rdf:Property",
-              "rdfs:label": "isSpellchecked",
-              "domain": "#SourceField",
-              "range": "xmls:boolean"
-            },
-            "hydra:title": "isSpellchecked",
-            "hydra:required": false,
-            "hydra:readable": false,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#SourceField/isUsedForRules",
-              "@type": "rdf:Property",
-              "rdfs:label": "isUsedForRules",
-              "domain": "#SourceField",
-              "range": "xmls:boolean"
-            },
-            "hydra:title": "isUsedForRules",
-            "hydra:required": false,
-            "hydra:readable": false,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#SourceField/metadata",
-              "@type": "hydra:Link",
-              "rdfs:label": "metadata",
-              "domain": "#SourceField",
-              "owl:maxCardinality": 1,
-              "range": "#Metadata"
-            },
-            "hydra:title": "metadata",
-            "hydra:required": true,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#SourceField/labels",
-              "@type": "hydra:Link",
-              "rdfs:label": "labels",
-              "domain": "#SourceField",
-              "range": "#SourceFieldLabel"
-            },
-            "hydra:title": "labels",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#SourceField/options",
-              "@type": "hydra:Link",
-              "rdfs:label": "options",
-              "domain": "#SourceField",
-              "range": "#SourceFieldOption"
-            },
-            "hydra:title": "options",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#SourceField/searchable",
-              "@type": "rdf:Property",
-              "rdfs:label": "searchable",
-              "domain": "#SourceField",
-              "range": "xmls:boolean"
-            },
-            "hydra:title": "searchable",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": false
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#SourceField/filterable",
-              "@type": "rdf:Property",
-              "rdfs:label": "filterable",
-              "domain": "#SourceField",
-              "range": "xmls:boolean"
-            },
-            "hydra:title": "filterable",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": false
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#SourceField/sortable",
-              "@type": "rdf:Property",
-              "rdfs:label": "sortable",
-              "domain": "#SourceField",
-              "range": "xmls:boolean"
-            },
-            "hydra:title": "sortable",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": false
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#SourceField/spellchecked",
-              "@type": "rdf:Property",
-              "rdfs:label": "spellchecked",
-              "domain": "#SourceField",
-              "range": "xmls:boolean"
-            },
-            "hydra:title": "spellchecked",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": false
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#SourceField/usedForRules",
-              "@type": "rdf:Property",
-              "rdfs:label": "usedForRules",
-              "domain": "#SourceField",
-              "range": "xmls:boolean"
-            },
-            "hydra:title": "usedForRules",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": false
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#SourceField/system",
-              "@type": "rdf:Property",
-              "rdfs:label": "system",
-              "domain": "#SourceField",
-              "range": "xmls:boolean"
-            },
-            "hydra:title": "system",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": false
-          }
-        ],
-        "hydra:supportedOperation": [
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:FindAction"
-            ],
-            "hydra:method": "GET",
-            "hydra:title": "Retrieves SourceField resource.",
-            "rdfs:label": "Retrieves SourceField resource.",
-            "returns": "#SourceField"
-          },
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:ReplaceAction"
-            ],
-            "expects": "#SourceField",
-            "hydra:method": "PUT",
-            "hydra:title": "Replaces the SourceField resource.",
-            "rdfs:label": "Replaces the SourceField resource.",
-            "returns": "#SourceField"
-          },
-          {
-            "@type": "hydra:Operation",
-            "expects": "#SourceField",
-            "hydra:method": "PATCH",
-            "hydra:title": "Updates the SourceField resource.",
-            "rdfs:label": "Updates the SourceField resource.",
-            "returns": "#SourceField"
-          },
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:DeleteAction"
-            ],
-            "hydra:method": "DELETE",
-            "hydra:title": "Deletes the SourceField resource.",
-            "rdfs:label": "Deletes the SourceField resource.",
-            "returns": "owl:Nothing"
-          }
-        ]
-      },
-      {
-        "@id": "#SourceFieldOptionLabel",
-        "@type": "hydra:Class",
-        "rdfs:label": "SourceFieldOptionLabel",
-        "hydra:title": "SourceFieldOptionLabel",
-        "hydra:supportedProperty": [
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#SourceFieldOptionLabel/sourceFieldOption",
-              "@type": "hydra:Link",
-              "rdfs:label": "sourceFieldOption",
-              "domain": "#SourceFieldOptionLabel",
-              "owl:maxCardinality": 1,
-              "range": "#SourceFieldOption"
-            },
-            "hydra:title": "sourceFieldOption",
-            "hydra:required": true,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#SourceFieldOptionLabel/catalog",
-              "@type": "hydra:Link",
-              "rdfs:label": "catalog",
-              "domain": "#SourceFieldOptionLabel",
-              "owl:maxCardinality": 1,
-              "range": "#LocalizedCatalog"
-            },
-            "hydra:title": "catalog",
-            "hydra:required": true,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#SourceFieldOptionLabel/label",
-              "@type": "rdf:Property",
-              "rdfs:label": "label",
-              "domain": "#SourceFieldOptionLabel",
-              "range": "xmls:string"
-            },
-            "hydra:title": "label",
-            "hydra:required": true,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          }
-        ],
-        "hydra:supportedOperation": [
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:FindAction"
-            ],
-            "hydra:method": "GET",
-            "hydra:title": "Retrieves SourceFieldOptionLabel resource.",
-            "rdfs:label": "Retrieves SourceFieldOptionLabel resource.",
-            "returns": "#SourceFieldOptionLabel"
-          },
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:ReplaceAction"
-            ],
-            "expects": "#SourceFieldOptionLabel",
-            "hydra:method": "PUT",
-            "hydra:title": "Replaces the SourceFieldOptionLabel resource.",
-            "rdfs:label": "Replaces the SourceFieldOptionLabel resource.",
-            "returns": "#SourceFieldOptionLabel"
-          },
-          {
-            "@type": "hydra:Operation",
-            "expects": "#SourceFieldOptionLabel",
-            "hydra:method": "PATCH",
-            "hydra:title": "Updates the SourceFieldOptionLabel resource.",
-            "rdfs:label": "Updates the SourceFieldOptionLabel resource.",
-            "returns": "#SourceFieldOptionLabel"
-          },
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:DeleteAction"
-            ],
-            "hydra:method": "DELETE",
-            "hydra:title": "Deletes the SourceFieldOptionLabel resource.",
-            "rdfs:label": "Deletes the SourceFieldOptionLabel resource.",
-            "returns": "owl:Nothing"
-          }
-        ]
-      },
-      {
-        "@id": "#Metadata",
-        "@type": "hydra:Class",
-        "rdfs:label": "Metadata",
-        "hydra:title": "Metadata",
-        "hydra:supportedProperty": [
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#Metadata/entity",
-              "@type": "rdf:Property",
-              "rdfs:label": "entity",
-              "domain": "#Metadata",
-              "range": "xmls:string"
-            },
-            "hydra:title": "entity",
-            "hydra:required": true,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#Metadata/sourceFields",
-              "@type": "hydra:Link",
-              "rdfs:label": "sourceFields",
-              "domain": "#Metadata",
-              "range": "#SourceField"
-            },
-            "hydra:title": "sourceFields",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          }
-        ],
-        "hydra:supportedOperation": [
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:FindAction"
-            ],
-            "hydra:method": "GET",
-            "hydra:title": "Retrieves Metadata resource.",
-            "rdfs:label": "Retrieves Metadata resource.",
-            "returns": "#Metadata"
-          },
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:ReplaceAction"
-            ],
-            "expects": "#Metadata",
-            "hydra:method": "PUT",
-            "hydra:title": "Replaces the Metadata resource.",
-            "rdfs:label": "Replaces the Metadata resource.",
-            "returns": "#Metadata"
-          },
-          {
-            "@type": "hydra:Operation",
-            "expects": "#Metadata",
-            "hydra:method": "PATCH",
-            "hydra:title": "Updates the Metadata resource.",
-            "rdfs:label": "Updates the Metadata resource.",
-            "returns": "#Metadata"
-          },
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:DeleteAction"
-            ],
-            "hydra:method": "DELETE",
-            "hydra:title": "Deletes the Metadata resource.",
-            "rdfs:label": "Deletes the Metadata resource.",
-            "returns": "owl:Nothing"
-          }
-        ]
-      },
-      {
-        "@id": "#SourceFieldLabel",
-        "@type": "hydra:Class",
-        "rdfs:label": "SourceFieldLabel",
-        "hydra:title": "SourceFieldLabel",
-        "hydra:supportedProperty": [
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#SourceFieldLabel/sourceField",
-              "@type": "hydra:Link",
-              "rdfs:label": "sourceField",
-              "domain": "#SourceFieldLabel",
-              "owl:maxCardinality": 1,
-              "range": "#SourceField"
-            },
-            "hydra:title": "sourceField",
-            "hydra:required": true,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#SourceFieldLabel/catalog",
-              "@type": "hydra:Link",
-              "rdfs:label": "catalog",
-              "domain": "#SourceFieldLabel",
-              "owl:maxCardinality": 1,
-              "range": "#LocalizedCatalog"
-            },
-            "hydra:title": "catalog",
-            "hydra:required": true,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#SourceFieldLabel/label",
-              "@type": "rdf:Property",
-              "rdfs:label": "label",
-              "domain": "#SourceFieldLabel",
-              "range": "xmls:string"
-            },
-            "hydra:title": "label",
-            "hydra:required": true,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          }
-        ],
-        "hydra:supportedOperation": [
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:FindAction"
-            ],
-            "hydra:method": "GET",
-            "hydra:title": "Retrieves SourceFieldLabel resource.",
-            "rdfs:label": "Retrieves SourceFieldLabel resource.",
-            "returns": "#SourceFieldLabel"
-          },
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:ReplaceAction"
-            ],
-            "expects": "#SourceFieldLabel",
-            "hydra:method": "PUT",
-            "hydra:title": "Replaces the SourceFieldLabel resource.",
-            "rdfs:label": "Replaces the SourceFieldLabel resource.",
-            "returns": "#SourceFieldLabel"
-          },
-          {
-            "@type": "hydra:Operation",
-            "expects": "#SourceFieldLabel",
-            "hydra:method": "PATCH",
-            "hydra:title": "Updates the SourceFieldLabel resource.",
-            "rdfs:label": "Updates the SourceFieldLabel resource.",
-            "returns": "#SourceFieldLabel"
-          },
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:DeleteAction"
-            ],
-            "hydra:method": "DELETE",
-            "hydra:title": "Deletes the SourceFieldLabel resource.",
-            "rdfs:label": "Deletes the SourceFieldLabel resource.",
-            "returns": "owl:Nothing"
-          }
-        ]
-      },
-      {
-        "@id": "#Catalog",
-        "@type": "hydra:Class",
-        "rdfs:label": "Catalog",
-        "hydra:title": "Catalog",
-        "hydra:supportedProperty": [
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#Catalog/code",
-              "@type": "rdf:Property",
-              "rdfs:label": "code",
-              "domain": "#Catalog",
-              "range": "xmls:string"
-            },
-            "hydra:title": "code",
-            "hydra:required": true,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#Catalog/name",
-              "@type": "rdf:Property",
-              "rdfs:label": "name",
-              "domain": "#Catalog",
-              "range": "xmls:string"
-            },
-            "hydra:title": "name",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#Catalog/localizedCatalogs",
-              "@type": "rdf:Property",
-              "rdfs:label": "localizedCatalogs",
-              "domain": "#Catalog",
-              "range": "#LocalizedCatalog"
-            },
-            "hydra:title": "localizedCatalogs",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          }
-        ],
-        "hydra:supportedOperation": [
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:FindAction"
-            ],
-            "hydra:method": "GET",
-            "hydra:title": "Retrieves Catalog resource.",
-            "rdfs:label": "Retrieves Catalog resource.",
-            "returns": "#Catalog"
-          },
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:ReplaceAction"
-            ],
-            "expects": "#Catalog",
-            "hydra:method": "PUT",
-            "hydra:title": "Replaces the Catalog resource.",
-            "rdfs:label": "Replaces the Catalog resource.",
-            "returns": "#Catalog"
-          },
-          {
-            "@type": "hydra:Operation",
-            "expects": "#Catalog",
-            "hydra:method": "PATCH",
-            "hydra:title": "Updates the Catalog resource.",
-            "rdfs:label": "Updates the Catalog resource.",
-            "returns": "#Catalog"
-          },
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:DeleteAction"
-            ],
-            "hydra:method": "DELETE",
-            "hydra:title": "Deletes the Catalog resource.",
-            "rdfs:label": "Deletes the Catalog resource.",
-            "returns": "owl:Nothing"
-          }
-        ]
-      },
-      {
-        "@id": "#LocalizedCatalog",
-        "@type": "hydra:Class",
-        "rdfs:label": "LocalizedCatalog",
-        "hydra:title": "LocalizedCatalog",
-        "hydra:supportedProperty": [
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#LocalizedCatalog/name",
-              "@type": "rdf:Property",
-              "rdfs:label": "name",
-              "domain": "#LocalizedCatalog",
-              "range": "xmls:string"
-            },
-            "hydra:title": "name",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#LocalizedCatalog/code",
-              "@type": "rdf:Property",
-              "rdfs:label": "code",
-              "domain": "#LocalizedCatalog",
-              "range": "xmls:string"
-            },
-            "hydra:title": "code",
-            "hydra:required": true,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#LocalizedCatalog/locale",
-              "@type": "rdf:Property",
-              "rdfs:label": "locale",
-              "domain": "#LocalizedCatalog",
-              "range": "xmls:string"
-            },
-            "hydra:title": "locale",
-            "hydra:required": true,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#LocalizedCatalog/isDefault",
-              "@type": "rdf:Property",
-              "rdfs:label": "isDefault",
-              "domain": "#LocalizedCatalog",
-              "range": "xmls:boolean"
-            },
-            "hydra:title": "isDefault",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": true,
-            "hydra:description": "It's important to keep the getter for isDefault property,\notherwise Api Platform will be not able to get the value in the response,\nin other words don't rename by IsDefault()."
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#LocalizedCatalog/catalog",
-              "@type": "hydra:Link",
-              "rdfs:label": "catalog",
-              "domain": "#LocalizedCatalog",
-              "owl:maxCardinality": 1,
-              "range": "#Catalog"
-            },
-            "hydra:title": "catalog",
-            "hydra:required": true,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#LocalizedCatalog/localName",
-              "@type": "rdf:Property",
-              "rdfs:label": "localName",
-              "domain": "#LocalizedCatalog",
-              "range": "xmls:string"
-            },
-            "hydra:title": "localName",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": false
-          }
-        ],
-        "hydra:supportedOperation": [
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:FindAction"
-            ],
-            "hydra:method": "GET",
-            "hydra:title": "Retrieves LocalizedCatalog resource.",
-            "rdfs:label": "Retrieves LocalizedCatalog resource.",
-            "returns": "#LocalizedCatalog"
-          },
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:ReplaceAction"
-            ],
-            "expects": "#LocalizedCatalog",
-            "hydra:method": "PUT",
-            "hydra:title": "Replaces the LocalizedCatalog resource.",
-            "rdfs:label": "Replaces the LocalizedCatalog resource.",
-            "returns": "#LocalizedCatalog"
-          },
-          {
-            "@type": "hydra:Operation",
-            "expects": "#LocalizedCatalog",
-            "hydra:method": "PATCH",
-            "hydra:title": "Updates the LocalizedCatalog resource.",
-            "rdfs:label": "Updates the LocalizedCatalog resource.",
-            "returns": "#LocalizedCatalog"
-          },
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:DeleteAction"
-            ],
-            "hydra:method": "DELETE",
-            "hydra:title": "Deletes the LocalizedCatalog resource.",
-            "rdfs:label": "Deletes the LocalizedCatalog resource.",
-            "returns": "owl:Nothing"
-          }
-        ]
-      },
-      {
-        "@id": "#Authentication",
-        "@type": "hydra:Class",
-        "rdfs:label": "Authentication",
-        "hydra:title": "Authentication",
-        "hydra:supportedProperty": [],
-        "hydra:supportedOperation": [
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:FindAction"
-            ],
-            "hydra:method": "GET",
-            "hydra:title": "Retrieves Authentication resource.",
-            "rdfs:label": "Retrieves Authentication resource.",
-            "returns": "owl:Nothing"
-          }
-        ]
-      },
-      {
-        "@id": "#Menu",
-        "@type": "hydra:Class",
-        "rdfs:label": "Menu",
-        "hydra:title": "Menu",
-        "hydra:supportedProperty": [],
-        "hydra:supportedOperation": [
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:FindAction"
-            ],
-            "hydra:method": "GET",
-            "hydra:title": "Retrieves Menu resource.",
-            "rdfs:label": "Retrieves Menu resource.",
-            "returns": "#Menu"
-          }
-        ]
-      },
-      {
-        "@id": "#FacetConfiguration",
-        "@type": "hydra:Class",
-        "rdfs:label": "FacetConfiguration",
-        "hydra:title": "FacetConfiguration",
-        "hydra:supportedProperty": [
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#FacetConfiguration/sourceField",
-              "@type": "hydra:Link",
-              "rdfs:label": "sourceField",
-              "domain": "#FacetConfiguration",
-              "owl:maxCardinality": 1,
-              "range": "#SourceField"
-            },
-            "hydra:title": "sourceField",
-            "hydra:required": true,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#FacetConfiguration/category",
-              "@type": "hydra:Link",
-              "rdfs:label": "category",
-              "domain": "#FacetConfiguration",
-              "owl:maxCardinality": 1,
-              "range": "#Category"
-            },
-            "hydra:title": "category",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#FacetConfiguration/displayMode",
-              "@type": "rdf:Property",
-              "rdfs:label": "displayMode",
-              "domain": "#FacetConfiguration",
-              "range": "xmls:string"
-            },
-            "hydra:title": "displayMode",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#FacetConfiguration/coverageRate",
-              "@type": "rdf:Property",
-              "rdfs:label": "coverageRate",
-              "domain": "#FacetConfiguration",
-              "range": "xmls:integer"
-            },
-            "hydra:title": "coverageRate",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#FacetConfiguration/maxSize",
-              "@type": "rdf:Property",
-              "rdfs:label": "maxSize",
-              "domain": "#FacetConfiguration",
-              "range": "xmls:integer"
-            },
-            "hydra:title": "maxSize",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#FacetConfiguration/sortOrder",
-              "@type": "rdf:Property",
-              "rdfs:label": "sortOrder",
-              "domain": "#FacetConfiguration",
-              "range": "xmls:string"
-            },
-            "hydra:title": "sortOrder",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#FacetConfiguration/isRecommendable",
-              "@type": "rdf:Property",
-              "rdfs:label": "isRecommendable",
-              "domain": "#FacetConfiguration",
-              "range": "xmls:boolean"
-            },
-            "hydra:title": "isRecommendable",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#FacetConfiguration/isVirtual",
-              "@type": "rdf:Property",
-              "rdfs:label": "isVirtual",
-              "domain": "#FacetConfiguration",
-              "range": "xmls:boolean"
-            },
-            "hydra:title": "isVirtual",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#FacetConfiguration/defaultDisplayMode",
-              "@type": "rdf:Property",
-              "rdfs:label": "defaultDisplayMode",
-              "domain": "#FacetConfiguration",
-              "range": "xmls:string"
-            },
-            "hydra:title": "defaultDisplayMode",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": false
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#FacetConfiguration/defaultCoverageRate",
-              "@type": "rdf:Property",
-              "rdfs:label": "defaultCoverageRate",
-              "domain": "#FacetConfiguration",
-              "range": "xmls:integer"
-            },
-            "hydra:title": "defaultCoverageRate",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": false
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#FacetConfiguration/defaultMaxSize",
-              "@type": "rdf:Property",
-              "rdfs:label": "defaultMaxSize",
-              "domain": "#FacetConfiguration",
-              "range": "xmls:integer"
-            },
-            "hydra:title": "defaultMaxSize",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": false
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#FacetConfiguration/defaultSortOrder",
-              "@type": "rdf:Property",
-              "rdfs:label": "defaultSortOrder",
-              "domain": "#FacetConfiguration",
-              "range": "xmls:string"
-            },
-            "hydra:title": "defaultSortOrder",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": false
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#FacetConfiguration/defaultIsRecommendable",
-              "@type": "rdf:Property",
-              "rdfs:label": "defaultIsRecommendable",
-              "domain": "#FacetConfiguration",
-              "range": "xmls:boolean"
-            },
-            "hydra:title": "defaultIsRecommendable",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": false
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#FacetConfiguration/defaultIsVirtual",
-              "@type": "rdf:Property",
-              "rdfs:label": "defaultIsVirtual",
-              "domain": "#FacetConfiguration",
-              "range": "xmls:boolean"
-            },
-            "hydra:title": "defaultIsVirtual",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": false
-          }
-        ],
-        "hydra:supportedOperation": [
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:FindAction"
-            ],
-            "hydra:method": "GET",
-            "hydra:title": "Retrieves FacetConfiguration resource.",
-            "rdfs:label": "Retrieves FacetConfiguration resource.",
-            "returns": "#FacetConfiguration"
-          },
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:ReplaceAction"
-            ],
-            "expects": "#FacetConfiguration",
-            "hydra:method": "PUT",
-            "hydra:title": "Replaces the FacetConfiguration resource.",
-            "rdfs:label": "Replaces the FacetConfiguration resource.",
-            "returns": "#FacetConfiguration"
-          },
-          {
-            "@type": "hydra:Operation",
-            "expects": "#FacetConfiguration",
-            "hydra:method": "PATCH",
-            "hydra:title": "Updates the FacetConfiguration resource.",
-            "rdfs:label": "Updates the FacetConfiguration resource.",
-            "returns": "#FacetConfiguration"
-          },
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:DeleteAction"
-            ],
-            "hydra:method": "DELETE",
-            "hydra:title": "Deletes the FacetConfiguration resource.",
-            "rdfs:label": "Deletes the FacetConfiguration resource.",
-            "returns": "owl:Nothing"
-          }
-        ]
-      },
-      {
-        "@id": "#Document",
-        "@type": "hydra:Class",
-        "rdfs:label": "Document",
-        "hydra:title": "Document",
-        "hydra:supportedProperty": [],
-        "hydra:supportedOperation": [
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:FindAction"
-            ],
-            "hydra:method": "GET",
-            "hydra:title": "Retrieves Document resource.",
-            "rdfs:label": "Retrieves Document resource.",
-            "returns": "owl:Nothing"
-          }
-        ]
-      },
-      {
-        "@id": "#Category",
-        "@type": "hydra:Class",
-        "rdfs:label": "Category",
-        "hydra:title": "Category",
-        "hydra:supportedProperty": [
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#Category/name",
-              "@type": "rdf:Property",
-              "rdfs:label": "name",
-              "domain": "#Category",
-              "range": "xmls:string"
-            },
-            "hydra:title": "name",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          }
-        ],
-        "hydra:supportedOperation": [
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:FindAction"
-            ],
-            "hydra:method": "GET",
-            "hydra:title": "Retrieves Category resource.",
-            "rdfs:label": "Retrieves Category resource.",
-            "returns": "#Category"
-          },
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:DeleteAction"
-            ],
-            "hydra:method": "DELETE",
-            "hydra:title": "Deletes the Category resource.",
-            "rdfs:label": "Deletes the Category resource.",
-            "returns": "owl:Nothing"
-          },
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:ReplaceAction"
-            ],
-            "expects": "#Category",
-            "hydra:method": "PUT",
-            "hydra:title": "Replaces the Category resource.",
-            "rdfs:label": "Replaces the Category resource.",
-            "returns": "#Category"
-          },
-          {
-            "@type": "hydra:Operation",
-            "expects": "#Category",
-            "hydra:method": "PATCH",
-            "hydra:title": "Updates the Category resource.",
-            "rdfs:label": "Updates the Category resource.",
-            "returns": "#Category"
-          }
-        ]
-      },
-      {
-        "@id": "#Product",
-        "@type": "hydra:Class",
-        "rdfs:label": "Product",
-        "hydra:title": "Product",
-        "hydra:supportedProperty": [],
-        "hydra:supportedOperation": [
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:FindAction"
-            ],
-            "hydra:method": "GET",
-            "hydra:title": "Retrieves Product resource.",
-            "rdfs:label": "Retrieves Product resource.",
-            "returns": "owl:Nothing"
-          }
-        ]
-      },
-      {
-        "@id": "#ExampleDocument",
-        "@type": "hydra:Class",
-        "rdfs:label": "ExampleDocument",
-        "hydra:title": "ExampleDocument",
-        "hydra:supportedProperty": [
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#ExampleDocument/indexName",
-              "@type": "rdf:Property",
-              "rdfs:label": "indexName",
-              "domain": "#ExampleDocument",
-              "range": "xmls:string"
-            },
-            "hydra:title": "indexName",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#ExampleDocument/documents",
-              "@type": "rdf:Property",
-              "rdfs:label": "documents",
-              "domain": "#ExampleDocument",
-              "range": "xmls:string"
-            },
-            "hydra:title": "documents",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          }
-        ],
-        "hydra:supportedOperation": [
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:FindAction"
-            ],
-            "hydra:method": "GET",
-            "hydra:title": "Retrieves ExampleDocument resource.",
-            "rdfs:label": "Retrieves ExampleDocument resource.",
-            "returns": "#ExampleDocument"
-          },
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:DeleteAction"
-            ],
-            "hydra:method": "DELETE",
-            "hydra:title": "Deletes the ExampleDocument resource.",
-            "rdfs:label": "Deletes the ExampleDocument resource.",
-            "returns": "owl:Nothing"
-          }
-        ]
-      },
-      {
-        "@id": "#ExampleProduct",
-        "@type": "hydra:Class",
-        "rdfs:label": "ExampleProduct",
-        "hydra:title": "ExampleProduct",
-        "hydra:supportedProperty": [
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#ExampleProduct/entity_id",
-              "@type": "rdf:Property",
-              "rdfs:label": "entity_id",
-              "domain": "#ExampleProduct",
-              "range": "xmls:string"
-            },
-            "hydra:title": "entity_id",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#ExampleProduct/description",
-              "@type": "rdf:Property",
-              "rdfs:label": "description",
-              "domain": "#ExampleProduct"
-            },
-            "hydra:title": "description",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": true,
-            "hydra:description": "description"
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#ExampleProduct/type_id",
-              "@type": "rdf:Property",
-              "rdfs:label": "type_id",
-              "domain": "#ExampleProduct",
-              "range": "xmls:string"
-            },
-            "hydra:title": "type_id",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#ExampleProduct/created_at",
-              "@type": "rdf:Property",
-              "rdfs:label": "created_at",
-              "domain": "#ExampleProduct",
-              "range": "xmls:string"
-            },
-            "hydra:title": "created_at",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#ExampleProduct/updated_at",
-              "@type": "rdf:Property",
-              "rdfs:label": "updated_at",
-              "domain": "#ExampleProduct",
-              "range": "xmls:string"
-            },
-            "hydra:title": "updated_at",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#ExampleProduct/attributes",
-              "@type": "rdf:Property",
-              "rdfs:label": "attributes",
-              "domain": "#ExampleProduct"
-            },
-            "hydra:title": "attributes",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          }
-        ],
-        "hydra:supportedOperation": [
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:FindAction"
-            ],
-            "hydra:method": "GET",
-            "hydra:title": "Retrieves ExampleProduct resource.",
-            "rdfs:label": "Retrieves ExampleProduct resource.",
-            "returns": "#ExampleProduct"
-          }
-        ]
-      },
-      {
-        "@id": "#ExampleCategory",
-        "@type": "hydra:Class",
-        "rdfs:label": "ExampleCategory",
-        "hydra:title": "ExampleCategory",
-        "hydra:supportedProperty": [
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#ExampleCategory/name",
-              "@type": "rdf:Property",
-              "rdfs:label": "name",
-              "domain": "#ExampleCategory",
-              "range": "xmls:string"
-            },
-            "hydra:title": "name",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#ExampleCategory/description",
-              "@type": "rdf:Property",
-              "rdfs:label": "description",
-              "domain": "#ExampleCategory",
-              "range": "xmls:string"
-            },
-            "hydra:title": "description",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          }
-        ],
-        "hydra:supportedOperation": [
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:FindAction"
-            ],
-            "hydra:method": "GET",
-            "hydra:title": "Retrieves ExampleCategory resource.",
-            "rdfs:label": "Retrieves ExampleCategory resource.",
-            "returns": "#ExampleCategory"
-          },
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:ReplaceAction"
-            ],
-            "expects": "#ExampleCategory",
-            "hydra:method": "PUT",
-            "hydra:title": "Replaces the ExampleCategory resource.",
-            "rdfs:label": "Replaces the ExampleCategory resource.",
-            "returns": "#ExampleCategory"
-          },
-          {
-            "@type": "hydra:Operation",
-            "expects": "#ExampleCategory",
-            "hydra:method": "PATCH",
-            "hydra:title": "Updates the ExampleCategory resource.",
-            "rdfs:label": "Updates the ExampleCategory resource.",
-            "returns": "#ExampleCategory"
-          },
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:DeleteAction"
-            ],
-            "hydra:method": "DELETE",
-            "hydra:title": "Deletes the ExampleCategory resource.",
-            "rdfs:label": "Deletes the ExampleCategory resource.",
-            "returns": "owl:Nothing"
-          }
-        ]
-      },
-      {
-        "@id": "#ExampleIndex",
-        "@type": "hydra:Class",
-        "rdfs:label": "ExampleIndex",
-        "hydra:title": "ExampleIndex",
-        "hydra:supportedProperty": [
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#ExampleIndex/name",
-              "@type": "rdf:Property",
-              "rdfs:label": "name",
-              "domain": "#ExampleIndex",
-              "range": "xmls:string"
-            },
-            "hydra:title": "name",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": true
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#ExampleIndex/health",
-              "@type": "rdf:Property",
-              "rdfs:label": "health",
-              "domain": "#ExampleIndex",
-              "range": "xmls:string"
-            },
-            "hydra:title": "health",
-            "hydra:required": false,
-            "hydra:readable": true,
-            "hydra:writeable": true,
-            "hydra:description": "health"
-          }
-        ],
-        "hydra:supportedOperation": [
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:FindAction"
-            ],
-            "hydra:method": "GET",
-            "hydra:title": "Retrieves ExampleIndex resource.",
-            "rdfs:label": "Retrieves ExampleIndex resource.",
-            "returns": "#ExampleIndex"
-          },
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:DeleteAction"
-            ],
-            "hydra:method": "DELETE",
-            "hydra:title": "Deletes the ExampleIndex resource.",
-            "rdfs:label": "Deletes the ExampleIndex resource.",
-            "returns": "owl:Nothing"
-          }
-        ]
-      },
-      {
-        "@id": "#ExampleResultDocument",
-        "@type": "hydra:Class",
-        "rdfs:label": "ExampleResultDocument",
-        "hydra:title": "ExampleResultDocument",
-        "hydra:supportedProperty": [],
-        "hydra:supportedOperation": [
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:FindAction"
-            ],
-            "hydra:method": "GET",
-            "hydra:title": "Retrieves ExampleResultDocument resource.",
-            "rdfs:label": "Retrieves ExampleResultDocument resource.",
-            "returns": "owl:Nothing"
-          }
-        ]
-      },
-      {
-        "@id": "Declarative Greeting",
-        "@type": "hydra:Class",
-        "rdfs:label": "DeclarativeGreeting",
-        "hydra:title": "DeclarativeGreeting",
-        "hydra:supportedProperty": [
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#DeclarativeGreeting/name",
-              "@type": "rdf:Property",
-              "rdfs:label": "name",
-              "domain": "Declarative Greeting",
-              "range": "xmls:string"
-            },
-            "hydra:title": "name",
-            "hydra:required": true,
-            "hydra:readable": true,
-            "hydra:writeable": true,
-            "hydra:description": "A nice person."
-          }
-        ],
-        "hydra:supportedOperation": [
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:FindAction"
-            ],
-            "hydra:method": "GET",
-            "hydra:title": "Retrieves DeclarativeGreeting resource.",
-            "rdfs:label": "Retrieves DeclarativeGreeting resource.",
-            "returns": "Declarative Greeting"
-          },
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:DeleteAction"
-            ],
-            "hydra:method": "DELETE",
-            "hydra:title": "Deletes the DeclarativeGreeting resource.",
-            "rdfs:label": "Deletes the DeclarativeGreeting resource.",
-            "returns": "owl:Nothing"
-          },
-          {
-            "@type": [
-              "hydra:Operation",
-              "schema:ReplaceAction"
-            ],
-            "expects": "Declarative Greeting",
-            "hydra:method": "PUT",
-            "hydra:title": "Replaces the DeclarativeGreeting resource.",
-            "rdfs:label": "Replaces the DeclarativeGreeting resource.",
-            "returns": "Declarative Greeting"
-          },
-          {
-            "@type": "hydra:Operation",
-            "expects": "Declarative Greeting",
-            "hydra:method": "PATCH",
-            "hydra:title": "Updates the DeclarativeGreeting resource.",
-            "rdfs:label": "Updates the DeclarativeGreeting resource.",
-            "returns": "Declarative Greeting"
-          }
-        ],
-        "hydra:description": "Description of declarative greetings (description)"
-      },
-      {
-        "@id": "#Entrypoint",
-        "@type": "hydra:Class",
-        "hydra:title": "The API entrypoint",
-        "hydra:supportedProperty": [
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#Entrypoint/index",
-              "@type": "hydra:Link",
-              "domain": "#Entrypoint",
-              "rdfs:label": "The collection of Index resources",
-              "rdfs:range": [
-                {
-                  "@id": "hydra:Collection"
-                },
-                {
-                  "owl:equivalentClass": {
-                    "owl:onProperty": {
-                      "@id": "hydra:member"
-                    },
-                    "owl:allValuesFrom": {
-                      "@id": "#Index"
-                    }
-                  }
-                }
-              ],
-              "hydra:supportedOperation": [
-                {
-                  "@type": [
-                    "hydra:Operation",
-                    "schema:FindAction"
-                  ],
-                  "hydra:method": "GET",
-                  "hydra:title": "Retrieves the collection of Index resources.",
-                  "rdfs:label": "Retrieves the collection of Index resources.",
-                  "returns": "hydra:Collection"
-                },
-                {
-                  "@type": [
-                    "hydra:Operation",
-                    "schema:CreateAction"
-                  ],
-                  "expects": "#Index",
-                  "hydra:method": "POST",
-                  "hydra:title": "Creates a Index resource.",
-                  "rdfs:label": "Creates a Index resource.",
-                  "returns": "#Index"
-                }
-              ]
-            },
-            "hydra:title": "The collection of Index resources",
-            "hydra:readable": true,
-            "hydra:writeable": false
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#Entrypoint/indexDocument",
-              "@type": "hydra:Link",
-              "domain": "#Entrypoint",
-              "rdfs:label": "The collection of IndexDocument resources",
-              "rdfs:range": [
-                {
-                  "@id": "hydra:Collection"
-                },
-                {
-                  "owl:equivalentClass": {
-                    "owl:onProperty": {
-                      "@id": "hydra:member"
-                    },
-                    "owl:allValuesFrom": {
-                      "@id": "#IndexDocument"
-                    }
-                  }
-                }
-              ],
-              "hydra:supportedOperation": [
-                {
-                  "@type": [
-                    "hydra:Operation",
-                    "schema:FindAction"
-                  ],
-                  "hydra:method": "GET",
-                  "hydra:title": "Retrieves the collection of IndexDocument resources.",
-                  "rdfs:label": "Retrieves the collection of IndexDocument resources.",
-                  "returns": "hydra:Collection"
-                },
-                {
-                  "@type": [
-                    "hydra:Operation",
-                    "schema:CreateAction"
-                  ],
-                  "expects": "#IndexDocument",
-                  "hydra:method": "POST",
-                  "hydra:title": "Creates a IndexDocument resource.",
-                  "rdfs:label": "Creates a IndexDocument resource.",
-                  "returns": "#IndexDocument"
-                }
-              ]
-            },
-            "hydra:title": "The collection of IndexDocument resources",
-            "hydra:readable": true,
-            "hydra:writeable": false
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#Entrypoint/sourceFieldOption",
-              "@type": "hydra:Link",
-              "domain": "#Entrypoint",
-              "rdfs:label": "The collection of SourceFieldOption resources",
-              "rdfs:range": [
-                {
-                  "@id": "hydra:Collection"
-                },
-                {
-                  "owl:equivalentClass": {
-                    "owl:onProperty": {
-                      "@id": "hydra:member"
-                    },
-                    "owl:allValuesFrom": {
-                      "@id": "#SourceFieldOption"
-                    }
-                  }
-                }
-              ],
-              "hydra:supportedOperation": [
-                {
-                  "@type": [
-                    "hydra:Operation",
-                    "schema:FindAction"
-                  ],
-                  "hydra:method": "GET",
-                  "hydra:title": "Retrieves the collection of SourceFieldOption resources.",
-                  "rdfs:label": "Retrieves the collection of SourceFieldOption resources.",
-                  "returns": "hydra:Collection"
-                },
-                {
-                  "@type": [
-                    "hydra:Operation",
-                    "schema:CreateAction"
-                  ],
-                  "expects": "#SourceFieldOption",
-                  "hydra:method": "POST",
-                  "hydra:title": "Creates a SourceFieldOption resource.",
-                  "rdfs:label": "Creates a SourceFieldOption resource.",
-                  "returns": "#SourceFieldOption"
-                }
-              ]
-            },
-            "hydra:title": "The collection of SourceFieldOption resources",
-            "hydra:readable": true,
-            "hydra:writeable": false
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#Entrypoint/sourceField",
-              "@type": "hydra:Link",
-              "domain": "#Entrypoint",
-              "rdfs:label": "The collection of SourceField resources",
-              "rdfs:range": [
-                {
-                  "@id": "hydra:Collection"
-                },
-                {
-                  "owl:equivalentClass": {
-                    "owl:onProperty": {
-                      "@id": "hydra:member"
-                    },
-                    "owl:allValuesFrom": {
-                      "@id": "#SourceField"
-                    }
-                  }
-                }
-              ],
-              "hydra:supportedOperation": [
-                {
-                  "@type": [
-                    "hydra:Operation",
-                    "schema:FindAction"
-                  ],
-                  "hydra:method": "GET",
-                  "hydra:title": "Retrieves the collection of SourceField resources.",
-                  "rdfs:label": "Retrieves the collection of SourceField resources.",
-                  "returns": "hydra:Collection"
-                },
-                {
-                  "@type": [
-                    "hydra:Operation",
-                    "schema:CreateAction"
-                  ],
-                  "expects": "#SourceField",
-                  "hydra:method": "POST",
-                  "hydra:title": "Creates a SourceField resource.",
-                  "rdfs:label": "Creates a SourceField resource.",
-                  "returns": "#SourceField"
-                }
-              ]
-            },
-            "hydra:title": "The collection of SourceField resources",
-            "hydra:readable": true,
-            "hydra:writeable": false
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#Entrypoint/sourceFieldOptionLabel",
-              "@type": "hydra:Link",
-              "domain": "#Entrypoint",
-              "rdfs:label": "The collection of SourceFieldOptionLabel resources",
-              "rdfs:range": [
-                {
-                  "@id": "hydra:Collection"
-                },
-                {
-                  "owl:equivalentClass": {
-                    "owl:onProperty": {
-                      "@id": "hydra:member"
-                    },
-                    "owl:allValuesFrom": {
-                      "@id": "#SourceFieldOptionLabel"
-                    }
-                  }
-                }
-              ],
-              "hydra:supportedOperation": [
-                {
-                  "@type": [
-                    "hydra:Operation",
-                    "schema:FindAction"
-                  ],
-                  "hydra:method": "GET",
-                  "hydra:title": "Retrieves the collection of SourceFieldOptionLabel resources.",
-                  "rdfs:label": "Retrieves the collection of SourceFieldOptionLabel resources.",
-                  "returns": "hydra:Collection"
-                },
-                {
-                  "@type": [
-                    "hydra:Operation",
-                    "schema:CreateAction"
-                  ],
-                  "expects": "#SourceFieldOptionLabel",
-                  "hydra:method": "POST",
-                  "hydra:title": "Creates a SourceFieldOptionLabel resource.",
-                  "rdfs:label": "Creates a SourceFieldOptionLabel resource.",
-                  "returns": "#SourceFieldOptionLabel"
-                }
-              ]
-            },
-            "hydra:title": "The collection of SourceFieldOptionLabel resources",
-            "hydra:readable": true,
-            "hydra:writeable": false
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#Entrypoint/metadata",
-              "@type": "hydra:Link",
-              "domain": "#Entrypoint",
-              "rdfs:label": "The collection of Metadata resources",
-              "rdfs:range": [
-                {
-                  "@id": "hydra:Collection"
-                },
-                {
-                  "owl:equivalentClass": {
-                    "owl:onProperty": {
-                      "@id": "hydra:member"
-                    },
-                    "owl:allValuesFrom": {
-                      "@id": "#Metadata"
-                    }
-                  }
-                }
-              ],
-              "hydra:supportedOperation": [
-                {
-                  "@type": [
-                    "hydra:Operation",
-                    "schema:FindAction"
-                  ],
-                  "hydra:method": "GET",
-                  "hydra:title": "Retrieves the collection of Metadata resources.",
-                  "rdfs:label": "Retrieves the collection of Metadata resources.",
-                  "returns": "hydra:Collection"
-                },
-                {
-                  "@type": [
-                    "hydra:Operation",
-                    "schema:CreateAction"
-                  ],
-                  "expects": "#Metadata",
-                  "hydra:method": "POST",
-                  "hydra:title": "Creates a Metadata resource.",
-                  "rdfs:label": "Creates a Metadata resource.",
-                  "returns": "#Metadata"
-                }
-              ]
-            },
-            "hydra:title": "The collection of Metadata resources",
-            "hydra:readable": true,
-            "hydra:writeable": false
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#Entrypoint/sourceFieldLabel",
-              "@type": "hydra:Link",
-              "domain": "#Entrypoint",
-              "rdfs:label": "The collection of SourceFieldLabel resources",
-              "rdfs:range": [
-                {
-                  "@id": "hydra:Collection"
-                },
-                {
-                  "owl:equivalentClass": {
-                    "owl:onProperty": {
-                      "@id": "hydra:member"
-                    },
-                    "owl:allValuesFrom": {
-                      "@id": "#SourceFieldLabel"
-                    }
-                  }
-                }
-              ],
-              "hydra:supportedOperation": [
-                {
-                  "@type": [
-                    "hydra:Operation",
-                    "schema:FindAction"
-                  ],
-                  "hydra:method": "GET",
-                  "hydra:title": "Retrieves the collection of SourceFieldLabel resources.",
-                  "rdfs:label": "Retrieves the collection of SourceFieldLabel resources.",
-                  "returns": "hydra:Collection"
-                },
-                {
-                  "@type": [
-                    "hydra:Operation",
-                    "schema:CreateAction"
-                  ],
-                  "expects": "#SourceFieldLabel",
-                  "hydra:method": "POST",
-                  "hydra:title": "Creates a SourceFieldLabel resource.",
-                  "rdfs:label": "Creates a SourceFieldLabel resource.",
-                  "returns": "#SourceFieldLabel"
-                }
-              ]
-            },
-            "hydra:title": "The collection of SourceFieldLabel resources",
-            "hydra:readable": true,
-            "hydra:writeable": false
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#Entrypoint/catalog",
-              "@type": "hydra:Link",
-              "domain": "#Entrypoint",
-              "rdfs:label": "The collection of Catalog resources",
-              "rdfs:range": [
-                {
-                  "@id": "hydra:Collection"
-                },
-                {
-                  "owl:equivalentClass": {
-                    "owl:onProperty": {
-                      "@id": "hydra:member"
-                    },
-                    "owl:allValuesFrom": {
-                      "@id": "#Catalog"
-                    }
-                  }
-                }
-              ],
-              "hydra:supportedOperation": [
-                {
-                  "@type": [
-                    "hydra:Operation",
-                    "schema:FindAction"
-                  ],
-                  "hydra:method": "GET",
-                  "hydra:title": "Retrieves the collection of Catalog resources.",
-                  "rdfs:label": "Retrieves the collection of Catalog resources.",
-                  "returns": "hydra:Collection"
-                },
-                {
-                  "@type": [
-                    "hydra:Operation",
-                    "schema:CreateAction"
-                  ],
-                  "expects": "#Catalog",
-                  "hydra:method": "POST",
-                  "hydra:title": "Creates a Catalog resource.",
-                  "rdfs:label": "Creates a Catalog resource.",
-                  "returns": "#Catalog"
-                }
-              ]
-            },
-            "hydra:title": "The collection of Catalog resources",
-            "hydra:readable": true,
-            "hydra:writeable": false
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#Entrypoint/localizedCatalog",
-              "@type": "hydra:Link",
-              "domain": "#Entrypoint",
-              "rdfs:label": "The collection of LocalizedCatalog resources",
-              "rdfs:range": [
-                {
-                  "@id": "hydra:Collection"
-                },
-                {
-                  "owl:equivalentClass": {
-                    "owl:onProperty": {
-                      "@id": "hydra:member"
-                    },
-                    "owl:allValuesFrom": {
-                      "@id": "#LocalizedCatalog"
-                    }
-                  }
-                }
-              ],
-              "hydra:supportedOperation": [
-                {
-                  "@type": [
-                    "hydra:Operation",
-                    "schema:FindAction"
-                  ],
-                  "hydra:method": "GET",
-                  "hydra:title": "Retrieves the collection of LocalizedCatalog resources.",
-                  "rdfs:label": "Retrieves the collection of LocalizedCatalog resources.",
-                  "returns": "hydra:Collection"
-                },
-                {
-                  "@type": [
-                    "hydra:Operation",
-                    "schema:CreateAction"
-                  ],
-                  "expects": "#LocalizedCatalog",
-                  "hydra:method": "POST",
-                  "hydra:title": "Creates a LocalizedCatalog resource.",
-                  "rdfs:label": "Creates a LocalizedCatalog resource.",
-                  "returns": "#LocalizedCatalog"
-                }
-              ]
-            },
-            "hydra:title": "The collection of LocalizedCatalog resources",
-            "hydra:readable": true,
-            "hydra:writeable": false
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#Entrypoint/facetConfiguration",
-              "@type": "hydra:Link",
-              "domain": "#Entrypoint",
-              "rdfs:label": "The collection of FacetConfiguration resources",
-              "rdfs:range": [
-                {
-                  "@id": "hydra:Collection"
-                },
-                {
-                  "owl:equivalentClass": {
-                    "owl:onProperty": {
-                      "@id": "hydra:member"
-                    },
-                    "owl:allValuesFrom": {
-                      "@id": "#FacetConfiguration"
-                    }
-                  }
-                }
-              ],
-              "hydra:supportedOperation": [
-                {
-                  "@type": [
-                    "hydra:Operation",
-                    "schema:FindAction"
-                  ],
-                  "hydra:method": "GET",
-                  "hydra:title": "Retrieves the collection of FacetConfiguration resources.",
-                  "rdfs:label": "Retrieves the collection of FacetConfiguration resources.",
-                  "returns": "hydra:Collection"
-                }
-              ]
-            },
-            "hydra:title": "The collection of FacetConfiguration resources",
-            "hydra:readable": true,
-            "hydra:writeable": false
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#Entrypoint/category",
-              "@type": "hydra:Link",
-              "domain": "#Entrypoint",
-              "rdfs:label": "The collection of Category resources",
-              "rdfs:range": [
-                {
-                  "@id": "hydra:Collection"
-                },
-                {
-                  "owl:equivalentClass": {
-                    "owl:onProperty": {
-                      "@id": "hydra:member"
-                    },
-                    "owl:allValuesFrom": {
-                      "@id": "#Category"
-                    }
-                  }
-                }
-              ],
-              "hydra:supportedOperation": [
-                {
-                  "@type": [
-                    "hydra:Operation",
-                    "schema:FindAction"
-                  ],
-                  "hydra:method": "GET",
-                  "hydra:title": "Retrieves the collection of Category resources.",
-                  "rdfs:label": "Retrieves the collection of Category resources.",
-                  "returns": "hydra:Collection"
-                },
-                {
-                  "@type": [
-                    "hydra:Operation",
-                    "schema:CreateAction"
-                  ],
-                  "expects": "#Category",
-                  "hydra:method": "POST",
-                  "hydra:title": "Creates a Category resource.",
-                  "rdfs:label": "Creates a Category resource.",
-                  "returns": "#Category"
-                }
-              ]
-            },
-            "hydra:title": "The collection of Category resources",
-            "hydra:readable": true,
-            "hydra:writeable": false
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#Entrypoint/exampleDocument",
-              "@type": "hydra:Link",
-              "domain": "#Entrypoint",
-              "rdfs:label": "The collection of ExampleDocument resources",
-              "rdfs:range": [
-                {
-                  "@id": "hydra:Collection"
-                },
-                {
-                  "owl:equivalentClass": {
-                    "owl:onProperty": {
-                      "@id": "hydra:member"
-                    },
-                    "owl:allValuesFrom": {
-                      "@id": "#ExampleDocument"
-                    }
-                  }
-                }
-              ],
-              "hydra:supportedOperation": [
-                {
-                  "@type": [
-                    "hydra:Operation",
-                    "schema:FindAction"
-                  ],
-                  "hydra:method": "GET",
-                  "hydra:title": "Retrieves the collection of ExampleDocument resources.",
-                  "rdfs:label": "Retrieves the collection of ExampleDocument resources.",
-                  "returns": "hydra:Collection"
-                },
-                {
-                  "@type": [
-                    "hydra:Operation",
-                    "schema:CreateAction"
-                  ],
-                  "expects": "#ExampleDocument",
-                  "hydra:method": "POST",
-                  "hydra:title": "Creates a ExampleDocument resource.",
-                  "rdfs:label": "Creates a ExampleDocument resource.",
-                  "returns": "#ExampleDocument"
-                }
-              ]
-            },
-            "hydra:title": "The collection of ExampleDocument resources",
-            "hydra:readable": true,
-            "hydra:writeable": false
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#Entrypoint/exampleProduct",
-              "@type": "hydra:Link",
-              "domain": "#Entrypoint",
-              "rdfs:label": "The collection of ExampleProduct resources",
-              "rdfs:range": [
-                {
-                  "@id": "hydra:Collection"
-                },
-                {
-                  "owl:equivalentClass": {
-                    "owl:onProperty": {
-                      "@id": "hydra:member"
-                    },
-                    "owl:allValuesFrom": {
-                      "@id": "#ExampleProduct"
-                    }
-                  }
-                }
-              ],
-              "hydra:supportedOperation": [
-                {
-                  "@type": [
-                    "hydra:Operation",
-                    "schema:FindAction"
-                  ],
-                  "hydra:method": "GET",
-                  "hydra:title": "Retrieves the collection of ExampleProduct resources.",
-                  "rdfs:label": "Retrieves the collection of ExampleProduct resources.",
-                  "returns": "hydra:Collection"
-                }
-              ]
-            },
-            "hydra:title": "The collection of ExampleProduct resources",
-            "hydra:readable": true,
-            "hydra:writeable": false
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#Entrypoint/exampleCategory",
-              "@type": "hydra:Link",
-              "domain": "#Entrypoint",
-              "rdfs:label": "The collection of ExampleCategory resources",
-              "rdfs:range": [
-                {
-                  "@id": "hydra:Collection"
-                },
-                {
-                  "owl:equivalentClass": {
-                    "owl:onProperty": {
-                      "@id": "hydra:member"
-                    },
-                    "owl:allValuesFrom": {
-                      "@id": "#ExampleCategory"
-                    }
-                  }
-                }
-              ],
-              "hydra:supportedOperation": [
-                {
-                  "@type": [
-                    "hydra:Operation",
-                    "schema:FindAction"
-                  ],
-                  "hydra:method": "GET",
-                  "hydra:title": "Retrieves the collection of ExampleCategory resources.",
-                  "rdfs:label": "Retrieves the collection of ExampleCategory resources.",
-                  "returns": "hydra:Collection"
-                },
-                {
-                  "@type": [
-                    "hydra:Operation",
-                    "schema:CreateAction"
-                  ],
-                  "expects": "#ExampleCategory",
-                  "hydra:method": "POST",
-                  "hydra:title": "Creates a ExampleCategory resource.",
-                  "rdfs:label": "Creates a ExampleCategory resource.",
-                  "returns": "#ExampleCategory"
-                }
-              ]
-            },
-            "hydra:title": "The collection of ExampleCategory resources",
-            "hydra:readable": true,
-            "hydra:writeable": false
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#Entrypoint/exampleIndex",
-              "@type": "hydra:Link",
-              "domain": "#Entrypoint",
-              "rdfs:label": "The collection of ExampleIndex resources",
-              "rdfs:range": [
-                {
-                  "@id": "hydra:Collection"
-                },
-                {
-                  "owl:equivalentClass": {
-                    "owl:onProperty": {
-                      "@id": "hydra:member"
-                    },
-                    "owl:allValuesFrom": {
-                      "@id": "#ExampleIndex"
-                    }
-                  }
-                }
-              ],
-              "hydra:supportedOperation": [
-                {
-                  "@type": [
-                    "hydra:Operation",
-                    "schema:FindAction"
-                  ],
-                  "hydra:method": "GET",
-                  "hydra:title": "Retrieves the collection of ExampleIndex resources.",
-                  "rdfs:label": "Retrieves the collection of ExampleIndex resources.",
-                  "returns": "hydra:Collection"
-                },
-                {
-                  "@type": [
-                    "hydra:Operation",
-                    "schema:CreateAction"
-                  ],
-                  "expects": "#ExampleIndex",
-                  "hydra:method": "POST",
-                  "hydra:title": "Creates a ExampleIndex resource.",
-                  "rdfs:label": "Creates a ExampleIndex resource.",
-                  "returns": "#ExampleIndex"
-                }
-              ]
-            },
-            "hydra:title": "The collection of ExampleIndex resources",
-            "hydra:readable": true,
-            "hydra:writeable": false
-          },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#Entrypoint/declarativeGreeting",
-              "@type": "hydra:Link",
-              "domain": "#Entrypoint",
-              "rdfs:label": "The collection of DeclarativeGreeting resources",
-              "rdfs:range": [
-                {
-                  "@id": "hydra:Collection"
-                },
-                {
-                  "owl:equivalentClass": {
-                    "owl:onProperty": {
-                      "@id": "hydra:member"
-                    },
-                    "owl:allValuesFrom": {
-                      "@id": "Declarative Greeting"
-                    }
-                  }
-                }
-              ],
-              "hydra:supportedOperation": [
-                {
-                  "@type": [
-                    "hydra:Operation",
-                    "schema:FindAction"
-                  ],
-                  "hydra:method": "GET",
-                  "hydra:title": "Retrieves the collection of DeclarativeGreeting resources.",
-                  "rdfs:label": "Retrieves the collection of DeclarativeGreeting resources.",
-                  "returns": "hydra:Collection"
-                },
-                {
-                  "@type": [
-                    "hydra:Operation",
-                    "schema:CreateAction"
-                  ],
-                  "expects": "Declarative Greeting",
-                  "hydra:method": "POST",
-                  "hydra:title": "Creates a DeclarativeGreeting resource.",
-                  "rdfs:label": "Creates a DeclarativeGreeting resource.",
-                  "returns": "Declarative Greeting"
-                }
-              ]
-            },
-            "hydra:title": "The collection of DeclarativeGreeting resources",
-            "hydra:readable": true,
-            "hydra:writeable": false
-          }
-        ],
-        "hydra:supportedOperation": {
-          "@type": "hydra:Operation",
-          "hydra:method": "GET",
-          "rdfs:label": "The API entrypoint.",
-          "returns": "#EntryPoint"
+    {
+      "@id": "#ConstraintViolation",
+      "@type": "hydra:Class",
+      "hydra:title": "A constraint violation",
+      "hydra:supportedProperty": [
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#ConstraintViolation/propertyPath",
+            "@type": "rdf:Property",
+            "rdfs:label": "propertyPath",
+            "domain": "#ConstraintViolation",
+            "range": "xmls:string"
+          },
+          "hydra:title": "propertyPath",
+          "hydra:description": "The property path of the violation",
+          "hydra:readable": true,
+          "hydra:writeable": false
+        },
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#ConstraintViolation/message",
+            "@type": "rdf:Property",
+            "rdfs:label": "message",
+            "domain": "#ConstraintViolation",
+            "range": "xmls:string"
+          },
+          "hydra:title": "message",
+          "hydra:description": "The message associated with the violation",
+          "hydra:readable": true,
+          "hydra:writeable": false
         }
-      },
-      {
-        "@id": "#ConstraintViolation",
-        "@type": "hydra:Class",
-        "hydra:title": "A constraint violation",
-        "hydra:supportedProperty": [
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#ConstraintViolation/propertyPath",
-              "@type": "rdf:Property",
-              "rdfs:label": "propertyPath",
-              "domain": "#ConstraintViolation",
-              "range": "xmls:string"
-            },
-            "hydra:title": "propertyPath",
-            "hydra:description": "The property path of the violation",
-            "hydra:readable": true,
-            "hydra:writeable": false
+      ]
+    },
+    {
+      "@id": "#ConstraintViolationList",
+      "@type": "hydra:Class",
+      "subClassOf": "hydra:Error",
+      "hydra:title": "A constraint violation list",
+      "hydra:supportedProperty": [
+        {
+          "@type": "hydra:SupportedProperty",
+          "hydra:property": {
+            "@id": "#ConstraintViolationList/violations",
+            "@type": "rdf:Property",
+            "rdfs:label": "violations",
+            "domain": "#ConstraintViolationList",
+            "range": "#ConstraintViolation"
           },
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#ConstraintViolation/message",
-              "@type": "rdf:Property",
-              "rdfs:label": "message",
-              "domain": "#ConstraintViolation",
-              "range": "xmls:string"
-            },
-            "hydra:title": "message",
-            "hydra:description": "The message associated with the violation",
-            "hydra:readable": true,
-            "hydra:writeable": false
-          }
-        ]
-      },
-      {
-        "@id": "#ConstraintViolationList",
-        "@type": "hydra:Class",
-        "subClassOf": "hydra:Error",
-        "hydra:title": "A constraint violation list",
-        "hydra:supportedProperty": [
-          {
-            "@type": "hydra:SupportedProperty",
-            "hydra:property": {
-              "@id": "#ConstraintViolationList/violations",
-              "@type": "rdf:Property",
-              "rdfs:label": "violations",
-              "domain": "#ConstraintViolationList",
-              "range": "#ConstraintViolation"
-            },
-            "hydra:title": "violations",
-            "hydra:description": "The violations",
-            "hydra:readable": true,
-            "hydra:writeable": false
-          }
-        ]
-      }
-    ]
-  }
+          "hydra:title": "violations",
+          "hydra:description": "The violations",
+          "hydra:readable": true,
+          "hydra:writeable": false
+        }
+      ]
+    }
+  ]
+}

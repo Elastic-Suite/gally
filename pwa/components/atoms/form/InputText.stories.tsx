@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 import InputTextComponent from './InputText'
-import InputAdornment from '@mui/material/InputAdornment'
+import { InputAdornment } from '@mui/material'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 
 export default {
@@ -50,7 +50,7 @@ InputText.args = {
   disabled: false,
   helperText: '',
   helperIcon: '',
-  color: 'none',
+  color: 'primary',
   endAdornment: null,
 }
 
@@ -63,7 +63,7 @@ SearchInputText.args = {
   disabled: false,
   helperText: '',
   helperIcon: '',
-  color: 'none',
+  color: 'primary',
   endAdornment: (
     <InputAdornment position="end">
       <IonIcon name="search" />

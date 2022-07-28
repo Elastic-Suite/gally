@@ -1,8 +1,10 @@
-import TextareaAutosize from '@mui/material/TextareaAutosize'
-import FormHelperText from '@mui/material/FormHelperText'
-import FormControl from '@mui/material/FormControl'
+import {
+  FormControl,
+  FormHelperText,
+  InputLabel,
+  TextareaAutosize,
+} from '@mui/material'
 import classNames from 'classnames'
-import InputLabel from '@mui/material/InputLabel'
 import { TextareaAutosizeProps } from '@mui/base/TextareaAutosize/TextareaAutosize'
 
 //Example get here https://codesandbox.io/s/n4t82?file=/src/index.js:612-654

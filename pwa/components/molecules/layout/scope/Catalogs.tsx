@@ -3,7 +3,7 @@ import TitleScope from '~/components/atoms/scope/TitleScope'
 import NbActiveLocales from '~/components/atoms/scope/NbActiveLocales'
 import Language from '~/components/atoms/scope/Language'
 import { ICatalog, IHydraResponse } from '~/types'
-import { getUniqueLocalName } from '~/services/local'
+import { getUniqueLocalName } from '~/services'
 import { useTranslation } from 'next-i18next'
 
 const CustomFullRoot = styled('div')(({ theme }) => ({

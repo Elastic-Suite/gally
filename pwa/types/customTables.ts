@@ -1,4 +1,4 @@
-import { IOptions } from '~/components/atoms/form/DropDown'
+import { IOptions } from '~/types'
 
 export enum MassiveSelectionType {
   ALL = 'massiveselection.all',
@@ -10,9 +10,9 @@ export interface ITableHeader {
   field: string
   headerName: string
   type: DataContentType
-  editable: boolean
-  sticky: boolean
-  options: IOptions | null
+  editable?: boolean
+  sticky?: boolean
+  options?: IOptions | null
 }
 
 export interface IBaseStyle {
@@ -22,6 +22,7 @@ export interface IBaseStyle {
 }
 
 export interface INonStickyStyle {
+  borderBottomColor: string
   backgroundColor: string
   overflow?: string
 }
@@ -42,6 +43,7 @@ export interface IDraggableColumnStyle extends IBaseStyle {
 }
 
 export interface IStickyBorderStyle {
+  borderBottomColor: string
   borderRight: string
   borderRightColor: string
   boxShadow?: string
@@ -57,7 +59,7 @@ export enum DataContentType {
 }
 
 export interface ITableRow {
-  id: string
+  id: string | number
   [key: string]: string | boolean | number
 }
 

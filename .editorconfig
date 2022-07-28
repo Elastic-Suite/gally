@@ -19,7 +19,7 @@ insert_final_newline = true
 indent_style = space
 indent_size = 2
 
-[*.json]
+[*.{json,jsonld}]
 indent_style = space
 indent_size = 2
 

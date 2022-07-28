@@ -1,11 +1,12 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { useCallback, useEffect, useState } from 'react'
 
-import { FilterType, IFilter } from './Filter'
+import { FilterType, IFilter } from '~/types'
+
 import Filters from './Filters'
 
 export default {
-  title: 'Atoms/Filters',
+  title: 'Molecules/Filters',
   component: Filters,
 } as ComponentMeta<typeof Filters>
 

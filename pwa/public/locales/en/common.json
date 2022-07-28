@@ -5,15 +5,7 @@
   "filters.clearAll": "Clear all",
   "filters.filter": "Filter",
   "filters.search": "Search",
-  "temporary-slug": "Temporary! Here is the coded slug:",
   "massiveselection.all": "All",
   "massiveselection.allOnCurrentPage": "All on this page",
-  "massiveselection.none": "None",
-  "catalog_one": "catalog",
-  "catalog_other": "catalogs",
-  "activeLocale_one": "active locale",
-  "activeLocale_other": "active locales",
-  "scope": "Scope",
-  "searchableAndFiltrableAttributes": "Searchable and filtrable attributes",
-  "contentOfSearchableAndFiltrableAttributes": "Content of Searchable and filtrable attributes"
+  "massiveselection.none": "None"
 }

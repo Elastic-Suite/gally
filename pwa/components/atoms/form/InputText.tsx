@@ -1,9 +1,12 @@
 import { ChangeEvent, ReactChild } from 'react'
-import InputBase, { InputBaseProps } from '@mui/material/InputBase/InputBase'
+import {
+  FormControl,
+  FormHelperText,
+  InputBase,
+  InputBaseProps,
+  InputLabel,
+} from '@mui/material'
 import { styled } from '@mui/material/styles'
-import FormControl from '@mui/material/FormControl'
-import InputLabel from '@mui/material/InputLabel'
-import FormHelperText from '@mui/material/FormHelperText'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 
 interface IUnstyledInputText extends InputBaseProps {

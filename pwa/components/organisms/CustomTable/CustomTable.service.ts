@@ -1,5 +1,5 @@
 import { ChangeEvent } from 'react'
-import { ITableHeader, ITableHeaderSticky } from '~/types'
+import { IStickyBorderStyle, ITableHeader, ITableHeaderSticky } from '~/types'
 
 export function manageStickyHeaders(
   tableHeaders: ITableHeader[]
@@ -21,13 +21,25 @@ export function manageStickyHeaders(
 
 export function handleSingleRow(
   e: ChangeEvent<HTMLInputElement>,
-  rowId: string,
-  setSelectedRows: (arr: string[]) => void,
-  selectedRows: string[]
+  rowId: string | number,
+  setSelectedRows: (arr: (string | number)[]) => void,
+  selectedRows: (string | number)[]
 ): void {
   setSelectedRows(
     e.target.checked
       ? selectedRows.concat(rowId)
       : selectedRows.filter((value) => value !== rowId)
   )
+}
+
+export function stickyBorderStyle(shadow: boolean): IStickyBorderStyle {
+  return {
+    borderBottomColor: 'colors.neutral.300',
+    borderRight: '2px solid',
+    borderRightColor: 'colors.neutral.600',
+    ...(shadow && {
+      boxShadow: '5px 0 460px -10px',
+      clipPath: 'inset(0px -15px 0px 0px)',
+    }),
+  }
 }
