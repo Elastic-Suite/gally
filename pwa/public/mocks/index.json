@@ -1,0 +1,21 @@
+{
+  "@context": "/mocks/contexts/Entrypoint.json",
+  "@id": "/",
+  "@type": "Entrypoint",
+  "catalog": "/mocks/catalogs",
+  "category": "/mocks/categories",
+  "declarativeGreeting": "/mocks/declarative_greetings",
+  "exampleCategory": "/mocks/example_categories",
+  "exampleDocument": "/mocks/example_documents",
+  "exampleIndex": "/mocks/example_indices",
+  "exampleProduct": "/mocks/example_products",
+  "facetConfiguration": "/mocks/facet_configurations",
+  "index": "/mocks/indices",
+  "indexDocument": "/mocks/index_documents",
+  "localizedCatalog": "/mocks/localized_catalogs",
+  "metadata": "/mocks/metadata",
+  "sourceField": "/mocks/source_fields",
+  "sourceFieldLabel": "/mocks/source_field_labels",
+  "sourceFieldOption": "/mocks/source_field_options",
+  "sourceFieldOptionLabel": "/mocks/source_field_option_labels"
+}

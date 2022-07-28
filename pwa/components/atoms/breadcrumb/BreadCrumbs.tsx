@@ -1,5 +1,4 @@
-import Breadcrumbs from '@mui/material/Breadcrumbs'
-import Typography from '@mui/material/Typography'
+import { Breadcrumbs, Typography } from '@mui/material'
 import { styled } from '@mui/system'
 import { IMenu, IMenuChild } from '~/store'
 
@@ -35,9 +34,7 @@ function newSlug(data: string[] | string): string[] {
   return newBreadCrumbData
 }
 
-function BreadCrumbs(props: IProps): JSX.Element {
-  const { menu, slug } = props
-
+function BreadCrumbs({ menu, slug }: IProps): JSX.Element {
   let labelData: string[] = []
   function findIn(find: string, menu: IMenuChild[]): string[] {
     if (typeof menu === 'object') {

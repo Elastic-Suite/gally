@@ -1,44 +1,48 @@
 import { useEffect, useRef, useState } from 'react'
-
 import { DragDropContext, DropResult } from 'react-beautiful-dnd'
+
+import {
+  reorderingColumnWidth,
+  selectionColumnWidth,
+  stickyColunWidth,
+} from '~/constants'
+import { useIsHorizontalOverflow } from '~/hooks'
+import { ITableHeader, ITableRow, MassiveSelectionType } from '~/types'
 
 import StickyBar from '~/components/molecules/CustomTable/StickyBar/StickyBar'
 import {
   StyledTable,
   TableContainerWithCustomScrollbar,
 } from '~/components/organisms/CustomTable/CustomTable.styled'
-
 import CustomTableHeader from '~/components/organisms/CustomTable/CustomTableHeader/CustomTableHeader'
-import { ITableHeader, ITableRow, MassiveSelectionType } from '~/types'
-import {
-  reorderingColumnWidth,
-  selectionColumnWidth,
-  stickyColunWidth,
-} from '~/constants'
 import NonDraggableBody from '~/components/organisms/CustomTable/CustomTableBody/NonDraggableBody'
 import DraggableBody from '~/components/organisms/CustomTable/CustomTableBody/DraggableBody'
-import { useIsHorizontalOverflow } from '~/hooks/useIsHorizontalOverflow'
 
-interface IProps {
+export interface IProps {
+  // onMassiveAction?: (action: string) => void
+  // onReordering?: (ordRows: ITableRow[]) => void
   tableHeaders: ITableHeader[]
   tableRows: ITableRow[]
   withSelection?: boolean
   draggable?: boolean
-  // onMassiveAction?: (actions: string) => void
-  // onReordering?: (ordRows: ITableRow[]) => void
 }
 
 function CustomTable(props: IProps): JSX.Element {
-  const { tableHeaders, tableRows, withSelection, draggable } = props
+  const { draggable, tableHeaders, tableRows, withSelection } = props
 
-  const [selectedRows, setSelectedRows] = useState<string[]>([])
+  const [selectedRows, setSelectedRows] = useState<(string | number)[]>([])
   const [scrollLength, setScrollLength] = useState<number>(0)
   const [currentMassiveSelection, setCurrentMassiveSelection] = useState(
     MassiveSelectionType.NONE
   )
+  // todo: Should we keep this state or should we let the parent manage it ?
   const [currentRows, setCurrentRows] = useState<ITableRow[]>(tableRows)
   const tableRef = useRef<HTMLDivElement>()
-  const { isOverflow, shadow } = useIsHorizontalOverflow(tableRef)
+  const { isOverflow, shadow } = useIsHorizontalOverflow(tableRef.current)
+
+  useEffect(() => {
+    setCurrentRows(tableRows)
+  }, [tableRows])
 
   /**
    * Compute the length of the sticky part.
@@ -89,7 +93,7 @@ function CustomTable(props: IProps): JSX.Element {
   /**
    * Compute the CSS left values for the sticky part of the table.
    * It return an array of all successive left value to use in CustomTableHeader.tsx, DraggableTableRow.tsx and CustomTableRows.tsx
-   * It gonna be provide by context CSSContext to each row component.
+   * It gonna be provide to each row component.
    */
   function computeLeftCSSValues(): number[] {
     const stickyHeaders = tableHeaders.filter((header) => header.sticky)

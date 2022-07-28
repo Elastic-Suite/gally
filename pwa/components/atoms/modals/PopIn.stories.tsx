@@ -15,4 +15,5 @@ Pop_In.args = {
   cancelName: 'Cancel',
   confirmName: 'Confirm',
   titlePopIn: 'Hello World',
+  onConfirm: (): void => console.log('Hello World'),
 }

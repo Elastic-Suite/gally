@@ -19,7 +19,7 @@ import {
   reorderIconStyle,
   selectionStyle,
   stickyStyle,
-} from './Row.styled'
+} from './Row.service'
 import { DraggableProvided } from 'react-beautiful-dnd'
 
 interface IProps {
@@ -27,8 +27,8 @@ interface IProps {
   updateRow: (row: ITableRow) => void
   tableHeaders: ITableHeader[]
   withSelection: boolean
-  selectedRows: string[]
-  setSelectedRows: (arr: string[]) => void
+  selectedRows: (string | number)[]
+  setSelectedRows: (arr: (string | number)[]) => void
   provider: DraggableProvided
   cSSLeftValuesIterator: IterableIterator<[number, number]>
   isHorizontalOverflow: boolean
@@ -61,6 +61,7 @@ function DraggableRow(props: IProps): JSX.Element {
     >
       <StickyTableCell
         sx={{
+          borderBottomColor: 'colors.neutral.300',
           '&:hover': {
             color: 'colors.neutral.500',
             cursor: 'default',
@@ -89,6 +90,7 @@ function DraggableRow(props: IProps): JSX.Element {
           )}
         >
           <Checkbox
+            data-testid="draggable-single-row-selection"
             checked={selectedRows ? selectedRows.includes(tableRow.id) : false}
             onChange={(value: ChangeEvent<HTMLInputElement>): void =>
               handleSingleRow(value, tableRow.id, setSelectedRows, selectedRows)

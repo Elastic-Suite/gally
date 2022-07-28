@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Help match snapshot Help simple 1`] = `
+<div>
+  <div
+    class="css-l3v3zn"
+  >
+    <ion-icon
+      name="help-circle-outline"
+      style="font-size: 18px; color: rgb(129, 135, 185);"
+    />
+    <div
+      class="css-1g5ufcu"
+    >
+      <div
+        class="css-ykyq1f"
+      >
+        <div>
+          Helpdesk
+        </div>
+        <div>
+          User guide
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

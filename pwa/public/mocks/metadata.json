@@ -1,0 +1,26 @@
+{
+  "@context": "/contexts/Metadata",
+  "@id": "/metadata",
+  "@type": "hydra:Collection",
+  "hydra:member": [
+    {
+      "@id": "/metadata/1",
+      "@type": "Metadata",
+      "id": 1,
+      "entity": "product",
+      "sourceFields": [
+        "/source_fields/1",
+        "/source_fields/3",
+        "/source_fields/4"
+      ]
+    },
+    {
+      "@id": "/metadata/2",
+      "@type": "Metadata",
+      "id": 2,
+      "entity": "category",
+      "sourceFields": ["/source_fields/2"]
+    }
+  ],
+  "hydra:totalItems": 2
+}

@@ -1,6 +1,9 @@
 import { Box, Switch } from '@mui/material'
-import DropDown, { IOptions } from '~/components/atoms/form/DropDown'
-import { DataContentType, ITableHeader, ITableRow } from '~/types'
+import { DataContentType, IOptions, ITableHeader, ITableRow } from '~/types'
+
+import DropDown from '~/components/atoms/form/DropDown'
+
+import NonEditableContent from './NonEditableContent'
 
 interface IProps {
   header: ITableHeader
@@ -50,6 +53,8 @@ function EditableContent(props: IProps): JSX.Element {
             checked={row[header.field] as boolean}
           />
         )
+      default:
+        return <NonEditableContent header={header} row={row} />
     }
   }
 

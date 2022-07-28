@@ -1,9 +1,10 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
-import Tooltips from './Tooltip'
+import IonIcon from '../IonIcon/IonIcon'
+import TooltipComponent from './Tooltip'
 
 export default {
   title: 'Atoms/Modals',
-  component: Tooltips,
+  component: TooltipComponent,
   argTypes: {
     placement: {
       options: [
@@ -23,14 +24,19 @@ export default {
       control: { type: 'select' },
     },
   },
-} as ComponentMeta<typeof Tooltips>
+} as ComponentMeta<typeof TooltipComponent>
 
-const Template: ComponentStory<typeof Tooltips> = (args) => (
-  <Tooltips {...args} />
+const Template: ComponentStory<typeof TooltipComponent> = (args) => (
+  <TooltipComponent {...args} />
 )
 
-export const ToolTips = Template.bind({})
-ToolTips.args = {
-  hoverDesc: 'Hello World',
-  desc: 'Hover me',
+export const ToolTip = Template.bind({})
+ToolTip.args = {
+  title: 'If the category name is used for fulltext search on products',
+  children: (
+    <span>
+      <IonIcon name="information" tooltip />
+    </span>
+  ),
+  placement: 'left',
 }

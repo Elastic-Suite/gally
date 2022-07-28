@@ -1,3 +1,7 @@
 export * from './api'
 export * from './authProvider'
+export * from './format'
+export * from './hydra'
+export * from './local'
+export * from './table'
 export * from './tests'

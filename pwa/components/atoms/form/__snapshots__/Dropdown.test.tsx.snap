@@ -1,0 +1,134 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DropDown match snapshot BadgeDisabledFalse 1`] = `
+<div>
+  <div
+    class="MuiFormControl-root css-1c9gikl-MuiFormControl-root"
+  >
+    <button
+      aria-expanded="false"
+      aria-haspopup="listbox"
+      class="MuiSelectUnstyled-root css-10s1kls"
+      type="button"
+    >
+      
+      <ion-icon
+        name="chevron-down"
+      />
+    </button>
+  </div>
+</div>
+`;
+
+exports[`DropDown match snapshot BadgeDisabledTrue 1`] = `
+<div>
+  <div
+    class="MuiFormControl-root css-1c9gikl-MuiFormControl-root"
+  >
+    <button
+      aria-expanded="false"
+      aria-haspopup="listbox"
+      class="MuiSelectUnstyled-root Mui-disabled css-10s1kls"
+      disabled=""
+      type="button"
+    >
+      
+      <ion-icon
+        name="chevron-down"
+      />
+    </button>
+  </div>
+</div>
+`;
+
+exports[`DropDown match snapshot BadgeLabel 1`] = `
+<div>
+  <div
+    class="MuiFormControl-root css-1c9gikl-MuiFormControl-root"
+  >
+    <label
+      class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-root MuiFormLabel-colorPrimary css-ssr94h-MuiFormLabel-root-MuiInputLabel-root"
+      data-shrink="true"
+    >
+      Label
+    </label>
+    <button
+      aria-expanded="false"
+      aria-haspopup="listbox"
+      class="MuiSelectUnstyled-root css-10s1kls"
+      type="button"
+    >
+      
+      <ion-icon
+        name="chevron-down"
+      />
+    </button>
+  </div>
+</div>
+`;
+
+exports[`DropDown match snapshot BadgeMultiple 1`] = `
+<div>
+  <div
+    class="MuiFormControl-root css-1c9gikl-MuiFormControl-root"
+  >
+    <label
+      class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-root MuiFormLabel-colorPrimary css-ssr94h-MuiFormLabel-root-MuiInputLabel-root"
+      data-shrink="true"
+    >
+      Label
+    </label>
+    <button
+      aria-expanded="false"
+      aria-haspopup="listbox"
+      class="MuiSelectUnstyled-root css-10s1kls"
+      type="button"
+    >
+      
+      <ion-icon
+        name="chevron-down"
+      />
+    </button>
+  </div>
+</div>
+`;
+
+exports[`DropDown match snapshot BadgeRequiredFalse 1`] = `
+<div>
+  <div
+    class="MuiFormControl-root css-1c9gikl-MuiFormControl-root"
+  >
+    <button
+      aria-expanded="false"
+      aria-haspopup="listbox"
+      class="MuiSelectUnstyled-root css-10s1kls"
+      type="button"
+    >
+      
+      <ion-icon
+        name="chevron-down"
+      />
+    </button>
+  </div>
+</div>
+`;
+
+exports[`DropDown match snapshot BadgeRequiredTrue 1`] = `
+<div>
+  <div
+    class="MuiFormControl-root css-1c9gikl-MuiFormControl-root"
+  >
+    <button
+      aria-expanded="false"
+      aria-haspopup="listbox"
+      class="MuiSelectUnstyled-root css-10s1kls"
+      type="button"
+    >
+      
+      <ion-icon
+        name="chevron-down"
+      />
+    </button>
+  </div>
+</div>
+`;

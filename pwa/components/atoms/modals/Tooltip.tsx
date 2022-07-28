@@ -1,8 +1,12 @@
 import { styled } from '@mui/material/styles'
-import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip'
+import {
+  Tooltip as MuiTooltip,
+  TooltipProps,
+  tooltipClasses,
+} from '@mui/material'
 
-const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
-  <Tooltip {...props} arrow classes={{ popper: className }} />
+const Tooltip = styled(({ className, ...props }: TooltipProps) => (
+  <MuiTooltip {...props} arrow classes={{ popper: className }} />
 ))(({ theme }) => ({
   [`& .${tooltipClasses.tooltip}`]: {
     backgroundColor: theme.palette.common.white,
@@ -17,17 +21,4 @@ const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
   },
 }))
 
-interface IProps {
-  hoverDesc: string
-  desc: string
-}
-
-function Tooltips({ hoverDesc, desc }: IProps): JSX.Element {
-  return (
-    <LightTooltip title={hoverDesc} placement="left">
-      <span>{desc}</span>
-    </LightTooltip>
-  )
-}
-
-export default Tooltips
+export default Tooltip

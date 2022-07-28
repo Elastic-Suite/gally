@@ -1,19 +1,7 @@
-import DropDown, { IOptions } from '~/components/atoms/form/DropDown'
+import DropDown from '~/components/atoms/form/DropDown'
 import InputText from '~/components/atoms/form/InputText'
 
-export enum FilterType {
-  BOOLEAN,
-  TEXT,
-  SELECT,
-}
-
-export interface IFilter {
-  id: string
-  label: string
-  multiple?: boolean
-  options?: IOptions
-  type: FilterType
-}
+import { FilterType, IFilter } from '~/types'
 
 interface IProps {
   filter: IFilter

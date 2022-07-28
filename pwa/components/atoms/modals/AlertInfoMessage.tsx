@@ -1,10 +1,6 @@
 import { useState } from 'react'
-import Box from '@mui/material/Box'
-import Alert from '@mui/material/Alert'
-import IconButton from '@mui/material/IconButton'
-import Collapse from '@mui/material/Collapse'
+import { Alert, Box, Button, Collapse, IconButton } from '@mui/material'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
-import Button from '@mui/material/Button'
 
 interface IProps {
   title: string

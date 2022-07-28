@@ -22,6 +22,7 @@ declare global {
 
 interface IProps extends IIonIconProps {
   name: string
+  tooltip?: boolean
 }
 
 export const customIcons = [
@@ -39,7 +40,16 @@ export const customIcons = [
  * Setup switch for special names that need svg or have another name in ion-icons
  */
 function IonIcon(props: IProps): JSX.Element {
-  const { name, ...iconProps } = props
+  const { name, tooltip, ...other } = props
+  const style = tooltip
+    ? {
+        color: '#8187B9',
+        width: '20px',
+        height: '20px',
+        display: 'flex',
+      }
+    : {}
+  const iconProps = { ...other, style: { ...style, ...other.style } }
   switch (name) {
     case 'dashboard':
       return <ion-icon src="/images/home2.svg" {...iconProps} />
@@ -51,6 +61,8 @@ function IonIcon(props: IProps): JSX.Element {
       return <ion-icon name="list" {...iconProps} />
     case 'settings':
       return <ion-icon name="settings-outline" {...iconProps} />
+    case 'information':
+      return <ion-icon name="information-circle-outline" {...iconProps} />
     default:
       return <ion-icon name={name} {...iconProps} />
   }

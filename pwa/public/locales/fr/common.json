@@ -5,15 +5,7 @@
   "filters.clearAll": "Réinitialiser",
   "filters.filter": "Filtrer",
   "filters.search": "Chercher",
-  "temporary-slug": "Temporaire ! Voici le slug codifié :",
   "massiveselection.all": "Toutes",
   "massiveselection.allOnCurrentPage": "Toute sur la page",
-  "massiveselection.none": "Aucune",
-  "catalog_one": "catalogue",
-  "catalog_other": "catalogues",
-  "activeLocale_one": "langue activé",
-  "activeLocale_other": "langues activé",
-  "scope": "Etendue",
-  "searchableAndFiltrableAttributes": "Attributs consultables et filtrables",
-  "contentOfSearchableAndFiltrableAttributes": "Contenu des attributs consultables et filtrables"
+  "massiveselection.none": "Aucune"
 }

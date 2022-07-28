@@ -1,12 +1,10 @@
-import { useState } from 'react'
-import Dialog from '@mui/material/Dialog'
-import DialogActions from '@mui/material/DialogActions'
-
+import { ReactChild, useState } from 'react'
+import { Box, Dialog, DialogActions } from '@mui/material'
 import { styled } from '@mui/material/styles'
+
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import PrimaryButton from '~/components/atoms/buttons/PrimaryButton'
 import TertiaryButton from '~/components/atoms/buttons/TertiaryButton'
-import { Box } from '@mui/material'
 
 const CustomClose = styled('div')(({ theme }) => ({
   position: 'absolute',
@@ -36,7 +34,7 @@ const CustomTitle = styled('div')(({ theme }) => ({
 
 interface IProps {
   onConfirm: () => void
-  title: string[]
+  title: ReactChild
   cancelName: string
   confirmName: string
   titlePopIn: string

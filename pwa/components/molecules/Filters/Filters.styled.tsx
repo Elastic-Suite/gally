@@ -5,6 +5,7 @@ import TertiaryButton from '~/components/atoms/buttons/TertiaryButton'
 
 export const FiltersPaper = styled(Paper)(({ theme }) => ({
   border: `1px solid ${theme.palette.colors.neutral[300]}`,
+  marginBottom: theme.spacing(3),
 }))
 
 export const HeaderBox = styled('div')(({ theme }) => ({
@@ -40,6 +41,7 @@ export const FilterBox = styled('div')(({ theme }) => ({
 }))
 
 export const FilterSecondaryButton = styled(SecondaryButton)(() => ({
+  flexShrink: 0,
   whiteSpace: 'nowrap',
 }))
 
