@@ -10,24 +10,16 @@ import metadata from '~/public/mocks/metadata.json'
 
 import {
   castFieldParameter,
-  getFieldName,
   getFieldType,
   getFilterParameters,
   getOptionsFromApi,
   getReadableField,
+  getReadableFieldName,
   getResource,
   isFieldValueValid,
 } from './hydra'
 
 describe('Hydra service', () => {
-  describe('getFieldName', () => {
-    it('should return the field name', () => {
-      expect(getFieldName('code')).toEqual('code')
-      expect(getFieldName('isSearchable')).toEqual('searchable')
-      expect(getFieldName('metadata[]')).toEqual('metadata')
-    })
-  })
-
   describe('getResource', () => {
     it('Should return the resource', () => {
       expect(getResource(api, 'source_fields')).toMatchObject({
@@ -36,10 +28,27 @@ describe('Hydra service', () => {
     })
   })
 
+  describe('getReadableFieldName', () => {
+    it('should return the field name', () => {
+      expect(getReadableFieldName('code')).toEqual('code')
+      expect(getReadableFieldName('isSearchable')).toEqual('searchable')
+      expect(getReadableFieldName('metadata[]')).toEqual('metadata')
+    })
+  })
+
   describe('getReadableField', () => {
     it('Should return the field', () => {
       expect(getReadableField(resourceWithRef, 'code')).toMatchObject(
         fieldString
+      )
+      expect(getReadableField(resourceWithRef, 'searchable')).toMatchObject(
+        fieldBoolean
+      )
+      expect(getReadableField(resourceWithRef, 'weight')).toMatchObject(
+        fieldInteger
+      )
+      expect(getReadableField(resourceWithRef, 'metadata')).toMatchObject(
+        fieldRef
       )
     })
   })

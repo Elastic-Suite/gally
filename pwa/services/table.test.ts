@@ -4,7 +4,6 @@ import sourceFields from '~/public/mocks/source_fields.json'
 
 import {
   getFieldDataContentType,
-  getFieldFromMapping,
   getFieldHeader,
   getFilter,
   getFilterType,
@@ -66,44 +65,6 @@ describe('Table service', () => {
           multiple: true,
         })
       ).toEqual(FilterType.SELECT)
-    })
-  })
-
-  describe('getFieldFromMapping', () => {
-    it('should return the field object', () => {
-      expect(
-        getFieldFromMapping(
-          {
-            '@type': 'IriTemplateMapping',
-            variable: 'code',
-            property: 'code',
-            required: false,
-          },
-          resourceWithRef
-        )
-      ).toEqual(fieldString)
-      expect(
-        getFieldFromMapping(
-          {
-            '@type': 'IriTemplateMapping',
-            variable: 'isSearchable',
-            property: 'isSearchable',
-            required: false,
-          },
-          resourceWithRef
-        )
-      ).toEqual(fieldBoolean)
-      expect(
-        getFieldFromMapping(
-          {
-            '@type': 'IriTemplateMapping',
-            variable: 'metadata[]',
-            property: 'metadata',
-            required: false,
-          },
-          resourceWithRef
-        )
-      ).toEqual(fieldRef)
     })
   })
 
