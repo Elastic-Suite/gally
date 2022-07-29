@@ -25,14 +25,19 @@ export function getReadableFieldName(property: string): string {
   return property
 }
 
+export function getFieldNameFromFieldId(id: string): string {
+  const match = fieldIdRegexp.exec(id)
+  return match?.[1]
+}
+
 export function getReadableField(resource: Resource, name: string): Field {
-  const fieldName = getReadableFieldName(name)
+  name = getReadableFieldName(name).toLowerCase()
   return resource.readableFields.find((field) => {
-    const match = fieldIdRegexp.exec(field.id)
-    if (match?.[1]) {
-      return match?.[1].toLowerCase() === fieldName.toLowerCase()
-    }
-    return field.name.toLowerCase() === fieldName.toLowerCase()
+    const fieldName = getFieldNameFromFieldId(field.id)
+    return (
+      (fieldName && fieldName.toLowerCase() === name) ||
+      field.name.toLowerCase() === name
+    )
   })
 }
 
