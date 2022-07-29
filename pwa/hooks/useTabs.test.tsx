@@ -7,12 +7,6 @@ import { useTabs } from './useTabs'
 
 jest.mock('next/router')
 
-// function Component1(): JSX.Element {
-//   return <>Content 1</>
-// }
-// function Component2(): JSX.Element {
-//   return <>Content 2</>
-// }
 const routerTabs: IRouterTab[] = [
   {
     Component: () => <>Content 1</>,
