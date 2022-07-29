@@ -1,7 +1,6 @@
 import { useMemo } from 'react'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
-import Head from 'next/head'
 
 import { useApiList, useResource } from '~/hooks'
 import { firstLetterUppercase, getRouterPath } from '~/services'
@@ -25,7 +24,6 @@ function SettingsScope(): JSX.Element {
         default: true,
         id: 0,
         label: firstLetterUppercase(t('catalog_other')),
-        title: firstLetterUppercase(t('catalog_other')),
         url: '/admin/settings/scope/catalogs',
       },
       {
@@ -34,7 +32,6 @@ function SettingsScope(): JSX.Element {
         ),
         id: 1,
         label: firstLetterUppercase(t('activeLocale_other')),
-        title: firstLetterUppercase(t('activeLocale_other')),
         url: '/admin/settings/scope/activeLocales',
       },
     ],
@@ -44,7 +41,7 @@ function SettingsScope(): JSX.Element {
   const activeTab =
     routerTabs.find((tab) => tab.url === pathname) ??
     routerTabs.find((tab) => tab.default)
-  const { id, title } = activeTab
+  const { id } = activeTab
 
   if (catalogsFields.error) {
     return <pre>{JSON.stringify(catalogsFields.error, null, 2)}</pre>
@@ -61,9 +58,6 @@ function SettingsScope(): JSX.Element {
 
   return (
     <>
-      <Head>
-        <title>{title}</title>
-      </Head>
       <SubTabs defaultActiveId={id} onChange={handleChange} tabs={routerTabs} />
     </>
   )
