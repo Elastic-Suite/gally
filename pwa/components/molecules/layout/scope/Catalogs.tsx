@@ -50,7 +50,7 @@ function Catalogs({ content }: IProps): JSX.Element {
     <CustomFullRoot>
       <CustomNbCatalogs>
         {content['hydra:member'].length}{' '}
-        {t('catalog', { count: content['hydra:member'].length })}
+        {t('catalog.catalog', { count: content['hydra:member'].length })}
       </CustomNbCatalogs>
       <CustomRoot>
         {content['hydra:member'].map((item: ICatalog, key: number) => (
