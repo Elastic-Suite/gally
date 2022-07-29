@@ -195,10 +195,8 @@ function MenuItemIcon(props: IProps): JSX.Element {
             color: isRoot && sidebarStateTimeout && '#2C19CD',
           }}
         />
-        {sidebarStateTimeout && isRoot ? (
+        {Boolean(sidebarStateTimeout && isRoot) && (
           <CustomIndicatorLineActiveOpacityFullDeux />
-        ) : (
-          ''
         )}
 
         <Label>{label}</Label>
