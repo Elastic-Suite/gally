@@ -10,6 +10,7 @@ import metadata from '~/public/mocks/metadata.json'
 
 import {
   castFieldParameter,
+  getFieldNameFromFieldId,
   getFieldType,
   getFilterParameters,
   getOptionsFromApi,
@@ -36,6 +37,16 @@ describe('Hydra service', () => {
     })
   })
 
+  describe('getFieldNameFromFieldId', () => {
+    it('should return the field name from id', () => {
+      expect(
+        getFieldNameFromFieldId(
+          'http://localhost:3000/mocks/docs.jsonld#SourceField/code'
+        )
+      ).toEqual('code')
+    })
+  })
+
   describe('getReadableField', () => {
     it('Should return the field', () => {
       expect(getReadableField(resourceWithRef, 'code')).toMatchObject(
@@ -50,6 +61,7 @@ describe('Hydra service', () => {
       expect(getReadableField(resourceWithRef, 'metadata')).toMatchObject(
         fieldRef
       )
+      expect(getReadableField(resourceWithRef, 'foo')).toEqual(undefined)
     })
   })
 

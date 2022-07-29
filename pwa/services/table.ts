@@ -3,7 +3,11 @@ import { Field, Resource } from '@api-platform/api-doc-parser'
 
 import { booleanRegexp } from '~/constants'
 import { getFieldLabelTranslationArgs } from './format'
-import { getFieldType, getReadableField } from './hydra'
+import {
+  getFieldNameFromFieldId,
+  getFieldType,
+  getReadableField,
+} from './hydra'
 import {
   DataContentType,
   FilterType,
@@ -31,7 +35,7 @@ export function getFieldDataContentType(field: Field): DataContentType {
 
 export function getFieldHeader(field: Field, t: TFunction): ITableHeader {
   return {
-    field: field.name,
+    field: getFieldNameFromFieldId(field.id),
     headerName: t(...getFieldLabelTranslationArgs(field.name)),
     type: getFieldDataContentType(field),
     editable: false,
