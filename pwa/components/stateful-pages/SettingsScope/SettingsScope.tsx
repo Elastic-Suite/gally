@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import Head from 'next/head'
 
 import { useApiList, useResource } from '~/hooks'
-import { firstLetterUppercase, getRouterUrl } from '~/services'
+import { firstLetterUppercase, getRouterPath } from '~/services'
 import { ICatalog, IHydraResponse, IRouterTab } from '~/types'
 
 import SubTabs from '~/components/atoms/subTabs/SubTabs'
@@ -40,9 +40,9 @@ function SettingsScope(): JSX.Element {
     ],
     [catalogsFields.data, t]
   )
-  const url = getRouterUrl(router.asPath)
+  const pathname = getRouterPath(router.asPath)
   const activeTab =
-    routerTabs.find((tab) => tab.url === url.pathname) ??
+    routerTabs.find((tab) => tab.url === pathname) ??
     routerTabs.find((tab) => tab.default)
   const { id, title } = activeTab
 
