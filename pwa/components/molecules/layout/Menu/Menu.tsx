@@ -61,7 +61,7 @@ function Menu(props: IProps): JSX.Element {
                 <MenuItemIcon
                   code={item.code}
                   href={slugify(item.code, 0)}
-                  isActive={menuItemActive === item.code}
+                  isActive={words.includes(item.code)}
                   isRoot={words[0] === item.code}
                   label={item.label}
                   lightStyle={false}
@@ -76,7 +76,7 @@ function Menu(props: IProps): JSX.Element {
                         childrenState={childrenState}
                         code={item.code}
                         href={slugify(item.code, 1)}
-                        isActive={menuItemActive === item.code}
+                        isActive={words.includes(item.code)}
                         isBoosts={
                           words.length > 2 &&
                           words.slice(0, 2).join('_') === item.code
@@ -100,7 +100,7 @@ function Menu(props: IProps): JSX.Element {
               <MenuItemIcon
                 code={item.code}
                 href={slugify(item.code, 0)}
-                isActive={menuItemActive === item.code}
+                isActive={words.includes(item.code)}
                 isRoot={words[0] === item.code}
                 label={item.label}
                 lightStyle
