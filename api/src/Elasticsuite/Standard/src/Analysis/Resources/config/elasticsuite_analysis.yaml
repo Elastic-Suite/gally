@@ -72,7 +72,7 @@ elasticsuite:
                         - word_delimiter
                         - lowercase
                         - elision
-                        - standard_override
+                        - stemmer_override
                         - stemmer
                 whitespace:
                     char_filters:
@@ -105,6 +105,8 @@ elasticsuite:
                         - word_delimiter
                         - lowercase
                         - elision
+                        - stemmer_override
+                        - stemmer
                         - shingle
                 sortable:
                     char_filters:
@@ -195,7 +197,7 @@ elasticsuite:
                 # This means existing rules can be both re-defined or voided in a custom module.   
                 #   params: {rules: []}
                 # Known issues with the "french" stemmer.
-                standard_override:
+                stemmer_override:
                     type: stemmer_override
                     params: 
                         rules:
@@ -240,7 +242,7 @@ elasticsuite:
                 # Please note that we do not claim 100% accuracy in the selected stems.
                 # For instance, the stem for trapani is originally trapan, the same as the verb trapanare.
                 # So the actual valid rule might be trapano => trapan ...     
-                standard_override:
+                stemmer_override:
                     type: stemmer_override
                     params: 
                         rules:
