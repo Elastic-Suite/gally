@@ -31,11 +31,12 @@ export const iconSrcMapping = {
 
 export const iconAliasMapping = {
   analyze: 'analytics',
+  informationCircle: 'information-circle-outline',
   merchandize: 'funnel-outline',
-  monitoring: 'list',
-  settings: 'settings-outline',
-  more: 'add-circle',
   minus: 'remove-circle',
+  monitoring: 'list',
+  more: 'add-circle',
+  settings: 'settings-outline',
 }
 
 export const customIcons = [
