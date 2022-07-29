@@ -72,9 +72,13 @@ describe('Hydra service', () => {
   describe('castFieldParameter', () => {
     it('Should cast the field value', () => {
       expect(castFieldParameter(fieldString, 'foo')).toEqual('foo')
+
       expect(castFieldParameter(fieldBoolean, 'true')).toEqual(true)
       expect(castFieldParameter(fieldBoolean, 'false')).toEqual(false)
+      expect(castFieldParameter(fieldBoolean, 'foo')).toEqual(null)
+
       expect(castFieldParameter(fieldInteger, '42')).toEqual(42)
+
       expect(castFieldParameter(fieldRef, '42')).toEqual(42)
       expect(castFieldParameter(fieldRef, ['1', '2', '3'])).toEqual([1, 2, 3])
     })
@@ -83,9 +87,14 @@ describe('Hydra service', () => {
   describe('isFieldValueValid', () => {
     it('Should validate the field value', () => {
       expect(isFieldValueValid(fieldString, 'foo')).toEqual(true)
+
       expect(isFieldValueValid(fieldBoolean, true)).toEqual(true)
+      expect(isFieldValueValid(fieldBoolean, false)).toEqual(true)
+      expect(isFieldValueValid(fieldBoolean, null)).toEqual(false)
+
       expect(isFieldValueValid(fieldInteger, 42)).toEqual(true)
       expect(isFieldValueValid(fieldInteger, NaN)).toEqual(false)
+
       expect(isFieldValueValid(fieldRef, 42)).toEqual(true)
       expect(isFieldValueValid(fieldRef, [1, 2, 3])).toEqual(true)
     })

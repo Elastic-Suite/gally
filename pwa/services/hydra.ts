@@ -93,7 +93,7 @@ export function castFieldParameter(
     case 'integer':
       return Number(value)
     case 'boolean':
-      return value === 'true'
+      return value !== 'true' && value !== 'false' ? null : value === 'true'
     default:
       return value
   }
