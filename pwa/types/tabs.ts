@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'react'
 
 export interface ITabContentProps {
-  active: boolean
+  active?: boolean
 }
 
 export interface ITab<P = ITabContentProps> {
