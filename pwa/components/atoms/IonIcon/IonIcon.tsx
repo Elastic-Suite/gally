@@ -25,12 +25,23 @@ interface IProps extends IIonIconProps {
   tooltip?: boolean
 }
 
+export const iconSrcMapping = {
+  dashboard: '/images/home2.svg',
+}
+
+export const iconAliasMapping = {
+  analyze: 'analytics',
+  informationCircle: 'information-circle-outline',
+  merchandize: 'funnel-outline',
+  minus: 'remove-circle',
+  monitoring: 'list',
+  more: 'add-circle',
+  settings: 'settings-outline',
+}
+
 export const customIcons = [
-  'dashboard',
-  'analyze',
-  'merchandize',
-  'monitoring',
-  'settings',
+  ...Object.keys(iconSrcMapping),
+  ...Object.keys(iconAliasMapping),
 ]
 
 /*
@@ -50,22 +61,22 @@ function IonIcon(props: IProps): JSX.Element {
       }
     : {}
   const iconProps = { ...other, style: { ...style, ...other.style } }
-  switch (name) {
-    case 'dashboard':
-      return <ion-icon src="/images/home2.svg" {...iconProps} />
-    case 'analyze':
-      return <ion-icon name="analytics" {...iconProps} />
-    case 'merchandize':
-      return <ion-icon name="funnel-outline" {...iconProps} />
-    case 'monitoring':
-      return <ion-icon name="list" {...iconProps} />
-    case 'settings':
-      return <ion-icon name="settings-outline" {...iconProps} />
-    case 'information':
-      return <ion-icon name="information-circle-outline" {...iconProps} />
-    default:
-      return <ion-icon name={name} {...iconProps} />
+  if (name in iconSrcMapping) {
+    return (
+      <ion-icon
+        src={iconSrcMapping[name as keyof typeof iconSrcMapping]}
+        {...iconProps}
+      />
+    )
+  } else if (name in iconAliasMapping) {
+    return (
+      <ion-icon
+        name={iconAliasMapping[name as keyof typeof iconAliasMapping]}
+        {...iconProps}
+      />
+    )
   }
+  return <ion-icon name={name} {...iconProps} />
 }
 
 export default IonIcon
