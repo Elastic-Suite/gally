@@ -34,8 +34,8 @@ export const ToolTip = Template.bind({})
 ToolTip.args = {
   title: 'If the category name is used for fulltext search on products',
   children: (
-    <span>
-      <IonIcon name="information" tooltip />
+    <span style={{ display: 'inline-block' }}>
+      <IonIcon name="informationCircle" tooltip />
     </span>
   ),
   placement: 'left',
