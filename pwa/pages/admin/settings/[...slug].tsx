@@ -4,7 +4,8 @@ import { useRouter } from 'next/router'
 import Head from 'next/head'
 
 import { breadcrumbContext } from '~/contexts'
-import { findBreadcrumbLabel, getRouterPath } from '~/services'
+import { useTabs } from '~/hooks'
+import { findBreadcrumbLabel } from '~/services'
 import { selectMenu, useAppSelector } from '~/store'
 import { IRouterTab } from '~/types'
 
@@ -46,19 +47,8 @@ function Settings(): JSX.Element {
     ],
     [t]
   )
-  const pathname = getRouterPath(router.asPath)
-  const activeTab =
-    routerTabs.find((tab) => tab.url === pathname) ??
-    routerTabs.find((tab) => tab.default)
+  const [activeTab, handleTabChange] = useTabs(routerTabs)
   const { actions, id } = activeTab
-
-  function handleChange(id: number): void {
-    const tab = routerTabs.find((tab) => tab.id === id)
-    if (tab) {
-      router.push(tab.url, undefined, { shallow: true })
-    }
-  }
-
   const title = findBreadcrumbLabel(0, [pageSlug], menu.hierarchy)
 
   return (
@@ -69,7 +59,7 @@ function Settings(): JSX.Element {
       <PageTile title={title}>{actions}</PageTile>
       <CustomTabs
         defaultActiveId={id}
-        onChange={handleChange}
+        onChange={handleTabChange}
         tabs={routerTabs}
       />
     </>
