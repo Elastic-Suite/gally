@@ -30,7 +30,7 @@ function Settings(): JSX.Element {
   const routerTabs: IRouterTab[] = useMemo(
     () => [
       {
-        content: <SettingsScope />,
+        Component: SettingsScope,
         default: true,
         id: 0,
         label: t('tabs.scope'),
@@ -38,7 +38,7 @@ function Settings(): JSX.Element {
       },
       {
         actions: <PrimaryButton>{t('action.import')} (xlsx)</PrimaryButton>,
-        content: <SettingsAttributes />,
+        Component: SettingsAttributes,
         id: 1,
         label: t('tabs.attributes'),
         url: '/admin/settings/attributes',

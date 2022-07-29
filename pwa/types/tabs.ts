@@ -1,7 +1,12 @@
-import { ReactChild } from 'react'
+import { FunctionComponent } from 'react'
 
-export interface ITab {
-  content: ReactChild | string
+export interface ITabContentProps {
+  active: boolean
+}
+
+export interface ITab<P = ITabContentProps> {
+  Component: FunctionComponent<P>
+  componentProps?: Omit<P, 'active'>
   id: number
   label: string
 }

@@ -1,8 +1,10 @@
 import { styled } from '@mui/material/styles'
+
+import { ICatalog, IHydraResponse, ITabContentProps } from '~/types'
+
 import TitleScope from '~/components/atoms/scope/TitleScope'
 import NbActiveLocales from '~/components/atoms/scope/NbActiveLocales'
 import Language from '~/components/atoms/scope/Language'
-import { ICatalog, IHydraResponse } from '~/types'
 
 const CustomRoot = styled('div')(({ theme }) => ({
   width: '671px',
@@ -16,7 +18,7 @@ const CustomRoot = styled('div')(({ theme }) => ({
   borderRadius: 8,
 }))
 
-interface IProps {
+interface IProps extends ITabContentProps {
   content: IHydraResponse<ICatalog>
 }
 
