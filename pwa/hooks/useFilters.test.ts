@@ -73,7 +73,6 @@ describe('useFilters', () => {
       const { result } = renderHookWithProviders(() =>
         useFilters(resourceWithRef)
       )
-      console.log(result.current[0])
       expect(result.current[0]).toEqual({
         code: 'foo',
         'metadata[]': [1, 2],
