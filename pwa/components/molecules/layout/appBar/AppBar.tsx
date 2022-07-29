@@ -1,4 +1,4 @@
-import BreadCrumbs from '~/components/atoms/breadcrumb/BreadCrumbs'
+import Breadcrumbs from '~/components/atoms/breadcrumb/Breadcrumbs'
 import User from '~/components/molecules/layout/user/User'
 import { styled } from '@mui/system'
 import { IMenu } from '~/store'
@@ -36,7 +36,7 @@ interface IProps {
 function AppBar({ slug, menu }: IProps): JSX.Element {
   return (
     <CustomRoot>
-      <BreadCrumbs slug={slug} menu={menu} />
+      <Breadcrumbs slug={slug} menu={menu} />
       <User />
     </CustomRoot>
   )

@@ -6,8 +6,10 @@ if (url && String(url).endsWith('/')) {
 }
 export const apiUrl = url
 
+// URL parameters
 export const currentPage = 'currentPage'
 export const pageSize = 'pageSize'
 export const usePagination = 'pagination'
+export const searchParameter = 'search'
 
 export const defaultPageSize = 50
