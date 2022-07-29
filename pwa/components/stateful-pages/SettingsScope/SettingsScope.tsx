@@ -20,16 +20,16 @@ function SettingsScope(): JSX.Element {
   const routerTabs: IRouterTab[] = useMemo(
     () => [
       {
-        content: <Catalogs key="Catalogs" content={catalogsFields.data} />,
+        Component: Catalogs,
+        componentProps: { content: catalogsFields.data },
         default: true,
         id: 0,
         label: firstLetterUppercase(t('catalog_other')),
         url: '/admin/settings/scope/catalogs',
       },
       {
-        content: (
-          <ActiveLocales key="ActiveLocales" content={catalogsFields.data} />
-        ),
+        Component: ActiveLocales,
+        componentProps: { content: catalogsFields.data },
         id: 1,
         label: firstLetterUppercase(t('activeLocale_other')),
         url: '/admin/settings/scope/activeLocales',
