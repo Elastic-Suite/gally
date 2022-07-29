@@ -3,7 +3,7 @@ import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 
 import { useApiList, useResource } from '~/hooks'
-import { firstLetterUppercase, getRouterPath } from '~/services'
+import { getRouterPath } from '~/services'
 import { ICatalog, IHydraResponse, IRouterTab } from '~/types'
 
 import SubTabs from '~/components/atoms/subTabs/SubTabs'
@@ -24,14 +24,14 @@ function SettingsScope(): JSX.Element {
         componentProps: { content: catalogsFields.data },
         default: true,
         id: 0,
-        label: firstLetterUppercase(t('catalog_other')),
+        label: t('title.catalogs'),
         url: '/admin/settings/scope/catalogs',
       },
       {
         Component: ActiveLocales,
         componentProps: { content: catalogsFields.data },
         id: 1,
-        label: firstLetterUppercase(t('activeLocale_other')),
+        label: t('title.activeLocales'),
         url: '/admin/settings/scope/activeLocales',
       },
     ],
@@ -57,9 +57,7 @@ function SettingsScope(): JSX.Element {
   }
 
   return (
-    <>
-      <SubTabs defaultActiveId={id} onChange={handleChange} tabs={routerTabs} />
-    </>
+    <SubTabs defaultActiveId={id} onChange={handleChange} tabs={routerTabs} />
   )
 }
 

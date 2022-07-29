@@ -34,7 +34,7 @@ function NbActiveLocales({ number }: IProps): JSX.Element {
     <CustomRoot>
       <CustomNbActiveLocales>{number}</CustomNbActiveLocales>
       <CustomTexteActiveLocales>
-        {t('activeLocale', { count: number })}
+        {t('catalog.activeLocale', { count: number })}
       </CustomTexteActiveLocales>
     </CustomRoot>
   )

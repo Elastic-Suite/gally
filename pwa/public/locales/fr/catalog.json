@@ -1,6 +1,4 @@
 {
-  "catalog_one": "catalogue",
-  "catalog_other": "catalogues",
-  "activeLocale_one": "langue activé",
-  "activeLocale_other": "langues activé"
+  "title.catalogs": "Catalogs",
+  "title.activeLocales": "Langues activé"
 }
