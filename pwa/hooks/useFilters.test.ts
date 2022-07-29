@@ -35,6 +35,16 @@ describe('useFilters', () => {
         { shallow: true }
       )
     })
+
+    it('should not redirect if active is false', () => {
+      const router = useRouter()
+      const pushSpy = router.push as jest.Mock
+      pushSpy.mockClear()
+      renderHookWithProviders(() =>
+        useFiltersRedirect(1, { foo: 'bar' }, 'baz', false)
+      )
+      expect(pushSpy).not.toHaveBeenCalled()
+    })
   })
 
   describe('usePage', () => {
