@@ -9,6 +9,5 @@ export interface ITab {
 export interface IRouterTab extends ITab {
   actions?: JSX.Element
   default?: true
-  title: string
   url: string
 }
