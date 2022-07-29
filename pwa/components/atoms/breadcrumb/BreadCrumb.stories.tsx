@@ -1,15 +1,15 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 
 import menu from '../../../public/mocks/menu.json'
-import BreadCrumbs from './BreadCrumbs'
+import Breadcrumbs from './Breadcrumbs'
 
 export default {
   title: 'Atoms/BreadCrumb',
-  component: BreadCrumbs,
-} as ComponentMeta<typeof BreadCrumbs>
+  component: Breadcrumbs,
+} as ComponentMeta<typeof Breadcrumbs>
 
-const Template: ComponentStory<typeof BreadCrumbs> = (args) => (
-  <BreadCrumbs {...args} />
+const Template: ComponentStory<typeof Breadcrumbs> = (args) => (
+  <Breadcrumbs {...args} />
 )
 
 export const Default = Template.bind({})

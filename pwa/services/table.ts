@@ -2,8 +2,8 @@ import { TFunction } from 'react-i18next'
 import { Field, Resource } from '@api-platform/api-doc-parser'
 
 import { booleanRegexp } from '~/constants'
-import { firstLetterLowercase, getFieldLabelTranslationArgs } from './format'
-import { getFieldType } from './hydra'
+import { getFieldLabelTranslationArgs } from './format'
+import { getFieldName, getFieldType } from './hydra'
 import {
   DataContentType,
   FilterType,
@@ -46,19 +46,11 @@ export function getFilterType(mapping: IMapping): FilterType {
     : FilterType.TEXT
 }
 
-export function getFieldNameFromMapping(mapping: IHydraMapping): string {
-  const result = booleanRegexp.exec(mapping.property)
-  if (result?.[1]) {
-    return firstLetterLowercase(result[1])
-  }
-  return mapping.property
-}
-
 export function getFieldFromMapping(
   mapping: IHydraMapping,
   resource: Resource
 ): Field {
-  const fieldName = getFieldNameFromMapping(mapping)
+  const fieldName = getFieldName(mapping.property)
   return resource.readableFields.find((field) => field.name === fieldName)
 }
 

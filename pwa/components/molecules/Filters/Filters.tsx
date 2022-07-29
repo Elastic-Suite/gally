@@ -44,7 +44,7 @@ interface IProps {
 
 function getActiveFilterLabel(filter: IFilter, value: unknown): string {
   let label = `${filter?.label}: ${value}`
-  if (filter?.options) {
+  if (filter?.options.length > 0) {
     const option = filter?.options.find((option) => option.value === value)
     label = `${filter?.label}: ${option?.label}`
   }

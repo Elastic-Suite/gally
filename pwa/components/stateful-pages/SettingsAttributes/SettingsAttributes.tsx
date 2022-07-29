@@ -1,6 +1,11 @@
-import { useState } from 'react'
-
-import { useApiList, useResource } from '~/hooks'
+import {
+  useApiList,
+  useFilters,
+  useFiltersRedirect,
+  usePage,
+  useResource,
+  useSearch,
+} from '~/hooks'
 import { IHydraResponse, ISearchParameters, ISourceField } from '~/types'
 
 import FiltersGuesser from '~/components/stateful/FiltersGuesser/FiltersGuesser'
@@ -10,14 +15,16 @@ function SettingsAttributes(): JSX.Element {
   const resourceName = 'source_fields'
   const resource = useResource(resourceName)
 
-  const [page, setPage] = useState(0)
-  const [activeFilters, setActiveFilters] = useState<ISearchParameters>({})
-  const [searchValue, setSearchValue] = useState('')
+  const [page, setPage] = usePage()
+  const [activeFilters, setActiveFilters] = useFilters(resource)
+  const [searchValue, setSearchValue] = useSearch()
+  useFiltersRedirect(page, activeFilters, searchValue)
 
   const [sourceFields] = useApiList<IHydraResponse<ISourceField>>(
     resource,
     page,
-    activeFilters
+    activeFilters,
+    searchValue
   )
 
   if (sourceFields.error) {
@@ -36,6 +43,10 @@ function SettingsAttributes(): JSX.Element {
     setPage(0)
   }
 
+  function handlePageChange(page: number): void {
+    setPage(page)
+  }
+
   return (
     <>
       <FiltersGuesser
@@ -49,7 +60,7 @@ function SettingsAttributes(): JSX.Element {
       <TableGuesser
         apiData={sourceFields.data}
         currentPage={page}
-        onPageChange={setPage}
+        onPageChange={handlePageChange}
         resource={resource}
       />
     </>

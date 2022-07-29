@@ -11,6 +11,7 @@ import PrimaryButton from '~/components/atoms/buttons/PrimaryButton'
 import CustomTabs from '~/components/molecules/layout/tabs/CustomTabs'
 import SettingsAttributes from '~/components/stateful-pages/SettingsAttributes/SettingsAttributes'
 import SettingsScope from '~/components/stateful-pages/SettingsScope/SettingsScope'
+import { getRouterUrl } from '~/services'
 
 function Settings(): JSX.Element {
   const { t } = useTranslation('settings')
@@ -43,8 +44,9 @@ function Settings(): JSX.Element {
     ],
     [t]
   )
+  const url = getRouterUrl(router.asPath)
   const activeTab =
-    routerTabs.find((tab) => tab.url === router.asPath) ??
+    routerTabs.find((tab) => tab.url === url.pathname) ??
     routerTabs.find((tab) => tab.default)
   const { actions, id, title } = activeTab
 
