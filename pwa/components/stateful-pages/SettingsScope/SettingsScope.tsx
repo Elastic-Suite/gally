@@ -40,7 +40,7 @@ function SettingsScope(): JSX.Element {
   if (catalogsFields.error) {
     return <pre>{JSON.stringify(catalogsFields.error, null, 2)}</pre>
   } else if (!catalogsFields.data) {
-    return null
+    return null //test
   }
 
   return (
