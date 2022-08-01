@@ -3,25 +3,32 @@
     "categoryTrees": [
       {
         "catalogCode": "com_fr",
-        "catalogName": "COM French Catalog",
+        "catalogName": "Cat One",
         "categories": [
           {
-            "id": "one",
-            "name": "Category One",
+            "id": "com_fr_1",
+            "name": "Cat One One",
             "level": 1,
             "path": "1",
+            "isVirtual": false
+          },
+          {
+            "id": "com_fr_2",
+            "name": "Cat One Two",
+            "level": 1,
+            "path": "2",
             "isVirtual": false,
             "children": [
               {
-                "id": "three",
-                "name": "Category Three",
+                "id": "com_fr_2_1",
+                "name": "Cat One Two One",
                 "level": 2,
                 "path": "1/3",
                 "isVirtual": false,
                 "children": [
                   {
-                    "id": "threeThree",
-                    "name": "Category Three",
+                    "id": "com_fr_2_1_1",
+                    "name": "Cat One Two One One",
                     "level": 2,
                     "path": "1/3",
                     "isVirtual": false
@@ -33,21 +40,174 @@
         ]
       },
       {
-        "catalogCode": "com_en",
-        "catalogName": "COM English Catalog",
+        "catalogCode": "codm_en",
+        "catalogName": "Cat Two",
         "categories": [
           {
-            "id": "one",
-            "name": "Category One",
+            "id": "com_fr_1",
+            "name": "Cat Two One",
             "level": 1,
-            "path": "1",
+            "path": "2",
             "isVirtual": false,
             "children": [
               {
-                "id": "three",
-                "name": "Category Three",
+                "id": "com_fr_1_1",
+                "name": "Cat Two One One",
                 "level": 2,
                 "path": "1/3",
+                "isVirtual": false,
+                "children": [
+                  {
+                    "id": "com_fr_1_1_1",
+                    "name": "Cat Two One One One",
+                    "level": 2,
+                    "path": "1/3",
+                    "isVirtual": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "com_fr_2",
+            "name": "Cat Two two",
+            "level": 1,
+            "path": "1",
+            "isVirtual": false
+          }
+        ]
+      },
+      {
+        "catalogCode": "coam_enT",
+        "catalogName": "Cat Three",
+        "categories": [
+          {
+            "id": "com_enT_three_one",
+            "name": "Cat three One",
+            "level": 1,
+            "path": "2",
+            "isVirtual": false,
+            "children": [
+              {
+                "id": "1",
+                "name": "Cat three One One",
+                "level": 2,
+                "path": "1/3",
+                "isVirtual": false,
+                "children": [
+                  {
+                    "id": "com_enT_three_one_one_one",
+                    "name": "Cat three One One One",
+                    "level": 3,
+                    "path": "1/3",
+                    "isVirtual": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "2",
+            "name": "Cat three One One",
+            "level": 1,
+            "path": "1/3",
+            "isVirtual": false,
+            "children": [
+              {
+                "id": "3",
+                "name": "Cat three One One One",
+                "level": 2,
+                "path": "1/3",
+                "isVirtual": false
+              }
+            ]
+          },
+          {
+            "id": "4",
+            "name": "Cat three One One",
+            "level": 1,
+            "path": "1/3",
+            "isVirtual": false,
+            "children": [
+              {
+                "id": "5",
+                "name": "Cat three One One One",
+                "level": 2,
+                "path": "1/3",
+                "isVirtual": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "catalogCode": "com_enThreeZ",
+        "catalogName": "Cat Four",
+        "categories": [
+          {
+            "id": "6",
+            "name": "Cat Four One",
+            "level": 1,
+            "path": "2",
+            "isVirtual": false
+          },
+          {
+            "id": "7",
+            "name": "Cat Four One",
+            "level": 1,
+            "path": "2",
+            "isVirtual": false
+          },
+          {
+            "id": "8",
+            "name": "Cat Four One",
+            "level": 1,
+            "path": "2",
+            "isVirtual": false
+          }
+        ]
+      },
+      {
+        "catalogCode": "com_enThree",
+        "catalogName": "Cat Five",
+        "categories": [
+          {
+            "id": "9",
+            "name": "Cat Five One",
+            "level": 1,
+            "path": "2",
+            "isVirtual": false,
+            "children": [
+              {
+                "id": "10",
+                "name": "Cat Five Two",
+                "level": 2,
+                "path": "1/3",
+                "isVirtual": false,
+                "children": [
+                  {
+                    "id": "11",
+                    "name": "Cat Five Three",
+                    "level": 3,
+                    "path": "1/3",
+                    "isVirtual": false,
+                    "children": [
+                      {
+                        "id": "12",
+                        "name": "Cat Five Four",
+                        "level": 3,
+                        "path": "1/3",
+                        "isVirtual": false
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "13",
+                "name": "Cat Five bis",
+                "level": 2,
+                "path": "2",
                 "isVirtual": false
               }
             ]
