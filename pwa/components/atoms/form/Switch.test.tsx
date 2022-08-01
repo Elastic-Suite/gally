@@ -1,4 +1,4 @@
-import Switch from '@mui/material/switch'
+import { Switch } from '@mui/material'
 import { renderWithProviders } from '~/services'
 
 describe('Switch match snapshot', () => {
