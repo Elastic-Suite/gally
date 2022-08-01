@@ -5,6 +5,7 @@ import {
   getListParameters,
   getPageParameter,
   getParametersFromUrl,
+  getRouterPath,
   getRouterUrl,
   getSearchParameter,
   getUrl,
@@ -44,9 +45,7 @@ describe('URL service', () => {
 
   describe('getListParameters', () => {
     it('should get list parameters with default values', () => {
-      expect(getListParameters()).toEqual({
-        currentPage: 0,
-      })
+      expect(getListParameters()).toEqual({})
     })
 
     it('should get list parameters with pagination', () => {
@@ -100,10 +99,16 @@ describe('URL service', () => {
     })
   })
 
+  describe('getRouterPath', () => {
+    it('should get the router path without parameters', () => {
+      expect(getRouterPath('/test?foo=bar')).toEqual('/test')
+    })
+  })
+
   describe('getAppUrl', () => {
     it('should get the app URL with default parameters', () => {
       const url = getAppUrl('/test')
-      expect(url.href).toEqual('http://localhost/test?currentPage=0')
+      expect(url.href).toEqual('http://localhost/test')
     })
 
     it('should get the app URL with parameters', () => {

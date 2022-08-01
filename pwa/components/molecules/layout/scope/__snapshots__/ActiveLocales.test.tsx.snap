@@ -21,7 +21,7 @@ exports[`ActiveLocales match snapshot ActiveLocales simple 1`] = `
       <div
         class="css-ry2e12"
       >
-        activeLocale
+        catalog.activeLocale
       </div>
     </div>
     <div

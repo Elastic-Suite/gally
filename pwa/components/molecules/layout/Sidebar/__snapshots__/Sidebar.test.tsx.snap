@@ -112,7 +112,6 @@ exports[`SideBar match snapshot SideBarStateFalse 1`] = `
                     name="analytics"
                     style="width: 18px; height: 18px;"
                   />
-                  
                   <span
                     class="css-1skr4lk"
                   >
@@ -134,16 +133,13 @@ exports[`SideBar match snapshot SideBarStateFalse 1`] = `
                           style="position: relative;"
                         >
                           <div
-                            class="css-1ooj8e9"
+                            class="css-1ylhpt2"
                           >
                             <a
                               class="css-136al6x"
                             >
                               Structure du catalogue
                             </a>
-                            <div
-                              class="css-ukifpj"
-                            />
                           </div>
                         </div>
                       </div>
@@ -209,7 +205,6 @@ exports[`SideBar match snapshot SideBarStateFalse 1`] = `
                     name="funnel-outline"
                     style="width: 18px; height: 18px;"
                   />
-                  
                   <span
                     class="css-1skr4lk"
                   >
@@ -429,7 +424,6 @@ exports[`SideBar match snapshot SideBarStateFalse 1`] = `
                     name="search"
                     style="width: 18px; height: 18px;"
                   />
-                  
                   <span
                     class="css-1skr4lk"
                   >
@@ -751,7 +745,6 @@ exports[`SideBar match snapshot SideBarStateTrue 1`] = `
                     name="analytics"
                     style="width: 18px; height: 18px;"
                   />
-                  
                   <span
                     class="css-1skr4lk"
                   >
@@ -773,16 +766,13 @@ exports[`SideBar match snapshot SideBarStateTrue 1`] = `
                           style="position: relative;"
                         >
                           <div
-                            class="css-1ooj8e9"
+                            class="css-1ylhpt2"
                           >
                             <a
                               class="css-136al6x"
                             >
                               Structure du catalogue
                             </a>
-                            <div
-                              class="css-ukifpj"
-                            />
                           </div>
                         </div>
                       </div>
@@ -848,7 +838,6 @@ exports[`SideBar match snapshot SideBarStateTrue 1`] = `
                     name="funnel-outline"
                     style="width: 18px; height: 18px;"
                   />
-                  
                   <span
                     class="css-1skr4lk"
                   >
@@ -1068,7 +1057,6 @@ exports[`SideBar match snapshot SideBarStateTrue 1`] = `
                     name="search"
                     style="width: 18px; height: 18px;"
                   />
-                  
                   <span
                     class="css-1skr4lk"
                   >

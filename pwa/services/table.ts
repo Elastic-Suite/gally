@@ -3,7 +3,11 @@ import { Field, Resource } from '@api-platform/api-doc-parser'
 
 import { booleanRegexp } from '~/constants'
 import { getFieldLabelTranslationArgs } from './format'
-import { getFieldName, getFieldType } from './hydra'
+import {
+  getFieldNameFromFieldId,
+  getFieldType,
+  getReadableField,
+} from './hydra'
 import {
   DataContentType,
   FilterType,
@@ -31,7 +35,7 @@ export function getFieldDataContentType(field: Field): DataContentType {
 
 export function getFieldHeader(field: Field, t: TFunction): ITableHeader {
   return {
-    field: field.name,
+    field: getFieldNameFromFieldId(field.id),
     headerName: t(...getFieldLabelTranslationArgs(field.name)),
     type: getFieldDataContentType(field),
     editable: false,
@@ -46,19 +50,13 @@ export function getFilterType(mapping: IMapping): FilterType {
     : FilterType.TEXT
 }
 
-export function getFieldFromMapping(
-  mapping: IHydraMapping,
-  resource: Resource
-): Field {
-  const fieldName = getFieldName(mapping.property)
-  return resource.readableFields.find((field) => field.name === fieldName)
-}
-
 export function getFilter(mapping: IMapping, t: TFunction): IFilter {
   const type = getFilterType(mapping)
   return {
     id: mapping.variable,
-    label: t(...getFieldLabelTranslationArgs(mapping.property)),
+    label: t(
+      ...getFieldLabelTranslationArgs(mapping.field?.name ?? mapping.property)
+    ),
     multiple: mapping.multiple,
     options: mapping.options,
     type,
@@ -72,7 +70,7 @@ export function getMappings<T extends IHydraMember>(
   const mappings: IMapping[] = apiData?.['hydra:search']['hydra:mapping'].map(
     (mapping) => ({
       ...mapping,
-      field: getFieldFromMapping(mapping, resource),
+      field: getReadableField(resource, mapping.property),
       multiple: mapping.variable.endsWith('[]'),
     })
   )

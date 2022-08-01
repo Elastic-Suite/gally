@@ -3,6 +3,8 @@ import { keyframes, styled } from '@mui/system'
 
 import { ITab } from '~/types'
 
+import SubTabPanel from './SubTabPanel'
+
 const CustomRoot = styled('div')(({ theme }) => ({
   display: 'flex',
   gap: theme.spacing(4),
@@ -83,10 +85,10 @@ interface IProps {
 
 function SubTabs(props: IProps): JSX.Element {
   const { defaultActiveId, onChange, tabs } = props
-  const [active, setActive] = useState(defaultActiveId)
+  const [activeId, setActiveId] = useState(defaultActiveId)
 
   function handleChange(id: number): void {
-    setActive(id)
+    setActiveId(id)
     if (onChange) {
       onChange(id)
     }
@@ -96,7 +98,7 @@ function SubTabs(props: IProps): JSX.Element {
     <CustomRoot>
       <CustumRootSubTabs>
         {tabs.map(({ label, id }) =>
-          id === active ? (
+          id === activeId ? (
             <CustomSubTabsActive
               key={id}
               onClick={(): void => handleChange(id)}
@@ -110,14 +112,11 @@ function SubTabs(props: IProps): JSX.Element {
           )
         )}
       </CustumRootSubTabs>
-      {tabs.map(
-        ({ content, id }) =>
-          id === active && (
-            <div style={{ width: '100%' }} key={id}>
-              {content}
-            </div>
-          )
-      )}
+      {tabs.map(({ Component, componentProps, id }) => (
+        <SubTabPanel key={id} id={id} value={activeId}>
+          <Component {...componentProps} active={id === activeId} />
+        </SubTabPanel>
+      ))}
     </CustomRoot>
   )
 }

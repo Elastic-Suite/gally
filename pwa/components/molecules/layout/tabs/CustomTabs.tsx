@@ -37,9 +37,9 @@ export default function CustomTabs(props: IProps): JSX.Element {
           ))}
         </Tabs>
       </Box>
-      {tabs.map(({ id, content }) => (
+      {tabs.map(({ id, Component, componentProps }) => (
         <TabPanel key={id} value={activeId} id={id}>
-          {content}
+          <Component {...componentProps} active={id === activeId} />
         </TabPanel>
       ))}
     </Box>

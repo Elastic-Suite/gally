@@ -43,7 +43,7 @@ export const fieldBoolean: Field = {
   deprecated: false,
   description: '',
   embedded: null,
-  id: 'http://localhost:3000/mocks/docs.jsonld#SourceField/isearchable',
+  id: 'http://localhost:3000/mocks/docs.jsonld#SourceField/searchable',
   maxCardinality: null,
   name: 'searchable',
   range: 'http://www.w3.org/2001/XMLSchema#boolean',
