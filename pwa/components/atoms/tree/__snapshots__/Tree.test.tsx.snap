@@ -26,7 +26,7 @@ exports[`Tree match snapshot 1`] = `
           <button
             class="css-1d0dnv7"
           >
-            COM French Catalog
+            Cat One
           </button>
         </div>
       </div>
@@ -52,7 +52,85 @@ exports[`Tree match snapshot 1`] = `
           <button
             class="css-1d0dnv7"
           >
-            COM English Catalog
+            Cat Two
+          </button>
+        </div>
+      </div>
+    </li>
+    <li
+      class="css-1lh1lxa"
+      style="margin-left: 0px;"
+    >
+      <div
+        class="css-12pjvak"
+        style="margin-left: 0px;"
+      >
+        <button
+          class="css-1ne2h4j"
+        >
+          <ion-icon
+            name="add-circle"
+          />
+        </button>
+        <div
+          class="css-gmuwbf"
+        >
+          <button
+            class="css-1d0dnv7"
+          >
+            Cat Three
+          </button>
+        </div>
+      </div>
+    </li>
+    <li
+      class="css-1lh1lxa"
+      style="margin-left: 0px;"
+    >
+      <div
+        class="css-12pjvak"
+        style="margin-left: 0px;"
+      >
+        <button
+          class="css-1ne2h4j"
+        >
+          <ion-icon
+            name="add-circle"
+          />
+        </button>
+        <div
+          class="css-gmuwbf"
+        >
+          <button
+            class="css-1d0dnv7"
+          >
+            Cat Four
+          </button>
+        </div>
+      </div>
+    </li>
+    <li
+      class="css-1lh1lxa"
+      style="margin-left: 0px;"
+    >
+      <div
+        class="css-12pjvak"
+        style="margin-left: 0px;"
+      >
+        <button
+          class="css-1ne2h4j"
+        >
+          <ion-icon
+            name="add-circle"
+          />
+        </button>
+        <div
+          class="css-gmuwbf"
+        >
+          <button
+            class="css-1d0dnv7"
+          >
+            Cat Five
           </button>
         </div>
       </div>

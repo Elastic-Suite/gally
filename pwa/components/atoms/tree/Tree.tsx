@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { keyframes, styled } from '@mui/system'
+
 import IonIcon from '../IonIcon/IonIcon'
 
 const CustomRoot = styled('ul')({
@@ -152,7 +153,7 @@ function Tree({ data }: IProps): JSX.Element {
           >
             <CustomContainer
               style={{
-                marginLeft: item.categories ? 0 : item.children ? 0 : 20,
+                marginLeft: item.categories ? 0 : item.children ? 0 : 28,
               }}
             >
               {item.children || item.categories ? (
@@ -191,7 +192,9 @@ function Tree({ data }: IProps): JSX.Element {
                   }}
                 >
                   {!item.children && !item.categories ? (
-                    <CustomLink href={item.path}>{item.name}</CustomLink>
+                    <>
+                      <CustomLink href={item.path}>{item.name}</CustomLink>
+                    </>
                   ) : item.catalogName ? (
                     item.catalogName
                   ) : (
