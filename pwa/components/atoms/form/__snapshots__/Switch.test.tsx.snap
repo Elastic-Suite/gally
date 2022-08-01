@@ -1,0 +1,159 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Switch match snapshot Switch defaultChecked false 1`] = `
+<div>
+  <span
+    class="MuiSwitch-root MuiSwitch-sizeMedium css-tnsvld-MuiSwitch-root"
+  >
+    <span
+      class="MuiSwitch-switchBase MuiSwitch-colorPrimary MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary PrivateSwitchBase-root css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
+    >
+      <input
+        class="MuiSwitch-input PrivateSwitchBase-input css-1m9pwf3"
+        type="checkbox"
+      />
+      <span
+        class="MuiSwitch-thumb css-epwt2k-MuiSwitch-thumb"
+      />
+      <span
+        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+      />
+    </span>
+    <span
+      class="MuiSwitch-track css-1mr4grv-MuiSwitch-track"
+    />
+  </span>
+</div>
+`;
+
+exports[`Switch match snapshot Switch defaultChecked true 1`] = `
+<div>
+  <span
+    class="MuiSwitch-root MuiSwitch-sizeMedium css-tnsvld-MuiSwitch-root"
+  >
+    <span
+      class="MuiSwitch-switchBase MuiSwitch-colorPrimary MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary PrivateSwitchBase-root Mui-checked css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
+    >
+      <input
+        checked=""
+        class="MuiSwitch-input PrivateSwitchBase-input css-1m9pwf3"
+        type="checkbox"
+      />
+      <span
+        class="MuiSwitch-thumb css-epwt2k-MuiSwitch-thumb"
+      />
+      <span
+        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+      />
+    </span>
+    <span
+      class="MuiSwitch-track css-1mr4grv-MuiSwitch-track"
+    />
+  </span>
+</div>
+`;
+
+exports[`Switch match snapshot Switch desabled 1`] = `
+<div>
+  <span
+    class="MuiSwitch-root MuiSwitch-sizeMedium css-tnsvld-MuiSwitch-root"
+  >
+    <span
+      aria-disabled="true"
+      class="MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled MuiButtonBase-root Mui-disabled MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled PrivateSwitchBase-root Mui-disabled css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
+      tabindex="-1"
+    >
+      <input
+        class="MuiSwitch-input PrivateSwitchBase-input css-1m9pwf3"
+        disabled=""
+        type="checkbox"
+      />
+      <span
+        class="MuiSwitch-thumb css-epwt2k-MuiSwitch-thumb"
+      />
+    </span>
+    <span
+      class="MuiSwitch-track css-1mr4grv-MuiSwitch-track"
+    />
+  </span>
+</div>
+`;
+
+exports[`Switch match snapshot Switch desabled false 1`] = `
+<div>
+  <span
+    class="MuiSwitch-root MuiSwitch-sizeMedium css-tnsvld-MuiSwitch-root"
+  >
+    <span
+      class="MuiSwitch-switchBase MuiSwitch-colorPrimary MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary PrivateSwitchBase-root css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
+    >
+      <input
+        class="MuiSwitch-input PrivateSwitchBase-input css-1m9pwf3"
+        type="checkbox"
+      />
+      <span
+        class="MuiSwitch-thumb css-epwt2k-MuiSwitch-thumb"
+      />
+      <span
+        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+      />
+    </span>
+    <span
+      class="MuiSwitch-track css-1mr4grv-MuiSwitch-track"
+    />
+  </span>
+</div>
+`;
+
+exports[`Switch match snapshot Switch onChange is console.log("Hello") 1`] = `
+<div>
+  <span
+    class="MuiSwitch-root MuiSwitch-sizeMedium css-tnsvld-MuiSwitch-root"
+  >
+    <span
+      class="MuiSwitch-switchBase MuiSwitch-colorPrimary MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary PrivateSwitchBase-root css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
+    >
+      <input
+        class="MuiSwitch-input PrivateSwitchBase-input css-1m9pwf3"
+        type="checkbox"
+      />
+      <span
+        class="MuiSwitch-thumb css-epwt2k-MuiSwitch-thumb"
+      />
+      <span
+        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+      />
+    </span>
+    <span
+      class="MuiSwitch-track css-1mr4grv-MuiSwitch-track"
+    />
+  </span>
+</div>
+`;
+
+exports[`Switch match snapshot Switch value is Hello 1`] = `
+<div>
+  <span
+    class="MuiSwitch-root MuiSwitch-sizeMedium css-tnsvld-MuiSwitch-root"
+  >
+    <span
+      class="MuiSwitch-switchBase MuiSwitch-colorPrimary MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary PrivateSwitchBase-root css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
+    >
+      <input
+        class="MuiSwitch-input PrivateSwitchBase-input css-1m9pwf3"
+        type="checkbox"
+        value="Hello"
+      />
+      <span
+        class="MuiSwitch-thumb css-epwt2k-MuiSwitch-thumb"
+      />
+      <span
+        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+      />
+    </span>
+    <span
+      class="MuiSwitch-track css-1mr4grv-MuiSwitch-track"
+    />
+  </span>
+</div>
+`;
