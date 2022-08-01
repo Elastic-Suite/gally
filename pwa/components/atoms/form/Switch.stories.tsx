@@ -14,6 +14,5 @@ export const Switch = Template.bind({})
 Switch.args = {
   defaultChecked: true,
   disabled: false,
-  onChange: (): void => console.log('Change Switch [... call API]'),
   value: 'Hello',
 }
