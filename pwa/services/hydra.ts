@@ -1,6 +1,6 @@
 import { Api, Field, Resource } from '@api-platform/api-doc-parser'
 
-import { booleanRegexp } from '~/constants'
+import { booleanRegexp, fieldIdRegexp } from '~/constants'
 import {
   IHydraMember,
   IHydraResponse,
@@ -10,7 +10,11 @@ import {
 
 import { firstLetterLowercase } from './format'
 
-export function getFieldName(property: string): string {
+export function getResource(doc: Api, resourceName: string): Resource {
+  return doc.resources?.find((resource) => resource.name === resourceName)
+}
+
+export function getReadableFieldName(property: string): string {
   const result = booleanRegexp.exec(property)
   if (result?.[1]) {
     return firstLetterLowercase(result[1])
@@ -21,13 +25,20 @@ export function getFieldName(property: string): string {
   return property
 }
 
-export function getResource(doc: Api, resourceName: string): Resource {
-  return doc.resources?.find((resource) => resource.name === resourceName)
+export function getFieldNameFromFieldId(id: string): string {
+  const match = fieldIdRegexp.exec(id)
+  return match?.[1]
 }
 
 export function getReadableField(resource: Resource, name: string): Field {
-  const fieldName = getFieldName(name)
-  return resource.readableFields.find((field) => field.name === fieldName)
+  name = getReadableFieldName(name).toLowerCase()
+  return resource.readableFields.find((field) => {
+    const fieldName = getFieldNameFromFieldId(field.id)
+    return (
+      (fieldName && fieldName.toLowerCase() === name) ||
+      field.name.toLowerCase() === name
+    )
+  })
 }
 
 // See https://github.com/api-platform/admin/blob/main/src/hydra/schemaAnalyzer.ts
@@ -93,7 +104,7 @@ export function castFieldParameter(
     case 'integer':
       return Number(value)
     case 'boolean':
-      return value === 'true'
+      return value !== 'true' && value !== 'false' ? null : value === 'true'
     default:
       return value
   }

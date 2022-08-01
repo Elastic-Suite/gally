@@ -41,7 +41,7 @@ export function getListParameters(
   if (typeof page === 'number') {
     return removeEmptyParameters({
       ...searchParameters,
-      [currentPage]: page,
+      [currentPage]: page === 0 ? '' : page, // If page=0, remove parameter from URL
       [searchParameter]: searchValue,
     })
   }
@@ -76,6 +76,11 @@ export function getRouterUrl(path: string): URL {
   return new URL(`${window.location.origin}${path}`)
 }
 
+export function getRouterPath(path: string): string {
+  const url = getRouterUrl(path)
+  return clearParameters(url).pathname
+}
+
 export function getAppUrl(
   path: string,
   page: number | false = 0,
@@ -83,9 +88,8 @@ export function getAppUrl(
   searchValue?: string
 ): URL {
   const parameters = getListParameters(page, activeFilters, searchValue)
-  const stringURl = getRouterUrl(path)
-  const returnUrl = getUrl(clearParameters(stringURl), parameters)
-  return returnUrl
+  const url = getRouterUrl(path)
+  return getUrl(clearParameters(url), parameters)
 }
 
 export function getParametersFromUrl(url: URL): ISearchParameters {

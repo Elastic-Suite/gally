@@ -1,4 +1,8 @@
 {
+  "catalog.catalog_one": "catalogue",
+  "catalog.catalog_other": "catalogues",
+  "catalog.activeLocale_one": "langue active",
+  "catalog.activeLocale_other": "langues actives",
   "filter.no": "Non",
   "filter.yes": "Oui",
   "filters.apply": "Appliquer",

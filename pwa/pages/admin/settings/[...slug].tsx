@@ -4,6 +4,9 @@ import { useRouter } from 'next/router'
 import Head from 'next/head'
 
 import { breadcrumbContext } from '~/contexts'
+import { useTabs } from '~/hooks'
+import { findBreadcrumbLabel } from '~/services'
+import { selectMenu, useAppSelector } from '~/store'
 import { IRouterTab } from '~/types'
 
 import PageTile from '~/components/atoms/PageTitle/PageTitle'
@@ -11,51 +14,42 @@ import PrimaryButton from '~/components/atoms/buttons/PrimaryButton'
 import CustomTabs from '~/components/molecules/layout/tabs/CustomTabs'
 import SettingsAttributes from '~/components/stateful-pages/SettingsAttributes/SettingsAttributes'
 import SettingsScope from '~/components/stateful-pages/SettingsScope/SettingsScope'
-import { getRouterUrl } from '~/services'
+
+const pageSlug = 'settings'
 
 function Settings(): JSX.Element {
-  const { t } = useTranslation('settings')
+  const { t } = useTranslation(pageSlug)
   const router = useRouter()
+  const menu = useAppSelector(selectMenu)
   const [, setBreadcrumb] = useContext(breadcrumbContext)
 
   useEffect(() => {
     const { slug } = router.query
-    setBreadcrumb(['settings', ...slug])
+    setBreadcrumb([pageSlug, ...slug])
   }, [router.query, setBreadcrumb])
 
   const routerTabs: IRouterTab[] = useMemo(
     () => [
       {
-        content: <SettingsScope />,
+        Component: SettingsScope,
         default: true,
         id: 0,
         label: t('tabs.scope'),
-        title: t('title.catalog'),
         url: '/admin/settings/scope',
       },
       {
         actions: <PrimaryButton>{t('action.import')} (xlsx)</PrimaryButton>,
-        content: <SettingsAttributes />,
+        Component: SettingsAttributes,
         id: 1,
         label: t('tabs.attributes'),
-        title: t('title.attributes'),
         url: '/admin/settings/attributes',
       },
     ],
     [t]
   )
-  const url = getRouterUrl(router.asPath)
-  const activeTab =
-    routerTabs.find((tab) => tab.url === url.pathname) ??
-    routerTabs.find((tab) => tab.default)
-  const { actions, id, title } = activeTab
-
-  function handleChange(id: number): void {
-    const tab = routerTabs.find((tab) => tab.id === id)
-    if (tab) {
-      router.push(tab.url, undefined, { shallow: true })
-    }
-  }
+  const [activeTab, handleTabChange] = useTabs(routerTabs)
+  const { actions, id } = activeTab
+  const title = findBreadcrumbLabel(0, [pageSlug], menu.hierarchy)
 
   return (
     <>
@@ -65,7 +59,7 @@ function Settings(): JSX.Element {
       <PageTile title={title}>{actions}</PageTile>
       <CustomTabs
         defaultActiveId={id}
-        onChange={handleChange}
+        onChange={handleTabChange}
         tabs={routerTabs}
       />
     </>

@@ -1,4 +1,8 @@
 {
+  "catalog.catalog_one": "catalog",
+  "catalog.catalog_other": "catalogs",
+  "catalog.activeLocale_one": "active locale",
+  "catalog.activeLocale_other": "active locales",
   "filter.no": "No",
   "filter.yes": "Yes",
   "filters.apply": "Apply",

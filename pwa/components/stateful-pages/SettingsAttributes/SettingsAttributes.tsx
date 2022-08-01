@@ -6,19 +6,25 @@ import {
   useResource,
   useSearch,
 } from '~/hooks'
-import { IHydraResponse, ISearchParameters, ISourceField } from '~/types'
+import {
+  IHydraResponse,
+  ISearchParameters,
+  ISourceField,
+  ITabContentProps,
+} from '~/types'
 
 import FiltersGuesser from '~/components/stateful/FiltersGuesser/FiltersGuesser'
 import TableGuesser from '~/components/stateful/TableGuesser/TableGuesser'
 
-function SettingsAttributes(): JSX.Element {
+function SettingsAttributes(props: ITabContentProps): JSX.Element {
+  const { active } = props
   const resourceName = 'source_fields'
   const resource = useResource(resourceName)
 
   const [page, setPage] = usePage()
   const [activeFilters, setActiveFilters] = useFilters(resource)
   const [searchValue, setSearchValue] = useSearch()
-  useFiltersRedirect(page, activeFilters, searchValue)
+  useFiltersRedirect(page, activeFilters, searchValue, active)
 
   const [sourceFields] = useApiList<IHydraResponse<ISourceField>>(
     resource,

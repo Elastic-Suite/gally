@@ -15,16 +15,19 @@ import { ISearchParameters } from '~/types'
 export function useFiltersRedirect(
   page: number | false = 0,
   activeFilters?: ISearchParameters,
-  searchValue?: string
+  searchValue?: string,
+  active = true
 ): void {
   const router = useRouter()
 
   useEffect(() => {
-    const url = getAppUrl(router.asPath, page, activeFilters, searchValue)
-    if (router.asPath !== url.pathname + url.search) {
-      router.push(url.href, undefined, { shallow: true })
+    if (active) {
+      const url = getAppUrl(router.asPath, page, activeFilters, searchValue)
+      if (router.asPath !== url.pathname + url.search) {
+        router.push(url.href, undefined, { shallow: true })
+      }
     }
-  }, [activeFilters, page, router, searchValue])
+  }, [active, activeFilters, page, router, searchValue])
 }
 
 export function usePage(): [number, Dispatch<SetStateAction<number>>] {

@@ -10,7 +10,7 @@ exports[`Catalogs match snapshot Catalogs simple 1`] = `
     >
       3
        
-      catalog
+      catalog.catalog
     </div>
     <div
       class="css-x8pnl5"
@@ -34,7 +34,7 @@ exports[`Catalogs match snapshot Catalogs simple 1`] = `
           <div
             class="css-ry2e12"
           >
-            activeLocale
+            catalog.activeLocale
           </div>
         </div>
         <div
@@ -106,7 +106,7 @@ exports[`Catalogs match snapshot Catalogs simple 1`] = `
           <div
             class="css-ry2e12"
           >
-            activeLocale
+            catalog.activeLocale
           </div>
         </div>
         <div
@@ -177,7 +177,7 @@ exports[`Catalogs match snapshot Catalogs simple 1`] = `
           <div
             class="css-ry2e12"
           >
-            activeLocale
+            catalog.activeLocale
           </div>
         </div>
         <div

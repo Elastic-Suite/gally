@@ -14,16 +14,12 @@ jest.mock('next/router')
 
 describe('useFilters', () => {
   describe('useFiltersRedirect', () => {
-    it('should redirect with default parameters', () => {
+    it('should not redirect if there is no need to redirect', () => {
       const router = useRouter()
       const pushSpy = router.push as jest.Mock
       pushSpy.mockClear()
       renderHookWithProviders(() => useFiltersRedirect())
-      expect(pushSpy).toHaveBeenCalledWith(
-        'http://localhost/test?currentPage=0',
-        undefined,
-        { shallow: true }
-      )
+      expect(pushSpy).not.toHaveBeenCalled()
     })
 
     it('should redirect with parameters', () => {
@@ -38,6 +34,16 @@ describe('useFilters', () => {
         undefined,
         { shallow: true }
       )
+    })
+
+    it('should not redirect if active is false', () => {
+      const router = useRouter()
+      const pushSpy = router.push as jest.Mock
+      pushSpy.mockClear()
+      renderHookWithProviders(() =>
+        useFiltersRedirect(1, { foo: 'bar' }, 'baz', false)
+      )
+      expect(pushSpy).not.toHaveBeenCalled()
     })
   })
 

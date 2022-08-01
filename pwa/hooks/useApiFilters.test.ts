@@ -17,7 +17,7 @@ describe('useApiFilters', () => {
     expect(result.current).toEqual([
       {
         id: 'isSearchable',
-        label: 'fields.isSearchable',
+        label: 'fields.searchable',
         multiple: false,
         options: [],
         type: 0,

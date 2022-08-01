@@ -1,7 +1,5 @@
 {
   "action.import": "Importer",
   "tabs.scope": "Etendue",
-  "tabs.attributes": "Attributs consultable et filtrable",
-  "title.attributes": "Attributs consultable & filtrable",
-  "title.catalog": "Catalogue"
+  "tabs.attributes": "Attributs consultable et filtrable"
 }
