@@ -60,6 +60,11 @@ sub vcl_recv {
     return (pass);
   }
 
+  #Do not cache "/" because it can be served by the Front (next.js) or API (ApiPlatform)
+  if (req.url == "/") {
+    return (pass);
+  }
+
   # For health checks
   # if (req.method == "GET" && req.url == "/healthz") {
     # return (synth(200, "OK"));
