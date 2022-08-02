@@ -12,7 +12,12 @@ import {
 import { handleSingleRow, manageStickyHeaders } from '../CustomTable.service'
 import EditableContent from '../CustomTableCell/EditableContent'
 import NonEditableContent from '../CustomTableCell/NonEditableContent'
-import { nonStickyStyle, selectionStyle, stickyStyle } from './Row.service'
+import {
+  draggableColumnStyle,
+  nonStickyStyle,
+  selectionStyle,
+  stickyStyle,
+} from './Row.service'
 
 interface IProps {
   tableRow: ITableRow
@@ -28,6 +33,7 @@ interface IProps {
   cSSLeftValuesIterator: IterableIterator<[number, number]>
   isHorizontalOverflow: boolean
   shadow: boolean
+  paginated: boolean
 }
 
 function NonDraggableRow(props: IProps): JSX.Element {
@@ -41,13 +47,43 @@ function NonDraggableRow(props: IProps): JSX.Element {
     cSSLeftValuesIterator,
     isHorizontalOverflow,
     shadow,
+    paginated,
   } = props
 
   const stickyHeaders: ITableHeaderSticky[] = manageStickyHeaders(tableHeaders)
   const nonStickyHeaders = tableHeaders.filter((header) => !header.sticky)
+  const isOnlyDraggable = !withSelection && stickyHeaders.length === 0
 
   return (
-    <TableRow key={tableRow.id}>
+    <TableRow
+      key={tableRow.id}
+      sx={{
+        '&:last-child': {
+          'td:first-child': {
+            ...(!paginated && { borderRadius: '0 0 0 8px' }),
+          },
+          'td:last-child': {
+            ...(!paginated && { borderRadius: '0 0 8px 0' }),
+          },
+        },
+      }}
+    >
+      <StickyTableCell
+        sx={{
+          borderBottomColor: 'colors.neutral.300',
+          '&:hover': {
+            color: 'colors.neutral.500',
+            cursor: 'default',
+          },
+          ...draggableColumnStyle(
+            isOnlyDraggable,
+            cSSLeftValuesIterator.next().value[1],
+            isHorizontalOverflow,
+            shadow
+          ),
+        }}
+      />
+
       {Boolean(withSelection) && (
         <StickyTableCell
           sx={selectionStyle(

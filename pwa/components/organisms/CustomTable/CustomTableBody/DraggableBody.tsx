@@ -14,9 +14,13 @@ interface IProps {
   onSelectRows: (arr: (string | number)[]) => void
   selectedRows: (string | number)[]
   shadow: boolean
+<<<<<<< HEAD
   tableHeaders: ITableHeader[]
   tableRows: ITableRow[]
   withSelection: boolean
+=======
+  paginated: boolean
+>>>>>>> feat/ESPP-279-gql-fetch
 }
 
 function DraggableBody(props: IProps): JSX.Element {
@@ -27,9 +31,13 @@ function DraggableBody(props: IProps): JSX.Element {
     onSelectRows,
     selectedRows,
     shadow,
+<<<<<<< HEAD
     tableHeaders,
     tableRows,
     withSelection,
+=======
+    paginated,
+>>>>>>> feat/ESPP-279-gql-fetch
   } = props
 
   return (
@@ -54,6 +62,7 @@ function DraggableBody(props: IProps): JSX.Element {
                   cSSLeftValuesIterator={cSSLeftValues.entries()}
                   isHorizontalOverflow={isHorizontalOverflow}
                   shadow={shadow}
+                  paginated={paginated}
                 />
               )}
             </Draggable>

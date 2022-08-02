@@ -1,4 +1,9 @@
 {
   "virtualRule.title": "Regle virtuelle",
-  "categories.title": "Categories"
+  "categories.title": "Categories",
+  "button.cancelSelection": "Annuler la sélection",
+  "pinToTop": "Pin",
+  "pinToBottom": "Unpin",
+  "previewArea": "Zone de prévisualisation",
+  "rows.selected": " ligne(s) sélectionnée(s)"
 }

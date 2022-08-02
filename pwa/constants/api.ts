@@ -7,6 +7,7 @@ if (url && String(url).endsWith('/')) {
   url = url.slice(0, -1)
 }
 export const apiUrl = url
+export const gqlUrl = `${url}/graphql`
 
 export const authHeader = 'Authorization'
 export const languageHeader = 'Elasticsuite-Language'

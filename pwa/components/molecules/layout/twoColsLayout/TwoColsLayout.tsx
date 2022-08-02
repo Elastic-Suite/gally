@@ -1,12 +1,12 @@
 import { styled } from '@mui/system'
 import { ReactChild } from 'react'
 
-const CustomRoot = styled('div')(({ theme }) => ({
+const CustomRoot = styled('div')({
   display: 'flex',
   justifyContent: 'center',
   flexDirection: 'row',
-  gap: theme.spacing(4),
-}))
+  //gap: theme.spacing(4),
+})
 
 const CustomBorder = styled('div')(({ theme }) => ({
   borderRadius: theme.spacing(1),

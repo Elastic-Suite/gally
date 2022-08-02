@@ -3,7 +3,13 @@ import Tag from '~/components/atoms/form/Tag'
 import Score from '~/components/atoms/score/Score'
 import Stock from '~/components/atoms/stock/Stock'
 import Price from '~/components/atoms/price/Price'
-import { DataContentType, IScore, ITableHeader, ITableRow } from '~/types'
+import {
+  DataContentType,
+  IScore,
+  IStock,
+  ITableHeader,
+  ITableRow,
+} from '~/types'
 
 interface IProps {
   header: ITableHeader
@@ -19,7 +25,17 @@ function NonEditableContent(props: IProps): JSX.Element {
   ): JSX.Element | number | boolean | string {
     switch (header.type) {
       case DataContentType.STRING:
-        return row[header.field] as string
+        return (
+          <Box
+            sx={{
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            {row[header.field] as string}
+          </Box>
+        )
       case DataContentType.BOOLEAN:
         return <Switch disabled defaultChecked={row[header.field] as boolean} />
       case DataContentType.TAG:
@@ -40,8 +56,11 @@ function NonEditableContent(props: IProps): JSX.Element {
         const score = row[header.field] as unknown as IScore
         return <Score scoreValue={score.scoreValue} {...score?.boostInfos} />
       }
-      case DataContentType.STOCK:
-        return <Stock stock={row[header.field] as boolean} />
+      case DataContentType.STOCK: {
+        const stock = row[header.field] as unknown as IStock
+        return <Stock stock={stock} />
+      }
+
       case DataContentType.PRICE:
         // todo : how backend will handle currency ?
         return (

@@ -41,6 +41,7 @@ function TableGuesser<T extends IHydraMember>(props: IProps<T>): JSX.Element {
       tableRows={apiData['hydra:member'] as unknown as ITableRow[]}
       totalPages={apiData['hydra:totalItems']}
       withSelection
+      paginated
     />
   )
 }
