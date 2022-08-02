@@ -1,12 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Tree match snapshot 1`] = `
+exports[`Tree match snapshot Tree data CatalogName 1`] = `
 <div>
   <ul
     class="css-1kxqmrx"
   >
     <li
-      class="css-1lh1lxa"
+      class="css-qvjka6"
       style="margin-left: 0px;"
     >
       <div
@@ -24,7 +24,7 @@ exports[`Tree match snapshot 1`] = `
           class="css-gmuwbf"
         >
           <button
-            class="css-1d0dnv7"
+            class="css-1k72lrg"
           >
             Cat One
           </button>
@@ -32,7 +32,7 @@ exports[`Tree match snapshot 1`] = `
       </div>
     </li>
     <li
-      class="css-1lh1lxa"
+      class="css-qvjka6"
       style="margin-left: 0px;"
     >
       <div
@@ -58,7 +58,7 @@ exports[`Tree match snapshot 1`] = `
       </div>
     </li>
     <li
-      class="css-1lh1lxa"
+      class="css-qvjka6"
       style="margin-left: 0px;"
     >
       <div
@@ -84,7 +84,7 @@ exports[`Tree match snapshot 1`] = `
       </div>
     </li>
     <li
-      class="css-1lh1lxa"
+      class="css-qvjka6"
       style="margin-left: 0px;"
     >
       <div
@@ -110,7 +110,146 @@ exports[`Tree match snapshot 1`] = `
       </div>
     </li>
     <li
-      class="css-1lh1lxa"
+      class="css-qvjka6"
+      style="margin-left: 0px;"
+    >
+      <div
+        class="css-12pjvak"
+        style="margin-left: 0px;"
+      >
+        <button
+          class="css-1ne2h4j"
+        >
+          <ion-icon
+            name="add-circle"
+          />
+        </button>
+        <div
+          class="css-gmuwbf"
+        >
+          <button
+            class="css-1d0dnv7"
+          >
+            Cat Five
+          </button>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`Tree match snapshot Tree simple 1`] = `
+<div>
+  <ul
+    class="css-1kxqmrx"
+  >
+    <li
+      class="css-qvjka6"
+      style="margin-left: 0px;"
+    >
+      <div
+        class="css-12pjvak"
+        style="margin-left: 0px;"
+      >
+        <button
+          class="css-1ne2h4j"
+        >
+          <ion-icon
+            name="add-circle"
+          />
+        </button>
+        <div
+          class="css-gmuwbf"
+        >
+          <button
+            class="css-1d0dnv7"
+          >
+            Cat One
+          </button>
+        </div>
+      </div>
+    </li>
+    <li
+      class="css-qvjka6"
+      style="margin-left: 0px;"
+    >
+      <div
+        class="css-12pjvak"
+        style="margin-left: 0px;"
+      >
+        <button
+          class="css-1ne2h4j"
+        >
+          <ion-icon
+            name="add-circle"
+          />
+        </button>
+        <div
+          class="css-gmuwbf"
+        >
+          <button
+            class="css-1d0dnv7"
+          >
+            Cat Two
+          </button>
+        </div>
+      </div>
+    </li>
+    <li
+      class="css-qvjka6"
+      style="margin-left: 0px;"
+    >
+      <div
+        class="css-12pjvak"
+        style="margin-left: 0px;"
+      >
+        <button
+          class="css-1ne2h4j"
+        >
+          <ion-icon
+            name="add-circle"
+          />
+        </button>
+        <div
+          class="css-gmuwbf"
+        >
+          <button
+            class="css-1d0dnv7"
+          >
+            Cat Three
+          </button>
+        </div>
+      </div>
+    </li>
+    <li
+      class="css-qvjka6"
+      style="margin-left: 0px;"
+    >
+      <div
+        class="css-12pjvak"
+        style="margin-left: 0px;"
+      >
+        <button
+          class="css-1ne2h4j"
+        >
+          <ion-icon
+            name="add-circle"
+          />
+        </button>
+        <div
+          class="css-gmuwbf"
+        >
+          <button
+            class="css-1d0dnv7"
+          >
+            Cat Four
+          </button>
+        </div>
+      </div>
+    </li>
+    <li
+      class="css-qvjka6"
       style="margin-left: 0px;"
     >
       <div

@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TitleBlock match snapshot TwoColsLayout simple 1`] = `
+<div>
+  <div
+    class="css-vpydjx"
+  >
+    <div
+      class="css-1a6i05b"
+    >
+      Hello World
+    </div>
+    <div
+      class="css-8o5tc6"
+    >
+      Hello
+    </div>
+  </div>
+</div>
+`;
+
+exports[`TitleBlock match snapshot TwoColsLayout with Array in left 1`] = `
+<div>
+  <div
+    class="css-vpydjx"
+  >
+    <div
+      class="css-1a6i05b"
+    >
+      hello world One
+      hello world Two
+    </div>
+    <div
+      class="css-8o5tc6"
+    >
+      <button
+        class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root css-13u4ebv-MuiButtonBase-root-MuiButton-root"
+        tabindex="0"
+        type="button"
+      >
+        
+        Hello world
+        
+        <span
+          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+        />
+      </button>
+    </div>
+  </div>
+</div>
+`;

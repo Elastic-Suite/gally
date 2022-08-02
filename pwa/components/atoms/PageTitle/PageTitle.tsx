@@ -30,18 +30,20 @@ interface IProps extends TypographyProps {
   title: string
 }
 
-function PageTile(props: IProps): JSX.Element {
+function PageTitle(props: IProps): JSX.Element {
   const { children, title, ...typographyProps } = props
   return (
     <Root>
-      <CustomTypography {...typographyProps}>{title}</CustomTypography>
+      {title ? (
+        <CustomTypography {...typographyProps}>{title}</CustomTypography>
+      ) : null}
       {Boolean(children) && <div>{children}</div>}
     </Root>
   )
 }
 
-PageTile.defaultProps = {
+PageTitle.defaultProps = {
   variant: 'h1',
 }
 
-export default PageTile
+export default PageTitle

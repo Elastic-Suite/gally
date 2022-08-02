@@ -53,11 +53,11 @@ export interface IJsonldContext {
 }
 
 export interface IJsonldType {
-  '@type': string | string[]
+  '@type'?: string | string[]
 }
 
 export interface IJsonldId {
-  '@id': string
+  '@id'?: string
 }
 
 export interface IJsonldBase extends IJsonldType, IJsonldId {}
