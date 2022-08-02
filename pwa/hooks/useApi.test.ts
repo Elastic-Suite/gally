@@ -46,6 +46,27 @@ describe('useApi', () => {
         true
       )
     })
+
+    it('calls and return the api result with options', async () => {
+      ;(fetchApi as jest.Mock).mockClear()
+      const options: RequestInit = {
+        body: 'gqlQuery',
+      }
+      const { result, waitForNextUpdate } = renderHookWithProviders(() =>
+        useApiFetch('/test', null, options)
+      )
+      expect(result.current[0]).toEqual({
+        status: LoadStatus.LOADING,
+      })
+      await waitForNextUpdate()
+      expect(result.current[0]).toEqual({
+        status: LoadStatus.SUCCEEDED,
+        data: { hello: 'world' },
+      })
+      expect(fetchApi).toHaveBeenCalledWith('en', '/test', null, {
+        body: 'gqlQuery',
+      })
+    })
   })
 
   describe('useApiDispatch', () => {

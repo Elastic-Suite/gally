@@ -1,4 +1,9 @@
 {
   "virtualRule.title": "Virtual rule",
-  "categories.title": "Categories"
+  "categories.title": "Categories",
+  "button.cancelSelection": "Cancel selection",
+  "pinToTop": "Pin",
+  "pinToBottom": "Unpin",
+  "previewArea": "Preview area",
+  "rows.selected": "selected row(s)."
 }

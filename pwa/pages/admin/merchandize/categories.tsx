@@ -12,7 +12,7 @@ import { ITreeItem } from '~/types'
 import TitleBlock from '~/components/molecules/layout/TitleBlock/TitleBlock'
 import TwoColsLayout from '~/components/molecules/layout/twoColsLayout/TwoColsLayout'
 import CategoryTree from '~/components/stateful/CategoryTree/CategoryTree'
-import PageTitle from '~/components/atoms/PageTitle/PageTitle'
+import ProductsContainer from '~/components/stateful/ProductsContainer/ProductsContainer'
 
 function Categories(): JSX.Element {
   const router = useRouter()
@@ -53,13 +53,7 @@ function Categories(): JSX.Element {
           </TitleBlock>,
         ]}
       >
-        <PageTitle
-          title={
-            selectedCategoryItem?.name
-              ? selectedCategoryItem?.name
-              : selectedCategoryItem?.catalogName
-          }
-        />
+        <ProductsContainer category={selectedCategoryItem} />
       </TwoColsLayout>
     </>
   )

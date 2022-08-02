@@ -1,22 +1,20 @@
-import { useEffect, useRef, useState } from 'react'
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
 import { DragDropContext, DropResult } from 'react-beautiful-dnd'
-
+import { ChangeEvent } from 'react-transition-group/node_modules/@types/react'
+import {
+  StyledTable,
+  TableContainerWithCustomScrollbar,
+} from '~/components/organisms/CustomTable/CustomTable.styled'
+import DraggableBody from '~/components/organisms/CustomTable/CustomTableBody/DraggableBody'
+import NonDraggableBody from '~/components/organisms/CustomTable/CustomTableBody/NonDraggableBody'
+import CustomTableHeader from '~/components/organisms/CustomTable/CustomTableHeader/CustomTableHeader'
 import {
   reorderingColumnWidth,
   selectionColumnWidth,
   stickyColunWidth,
 } from '~/constants'
 import { useIsHorizontalOverflow } from '~/hooks'
-import { ITableHeader, ITableRow, MassiveSelectionType } from '~/types'
-
-import StickyBar from '~/components/molecules/CustomTable/StickyBar/StickyBar'
-import {
-  StyledTable,
-  TableContainerWithCustomScrollbar,
-} from '~/components/organisms/CustomTable/CustomTable.styled'
-import CustomTableHeader from '~/components/organisms/CustomTable/CustomTableHeader/CustomTableHeader'
-import NonDraggableBody from '~/components/organisms/CustomTable/CustomTableBody/NonDraggableBody'
-import DraggableBody from '~/components/organisms/CustomTable/CustomTableBody/DraggableBody'
+import { ITableHeader, ITableRow } from '~/types'
 
 export interface IProps {
   draggable?: boolean
@@ -28,7 +26,10 @@ export interface IProps {
   ) => void
   tableHeaders: ITableHeader[]
   tableRows: ITableRow[]
+  selectedRows?: (string | number)[]
+  setSelectedRows?: Dispatch<SetStateAction<(string | number)[]>>
   withSelection?: boolean
+  paginated: boolean
 }
 
 function CustomTable(props: IProps): JSX.Element {
@@ -39,13 +40,12 @@ function CustomTable(props: IProps): JSX.Element {
     tableHeaders,
     tableRows,
     withSelection,
+    selectedRows,
+    setSelectedRows,
+    paginated,
   } = props
 
-  const [selectedRows, setSelectedRows] = useState<(string | number)[]>([])
   const [scrollLength, setScrollLength] = useState<number>(0)
-  const [currentMassiveSelection, setCurrentMassiveSelection] = useState(
-    MassiveSelectionType.NONE
-  )
   const tableRef = useRef<HTMLDivElement>()
   const { isOverflow, shadow } = useIsHorizontalOverflow(tableRef.current)
 
@@ -56,10 +56,9 @@ function CustomTable(props: IProps): JSX.Element {
   const stickyLength =
     tableHeaders.filter((header) => header.sticky).length * stickyColunWidth
 
-  let handleMassiveSelection = null
+  let onSelection = null
   let massiveSelectionState = null
   let massiveSelectionIndeterminate = false
-  let showStickyBar = null
   if (withSelection) {
     massiveSelectionState = selectedRows
       ? selectedRows.length === tableRows.length
@@ -68,19 +67,10 @@ function CustomTable(props: IProps): JSX.Element {
     massiveSelectionIndeterminate =
       selectedRows.length > 0 ? selectedRows.length < tableRows.length : false
 
-    showStickyBar =
-      Boolean(selectedRows && selectedRows.length > 0) ||
-      currentMassiveSelection !== MassiveSelectionType.NONE
-
-    handleMassiveSelection = (selection: MassiveSelectionType): void => {
-      setCurrentMassiveSelection(selection)
-      switch (selection) {
-        case MassiveSelectionType.ALL:
-        case MassiveSelectionType.ALL_ON_CURRENT_PAGE:
-          return setSelectedRows(tableRows.map((row) => row.id))
-        case MassiveSelectionType.NONE:
-          return setSelectedRows([])
-      }
+    onSelection = (e: ChangeEvent<HTMLInputElement>): void => {
+      e.target.checked
+        ? setSelectedRows(tableRows.map((row) => row.id))
+        : setSelectedRows([])
     }
   }
 
@@ -104,9 +94,8 @@ function CustomTable(props: IProps): JSX.Element {
     const stickyHeaders = tableHeaders.filter((header) => header.sticky)
     const result: number[] = [0]
     let eachLeftvalues: number[] = [0]
-    if (draggable) {
-      eachLeftvalues.push(reorderingColumnWidth)
-    }
+    eachLeftvalues.push(reorderingColumnWidth)
+
     if (withSelection) {
       eachLeftvalues.push(selectionColumnWidth)
     }
@@ -137,12 +126,6 @@ function CustomTable(props: IProps): JSX.Element {
     }
   }, [withSelection, stickyLength, draggable])
 
-  useEffect(() => {
-    if (selectedRows.length === 0) {
-      setCurrentMassiveSelection(MassiveSelectionType.NONE)
-    }
-  }, [selectedRows])
-
   return (
     <>
       <DragDropContext onDragEnd={handleDragEnd}>
@@ -161,9 +144,8 @@ function CustomTable(props: IProps): JSX.Element {
             <CustomTableHeader
               tableHeaders={tableHeaders}
               withSelection={withSelection}
-              onMassiveSelection={handleMassiveSelection}
+              onSelection={onSelection}
               massiveSelectionState={massiveSelectionState}
-              draggable={draggable}
               cSSLeftValues={cSSLeftValues}
               isHorizontalOverflow={isOverflow}
               shadow={shadow}
@@ -180,6 +162,7 @@ function CustomTable(props: IProps): JSX.Element {
                 cSSLeftValues={cSSLeftValues}
                 isHorizontalOverflow={isOverflow}
                 shadow={shadow}
+                paginated={paginated}
               />
             )}
             {Boolean(draggable) && (
@@ -193,17 +176,12 @@ function CustomTable(props: IProps): JSX.Element {
                 cSSLeftValues={cSSLeftValues}
                 isHorizontalOverflow={isOverflow}
                 shadow={shadow}
+                paginated={paginated}
               />
             )}
           </StyledTable>
         </TableContainerWithCustomScrollbar>
       </DragDropContext>
-      <StickyBar
-        show={showStickyBar}
-        onMassiveSelection={handleMassiveSelection}
-        massiveSelectionState={massiveSelectionState}
-        massiveSelectionIndeterminate={massiveSelectionIndeterminate}
-      />
     </>
   )
 }

@@ -66,7 +66,7 @@ export enum DataContentType {
 
 export interface ITableRow {
   id: string | number
-  [key: string]: string | boolean | number | IScore
+  [key: string]: string | boolean | number | IScore | IStock
 }
 
 export interface IHorizontalOverflow {

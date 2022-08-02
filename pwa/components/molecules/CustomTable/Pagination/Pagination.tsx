@@ -46,7 +46,7 @@ function Pagination(props: IProps): JSX.Element {
       <TablePagination
         rowsPerPageOptions={rowsPerPageOptions}
         component="div"
-        count={totalPages}
+        count={totalPages * rowsPerPage}
         page={currentPage}
         onPageChange={handlePageChange}
         rowsPerPage={rowsPerPage}

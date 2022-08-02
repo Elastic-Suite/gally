@@ -30,7 +30,7 @@ export const StyledTable = styled(Table)({
 export const BaseTableCell = styled(TableCell)({
   height: '48px',
   maxHeight: '80px',
-  maxWidth: '200px',
+  maxWidth: '150px',
   textOverflow: 'ellipsis',
   overflow: 'hidden',
 })

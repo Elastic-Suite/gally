@@ -1,8 +1,9 @@
 import { useTranslation } from 'react-i18next'
 import Tag from '~/components/atoms/form/Tag'
+import { IStock } from '~/types'
 
 interface IProps {
-  stock: boolean
+  stock: IStock
 }
 
 function Stock(props: IProps): JSX.Element {

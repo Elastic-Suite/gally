@@ -14,9 +14,13 @@ interface IProps {
   onSelectRows: (arr: (string | number)[]) => void
   selectedRows: (string | number)[]
   shadow: boolean
+<<<<<<< HEAD
   tableHeaders: ITableHeader[]
   tableRows: ITableRow[]
   withSelection: boolean
+=======
+  paginated: boolean
+>>>>>>> feat/ESPP-279-gql-fetch
 }
 
 function NonDraggableBody(props: IProps): JSX.Element {
@@ -29,7 +33,7 @@ function NonDraggableBody(props: IProps): JSX.Element {
     shadow,
     tableHeaders,
     tableRows,
-    withSelection,
+    paginated,
   } = props
 
   return (
@@ -46,6 +50,7 @@ function NonDraggableBody(props: IProps): JSX.Element {
           cSSLeftValuesIterator={cSSLeftValues.entries()}
           isHorizontalOverflow={isHorizontalOverflow}
           shadow={shadow}
+          paginated={paginated}
         />
       ))}
     </TableBody>
