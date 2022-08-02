@@ -2,7 +2,7 @@ import { ReactChild } from 'react'
 
 import AppProvider from '~/components/AppProvider'
 import { AppStore } from '~/store'
-import { useSchemaLoader } from '~/hooks/useSchemaLoader'
+import { useSchemaLoader } from '~/hooks'
 
 interface IProps {
   children: ReactChild

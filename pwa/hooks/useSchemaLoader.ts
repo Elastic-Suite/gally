@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { getApiUrl } from '~/services'
-import { parseDocs } from '~/services/parser'
+import { getApiUrl, parseDocs } from '~/services'
 import { IApi, IFetch, LoadStatus } from '~/types'
 
 export function useSchemaLoader(): IFetch<IApi> {
