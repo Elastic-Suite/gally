@@ -1,28 +1,27 @@
-import { FormControlLabel, Radio, RadioGroup as RadioGrp } from '@mui/material'
+import {
+  FormControlLabel,
+  Radio,
+  RadioGroupProps,
+  RadioGroup as RadioGrp,
+} from '@mui/material'
+import { IOption, IOptions } from '~/types'
 
-interface IOptions {
-  value: string
-  label: string
-  disabled?: boolean
-  default?: boolean
+interface IProps extends RadioGroupProps {
+  options: IOptions
 }
 
-interface IProps {
-  name: string
-  defaultChecked: string
-  row?: boolean
-  options: IOptions[]
-}
+function RadioGroup(props: IProps): JSX.Element {
+  const { options, ...radioGroupProps } = props
+  const foundNameDefaultValue = options.find((element) => element.default)
 
-function RadioGroup({
-  name,
-  defaultChecked,
-  row,
-  options,
-}: IProps): JSX.Element {
   return (
-    <RadioGrp name={name} row={row} defaultValue={defaultChecked}>
-      {options.map((item: IOptions) => {
+    <RadioGrp
+      {...radioGroupProps}
+      defaultValue={
+        radioGroupProps.defaultChecked ? foundNameDefaultValue?.value : null
+      }
+    >
+      {options.map((item: IOption) => {
         return (
           <FormControlLabel
             disabled={item.disabled}

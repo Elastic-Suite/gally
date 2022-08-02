@@ -12,7 +12,7 @@ const Template: ComponentStory<typeof RadioGrp> = (args) => (
 export const RadioGroup = Template.bind({})
 RadioGroup.args = {
   name: 'radio-buttons-group',
-  defaultChecked: 'female',
+  defaultChecked: true,
   row: true,
   options: [
     { value: 'male', label: 'Label One', disabled: true },
