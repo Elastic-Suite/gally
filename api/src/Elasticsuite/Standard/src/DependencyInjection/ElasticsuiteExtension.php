@@ -135,6 +135,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
         $loader->load('Product/Resources/config/services.yaml');
         $loader->load('Analysis/Resources/config/services.yaml');
         $loader->load('Hydra/Resources/config/services.yaml');
+        $loader->load('Locale/Resources/config/services.yaml');
 
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
