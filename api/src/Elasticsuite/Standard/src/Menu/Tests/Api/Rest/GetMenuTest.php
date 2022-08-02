@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Elasticsuite\Index\Tests\Api\Rest;
 
 use Elasticsuite\Index\Tests\Api\AbstractMenuTest;
+use Elasticsuite\Locale\EventSubscriber\LocaleSubscriber;
 use Elasticsuite\Standard\src\Test\ExpectedResponse;
 use Elasticsuite\Standard\src\Test\RequestToTest;
 use Elasticsuite\User\Constant\Role;
@@ -30,7 +31,7 @@ class GetMenuTest extends AbstractMenuTest
     public function testGetMenu(string $local, array $expectedResponse): void
     {
         $this->validateApiCall(
-            new RequestToTest('GET', 'menu', $this->getUser(Role::ROLE_CONTRIBUTOR), [], ['Accept-Language' => $local]),
+            new RequestToTest('GET', 'menu', $this->getUser(Role::ROLE_CONTRIBUTOR), [], [LocaleSubscriber::ELASTICSUITE_LANGUAGE_HEADER => $local]),
             new ExpectedResponse(
                 200,
                 function (ResponseInterface $response) use ($expectedResponse) {

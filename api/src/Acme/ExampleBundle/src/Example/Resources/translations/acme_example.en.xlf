@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0"
-       srcLang="en-US" trgLang="fr-FR">
-    <file id="acme_example.fr_FR">
+       srcLang="en-US" trgLang="en-US">
+    <file id="acme_example.en">
         <unit id="example_command_mapping_label">
             <segment>
                 <source>example.command.mapping.label</source> <!-- key get from the source node, replace dots by underscores (format to eb confirmed with the team). -->
-                <target>Exemple de mapping</target>
+                <target>Mapping example</target>
             </segment>
         </unit>
     </file>
