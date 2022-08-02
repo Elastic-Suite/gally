@@ -1,10 +1,10 @@
 import { useContext, useMemo } from 'react'
-import { Resource } from '@api-platform/api-doc-parser'
 
-import { resourcesContext } from '~/contexts'
+import { schemaContext } from '~/contexts'
 import { getResource } from '~/services'
+import { IResource } from '~/types'
 
-export function useResource(resourceName: string): Resource {
-  const api = useContext(resourcesContext)
+export function useResource(resourceName: string): IResource {
+  const api = useContext(schemaContext)
   return useMemo(() => getResource(api, resourceName), [api, resourceName])
 }

@@ -1,5 +1,6 @@
+import { renderWithProviders } from '~/utils/tests'
+
 import AlertInfoMessage from './AlertInfoMessage'
-import { renderWithProviders } from '~/services'
 
 describe('AlertInfoMessage match snapshot', () => {
   it('AlertInfoMessageDevFalse', () => {

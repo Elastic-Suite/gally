@@ -48,7 +48,7 @@ describe('Api service', () => {
     })
 
     it('should fetch requested api from resource', async () => {
-      const url = 'http://localhost:3000/mocks/metadata'
+      const url = 'https://localhost/metadata'
       fetchMock.get(url, { hello: 'world' })
       const response = await fetchApi('en', resource)
       expect(response).toEqual({ hello: 'world' })

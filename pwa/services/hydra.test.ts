@@ -10,12 +10,11 @@ import metadata from '~/public/mocks/metadata.json'
 
 import {
   castFieldParameter,
-  getFieldNameFromFieldId,
+  getField,
+  getFieldName,
   getFieldType,
   getFilterParameters,
   getOptionsFromApi,
-  getReadableField,
-  getReadableFieldName,
   getResource,
   isFieldValueValid,
 } from './hydra'
@@ -23,45 +22,26 @@ import {
 describe('Hydra service', () => {
   describe('getResource', () => {
     it('Should return the resource', () => {
-      expect(getResource(api, 'source_fields')).toMatchObject({
-        name: 'source_fields',
-      })
+      expect(getResource(api, 'SourceField')).toEqual(resourceWithRef)
     })
   })
 
-  describe('getReadableFieldName', () => {
+  describe('getFieldName', () => {
     it('should return the field name', () => {
-      expect(getReadableFieldName('code')).toEqual('code')
-      expect(getReadableFieldName('isSearchable')).toEqual('searchable')
-      expect(getReadableFieldName('metadata[]')).toEqual('metadata')
+      expect(getFieldName('code')).toEqual('code')
+      expect(getFieldName('metadata[]')).toEqual('metadata')
     })
   })
 
-  describe('getFieldNameFromFieldId', () => {
-    it('should return the field name from id', () => {
-      expect(
-        getFieldNameFromFieldId(
-          'http://localhost:3000/mocks/docs.jsonld#SourceField/code'
-        )
-      ).toEqual('code')
-    })
-  })
-
-  describe('getReadableField', () => {
+  describe('getField', () => {
     it('Should return the field', () => {
-      expect(getReadableField(resourceWithRef, 'code')).toMatchObject(
-        fieldString
-      )
-      expect(getReadableField(resourceWithRef, 'searchable')).toMatchObject(
+      expect(getField(resourceWithRef, 'code')).toMatchObject(fieldString)
+      expect(getField(resourceWithRef, 'isFilterable')).toMatchObject(
         fieldBoolean
       )
-      expect(getReadableField(resourceWithRef, 'weight')).toMatchObject(
-        fieldInteger
-      )
-      expect(getReadableField(resourceWithRef, 'metadata')).toMatchObject(
-        fieldRef
-      )
-      expect(getReadableField(resourceWithRef, 'foo')).toEqual(undefined)
+      expect(getField(resourceWithRef, 'weight')).toMatchObject(fieldInteger)
+      expect(getField(resourceWithRef, 'metadata')).toMatchObject(fieldRef)
+      expect(getField(resourceWithRef, 'foo')).toEqual(undefined)
     })
   })
 

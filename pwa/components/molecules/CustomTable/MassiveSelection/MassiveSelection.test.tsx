@@ -1,5 +1,8 @@
-import { renderWithProviders } from '~/services/tests'
+import { renderWithProviders } from '~/utils/tests'
+
 import MassiveSelection from './MassiveSelection'
+
+jest.mock('react-i18next')
 
 describe('MassiveSelection', () => {
   it('should match snapshot without indeterminate state', () => {

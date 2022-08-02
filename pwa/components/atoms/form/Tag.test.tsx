@@ -1,5 +1,6 @@
+import { renderWithProviders } from '~/utils/tests'
+
 import Tag from './Tag'
-import { renderWithProviders } from '~/services'
 
 describe('Tag match snapshot', () => {
   it('Tag simple', () => {

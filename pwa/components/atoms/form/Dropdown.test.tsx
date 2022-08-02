@@ -1,5 +1,6 @@
+import { renderWithProviders } from '~/utils/tests'
+
 import DropDown from './DropDown'
-import { renderWithProviders } from '~/services'
 
 describe('DropDown match snapshot', () => {
   it('BadgeDisabledFalse', () => {

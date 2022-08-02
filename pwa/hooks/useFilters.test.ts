@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 
 import { resourceWithRef } from '~/mocks'
-import { renderHookWithProviders } from '~/services'
+import { renderHookWithProviders } from '~/utils/tests'
 
 import {
   useFilters,

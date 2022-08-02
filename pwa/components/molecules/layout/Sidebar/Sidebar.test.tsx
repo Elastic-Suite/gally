@@ -1,6 +1,8 @@
-import Sidebar from './Sidebar'
-import { renderWithProviders } from '~/services'
+import { renderWithProviders } from '~/utils/tests'
+
 import menu from '../../../../public/mocks/menu.json'
+
+import Sidebar from './Sidebar'
 
 describe('SideBar match snapshot', () => {
   it('SideBarStateTrue', () => {

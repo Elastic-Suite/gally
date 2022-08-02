@@ -1,15 +1,27 @@
-import { Resource } from '@api-platform/api-doc-parser'
-
 import metadata from '~/public/mocks/metadata.json'
-import { ISearchParameters } from '~/types'
+import { IResource, ISearchParameters } from '~/types'
 
 export const getApiUrl = jest.fn((url: string): string => url)
 
+const body = { hello: 'world' }
+
+export const fetchJson = jest.fn(
+  (): Promise<unknown> =>
+    Promise.resolve({
+      json: body,
+      response: new Response(JSON.stringify(body)),
+    })
+)
+
 export const fetchApi = jest.fn(
-  (_: string, resource: Resource | string): Promise<unknown> => {
-    let data: unknown = { hello: 'world' }
-    if (typeof resource !== 'string' && resource.title === 'Metadata') {
-      data = metadata
+  (_: string, resource: IResource | string): Promise<unknown> => {
+    let data: unknown = { ...body }
+    if (
+      (typeof resource !== 'string' &&
+        resource.title.toLowerCase() === 'metadata') ||
+      (typeof resource === 'string' && resource.endsWith('metadata'))
+    ) {
+      data = { ...metadata }
     }
     return Promise.resolve(data)
   }

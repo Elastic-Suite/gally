@@ -1,7 +1,5 @@
-import { Resource } from '@api-platform/api-doc-parser'
-
 import { apiUrl } from '~/constants'
-import { ISearchParameters } from '~/types'
+import { IResource, ISearchParameters } from '~/types'
 
 import { getUrl } from './url'
 
@@ -29,21 +27,31 @@ export function getApiUrl(url = ''): string {
   return url
 }
 
-export function fetchApi<T>(
+export async function fetchJson<T>(
+  url: RequestInfo | URL,
+  options: RequestInit = {}
+): Promise<{ json: T; response: Response }> {
+  const response = await fetch(url, options)
+  const json = await response.json()
+  return { json, response }
+}
+
+export async function fetchApi<T>(
   language: string,
-  resource: Resource | string,
+  resource: IResource | string,
   searchParameters: ISearchParameters = {},
   options: RequestInit = {}
 ): Promise<T> {
   const apiUrl =
     typeof resource === 'string' ? getApiUrl(resource) : getApiUrl(resource.url)
-  return fetch(getUrl(apiUrl, searchParameters), {
+  const { json } = await fetchJson<T>(getUrl(apiUrl, searchParameters), {
     ...options,
     headers: {
       ...options.headers,
       'Accept-Language': language,
     },
-  }).then((response) => response.json())
+  })
+  return json
 }
 
 export function removeEmptyParameters(

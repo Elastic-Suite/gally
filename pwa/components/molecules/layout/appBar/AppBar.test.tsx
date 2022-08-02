@@ -1,6 +1,8 @@
-import AppBar from './AppBar'
-import { renderWithProviders } from '~/services'
+import { renderWithProviders } from '~/utils/tests'
+
 import menu from '../../../../public/mocks/menu.json'
+
+import AppBar from './AppBar'
 
 describe('AppBar match snapshot', () => {
   it('AppBar simple', () => {

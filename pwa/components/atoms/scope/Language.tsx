@@ -1,7 +1,9 @@
 import { styled } from '@mui/material/styles'
-import PopInCatalogs from './PopInCatalogs'
+
 import { firstLetterUppercase } from '~/services'
 import { ICatalog } from '~/types'
+
+import PopInCatalogs from './PopInCatalogs'
 
 const CustomRoot = styled('div')(({ theme }) => ({
   gap: theme.spacing(1),

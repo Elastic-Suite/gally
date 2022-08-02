@@ -18,7 +18,7 @@ import TableGuesser from '~/components/stateful/TableGuesser/TableGuesser'
 
 function SettingsAttributes(props: ITabContentProps): JSX.Element {
   const { active } = props
-  const resourceName = 'source_fields'
+  const resourceName = 'SourceField'
   const resource = useResource(resourceName)
 
   const [page, setPage] = usePage()
@@ -34,6 +34,8 @@ function SettingsAttributes(props: ITabContentProps): JSX.Element {
   )
 
   if (sourceFields.error) {
+    // eslint-disable-next-line no-console
+    console.error(sourceFields.error)
     return <pre>{JSON.stringify(sourceFields.error, null, 2)}</pre>
   } else if (!sourceFields.data) {
     return null

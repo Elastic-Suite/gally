@@ -22,7 +22,6 @@
     "prepare": "cd .. && husky install pwa/.husky"
   },
   "dependencies": {
-    "@api-platform/api-doc-parser": "^0.15.2",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "@mui/material": "^5.8.2",
@@ -40,6 +39,7 @@
     "inflection": "^1.13.2",
     "ionicons": "^6.0.2",
     "isomorphic-unfetch": "^3.1.0",
+    "jsonld": "^6.0.0",
     "jwt-decode": "^3.1.2",
     "lint-staged": "^13.0.2",
     "lodash.get": "^4.4.2",
@@ -80,6 +80,7 @@
     "@testing-library/react": "^12.1.5",
     "@testing-library/react-hooks": "^8.0.1",
     "@types/inflection": "^1.13.0",
+    "@types/jsonld": "^1.5.6",
     "@types/lodash": "^4.14.167",
     "@types/node": "^17.0.25",
     "@types/react": "^17.0.0",

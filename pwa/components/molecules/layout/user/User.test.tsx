@@ -1,5 +1,6 @@
+import { renderWithProviders } from '~/utils/tests'
+
 import User from './User'
-import { renderWithProviders } from '~/services'
 
 describe('User', () => {
   it('match snapshot', () => {
