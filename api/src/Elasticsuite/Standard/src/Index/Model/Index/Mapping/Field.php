@@ -220,12 +220,9 @@ class Field implements FieldInterface
         // Setting the field type to "multi_field".
         $property = [];
 
+        $property = array_merge($property, $this->getPropertyConfig(array_shift($analyzers)));
         foreach ($analyzers as $analyzer) {
-            if ($analyzer === $this->getDefaultSearchAnalyzer()) {
-                $property = array_merge($property, $this->getPropertyConfig($analyzer));
-            } else {
-                $property['fields'][$analyzer] = $this->getPropertyConfig($analyzer);
-            }
+            $property['fields'][$analyzer] = $this->getPropertyConfig($analyzer);
         }
 
         return $property;
@@ -238,10 +235,17 @@ class Field implements FieldInterface
     {
         $analyzers = [];
 
+        // By default, texts are indexed with "keyword" analyzer which is a 'noop' analyzer.
+        // They will get the defaultSearchAnalyzer just after, if that's needed.
+        if (self::FIELD_TYPE_TEXT === $this->getType()) {
+            $analyzers = [self::ANALYZER_KEYWORD];
+        }
+
         if ($this->isSearchable() || $this->isUsedForSortBy()) {
             // Default search analyzer.
-            $analyzers = [$this->getDefaultSearchAnalyzer()];
+            $analyzers[] = $this->getDefaultSearchAnalyzer();
         }
+
         if ($this->isSearchable() && $this->getSearchWeight() > 1) {
             $analyzers[] = self::ANALYZER_WHITESPACE;
             $analyzers[] = self::ANALYZER_SHINGLE;
