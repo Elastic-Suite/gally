@@ -9,7 +9,7 @@ import { findBreadcrumbLabel } from '~/services'
 import { selectMenu, useAppSelector } from '~/store'
 import { IRouterTab } from '~/types'
 
-import PageTile from '~/components/atoms/PageTitle/PageTitle'
+import PageTitle from '~/components/atoms/PageTitle/PageTitle'
 import PrimaryButton from '~/components/atoms/buttons/PrimaryButton'
 import CustomTabs from '~/components/molecules/layout/tabs/CustomTabs'
 import SettingsAttributes from '~/components/stateful-pages/SettingsAttributes/SettingsAttributes'
@@ -56,7 +56,7 @@ function Settings(): JSX.Element {
       <Head>
         <title>{title}</title>
       </Head>
-      <PageTile title={title}>{actions}</PageTile>
+      <PageTitle title={title}>{actions}</PageTitle>
       <CustomTabs
         defaultActiveId={id}
         onChange={handleTabChange}
