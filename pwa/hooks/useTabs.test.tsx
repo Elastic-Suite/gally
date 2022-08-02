@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 
-import { renderHookWithProviders } from '~/services'
 import { IRouterTab } from '~/types'
+import { renderHookWithProviders } from '~/utils/tests'
 
 import { useTabs } from './useTabs'
 

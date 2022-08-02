@@ -1,6 +1,10 @@
-import ActiveLocales from './ActiveLocales'
-import { renderWithProviders } from '~/services'
+import { renderWithProviders } from '~/utils/tests'
+
 import catalog from '../../../../public/mocks/catalog.json'
+
+import ActiveLocales from './ActiveLocales'
+
+jest.mock('react-i18next')
 
 describe('ActiveLocales match snapshot', () => {
   it('ActiveLocales simple', () => {

@@ -1,65 +1,36 @@
-import { Api, Field, Resource } from '@api-platform/api-doc-parser'
-
-import { booleanRegexp, fieldIdRegexp } from '~/constants'
 import {
+  IApi,
+  IField,
   IHydraMember,
   IHydraResponse,
   IOptions,
+  IResource,
   ISearchParameters,
 } from '~/types'
 
-import { firstLetterLowercase } from './format'
-
-export function getResource(doc: Api, resourceName: string): Resource {
-  return doc.resources?.find((resource) => resource.name === resourceName)
+export function getResource(api: IApi, resourceName: string): IResource {
+  return api.resources.find(
+    (resource) =>
+      resource.title === resourceName || resource.label === resourceName
+  )
 }
 
-export function getReadableFieldName(property: string): string {
-  const result = booleanRegexp.exec(property)
-  if (result?.[1]) {
-    return firstLetterLowercase(result[1])
-  }
+export function getFieldName(property: string): string {
   if (property.endsWith('[]')) {
     return property.slice(0, -2)
   }
   return property
 }
 
-export function getFieldNameFromFieldId(id: string): string {
-  const match = fieldIdRegexp.exec(id)
-  return match?.[1]
-}
-
-export function getReadableField(resource: Resource, name: string): Field {
-  name = getReadableFieldName(name).toLowerCase()
-  return resource.readableFields.find((field) => {
-    const fieldName = getFieldNameFromFieldId(field.id)
-    return (
-      (fieldName && fieldName.toLowerCase() === name) ||
-      field.name.toLowerCase() === name
-    )
+export function getField(resource: IResource, name: string): IField {
+  name = getFieldName(name)
+  return resource.supportedProperty.find((field) => {
+    return field.title === name
   })
 }
 
-// See https://github.com/api-platform/admin/blob/main/src/hydra/schemaAnalyzer.ts
-export function getFieldType(field: Field): string {
-  switch (field.id) {
-    case 'http://schema.org/identifier':
-      return field.range === 'http://www.w3.org/2001/XMLSchema#integer'
-        ? 'integer_id'
-        : 'id'
-    case 'http://schema.org/email':
-      return 'email'
-    case 'http://schema.org/url':
-      return 'url'
-    default:
-  }
-
-  if (field.embedded !== null && field.maxCardinality !== 1) {
-    return 'array'
-  }
-
-  switch (field.range) {
+export function getFieldType(field: IField): string {
+  switch (field.property?.range['@id']) {
     case 'http://www.w3.org/2001/XMLSchema#array':
       return 'array'
     case 'http://www.w3.org/2001/XMLSchema#integer':
@@ -78,6 +49,16 @@ export function getFieldType(field: Field): string {
   }
 }
 
+export function isReferenceField(field: IField): boolean {
+  return field.property['@type'] === 'http://www.w3.org/ns/hydra/core#Link'
+}
+
+export function getReferenceField(api: IApi, field: IField): IResource {
+  return api.resources.find(
+    (resource) => resource['@id'] === field.property.range['@id']
+  )
+}
+
 export function getOptionsFromApi<T extends IHydraMember>(
   response: IHydraResponse<T>
 ): IOptions {
@@ -89,7 +70,7 @@ export function getOptionsFromApi<T extends IHydraMember>(
 }
 
 export function castFieldParameter(
-  field: Field,
+  field: IField,
   value: string | string[]
 ): string | number | boolean | (string | number | boolean)[] {
   if (value instanceof Array) {
@@ -97,10 +78,10 @@ export function castFieldParameter(
       (value) => castFieldParameter(field, value) as string | number | boolean
     )
   }
-  if (field.reference) {
+  if (isReferenceField(field)) {
     return Number(value)
   }
-  switch (field.type) {
+  switch (getFieldType(field)) {
     case 'integer':
       return Number(value)
     case 'boolean':
@@ -110,14 +91,14 @@ export function castFieldParameter(
   }
 }
 
-export function isFieldValueValid(field: Field, value: unknown): boolean {
+export function isFieldValueValid(field: IField, value: unknown): boolean {
   if (value instanceof Array) {
     return value.every((value) => isFieldValueValid(field, value))
   }
-  if (field.reference) {
+  if (isReferenceField(field)) {
     return typeof value === 'number' && !isNaN(value)
   }
-  switch (field.type) {
+  switch (getFieldType(field)) {
     case 'integer':
       return typeof value === 'number' && !isNaN(value)
     case 'boolean':
@@ -128,12 +109,12 @@ export function isFieldValueValid(field: Field, value: unknown): boolean {
 }
 
 export function getFilterParameters(
-  resource: Resource,
+  resource: IResource,
   parameters: ISearchParameters
 ): ISearchParameters {
   return Object.fromEntries(
     Object.entries(parameters).reduce((acc, [key, value]) => {
-      const field = getReadableField(resource, key)
+      const field = getField(resource, key)
       if (field) {
         const fieldValue = castFieldParameter(field, value as string | string[])
         if (isFieldValueValid(field, fieldValue)) {

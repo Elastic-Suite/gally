@@ -1,6 +1,7 @@
-import PopIn from './PopIn'
 import PrimaryButton from '~/components/atoms/buttons/PrimaryButton'
-import { renderWithProviders } from '~/services'
+import { renderWithProviders } from '~/utils/tests'
+
+import PopIn from './PopIn'
 
 describe('PopIn match snapshot', () => {
   it('PopIn simple', () => {

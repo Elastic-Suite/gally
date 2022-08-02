@@ -1,15 +1,15 @@
 import { Dispatch, ReactChild, SetStateAction, useMemo, useState } from 'react'
-import { Api } from '@api-platform/api-doc-parser'
 import { ThemeProvider } from '@mui/material/styles'
 import { StyledEngineProvider } from '@mui/styled-engine'
 import { Provider } from 'react-redux'
 
 import { theme } from '~/constants'
-import { breadcrumbContext, resourcesContext } from '~/contexts'
+import { breadcrumbContext, schemaContext } from '~/contexts'
 import { AppStore } from '~/store'
+import { IApi } from '~/types'
 
 interface IProps {
-  api: Api
+  api: IApi
   children: ReactChild
   store: AppStore
 }
@@ -21,7 +21,7 @@ function AppProvider(props: IProps): JSX.Element {
     useMemo(() => [breadcrumb, setBreadcrumb], [breadcrumb])
 
   return (
-    <resourcesContext.Provider value={api}>
+    <schemaContext.Provider value={api}>
       <Provider store={store}>
         <ThemeProvider theme={theme}>
           <StyledEngineProvider injectFirst>
@@ -31,7 +31,7 @@ function AppProvider(props: IProps): JSX.Element {
           </StyledEngineProvider>
         </ThemeProvider>
       </Provider>
-    </resourcesContext.Provider>
+    </schemaContext.Provider>
   )
 }
 

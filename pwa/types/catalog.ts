@@ -1,6 +1,7 @@
-import { IHydraMember, IJsonldId, IJsonldType } from './hydra'
+import { IHydraMember } from './hydra'
+import { IJsonldBase } from './jsonld'
 
-export interface ILocalizedCatalog extends IJsonldType, IJsonldId {
+export interface ILocalizedCatalog extends IJsonldBase {
   id: number
   name: string
   code: string

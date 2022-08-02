@@ -1,5 +1,6 @@
+import { renderWithProviders } from '~/utils/tests'
+
 import Pagination from './Pagination'
-import { renderWithProviders } from '~/services/tests'
 
 describe('Pagination', () => {
   it('should match snapshot for bottom pagination', () => {

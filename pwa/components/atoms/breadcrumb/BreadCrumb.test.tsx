@@ -1,6 +1,8 @@
-import Breadcrumbs from './Breadcrumbs'
-import { renderWithProviders } from '~/services'
 import menu from '../../../public/mocks/menu.json'
+
+import { renderWithProviders } from '~/utils/tests'
+
+import Breadcrumbs from './Breadcrumbs'
 
 describe('Breadcrumbs', () => {
   it('match snapshot', () => {

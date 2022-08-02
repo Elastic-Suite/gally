@@ -28,6 +28,10 @@ export interface IFetch<D> {
   status: LoadStatus
 }
 
+export interface IGraphqlResponse<D> {
+  data: D
+}
+
 export type ISearchParameters = Record<
   string,
   string | number | boolean | (string | number | boolean)[]

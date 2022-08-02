@@ -1,7 +1,9 @@
-import { renderWithProviders } from '~/services'
-import CustomTable from './CustomTable'
-import { DataContentType } from '~/types'
 import { fireEvent, screen } from '@testing-library/react'
+
+import { DataContentType } from '~/types'
+import { renderWithProviders } from '~/utils/tests'
+
+import CustomTable from './CustomTable'
 
 const mockedHeadersAndRows = {
   tableHeadersWithoutSticky: [

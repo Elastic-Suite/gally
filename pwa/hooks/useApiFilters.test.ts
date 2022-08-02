@@ -1,8 +1,8 @@
-import { act } from '@testing-library/react'
+import { act } from '@testing-library/react-hooks'
 
 import { resourceWithRef } from '~/mocks'
 import sourceFields from '~/public/mocks/source_fields.json'
-import { renderHookWithProviders } from '~/services'
+import { renderHookWithProviders } from '~/utils/tests'
 
 import { useApiFilters } from './useApiFilters'
 
@@ -17,42 +17,42 @@ describe('useApiFilters', () => {
     expect(result.current).toEqual([
       {
         id: 'isSearchable',
-        label: 'fields.searchable',
+        label: 'Searchable',
         multiple: false,
         options: [],
         type: 0,
       },
       {
         id: 'isFilterable',
-        label: 'fields.isFilterable',
+        label: 'Filterable',
         multiple: false,
         options: [],
         type: 0,
       },
       {
         id: 'code',
-        label: 'fields.code',
+        label: 'Attribute code',
         multiple: false,
         options: [],
         type: 1,
       },
       {
         id: 'defaultLabel',
-        label: 'fields.defaultLabel',
+        label: 'Attribute label',
         multiple: false,
         options: [],
         type: 1,
       },
       {
         id: 'type',
-        label: 'fields.type',
+        label: 'Attribute type',
         multiple: false,
         options: [],
         type: 1,
       },
       {
         id: 'metadata[]',
-        label: 'fields.metadata',
+        label: 'metadata',
         multiple: true,
         options: [],
         type: 2,

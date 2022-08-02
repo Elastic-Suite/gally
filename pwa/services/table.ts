@@ -1,31 +1,28 @@
 import { TFunction } from 'react-i18next'
-import { Field, Resource } from '@api-platform/api-doc-parser'
 
 import { booleanRegexp } from '~/constants'
 import { getFieldLabelTranslationArgs } from './format'
-import {
-  getFieldNameFromFieldId,
-  getFieldType,
-  getReadableField,
-} from './hydra'
+import { getField, getFieldType } from './hydra'
 import {
   DataContentType,
   FilterType,
+  IField,
   IFilter,
   IHydraMapping,
   IHydraMember,
   IHydraResponse,
   IOptions,
+  IResource,
   ITableHeader,
 } from '~/types'
 
 interface IMapping extends IHydraMapping {
-  field: Field
+  field: IField
   multiple: boolean
   options?: IOptions
 }
 
-export function getFieldDataContentType(field: Field): DataContentType {
+export function getFieldDataContentType(field: IField): DataContentType {
   const type = getFieldType(field)
   if (type === 'boolean') {
     return DataContentType.BOOLEAN
@@ -33,10 +30,11 @@ export function getFieldDataContentType(field: Field): DataContentType {
   return DataContentType.STRING
 }
 
-export function getFieldHeader(field: Field, t: TFunction): ITableHeader {
+export function getFieldHeader(field: IField, t: TFunction): ITableHeader {
   return {
-    field: getFieldNameFromFieldId(field.id),
-    headerName: t(...getFieldLabelTranslationArgs(field.name)),
+    field: field.title,
+    headerName:
+      field.property.label ?? t(...getFieldLabelTranslationArgs(field.title)),
     type: getFieldDataContentType(field),
     editable: false,
   }
@@ -54,9 +52,10 @@ export function getFilter(mapping: IMapping, t: TFunction): IFilter {
   const type = getFilterType(mapping)
   return {
     id: mapping.variable,
-    label: t(
-      ...getFieldLabelTranslationArgs(mapping.field?.name ?? mapping.property)
-    ),
+    label: mapping.field
+      ? mapping.field.property.label ??
+        t(...getFieldLabelTranslationArgs(mapping.field.title))
+      : t(...getFieldLabelTranslationArgs(mapping.property)),
     multiple: mapping.multiple,
     options: mapping.options,
     type,
@@ -65,12 +64,12 @@ export function getFilter(mapping: IMapping, t: TFunction): IFilter {
 
 export function getMappings<T extends IHydraMember>(
   apiData: IHydraResponse<T>,
-  resource: Resource
+  resource: IResource
 ): IMapping[] {
   const mappings: IMapping[] = apiData?.['hydra:search']['hydra:mapping'].map(
     (mapping) => ({
       ...mapping,
-      field: getReadableField(resource, mapping.property),
+      field: getField(resource, mapping.property),
       multiple: mapping.variable.endsWith('[]'),
     })
   )

@@ -1,5 +1,6 @@
+import { renderWithProviders } from '~/utils/tests'
+
 import Badge from './Badge'
-import { renderWithProviders } from '~/services'
 
 describe('Badge match snapshot', () => {
   it('Badge simple', () => {

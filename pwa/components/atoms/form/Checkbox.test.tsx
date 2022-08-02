@@ -1,5 +1,6 @@
+import { renderWithProviders } from '~/utils/tests'
+
 import Checkbox from './Checkbox'
-import { renderWithProviders } from '~/services'
 
 describe('Checkbox match snapshot', () => {
   it('CheckboxIndeterminateFalse', () => {

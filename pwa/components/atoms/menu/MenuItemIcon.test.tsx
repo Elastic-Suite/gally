@@ -1,6 +1,6 @@
-import MenuItemIcon from './MenuItemIcon'
+import { renderWithProviders } from '~/utils/tests'
 
-import { renderWithProviders } from '~/services'
+import MenuItemIcon from './MenuItemIcon'
 
 describe('MenuItemIcon', () => {
   it('match snapshot', () => {
