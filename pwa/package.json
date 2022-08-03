@@ -8,6 +8,7 @@
     "build": "next build",
     "start": "next start",
     "test": "jest",
+    "test:debug": "jest --runInBand",
     "test:update": "jest --update-snapshot",
     "eslint": "eslint --fix --ignore-path .gitignore .",
     "eslint:ci": "eslint --ignore-path .gitignore .",

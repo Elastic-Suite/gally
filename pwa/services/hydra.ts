@@ -53,7 +53,7 @@ export function isReferenceField(field: IField): boolean {
   return field.property['@type'] === 'http://www.w3.org/ns/hydra/core#Link'
 }
 
-export function getReferenceField(api: IApi, field: IField): IResource {
+export function getReferencedResource(api: IApi, field: IField): IResource {
   return api.resources.find(
     (resource) => resource['@id'] === field.property.range['@id']
   )

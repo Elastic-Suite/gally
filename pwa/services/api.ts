@@ -3,24 +3,40 @@ import { IResource, ISearchParameters } from '~/types'
 
 import { getUrl } from './url'
 
-export function getApiUrl(url = ''): string {
+export function normalizeUrl(url = ''): string {
   if (process.env.NEXT_PUBLIC_LOCAL) {
-    if (
-      url &&
-      !String(url).endsWith('.json') &&
-      !String(url).endsWith('.jsonld')
-    ) {
-      url = `${url}.json`
+    try {
+      const urlObj = new URL(url)
+      if (urlObj.origin === apiUrl) {
+        if (urlObj.pathname === '/') {
+          urlObj.pathname = '/index'
+        }
+        if (
+          urlObj.pathname &&
+          !urlObj.pathname.endsWith('.json') &&
+          !urlObj.pathname.endsWith('.jsonld')
+        ) {
+          urlObj.pathname = `${urlObj.pathname}.json`
+        }
+        if (urlObj.pathname.endsWith('.jsonld')) {
+          urlObj.pathname = `${urlObj.pathname.slice(0, -7)}.json`
+        }
+        if (!urlObj.pathname.startsWith('/mocks')) {
+          urlObj.pathname = `/mocks${urlObj.pathname}`
+        }
+        url = urlObj.href
+      }
+    } catch (error) {
+      // in that case just silent and don't transform the URL
     }
   }
-  if (!String(url).startsWith('http')) {
-    if (!String(url).startsWith('/')) {
+  return url
+}
+
+export function getApiUrl(url = ''): string {
+  if (!url.startsWith('http')) {
+    if (!url.startsWith('/')) {
       url = `/${url}`
-    }
-    if (process.env.NEXT_PUBLIC_LOCAL) {
-      if (!String(url).startsWith('/mocks')) {
-        url = `/mocks${url}`
-      }
     }
     url = `${apiUrl}${url}`
   }
@@ -31,7 +47,7 @@ export async function fetchJson<T>(
   url: RequestInfo | URL,
   options: RequestInit = {}
 ): Promise<{ json: T; response: Response }> {
-  const response = await fetch(url, options)
+  const response = await fetch(normalizeUrl(url.toString()), options)
   const json = await response.json()
   return { json, response }
 }
