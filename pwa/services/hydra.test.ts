@@ -4,6 +4,7 @@ import {
   fieldInteger,
   fieldRef,
   fieldString,
+  resource,
   resourceWithRef,
 } from '~/mocks'
 import metadata from '~/public/mocks/metadata.json'
@@ -15,8 +16,10 @@ import {
   getFieldType,
   getFilterParameters,
   getOptionsFromApi,
+  getReferencedResource,
   getResource,
   isFieldValueValid,
+  isReferenceField,
 } from './hydra'
 
 describe('Hydra service', () => {
@@ -50,6 +53,19 @@ describe('Hydra service', () => {
       expect(getFieldType(fieldString)).toEqual('text')
       expect(getFieldType(fieldInteger)).toEqual('integer')
       expect(getFieldType(fieldBoolean)).toEqual('boolean')
+    })
+  })
+
+  describe('isReferenceField', () => {
+    it('Should check if given field is a reference', () => {
+      expect(isReferenceField(fieldString)).toEqual(false)
+      expect(isReferenceField(fieldRef)).toEqual(true)
+    })
+  })
+
+  describe('getReferencedResource', () => {
+    it('Should return the reference resource', () => {
+      expect(getReferencedResource(api, fieldRef)).toEqual(resource)
     })
   })
 

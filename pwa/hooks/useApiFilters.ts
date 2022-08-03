@@ -7,7 +7,7 @@ import {
   getFilter,
   getMappings,
   getOptionsFromApi,
-  getReferenceField,
+  getReferencedResource,
   isReferenceField,
 } from '~/services'
 import {
@@ -43,7 +43,7 @@ export function useApiFilters<A extends IHydraMember, R extends IHydraMember>(
       .map((mapping) =>
         fetchApi<IHydraResponse<R>>(
           i18n.language,
-          getReferenceField(api, mapping.field)?.url
+          getReferencedResource(api, mapping.field)?.url
         ).then((json) => [mapping.field, json])
       )
 

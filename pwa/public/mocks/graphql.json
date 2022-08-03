@@ -1,0 +1,2613 @@
+{
+  "data": {
+    "__schema": {
+      "queryType": {
+        "fields": [
+          {
+            "name": "node",
+            "description": null,
+            "type": {
+              "name": "Node",
+              "description": "A node, according to the Relay specification.",
+              "fields": [
+                {
+                  "name": "id",
+                  "description": "The id of this node.",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "ID" }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "metadata",
+            "description": null,
+            "type": {
+              "name": "Metadata",
+              "description": null,
+              "fields": [
+                {
+                  "name": "id",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "ID" }
+                  }
+                },
+                {
+                  "name": "_id",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "Int" }
+                  }
+                },
+                {
+                  "name": "entity",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "String" }
+                  }
+                },
+                {
+                  "name": "sourceFields",
+                  "description": null,
+                  "type": {
+                    "kind": "OBJECT",
+                    "name": "SourceFieldConnection",
+                    "description": "Connection for SourceField.",
+                    "fields": [
+                      { "name": "edges" },
+                      { "name": "pageInfo" },
+                      { "name": "totalCount" }
+                    ],
+                    "interfaces": [],
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "sourceField",
+            "description": null,
+            "type": {
+              "name": "SourceField",
+              "description": null,
+              "fields": [
+                {
+                  "name": "id",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "ID" }
+                  }
+                },
+                {
+                  "name": "_id",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "Int" }
+                  }
+                },
+                {
+                  "name": "code",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "String" }
+                  }
+                },
+                {
+                  "name": "defaultLabel",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "description": "The `String` scalar type represents textual data, represented as UTF-8\ncharacter sequences. The String type is most often used by GraphQL to\nrepresent free-form human-readable text.",
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "type",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "description": "The `String` scalar type represents textual data, represented as UTF-8\ncharacter sequences. The String type is most often used by GraphQL to\nrepresent free-form human-readable text.",
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "weight",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "description": "The `Int` scalar type represents non-fractional signed whole numeric\nvalues. Int can represent values between -(2^31) and 2^31 - 1. ",
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "metadata",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "Metadata" }
+                  }
+                },
+                {
+                  "name": "labels",
+                  "description": null,
+                  "type": {
+                    "kind": "OBJECT",
+                    "name": "SourceFieldLabelConnection",
+                    "description": "Connection for SourceFieldLabel.",
+                    "fields": [
+                      { "name": "edges" },
+                      { "name": "pageInfo" },
+                      { "name": "totalCount" }
+                    ],
+                    "interfaces": [],
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "options",
+                  "description": null,
+                  "type": {
+                    "kind": "OBJECT",
+                    "name": "SourceFieldOptionConnection",
+                    "description": "Connection for SourceFieldOption.",
+                    "fields": [
+                      { "name": "edges" },
+                      { "name": "pageInfo" },
+                      { "name": "totalCount" }
+                    ],
+                    "interfaces": [],
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "searchable",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "description": "The `Boolean` scalar type represents `true` or `false`.",
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "filterable",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "description": "The `Boolean` scalar type represents `true` or `false`.",
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "sortable",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "description": "The `Boolean` scalar type represents `true` or `false`.",
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "spellchecked",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "description": "The `Boolean` scalar type represents `true` or `false`.",
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "usedForRules",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "description": "The `Boolean` scalar type represents `true` or `false`.",
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "system",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "Boolean" }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "sourceFields",
+            "description": null,
+            "type": {
+              "name": "SourceFieldConnection",
+              "description": "Connection for SourceField.",
+              "fields": [
+                {
+                  "name": "edges",
+                  "description": null,
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "SourceFieldEdge" }
+                  }
+                },
+                {
+                  "name": "pageInfo",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "SourceFieldPageInfo" }
+                  }
+                },
+                {
+                  "name": "totalCount",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "Int" }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "index",
+            "description": null,
+            "type": {
+              "name": "IndexItem",
+              "description": null,
+              "fields": [
+                {
+                  "name": "id",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "ID" }
+                  }
+                },
+                {
+                  "name": "name",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "String" }
+                  }
+                },
+                {
+                  "name": "aliases",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "Iterable" }
+                  }
+                },
+                {
+                  "name": "docsCount",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "Int" }
+                  }
+                },
+                {
+                  "name": "size",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "String" }
+                  }
+                },
+                {
+                  "name": "entityType",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "description": "The `String` scalar type represents textual data, represented as UTF-8\ncharacter sequences. The String type is most often used by GraphQL to\nrepresent free-form human-readable text.",
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "catalog",
+                  "description": null,
+                  "type": {
+                    "kind": "OBJECT",
+                    "name": "LocalizedCatalog",
+                    "description": null,
+                    "fields": [
+                      { "name": "id" },
+                      { "name": "_id" },
+                      { "name": "name" },
+                      { "name": "code" },
+                      { "name": "locale" },
+                      { "name": "isDefault" },
+                      { "name": "catalog" },
+                      { "name": "localName" }
+                    ],
+                    "interfaces": [{ "name": "Node" }],
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "status",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "String" }
+                  }
+                },
+                {
+                  "name": "mapping",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "Iterable" }
+                  }
+                },
+                {
+                  "name": "settings",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "Iterable" }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "indices",
+            "description": null,
+            "type": { "name": null, "description": null, "fields": null }
+          },
+          {
+            "name": "getMappingStatus",
+            "description": null,
+            "type": {
+              "name": "MappingStatus",
+              "description": null,
+              "fields": [
+                {
+                  "name": "id",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "ID" }
+                  }
+                },
+                {
+                  "name": "entityType",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "String" }
+                  }
+                },
+                {
+                  "name": "status",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "String" }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "indexDocument",
+            "description": null,
+            "type": {
+              "name": "IndexDocument",
+              "description": null,
+              "fields": [
+                {
+                  "name": "id",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "ID" }
+                  }
+                },
+                {
+                  "name": "indexName",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "String" }
+                  }
+                },
+                {
+                  "name": "documents",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "Iterable" }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "indexDocuments",
+            "description": null,
+            "type": { "name": null, "description": null, "fields": null }
+          },
+          {
+            "name": "sourceFieldOption",
+            "description": null,
+            "type": {
+              "name": "SourceFieldOption",
+              "description": null,
+              "fields": [
+                {
+                  "name": "id",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "ID" }
+                  }
+                },
+                {
+                  "name": "_id",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "Int" }
+                  }
+                },
+                {
+                  "name": "sourceField",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "SourceField" }
+                  }
+                },
+                {
+                  "name": "position",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "description": "The `Int` scalar type represents non-fractional signed whole numeric\nvalues. Int can represent values between -(2^31) and 2^31 - 1. ",
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "labels",
+                  "description": null,
+                  "type": {
+                    "kind": "OBJECT",
+                    "name": "SourceFieldOptionLabelConnection",
+                    "description": "Connection for SourceFieldOptionLabel.",
+                    "fields": [
+                      { "name": "edges" },
+                      { "name": "pageInfo" },
+                      { "name": "totalCount" }
+                    ],
+                    "interfaces": [],
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "sourceFieldOptions",
+            "description": null,
+            "type": {
+              "name": "SourceFieldOptionConnection",
+              "description": "Connection for SourceFieldOption.",
+              "fields": [
+                {
+                  "name": "edges",
+                  "description": null,
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "SourceFieldOptionEdge" }
+                  }
+                },
+                {
+                  "name": "pageInfo",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "SourceFieldOptionPageInfo" }
+                  }
+                },
+                {
+                  "name": "totalCount",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "Int" }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "sourceFieldOptionLabel",
+            "description": null,
+            "type": {
+              "name": "SourceFieldOptionLabel",
+              "description": null,
+              "fields": [
+                {
+                  "name": "id",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "ID" }
+                  }
+                },
+                {
+                  "name": "_id",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "Int" }
+                  }
+                },
+                {
+                  "name": "sourceFieldOption",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "SourceFieldOption" }
+                  }
+                },
+                {
+                  "name": "catalog",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "LocalizedCatalog" }
+                  }
+                },
+                {
+                  "name": "label",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "String" }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "sourceFieldOptionLabels",
+            "description": null,
+            "type": {
+              "name": "SourceFieldOptionLabelConnection",
+              "description": "Connection for SourceFieldOptionLabel.",
+              "fields": [
+                {
+                  "name": "edges",
+                  "description": null,
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "SourceFieldOptionLabelEdge" }
+                  }
+                },
+                {
+                  "name": "pageInfo",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "SourceFieldOptionLabelPageInfo" }
+                  }
+                },
+                {
+                  "name": "totalCount",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "Int" }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "sourceFieldLabel",
+            "description": null,
+            "type": {
+              "name": "SourceFieldLabel",
+              "description": null,
+              "fields": [
+                {
+                  "name": "id",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "ID" }
+                  }
+                },
+                {
+                  "name": "_id",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "Int" }
+                  }
+                },
+                {
+                  "name": "sourceField",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "SourceField" }
+                  }
+                },
+                {
+                  "name": "catalog",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "LocalizedCatalog" }
+                  }
+                },
+                {
+                  "name": "label",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "String" }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "sourceFieldLabels",
+            "description": null,
+            "type": {
+              "name": "SourceFieldLabelConnection",
+              "description": "Connection for SourceFieldLabel.",
+              "fields": [
+                {
+                  "name": "edges",
+                  "description": null,
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "SourceFieldLabelEdge" }
+                  }
+                },
+                {
+                  "name": "pageInfo",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "SourceFieldLabelPageInfo" }
+                  }
+                },
+                {
+                  "name": "totalCount",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "Int" }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "catalog",
+            "description": null,
+            "type": {
+              "name": "Catalog",
+              "description": null,
+              "fields": [
+                {
+                  "name": "id",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "ID" }
+                  }
+                },
+                {
+                  "name": "_id",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "Int" }
+                  }
+                },
+                {
+                  "name": "code",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "String" }
+                  }
+                },
+                {
+                  "name": "name",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "description": "The `String` scalar type represents textual data, represented as UTF-8\ncharacter sequences. The String type is most often used by GraphQL to\nrepresent free-form human-readable text.",
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "localizedCatalogs",
+                  "description": null,
+                  "type": {
+                    "kind": "OBJECT",
+                    "name": "LocalizedCatalogConnection",
+                    "description": "Connection for LocalizedCatalog.",
+                    "fields": [
+                      { "name": "edges" },
+                      { "name": "pageInfo" },
+                      { "name": "totalCount" }
+                    ],
+                    "interfaces": [],
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "catalogs",
+            "description": null,
+            "type": {
+              "name": "CatalogConnection",
+              "description": "Connection for Catalog.",
+              "fields": [
+                {
+                  "name": "edges",
+                  "description": null,
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "CatalogEdge" }
+                  }
+                },
+                {
+                  "name": "pageInfo",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "CatalogPageInfo" }
+                  }
+                },
+                {
+                  "name": "totalCount",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "Int" }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "localizedCatalog",
+            "description": null,
+            "type": {
+              "name": "LocalizedCatalog",
+              "description": null,
+              "fields": [
+                {
+                  "name": "id",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "ID" }
+                  }
+                },
+                {
+                  "name": "_id",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "Int" }
+                  }
+                },
+                {
+                  "name": "name",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "description": "The `String` scalar type represents textual data, represented as UTF-8\ncharacter sequences. The String type is most often used by GraphQL to\nrepresent free-form human-readable text.",
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "code",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "String" }
+                  }
+                },
+                {
+                  "name": "locale",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "String" }
+                  }
+                },
+                {
+                  "name": "isDefault",
+                  "description": "It\u0027s important to keep the getter for isDefault property,\notherwise Api Platform will be not able to get the value in the response,\nin other words don\u0027t rename by IsDefault().",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "Boolean" }
+                  }
+                },
+                {
+                  "name": "catalog",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "Catalog" }
+                  }
+                },
+                {
+                  "name": "localName",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "String" }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "localizedCatalogs",
+            "description": null,
+            "type": {
+              "name": "LocalizedCatalogConnection",
+              "description": "Connection for LocalizedCatalog.",
+              "fields": [
+                {
+                  "name": "edges",
+                  "description": null,
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "LocalizedCatalogEdge" }
+                  }
+                },
+                {
+                  "name": "pageInfo",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "LocalizedCatalogPageInfo" }
+                  }
+                },
+                {
+                  "name": "totalCount",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "Int" }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "getMenu",
+            "description": null,
+            "type": {
+              "name": "Menu",
+              "description": null,
+              "fields": [
+                {
+                  "name": "id",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "ID" }
+                  }
+                },
+                {
+                  "name": "code",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "String" }
+                  }
+                },
+                {
+                  "name": "hierarchy",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "Iterable" }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "facetConfiguration",
+            "description": null,
+            "type": {
+              "name": "FacetConfiguration",
+              "description": null,
+              "fields": [
+                {
+                  "name": "id",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "ID" }
+                  }
+                },
+                {
+                  "name": "_id",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "String" }
+                  }
+                },
+                {
+                  "name": "sourceField",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "SourceField" }
+                  }
+                },
+                {
+                  "name": "category",
+                  "description": null,
+                  "type": {
+                    "kind": "OBJECT",
+                    "name": "Category",
+                    "description": null,
+                    "fields": [
+                      { "name": "id" },
+                      { "name": "_id" },
+                      { "name": "name" }
+                    ],
+                    "interfaces": [{ "name": "Node" }],
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "displayMode",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "description": "The `String` scalar type represents textual data, represented as UTF-8\ncharacter sequences. The String type is most often used by GraphQL to\nrepresent free-form human-readable text.",
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "coverageRate",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "description": "The `Int` scalar type represents non-fractional signed whole numeric\nvalues. Int can represent values between -(2^31) and 2^31 - 1. ",
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "maxSize",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "description": "The `Int` scalar type represents non-fractional signed whole numeric\nvalues. Int can represent values between -(2^31) and 2^31 - 1. ",
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "sortOrder",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "description": "The `String` scalar type represents textual data, represented as UTF-8\ncharacter sequences. The String type is most often used by GraphQL to\nrepresent free-form human-readable text.",
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "isRecommendable",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "description": "The `Boolean` scalar type represents `true` or `false`.",
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "isVirtual",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "description": "The `Boolean` scalar type represents `true` or `false`.",
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "defaultDisplayMode",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "description": "The `String` scalar type represents textual data, represented as UTF-8\ncharacter sequences. The String type is most often used by GraphQL to\nrepresent free-form human-readable text.",
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "defaultCoverageRate",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "description": "The `Int` scalar type represents non-fractional signed whole numeric\nvalues. Int can represent values between -(2^31) and 2^31 - 1. ",
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "defaultMaxSize",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "description": "The `Int` scalar type represents non-fractional signed whole numeric\nvalues. Int can represent values between -(2^31) and 2^31 - 1. ",
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "defaultSortOrder",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "description": "The `String` scalar type represents textual data, represented as UTF-8\ncharacter sequences. The String type is most often used by GraphQL to\nrepresent free-form human-readable text.",
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "defaultIsRecommendable",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "description": "The `Boolean` scalar type represents `true` or `false`.",
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "defaultIsVirtual",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "description": "The `Boolean` scalar type represents `true` or `false`.",
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "facetConfigurations",
+            "description": null,
+            "type": {
+              "name": "FacetConfigurationConnection",
+              "description": "Connection for FacetConfiguration.",
+              "fields": [
+                {
+                  "name": "edges",
+                  "description": null,
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "FacetConfigurationEdge" }
+                  }
+                },
+                {
+                  "name": "pageInfo",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "FacetConfigurationPageInfo" }
+                  }
+                },
+                {
+                  "name": "totalCount",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "Int" }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "searchDocuments",
+            "description": null,
+            "type": {
+              "name": "DocumentConnection",
+              "description": "Connection for DocumentConnection.",
+              "fields": [
+                {
+                  "name": "collection",
+                  "description": null,
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "Document" }
+                  }
+                },
+                {
+                  "name": "paginationInfo",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "DocumentPaginationInfo" }
+                  }
+                },
+                {
+                  "name": "aggregations",
+                  "description": null,
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "Aggregation" }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "category",
+            "description": null,
+            "type": {
+              "name": "Category",
+              "description": null,
+              "fields": [
+                {
+                  "name": "id",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "ID" }
+                  }
+                },
+                {
+                  "name": "_id",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "Int" }
+                  }
+                },
+                {
+                  "name": "name",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "String" }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "categories",
+            "description": null,
+            "type": {
+              "name": "CategoryConnection",
+              "description": "Connection for Category.",
+              "fields": [
+                {
+                  "name": "edges",
+                  "description": null,
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "CategoryEdge" }
+                  }
+                },
+                {
+                  "name": "pageInfo",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "CategoryPageInfo" }
+                  }
+                },
+                {
+                  "name": "totalCount",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "Int" }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "searchProducts",
+            "description": null,
+            "type": {
+              "name": "ProductConnection",
+              "description": "Connection for Product.",
+              "fields": [
+                {
+                  "name": "collection",
+                  "description": null,
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "Product" }
+                  }
+                },
+                {
+                  "name": "paginationInfo",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "ProductPaginationInfo" }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "exampleDocument",
+            "description": null,
+            "type": {
+              "name": "ExampleDocument",
+              "description": null,
+              "fields": [
+                {
+                  "name": "id",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "ID" }
+                  }
+                },
+                {
+                  "name": "indexName",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "String" }
+                  }
+                },
+                {
+                  "name": "documents",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "Iterable" }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "exampleDocuments",
+            "description": null,
+            "type": { "name": null, "description": null, "fields": null }
+          },
+          {
+            "name": "exampleProduct",
+            "description": null,
+            "type": {
+              "name": "ExampleProduct",
+              "description": null,
+              "fields": [
+                {
+                  "name": "id",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "ID" }
+                  }
+                },
+                {
+                  "name": "entity_id",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "String" }
+                  }
+                },
+                {
+                  "name": "description",
+                  "description": "description",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "Iterable" }
+                  }
+                },
+                {
+                  "name": "type_id",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "String" }
+                  }
+                },
+                {
+                  "name": "created_at",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "String" }
+                  }
+                },
+                {
+                  "name": "updated_at",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "String" }
+                  }
+                },
+                {
+                  "name": "name",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "description": "The `String` scalar type represents textual data, represented as UTF-8\ncharacter sequences. The String type is most often used by GraphQL to\nrepresent free-form human-readable text.",
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "price",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "description": "The `String` scalar type represents textual data, represented as UTF-8\ncharacter sequences. The String type is most often used by GraphQL to\nrepresent free-form human-readable text.",
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": null
+                  }
+                },
+                {
+                  "name": "brand",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "description": "The `String` scalar type represents textual data, represented as UTF-8\ncharacter sequences. The String type is most often used by GraphQL to\nrepresent free-form human-readable text.",
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "exampleProducts",
+            "description": null,
+            "type": {
+              "name": "ExampleProductConnection",
+              "description": "Connection for ExampleProduct.",
+              "fields": [
+                {
+                  "name": "edges",
+                  "description": null,
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "ExampleProductEdge" }
+                  }
+                },
+                {
+                  "name": "pageInfo",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "ExampleProductPageInfo" }
+                  }
+                },
+                {
+                  "name": "totalCount",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "Int" }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "exampleCategory",
+            "description": null,
+            "type": {
+              "name": "ExampleCategory",
+              "description": null,
+              "fields": [
+                {
+                  "name": "id",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "ID" }
+                  }
+                },
+                {
+                  "name": "_id",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "Int" }
+                  }
+                },
+                {
+                  "name": "name",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "String" }
+                  }
+                },
+                {
+                  "name": "description",
+                  "description": null,
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "description": "The `String` scalar type represents textual data, represented as UTF-8\ncharacter sequences. The String type is most often used by GraphQL to\nrepresent free-form human-readable text.",
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": null
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "exampleCategories",
+            "description": null,
+            "type": {
+              "name": "ExampleCategoryConnection",
+              "description": "Connection for ExampleCategory.",
+              "fields": [
+                {
+                  "name": "edges",
+                  "description": null,
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "ExampleCategoryEdge" }
+                  }
+                },
+                {
+                  "name": "pageInfo",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "ExampleCategoryPageInfo" }
+                  }
+                },
+                {
+                  "name": "totalCount",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "Int" }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "exampleIndex",
+            "description": null,
+            "type": {
+              "name": "ExampleIndex",
+              "description": null,
+              "fields": [
+                {
+                  "name": "id",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "ID" }
+                  }
+                },
+                {
+                  "name": "name",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "String" }
+                  }
+                },
+                {
+                  "name": "health",
+                  "description": "health",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "String" }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "exampleIndices",
+            "description": null,
+            "type": { "name": null, "description": null, "fields": null }
+          },
+          {
+            "name": "searchExampleResultDocuments",
+            "description": null,
+            "type": {
+              "name": "ExampleResultDocumentConnection",
+              "description": "Connection for ExampleResultDocument.",
+              "fields": [
+                {
+                  "name": "collection",
+                  "description": null,
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "ExampleResultDocument" }
+                  }
+                },
+                {
+                  "name": "paginationInfo",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "ExampleResultDocumentPaginationInfo" }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "declarativeGreeting",
+            "description": null,
+            "type": {
+              "name": "DeclarativeGreeting",
+              "description": "Description of declarative greetings (description)",
+              "fields": [
+                {
+                  "name": "id",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "ID" }
+                  }
+                },
+                {
+                  "name": "_id",
+                  "description": "The entity ID.",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "Int" }
+                  }
+                },
+                {
+                  "name": "name",
+                  "description": "A nice person.",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "String" }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "declarativeGreetings",
+            "description": null,
+            "type": {
+              "name": "DeclarativeGreetingConnection",
+              "description": "Connection for DeclarativeGreeting.",
+              "fields": [
+                {
+                  "name": "edges",
+                  "description": null,
+                  "type": {
+                    "kind": "LIST",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "DeclarativeGreetingEdge" }
+                  }
+                },
+                {
+                  "name": "pageInfo",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "DeclarativeGreetingPageInfo" }
+                  }
+                },
+                {
+                  "name": "totalCount",
+                  "description": null,
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "description": null,
+                    "fields": null,
+                    "interfaces": null,
+                    "possibleTypes": null,
+                    "enumValues": null,
+                    "inputFields": null,
+                    "ofType": { "name": "Int" }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  }
+}
