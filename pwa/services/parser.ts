@@ -201,7 +201,7 @@ export function simplifyJsonldObject(
   )
 }
 
-export async function parseDocs(apiUrl: string): Promise<IApi> {
+export async function parseSchema(apiUrl: string): Promise<IApi> {
   const [{ docs, entrypoint }, graphqlFields] = await Promise.all([
     fetchDocs(apiUrl),
     fetchGraphqlDoc(apiUrl),
@@ -223,7 +223,14 @@ export async function parseDocs(apiUrl: string): Promise<IApi> {
           const resource = simplifyJsonldObject(
             relatedClass as unknown as Record<string, unknown>
           ) as Omit<IResource, 'url'>
-          acc.push({ ...resource, url: entrypoint[property['@id']][0]['@id'] })
+          const [entrypointUrl] = entrypoint[property['@id']]
+          acc.push({
+            ...resource,
+            url:
+              typeof entrypointUrl === 'string'
+                ? entrypointUrl
+                : entrypointUrl['@id'],
+          })
         }
       }
       return acc
