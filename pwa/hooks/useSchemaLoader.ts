@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { getApiUrl, parseDocs } from '~/services'
+import { getApiUrl, parseSchema } from '~/services'
 import { IApi, IFetch, LoadStatus } from '~/types'
 
 export function useSchemaLoader(): IFetch<IApi> {
@@ -11,7 +11,7 @@ export function useSchemaLoader(): IFetch<IApi> {
   useEffect(() => {
     if (api.status === LoadStatus.IDLE) {
       setApi({ status: LoadStatus.LOADING })
-      parseDocs(getApiUrl())
+      parseSchema(getApiUrl())
         .then((api) => setApi({ status: LoadStatus.SUCCEEDED, data: api }))
         .catch((error) => setApi({ error, status: LoadStatus.FAILED }))
     }
