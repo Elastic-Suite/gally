@@ -3,8 +3,6 @@ import { renderHookWithProviders } from '~/utils/tests'
 
 import { useApiHeaders } from './useApiHeaders'
 
-jest.mock('react-i18next')
-
 describe('useApiHeaders', () => {
   it('should return the headers from a resource', () => {
     const { result } = renderHookWithProviders(() =>
