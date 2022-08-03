@@ -163,8 +163,6 @@ function Tree({ data, selectedItem, onSelect }: IProps): JSX.Element {
     Record<string, boolean>
   >({})
 
-  console.log(selectedItem)
-
   return (
     <CustomRoot>
       {data.map((item: ITreeItem) => {
