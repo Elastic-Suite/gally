@@ -58,7 +58,7 @@ interface IProps {
   childrenState: Record<string, boolean>
   menu: IMenu
   menuItemActive: string
-  onChildToggle: (code: string, childState: boolean) => void
+  onChildToggle?: (code: string, childState: boolean) => void
   sidebarState?: boolean
   sidebarStateTimeout?: boolean
 }

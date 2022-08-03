@@ -11,9 +11,6 @@ describe('PopIn match snapshot', () => {
         cancelName="Cancel"
         confirmName="Confirm"
         titlePopIn="Hello World"
-        onConfirm={(): void => {
-          Math.floor(1)
-        }}
       />
     )
     expect(container).toMatchSnapshot()
