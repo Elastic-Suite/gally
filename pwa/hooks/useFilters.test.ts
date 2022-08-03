@@ -10,8 +10,6 @@ import {
   useSearch,
 } from './useFilters'
 
-jest.mock('next/router')
-
 describe('useFilters', () => {
   describe('useFiltersRedirect', () => {
     it('should not redirect if there is no need to redirect', () => {

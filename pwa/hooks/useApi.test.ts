@@ -4,7 +4,6 @@ import { renderHookWithProviders } from '~/utils/tests'
 
 import { useApiDispatch, useApiFetch, useApiList } from './useApi'
 
-jest.mock('react-i18next')
 jest.mock('~/services/api')
 
 describe('useApi', () => {

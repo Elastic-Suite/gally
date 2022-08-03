@@ -5,8 +5,6 @@ import { renderHookWithProviders } from '~/utils/tests'
 
 import { useTabs } from './useTabs'
 
-jest.mock('next/router')
-
 const routerTabs: IRouterTab[] = [
   {
     Component: () => <>Content 1</>,

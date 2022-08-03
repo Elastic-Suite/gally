@@ -6,7 +6,6 @@ import { renderHookWithProviders } from '~/utils/tests'
 
 import { useApiFilters } from './useApiFilters'
 
-jest.mock('react-i18next')
 jest.mock('~/services/api')
 
 describe('useApiFilters', () => {
