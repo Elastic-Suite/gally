@@ -8,19 +8,6 @@ describe('Tag match snapshot', () => {
     expect(container).toMatchSnapshot()
   })
 
-  it('TagOnIconClick', () => {
-    const { container } = renderWithProviders(
-      <Tag
-        onIconClick={(): void => {
-          Math.floor(1)
-        }}
-      >
-        Hello world
-      </Tag>
-    )
-    expect(container).toMatchSnapshot()
-  })
-
   it('TagColor', () => {
     const { container } = renderWithProviders(
       <Tag color="red">Hello world</Tag>

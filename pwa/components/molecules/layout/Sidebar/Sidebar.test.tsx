@@ -13,9 +13,6 @@ describe('SideBar match snapshot', () => {
         sidebarState
         sidebarStateTimeout={false}
         childrenState={{}}
-        onChildToggle={(): void => {
-          Math.floor(1)
-        }}
       />
     )
     expect(container).toMatchSnapshot()
@@ -29,9 +26,6 @@ describe('SideBar match snapshot', () => {
         sidebarState={false}
         sidebarStateTimeout={false}
         childrenState={{}}
-        onChildToggle={(): void => {
-          Math.floor(1)
-        }}
       />
     )
     expect(container).toMatchSnapshot()
