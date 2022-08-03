@@ -3,6 +3,7 @@ export interface IOption {
   id?: string | number
   label: string
   value: unknown
+  default?: boolean
 }
 
 export type IOptions = IOption[]
