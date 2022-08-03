@@ -1,7 +1,7 @@
 import Tree from '~/components/atoms/tree/Tree'
 import { ICategoriesFields, ITreeItem } from '~/types/categories'
 import { useApiList, useResource } from '~/hooks'
-import catcat from '../../../public/mocks/categories.json' // DATA MOCK
+import { IHydraResponse } from '~/types'
 
 interface IProps {
   selectedItem: ITreeItem
@@ -11,15 +11,17 @@ interface IProps {
 function CategoryTree({ selectedItem, onSelect }: IProps): JSX.Element {
   const resourceName = 'categories'
   const resource = useResource(resourceName)
-  const [categoriesFields] = useApiList<ICategoriesFields>(resource, false)
+  const [categoriesFields] = useApiList<IHydraResponse<ICategoriesFields>>(
+    resource,
+    false
+  )
 
   return (
     categoriesFields.status === 3 && (
       <Tree
         selectedItem={selectedItem}
         onSelect={onSelect}
-        // data={categoriesFields.data['hydra:member']} // DATA from API
-        data={catcat.data.categoryTrees} // DATA from MOCKS
+        data={categoriesFields.data['hydra:member']}
       />
     )
   )
