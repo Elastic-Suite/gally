@@ -154,11 +154,17 @@ const CustomTitleContainer = styled('div')({
 
 interface IProps {
   data: ITreeItem[]
+  base?: boolean
   selectedItem?: ITreeItem
   onSelect?: (item: ITreeItem) => void
 }
 
-function Tree({ data, selectedItem, onSelect }: IProps): JSX.Element {
+function Tree({
+  data,
+  base = true,
+  selectedItem,
+  onSelect,
+}: IProps): JSX.Element {
   const [displayChildren, setDisplayChildren] = useState<
     Record<string, boolean>
   >({})
@@ -166,16 +172,13 @@ function Tree({ data, selectedItem, onSelect }: IProps): JSX.Element {
   return (
     <CustomRoot>
       {data.map((item: ITreeItem) => {
-        const Title = item.categories
-          ? selectedItem?.catalogCode !== item.catalogCode
-            ? CustomTitleBase
-            : CustomTitleBaseSelected
-          : selectedItem?.id !== item.id
-          ? CustomTitle
-          : CustomTitleSelected
+        const selected = base ? CustomTitleBaseSelected : CustomTitleSelected
+        const unselected = base ? CustomTitleBase : CustomTitle
+        const Title = selectedItem?.id === item.id ? selected : unselected
+
         return (
           <CustomLi
-            style={{ marginLeft: item.categories ? 0 : 20 }}
+            style={{ marginLeft: base ? 0 : 20 }}
             key={item.catalogCode ? item.catalogCode : item.id}
           >
             <CustomContainer
@@ -188,22 +191,11 @@ function Tree({ data, selectedItem, onSelect }: IProps): JSX.Element {
                   onClick={(): void => {
                     setDisplayChildren({
                       ...displayChildren,
-                      [item.catalogCode ? item.catalogCode : item.id]:
-                        !displayChildren[
-                          item.catalogCode ? item.catalogCode : item.id
-                        ],
+                      [item.id]: !displayChildren[item.id],
                     })
                   }}
                 >
-                  <IonIcon
-                    name={
-                      displayChildren[
-                        item.catalogCode ? item.catalogCode : item.id
-                      ]
-                        ? 'minus'
-                        : 'more'
-                    }
-                  />
+                  <IonIcon name={displayChildren[item.id] ? 'minus' : 'more'} />
                 </CustomBtn>
               ) : null}
               <CustomTitleContainer>
@@ -217,12 +209,12 @@ function Tree({ data, selectedItem, onSelect }: IProps): JSX.Element {
                 {item.isVirtual ? <CustomVirtual>virtual</CustomVirtual> : null}
               </CustomTitleContainer>
             </CustomContainer>
-            {displayChildren[item.catalogCode ? item.catalogCode : item.id] &&
-            (item.children || item.categories) ? (
+            {displayChildren[item.id] && (item.children || item.categories) ? (
               <Tree
                 data={item.categories ? item.categories : item.children}
                 selectedItem={selectedItem}
                 onSelect={onSelect}
+                base={false}
               />
             ) : null}
           </CustomLi>

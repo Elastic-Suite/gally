@@ -53,11 +53,11 @@ export interface IJsonldContext {
 }
 
 export interface IJsonldType {
-  '@type'?: string | string[]
+  '@type': string | string[]
 }
 
 export interface IJsonldId {
-  '@id'?: string
+  '@id': string
 }
 
 export interface IJsonldBase extends IJsonldType, IJsonldId {}
@@ -111,7 +111,7 @@ export interface IHydraSupportedClass extends IJsonldBase {
 }
 
 export interface IHydraMember extends IJsonldType, IJsonldId {
-  id: number
+  id: number | string
 }
 
 export interface IHydraMapping extends IJsonldType {
