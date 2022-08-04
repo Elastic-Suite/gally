@@ -9,7 +9,11 @@ describe('Tag match snapshot', () => {
 
   it('TagOnIconClick', () => {
     const { container } = renderWithProviders(
-      <Tag onIconClick={(): void => console.log('Hello world')}>
+      <Tag
+        onIconClick={(): void => {
+          Math.floor(1)
+        }}
+      >
         Hello world
       </Tag>
     )
