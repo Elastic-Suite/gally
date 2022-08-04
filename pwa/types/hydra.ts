@@ -111,7 +111,7 @@ export interface IHydraSupportedClass extends IJsonldBase {
 }
 
 export interface IHydraMember extends IJsonldType, IJsonldId {
-  id: number
+  id: number | string
 }
 
 export interface IHydraMapping extends IJsonldType {
