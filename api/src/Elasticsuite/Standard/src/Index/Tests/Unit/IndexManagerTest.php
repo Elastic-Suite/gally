@@ -79,13 +79,17 @@ class IndexManagerTest extends AbstractTest
                                     'type' => 'text',
                                     'analyzer' => 'shingle',
                                 ],
+                                'standard' => [
+                                    'type' => 'text',
+                                    'analyzer' => 'standard',
+                                ],
                             ],
-                            'analyzer' => 'standard',
+                            'analyzer' => 'keyword',
                             'copy_to' => ['search'],
                         ],
                         'brand' => [
-                            'type' => 'keyword',
-                            'ignore_above' => 256,
+                            'type' => 'text',
+                            'analyzer' => 'keyword',
                         ],
                         'search' => [
                             'type' => 'text',
@@ -128,13 +132,19 @@ class IndexManagerTest extends AbstractTest
                     'properties' => [
                         'id' => ['type' => 'integer'],
                         'name' => [
-                            'type' => 'keyword',
-                            'ignore_above' => 256,
+                            'type' => 'text',
+                            'analyzer' => 'keyword',
                         ],
                         'description' => [
                             'type' => 'text',
-                            'analyzer' => 'standard',
+                            'analyzer' => 'keyword',
                             'copy_to' => ['search', 'spelling'],
+                            'fields' => [
+                                'standard' => [
+                                    'type' => 'text',
+                                    'analyzer' => 'standard',
+                                ],
+                            ],
                         ],
                         'search' => [
                             'type' => 'text',
