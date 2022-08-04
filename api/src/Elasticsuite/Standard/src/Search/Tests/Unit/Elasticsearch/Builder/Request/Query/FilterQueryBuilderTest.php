@@ -111,23 +111,19 @@ class FilterQueryBuilderTest extends KernelTestCase
         }
     }
 
-//    Todo Analyzer & Fulltext search
-//
-//    /**
-//     * Test fulltext query conditions.
-//     *
-//     * @return void
-//     */
-//    public function testFulltextQueryFilter()
-//    {
-//        $query = $this->buildQuery(['simpleTextField' => ['like' => 'fulltext']]);
-//        $this->assertInstanceOf(QueryInterface::class, $query);
-//        $this->assertEquals(QueryInterface::TYPE_TERMS, $query->getType());
-//
-//        $query = $this->buildQuery(['analyzedField' => ['like' => 'fulltext']]);
-//        $this->assertInstanceOf(QueryInterface::class, $query);
-//        $this->assertEquals(QueryInterface::TYPE_MATCH, $query->getType());
-//    }
+    /**
+     * Test fulltext query conditions.
+     */
+    public function testFulltextQueryFilter(): void
+    {
+        $query = $this->buildQuery(['simpleTextField' => ['like' => 'fulltext']]);
+        $this->assertInstanceOf(QueryInterface::class, $query);
+        $this->assertEquals(QueryInterface::TYPE_TERMS, $query->getType());
+
+        $query = $this->buildQuery(['analyzedField' => ['like' => 'fulltext']]);
+        $this->assertInstanceOf(QueryInterface::class, $query);
+        $this->assertEquals(QueryInterface::TYPE_MATCH, $query->getType());
+    }
 
     /**
      * Test using a raw query as condition.

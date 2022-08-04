@@ -139,9 +139,7 @@ class FilterQueryBuilderTest extends KernelTestCase
 
     /**
      * Test fulltext query conditions.
-     * NOTE: will not work as long as analyzers are not properly introduced.
      */
-    /*
     public function testFulltextQueryFilter(): void
     {
         $query = $this->buildQuery(['simpleTextField' => ['like' => 'fulltext']]);
@@ -152,7 +150,6 @@ class FilterQueryBuilderTest extends KernelTestCase
         $this->assertInstanceOf(QueryInterface::class, $query);
         $this->assertEquals(QueryInterface::TYPE_MATCH, $query->getType());
     }
-    */
 
     /**
      * Test using a raw query as condition.
