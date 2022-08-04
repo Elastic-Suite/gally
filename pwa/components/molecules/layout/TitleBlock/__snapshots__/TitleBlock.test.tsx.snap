@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TitleBlock match snapshot PageTitle simple 1`] = `
+<div>
+  <div
+    class="css-1sl3yy7"
+  >
+    Hello World
+  </div>
+  <div
+    class="css-1fhr9tz"
+  >
+    Hello
+  </div>
+</div>
+`;
+
+exports[`TitleBlock match snapshot PageTitle with Composant on Children 1`] = `
+<div>
+  <div
+    class="css-1sl3yy7"
+  >
+    Hello World
+  </div>
+  <div
+    class="css-1fhr9tz"
+  >
+    <button
+      class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root css-13u4ebv-MuiButtonBase-root-MuiButton-root"
+      tabindex="0"
+      type="button"
+    >
+      
+      Hello world
+      
+      <span
+        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+      />
+    </button>
+  </div>
+</div>
+`;

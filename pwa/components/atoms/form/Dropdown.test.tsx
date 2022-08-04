@@ -80,7 +80,9 @@ describe('DropDown match snapshot', () => {
   it('BadgeMultiple', () => {
     const { container } = renderWithProviders(
       <DropDown
-        onChange={(): void => console.log('Hello world')}
+        onChange={(): void => {
+          Math.floor(1)
+        }}
         value={[]}
         multiple
         disabled={false}

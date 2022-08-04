@@ -33,7 +33,7 @@ const CustomTitle = styled('div')(({ theme }) => ({
 }))
 
 interface IProps {
-  onConfirm: () => void
+  onConfirm?: () => void
   title: ReactChild
   cancelName: string
   confirmName: string
@@ -59,7 +59,7 @@ function PopIn({
 
   function handleConfirm(): void {
     setOpen(false)
-    onConfirm()
+    typeof onConfirm === 'function' && onConfirm()
   }
 
   return (

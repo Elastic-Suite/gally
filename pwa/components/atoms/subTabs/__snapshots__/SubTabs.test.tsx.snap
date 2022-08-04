@@ -1,0 +1,97 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SubTabs match snapshot SubTabs defaultActive 0 1`] = `
+<div>
+  <div
+    class="css-13t3iqc"
+  >
+    <div
+      class="css-jve40n"
+    >
+      <button
+        class="css-1btl3ot"
+      >
+        Hello One
+      </button>
+      <button
+        class="css-9univ4"
+      >
+        Hello Two
+      </button>
+    </div>
+    <div
+      style="width: 100%; display: block;"
+    >
+      <div
+        style="position: relative;"
+      >
+        <div
+          class="MuiBox-root css-0"
+        >
+          <button
+            class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root css-13u4ebv-MuiButtonBase-root-MuiButton-root"
+            tabindex="0"
+            type="button"
+          >
+            Hello One
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+            />
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      style="width: 100%; display: none;"
+    />
+  </div>
+</div>
+`;
+
+exports[`SubTabs match snapshot SubTabs defaultActive 1 1`] = `
+<div>
+  <div
+    class="css-13t3iqc"
+  >
+    <div
+      class="css-jve40n"
+    >
+      <button
+        class="css-9univ4"
+      >
+        Hello One
+      </button>
+      <button
+        class="css-1btl3ot"
+      >
+        Hello Two
+      </button>
+    </div>
+    <div
+      style="width: 100%; display: none;"
+    />
+    <div
+      style="width: 100%; display: block;"
+    >
+      <div
+        style="position: relative;"
+      >
+        <div
+          class="MuiBox-root css-0"
+        >
+          <button
+            class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root css-13u4ebv-MuiButtonBase-root-MuiButton-root"
+            tabindex="0"
+            type="button"
+          >
+            Hello Two
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+            />
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
