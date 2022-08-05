@@ -1,0 +1,9 @@
+{
+  "category.required": "* Champ requis",
+  "category.name": "Utiliser le nom de la catégorie dans la recherche de produits",
+  "category.name.tooltip": "Utiliser le nom de la catégorie dans la recherche de produits",
+  "category.virtual": "Catégorie virtuelle",
+  "category.virtual.tooltip": "Catégorie virtuelle",
+  "category.select": "Sélectionnez",
+  "category.select.tooltip": "Si le nom de la catégorie est utilisé pour la recherche plein texte sur les produits"
+}

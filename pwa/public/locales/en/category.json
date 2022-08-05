@@ -1,0 +1,9 @@
+{
+  "category.required": "* Required field",
+  "category.name": "Use category name in product search",
+  "category.name.tooltip": "Use category name in product search",
+  "category.virtual": "Virtual category",
+  "category.virtual.tooltip": "Virtual category",
+  "category.select": "Select",
+  "category.select.tooltip": "If the category name is used for fulltext search on products"
+}

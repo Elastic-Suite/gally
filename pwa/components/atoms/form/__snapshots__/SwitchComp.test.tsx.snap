@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SwitchComp match snapshot BadgeDisabledFalse 1`] = `
+<div>
+  <div
+    class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-1vpwcmr-MuiGrid-root"
+  >
+    <div
+      class="MuiBox-root css-3brtf5"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container css-1e2bu2o-MuiGrid-root"
+      >
+        label
+        <span
+          aria-label="labelInfo"
+          class=""
+          data-mui-internal-clone-element="true"
+          style="display: inline-block; padding-left: 10px; margin-bottom: -5px;"
+        >
+          <ion-icon
+            name="information-circle-outline"
+            style="color: rgb(129, 135, 185); width: 20px; height: 20px; display: flex;"
+          />
+        </span>
+      </div>
+    </div>
+    <div
+      style="margin-left: -12px;"
+    >
+      <span
+        class="MuiSwitch-root MuiSwitch-sizeMedium css-tnsvld-MuiSwitch-root"
+      >
+        <span
+          class="MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-checked MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-checked PrivateSwitchBase-root Mui-checked css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
+        >
+          <input
+            aria-label="secondary checkbox"
+            checked=""
+            class="MuiSwitch-input PrivateSwitchBase-input css-1m9pwf3"
+            name="checkedA"
+            type="checkbox"
+          />
+          <span
+            class="MuiSwitch-thumb css-epwt2k-MuiSwitch-thumb"
+          />
+          <span
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+          />
+        </span>
+        <span
+          class="MuiSwitch-track css-1mr4grv-MuiSwitch-track"
+        />
+      </span>
+    </div>
+  </div>
+</div>
+`;
