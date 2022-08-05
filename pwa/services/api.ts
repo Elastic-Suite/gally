@@ -64,7 +64,7 @@ export async function fetchApi<T>(
     ...options,
     headers: {
       ...options.headers,
-      'Accept-Language': language,
+      'Elasticsuite-Language': language,
     },
   })
   return json
