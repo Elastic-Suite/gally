@@ -55,6 +55,10 @@ function SettingsAttributes(props: ITabContentProps): JSX.Element {
     setPage(page)
   }
 
+  function handleRowChange(row: any): void {
+    console.log(row)
+  }
+
   return (
     <>
       <FiltersGuesser
@@ -69,6 +73,7 @@ function SettingsAttributes(props: ITabContentProps): JSX.Element {
         apiData={sourceFields.data}
         currentPage={page}
         onPageChange={handlePageChange}
+        onRowUpdate={handleRowChange}
         resource={resource}
       />
     </>
