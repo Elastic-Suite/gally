@@ -15,6 +15,7 @@ Elasticsuite\Catalog\Model\LocalizedCatalog:
             - Length:
                   min: 5
                   max: 5
+            - Locale: ~
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
               fields: [code, locale]
