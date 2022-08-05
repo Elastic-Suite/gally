@@ -1,8 +1,6 @@
-import { Resource } from '@api-platform/api-doc-parser'
-
 import { defaultPageSize } from '~/constants'
 import { useApiHeaders } from '~/hooks'
-import { IHydraMember, IHydraResponse, ITableRow } from '~/types'
+import { IHydraMember, IHydraResponse, IResource, ITableRow } from '~/types'
 
 import PagerTable from '~/components/organisms/PagerTable/PagerTable'
 
@@ -10,7 +8,7 @@ interface IProps<T extends IHydraMember> {
   apiData: IHydraResponse<T>
   currentPage?: number
   onPageChange: (page: number) => void
-  resource: Resource
+  resource: IResource
   rowsPerPage?: number
   rowsPerPageOptions?: number[]
 }

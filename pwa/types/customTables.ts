@@ -1,4 +1,4 @@
-import { IOptions } from '~/types'
+import { IOptions } from './option'
 
 export enum MassiveSelectionType {
   ALL = 'massiveselection.all',

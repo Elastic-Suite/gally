@@ -1,6 +1,8 @@
-import SubTabPanel from './SubTabPanel'
-import { renderWithProviders } from '~/services'
+import { renderWithProviders } from '~/utils/tests'
+
 import PrimaryButton from '../buttons/PrimaryButton'
+
+import SubTabPanel from './SubTabPanel'
 
 describe('SubTabPanel match snapshot', () => {
   it('SubTabPanel simple', () => {

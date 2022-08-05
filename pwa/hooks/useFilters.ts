@@ -1,5 +1,4 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
-import { Resource } from '@api-platform/api-doc-parser'
 import { useRouter } from 'next/router'
 
 import {
@@ -10,7 +9,7 @@ import {
   getRouterUrl,
   getSearchParameter,
 } from '~/services'
-import { ISearchParameters } from '~/types'
+import { IResource, ISearchParameters } from '~/types'
 
 export function useFiltersRedirect(
   page: number | false = 0,
@@ -41,7 +40,7 @@ export function usePage(): [number, Dispatch<SetStateAction<number>>] {
 }
 
 export function useFilters(
-  resource: Resource
+  resource: IResource
 ): [ISearchParameters, Dispatch<SetStateAction<ISearchParameters>>] {
   const router = useRouter()
   const [activeFilters, setActiveFilters] = useState<ISearchParameters>(() => {

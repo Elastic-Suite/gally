@@ -1,4 +1,5 @@
-import { renderWithProviders } from '~/services/tests'
+import { renderWithProviders } from '~/utils/tests'
+
 import MassiveSelection from './MassiveSelection'
 
 describe('MassiveSelection', () => {

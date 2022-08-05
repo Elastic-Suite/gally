@@ -1,6 +1,8 @@
-import TitleBlock from './TitleBlock'
-import { renderWithProviders } from '~/services'
+import { renderWithProviders } from '~/utils/tests'
+
 import PrimaryButton from '../../../atoms/buttons/PrimaryButton'
+
+import TitleBlock from './TitleBlock'
 
 describe('TitleBlock match snapshot', () => {
   it('PageTitle simple', () => {

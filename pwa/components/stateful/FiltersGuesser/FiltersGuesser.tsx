@@ -1,8 +1,7 @@
 import { useCallback, useState } from 'react'
-import { Resource } from '@api-platform/api-doc-parser'
 
 import { useApiFilters } from '~/hooks'
-import { IFilter, IHydraMember, IHydraResponse } from '~/types'
+import { IFilter, IHydraMember, IHydraResponse, IResource } from '~/types'
 
 import Filters from '~/components/molecules/Filters/Filters'
 
@@ -11,7 +10,7 @@ interface IProps<T extends IHydraMember> {
   apiData: IHydraResponse<T>
   onFilterChange: (values: Record<string, unknown>) => void
   onSearch: (value: string) => void
-  resource: Resource
+  resource: IResource
   searchValue: string
 }
 

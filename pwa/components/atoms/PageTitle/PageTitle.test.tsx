@@ -1,6 +1,8 @@
-import PageTitle from './PageTitle'
-import { renderWithProviders } from '~/services'
+import { renderWithProviders } from '~/utils/tests'
+
 import PrimaryButton from '../buttons/PrimaryButton'
+
+import PageTitle from './PageTitle'
 
 describe('PageTitle match snapshot', () => {
   it('PageTitle simple', () => {

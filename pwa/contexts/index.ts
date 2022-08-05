@@ -1,2 +1,2 @@
 export * from './breadcrumb'
-export * from './ressources'
+export * from './schema'

@@ -1,6 +1,8 @@
-import TwoColsLayout from './TwoColsLayout'
-import { renderWithProviders } from '~/services'
+import { renderWithProviders } from '~/utils/tests'
+
 import PrimaryButton from '../../../atoms/buttons/PrimaryButton'
+
+import TwoColsLayout from './TwoColsLayout'
 
 describe('TitleBlock match snapshot', () => {
   it('TwoColsLayout simple', () => {

@@ -1,5 +1,6 @@
+import { renderWithProviders } from '~/utils/tests'
+
 import InputText from './InputText'
-import { renderWithProviders } from '~/services'
 
 describe('InputText match snapshot', () => {
   it('BadgeDisabledFalse', () => {

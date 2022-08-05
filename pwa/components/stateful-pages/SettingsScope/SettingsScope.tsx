@@ -10,7 +10,7 @@ import ActiveLocales from '~/components/molecules/layout/scope/ActiveLocales'
 
 function SettingsScope(): JSX.Element {
   const { t } = useTranslation('catalog')
-  const resourceName = 'catalogs'
+  const resourceName = 'Catalog'
   const resource = useResource(resourceName)
   const [catalogsFields] = useApiList<IHydraResponse<ICatalog>>(resource, false)
 
@@ -38,6 +38,8 @@ function SettingsScope(): JSX.Element {
   const { id } = activeTab
 
   if (catalogsFields.error) {
+    // eslint-disable-next-line no-console
+    console.error(catalogsFields.error)
     return <pre>{JSON.stringify(catalogsFields.error, null, 2)}</pre>
   } else if (!catalogsFields.data) {
     return null
