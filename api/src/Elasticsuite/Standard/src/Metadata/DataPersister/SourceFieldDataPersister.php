@@ -59,7 +59,7 @@ class SourceFieldDataPersister implements DataPersisterInterface
     public function remove($data)
     {
         // Prevent user to delete system source fields
-        if ($data->isSystem()) {
+        if ($data->getIsSystem()) {
             throw new InvalidArgumentException('You can`t remove system source field');
         }
 
