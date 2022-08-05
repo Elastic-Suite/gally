@@ -1,15 +1,15 @@
 import { FunctionComponent, useEffect } from 'react'
+import { appWithTranslation, useTranslation } from 'next-i18next'
 import type { AppProps } from 'next/app'
 import dynamic from 'next/dynamic'
-import Head from 'next/head'
 import Script from 'next/script'
-import { appWithTranslation, useTranslation } from 'next-i18next'
+import Head from 'next/head'
 
-import SchemaLoader from '~/components/stateful/SchemaLoader/SchemaLoader'
 import nextI18nConfig from '~/next-i18next.config'
 import { setLanguage, setupStore } from '~/store'
 
 import 'assets/scss/style.scss'
+import AppProvider from '~/components/stateful-providers/AppProvider/AppProvider'
 
 /*
  * Resolve for "Prop className did not match" between Server side and Client side
@@ -42,12 +42,11 @@ function MyApp(props: AppProps): JSX.Element {
       <Head>
         <title>Blink Admin</title>
       </Head>
-
-      <SchemaLoader store={store}>
+      <AppProvider store={store}>
         <Layout>
           <Cmp {...pageProps} />
         </Layout>
-      </SchemaLoader>
+      </AppProvider>
       <Script
         type="module"
         src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js"

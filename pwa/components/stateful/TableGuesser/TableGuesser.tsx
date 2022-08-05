@@ -25,9 +25,6 @@ function TableGuesser<T extends IHydraMember>(props: IProps<T>): JSX.Element {
     rowsPerPageOptions,
   } = props
   const tableHeaders = useApiHeaders(resource)
-  console.log(resource)
-  // console.log(tableHeaders)
-  console.log(apiData)
 
   return (
     <PagerTable

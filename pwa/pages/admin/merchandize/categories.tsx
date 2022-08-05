@@ -4,6 +4,7 @@ import Head from 'next/head'
 import { useTranslation } from 'next-i18next'
 
 import { breadcrumbContext } from '~/contexts'
+import { withAuth } from '~/hocs'
 import { findBreadcrumbLabel } from '~/services'
 import { selectMenu, useAppSelector } from '~/store'
 import { ITreeItem } from '~/types'
@@ -64,4 +65,4 @@ function Categories(): JSX.Element {
   )
 }
 
-export default Categories
+export default withAuth(Categories)

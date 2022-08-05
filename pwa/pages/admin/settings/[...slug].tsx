@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import Head from 'next/head'
 
 import { breadcrumbContext } from '~/contexts'
+import { withAuth } from '~/hocs'
 import { useTabs } from '~/hooks'
 import { findBreadcrumbLabel } from '~/services'
 import { selectMenu, useAppSelector } from '~/store'
@@ -66,4 +67,4 @@ function Settings(): JSX.Element {
   )
 }
 
-export default Settings
+export default withAuth(Settings)
