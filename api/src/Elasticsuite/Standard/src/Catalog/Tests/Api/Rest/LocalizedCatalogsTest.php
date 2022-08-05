@@ -54,10 +54,11 @@ class LocalizedCatalogsTest extends AbstractEntityTest
             [$adminUser, ['catalog' => '/catalogs/1', 'locale' => 'en_US', 'name' => 'Missing Code'], 422, 'code: This value should not be blank.'],
             [$adminUser, ['catalog' => '/catalogs/1', 'code' => 'missing_locale'], 422, 'locale: This value should not be blank.'],
             [$adminUser, ['catalog' => '/catalogs/1', 'code' => 'cat_1_invalid', 'locale' => 'fr-fr'], 422, 'locale: This value is not valid.'],
-            [$adminUser, ['catalog' => '/catalogs/1', 'code' => 'cat_1_invalid', 'locale' => 'strin'], 422, 'locale: This value is not valid.'],
-            [$adminUser, ['catalog' => '/catalogs/1', 'code' => 'cat_1_invalid', 'locale' => 'too_long_locale'], 422, "locale: This value is not valid.\nlocale: This value should have exactly 5 characters."],
-            [$adminUser, ['catalog' => '/catalogs/1', 'code' => 'cat_1_invalid', 'locale' => 'a'], 422, "locale: This value is not valid.\nlocale: This value should have exactly 5 characters."],
-            [$adminUser, ['catalog' => '/catalogs/1', 'code' => 'cat_1_invalid', 'locale' => 'abc'], 422, "locale: This value is not valid.\nlocale: This value should have exactly 5 characters."],
+            [$adminUser, ['catalog' => '/catalogs/1', 'code' => 'cat_1_invalid', 'locale' => 'strin'], 422, "locale: This value is not valid.\nlocale: This value is not a valid locale."],
+            [$adminUser, ['catalog' => '/catalogs/1', 'code' => 'cat_1_invalid', 'locale' => 'too_long_locale'], 422, "locale: This value is not valid.\nlocale: This value should have exactly 5 characters.\nlocale: This value is not a valid locale."],
+            [$adminUser, ['catalog' => '/catalogs/1', 'code' => 'cat_1_invalid', 'locale' => 'a'], 422, "locale: This value is not valid.\nlocale: This value should have exactly 5 characters.\nlocale: This value is not a valid locale."],
+            [$adminUser, ['catalog' => '/catalogs/1', 'code' => 'cat_1_invalid', 'locale' => 'abc'], 422, "locale: This value is not valid.\nlocale: This value should have exactly 5 characters.\nlocale: This value is not a valid locale."],
+            [$adminUser, ['catalog' => '/catalogs/1', 'code' => 'cat_1_invalid', 'locale' => 'ep_EP'], 422, 'locale: This value is not a valid locale.'],
         ];
     }
 
