@@ -206,7 +206,7 @@ class SourceField
     }
 
     #[Groups(['source_field:api', 'facet_configuration:graphql_read'])]
-    public function isSearchable(): ?bool
+    public function getIsSearchable(): ?bool
     {
         return $this->isSearchable;
     }
@@ -220,7 +220,7 @@ class SourceField
     }
 
     #[Groups(['source_field:api', 'facet_configuration:graphql_read'])]
-    public function isFilterable(): ?bool
+    public function getIsFilterable(): ?bool
     {
         return $this->isFilterable;
     }
@@ -234,7 +234,7 @@ class SourceField
     }
 
     #[Groups(['source_field:api', 'facet_configuration:graphql_read'])]
-    public function isSortable(): ?bool
+    public function getIsSortable(): ?bool
     {
         return $this->isSortable;
     }
@@ -248,7 +248,7 @@ class SourceField
     }
 
     #[Groups(['source_field:api', 'facet_configuration:graphql_read'])]
-    public function isSpellchecked(): ?bool
+    public function getIsSpellchecked(): ?bool
     {
         return $this->isSpellchecked;
     }
@@ -262,7 +262,7 @@ class SourceField
     }
 
     #[Groups(['source_field:api', 'facet_configuration:graphql_read'])]
-    public function isUsedForRules(): ?bool
+    public function getIsUsedForRules(): ?bool
     {
         return $this->isUsedForRules;
     }
@@ -276,7 +276,7 @@ class SourceField
     }
 
     #[Groups(['source_field:api', 'facet_configuration:graphql_read'])]
-    public function isSystem(): bool
+    public function getIsSystem(): bool
     {
         return $this->isSystem;
     }

@@ -34,7 +34,7 @@ class FilterableFieldConstraintValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, FilterableFieldConstraint::class);
         }
 
-        if ($value && !$value->isFilterable()) {
+        if ($value && !$value->getIsFilterable()) {
             $this->context->buildViolation($constraint->message)
                 ->setParameter('{{ sourceFieldCode }}', $value->getCode())
                 ->addViolation();

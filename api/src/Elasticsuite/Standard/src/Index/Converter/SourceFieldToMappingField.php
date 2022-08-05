@@ -47,12 +47,12 @@ class SourceFieldToMappingField
         $path = \count($path) ? implode('.', $path) : null;
 
         $fieldConfig = [
-            'is_searchable' => $sourceField->isSearchable(),
-            'is_filterable' => $sourceField->isFilterable(),
+            'is_searchable' => $sourceField->getIsSearchable(),
+            'is_filterable' => $sourceField->getIsFilterable(),
             'search_weight' => $sourceField->getWeight(),
-            'is_used_for_sort_by' => $sourceField->isSortable(),
+            'is_used_for_sort_by' => $sourceField->getIsSortable(),
         ];
-        if ($sourceField->isSpellchecked()) {
+        if ($sourceField->getIsSpellchecked()) {
             $fieldConfig['is_used_in_spellcheck'] = true;
         }
 
