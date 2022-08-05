@@ -16,11 +16,11 @@ import { nonStickyStyle, selectionStyle, stickyStyle } from './Row.service'
 
 interface IProps {
   tableRow: ITableRow
-  updateRow: (row: ITableRow) => void
+  onRowUpdate?: (row: ITableRow) => void
   tableHeaders: ITableHeader[]
   withSelection: boolean
   selectedRows: (string | number)[]
-  setSelectedRows: (arr: (string | number)[]) => void
+  onSelectRows: (arr: (string | number)[]) => void
   cSSLeftValuesIterator: IterableIterator<[number, number]>
   isHorizontalOverflow: boolean
   shadow: boolean
@@ -29,10 +29,10 @@ interface IProps {
 function NonDraggableRow(props: IProps): JSX.Element {
   const {
     tableRow,
-    updateRow,
+    onRowUpdate,
     tableHeaders,
     selectedRows,
-    setSelectedRows,
+    onSelectRows,
     withSelection,
     cSSLeftValuesIterator,
     isHorizontalOverflow,
@@ -57,7 +57,7 @@ function NonDraggableRow(props: IProps): JSX.Element {
             data-testid="non-draggable-single-row-selection"
             checked={selectedRows ? selectedRows.includes(tableRow.id) : false}
             onChange={(value: ChangeEvent<HTMLInputElement>): void =>
-              handleSingleRow(value, tableRow.id, setSelectedRows, selectedRows)
+              handleSingleRow(value, tableRow.id, onSelectRows, selectedRows)
             }
           />
         </StickyTableCell>
@@ -77,7 +77,7 @@ function NonDraggableRow(props: IProps): JSX.Element {
             <EditableContent
               header={stickyHeader}
               row={tableRow}
-              onRowUpdate={updateRow}
+              onRowUpdate={onRowUpdate}
             />
           ) : null}
           {!stickyHeader.editable && (
@@ -92,7 +92,7 @@ function NonDraggableRow(props: IProps): JSX.Element {
             <EditableContent
               header={header}
               row={tableRow}
-              onRowUpdate={updateRow}
+              onRowUpdate={onRowUpdate}
             />
           ) : null}
           {!header.editable && (

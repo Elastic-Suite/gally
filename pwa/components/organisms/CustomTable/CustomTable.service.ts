@@ -22,10 +22,10 @@ export function manageStickyHeaders(
 export function handleSingleRow(
   e: ChangeEvent<HTMLInputElement>,
   rowId: string | number,
-  setSelectedRows: (arr: (string | number)[]) => void,
+  onSelectRows: (arr: (string | number)[]) => void,
   selectedRows: (string | number)[]
 ): void {
-  setSelectedRows(
+  onSelectRows(
     e.target.checked
       ? selectedRows.concat(rowId)
       : selectedRows.filter((value) => value !== rowId)

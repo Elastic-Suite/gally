@@ -36,7 +36,7 @@ export function getFieldHeader(field: IField, t: TFunction): ITableHeader {
     headerName:
       field.property.label ?? t(...getFieldLabelTranslationArgs(field.title)),
     type: getFieldDataContentType(field),
-    editable: false,
+    editable: true,
   }
 }
 
