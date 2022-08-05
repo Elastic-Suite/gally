@@ -59,7 +59,7 @@ class FacetConfigurationTest extends RestFacetConfigurationTest
         );
     }
 
-    protected function testGetCollection(?int $categoryId, array $items): void
+    protected function testGetCollection(?string $categoryId, array $items): void
     {
         $query = $categoryId ? "(category: \"/categories/$categoryId\")" : '';
         $this->validateApiCall(

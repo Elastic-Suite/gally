@@ -43,7 +43,7 @@ class FacetConfigurationTest extends AbstractTest
     /**
      * @dataProvider getCollectionBeforeDataProvider
      */
-    public function testGetCollectionBefore(?int $categoryId, array $elements): void
+    public function testGetCollectionBefore(?string $categoryId, array $elements): void
     {
         $this->testGetCollection($categoryId, $elements);
     }
@@ -60,19 +60,19 @@ class FacetConfigurationTest extends AbstractTest
                 ],
             ],
             [
-                1,
+                'one',
                 [
-                    ['sourceField' => 3, 'category' => 1],
-                    ['sourceField' => 4, 'category' => 1],
-                    ['sourceField' => 5, 'category' => 1],
+                    ['sourceField' => 3, 'category' => 'one'],
+                    ['sourceField' => 4, 'category' => 'one'],
+                    ['sourceField' => 5, 'category' => 'one'],
                 ],
             ],
             [
-                2,
+                'two',
                 [
-                    ['sourceField' => 3, 'category' => 2],
-                    ['sourceField' => 4, 'category' => 2],
-                    ['sourceField' => 5, 'category' => 2],
+                    ['sourceField' => 3, 'category' => 'two'],
+                    ['sourceField' => 4, 'category' => 'two'],
+                    ['sourceField' => 5, 'category' => 'two'],
                 ],
             ],
         ];
@@ -97,9 +97,9 @@ class FacetConfigurationTest extends AbstractTest
         return [
             [$this->getUser(Role::ROLE_CONTRIBUTOR), '3-0', ['coverageRate' => 0], 403],
             [$admin, '3-0', ['coverageRate' => 0], 200],
-            [$admin, '3-1', ['coverageRate' => 10], 200],
-            [$admin, '4-1', ['coverageRate' => 10], 200],
-            [$admin, '3-2', ['coverageRate' => 20], 200],
+            [$admin, '3-one', ['coverageRate' => 10], 200],
+            [$admin, '4-one', ['coverageRate' => 10], 200],
+            [$admin, '3-two', ['coverageRate' => 20], 200],
         ];
     }
 
@@ -107,7 +107,7 @@ class FacetConfigurationTest extends AbstractTest
      * @dataProvider getCollectionAfterDataProvider
      * @depends testUpdateValue
      */
-    public function testGetCollectionAfter(?int $categoryId, array $items): void
+    public function testGetCollectionAfter(?string $categoryId, array $items): void
     {
         $this->testGetCollection($categoryId, $items);
     }
@@ -124,25 +124,25 @@ class FacetConfigurationTest extends AbstractTest
                 ],
             ],
             [
-                1,
+                'one',
                 [
-                    ['sourceField' => 3, 'category' => 1, 'coverageRate' => 10, 'defaultCoverageRate' => 0],
-                    ['sourceField' => 4, 'category' => 1, 'coverageRate' => 10],
-                    ['sourceField' => 5, 'category' => 1, 'coverageRate' => 90],
+                    ['sourceField' => 3, 'category' => 'one', 'coverageRate' => 10, 'defaultCoverageRate' => 0],
+                    ['sourceField' => 4, 'category' => 'one', 'coverageRate' => 10],
+                    ['sourceField' => 5, 'category' => 'one', 'coverageRate' => 90],
                 ],
             ],
             [
-                2,
+                'two',
                 [
-                    ['sourceField' => 3, 'category' => 2, 'coverageRate' => 20, 'defaultCoverageRate' => 0],
-                    ['sourceField' => 4, 'category' => 2, 'coverageRate' => 90],
-                    ['sourceField' => 5, 'category' => 2, 'coverageRate' => 90],
+                    ['sourceField' => 3, 'category' => 'two', 'coverageRate' => 20, 'defaultCoverageRate' => 0],
+                    ['sourceField' => 4, 'category' => 'two', 'coverageRate' => 90],
+                    ['sourceField' => 5, 'category' => 'two', 'coverageRate' => 90],
                 ],
             ],
         ];
     }
 
-    protected function testGetCollection(?int $categoryId, array $items): void
+    protected function testGetCollection(?string $categoryId, array $items): void
     {
         $query = $categoryId ? "category=$categoryId" : '';
         $this->validateApiCall(

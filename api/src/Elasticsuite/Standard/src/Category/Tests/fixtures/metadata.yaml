@@ -1,0 +1,5 @@
+Elasticsuite\Metadata\Model\Metadata:
+    category:
+        entity: category
+    cms:
+        entity: cms

@@ -21,7 +21,7 @@
             <unique-constraint columns="code,locale" name="unique_code_locale" />
         </unique-constraints>
 
-        <many-to-one field="catalog" target-entity="Elasticsuite\Catalog\Model\Catalog" inversed-by="localizedCatalogs">
+        <many-to-one field="catalog" target-entity="Elasticsuite\Catalog\Model\Catalog" inversed-by="localizedCatalogs" fetch="EAGER">
             <join-column name="catalog_id" referenced-column-name="id" nullable="false" on-delete="CASCADE" on-update="CASCADE"/>
         </many-to-one>
     </entity>

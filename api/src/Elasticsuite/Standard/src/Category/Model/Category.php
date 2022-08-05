@@ -17,33 +17,55 @@ declare(strict_types=1);
 namespace Elasticsuite\Category\Model;
 
 use ApiPlatform\Core\Annotation\ApiResource;
-use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ApiResource]
 class Category
 {
-    private int $id;
+    private string $id;
 
-    private string $name;
+    private ?string $parentId = null;
 
-    public function getId(): int
+    private int $level = 0;
+
+    private string $path = '';
+
+    public function getId(): string
     {
         return $this->id;
     }
 
-    public function setId(int $id): void
+    public function setId(string $id): void
     {
         $this->id = $id;
     }
 
-    #[Groups(['facet_configuration:graphql_read'])]
-    public function getName(): string
+    public function getParentId(): ?string
     {
-        return $this->name;
+        return $this->parentId;
     }
 
-    public function setName(string $name): void
+    public function setParentId(?string $parentId): void
     {
-        $this->name = $name;
+        $this->parentId = $parentId;
+    }
+
+    public function getLevel(): int
+    {
+        return $this->level;
+    }
+
+    public function setLevel(int $level): void
+    {
+        $this->level = $level;
+    }
+
+    public function getPath(): string
+    {
+        return $this->path;
+    }
+
+    public function setPath(string $path): void
+    {
+        $this->path = $path;
     }
 }
