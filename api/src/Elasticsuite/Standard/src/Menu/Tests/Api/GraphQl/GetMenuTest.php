@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Elasticsuite\Index\Tests\Api\GraphQl;
 
 use Elasticsuite\Index\Tests\Api\AbstractMenuTest;
+use Elasticsuite\Locale\EventSubscriber\LocaleSubscriber;
 use Elasticsuite\Standard\src\Test\ExpectedResponse;
 use Elasticsuite\Standard\src\Test\RequestGraphQlToTest;
 use Elasticsuite\User\Constant\Role;
@@ -39,7 +40,7 @@ class GetMenuTest extends AbstractMenuTest
                     }
                 GQL,
                 $this->getUser(Role::ROLE_CONTRIBUTOR),
-                ['Accept-Language' => $local]
+                [LocaleSubscriber::ELASTICSUITE_LANGUAGE_HEADER => $local]
             ),
             new ExpectedResponse(
                 200,

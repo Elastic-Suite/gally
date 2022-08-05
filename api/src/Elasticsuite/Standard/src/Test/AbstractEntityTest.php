@@ -19,6 +19,7 @@ namespace Elasticsuite\Standard\src\Test;
 use ApiPlatform\Core\Metadata\Resource\Factory\ResourceMetadataFactoryInterface;
 use ApiPlatform\Core\Metadata\Resource\ResourceMetadata;
 use ApiPlatform\Core\Operation\PathSegmentNameGeneratorInterface;
+use Elasticsuite\Locale\EventSubscriber\LocaleSubscriber;
 use Elasticsuite\User\Model\User;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
@@ -100,7 +101,7 @@ abstract class AbstractEntityTest extends AbstractTest
      */
     public function testGet(User $user, int|string $id, array $expectedData, int $responseCode, ?string $locale = null): void
     {
-        $headers = null !== $locale ? ['Accept-Language' => $locale] : [];
+        $headers = null !== $locale ? [LocaleSubscriber::ELASTICSUITE_LANGUAGE_HEADER => $locale] : [];
         $request = new RequestToTest('GET', "{$this->getApiPath()}/{$id}", $user, [], $headers);
         $expectedResponse = new ExpectedResponse(
             $responseCode,

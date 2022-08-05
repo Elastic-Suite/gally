@@ -1,0 +1,9 @@
+services:
+    Elasticsuite\Locale\EventSubscriber\LocaleSubscriber:
+        arguments:
+            - '%kernel.enabled_locales%'
+        tags:
+            - { name: kernel.event_subscriber }
+    Elasticsuite\Locale\EventSubscriber\ResponseSubscriber:
+        tags:
+            - { name: kernel.event_subscriber }
