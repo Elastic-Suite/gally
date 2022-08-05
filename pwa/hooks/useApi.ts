@@ -1,14 +1,13 @@
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react'
 import { ActionCreatorWithOptionalPayload } from '@reduxjs/toolkit'
-import { Resource } from '@api-platform/api-doc-parser'
 import { useTranslation } from 'next-i18next'
 
 import { fetchApi, getListApiParameters } from '~/services'
 import { useAppDispatch } from '~/store'
-import { IFetch, ISearchParameters, LoadStatus } from '~/types'
+import { IFetch, IResource, ISearchParameters, LoadStatus } from '~/types'
 
 export function useApiFetch<T>(
-  resource: Resource | string,
+  resource: IResource | string,
   searchParameters?: ISearchParameters,
   options?: RequestInit
 ): [IFetch<T>, Dispatch<SetStateAction<IFetch<T>>>] {
@@ -32,7 +31,7 @@ export function useApiFetch<T>(
 
 export function useApiDispatch<T>(
   action: ActionCreatorWithOptionalPayload<IFetch<T>>,
-  resource: Resource | string,
+  resource: IResource | string,
   searchParameters?: ISearchParameters,
   options?: RequestInit
 ): void {
@@ -50,7 +49,7 @@ export function useApiDispatch<T>(
 }
 
 export function useApiList<T>(
-  resource: Resource | string,
+  resource: IResource | string,
   page: number | false = 0,
   searchParameters?: ISearchParameters,
   searchValue?: string

@@ -1,15 +1,14 @@
 import { useMemo } from 'react'
 import { useTranslation } from 'next-i18next'
-import { Resource } from '@api-platform/api-doc-parser'
 
 import { getFieldHeader } from '~/services'
-import { ITableHeader } from '~/types'
+import { IResource, ITableHeader } from '~/types'
 
-export function useApiHeaders(resource: Resource): ITableHeader[] {
+export function useApiHeaders(resource: IResource): ITableHeader[] {
   const { t } = useTranslation('api')
   return useMemo(() => {
-    return resource.readableFields
-      .filter((field) => !field.reference)
+    return resource.supportedProperty
+      .filter((field) => field.property.showable)
       .map((field) => getFieldHeader(field, t))
   }, [resource, t])
 }

@@ -1,4 +1,14 @@
 import { Method } from './fetch'
+import {
+  IJsonldBase,
+  IJsonldBoolean,
+  IJsonldContext,
+  IJsonldId,
+  IJsonldNumber,
+  IJsonldRange,
+  IJsonldString,
+  IJsonldType,
+} from './jsonld'
 
 export enum HydraType {
   ARRAY = 'array',
@@ -48,20 +58,6 @@ export type HydraPropertyType =
   | IHydraPropertyTypeObject
   | IHydraPropertyTypeString
 
-export interface IJsonldContext {
-  '@context': string
-}
-
-export interface IJsonldType {
-  '@type': string | string[]
-}
-
-export interface IJsonldId {
-  '@id': string
-}
-
-export interface IJsonldBase extends IJsonldType, IJsonldId {}
-
 export interface IOwlEquivalentClass {
   'owl:onProperty': IJsonldId
   'owl:allValuesFrom': IJsonldId
@@ -88,6 +84,7 @@ export interface IHydraProperty extends IJsonldBase {
   range?: string
   'rdfs:label': string
   'rdfs:range'?: (IJsonldId | IRdfsRange)[]
+  showable?: boolean
 }
 
 export interface IHydraSupportedProperty extends IJsonldType {
@@ -110,7 +107,7 @@ export interface IHydraSupportedClass extends IJsonldBase {
   subClassOf?: string
 }
 
-export interface IHydraMember extends IJsonldType, IJsonldId {
+export interface IHydraMember extends IJsonldBase {
   id: number | string
 }
 
@@ -133,4 +130,38 @@ export interface IHydraResponse<Member extends IHydraMember>
   'hydra:member': Member[]
   'hydra:search'?: IHydraSearch
   'hydra:totalItems': number
+}
+
+export interface IExpandedHydraSupportedOperation extends IJsonldType {
+  'http://www.w3.org/2000/01/rdf-schema#label': [IJsonldString]
+  'http://www.w3.org/ns/hydra/core#expects'?: [IJsonldString]
+  'http://www.w3.org/ns/hydra/core#method': [IJsonldString]
+  'http://www.w3.org/ns/hydra/core#returns': [IJsonldId]
+  'http://www.w3.org/ns/hydra/core#title'?: [IJsonldString]
+}
+
+export interface IExpandedHydraProperty extends IJsonldBase {
+  'http://www.w3.org/2000/01/rdf-schema#domain': [IJsonldId]
+  'http://www.w3.org/2000/01/rdf-schema#label': [IJsonldString]
+  'http://www.w3.org/2000/01/rdf-schema#range':
+    | [IJsonldId]
+    | [IJsonldId, IJsonldRange]
+  'http://www.w3.org/2002/07/owl#maxCardinality'?: [IJsonldNumber]
+  'http://www.w3.org/ns/hydra/core#supportedOperation'?: IExpandedHydraSupportedOperation[]
+  'https://localhost/docs.jsonld#showable'?: [IJsonldBoolean]
+}
+
+export interface IExpandedHydraSupportedProperty extends IJsonldType {
+  'http://www.w3.org/ns/hydra/core#property': IExpandedHydraProperty[]
+  'http://www.w3.org/ns/hydra/core#readable': [IJsonldBoolean]
+  'http://www.w3.org/ns/hydra/core#required'?: [IJsonldBoolean]
+  'http://www.w3.org/ns/hydra/core#title': [IJsonldString]
+  'http://www.w3.org/ns/hydra/core#writeable': [IJsonldBoolean]
+}
+
+export interface IExpandedHydraSupportedClass extends IJsonldBase {
+  'http://www.w3.org/2000/01/rdf-schema#label'?: [IJsonldString]
+  'http://www.w3.org/ns/hydra/core#supportedOperation': IExpandedHydraSupportedOperation[]
+  'http://www.w3.org/ns/hydra/core#supportedProperty': IExpandedHydraSupportedProperty[]
+  'http://www.w3.org/ns/hydra/core#title': [IJsonldString]
 }

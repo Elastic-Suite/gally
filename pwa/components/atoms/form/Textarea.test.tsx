@@ -1,5 +1,6 @@
+import { renderWithProviders } from '~/utils/tests'
+
 import Textarea from './Textarea'
-import { renderWithProviders } from '~/services'
 
 describe('Textarea match snapshot', () => {
   it('TextareaAllFalse', () => {

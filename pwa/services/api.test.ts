@@ -2,10 +2,16 @@ import fetchMock from 'fetch-mock-jest'
 
 import { resource } from '~/mocks'
 
-import { fetchApi, getApiUrl, removeEmptyParameters } from './api'
+import {
+  fetchApi,
+  fetchJson,
+  getApiUrl,
+  normalizeUrl,
+  removeEmptyParameters,
+} from './api'
 
 describe('Api service', () => {
-  describe('getApiUrl', () => {
+  describe('normalizeUrl', () => {
     const OLD_ENV = process.env
 
     beforeEach(() => {
@@ -17,6 +23,23 @@ describe('Api service', () => {
       process.env = OLD_ENV
     })
 
+    it('should do nothing if not on local environment', () => {
+      expect(normalizeUrl('/test')).toEqual('/test')
+      expect(normalizeUrl('http://localhost/test')).toEqual(
+        'http://localhost/test'
+      )
+    })
+
+    it('should return the mock URL', () => {
+      process.env.NEXT_PUBLIC_LOCAL = 'true'
+      expect(normalizeUrl('/test')).toEqual('/test')
+      expect(normalizeUrl('http://localhost/test')).toEqual(
+        'http://localhost/mocks/test.json'
+      )
+    })
+  })
+
+  describe('getApiUrl', () => {
     it('should return the api URL', () => {
       expect(getApiUrl('')).toEqual('http://localhost/')
       expect(getApiUrl('/test')).toEqual('http://localhost/test')
@@ -25,15 +48,16 @@ describe('Api service', () => {
         'http://localhost/test'
       )
     })
+  })
 
-    it('should return the mock URL', () => {
-      process.env.NEXT_PUBLIC_LOCAL = 'true'
-      expect(getApiUrl('')).toEqual('http://localhost/mocks/')
-      expect(getApiUrl('/test')).toEqual('http://localhost/mocks/test.json')
-      expect(getApiUrl('test')).toEqual('http://localhost/mocks/test.json')
-      expect(getApiUrl('http://localhost/test')).toEqual(
-        'http://localhost/test.json'
-      )
+  describe('fetchJson', () => {
+    it('should fetch requested url and returns json', async () => {
+      const url = 'http://localhost/test'
+      fetchMock.get(url, { hello: 'world' })
+      const response = await fetchJson('http://localhost/test')
+      expect(response).toMatchObject({ json: { hello: 'world' } })
+      expect(fetchMock.called(url)).toEqual(true)
+      fetchMock.restore()
     })
   })
 
@@ -48,7 +72,7 @@ describe('Api service', () => {
     })
 
     it('should fetch requested api from resource', async () => {
-      const url = 'http://localhost:3000/mocks/metadata'
+      const url = 'https://localhost/metadata'
       fetchMock.get(url, { hello: 'world' })
       const response = await fetchApi('en', resource)
       expect(response).toEqual({ hello: 'world' })

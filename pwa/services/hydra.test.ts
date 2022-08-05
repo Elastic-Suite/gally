@@ -4,64 +4,47 @@ import {
   fieldInteger,
   fieldRef,
   fieldString,
+  resource,
   resourceWithRef,
 } from '~/mocks'
 import metadata from '~/public/mocks/metadata.json'
 
 import {
   castFieldParameter,
-  getFieldNameFromFieldId,
+  getField,
+  getFieldName,
   getFieldType,
   getFilterParameters,
   getOptionsFromApi,
-  getReadableField,
-  getReadableFieldName,
+  getReferencedResource,
   getResource,
   isFieldValueValid,
+  isReferenceField,
 } from './hydra'
 
 describe('Hydra service', () => {
   describe('getResource', () => {
     it('Should return the resource', () => {
-      expect(getResource(api, 'source_fields')).toMatchObject({
-        name: 'source_fields',
-      })
+      expect(getResource(api, 'SourceField')).toEqual(resourceWithRef)
     })
   })
 
-  describe('getReadableFieldName', () => {
+  describe('getFieldName', () => {
     it('should return the field name', () => {
-      expect(getReadableFieldName('code')).toEqual('code')
-      expect(getReadableFieldName('isSearchable')).toEqual('searchable')
-      expect(getReadableFieldName('metadata[]')).toEqual('metadata')
+      expect(getFieldName('code')).toEqual('code')
+      expect(getFieldName('metadata[]')).toEqual('metadata')
     })
   })
 
-  describe('getFieldNameFromFieldId', () => {
-    it('should return the field name from id', () => {
-      expect(
-        getFieldNameFromFieldId(
-          'http://localhost:3000/mocks/docs.jsonld#SourceField/code'
-        )
-      ).toEqual('code')
-    })
-  })
-
-  describe('getReadableField', () => {
+  describe('getField', () => {
     it('Should return the field', () => {
-      expect(getReadableField(resourceWithRef, 'code')).toMatchObject(
-        fieldString
-      )
-      expect(getReadableField(resourceWithRef, 'searchable')).toMatchObject(
+      expect(getField(resourceWithRef, 'code')).toMatchObject(fieldString)
+      expect(getField(resourceWithRef, 'isFilterable')).toMatchObject(
         fieldBoolean
       )
-      expect(getReadableField(resourceWithRef, 'weight')).toMatchObject(
-        fieldInteger
-      )
-      expect(getReadableField(resourceWithRef, 'metadata')).toMatchObject(
-        fieldRef
-      )
-      expect(getReadableField(resourceWithRef, 'foo')).toEqual(undefined)
+      expect(getField(resourceWithRef, 'weight')).toMatchObject(fieldInteger)
+      expect(getField(resourceWithRef, 'metadata')).toMatchObject(fieldRef)
+      expect(getField(resourceWithRef, 'foo')).toEqual(undefined)
     })
   })
 
@@ -70,6 +53,19 @@ describe('Hydra service', () => {
       expect(getFieldType(fieldString)).toEqual('text')
       expect(getFieldType(fieldInteger)).toEqual('integer')
       expect(getFieldType(fieldBoolean)).toEqual('boolean')
+    })
+  })
+
+  describe('isReferenceField', () => {
+    it('Should check if given field is a reference', () => {
+      expect(isReferenceField(fieldString)).toEqual(false)
+      expect(isReferenceField(fieldRef)).toEqual(true)
+    })
+  })
+
+  describe('getReferencedResource', () => {
+    it('Should return the reference resource', () => {
+      expect(getReferencedResource(api, fieldRef)).toEqual(resource)
     })
   })
 

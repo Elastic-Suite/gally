@@ -1,16 +1,16 @@
 import { api } from '~/mocks'
-import { renderHookWithProviders } from '~/services'
 import { LoadStatus } from '~/types'
+import { renderHookWithProviders } from '~/utils/tests'
 
-import { useDocLoader } from './useDocLoader'
+import { useSchemaLoader } from './useSchemaLoader'
 
-jest.mock('@api-platform/api-doc-parser')
 jest.mock('~/services/api')
+jest.mock('~/services/parser')
 
-describe('useDocLoader', () => {
+describe('useSchemaLoader', () => {
   it('should loads the doc api', async () => {
     const { result, waitForNextUpdate } = renderHookWithProviders(() =>
-      useDocLoader()
+      useSchemaLoader()
     )
     expect(result.current).toEqual({ status: LoadStatus.LOADING })
     await waitForNextUpdate()

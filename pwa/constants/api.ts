@@ -1,6 +1,8 @@
 let url =
-  process.env.NEXT_PUBLIC_API_URL ??
-  (typeof window !== 'undefined' ? window.location.origin : '')
+  process.env.NODE_ENV === 'test'
+    ? 'http://localhost/'
+    : process.env.NEXT_PUBLIC_API_URL ??
+      (typeof window !== 'undefined' ? window.location.origin : '')
 if (url && String(url).endsWith('/')) {
   url = url.slice(0, -1)
 }

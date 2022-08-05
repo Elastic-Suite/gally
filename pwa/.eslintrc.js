@@ -75,7 +75,7 @@ module.exports = {
     'no-self-compare': 'error',
     'no-sequences': 'error',
     'no-throw-literal': 'error',
-    'no-underscore-dangle': 'error',
+    'no-underscore-dangle': ['error', { allow: ['__schema'] }],
     'no-unneeded-ternary': 'error',
     'no-unreachable-loop': 'error',
     'no-unused-private-class-members': 'error',

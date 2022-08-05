@@ -1,5 +1,6 @@
+import { renderWithProviders } from '~/utils/tests'
+
 import CloseComponent from './CloseComponent'
-import { renderWithProviders } from '~/services'
 
 describe('CloseComponent match snapshot', () => {
   it('CloseComponent simple', () => {

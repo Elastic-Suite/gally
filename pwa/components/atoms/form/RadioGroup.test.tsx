@@ -1,4 +1,5 @@
-import { renderWithProviders } from '~/services'
+import { renderWithProviders } from '~/utils/tests'
+
 import RadioGroup from './RadioGroup'
 
 describe('Switch match snapshot', () => {

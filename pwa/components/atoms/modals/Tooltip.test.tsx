@@ -1,5 +1,6 @@
+import { renderWithProviders } from '~/utils/tests'
+
 import Tooltips from './Tooltip'
-import { renderWithProviders } from '~/services'
 
 describe('Tooltip match snapshot', () => {
   it('TooltipLeft', () => {

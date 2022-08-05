@@ -1,5 +1,6 @@
+import { renderWithProviders } from '~/utils/tests'
+
 import DropDown from './DropDown'
-import { renderWithProviders } from '~/services'
 
 describe('DropDown match snapshot', () => {
   it('BadgeDisabledFalse', () => {
@@ -80,9 +81,6 @@ describe('DropDown match snapshot', () => {
   it('BadgeMultiple', () => {
     const { container } = renderWithProviders(
       <DropDown
-        onChange={(): void => {
-          Math.floor(1)
-        }}
         value={[]}
         multiple
         disabled={false}

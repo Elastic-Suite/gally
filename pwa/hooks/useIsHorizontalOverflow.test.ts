@@ -1,5 +1,7 @@
 import { act } from '@testing-library/react-hooks'
-import { renderHookWithProviders } from '~/services'
+
+import { renderHookWithProviders } from '~/utils/tests'
+
 import { useIsHorizontalOverflow } from './useIsHorizontalOverflow'
 
 describe('useIsHorizontalOverflow', () => {

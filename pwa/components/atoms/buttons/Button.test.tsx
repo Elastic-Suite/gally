@@ -1,7 +1,8 @@
+import { renderWithProviders } from '~/utils/tests'
+
 import PrimaryButton from './PrimaryButton'
 import SecondaryButton from './SecondaryButton'
 import TertiaryButton from './TertiaryButton'
-import { renderWithProviders } from '~/services'
 
 describe('Button match snapshot', () => {
   it('PrimaryButton', () => {

@@ -26,7 +26,7 @@ describe('Table service', () => {
     it('should return the field header', () => {
       expect(getFieldHeader(fieldString, (key: string) => key)).toEqual({
         field: 'code',
-        headerName: 'fields.code',
+        headerName: 'Attribute code',
         type: DataContentType.STRING,
         editable: false,
       })
@@ -84,8 +84,9 @@ describe('Table service', () => {
         )
       ).toEqual({
         id: 'code',
-        label: 'fields.code',
+        label: 'Attribute code',
         multiple: false,
+        options: undefined,
         type: FilterType.TEXT,
       })
     })
@@ -94,10 +95,10 @@ describe('Table service', () => {
   describe('getMappings', () => {
     it('should return the mappings object', () => {
       const mappings = getMappings(sourceFields, resourceWithRef)
-      expect(mappings[0]).toEqual({
+      expect(mappings[1]).toEqual({
         '@type': 'IriTemplateMapping',
-        variable: 'isSearchable',
-        property: 'isSearchable',
+        variable: 'isFilterable',
+        property: 'isFilterable',
         required: false,
         field: fieldBoolean,
         multiple: false,
