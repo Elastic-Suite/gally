@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SwitchComp match snapshot BadgeDisabledFalse 1`] = `
+exports[`SwitchComp match snapshot testSwitchTrue 1`] = `
 <div>
   <div
     class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-1vpwcmr-MuiGrid-root"

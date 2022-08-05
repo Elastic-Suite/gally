@@ -8,8 +8,8 @@ export default {
 } as ComponentMeta<typeof DropDownComponent>
 
 export function Dropdown(args: ISelectProps): JSX.Element {
-  const [value, setValue] = useState('')
-  const handleChange = (value: string): void => setValue(value)
+  const [value, setValue] = useState(20)
+  const handleChange = (value: number): void => setValue(value)
   return <DropDownComponent {...args} onChange={handleChange} value={value} />
 }
 Dropdown.args = {

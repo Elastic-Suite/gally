@@ -3,7 +3,7 @@ import { renderWithProviders } from '~/services'
 import { ChangeEvent } from 'react'
 
 describe('SwitchComp match snapshot', () => {
-  it('BadgeDisabledFalse', () => {
+  it('testSwitchTrue', () => {
     let first = true
     const setFirst = (bol: boolean): void => {
       first = bol

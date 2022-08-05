@@ -1,7 +1,6 @@
 import { ChangeEvent } from 'react'
 import { useTranslation } from 'next-i18next'
 import { Grid, Paper } from '@mui/material'
-import { FontRequired } from './Merchandize.style'
 import DropDown, { ISelectProps } from '~/components/atoms/form/DropDown'
 import SwitchComp from '~/components/atoms/form/SwitchComp'
 
@@ -18,7 +17,8 @@ function Merchandize({
   useCategoryNameValue: boolean
   virtualCategoryValue: boolean
   args: ISelectProps
-  onChange: (arg: string) => void
+  onChange?: (arg: number) => void
+  value?: number
 }): JSX.Element {
   const { t } = useTranslation('category')
 
@@ -30,15 +30,6 @@ function Merchandize({
 
   return (
     <Paper variant="outlined" style={{ height: 'auto', padding: '16px' }}>
-      <FontRequired
-        container
-        justifyContent="flex-end"
-        alignItems="center"
-        style={{ width: '100%' }}
-      >
-        {t('category.required')}
-      </FontRequired>
-
       <Grid
         container
         justifyContent="center"

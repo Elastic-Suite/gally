@@ -5,5 +5,5 @@
   "category.virtual": "Catégorie virtuelle",
   "category.virtual.tooltip": "Catégorie virtuelle",
   "category.select": "Sélectionnez",
-  "category.select.tooltip": "Si le nom de la catégorie est utilisé pour la recherche plein texte sur les produits"
+  "category.select.tooltip": "Quel tri sera utilisé pour la catégorie"
 }

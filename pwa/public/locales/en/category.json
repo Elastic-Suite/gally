@@ -5,5 +5,5 @@
   "category.virtual": "Virtual category",
   "category.virtual.tooltip": "Virtual category",
   "category.select": "Select",
-  "category.select.tooltip": "If the category name is used for fulltext search on products"
+  "category.select.tooltip": "what sorting will be used for the category"
 }

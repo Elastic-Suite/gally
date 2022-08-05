@@ -1,17 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Merchandize match snapshot BadgeDisabledFalse 1`] = `
+exports[`Merchandize match snapshot testSelect 1`] = `
 <div>
   <div
     class="MuiPaper-root MuiPaper-outlined MuiPaper-rounded css-11hpgp0-MuiPaper-root"
     style="height: auto; padding: 16px;"
   >
-    <div
-      class="MuiGrid-root MuiGrid-container css-m7k7it-MuiGrid-root"
-      style="width: 100%;"
-    >
-      category.required
-    </div>
     <div
       class="MuiGrid-root MuiGrid-container css-1hbmzt3-MuiGrid-root"
       style="width: 100%;"
@@ -155,7 +149,7 @@ exports[`Merchandize match snapshot BadgeDisabledFalse 1`] = `
             class="MuiSelectUnstyled-root css-10s1kls"
             type="button"
           >
-            
+            Ten
             <ion-icon
               name="chevron-down"
             />

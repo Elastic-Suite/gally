@@ -2,7 +2,7 @@ import Merchandize from './Merchandize'
 import { renderWithProviders } from '~/services'
 
 describe('Merchandize match snapshot', () => {
-  it('BadgeDisabledFalse', () => {
+  it('testSelect', () => {
     let first = true
     const setFirst = (bol: boolean): void => {
       first = bol
@@ -11,11 +11,12 @@ describe('Merchandize match snapshot', () => {
     const setSec = (bol: boolean): void => {
       sec = bol
     }
-    const setValue = (str: string): string => {
-      return str
+    let val = 10
+    const setValue = (str: number): void => {
+      val = str
     }
 
-    const handleChange = (value: string): string => setValue(value)
+    const handleChange = (value: number): void => setValue(value)
 
     const { container } = renderWithProviders(
       <Merchandize
@@ -36,7 +37,7 @@ describe('Merchandize match snapshot', () => {
             required: false,
           },
         }}
-        {...{ onChange: handleChange }}
+        {...{ onChange: handleChange, value: val }}
       />
     )
     expect(container).toMatchSnapshot()

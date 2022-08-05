@@ -11,9 +11,10 @@ export default {
       // mock state
       const [first, setFirst] = useState(true)
       const [sec, setSec] = useState(false)
+      const [val, setVal] = useState(10)
 
-      const handleChange = (): void => {
-        return null
+      const handleChange = (val: number): void => {
+        setVal(val)
       }
       return (
         <Merchandize
@@ -24,17 +25,18 @@ export default {
           {...{
             args: {
               disabled: false,
-              label: 'Label',
+              label: 'Default sorting',
+              value: 10,
               options: [
-                { label: 'Ten', value: 10 },
-                { label: 'Twenty', value: 20 },
-                { label: 'Thirty', value: 30 },
-                { label: 'Fourty', value: 40 },
+                { label: 'Position', value: 10 },
+                { label: 'Product Name', value: 20 },
+                { label: 'Price', value: 30 },
+                { label: 'Performance', value: 40 },
               ],
               required: false,
             },
           }}
-          {...{ onChange: handleChange }}
+          {...{ onChange: handleChange, value: val }}
         />
       )
     },
@@ -49,12 +51,12 @@ export const Default = Template.bind({})
 Default.args = {
   args: {
     disabled: false,
-    label: 'Label',
+    label: 'Default sorting',
     options: [
-      { label: 'Ten', value: 10 },
-      { label: 'Twenty', value: 20 },
-      { label: 'Thirty', value: 30 },
-      { label: 'Fourty', value: 40 },
+      { label: 'Position', value: 10 },
+      { label: 'Product Name', value: 20 },
+      { label: 'Price', value: 30 },
+      { label: 'Performance', value: 40 },
     ],
     required: false,
   },

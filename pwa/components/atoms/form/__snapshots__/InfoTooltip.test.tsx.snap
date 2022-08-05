@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`InfoTooltip match snapshot BadgeDisabledFalse 1`] = `
+exports[`InfoTooltip match snapshot testInfoText 1`] = `
 <div>
   <span
     aria-label="salut"
