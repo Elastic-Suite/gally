@@ -60,7 +60,8 @@ sub vcl_recv {
     return (pass);
   }
 
-  #Do not cache "/" because it can be served by the Front (next.js) or API (ApiPlatform)
+  # Do not cache "/" because it can be served by the Front (next.js) or API (ApiPlatform)
+  # Temporary solution to avoid issue when Google crawls the website (see ESPP-378)
   if (req.url == "/") {
     return (pass);
   }
