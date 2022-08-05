@@ -1,5 +1,4 @@
 import { Method } from './fetch'
-import { IGraphqlField } from './graphql'
 import { IJsonldBase, IJsonldId, IJsonldType } from './jsonld'
 
 export interface IProperty extends IJsonldBase {
@@ -34,7 +33,4 @@ export interface IResource extends IJsonldBase {
   url: string
 }
 
-export interface IApi {
-  graphqlFields: IGraphqlField[]
-  resources: IResource[]
-}
+export type IApi = IResource[]

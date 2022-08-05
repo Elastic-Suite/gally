@@ -1,7 +1,6 @@
 import { expandedDocs, expandedProperty, expandedRange } from '~/mocks'
 import {
   fetchDocs,
-  fetchGraphqlDoc,
   findRelatedClass,
   getDocumentationUrlFromHeaders,
   getSupportedClassMap,
@@ -49,13 +48,6 @@ describe('Parser service', () => {
         }),
         docsUrl: 'http://localhost/docs.jsonld',
       })
-    })
-  })
-
-  describe('fetchGraphqlDoc', () => {
-    it('Should fetch the GraphQL shema', async () => {
-      const result = await fetchGraphqlDoc('http://localhost/')
-      expect(result[0]).toMatchObject({ name: 'node' })
     })
   })
 
@@ -148,8 +140,7 @@ describe('Parser service', () => {
   describe('parseSchema', () => {
     it('should parse and return the schema', async () => {
       const result = await parseSchema('http://localhost/')
-      expect(result.graphqlFields instanceof Array).toEqual(true)
-      expect(result.resources[0]).toMatchObject({
+      expect(result[0]).toMatchObject({
         '@id': 'https://localhost/docs.jsonld#Metadata',
         '@type': 'http://www.w3.org/ns/hydra/core#Class',
         title: 'Metadata',
