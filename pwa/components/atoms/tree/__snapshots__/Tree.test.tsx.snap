@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Tree match snapshot Tree data CatalogName 1`] = `
+exports[`Tree match snapshot 1`] = `
 <div>
   <ul
     class="css-1kxqmrx"
@@ -158,7 +158,7 @@ exports[`Tree match snapshot Tree data CatalogName 1`] = `
 </div>
 `;
 
-exports[`Tree match snapshot Tree simple 1`] = `
+exports[`Tree match snapshot with selected item 1`] = `
 <div>
   <ul
     class="css-1kxqmrx"
@@ -182,7 +182,7 @@ exports[`Tree match snapshot Tree simple 1`] = `
           class="css-gmuwbf"
         >
           <button
-            class="css-1d0dnv7"
+            class="css-1k72lrg"
           >
             Cat One
           </button>
