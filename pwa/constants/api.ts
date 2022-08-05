@@ -8,6 +8,8 @@ if (url && String(url).endsWith('/')) {
 }
 export const apiUrl = url
 
+export const languageHeader = 'Elasticsuite-Language'
+
 // URL parameters
 export const currentPage = 'currentPage'
 export const pageSize = 'pageSize'

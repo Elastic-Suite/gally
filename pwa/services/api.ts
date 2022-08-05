@@ -1,4 +1,4 @@
-import { apiUrl } from '~/constants'
+import { apiUrl, languageHeader } from '~/constants'
 import { IResource, ISearchParameters } from '~/types'
 
 import { getUrl } from './url'
@@ -64,7 +64,7 @@ export async function fetchApi<T>(
     ...options,
     headers: {
       ...options.headers,
-      'Elasticsuite-Language': language,
+      [languageHeader]: language,
     },
   })
   return json
