@@ -1,0 +1,10 @@
+services:
+    Elasticsuite\Category\Service\CategorySynchronizer:
+        public: true
+        arguments:
+            - '@Elasticsuite\Category\Repository\CategoryRepository'
+            - '@Elasticsuite\Category\Repository\CategoryConfigurationRepository'
+            - '@Elasticsuite\Search\Elasticsearch\RequestFactoryInterface'
+            - '@Elasticsuite\Search\Elasticsearch\Builder\Request\Query\QueryBuilder'
+            - '@Elasticsuite\Search\Elasticsearch\Adapter'
+            - '@doctrine.orm.entity_manager'

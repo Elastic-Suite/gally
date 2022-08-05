@@ -46,7 +46,7 @@ final class ConfigurationItemDataProvider implements RestrictedDataProviderInter
         $manager = $this->managerRegistry->getManagerForClass($resourceClass);
         /** @var ConfigurationRepository $repository */
         $repository = $manager->getRepository($resourceClass);
-        $repository->setCategoryId((int) $categoryId);
+        $repository->setCategoryId($categoryId);
 
         // Force loading sub-entity in order to avoid having proxies.
         /** @var SourceField $sourceField */

@@ -1,5 +1,9 @@
 Elasticsuite\Category\Model\Category:
     categ1:
-        name: Category One
+        id: one
+        level: 1
+        path: 1
     categ2:
-        name: Category Two
+        id: two
+        level: 1
+        path: 2

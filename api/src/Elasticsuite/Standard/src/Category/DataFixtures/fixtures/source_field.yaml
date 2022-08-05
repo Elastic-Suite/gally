@@ -1,0 +1,32 @@
+Elasticsuite\Metadata\Model\SourceField:
+    category_id:
+        metadata: '@category'
+        code: 'id'
+        type: 'text'
+        isSystem: true
+    category_parent_id:
+        metadata: '@category'
+        code: 'parentId'
+        type: 'text'
+        isSystem: true
+    category_path:
+        metadata: '@category'
+        code: 'path'
+        type: 'text'
+        isSystem: true
+    category_level:
+        metadata: '@category'
+        code: 'level'
+        type: 'int'
+        isSystem: true
+    category_name:
+        metadata: '@category'
+        code: 'name'
+        type: 'text'
+        weight: 10
+        is_searchable: true
+        is_filterable: false
+        is_sortable: false
+        is_spellchecked: false
+        is_used_for_rules: false
+        isSystem: true
