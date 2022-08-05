@@ -1,7 +1,5 @@
 import { IApi, IResource } from '~/types'
 
-import { graphqlFields } from './graphql'
-
 export const resources = [
   {
     '@id': 'https://localhost/docs.jsonld#Metadata',
@@ -1818,7 +1816,4 @@ export const [resource, resourceWithRef] = resources
 export const [fieldString, , , fieldBoolean, , , fieldInteger, , , fieldRef] =
   resourceWithRef.supportedProperty
 
-export const api: IApi = {
-  graphqlFields,
-  resources,
-}
+export const api: IApi = resources
