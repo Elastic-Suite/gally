@@ -1,11 +1,13 @@
 import { useRouter } from 'next/router'
-import { selectMenu, useAppSelector } from '~/store'
 import { useContext, useEffect, useState } from 'react'
-import { breadcrumbContext } from '~/contexts'
-import { findBreadcrumbLabel } from '~/services'
 import Head from 'next/head'
 import { useTranslation } from 'next-i18next'
-import { ITreeItem } from '~/types/categories'
+
+import { breadcrumbContext } from '~/contexts'
+import { findBreadcrumbLabel } from '~/services'
+import { selectMenu, useAppSelector } from '~/store'
+import { ITreeItem } from '~/types'
+
 import TitleBlock from '~/components/molecules/layout/TitleBlock/TitleBlock'
 import TwoColsLayout from '~/components/molecules/layout/twoColsLayout/TwoColsLayout'
 import CategoryTree from '~/components/stateful/CategoryTree/CategoryTree'

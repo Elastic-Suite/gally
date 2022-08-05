@@ -1,4 +1,4 @@
-import { IJsonldId, IJsonldType } from './hydra'
+import { IJsonldBase } from './jsonld'
 
 export interface ITreeItem {
   catalogCode?: string
@@ -12,7 +12,7 @@ export interface ITreeItem {
   children?: ITreeItem[]
 }
 
-export interface ICategories extends IJsonldType, IJsonldId {
+export interface ICategories extends IJsonldBase {
   catalogCode?: string
   catalogName?: string
   categories?: ITreeItem[]

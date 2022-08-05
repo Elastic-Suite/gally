@@ -19,7 +19,7 @@ describe('Tree', () => {
         selectedItem={{
           catalogCode: 'com_fr',
           catalogName: 'Cat One',
-          "id": 1,
+          id: 1,
         }}
       />
     )
