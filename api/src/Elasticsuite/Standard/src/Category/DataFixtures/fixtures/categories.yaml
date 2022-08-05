@@ -1,23 +1,14 @@
 Elasticsuite\Category\Model\Category:
     categ1:
-        id: 1
-        categoryId: one
-        catalog: '@localized_catalog1'
+        id: one
         level: 1
-        path: 1
-        name: Category One
+        path: one
     categ2:
-        id: 2
-        categoryId: two
-        catalog: '@localized_catalog1'
+        id: two
         level: 1
-        path: 2
-        name: Category Two
+        path: two
     categ3:
-        id: 3
-        categoryId: three
-        catalog: '@localized_catalog1'
-        parentId: 1
+        id: three
+        parentId: one
         level: 2
-        path: 1/3
-        name: Category Three
+        path: one/three
