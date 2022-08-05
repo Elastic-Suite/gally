@@ -71,19 +71,6 @@ class SourceFieldTest extends AbstractEntityTest
         ];
     }
 
-    protected function getJsonCreationValidation(array $expectedData): array
-    {
-        $json = [
-            'code' => $expectedData['code'],
-        ];
-
-        if (isset($expectedData['isSearchable'])) {
-            $json['searchable'] = $expectedData['isSearchable'];
-        }
-
-        return $json;
-    }
-
     /**
      * {@inheritDoc}
      */
