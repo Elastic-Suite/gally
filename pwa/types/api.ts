@@ -34,3 +34,8 @@ export interface IResource extends IJsonldBase {
 }
 
 export type IApi = IResource[]
+
+export interface IResponseError {
+  code: number
+  message: string
+}

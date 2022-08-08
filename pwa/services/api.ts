@@ -1,7 +1,9 @@
 import { apiUrl, languageHeader } from '~/constants'
-import { IResource, ISearchParameters } from '~/types'
+import { IResource, IResponseError, ISearchParameters } from '~/types'
 
 import { getUrl } from './url'
+
+class ApiError extends Error {}
 
 export function normalizeUrl(url = ''): string {
   if (process.env.NEXT_PUBLIC_LOCAL) {
@@ -52,7 +54,7 @@ export async function fetchJson<T>(
   return { json, response }
 }
 
-export async function fetchApi<T>(
+export function fetchApi<T>(
   language: string,
   resource: IResource | string,
   searchParameters: ISearchParameters = {},
@@ -60,14 +62,19 @@ export async function fetchApi<T>(
 ): Promise<T> {
   const apiUrl =
     typeof resource === 'string' ? getApiUrl(resource) : getApiUrl(resource.url)
-  const { json } = await fetchJson<T>(getUrl(apiUrl, searchParameters), {
+  return fetchJson<T>(getUrl(apiUrl, searchParameters), {
     ...options,
     headers: {
       ...options.headers,
       [languageHeader]: language,
+      'Content-Type': 'application/json',
     },
+  }).then(({ json }) => {
+    if (isApiError(json)) {
+      throw new ApiError(json.message)
+    }
+    return json
   })
-  return json
 }
 
 export function removeEmptyParameters(
@@ -78,4 +85,10 @@ export function removeEmptyParameters(
       ([_, value]) => (value ?? '') !== ''
     )
   )
+}
+
+export function isApiError<T>(
+  json: T | IResponseError
+): json is IResponseError {
+  return 'code' in json && 'message' in json
 }

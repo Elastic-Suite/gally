@@ -85,16 +85,27 @@ const InputTextStyled = styled(UnstyledInputText)(({ theme }) => ({
 }))
 
 interface IProps extends Omit<InputBaseProps, 'onChange'> {
+  fullWidth?: boolean
   label?: string
   helperText?: ReactChild
   helperIcon?: string
   onChange?: (value: string) => void
   value: string
+  withMargin?: boolean
 }
 
 function InputText(props: IProps): JSX.Element {
-  const { id, label, onChange, helperText, helperIcon, required, ...other } =
-    props
+  const {
+    fullWidth,
+    id,
+    label,
+    onChange,
+    helperText,
+    helperIcon,
+    required,
+    withMargin,
+    ...other
+  } = props
 
   function handleChange(
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -103,7 +114,11 @@ function InputText(props: IProps): JSX.Element {
   }
 
   return (
-    <FormControl variant="standard">
+    <FormControl
+      fullWidth={fullWidth}
+      sx={{ marginBottom: withMargin ? 4 : 0 }}
+      variant="standard"
+    >
       {label ? (
         <InputLabel shrink htmlFor={id} required={required}>
           {label}

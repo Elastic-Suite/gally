@@ -2,16 +2,16 @@ import { fetchApi } from '~/services/api'
 import { LoadStatus } from '~/types'
 import { renderHookWithProviders } from '~/utils/tests'
 
-import { useApiDispatch, useApiFetch, useApiList } from './useApi'
+import { useApiDispatch, useApiList, useFetchApi } from './useApi'
 
 jest.mock('~/services/api')
 
 describe('useApi', () => {
-  describe('useApiFetch', () => {
+  describe('useFetchApi', () => {
     it('calls and return the api result', async () => {
       ;(fetchApi as jest.Mock).mockClear()
       const { result, waitForNextUpdate } = renderHookWithProviders(() =>
-        useApiFetch('/test')
+        useFetchApi('/test')
       )
       expect(result.current[0]).toEqual({
         status: LoadStatus.LOADING,

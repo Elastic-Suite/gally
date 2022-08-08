@@ -55,7 +55,7 @@ describe('Api service', () => {
       const url = 'http://localhost/test'
       fetchMock.get(url, { hello: 'world' })
       const response = await fetchJson('http://localhost/test')
-      expect(response).toMatchObject({ json: { hello: 'world' } })
+      expect(response).toMatchObject({ hello: 'world' })
       expect(fetchMock.called(url)).toEqual(true)
       fetchMock.restore()
     })
@@ -65,8 +65,8 @@ describe('Api service', () => {
     it('should fetch requested api from url', async () => {
       const url = 'http://localhost/test'
       fetchMock.get(url, { hello: 'world' })
-      const response = await fetchApi('en', '/test')
-      expect(response).toEqual({ hello: 'world' })
+      const json = await fetchApi('en', '/test')
+      expect(json).toEqual({ hello: 'world' })
       expect(fetchMock.called(url)).toEqual(true)
       fetchMock.restore()
     })
@@ -74,8 +74,8 @@ describe('Api service', () => {
     it('should fetch requested api from resource', async () => {
       const url = 'https://localhost/metadata'
       fetchMock.get(url, { hello: 'world' })
-      const response = await fetchApi('en', resource)
-      expect(response).toEqual({ hello: 'world' })
+      const json = await fetchApi('en', resource)
+      expect(json).toEqual({ hello: 'world' })
       expect(fetchMock.called(url)).toEqual(true)
       fetchMock.restore()
     })
