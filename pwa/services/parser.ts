@@ -8,9 +8,6 @@ import {
   IExpandedEntrypoint,
   IExpandedHydraProperty,
   IExpandedHydraSupportedClass,
-  IGraphqlDoc,
-  IGraphqlField,
-  IGraphqlResponse,
   IJsonldId,
   IJsonldRange,
   IResource,
@@ -47,65 +44,6 @@ export async function fetchDocs(apiUrl: string): Promise<{
     entrypoint: expandedEntrypoint[0] as unknown as IExpandedEntrypoint,
     entrypointUrl: apiUrl,
   }
-}
-
-export async function fetchGraphqlDoc(
-  apiUrl: string
-): Promise<IGraphqlField[]> {
-  const { json } = await fetchJson<IGraphqlResponse<IGraphqlDoc>>(
-    `${apiUrl}graphql`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify({
-        query: `{
-  __schema {
-    queryType {
-      fields {
-        name
-        description
-        type {
-          name
-          description
-          fields {
-            name
-            description
-            type {
-              kind
-              name
-              description
-              fields {
-                name
-              }
-              interfaces {
-                name
-              }
-              possibleTypes {
-                name
-              }
-              enumValues {
-                name
-              }
-              inputFields {
-                name
-              }
-              ofType {
-                name
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}`,
-      }),
-    }
-  )
-  return json.data.__schema.queryType.fields
 }
 
 export function getSupportedClassMap(
@@ -202,10 +140,7 @@ export function simplifyJsonldObject(
 }
 
 export async function parseSchema(apiUrl: string): Promise<IApi> {
-  const [{ docs, entrypoint }, graphqlFields] = await Promise.all([
-    fetchDocs(apiUrl),
-    fetchGraphqlDoc(apiUrl),
-  ])
+  const { docs, entrypoint } = await fetchDocs(apiUrl)
 
   const supportedClassMap = getSupportedClassMap(docs)
   const entrypointClass = supportedClassMap.get(entrypoint['@type'][0])
@@ -237,8 +172,5 @@ export async function parseSchema(apiUrl: string): Promise<IApi> {
     }, [])
   }
 
-  return {
-    graphqlFields,
-    resources,
-  }
+  return resources
 }

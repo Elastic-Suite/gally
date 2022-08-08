@@ -9,7 +9,7 @@ import {
 } from '~/types'
 
 export function getResource(api: IApi, resourceName: string): IResource {
-  return api.resources.find(
+  return api.find(
     (resource) =>
       resource.title === resourceName || resource.label === resourceName
   )
@@ -54,9 +54,7 @@ export function isReferenceField(field: IField): boolean {
 }
 
 export function getReferencedResource(api: IApi, field: IField): IResource {
-  return api.resources.find(
-    (resource) => resource['@id'] === field.property.range['@id']
-  )
+  return api.find((resource) => resource['@id'] === field.property.range['@id'])
 }
 
 export function getOptionsFromApi<T extends IHydraMember>(
