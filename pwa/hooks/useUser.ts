@@ -7,5 +7,15 @@ import { IUser } from '~/types'
 
 export function useUser(): IUser {
   const token = storageGet(tokenStorageKey)
-  return useMemo(() => (token ? (jwtDecode(token) as IUser) : null), [token])
+  return useMemo(() => {
+    try {
+      if (token) {
+        return jwtDecode(token) as IUser
+      }
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error)
+    }
+    return null
+  }, [token])
 }

@@ -6,7 +6,11 @@ import NonDraggableRow from '../CustomTableRow/NonDraggableRow'
 interface IProps {
   cSSLeftValues: number[]
   isHorizontalOverflow: boolean
-  onRowUpdate?: (row: ITableRow) => void
+  onRowUpdate?: (
+    id: string | number,
+    field: string,
+    value: boolean | number | string
+  ) => void
   onSelectRows: (arr: (string | number)[]) => void
   selectedRows: (string | number)[]
   shadow: boolean

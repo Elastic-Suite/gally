@@ -24,7 +24,11 @@ import { DraggableProvided } from 'react-beautiful-dnd'
 
 interface IProps {
   tableRow: ITableRow
-  onRowUpdate?: (row: ITableRow) => void
+  onRowUpdate?: (
+    id: string | number,
+    field: string,
+    value: boolean | number | string
+  ) => void
   tableHeaders: ITableHeader[]
   withSelection: boolean
   selectedRows: (string | number)[]
