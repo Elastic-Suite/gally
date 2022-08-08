@@ -1,0 +1,6 @@
+Elasticsuite\Category\Model\Category\Configuration:
+    properties:
+        defaultSorting:
+            - Elasticsuite\Category\Validator\DefaultSortingFieldConstraint:
+                  sortOptions:
+                      - "position"
