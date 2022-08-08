@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 import { RootState } from './store'
 
-interface IUserState {
+export interface IUserState {
   requestedPath: string
 }
 
