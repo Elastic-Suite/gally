@@ -28,23 +28,26 @@
        <unique-constraints>
            <unique-constraint columns="category_id" name="unique_category_id">
                <options>
-                   <option name="where">(catalog_id IS NULL AND localized_catalog_id IS NULL)</option>
+                   <option name="where">((catalog_id IS NULL) AND (localized_catalog_id IS NULL))</option>
                </options>
            </unique-constraint>
            <unique-constraint columns="category_id,catalog_id" name="unique_category_id_catalog_id">
                <options>
-                   <option name="where">(catalog_id IS NOT NULL AND localized_catalog_id IS NULL)</option>
+                   <option name="where">((catalog_id IS NOT NULL) AND (localized_catalog_id IS NULL))</option>
                </options>
            </unique-constraint>
            <unique-constraint columns="category_id,catalog_id,localized_catalog_id" name="unique_category_id_catalog_id_localized_catalog_id">
                <options>
-                   <option name="where">(catalog_id IS NOT NULL AND localized_catalog_id IS NOT NULL)</option>
+                   <option name="where">((catalog_id IS NOT NULL) AND (localized_catalog_id IS NOT NULL))</option>
                </options>
            </unique-constraint>
        </unique-constraints>
 
         <field name="name" type="string" length="255" nullable="true" />
         <field name="isVirtual" type="boolean" nullable="true" />
+        <field name="useNameInProductSearch" type="boolean" nullable="true" />
+        <field name="defaultSorting" type="string" length="255" nullable="true" />
+
     </entity>
 
 </doctrine-mapping>

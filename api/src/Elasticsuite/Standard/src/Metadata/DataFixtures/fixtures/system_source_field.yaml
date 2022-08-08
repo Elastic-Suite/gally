@@ -8,12 +8,20 @@ Elasticsuite\Metadata\Model\SourceField:
         metadata: '@product'
         code: 'sku'
         type: 'reference'
-        isSystem: true
+        isSystem: true    
+    product_name:
+        metadata: '@product'
+        code: 'name'
+        type: 'text'
+        weight: 10
+        is_searchable: true
+        is_sortable: true
     product_price:
         metadata: '@product'
         code: 'price'
         type: 'price'
         isSystem: true
+        is_sortable: true
     product_stock_status:
         metadata: '@product'
         code: 'stock.status'
