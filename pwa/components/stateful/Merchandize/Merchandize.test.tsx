@@ -1,5 +1,5 @@
 import Merchandize from './Merchandize'
-import { renderWithProviders } from '~/services'
+import { renderWithProviders } from '~/utils/tests'
 
 describe('Merchandize match snapshot', () => {
   it('testSelect', () => {

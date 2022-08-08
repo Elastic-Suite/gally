@@ -1,5 +1,5 @@
 import InfoTooltip from './InfoTooltip'
-import { renderWithProviders } from '~/services'
+import { renderWithProviders } from '~/utils/tests'
 
 describe('InfoTooltip match snapshot', () => {
   it('testInfoText', () => {

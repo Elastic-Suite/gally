@@ -1,5 +1,5 @@
 import SwitchComp from './SwitchComp'
-import { renderWithProviders } from '~/services'
+import { renderWithProviders } from '~/utils/tests'
 import { ChangeEvent } from 'react'
 
 describe('SwitchComp match snapshot', () => {
