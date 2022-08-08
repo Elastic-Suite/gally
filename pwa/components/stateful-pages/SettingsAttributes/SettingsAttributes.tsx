@@ -4,14 +4,10 @@ import {
   useFiltersRedirect,
   usePage,
   useResource,
+  useResourceOperations,
   useSearch,
 } from '~/hooks'
-import {
-  IHydraResponse,
-  ISearchParameters,
-  ISourceField,
-  ITabContentProps,
-} from '~/types'
+import { ISearchParameters, ISourceField, ITabContentProps } from '~/types'
 
 import FiltersGuesser from '~/components/stateful/FiltersGuesser/FiltersGuesser'
 import TableGuesser from '~/components/stateful/TableGuesser/TableGuesser'
@@ -26,7 +22,8 @@ function SettingsAttributes(props: ITabContentProps): JSX.Element {
   const [searchValue, setSearchValue] = useSearch()
   useFiltersRedirect(page, activeFilters, searchValue, active)
 
-  const [sourceFields] = useApiList<IHydraResponse<ISourceField>>(
+  const { update } = useResourceOperations<ISourceField>(resource)
+  const [sourceFields, updateSourceFields] = useApiList<ISourceField>(
     resource,
     page,
     activeFilters,
@@ -55,8 +52,17 @@ function SettingsAttributes(props: ITabContentProps): JSX.Element {
     setPage(page)
   }
 
-  function handleRowChange(row: any): void {
-    console.log(row)
+  async function handleRowChange(
+    id: string | number,
+    field: string,
+    value: boolean | number | string
+  ): Promise<void> {
+    if (update) {
+      const sourceField = await update(id, { [field]: value })
+      updateSourceFields((items) =>
+        items.map((item) => (item.id === sourceField.id ? sourceField : item))
+      )
+    }
   }
 
   return (

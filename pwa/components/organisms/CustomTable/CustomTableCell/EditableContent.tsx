@@ -8,7 +8,11 @@ import NonEditableContent from './NonEditableContent'
 interface IProps {
   header: ITableHeader
   row: ITableRow
-  onRowUpdate?: (row: ITableRow) => void
+  onRowUpdate?: (
+    id: string | number,
+    field: string,
+    value: boolean | number | string
+  ) => void
 }
 
 function EditableContent(props: IProps): JSX.Element {
@@ -16,17 +20,15 @@ function EditableContent(props: IProps): JSX.Element {
 
   function handleDropdownChange(value: number | string): void {
     if (onRowUpdate) {
-      row[header.field] = value
-      onRowUpdate(row)
+      onRowUpdate(row.id, header.field, value)
     }
   }
 
   function handleSwitchChange(
-    value: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>
   ): void {
     if (onRowUpdate) {
-      row[header.field] = value.target.checked
-      onRowUpdate(row)
+      onRowUpdate(row.id, header.field, event.target.checked)
     }
   }
 
@@ -53,8 +55,7 @@ function EditableContent(props: IProps): JSX.Element {
         return (
           <Switch
             onChange={handleSwitchChange}
-            value={row[header.field] as boolean}
-            checked={row[header.field] as boolean}
+            checked={Boolean(row[header.field])}
           />
         )
       default:

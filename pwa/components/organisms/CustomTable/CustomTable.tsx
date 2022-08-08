@@ -21,7 +21,11 @@ import DraggableBody from '~/components/organisms/CustomTable/CustomTableBody/Dr
 export interface IProps {
   draggable?: boolean
   onReorder?: (rows: ITableRow[]) => void
-  onRowUpdate?: (row: ITableRow) => void
+  onRowUpdate?: (
+    id: string | number,
+    field: string,
+    value: boolean | number | string
+  ) => void
   tableHeaders: ITableHeader[]
   tableRows: ITableRow[]
   withSelection?: boolean

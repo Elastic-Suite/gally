@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import { useTranslation } from 'next-i18next'
 
 import { useApiList, useResource, useTabs } from '~/hooks'
-import { ICatalog, IHydraResponse, IRouterTab } from '~/types'
+import { ICatalog, IRouterTab } from '~/types'
 
 import SubTabs from '~/components/atoms/subTabs/SubTabs'
 import Catalogs from '~/components/molecules/layout/scope/Catalogs'
@@ -12,7 +12,7 @@ function SettingsScope(): JSX.Element {
   const { t } = useTranslation('catalog')
   const resourceName = 'Catalog'
   const resource = useResource(resourceName)
-  const [catalogsFields] = useApiList<IHydraResponse<ICatalog>>(resource, false)
+  const [catalogsFields] = useApiList<ICatalog>(resource, false)
 
   const routerTabs: IRouterTab[] = useMemo(
     () => [

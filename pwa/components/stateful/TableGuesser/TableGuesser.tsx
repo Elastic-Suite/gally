@@ -8,7 +8,11 @@ interface IProps<T extends IHydraMember> {
   apiData: IHydraResponse<T>
   currentPage?: number
   onPageChange: (page: number) => void
-  onRowUpdate?: (row: ITableRow) => void
+  onRowUpdate?: (
+    id: string | number,
+    field: string,
+    value: boolean | number | string
+  ) => void
   resource: IResource
   rowsPerPage?: number
   rowsPerPageOptions?: number[]
