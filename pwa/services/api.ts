@@ -3,7 +3,13 @@ import { IResource, IResponseError, ISearchParameters } from '~/types'
 
 import { getUrl } from './url'
 
-class ApiError extends Error {}
+export class ApiError extends Error {}
+
+export function isApiError<T>(
+  json: T | IResponseError
+): json is IResponseError {
+  return 'code' in json && 'message' in json
+}
 
 export function normalizeUrl(url = ''): string {
   if (process.env.NEXT_PUBLIC_LOCAL) {
@@ -85,10 +91,4 @@ export function removeEmptyParameters(
       ([_, value]) => (value ?? '') !== ''
     )
   )
-}
-
-export function isApiError<T>(
-  json: T | IResponseError
-): json is IResponseError {
-  return 'code' in json && 'message' in json
 }

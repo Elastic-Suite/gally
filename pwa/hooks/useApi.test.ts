@@ -2,11 +2,22 @@ import { fetchApi } from '~/services/api'
 import { LoadStatus } from '~/types'
 import { renderHookWithProviders } from '~/utils/tests'
 
-import { useApiDispatch, useApiList, useFetchApi } from './useApi'
+import { useApiDispatch, useApiFetch, useApiList, useFetchApi } from './useApi'
 
 jest.mock('~/services/api')
 
 describe('useApi', () => {
+  describe('useApiFetch', () => {
+    it('should return the apiFetch function with language prefilled', async () => {
+      ;(fetchApi as jest.Mock).mockClear()
+      const { result } = renderHookWithProviders(() => useApiFetch())
+      expect(typeof result.current).toEqual('function')
+      const json = await result.current('/test')
+      expect(json).toEqual({ hello: 'world' })
+      expect(fetchApi).toHaveBeenCalledWith('en', '/test')
+    })
+  })
+
   describe('useFetchApi', () => {
     it('calls and return the api result', async () => {
       ;(fetchApi as jest.Mock).mockClear()

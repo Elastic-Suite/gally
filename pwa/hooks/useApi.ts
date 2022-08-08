@@ -8,8 +8,8 @@ import { IFetch, IResource, ISearchParameters, LoadStatus } from '~/types'
 
 export function useApiFetch<T>(): (
   resource: IResource | string,
-  searchParameters: ISearchParameters,
-  options: RequestInit
+  searchParameters?: ISearchParameters,
+  options?: RequestInit
 ) => Promise<T> {
   const { i18n } = useTranslation('common')
   return useMemo(() => fetchApi.bind(null, i18n.language), [i18n.language])

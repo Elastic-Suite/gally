@@ -3,7 +3,7 @@
 exports[`InputText match snapshot BadgeDisabledFalse 1`] = `
 <div>
   <div
-    class="MuiFormControl-root css-1c9gikl-MuiFormControl-root"
+    class="MuiFormControl-root css-14yckze-MuiFormControl-root"
   >
     <label
       class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-root MuiFormLabel-colorPrimary MuiFormLabel-filled css-ssr94h-MuiFormLabel-root-MuiInputLabel-root"
@@ -31,7 +31,7 @@ exports[`InputText match snapshot BadgeDisabledFalse 1`] = `
 exports[`InputText match snapshot BadgeDisabledFalseRequired 1`] = `
 <div>
   <div
-    class="MuiFormControl-root css-1c9gikl-MuiFormControl-root"
+    class="MuiFormControl-root css-14yckze-MuiFormControl-root"
   >
     <label
       class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-root MuiFormLabel-colorPrimary MuiFormLabel-filled Mui-required css-ssr94h-MuiFormLabel-root-MuiInputLabel-root"

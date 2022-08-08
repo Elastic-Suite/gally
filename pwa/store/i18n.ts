@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
-interface II18nState {
+export interface II18nState {
   language: string
 }
 
