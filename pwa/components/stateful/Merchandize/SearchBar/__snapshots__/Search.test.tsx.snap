@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchBar match snapshot SearchBar 1`] = `
+<div>
+  <div
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-vvl4on-MuiPaper-root"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-container css-3az692-MuiGrid-root"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-9tc18q-MuiGrid-root"
+      >
+        <div
+          class="MuiGrid-root css-iwdcax-MuiGrid-root"
+        >
+          category.searchBar.title
+        </div>
+        <div
+          class="MuiGrid-root css-smiavp-MuiGrid-root"
+        >
+          1010 
+          category.searchBar.results
+        </div>
+      </div>
+      <div
+        class="MuiFormControl-root css-1c9gikl-MuiFormControl-root"
+      >
+        <div
+          class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd css-16scddn-MuiInputBase-root"
+        >
+          <input
+            aria-invalid="false"
+            class="MuiInputBase-input MuiInputBase-inputAdornedEnd css-yz9k0d-MuiInputBase-input"
+            id="input-text"
+            placeholder="category.searchBar.placeholder"
+            type="text"
+            value=""
+          />
+          <div
+            class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
+          >
+            <ion-icon
+              name="search"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
