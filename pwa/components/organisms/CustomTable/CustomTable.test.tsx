@@ -96,7 +96,7 @@ describe('CustomTable', () => {
       <CustomTable
         tableHeaders={mockedHeadersAndRows.tableHeadersWithoutSticky}
         tableRows={mockedHeadersAndRows.tableRows}
-        withSelection
+        selectedRows={['fake_id']}
         paginated
       />
     )
@@ -109,7 +109,7 @@ describe('CustomTable', () => {
       <CustomTable
         tableHeaders={mockedHeadersAndRows.tableHeadersWithSticky}
         tableRows={mockedHeadersAndRows.tableRows}
-        withSelection
+        selectedRows={['fake_id']}
         paginated
       />
     )
@@ -122,7 +122,7 @@ describe('CustomTable', () => {
       <CustomTable
         tableHeaders={mockedHeadersAndRows.tableHeadersWithoutSticky}
         tableRows={mockedHeadersAndRows.tableRows}
-        withSelection
+        selectedRows={['fake_id']}
         draggable
         paginated
       />
@@ -136,7 +136,7 @@ describe('CustomTable', () => {
       <CustomTable
         tableHeaders={mockedHeadersAndRows.tableHeadersWithSticky}
         tableRows={mockedHeadersAndRows.tableRows}
-        withSelection
+        selectedRows={['fake_id']}
         draggable
         paginated
       />
@@ -150,7 +150,7 @@ describe('CustomTable', () => {
       <CustomTable
         tableHeaders={mockedHeadersAndRows.tableHeadersEditable}
         tableRows={mockedHeadersAndRows.tableRows}
-        withSelection
+        selectedRows={['fake_id']}
         draggable
         paginated
       />
@@ -164,7 +164,7 @@ describe('CustomTable', () => {
       <CustomTable
         tableHeaders={mockedHeadersAndRows.tableHeadersEditable}
         tableRows={mockedHeadersAndRows.tableRows}
-        withSelection
+        selectedRows={['fake_id']}
         draggable
         paginated={false}
       />

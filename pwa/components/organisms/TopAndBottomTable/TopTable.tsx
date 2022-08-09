@@ -55,7 +55,6 @@ function TopTable(props: IProps): JSX.Element {
             setSelectedRows={setSelectedRows}
             tableHeaders={tableHeaders}
             tableRows={tableRows}
-            withSelection
             draggable
             paginated={false}
           />

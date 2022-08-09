@@ -90,3 +90,8 @@ export interface IScore {
 }
 
 export type BoostType = 'up' | 'down' | 'no boost'
+
+export interface IStock {
+  status: boolean
+  qty: number
+}

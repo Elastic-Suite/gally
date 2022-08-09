@@ -9,7 +9,6 @@ export interface IProps {
   setSelectedRows: Dispatch<SetStateAction<(string | number)[]>>
   tableHeaders: ITableHeader[]
   tableRows: ITableRow[]
-  withSelection: boolean
   draggable: boolean
   paginated: boolean
 }

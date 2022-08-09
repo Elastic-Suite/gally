@@ -27,11 +27,11 @@ exports[`TopProductTable Should match snapschot 1`] = `
           class="MuiTableRow-root MuiTableRow-head css-1u1grnd-MuiTableRow-root"
         >
           <th
-            class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-18neeob-MuiTableCell-root"
+            class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-b78cdr-MuiTableCell-root"
             scope="col"
           />
           <th
-            class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-v62wb6-MuiTableCell-root"
+            class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1fakg2h-MuiTableCell-root"
             scope="col"
           >
             <span
@@ -58,6 +58,7 @@ exports[`TopProductTable Should match snapschot 1`] = `
                 class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
               />
             </span>
+<<<<<<< HEAD
             <button
               class="MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButtonBase-root  css-poyljr-MuiButtonBase-root-MuiButton-root"
               data-testid="massive-selection-dropdown"
@@ -71,45 +72,47 @@ exports[`TopProductTable Should match snapschot 1`] = `
                 class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
               />
             </button>
+=======
+>>>>>>> c7e2136... update-test
           </th>
           <th
-            class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-aa2ftw-MuiTableCell-root"
+            class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1bwdx79-MuiTableCell-root"
             scope="col"
           >
             Code
           </th>
           <th
-            class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-aa2ftw-MuiTableCell-root"
+            class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1yoqnw7-MuiTableCell-root"
             scope="col"
           >
             Image
           </th>
           <th
-            class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-aa2ftw-MuiTableCell-root"
+            class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1bwdx79-MuiTableCell-root"
             scope="col"
           >
             Name
           </th>
           <th
-            class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-aa2ftw-MuiTableCell-root"
+            class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1rokb6p-MuiTableCell-root"
             scope="col"
           >
             Score
           </th>
           <th
-            class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-aa2ftw-MuiTableCell-root"
+            class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1qpl6n0-MuiTableCell-root"
             scope="col"
           >
             In stock
           </th>
           <th
-            class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-aa2ftw-MuiTableCell-root"
+            class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1rokb6p-MuiTableCell-root"
             scope="col"
           >
             Price
           </th>
           <th
-            class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-aa2ftw-MuiTableCell-root"
+            class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1yoqnw7-MuiTableCell-root"
             scope="col"
           >
             Visible
@@ -122,13 +125,13 @@ exports[`TopProductTable Should match snapschot 1`] = `
         data-rbd-droppable-id="droppableTable"
       >
         <tr
-          class="MuiTableRow-root css-9mllys-MuiTableRow-root"
+          class="MuiTableRow-root css-23ihwx-MuiTableRow-root"
           data-rbd-draggable-context-id="0"
           data-rbd-draggable-id="1"
         >
           <td
             aria-describedby="rbd-hidden-text-0-hidden-text-0"
-            class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1k2gu87-MuiTableCell-root"
+            class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-107228a-MuiTableCell-root"
             data-rbd-drag-handle-context-id="0"
             data-rbd-drag-handle-draggable-id="1"
             draggable="false"
@@ -144,7 +147,7 @@ exports[`TopProductTable Should match snapschot 1`] = `
             </div>
           </td>
           <td
-            class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-k8d3t5-MuiTableCell-root"
+            class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1ipz1hd-MuiTableCell-root"
           >
             <span
               class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
@@ -172,12 +175,16 @@ exports[`TopProductTable Should match snapschot 1`] = `
             </span>
           </td>
           <td
-            class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-7hdxk1-MuiTableCell-root"
+            class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-fyenha-MuiTableCell-root"
           >
-            VA03
+            <div
+              class="MuiBox-root css-8uhtka"
+            >
+              VA03
+            </div>
           </td>
           <td
-            class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-7hdxk1-MuiTableCell-root"
+            class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-fyenha-MuiTableCell-root"
           >
             <img
               alt=""
@@ -186,36 +193,42 @@ exports[`TopProductTable Should match snapschot 1`] = `
             />
           </td>
           <td
-            class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-7hdxk1-MuiTableCell-root"
+            class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-fyenha-MuiTableCell-root"
           >
-            Product name
+            <div
+              class="MuiBox-root css-8uhtka"
+            >
+              Product name
+            </div>
           </td>
           <td
-            class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-7hdxk1-MuiTableCell-root"
+            class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-fyenha-MuiTableCell-root"
           >
             <div
               class="MuiBox-root css-0"
             >
               <div
                 class="MuiBox-root css-1sm7xfn"
-              />
+              >
+                100.11
+              </div>
             </div>
           </td>
           <td
-            class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-7hdxk1-MuiTableCell-root"
+            class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-fyenha-MuiTableCell-root"
           >
             <span
-              class="tag--color__success css-172fwkx"
+              class="tag--color__error css-172fwkx"
             >
               <span
                 class="tag--label"
               >
-                stock.inStock
+                stock.outOfStock
               </span>
             </span>
           </td>
           <td
-            class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-7hdxk1-MuiTableCell-root"
+            class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-fyenha-MuiTableCell-root"
           >
             <div
               class="MuiBox-root css-1u92jb9"
@@ -225,7 +238,7 @@ exports[`TopProductTable Should match snapschot 1`] = `
             </div>
           </td>
           <td
-            class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-7hdxk1-MuiTableCell-root"
+            class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-fyenha-MuiTableCell-root"
           >
             <span
               class="MuiSwitch-root MuiSwitch-sizeMedium css-tnsvld-MuiSwitch-root"
@@ -252,13 +265,13 @@ exports[`TopProductTable Should match snapschot 1`] = `
           </td>
         </tr>
         <tr
-          class="MuiTableRow-root css-9mllys-MuiTableRow-root"
+          class="MuiTableRow-root css-23ihwx-MuiTableRow-root"
           data-rbd-draggable-context-id="0"
           data-rbd-draggable-id="2"
         >
           <td
             aria-describedby="rbd-hidden-text-0-hidden-text-0"
-            class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1k2gu87-MuiTableCell-root"
+            class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-107228a-MuiTableCell-root"
             data-rbd-drag-handle-context-id="0"
             data-rbd-drag-handle-draggable-id="2"
             draggable="false"
@@ -274,7 +287,7 @@ exports[`TopProductTable Should match snapschot 1`] = `
             </div>
           </td>
           <td
-            class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-k8d3t5-MuiTableCell-root"
+            class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1ipz1hd-MuiTableCell-root"
           >
             <span
               class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
@@ -302,12 +315,16 @@ exports[`TopProductTable Should match snapschot 1`] = `
             </span>
           </td>
           <td
-            class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-7hdxk1-MuiTableCell-root"
+            class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-fyenha-MuiTableCell-root"
           >
-            VA03
+            <div
+              class="MuiBox-root css-8uhtka"
+            >
+              VA03
+            </div>
           </td>
           <td
-            class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-7hdxk1-MuiTableCell-root"
+            class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-fyenha-MuiTableCell-root"
           >
             <img
               alt=""
@@ -316,23 +333,29 @@ exports[`TopProductTable Should match snapschot 1`] = `
             />
           </td>
           <td
-            class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-7hdxk1-MuiTableCell-root"
+            class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-fyenha-MuiTableCell-root"
           >
-            Product name
+            <div
+              class="MuiBox-root css-8uhtka"
+            >
+              Product name
+            </div>
           </td>
           <td
-            class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-7hdxk1-MuiTableCell-root"
+            class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-fyenha-MuiTableCell-root"
           >
             <div
               class="MuiBox-root css-0"
             >
               <div
                 class="MuiBox-root css-1sm7xfn"
-              />
+              >
+                100.11
+              </div>
             </div>
           </td>
           <td
-            class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-7hdxk1-MuiTableCell-root"
+            class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-fyenha-MuiTableCell-root"
           >
             <span
               class="tag--color__error css-172fwkx"
@@ -345,7 +368,7 @@ exports[`TopProductTable Should match snapschot 1`] = `
             </span>
           </td>
           <td
-            class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-7hdxk1-MuiTableCell-root"
+            class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-fyenha-MuiTableCell-root"
           >
             <div
               class="MuiBox-root css-1u92jb9"
@@ -355,7 +378,7 @@ exports[`TopProductTable Should match snapschot 1`] = `
             </div>
           </td>
           <td
-            class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-7hdxk1-MuiTableCell-root"
+            class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-fyenha-MuiTableCell-root"
           >
             <span
               class="MuiSwitch-root MuiSwitch-sizeMedium css-tnsvld-MuiSwitch-root"

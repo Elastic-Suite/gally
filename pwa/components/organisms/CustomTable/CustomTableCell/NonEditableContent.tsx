@@ -58,7 +58,7 @@ function NonEditableContent(props: IProps): JSX.Element {
       }
       case DataContentType.STOCK: {
         const stock = row[header.field] as unknown as IStock
-        return <Stock stock={stock} />
+        return <Stock stockStatus={stock.status} />
       }
 
       case DataContentType.PRICE:

@@ -4,7 +4,7 @@ import { StyledButton, StyledListbox, StyledPopper } from './Select.styled'
 
 function Select(
   props: SelectUnstyledProps<unknown>,
-  ref: ForwardedRef<HTMLUListElement>
+  ref: ForwardedRef<HTMLButtonElement>
 ): JSX.Element {
   const components: SelectUnstyledProps<unknown>['components'] = {
     Root: StyledButton,
