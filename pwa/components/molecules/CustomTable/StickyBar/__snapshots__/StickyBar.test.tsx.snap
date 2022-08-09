@@ -7,7 +7,7 @@ exports[`StickyBar should match snapshot 1`] = `
     data-testid="sticky-bar"
   >
     <span
-      class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-indeterminate MuiCheckbox-colorPrimary PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-indeterminate MuiCheckbox-colorPrimary Mui-checked css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
+      class="MuiCheckbox-root MuiCheckbox-indeterminate MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-indeterminate MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
       data-testid="massive-selection"
     >
       <input
@@ -32,7 +32,7 @@ exports[`StickyBar should match snapshot 1`] = `
       />
     </span>
     <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit  css-poyljr-MuiButtonBase-root-MuiButton-root"
+      class="MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButtonBase-root  css-poyljr-MuiButtonBase-root-MuiButton-root"
       data-testid="massive-selection-dropdown"
       tabindex="0"
       type="button"
@@ -45,7 +45,7 @@ exports[`StickyBar should match snapshot 1`] = `
       />
     </button>
     <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium css-1mgaza3-MuiButtonBase-root-MuiButton-root"
+      class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root css-1mgaza3-MuiButtonBase-root-MuiButton-root"
       tabindex="0"
       type="button"
     >

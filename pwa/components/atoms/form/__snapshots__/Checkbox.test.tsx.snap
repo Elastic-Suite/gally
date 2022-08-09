@@ -6,7 +6,7 @@ exports[`Checkbox match snapshot CheckboxIndeterminateFalse 1`] = `
     class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fbz9fk-MuiFormControlLabel-root"
   >
     <span
-      class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
+      class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
     >
       <input
         class="PrivateSwitchBase-input css-1m9pwf3"
@@ -38,7 +38,7 @@ exports[`Checkbox match snapshot CheckboxIndeterminateTrue 1`] = `
     class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fbz9fk-MuiFormControlLabel-root"
   >
     <span
-      class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-indeterminate MuiCheckbox-colorPrimary PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-indeterminate MuiCheckbox-colorPrimary css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
+      class="MuiCheckbox-root MuiCheckbox-indeterminate MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-indeterminate MuiCheckbox-colorPrimary PrivateSwitchBase-root css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
     >
       <input
         class="PrivateSwitchBase-input css-1m9pwf3"
@@ -70,7 +70,7 @@ exports[`Checkbox match snapshot CheckboxLabel 1`] = `
     class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fbz9fk-MuiFormControlLabel-root"
   >
     <span
-      class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
+      class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
     >
       <input
         class="PrivateSwitchBase-input css-1m9pwf3"
@@ -107,7 +107,7 @@ exports[`Checkbox match snapshot CheckboxLabelAndList 1`] = `
     class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fbz9fk-MuiFormControlLabel-root"
   >
     <span
-      class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-indeterminate MuiCheckbox-colorPrimary PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-indeterminate MuiCheckbox-colorPrimary css-b2ivi4-MuiButtonBase-root-MuiCheckbox-root"
+      class="MuiCheckbox-root MuiCheckbox-indeterminate MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-indeterminate MuiCheckbox-colorPrimary PrivateSwitchBase-root css-b2ivi4-MuiButtonBase-root-MuiCheckbox-root"
     >
       <input
         class="PrivateSwitchBase-input css-1m9pwf3"
@@ -144,7 +144,7 @@ exports[`Checkbox match snapshot CheckboxListFalse 1`] = `
     class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fbz9fk-MuiFormControlLabel-root"
   >
     <span
-      class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
+      class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
     >
       <input
         class="PrivateSwitchBase-input css-1m9pwf3"
@@ -176,7 +176,7 @@ exports[`Checkbox match snapshot CheckboxListTrue 1`] = `
     class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fbz9fk-MuiFormControlLabel-root"
   >
     <span
-      class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary css-b2ivi4-MuiButtonBase-root-MuiCheckbox-root"
+      class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-b2ivi4-MuiButtonBase-root-MuiCheckbox-root"
     >
       <input
         class="PrivateSwitchBase-input css-1m9pwf3"

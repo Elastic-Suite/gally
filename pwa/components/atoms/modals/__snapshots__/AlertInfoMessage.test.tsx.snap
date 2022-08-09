@@ -127,7 +127,7 @@ exports[`AlertInfoMessage match snapshot AlertInfoMessageDevTrue 1`] = `
       </div>
     </div>
     <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium Mui-disabled  css-1oj4bki-MuiButtonBase-root-MuiButton-root"
+      class="MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButtonBase-root Mui-disabled  css-1oj4bki-MuiButtonBase-root-MuiButton-root"
       disabled=""
       style="margin-top: 10px;"
       tabindex="-1"
