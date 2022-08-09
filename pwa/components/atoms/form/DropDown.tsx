@@ -43,11 +43,12 @@ function isMultiple(props: IDropDownProps): props is IMultiSelectProps {
 }
 
 interface ICommonProps {
+  infoTooltip?: string
   label?: string
   multiple?: boolean
   options: IOptions<unknown>
   required?: boolean
-  infoTooltip?: string
+  style?: { [key: string]: string }
 }
 
 export interface ISelectProps extends ISelectUnstyledProps, ICommonProps {}
@@ -60,12 +61,12 @@ export type IDropDownProps = ISelectProps | IMultiSelectProps
 
 export default function DropDown(props: IDropDownProps): JSX.Element {
   const {
+    infoTooltip,
     label,
     multiple,
     options,
     required,
     value,
-    infoTooltip,
     ...selectProps
   } = props
   const [listboxOpen, setListboxOpen] = useState(false)
@@ -86,12 +87,12 @@ export default function DropDown(props: IDropDownProps): JSX.Element {
 
   return (
     <FormControl variant="standard">
-      {label ? (
+      {Boolean(label || infoTooltip) && (
         <InputLabel shrink required={required}>
           {label}
           {infoTooltip ? <InfoTooltip title={infoTooltip} /> : null}
         </InputLabel>
-      ) : null}
+      )}
       {isMultiple(props) ? (
         <MultiSelect
           listboxOpen={listboxOpen}
