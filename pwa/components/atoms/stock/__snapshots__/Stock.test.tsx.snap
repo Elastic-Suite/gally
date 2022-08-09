@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Stock Should match snapschot 1`] = `
+<div>
+  <span
+    class="tag--color__success css-172fwkx"
+  >
+    <span
+      class="tag--label"
+    >
+      stock.inStock
+    </span>
+  </span>
+</div>
+`;

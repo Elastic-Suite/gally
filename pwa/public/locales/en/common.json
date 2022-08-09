@@ -11,5 +11,15 @@
   "filters.search": "Search",
   "massiveselection.all": "All",
   "massiveselection.allOnCurrentPage": "All on this page",
-  "massiveselection.none": "None"
+  "massiveselection.none": "None",
+  "catalog_one": "catalog",
+  "catalog_other": "catalogs",
+  "activeLocale_one": "active locale",
+  "activeLocale_other": "active locales",
+  "scope": "Scope",
+  "searchableAndFiltrableAttributes": "Searchable and filtrable attributes",
+  "contentOfSearchableAndFiltrableAttributes": "Content of Searchable and filtrable attributes",
+  "searchResults.topProducts": "Top Products",
+  "stock.inStock": "In stock",
+  "stock.outOfStock": "Out of stock"
 }

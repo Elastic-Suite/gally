@@ -60,6 +60,13 @@ const mockedHeadersAndRows = {
       editable: false,
       sticky: false,
     },
+    {
+      field: 'field7',
+      headerName: 'Test header image',
+      type: 'image',
+      editable: false,
+      sticky: false,
+    },
   ],
   tableRows: [
     {
@@ -70,96 +77,17 @@ const mockedHeadersAndRows = {
       field4: 'One field',
       field5: 10,
       field6: 'I am a tag',
+      field7: 'static/media/assets/img/scarf_elastic.png',
     },
     {
       id: '2',
       field: true,
       field2: 'hello2',
-      field3:
-        'Loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong',
+      field3: 'Here description',
       field4: 'One field',
       field5: 10,
       field6: 'I am a tag',
-    },
-    {
-      id: '3',
-      field: true,
-      field2: 'hello2',
-      field3:
-        'Loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong',
-      field4: 'One field',
-      field5: 10,
-      field6: 'I am a tag',
-    },
-    {
-      id: '4',
-      field: true,
-      field2: 'hello2',
-      field3:
-        'Loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong',
-      field4: 'One field',
-      field5: 10,
-      field6: 'I am a tag',
-    },
-    {
-      id: '5',
-      field: true,
-      field2: 'hello2',
-      field3:
-        'Loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong',
-      field4: 'One field',
-      field5: 10,
-      field6: 'I am a tag',
-    },
-    {
-      id: '6',
-      field: true,
-      field2: 'hello2',
-      field3:
-        'Loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong',
-      field4: 'One field',
-      field5: 10,
-      field6: 'I am a tag',
-    },
-    {
-      id: '7',
-      field: true,
-      field2: 'hello2',
-      field3:
-        'Loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong',
-      field4: 'One field',
-      field5: 10,
-      field6: 'I am a tag',
-    },
-    {
-      id: '8',
-      field: true,
-      field2: 'hello2',
-      field3:
-        'Loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong',
-      field4: 'One field',
-      field5: 10,
-      field6: 'I am a tag',
-    },
-    {
-      id: '9',
-      field: true,
-      field2: 'hello2',
-      field3:
-        'Loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong',
-      field4: 'One field',
-      field5: 10,
-      field6: 'I am a tag',
-    },
-    {
-      id: '10',
-      field: true,
-      field2: 'hello2',
-      field3:
-        'Loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong',
-      field4: 'One field',
-      field5: 10,
-      field6: 'I am a tag',
+      field7: 'static/media/assets/img/scarf_elastic.png',
     },
   ],
 }

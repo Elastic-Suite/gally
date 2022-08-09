@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Score Should match snapschot 1`] = `
+<div>
+  <div
+    class="MuiBox-root css-0"
+  >
+    <div
+      class="MuiBox-root css-1sm7xfn"
+    >
+      100.11
+    </div>
+    <div
+      class="MuiBox-root css-1utx3w7"
+    >
+      <div
+        class="MuiBox-root css-12xvij6"
+      >
+        <ion-icon
+          name="trending-down-outline"
+          style="width: 14px; height: 8px;"
+        />
+      </div>
+      <div
+        class="MuiBox-root css-sltm51"
+      >
+         x1.1 ( 1 boost) 
+      </div>
+    </div>
+  </div>
+</div>
+`;

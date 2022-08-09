@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Boost Should match snapschot 1`] = `
+<div>
+  <div
+    class="MuiBox-root css-1utx3w7"
+  >
+    <div
+      class="MuiBox-root css-12xvij6"
+    >
+      <ion-icon
+        name="trending-down-outline"
+        style="width: 14px; height: 8px;"
+      />
+    </div>
+    <div
+      class="MuiBox-root css-sltm51"
+    >
+       x1.1 ( 1 boost) 
+    </div>
+  </div>
+</div>
+`;

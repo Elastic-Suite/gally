@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Price Should match snapschot 1`] = `
+<div>
+  <div
+    class="MuiBox-root css-1u92jb9"
+  >
+     
+    100,00 €
+  </div>
+</div>
+`;
