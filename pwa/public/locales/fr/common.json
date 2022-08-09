@@ -11,5 +11,15 @@
   "filters.search": "Chercher",
   "massiveselection.all": "Toutes",
   "massiveselection.allOnCurrentPage": "Toute sur la page",
-  "massiveselection.none": "Aucune"
+  "massiveselection.none": "Aucune",
+  "catalog_one": "catalogue",
+  "catalog_other": "catalogues",
+  "activeLocale_one": "langue activé",
+  "activeLocale_other": "langues activé",
+  "scope": "Etendue",
+  "searchableAndFiltrableAttributes": "Attributs consultables et filtrables",
+  "contentOfSearchableAndFiltrableAttributes": "Contenu des attributs consultables et filtrables",
+  "searchResults.topProducts": "Top Products",
+  "stock.inStock": "En stock",
+  "stock.outOfStock": "Rupture de stock"
 }

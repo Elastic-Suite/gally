@@ -1,7 +1,5 @@
 import { Box } from '@mui/system'
-import PrimaryButton from '~/components/atoms/buttons/PrimaryButton'
 import TertiaryButton from '~/components/atoms/buttons/TertiaryButton'
-import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import { MassiveSelectionType } from '~/types'
 import MassiveSelection from '../MassiveSelection/MassiveSelection'
 
@@ -49,32 +47,10 @@ function StickyBar(props: IProps): JSX.Element {
           margin: '10px 8px 10px auto',
           padding: '8px 12px 8px 12px',
         }}
+        onClick={(): void => onMassiveSelection(MassiveSelectionType.NONE)}
       >
         Cancel
       </TertiaryButton>
-      <TertiaryButton
-        sx={{
-          color: 'colors.black',
-          margin: '10px 0 10px 0',
-          padding: '8px 12px 8px 12px',
-        }}
-      >
-        <Box
-          sx={{
-            fontSize: '25px',
-          }}
-        >
-          <IonIcon name="download-outline" />
-        </Box>
-        Export (CSV)
-      </TertiaryButton>
-      <PrimaryButton
-        sx={{
-          margin: '10px 32px 10px 8px',
-        }}
-      >
-        Apply
-      </PrimaryButton>
     </Box>
   )
 }

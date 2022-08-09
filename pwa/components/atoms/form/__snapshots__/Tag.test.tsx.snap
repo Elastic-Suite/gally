@@ -3,7 +3,7 @@
 exports[`Tag match snapshot Tag simple 1`] = `
 <div>
   <span
-    class="tag--color__neutral css-1laa4dw"
+    class="tag--color__undefined css-172fwkx"
   >
     <span
       class="tag--label"
@@ -17,7 +17,7 @@ exports[`Tag match snapshot Tag simple 1`] = `
 exports[`Tag match snapshot TagColor 1`] = `
 <div>
   <span
-    class="tag--color__red css-1laa4dw"
+    class="tag--color__success css-172fwkx"
   >
     <span
       class="tag--label"

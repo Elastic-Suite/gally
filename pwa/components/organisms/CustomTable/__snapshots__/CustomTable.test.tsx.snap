@@ -15,7 +15,7 @@ exports[`CustomTable match snapshot with editable content 1`] = `
           class="MuiTableRow-root MuiTableRow-head css-1u1grnd-MuiTableRow-root"
         >
           <th
-            class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1d8zdlv-MuiTableCell-root"
+            class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-18neeob-MuiTableCell-root"
             scope="col"
           />
           <th
@@ -201,7 +201,7 @@ exports[`CustomTable match snapshot with selection, with draggable, with sticky 
           class="MuiTableRow-root MuiTableRow-head css-1u1grnd-MuiTableRow-root"
         >
           <th
-            class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1d8zdlv-MuiTableCell-root"
+            class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-18neeob-MuiTableCell-root"
             scope="col"
           />
           <th
@@ -388,7 +388,7 @@ exports[`CustomTable match snapshot with selection, with draggable, without stic
           class="MuiTableRow-root MuiTableRow-head css-1u1grnd-MuiTableRow-root"
         >
           <th
-            class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1d8zdlv-MuiTableCell-root"
+            class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-18neeob-MuiTableCell-root"
             scope="col"
           />
           <th

@@ -54,33 +54,6 @@ exports[`StickyBar should match snapshot 1`] = `
         class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
       />
     </button>
-    <button
-      class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root css-dh3olr-MuiButtonBase-root-MuiButton-root"
-      tabindex="0"
-      type="button"
-    >
-      <div
-        class="MuiBox-root css-6orinh"
-      >
-        <ion-icon
-          name="download-outline"
-        />
-      </div>
-      Export (CSV)
-      <span
-        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-      />
-    </button>
-    <button
-      class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root css-1rccv5x-MuiButtonBase-root-MuiButton-root"
-      tabindex="0"
-      type="button"
-    >
-      Apply
-      <span
-        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-      />
-    </button>
   </div>
 </div>
 `;
