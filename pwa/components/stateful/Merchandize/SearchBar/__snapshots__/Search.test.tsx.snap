@@ -14,16 +14,17 @@ exports[`SearchBar match snapshot SearchBar 1`] = `
         <div
           class="MuiGrid-root css-iwdcax-MuiGrid-root"
         >
-          searchBar.title
+          category.searchBar.title
         </div>
         <div
           class="MuiGrid-root css-smiavp-MuiGrid-root"
         >
-          1010 searchBar.results
+          1010 
+          category.searchBar.results
         </div>
       </div>
       <div
-        class="MuiFormControl-root css-14yckze-MuiFormControl-root"
+        class="MuiFormControl-root css-1c9gikl-MuiFormControl-root"
       >
         <div
           class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd css-16scddn-MuiInputBase-root"
@@ -32,7 +33,7 @@ exports[`SearchBar match snapshot SearchBar 1`] = `
             aria-invalid="false"
             class="MuiInputBase-input MuiInputBase-inputAdornedEnd css-yz9k0d-MuiInputBase-input"
             id="input-text"
-            placeholder="searchBar.placeholder"
+            placeholder="category.searchBar.placeholder"
             type="text"
             value=""
           />
