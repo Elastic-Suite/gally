@@ -84,7 +84,7 @@ const InputTextStyled = styled(UnstyledInputText)(({ theme }) => ({
   },
 }))
 
-interface IProps extends Omit<InputBaseProps, 'onChange'> {
+export interface IProps extends Omit<InputBaseProps, 'onChange'> {
   fullWidth?: boolean
   label?: string
   helperText?: ReactChild

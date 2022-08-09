@@ -5,16 +5,24 @@ import { useContext, useEffect, useState } from 'react'
 
 import { breadcrumbContext } from '~/contexts'
 import { withAuth } from '~/hocs'
-import { useApiList, useFetchApi, useResource } from '~/hooks'
+import {
+  useApiList,
+  useFetchApi,
+  useResource,
+  useResourceOperations,
+} from '~/hooks'
 import { findBreadcrumbLabel } from '~/services'
 import { selectMenu, useAppSelector } from '~/store'
 import { ICatalog, ICategories, ITreeItem } from '~/types'
 
+import VirtualRule from '~/components/molecules/layout/fade/VirtualRule'
 import TitleBlock from '~/components/molecules/layout/TitleBlock/TitleBlock'
 import TwoColsLayout from '~/components/molecules/layout/twoColsLayout/TwoColsLayout'
 import CatalogSwitcher from '~/components/stateful/CatalogSwitcher/CatalogSwitcher'
 import CategoryTree from '~/components/stateful/CategoryTree/CategoryTree'
-import ProductsContainer from '~/components/stateful/ProductsContainer/ProductsContainer'
+import ProductsContainer, {
+  IConfiguration,
+} from '~/components/stateful/ProductsContainer/ProductsContainer'
 
 function Categories(): JSX.Element {
   const router = useRouter()
@@ -49,6 +57,29 @@ function Categories(): JSX.Element {
     }`
   )
 
+  const paramsCategory = `https://localhost/category_configurations/category/one?catalogId=${catalogId}&localizedCatalogId=${localizedCatalogId}`
+  const [dataCat, updateDataCat] = useFetchApi<IConfiguration>(paramsCategory)
+
+  const idCat = dataCat?.data?.id
+
+  const configuration = useResource('CategoryConfiguration')
+  const { update } = useResourceOperations<IConfiguration>(configuration)
+
+  function handleUpdateCat(
+    name: string
+  ): (val: boolean | string) => Promise<void> {
+    return async function (val: boolean | string): Promise<void> {
+      await update(idCat, { [name]: val })
+
+      updateDataCat((categ) => {
+        return {
+          ...categ,
+          [name]: val,
+        }
+      })
+    }
+  }
+
   return (
     <>
       <Head>
@@ -75,16 +106,19 @@ function Categories(): JSX.Element {
             </>
           </TitleBlock>,
           <TitleBlock key="virtualRule" title={t('virtualRule.title')}>
-            Virtual rule DATA
+            <VirtualRule val={dataCat?.data?.isVirtual}>
+              Virtual rule DATA
+            </VirtualRule>
           </TitleBlock>,
         ]}
       >
         <ProductsContainer
-          catalog={catalogId}
-          localizedCatalog={localizedCatalogId}
-          catalogsData={data}
-          error={error}
           category={selectedCategoryItem}
+          dataCat={dataCat.data}
+          onVirtualChange={handleUpdateCat('isVirtual')}
+          onNameChange={handleUpdateCat('useNameInProductSearch')}
+          onSortChange={handleUpdateCat('defaultSorting')}
+          catalogId={catalogId}
         />
       </TwoColsLayout>
     </>

@@ -1,8 +1,8 @@
 import { Box, styled } from '@mui/system'
-import { useRef, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { ICatalog, IHydraResponse, ITreeItem } from '~/types'
+import { IHydraCatSort, IHydraMember, ITreeItem } from '~/types'
 
 import PrimaryButton from '~/components/atoms/buttons/PrimaryButton'
 import TertiaryButton from '~/components/atoms/buttons/TertiaryButton'
@@ -10,7 +10,11 @@ import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import PageTile from '~/components/atoms/PageTitle/PageTitle'
 import StickyBar from '~/components/molecules/CustomTable/StickyBar/StickyBar'
 import ProductsTopAndBottom from '~/components/stateful/ProductsTopAndBottom/ProductsTopAndBottom'
-import { getCatalogForSearchProductApi } from '~/services'
+import Merchandize from '../Merchandize/Merchandize'
+
+import { apiUrlSort } from '~/constants'
+import { useApiList } from '~/hooks'
+import SearchBar from '../Merchandize/SearchBar/SearchBar'
 
 const Layout = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -26,27 +30,35 @@ const ActionsButtonsContainer = styled(Box)({
 
 interface IProps {
   category: ITreeItem
-  catalog: number
-  localizedCatalog: number
-  catalogsData: IHydraResponse<ICatalog>
-  error: Error
+  onVirtualChange: (val: boolean) => Promise<void>
+  onNameChange: (val: boolean) => Promise<void>
+  onSortChange: (val: string) => Promise<void>
+  dataCat: IConfiguration
+  catalogId: number
+}
+
+export interface IConfiguration extends IHydraMember {
+  useNameInProductSearch: boolean
+  isVirtual: boolean
+  defaultSorting: string
+}
+
+interface IPropsSort {
+  code: string | number
+  label: string
 }
 
 function ProductsContainer(props: IProps): JSX.Element {
-  const { category, catalog, localizedCatalog, catalogsData, error } = props
+  const { catalogId, category, onVirtualChange, dataCat, onNameChange, onSortChange } =
+    props
 
   const tableRef = useRef<HTMLDivElement>()
   const [topSelectedRows, setTopSelectedRows] = useState<string[]>([])
   const [bottomSelectedRows, setBottomSelectedRows] = useState<string[]>([])
 
-  const catalogId =
-    catalogsData && catalogsData['hydra:totalItems'] > 0
-      ? getCatalogForSearchProductApi(
-          catalog,
-          localizedCatalog,
-          catalogsData['hydra:member']
-        )
-      : null
+  const useNameInProductSearch = dataCat?.useNameInProductSearch ?? false
+  const isVirtual = dataCat?.isVirtual ?? false
+  const defaultSorting = dataCat?.defaultSorting ?? ''
 
   const { t } = useTranslation('categories')
 
@@ -59,9 +71,23 @@ function ProductsContainer(props: IProps): JSX.Element {
     setBottomSelectedRows([])
   }
 
-  if (error || !catalogsData) {
-    return null
-  }
+  const params = useMemo(() => {
+    return {
+      url: apiUrlSort,
+    }
+  }, [])
+
+  const [{ data }] = useApiList<IHydraCatSort>(params.url)
+
+  const sortOption = data
+    ? data[`hydra:member`].map((obj: IPropsSort) => ({
+        value: obj.code,
+        ...obj,
+      }))
+    : [{ label: 'Position', value: 'postion' }]
+
+  const [searchValue, setSearchValue] = useState('')
+  const onSearchChange = (value: string): void => setSearchValue(value)
 
   return (
     <Box>
@@ -70,10 +96,21 @@ function ProductsContainer(props: IProps): JSX.Element {
           title={category?.name ? category?.name : category?.catalogName}
           sx={{ marginBottom: '12px' }}
         />
+        <Merchandize
+          onVirtualChange={onVirtualChange}
+          virtualCategoryValue={isVirtual}
+          onNameChange={onNameChange}
+          categoryNameValue={useNameInProductSearch}
+          onSortChange={onSortChange}
+          sortValue={defaultSorting}
+          sortOptions={sortOption}
+        />
 
-        {/* todo: add sort and category / virtual category toggle */}
-
-        {/* todo : add search bar */}
+        <SearchBar
+          resultsValue={10}
+          value={searchValue}
+          onChange={onSearchChange}
+        />
 
         <ProductsTopAndBottom
           ref={tableRef}
@@ -81,7 +118,7 @@ function ProductsContainer(props: IProps): JSX.Element {
           onTopSelectedRows={setTopSelectedRows}
           bottomSelectedRows={bottomSelectedRows}
           onBottomSelectedRows={setBottomSelectedRows}
-          catalogId={catalogId}
+          catalogId={`${catalogId}`}
         />
       </Layout>
       <StickyBar positionRef={tableRef} show={showStickyBar}>

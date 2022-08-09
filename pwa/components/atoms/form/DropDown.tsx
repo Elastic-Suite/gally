@@ -9,6 +9,7 @@ import { IOptions } from '~/types'
 import Checkbox from './Checkbox'
 import MultiSelect, { IMultiSelectUnstyledProps } from './MultiSelect'
 import Select, { ISelectUnstyledProps } from './Select'
+import InfoTooltip from './InfoTooltip'
 
 const Option = styled(OptionUnstyled)(({ theme }) => ({
   fontFamily: 'Inter',
@@ -45,6 +46,7 @@ interface ICommonProps {
   multiple?: boolean
   options: IOptions<unknown>
   required?: boolean
+  infoTooltip?: string
 }
 
 export interface ISelectProps extends ISelectUnstyledProps, ICommonProps {}
@@ -56,7 +58,15 @@ export interface IMultiSelectProps
 export type IDropDownProps = ISelectProps | IMultiSelectProps
 
 export default function DropDown(props: IDropDownProps): JSX.Element {
-  const { label, multiple, options, required, value, ...selectProps } = props
+  const {
+    label,
+    multiple,
+    options,
+    required,
+    value,
+    infoTooltip,
+    ...selectProps
+  } = props
   const [listboxOpen, setListboxOpen] = useState(false)
   const ignoreClick = useRef(false)
 
@@ -78,6 +88,7 @@ export default function DropDown(props: IDropDownProps): JSX.Element {
       {label ? (
         <InputLabel shrink required={required}>
           {label}
+          {infoTooltip ? <InfoTooltip title={infoTooltip} /> : null}
         </InputLabel>
       ) : null}
       {isMultiple(props) ? (
