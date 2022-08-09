@@ -6,7 +6,7 @@ exports[`InputText match snapshot BadgeDisabledFalse 1`] = `
     class="MuiFormControl-root css-1c9gikl-MuiFormControl-root"
   >
     <label
-      class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-colorPrimary MuiFormLabel-filled css-ssr94h-MuiFormLabel-root-MuiInputLabel-root"
+      class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-root MuiFormLabel-colorPrimary MuiFormLabel-filled css-ssr94h-MuiFormLabel-root-MuiInputLabel-root"
       data-shrink="true"
       for="input-text"
     >
@@ -34,14 +34,14 @@ exports[`InputText match snapshot BadgeDisabledFalseRequired 1`] = `
     class="MuiFormControl-root css-1c9gikl-MuiFormControl-root"
   >
     <label
-      class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-colorPrimary MuiFormLabel-filled Mui-required css-ssr94h-MuiFormLabel-root-MuiInputLabel-root"
+      class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-root MuiFormLabel-colorPrimary MuiFormLabel-filled Mui-required css-ssr94h-MuiFormLabel-root-MuiInputLabel-root"
       data-shrink="true"
       for="input-text"
     >
       Label
       <span
         aria-hidden="true"
-        class="MuiFormLabel-asterisk MuiInputLabel-asterisk css-1ufxisk-MuiFormLabel-asterisk"
+        class="MuiInputLabel-asterisk MuiFormLabel-asterisk css-1ufxisk-MuiFormLabel-asterisk"
       >
          
         *

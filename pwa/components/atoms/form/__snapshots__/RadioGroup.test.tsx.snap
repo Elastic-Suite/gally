@@ -11,7 +11,7 @@ exports[`Switch match snapshot Radio group defaultChecked False with default tru
     >
       <span
         aria-disabled="true"
-        class="MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary Mui-disabled PrivateSwitchBase-root MuiRadio-root MuiRadio-colorPrimary Mui-disabled css-14bw0ew-MuiButtonBase-root-MuiRadio-root"
+        class="MuiRadio-root MuiRadio-colorPrimary MuiButtonBase-root Mui-disabled MuiRadio-root MuiRadio-colorPrimary PrivateSwitchBase-root Mui-disabled css-14bw0ew-MuiButtonBase-root-MuiRadio-root"
         tabindex="-1"
       >
         <input
@@ -58,7 +58,7 @@ exports[`Switch match snapshot Radio group defaultChecked False with default tru
       class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fbz9fk-MuiFormControlLabel-root"
     >
       <span
-        class="MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary PrivateSwitchBase-root MuiRadio-root MuiRadio-colorPrimary css-14bw0ew-MuiButtonBase-root-MuiRadio-root"
+        class="MuiRadio-root MuiRadio-colorPrimary MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary PrivateSwitchBase-root css-14bw0ew-MuiButtonBase-root-MuiRadio-root"
       >
         <input
           class="PrivateSwitchBase-input css-1m9pwf3"
@@ -117,7 +117,7 @@ exports[`Switch match snapshot Radio group defaultChecked False without default 
     >
       <span
         aria-disabled="true"
-        class="MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary Mui-disabled PrivateSwitchBase-root MuiRadio-root MuiRadio-colorPrimary Mui-disabled css-14bw0ew-MuiButtonBase-root-MuiRadio-root"
+        class="MuiRadio-root MuiRadio-colorPrimary MuiButtonBase-root Mui-disabled MuiRadio-root MuiRadio-colorPrimary PrivateSwitchBase-root Mui-disabled css-14bw0ew-MuiButtonBase-root-MuiRadio-root"
         tabindex="-1"
       >
         <input
@@ -164,7 +164,7 @@ exports[`Switch match snapshot Radio group defaultChecked False without default 
       class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fbz9fk-MuiFormControlLabel-root"
     >
       <span
-        class="MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary PrivateSwitchBase-root MuiRadio-root MuiRadio-colorPrimary css-14bw0ew-MuiButtonBase-root-MuiRadio-root"
+        class="MuiRadio-root MuiRadio-colorPrimary MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary PrivateSwitchBase-root css-14bw0ew-MuiButtonBase-root-MuiRadio-root"
       >
         <input
           class="PrivateSwitchBase-input css-1m9pwf3"
@@ -223,7 +223,7 @@ exports[`Switch match snapshot Radio group defaultChecked true with default 1`] 
     >
       <span
         aria-disabled="true"
-        class="MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary Mui-disabled PrivateSwitchBase-root MuiRadio-root MuiRadio-colorPrimary Mui-disabled css-14bw0ew-MuiButtonBase-root-MuiRadio-root"
+        class="MuiRadio-root MuiRadio-colorPrimary MuiButtonBase-root Mui-disabled MuiRadio-root MuiRadio-colorPrimary PrivateSwitchBase-root Mui-disabled css-14bw0ew-MuiButtonBase-root-MuiRadio-root"
         tabindex="-1"
       >
         <input
@@ -270,7 +270,7 @@ exports[`Switch match snapshot Radio group defaultChecked true with default 1`] 
       class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fbz9fk-MuiFormControlLabel-root"
     >
       <span
-        class="MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary PrivateSwitchBase-root MuiRadio-root MuiRadio-colorPrimary Mui-checked css-14bw0ew-MuiButtonBase-root-MuiRadio-root"
+        class="MuiRadio-root MuiRadio-colorPrimary MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary PrivateSwitchBase-root Mui-checked css-14bw0ew-MuiButtonBase-root-MuiRadio-root"
       >
         <input
           checked=""
@@ -330,7 +330,7 @@ exports[`Switch match snapshot Radio group defaultChecked true without default 1
     >
       <span
         aria-disabled="true"
-        class="MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary Mui-disabled PrivateSwitchBase-root MuiRadio-root MuiRadio-colorPrimary Mui-disabled css-14bw0ew-MuiButtonBase-root-MuiRadio-root"
+        class="MuiRadio-root MuiRadio-colorPrimary MuiButtonBase-root Mui-disabled MuiRadio-root MuiRadio-colorPrimary PrivateSwitchBase-root Mui-disabled css-14bw0ew-MuiButtonBase-root-MuiRadio-root"
         tabindex="-1"
       >
         <input
@@ -377,7 +377,7 @@ exports[`Switch match snapshot Radio group defaultChecked true without default 1
       class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-fbz9fk-MuiFormControlLabel-root"
     >
       <span
-        class="MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary PrivateSwitchBase-root MuiRadio-root MuiRadio-colorPrimary css-14bw0ew-MuiButtonBase-root-MuiRadio-root"
+        class="MuiRadio-root MuiRadio-colorPrimary MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary PrivateSwitchBase-root css-14bw0ew-MuiButtonBase-root-MuiRadio-root"
       >
         <input
           class="PrivateSwitchBase-input css-1m9pwf3"
