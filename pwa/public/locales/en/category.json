@@ -1,5 +1,11 @@
 {
+<<<<<<< HEAD
   "searchBar.title": "Products in category",
   "searchBar.results": "resluts",
   "searchBar.placeholder": "Search by name..."
+=======
+  "category.searchBar.title": "Products in category",
+  "category.searchBar.results": "resluts",
+  "category.searchBar.placeholder": "Search by name..."
+>>>>>>> feat/ESPP-353-Search-bar
 }
