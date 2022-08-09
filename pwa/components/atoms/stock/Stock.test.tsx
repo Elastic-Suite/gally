@@ -3,7 +3,7 @@ import Stock from './Stock'
 
 describe('Stock', () => {
   it('Should match snapschot', () => {
-    const { container } = renderWithProviders(<Stock stock />)
+    const { container } = renderWithProviders(<Stock stockStatus />)
     expect(container).toMatchSnapshot()
   })
 })

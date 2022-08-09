@@ -3,7 +3,7 @@
 exports[`TitleBlock match snapshot TwoColsLayout simple 1`] = `
 <div>
   <div
-    class="css-vpydjx"
+    class="css-ksvmh9"
   >
     <div
       class="css-1a6i05b"
@@ -22,7 +22,7 @@ exports[`TitleBlock match snapshot TwoColsLayout simple 1`] = `
 exports[`TitleBlock match snapshot TwoColsLayout with Array in left 1`] = `
 <div>
   <div
-    class="css-vpydjx"
+    class="css-ksvmh9"
   >
     <div
       class="css-1a6i05b"

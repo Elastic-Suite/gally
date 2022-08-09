@@ -9,7 +9,7 @@ import {
   selectionColumnWidth,
   stickyColunWidth,
 } from '~/constants'
-import { ITableHeader, ITableHeaderSticky } from '~/types'
+import { DataContentType, ITableHeader, ITableHeaderSticky } from '~/types'
 import { manageStickyHeaders, stickyBorderStyle } from '../CustomTable.service'
 
 interface IProps {
@@ -123,6 +123,12 @@ function CustomTableHeader(props: IProps): JSX.Element {
                 borderTopStyle: 'solid',
                 backgroundColor: 'neutral.light',
                 whiteSpace: 'nowrap',
+                ...((header.type === DataContentType.SCORE ||
+                  header.type === DataContentType.PRICE) && { width: '5%' }),
+                ...(header.type === DataContentType.STOCK && { width: '15%' }),
+                ...(header.type === DataContentType.STRING && {
+                  maxWidth: 'fit-content',
+                }),
               }}
               key={header.field}
             >

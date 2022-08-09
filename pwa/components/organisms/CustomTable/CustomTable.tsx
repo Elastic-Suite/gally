@@ -28,7 +28,7 @@ export interface IProps {
   tableRows: ITableRow[]
   selectedRows?: (string | number)[]
   setSelectedRows?: Dispatch<SetStateAction<(string | number)[]>>
-  withSelection?: boolean
+  draggable?: boolean
   paginated: boolean
 }
 
@@ -39,7 +39,6 @@ function CustomTable(props: IProps): JSX.Element {
     onRowUpdate,
     tableHeaders,
     tableRows,
-    withSelection,
     selectedRows,
     setSelectedRows,
     paginated,
@@ -55,6 +54,8 @@ function CustomTable(props: IProps): JSX.Element {
    */
   const stickyLength =
     tableHeaders.filter((header) => header.sticky).length * stickyColunWidth
+
+  const withSelection = selectedRows?.length !== undefined
 
   let onSelection = null
   let massiveSelectionState = null
@@ -113,16 +114,11 @@ function CustomTable(props: IProps): JSX.Element {
 
   useEffect(() => {
     if (withSelection) {
-      setScrollLength(selectionColumnWidth + stickyLength)
-      if (draggable) {
-        setScrollLength(
-          selectionColumnWidth + reorderingColumnWidth + stickyLength
-        )
-      }
-    } else if (draggable) {
-      setScrollLength(reorderingColumnWidth)
+      setScrollLength(
+        selectionColumnWidth + stickyLength + reorderingColumnWidth
+      )
     } else {
-      setScrollLength(stickyLength)
+      setScrollLength(stickyLength + reorderingColumnWidth)
     }
   }, [withSelection, stickyLength, draggable])
 

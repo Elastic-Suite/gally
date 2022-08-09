@@ -3,9 +3,10 @@
 exports[`StickyBar should match snapshot 1`] = `
 <div>
   <div
-    class="MuiBox-root css-4z6a4y"
+    class="MuiBox-root css-1tbxctp"
     data-testid="sticky-bar"
   >
+<<<<<<< HEAD
     <span
       class="MuiCheckbox-root MuiCheckbox-indeterminate MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-indeterminate MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
       data-testid="massive-selection"
@@ -54,6 +55,15 @@ exports[`StickyBar should match snapshot 1`] = `
         class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
       />
     </button>
+=======
+    <div
+      class="MuiBox-root css-112rthd"
+    >
+      <div>
+        Hello Sticky
+      </div>
+    </div>
+>>>>>>> c7e2136... update-test
   </div>
 </div>
 `;

@@ -89,7 +89,6 @@ function BottomTable(props: IProps): JSX.Element {
             totalPages={
               products.data.data.searchProducts.paginationInfo.lastPage
             }
-            withSelection
             paginated
           />
         )}
