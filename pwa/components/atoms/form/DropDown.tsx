@@ -48,6 +48,7 @@ interface ICommonProps {
   multiple?: boolean
   options: IOptions<unknown>
   required?: boolean
+  style?: { [key: string]: string }
 }
 
 export interface ISelectProps extends ISelectUnstyledProps, ICommonProps {}
