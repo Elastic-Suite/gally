@@ -110,7 +110,6 @@ const mockedHeadersAndRows = {
     },
   ],
   selectedRows,
-  setSelectedRows: (): void => null,
 }
 
 export const CustomTable = Template.bind({})

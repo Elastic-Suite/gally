@@ -85,7 +85,7 @@ describe('TopProductTable', () => {
         tableHeaders={mockedHeadersAndRows.tableHeaders}
         tableRows={mockedHeadersAndRows.tableRows}
         selectedRows={[]}
-        setSelectedRows={(): void => null}
+        onSelectedRows={(): void => null}
         draggable
         paginated={false}
       />

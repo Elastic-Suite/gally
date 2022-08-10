@@ -5,5 +5,6 @@
   "pinToTop": "Pin",
   "pinToBottom": "Unpin",
   "previewArea": "Zone de prévisualisation",
-  "rows.selected": " ligne(s) sélectionnée(s)"
+  "rows.selected_one": "{{count}} ligne sélectionnée",
+  "rows.selected_other": "{{count}} lignes sélectionnées"
 }

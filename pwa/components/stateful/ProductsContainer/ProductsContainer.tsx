@@ -6,7 +6,7 @@ import TertiaryButton from '~/components/atoms/buttons/TertiaryButton'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import PageTile from '~/components/atoms/PageTitle/PageTitle'
 import StickyBar from '~/components/molecules/CustomTable/StickyBar/StickyBar'
-import ProductsTopAndBottom from '~/components/organisms/ProductsTopAndBottom/ProductsTopAndBottom'
+import ProductsTopAndBottom from '~/components/stateful/ProductsTopAndBottom/ProductsTopAndBottom'
 import { ITreeItem } from '~/types'
 
 const Layout = styled('div')(({ theme }) => ({
@@ -62,17 +62,18 @@ function ProductsContainer(props: IProps): JSX.Element {
 
         <ProductsTopAndBottom
           topSelectedRows={topSelectedRows}
-          setTopSelectedRows={setTopSelectedRows}
+          onTopSelectedRows={setTopSelectedRows}
           bottomSelectedRows={bottomSelectedRows}
-          setBottomSelectedRows={setBottomSelectedRows}
+          onBottomSelectedRows={setBottomSelectedRows}
         />
       </Layout>
       <StickyBar show={showStickyBar}>
         <>
           <CustomSpan>
             {' '}
-            {topSelectedRows.length + bottomSelectedRows.length}{' '}
-            {t('rows.selected')}{' '}
+            {t('rows.selected', {
+              count: topSelectedRows.length + bottomSelectedRows.length,
+            })}{' '}
           </CustomSpan>
           <ActionsButtonsContainer>
             <TertiaryButton
@@ -82,7 +83,7 @@ function ProductsContainer(props: IProps): JSX.Element {
               }}
               onClick={(): void => unselectAllRows()}
             >
-              {t('button.cancel')}
+              {t('button.cancelSelection')}
             </TertiaryButton>
             <PrimaryButton
               sx={{

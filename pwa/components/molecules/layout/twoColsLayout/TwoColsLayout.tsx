@@ -5,7 +5,6 @@ const CustomRoot = styled('div')({
   display: 'flex',
   justifyContent: 'center',
   flexDirection: 'row',
-  //gap: theme.spacing(4),
 })
 
 const CustomBorder = styled('div')(({ theme }) => ({

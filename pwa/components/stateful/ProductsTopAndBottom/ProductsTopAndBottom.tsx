@@ -1,8 +1,8 @@
 import { Box, styled } from '@mui/system'
 import { Dispatch, SetStateAction } from 'react'
 import { useTranslation } from 'react-i18next'
-import BottomTable from '~/components/organisms/TopAndBottomTable/BottomTable'
-import TopTable from '~/components/organisms/TopAndBottomTable/TopTable'
+import BottomTable from '~/components/stateful/TopAndBottomTable/BottomTable'
+import TopTable from '~/components/stateful/TopAndBottomTable/TopTable'
 
 const PreviewArea = styled(Box)(({ theme }) => ({
   fontSize: '12px',
@@ -14,33 +14,35 @@ const PreviewArea = styled(Box)(({ theme }) => ({
 
 interface IProps {
   topSelectedRows: (string | number)[]
-  setTopSelectedRows: Dispatch<SetStateAction<(string | number)[]>>
+  onTopSelectedRows: Dispatch<SetStateAction<(string | number)[]>>
   bottomSelectedRows: (string | number)[]
-  setBottomSelectedRows: Dispatch<SetStateAction<(string | number)[]>>
+  onBottomSelectedRows: Dispatch<SetStateAction<(string | number)[]>>
 }
 
 function ProductsTopAndBottom(props: IProps): JSX.Element {
   const {
     topSelectedRows,
-    setTopSelectedRows,
+    onTopSelectedRows,
     bottomSelectedRows,
-    setBottomSelectedRows,
+    onBottomSelectedRows,
   } = props
 
-  const { t } = useTranslation('common')
+  const { t } = useTranslation('categories')
 
   return (
     <Box sx={{ backgroundColor: 'colors.neutral.300' }}>
-      <PreviewArea>{t('categories.previewArea')}</PreviewArea>
+      <PreviewArea>{t('previewArea')}</PreviewArea>
       <Box sx={{ padding: '42px 16px 17px 16px' }}>
         <TopTable
           selectedRows={topSelectedRows}
-          setSelectedRows={setTopSelectedRows}
+          onSelectedRows={onTopSelectedRows}
+          catalogId="com_fr"
         />
         <Box sx={{ marginTop: '24px' }}>
           <BottomTable
             selectedRows={bottomSelectedRows}
-            setSelectedRows={setBottomSelectedRows}
+            onSelectedRows={onBottomSelectedRows}
+            catalogId="com_fr"
           />
         </Box>
       </Box>
