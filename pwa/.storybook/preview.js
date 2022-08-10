@@ -1,10 +1,12 @@
 import { Suspense } from 'react'
-import AppProvider from '~/components/AppProvider'
-
-import I18nProvider from './I18nProvider'
 
 import { api } from '~/mocks'
 import { setupStore } from '~/store'
+import TestProvider from '~/utils/TestProvider'
+
+import AppProvider from '~/components/stateful-providers/AppProvider/AppProvider'
+
+import I18nProvider from './I18nProvider'
 
 import '~/assets/scss/style.scss'
 
@@ -24,10 +26,12 @@ export const decorators = [
     const store = setupStore()
     return (
       <I18nProvider locale={context.globals.locale}>
-        <AppProvider api={api} store={store}>
-          <Suspense fallback="">
-            <Story />
-          </Suspense>
+        <AppProvider store={store}>
+          <TestProvider api={api}>
+            <Suspense fallback="">
+              <Story />
+            </Suspense>
+          </TestProvider>
         </AppProvider>
       </I18nProvider>
     )

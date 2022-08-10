@@ -1,16 +1,14 @@
 import { ReactChild } from 'react'
 
-import AppProvider from '~/components/AppProvider'
-import { AppStore } from '~/store'
+import { schemaContext } from '~/contexts'
 import { useSchemaLoader } from '~/hooks'
 
 interface IProps {
   children: ReactChild
-  store: AppStore
 }
 
-function SchemaLoader(props: IProps): JSX.Element {
-  const { children, store } = props
+function SchemaProvider(props: IProps): JSX.Element {
+  const { children } = props
   const api = useSchemaLoader()
 
   if (api.error) {
@@ -22,10 +20,8 @@ function SchemaLoader(props: IProps): JSX.Element {
   }
 
   return (
-    <AppProvider api={api.data} store={store}>
-      {children}
-    </AppProvider>
+    <schemaContext.Provider value={api.data}>{children}</schemaContext.Provider>
   )
 }
 
-export default SchemaLoader
+export default SchemaProvider

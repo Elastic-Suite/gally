@@ -48,9 +48,9 @@ export function useApiFilters<A extends IHydraMember, R extends IHydraMember>(
       )
 
     Promise.all(promises)
-      .then((responses: [IField, IHydraResponse<R>][]) =>
+      .then((results: [IField, IHydraResponse<R>][]) =>
         setReferences({
-          data: new Map(responses),
+          data: new Map(results),
           status: LoadStatus.SUCCEEDED,
         })
       )

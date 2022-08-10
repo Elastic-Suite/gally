@@ -1,7 +1,22 @@
-import { apiUrl, languageHeader } from '~/constants'
-import { IResource, ISearchParameters } from '~/types'
+import {
+  apiUrl,
+  authHeader,
+  contentTypeHeader,
+  languageHeader,
+  tokenStorageKey,
+} from '~/constants'
+import { IResource, IResponseError, ISearchParameters, Method } from '~/types'
+import { storageGet } from './storage'
 
 import { getUrl } from './url'
+
+export class ApiError extends Error {}
+
+export function isApiError<T>(
+  json: T | IResponseError
+): json is IResponseError {
+  return 'code' in json && 'message' in json
+}
 
 export function normalizeUrl(url = ''): string {
   if (process.env.NEXT_PUBLIC_LOCAL) {
@@ -47,27 +62,45 @@ export async function fetchJson<T>(
   url: RequestInfo | URL,
   options: RequestInit = {}
 ): Promise<{ json: T; response: Response }> {
-  const response = await fetch(normalizeUrl(url.toString()), options)
+  if (!options.method || options.method === Method.GET) {
+    url = normalizeUrl(url.toString())
+  }
+  const response = await fetch(url, options)
   const json = await response.json()
   return { json, response }
 }
 
-export async function fetchApi<T>(
+export function fetchApi<T>(
   language: string,
   resource: IResource | string,
   searchParameters: ISearchParameters = {},
-  options: RequestInit = {}
+  options: RequestInit = {},
+  secure = true
 ): Promise<T> {
   const apiUrl =
     typeof resource === 'string' ? getApiUrl(resource) : getApiUrl(resource.url)
-  const { json } = await fetchJson<T>(getUrl(apiUrl, searchParameters), {
+  const headers: Record<string, string> = {
+    [languageHeader]: language,
+    [contentTypeHeader]: 'application/json',
+    ...(options.headers as Record<string, string>),
+  }
+  const token = storageGet(tokenStorageKey)
+  if (secure && token) {
+    headers[authHeader] = `Bearer ${token}`
+  }
+  return fetchJson<T>(getUrl(apiUrl, searchParameters), {
     ...options,
     headers: {
-      ...options.headers,
       [languageHeader]: language,
+      [contentTypeHeader]: 'application/json',
+      ...options.headers,
     },
+  }).then(({ json }) => {
+    if (isApiError(json)) {
+      throw new ApiError(json.message)
+    }
+    return json
   })
-  return json
 }
 
 export function removeEmptyParameters(

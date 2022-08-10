@@ -28,7 +28,7 @@ describe('Table service', () => {
         field: 'code',
         headerName: 'Attribute code',
         type: DataContentType.STRING,
-        editable: false,
+        editable: true,
       })
     })
   })

@@ -1,5 +1,5 @@
 import { useApiList, useResource } from '~/hooks'
-import { ICategories, IHydraResponse, ITreeItem } from '~/types'
+import { ICategories, ITreeItem } from '~/types'
 
 import Tree from '~/components/atoms/tree/Tree'
 
@@ -11,10 +11,7 @@ interface IProps {
 function CategoryTree({ selectedItem, onSelect }: IProps): JSX.Element {
   const resourceName = '"Category"'
   const resource = useResource(resourceName)
-  const [categoriesFields] = useApiList<IHydraResponse<ICategories>>(
-    resource,
-    false
-  )
+  const [categoriesFields] = useApiList<ICategories>(resource, false)
 
   return (
     categoriesFields.status === 3 && (

@@ -19,30 +19,35 @@ import NonDraggableBody from '~/components/organisms/CustomTable/CustomTableBody
 import DraggableBody from '~/components/organisms/CustomTable/CustomTableBody/DraggableBody'
 
 export interface IProps {
-  // onMassiveAction?: (action: string) => void
-  // onReordering?: (ordRows: ITableRow[]) => void
+  draggable?: boolean
+  onReorder?: (rows: ITableRow[]) => void
+  onRowUpdate?: (
+    id: string | number,
+    field: string,
+    value: boolean | number | string
+  ) => void
   tableHeaders: ITableHeader[]
   tableRows: ITableRow[]
   withSelection?: boolean
-  draggable?: boolean
 }
 
 function CustomTable(props: IProps): JSX.Element {
-  const { draggable, tableHeaders, tableRows, withSelection } = props
+  const {
+    draggable,
+    onReorder,
+    onRowUpdate,
+    tableHeaders,
+    tableRows,
+    withSelection,
+  } = props
 
   const [selectedRows, setSelectedRows] = useState<(string | number)[]>([])
   const [scrollLength, setScrollLength] = useState<number>(0)
   const [currentMassiveSelection, setCurrentMassiveSelection] = useState(
     MassiveSelectionType.NONE
   )
-  // todo: Should we keep this state or should we let the parent manage it ?
-  const [currentRows, setCurrentRows] = useState<ITableRow[]>(tableRows)
   const tableRef = useRef<HTMLDivElement>()
   const { isOverflow, shadow } = useIsHorizontalOverflow(tableRef.current)
-
-  useEffect(() => {
-    setCurrentRows(tableRows)
-  }, [tableRows])
 
   /**
    * Compute the length of the sticky part.
@@ -83,10 +88,10 @@ function CustomTable(props: IProps): JSX.Element {
   if (draggable) {
     handleDragEnd = (e: DropResult): void => {
       if (!e.destination) return
-      const tempData = Array.from(currentRows)
+      const tempData = Array.from(tableRows)
       const [source_data] = tempData.splice(e.source.index, 1)
       tempData.splice(e.destination.index, 0, source_data)
-      setCurrentRows(tempData)
+      onReorder(tempData)
     }
   }
 
@@ -166,11 +171,11 @@ function CustomTable(props: IProps): JSX.Element {
             />
             {Boolean(!draggable) && (
               <NonDraggableBody
-                tableRows={currentRows}
-                setTableRows={setCurrentRows}
+                tableRows={tableRows}
+                onRowUpdate={onRowUpdate}
                 tableHeaders={tableHeaders}
                 withSelection={withSelection}
-                setSelectedRows={setSelectedRows}
+                onSelectRows={setSelectedRows}
                 selectedRows={selectedRows}
                 cSSLeftValues={cSSLeftValues}
                 isHorizontalOverflow={isOverflow}
@@ -179,11 +184,11 @@ function CustomTable(props: IProps): JSX.Element {
             )}
             {Boolean(draggable) && (
               <DraggableBody
-                tableRows={currentRows}
-                setTableRows={setCurrentRows}
+                tableRows={tableRows}
+                onRowUpdate={onRowUpdate}
                 tableHeaders={tableHeaders}
                 withSelection={withSelection}
-                setSelectedRows={setSelectedRows}
+                onSelectRows={setSelectedRows}
                 selectedRows={selectedRows}
                 cSSLeftValues={cSSLeftValues}
                 isHorizontalOverflow={isOverflow}

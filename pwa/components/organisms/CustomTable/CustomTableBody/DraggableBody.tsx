@@ -4,41 +4,33 @@ import { ITableHeader, ITableRow } from '~/types/customTables'
 import DraggableRow from '../CustomTableRow/DraggableRow'
 
 interface IProps {
-  tableRows: ITableRow[]
-  setTableRows: (arr: ITableRow[]) => void
-  tableHeaders: ITableHeader[]
-  withSelection: boolean
-  selectedRows: (string | number)[]
-  setSelectedRows: (arr: (string | number)[]) => void
   cSSLeftValues: number[]
   isHorizontalOverflow: boolean
+  onRowUpdate?: (
+    id: string | number,
+    field: string,
+    value: boolean | number | string
+  ) => void
+  onSelectRows: (arr: (string | number)[]) => void
+  selectedRows: (string | number)[]
   shadow: boolean
+  tableHeaders: ITableHeader[]
+  tableRows: ITableRow[]
+  withSelection: boolean
 }
 
 function DraggableBody(props: IProps): JSX.Element {
   const {
-    tableRows,
-    setTableRows,
-    tableHeaders,
-    withSelection,
-    setSelectedRows,
-    selectedRows,
     cSSLeftValues,
     isHorizontalOverflow,
+    onRowUpdate,
+    onSelectRows,
+    selectedRows,
     shadow,
+    tableHeaders,
+    tableRows,
+    withSelection,
   } = props
-
-  function updateRow(currentRow: ITableRow): void {
-    const updatedTableRows: ITableRow[] = []
-    tableRows.forEach((tableRow) => {
-      if (tableRow.id === currentRow.id) {
-        updatedTableRows.push(currentRow)
-      } else {
-        updatedTableRows.push(tableRow)
-      }
-    })
-    setTableRows(updatedTableRows)
-  }
 
   return (
     <Droppable droppableId="droppableTable">
@@ -53,10 +45,10 @@ function DraggableBody(props: IProps): JSX.Element {
               {(provider): JSX.Element => (
                 <DraggableRow
                   tableRow={tableRow}
-                  updateRow={updateRow}
+                  onRowUpdate={onRowUpdate}
                   tableHeaders={tableHeaders}
                   selectedRows={selectedRows}
-                  setSelectedRows={setSelectedRows}
+                  onSelectRows={onSelectRows}
                   provider={provider}
                   withSelection={withSelection}
                   cSSLeftValuesIterator={cSSLeftValues.entries()}

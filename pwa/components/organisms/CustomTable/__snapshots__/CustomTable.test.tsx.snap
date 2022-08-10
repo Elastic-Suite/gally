@@ -142,7 +142,6 @@ exports[`CustomTable match snapshot with editable content 1`] = `
                   checked=""
                   class="MuiSwitch-input PrivateSwitchBase-input css-1m9pwf3"
                   type="checkbox"
-                  value="true"
                 />
                 <span
                   class="MuiSwitch-thumb css-epwt2k-MuiSwitch-thumb"
