@@ -6,7 +6,7 @@ import {
   productTableheader,
 } from '~/constants'
 import { productsQuery } from '~/constants/graphql'
-import { useApiFetch } from '~/hooks'
+import { useFetchApi } from '~/hooks'
 import { ISearchParameters, ITableHeader, ITableRow, LoadStatus } from '~/types'
 import { IFetchParams, IFetchProducts } from '~/types/products'
 import PagerTable from '../../organisms/PagerTable/PagerTable'
@@ -38,7 +38,7 @@ function BottomTable(props: IProps): JSX.Element {
     }
   }, [query, catalogId, currentPage, rowsPerPage])
 
-  const [products] = useApiFetch<IFetchProducts>(
+  const [products] = useFetchApi<IFetchProducts>(
     gqlUrl,
     params.searchParameters,
     params.options

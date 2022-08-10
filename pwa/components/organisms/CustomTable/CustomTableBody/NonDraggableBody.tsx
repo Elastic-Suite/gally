@@ -17,6 +17,7 @@ interface IProps {
   tableHeaders: ITableHeader[]
   tableRows: ITableRow[]
   paginated: boolean
+  withSelection: boolean
 }
 
 function NonDraggableBody(props: IProps): JSX.Element {
@@ -30,6 +31,7 @@ function NonDraggableBody(props: IProps): JSX.Element {
     tableHeaders,
     tableRows,
     paginated,
+    withSelection,
   } = props
 
   return (

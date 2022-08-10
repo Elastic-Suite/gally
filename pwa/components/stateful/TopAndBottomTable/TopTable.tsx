@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useMemo } from 'react'
 
 import { gqlUrl, productTableheader } from '~/constants'
 import { productsQuery } from '~/constants/graphql'
-import { useApiFetch } from '~/hooks'
+import { useFetchApi } from '~/hooks'
 import { removeEmptyParameters } from '~/services'
 import { ISearchParameters, ITableHeader, ITableRow, LoadStatus } from '~/types'
 import { IFetchParams, IFetchProducts } from '~/types/products'
@@ -33,7 +33,7 @@ function TopTable(props: IProps): JSX.Element {
     }
   }, [query, catalogId])
 
-  const [products] = useApiFetch<IFetchProducts>(
+  const [products] = useFetchApi<IFetchProducts>(
     gqlUrl,
     params.searchParameters,
     params.options

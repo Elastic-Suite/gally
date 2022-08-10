@@ -1094,6 +1094,105 @@ exports[`CustomTable match snapshot with selection, without draggable, without s
 </div>
 `;
 
+exports[`CustomTable match snapshot without selection, without draggable, with sticky headers 1`] = `
+<div>
+  <div
+    class="MuiTableContainer-root css-o5pwnc-MuiTableContainer-root"
+  >
+    <table
+      class="MuiTable-root css-1pty5za-MuiTable-root"
+    >
+      <thead
+        class="MuiTableHead-root css-15wwp11-MuiTableHead-root"
+      >
+        <tr
+          class="MuiTableRow-root MuiTableRow-head css-1u1grnd-MuiTableRow-root"
+        >
+          <th
+            class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-rui9uk-MuiTableCell-root"
+            scope="col"
+          />
+          <th
+            class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1yoqnw7-MuiTableCell-root"
+            scope="col"
+          >
+            Test header switch
+          </th>
+          <th
+            class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1yoqnw7-MuiTableCell-root"
+            scope="col"
+          >
+            Test header switch
+          </th>
+        </tr>
+      </thead>
+      <tbody
+        class="MuiTableBody-root css-apqrd9-MuiTableBody-root"
+      >
+        <tr
+          class="MuiTableRow-root css-y5ibvh-MuiTableRow-root"
+        >
+          <td
+            class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-y1kxj2-MuiTableCell-root"
+          />
+          <td
+            class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-fyenha-MuiTableCell-root"
+          >
+            <span
+              class="MuiSwitch-root MuiSwitch-sizeMedium css-tnsvld-MuiSwitch-root"
+            >
+              <span
+                aria-disabled="true"
+                class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled Mui-disabled PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled Mui-checked Mui-disabled css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
+                tabindex="-1"
+              >
+                <input
+                  checked=""
+                  class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
+                  disabled=""
+                  type="checkbox"
+                />
+                <span
+                  class="MuiSwitch-thumb css-epwt2k-MuiSwitch-thumb"
+                />
+              </span>
+              <span
+                class="MuiSwitch-track css-1mr4grv-MuiSwitch-track"
+              />
+            </span>
+          </td>
+          <td
+            class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-fyenha-MuiTableCell-root"
+          >
+            <span
+              class="MuiSwitch-root MuiSwitch-sizeMedium css-tnsvld-MuiSwitch-root"
+            >
+              <span
+                aria-disabled="true"
+                class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled Mui-disabled PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled Mui-disabled css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
+                tabindex="-1"
+              >
+                <input
+                  class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
+                  disabled=""
+                  type="checkbox"
+                />
+                <span
+                  class="MuiSwitch-thumb css-epwt2k-MuiSwitch-thumb"
+                />
+              </span>
+              <span
+                class="MuiSwitch-track css-1mr4grv-MuiSwitch-track"
+              />
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+`;
+
 exports[`CustomTable match snapshot without selection, without draggable, without sticky headers 1`] = `
 <div>
   <div

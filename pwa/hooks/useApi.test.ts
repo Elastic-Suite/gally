@@ -53,7 +53,7 @@ describe('useApi', () => {
         body: 'gqlQuery',
       }
       const { result, waitForNextUpdate } = renderHookWithProviders(() =>
-        useApiFetch('/test', null, options)
+        useFetchApi('/test', null, options)
       )
       expect(result.current[0]).toEqual({
         status: LoadStatus.LOADING,
