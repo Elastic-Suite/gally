@@ -155,9 +155,15 @@ export async function parseSchema(apiUrl: string): Promise<IApi> {
           supportedProperty['http://www.w3.org/ns/hydra/core#property']
         const relatedClass = findRelatedClass(supportedClassMap, property)
         if (relatedClass && entrypoint[property['@id']]) {
-          const resource = simplifyJsonldObject(
-            relatedClass as unknown as Record<string, unknown>
-          ) as Omit<IResource, 'url'>
+          const resource = simplifyJsonldObject({
+            ...relatedClass,
+            'http://www.w3.org/ns/hydra/core#supportedOperation': [
+              ...property['http://www.w3.org/ns/hydra/core#supportedOperation'],
+              ...relatedClass[
+                'http://www.w3.org/ns/hydra/core#supportedOperation'
+              ],
+            ],
+          } as unknown as Record<string, unknown>) as Omit<IResource, 'url'>
           const [entrypointUrl] = entrypoint[property['@id']]
           acc.push({
             ...resource,

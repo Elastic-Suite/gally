@@ -1,4 +1,8 @@
+import { useEffect, useState } from 'react'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
+
+import { ITableRow } from '~/types'
+
 import CustomTableComponent from './CustomTable'
 
 export default {
@@ -6,9 +10,22 @@ export default {
   component: CustomTableComponent,
 } as ComponentMeta<typeof CustomTableComponent>
 
-const Template: ComponentStory<typeof CustomTableComponent> = (args) => (
-  <CustomTableComponent {...args} />
-)
+const Template: ComponentStory<typeof CustomTableComponent> = (args) => {
+  const { tableRows, ...props } = args
+  const [currentRows, setCurrentRows] = useState<ITableRow[]>(tableRows)
+
+  useEffect(() => {
+    setCurrentRows(tableRows)
+  }, [tableRows])
+
+  return (
+    <CustomTableComponent
+      {...props}
+      onReorder={setCurrentRows}
+      tableRows={currentRows}
+    />
+  )
+}
 
 const mockedHeadersAndRows = {
   tableHeaders: [

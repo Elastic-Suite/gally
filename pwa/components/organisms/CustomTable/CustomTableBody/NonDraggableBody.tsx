@@ -4,41 +4,33 @@ import { ITableHeader, ITableRow } from '~/types/customTables'
 import NonDraggableRow from '../CustomTableRow/NonDraggableRow'
 
 interface IProps {
-  tableRows: ITableRow[]
-  setTableRows: (arr: ITableRow[]) => void
-  tableHeaders: ITableHeader[]
-  withSelection: boolean
-  selectedRows: (string | number)[]
-  setSelectedRows: (arr: (string | number)[]) => void
   cSSLeftValues: number[]
   isHorizontalOverflow: boolean
+  onRowUpdate?: (
+    id: string | number,
+    field: string,
+    value: boolean | number | string
+  ) => void
+  onSelectRows: (arr: (string | number)[]) => void
+  selectedRows: (string | number)[]
   shadow: boolean
+  tableHeaders: ITableHeader[]
+  tableRows: ITableRow[]
+  withSelection: boolean
 }
 
 function NonDraggableBody(props: IProps): JSX.Element {
   const {
-    tableRows,
-    setTableRows,
-    tableHeaders,
-    withSelection,
-    setSelectedRows,
-    selectedRows,
     cSSLeftValues,
     isHorizontalOverflow,
+    onRowUpdate,
+    onSelectRows,
+    selectedRows,
     shadow,
+    tableHeaders,
+    tableRows,
+    withSelection,
   } = props
-
-  const updateRow = (currentRow: ITableRow): void => {
-    const updatedTableRows: ITableRow[] = []
-    tableRows.forEach((tableRow) => {
-      if (tableRow.id === currentRow.id) {
-        updatedTableRows.push(currentRow)
-      } else {
-        updatedTableRows.push(tableRow)
-      }
-    })
-    setTableRows(updatedTableRows)
-  }
 
   return (
     <TableBody>
@@ -46,11 +38,11 @@ function NonDraggableBody(props: IProps): JSX.Element {
         <NonDraggableRow
           key={tableRow.id}
           tableRow={tableRow}
-          updateRow={updateRow}
+          onRowUpdate={onRowUpdate}
           tableHeaders={tableHeaders}
           withSelection={withSelection}
           selectedRows={selectedRows}
-          setSelectedRows={setSelectedRows}
+          onSelectRows={onSelectRows}
           cSSLeftValuesIterator={cSSLeftValues.entries()}
           isHorizontalOverflow={isHorizontalOverflow}
           shadow={shadow}

@@ -3,9 +3,11 @@ import { renderHook } from '@testing-library/react-hooks/dom'
 import { PreloadedState } from '@reduxjs/toolkit'
 import { ReactChild } from 'react'
 
-import AppProvider from '~/components/AppProvider'
+import AppProvider from '~/components/stateful-providers/AppProvider/AppProvider'
 import { api } from '~/mocks'
 import { AppStore, RootState, setupStore } from '~/store'
+
+import TestProvider from './TestProvider'
 
 export interface IExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
   preloadedState?: PreloadedState<RootState>
@@ -27,8 +29,8 @@ export function renderWithProviders(
 ) {
   function Wrapper({ children }: { children: ReactChild }): JSX.Element {
     return (
-      <AppProvider api={api} store={store}>
-        {children}
+      <AppProvider store={store}>
+        <TestProvider api={api}>{children}</TestProvider>
       </AppProvider>
     )
   }
@@ -47,8 +49,8 @@ export function renderHookWithProviders<R>(
 ) {
   function Wrapper({ children }: { children: ReactChild }): JSX.Element {
     return (
-      <AppProvider api={api} store={store}>
-        {children}
+      <AppProvider store={store}>
+        <TestProvider api={api}>{children}</TestProvider>
       </AppProvider>
     )
   }

@@ -8,7 +8,9 @@ if (url && String(url).endsWith('/')) {
 }
 export const apiUrl = url
 
+export const authHeader = 'Authorization'
 export const languageHeader = 'Elasticsuite-Language'
+export const contentTypeHeader = 'Content-Type'
 
 // URL parameters
 export const currentPage = 'currentPage'

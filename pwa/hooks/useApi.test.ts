@@ -2,16 +2,33 @@ import { fetchApi } from '~/services/api'
 import { LoadStatus } from '~/types'
 import { renderHookWithProviders } from '~/utils/tests'
 
-import { useApiDispatch, useApiFetch, useApiList } from './useApi'
+import { useApiDispatch, useApiFetch, useApiList, useFetchApi } from './useApi'
 
 jest.mock('~/services/api')
 
 describe('useApi', () => {
   describe('useApiFetch', () => {
+    it('should return the apiFetch function with language prefilled', async () => {
+      ;(fetchApi as jest.Mock).mockClear()
+      const { result } = renderHookWithProviders(() => useApiFetch())
+      expect(typeof result.current).toEqual('function')
+      const json = await result.current('/test')
+      expect(json).toEqual({ hello: 'world' })
+      expect(fetchApi).toHaveBeenCalledWith(
+        'en',
+        '/test',
+        undefined,
+        undefined,
+        true
+      )
+    })
+  })
+
+  describe('useFetchApi', () => {
     it('calls and return the api result', async () => {
       ;(fetchApi as jest.Mock).mockClear()
       const { result, waitForNextUpdate } = renderHookWithProviders(() =>
-        useApiFetch('/test')
+        useFetchApi('/test')
       )
       expect(result.current[0]).toEqual({
         status: LoadStatus.LOADING,
@@ -21,7 +38,13 @@ describe('useApi', () => {
         status: LoadStatus.SUCCEEDED,
         data: { hello: 'world' },
       })
-      expect(fetchApi).toHaveBeenCalledWith('en', '/test', undefined, undefined)
+      expect(fetchApi).toHaveBeenCalledWith(
+        'en',
+        '/test',
+        undefined,
+        undefined,
+        true
+      )
     })
   })
 
@@ -45,7 +68,8 @@ describe('useApi', () => {
         'en',
         '/list',
         { pagination: false, search: '' },
-        undefined
+        undefined,
+        true
       )
     })
 
@@ -59,7 +83,8 @@ describe('useApi', () => {
         'en',
         '/list',
         { pagination: true, pageSize: 50, currentPage: 1, search: '' },
-        undefined
+        undefined,
+        true
       )
     })
 
@@ -80,7 +105,8 @@ describe('useApi', () => {
           foo: 'bar',
           search: '',
         },
-        undefined
+        undefined,
+        true
       )
     })
   })
