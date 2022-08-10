@@ -125,7 +125,6 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} "
             cd /home/ubuntu/standalone &&
             docker system prune -af &&
-            docker volume prune -f &&
             docker-compose down &&
             git checkout master &&
             git fetch --all &&
