@@ -9,7 +9,7 @@ import {
   simplifyJsonldObject,
 } from './parser'
 
-jest.mock('./api')
+jest.mock('./fetch')
 
 describe('Parser service', () => {
   describe('getDocumentationUrlFromHeaders', () => {

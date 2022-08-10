@@ -1,5 +1,6 @@
 export * from './hooks'
 export * from './i18n'
 export * from './menu'
+export * from './message'
 export * from './store'
 export * from './user'

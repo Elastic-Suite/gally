@@ -1,5 +1,6 @@
-import { fetchApi } from '~/services/api'
-import { LoadStatus } from '~/types'
+import { act } from '@testing-library/react-hooks'
+import { fetchApi, log } from '~/services/api'
+import { IFetchError, IHydraMember, LoadStatus } from '~/types'
 import { renderHookWithProviders } from '~/utils/tests'
 
 import { useApiDispatch, useApiFetch, useApiList, useFetchApi } from './useApi'
@@ -8,7 +9,7 @@ jest.mock('~/services/api')
 
 describe('useApi', () => {
   describe('useApiFetch', () => {
-    it('should return the apiFetch function with language prefilled', async () => {
+    it('should return the apiFetch function prefilled', async () => {
       ;(fetchApi as jest.Mock).mockClear()
       const { result } = renderHookWithProviders(() => useApiFetch())
       expect(typeof result.current).toEqual('function')
@@ -21,6 +22,17 @@ describe('useApi', () => {
         undefined,
         true
       )
+    })
+
+    it('should call the log function if any error is thrown', async () => {
+      const mock = fetchApi as jest.Mock
+      mock.mockClear()
+      ;(log as jest.Mock).mockClear()
+      mock.mockImplementationOnce(() => Promise.reject(new Error('error')))
+      const { result } = renderHookWithProviders(() => useApiFetch())
+      const json = await result.current('/test')
+      expect((json as IFetchError).error.message).toEqual('error')
+      expect(log).toHaveBeenCalled()
     })
   })
 
@@ -72,6 +84,40 @@ describe('useApi', () => {
         },
         true
       )
+    })
+
+    it('should update the data in the response', async () => {
+      ;(fetchApi as jest.Mock).mockClear()
+      const { result, waitForNextUpdate } = renderHookWithProviders(() =>
+        useFetchApi('/test')
+      )
+      await waitForNextUpdate()
+      expect(result.current[0]).toEqual({
+        status: LoadStatus.SUCCEEDED,
+        data: { hello: 'world' },
+      })
+      act(() => result.current[1]({ hello: 'foo' }))
+      expect(result.current[0]).toEqual({
+        status: LoadStatus.SUCCEEDED,
+        data: { hello: 'foo' },
+      })
+    })
+
+    it('should update the data in the response (using an update function)', async () => {
+      ;(fetchApi as jest.Mock).mockClear()
+      const { result, waitForNextUpdate } = renderHookWithProviders(() =>
+        useFetchApi('/test')
+      )
+      await waitForNextUpdate()
+      expect(result.current[0]).toEqual({
+        status: LoadStatus.SUCCEEDED,
+        data: { hello: 'world' },
+      })
+      act(() => result.current[1]((data: any) => ({ ...data, foo: 'bar' })))
+      expect(result.current[0]).toEqual({
+        status: LoadStatus.SUCCEEDED,
+        data: { hello: 'world', foo: 'bar' },
+      })
     })
   })
 
@@ -135,6 +181,52 @@ describe('useApi', () => {
         undefined,
         true
       )
+    })
+
+    it('should update the list', async () => {
+      const mock = fetchApi as jest.Mock
+      mock.mockClear()
+      mock.mockImplementationOnce(() =>
+        Promise.resolve({ 'hydra:member': [{ id: 0 }] })
+      )
+      const { result, waitForNextUpdate } = renderHookWithProviders(() =>
+        useApiList('/list', false)
+      )
+      await waitForNextUpdate()
+      expect(result.current[0]).toEqual({
+        status: LoadStatus.SUCCEEDED,
+        data: { 'hydra:member': [{ id: 0 }] },
+      })
+      act(() => result.current[1]([{ id: 1 } as unknown as IHydraMember]))
+      expect(result.current[0]).toEqual({
+        status: LoadStatus.SUCCEEDED,
+        data: { 'hydra:member': [{ id: 1 }] },
+      })
+    })
+
+    it('should update the list (using an update function)', async () => {
+      const mock = fetchApi as jest.Mock
+      mock.mockClear()
+      mock.mockImplementationOnce(() =>
+        Promise.resolve({ 'hydra:member': [{ id: 0 }] })
+      )
+      const { result, waitForNextUpdate } = renderHookWithProviders(() =>
+        useApiList('/list', false)
+      )
+      await waitForNextUpdate()
+      expect(result.current[0]).toEqual({
+        status: LoadStatus.SUCCEEDED,
+        data: { 'hydra:member': [{ id: 0 }] },
+      })
+      act(() =>
+        result.current[1]((list) =>
+          list.concat([{ id: 1 } as unknown as IHydraMember])
+        )
+      )
+      expect(result.current[0]).toEqual({
+        status: LoadStatus.SUCCEEDED,
+        data: { 'hydra:member': [{ id: 0 }, { id: 1 }] },
+      })
     })
   })
 })

@@ -11,7 +11,6 @@ import { selectMenu, useAppSelector } from '~/store'
 import { IRouterTab } from '~/types'
 
 import PageTitle from '~/components/atoms/PageTitle/PageTitle'
-import PrimaryButton from '~/components/atoms/buttons/PrimaryButton'
 import CustomTabs from '~/components/molecules/layout/tabs/CustomTabs'
 import SettingsAttributes from '~/components/stateful-pages/SettingsAttributes/SettingsAttributes'
 import SettingsScope from '~/components/stateful-pages/SettingsScope/SettingsScope'
@@ -39,7 +38,7 @@ function Settings(): JSX.Element {
         url: '/admin/settings/scope',
       },
       {
-        actions: <PrimaryButton>{t('action.import')} (xlsx)</PrimaryButton>,
+        // actions: <PrimaryButton>{t('action.import')} (xlsx)</PrimaryButton>,
         Component: SettingsAttributes,
         id: 1,
         label: t('tabs.attributes'),

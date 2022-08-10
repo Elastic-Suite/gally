@@ -22,9 +22,13 @@ export enum LoadStatus {
   SUCCEEDED,
 }
 
+export interface IFetchError {
+  error: Error
+}
+
 export interface IFetch<D> {
   data?: D
-  error?: Error | string
+  error?: Error
   status: LoadStatus
 }
 

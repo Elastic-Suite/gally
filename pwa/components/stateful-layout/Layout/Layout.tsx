@@ -21,6 +21,7 @@ import {
 import AppBar from '~/components/molecules/layout/appBar/AppBar'
 import Sidebar from '~/components/molecules/layout/Sidebar/Sidebar'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
+import Messages from '~/components/stateful/Messages/Messages'
 
 /*
  * TODO: THIBO: Update AppBar
@@ -160,7 +161,10 @@ function Layout({ children }: IProps): JSX.Element {
             <IonIcon name="code-outline" style={{ width: 18, height: 18 }} />
           </Collapse>
           <AppBar slug={breadcrumb} menu={menu} />
-          <CustomContent>{children}</CustomContent>
+          <CustomContent>
+            <Messages />
+            {children}
+          </CustomContent>
         </CustomContentWithAppBar>
         {/*<Notification /> TODO: Set here Notification component*/}
       </CustomAppFrame>
