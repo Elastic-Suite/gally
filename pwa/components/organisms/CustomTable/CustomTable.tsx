@@ -151,7 +151,7 @@ function CustomTable(props: ICustomTableProps): JSX.Element {
                 onRowUpdate={onRowUpdate}
                 tableHeaders={tableHeaders}
                 withSelection={withSelection}
-                onSelectedRows={onSelectedRows}
+                onSelectRows={onSelectedRows}
                 selectedRows={selectedRows}
                 cSSLeftValues={cSSLeftValues}
                 isHorizontalOverflow={isOverflow}
@@ -165,7 +165,7 @@ function CustomTable(props: ICustomTableProps): JSX.Element {
                 onRowUpdate={onRowUpdate}
                 tableHeaders={tableHeaders}
                 withSelection={withSelection}
-                onSelectedRows={onSelectedRows}
+                onSelectRows={onSelectedRows}
                 selectedRows={selectedRows}
                 cSSLeftValues={cSSLeftValues}
                 isHorizontalOverflow={isOverflow}
