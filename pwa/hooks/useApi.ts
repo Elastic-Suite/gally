@@ -6,11 +6,9 @@ import {
   useMemo,
   useState,
 } from 'react'
-import { ActionCreatorWithOptionalPayload } from '@reduxjs/toolkit'
 import { useTranslation } from 'next-i18next'
 
 import { fetchApi, getListApiParameters, isFetchError } from '~/services'
-import { useAppDispatch } from '~/store'
 import {
   IFetch,
   IFetchError,
@@ -88,27 +86,6 @@ export function useFetchApi<T>(
   }, [fetchApi, options, resource, searchParameters])
 
   return [response, updateResponse]
-}
-
-export function useApiDispatch<T>(
-  action: ActionCreatorWithOptionalPayload<IFetch<T>>,
-  resource: IResource | string,
-  searchParameters?: ISearchParameters,
-  options?: RequestInit
-): void {
-  const fetchApi = useApiFetch<T>()
-  const dispatch = useAppDispatch()
-
-  useEffect(() => {
-    dispatch(action({ status: LoadStatus.LOADING }))
-    fetchApi(resource, searchParameters, options).then((json) => {
-      if (isFetchError(json)) {
-        dispatch(action({ error: json.error, status: LoadStatus.FAILED }))
-      } else {
-        dispatch(action({ data: json, status: LoadStatus.SUCCEEDED }))
-      }
-    })
-  }, [action, dispatch, fetchApi, options, resource, searchParameters])
 }
 
 export function useApiList<T extends IHydraMember>(

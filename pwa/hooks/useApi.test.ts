@@ -3,7 +3,7 @@ import { fetchApi, log } from '~/services/api'
 import { IFetchError, IHydraMember, LoadStatus } from '~/types'
 import { renderHookWithProviders } from '~/utils/tests'
 
-import { useApiDispatch, useApiFetch, useApiList, useFetchApi } from './useApi'
+import { useApiFetch, useApiList, useFetchApi } from './useApi'
 
 jest.mock('~/services/api')
 
@@ -118,15 +118,6 @@ describe('useApi', () => {
         status: LoadStatus.SUCCEEDED,
         data: { hello: 'world', foo: 'bar' },
       })
-    })
-  })
-
-  describe('useApiDispatch', () => {
-    it('calls and return the api result', () => {
-      const action = jest.fn()
-      // @ts-expect-error use spy
-      renderHookWithProviders(() => useApiDispatch(action, '/test'))
-      expect(action).toHaveBeenCalledWith({ status: LoadStatus.LOADING })
     })
   })
 

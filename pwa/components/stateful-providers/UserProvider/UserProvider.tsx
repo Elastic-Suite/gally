@@ -16,7 +16,7 @@ function UserProvider(props: IProps): JSX.Element {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    if (!user) {
+    if (!user || Date.now() / 1000 > user.exp) {
       dispatch(setRequestedPath(asPath))
       push('/login')
     }
