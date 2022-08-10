@@ -13,7 +13,7 @@ import {
   IResource,
 } from '~/types'
 
-import { fetchJson } from './api'
+import { fetchJson } from './fetch'
 
 type IExpandedHydraSupportedClassMap = Map<string, IExpandedHydraSupportedClass>
 

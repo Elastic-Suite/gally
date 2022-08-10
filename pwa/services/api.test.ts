@@ -1,74 +1,25 @@
-import fetchMock from 'fetch-mock-jest'
-
 import { resource } from '~/mocks'
+import { fetchJson } from '~/services/fetch'
+import { storageGet, storageRemove } from '~/services/storage'
 
 import {
   ApiError,
+  AuthError,
   fetchApi,
-  fetchJson,
   getApiUrl,
   isApiError,
-  normalizeUrl,
+  log,
   removeEmptyParameters,
 } from './api'
+
+jest.mock('~/services/fetch')
+jest.mock('~/services/storage')
 
 describe('Api service', () => {
   describe('isApiError', () => {
     it('should check if response is an API error', () => {
       expect(isApiError({ code: 401, message: 'Unauthorized' })).toEqual(true)
       expect(isApiError({ hello: 'world' })).toEqual(false)
-    })
-  })
-
-  describe('normalizeUrl', () => {
-    const OLD_ENV = process.env
-
-    beforeEach(() => {
-      jest.resetModules()
-      process.env = { ...OLD_ENV }
-    })
-
-    afterAll(() => {
-      process.env = OLD_ENV
-    })
-
-    it('should do nothing if not on local environment', () => {
-      expect(normalizeUrl()).toEqual('')
-      expect(normalizeUrl('/test')).toEqual('/test')
-      expect(normalizeUrl('http://localhost/')).toEqual('http://localhost/')
-      expect(normalizeUrl('http://localhost/test')).toEqual(
-        'http://localhost/test'
-      )
-      expect(normalizeUrl('http://localhost/mocks/test.json')).toEqual(
-        'http://localhost/mocks/test.json'
-      )
-      expect(normalizeUrl('http://localhost/docs.jsonld')).toEqual(
-        'http://localhost/docs.jsonld'
-      )
-      expect(normalizeUrl('http://example.com/test')).toEqual(
-        'http://example.com/test'
-      )
-    })
-
-    it('should return the mock URL', () => {
-      process.env.NEXT_PUBLIC_LOCAL = 'true'
-      expect(normalizeUrl()).toEqual('')
-      expect(normalizeUrl('/test')).toEqual('/test')
-      expect(normalizeUrl('http://localhost/')).toEqual(
-        'http://localhost/mocks/index.json'
-      )
-      expect(normalizeUrl('http://localhost/test')).toEqual(
-        'http://localhost/mocks/test.json'
-      )
-      expect(normalizeUrl('http://localhost/mocks/test.json')).toEqual(
-        'http://localhost/mocks/test.json'
-      )
-      expect(normalizeUrl('http://localhost/docs.jsonld')).toEqual(
-        'http://localhost/mocks/docs.json'
-      )
-      expect(normalizeUrl('http://example.com/test')).toEqual(
-        'http://example.com/test'
-      )
     })
   })
 
@@ -83,43 +34,81 @@ describe('Api service', () => {
     })
   })
 
-  describe('fetchJson', () => {
-    it('should fetch requested url and returns json', async () => {
-      const url = 'http://localhost/test'
-      fetchMock.once(url, { hello: 'world' })
-      const result = await fetchJson('http://localhost/test')
-      expect(result.response.status).toEqual(200)
-      expect(result.json).toMatchObject({ hello: 'world' })
-      expect(fetchMock.called(url)).toEqual(true)
-      fetchMock.restore()
-    })
-  })
-
   describe('fetchApi', () => {
     it('should fetch requested api from url', async () => {
-      const url = 'http://localhost/test'
-      fetchMock.once(url, { hello: 'world' })
+      ;(fetchJson as jest.Mock).mockClear()
       const json = await fetchApi('en', '/test')
       expect(json).toEqual({ hello: 'world' })
-      expect(fetchMock.called(url)).toEqual(true)
-      fetchMock.restore()
+      expect(fetchJson).toHaveBeenCalledWith('http://localhost/test', {
+        headers: {
+          'Content-Type': 'application/json',
+          'Elasticsuite-Language': 'en',
+        },
+      })
     })
 
     it('should fetch requested api from resource', async () => {
-      const url = 'https://localhost/metadata'
-      fetchMock.once(url, { hello: 'world' })
+      ;(fetchJson as jest.Mock).mockClear()
       const json = await fetchApi('en', resource)
       expect(json).toEqual({ hello: 'world' })
-      expect(fetchMock.called(url)).toEqual(true)
-      fetchMock.restore()
+      expect(json).toEqual({ hello: 'world' })
+      expect(fetchJson).toHaveBeenCalledWith('https://localhost/metadata', {
+        headers: {
+          'Content-Type': 'application/json',
+          'Elasticsuite-Language': 'en',
+        },
+      })
     })
 
-    it('should throw an error (API error)', async () => {
-      const url = 'http://localhost/restricted'
-      fetchMock.once(url, { code: 401, message: 'Unauthorized' })
+    it('should add auth header if user is connected', async () => {
+      const mock = storageGet as jest.Mock
+      mock.mockClear()
+      ;(fetchJson as jest.Mock).mockClear()
+      mock.mockImplementationOnce(() => 'token')
+      const json = await fetchApi('en', '/test')
+      expect(json).toEqual({ hello: 'world' })
+      expect(json).toEqual({ hello: 'world' })
+      expect(fetchJson).toHaveBeenCalledWith('http://localhost/test', {
+        headers: {
+          Authorization: 'Bearer token',
+          'Content-Type': 'application/json',
+          'Elasticsuite-Language': 'en',
+        },
+      })
+    })
+
+    it('should throw an error and remove token from storage (ApiError)', async () => {
+      const mock = fetchJson as jest.Mock
+      mock.mockClear()
+      ;(storageRemove as jest.Mock).mockClear()
+      mock.mockImplementationOnce(() =>
+        Promise.resolve({ json: { code: 401, message: 'Unauthorized' } })
+      )
       await expect(fetchApi('en', '/restricted')).rejects.toThrow(ApiError)
-      expect(fetchMock.called(url)).toEqual(true)
-      fetchMock.restore()
+      expect(fetchJson).toHaveBeenCalledWith('http://localhost/restricted', {
+        headers: {
+          'Content-Type': 'application/json',
+          'Elasticsuite-Language': 'en',
+        },
+      })
+      expect(storageRemove).toHaveBeenCalledWith('elasticSuiteToken')
+    })
+
+    it('should throw an error and remove token from storage (AuthError)', async () => {
+      const mock = fetchJson as jest.Mock
+      mock.mockClear()
+      ;(storageRemove as jest.Mock).mockClear()
+      mock.mockImplementationOnce(() =>
+        Promise.resolve({ json: {}, response: { status: 401 } })
+      )
+      await expect(fetchApi('en', '/restricted')).rejects.toThrow(AuthError)
+      expect(fetchJson).toHaveBeenCalledWith('http://localhost/restricted', {
+        headers: {
+          'Content-Type': 'application/json',
+          'Elasticsuite-Language': 'en',
+        },
+      })
+      expect(storageRemove).toHaveBeenCalledWith('elasticSuiteToken')
     })
   })
 
@@ -129,6 +118,14 @@ describe('Api service', () => {
       expect(removeEmptyParameters({ foo: null, bar: '', baz: 42 })).toEqual({
         baz: 42,
       })
+    })
+  })
+
+  describe('log', () => {
+    it('should call the funtion passed in arguments', () => {
+      const spy = jest.fn()
+      log(spy, new Error('error'))
+      expect(spy).toHaveBeenCalledWith('error')
     })
   })
 })

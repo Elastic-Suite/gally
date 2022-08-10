@@ -1,51 +1,26 @@
+/* eslint-disable max-classes-per-file */
 import {
   apiUrl,
+  authErrorCodes,
   authHeader,
   contentTypeHeader,
   languageHeader,
   tokenStorageKey,
 } from '~/constants'
-import { IResource, IResponseError, ISearchParameters, Method } from '~/types'
-import { storageGet } from './storage'
+import { IResource, IResponseError, ISearchParameters } from '~/types'
 
+import { fetchJson } from './fetch'
+import { storageGet, storageRemove } from './storage'
 import { getUrl } from './url'
 
 export class ApiError extends Error {}
+
+export class AuthError extends Error {}
 
 export function isApiError<T>(
   json: T | IResponseError
 ): json is IResponseError {
   return 'code' in json && 'message' in json
-}
-
-export function normalizeUrl(url = ''): string {
-  if (process.env.NEXT_PUBLIC_LOCAL) {
-    try {
-      const urlObj = new URL(url)
-      if (urlObj.origin === apiUrl) {
-        if (urlObj.pathname === '/') {
-          urlObj.pathname = '/index'
-        }
-        if (
-          urlObj.pathname &&
-          !urlObj.pathname.endsWith('.json') &&
-          !urlObj.pathname.endsWith('.jsonld')
-        ) {
-          urlObj.pathname = `${urlObj.pathname}.json`
-        }
-        if (urlObj.pathname.endsWith('.jsonld')) {
-          urlObj.pathname = `${urlObj.pathname.slice(0, -7)}.json`
-        }
-        if (!urlObj.pathname.startsWith('/mocks')) {
-          urlObj.pathname = `/mocks${urlObj.pathname}`
-        }
-        url = urlObj.href
-      }
-    } catch (error) {
-      // in that case just silent and don't transform the URL
-    }
-  }
-  return url
 }
 
 export function getApiUrl(url = ''): string {
@@ -56,18 +31,6 @@ export function getApiUrl(url = ''): string {
     url = `${apiUrl}${url}`
   }
   return url
-}
-
-export async function fetchJson<T>(
-  url: RequestInfo | URL,
-  options: RequestInit = {}
-): Promise<{ json: T; response: Response }> {
-  if (!options.method || options.method === Method.GET) {
-    url = normalizeUrl(url.toString())
-  }
-  const response = await fetch(url, options)
-  const json = await response.json()
-  return { json, response }
 }
 
 export function fetchApi<T>(
@@ -88,16 +51,17 @@ export function fetchApi<T>(
   if (secure && token) {
     headers[authHeader] = `Bearer ${token}`
   }
-  return fetchJson<T>(getUrl(apiUrl, searchParameters), {
+  return fetchJson<T>(getUrl(apiUrl, searchParameters).href, {
     ...options,
-    headers: {
-      [languageHeader]: language,
-      [contentTypeHeader]: 'application/json',
-      ...options.headers,
-    },
-  }).then(({ json }) => {
+    headers,
+  }).then(({ json, response }) => {
+    // fixme: should we redirect to login if 401/403 error ?
     if (isApiError(json)) {
+      storageRemove(tokenStorageKey)
       throw new ApiError(json.message)
+    } else if (authErrorCodes.includes(response.status)) {
+      storageRemove(tokenStorageKey)
+      throw new AuthError('Unauthorized/Forbidden')
     }
     return json
   })
@@ -111,4 +75,16 @@ export function removeEmptyParameters(
       ([_, value]) => (value ?? '') !== ''
     )
   )
+}
+
+export type NetworkError = Error | ApiError | AuthError
+export function log(log: (message: string) => void, error: NetworkError): void {
+  if (
+    process.env.NODE_ENV === 'development' ||
+    (typeof window !== 'undefined' && window.showErrors === true)
+  ) {
+    // eslint-disable-next-line no-console
+    console.error(error)
+  }
+  log(error.message)
 }

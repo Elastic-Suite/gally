@@ -1,4 +1,4 @@
-import { Method } from './fetch'
+import { IFetchError, Method } from './fetch'
 import { IHydraMember } from './hydra'
 import { IJsonldBase, IJsonldId, IJsonldType } from './jsonld'
 
@@ -42,8 +42,8 @@ export interface IResponseError {
 }
 
 export interface IResourceOperations<T extends IHydraMember> {
-  create?: (item: Omit<T, 'id' | '@id' | '@type'>) => Promise<T>
-  replace?: (item: Omit<T, '@id' | '@type'>) => Promise<T>
-  update?: (id: string | number, item: Partial<T>) => Promise<T>
-  delete?: (id: string | number) => Promise<void>
+  create?: (item: Omit<T, 'id' | '@id' | '@type'>) => Promise<T | IFetchError>
+  replace?: (item: Omit<T, '@id' | '@type'>) => Promise<T | IFetchError>
+  update?: (id: string | number, item: Partial<T>) => Promise<T | IFetchError>
+  delete?: (id: string | number) => Promise<T | IFetchError>
 }

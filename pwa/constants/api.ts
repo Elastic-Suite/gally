@@ -13,6 +13,8 @@ export const authHeader = 'Authorization'
 export const languageHeader = 'Elasticsuite-Language'
 export const contentTypeHeader = 'Content-Type'
 
+export const authErrorCodes = [401, 403]
+
 // URL parameters
 export const currentPage = 'currentPage'
 export const pageSize = 'pageSize'
