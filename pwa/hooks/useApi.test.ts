@@ -14,7 +14,13 @@ describe('useApi', () => {
       expect(typeof result.current).toEqual('function')
       const json = await result.current('/test')
       expect(json).toEqual({ hello: 'world' })
-      expect(fetchApi).toHaveBeenCalledWith('en', '/test')
+      expect(fetchApi).toHaveBeenCalledWith(
+        'en',
+        '/test',
+        undefined,
+        undefined,
+        true
+      )
     })
   })
 
@@ -32,7 +38,13 @@ describe('useApi', () => {
         status: LoadStatus.SUCCEEDED,
         data: { hello: 'world' },
       })
-      expect(fetchApi).toHaveBeenCalledWith('en', '/test', undefined, undefined)
+      expect(fetchApi).toHaveBeenCalledWith(
+        'en',
+        '/test',
+        undefined,
+        undefined,
+        true
+      )
     })
   })
 
@@ -56,7 +68,8 @@ describe('useApi', () => {
         'en',
         '/list',
         { pagination: false, search: '' },
-        undefined
+        undefined,
+        true
       )
     })
 
@@ -70,7 +83,8 @@ describe('useApi', () => {
         'en',
         '/list',
         { pagination: true, pageSize: 50, currentPage: 1, search: '' },
-        undefined
+        undefined,
+        true
       )
     })
 
@@ -91,7 +105,8 @@ describe('useApi', () => {
           foo: 'bar',
           search: '',
         },
-        undefined
+        undefined,
+        true
       )
     })
   })
