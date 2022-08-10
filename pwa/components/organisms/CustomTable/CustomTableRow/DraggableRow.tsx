@@ -65,11 +65,11 @@ function DraggableRow(props: IProps): JSX.Element {
       {...provider.draggableProps}
       ref={provider.innerRef}
       sx={{
-        '&:last-child': {
-          'td:first-child': {
+        '&:last-of-type': {
+          'td:first-of-type': {
             ...(!paginated && { borderRadius: '0 0 0 8px' }),
           },
-          'td:last-child': {
+          'td:last-of-type': {
             ...(!paginated && { borderRadius: '0 0 8px 0' }),
           },
           td: {

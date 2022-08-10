@@ -15,8 +15,7 @@ import {
 } from '~/constants'
 import { useIsHorizontalOverflow } from '~/hooks'
 import { ITableHeader, ITableRow } from '~/types'
-
-export interface IProps {
+export interface ICustomTableProps {
   draggable?: boolean
   onReorder?: (rows: ITableRow[]) => void
   onRowUpdate?: (
@@ -27,12 +26,11 @@ export interface IProps {
   tableHeaders: ITableHeader[]
   tableRows: ITableRow[]
   selectedRows?: (string | number)[]
-  setSelectedRows?: Dispatch<SetStateAction<(string | number)[]>>
-  draggable?: boolean
+  onSelectedRows?: Dispatch<SetStateAction<(string | number)[]>>
   paginated: boolean
 }
 
-function CustomTable(props: IProps): JSX.Element {
+function CustomTable(props: ICustomTableProps): JSX.Element {
   const {
     draggable,
     onReorder,
@@ -40,7 +38,7 @@ function CustomTable(props: IProps): JSX.Element {
     tableHeaders,
     tableRows,
     selectedRows,
-    setSelectedRows,
+    onSelectedRows,
     paginated,
   } = props
 
@@ -70,8 +68,8 @@ function CustomTable(props: IProps): JSX.Element {
 
     onSelection = (e: ChangeEvent<HTMLInputElement>): void => {
       e.target.checked
-        ? setSelectedRows(tableRows.map((row) => row.id))
-        : setSelectedRows([])
+        ? onSelectedRows(tableRows.map((row) => row.id))
+        : onSelectedRows([])
     }
   }
 
@@ -153,7 +151,7 @@ function CustomTable(props: IProps): JSX.Element {
                 onRowUpdate={onRowUpdate}
                 tableHeaders={tableHeaders}
                 withSelection={withSelection}
-                onSelectRows={setSelectedRows}
+                onSelectedRows={onSelectedRows}
                 selectedRows={selectedRows}
                 cSSLeftValues={cSSLeftValues}
                 isHorizontalOverflow={isOverflow}
@@ -167,7 +165,7 @@ function CustomTable(props: IProps): JSX.Element {
                 onRowUpdate={onRowUpdate}
                 tableHeaders={tableHeaders}
                 withSelection={withSelection}
-                onSelectRows={setSelectedRows}
+                onSelectedRows={onSelectedRows}
                 selectedRows={selectedRows}
                 cSSLeftValues={cSSLeftValues}
                 isHorizontalOverflow={isOverflow}

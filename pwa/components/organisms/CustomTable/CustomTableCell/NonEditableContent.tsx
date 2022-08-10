@@ -53,7 +53,7 @@ function NonEditableContent(props: IProps): JSX.Element {
           />
         )
       case DataContentType.SCORE: {
-        const score = row[header.field] as unknown as IScore
+        const score = { scoreValue: row[header.field] } as unknown as IScore
         return <Score scoreValue={score.scoreValue} {...score?.boostInfos} />
       }
       case DataContentType.STOCK: {

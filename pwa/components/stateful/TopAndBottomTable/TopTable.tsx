@@ -1,40 +1,37 @@
 import { Dispatch, SetStateAction, useMemo } from 'react'
-import { gqlUrl, productTableFields, productTableheader } from '~/constants'
+
+import { gqlUrl, productTableheader } from '~/constants'
+import { productsQuery } from '~/constants/graphql'
 import { useApiFetch } from '~/hooks'
 import { removeEmptyParameters } from '~/services'
 import { ISearchParameters, ITableHeader, ITableRow, LoadStatus } from '~/types'
 import { IFetchParams, IFetchProducts } from '~/types/products'
+
 import TopProductsTable from '../TopProductsTable/TopProductsTable'
 
 interface IProps {
   selectedRows: (string | number)[]
-  setSelectedRows: Dispatch<SetStateAction<(string | number)[]>>
+  onSelectedRows: Dispatch<SetStateAction<(string | number)[]>>
+  catalogId: string
 }
 
 function TopTable(props: IProps): JSX.Element {
-  const { selectedRows, setSelectedRows } = props
+  const { selectedRows, onSelectedRows, catalogId } = props
 
   // todo : when api product will be finalize, factorize code and exports this into a products service with top and bottom distinguish.
-  const gqlQuery = `
-  query {
-    searchProducts(catalogId: "com_fr", currentPage:1, pageSize:2) {
-      collection {
-        ${productTableFields}
-      }
-    }
-  }
-  `
+  const query = productsQuery
 
   const params: IFetchParams = useMemo(() => {
+    const variables = { catalogId }
     return {
       options: {
-        body: JSON.stringify({ query: gqlQuery }),
+        body: JSON.stringify({ query, variables }),
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
       },
       searchParameters: removeEmptyParameters({} as ISearchParameters),
     }
-  }, [gqlQuery])
+  }, [query, catalogId])
 
   const [products] = useApiFetch<IFetchProducts>(
     gqlUrl,
@@ -52,7 +49,7 @@ function TopTable(props: IProps): JSX.Element {
         Boolean(products?.data?.data?.searchProducts) && (
           <TopProductsTable
             selectedRows={selectedRows}
-            setSelectedRows={setSelectedRows}
+            onSelectedRows={onSelectedRows}
             tableHeaders={tableHeaders}
             tableRows={tableRows}
             draggable

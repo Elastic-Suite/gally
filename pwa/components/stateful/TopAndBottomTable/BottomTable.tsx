@@ -1,52 +1,42 @@
 import { Dispatch, SetStateAction, useMemo, useState } from 'react'
 import {
   defaultPageSize,
+  defaultRowsPerPageOptions,
   gqlUrl,
-  productTableFields,
   productTableheader,
 } from '~/constants'
+import { productsQuery } from '~/constants/graphql'
 import { useApiFetch } from '~/hooks'
-import { removeEmptyParameters } from '~/services'
 import { ISearchParameters, ITableHeader, ITableRow, LoadStatus } from '~/types'
 import { IFetchParams, IFetchProducts } from '~/types/products'
-import PagerTable from '../PagerTable/PagerTable'
+import PagerTable from '../../organisms/PagerTable/PagerTable'
 
 interface IProps {
   selectedRows: (string | number)[]
-  setSelectedRows: Dispatch<SetStateAction<(string | number)[]>>
+  onSelectedRows: Dispatch<SetStateAction<(string | number)[]>>
+  catalogId: string
 }
 
 function BottomTable(props: IProps): JSX.Element {
-  const { selectedRows, setSelectedRows } = props
+  const { selectedRows, onSelectedRows, catalogId } = props
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [rowsPerPage, setRowsPerPage] = useState<number>(defaultPageSize)
-  const rowsPerPageOptions = [2, 25, 50]
+  const rowsPerPageOptions = defaultRowsPerPageOptions
 
   // todo : when api product will be finalize, factorize code and exports this into a products service with top and bottom distinguish.
-  const gqlQuery = `
-  query {
-    searchProducts(catalogId: "com_fr", currentPage:${currentPage}, pageSize:${rowsPerPage}) {
-      collection {
-        ${productTableFields}
-      }
-      paginationInfo {
-        lastPage
-        totalCount
-      }
-    }
-  }
-  `
+  const query = productsQuery
 
   const params: IFetchParams = useMemo(() => {
+    const variables = { catalogId, currentPage, pageSize: rowsPerPage }
     return {
       options: {
-        body: JSON.stringify({ query: gqlQuery }),
+        body: JSON.stringify({ query, variables }),
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
       },
-      searchParameters: removeEmptyParameters({} as ISearchParameters),
+      searchParameters: {} as ISearchParameters,
     }
-  }, [gqlQuery])
+  }, [query, catalogId, currentPage, rowsPerPage])
 
   const [products] = useApiFetch<IFetchProducts>(
     gqlUrl,
@@ -55,18 +45,17 @@ function BottomTable(props: IProps): JSX.Element {
   )
   const tableRows: ITableRow[] = products?.data?.data?.searchProducts
     ?.collection as unknown as ITableRow[]
-
   const tableHeaders: ITableHeader[] = productTableheader
 
   function onPageChange(page: number): void {
     setCurrentPage(page + 1)
-    setSelectedRows([])
+    onSelectedRows([])
   }
 
   const onRowsPerPageChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ): void => {
-    setRowsPerPage(parseInt(event.target.value, 10))
+    setRowsPerPage(Number(event.target.value))
     setCurrentPage(1)
   }
 
@@ -85,10 +74,8 @@ function BottomTable(props: IProps): JSX.Element {
             tableHeaders={tableHeaders}
             tableRows={tableRows}
             selectedRows={selectedRows}
-            setSelectedRows={setSelectedRows}
-            totalPages={
-              products.data.data.searchProducts.paginationInfo.lastPage
-            }
+            onSelectedRows={onSelectedRows}
+            count={products.data.data.searchProducts.paginationInfo.totalCount}
             paginated
           />
         )}
