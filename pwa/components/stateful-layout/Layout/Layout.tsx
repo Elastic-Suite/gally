@@ -1,10 +1,10 @@
 import { ReactChild, useCallback, useContext, useEffect } from 'react'
 import { styled } from '@mui/system'
 
-import { useApiDispatch } from '~/hooks'
 import { breadcrumbContext } from '~/contexts'
-
+import { useApiFetch, useUser } from '~/hooks'
 import {
+  IMenu,
   selectChildrenState,
   selectMenu,
   selectMenuItemActive,
@@ -18,10 +18,13 @@ import {
   useAppDispatch,
   useAppSelector,
 } from '~/store'
+
 import AppBar from '~/components/molecules/layout/appBar/AppBar'
 import Sidebar from '~/components/molecules/layout/Sidebar/Sidebar'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import Messages from '~/components/stateful/Messages/Messages'
+import { LoadStatus } from '~/types'
+import { isFetchError } from '~/services'
 
 /*
  * TODO: THIBO: Update AppBar
@@ -111,9 +114,22 @@ function Layout({ children }: IProps): JSX.Element {
   const childrenState = useAppSelector(selectChildrenState)
   const menu = useAppSelector(selectMenu)
   const [breadcrumb] = useContext(breadcrumbContext)
+  const fetchApi = useApiFetch<IMenu>()
+  const user = useUser()
 
-  // fetch menu
-  useApiDispatch(setMenu, 'menu')
+  // Load menu
+  useEffect(() => {
+    if (user) {
+      dispatch(setMenu({ status: LoadStatus.LOADING }))
+      fetchApi('menu').then((json) => {
+        if (isFetchError(json)) {
+          dispatch(setMenu({ error: json.error, status: LoadStatus.FAILED }))
+        } else {
+          dispatch(setMenu({ data: json, status: LoadStatus.SUCCEEDED }))
+        }
+      })
+    }
+  }, [dispatch, fetchApi, user])
 
   useEffect(() => {
     dispatch(setMenuItemActive(breadcrumb?.join('_')))
