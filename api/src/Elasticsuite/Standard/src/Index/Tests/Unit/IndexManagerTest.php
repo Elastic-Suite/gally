@@ -86,10 +86,12 @@ class IndexManagerTest extends AbstractTest
                             ],
                             'analyzer' => 'keyword',
                             'copy_to' => ['search'],
+                            'norms' => false,
                         ],
                         'brand' => [
                             'type' => 'text',
                             'analyzer' => 'keyword',
+                            'norms' => false,
                         ],
                         'search' => [
                             'type' => 'text',
@@ -134,6 +136,7 @@ class IndexManagerTest extends AbstractTest
                         'name' => [
                             'type' => 'text',
                             'analyzer' => 'keyword',
+                            'norms' => false,
                         ],
                         'description' => [
                             'type' => 'text',
@@ -145,6 +148,7 @@ class IndexManagerTest extends AbstractTest
                                     'analyzer' => 'standard',
                                 ],
                             ],
+                            'norms' => false,
                         ],
                         'search' => [
                             'type' => 'text',

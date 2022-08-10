@@ -39,6 +39,7 @@ class Field implements FieldInterface
         'search_weight' => 1,
         'default_search_analyzer' => self::ANALYZER_STANDARD,
         'filter_logical_operator' => self::FILTER_LOGICAL_OPERATOR_OR,
+        'norms_disabled' => false,
     ];
 
     /** Date formats used by the indices. */
@@ -102,6 +103,11 @@ class Field implements FieldInterface
     public function getSearchWeight(): int
     {
         return (int) $this->config['search_weight'];
+    }
+
+    public function normsDisabled(): bool
+    {
+        return (bool) $this->config['norms_disabled'];
     }
 
     public function isNested(): bool
@@ -281,6 +287,9 @@ class Field implements FieldInterface
                 }
                 if (self::ANALYZER_UNTOUCHED !== $analyzer) {
                     $fieldMapping['analyzer'] = $analyzer;
+                    if ($this->normsDisabled() || (self::ANALYZER_KEYWORD === $analyzer)) {
+                        $fieldMapping['norms'] = false;
+                    }
                     if (self::ANALYZER_SORTABLE === $analyzer) {
                         $fieldMapping['fielddata'] = true;
                     }

@@ -67,6 +67,8 @@ interface FieldInterface
 
     public function getSearchWeight(): int;
 
+    public function normsDisabled(): bool;
+
     /**
      * Return true if the field has a nested path.
      */
