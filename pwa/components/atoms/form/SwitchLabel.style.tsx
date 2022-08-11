@@ -11,4 +11,5 @@ export const Font = styled(Box)(() => ({
   flex: 'none',
   order: 0,
   flexGrow: 0,
+  width: '100%',
 }))

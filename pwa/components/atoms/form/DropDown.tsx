@@ -88,7 +88,7 @@ export default function DropDown(props: IDropDownProps): JSX.Element {
       {label ? (
         <InputLabel shrink required={required}>
           {label}
-          {infoTooltip ? <InfoTooltip text={infoTooltip} /> : null}
+          {infoTooltip ? <InfoTooltip title={infoTooltip} /> : null}
         </InputLabel>
       ) : null}
       {isMultiple(props) ? (

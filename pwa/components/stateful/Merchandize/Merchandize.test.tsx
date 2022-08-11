@@ -3,27 +3,14 @@ import { renderWithProviders } from '~/utils/tests'
 
 describe('Merchandize match snapshot', () => {
   it('testSelect', () => {
-    let first = true
-    const setFirst = (bol: boolean): void => {
-      first = bol
-    }
-    let sec = true
-    const setSec = (bol: boolean): void => {
-      sec = bol
-    }
-    let val = 10
-    const setValue = (str: number): void => {
-      val = str
-    }
-
-    const handleChange = (value: number): void => setValue(value)
+    const first = true
+    const sec = true
+    const val = 10
 
     const { container } = renderWithProviders(
       <Merchandize
-        onVirtualCategoryChange={setFirst}
         virtualCategoryValue={first}
-        onCategoryNameChange={setSec}
-        useCategoryNameValue={sec}
+        categoryNameValue={sec}
         {...{
           args: {
             disabled: false,
@@ -37,7 +24,7 @@ describe('Merchandize match snapshot', () => {
             required: false,
           },
         }}
-        {...{ onChange: handleChange, value: val }}
+        {...{ value: val }}
       />
     )
     expect(container).toMatchSnapshot()

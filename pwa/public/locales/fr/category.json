@@ -1,9 +1,9 @@
 {
-  "category.required": "* Champ requis",
-  "category.name": "Utiliser le nom de la catégorie dans la recherche de produits",
-  "category.name.tooltip": "Utiliser le nom de la catégorie dans la recherche de produits",
-  "category.virtual": "Catégorie virtuelle",
-  "category.virtual.tooltip": "Catégorie virtuelle",
-  "category.select": "Sélectionnez",
-  "category.select.tooltip": "Quel tri sera utilisé pour la catégorie"
+  "required": "* Champ requis",
+  "name": "Utiliser le nom de la catégorie dans la recherche de produits",
+  "name.tooltip": "Utiliser le nom de la catégorie dans la recherche de produits",
+  "virtual": "Catégorie virtuelle",
+  "virtual.tooltip": "Catégorie virtuelle",
+  "select": "Sélectionnez",
+  "select.tooltip": "Quel tri sera utilisé pour la catégorie"
 }

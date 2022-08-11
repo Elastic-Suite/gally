@@ -21,7 +21,7 @@ export default {
           onVirtualCategoryChange={setFirst}
           virtualCategoryValue={first}
           onCategoryNameChange={setSec}
-          useCategoryNameValue={sec}
+          categoryNameValue={sec}
           {...{
             args: {
               disabled: false,

@@ -15,17 +15,18 @@ exports[`Merchandize match snapshot testSelect 1`] = `
         style="width: 50%;"
       >
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-1vpwcmr-MuiGrid-root"
+          class="MuiBox-root css-k4hhaz"
         >
           <div
-            class="MuiBox-root css-3brtf5"
+            class="MuiFormControl-root MuiFormControl-fullWidth css-s5qhyf-MuiFormControl-root"
           >
-            <div
-              class="MuiGrid-root MuiGrid-container css-1e2bu2o-MuiGrid-root"
+            <label
+              class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-root MuiFormLabel-colorPrimary css-ssr94h-MuiFormLabel-root-MuiInputLabel-root"
+              data-shrink="true"
             >
-              category.name
+              name
               <span
-                aria-label="category.name.tooltip"
+                aria-label="name.tooltip"
                 class=""
                 data-mui-internal-clone-element="true"
                 style="display: inline-block; padding-left: 10px; margin-bottom: -5px;"
@@ -35,13 +36,9 @@ exports[`Merchandize match snapshot testSelect 1`] = `
                   style="color: rgb(129, 135, 185); width: 20px; height: 20px; display: flex;"
                 />
               </span>
-            </div>
-          </div>
-          <div
-            style="margin-left: -12px;"
-          >
+            </label>
             <span
-              class="MuiSwitch-root MuiSwitch-sizeMedium css-tnsvld-MuiSwitch-root"
+              class="MuiSwitch-root MuiSwitch-sizeMedium css-najw49-MuiSwitch-root"
             >
               <span
                 class="MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-checked MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-checked PrivateSwitchBase-root Mui-checked css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
@@ -67,17 +64,18 @@ exports[`Merchandize match snapshot testSelect 1`] = `
           </div>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-1vpwcmr-MuiGrid-root"
+          class="MuiBox-root css-k4hhaz"
         >
           <div
-            class="MuiBox-root css-3brtf5"
+            class="MuiFormControl-root MuiFormControl-fullWidth css-s5qhyf-MuiFormControl-root"
           >
-            <div
-              class="MuiGrid-root MuiGrid-container css-1e2bu2o-MuiGrid-root"
+            <label
+              class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-root MuiFormLabel-colorPrimary css-ssr94h-MuiFormLabel-root-MuiInputLabel-root"
+              data-shrink="true"
             >
-              category.virtual
+              virtual
               <span
-                aria-label="category.virtual.tooltip"
+                aria-label="virtual.tooltip"
                 class=""
                 data-mui-internal-clone-element="true"
                 style="display: inline-block; padding-left: 10px; margin-bottom: -5px;"
@@ -87,13 +85,9 @@ exports[`Merchandize match snapshot testSelect 1`] = `
                   style="color: rgb(129, 135, 185); width: 20px; height: 20px; display: flex;"
                 />
               </span>
-            </div>
-          </div>
-          <div
-            style="margin-left: -12px;"
-          >
+            </label>
             <span
-              class="MuiSwitch-root MuiSwitch-sizeMedium css-tnsvld-MuiSwitch-root"
+              class="MuiSwitch-root MuiSwitch-sizeMedium css-najw49-MuiSwitch-root"
             >
               <span
                 class="MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-checked MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-checked PrivateSwitchBase-root Mui-checked css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
@@ -132,7 +126,7 @@ exports[`Merchandize match snapshot testSelect 1`] = `
           >
             Label
             <span
-              aria-label="category.select.tooltip"
+              aria-label="select.tooltip"
               class=""
               data-mui-internal-clone-element="true"
               style="display: inline-block; padding-left: 10px; margin-bottom: -5px;"

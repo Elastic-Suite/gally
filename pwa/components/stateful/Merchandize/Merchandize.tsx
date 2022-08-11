@@ -2,24 +2,26 @@ import { ChangeEvent } from 'react'
 import { useTranslation } from 'next-i18next'
 import { Grid, Paper } from '@mui/material'
 import DropDown, { ISelectProps } from '~/components/atoms/form/DropDown'
-import SwitchComp from '~/components/atoms/form/SwitchComp'
+import SwitchLabel from '~/components/atoms/form/SwitchLabel'
 
-function Merchandize({
-  onCategoryNameChange,
-  onVirtualCategoryChange,
-  useCategoryNameValue,
-  virtualCategoryValue,
-  args,
-  ...props
-}: {
-  onCategoryNameChange: (arg: boolean) => void
-  onVirtualCategoryChange: (arg: boolean) => void
-  useCategoryNameValue: boolean
+interface IProps {
+  onCategoryNameChange?: (arg: boolean) => void
+  onVirtualCategoryChange?: (arg: boolean) => void
+  categoryNameValue: boolean
   virtualCategoryValue: boolean
   args: ISelectProps
   onChange?: (arg: number) => void
   value?: number
-}): JSX.Element {
+}
+
+function Merchandize({
+  onCategoryNameChange,
+  onVirtualCategoryChange,
+  categoryNameValue,
+  virtualCategoryValue,
+  args,
+  ...props
+}: IProps): JSX.Element {
   const { t } = useTranslation('category')
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -43,18 +45,18 @@ function Merchandize({
           alignItems="flex-start"
           style={{ width: '50%' }}
         >
-          <SwitchComp
-            label={t('category.name')}
-            labelInfo={t('category.name.tooltip')}
-            handleChange={handleChange}
-            value={useCategoryNameValue}
+          <SwitchLabel
+            label={t('name')}
+            labelInfo={t('name.tooltip')}
+            onChange={handleChange}
+            checked={categoryNameValue}
             name="checkedA"
           />
-          <SwitchComp
-            label={t('category.virtual')}
-            labelInfo={t('category.virtual.tooltip')}
-            handleChange={handleChange}
-            value={virtualCategoryValue}
+          <SwitchLabel
+            label={t('virtual')}
+            labelInfo={t('virtual.tooltip')}
+            onChange={handleChange}
+            checked={virtualCategoryValue}
             name="checkedB"
           />
         </Grid>
@@ -65,11 +67,7 @@ function Merchandize({
           justifyContent="flex-start"
           alignItems="center"
         >
-          <DropDown
-            {...args}
-            {...props}
-            infoTooltip={t('category.select.tooltip')}
-          />
+          <DropDown {...args} {...props} infoTooltip={t('select.tooltip')} />
         </Grid>
       </Grid>
     </Paper>

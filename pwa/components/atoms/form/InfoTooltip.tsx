@@ -1,9 +1,13 @@
 import Tooltip from '~/components/atoms/modals/Tooltip'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 
-function InfoTooltip({ text }: { text: string }): JSX.Element {
+interface IProps {
+  title: string
+}
+
+function InfoTooltip({ title }: IProps): JSX.Element {
   return (
-    <Tooltip title={text} placement="left">
+    <Tooltip title={title} placement="left">
       <span
         style={{
           display: 'inline-block',
