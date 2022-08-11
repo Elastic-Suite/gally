@@ -6,7 +6,7 @@ exports[`Textarea match snapshot TextareaAllFalse 1`] = `
     class="MuiFormControl-root css-1c9gikl-MuiFormControl-root"
   >
     <label
-      class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-root MuiFormLabel-colorPrimary css-ssr94h-MuiFormLabel-root-MuiInputLabel-root"
+      class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-colorPrimary css-ssr94h-MuiFormLabel-root-MuiInputLabel-root"
       data-shrink="true"
       for="textarea"
     >
@@ -43,14 +43,14 @@ exports[`Textarea match snapshot TextareaAllTrue 1`] = `
     class="MuiFormControl-root css-1c9gikl-MuiFormControl-root"
   >
     <label
-      class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-root MuiFormLabel-colorPrimary Mui-required css-ssr94h-MuiFormLabel-root-MuiInputLabel-root"
+      class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-colorPrimary Mui-required css-ssr94h-MuiFormLabel-root-MuiInputLabel-root"
       data-shrink="true"
       for="textarea"
     >
       Label
       <span
         aria-hidden="true"
-        class="MuiInputLabel-asterisk MuiFormLabel-asterisk css-1ufxisk-MuiFormLabel-asterisk"
+        class="MuiFormLabel-asterisk MuiInputLabel-asterisk css-1ufxisk-MuiFormLabel-asterisk"
       >
          
         *
