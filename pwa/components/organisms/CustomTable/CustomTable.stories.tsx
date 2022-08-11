@@ -27,6 +27,8 @@ const Template: ComponentStory<typeof CustomTableComponent> = (args) => {
   )
 }
 
+const selectedRows: string[] = []
+
 const mockedHeadersAndRows = {
   tableHeaders: [
     {
@@ -107,6 +109,7 @@ const mockedHeadersAndRows = {
       field7: 'static/media/assets/img/scarf_elastic.png',
     },
   ],
+  selectedRows,
 }
 
 export const CustomTable = Template.bind({})

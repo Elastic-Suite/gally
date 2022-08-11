@@ -21,5 +21,7 @@
   "contentOfSearchableAndFiltrableAttributes": "Contenu des attributs consultables et filtrables",
   "searchResults.topProducts": "Top Products",
   "stock.inStock": "En stock",
-  "stock.outOfStock": "Rupture de stock"
+  "stock.outOfStock": "Rupture de stock",
+  "pagination.of": "de",
+  "pagination.rowsPerPage": "Lignes par pages"
 }

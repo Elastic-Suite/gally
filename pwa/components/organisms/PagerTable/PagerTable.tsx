@@ -1,9 +1,9 @@
-import { ChangeEvent } from 'react'
 import { styled } from '@mui/system'
+import { ChangeEvent } from 'react'
 
 import Pagination from '~/components/molecules/CustomTable/Pagination/Pagination'
 import CustomTable, {
-  IProps as ICustomTableProps,
+  ICustomTableProps,
 } from '~/components/organisms/CustomTable/CustomTable'
 
 const Root = styled('div')(({ theme }) => ({
@@ -19,7 +19,7 @@ interface IProps extends ICustomTableProps {
   ) => void
   rowsPerPage: number
   rowsPerPageOptions: number[]
-  totalPages: number
+  count: number
 }
 
 function PagerTable(props: IProps): JSX.Element {
@@ -29,7 +29,7 @@ function PagerTable(props: IProps): JSX.Element {
     onRowsPerPageChange,
     rowsPerPage,
     rowsPerPageOptions,
-    totalPages,
+    count,
     ...tableProps
   } = props
 
@@ -41,7 +41,7 @@ function PagerTable(props: IProps): JSX.Element {
         onRowsPerPageChange={onRowsPerPageChange}
         rowsPerPage={rowsPerPage}
         rowsPerPageOptions={rowsPerPageOptions}
-        totalPages={totalPages}
+        count={count}
       />
       <CustomTable {...tableProps} />
       <Pagination
@@ -51,7 +51,7 @@ function PagerTable(props: IProps): JSX.Element {
         onRowsPerPageChange={onRowsPerPageChange}
         rowsPerPage={rowsPerPage}
         rowsPerPageOptions={rowsPerPageOptions}
-        totalPages={totalPages}
+        count={count}
       />
     </Root>
   )

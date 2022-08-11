@@ -12,4 +12,6 @@ const Template: ComponentStory<typeof StickyBarComponent> = (args) => (
 )
 
 export const StickyBar = Template.bind({})
-StickyBar.args = {}
+StickyBar.args = {
+  show: true,
+}

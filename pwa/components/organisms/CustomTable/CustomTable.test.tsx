@@ -1,5 +1,3 @@
-import { fireEvent, screen } from '@testing-library/react'
-
 import { DataContentType } from '~/types'
 import { renderWithProviders } from '~/utils/tests'
 
@@ -85,7 +83,6 @@ describe('CustomTable', () => {
       <CustomTable
         tableHeaders={mockedHeadersAndRows.tableHeadersWithSticky}
         tableRows={mockedHeadersAndRows.tableRows}
-        withSelection
       />
     )
 
@@ -97,7 +94,7 @@ describe('CustomTable', () => {
       <CustomTable
         tableHeaders={mockedHeadersAndRows.tableHeadersWithoutSticky}
         tableRows={mockedHeadersAndRows.tableRows}
-        withSelection
+        selectedRows={['fake_id']}
       />
     )
 
@@ -109,7 +106,7 @@ describe('CustomTable', () => {
       <CustomTable
         tableHeaders={mockedHeadersAndRows.tableHeadersWithSticky}
         tableRows={mockedHeadersAndRows.tableRows}
-        withSelection
+        selectedRows={['fake_id']}
       />
     )
 
@@ -121,7 +118,7 @@ describe('CustomTable', () => {
       <CustomTable
         tableHeaders={mockedHeadersAndRows.tableHeadersWithoutSticky}
         tableRows={mockedHeadersAndRows.tableRows}
-        withSelection
+        selectedRows={['fake_id']}
         draggable
       />
     )
@@ -134,7 +131,7 @@ describe('CustomTable', () => {
       <CustomTable
         tableHeaders={mockedHeadersAndRows.tableHeadersWithSticky}
         tableRows={mockedHeadersAndRows.tableRows}
-        withSelection
+        selectedRows={['fake_id']}
         draggable
       />
     )
@@ -147,70 +144,11 @@ describe('CustomTable', () => {
       <CustomTable
         tableHeaders={mockedHeadersAndRows.tableHeadersEditable}
         tableRows={mockedHeadersAndRows.tableRows}
-        withSelection
+        selectedRows={['fake_id']}
         draggable
       />
     )
 
     expect(container).toMatchSnapshot()
-  })
-
-  it('should open selection dropdown when chevron-down button is click', () => {
-    renderWithProviders(
-      <CustomTable
-        tableHeaders={mockedHeadersAndRows.tableHeadersEditable}
-        tableRows={mockedHeadersAndRows.tableRows}
-        withSelection
-      />
-    )
-    expect(screen.queryByTestId('massive-selection-dropdown-open')).toBeNull()
-    fireEvent.click(screen.queryByTestId('massive-selection-dropdown'))
-    expect(
-      screen.queryByTestId('massive-selection-dropdown-open')
-    ).toBeVisible()
-  })
-
-  it('should make sticky-bar visible when header massive selection checkbox is checked', () => {
-    renderWithProviders(
-      <CustomTable
-        tableHeaders={mockedHeadersAndRows.tableHeadersEditable}
-        tableRows={mockedHeadersAndRows.tableRows}
-        withSelection
-      />
-    )
-    expect(screen.queryByTestId('sticky-bar')).toBeNull()
-    fireEvent.click(screen.queryByTestId('massive-selection').childNodes[0])
-    expect(screen.queryByTestId('sticky-bar')).toBeVisible()
-  })
-
-  it('should make sticky-bar visible when a single row selection checkbox is checked on non draggable table', () => {
-    renderWithProviders(
-      <CustomTable
-        tableHeaders={mockedHeadersAndRows.tableHeadersEditable}
-        tableRows={mockedHeadersAndRows.tableRows}
-        withSelection
-      />
-    )
-    expect(screen.queryByTestId('sticky-bar')).toBeNull()
-    fireEvent.click(
-      screen.queryByTestId('non-draggable-single-row-selection').childNodes[0]
-    )
-    expect(screen.queryByTestId('sticky-bar')).toBeVisible()
-  })
-
-  it('should make sticky-bar visible when a single row selection checkbox is checked on draggable table', () => {
-    renderWithProviders(
-      <CustomTable
-        tableHeaders={mockedHeadersAndRows.tableHeadersEditable}
-        tableRows={mockedHeadersAndRows.tableRows}
-        withSelection
-        draggable
-      />
-    )
-    expect(screen.queryByTestId('sticky-bar')).toBeNull()
-    fireEvent.click(
-      screen.queryByTestId('draggable-single-row-selection').childNodes[0]
-    )
-    expect(screen.queryByTestId('sticky-bar')).toBeVisible()
   })
 })

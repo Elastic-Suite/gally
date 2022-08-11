@@ -12,5 +12,5 @@ const Template: ComponentStory<typeof StockComponent> = (args) => (
 
 export const Stock = Template.bind({})
 Stock.args = {
-  stock: true,
+  stockStatus: true,
 }

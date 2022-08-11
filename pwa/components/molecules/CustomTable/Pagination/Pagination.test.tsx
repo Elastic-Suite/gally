@@ -7,7 +7,7 @@ describe('Pagination', () => {
     const { container } = renderWithProviders(
       <Pagination
         isBottom
-        totalPages={10}
+        count={10}
         currentPage={1}
         rowsPerPage={5}
         rowsPerPageOptions={[]}
@@ -22,7 +22,7 @@ describe('Pagination', () => {
     const { container } = renderWithProviders(
       <Pagination
         isBottom={false}
-        totalPages={10}
+        count={10}
         currentPage={1}
         rowsPerPage={5}
         rowsPerPageOptions={[]}

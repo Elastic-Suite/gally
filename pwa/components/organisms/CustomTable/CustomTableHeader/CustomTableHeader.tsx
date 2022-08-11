@@ -1,5 +1,5 @@
-import { TableHead, TableRow } from '@mui/material'
-import MassiveSelection from '~/components/molecules/CustomTable/MassiveSelection/MassiveSelection'
+import { ChangeEvent } from 'react'
+import { Checkbox, TableHead, TableRow } from '@mui/material'
 import {
   BaseTableCell,
   StickyTableCell,
@@ -9,15 +9,14 @@ import {
   selectionColumnWidth,
   stickyColunWidth,
 } from '~/constants'
-import { ITableHeader, ITableHeaderSticky, MassiveSelectionType } from '~/types'
+import { DataContentType, ITableHeader, ITableHeaderSticky } from '~/types'
 import { manageStickyHeaders, stickyBorderStyle } from '../CustomTable.service'
 
 interface IProps {
   tableHeaders: ITableHeader[]
   withSelection: boolean
-  onMassiveSelection?: (selection: MassiveSelectionType) => void
+  onSelection?: (e: ChangeEvent<HTMLInputElement>) => void
   massiveSelectionState?: boolean
-  draggable: boolean
   cSSLeftValues: number[]
   isHorizontalOverflow: boolean
   shadow: boolean
@@ -28,9 +27,8 @@ function CustomTableHeader(props: IProps): JSX.Element {
   const {
     tableHeaders,
     withSelection,
-    onMassiveSelection,
+    onSelection,
     massiveSelectionState,
-    draggable,
     cSSLeftValues,
     isHorizontalOverflow,
     shadow,
@@ -48,25 +46,23 @@ function CustomTableHeader(props: IProps): JSX.Element {
           backgroundColor: 'neutral.light',
         }}
       >
-        {Boolean(draggable) && (
-          <StickyTableCell
-            sx={{
-              minWidth: `${reorderingColumnWidth}px`,
-              width: `${reorderingColumnWidth}px`,
-              borderBottomColor: 'colors.neutral.300',
-              borderTopColor: 'colors.neutral.300',
-              borderTopWidth: '1px',
-              borderTopStyle: 'solid',
-              backgroundColor: 'neutral.light',
-              ...(!isOnlyDraggable && { borderRight: 'none' }),
-              ...(isOnlyDraggable &&
-                isHorizontalOverflow &&
-                stickyBorderStyle(shadow)),
-              zIndex: '1',
-              left: `${CSSLeftValuesIterator.next().value[1]}px`,
-            }}
-          />
-        )}
+        <StickyTableCell
+          sx={{
+            minWidth: `${reorderingColumnWidth}px`,
+            width: `${reorderingColumnWidth}px`,
+            borderBottomColor: 'colors.neutral.300',
+            borderTopColor: 'colors.neutral.300',
+            borderTopWidth: '1px',
+            borderTopStyle: 'solid',
+            backgroundColor: 'neutral.light',
+            ...(!isOnlyDraggable && { borderRight: 'none' }),
+            ...(isOnlyDraggable &&
+              isHorizontalOverflow &&
+              stickyBorderStyle(shadow)),
+            zIndex: '1',
+            left: `${CSSLeftValuesIterator.next().value[1]}px`,
+          }}
+        />
 
         {Boolean(withSelection) && (
           <StickyTableCell
@@ -85,10 +81,11 @@ function CustomTableHeader(props: IProps): JSX.Element {
             }}
             key="header-massiveselection"
           >
-            <MassiveSelection
-              onSelection={onMassiveSelection}
-              selectionState={massiveSelectionState}
-              indeterminateState={massiveSelectionIndeterminate}
+            <Checkbox
+              data-testid="massive-selection"
+              indeterminate={massiveSelectionIndeterminate}
+              checked={massiveSelectionState}
+              onChange={onSelection}
             />
           </StickyTableCell>
         )}
@@ -118,12 +115,20 @@ function CustomTableHeader(props: IProps): JSX.Element {
           .map((header) => (
             <BaseTableCell
               sx={{
+                height: '20px',
+                padding: '14px 16px',
                 borderBottomColor: 'colors.neutral.300',
                 borderTopColor: 'colors.neutral.300',
                 borderTopWidth: '1px',
                 borderTopStyle: 'solid',
                 backgroundColor: 'neutral.light',
                 whiteSpace: 'nowrap',
+                ...((header.type === DataContentType.SCORE ||
+                  header.type === DataContentType.PRICE) && { width: '5%' }),
+                ...(header.type === DataContentType.STOCK && { width: '15%' }),
+                ...(header.type === DataContentType.STRING && {
+                  maxWidth: 'fit-content',
+                }),
               }}
               key={header.field}
             >
