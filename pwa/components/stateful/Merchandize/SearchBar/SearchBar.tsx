@@ -11,21 +11,18 @@ export default function SearchBar(props: IProps): JSX.Element {
   const { nbRes, ...inputTextProps } = props
   const { t } = useTranslation('category')
 
-  const result = `${nbRes} `
+  const result = `${nbRes} ${t('searchBar.results')}`
   return (
     <Paper>
       <Grid container justifyContent="space-between" sx={{ padding: '16px' }}>
         <Grid container direction="column" sx={{ width: 'auto' }}>
-          <SearchTitle>{t('category.searchBar.title')}</SearchTitle>
-          <SearchResult>
-            {result}
-            {t('category.searchBar.results')}
-          </SearchResult>
+          <SearchTitle>{t('searchBar.title')}</SearchTitle>
+          <SearchResult>{result}</SearchResult>
         </Grid>
         <InputText
           {...inputTextProps}
           color="primary"
-          placeholder={t('category.searchBar.placeholder')}
+          placeholder={t('searchBar.placeholder')}
           endAdornment={
             <InputAdornment position="end">
               <IonIcon name="search" />
