@@ -30,15 +30,15 @@ exports[`TopProductTable Should match snapschot 1`] = `
             class="MuiTableRow-root MuiTableRow-head css-1u1grnd-MuiTableRow-root"
           >
             <th
-              class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-b78cdr-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-emp0jo-MuiTableCell-root"
               scope="col"
             />
             <th
-              class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1fakg2h-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1lf9arb-MuiTableCell-root"
               scope="col"
             >
               <span
-                class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
+                class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
                 data-testid="massive-selection"
               >
                 <input
@@ -118,7 +118,7 @@ exports[`TopProductTable Should match snapschot 1`] = `
           >
             <td
               aria-describedby="rbd-hidden-text-0-hidden-text-0"
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-107228a-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1u51mjb-MuiTableCell-root"
               data-rbd-drag-handle-context-id="0"
               data-rbd-drag-handle-draggable-id="1"
               draggable="false"
@@ -134,10 +134,10 @@ exports[`TopProductTable Should match snapschot 1`] = `
               </div>
             </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1ipz1hd-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1441ee9-MuiTableCell-root"
             >
               <span
-                class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
+                class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
                 data-testid="draggable-single-row-selection"
               >
                 <input
@@ -232,12 +232,12 @@ exports[`TopProductTable Should match snapschot 1`] = `
               >
                 <span
                   aria-disabled="true"
-                  class="MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled MuiButtonBase-root Mui-disabled MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled PrivateSwitchBase-root Mui-checked Mui-disabled css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
+                  class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled Mui-disabled PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled Mui-checked Mui-disabled css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
                   tabindex="-1"
                 >
                   <input
                     checked=""
-                    class="MuiSwitch-input PrivateSwitchBase-input css-1m9pwf3"
+                    class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
                     disabled=""
                     type="checkbox"
                   />
@@ -258,7 +258,7 @@ exports[`TopProductTable Should match snapschot 1`] = `
           >
             <td
               aria-describedby="rbd-hidden-text-0-hidden-text-0"
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-107228a-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1u51mjb-MuiTableCell-root"
               data-rbd-drag-handle-context-id="0"
               data-rbd-drag-handle-draggable-id="2"
               draggable="false"
@@ -274,10 +274,10 @@ exports[`TopProductTable Should match snapschot 1`] = `
               </div>
             </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1ipz1hd-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1441ee9-MuiTableCell-root"
             >
               <span
-                class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
+                class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
                 data-testid="draggable-single-row-selection"
               >
                 <input
@@ -372,12 +372,12 @@ exports[`TopProductTable Should match snapschot 1`] = `
               >
                 <span
                   aria-disabled="true"
-                  class="MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled MuiButtonBase-root Mui-disabled MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled PrivateSwitchBase-root Mui-checked Mui-disabled css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
+                  class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled Mui-disabled PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled Mui-checked Mui-disabled css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
                   tabindex="-1"
                 >
                   <input
                     checked=""
-                    class="MuiSwitch-input PrivateSwitchBase-input css-1m9pwf3"
+                    class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
                     disabled=""
                     type="checkbox"
                   />
