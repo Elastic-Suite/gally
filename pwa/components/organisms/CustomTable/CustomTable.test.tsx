@@ -72,7 +72,6 @@ describe('CustomTable', () => {
       <CustomTable
         tableHeaders={mockedHeadersAndRows.tableHeadersWithoutSticky}
         tableRows={mockedHeadersAndRows.tableRows}
-        paginated
       />
     )
 
@@ -84,7 +83,6 @@ describe('CustomTable', () => {
       <CustomTable
         tableHeaders={mockedHeadersAndRows.tableHeadersWithSticky}
         tableRows={mockedHeadersAndRows.tableRows}
-        paginated
       />
     )
 
@@ -97,7 +95,6 @@ describe('CustomTable', () => {
         tableHeaders={mockedHeadersAndRows.tableHeadersWithoutSticky}
         tableRows={mockedHeadersAndRows.tableRows}
         selectedRows={['fake_id']}
-        paginated
       />
     )
 
@@ -110,7 +107,6 @@ describe('CustomTable', () => {
         tableHeaders={mockedHeadersAndRows.tableHeadersWithSticky}
         tableRows={mockedHeadersAndRows.tableRows}
         selectedRows={['fake_id']}
-        paginated
       />
     )
 
@@ -124,7 +120,6 @@ describe('CustomTable', () => {
         tableRows={mockedHeadersAndRows.tableRows}
         selectedRows={['fake_id']}
         draggable
-        paginated
       />
     )
 
@@ -138,7 +133,6 @@ describe('CustomTable', () => {
         tableRows={mockedHeadersAndRows.tableRows}
         selectedRows={['fake_id']}
         draggable
-        paginated
       />
     )
 
@@ -152,21 +146,6 @@ describe('CustomTable', () => {
         tableRows={mockedHeadersAndRows.tableRows}
         selectedRows={['fake_id']}
         draggable
-        paginated
-      />
-    )
-
-    expect(container).toMatchSnapshot()
-  })
-
-  it('match snapshot with editable content, not paginated', () => {
-    const { container } = renderWithProviders(
-      <CustomTable
-        tableHeaders={mockedHeadersAndRows.tableHeadersEditable}
-        tableRows={mockedHeadersAndRows.tableRows}
-        selectedRows={['fake_id']}
-        draggable
-        paginated={false}
       />
     )
 

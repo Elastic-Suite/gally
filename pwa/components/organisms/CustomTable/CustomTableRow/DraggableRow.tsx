@@ -37,7 +37,6 @@ interface IProps {
   cSSLeftValuesIterator: IterableIterator<[number, number]>
   isHorizontalOverflow: boolean
   shadow: boolean
-  paginated: boolean
 }
 
 function DraggableRow(props: IProps): JSX.Element {
@@ -52,7 +51,6 @@ function DraggableRow(props: IProps): JSX.Element {
     cSSLeftValuesIterator,
     isHorizontalOverflow,
     shadow,
-    paginated,
   } = props
 
   const stickyHeaders: ITableHeaderSticky[] = manageStickyHeaders(tableHeaders)
@@ -64,19 +62,6 @@ function DraggableRow(props: IProps): JSX.Element {
       key={tableRow.id}
       {...provider.draggableProps}
       ref={provider.innerRef}
-      sx={{
-        '&:last-of-type': {
-          'td:first-of-type': {
-            ...(!paginated && { borderRadius: '0 0 0 8px' }),
-          },
-          'td:last-of-type': {
-            ...(!paginated && { borderRadius: '0 0 8px 0' }),
-          },
-          td: {
-            ...(!paginated && { borderBottom: 'none' }),
-          },
-        },
-      }}
     >
       <StickyTableCell
         sx={{

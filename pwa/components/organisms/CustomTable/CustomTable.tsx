@@ -27,7 +27,6 @@ export interface ICustomTableProps {
   tableRows: ITableRow[]
   selectedRows?: (string | number)[]
   onSelectedRows?: Dispatch<SetStateAction<(string | number)[]>>
-  paginated: boolean
 }
 
 function CustomTable(props: ICustomTableProps): JSX.Element {
@@ -39,7 +38,6 @@ function CustomTable(props: ICustomTableProps): JSX.Element {
     tableRows,
     selectedRows,
     onSelectedRows,
-    paginated,
   } = props
 
   const [scrollLength, setScrollLength] = useState<number>(0)
@@ -156,7 +154,6 @@ function CustomTable(props: ICustomTableProps): JSX.Element {
                 cSSLeftValues={cSSLeftValues}
                 isHorizontalOverflow={isOverflow}
                 shadow={shadow}
-                paginated={paginated}
               />
             )}
             {Boolean(draggable) && (
@@ -170,7 +167,6 @@ function CustomTable(props: ICustomTableProps): JSX.Element {
                 cSSLeftValues={cSSLeftValues}
                 isHorizontalOverflow={isOverflow}
                 shadow={shadow}
-                paginated={paginated}
               />
             )}
           </StyledTable>
