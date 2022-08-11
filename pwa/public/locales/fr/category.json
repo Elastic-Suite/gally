@@ -1,5 +1,5 @@
 {
-  "category.searchBar.title": "Produits dans la catégorie",
-  "category.searchBar.results": "résultats",
-  "category.searchBar.placeholder": "Recherche par nom..."
+  "searchBar.title": "Produits dans la catégorie",
+  "searchBar.results": "résultats",
+  "searchBar.placeholder": "Recherche par nom..."
 }
