@@ -33,7 +33,6 @@ interface IProps {
   cSSLeftValuesIterator: IterableIterator<[number, number]>
   isHorizontalOverflow: boolean
   shadow: boolean
-  paginated: boolean
 }
 
 function NonDraggableRow(props: IProps): JSX.Element {
@@ -47,7 +46,6 @@ function NonDraggableRow(props: IProps): JSX.Element {
     cSSLeftValuesIterator,
     isHorizontalOverflow,
     shadow,
-    paginated,
   } = props
 
   const stickyHeaders: ITableHeaderSticky[] = manageStickyHeaders(tableHeaders)
@@ -55,19 +53,7 @@ function NonDraggableRow(props: IProps): JSX.Element {
   const isOnlyDraggable = !withSelection && stickyHeaders.length === 0
 
   return (
-    <TableRow
-      key={tableRow.id}
-      sx={{
-        '&:last-of-type': {
-          'td:first-of-type': {
-            ...(!paginated && { borderRadius: '0 0 0 8px' }),
-          },
-          'td:last-of-type': {
-            ...(!paginated && { borderRadius: '0 0 8px 0' }),
-          },
-        },
-      }}
-    >
+    <TableRow key={tableRow.id}>
       <StickyTableCell
         sx={{
           borderBottomColor: 'colors.neutral.300',

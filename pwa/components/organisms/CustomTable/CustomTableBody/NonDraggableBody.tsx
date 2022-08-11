@@ -16,7 +16,6 @@ interface IProps {
   shadow: boolean
   tableHeaders: ITableHeader[]
   tableRows: ITableRow[]
-  paginated: boolean
   withSelection: boolean
 }
 
@@ -30,7 +29,6 @@ function NonDraggableBody(props: IProps): JSX.Element {
     shadow,
     tableHeaders,
     tableRows,
-    paginated,
     withSelection,
   } = props
 
@@ -48,7 +46,6 @@ function NonDraggableBody(props: IProps): JSX.Element {
           cSSLeftValuesIterator={cSSLeftValues.entries()}
           isHorizontalOverflow={isHorizontalOverflow}
           shadow={shadow}
-          paginated={paginated}
         />
       ))}
     </TableBody>

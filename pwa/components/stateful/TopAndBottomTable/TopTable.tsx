@@ -3,7 +3,6 @@ import { Dispatch, SetStateAction, useMemo } from 'react'
 import { gqlUrl, productTableheader } from '~/constants'
 import { productsQuery } from '~/constants/graphql'
 import { useFetchApi } from '~/hooks'
-import { removeEmptyParameters } from '~/services'
 import { ISearchParameters, ITableHeader, ITableRow, LoadStatus } from '~/types'
 import { IFetchParams, IFetchProducts } from '~/types/products'
 
@@ -29,7 +28,7 @@ function TopTable(props: IProps): JSX.Element {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
       },
-      searchParameters: removeEmptyParameters({} as ISearchParameters),
+      searchParameters: {} as ISearchParameters,
     }
   }, [query, catalogId])
 
@@ -53,7 +52,6 @@ function TopTable(props: IProps): JSX.Element {
             tableHeaders={tableHeaders}
             tableRows={tableRows}
             draggable
-            paginated={false}
           />
         )}
     </>

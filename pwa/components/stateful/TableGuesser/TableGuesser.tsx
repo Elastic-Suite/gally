@@ -40,7 +40,6 @@ function TableGuesser<T extends IHydraMember>(props: IProps<T>): JSX.Element {
       tableHeaders={tableHeaders}
       tableRows={apiData['hydra:member'] as unknown as ITableRow[]}
       count={apiData['hydra:totalItems']}
-      paginated
     />
   )
 }

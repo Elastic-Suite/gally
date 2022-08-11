@@ -81,16 +81,3 @@ export function nonStickyStyle(type: DataContentType): INonStickyStyle {
     ...(type === DataContentType.DROPDOWN && { overflow: 'visible' }),
   }
 }
-
-export function borderRadiusStyle(paginated: boolean): any {
-  return {
-    '&:last-child': {
-      'td:first-child': {
-        ...(!paginated && { borderRadius: '0 0 0 8px' }),
-      },
-      'td:last-child': {
-        ...(!paginated && { borderRadius: '0 0 8px 0' }),
-      },
-    },
-  }
-}

@@ -76,7 +76,6 @@ function BottomTable(props: IProps): JSX.Element {
             selectedRows={selectedRows}
             onSelectedRows={onSelectedRows}
             count={products.data.data.searchProducts.paginationInfo.totalCount}
-            paginated
           />
         )}
     </>
