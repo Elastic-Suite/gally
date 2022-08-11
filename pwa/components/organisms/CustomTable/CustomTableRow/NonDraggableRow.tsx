@@ -12,7 +12,12 @@ import {
 import { handleSingleRow, manageStickyHeaders } from '../CustomTable.service'
 import EditableContent from '../CustomTableCell/EditableContent'
 import NonEditableContent from '../CustomTableCell/NonEditableContent'
-import { nonStickyStyle, selectionStyle, stickyStyle } from './Row.service'
+import {
+  draggableColumnStyle,
+  nonStickyStyle,
+  selectionStyle,
+  stickyStyle,
+} from './Row.service'
 
 interface IProps {
   tableRow: ITableRow
@@ -45,9 +50,26 @@ function NonDraggableRow(props: IProps): JSX.Element {
 
   const stickyHeaders: ITableHeaderSticky[] = manageStickyHeaders(tableHeaders)
   const nonStickyHeaders = tableHeaders.filter((header) => !header.sticky)
+  const isOnlyDraggable = !withSelection && stickyHeaders.length === 0
 
   return (
     <TableRow key={tableRow.id}>
+      <StickyTableCell
+        sx={{
+          borderBottomColor: 'colors.neutral.300',
+          '&:hover': {
+            color: 'colors.neutral.500',
+            cursor: 'default',
+          },
+          ...draggableColumnStyle(
+            isOnlyDraggable,
+            cSSLeftValuesIterator.next().value[1],
+            isHorizontalOverflow,
+            shadow
+          ),
+        }}
+      />
+
       {Boolean(withSelection) && (
         <StickyTableCell
           sx={selectionStyle(

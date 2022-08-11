@@ -84,6 +84,8 @@ describe('TopProductTable', () => {
       <TopProductsTable
         tableHeaders={mockedHeadersAndRows.tableHeaders}
         tableRows={mockedHeadersAndRows.tableRows}
+        selectedRows={[]}
+        draggable
       />
     )
     expect(container).toMatchSnapshot()

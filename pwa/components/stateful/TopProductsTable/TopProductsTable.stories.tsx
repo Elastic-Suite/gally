@@ -76,7 +76,10 @@ const mockedHeadersAndRows = {
           boostMultiplicator: 1.1,
         },
       },
-      stock: true,
+      stock: {
+        status: true,
+        qty: 10,
+      },
       price: 10,
       visible: true,
     },
@@ -93,7 +96,10 @@ const mockedHeadersAndRows = {
           boostMultiplicator: 1.1,
         },
       },
-      stock: false,
+      stock: {
+        status: false,
+        qty: 10,
+      },
       price: 10,
       visible: true,
     },
