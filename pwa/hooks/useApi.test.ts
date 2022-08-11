@@ -63,9 +63,15 @@ describe('useApi', () => {
         status: LoadStatus.SUCCEEDED,
         data: { hello: 'world' },
       })
-      expect(fetchApi).toHaveBeenCalledWith('en', '/test', null, {
-        body: 'gqlQuery',
-      })
+      expect(fetchApi).toHaveBeenCalledWith(
+        'en',
+        '/test',
+        null,
+        {
+          body: 'gqlQuery',
+        },
+        true
+      )
     })
   })
 

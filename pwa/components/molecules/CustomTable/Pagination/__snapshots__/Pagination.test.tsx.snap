@@ -17,14 +17,18 @@ exports[`Pagination should match snapshot for bottom pagination 1`] = `
         <p
           class="MuiTablePagination-displayedRows css-exf7au-MuiTablePagination-displayedRows"
         >
-          6–10 of 50
+          <div
+            class="MuiBox-root css-1lii1z3"
+          >
+            6 - 10 pagination.of 10
+          </div>
         </p>
         <div
           class="MuiTablePagination-actions"
         >
           <button
             aria-label="Go to previous page"
-            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium css-zylse7-MuiButtonBase-root-MuiIconButton-root"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium css-16dah6a-MuiButtonBase-root-MuiIconButton-root"
             tabindex="0"
             title="Go to previous page"
             type="button"
@@ -46,8 +50,9 @@ exports[`Pagination should match snapshot for bottom pagination 1`] = `
           </button>
           <button
             aria-label="Go to next page"
-            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium css-zylse7-MuiButtonBase-root-MuiIconButton-root"
-            tabindex="0"
+            class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-colorInherit MuiIconButton-sizeMedium css-16dah6a-MuiButtonBase-root-MuiIconButton-root"
+            disabled=""
+            tabindex="-1"
             title="Go to next page"
             type="button"
           >
@@ -62,9 +67,6 @@ exports[`Pagination should match snapshot for bottom pagination 1`] = `
                 d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"
               />
             </svg>
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
           </button>
         </div>
       </div>
@@ -90,14 +92,18 @@ exports[`Pagination should match snapshot for top pagination 1`] = `
         <p
           class="MuiTablePagination-displayedRows css-exf7au-MuiTablePagination-displayedRows"
         >
-          6–10 of 50
+          <div
+            class="MuiBox-root css-1lii1z3"
+          >
+            6 - 10 pagination.of 10
+          </div>
         </p>
         <div
           class="MuiTablePagination-actions"
         >
           <button
             aria-label="Go to previous page"
-            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium css-zylse7-MuiButtonBase-root-MuiIconButton-root"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium css-16dah6a-MuiButtonBase-root-MuiIconButton-root"
             tabindex="0"
             title="Go to previous page"
             type="button"
@@ -119,8 +125,9 @@ exports[`Pagination should match snapshot for top pagination 1`] = `
           </button>
           <button
             aria-label="Go to next page"
-            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium css-zylse7-MuiButtonBase-root-MuiIconButton-root"
-            tabindex="0"
+            class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-colorInherit MuiIconButton-sizeMedium css-16dah6a-MuiButtonBase-root-MuiIconButton-root"
+            disabled=""
+            tabindex="-1"
             title="Go to next page"
             type="button"
           >
@@ -135,9 +142,6 @@ exports[`Pagination should match snapshot for top pagination 1`] = `
                 d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"
               />
             </svg>
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
           </button>
         </div>
       </div>
