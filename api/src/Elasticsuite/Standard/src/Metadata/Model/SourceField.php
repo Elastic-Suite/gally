@@ -58,7 +58,11 @@ class SourceField
             'hydra:supportedProperty' => [
                 'hydra:property' => [
                     'rdfs:label' => 'Attribute code',
-                    'showable' => true,
+                ],
+                'elasticsuite' => [
+                    'visible' => true,
+                    'editable' => false,
+                    'position' => 10,
                 ],
             ],
         ],
@@ -70,7 +74,11 @@ class SourceField
             'hydra:supportedProperty' => [
                 'hydra:property' => [
                     'rdfs:label' => 'Attribute label',
-                    'showable' => true,
+                ],
+                'elasticsuite' => [
+                    'visible' => true,
+                    'editable' => false,
+                    'position' => 20,
                 ],
             ],
         ],
@@ -82,18 +90,37 @@ class SourceField
             'hydra:supportedProperty' => [
                 'hydra:property' => [
                     'rdfs:label' => 'Attribute type',
-                    'showable' => true,
+                ],
+                'elasticsuite' => [
+                    'visible' => true,
+                    'editable' => false,
+                    'position' => 30,
+                    'context' => [
+                        'search_configuration_attributes' => [
+                            'visible' => false,
+                        ],
+                    ],
                 ],
             ],
         ],
     )]
     private ?string $type = null;
+
     #[ApiProperty(
         attributes: [
             'hydra:supportedProperty' => [
                 'hydra:property' => [
                     'rdfs:label' => 'Filterable',
-                    'showable' => true,
+                ],
+                'elasticsuite' => [
+                    'visible' => true,
+                    'editable' => true,
+                    'position' => 40,
+                    'context' => [
+                        'search_configuration_attributes' => [
+                            'visible' => false,
+                        ],
+                    ],
                 ],
             ],
         ],
@@ -105,7 +132,16 @@ class SourceField
             'hydra:supportedProperty' => [
                 'hydra:property' => [
                     'rdfs:label' => 'Searchable',
-                    'showable' => true,
+                ],
+                'elasticsuite' => [
+                    'visible' => true,
+                    'editable' => true,
+                    'position' => 50,
+                    'context' => [
+                        'search_configuration_attributes' => [
+                            'visible' => false,
+                        ],
+                    ],
                 ],
             ],
         ],
@@ -117,16 +153,85 @@ class SourceField
             'hydra:supportedProperty' => [
                 'hydra:property' => [
                     'rdfs:label' => 'Sortable',
-                    'showable' => true,
+                ],
+                'elasticsuite' => [
+                    'visible' => true,
+                    'editable' => true,
+                    'position' => 60,
+                    'context' => [
+                        'search_configuration_attributes' => [
+                            'visible' => false,
+                        ],
+                    ],
                 ],
             ],
         ],
     )]
     private ?bool $isSortable = null;
 
-    private ?int $weight = null;
-    private ?bool $isSpellchecked = null;
+    #[ApiProperty(
+        attributes: [
+            'hydra:supportedProperty' => [
+                'hydra:property' => [
+                    'rdfs:label' => 'Use in rule engine',
+                ],
+                'elasticsuite' => [
+                    'visible' => true,
+                    'editable' => true,
+                    'position' => 70,
+                    'context' => [
+                        'search_configuration_attributes' => [
+                            'visible' => false,
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    )]
     private ?bool $isUsedForRules = null;
+
+    #[ApiProperty(
+        attributes: [
+            'hydra:supportedProperty' => [
+                'hydra:property' => [
+                    'rdfs:label' => 'Search weight',
+                ],
+                'elasticsuite' => [
+                    'visible' => false,
+                    'editable' => true,
+                    'position' => 80,
+                    'context' => [
+                        'settings_attribute' => [
+                            'visible' => true,
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    )]
+    private ?int $weight = null;
+
+    #[ApiProperty(
+        attributes: [
+            'hydra:supportedProperty' => [
+                'hydra:property' => [
+                    'rdfs:label' => 'Used in spellcheck',
+                ],
+                'elasticsuite' => [
+                    'visible' => false,
+                    'editable' => true,
+                    'position' => 90,
+                    'context' => [
+                        'settings_attribute' => [
+                            'visible' => true,
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    )]
+    private ?bool $isSpellchecked = null;
+
     private bool $isSystem = false;
 
     private Metadata $metadata;
