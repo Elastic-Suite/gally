@@ -24,7 +24,7 @@ const paginationStyle: IPaginationStyle = {
   lineHeight: '18px',
 }
 
-const PaginationTextContainer = styled(Box)({
+const PaginationTextContainer = styled('span')({
   ...paginationStyle,
 })
 

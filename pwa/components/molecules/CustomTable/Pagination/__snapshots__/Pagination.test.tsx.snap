@@ -17,11 +17,11 @@ exports[`Pagination should match snapshot for bottom pagination 1`] = `
         <p
           class="MuiTablePagination-displayedRows css-exf7au-MuiTablePagination-displayedRows"
         >
-          <div
-            class="MuiBox-root css-1lii1z3"
+          <span
+            class="css-vwp1eu"
           >
             6 - 10 pagination.of 10
-          </div>
+          </span>
         </p>
         <div
           class="MuiTablePagination-actions"
@@ -92,11 +92,11 @@ exports[`Pagination should match snapshot for top pagination 1`] = `
         <p
           class="MuiTablePagination-displayedRows css-exf7au-MuiTablePagination-displayedRows"
         >
-          <div
-            class="MuiBox-root css-1lii1z3"
+          <span
+            class="css-vwp1eu"
           >
             6 - 10 pagination.of 10
-          </div>
+          </span>
         </p>
         <div
           class="MuiTablePagination-actions"

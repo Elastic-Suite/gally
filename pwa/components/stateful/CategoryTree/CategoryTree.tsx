@@ -9,7 +9,7 @@ interface IProps {
 }
 
 function CategoryTree({ selectedItem, onSelect }: IProps): JSX.Element {
-  const resourceName = '"Category"'
+  const resourceName = 'Category'
   const resource = useResource(resourceName)
   const [categoriesFields] = useApiList<ICategories>(resource, false)
   const { data, error } = categoriesFields
