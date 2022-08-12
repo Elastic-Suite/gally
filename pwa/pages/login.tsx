@@ -6,7 +6,7 @@ import { Paper } from '@mui/material'
 
 import { tokenStorageKey } from '~/constants'
 import { useApiFetch, useUser } from '~/hooks'
-import { storageSet } from '~/services'
+import { isFetchError, storageSet } from '~/services'
 import { selectRequestedPath, useAppSelector } from '~/store'
 import { ILogin } from '~/types'
 
@@ -42,8 +42,10 @@ function Login(): JSX.Element {
       body: JSON.stringify({ email, password }),
       headers: new Headers({ 'Content-Type': 'application/json' }),
     }).then((json) => {
-      storageSet(tokenStorageKey, json.token)
-      redirectToRequestedPath()
+      if (!isFetchError(json)) {
+        storageSet(tokenStorageKey, json.token)
+        redirectToRequestedPath()
+      }
     })
   }
 

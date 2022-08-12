@@ -220,5 +220,11 @@ module.exports = {
         '@typescript-eslint/unified-signatures': 'error',
       },
     },
+    {
+      files: ['**/*.test.{ts,tsx}'],
+      rules: {
+        '@typescript-eslint/no-explicit-any': 'off',
+      },
+    },
   ],
 }

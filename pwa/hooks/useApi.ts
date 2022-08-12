@@ -6,13 +6,12 @@ import {
   useMemo,
   useState,
 } from 'react'
-import { ActionCreatorWithOptionalPayload } from '@reduxjs/toolkit'
 import { useTranslation } from 'next-i18next'
 
-import { fetchApi, getListApiParameters } from '~/services'
-import { useAppDispatch } from '~/store'
+import { fetchApi, getListApiParameters, isFetchError } from '~/services'
 import {
   IFetch,
+  IFetchError,
   IHydraMember,
   IHydraResponse,
   IResource,
@@ -20,22 +19,38 @@ import {
   LoadStatus,
 } from '~/types'
 
+import { useLog } from './useLog'
+
 export function useApiFetch<T>(
   secure = true
 ): (
   resource: IResource | string,
   searchParameters?: ISearchParameters,
   options?: RequestInit
-) => Promise<T> {
+) => Promise<T | IFetchError> {
   const { i18n } = useTranslation('common')
+  const log = useLog()
   return useCallback(
-    (
+    async (
       resource: IResource | string,
       searchParameters?: ISearchParameters,
       options?: RequestInit
-    ) =>
-      fetchApi<T>(i18n.language, resource, searchParameters, options, secure),
-    [i18n.language, secure]
+    ) => {
+      try {
+        const json = await fetchApi<T>(
+          i18n.language,
+          resource,
+          searchParameters,
+          options,
+          secure
+        )
+        return json
+      } catch (error) {
+        log(error)
+        return { error }
+      }
+    },
+    [i18n.language, log, secure]
   )
 }
 
@@ -61,31 +76,16 @@ export function useFetchApi<T>(
       data: prevState.data,
       status: LoadStatus.LOADING,
     }))
-    fetchApi(resource, searchParameters, options)
-      .then((json) => setResponse({ data: json, status: LoadStatus.SUCCEEDED }))
-      .catch((error) => setResponse({ error, status: LoadStatus.FAILED }))
+    fetchApi(resource, searchParameters, options).then((json) => {
+      if (isFetchError(json)) {
+        setResponse({ error: json.error, status: LoadStatus.FAILED })
+      } else {
+        setResponse({ data: json, status: LoadStatus.SUCCEEDED })
+      }
+    })
   }, [fetchApi, options, resource, searchParameters])
 
   return [response, updateResponse]
-}
-
-export function useApiDispatch<T>(
-  action: ActionCreatorWithOptionalPayload<IFetch<T>>,
-  resource: IResource | string,
-  searchParameters?: ISearchParameters,
-  options?: RequestInit
-): void {
-  const fetchApi = useApiFetch<T>()
-  const dispatch = useAppDispatch()
-
-  useEffect(() => {
-    dispatch(action({ status: LoadStatus.LOADING }))
-    fetchApi(resource, searchParameters, options)
-      .then((json) =>
-        dispatch(action({ data: json, status: LoadStatus.SUCCEEDED }))
-      )
-      .catch((error) => dispatch(action({ error, status: LoadStatus.FAILED })))
-  }, [action, dispatch, fetchApi, options, resource, searchParameters])
 }
 
 export function useApiList<T extends IHydraMember>(

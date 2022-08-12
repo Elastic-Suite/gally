@@ -12,13 +12,18 @@ function CategoryTree({ selectedItem, onSelect }: IProps): JSX.Element {
   const resourceName = '"Category"'
   const resource = useResource(resourceName)
   const [categoriesFields] = useApiList<ICategories>(resource, false)
+  const { data, error } = categoriesFields
+
+  if (error || !data) {
+    return null
+  }
 
   return (
     categoriesFields.status === 3 && (
       <Tree
         selectedItem={selectedItem}
         onSelect={onSelect}
-        data={categoriesFields.data['hydra:member']}
+        data={data['hydra:member']}
       />
     )
   )

@@ -155,3 +155,9 @@ declare module '@mui/material/styles' {
 declare module '@mui/styles/defaultTheme' {
   type DefaultTheme = Theme
 }
+
+declare global {
+  interface Window {
+    showErrors?: boolean
+  }
+}

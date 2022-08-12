@@ -1,6 +1,12 @@
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
+import {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import { DragDropContext, DropResult } from 'react-beautiful-dnd'
-import { ChangeEvent } from 'react-transition-group/node_modules/@types/react'
 import {
   StyledTable,
   TableContainerWithCustomScrollbar,

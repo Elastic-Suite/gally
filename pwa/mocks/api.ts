@@ -11,6 +11,27 @@ export const resources = [
           'http://schema.org/FindAction',
         ],
         method: 'GET',
+        title: 'Retrieves the collection of Metadata resources.',
+        label: 'Retrieves the collection of Metadata resources.',
+        returns: { '@id': 'http://www.w3.org/ns/hydra/core#Collection' },
+      },
+      {
+        '@type': [
+          'http://www.w3.org/ns/hydra/core#Operation',
+          'http://schema.org/CreateAction',
+        ],
+        expects: { '@id': 'https://localhost/docs.jsonld#Metadata' },
+        method: 'POST',
+        title: 'Creates a Metadata resource.',
+        label: 'Creates a Metadata resource.',
+        returns: { '@id': 'https://localhost/docs.jsonld#Metadata' },
+      },
+      {
+        '@type': [
+          'http://www.w3.org/ns/hydra/core#Operation',
+          'http://schema.org/FindAction',
+        ],
+        method: 'GET',
         title: 'Retrieves Metadata resource.',
         label: 'Retrieves Metadata resource.',
         returns: { '@id': 'https://localhost/docs.jsonld#Metadata' },
@@ -83,6 +104,27 @@ export const resources = [
     '@id': 'https://localhost/docs.jsonld#SourceField',
     '@type': 'http://www.w3.org/ns/hydra/core#Class',
     supportedOperation: [
+      {
+        '@type': [
+          'http://www.w3.org/ns/hydra/core#Operation',
+          'http://schema.org/FindAction',
+        ],
+        method: 'GET',
+        title: 'Retrieves the collection of SourceField resources.',
+        label: 'Retrieves the collection of SourceField resources.',
+        returns: { '@id': 'http://www.w3.org/ns/hydra/core#Collection' },
+      },
+      {
+        '@type': [
+          'http://www.w3.org/ns/hydra/core#Operation',
+          'http://schema.org/CreateAction',
+        ],
+        expects: { '@id': 'https://localhost/docs.jsonld#SourceField' },
+        method: 'POST',
+        title: 'Creates a SourceField resource.',
+        label: 'Creates a SourceField resource.',
+        returns: { '@id': 'https://localhost/docs.jsonld#SourceField' },
+      },
       {
         '@type': [
           'http://www.w3.org/ns/hydra/core#Operation',
@@ -179,7 +221,7 @@ export const resources = [
           label: 'Filterable',
           showable: true,
         },
-        readable: false,
+        readable: true,
         required: false,
         title: 'isFilterable',
         writeable: true,
@@ -194,7 +236,7 @@ export const resources = [
           label: 'Searchable',
           showable: true,
         },
-        readable: false,
+        readable: true,
         required: false,
         title: 'isSearchable',
         writeable: true,
@@ -209,7 +251,7 @@ export const resources = [
           label: 'Sortable',
           showable: true,
         },
-        readable: false,
+        readable: true,
         required: false,
         title: 'isSortable',
         writeable: true,
@@ -237,7 +279,7 @@ export const resources = [
           range: { '@id': 'http://www.w3.org/2001/XMLSchema#boolean' },
           label: 'isSpellchecked',
         },
-        readable: false,
+        readable: true,
         required: false,
         title: 'isSpellchecked',
         writeable: true,
@@ -251,9 +293,23 @@ export const resources = [
           range: { '@id': 'http://www.w3.org/2001/XMLSchema#boolean' },
           label: 'isUsedForRules',
         },
-        readable: false,
+        readable: true,
         required: false,
         title: 'isUsedForRules',
+        writeable: true,
+      },
+      {
+        '@type': 'http://www.w3.org/ns/hydra/core#SupportedProperty',
+        property: {
+          '@id': 'https://localhost/docs.jsonld#SourceField/isSystem',
+          '@type': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#Property',
+          domain: { '@id': 'https://localhost/docs.jsonld#SourceField' },
+          range: { '@id': 'http://www.w3.org/2001/XMLSchema#boolean' },
+          label: 'isSystem',
+        },
+        readable: true,
+        required: false,
+        title: 'isSystem',
         writeable: true,
       },
       {
@@ -299,90 +355,6 @@ export const resources = [
         title: 'options',
         writeable: true,
       },
-      {
-        '@type': 'http://www.w3.org/ns/hydra/core#SupportedProperty',
-        property: {
-          '@id': 'https://localhost/docs.jsonld#SourceField/searchable',
-          '@type': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#Property',
-          domain: { '@id': 'https://localhost/docs.jsonld#SourceField' },
-          range: { '@id': 'http://www.w3.org/2001/XMLSchema#boolean' },
-          label: 'searchable',
-        },
-        readable: true,
-        required: false,
-        title: 'searchable',
-        writeable: false,
-      },
-      {
-        '@type': 'http://www.w3.org/ns/hydra/core#SupportedProperty',
-        property: {
-          '@id': 'https://localhost/docs.jsonld#SourceField/filterable',
-          '@type': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#Property',
-          domain: { '@id': 'https://localhost/docs.jsonld#SourceField' },
-          range: { '@id': 'http://www.w3.org/2001/XMLSchema#boolean' },
-          label: 'filterable',
-        },
-        readable: true,
-        required: false,
-        title: 'filterable',
-        writeable: false,
-      },
-      {
-        '@type': 'http://www.w3.org/ns/hydra/core#SupportedProperty',
-        property: {
-          '@id': 'https://localhost/docs.jsonld#SourceField/sortable',
-          '@type': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#Property',
-          domain: { '@id': 'https://localhost/docs.jsonld#SourceField' },
-          range: { '@id': 'http://www.w3.org/2001/XMLSchema#boolean' },
-          label: 'sortable',
-        },
-        readable: true,
-        required: false,
-        title: 'sortable',
-        writeable: false,
-      },
-      {
-        '@type': 'http://www.w3.org/ns/hydra/core#SupportedProperty',
-        property: {
-          '@id': 'https://localhost/docs.jsonld#SourceField/spellchecked',
-          '@type': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#Property',
-          domain: { '@id': 'https://localhost/docs.jsonld#SourceField' },
-          range: { '@id': 'http://www.w3.org/2001/XMLSchema#boolean' },
-          label: 'spellchecked',
-        },
-        readable: true,
-        required: false,
-        title: 'spellchecked',
-        writeable: false,
-      },
-      {
-        '@type': 'http://www.w3.org/ns/hydra/core#SupportedProperty',
-        property: {
-          '@id': 'https://localhost/docs.jsonld#SourceField/usedForRules',
-          '@type': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#Property',
-          domain: { '@id': 'https://localhost/docs.jsonld#SourceField' },
-          range: { '@id': 'http://www.w3.org/2001/XMLSchema#boolean' },
-          label: 'usedForRules',
-        },
-        readable: true,
-        required: false,
-        title: 'usedForRules',
-        writeable: false,
-      },
-      {
-        '@type': 'http://www.w3.org/ns/hydra/core#SupportedProperty',
-        property: {
-          '@id': 'https://localhost/docs.jsonld#SourceField/system',
-          '@type': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#Property',
-          domain: { '@id': 'https://localhost/docs.jsonld#SourceField' },
-          range: { '@id': 'http://www.w3.org/2001/XMLSchema#boolean' },
-          label: 'system',
-        },
-        readable: true,
-        required: false,
-        title: 'system',
-        writeable: false,
-      },
     ],
     title: 'SourceField',
     label: 'SourceField',
@@ -392,6 +364,27 @@ export const resources = [
     '@id': 'https://localhost/docs.jsonld#Index',
     '@type': 'http://www.w3.org/ns/hydra/core#Class',
     supportedOperation: [
+      {
+        '@type': [
+          'http://www.w3.org/ns/hydra/core#Operation',
+          'http://schema.org/FindAction',
+        ],
+        method: 'GET',
+        title: 'Retrieves the collection of Index resources.',
+        label: 'Retrieves the collection of Index resources.',
+        returns: { '@id': 'http://www.w3.org/ns/hydra/core#Collection' },
+      },
+      {
+        '@type': [
+          'http://www.w3.org/ns/hydra/core#Operation',
+          'http://schema.org/CreateAction',
+        ],
+        expects: { '@id': 'https://localhost/docs.jsonld#Index' },
+        method: 'POST',
+        title: 'Creates a Index resource.',
+        label: 'Creates a Index resource.',
+        returns: { '@id': 'https://localhost/docs.jsonld#Index' },
+      },
       {
         '@type': [
           'http://www.w3.org/ns/hydra/core#Operation',
@@ -550,6 +543,27 @@ export const resources = [
           'http://schema.org/FindAction',
         ],
         method: 'GET',
+        title: 'Retrieves the collection of IndexDocument resources.',
+        label: 'Retrieves the collection of IndexDocument resources.',
+        returns: { '@id': 'http://www.w3.org/ns/hydra/core#Collection' },
+      },
+      {
+        '@type': [
+          'http://www.w3.org/ns/hydra/core#Operation',
+          'http://schema.org/CreateAction',
+        ],
+        expects: { '@id': 'https://localhost/docs.jsonld#IndexDocument' },
+        method: 'POST',
+        title: 'Creates a IndexDocument resource.',
+        label: 'Creates a IndexDocument resource.',
+        returns: { '@id': 'https://localhost/docs.jsonld#IndexDocument' },
+      },
+      {
+        '@type': [
+          'http://www.w3.org/ns/hydra/core#Operation',
+          'http://schema.org/FindAction',
+        ],
+        method: 'GET',
         title: 'Retrieves IndexDocument resource.',
         label: 'Retrieves IndexDocument resource.',
         returns: { '@id': 'https://localhost/docs.jsonld#IndexDocument' },
@@ -603,6 +617,27 @@ export const resources = [
     '@id': 'https://localhost/docs.jsonld#SourceFieldOption',
     '@type': 'http://www.w3.org/ns/hydra/core#Class',
     supportedOperation: [
+      {
+        '@type': [
+          'http://www.w3.org/ns/hydra/core#Operation',
+          'http://schema.org/FindAction',
+        ],
+        method: 'GET',
+        title: 'Retrieves the collection of SourceFieldOption resources.',
+        label: 'Retrieves the collection of SourceFieldOption resources.',
+        returns: { '@id': 'http://www.w3.org/ns/hydra/core#Collection' },
+      },
+      {
+        '@type': [
+          'http://www.w3.org/ns/hydra/core#Operation',
+          'http://schema.org/CreateAction',
+        ],
+        expects: { '@id': 'https://localhost/docs.jsonld#SourceFieldOption' },
+        method: 'POST',
+        title: 'Creates a SourceFieldOption resource.',
+        label: 'Creates a SourceFieldOption resource.',
+        returns: { '@id': 'https://localhost/docs.jsonld#SourceFieldOption' },
+      },
       {
         '@type': [
           'http://www.w3.org/ns/hydra/core#Operation',
@@ -698,6 +733,31 @@ export const resources = [
     '@id': 'https://localhost/docs.jsonld#SourceFieldOptionLabel',
     '@type': 'http://www.w3.org/ns/hydra/core#Class',
     supportedOperation: [
+      {
+        '@type': [
+          'http://www.w3.org/ns/hydra/core#Operation',
+          'http://schema.org/FindAction',
+        ],
+        method: 'GET',
+        title: 'Retrieves the collection of SourceFieldOptionLabel resources.',
+        label: 'Retrieves the collection of SourceFieldOptionLabel resources.',
+        returns: { '@id': 'http://www.w3.org/ns/hydra/core#Collection' },
+      },
+      {
+        '@type': [
+          'http://www.w3.org/ns/hydra/core#Operation',
+          'http://schema.org/CreateAction',
+        ],
+        expects: {
+          '@id': 'https://localhost/docs.jsonld#SourceFieldOptionLabel',
+        },
+        method: 'POST',
+        title: 'Creates a SourceFieldOptionLabel resource.',
+        label: 'Creates a SourceFieldOptionLabel resource.',
+        returns: {
+          '@id': 'https://localhost/docs.jsonld#SourceFieldOptionLabel',
+        },
+      },
       {
         '@type': [
           'http://www.w3.org/ns/hydra/core#Operation',
@@ -815,6 +875,27 @@ export const resources = [
           'http://schema.org/FindAction',
         ],
         method: 'GET',
+        title: 'Retrieves the collection of SourceFieldLabel resources.',
+        label: 'Retrieves the collection of SourceFieldLabel resources.',
+        returns: { '@id': 'http://www.w3.org/ns/hydra/core#Collection' },
+      },
+      {
+        '@type': [
+          'http://www.w3.org/ns/hydra/core#Operation',
+          'http://schema.org/CreateAction',
+        ],
+        expects: { '@id': 'https://localhost/docs.jsonld#SourceFieldLabel' },
+        method: 'POST',
+        title: 'Creates a SourceFieldLabel resource.',
+        label: 'Creates a SourceFieldLabel resource.',
+        returns: { '@id': 'https://localhost/docs.jsonld#SourceFieldLabel' },
+      },
+      {
+        '@type': [
+          'http://www.w3.org/ns/hydra/core#Operation',
+          'http://schema.org/FindAction',
+        ],
+        method: 'GET',
         title: 'Retrieves SourceFieldLabel resource.',
         label: 'Retrieves SourceFieldLabel resource.',
         returns: { '@id': 'https://localhost/docs.jsonld#SourceFieldLabel' },
@@ -909,6 +990,27 @@ export const resources = [
           'http://schema.org/FindAction',
         ],
         method: 'GET',
+        title: 'Retrieves the collection of Catalog resources.',
+        label: 'Retrieves the collection of Catalog resources.',
+        returns: { '@id': 'http://www.w3.org/ns/hydra/core#Collection' },
+      },
+      {
+        '@type': [
+          'http://www.w3.org/ns/hydra/core#Operation',
+          'http://schema.org/CreateAction',
+        ],
+        expects: { '@id': 'https://localhost/docs.jsonld#Catalog' },
+        method: 'POST',
+        title: 'Creates a Catalog resource.',
+        label: 'Creates a Catalog resource.',
+        returns: { '@id': 'https://localhost/docs.jsonld#Catalog' },
+      },
+      {
+        '@type': [
+          'http://www.w3.org/ns/hydra/core#Operation',
+          'http://schema.org/FindAction',
+        ],
+        method: 'GET',
         title: 'Retrieves Catalog resource.',
         label: 'Retrieves Catalog resource.',
         returns: { '@id': 'https://localhost/docs.jsonld#Catalog' },
@@ -995,6 +1097,27 @@ export const resources = [
     '@id': 'https://localhost/docs.jsonld#LocalizedCatalog',
     '@type': 'http://www.w3.org/ns/hydra/core#Class',
     supportedOperation: [
+      {
+        '@type': [
+          'http://www.w3.org/ns/hydra/core#Operation',
+          'http://schema.org/FindAction',
+        ],
+        method: 'GET',
+        title: 'Retrieves the collection of LocalizedCatalog resources.',
+        label: 'Retrieves the collection of LocalizedCatalog resources.',
+        returns: { '@id': 'http://www.w3.org/ns/hydra/core#Collection' },
+      },
+      {
+        '@type': [
+          'http://www.w3.org/ns/hydra/core#Operation',
+          'http://schema.org/CreateAction',
+        ],
+        expects: { '@id': 'https://localhost/docs.jsonld#LocalizedCatalog' },
+        method: 'POST',
+        title: 'Creates a LocalizedCatalog resource.',
+        label: 'Creates a LocalizedCatalog resource.',
+        returns: { '@id': 'https://localhost/docs.jsonld#LocalizedCatalog' },
+      },
       {
         '@type': [
           'http://www.w3.org/ns/hydra/core#Operation',
@@ -1132,6 +1255,16 @@ export const resources = [
     '@id': 'https://localhost/docs.jsonld#FacetConfiguration',
     '@type': 'http://www.w3.org/ns/hydra/core#Class',
     supportedOperation: [
+      {
+        '@type': [
+          'http://www.w3.org/ns/hydra/core#Operation',
+          'http://schema.org/FindAction',
+        ],
+        method: 'GET',
+        title: 'Retrieves the collection of FacetConfiguration resources.',
+        label: 'Retrieves the collection of FacetConfiguration resources.',
+        returns: { '@id': 'http://www.w3.org/ns/hydra/core#Collection' },
+      },
       {
         '@type': [
           'http://www.w3.org/ns/hydra/core#Operation',
@@ -1394,6 +1527,27 @@ export const resources = [
           'http://schema.org/FindAction',
         ],
         method: 'GET',
+        title: 'Retrieves the collection of Category resources.',
+        label: 'Retrieves the collection of Category resources.',
+        returns: { '@id': 'http://www.w3.org/ns/hydra/core#Collection' },
+      },
+      {
+        '@type': [
+          'http://www.w3.org/ns/hydra/core#Operation',
+          'http://schema.org/CreateAction',
+        ],
+        expects: { '@id': 'https://localhost/docs.jsonld#Category' },
+        method: 'POST',
+        title: 'Creates a Category resource.',
+        label: 'Creates a Category resource.',
+        returns: { '@id': 'https://localhost/docs.jsonld#Category' },
+      },
+      {
+        '@type': [
+          'http://www.w3.org/ns/hydra/core#Operation',
+          'http://schema.org/FindAction',
+        ],
+        method: 'GET',
         title: 'Retrieves Category resource.',
         label: 'Retrieves Category resource.',
         returns: { '@id': 'https://localhost/docs.jsonld#Category' },
@@ -1428,20 +1582,64 @@ export const resources = [
         returns: { '@id': 'https://localhost/docs.jsonld#Category' },
       },
     ],
-    supportedProperty: {
-      '@type': 'http://www.w3.org/ns/hydra/core#SupportedProperty',
-      property: {
-        '@id': 'https://localhost/docs.jsonld#Category/name',
-        '@type': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#Property',
-        domain: { '@id': 'https://localhost/docs.jsonld#Category' },
-        range: { '@id': 'http://www.w3.org/2001/XMLSchema#string' },
-        label: 'name',
+    supportedProperty: [
+      {
+        '@type': 'http://www.w3.org/ns/hydra/core#SupportedProperty',
+        property: {
+          '@id': 'https://localhost/docs.jsonld#Category/id',
+          '@type': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#Property',
+          domain: { '@id': 'https://localhost/docs.jsonld#Category' },
+          range: { '@id': 'http://www.w3.org/2001/XMLSchema#string' },
+          label: 'id',
+        },
+        readable: true,
+        required: false,
+        title: 'id',
+        writeable: true,
       },
-      readable: true,
-      required: false,
-      title: 'name',
-      writeable: true,
-    },
+      {
+        '@type': 'http://www.w3.org/ns/hydra/core#SupportedProperty',
+        property: {
+          '@id': 'https://localhost/docs.jsonld#Category/parentId',
+          '@type': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#Property',
+          domain: { '@id': 'https://localhost/docs.jsonld#Category' },
+          range: { '@id': 'http://www.w3.org/2001/XMLSchema#string' },
+          label: 'parentId',
+        },
+        readable: true,
+        required: false,
+        title: 'parentId',
+        writeable: true,
+      },
+      {
+        '@type': 'http://www.w3.org/ns/hydra/core#SupportedProperty',
+        property: {
+          '@id': 'https://localhost/docs.jsonld#Category/level',
+          '@type': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#Property',
+          domain: { '@id': 'https://localhost/docs.jsonld#Category' },
+          range: { '@id': 'http://www.w3.org/2001/XMLSchema#integer' },
+          label: 'level',
+        },
+        readable: true,
+        required: false,
+        title: 'level',
+        writeable: true,
+      },
+      {
+        '@type': 'http://www.w3.org/ns/hydra/core#SupportedProperty',
+        property: {
+          '@id': 'https://localhost/docs.jsonld#Category/path',
+          '@type': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#Property',
+          domain: { '@id': 'https://localhost/docs.jsonld#Category' },
+          range: { '@id': 'http://www.w3.org/2001/XMLSchema#string' },
+          label: 'path',
+        },
+        readable: true,
+        required: false,
+        title: 'path',
+        writeable: true,
+      },
+    ],
     title: 'Category',
     label: 'Category',
     url: 'https://localhost/categories',
@@ -1450,6 +1648,27 @@ export const resources = [
     '@id': 'https://localhost/docs.jsonld#ExampleDocument',
     '@type': 'http://www.w3.org/ns/hydra/core#Class',
     supportedOperation: [
+      {
+        '@type': [
+          'http://www.w3.org/ns/hydra/core#Operation',
+          'http://schema.org/FindAction',
+        ],
+        method: 'GET',
+        title: 'Retrieves the collection of ExampleDocument resources.',
+        label: 'Retrieves the collection of ExampleDocument resources.',
+        returns: { '@id': 'http://www.w3.org/ns/hydra/core#Collection' },
+      },
+      {
+        '@type': [
+          'http://www.w3.org/ns/hydra/core#Operation',
+          'http://schema.org/CreateAction',
+        ],
+        expects: { '@id': 'https://localhost/docs.jsonld#ExampleDocument' },
+        method: 'POST',
+        title: 'Creates a ExampleDocument resource.',
+        label: 'Creates a ExampleDocument resource.',
+        returns: { '@id': 'https://localhost/docs.jsonld#ExampleDocument' },
+      },
       {
         '@type': [
           'http://www.w3.org/ns/hydra/core#Operation',
@@ -1508,16 +1727,28 @@ export const resources = [
   {
     '@id': 'https://localhost/docs.jsonld#ExampleProduct',
     '@type': 'http://www.w3.org/ns/hydra/core#Class',
-    supportedOperation: {
-      '@type': [
-        'http://www.w3.org/ns/hydra/core#Operation',
-        'http://schema.org/FindAction',
-      ],
-      method: 'GET',
-      title: 'Retrieves ExampleProduct resource.',
-      label: 'Retrieves ExampleProduct resource.',
-      returns: { '@id': 'https://localhost/docs.jsonld#ExampleProduct' },
-    },
+    supportedOperation: [
+      {
+        '@type': [
+          'http://www.w3.org/ns/hydra/core#Operation',
+          'http://schema.org/FindAction',
+        ],
+        method: 'GET',
+        title: 'Retrieves the collection of ExampleProduct resources.',
+        label: 'Retrieves the collection of ExampleProduct resources.',
+        returns: { '@id': 'http://www.w3.org/ns/hydra/core#Collection' },
+      },
+      {
+        '@type': [
+          'http://www.w3.org/ns/hydra/core#Operation',
+          'http://schema.org/FindAction',
+        ],
+        method: 'GET',
+        title: 'Retrieves ExampleProduct resource.',
+        label: 'Retrieves ExampleProduct resource.',
+        returns: { '@id': 'https://localhost/docs.jsonld#ExampleProduct' },
+      },
+    ],
     supportedProperty: [
       {
         '@type': 'http://www.w3.org/ns/hydra/core#SupportedProperty',
@@ -1617,6 +1848,27 @@ export const resources = [
           'http://schema.org/FindAction',
         ],
         method: 'GET',
+        title: 'Retrieves the collection of ExampleCategory resources.',
+        label: 'Retrieves the collection of ExampleCategory resources.',
+        returns: { '@id': 'http://www.w3.org/ns/hydra/core#Collection' },
+      },
+      {
+        '@type': [
+          'http://www.w3.org/ns/hydra/core#Operation',
+          'http://schema.org/CreateAction',
+        ],
+        expects: { '@id': 'https://localhost/docs.jsonld#ExampleCategory' },
+        method: 'POST',
+        title: 'Creates a ExampleCategory resource.',
+        label: 'Creates a ExampleCategory resource.',
+        returns: { '@id': 'https://localhost/docs.jsonld#ExampleCategory' },
+      },
+      {
+        '@type': [
+          'http://www.w3.org/ns/hydra/core#Operation',
+          'http://schema.org/FindAction',
+        ],
+        method: 'GET',
         title: 'Retrieves ExampleCategory resource.',
         label: 'Retrieves ExampleCategory resource.',
         returns: { '@id': 'https://localhost/docs.jsonld#ExampleCategory' },
@@ -1695,6 +1947,27 @@ export const resources = [
           'http://schema.org/FindAction',
         ],
         method: 'GET',
+        title: 'Retrieves the collection of ExampleIndex resources.',
+        label: 'Retrieves the collection of ExampleIndex resources.',
+        returns: { '@id': 'http://www.w3.org/ns/hydra/core#Collection' },
+      },
+      {
+        '@type': [
+          'http://www.w3.org/ns/hydra/core#Operation',
+          'http://schema.org/CreateAction',
+        ],
+        expects: { '@id': 'https://localhost/docs.jsonld#ExampleIndex' },
+        method: 'POST',
+        title: 'Creates a ExampleIndex resource.',
+        label: 'Creates a ExampleIndex resource.',
+        returns: { '@id': 'https://localhost/docs.jsonld#ExampleIndex' },
+      },
+      {
+        '@type': [
+          'http://www.w3.org/ns/hydra/core#Operation',
+          'http://schema.org/FindAction',
+        ],
+        method: 'GET',
         title: 'Retrieves ExampleIndex resource.',
         label: 'Retrieves ExampleIndex resource.',
         returns: { '@id': 'https://localhost/docs.jsonld#ExampleIndex' },
@@ -1750,6 +2023,27 @@ export const resources = [
     '@type': 'http://www.w3.org/ns/hydra/core#Class',
     description: 'Description of declarative greetings (description)',
     supportedOperation: [
+      {
+        '@type': [
+          'http://www.w3.org/ns/hydra/core#Operation',
+          'http://schema.org/FindAction',
+        ],
+        method: 'GET',
+        title: 'Retrieves the collection of DeclarativeGreeting resources.',
+        label: 'Retrieves the collection of DeclarativeGreeting resources.',
+        returns: { '@id': 'http://www.w3.org/ns/hydra/core#Collection' },
+      },
+      {
+        '@type': [
+          'http://www.w3.org/ns/hydra/core#Operation',
+          'http://schema.org/CreateAction',
+        ],
+        expects: { '@id': 'https://localhost/Declarative Greeting' },
+        method: 'POST',
+        title: 'Creates a DeclarativeGreeting resource.',
+        label: 'Creates a DeclarativeGreeting resource.',
+        returns: { '@id': 'https://localhost/Declarative Greeting' },
+      },
       {
         '@type': [
           'http://www.w3.org/ns/hydra/core#Operation',
@@ -1813,7 +2107,7 @@ export const resources = [
 
 export const [resource, resourceWithRef] = resources
 
-export const [fieldString, , , fieldBoolean, , , fieldInteger, , , fieldRef] =
+export const [fieldString, , , fieldBoolean, , , fieldInteger, , , , fieldRef] =
   resourceWithRef.supportedProperty
 
 export const api: IApi = resources

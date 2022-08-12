@@ -1,5 +1,6 @@
 export * from './api'
 export * from './breadcrumb'
+export * from './fetch'
 export * from './format'
 export * from './hydra'
 export * from './local'

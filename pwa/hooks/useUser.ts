@@ -5,7 +5,10 @@ import { tokenStorageKey } from '~/constants'
 import { storageGet } from '~/services'
 import { IUser } from '~/types'
 
+import { useLog } from './useLog'
+
 export function useUser(): IUser {
+  const log = useLog()
   const token = storageGet(tokenStorageKey)
   return useMemo(() => {
     try {
@@ -13,9 +16,8 @@ export function useUser(): IUser {
         return jwtDecode(token) as IUser
       }
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error)
+      log(error)
     }
     return null
-  }, [token])
+  }, [log, token])
 }
