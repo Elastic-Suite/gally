@@ -1,12 +1,11 @@
 import { IFetchError, Method } from './fetch'
-import { IHydraMember } from './hydra'
+import { IElasticSuiteProperty, IHydraMember } from './hydra'
 import { IJsonldBase, IJsonldId, IJsonldType } from './jsonld'
 
 export interface IProperty extends IJsonldBase {
   domain: IJsonldId
   label: string
   range?: IJsonldId
-  showable?: boolean
 }
 
 export interface IField extends IJsonldType {
@@ -16,6 +15,7 @@ export interface IField extends IJsonldType {
   required: boolean
   title: string
   writeable: boolean
+  elasticsuite?: IElasticSuiteProperty
 }
 
 export interface IOperation extends IJsonldType {

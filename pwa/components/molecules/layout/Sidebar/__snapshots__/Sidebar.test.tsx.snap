@@ -3,7 +3,7 @@
 exports[`SideBar match snapshot SideBarStateFalse 1`] = `
 <div>
   <div
-    class="MuiCollapse-root MuiCollapse-horizontal css-10p581u-MuiCollapse-root"
+    class="MuiCollapse-root MuiCollapse-horizontal css-gvgdin-MuiCollapse-root"
     style="min-width: 66px;"
   >
     <div
@@ -637,7 +637,7 @@ exports[`SideBar match snapshot SideBarStateFalse 1`] = `
 exports[`SideBar match snapshot SideBarStateTrue 1`] = `
 <div>
   <div
-    class="MuiCollapse-root MuiCollapse-horizontal MuiCollapse-entered css-1huht6y-MuiCollapse-root"
+    class="MuiCollapse-root MuiCollapse-horizontal MuiCollapse-entered css-r09iak-MuiCollapse-root"
     style="min-width: 278px;"
   >
     <div

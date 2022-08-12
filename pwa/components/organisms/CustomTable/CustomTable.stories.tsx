@@ -3,6 +3,8 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 
 import { ITableRow } from '~/types'
 
+import FieldGuesser from '~/components/stateful/FieldGuesser/FieldGuesser'
+
 import CustomTableComponent from './CustomTable'
 
 export default {
@@ -32,36 +34,36 @@ const selectedRows: string[] = []
 const mockedHeadersAndRows = {
   tableHeaders: [
     {
-      field: 'field',
-      headerName: 'Test header switch',
+      name: 'field',
+      label: 'Test header switch',
       type: 'boolean',
       editable: false,
       sticky: false,
     },
     {
-      field: 'field2',
-      headerName: 'Test header text',
+      name: 'field2',
+      label: 'Test header text',
       type: 'string',
       editable: false,
       sticky: false,
     },
     {
-      field: 'field3',
-      headerName: 'Test header long text',
+      name: 'field3',
+      label: 'Test header long text',
       type: 'string',
       editable: false,
       sticky: false,
     },
     {
-      field: 'field4',
-      headerName: 'Test header label',
+      name: 'field4',
+      label: 'Test header label',
       type: 'string',
       editable: false,
       sticky: false,
     },
     {
-      field: 'field5',
-      headerName: 'Test header dropdown',
+      name: 'field5',
+      label: 'Test header dropdown',
       type: 'dropdown',
       editable: true,
       sticky: false,
@@ -73,15 +75,15 @@ const mockedHeadersAndRows = {
       ],
     },
     {
-      field: 'field6',
-      headerName: 'Test header Tag',
+      name: 'field6',
+      label: 'Test header Tag',
       type: 'tag',
       editable: false,
       sticky: false,
     },
     {
-      field: 'field7',
-      headerName: 'Test header image',
+      name: 'field7',
+      label: 'Test header image',
       type: 'image',
       editable: false,
       sticky: false,
@@ -90,7 +92,7 @@ const mockedHeadersAndRows = {
   tableRows: [
     {
       id: '1',
-      field: true,
+      name: true,
       field2: 'hello1',
       field3: 'Here you will find a fake product description.',
       field4: 'One field',
@@ -100,7 +102,7 @@ const mockedHeadersAndRows = {
     },
     {
       id: '2',
-      field: true,
+      name: true,
       field2: 'hello2',
       field3: 'Here description',
       field4: 'One field',
@@ -114,5 +116,6 @@ const mockedHeadersAndRows = {
 
 export const CustomTable = Template.bind({})
 CustomTable.args = {
+  Field: FieldGuesser,
   ...mockedHeadersAndRows,
 }

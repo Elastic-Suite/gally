@@ -52,11 +52,12 @@ function SettingsAttributes(props: ITabContentProps): JSX.Element {
 
   async function handleRowChange(
     id: string | number,
-    field: string,
+    name: string,
     value: boolean | number | string
   ): Promise<void> {
     if (update) {
-      const sourceField = await update(id, { [field]: value })
+      // todo: should we use optimistic updates ?
+      const sourceField = await update(id, { [name]: value })
       if (!isFetchError(sourceField)) {
         updateSourceFields((items) =>
           items.map((item) => (item.id === sourceField.id ? sourceField : item))
@@ -81,6 +82,7 @@ function SettingsAttributes(props: ITabContentProps): JSX.Element {
         onPageChange={handlePageChange}
         onRowUpdate={handleRowChange}
         resource={resource}
+        updateSourceFields={updateSourceFields}
       />
     </>
   )

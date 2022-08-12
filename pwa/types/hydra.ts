@@ -84,7 +84,13 @@ export interface IHydraProperty extends IJsonldBase {
   range?: string
   'rdfs:label': string
   'rdfs:range'?: (IJsonldId | IRdfsRange)[]
-  showable?: boolean
+}
+
+export interface IElasticSuiteProperty {
+  visible?: boolean
+  editable?: boolean
+  position?: number
+  context?: Record<string, IElasticSuiteProperty>
 }
 
 export interface IHydraSupportedProperty extends IJsonldType {
@@ -94,6 +100,7 @@ export interface IHydraSupportedProperty extends IJsonldType {
   'hydra:required'?: boolean
   'hydra:title': string
   'hydra:writeable': boolean
+  elasticsuite?: IElasticSuiteProperty
 }
 
 export interface IHydraSupportedClass extends IJsonldBase {
@@ -148,7 +155,15 @@ export interface IExpandedHydraProperty extends IJsonldBase {
     | [IJsonldId, IJsonldRange]
   'http://www.w3.org/2002/07/owl#maxCardinality'?: [IJsonldNumber]
   'http://www.w3.org/ns/hydra/core#supportedOperation'?: IExpandedHydraSupportedOperation[]
-  'https://localhost/docs.jsonld#showable'?: [IJsonldBoolean]
+}
+
+export interface IExpandedElasticSuiteProperty {
+  'https://localhost/docs.jsonld#editable'?: [IJsonldBoolean]
+  'https://localhost/docs.jsonld#position'?: [IJsonldNumber]
+  'https://localhost/docs.jsonld#visible'?: [IJsonldBoolean]
+  'https://localhost/docs.jsonld#context'?: [
+    Record<string, [IExpandedElasticSuiteProperty]>
+  ]
 }
 
 export interface IExpandedHydraSupportedProperty extends IJsonldType {
@@ -157,6 +172,7 @@ export interface IExpandedHydraSupportedProperty extends IJsonldType {
   'http://www.w3.org/ns/hydra/core#required'?: [IJsonldBoolean]
   'http://www.w3.org/ns/hydra/core#title': [IJsonldString]
   'http://www.w3.org/ns/hydra/core#writeable': [IJsonldBoolean]
+  'https://localhost/docs.jsonld#elasticsuite'?: IExpandedElasticSuiteProperty
 }
 
 export interface IExpandedHydraSupportedClass extends IJsonldBase {

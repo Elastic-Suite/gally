@@ -1,9 +1,9 @@
-export interface IOption {
+export interface IOption<T> {
   disabled?: boolean
   id?: string | number
   label: string
   value: unknown
-  default?: boolean
+  default?: T
 }
 
-export type IOptions = IOption[]
+export type IOptions<T> = IOption<T>[]

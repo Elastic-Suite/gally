@@ -6,28 +6,28 @@ export const stickyColunWidth = 180 // 180px, fixed width for sticky column widt
 
 export const productTableheader: ITableHeader[] = [
   {
-    field: 'sku',
-    headerName: 'Code',
+    name: 'sku',
+    label: 'Code',
     type: DataContentType.STRING,
   },
   {
-    field: 'name',
-    headerName: 'Name',
+    name: 'name',
+    label: 'Name',
     type: DataContentType.STRING,
   },
   {
-    field: 'score',
-    headerName: 'Score',
+    name: 'score',
+    label: 'Score',
     type: DataContentType.SCORE,
   },
   {
-    field: 'stock',
-    headerName: 'Stock',
+    name: 'stock',
+    label: 'Stock',
     type: DataContentType.STOCK,
   },
   {
-    field: 'price',
-    headerName: 'Price',
+    name: 'price',
+    label: 'Price',
     type: DataContentType.PRICE,
   },
 ]

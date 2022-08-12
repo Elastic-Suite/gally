@@ -140,7 +140,7 @@ describe('Parser service', () => {
   describe('parseSchema', () => {
     it('should parse and return the schema', async () => {
       const result = await parseSchema('http://localhost/')
-      expect(result[0]).toMatchObject({
+      expect(result[5]).toMatchObject({
         '@id': 'https://localhost/docs.jsonld#Metadata',
         '@type': 'http://www.w3.org/ns/hydra/core#Class',
         title: 'Metadata',
