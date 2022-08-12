@@ -28,7 +28,7 @@ interface IProps<T extends IHydraMember> {
   onPageChange: (page: number) => void
   onRowUpdate?: (
     id: string | number,
-    field: string,
+    name: string,
     value: boolean | number | string
   ) => void
   resource: IResource

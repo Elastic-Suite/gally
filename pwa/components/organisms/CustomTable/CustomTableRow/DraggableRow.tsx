@@ -31,7 +31,7 @@ interface IProps {
   isHorizontalOverflow: boolean
   onRowUpdate?: (
     id: string | number,
-    field: string,
+    name: string,
     value: boolean | number | string
   ) => void
   onSelectRows: (arr: (string | number)[]) => void

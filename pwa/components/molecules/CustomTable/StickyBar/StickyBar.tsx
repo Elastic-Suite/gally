@@ -35,14 +35,14 @@ function getStickyBarStyles(positionRef?: MutableRefObject<HTMLDivElement>): {
   left: string
   width: string
 } {
-  let left = ''
+  let left = 0
   let width = ''
   if (positionRef?.current) {
     const positions = positionRef.current.getBoundingClientRect()
-    left = `${positions.left - 32}px`
+    left = positions.left - 32
     width = `${positions.width + 64}px`
   }
-  return { left, width }
+  return { left: `${left}px`, width }
 }
 
 interface IProps {

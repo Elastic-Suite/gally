@@ -3,6 +3,8 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 
 import { ITableRow } from '~/types'
 
+import FieldGuesser from '~/components/stateful/FieldGuesser/FieldGuesser'
+
 import CustomTableComponent from './CustomTable'
 
 export default {
@@ -32,35 +34,35 @@ const selectedRows: string[] = []
 const mockedHeadersAndRows = {
   tableHeaders: [
     {
-      field: 'field',
+      name: 'field',
       label: 'Test header switch',
       type: 'boolean',
       editable: false,
       sticky: false,
     },
     {
-      field: 'field2',
+      name: 'field2',
       label: 'Test header text',
       type: 'string',
       editable: false,
       sticky: false,
     },
     {
-      field: 'field3',
+      name: 'field3',
       label: 'Test header long text',
       type: 'string',
       editable: false,
       sticky: false,
     },
     {
-      field: 'field4',
+      name: 'field4',
       label: 'Test header label',
       type: 'string',
       editable: false,
       sticky: false,
     },
     {
-      field: 'field5',
+      name: 'field5',
       label: 'Test header dropdown',
       type: 'dropdown',
       editable: true,
@@ -73,14 +75,14 @@ const mockedHeadersAndRows = {
       ],
     },
     {
-      field: 'field6',
+      name: 'field6',
       label: 'Test header Tag',
       type: 'tag',
       editable: false,
       sticky: false,
     },
     {
-      field: 'field7',
+      name: 'field7',
       label: 'Test header image',
       type: 'image',
       editable: false,
@@ -90,7 +92,7 @@ const mockedHeadersAndRows = {
   tableRows: [
     {
       id: '1',
-      field: true,
+      name: true,
       field2: 'hello1',
       field3: 'Here you will find a fake product description.',
       field4: 'One field',
@@ -100,7 +102,7 @@ const mockedHeadersAndRows = {
     },
     {
       id: '2',
-      field: true,
+      name: true,
       field2: 'hello2',
       field3: 'Here description',
       field4: 'One field',
@@ -114,5 +116,6 @@ const mockedHeadersAndRows = {
 
 export const CustomTable = Template.bind({})
 CustomTable.args = {
+  Field: FieldGuesser,
   ...mockedHeadersAndRows,
 }
