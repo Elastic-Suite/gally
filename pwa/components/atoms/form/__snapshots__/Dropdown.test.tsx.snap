@@ -8,7 +8,7 @@ exports[`DropDown match snapshot BadgeDisabledFalse 1`] = `
     <button
       aria-expanded="false"
       aria-haspopup="listbox"
-      class="MuiSelectUnstyled-root css-10s1kls"
+      class="MuiSelectUnstyled-root css-17ts3f5"
       type="button"
     >
       
@@ -28,7 +28,7 @@ exports[`DropDown match snapshot BadgeDisabledTrue 1`] = `
     <button
       aria-expanded="false"
       aria-haspopup="listbox"
-      class="MuiSelectUnstyled-root Mui-disabled css-10s1kls"
+      class="MuiSelectUnstyled-root Mui-disabled css-17ts3f5"
       disabled=""
       type="button"
     >
@@ -55,7 +55,7 @@ exports[`DropDown match snapshot BadgeLabel 1`] = `
     <button
       aria-expanded="false"
       aria-haspopup="listbox"
-      class="MuiSelectUnstyled-root css-10s1kls"
+      class="MuiSelectUnstyled-root css-17ts3f5"
       type="button"
     >
       
@@ -81,7 +81,7 @@ exports[`DropDown match snapshot BadgeMultiple 1`] = `
     <button
       aria-expanded="false"
       aria-haspopup="listbox"
-      class="MuiSelectUnstyled-root css-10s1kls"
+      class="MuiSelectUnstyled-root css-17ts3f5"
       type="button"
     >
       
@@ -101,7 +101,7 @@ exports[`DropDown match snapshot BadgeRequiredFalse 1`] = `
     <button
       aria-expanded="false"
       aria-haspopup="listbox"
-      class="MuiSelectUnstyled-root css-10s1kls"
+      class="MuiSelectUnstyled-root css-17ts3f5"
       type="button"
     >
       
@@ -121,7 +121,7 @@ exports[`DropDown match snapshot BadgeRequiredTrue 1`] = `
     <button
       aria-expanded="false"
       aria-haspopup="listbox"
-      class="MuiSelectUnstyled-root css-10s1kls"
+      class="MuiSelectUnstyled-root css-17ts3f5"
       type="button"
     >
       

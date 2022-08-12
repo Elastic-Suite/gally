@@ -6,5 +6,8 @@
   "pinToBottom": "Unpin",
   "previewArea": "Zone de prévisualisation",
   "rows.selected_one": "{{count}} ligne sélectionnée",
-  "rows.selected_other": "{{count}} lignes sélectionnées"
+  "rows.selected_other": "{{count}} lignes sélectionnées",
+  "defaultCatalog.label": "Tous les catalogues",
+  "catalog.dropdown.label": "Choisir un catalogue",
+  "localizedCatalog.dropdown.label": "Choisir une locale"
 }
