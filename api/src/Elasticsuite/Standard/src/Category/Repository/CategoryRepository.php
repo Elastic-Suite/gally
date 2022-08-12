@@ -34,6 +34,11 @@ class CategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, Category::class);
     }
 
+    public function findAllIndexedById(): array
+    {
+        return $this->createQueryBuilder('o', 'o.id')->getQuery()->getResult();
+    }
+
     /**
      * @return Category\Configuration[]
      */
