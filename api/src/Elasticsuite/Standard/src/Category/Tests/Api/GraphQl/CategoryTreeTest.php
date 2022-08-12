@@ -41,21 +41,19 @@ class CategoryTreeTest extends AbstractTest
     {
         $this->assertSame(
             [
-                'categories' => [
-                    [
-                        'id' => 'one',
-                        'name' => 'Un',
-                        'level' => 1,
-                        'path' => 'one',
-                        'isVirtual' => true,
-                        'children' => [
-                            [
-                                'id' => 'three',
-                                'name' => 'Trois',
-                                'level' => 2,
-                                'path' => 'one/three',
-                                'isVirtual' => null,
-                            ],
+                [
+                    'id' => 'one',
+                    'name' => 'Un',
+                    'level' => 1,
+                    'path' => 'one',
+                    'isVirtual' => true,
+                    'children' => [
+                        [
+                            'id' => 'three',
+                            'name' => 'Trois',
+                            'level' => 2,
+                            'path' => 'one/three',
+                            'isVirtual' => null,
                         ],
                     ],
                 ],
@@ -65,30 +63,28 @@ class CategoryTreeTest extends AbstractTest
 
         $this->assertSame(
             [
-                'categories' => [
-                    [
-                        'id' => 'one',
-                        'name' => 'One',
-                        'level' => 1,
-                        'path' => 'one',
-                        'isVirtual' => false,
-                        'children' => [
-                            [
-                                'id' => 'three',
-                                'name' => 'Three',
-                                'level' => 2,
-                                'path' => 'one/three',
-                                'isVirtual' => null,
-                            ],
+                [
+                    'id' => 'one',
+                    'name' => 'One',
+                    'level' => 1,
+                    'path' => 'one',
+                    'isVirtual' => false,
+                    'children' => [
+                        [
+                            'id' => 'three',
+                            'name' => 'Three',
+                            'level' => 2,
+                            'path' => 'one/three',
+                            'isVirtual' => null,
                         ],
                     ],
-                    [
-                        'id' => 'two',
-                        'name' => 'Two',
-                        'level' => 1,
-                        'path' => 'two',
-                        'isVirtual' => null,
-                    ],
+                ],
+                [
+                    'id' => 'two',
+                    'name' => 'Two',
+                    'level' => 1,
+                    'path' => 'two',
+                    'isVirtual' => null,
                 ],
             ],
             $this->getCategoryTree('b2c', 'b2c_en')
@@ -96,14 +92,12 @@ class CategoryTreeTest extends AbstractTest
 
         $this->assertSame(
             [
-                'categories' => [
-                    [
-                        'id' => 'five',
-                        'name' => 'Five',
-                        'level' => 1,
-                        'path' => 'five',
-                        'isVirtual' => null,
-                    ],
+                [
+                    'id' => 'five',
+                    'name' => 'Five',
+                    'level' => 1,
+                    'path' => 'five',
+                    'isVirtual' => null,
                 ],
             ],
             $this->getCategoryTree('b2b')
@@ -111,37 +105,35 @@ class CategoryTreeTest extends AbstractTest
 
         $this->assertSame(
             [
-                'categories' => [
-                    [
-                        'id' => 'one',
-                        'name' => 'Un',
-                        'level' => 1,
-                        'path' => 'one',
-                        'isVirtual' => true,
-                        'children' => [
-                            [
-                                'id' => 'three',
-                                'name' => 'Trois',
-                                'level' => 2,
-                                'path' => 'one/three',
-                                'isVirtual' => null,
-                            ],
+                [
+                    'id' => 'one',
+                    'name' => 'Un',
+                    'level' => 1,
+                    'path' => 'one',
+                    'isVirtual' => true,
+                    'children' => [
+                        [
+                            'id' => 'three',
+                            'name' => 'Trois',
+                            'level' => 2,
+                            'path' => 'one/three',
+                            'isVirtual' => null,
                         ],
                     ],
-                    [
-                        'id' => 'two',
-                        'name' => 'Deux',
-                        'level' => 1,
-                        'path' => 'two',
-                        'isVirtual' => null,
-                    ],
+                ],
+                [
+                    'id' => 'two',
+                    'name' => 'Deux',
+                    'level' => 1,
+                    'path' => 'two',
+                    'isVirtual' => null,
                 ],
             ],
             $this->getCategoryTree()
         );
     }
 
-    private function getCategoryTree(?string $catalogCode = null, ?string $localizedCatalogCode = null): array
+    protected function getCategoryTree(?string $catalogCode = null, ?string $localizedCatalogCode = null): array
     {
         $responseData = [];
         $localizedCatalogRepository = static::getContainer()->get(LocalizedCatalogRepository::class);
@@ -173,7 +165,7 @@ class CategoryTreeTest extends AbstractTest
             new ExpectedResponse(
                 200,
                 function (ResponseInterface $response) use (&$responseData) {
-                    $responseData = $response->toArray()['data']['getCategoryTree'];
+                    $responseData = $response->toArray()['data']['getCategoryTree']['categories'];
                 }
             )
         );
