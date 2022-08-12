@@ -24,6 +24,7 @@ const CustomLeftBar = styled(Collapse)({
   boxSizing: 'unset',
   height: '100vh',
   overflowY: 'scroll',
+  overflowX: 'hidden',
   position: 'fixed',
   left: '0',
   top: '0',

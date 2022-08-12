@@ -7,7 +7,7 @@ import {
 import { IOption, IOptions } from '~/types'
 
 interface IProps extends RadioGroupProps {
-  options: IOptions
+  options: IOptions<unknown>
 }
 
 function RadioGroup(props: IProps): JSX.Element {
@@ -21,7 +21,7 @@ function RadioGroup(props: IProps): JSX.Element {
         radioGroupProps.defaultChecked ? foundNameDefaultValue?.value : null
       }
     >
-      {options.map((item: IOption) => {
+      {options.map((item: IOption<unknown>) => {
         return (
           <FormControlLabel
             disabled={item.disabled}

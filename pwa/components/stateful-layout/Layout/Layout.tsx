@@ -56,6 +56,7 @@ const CustomContentWithAppBar = styled('div')({
   boxSizing: 'border-box',
   height: '100vh',
   overflowY: 'scroll',
+  overflowX: 'hidden',
   position: 'fixed',
   top: '0',
   right: '0',

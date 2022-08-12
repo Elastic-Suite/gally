@@ -1,13 +1,15 @@
 import { Box, styled } from '@mui/system'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+
+import { ITreeItem } from '~/types'
+
 import PrimaryButton from '~/components/atoms/buttons/PrimaryButton'
 import TertiaryButton from '~/components/atoms/buttons/TertiaryButton'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import PageTile from '~/components/atoms/PageTitle/PageTitle'
 import StickyBar from '~/components/molecules/CustomTable/StickyBar/StickyBar'
 import ProductsTopAndBottom from '~/components/stateful/ProductsTopAndBottom/ProductsTopAndBottom'
-import { ITreeItem } from '~/types'
 
 const Layout = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -17,16 +19,10 @@ const Layout = styled('div')(({ theme }) => ({
   marginRight: '28px',
 }))
 
-const CustomSpan = styled('span')({
-  display: 'flex',
-  alignItems: 'center',
-  fontFamily: 'inter',
-  marginLeft: '35px',
-})
-
 const ActionsButtonsContainer = styled(Box)({
   marginLeft: 'auto',
 })
+
 interface IProps {
   category: ITreeItem
 }
@@ -34,6 +30,7 @@ interface IProps {
 function ProductsContainer(props: IProps): JSX.Element {
   const { category } = props
 
+  const tableRef = useRef<HTMLDivElement>()
   const [topSelectedRows, setTopSelectedRows] = useState<string[]>([])
   const [bottomSelectedRows, setBottomSelectedRows] = useState<string[]>([])
 
@@ -61,54 +58,36 @@ function ProductsContainer(props: IProps): JSX.Element {
         {/* todo : add search bar */}
 
         <ProductsTopAndBottom
+          ref={tableRef}
           topSelectedRows={topSelectedRows}
           onTopSelectedRows={setTopSelectedRows}
           bottomSelectedRows={bottomSelectedRows}
           onBottomSelectedRows={setBottomSelectedRows}
         />
       </Layout>
-      <StickyBar show={showStickyBar}>
-        <>
-          <CustomSpan>
-            {' '}
-            {t('rows.selected', {
-              count: topSelectedRows.length + bottomSelectedRows.length,
-            })}{' '}
-          </CustomSpan>
-          <ActionsButtonsContainer>
-            <TertiaryButton
-              sx={{
-                margin: '10px 8px 10px auto',
-                padding: '8px 12px 8px 12px',
-              }}
-              onClick={(): void => unselectAllRows()}
-            >
-              {t('button.cancelSelection')}
-            </TertiaryButton>
-            <PrimaryButton
-              sx={{
-                margin: '10px 32px 10px 8px',
-              }}
-              disabled={bottomSelectedRows.length === 0}
-            >
-              {t('pinToTop')}
-              <IonIcon name="arrow-up-outline" style={{ marginLeft: '13px' }} />
-            </PrimaryButton>
-
-            <PrimaryButton
-              sx={{
-                margin: '10px 32px 10px 8px',
-              }}
-              disabled={topSelectedRows.length === 0}
-            >
-              {t('pinToBottom')}
-              <IonIcon
-                name="arrow-down-outline"
-                style={{ marginLeft: '13px' }}
-              />
-            </PrimaryButton>
-          </ActionsButtonsContainer>
-        </>
+      <StickyBar positionRef={tableRef} show={showStickyBar}>
+        {t('rows.selected', {
+          count: topSelectedRows.length + bottomSelectedRows.length,
+        })}
+        <ActionsButtonsContainer>
+          <TertiaryButton onClick={(): void => unselectAllRows()}>
+            {t('button.cancelSelection')}
+          </TertiaryButton>
+          <PrimaryButton
+            sx={{ marginLeft: 1 }}
+            disabled={bottomSelectedRows.length === 0}
+          >
+            {t('pinToTop')}
+            <IonIcon name="arrow-up-outline" style={{ marginLeft: '13px' }} />
+          </PrimaryButton>
+          <PrimaryButton
+            sx={{ marginLeft: 1 }}
+            disabled={topSelectedRows.length === 0}
+          >
+            {t('pinToBottom')}
+            <IonIcon name="arrow-down-outline" style={{ marginLeft: '13px' }} />
+          </PrimaryButton>
+        </ActionsButtonsContainer>
       </StickyBar>
     </Box>
   )

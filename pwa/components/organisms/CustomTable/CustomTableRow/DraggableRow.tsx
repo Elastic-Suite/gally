@@ -1,18 +1,22 @@
-import { ChangeEvent } from 'react'
+import { ChangeEvent, FunctionComponent } from 'react'
 import { Box, Checkbox, TableRow } from '@mui/material'
+import { DraggableProvided } from 'react-beautiful-dnd'
+
+import {
+  IFieldGuesserProps,
+  ITableHeader,
+  ITableHeaderSticky,
+  ITableRow,
+} from '~/types'
+
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import {
   BaseTableCell,
   StickyTableCell,
 } from '~/components/organisms/CustomTable/CustomTable.styled'
+
 import { handleSingleRow, manageStickyHeaders } from '../CustomTable.service'
-import {
-  ITableHeader,
-  ITableHeaderSticky,
-  ITableRow,
-} from '~/types/customTables'
-import EditableContent from '../CustomTableCell/EditableContent'
-import NonEditableContent from '../CustomTableCell/NonEditableContent'
+
 import {
   draggableColumnStyle,
   nonStickyStyle,
@@ -20,42 +24,47 @@ import {
   selectionStyle,
   stickyStyle,
 } from './Row.service'
-import { DraggableProvided } from 'react-beautiful-dnd'
 
 interface IProps {
-  tableRow: ITableRow
+  Field: FunctionComponent<IFieldGuesserProps>
+  cssLeftValuesIterator: IterableIterator<[number, number]>
+  isHorizontalOverflow: boolean
   onRowUpdate?: (
     id: string | number,
     field: string,
     value: boolean | number | string
   ) => void
-  tableHeaders: ITableHeader[]
-  withSelection: boolean
-  selectedRows: (string | number)[]
   onSelectRows: (arr: (string | number)[]) => void
   provider: DraggableProvided
-  cSSLeftValuesIterator: IterableIterator<[number, number]>
-  isHorizontalOverflow: boolean
+  selectedRows: (string | number)[]
   shadow: boolean
+  tableHeaders: ITableHeader[]
+  tableRow: ITableRow
+  withSelection: boolean
 }
 
 function DraggableRow(props: IProps): JSX.Element {
   const {
-    tableRow,
+    Field,
+    cssLeftValuesIterator,
+    isHorizontalOverflow,
     onRowUpdate,
-    tableHeaders,
-    withSelection,
-    selectedRows,
     onSelectRows,
     provider,
-    cSSLeftValuesIterator,
-    isHorizontalOverflow,
+    selectedRows,
     shadow,
+    tableHeaders,
+    tableRow,
+    withSelection,
   } = props
 
   const stickyHeaders: ITableHeaderSticky[] = manageStickyHeaders(tableHeaders)
   const nonStickyHeaders = tableHeaders.filter((header) => !header.sticky)
   const isOnlyDraggable = !withSelection && stickyHeaders.length === 0
+
+  function handleChange(name: string, value: boolean | number | string): void {
+    onRowUpdate(tableRow.id, name, value)
+  }
 
   return (
     <TableRow
@@ -72,7 +81,7 @@ function DraggableRow(props: IProps): JSX.Element {
           },
           ...draggableColumnStyle(
             isOnlyDraggable,
-            cSSLeftValuesIterator.next().value[1],
+            cssLeftValuesIterator.next().value[1],
             isHorizontalOverflow,
             shadow
           ),
@@ -88,7 +97,7 @@ function DraggableRow(props: IProps): JSX.Element {
         <StickyTableCell
           sx={selectionStyle(
             isHorizontalOverflow,
-            cSSLeftValuesIterator.next().value[1],
+            cssLeftValuesIterator.next().value[1],
             shadow,
             stickyHeaders.length
           )}
@@ -105,39 +114,29 @@ function DraggableRow(props: IProps): JSX.Element {
 
       {stickyHeaders.map((stickyHeader) => (
         <StickyTableCell
-          key={stickyHeader.field}
+          key={stickyHeader.name}
           sx={stickyStyle(
-            cSSLeftValuesIterator.next().value[1],
+            cssLeftValuesIterator.next().value[1],
             shadow,
             stickyHeader.isLastSticky,
             stickyHeader.type
           )}
         >
-          {stickyHeader.editable ? (
-            <EditableContent
-              header={stickyHeader}
-              row={tableRow}
-              onRowUpdate={onRowUpdate}
-            />
-          ) : null}
-          {!stickyHeader.editable && (
-            <NonEditableContent header={stickyHeader} row={tableRow} />
-          )}
+          <Field
+            {...stickyHeader}
+            onChange={handleChange}
+            value={tableRow[stickyHeader.name]}
+          />
         </StickyTableCell>
       ))}
 
       {nonStickyHeaders.map((header) => (
-        <BaseTableCell sx={nonStickyStyle(header.type)} key={header.field}>
-          {header.editable ? (
-            <EditableContent
-              header={header}
-              row={tableRow}
-              onRowUpdate={onRowUpdate}
-            />
-          ) : null}
-          {!header.editable && (
-            <NonEditableContent header={header} row={tableRow} />
-          )}
+        <BaseTableCell sx={nonStickyStyle(header.type)} key={header.name}>
+          <Field
+            {...header}
+            onChange={handleChange}
+            value={tableRow[header.name]}
+          />
         </BaseTableCell>
       ))}
     </TableRow>

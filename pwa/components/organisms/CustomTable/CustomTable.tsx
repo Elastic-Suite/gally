@@ -1,12 +1,24 @@
 import {
   ChangeEvent,
   Dispatch,
+  FunctionComponent,
+  MutableRefObject,
   SetStateAction,
+  forwardRef,
   useEffect,
   useRef,
   useState,
 } from 'react'
 import { DragDropContext, DropResult } from 'react-beautiful-dnd'
+
+import {
+  reorderingColumnWidth,
+  selectionColumnWidth,
+  stickyColunWidth,
+} from '~/constants'
+import { useIsHorizontalOverflow } from '~/hooks'
+import { IFieldGuesserProps, ITableHeader, ITableRow } from '~/types'
+
 import {
   StyledTable,
   TableContainerWithCustomScrollbar,
@@ -14,19 +26,14 @@ import {
 import DraggableBody from '~/components/organisms/CustomTable/CustomTableBody/DraggableBody'
 import NonDraggableBody from '~/components/organisms/CustomTable/CustomTableBody/NonDraggableBody'
 import CustomTableHeader from '~/components/organisms/CustomTable/CustomTableHeader/CustomTableHeader'
-import {
-  reorderingColumnWidth,
-  selectionColumnWidth,
-  stickyColunWidth,
-} from '~/constants'
-import { useIsHorizontalOverflow } from '~/hooks'
-import { ITableHeader, ITableRow } from '~/types'
+
 export interface ICustomTableProps {
+  Field: FunctionComponent<IFieldGuesserProps>
   draggable?: boolean
   onReorder?: (rows: ITableRow[]) => void
   onRowUpdate?: (
     id: string | number,
-    field: string,
+    name: string,
     value: boolean | number | string
   ) => void
   tableHeaders: ITableHeader[]
@@ -35,8 +42,12 @@ export interface ICustomTableProps {
   onSelectedRows?: Dispatch<SetStateAction<(string | number)[]>>
 }
 
-function CustomTable(props: ICustomTableProps): JSX.Element {
+function CustomTable(
+  props: ICustomTableProps,
+  ref: MutableRefObject<HTMLDivElement>
+): JSX.Element {
   const {
+    Field,
     draggable,
     onReorder,
     onRowUpdate,
@@ -48,7 +59,10 @@ function CustomTable(props: ICustomTableProps): JSX.Element {
 
   const [scrollLength, setScrollLength] = useState<number>(0)
   const tableRef = useRef<HTMLDivElement>()
-  const { isOverflow, shadow } = useIsHorizontalOverflow(tableRef.current)
+  const { isOverflow, shadow } = useIsHorizontalOverflow(
+    // eslint-disable-next-line react/destructuring-assignment
+    ref?.current ?? tableRef.current
+  )
 
   /**
    * Compute the length of the sticky part.
@@ -112,7 +126,7 @@ function CustomTable(props: ICustomTableProps): JSX.Element {
     )
     return result
   }
-  const cSSLeftValues = computeLeftCSSValues()
+  const cssLeftValues = computeLeftCSSValues()
 
   useEffect(() => {
     if (withSelection) {
@@ -128,7 +142,7 @@ function CustomTable(props: ICustomTableProps): JSX.Element {
     <>
       <DragDropContext onDragEnd={handleDragEnd}>
         <TableContainerWithCustomScrollbar
-          ref={tableRef}
+          ref={ref ?? tableRef}
           sx={{
             '&::-webkit-scrollbar-track': {
               marginLeft: `${scrollLength}px`,
@@ -144,33 +158,35 @@ function CustomTable(props: ICustomTableProps): JSX.Element {
               withSelection={withSelection}
               onSelection={onSelection}
               massiveSelectionState={massiveSelectionState}
-              cSSLeftValues={cSSLeftValues}
+              cssLeftValues={cssLeftValues}
               isHorizontalOverflow={isOverflow}
               shadow={shadow}
               massiveSelectionIndeterminate={massiveSelectionIndeterminate}
             />
             {Boolean(!draggable) && (
               <NonDraggableBody
+                Field={Field}
                 tableRows={tableRows}
                 onRowUpdate={onRowUpdate}
                 tableHeaders={tableHeaders}
                 withSelection={withSelection}
                 onSelectRows={onSelectedRows}
                 selectedRows={selectedRows}
-                cSSLeftValues={cSSLeftValues}
+                cssLeftValues={cssLeftValues}
                 isHorizontalOverflow={isOverflow}
                 shadow={shadow}
               />
             )}
             {Boolean(draggable) && (
               <DraggableBody
+                Field={Field}
                 tableRows={tableRows}
                 onRowUpdate={onRowUpdate}
                 tableHeaders={tableHeaders}
                 withSelection={withSelection}
                 onSelectRows={onSelectedRows}
                 selectedRows={selectedRows}
-                cSSLeftValues={cSSLeftValues}
+                cssLeftValues={cssLeftValues}
                 isHorizontalOverflow={isOverflow}
                 shadow={shadow}
               />
@@ -182,4 +198,4 @@ function CustomTable(props: ICustomTableProps): JSX.Element {
   )
 }
 
-export default CustomTable
+export default forwardRef(CustomTable)

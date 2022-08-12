@@ -1,7 +1,7 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { useCallback, useEffect, useState } from 'react'
 
-import { FilterType, IFilter } from '~/types'
+import { DataContentType, IFilter } from '~/types'
 
 import Filters from './Filters'
 
@@ -87,17 +87,17 @@ Default.args = {
         { label: 'Four', value: 4 },
         { label: 'Five', value: 5 },
       ],
-      type: FilterType.SELECT,
+      type: DataContentType.DROPDOWN,
     },
     {
       id: 'filterable',
       label: 'Filterable',
-      type: FilterType.BOOLEAN,
+      type: DataContentType.BOOLEAN,
     },
     {
       id: 'searchable',
       label: 'Searchable',
-      type: FilterType.BOOLEAN,
+      type: DataContentType.BOOLEAN,
     },
   ],
   showSearch: false,

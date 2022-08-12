@@ -1,10 +1,12 @@
+import { FunctionComponent } from 'react'
 import { TableBody } from '@mui/material'
 
-import { ITableHeader, ITableRow } from '~/types/customTables'
+import { IFieldGuesserProps, ITableHeader, ITableRow } from '~/types'
 import NonDraggableRow from '../CustomTableRow/NonDraggableRow'
 
 interface IProps {
-  cSSLeftValues: number[]
+  Field: FunctionComponent<IFieldGuesserProps>
+  cssLeftValues: number[]
   isHorizontalOverflow: boolean
   onRowUpdate?: (
     id: string | number,
@@ -21,7 +23,8 @@ interface IProps {
 
 function NonDraggableBody(props: IProps): JSX.Element {
   const {
-    cSSLeftValues,
+    Field,
+    cssLeftValues,
     isHorizontalOverflow,
     onRowUpdate,
     onSelectRows,
@@ -36,6 +39,7 @@ function NonDraggableBody(props: IProps): JSX.Element {
     <TableBody>
       {tableRows.map((tableRow) => (
         <NonDraggableRow
+          Field={Field}
           key={tableRow.id}
           tableRow={tableRow}
           onRowUpdate={onRowUpdate}
@@ -43,7 +47,7 @@ function NonDraggableBody(props: IProps): JSX.Element {
           withSelection={withSelection}
           selectedRows={selectedRows}
           onSelectRows={onSelectRows}
-          cSSLeftValuesIterator={cSSLeftValues.entries()}
+          cssLeftValuesIterator={cssLeftValues.entries()}
           isHorizontalOverflow={isHorizontalOverflow}
           shadow={shadow}
         />

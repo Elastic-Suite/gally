@@ -1,11 +1,17 @@
 import { Dispatch, SetStateAction, useMemo } from 'react'
 
-import { gqlUrl, productTableheader } from '~/constants'
-import { productsQuery } from '~/constants/graphql'
+import { gqlUrl, productTableheader, productsQuery } from '~/constants'
 import { useFetchApi } from '~/hooks'
-import { ISearchParameters, ITableHeader, ITableRow, LoadStatus } from '~/types'
-import { IFetchParams, IFetchProducts } from '~/types/products'
+import {
+  IFetchParams,
+  IFetchProducts,
+  ISearchParameters,
+  ITableHeader,
+  ITableRow,
+  LoadStatus,
+} from '~/types'
 
+import FieldGuesser from '../FieldGuesser/FieldGuesser'
 import TopProductsTable from '../TopProductsTable/TopProductsTable'
 
 interface IProps {
@@ -47,6 +53,7 @@ function TopTable(props: IProps): JSX.Element {
       {products.status === LoadStatus.SUCCEEDED &&
         Boolean(products?.data?.data?.searchProducts) && (
           <TopProductsTable
+            Field={FieldGuesser}
             selectedRows={selectedRows}
             onSelectedRows={onSelectedRows}
             tableHeaders={tableHeaders}
