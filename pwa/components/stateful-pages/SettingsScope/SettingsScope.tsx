@@ -13,12 +13,13 @@ function SettingsScope(): JSX.Element {
   const resourceName = 'Catalog'
   const resource = useResource(resourceName)
   const [catalogsFields] = useApiList<ICatalog>(resource, false)
+  const { data, error } = catalogsFields
 
   const routerTabs: IRouterTab[] = useMemo(
     () => [
       {
         Component: Catalogs,
-        componentProps: { content: catalogsFields.data },
+        componentProps: { content: data },
         default: true,
         id: 0,
         label: t('title.catalogs'),
@@ -26,22 +27,18 @@ function SettingsScope(): JSX.Element {
       },
       {
         Component: ActiveLocales,
-        componentProps: { content: catalogsFields.data },
+        componentProps: { content: data },
         id: 1,
         label: t('title.activeLocales'),
         url: '/admin/settings/scope/activeLocales',
       },
     ],
-    [catalogsFields.data, t]
+    [data, t]
   )
   const [activeTab, handleTabChange] = useTabs(routerTabs)
   const { id } = activeTab
 
-  if (catalogsFields.error) {
-    // eslint-disable-next-line no-console
-    console.error(catalogsFields.error)
-    return <pre>{JSON.stringify(catalogsFields.error, null, 2)}</pre>
-  } else if (!catalogsFields.data) {
+  if (error || !data) {
     return null
   }
 

@@ -7,6 +7,7 @@ import {
   useResourceOperations,
   useSearch,
 } from '~/hooks'
+import { isFetchError } from '~/services'
 import { ISearchParameters, ISourceField, ITabContentProps } from '~/types'
 
 import FiltersGuesser from '~/components/stateful/FiltersGuesser/FiltersGuesser'
@@ -29,12 +30,9 @@ function SettingsAttributes(props: ITabContentProps): JSX.Element {
     activeFilters,
     searchValue
   )
+  const { data, error } = sourceFields
 
-  if (sourceFields.error) {
-    // eslint-disable-next-line no-console
-    console.error(sourceFields.error)
-    return <pre>{JSON.stringify(sourceFields.error, null, 2)}</pre>
-  } else if (!sourceFields.data) {
+  if (error || !data) {
     return null
   }
 
@@ -59,9 +57,11 @@ function SettingsAttributes(props: ITabContentProps): JSX.Element {
   ): Promise<void> {
     if (update) {
       const sourceField = await update(id, { [field]: value })
-      updateSourceFields((items) =>
-        items.map((item) => (item.id === sourceField.id ? sourceField : item))
-      )
+      if (!isFetchError(sourceField)) {
+        updateSourceFields((items) =>
+          items.map((item) => (item.id === sourceField.id ? sourceField : item))
+        )
+      }
     }
   }
 
@@ -69,14 +69,14 @@ function SettingsAttributes(props: ITabContentProps): JSX.Element {
     <>
       <FiltersGuesser
         activeFilters={activeFilters}
-        apiData={sourceFields.data}
+        apiData={data}
         onFilterChange={handleFilterChange}
         onSearch={handleSearchValue}
         resource={resource}
         searchValue={searchValue}
       />
       <TableGuesser
-        apiData={sourceFields.data}
+        apiData={data}
         currentPage={page}
         onPageChange={handlePageChange}
         onRowUpdate={handleRowChange}
