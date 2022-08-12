@@ -6,13 +6,26 @@ export enum MassiveSelectionType {
   NONE = 'massiveselection.none',
 }
 
+export enum DataContentType {
+  STRING = 'string',
+  BOOLEAN = 'boolean',
+  TAG = 'tag',
+  LABEL = 'label',
+  DROPDOWN = 'dropdown',
+  IMAGE = 'image',
+  SCORE = 'score',
+  STOCK = 'stock',
+  PRICE = 'price',
+  NUMBER = 'number',
+}
+
 export interface ITableHeader {
-  field: string
-  headerName: string
-  type: DataContentType
+  name: string
+  label: string
+  type?: DataContentType
   editable?: boolean
   sticky?: boolean
-  options?: IOptions | null
+  options?: IOptions<unknown> | null
   boostInfos?: IBoost
 }
 
@@ -49,19 +62,6 @@ export interface IStickyBorderStyle {
   borderRightColor: string
   boxShadow?: string
   clipPath?: string
-}
-
-export enum DataContentType {
-  STRING = 'string',
-  BOOLEAN = 'boolean',
-  TAG = 'tag',
-  LABEL = 'label',
-  DROPDOWN = 'dropdown',
-  IMAGE = 'image',
-  SCORE = 'score',
-  STOCK = 'stock',
-  PRICE = 'price',
-  NUMBER = 'number',
 }
 
 export interface ITableRow {

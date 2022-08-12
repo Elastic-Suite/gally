@@ -59,7 +59,7 @@ export function getReferencedResource(api: IApi, field: IField): IResource {
 
 export function getOptionsFromApi<T extends IHydraMember>(
   response: IHydraResponse<T>
-): IOptions {
+): IOptions<string | number> {
   return response['hydra:member'].map((member) => ({
     id: member.id,
     label: member['@id'],

@@ -1,5 +1,5 @@
 import { Box, styled } from '@mui/system'
-import { Dispatch, SetStateAction } from 'react'
+import { Dispatch, MutableRefObject, SetStateAction, forwardRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import BottomTable from '~/components/stateful/TopAndBottomTable/BottomTable'
 import TopTable from '~/components/stateful/TopAndBottomTable/TopTable'
@@ -19,7 +19,10 @@ interface IProps {
   onBottomSelectedRows: Dispatch<SetStateAction<(string | number)[]>>
 }
 
-function ProductsTopAndBottom(props: IProps): JSX.Element {
+function ProductsTopAndBottom(
+  props: IProps,
+  ref: MutableRefObject<HTMLDivElement>
+): JSX.Element {
   const {
     topSelectedRows,
     onTopSelectedRows,
@@ -40,6 +43,7 @@ function ProductsTopAndBottom(props: IProps): JSX.Element {
         />
         <Box sx={{ marginTop: '24px' }}>
           <BottomTable
+            ref={ref}
             selectedRows={bottomSelectedRows}
             onSelectedRows={onBottomSelectedRows}
             catalogId="com_fr"
@@ -50,4 +54,4 @@ function ProductsTopAndBottom(props: IProps): JSX.Element {
   )
 }
 
-export default ProductsTopAndBottom
+export default forwardRef(ProductsTopAndBottom)

@@ -1,5 +1,6 @@
 export * from './api'
 export * from './customTable'
+export * from './graphql'
 export * from './hydra'
 export * from './icons'
 export * from './theme'

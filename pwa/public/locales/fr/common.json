@@ -23,5 +23,9 @@
   "stock.inStock": "En stock",
   "stock.outOfStock": "Rupture de stock",
   "pagination.of": "de",
-  "pagination.rowsPerPage": "Lignes par pages"
+  "pagination.rowsPerPage": "Lignes par pages",
+  "table.apply": "Appliquer",
+  "table.cancel": "Annuler",
+  "table.selected_one": "{{count}} ligne sélectionnée",
+  "table.selected_other": "{{count}} lignes sélectionnées"
 }

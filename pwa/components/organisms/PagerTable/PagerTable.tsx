@@ -1,5 +1,5 @@
+import { ChangeEvent, MutableRefObject, forwardRef } from 'react'
 import { styled } from '@mui/system'
-import { ChangeEvent } from 'react'
 
 import Pagination from '~/components/molecules/CustomTable/Pagination/Pagination'
 import CustomTable, {
@@ -22,7 +22,10 @@ interface IProps extends ICustomTableProps {
   count: number
 }
 
-function PagerTable(props: IProps): JSX.Element {
+function PagerTable(
+  props: IProps,
+  ref: MutableRefObject<HTMLDivElement>
+): JSX.Element {
   const {
     currentPage,
     onPageChange,
@@ -34,7 +37,7 @@ function PagerTable(props: IProps): JSX.Element {
   } = props
 
   return (
-    <Root>
+    <Root ref={ref}>
       <Pagination
         currentPage={currentPage}
         onPageChange={onPageChange}
@@ -57,4 +60,4 @@ function PagerTable(props: IProps): JSX.Element {
   )
 }
 
-export default PagerTable
+export default forwardRef(PagerTable)

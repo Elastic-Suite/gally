@@ -1,7 +1,7 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { useCallback, useEffect, useState } from 'react'
 
-import { FilterType, IFilter } from '~/types'
+import { DataContentType, IFilter } from '~/types'
 
 import Filters from './Filters'
 
@@ -74,8 +74,8 @@ const Template: ComponentStory<typeof Filters> = (args) => {
 export const Default = Template.bind({})
 Default.args = {
   filters: [
-    { id: 'code', label: 'Attribute code' },
-    { id: 'label', label: 'Label attribute' },
+    { id: 'code', label: 'Attribute code', type: DataContentType.STRING },
+    { id: 'label', label: 'Label attribute', type: DataContentType.STRING },
     {
       id: 'type',
       label: 'Attribute type',
@@ -87,17 +87,17 @@ Default.args = {
         { label: 'Four', value: 4 },
         { label: 'Five', value: 5 },
       ],
-      type: FilterType.SELECT,
+      type: DataContentType.DROPDOWN,
     },
     {
       id: 'filterable',
       label: 'Filterable',
-      type: FilterType.BOOLEAN,
+      type: DataContentType.BOOLEAN,
     },
     {
       id: 'searchable',
       label: 'Searchable',
-      type: FilterType.BOOLEAN,
+      type: DataContentType.BOOLEAN,
     },
   ],
   showSearch: false,

@@ -2,13 +2,14 @@ import { FormEvent, useState } from 'react'
 import { useTranslation } from 'next-i18next'
 import { Collapse, InputAdornment, Stack } from '@mui/material'
 
-import { FilterType, IFilter } from '~/types'
+import { DataContentType, IFilter } from '~/types'
 
 import PrimaryButton from '~/components/atoms/buttons/PrimaryButton'
 import TertiaryButton from '~/components/atoms/buttons/TertiaryButton'
 import InputText from '~/components/atoms/form/InputText'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import Tag from '~/components/atoms/form/Tag'
+import FieldGuesser from '~/components/stateful/FieldGuesser/FieldGuesser'
 
 import {
   ContentForm,
@@ -21,7 +22,6 @@ import {
   HeaderBox,
   SearchBox,
 } from './Filters.styled'
-import Filter from './Filter'
 
 interface IActiveFilter {
   filter: IFilter
@@ -77,7 +77,7 @@ function Filters(props: IProps): JSX.Element {
   const augmentedFilters = filters.map((filter) => ({
     ...filter,
     options:
-      filter.type === FilterType.BOOLEAN && !filter.options?.length
+      filter.type === DataContentType.BOOLEAN && !filter.options?.length
         ? [
             { label: t('filter.yes'), value: true },
             { label: t('filter.no'), value: false },
@@ -114,6 +114,13 @@ function Filters(props: IProps): JSX.Element {
       )
     } else {
       onClear(filter, '')
+    }
+  }
+
+  function handleChange(name: string, value: unknown): void {
+    const filter = filters.find((filter) => filter.id === name)
+    if (filter) {
+      onFilterChange(filter, value)
     }
   }
 
@@ -164,11 +171,14 @@ function Filters(props: IProps): JSX.Element {
         <ContentForm onSubmit={handleSubmit}>
           <FiltersBox>
             {augmentedFilters.map((filter) => (
-              <Filter
+              <FieldGuesser
                 key={filter.id}
-                filter={filter}
-                filterValues={filterValues}
-                onFilterChange={onFilterChange}
+                editable
+                name={filter.id}
+                onChange={handleChange}
+                useDropdownBoolean
+                value={filterValues[filter.id]}
+                {...filter}
               />
             ))}
           </FiltersBox>

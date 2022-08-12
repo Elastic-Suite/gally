@@ -1,4 +1,7 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
+
+import FieldGuesser from '../FieldGuesser/FieldGuesser'
+
 import TopProductsTableComponent from './TopProductsTable'
 
 export default {
@@ -13,50 +16,50 @@ const Template: ComponentStory<typeof TopProductsTableComponent> = (args) => (
 const mockedHeadersAndRows = {
   tableHeaders: [
     {
-      field: 'code',
-      headerName: 'Code',
+      name: 'code',
+      label: 'Code',
       type: 'string',
       editable: false,
       sticky: false,
     },
     {
-      field: 'image',
-      headerName: 'Image',
+      name: 'image',
+      label: 'Image',
       type: 'image',
       editable: false,
       sticky: false,
     },
     {
-      field: 'name',
-      headerName: 'Name',
+      name: 'name',
+      label: 'Name',
       type: 'string',
       editable: false,
       sticky: false,
     },
     {
-      field: 'score',
-      headerName: 'Score',
+      name: 'score',
+      label: 'Score',
       type: 'score',
       editable: false,
       sticky: false,
     },
     {
-      field: 'stock',
-      headerName: 'In stock',
+      name: 'stock',
+      label: 'In stock',
       type: 'stock',
       editable: false,
       sticky: false,
     },
     {
-      field: 'price',
-      headerName: 'Price',
+      name: 'price',
+      label: 'Price',
       type: 'price',
       editable: false,
       sticky: false,
     },
     {
-      field: 'visible',
-      headerName: 'Visible',
+      name: 'visible',
+      label: 'Visible',
       type: 'boolean',
       editable: false,
       sticky: false,
@@ -68,14 +71,7 @@ const mockedHeadersAndRows = {
       code: 'VA03',
       image: 'static/media/assets/img/scarf_elastic.png',
       name: 'Product name',
-      score: {
-        scoreValue: 100.11,
-        boostInfos: {
-          type: 'down',
-          boostNumber: 1,
-          boostMultiplicator: 1.1,
-        },
-      },
+      score: 100.11,
       stock: {
         status: true,
         qty: 10,
@@ -88,14 +84,7 @@ const mockedHeadersAndRows = {
       code: 'VA03',
       image: 'static/media/assets/img/scarf_elastic.png',
       name: 'Product name',
-      score: {
-        scoreValue: 100.11,
-        boostInfos: {
-          type: 'up',
-          boostNumber: 1,
-          boostMultiplicator: 1.1,
-        },
-      },
+      score: 100.11,
       stock: {
         status: false,
         qty: 10,
@@ -108,5 +97,6 @@ const mockedHeadersAndRows = {
 
 export const TopProductTable = Template.bind({})
 TopProductTable.args = {
+  Field: FieldGuesser,
   ...mockedHeadersAndRows,
 }
