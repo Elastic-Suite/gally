@@ -98,8 +98,8 @@ class CategoryTest extends AbstractEntityTest
     public function getCollectionDataProvider(): iterable
     {
         return [
-            [$this->getUser(Role::ROLE_CONTRIBUTOR), 3, 403],
-            [$this->getUser(Role::ROLE_ADMIN), 3, 200],
+            [$this->getUser(Role::ROLE_CONTRIBUTOR), 4, 403],
+            [$this->getUser(Role::ROLE_ADMIN), 4, 200],
         ];
     }
 }

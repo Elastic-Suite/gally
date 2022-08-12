@@ -19,6 +19,8 @@ namespace Elasticsuite\Category\Repository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
+use Elasticsuite\Catalog\Model\Catalog;
+use Elasticsuite\Catalog\Model\LocalizedCatalog;
 use Elasticsuite\Category\Model\Category;
 
 /**
@@ -39,6 +41,54 @@ class CategoryConfigurationRepository extends ServiceEntityRepository
         return $this->findOneBy(
             ['category' => $categoryId, 'catalog' => $catalogId, 'localizedCatalog' => $localizedCatalogId]
         );
+    }
+
+    public function findMergedConfigurationByContext(Catalog $catalog, LocalizedCatalog $localizedCatalog): array
+    {
+        $exprBuilder = $this->getEntityManager()->getExpressionBuilder();
+
+        $conditionExpr = 'case when lc.%1$s IS NOT NULL then lc.%1$s else ' .
+            '(case when c.%1$s IS NOT NULL then c.%1$s else g.%1$s end) end as %1$s';
+
+        return $this->createQueryBuilder('lc')
+            ->resetDQLPart('select')
+            ->select(
+                [
+                    'lc.name',
+                    'IDENTITY(lc.category) as category_id',
+                    sprintf($conditionExpr, 'isVirtual'),
+                    sprintf($conditionExpr, 'useNameInProductSearch'),
+                    sprintf($conditionExpr, 'defaultSorting'),
+                    'lc.isActive',
+                ]
+            )
+            ->leftJoin(
+                $this->getClassName(),
+                'c',
+                Join::WITH,
+                $exprBuilder->andX(
+                    $exprBuilder->eq('c.category', 'lc.category'),
+                    $exprBuilder->eq('c.catalog', 'lc.catalog'),
+                    $exprBuilder->isNull('c.localizedCatalog'),
+                )
+            )
+            ->leftJoin(
+                $this->getClassName(),
+                'g',
+                Join::WITH,
+                $exprBuilder->andX(
+                    $exprBuilder->eq('g.category', 'lc.category'),
+                    $exprBuilder->isNull('g.catalog'),
+                    $exprBuilder->isNull('c.localizedCatalog'),
+                )
+            )
+            // Is null catalog | localized catalog
+            ->where('lc.localizedCatalog = :localizedCatalog')
+            ->andWhere('lc.catalog = :catalog')
+            ->setParameter('catalog', $catalog)
+            ->setParameter('localizedCatalog', $localizedCatalog)
+            ->getQuery()
+            ->getResult();
     }
 
     /**

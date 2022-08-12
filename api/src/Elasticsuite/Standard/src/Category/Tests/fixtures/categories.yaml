@@ -17,3 +17,7 @@ Elasticsuite\Category\Model\Category:
         parentId: three
         level: 3
         path: one/three/four
+    categ5:
+        id: five
+        level: 1
+        path: five

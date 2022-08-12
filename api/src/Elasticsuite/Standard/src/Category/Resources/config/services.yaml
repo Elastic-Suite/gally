@@ -77,4 +77,18 @@ services:
         arguments:
             - '@Elasticsuite\Category\Repository\CategoryConfigurationRepository'
         tags:
-            - { name: api_platform.graphql.query_resolver } 
+            - { name: api_platform.graphql.query_resolver }
+    
+    Elasticsuite\Category\Service\CategoryTreeBuilder:
+        arguments:
+            - '@Elasticsuite\Catalog\Repository\CatalogRepository'
+            - '@Elasticsuite\Catalog\Repository\LocalizedCatalogRepository'
+            - '@Elasticsuite\Category\Repository\CategoryRepository'
+            - '@Elasticsuite\Category\Repository\CategoryConfigurationRepository'
+            - '@Elasticsuite\Catalog\Service\DefaultCatalogProvider'
+    
+    Elasticsuite\Category\Resolver\CategoryTreeResolver:
+        arguments:
+            - '@Elasticsuite\Category\Service\CategoryTreeBuilder'
+        tags:
+            - { name: api_platform.graphql.query_resolver }
