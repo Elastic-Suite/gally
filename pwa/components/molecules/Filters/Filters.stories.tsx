@@ -74,8 +74,8 @@ const Template: ComponentStory<typeof Filters> = (args) => {
 export const Default = Template.bind({})
 Default.args = {
   filters: [
-    { id: 'code', label: 'Attribute code' },
-    { id: 'label', label: 'Label attribute' },
+    { id: 'code', label: 'Attribute code', type: DataContentType.STRING },
+    { id: 'label', label: 'Label attribute', type: DataContentType.STRING },
     {
       id: 'type',
       label: 'Attribute type',

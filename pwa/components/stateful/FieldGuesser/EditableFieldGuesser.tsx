@@ -4,9 +4,9 @@ import { useTranslation } from 'next-i18next'
 import { DataContentType, IFieldGuesserProps } from '~/types'
 
 import DropDown from '~/components/atoms/form/DropDown'
+import InputText from '~/components/atoms/form/InputText'
 
 import ReadableFieldGuesser from './ReadableFieldGuesser'
-import InputText from '~/components/atoms/form/InputText'
 
 function EditableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
   const {
