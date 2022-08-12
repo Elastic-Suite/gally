@@ -6,22 +6,22 @@ describe('CustomTableService', () => {
     it('Should manage sticky headers', () => {
       const tableHeaders: ITableHeader[] = [
         {
-          field: 'field1',
-          headerName: 'Test header switch',
+          name: 'field1',
+          label: 'Test header switch',
           type: DataContentType.BOOLEAN,
           editable: false,
           sticky: true,
         },
         {
-          field: 'field2',
-          headerName: 'Test header switch',
+          name: 'field2',
+          label: 'Test header switch',
           type: DataContentType.BOOLEAN,
           editable: false,
           sticky: false,
         },
         {
-          field: 'field3',
-          headerName: 'Test header switch',
+          name: 'field3',
+          label: 'Test header switch',
           type: DataContentType.BOOLEAN,
           editable: false,
           sticky: true,
@@ -30,16 +30,16 @@ describe('CustomTableService', () => {
       const result: ITableHeaderSticky[] = manageStickyHeaders(tableHeaders)
       expect(result).toEqual([
         {
-          field: 'field1',
-          headerName: 'Test header switch',
+          name: 'field1',
+          label: 'Test header switch',
           type: DataContentType.BOOLEAN,
           editable: false,
           sticky: true,
           isLastSticky: false,
         },
         {
-          field: 'field3',
-          headerName: 'Test header switch',
+          name: 'field3',
+          label: 'Test header switch',
           type: DataContentType.BOOLEAN,
           editable: false,
           sticky: true,

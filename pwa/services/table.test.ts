@@ -1,5 +1,5 @@
 import { fieldBoolean, fieldRef, fieldString, resourceWithRef } from '~/mocks'
-import { DataContentType, FilterType } from '~/types'
+import { DataContentType } from '~/types'
 import sourceFields from '~/public/mocks/source_fields.json'
 
 import {
@@ -25,10 +25,10 @@ describe('Table service', () => {
   describe('getFieldHeader', () => {
     it('should return the field header', () => {
       expect(getFieldHeader(fieldString, (key: string) => key)).toEqual({
-        field: 'code',
-        headerName: 'Attribute code',
+        name: 'code',
+        label: 'Attribute code',
         type: DataContentType.STRING,
-        editable: true,
+        editable: false,
       })
     })
   })
@@ -44,7 +44,7 @@ describe('Table service', () => {
           field: fieldString,
           multiple: false,
         })
-      ).toEqual(FilterType.TEXT)
+      ).toEqual(DataContentType.STRING)
       expect(
         getFilterType({
           '@type': 'IriTemplateMapping',
@@ -54,7 +54,7 @@ describe('Table service', () => {
           field: fieldBoolean,
           multiple: false,
         })
-      ).toEqual(FilterType.BOOLEAN)
+      ).toEqual(DataContentType.BOOLEAN)
       expect(
         getFilterType({
           '@type': 'IriTemplateMapping',
@@ -64,7 +64,7 @@ describe('Table service', () => {
           field: fieldRef,
           multiple: true,
         })
-      ).toEqual(FilterType.SELECT)
+      ).toEqual(DataContentType.DROPDOWN)
     })
   })
 
@@ -87,7 +87,7 @@ describe('Table service', () => {
         label: 'Attribute code',
         multiple: false,
         options: undefined,
-        type: FilterType.TEXT,
+        type: DataContentType.STRING,
       })
     })
   })

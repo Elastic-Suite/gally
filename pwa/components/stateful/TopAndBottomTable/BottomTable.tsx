@@ -1,15 +1,32 @@
-import { Dispatch, SetStateAction, useMemo, useState } from 'react'
+import {
+  Dispatch,
+  MutableRefObject,
+  SetStateAction,
+  forwardRef,
+  useMemo,
+  useState,
+} from 'react'
+
 import {
   defaultPageSize,
   defaultRowsPerPageOptions,
   gqlUrl,
   productTableheader,
+  productsQuery,
 } from '~/constants'
-import { productsQuery } from '~/constants/graphql'
 import { useFetchApi } from '~/hooks'
-import { ISearchParameters, ITableHeader, ITableRow, LoadStatus } from '~/types'
-import { IFetchParams, IFetchProducts } from '~/types/products'
+import {
+  IFetchParams,
+  IFetchProducts,
+  ISearchParameters,
+  ITableHeader,
+  ITableRow,
+  LoadStatus,
+} from '~/types'
+
 import PagerTable from '../../organisms/PagerTable/PagerTable'
+
+import FieldGuesser from '../FieldGuesser/FieldGuesser'
 
 interface IProps {
   selectedRows: (string | number)[]
@@ -17,7 +34,10 @@ interface IProps {
   catalogId: string
 }
 
-function BottomTable(props: IProps): JSX.Element {
+function BottomTable(
+  props: IProps,
+  ref: MutableRefObject<HTMLDivElement>
+): JSX.Element {
   const { selectedRows, onSelectedRows, catalogId } = props
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [rowsPerPage, setRowsPerPage] = useState<number>(defaultPageSize)
@@ -64,10 +84,12 @@ function BottomTable(props: IProps): JSX.Element {
       {products.status === LoadStatus.SUCCEEDED &&
         Boolean(products?.data?.data?.searchProducts) && (
           <PagerTable
+            Field={FieldGuesser}
             currentPage={
               (currentPage - 1 >= 0 ? currentPage - 1 : currentPage) ?? 0
             }
             onPageChange={onPageChange}
+            ref={ref}
             rowsPerPage={rowsPerPage}
             rowsPerPageOptions={rowsPerPageOptions ?? []}
             onRowsPerPageChange={onRowsPerPageChange}
@@ -82,4 +104,4 @@ function BottomTable(props: IProps): JSX.Element {
   )
 }
 
-export default BottomTable
+export default forwardRef(BottomTable)

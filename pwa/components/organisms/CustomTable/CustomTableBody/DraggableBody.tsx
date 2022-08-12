@@ -1,10 +1,14 @@
+import { FunctionComponent } from 'react'
 import { TableBody } from '@mui/material'
 import { Draggable, Droppable } from 'react-beautiful-dnd'
-import { ITableHeader, ITableRow } from '~/types/customTables'
+
+import { IFieldGuesserProps, ITableHeader, ITableRow } from '~/types'
+
 import DraggableRow from '../CustomTableRow/DraggableRow'
 
 interface IProps {
-  cSSLeftValues: number[]
+  Field: FunctionComponent<IFieldGuesserProps>
+  cssLeftValues: number[]
   isHorizontalOverflow: boolean
   onRowUpdate?: (
     id: string | number,
@@ -21,7 +25,8 @@ interface IProps {
 
 function DraggableBody(props: IProps): JSX.Element {
   const {
-    cSSLeftValues,
+    Field,
+    cssLeftValues,
     isHorizontalOverflow,
     onRowUpdate,
     onSelectRows,
@@ -44,6 +49,7 @@ function DraggableBody(props: IProps): JSX.Element {
             >
               {(provider): JSX.Element => (
                 <DraggableRow
+                  Field={Field}
                   tableRow={tableRow}
                   onRowUpdate={onRowUpdate}
                   tableHeaders={tableHeaders}
@@ -51,7 +57,7 @@ function DraggableBody(props: IProps): JSX.Element {
                   onSelectRows={onSelectRows}
                   provider={provider}
                   withSelection={withSelection}
-                  cSSLeftValuesIterator={cSSLeftValues.entries()}
+                  cssLeftValuesIterator={cssLeftValues.entries()}
                   isHorizontalOverflow={isHorizontalOverflow}
                   shadow={shadow}
                 />

@@ -147,23 +147,25 @@ exports[`CustomTable match snapshot with editable content 1`] = `
             class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-w76ctl-MuiTableCell-root"
           >
             <div
-              class="MuiBox-root css-0"
+              class="MuiFormControl-root css-1c9gikl-MuiFormControl-root"
             >
-              <div
-                class="MuiFormControl-root css-1c9gikl-MuiFormControl-root"
+              <label
+                class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-colorPrimary css-ssr94h-MuiFormLabel-root-MuiInputLabel-root"
+                data-shrink="true"
               >
-                <button
-                  aria-expanded="false"
-                  aria-haspopup="listbox"
-                  class="MuiSelectUnstyled-root css-10s1kls"
-                  type="button"
-                >
-                  
-                  <ion-icon
-                    name="chevron-down"
-                  />
-                </button>
-              </div>
+                Test header dropdown
+              </label>
+              <button
+                aria-expanded="false"
+                aria-haspopup="listbox"
+                class="MuiSelectUnstyled-root css-10s1kls"
+                type="button"
+              >
+                
+                <ion-icon
+                  name="chevron-down"
+                />
+              </button>
             </div>
           </td>
         </tr>

@@ -1,6 +1,5 @@
+/* eslint-disable react/destructuring-assignment */
 import { useRef, useState } from 'react'
-import { SelectUnstyledProps } from '@mui/base/SelectUnstyled'
-import { MultiSelectUnstyledProps } from '@mui/base/MultiSelectUnstyled'
 import OptionUnstyled, { optionUnstyledClasses } from '@mui/base/OptionUnstyled'
 import { styled } from '@mui/system'
 import { FormControl, InputLabel } from '@mui/material'
@@ -8,8 +7,8 @@ import { FormControl, InputLabel } from '@mui/material'
 import { IOptions } from '~/types'
 
 import Checkbox from './Checkbox'
-import MultiSelect from './MultiSelect'
-import Select from './Select'
+import MultiSelect, { IMultiSelectUnstyledProps } from './MultiSelect'
+import Select, { ISelectUnstyledProps } from './Select'
 
 const Option = styled(OptionUnstyled)(({ theme }) => ({
   fontFamily: 'Inter',
@@ -37,24 +36,22 @@ const Option = styled(OptionUnstyled)(({ theme }) => ({
   },
 }))
 
+function isMultiple(props: IDropDownProps): props is IMultiSelectProps {
+  return props.multiple
+}
+
 interface ICommonProps {
   label?: string
   multiple?: boolean
-  options: IOptions
+  options: IOptions<unknown>
   required?: boolean
 }
 
-export interface ISelectProps
-  extends Omit<SelectUnstyledProps<unknown>, 'components'>,
-    ICommonProps {
-  multiple?: false
-}
+export interface ISelectProps extends ISelectUnstyledProps, ICommonProps {}
 
 export interface IMultiSelectProps
-  extends Omit<MultiSelectUnstyledProps<unknown>, 'components'>,
-    ICommonProps {
-  multiple: true
-}
+  extends IMultiSelectUnstyledProps,
+    ICommonProps {}
 
 export type IDropDownProps = ISelectProps | IMultiSelectProps
 
@@ -83,17 +80,17 @@ export default function DropDown(props: IDropDownProps): JSX.Element {
           {label}
         </InputLabel>
       ) : null}
-      {multiple ? (
+      {isMultiple(props) ? (
         <MultiSelect
           listboxOpen={listboxOpen}
           onListboxOpenChange={handleListOpenChange}
           {...(selectProps as IMultiSelectProps)}
-          value={value}
+          value={props.value}
         >
           {options.map((option) => (
             <Option key={option.id || String(option.value)} {...option}>
               <Checkbox
-                checked={value.includes(option.value)}
+                checked={props.value.includes(option.value)}
                 label={option.label}
                 list
                 onMouseDown={handleCheckboxMouseDown}
@@ -102,7 +99,7 @@ export default function DropDown(props: IDropDownProps): JSX.Element {
           ))}
         </MultiSelect>
       ) : (
-        <Select {...(selectProps as ISelectProps)} value={value}>
+        <Select {...(selectProps as ISelectProps)} value={props.value}>
           {!required && <Option value="">&nbsp;</Option>}
           {options.map((option) => (
             <Option key={option.id || String(option.value)} {...option}>

@@ -60,625 +60,6 @@ export const expandedDocs = {
   'http://www.w3.org/ns/hydra/core#entrypoint': [{ '@value': '/' }],
   'http://www.w3.org/ns/hydra/core#supportedClass': [
     {
-      '@id': 'https://localhost/docs.jsonld#Metadata',
-      '@type': ['http://www.w3.org/ns/hydra/core#Class'],
-      'http://www.w3.org/ns/hydra/core#supportedOperation': [
-        {
-          '@type': [
-            'http://www.w3.org/ns/hydra/core#Operation',
-            'http://schema.org/FindAction',
-          ],
-          'http://www.w3.org/ns/hydra/core#method': [{ '@value': 'GET' }],
-          'http://www.w3.org/ns/hydra/core#title': [
-            { '@value': 'Retrieves Metadata resource.' },
-          ],
-          'http://www.w3.org/2000/01/rdf-schema#label': [
-            { '@value': 'Retrieves Metadata resource.' },
-          ],
-          'http://www.w3.org/ns/hydra/core#returns': [
-            { '@id': 'https://localhost/docs.jsonld#Metadata' },
-          ],
-        },
-        {
-          '@type': [
-            'http://www.w3.org/ns/hydra/core#Operation',
-            'http://schema.org/ReplaceAction',
-          ],
-          'http://www.w3.org/ns/hydra/core#expects': [
-            { '@id': 'https://localhost/docs.jsonld#Metadata' },
-          ],
-          'http://www.w3.org/ns/hydra/core#method': [{ '@value': 'PUT' }],
-          'http://www.w3.org/ns/hydra/core#title': [
-            { '@value': 'Replaces the Metadata resource.' },
-          ],
-          'http://www.w3.org/2000/01/rdf-schema#label': [
-            { '@value': 'Replaces the Metadata resource.' },
-          ],
-          'http://www.w3.org/ns/hydra/core#returns': [
-            { '@id': 'https://localhost/docs.jsonld#Metadata' },
-          ],
-        },
-        {
-          '@type': ['http://www.w3.org/ns/hydra/core#Operation'],
-          'http://www.w3.org/ns/hydra/core#expects': [
-            { '@id': 'https://localhost/docs.jsonld#Metadata' },
-          ],
-          'http://www.w3.org/ns/hydra/core#method': [{ '@value': 'PATCH' }],
-          'http://www.w3.org/ns/hydra/core#title': [
-            { '@value': 'Updates the Metadata resource.' },
-          ],
-          'http://www.w3.org/2000/01/rdf-schema#label': [
-            { '@value': 'Updates the Metadata resource.' },
-          ],
-          'http://www.w3.org/ns/hydra/core#returns': [
-            { '@id': 'https://localhost/docs.jsonld#Metadata' },
-          ],
-        },
-        {
-          '@type': [
-            'http://www.w3.org/ns/hydra/core#Operation',
-            'http://schema.org/DeleteAction',
-          ],
-          'http://www.w3.org/ns/hydra/core#method': [{ '@value': 'DELETE' }],
-          'http://www.w3.org/ns/hydra/core#title': [
-            { '@value': 'Deletes the Metadata resource.' },
-          ],
-          'http://www.w3.org/2000/01/rdf-schema#label': [
-            { '@value': 'Deletes the Metadata resource.' },
-          ],
-          'http://www.w3.org/ns/hydra/core#returns': [
-            { '@id': 'http://www.w3.org/2002/07/owl#Nothing' },
-          ],
-        },
-      ],
-      'http://www.w3.org/ns/hydra/core#supportedProperty': [
-        {
-          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
-          'http://www.w3.org/ns/hydra/core#property': [
-            {
-              '@id': 'https://localhost/docs.jsonld#Metadata/entity',
-              '@type': ['http://www.w3.org/1999/02/22-rdf-syntax-ns#Property'],
-              'http://www.w3.org/2000/01/rdf-schema#domain': [
-                { '@id': 'https://localhost/docs.jsonld#Metadata' },
-              ],
-              'http://www.w3.org/2000/01/rdf-schema#range': [
-                { '@id': 'http://www.w3.org/2001/XMLSchema#string' },
-              ],
-              'http://www.w3.org/2000/01/rdf-schema#label': [
-                { '@value': 'entity' },
-              ],
-            },
-          ],
-          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
-          'http://www.w3.org/ns/hydra/core#required': [{ '@value': true }],
-          'http://www.w3.org/ns/hydra/core#title': [{ '@value': 'entity' }],
-          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': true }],
-        },
-        {
-          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
-          'http://www.w3.org/ns/hydra/core#property': [
-            {
-              '@id': 'https://localhost/docs.jsonld#Metadata/sourceFields',
-              '@type': ['http://www.w3.org/ns/hydra/core#Link'],
-              'http://www.w3.org/2000/01/rdf-schema#domain': [
-                { '@id': 'https://localhost/docs.jsonld#Metadata' },
-              ],
-              'http://www.w3.org/2000/01/rdf-schema#range': [
-                { '@id': 'https://localhost/docs.jsonld#SourceField' },
-              ],
-              'http://www.w3.org/2000/01/rdf-schema#label': [
-                { '@value': 'sourceFields' },
-              ],
-            },
-          ],
-          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
-          'http://www.w3.org/ns/hydra/core#required': [{ '@value': false }],
-          'http://www.w3.org/ns/hydra/core#title': [
-            { '@value': 'sourceFields' },
-          ],
-          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': true }],
-        },
-      ],
-      'http://www.w3.org/ns/hydra/core#title': [{ '@value': 'Metadata' }],
-      'http://www.w3.org/2000/01/rdf-schema#label': [{ '@value': 'Metadata' }],
-    },
-    {
-      '@id': 'https://localhost/docs.jsonld#SourceField',
-      '@type': ['http://www.w3.org/ns/hydra/core#Class'],
-      'http://www.w3.org/ns/hydra/core#supportedOperation': [
-        {
-          '@type': [
-            'http://www.w3.org/ns/hydra/core#Operation',
-            'http://schema.org/FindAction',
-          ],
-          'http://www.w3.org/ns/hydra/core#method': [{ '@value': 'GET' }],
-          'http://www.w3.org/ns/hydra/core#title': [
-            { '@value': 'Retrieves SourceField resource.' },
-          ],
-          'http://www.w3.org/2000/01/rdf-schema#label': [
-            { '@value': 'Retrieves SourceField resource.' },
-          ],
-          'http://www.w3.org/ns/hydra/core#returns': [
-            { '@id': 'https://localhost/docs.jsonld#SourceField' },
-          ],
-        },
-        {
-          '@type': [
-            'http://www.w3.org/ns/hydra/core#Operation',
-            'http://schema.org/ReplaceAction',
-          ],
-          'http://www.w3.org/ns/hydra/core#expects': [
-            { '@id': 'https://localhost/docs.jsonld#SourceField' },
-          ],
-          'http://www.w3.org/ns/hydra/core#method': [{ '@value': 'PUT' }],
-          'http://www.w3.org/ns/hydra/core#title': [
-            { '@value': 'Replaces the SourceField resource.' },
-          ],
-          'http://www.w3.org/2000/01/rdf-schema#label': [
-            { '@value': 'Replaces the SourceField resource.' },
-          ],
-          'http://www.w3.org/ns/hydra/core#returns': [
-            { '@id': 'https://localhost/docs.jsonld#SourceField' },
-          ],
-        },
-        {
-          '@type': ['http://www.w3.org/ns/hydra/core#Operation'],
-          'http://www.w3.org/ns/hydra/core#expects': [
-            { '@id': 'https://localhost/docs.jsonld#SourceField' },
-          ],
-          'http://www.w3.org/ns/hydra/core#method': [{ '@value': 'PATCH' }],
-          'http://www.w3.org/ns/hydra/core#title': [
-            { '@value': 'Updates the SourceField resource.' },
-          ],
-          'http://www.w3.org/2000/01/rdf-schema#label': [
-            { '@value': 'Updates the SourceField resource.' },
-          ],
-          'http://www.w3.org/ns/hydra/core#returns': [
-            { '@id': 'https://localhost/docs.jsonld#SourceField' },
-          ],
-        },
-        {
-          '@type': [
-            'http://www.w3.org/ns/hydra/core#Operation',
-            'http://schema.org/DeleteAction',
-          ],
-          'http://www.w3.org/ns/hydra/core#method': [{ '@value': 'DELETE' }],
-          'http://www.w3.org/ns/hydra/core#title': [
-            { '@value': 'Deletes the SourceField resource.' },
-          ],
-          'http://www.w3.org/2000/01/rdf-schema#label': [
-            { '@value': 'Deletes the SourceField resource.' },
-          ],
-          'http://www.w3.org/ns/hydra/core#returns': [
-            { '@id': 'http://www.w3.org/2002/07/owl#Nothing' },
-          ],
-        },
-      ],
-      'http://www.w3.org/ns/hydra/core#supportedProperty': [
-        {
-          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
-          'http://www.w3.org/ns/hydra/core#property': [
-            {
-              '@id': 'https://localhost/docs.jsonld#SourceField/code',
-              '@type': ['http://www.w3.org/1999/02/22-rdf-syntax-ns#Property'],
-              'http://www.w3.org/2000/01/rdf-schema#domain': [
-                { '@id': 'https://localhost/docs.jsonld#SourceField' },
-              ],
-              'http://www.w3.org/2000/01/rdf-schema#range': [
-                { '@id': 'http://www.w3.org/2001/XMLSchema#string' },
-              ],
-              'http://www.w3.org/2000/01/rdf-schema#label': [
-                { '@value': 'Attribute code' },
-              ],
-              'https://localhost/docs.jsonld#showable': [{ '@value': true }],
-            },
-          ],
-          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
-          'http://www.w3.org/ns/hydra/core#required': [{ '@value': true }],
-          'http://www.w3.org/ns/hydra/core#title': [{ '@value': 'code' }],
-          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': true }],
-        },
-        {
-          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
-          'http://www.w3.org/ns/hydra/core#property': [
-            {
-              '@id': 'https://localhost/docs.jsonld#SourceField/defaultLabel',
-              '@type': ['http://www.w3.org/1999/02/22-rdf-syntax-ns#Property'],
-              'http://www.w3.org/2000/01/rdf-schema#domain': [
-                { '@id': 'https://localhost/docs.jsonld#SourceField' },
-              ],
-              'http://www.w3.org/2000/01/rdf-schema#range': [
-                { '@id': 'http://www.w3.org/2001/XMLSchema#string' },
-              ],
-              'http://www.w3.org/2000/01/rdf-schema#label': [
-                { '@value': 'Attribute label' },
-              ],
-              'https://localhost/docs.jsonld#showable': [{ '@value': true }],
-            },
-          ],
-          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
-          'http://www.w3.org/ns/hydra/core#required': [{ '@value': false }],
-          'http://www.w3.org/ns/hydra/core#title': [
-            { '@value': 'defaultLabel' },
-          ],
-          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': true }],
-        },
-        {
-          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
-          'http://www.w3.org/ns/hydra/core#property': [
-            {
-              '@id': 'https://localhost/docs.jsonld#SourceField/type',
-              '@type': ['http://www.w3.org/1999/02/22-rdf-syntax-ns#Property'],
-              'http://www.w3.org/2000/01/rdf-schema#domain': [
-                { '@id': 'https://localhost/docs.jsonld#SourceField' },
-              ],
-              'http://www.w3.org/2000/01/rdf-schema#range': [
-                { '@id': 'http://www.w3.org/2001/XMLSchema#string' },
-              ],
-              'http://www.w3.org/2000/01/rdf-schema#label': [
-                { '@value': 'Attribute type' },
-              ],
-              'https://localhost/docs.jsonld#showable': [{ '@value': true }],
-            },
-          ],
-          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
-          'http://www.w3.org/ns/hydra/core#required': [{ '@value': false }],
-          'http://www.w3.org/ns/hydra/core#title': [{ '@value': 'type' }],
-          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': true }],
-        },
-        {
-          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
-          'http://www.w3.org/ns/hydra/core#property': [
-            {
-              '@id': 'https://localhost/docs.jsonld#SourceField/isFilterable',
-              '@type': ['http://www.w3.org/1999/02/22-rdf-syntax-ns#Property'],
-              'http://www.w3.org/2000/01/rdf-schema#domain': [
-                { '@id': 'https://localhost/docs.jsonld#SourceField' },
-              ],
-              'http://www.w3.org/2000/01/rdf-schema#range': [
-                { '@id': 'http://www.w3.org/2001/XMLSchema#boolean' },
-              ],
-              'http://www.w3.org/2000/01/rdf-schema#label': [
-                { '@value': 'Filterable' },
-              ],
-              'https://localhost/docs.jsonld#showable': [{ '@value': true }],
-            },
-          ],
-          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': false }],
-          'http://www.w3.org/ns/hydra/core#required': [{ '@value': false }],
-          'http://www.w3.org/ns/hydra/core#title': [
-            { '@value': 'isFilterable' },
-          ],
-          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': true }],
-        },
-        {
-          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
-          'http://www.w3.org/ns/hydra/core#property': [
-            {
-              '@id': 'https://localhost/docs.jsonld#SourceField/isSearchable',
-              '@type': ['http://www.w3.org/1999/02/22-rdf-syntax-ns#Property'],
-              'http://www.w3.org/2000/01/rdf-schema#domain': [
-                { '@id': 'https://localhost/docs.jsonld#SourceField' },
-              ],
-              'http://www.w3.org/2000/01/rdf-schema#range': [
-                { '@id': 'http://www.w3.org/2001/XMLSchema#boolean' },
-              ],
-              'http://www.w3.org/2000/01/rdf-schema#label': [
-                { '@value': 'Searchable' },
-              ],
-              'https://localhost/docs.jsonld#showable': [{ '@value': true }],
-            },
-          ],
-          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': false }],
-          'http://www.w3.org/ns/hydra/core#required': [{ '@value': false }],
-          'http://www.w3.org/ns/hydra/core#title': [
-            { '@value': 'isSearchable' },
-          ],
-          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': true }],
-        },
-        {
-          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
-          'http://www.w3.org/ns/hydra/core#property': [
-            {
-              '@id': 'https://localhost/docs.jsonld#SourceField/isSortable',
-              '@type': ['http://www.w3.org/1999/02/22-rdf-syntax-ns#Property'],
-              'http://www.w3.org/2000/01/rdf-schema#domain': [
-                { '@id': 'https://localhost/docs.jsonld#SourceField' },
-              ],
-              'http://www.w3.org/2000/01/rdf-schema#range': [
-                { '@id': 'http://www.w3.org/2001/XMLSchema#boolean' },
-              ],
-              'http://www.w3.org/2000/01/rdf-schema#label': [
-                { '@value': 'Sortable' },
-              ],
-              'https://localhost/docs.jsonld#showable': [{ '@value': true }],
-            },
-          ],
-          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': false }],
-          'http://www.w3.org/ns/hydra/core#required': [{ '@value': false }],
-          'http://www.w3.org/ns/hydra/core#title': [{ '@value': 'isSortable' }],
-          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': true }],
-        },
-        {
-          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
-          'http://www.w3.org/ns/hydra/core#property': [
-            {
-              '@id': 'https://localhost/docs.jsonld#SourceField/weight',
-              '@type': ['http://www.w3.org/1999/02/22-rdf-syntax-ns#Property'],
-              'http://www.w3.org/2000/01/rdf-schema#domain': [
-                { '@id': 'https://localhost/docs.jsonld#SourceField' },
-              ],
-              'http://www.w3.org/2000/01/rdf-schema#range': [
-                { '@id': 'http://www.w3.org/2001/XMLSchema#integer' },
-              ],
-              'http://www.w3.org/2000/01/rdf-schema#label': [
-                { '@value': 'weight' },
-              ],
-            },
-          ],
-          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
-          'http://www.w3.org/ns/hydra/core#required': [{ '@value': false }],
-          'http://www.w3.org/ns/hydra/core#title': [{ '@value': 'weight' }],
-          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': true }],
-        },
-        {
-          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
-          'http://www.w3.org/ns/hydra/core#property': [
-            {
-              '@id': 'https://localhost/docs.jsonld#SourceField/isSpellchecked',
-              '@type': ['http://www.w3.org/1999/02/22-rdf-syntax-ns#Property'],
-              'http://www.w3.org/2000/01/rdf-schema#domain': [
-                { '@id': 'https://localhost/docs.jsonld#SourceField' },
-              ],
-              'http://www.w3.org/2000/01/rdf-schema#range': [
-                { '@id': 'http://www.w3.org/2001/XMLSchema#boolean' },
-              ],
-              'http://www.w3.org/2000/01/rdf-schema#label': [
-                { '@value': 'isSpellchecked' },
-              ],
-            },
-          ],
-          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': false }],
-          'http://www.w3.org/ns/hydra/core#required': [{ '@value': false }],
-          'http://www.w3.org/ns/hydra/core#title': [
-            { '@value': 'isSpellchecked' },
-          ],
-          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': true }],
-        },
-        {
-          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
-          'http://www.w3.org/ns/hydra/core#property': [
-            {
-              '@id': 'https://localhost/docs.jsonld#SourceField/isUsedForRules',
-              '@type': ['http://www.w3.org/1999/02/22-rdf-syntax-ns#Property'],
-              'http://www.w3.org/2000/01/rdf-schema#domain': [
-                { '@id': 'https://localhost/docs.jsonld#SourceField' },
-              ],
-              'http://www.w3.org/2000/01/rdf-schema#range': [
-                { '@id': 'http://www.w3.org/2001/XMLSchema#boolean' },
-              ],
-              'http://www.w3.org/2000/01/rdf-schema#label': [
-                { '@value': 'isUsedForRules' },
-              ],
-            },
-          ],
-          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': false }],
-          'http://www.w3.org/ns/hydra/core#required': [{ '@value': false }],
-          'http://www.w3.org/ns/hydra/core#title': [
-            { '@value': 'isUsedForRules' },
-          ],
-          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': true }],
-        },
-        {
-          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
-          'http://www.w3.org/ns/hydra/core#property': [
-            {
-              '@id': 'https://localhost/docs.jsonld#SourceField/metadata',
-              '@type': ['http://www.w3.org/ns/hydra/core#Link'],
-              'http://www.w3.org/2000/01/rdf-schema#domain': [
-                { '@id': 'https://localhost/docs.jsonld#SourceField' },
-              ],
-              'http://www.w3.org/2002/07/owl#maxCardinality': [{ '@value': 1 }],
-              'http://www.w3.org/2000/01/rdf-schema#range': [
-                { '@id': 'https://localhost/docs.jsonld#Metadata' },
-              ],
-              'http://www.w3.org/2000/01/rdf-schema#label': [
-                { '@value': 'metadata' },
-              ],
-            },
-          ],
-          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
-          'http://www.w3.org/ns/hydra/core#required': [{ '@value': true }],
-          'http://www.w3.org/ns/hydra/core#title': [{ '@value': 'metadata' }],
-          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': true }],
-        },
-        {
-          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
-          'http://www.w3.org/ns/hydra/core#property': [
-            {
-              '@id': 'https://localhost/docs.jsonld#SourceField/labels',
-              '@type': ['http://www.w3.org/ns/hydra/core#Link'],
-              'http://www.w3.org/2000/01/rdf-schema#domain': [
-                { '@id': 'https://localhost/docs.jsonld#SourceField' },
-              ],
-              'http://www.w3.org/2000/01/rdf-schema#range': [
-                { '@id': 'https://localhost/docs.jsonld#SourceFieldLabel' },
-              ],
-              'http://www.w3.org/2000/01/rdf-schema#label': [
-                { '@value': 'labels' },
-              ],
-            },
-          ],
-          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
-          'http://www.w3.org/ns/hydra/core#required': [{ '@value': false }],
-          'http://www.w3.org/ns/hydra/core#title': [{ '@value': 'labels' }],
-          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': true }],
-        },
-        {
-          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
-          'http://www.w3.org/ns/hydra/core#property': [
-            {
-              '@id': 'https://localhost/docs.jsonld#SourceField/options',
-              '@type': ['http://www.w3.org/ns/hydra/core#Link'],
-              'http://www.w3.org/2000/01/rdf-schema#domain': [
-                { '@id': 'https://localhost/docs.jsonld#SourceField' },
-              ],
-              'http://www.w3.org/2000/01/rdf-schema#range': [
-                { '@id': 'https://localhost/docs.jsonld#SourceFieldOption' },
-              ],
-              'http://www.w3.org/2000/01/rdf-schema#label': [
-                { '@value': 'options' },
-              ],
-            },
-          ],
-          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
-          'http://www.w3.org/ns/hydra/core#required': [{ '@value': false }],
-          'http://www.w3.org/ns/hydra/core#title': [{ '@value': 'options' }],
-          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': true }],
-        },
-        {
-          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
-          'http://www.w3.org/ns/hydra/core#property': [
-            {
-              '@id': 'https://localhost/docs.jsonld#SourceField/searchable',
-              '@type': ['http://www.w3.org/1999/02/22-rdf-syntax-ns#Property'],
-              'http://www.w3.org/2000/01/rdf-schema#domain': [
-                { '@id': 'https://localhost/docs.jsonld#SourceField' },
-              ],
-              'http://www.w3.org/2000/01/rdf-schema#range': [
-                { '@id': 'http://www.w3.org/2001/XMLSchema#boolean' },
-              ],
-              'http://www.w3.org/2000/01/rdf-schema#label': [
-                { '@value': 'searchable' },
-              ],
-            },
-          ],
-          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
-          'http://www.w3.org/ns/hydra/core#required': [{ '@value': false }],
-          'http://www.w3.org/ns/hydra/core#title': [{ '@value': 'searchable' }],
-          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': false }],
-        },
-        {
-          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
-          'http://www.w3.org/ns/hydra/core#property': [
-            {
-              '@id': 'https://localhost/docs.jsonld#SourceField/filterable',
-              '@type': ['http://www.w3.org/1999/02/22-rdf-syntax-ns#Property'],
-              'http://www.w3.org/2000/01/rdf-schema#domain': [
-                { '@id': 'https://localhost/docs.jsonld#SourceField' },
-              ],
-              'http://www.w3.org/2000/01/rdf-schema#range': [
-                { '@id': 'http://www.w3.org/2001/XMLSchema#boolean' },
-              ],
-              'http://www.w3.org/2000/01/rdf-schema#label': [
-                { '@value': 'filterable' },
-              ],
-            },
-          ],
-          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
-          'http://www.w3.org/ns/hydra/core#required': [{ '@value': false }],
-          'http://www.w3.org/ns/hydra/core#title': [{ '@value': 'filterable' }],
-          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': false }],
-        },
-        {
-          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
-          'http://www.w3.org/ns/hydra/core#property': [
-            {
-              '@id': 'https://localhost/docs.jsonld#SourceField/sortable',
-              '@type': ['http://www.w3.org/1999/02/22-rdf-syntax-ns#Property'],
-              'http://www.w3.org/2000/01/rdf-schema#domain': [
-                { '@id': 'https://localhost/docs.jsonld#SourceField' },
-              ],
-              'http://www.w3.org/2000/01/rdf-schema#range': [
-                { '@id': 'http://www.w3.org/2001/XMLSchema#boolean' },
-              ],
-              'http://www.w3.org/2000/01/rdf-schema#label': [
-                { '@value': 'sortable' },
-              ],
-            },
-          ],
-          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
-          'http://www.w3.org/ns/hydra/core#required': [{ '@value': false }],
-          'http://www.w3.org/ns/hydra/core#title': [{ '@value': 'sortable' }],
-          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': false }],
-        },
-        {
-          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
-          'http://www.w3.org/ns/hydra/core#property': [
-            {
-              '@id': 'https://localhost/docs.jsonld#SourceField/spellchecked',
-              '@type': ['http://www.w3.org/1999/02/22-rdf-syntax-ns#Property'],
-              'http://www.w3.org/2000/01/rdf-schema#domain': [
-                { '@id': 'https://localhost/docs.jsonld#SourceField' },
-              ],
-              'http://www.w3.org/2000/01/rdf-schema#range': [
-                { '@id': 'http://www.w3.org/2001/XMLSchema#boolean' },
-              ],
-              'http://www.w3.org/2000/01/rdf-schema#label': [
-                { '@value': 'spellchecked' },
-              ],
-            },
-          ],
-          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
-          'http://www.w3.org/ns/hydra/core#required': [{ '@value': false }],
-          'http://www.w3.org/ns/hydra/core#title': [
-            { '@value': 'spellchecked' },
-          ],
-          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': false }],
-        },
-        {
-          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
-          'http://www.w3.org/ns/hydra/core#property': [
-            {
-              '@id': 'https://localhost/docs.jsonld#SourceField/usedForRules',
-              '@type': ['http://www.w3.org/1999/02/22-rdf-syntax-ns#Property'],
-              'http://www.w3.org/2000/01/rdf-schema#domain': [
-                { '@id': 'https://localhost/docs.jsonld#SourceField' },
-              ],
-              'http://www.w3.org/2000/01/rdf-schema#range': [
-                { '@id': 'http://www.w3.org/2001/XMLSchema#boolean' },
-              ],
-              'http://www.w3.org/2000/01/rdf-schema#label': [
-                { '@value': 'usedForRules' },
-              ],
-            },
-          ],
-          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
-          'http://www.w3.org/ns/hydra/core#required': [{ '@value': false }],
-          'http://www.w3.org/ns/hydra/core#title': [
-            { '@value': 'usedForRules' },
-          ],
-          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': false }],
-        },
-        {
-          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
-          'http://www.w3.org/ns/hydra/core#property': [
-            {
-              '@id': 'https://localhost/docs.jsonld#SourceField/system',
-              '@type': ['http://www.w3.org/1999/02/22-rdf-syntax-ns#Property'],
-              'http://www.w3.org/2000/01/rdf-schema#domain': [
-                { '@id': 'https://localhost/docs.jsonld#SourceField' },
-              ],
-              'http://www.w3.org/2000/01/rdf-schema#range': [
-                { '@id': 'http://www.w3.org/2001/XMLSchema#boolean' },
-              ],
-              'http://www.w3.org/2000/01/rdf-schema#label': [
-                { '@value': 'system' },
-              ],
-            },
-          ],
-          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
-          'http://www.w3.org/ns/hydra/core#required': [{ '@value': false }],
-          'http://www.w3.org/ns/hydra/core#title': [{ '@value': 'system' }],
-          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': false }],
-        },
-      ],
-      'http://www.w3.org/ns/hydra/core#title': [{ '@value': 'SourceField' }],
-      'http://www.w3.org/2000/01/rdf-schema#label': [
-        { '@value': 'SourceField' },
-      ],
-    },
-    {
       '@id': 'https://localhost/docs.jsonld#Index',
       '@type': ['http://www.w3.org/ns/hydra/core#Class'],
       'http://www.w3.org/ns/hydra/core#supportedOperation': [
@@ -1182,6 +563,522 @@ export const expandedDocs = {
       ],
     },
     {
+      '@id': 'https://localhost/docs.jsonld#SourceField',
+      '@type': ['http://www.w3.org/ns/hydra/core#Class'],
+      'http://www.w3.org/ns/hydra/core#supportedOperation': [
+        {
+          '@type': [
+            'http://www.w3.org/ns/hydra/core#Operation',
+            'http://schema.org/FindAction',
+          ],
+          'http://www.w3.org/ns/hydra/core#method': [{ '@value': 'GET' }],
+          'http://www.w3.org/ns/hydra/core#title': [
+            { '@value': 'Retrieves SourceField resource.' },
+          ],
+          'http://www.w3.org/2000/01/rdf-schema#label': [
+            { '@value': 'Retrieves SourceField resource.' },
+          ],
+          'http://www.w3.org/ns/hydra/core#returns': [
+            { '@id': 'https://localhost/docs.jsonld#SourceField' },
+          ],
+        },
+        {
+          '@type': [
+            'http://www.w3.org/ns/hydra/core#Operation',
+            'http://schema.org/ReplaceAction',
+          ],
+          'http://www.w3.org/ns/hydra/core#expects': [
+            { '@id': 'https://localhost/docs.jsonld#SourceField' },
+          ],
+          'http://www.w3.org/ns/hydra/core#method': [{ '@value': 'PUT' }],
+          'http://www.w3.org/ns/hydra/core#title': [
+            { '@value': 'Replaces the SourceField resource.' },
+          ],
+          'http://www.w3.org/2000/01/rdf-schema#label': [
+            { '@value': 'Replaces the SourceField resource.' },
+          ],
+          'http://www.w3.org/ns/hydra/core#returns': [
+            { '@id': 'https://localhost/docs.jsonld#SourceField' },
+          ],
+        },
+        {
+          '@type': ['http://www.w3.org/ns/hydra/core#Operation'],
+          'http://www.w3.org/ns/hydra/core#expects': [
+            { '@id': 'https://localhost/docs.jsonld#SourceField' },
+          ],
+          'http://www.w3.org/ns/hydra/core#method': [{ '@value': 'PATCH' }],
+          'http://www.w3.org/ns/hydra/core#title': [
+            { '@value': 'Updates the SourceField resource.' },
+          ],
+          'http://www.w3.org/2000/01/rdf-schema#label': [
+            { '@value': 'Updates the SourceField resource.' },
+          ],
+          'http://www.w3.org/ns/hydra/core#returns': [
+            { '@id': 'https://localhost/docs.jsonld#SourceField' },
+          ],
+        },
+        {
+          '@type': [
+            'http://www.w3.org/ns/hydra/core#Operation',
+            'http://schema.org/DeleteAction',
+          ],
+          'http://www.w3.org/ns/hydra/core#method': [{ '@value': 'DELETE' }],
+          'http://www.w3.org/ns/hydra/core#title': [
+            { '@value': 'Deletes the SourceField resource.' },
+          ],
+          'http://www.w3.org/2000/01/rdf-schema#label': [
+            { '@value': 'Deletes the SourceField resource.' },
+          ],
+          'http://www.w3.org/ns/hydra/core#returns': [
+            { '@id': 'http://www.w3.org/2002/07/owl#Nothing' },
+          ],
+        },
+      ],
+      'http://www.w3.org/ns/hydra/core#supportedProperty': [
+        {
+          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
+          'https://localhost/docs.jsonld#elasticsuite': [
+            {
+              'https://localhost/docs.jsonld#editable': [{ '@value': false }],
+              'https://localhost/docs.jsonld#position': [{ '@value': 10 }],
+              'https://localhost/docs.jsonld#visible': [{ '@value': true }],
+            },
+          ],
+          'http://www.w3.org/ns/hydra/core#property': [
+            {
+              '@id': 'https://localhost/docs.jsonld#SourceField/code',
+              '@type': ['http://www.w3.org/1999/02/22-rdf-syntax-ns#Property'],
+              'http://www.w3.org/2000/01/rdf-schema#domain': [
+                { '@id': 'https://localhost/docs.jsonld#SourceField' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#range': [
+                { '@id': 'http://www.w3.org/2001/XMLSchema#string' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#label': [
+                { '@value': 'Attribute code' },
+              ],
+            },
+          ],
+          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
+          'http://www.w3.org/ns/hydra/core#required': [{ '@value': true }],
+          'http://www.w3.org/ns/hydra/core#title': [{ '@value': 'code' }],
+          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': true }],
+        },
+        {
+          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
+          'https://localhost/docs.jsonld#elasticsuite': [
+            {
+              'https://localhost/docs.jsonld#editable': [{ '@value': false }],
+              'https://localhost/docs.jsonld#position': [{ '@value': 20 }],
+              'https://localhost/docs.jsonld#visible': [{ '@value': true }],
+            },
+          ],
+          'http://www.w3.org/ns/hydra/core#property': [
+            {
+              '@id': 'https://localhost/docs.jsonld#SourceField/defaultLabel',
+              '@type': ['http://www.w3.org/1999/02/22-rdf-syntax-ns#Property'],
+              'http://www.w3.org/2000/01/rdf-schema#domain': [
+                { '@id': 'https://localhost/docs.jsonld#SourceField' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#range': [
+                { '@id': 'http://www.w3.org/2001/XMLSchema#string' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#label': [
+                { '@value': 'Attribute label' },
+              ],
+            },
+          ],
+          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
+          'http://www.w3.org/ns/hydra/core#required': [{ '@value': false }],
+          'http://www.w3.org/ns/hydra/core#title': [
+            { '@value': 'defaultLabel' },
+          ],
+          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': true }],
+        },
+        {
+          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
+          'https://localhost/docs.jsonld#elasticsuite': [
+            {
+              'https://localhost/docs.jsonld#context': [
+                {
+                  'https://localhost/docs.jsonld#grid_2': [
+                    {
+                      'https://localhost/docs.jsonld#visible': [
+                        { '@value': false },
+                      ],
+                    },
+                  ],
+                },
+              ],
+              'https://localhost/docs.jsonld#editable': [{ '@value': false }],
+              'https://localhost/docs.jsonld#position': [{ '@value': 30 }],
+              'https://localhost/docs.jsonld#visible': [{ '@value': true }],
+            },
+          ],
+          'http://www.w3.org/ns/hydra/core#property': [
+            {
+              '@id': 'https://localhost/docs.jsonld#SourceField/type',
+              '@type': ['http://www.w3.org/1999/02/22-rdf-syntax-ns#Property'],
+              'http://www.w3.org/2000/01/rdf-schema#domain': [
+                { '@id': 'https://localhost/docs.jsonld#SourceField' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#range': [
+                { '@id': 'http://www.w3.org/2001/XMLSchema#string' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#label': [
+                { '@value': 'Attribute type' },
+              ],
+            },
+          ],
+          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
+          'http://www.w3.org/ns/hydra/core#required': [{ '@value': false }],
+          'http://www.w3.org/ns/hydra/core#title': [{ '@value': 'type' }],
+          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': true }],
+        },
+        {
+          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
+          'https://localhost/docs.jsonld#elasticsuite': [
+            {
+              'https://localhost/docs.jsonld#context': [
+                {
+                  'https://localhost/docs.jsonld#grid_2': [
+                    {
+                      'https://localhost/docs.jsonld#visible': [
+                        { '@value': false },
+                      ],
+                    },
+                  ],
+                },
+              ],
+              'https://localhost/docs.jsonld#editable': [{ '@value': true }],
+              'https://localhost/docs.jsonld#position': [{ '@value': 40 }],
+              'https://localhost/docs.jsonld#visible': [{ '@value': true }],
+            },
+          ],
+          'http://www.w3.org/ns/hydra/core#property': [
+            {
+              '@id': 'https://localhost/docs.jsonld#SourceField/isFilterable',
+              '@type': ['http://www.w3.org/1999/02/22-rdf-syntax-ns#Property'],
+              'http://www.w3.org/2000/01/rdf-schema#domain': [
+                { '@id': 'https://localhost/docs.jsonld#SourceField' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#range': [
+                { '@id': 'http://www.w3.org/2001/XMLSchema#boolean' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#label': [
+                { '@value': 'Filterable' },
+              ],
+            },
+          ],
+          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
+          'http://www.w3.org/ns/hydra/core#required': [{ '@value': false }],
+          'http://www.w3.org/ns/hydra/core#title': [
+            { '@value': 'isFilterable' },
+          ],
+          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': true }],
+        },
+        {
+          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
+          'https://localhost/docs.jsonld#elasticsuite': [
+            {
+              'https://localhost/docs.jsonld#context': [
+                {
+                  'https://localhost/docs.jsonld#grid_2': [
+                    {
+                      'https://localhost/docs.jsonld#visible': [
+                        { '@value': false },
+                      ],
+                    },
+                  ],
+                },
+              ],
+              'https://localhost/docs.jsonld#editable': [{ '@value': true }],
+              'https://localhost/docs.jsonld#position': [{ '@value': 50 }],
+              'https://localhost/docs.jsonld#visible': [{ '@value': true }],
+            },
+          ],
+          'http://www.w3.org/ns/hydra/core#property': [
+            {
+              '@id': 'https://localhost/docs.jsonld#SourceField/isSearchable',
+              '@type': ['http://www.w3.org/1999/02/22-rdf-syntax-ns#Property'],
+              'http://www.w3.org/2000/01/rdf-schema#domain': [
+                { '@id': 'https://localhost/docs.jsonld#SourceField' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#range': [
+                { '@id': 'http://www.w3.org/2001/XMLSchema#boolean' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#label': [
+                { '@value': 'Searchable' },
+              ],
+            },
+          ],
+          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
+          'http://www.w3.org/ns/hydra/core#required': [{ '@value': false }],
+          'http://www.w3.org/ns/hydra/core#title': [
+            { '@value': 'isSearchable' },
+          ],
+          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': true }],
+        },
+        {
+          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
+          'https://localhost/docs.jsonld#elasticsuite': [
+            {
+              'https://localhost/docs.jsonld#context': [
+                {
+                  'https://localhost/docs.jsonld#grid_2': [
+                    {
+                      'https://localhost/docs.jsonld#visible': [
+                        { '@value': false },
+                      ],
+                    },
+                  ],
+                },
+              ],
+              'https://localhost/docs.jsonld#editable': [{ '@value': true }],
+              'https://localhost/docs.jsonld#position': [{ '@value': 60 }],
+              'https://localhost/docs.jsonld#visible': [{ '@value': true }],
+            },
+          ],
+          'http://www.w3.org/ns/hydra/core#property': [
+            {
+              '@id': 'https://localhost/docs.jsonld#SourceField/isSortable',
+              '@type': ['http://www.w3.org/1999/02/22-rdf-syntax-ns#Property'],
+              'http://www.w3.org/2000/01/rdf-schema#domain': [
+                { '@id': 'https://localhost/docs.jsonld#SourceField' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#range': [
+                { '@id': 'http://www.w3.org/2001/XMLSchema#boolean' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#label': [
+                { '@value': 'Sortable' },
+              ],
+            },
+          ],
+          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
+          'http://www.w3.org/ns/hydra/core#required': [{ '@value': false }],
+          'http://www.w3.org/ns/hydra/core#title': [{ '@value': 'isSortable' }],
+          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': true }],
+        },
+        {
+          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
+          'https://localhost/docs.jsonld#elasticsuite': [
+            {
+              'https://localhost/docs.jsonld#context': [
+                {
+                  'https://localhost/docs.jsonld#grid_2': [
+                    {
+                      'https://localhost/docs.jsonld#visible': [
+                        { '@value': false },
+                      ],
+                    },
+                  ],
+                },
+              ],
+              'https://localhost/docs.jsonld#editable': [{ '@value': true }],
+              'https://localhost/docs.jsonld#position': [{ '@value': 70 }],
+              'https://localhost/docs.jsonld#visible': [{ '@value': true }],
+            },
+          ],
+          'http://www.w3.org/ns/hydra/core#property': [
+            {
+              '@id': 'https://localhost/docs.jsonld#SourceField/isUsedForRules',
+              '@type': ['http://www.w3.org/1999/02/22-rdf-syntax-ns#Property'],
+              'http://www.w3.org/2000/01/rdf-schema#domain': [
+                { '@id': 'https://localhost/docs.jsonld#SourceField' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#range': [
+                { '@id': 'http://www.w3.org/2001/XMLSchema#boolean' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#label': [
+                { '@value': 'Use in rule engine' },
+              ],
+            },
+          ],
+          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
+          'http://www.w3.org/ns/hydra/core#required': [{ '@value': false }],
+          'http://www.w3.org/ns/hydra/core#title': [
+            { '@value': 'isUsedForRules' },
+          ],
+          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': true }],
+        },
+        {
+          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
+          'https://localhost/docs.jsonld#elasticsuite': [
+            {
+              'https://localhost/docs.jsonld#context': [
+                {
+                  'https://localhost/docs.jsonld#grid_2': [
+                    {
+                      'https://localhost/docs.jsonld#visible': [
+                        { '@value': true },
+                      ],
+                    },
+                  ],
+                },
+              ],
+              'https://localhost/docs.jsonld#editable': [{ '@value': true }],
+              'https://localhost/docs.jsonld#position': [{ '@value': 80 }],
+              'https://localhost/docs.jsonld#visible': [{ '@value': false }],
+            },
+          ],
+          'http://www.w3.org/ns/hydra/core#property': [
+            {
+              '@id': 'https://localhost/docs.jsonld#SourceField/weight',
+              '@type': ['http://www.w3.org/1999/02/22-rdf-syntax-ns#Property'],
+              'http://www.w3.org/2000/01/rdf-schema#domain': [
+                { '@id': 'https://localhost/docs.jsonld#SourceField' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#range': [
+                { '@id': 'http://www.w3.org/2001/XMLSchema#integer' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#label': [
+                { '@value': 'Search weight' },
+              ],
+            },
+          ],
+          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
+          'http://www.w3.org/ns/hydra/core#required': [{ '@value': false }],
+          'http://www.w3.org/ns/hydra/core#title': [{ '@value': 'weight' }],
+          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': true }],
+        },
+        {
+          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
+          'https://localhost/docs.jsonld#elasticsuite': [
+            {
+              'https://localhost/docs.jsonld#context': [
+                {
+                  'https://localhost/docs.jsonld#grid_2': [
+                    {
+                      'https://localhost/docs.jsonld#visible': [
+                        { '@value': true },
+                      ],
+                    },
+                  ],
+                },
+              ],
+              'https://localhost/docs.jsonld#editable': [{ '@value': true }],
+              'https://localhost/docs.jsonld#position': [{ '@value': 90 }],
+              'https://localhost/docs.jsonld#visible': [{ '@value': false }],
+            },
+          ],
+          'http://www.w3.org/ns/hydra/core#property': [
+            {
+              '@id': 'https://localhost/docs.jsonld#SourceField/isSpellchecked',
+              '@type': ['http://www.w3.org/1999/02/22-rdf-syntax-ns#Property'],
+              'http://www.w3.org/2000/01/rdf-schema#domain': [
+                { '@id': 'https://localhost/docs.jsonld#SourceField' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#range': [
+                { '@id': 'http://www.w3.org/2001/XMLSchema#boolean' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#label': [
+                { '@value': 'Used in spellcheck' },
+              ],
+            },
+          ],
+          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
+          'http://www.w3.org/ns/hydra/core#required': [{ '@value': false }],
+          'http://www.w3.org/ns/hydra/core#title': [
+            { '@value': 'isSpellchecked' },
+          ],
+          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': true }],
+        },
+        {
+          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
+          'http://www.w3.org/ns/hydra/core#property': [
+            {
+              '@id': 'https://localhost/docs.jsonld#SourceField/isSystem',
+              '@type': ['http://www.w3.org/1999/02/22-rdf-syntax-ns#Property'],
+              'http://www.w3.org/2000/01/rdf-schema#domain': [
+                { '@id': 'https://localhost/docs.jsonld#SourceField' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#range': [
+                { '@id': 'http://www.w3.org/2001/XMLSchema#boolean' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#label': [
+                { '@value': 'isSystem' },
+              ],
+            },
+          ],
+          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
+          'http://www.w3.org/ns/hydra/core#required': [{ '@value': false }],
+          'http://www.w3.org/ns/hydra/core#title': [{ '@value': 'isSystem' }],
+          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': true }],
+        },
+        {
+          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
+          'http://www.w3.org/ns/hydra/core#property': [
+            {
+              '@id': 'https://localhost/docs.jsonld#SourceField/metadata',
+              '@type': ['http://www.w3.org/ns/hydra/core#Link'],
+              'http://www.w3.org/2000/01/rdf-schema#domain': [
+                { '@id': 'https://localhost/docs.jsonld#SourceField' },
+              ],
+              'http://www.w3.org/2002/07/owl#maxCardinality': [{ '@value': 1 }],
+              'http://www.w3.org/2000/01/rdf-schema#range': [
+                { '@id': 'https://localhost/docs.jsonld#Metadata' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#label': [
+                { '@value': 'metadata' },
+              ],
+            },
+          ],
+          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
+          'http://www.w3.org/ns/hydra/core#required': [{ '@value': true }],
+          'http://www.w3.org/ns/hydra/core#title': [{ '@value': 'metadata' }],
+          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': true }],
+        },
+        {
+          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
+          'http://www.w3.org/ns/hydra/core#property': [
+            {
+              '@id': 'https://localhost/docs.jsonld#SourceField/labels',
+              '@type': ['http://www.w3.org/ns/hydra/core#Link'],
+              'http://www.w3.org/2000/01/rdf-schema#domain': [
+                { '@id': 'https://localhost/docs.jsonld#SourceField' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#range': [
+                { '@id': 'https://localhost/docs.jsonld#SourceFieldLabel' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#label': [
+                { '@value': 'labels' },
+              ],
+            },
+          ],
+          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
+          'http://www.w3.org/ns/hydra/core#required': [{ '@value': false }],
+          'http://www.w3.org/ns/hydra/core#title': [{ '@value': 'labels' }],
+          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': true }],
+        },
+        {
+          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
+          'http://www.w3.org/ns/hydra/core#property': [
+            {
+              '@id': 'https://localhost/docs.jsonld#SourceField/options',
+              '@type': ['http://www.w3.org/ns/hydra/core#Link'],
+              'http://www.w3.org/2000/01/rdf-schema#domain': [
+                { '@id': 'https://localhost/docs.jsonld#SourceField' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#range': [
+                { '@id': 'https://localhost/docs.jsonld#SourceFieldOption' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#label': [
+                { '@value': 'options' },
+              ],
+            },
+          ],
+          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
+          'http://www.w3.org/ns/hydra/core#required': [{ '@value': false }],
+          'http://www.w3.org/ns/hydra/core#title': [{ '@value': 'options' }],
+          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': true }],
+        },
+      ],
+      'http://www.w3.org/ns/hydra/core#title': [{ '@value': 'SourceField' }],
+      'http://www.w3.org/2000/01/rdf-schema#label': [
+        { '@value': 'SourceField' },
+      ],
+    },
+    {
       '@id': 'https://localhost/docs.jsonld#SourceFieldOptionLabel',
       '@type': ['http://www.w3.org/ns/hydra/core#Class'],
       'http://www.w3.org/ns/hydra/core#supportedOperation': [
@@ -1340,6 +1237,129 @@ export const expandedDocs = {
       'http://www.w3.org/2000/01/rdf-schema#label': [
         { '@value': 'SourceFieldOptionLabel' },
       ],
+    },
+    {
+      '@id': 'https://localhost/docs.jsonld#Metadata',
+      '@type': ['http://www.w3.org/ns/hydra/core#Class'],
+      'http://www.w3.org/ns/hydra/core#supportedOperation': [
+        {
+          '@type': [
+            'http://www.w3.org/ns/hydra/core#Operation',
+            'http://schema.org/FindAction',
+          ],
+          'http://www.w3.org/ns/hydra/core#method': [{ '@value': 'GET' }],
+          'http://www.w3.org/ns/hydra/core#title': [
+            { '@value': 'Retrieves Metadata resource.' },
+          ],
+          'http://www.w3.org/2000/01/rdf-schema#label': [
+            { '@value': 'Retrieves Metadata resource.' },
+          ],
+          'http://www.w3.org/ns/hydra/core#returns': [
+            { '@id': 'https://localhost/docs.jsonld#Metadata' },
+          ],
+        },
+        {
+          '@type': [
+            'http://www.w3.org/ns/hydra/core#Operation',
+            'http://schema.org/ReplaceAction',
+          ],
+          'http://www.w3.org/ns/hydra/core#expects': [
+            { '@id': 'https://localhost/docs.jsonld#Metadata' },
+          ],
+          'http://www.w3.org/ns/hydra/core#method': [{ '@value': 'PUT' }],
+          'http://www.w3.org/ns/hydra/core#title': [
+            { '@value': 'Replaces the Metadata resource.' },
+          ],
+          'http://www.w3.org/2000/01/rdf-schema#label': [
+            { '@value': 'Replaces the Metadata resource.' },
+          ],
+          'http://www.w3.org/ns/hydra/core#returns': [
+            { '@id': 'https://localhost/docs.jsonld#Metadata' },
+          ],
+        },
+        {
+          '@type': ['http://www.w3.org/ns/hydra/core#Operation'],
+          'http://www.w3.org/ns/hydra/core#expects': [
+            { '@id': 'https://localhost/docs.jsonld#Metadata' },
+          ],
+          'http://www.w3.org/ns/hydra/core#method': [{ '@value': 'PATCH' }],
+          'http://www.w3.org/ns/hydra/core#title': [
+            { '@value': 'Updates the Metadata resource.' },
+          ],
+          'http://www.w3.org/2000/01/rdf-schema#label': [
+            { '@value': 'Updates the Metadata resource.' },
+          ],
+          'http://www.w3.org/ns/hydra/core#returns': [
+            { '@id': 'https://localhost/docs.jsonld#Metadata' },
+          ],
+        },
+        {
+          '@type': [
+            'http://www.w3.org/ns/hydra/core#Operation',
+            'http://schema.org/DeleteAction',
+          ],
+          'http://www.w3.org/ns/hydra/core#method': [{ '@value': 'DELETE' }],
+          'http://www.w3.org/ns/hydra/core#title': [
+            { '@value': 'Deletes the Metadata resource.' },
+          ],
+          'http://www.w3.org/2000/01/rdf-schema#label': [
+            { '@value': 'Deletes the Metadata resource.' },
+          ],
+          'http://www.w3.org/ns/hydra/core#returns': [
+            { '@id': 'http://www.w3.org/2002/07/owl#Nothing' },
+          ],
+        },
+      ],
+      'http://www.w3.org/ns/hydra/core#supportedProperty': [
+        {
+          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
+          'http://www.w3.org/ns/hydra/core#property': [
+            {
+              '@id': 'https://localhost/docs.jsonld#Metadata/entity',
+              '@type': ['http://www.w3.org/1999/02/22-rdf-syntax-ns#Property'],
+              'http://www.w3.org/2000/01/rdf-schema#domain': [
+                { '@id': 'https://localhost/docs.jsonld#Metadata' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#range': [
+                { '@id': 'http://www.w3.org/2001/XMLSchema#string' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#label': [
+                { '@value': 'entity' },
+              ],
+            },
+          ],
+          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
+          'http://www.w3.org/ns/hydra/core#required': [{ '@value': true }],
+          'http://www.w3.org/ns/hydra/core#title': [{ '@value': 'entity' }],
+          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': true }],
+        },
+        {
+          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
+          'http://www.w3.org/ns/hydra/core#property': [
+            {
+              '@id': 'https://localhost/docs.jsonld#Metadata/sourceFields',
+              '@type': ['http://www.w3.org/ns/hydra/core#Link'],
+              'http://www.w3.org/2000/01/rdf-schema#domain': [
+                { '@id': 'https://localhost/docs.jsonld#Metadata' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#range': [
+                { '@id': 'https://localhost/docs.jsonld#SourceField' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#label': [
+                { '@value': 'sourceFields' },
+              ],
+            },
+          ],
+          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
+          'http://www.w3.org/ns/hydra/core#required': [{ '@value': false }],
+          'http://www.w3.org/ns/hydra/core#title': [
+            { '@value': 'sourceFields' },
+          ],
+          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': true }],
+        },
+      ],
+      'http://www.w3.org/ns/hydra/core#title': [{ '@value': 'Metadata' }],
+      'http://www.w3.org/2000/01/rdf-schema#label': [{ '@value': 'Metadata' }],
     },
     {
       '@id': 'https://localhost/docs.jsonld#SourceFieldLabel',
@@ -2382,22 +2402,6 @@ export const expandedDocs = {
         {
           '@type': [
             'http://www.w3.org/ns/hydra/core#Operation',
-            'http://schema.org/DeleteAction',
-          ],
-          'http://www.w3.org/ns/hydra/core#method': [{ '@value': 'DELETE' }],
-          'http://www.w3.org/ns/hydra/core#title': [
-            { '@value': 'Deletes the Category resource.' },
-          ],
-          'http://www.w3.org/2000/01/rdf-schema#label': [
-            { '@value': 'Deletes the Category resource.' },
-          ],
-          'http://www.w3.org/ns/hydra/core#returns': [
-            { '@id': 'http://www.w3.org/2002/07/owl#Nothing' },
-          ],
-        },
-        {
-          '@type': [
-            'http://www.w3.org/ns/hydra/core#Operation',
             'http://schema.org/ReplaceAction',
           ],
           'http://www.w3.org/ns/hydra/core#expects': [
@@ -2430,16 +2434,357 @@ export const expandedDocs = {
             { '@id': 'https://localhost/docs.jsonld#Category' },
           ],
         },
+        {
+          '@type': [
+            'http://www.w3.org/ns/hydra/core#Operation',
+            'http://schema.org/DeleteAction',
+          ],
+          'http://www.w3.org/ns/hydra/core#method': [{ '@value': 'DELETE' }],
+          'http://www.w3.org/ns/hydra/core#title': [
+            { '@value': 'Deletes the Category resource.' },
+          ],
+          'http://www.w3.org/2000/01/rdf-schema#label': [
+            { '@value': 'Deletes the Category resource.' },
+          ],
+          'http://www.w3.org/ns/hydra/core#returns': [
+            { '@id': 'http://www.w3.org/2002/07/owl#Nothing' },
+          ],
+        },
       ],
       'http://www.w3.org/ns/hydra/core#supportedProperty': [
         {
           '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
           'http://www.w3.org/ns/hydra/core#property': [
             {
-              '@id': 'https://localhost/docs.jsonld#Category/name',
+              '@id': 'https://localhost/docs.jsonld#Category/id',
               '@type': ['http://www.w3.org/1999/02/22-rdf-syntax-ns#Property'],
               'http://www.w3.org/2000/01/rdf-schema#domain': [
                 { '@id': 'https://localhost/docs.jsonld#Category' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#range': [
+                { '@id': 'http://www.w3.org/2001/XMLSchema#string' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#label': [
+                { '@value': 'id' },
+              ],
+            },
+          ],
+          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
+          'http://www.w3.org/ns/hydra/core#required': [{ '@value': false }],
+          'http://www.w3.org/ns/hydra/core#title': [{ '@value': 'id' }],
+          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': true }],
+        },
+        {
+          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
+          'http://www.w3.org/ns/hydra/core#property': [
+            {
+              '@id': 'https://localhost/docs.jsonld#Category/parentId',
+              '@type': ['http://www.w3.org/1999/02/22-rdf-syntax-ns#Property'],
+              'http://www.w3.org/2000/01/rdf-schema#domain': [
+                { '@id': 'https://localhost/docs.jsonld#Category' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#range': [
+                { '@id': 'http://www.w3.org/2001/XMLSchema#string' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#label': [
+                { '@value': 'parentId' },
+              ],
+            },
+          ],
+          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
+          'http://www.w3.org/ns/hydra/core#required': [{ '@value': false }],
+          'http://www.w3.org/ns/hydra/core#title': [{ '@value': 'parentId' }],
+          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': true }],
+        },
+        {
+          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
+          'http://www.w3.org/ns/hydra/core#property': [
+            {
+              '@id': 'https://localhost/docs.jsonld#Category/level',
+              '@type': ['http://www.w3.org/1999/02/22-rdf-syntax-ns#Property'],
+              'http://www.w3.org/2000/01/rdf-schema#domain': [
+                { '@id': 'https://localhost/docs.jsonld#Category' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#range': [
+                { '@id': 'http://www.w3.org/2001/XMLSchema#integer' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#label': [
+                { '@value': 'level' },
+              ],
+            },
+          ],
+          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
+          'http://www.w3.org/ns/hydra/core#required': [{ '@value': false }],
+          'http://www.w3.org/ns/hydra/core#title': [{ '@value': 'level' }],
+          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': true }],
+        },
+        {
+          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
+          'http://www.w3.org/ns/hydra/core#property': [
+            {
+              '@id': 'https://localhost/docs.jsonld#Category/path',
+              '@type': ['http://www.w3.org/1999/02/22-rdf-syntax-ns#Property'],
+              'http://www.w3.org/2000/01/rdf-schema#domain': [
+                { '@id': 'https://localhost/docs.jsonld#Category' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#range': [
+                { '@id': 'http://www.w3.org/2001/XMLSchema#string' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#label': [
+                { '@value': 'path' },
+              ],
+            },
+          ],
+          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
+          'http://www.w3.org/ns/hydra/core#required': [{ '@value': false }],
+          'http://www.w3.org/ns/hydra/core#title': [{ '@value': 'path' }],
+          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': true }],
+        },
+      ],
+      'http://www.w3.org/ns/hydra/core#title': [{ '@value': 'Category' }],
+      'http://www.w3.org/2000/01/rdf-schema#label': [{ '@value': 'Category' }],
+    },
+    {
+      '@id': 'https://localhost/docs.jsonld#CategorySortingOption',
+      '@type': ['http://www.w3.org/ns/hydra/core#Class'],
+      'http://www.w3.org/ns/hydra/core#supportedOperation': [],
+      'http://www.w3.org/ns/hydra/core#supportedProperty': [
+        {
+          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
+          'http://www.w3.org/ns/hydra/core#property': [
+            {
+              '@id':
+                'https://localhost/docs.jsonld#CategorySortingOption/label',
+              '@type': ['http://www.w3.org/1999/02/22-rdf-syntax-ns#Property'],
+              'http://www.w3.org/2000/01/rdf-schema#domain': [
+                {
+                  '@id': 'https://localhost/docs.jsonld#CategorySortingOption',
+                },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#range': [
+                { '@id': 'http://www.w3.org/2001/XMLSchema#string' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#label': [
+                { '@value': 'label' },
+              ],
+            },
+          ],
+          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
+          'http://www.w3.org/ns/hydra/core#required': [{ '@value': false }],
+          'http://www.w3.org/ns/hydra/core#title': [{ '@value': 'label' }],
+          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': true }],
+        },
+        {
+          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
+          'http://www.w3.org/ns/hydra/core#property': [
+            {
+              '@id': 'https://localhost/docs.jsonld#CategorySortingOption/code',
+              '@type': ['http://www.w3.org/1999/02/22-rdf-syntax-ns#Property'],
+              'http://www.w3.org/2000/01/rdf-schema#domain': [
+                {
+                  '@id': 'https://localhost/docs.jsonld#CategorySortingOption',
+                },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#range': [
+                { '@id': 'http://www.w3.org/2001/XMLSchema#string' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#label': [
+                { '@value': 'code' },
+              ],
+            },
+          ],
+          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
+          'http://www.w3.org/ns/hydra/core#required': [{ '@value': false }],
+          'http://www.w3.org/ns/hydra/core#title': [{ '@value': 'code' }],
+          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': true }],
+        },
+      ],
+      'http://www.w3.org/ns/hydra/core#title': [
+        { '@value': 'CategorySortingOption' },
+      ],
+      'http://www.w3.org/2000/01/rdf-schema#label': [
+        { '@value': 'CategorySortingOption' },
+      ],
+    },
+    {
+      '@id': 'https://localhost/docs.jsonld#CategoryConfiguration',
+      '@type': ['http://www.w3.org/ns/hydra/core#Class'],
+      'http://www.w3.org/ns/hydra/core#supportedOperation': [
+        {
+          '@type': [
+            'http://www.w3.org/ns/hydra/core#Operation',
+            'http://schema.org/FindAction',
+          ],
+          'http://www.w3.org/ns/hydra/core#method': [{ '@value': 'GET' }],
+          'http://www.w3.org/ns/hydra/core#title': [
+            { '@value': 'Retrieves CategoryConfiguration resource.' },
+          ],
+          'http://www.w3.org/2000/01/rdf-schema#label': [
+            { '@value': 'Retrieves CategoryConfiguration resource.' },
+          ],
+          'http://www.w3.org/ns/hydra/core#returns': [
+            { '@id': 'https://localhost/docs.jsonld#CategoryConfiguration' },
+          ],
+        },
+        {
+          '@type': [
+            'http://www.w3.org/ns/hydra/core#Operation',
+            'http://schema.org/FindAction',
+          ],
+          'http://www.w3.org/ns/hydra/core#method': [{ '@value': 'GET' }],
+          'http://www.w3.org/ns/hydra/core#title': [
+            { '@value': 'Retrieves CategoryConfiguration resource.' },
+          ],
+          'http://www.w3.org/2000/01/rdf-schema#label': [
+            { '@value': 'Retrieves CategoryConfiguration resource.' },
+          ],
+          'http://www.w3.org/ns/hydra/core#returns': [
+            { '@id': 'https://localhost/docs.jsonld#CategoryConfiguration' },
+          ],
+        },
+        {
+          '@type': [
+            'http://www.w3.org/ns/hydra/core#Operation',
+            'http://schema.org/ReplaceAction',
+          ],
+          'http://www.w3.org/ns/hydra/core#expects': [
+            { '@id': 'https://localhost/docs.jsonld#CategoryConfiguration' },
+          ],
+          'http://www.w3.org/ns/hydra/core#method': [{ '@value': 'PUT' }],
+          'http://www.w3.org/ns/hydra/core#title': [
+            { '@value': 'Replaces the CategoryConfiguration resource.' },
+          ],
+          'http://www.w3.org/2000/01/rdf-schema#label': [
+            { '@value': 'Replaces the CategoryConfiguration resource.' },
+          ],
+          'http://www.w3.org/ns/hydra/core#returns': [
+            { '@id': 'https://localhost/docs.jsonld#CategoryConfiguration' },
+          ],
+        },
+        {
+          '@type': ['http://www.w3.org/ns/hydra/core#Operation'],
+          'http://www.w3.org/ns/hydra/core#expects': [
+            { '@id': 'https://localhost/docs.jsonld#CategoryConfiguration' },
+          ],
+          'http://www.w3.org/ns/hydra/core#method': [{ '@value': 'PATCH' }],
+          'http://www.w3.org/ns/hydra/core#title': [
+            { '@value': 'Updates the CategoryConfiguration resource.' },
+          ],
+          'http://www.w3.org/2000/01/rdf-schema#label': [
+            { '@value': 'Updates the CategoryConfiguration resource.' },
+          ],
+          'http://www.w3.org/ns/hydra/core#returns': [
+            { '@id': 'https://localhost/docs.jsonld#CategoryConfiguration' },
+          ],
+        },
+        {
+          '@type': [
+            'http://www.w3.org/ns/hydra/core#Operation',
+            'http://schema.org/DeleteAction',
+          ],
+          'http://www.w3.org/ns/hydra/core#method': [{ '@value': 'DELETE' }],
+          'http://www.w3.org/ns/hydra/core#title': [
+            { '@value': 'Deletes the CategoryConfiguration resource.' },
+          ],
+          'http://www.w3.org/2000/01/rdf-schema#label': [
+            { '@value': 'Deletes the CategoryConfiguration resource.' },
+          ],
+          'http://www.w3.org/ns/hydra/core#returns': [
+            { '@id': 'http://www.w3.org/2002/07/owl#Nothing' },
+          ],
+        },
+      ],
+      'http://www.w3.org/ns/hydra/core#supportedProperty': [
+        {
+          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
+          'http://www.w3.org/ns/hydra/core#property': [
+            {
+              '@id':
+                'https://localhost/docs.jsonld#CategoryConfiguration/category',
+              '@type': ['http://www.w3.org/ns/hydra/core#Link'],
+              'http://www.w3.org/2000/01/rdf-schema#domain': [
+                {
+                  '@id': 'https://localhost/docs.jsonld#CategoryConfiguration',
+                },
+              ],
+              'http://www.w3.org/2002/07/owl#maxCardinality': [{ '@value': 1 }],
+              'http://www.w3.org/2000/01/rdf-schema#range': [
+                { '@id': 'https://localhost/docs.jsonld#Category' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#label': [
+                { '@value': 'category' },
+              ],
+            },
+          ],
+          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
+          'http://www.w3.org/ns/hydra/core#required': [{ '@value': false }],
+          'http://www.w3.org/ns/hydra/core#title': [{ '@value': 'category' }],
+          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': true }],
+        },
+        {
+          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
+          'http://www.w3.org/ns/hydra/core#property': [
+            {
+              '@id':
+                'https://localhost/docs.jsonld#CategoryConfiguration/catalog',
+              '@type': ['http://www.w3.org/ns/hydra/core#Link'],
+              'http://www.w3.org/2000/01/rdf-schema#domain': [
+                {
+                  '@id': 'https://localhost/docs.jsonld#CategoryConfiguration',
+                },
+              ],
+              'http://www.w3.org/2002/07/owl#maxCardinality': [{ '@value': 1 }],
+              'http://www.w3.org/2000/01/rdf-schema#range': [
+                { '@id': 'https://localhost/docs.jsonld#Catalog' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#label': [
+                { '@value': 'catalog' },
+              ],
+            },
+          ],
+          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
+          'http://www.w3.org/ns/hydra/core#required': [{ '@value': false }],
+          'http://www.w3.org/ns/hydra/core#title': [{ '@value': 'catalog' }],
+          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': true }],
+        },
+        {
+          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
+          'http://www.w3.org/ns/hydra/core#property': [
+            {
+              '@id':
+                'https://localhost/docs.jsonld#CategoryConfiguration/localizedCatalog',
+              '@type': ['http://www.w3.org/ns/hydra/core#Link'],
+              'http://www.w3.org/2000/01/rdf-schema#domain': [
+                {
+                  '@id': 'https://localhost/docs.jsonld#CategoryConfiguration',
+                },
+              ],
+              'http://www.w3.org/2002/07/owl#maxCardinality': [{ '@value': 1 }],
+              'http://www.w3.org/2000/01/rdf-schema#range': [
+                { '@id': 'https://localhost/docs.jsonld#LocalizedCatalog' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#label': [
+                { '@value': 'localizedCatalog' },
+              ],
+            },
+          ],
+          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
+          'http://www.w3.org/ns/hydra/core#required': [{ '@value': false }],
+          'http://www.w3.org/ns/hydra/core#title': [
+            { '@value': 'localizedCatalog' },
+          ],
+          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': true }],
+        },
+        {
+          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
+          'http://www.w3.org/ns/hydra/core#property': [
+            {
+              '@id': 'https://localhost/docs.jsonld#CategoryConfiguration/name',
+              '@type': ['http://www.w3.org/1999/02/22-rdf-syntax-ns#Property'],
+              'http://www.w3.org/2000/01/rdf-schema#domain': [
+                {
+                  '@id': 'https://localhost/docs.jsonld#CategoryConfiguration',
+                },
               ],
               'http://www.w3.org/2000/01/rdf-schema#range': [
                 { '@id': 'http://www.w3.org/2001/XMLSchema#string' },
@@ -2454,9 +2799,92 @@ export const expandedDocs = {
           'http://www.w3.org/ns/hydra/core#title': [{ '@value': 'name' }],
           'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': true }],
         },
+        {
+          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
+          'http://www.w3.org/ns/hydra/core#property': [
+            {
+              '@id':
+                'https://localhost/docs.jsonld#CategoryConfiguration/isVirtual',
+              '@type': ['http://www.w3.org/1999/02/22-rdf-syntax-ns#Property'],
+              'http://www.w3.org/2000/01/rdf-schema#domain': [
+                {
+                  '@id': 'https://localhost/docs.jsonld#CategoryConfiguration',
+                },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#range': [
+                { '@id': 'http://www.w3.org/2001/XMLSchema#boolean' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#label': [
+                { '@value': 'isVirtual' },
+              ],
+            },
+          ],
+          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
+          'http://www.w3.org/ns/hydra/core#required': [{ '@value': false }],
+          'http://www.w3.org/ns/hydra/core#title': [{ '@value': 'isVirtual' }],
+          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': true }],
+        },
+        {
+          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
+          'http://www.w3.org/ns/hydra/core#property': [
+            {
+              '@id':
+                'https://localhost/docs.jsonld#CategoryConfiguration/useNameInProductSearch',
+              '@type': ['http://www.w3.org/1999/02/22-rdf-syntax-ns#Property'],
+              'http://www.w3.org/2000/01/rdf-schema#domain': [
+                {
+                  '@id': 'https://localhost/docs.jsonld#CategoryConfiguration',
+                },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#range': [
+                { '@id': 'http://www.w3.org/2001/XMLSchema#boolean' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#label': [
+                { '@value': 'useNameInProductSearch' },
+              ],
+            },
+          ],
+          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
+          'http://www.w3.org/ns/hydra/core#required': [{ '@value': false }],
+          'http://www.w3.org/ns/hydra/core#title': [
+            { '@value': 'useNameInProductSearch' },
+          ],
+          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': true }],
+        },
+        {
+          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
+          'http://www.w3.org/ns/hydra/core#property': [
+            {
+              '@id':
+                'https://localhost/docs.jsonld#CategoryConfiguration/defaultSorting',
+              '@type': ['http://www.w3.org/1999/02/22-rdf-syntax-ns#Property'],
+              'http://www.w3.org/2000/01/rdf-schema#domain': [
+                {
+                  '@id': 'https://localhost/docs.jsonld#CategoryConfiguration',
+                },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#range': [
+                { '@id': 'http://www.w3.org/2001/XMLSchema#string' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#label': [
+                { '@value': 'defaultSorting' },
+              ],
+            },
+          ],
+          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
+          'http://www.w3.org/ns/hydra/core#required': [{ '@value': false }],
+          'http://www.w3.org/ns/hydra/core#title': [
+            { '@value': 'defaultSorting' },
+          ],
+          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': true }],
+        },
       ],
-      'http://www.w3.org/ns/hydra/core#title': [{ '@value': 'Category' }],
-      'http://www.w3.org/2000/01/rdf-schema#label': [{ '@value': 'Category' }],
+      'http://www.w3.org/ns/hydra/core#title': [
+        { '@value': 'CategoryConfiguration' },
+      ],
+      'http://www.w3.org/2000/01/rdf-schema#label': [
+        { '@value': 'CategoryConfiguration' },
+      ],
     },
     {
       '@id': 'https://localhost/docs.jsonld#Product',
@@ -3109,172 +3537,6 @@ export const expandedDocs = {
           '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
           'http://www.w3.org/ns/hydra/core#property': [
             {
-              '@id': 'https://localhost/docs.jsonld#Entrypoint/metadata',
-              '@type': ['http://www.w3.org/ns/hydra/core#Link'],
-              'http://www.w3.org/2000/01/rdf-schema#domain': [
-                { '@id': 'https://localhost/docs.jsonld#Entrypoint' },
-              ],
-              'http://www.w3.org/ns/hydra/core#supportedOperation': [
-                {
-                  '@type': [
-                    'http://www.w3.org/ns/hydra/core#Operation',
-                    'http://schema.org/FindAction',
-                  ],
-                  'http://www.w3.org/ns/hydra/core#method': [
-                    { '@value': 'GET' },
-                  ],
-                  'http://www.w3.org/ns/hydra/core#title': [
-                    {
-                      '@value':
-                        'Retrieves the collection of Metadata resources.',
-                    },
-                  ],
-                  'http://www.w3.org/2000/01/rdf-schema#label': [
-                    {
-                      '@value':
-                        'Retrieves the collection of Metadata resources.',
-                    },
-                  ],
-                  'http://www.w3.org/ns/hydra/core#returns': [
-                    { '@id': 'http://www.w3.org/ns/hydra/core#Collection' },
-                  ],
-                },
-                {
-                  '@type': [
-                    'http://www.w3.org/ns/hydra/core#Operation',
-                    'http://schema.org/CreateAction',
-                  ],
-                  'http://www.w3.org/ns/hydra/core#expects': [
-                    { '@id': 'https://localhost/docs.jsonld#Metadata' },
-                  ],
-                  'http://www.w3.org/ns/hydra/core#method': [
-                    { '@value': 'POST' },
-                  ],
-                  'http://www.w3.org/ns/hydra/core#title': [
-                    { '@value': 'Creates a Metadata resource.' },
-                  ],
-                  'http://www.w3.org/2000/01/rdf-schema#label': [
-                    { '@value': 'Creates a Metadata resource.' },
-                  ],
-                  'http://www.w3.org/ns/hydra/core#returns': [
-                    { '@id': 'https://localhost/docs.jsonld#Metadata' },
-                  ],
-                },
-              ],
-              'http://www.w3.org/2000/01/rdf-schema#label': [
-                { '@value': 'The collection of Metadata resources' },
-              ],
-              'http://www.w3.org/2000/01/rdf-schema#range': [
-                { '@id': 'http://www.w3.org/ns/hydra/core#Collection' },
-                {
-                  'http://www.w3.org/2002/07/owl#equivalentClass': [
-                    {
-                      'http://www.w3.org/2002/07/owl#allValuesFrom': [
-                        { '@id': 'https://localhost/docs.jsonld#Metadata' },
-                      ],
-                      'http://www.w3.org/2002/07/owl#onProperty': [
-                        { '@id': 'http://www.w3.org/ns/hydra/core#member' },
-                      ],
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
-          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
-          'http://www.w3.org/ns/hydra/core#title': [
-            { '@value': 'The collection of Metadata resources' },
-          ],
-          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': false }],
-        },
-        {
-          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
-          'http://www.w3.org/ns/hydra/core#property': [
-            {
-              '@id': 'https://localhost/docs.jsonld#Entrypoint/sourceField',
-              '@type': ['http://www.w3.org/ns/hydra/core#Link'],
-              'http://www.w3.org/2000/01/rdf-schema#domain': [
-                { '@id': 'https://localhost/docs.jsonld#Entrypoint' },
-              ],
-              'http://www.w3.org/ns/hydra/core#supportedOperation': [
-                {
-                  '@type': [
-                    'http://www.w3.org/ns/hydra/core#Operation',
-                    'http://schema.org/FindAction',
-                  ],
-                  'http://www.w3.org/ns/hydra/core#method': [
-                    { '@value': 'GET' },
-                  ],
-                  'http://www.w3.org/ns/hydra/core#title': [
-                    {
-                      '@value':
-                        'Retrieves the collection of SourceField resources.',
-                    },
-                  ],
-                  'http://www.w3.org/2000/01/rdf-schema#label': [
-                    {
-                      '@value':
-                        'Retrieves the collection of SourceField resources.',
-                    },
-                  ],
-                  'http://www.w3.org/ns/hydra/core#returns': [
-                    { '@id': 'http://www.w3.org/ns/hydra/core#Collection' },
-                  ],
-                },
-                {
-                  '@type': [
-                    'http://www.w3.org/ns/hydra/core#Operation',
-                    'http://schema.org/CreateAction',
-                  ],
-                  'http://www.w3.org/ns/hydra/core#expects': [
-                    { '@id': 'https://localhost/docs.jsonld#SourceField' },
-                  ],
-                  'http://www.w3.org/ns/hydra/core#method': [
-                    { '@value': 'POST' },
-                  ],
-                  'http://www.w3.org/ns/hydra/core#title': [
-                    { '@value': 'Creates a SourceField resource.' },
-                  ],
-                  'http://www.w3.org/2000/01/rdf-schema#label': [
-                    { '@value': 'Creates a SourceField resource.' },
-                  ],
-                  'http://www.w3.org/ns/hydra/core#returns': [
-                    { '@id': 'https://localhost/docs.jsonld#SourceField' },
-                  ],
-                },
-              ],
-              'http://www.w3.org/2000/01/rdf-schema#label': [
-                { '@value': 'The collection of SourceField resources' },
-              ],
-              'http://www.w3.org/2000/01/rdf-schema#range': [
-                { '@id': 'http://www.w3.org/ns/hydra/core#Collection' },
-                {
-                  'http://www.w3.org/2002/07/owl#equivalentClass': [
-                    {
-                      'http://www.w3.org/2002/07/owl#allValuesFrom': [
-                        {
-                          '@id': 'https://localhost/docs.jsonld#SourceField',
-                        },
-                      ],
-                      'http://www.w3.org/2002/07/owl#onProperty': [
-                        { '@id': 'http://www.w3.org/ns/hydra/core#member' },
-                      ],
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
-          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
-          'http://www.w3.org/ns/hydra/core#title': [
-            { '@value': 'The collection of SourceField resources' },
-          ],
-          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': false }],
-        },
-        {
-          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
-          'http://www.w3.org/ns/hydra/core#property': [
-            {
               '@id': 'https://localhost/docs.jsonld#Entrypoint/index',
               '@type': ['http://www.w3.org/ns/hydra/core#Link'],
               'http://www.w3.org/2000/01/rdf-schema#domain': [
@@ -3529,6 +3791,90 @@ export const expandedDocs = {
           '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
           'http://www.w3.org/ns/hydra/core#property': [
             {
+              '@id': 'https://localhost/docs.jsonld#Entrypoint/sourceField',
+              '@type': ['http://www.w3.org/ns/hydra/core#Link'],
+              'http://www.w3.org/2000/01/rdf-schema#domain': [
+                { '@id': 'https://localhost/docs.jsonld#Entrypoint' },
+              ],
+              'http://www.w3.org/ns/hydra/core#supportedOperation': [
+                {
+                  '@type': [
+                    'http://www.w3.org/ns/hydra/core#Operation',
+                    'http://schema.org/FindAction',
+                  ],
+                  'http://www.w3.org/ns/hydra/core#method': [
+                    { '@value': 'GET' },
+                  ],
+                  'http://www.w3.org/ns/hydra/core#title': [
+                    {
+                      '@value':
+                        'Retrieves the collection of SourceField resources.',
+                    },
+                  ],
+                  'http://www.w3.org/2000/01/rdf-schema#label': [
+                    {
+                      '@value':
+                        'Retrieves the collection of SourceField resources.',
+                    },
+                  ],
+                  'http://www.w3.org/ns/hydra/core#returns': [
+                    { '@id': 'http://www.w3.org/ns/hydra/core#Collection' },
+                  ],
+                },
+                {
+                  '@type': [
+                    'http://www.w3.org/ns/hydra/core#Operation',
+                    'http://schema.org/CreateAction',
+                  ],
+                  'http://www.w3.org/ns/hydra/core#expects': [
+                    { '@id': 'https://localhost/docs.jsonld#SourceField' },
+                  ],
+                  'http://www.w3.org/ns/hydra/core#method': [
+                    { '@value': 'POST' },
+                  ],
+                  'http://www.w3.org/ns/hydra/core#title': [
+                    { '@value': 'Creates a SourceField resource.' },
+                  ],
+                  'http://www.w3.org/2000/01/rdf-schema#label': [
+                    { '@value': 'Creates a SourceField resource.' },
+                  ],
+                  'http://www.w3.org/ns/hydra/core#returns': [
+                    { '@id': 'https://localhost/docs.jsonld#SourceField' },
+                  ],
+                },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#label': [
+                { '@value': 'The collection of SourceField resources' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#range': [
+                { '@id': 'http://www.w3.org/ns/hydra/core#Collection' },
+                {
+                  'http://www.w3.org/2002/07/owl#equivalentClass': [
+                    {
+                      'http://www.w3.org/2002/07/owl#allValuesFrom': [
+                        {
+                          '@id': 'https://localhost/docs.jsonld#SourceField',
+                        },
+                      ],
+                      'http://www.w3.org/2002/07/owl#onProperty': [
+                        { '@id': 'http://www.w3.org/ns/hydra/core#member' },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
+          'http://www.w3.org/ns/hydra/core#title': [
+            { '@value': 'The collection of SourceField resources' },
+          ],
+          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': false }],
+        },
+        {
+          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
+          'http://www.w3.org/ns/hydra/core#property': [
+            {
               '@id':
                 'https://localhost/docs.jsonld#Entrypoint/sourceFieldOptionLabel',
               '@type': ['http://www.w3.org/ns/hydra/core#Link'],
@@ -3623,6 +3969,88 @@ export const expandedDocs = {
             {
               '@value': 'The collection of SourceFieldOptionLabel resources',
             },
+          ],
+          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': false }],
+        },
+        {
+          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
+          'http://www.w3.org/ns/hydra/core#property': [
+            {
+              '@id': 'https://localhost/docs.jsonld#Entrypoint/metadata',
+              '@type': ['http://www.w3.org/ns/hydra/core#Link'],
+              'http://www.w3.org/2000/01/rdf-schema#domain': [
+                { '@id': 'https://localhost/docs.jsonld#Entrypoint' },
+              ],
+              'http://www.w3.org/ns/hydra/core#supportedOperation': [
+                {
+                  '@type': [
+                    'http://www.w3.org/ns/hydra/core#Operation',
+                    'http://schema.org/FindAction',
+                  ],
+                  'http://www.w3.org/ns/hydra/core#method': [
+                    { '@value': 'GET' },
+                  ],
+                  'http://www.w3.org/ns/hydra/core#title': [
+                    {
+                      '@value':
+                        'Retrieves the collection of Metadata resources.',
+                    },
+                  ],
+                  'http://www.w3.org/2000/01/rdf-schema#label': [
+                    {
+                      '@value':
+                        'Retrieves the collection of Metadata resources.',
+                    },
+                  ],
+                  'http://www.w3.org/ns/hydra/core#returns': [
+                    { '@id': 'http://www.w3.org/ns/hydra/core#Collection' },
+                  ],
+                },
+                {
+                  '@type': [
+                    'http://www.w3.org/ns/hydra/core#Operation',
+                    'http://schema.org/CreateAction',
+                  ],
+                  'http://www.w3.org/ns/hydra/core#expects': [
+                    { '@id': 'https://localhost/docs.jsonld#Metadata' },
+                  ],
+                  'http://www.w3.org/ns/hydra/core#method': [
+                    { '@value': 'POST' },
+                  ],
+                  'http://www.w3.org/ns/hydra/core#title': [
+                    { '@value': 'Creates a Metadata resource.' },
+                  ],
+                  'http://www.w3.org/2000/01/rdf-schema#label': [
+                    { '@value': 'Creates a Metadata resource.' },
+                  ],
+                  'http://www.w3.org/ns/hydra/core#returns': [
+                    { '@id': 'https://localhost/docs.jsonld#Metadata' },
+                  ],
+                },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#label': [
+                { '@value': 'The collection of Metadata resources' },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#range': [
+                { '@id': 'http://www.w3.org/ns/hydra/core#Collection' },
+                {
+                  'http://www.w3.org/2002/07/owl#equivalentClass': [
+                    {
+                      'http://www.w3.org/2002/07/owl#allValuesFrom': [
+                        { '@id': 'https://localhost/docs.jsonld#Metadata' },
+                      ],
+                      'http://www.w3.org/2002/07/owl#onProperty': [
+                        { '@id': 'http://www.w3.org/ns/hydra/core#member' },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
+          'http://www.w3.org/ns/hydra/core#title': [
+            { '@value': 'The collection of Metadata resources' },
           ],
           'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': false }],
         },
@@ -4034,6 +4462,167 @@ export const expandedDocs = {
           'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
           'http://www.w3.org/ns/hydra/core#title': [
             { '@value': 'The collection of Category resources' },
+          ],
+          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': false }],
+        },
+        {
+          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
+          'http://www.w3.org/ns/hydra/core#property': [
+            {
+              '@id':
+                'https://localhost/docs.jsonld#Entrypoint/categorySortingOption',
+              '@type': ['http://www.w3.org/ns/hydra/core#Link'],
+              'http://www.w3.org/2000/01/rdf-schema#domain': [
+                { '@id': 'https://localhost/docs.jsonld#Entrypoint' },
+              ],
+              'http://www.w3.org/ns/hydra/core#supportedOperation': [
+                {
+                  '@type': [
+                    'http://www.w3.org/ns/hydra/core#Operation',
+                    'http://schema.org/FindAction',
+                  ],
+                  'http://www.w3.org/ns/hydra/core#method': [
+                    { '@value': 'GET' },
+                  ],
+                  'http://www.w3.org/ns/hydra/core#title': [
+                    {
+                      '@value':
+                        'Retrieves the collection of CategorySortingOption resources.',
+                    },
+                  ],
+                  'http://www.w3.org/2000/01/rdf-schema#label': [
+                    {
+                      '@value':
+                        'Retrieves the collection of CategorySortingOption resources.',
+                    },
+                  ],
+                  'http://www.w3.org/ns/hydra/core#returns': [
+                    { '@id': 'http://www.w3.org/ns/hydra/core#Collection' },
+                  ],
+                },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#label': [
+                {
+                  '@value': 'The collection of CategorySortingOption resources',
+                },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#range': [
+                { '@id': 'http://www.w3.org/ns/hydra/core#Collection' },
+                {
+                  'http://www.w3.org/2002/07/owl#equivalentClass': [
+                    {
+                      'http://www.w3.org/2002/07/owl#allValuesFrom': [
+                        {
+                          '@id':
+                            'https://localhost/docs.jsonld#CategorySortingOption',
+                        },
+                      ],
+                      'http://www.w3.org/2002/07/owl#onProperty': [
+                        { '@id': 'http://www.w3.org/ns/hydra/core#member' },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
+          'http://www.w3.org/ns/hydra/core#title': [
+            { '@value': 'The collection of CategorySortingOption resources' },
+          ],
+          'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': false }],
+        },
+        {
+          '@type': ['http://www.w3.org/ns/hydra/core#SupportedProperty'],
+          'http://www.w3.org/ns/hydra/core#property': [
+            {
+              '@id':
+                'https://localhost/docs.jsonld#Entrypoint/categoryConfiguration',
+              '@type': ['http://www.w3.org/ns/hydra/core#Link'],
+              'http://www.w3.org/2000/01/rdf-schema#domain': [
+                { '@id': 'https://localhost/docs.jsonld#Entrypoint' },
+              ],
+              'http://www.w3.org/ns/hydra/core#supportedOperation': [
+                {
+                  '@type': [
+                    'http://www.w3.org/ns/hydra/core#Operation',
+                    'http://schema.org/FindAction',
+                  ],
+                  'http://www.w3.org/ns/hydra/core#method': [
+                    { '@value': 'GET' },
+                  ],
+                  'http://www.w3.org/ns/hydra/core#title': [
+                    {
+                      '@value':
+                        'Retrieves the collection of CategoryConfiguration resources.',
+                    },
+                  ],
+                  'http://www.w3.org/2000/01/rdf-schema#label': [
+                    {
+                      '@value':
+                        'Retrieves the collection of CategoryConfiguration resources.',
+                    },
+                  ],
+                  'http://www.w3.org/ns/hydra/core#returns': [
+                    { '@id': 'http://www.w3.org/ns/hydra/core#Collection' },
+                  ],
+                },
+                {
+                  '@type': [
+                    'http://www.w3.org/ns/hydra/core#Operation',
+                    'http://schema.org/CreateAction',
+                  ],
+                  'http://www.w3.org/ns/hydra/core#expects': [
+                    {
+                      '@id':
+                        'https://localhost/docs.jsonld#CategoryConfiguration',
+                    },
+                  ],
+                  'http://www.w3.org/ns/hydra/core#method': [
+                    { '@value': 'POST' },
+                  ],
+                  'http://www.w3.org/ns/hydra/core#title': [
+                    { '@value': 'Creates a CategoryConfiguration resource.' },
+                  ],
+                  'http://www.w3.org/2000/01/rdf-schema#label': [
+                    { '@value': 'Creates a CategoryConfiguration resource.' },
+                  ],
+                  'http://www.w3.org/ns/hydra/core#returns': [
+                    {
+                      '@id':
+                        'https://localhost/docs.jsonld#CategoryConfiguration',
+                    },
+                  ],
+                },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#label': [
+                {
+                  '@value': 'The collection of CategoryConfiguration resources',
+                },
+              ],
+              'http://www.w3.org/2000/01/rdf-schema#range': [
+                { '@id': 'http://www.w3.org/ns/hydra/core#Collection' },
+                {
+                  'http://www.w3.org/2002/07/owl#equivalentClass': [
+                    {
+                      'http://www.w3.org/2002/07/owl#allValuesFrom': [
+                        {
+                          '@id':
+                            'https://localhost/docs.jsonld#CategoryConfiguration',
+                        },
+                      ],
+                      'http://www.w3.org/2002/07/owl#onProperty': [
+                        { '@id': 'http://www.w3.org/ns/hydra/core#member' },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+          'http://www.w3.org/ns/hydra/core#readable': [{ '@value': true }],
+          'http://www.w3.org/ns/hydra/core#title': [
+            { '@value': 'The collection of CategoryConfiguration resources' },
           ],
           'http://www.w3.org/ns/hydra/core#writeable': [{ '@value': false }],
         },
@@ -4564,12 +5153,12 @@ export const expandedDocs = {
 } as IExpandedDocsJsonld
 
 export const expandedDocsEntrypoint =
-  expandedDocs['http://www.w3.org/ns/hydra/core#supportedClass'][22]
+  expandedDocs['http://www.w3.org/ns/hydra/core#supportedClass'][24]
 
 export const expandedProperty =
   expandedDocsEntrypoint[
     'http://www.w3.org/ns/hydra/core#supportedProperty'
-  ][0]['http://www.w3.org/ns/hydra/core#property'][0]
+  ][5]['http://www.w3.org/ns/hydra/core#property'][0]
 
 export const expandedRange =
   expandedProperty['http://www.w3.org/2000/01/rdf-schema#range']

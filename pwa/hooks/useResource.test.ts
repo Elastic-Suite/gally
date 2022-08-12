@@ -34,7 +34,7 @@ describe('useResource', () => {
       })
     })
 
-    it('should call the API (create))', () => {
+    it('should call the API (create)', () => {
       ;(fetchApi as jest.Mock).mockClear()
       const { result } = renderHookWithProviders(() =>
         useResourceOperations<ITest>(resource)
@@ -43,7 +43,7 @@ describe('useResource', () => {
       expect(fetchApi).toHaveBeenCalled()
     })
 
-    it('should call the API (replace))', () => {
+    it('should call the API (replace)', () => {
       ;(fetchApi as jest.Mock).mockClear()
       const { result } = renderHookWithProviders(() =>
         useResourceOperations<ITest>(resource)
@@ -52,7 +52,7 @@ describe('useResource', () => {
       expect(fetchApi).toHaveBeenCalled()
     })
 
-    it('should call the API (update))', () => {
+    it('should call the API (update)', () => {
       ;(fetchApi as jest.Mock).mockClear()
       const { result } = renderHookWithProviders(() =>
         useResourceOperations<ITest>(resource)

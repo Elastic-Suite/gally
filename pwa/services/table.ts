@@ -5,7 +5,6 @@ import { getFieldLabelTranslationArgs } from './format'
 import { getField, getFieldType } from './hydra'
 import {
   DataContentType,
-  FilterType,
   IField,
   IFilter,
   IHydraMapping,
@@ -19,7 +18,7 @@ import {
 interface IMapping extends IHydraMapping {
   field: IField
   multiple: boolean
-  options?: IOptions
+  options?: IOptions<unknown>
 }
 
 export function getFieldDataContentType(field: IField): DataContentType {
@@ -32,20 +31,20 @@ export function getFieldDataContentType(field: IField): DataContentType {
 
 export function getFieldHeader(field: IField, t: TFunction): ITableHeader {
   return {
-    field: field.title,
-    headerName:
+    name: field.title,
+    label:
       field.property.label ?? t(...getFieldLabelTranslationArgs(field.title)),
     type: getFieldDataContentType(field),
-    editable: field.writeable,
+    editable: field.elasticsuite?.editable && field.writeable,
   }
 }
 
-export function getFilterType(mapping: IMapping): FilterType {
+export function getFilterType(mapping: IMapping): DataContentType {
   return mapping.multiple
-    ? FilterType.SELECT
+    ? DataContentType.DROPDOWN
     : booleanRegexp.test(mapping.property)
-    ? FilterType.BOOLEAN
-    : FilterType.TEXT
+    ? DataContentType.BOOLEAN
+    : DataContentType.STRING
 }
 
 export function getFilter(mapping: IMapping, t: TFunction): IFilter {

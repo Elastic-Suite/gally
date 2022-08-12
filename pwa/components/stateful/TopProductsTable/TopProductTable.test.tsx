@@ -1,5 +1,8 @@
 import { renderWithProviders } from '~/utils/tests'
 import { DataContentType } from '~/types'
+
+import FieldGuesser from '../FieldGuesser/FieldGuesser'
+
 import TopProductsTable from './TopProductsTable'
 
 describe('TopProductTable', () => {
@@ -7,50 +10,50 @@ describe('TopProductTable', () => {
     const mockedHeadersAndRows = {
       tableHeaders: [
         {
-          field: 'code',
-          headerName: 'Code',
+          name: 'code',
+          label: 'Code',
           type: DataContentType.STRING,
           editable: false,
           sticky: false,
         },
         {
-          field: 'image',
-          headerName: 'Image',
+          name: 'image',
+          label: 'Image',
           type: DataContentType.IMAGE,
           editable: false,
           sticky: false,
         },
         {
-          field: 'name',
-          headerName: 'Name',
+          name: 'name',
+          label: 'Name',
           type: DataContentType.STRING,
           editable: false,
           sticky: false,
         },
         {
-          field: 'score',
-          headerName: 'Score',
+          name: 'score',
+          label: 'Score',
           type: DataContentType.SCORE,
           editable: false,
           sticky: false,
         },
         {
-          field: 'stock',
-          headerName: 'In stock',
+          name: 'stock',
+          label: 'In stock',
           type: DataContentType.STOCK,
           editable: false,
           sticky: false,
         },
         {
-          field: 'price',
-          headerName: 'Price',
+          name: 'price',
+          label: 'Price',
           type: DataContentType.PRICE,
           editable: false,
           sticky: false,
         },
         {
-          field: 'visible',
-          headerName: 'Visible',
+          name: 'visible',
+          label: 'Visible',
           type: DataContentType.BOOLEAN,
           editable: false,
           sticky: false,
@@ -82,6 +85,7 @@ describe('TopProductTable', () => {
 
     const { container } = renderWithProviders(
       <TopProductsTable
+        Field={FieldGuesser}
         tableHeaders={mockedHeadersAndRows.tableHeaders}
         tableRows={mockedHeadersAndRows.tableRows}
         selectedRows={[]}

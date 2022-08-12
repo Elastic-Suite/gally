@@ -56,6 +56,7 @@ function SettingsAttributes(props: ITabContentProps): JSX.Element {
     value: boolean | number | string
   ): Promise<void> {
     if (update) {
+      // todo: should we use optimistic updates ?
       const sourceField = await update(id, { [field]: value })
       if (!isFetchError(sourceField)) {
         updateSourceFields((items) =>
@@ -81,6 +82,7 @@ function SettingsAttributes(props: ITabContentProps): JSX.Element {
         onPageChange={handlePageChange}
         onRowUpdate={handleRowChange}
         resource={resource}
+        updateSourceFields={updateSourceFields}
       />
     </>
   )

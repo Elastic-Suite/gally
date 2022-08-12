@@ -13,31 +13,31 @@ import { DataContentType, ITableHeader, ITableHeaderSticky } from '~/types'
 import { manageStickyHeaders, stickyBorderStyle } from '../CustomTable.service'
 
 interface IProps {
+  cssLeftValues: number[]
+  isHorizontalOverflow: boolean
+  massiveSelectionIndeterminate: boolean
+  massiveSelectionState?: boolean
+  onSelection?: (e: ChangeEvent<HTMLInputElement>) => void
+  shadow: boolean
   tableHeaders: ITableHeader[]
   withSelection: boolean
-  onSelection?: (e: ChangeEvent<HTMLInputElement>) => void
-  massiveSelectionState?: boolean
-  cSSLeftValues: number[]
-  isHorizontalOverflow: boolean
-  shadow: boolean
-  massiveSelectionIndeterminate: boolean
 }
 
 function CustomTableHeader(props: IProps): JSX.Element {
   const {
+    cssLeftValues,
+    isHorizontalOverflow,
+    massiveSelectionIndeterminate,
+    massiveSelectionState,
+    onSelection,
+    shadow,
     tableHeaders,
     withSelection,
-    onSelection,
-    massiveSelectionState,
-    cSSLeftValues,
-    isHorizontalOverflow,
-    shadow,
-    massiveSelectionIndeterminate,
   } = props
 
   const stickyHeaders: ITableHeaderSticky[] = manageStickyHeaders(tableHeaders)
   const isOnlyDraggable = !withSelection && stickyHeaders.length === 0
-  const CSSLeftValuesIterator = cSSLeftValues.entries()
+  const cssLeftValuesIterator = cssLeftValues.entries()
 
   return (
     <TableHead>
@@ -60,7 +60,7 @@ function CustomTableHeader(props: IProps): JSX.Element {
               isHorizontalOverflow &&
               stickyBorderStyle(shadow)),
             zIndex: '1',
-            left: `${CSSLeftValuesIterator.next().value[1]}px`,
+            left: `${cssLeftValuesIterator.next().value[1]}px`,
           }}
         />
 
@@ -74,7 +74,7 @@ function CustomTableHeader(props: IProps): JSX.Element {
               backgroundColor: 'neutral.light',
               width: `${selectionColumnWidth}px`,
               minWidth: `${selectionColumnWidth}px`,
-              left: `${CSSLeftValuesIterator.next().value[1]}px`,
+              left: `${cssLeftValuesIterator.next().value[1]}px`,
               ...(isHorizontalOverflow &&
                 stickyHeaders.length === 0 &&
                 stickyBorderStyle(shadow)),
@@ -92,9 +92,9 @@ function CustomTableHeader(props: IProps): JSX.Element {
 
         {stickyHeaders.map((stickyHeader) => (
           <StickyTableCell
-            key={stickyHeader.field}
+            key={stickyHeader.name}
             sx={{
-              left: `${CSSLeftValuesIterator.next().value[1]}px`,
+              left: `${cssLeftValuesIterator.next().value[1]}px`,
               borderBottomColor: 'colors.neutral.300',
               borderTopColor: 'colors.neutral.300',
               borderTopWidth: '1px',
@@ -106,7 +106,7 @@ function CustomTableHeader(props: IProps): JSX.Element {
               ...(stickyHeader.isLastSticky && stickyBorderStyle(shadow)),
             }}
           >
-            {stickyHeader.headerName}
+            {stickyHeader.label}
           </StickyTableCell>
         ))}
 
@@ -114,6 +114,7 @@ function CustomTableHeader(props: IProps): JSX.Element {
           .filter((header) => !header.sticky)
           .map((header) => (
             <BaseTableCell
+              key={header.name}
               sx={{
                 height: '20px',
                 padding: '14px 16px',
@@ -130,9 +131,8 @@ function CustomTableHeader(props: IProps): JSX.Element {
                   maxWidth: 'fit-content',
                 }),
               }}
-              key={header.field}
             >
-              {header.headerName}
+              {header.label}
             </BaseTableCell>
           ))}
       </TableRow>
