@@ -18,13 +18,34 @@ namespace Elasticsuite\Category\Model;
 
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Elasticsuite\Category\Controller\GetCategoryTree;
 use Elasticsuite\Category\Resolver\CategoryTreeResolver;
 use Elasticsuite\User\Constant\Role;
 
 #[ApiResource(
     collectionOperations: [],
     itemOperations: [
-        'get' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
+        'get_tree' => [
+            'security' => "is_granted('" . Role::ROLE_ADMIN . "')",
+            'method' => 'GET',
+            'path' => '/categoryTree',
+            'controller' => GetCategoryTree::class,
+            'read' => false,
+            'openapi_context' => [
+                'parameters' => [
+                    [
+                        'name' => 'catalogId',
+                        'in' => 'query',
+                        'type' => 'int',
+                    ],
+                    [
+                        'name' => 'localizedCatalogId',
+                        'in' => 'query',
+                        'type' => 'int',
+                    ],
+                ],
+            ],
+        ],
     ],
     graphql: [
         'get' => [

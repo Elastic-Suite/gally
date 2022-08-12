@@ -92,3 +92,12 @@ services:
             - '@Elasticsuite\Category\Service\CategoryTreeBuilder'
         tags:
             - { name: api_platform.graphql.query_resolver }
+    
+    Elasticsuite\Category\Controller\GetCategoryTree:
+        arguments:
+            - '@Elasticsuite\Category\Service\CategoryTreeBuilder'
+            - '@request_stack'
+        calls:
+            - [ setContainer, [ '@service_container' ] ]
+        tags:
+            - { name: controller.service_arguments }
