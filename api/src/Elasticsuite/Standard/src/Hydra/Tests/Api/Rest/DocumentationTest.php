@@ -30,26 +30,29 @@ class DocumentationTest extends ApiTestCase
         $classKey = array_search('SourceField', array_column($response['hydra:supportedClass'] ?? [], 'hydra:title'), true);
         $this->assertNotFalse($classKey, "Class 'SourceField' is missing in 'hydra:supportedClass' node in docs.jsonld.");
 
-        $propertyCodeKey = array_search('code', array_column($response['hydra:supportedClass'][$classKey]['hydra:supportedProperty'] ?? [], 'hydra:title'), true);
-        $this->assertNotFalse($propertyCodeKey, "Property 'code' for the class 'SourceField' is missing in docs.jsonld.");
+        $propertyTypeKey = array_search('type', array_column($response['hydra:supportedClass'][$classKey]['hydra:supportedProperty'] ?? [], 'hydra:title'), true);
+        $this->assertNotFalse($propertyTypeKey, "Property 'type' for the class 'SourceField' is missing in docs.jsonld.");
 
+        // The goal of this test, is to check that the documentation added on ApiResource properties metadata are added in docs.jsonld
         static::assertArraySubset(
             [
-                'hydra:title' => 'code',
+                'hydra:title' => 'type',
                 'hydra:property' => [
-                    '@id' => '#SourceField/code',
-                    'rdfs:label' => 'Attribute code',
-                    'showable' => 'false',
+                    '@id' => '#SourceField/type',
+                    'rdfs:label' => 'Attribute type',
+                ],
+                'elasticsuite' => [
+                    'visible' => true,
+                    'editable' => false,
+                    'position' => 30,
+                    'context' => [
+                        'search_configuration_attributes' => [
+                            'visible' => false,
+                        ],
+                    ],
                 ],
             ],
-            $response['hydra:supportedClass'][$classKey]['hydra:supportedProperty'][$propertyCodeKey]
-        );
-
-        $propertyWeightKey = array_search('weight', array_column($response['hydra:supportedClass'][$classKey]['hydra:supportedProperty'] ?? [], 'hydra:title'), true);
-        $this->assertArrayNotHasKey(
-            'showable',
-            $response['hydra:supportedClass'][$classKey]['hydra:supportedProperty'][$propertyWeightKey]['hydra:property'],
-            "'showable' key should not exist when it is not explicitly defined."
+            $response['hydra:supportedClass'][$classKey]['hydra:supportedProperty'][$propertyTypeKey]
         );
     }
 }
