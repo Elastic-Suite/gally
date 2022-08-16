@@ -16,9 +16,14 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Search\Tests\Unit\Elasticsearch\Builder\Request\Query;
 
+use Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\Query\QueryBuilder;
+use Elasticsuite\Search\Elasticsearch\ContextInterface;
+use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
 use Elasticsuite\Search\Elasticsearch\Request\QueryFactory;
 use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
+use Elasticsuite\Search\Elasticsearch\SpellcheckerInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
@@ -32,17 +37,17 @@ class QueryBuilderTest extends KernelTestCase
     public function testCreateQuery(): void
     {
         $builder = new QueryBuilder(
-            $this->getQueryFactory()/*,
-            $this->getFulltextQueryBuilder(),
+            $this->getQueryFactory(),
+//            $this->getFulltextQueryBuilder(),
             $this->getFilterQueryBuilder(),
-            $this->getSearchContext() */
+            /*$this->getSearchContext()*/
         );
 
         $query = $builder->createQuery(
-            // $this->getContainerConfiguration(),
-            'test'/*,
+            $this->getContainerConfiguration(),
+            'test',
             ['filter'],
-            SpellcheckerInterface::SPELLING_TYPE_EXACT */
+            SpellcheckerInterface::SPELLING_TYPE_EXACT
         );
 
         $this->assertInstanceOf(QueryInterface::class, $query);
@@ -54,10 +59,8 @@ class QueryBuilderTest extends KernelTestCase
         // $this->assertInstanceOf(QueryInterface::class, $query->getQuery());
         // $this->assertEquals('fulltextQuery', $query->getQuery()->getType());
 
-        // TODO: implement filter queries builder first.
-        $this->assertNull($query->getFilter());
-        // $this->assertInstanceOf(QueryInterface::class, $query->getFilter());
-        // $this->assertEquals('filterQuery', $query->getFilter()->getType());
+        $this->assertInstanceOf(QueryInterface::class, $query->getFilter());
+        $this->assertEquals('filterQuery', $query->getFilter()->getType());
     }
 
     /*
@@ -73,8 +76,7 @@ class QueryBuilderTest extends KernelTestCase
     /*
      * Mocks the container configuration.
      */
-    /*
-    private function getContainerConfiguration(): MockObject
+    private function getContainerConfiguration(): ContainerConfigurationInterface|MockObject
     {
         $containerConfiguration = $this->getMockBuilder(ContainerConfigurationInterface::class)->getMock();
 
@@ -82,7 +84,6 @@ class QueryBuilderTest extends KernelTestCase
 
         return $containerConfiguration;
     }
-    */
 
     /**
      * Get the query factory used by the tested builder.
@@ -105,12 +106,10 @@ class QueryBuilderTest extends KernelTestCase
     /*
      * Mocks the filters query builder.
      */
-    /*
-    private function getFilterQueryBuilder(): MockObject
+    private function getFilterQueryBuilder(): FilterQueryBuilder|MockObject
     {
-        return $this->getQueryBuilder(\Elasticsuite\Search\Request\Query\Filter\QueryBuilder::class, 'filterQuery');
+        return $this->getQueryBuilder(FilterQueryBuilder::class, 'filterQuery');
     }
-    */
 
     /*
      * Mock a query builder that creates query with the indicated type.
@@ -118,7 +117,6 @@ class QueryBuilderTest extends KernelTestCase
      * @param string $class mocked class name
      * @param string $name  mock returned query type
      */
-    /*
     private function getQueryBuilder(string $class, string $name): MockObject
     {
         $query = $this->getMockBuilder(QueryInterface::class)->getMock();
@@ -129,5 +127,4 @@ class QueryBuilderTest extends KernelTestCase
 
         return $queryBuilder;
     }
-    */
 }

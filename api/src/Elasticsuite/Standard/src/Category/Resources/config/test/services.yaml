@@ -7,4 +7,6 @@ services:
             - '@Elasticsuite\Search\Elasticsearch\RequestFactoryInterface'
             - '@Elasticsuite\Search\Elasticsearch\Builder\Request\Query\QueryBuilder'
             - '@Elasticsuite\Search\Elasticsearch\Adapter'
+            - '@Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider'
+            - '@Elasticsuite\Metadata\Repository\MetadataRepository'
             - '@doctrine.orm.entity_manager'

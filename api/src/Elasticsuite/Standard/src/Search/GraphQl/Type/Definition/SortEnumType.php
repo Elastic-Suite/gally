@@ -14,7 +14,7 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\Search\Type\Definition;
+namespace Elasticsuite\Search\GraphQl\Type\Definition;
 
 use ApiPlatform\Core\GraphQl\Type\Definition\TypeInterface;
 use Elasticsuite\Search\Elasticsearch\Request\SortOrderInterface;
@@ -22,13 +22,20 @@ use GraphQL\Type\Definition\EnumType;
 
 class SortEnumType extends EnumType implements TypeInterface
 {
+    public const NAME = 'SortEnum';
+
     public function __construct()
     {
-        $config = [
+        $this->name = self::NAME;
+
+        parent::__construct($this->getConfig());
+    }
+
+    public function getConfig(): array
+    {
+        return [
             'values' => [SortOrderInterface::SORT_ASC, SortOrderInterface::SORT_DESC],
         ];
-
-        parent::__construct($config);
     }
 
     /**
