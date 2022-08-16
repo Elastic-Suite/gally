@@ -77,6 +77,7 @@ services:
     Elasticsuite\Search\Elasticsearch\Builder\Request\Query\QueryBuilder:
         arguments:
             - '@Elasticsuite\Search\Elasticsearch\Request\QueryFactory'
+            - '@Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
 
     Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder:
         arguments:
@@ -117,13 +118,56 @@ services:
             - '@Elasticsuite\Search\Elasticsearch\Builder\Response\AggregationBuilder'
             - '@logger'
 
-    Elasticsuite\Search\Type\Definition\SortEnumType:
+    Elasticsuite\Search\GraphQl\Type\Definition\SortEnumType:
         tags:
             - { name: api_platform.graphql.type }
 
-    Elasticsuite\Search\Type\Definition\SortInputType:
+    Elasticsuite\Search\GraphQl\Type\Definition\SortInputType:
         tags:
             - { name: api_platform.graphql.type }
+
+    Elasticsuite\Search\GraphQl\Type\Definition\FieldFilterInputType:
+        arguments:
+            - '@Elasticsuite\Search\GraphQl\Type\Definition\Filter\BoolFilterInputType'
+            - '@Elasticsuite\Search\GraphQl\Type\Definition\Filter\EqualTypeFilterInputType'
+            - '@Elasticsuite\Search\GraphQl\Type\Definition\Filter\MatchFilterInputType'
+            - '@Elasticsuite\Search\GraphQl\Type\Definition\Filter\RangeFilterInputType'
+            - '@Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
+        tags:
+            - { name: api_platform.graphql.type }
+
+    Elasticsuite\Search\GraphQl\Type\Definition\Filter\BoolFilterInputType:
+        lazy: true
+        arguments:
+            - '@Elasticsuite\Search\GraphQl\Type\Definition\FieldFilterInputType'
+            - '@Elasticsuite\Search\Elasticsearch\Request\QueryFactory'
+        tags:
+            - { name: api_platform.graphql.type }
+
+    Elasticsuite\Search\GraphQl\Type\Definition\Filter\EqualTypeFilterInputType:
+        arguments:
+            - '@Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
+            - '@Elasticsuite\Metadata\Repository\SourceFieldRepository'
+        tags:
+            - { name: api_platform.graphql.type }
+
+    Elasticsuite\Search\GraphQl\Type\Definition\Filter\MatchFilterInputType:
+        arguments:
+            - '@Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
+            - '@Elasticsuite\Metadata\Repository\SourceFieldRepository'
+        tags:
+            - { name: api_platform.graphql.type }
+
+    Elasticsuite\Search\GraphQl\Type\Definition\Filter\RangeFilterInputType:
+        arguments:
+            - '@Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
+            - '@Elasticsuite\Metadata\Repository\SourceFieldRepository'
+        tags:
+            - { name: api_platform.graphql.type }
+
+    Elasticsuite\Search\Service\GraphQl\FilterManager:
+        arguments:
+            - '@Elasticsuite\Search\GraphQl\Type\Definition\FieldFilterInputType'
 
     Elasticsuite\Search\DataProvider\DocumentDataProvider:
         arguments:
@@ -132,7 +176,9 @@ services:
             - '@Elasticsuite\Metadata\Repository\MetadataRepository'
             - '@Elasticsuite\Catalog\Repository\LocalizedCatalogRepository'
             - '@Elasticsuite\Search\Elasticsearch\Builder\Request\SimpleRequestBuilder'
+            - '@Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider'
             - '@Elasticsuite\Search\Elasticsearch\Adapter'
+            - '@Elasticsuite\Search\Service\GraphQl\FilterManager'
         tags:
             - { name: api_platform.collection_data_provider }
 

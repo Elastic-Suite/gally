@@ -77,8 +77,18 @@
           "id": {
             "type": "integer"
           },
+          "sku": {
+            "type": "keyword"
+          },
           "name": {
-            "type": "text"
+            "type": "text",
+            "fields": {
+              "standard": {
+                "type": "text",
+                "analyzer": "standard"
+              }
+            },
+            "analyzer": "keyword"
           },
           "length": {
             "type": "integer"

@@ -18,7 +18,10 @@ namespace Elasticsuite\Search\Model;
 
 use ApiPlatform\Core\Action\NotFoundAction;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Elasticsuite\GraphQl\Decoration\Resolver\Stage\ReadStage;
 use Elasticsuite\Search\Elasticsearch\DocumentInterface;
+use Elasticsuite\Search\GraphQl\Type\Definition\FieldFilterInputType;
+use Elasticsuite\Search\GraphQl\Type\Definition\SortInputType;
 use Elasticsuite\Search\Resolver\DummyDocumentResolver;
 
 #[
@@ -33,7 +36,8 @@ use Elasticsuite\Search\Resolver\DummyDocumentResolver;
                     'catalogId' => ['type' => 'String!', 'description' => 'Catalog ID'],
                     'currentPage' => ['type' => 'Int'],
                     'pageSize' => ['type' => 'Int'],
-                    'sort' => ['type' => 'SortInput'],
+                    'sort' => ['type' => SortInputType::NAME],
+                    'filter' => ['type' => '[' . FieldFilterInputType::NAME . ']', ReadStage::IS_GRAPHQL_ELASTICSUITE_ARG_KEY => true],
                 ],
                 'read' => true, // Required so the dataprovider is called.
                 'deserialize' => true,

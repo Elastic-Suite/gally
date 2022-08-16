@@ -23,8 +23,10 @@ use Elasticsuite\Catalog\Repository\LocalizedCatalogRepository;
 use Elasticsuite\Metadata\Repository\MetadataRepository;
 use Elasticsuite\Search\Elasticsearch\Adapter;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\SimpleRequestBuilder as RequestBuilder;
+use Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider;
 use Elasticsuite\Search\Elasticsearch\Request\SortOrderInterface;
 use Elasticsuite\Search\Model\Document;
+use Elasticsuite\Search\Service\GraphQl\FilterManager;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 class DocumentDataProvider implements ContextAwareCollectionDataProviderInterface, RestrictedDataProviderInterface
@@ -35,7 +37,9 @@ class DocumentDataProvider implements ContextAwareCollectionDataProviderInterfac
         private MetadataRepository $metadataRepository,
         private LocalizedCatalogRepository $catalogRepository,
         private RequestBuilder $requestBuilder,
+        private ContainerConfigurationProvider $containerConfigurationProvider,
         private Adapter $adapter,
+        private FilterManager $filterManager,
     ) {
     }
 
@@ -52,8 +56,11 @@ class DocumentDataProvider implements ContextAwareCollectionDataProviderInterfac
      */
     public function getCollection(string $resourceClass, string $operationName = null, array $context = []): iterable
     {
+        $this->filterManager->validateFilters($context);
+
         $metadata = $this->metadataRepository->findByEntity($context['filters']['entityType']);
         $catalog = $this->catalogRepository->findByCodeOrId($context['filters']['catalogId']);
+        $containerConfig = $this->containerConfigurationProvider->get($metadata, $catalog);
 
         $sortOrders = [];
         if (\array_key_exists('sort', $context['filters'])) {
@@ -72,7 +79,7 @@ class DocumentDataProvider implements ContextAwareCollectionDataProviderInterfac
             $limit,
             null,
             $sortOrders,
-            [],
+            $this->filterManager->formatFilters($context, $containerConfig),
             [],
             ($context['need_aggregations'] ?? false) ? [] : null
         );
