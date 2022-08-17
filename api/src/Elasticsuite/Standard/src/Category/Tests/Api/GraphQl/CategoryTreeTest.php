@@ -53,7 +53,7 @@ class CategoryTreeTest extends AbstractTest
                             'name' => 'Trois',
                             'level' => 2,
                             'path' => 'one/three',
-                            'isVirtual' => null,
+                            'isVirtual' => false,
                         ],
                     ],
                 ],
@@ -75,7 +75,7 @@ class CategoryTreeTest extends AbstractTest
                             'name' => 'Three',
                             'level' => 2,
                             'path' => 'one/three',
-                            'isVirtual' => null,
+                            'isVirtual' => false,
                         ],
                     ],
                 ],
@@ -84,7 +84,7 @@ class CategoryTreeTest extends AbstractTest
                     'name' => 'Two',
                     'level' => 1,
                     'path' => 'two',
-                    'isVirtual' => null,
+                    'isVirtual' => false,
                 ],
             ],
             $this->getCategoryTree('b2c', 'b2c_en')
@@ -97,7 +97,14 @@ class CategoryTreeTest extends AbstractTest
                     'name' => 'Five',
                     'level' => 1,
                     'path' => 'five',
-                    'isVirtual' => null,
+                    'isVirtual' => false,
+                ],
+                [
+                    'id' => 'one',
+                    'name' => 'One',
+                    'level' => 1,
+                    'path' => 'one',
+                    'isVirtual' => true,
                 ],
             ],
             $this->getCategoryTree('b2b')
@@ -105,6 +112,13 @@ class CategoryTreeTest extends AbstractTest
 
         $this->assertSame(
             [
+                [
+                    'id' => 'five',
+                    'name' => 'Five',
+                    'level' => 1,
+                    'path' => 'five',
+                    'isVirtual' => false,
+                ],
                 [
                     'id' => 'one',
                     'name' => 'Un',
@@ -117,7 +131,7 @@ class CategoryTreeTest extends AbstractTest
                             'name' => 'Trois',
                             'level' => 2,
                             'path' => 'one/three',
-                            'isVirtual' => null,
+                            'isVirtual' => false,
                         ],
                     ],
                 ],
@@ -126,7 +140,7 @@ class CategoryTreeTest extends AbstractTest
                     'name' => 'Deux',
                     'level' => 1,
                     'path' => 'two',
-                    'isVirtual' => null,
+                    'isVirtual' => false,
                 ],
             ],
             $this->getCategoryTree()
