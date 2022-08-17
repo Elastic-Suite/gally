@@ -1,0 +1,91 @@
+export const basicRules = {
+  type: 'combination',
+  operator: 'all',
+  value: 'true',
+  children: [
+    {
+      type: 'combination',
+      operator: 'any',
+      value: 'true',
+      children: [
+        {
+          type: 'attribute',
+          field: 'color',
+          operator: 'is_one_of',
+          attribute_type: 'select',
+          value: '35',
+        },
+        {
+          type: 'attribute',
+          field: 'attribut set',
+          operator: 'is',
+          attribute_type: 'select',
+          value: 'music accesories',
+        },
+        {
+          type: 'attribute',
+          field: 'age',
+          operator: 'is',
+          attribute_type: 'select',
+          value: '6-9 years old',
+        },
+        {
+          type: 'combination',
+          operator: 'any',
+          value: 'true',
+          children: [
+            {
+              type: 'attribute',
+              field: 'color',
+              operator: 'is_one_of',
+              attribute_type: 'select',
+              value: 'rouge',
+            },
+            {
+              type: 'attribute',
+              field: 'attribut set',
+              operator: 'is',
+              attribute_type: 'select',
+              value: 'music accesories',
+            },
+            {
+              type: 'attribute',
+              field: 'age',
+              operator: 'is',
+              attribute_type: 'select',
+              value: '6-9 years old',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      type: 'combination',
+      operator: 'any',
+      value: 'true',
+      children: [
+        {
+          type: 'attribute',
+          field: 'color',
+          operator: 'is_one_of',
+          attribute_type: 'select',
+          value: 'rouge',
+        },
+        {
+          type: 'attribute',
+          field: 'attribut set',
+          operator: 'is',
+          attribute_type: 'select',
+          value: 'music accesories',
+        },
+        {
+          type: 'attribute',
+          field: 'age',
+          operator: 'is',
+          attribute_type: 'select',
+          value: '6-9 years old',
+        },
+      ],
+    },
+  ],
+}
