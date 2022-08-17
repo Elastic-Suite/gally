@@ -10,6 +10,7 @@ import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import PageTile from '~/components/atoms/PageTitle/PageTitle'
 import StickyBar from '~/components/molecules/CustomTable/StickyBar/StickyBar'
 import ProductsTopAndBottom from '~/components/stateful/ProductsTopAndBottom/ProductsTopAndBottom'
+import Merchandize from '../Merchandize/Merchandize'
 
 const Layout = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -25,10 +26,12 @@ const ActionsButtonsContainer = styled(Box)({
 
 interface IProps {
   category: ITreeItem
+  handleVirtuel: () => void
+  virtualCat: boolean
 }
 
 function ProductsContainer(props: IProps): JSX.Element {
-  const { category } = props
+  const { category, virtualCat, handleVirtuel } = props
 
   const tableRef = useRef<HTMLDivElement>()
   const [topSelectedRows, setTopSelectedRows] = useState<string[]>([])
@@ -45,6 +48,16 @@ function ProductsContainer(props: IProps): JSX.Element {
     setBottomSelectedRows([])
   }
 
+  /* args sort category / virtuel C */
+
+  // const [virtualCat, setVirtualCat] = useState(true)
+  const [catNameChange, setCatNameChange] = useState(false)
+  const [valSorting, setValSorting] = useState(10)
+
+  const handleChange = (val: number): void => {
+    setValSorting(val)
+  }
+
   return (
     <Box>
       <Layout>
@@ -52,8 +65,29 @@ function ProductsContainer(props: IProps): JSX.Element {
           title={category?.name ? category?.name : category?.catalogName}
           sx={{ marginBottom: '12px' }}
         />
-
         {/* todo: add sort and category / virtual category toggle */}
+
+        <Merchandize
+          onVirtualCategoryChange={handleVirtuel}
+          virtualCategoryValue={virtualCat}
+          onCategoryNameChange={setCatNameChange}
+          categoryNameValue={catNameChange}
+          {...{
+            args: {
+              disabled: false,
+              label: 'Default sorting',
+              value: 10,
+              options: [
+                { label: 'Position', value: 10 },
+                { label: 'Product Name', value: 20 },
+                { label: 'Price', value: 30 },
+                { label: 'Performance', value: 40 },
+              ],
+              required: false,
+            },
+          }}
+          {...{ onChange: handleChange, value: valSorting }}
+        />
 
         {/* todo : add search bar */}
 

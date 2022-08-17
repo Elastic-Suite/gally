@@ -10,6 +10,7 @@ import { findBreadcrumbLabel, findDefaultCatalog } from '~/services'
 import { selectMenu, useAppSelector } from '~/store'
 import { ICatalog, ITreeItem } from '~/types'
 
+import VirtualRule from '~/components/molecules/layout/fade/VirtualRule'
 import TitleBlock from '~/components/molecules/layout/TitleBlock/TitleBlock'
 import TwoColsLayout from '~/components/molecules/layout/twoColsLayout/TwoColsLayout'
 import CatalogSwitcher from '~/components/stateful/CatalogSwitcher/CatalogSwitcher'
@@ -50,7 +51,20 @@ function Categories(): JSX.Element {
   function handleSelect(item: ITreeItem): void {
     setSelectedCategoryItem(item)
   }
+  const [val, setVal] = useState(true)
 
+  function handleVirtuel(): void {
+    setVal((state) => !state)
+  }
+  /* useRessource opperation pour create supp ou autre a regarder
+     useFetchApi
+     les use... redeclanche les render refait l'appel boucle ( donc utiliser le 'useMemo' ) 
+     useRessourceOperations: pour mettre a jour une ressource 
+     useApiList: a regarder ce qu'il y a dedans 
+     pages settingsAttributes
+     un updadte pour ma partie 
+  */
+  // setValue(true)
   return (
     <>
       <Head>
@@ -79,11 +93,15 @@ function Categories(): JSX.Element {
             </>
           </TitleBlock>,
           <TitleBlock key="virtualRule" title={t('virtualRule.title')}>
-            Virtual rule DATA
+            <VirtualRule val={val}>Virtual rule DATA</VirtualRule>
           </TitleBlock>,
         ]}
       >
-        <ProductsContainer category={selectedCategoryItem} />
+        <ProductsContainer
+          category={selectedCategoryItem}
+          handleVirtuel={handleVirtuel}
+          virtualCat={val}
+        />
       </TwoColsLayout>
     </>
   )
