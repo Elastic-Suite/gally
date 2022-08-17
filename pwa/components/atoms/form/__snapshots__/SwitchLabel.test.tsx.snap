@@ -9,7 +9,7 @@ exports[`SwitchLabel match snapshot testSwitchTrue 1`] = `
       class="MuiFormControl-root MuiFormControl-fullWidth css-s5qhyf-MuiFormControl-root"
     >
       <label
-        class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-root MuiFormLabel-colorPrimary css-ssr94h-MuiFormLabel-root-MuiInputLabel-root"
+        class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-colorPrimary css-ssr94h-MuiFormLabel-root-MuiInputLabel-root"
         data-shrink="true"
       >
         label
@@ -29,12 +29,12 @@ exports[`SwitchLabel match snapshot testSwitchTrue 1`] = `
         class="MuiSwitch-root MuiSwitch-sizeMedium css-najw49-MuiSwitch-root"
       >
         <span
-          class="MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-checked MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-checked PrivateSwitchBase-root Mui-checked css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
+          class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-checked PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-checked Mui-checked css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
         >
           <input
             aria-label="secondary checkbox"
             checked=""
-            class="MuiSwitch-input PrivateSwitchBase-input css-1m9pwf3"
+            class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
             name="checkedA"
             type="checkbox"
           />
