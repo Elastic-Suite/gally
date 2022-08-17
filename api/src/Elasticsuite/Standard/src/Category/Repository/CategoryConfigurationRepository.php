@@ -18,6 +18,7 @@ namespace Elasticsuite\Category\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use Elasticsuite\Catalog\Model\Catalog;
 use Elasticsuite\Catalog\Model\LocalizedCatalog;
@@ -36,57 +37,108 @@ class CategoryConfigurationRepository extends ServiceEntityRepository
         parent::__construct($registry, Category\Configuration::class);
     }
 
-    public function findByContext(string $categoryId, ?int $catalogId, ?int $localizedCatalogId): ?Category\Configuration
-    {
-        return $this->findOneBy(
-            ['category' => $categoryId, 'catalog' => $catalogId, 'localizedCatalog' => $localizedCatalogId]
-        );
-    }
-
-    public function findMergedConfigurationByContext(Catalog $catalog, LocalizedCatalog $localizedCatalog): array
-    {
+    /**
+     * Get the configuration of a given category for the given context.
+     * If a parameter is not defined in this context, we get the value from the parent context
+     * (ex: if isVirtual is null for this localized catalog, we get the value for this category on the catalog).
+     */
+    public function findOneMergedByContext(
+        Category $category,
+        ?Catalog $catalog,
+        ?LocalizedCatalog $localizedCatalog
+    ): ?Category\Configuration {
         $exprBuilder = $this->getEntityManager()->getExpressionBuilder();
 
-        $conditionExpr = 'case when lc.%1$s IS NOT NULL then lc.%1$s else ' .
-            '(case when c.%1$s IS NOT NULL then c.%1$s else g.%1$s end) end as %1$s';
+        if ($localizedCatalog) {
+            $mergeExpr = 'case when lc.%1$s IS NOT NULL then lc.%1$s else ' .
+                '(case when c.%1$s IS NOT NULL then c.%1$s else g.%1$s end) end';
+        } elseif ($catalog) {
+            $localizedCatalog = $catalog->getLocalizedCatalogs()->first();
+            $mergeExpr = 'case when c.%1$s IS NOT NULL then c.%1$s else g.%1$s end';
+        } else {
+            $mergeExpr = 'g.%1$s';
+        }
 
-        return $this->createQueryBuilder('lc')
-            ->resetDQLPart('select')
-            ->select(
-                [
-                    'lc.name',
-                    'IDENTITY(lc.category) as category_id',
-                    sprintf($conditionExpr, 'isVirtual'),
-                    sprintf($conditionExpr, 'useNameInProductSearch'),
-                    sprintf($conditionExpr, 'defaultSorting'),
-                    'lc.isActive',
-                ]
-            )
-            ->leftJoin(
-                $this->getClassName(),
-                'c',
-                Join::WITH,
-                $exprBuilder->andX(
-                    $exprBuilder->eq('c.category', 'lc.category'),
-                    $exprBuilder->eq('c.catalog', 'lc.catalog'),
-                    $exprBuilder->isNull('c.localizedCatalog'),
-                )
-            )
-            ->leftJoin(
-                $this->getClassName(),
-                'g',
-                Join::WITH,
-                $exprBuilder->andX(
-                    $exprBuilder->eq('g.category', 'lc.category'),
-                    $exprBuilder->isNull('g.catalog'),
-                    $exprBuilder->isNull('c.localizedCatalog'),
-                )
-            )
-            // Is null catalog | localized catalog
+        $queryBuilder = $this->buildMergeQuery($mergeExpr)
+            ->addSelect('MAX(lc.name) as name')
+            ->where('lc.category = :category')
+            ->setParameter('category', $category);
+
+        if ($catalog) {
+            $queryBuilder->addSelect('MAX(' . ($localizedCatalog ? 'lc.id' : 'c.id') . ') as id')
+                ->andWhere('lc.localizedCatalog = :localizedCatalog')
+                ->andWhere('lc.catalog = :catalog')
+                ->setParameter('catalog', $catalog)
+                ->setParameter('localizedCatalog', $localizedCatalog);
+        } else {
+            $queryBuilder->addSelect('MAX(g.id) as id')
+                ->andWhere($exprBuilder->isNotNull('lc.localizedCatalog'))
+                ->andWhere($exprBuilder->isNotNull('lc.catalog'));
+        }
+
+        $results = $queryBuilder->getQuery()->getResult();
+        $result = reset($results);
+        $categoryConfiguration = new Category\Configuration();
+
+        // Api can't return data without IRI, so without id.
+        // We need to set 0 id for configuration that not exist yet in db.
+        $categoryConfiguration->setId($result['id'] ?: 0);
+        $categoryConfiguration->setCategory($category);
+        $categoryConfiguration->setCatalog($catalog);
+        $categoryConfiguration->setLocalizedCatalog($localizedCatalog);
+        $categoryConfiguration->setName($result['name']);
+        $categoryConfiguration->setIsVirtual((bool) $result['isVirtual']);
+        $categoryConfiguration->setDefaultSorting($result['defaultSorting']);
+        $categoryConfiguration->setUseNameInProductSearch((bool) $result['useNameInProductSearch']);
+        $categoryConfiguration->setIsActive((bool) $result['isActive']);
+
+        return $categoryConfiguration;
+    }
+
+    /**
+     * Get category configurations for given context.
+     * If a parameter is not defined in this context, we get the value from the parent context
+     * (ex: if isVirtual is null for this localized catalog, we get the value for this category on the catalog).
+     */
+    public function findMergedByContext(Catalog $catalog, LocalizedCatalog $localizedCatalog): array
+    {
+        $mergeExpr = 'case when lc.%1$s IS NOT NULL then lc.%1$s else ' .
+            '(case when c.%1$s IS NOT NULL then c.%1$s else g.%1$s end) end';
+
+        return $this->buildMergeQuery($mergeExpr)
+            ->addSelect('MAX(lc.name) as name')
             ->where('lc.localizedCatalog = :localizedCatalog')
             ->andWhere('lc.catalog = :catalog')
             ->setParameter('catalog', $catalog)
             ->setParameter('localizedCatalog', $localizedCatalog)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Get all category configurations.
+     * The given localized catalog is used to get the default name for these categories.
+     */
+    public function findAllMerged(LocalizedCatalog $localizedCatalog): array
+    {
+        $exprBuilder = $this->getEntityManager()->getExpressionBuilder();
+        $mergeExpr = 'case when lc.%1$s IS NOT NULL then lc.%1$s else ' .
+            '(case when c.%1$s IS NOT NULL then c.%1$s else g.%1$s end) end';
+
+        return $this->buildMergeQuery($mergeExpr)
+            ->leftJoin(
+                $this->getClassName(),
+                'defaultName',
+                Join::WITH,
+                $exprBuilder->andX(
+                    $exprBuilder->eq('defaultName.category', 'lc.category'),
+                    $exprBuilder->eq('defaultName.localizedCatalog', ':localizedCatalogForName'),
+                )
+            )
+            ->andWhere($exprBuilder->isNotNull('lc.localizedCatalog'))
+            ->andWhere($exprBuilder->isNotNull('lc.catalog'))
+            ->addSelect('MAX(case when defaultName.name is not null then defaultName.name else lc.name end) as name')
+            ->setParameter('localizedCatalogForName', $localizedCatalog)
             ->getQuery()
             ->getResult();
     }
@@ -155,5 +207,47 @@ class CategoryConfigurationRepository extends ServiceEntityRepository
             ->distinct();
 
         return $unusedConfiguration->getQuery()->getResult();
+    }
+
+    private function buildMergeQuery(string $mergeExpr): QueryBuilder
+    {
+        $exprBuilder = $this->getEntityManager()->getExpressionBuilder();
+
+        return $this->createQueryBuilder('lc')
+            ->resetDQLPart('select')
+            // We need to aggregate select field in order to group row on category id.
+            // But in doctrine we don't have access on postgres 'DISTINCT ON' or BOOL_AND or IF function
+            // So we have to cast our bool value in int in order to aggregate them.
+            ->select(
+                [
+                    'MAX(IDENTITY(lc.category)) as category_id',
+                    'MAX(CASE WHEN ' . sprintf($mergeExpr, 'isVirtual') . ' = TRUE THEN 1 ELSE 0 END) as isVirtual',
+                    'MAX(CASE WHEN ' . sprintf($mergeExpr, 'useNameInProductSearch') . ' = TRUE THEN 1 ELSE 0 END) as useNameInProductSearch',
+                    'MAX(' . sprintf($mergeExpr, 'defaultSorting') . ') as defaultSorting',
+                    'MAX(CASE WHEN lc.isActive = TRUE THEN 1 ELSE 0 END) as isActive',
+                ]
+            )
+            ->leftJoin(
+                $this->getClassName(),
+                'c',
+                Join::WITH,
+                $exprBuilder->andX(
+                    $exprBuilder->eq('c.category', 'lc.category'),
+                    $exprBuilder->eq('c.catalog', 'lc.catalog'),
+                    $exprBuilder->isNull('c.localizedCatalog'),
+                )
+            )
+            ->leftJoin(
+                $this->getClassName(),
+                'g',
+                Join::WITH,
+                $exprBuilder->andX(
+                    $exprBuilder->eq('g.category', 'lc.category'),
+                    $exprBuilder->isNull('g.catalog'),
+                    $exprBuilder->isNull('c.localizedCatalog'),
+                )
+            )
+            ->groupBy('lc.category')
+            ->orderBy('lc.category');
     }
 }

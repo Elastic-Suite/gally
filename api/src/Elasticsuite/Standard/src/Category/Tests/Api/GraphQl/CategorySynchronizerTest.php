@@ -76,7 +76,7 @@ class CategorySynchronizerTest extends AbstractTest
 
     public function testSynchronize(): void
     {
-        /** @var EntityManager */
+        /** @var EntityManager $entityManager */
         $entityManager = static::getContainer()->get('doctrine')->getManager();
         $catalogRepository = static::getContainer()->get(LocalizedCatalogRepository::class);
 
@@ -144,7 +144,7 @@ class CategorySynchronizerTest extends AbstractTest
             ['category' => $category3, 'localizedCatalog' => $catalog2]
         );
         $this->assertSame('Three', $categoryConfigCatalog2->getName());
-        $this->assertNull($categoryConfigCatalog2->getIsVirtual());
+        $this->assertFalse($categoryConfigCatalog2->getIsVirtual());
 
         // Add new specific configuration on catalog scope
         $category1 = self::$categoryRepository->find('one');
