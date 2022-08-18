@@ -18,10 +18,11 @@ namespace Elasticsuite\Category\Controller;
 
 use Elasticsuite\Catalog\Repository\CatalogRepository;
 use Elasticsuite\Catalog\Repository\LocalizedCatalogRepository;
+use Elasticsuite\Category\Model\Category\Configuration;
 use Elasticsuite\Category\Repository\CategoryConfigurationRepository;
 use Elasticsuite\Category\Repository\CategoryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -33,14 +34,11 @@ class CategoryConfigurationGet extends AbstractController
         private CatalogRepository $catalogRepository,
         private LocalizedCatalogRepository $localizedCatalogRepository,
         private CategoryRepository $categoryRepository,
-        private RequestStack $requestStack,
     ) {
     }
 
-    public function __invoke(string $categoryId)
+    public function __invoke(string $categoryId, Request $request): Configuration
     {
-        $request = $this->requestStack->getCurrentRequest();
-
         $category = $this->categoryRepository->find($categoryId);
         if (!$category) {
             throw new NotFoundHttpException(sprintf('Category with id %s not found.', $categoryId));

@@ -1,9 +1,24 @@
 Elasticsuite\Metadata\Model\SourceField:
+    product_id:
+        metadata: '@product'
+        code: 'id'
+        type: 'int'
+        isSystem: true
     product_name:
         metadata: '@product'
         code: 'name'
         type: 'text'
         isSortable: true
+    product_category_id:
+        metadata: '@product'
+        code: 'category.id'
+        type: 'keyword'
+        isSystem: true
+    product_category_position:
+        metadata: '@product'
+        code: 'category.position'
+        type: 'int'
+        isSystem: true
     category_id:
         metadata: '@category'
         code: 'id'

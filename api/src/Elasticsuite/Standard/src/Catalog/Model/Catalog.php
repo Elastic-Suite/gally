@@ -92,7 +92,7 @@ class Catalog
     }
 
     /**
-     * @return Collection&iterable<\Elasticsuite\Catalog\Model\LocalizedCatalog>
+     * @return Collection<int, LocalizedCatalog>|LocalizedCatalog[]
      */
     public function getLocalizedCatalogs(): Collection
     {
