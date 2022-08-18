@@ -19,10 +19,10 @@ namespace Elasticsuite\Metadata\Model;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Elasticsuite\Entity\Filter\BooleanFilter;
 use Elasticsuite\User\Constant\Role;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -47,7 +47,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
     normalizationContext: ['groups' => ['source_field:api']],
     denormalizationContext: ['groups' => ['source_field:api']],
 )]
-#[ApiFilter(BooleanFilter::class, properties: ['isSearchable', 'isFilterable'])]
+#[ApiFilter(BooleanFilter::class, properties: ['isSearchable', 'isFilterable'], arguments: ['treatNullAsFalse' => true])]
 #[ApiFilter(SearchFilter::class, properties: ['code' => 'partial', 'defaultLabel' => 'partial', 'type' => 'partial', 'metadata' => 'exact'])]
 class SourceField
 {
