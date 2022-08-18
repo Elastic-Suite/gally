@@ -6,5 +6,8 @@
   "pinToBottom": "Unpin",
   "previewArea": "Preview area",
   "rows.selected_one": "{{count}} selected row.",
-  "rows.selected_other": "{{count}} selected rows."
+  "rows.selected_other": "{{count}} selected rows.",
+  "defaultCatalog.label": "All catalog",
+  "catalog.dropdown.label": "Choose a catalog",
+  "localizedCatalog.dropdown.label": "Choose a local"
 }

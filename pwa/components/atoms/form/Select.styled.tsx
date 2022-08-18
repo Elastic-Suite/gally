@@ -19,6 +19,9 @@ function ButtonWithIcon(
 const ButtonWithIconRef = forwardRef<HTMLButtonElement>(ButtonWithIcon)
 
 export const StyledButton = styled(ButtonWithIconRef)(({ theme }) => ({
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
   fontFamily: 'Inter',
   padding: '10px 16px',
   background: theme.palette.colors.white,
