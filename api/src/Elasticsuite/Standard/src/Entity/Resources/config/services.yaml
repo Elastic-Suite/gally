@@ -15,3 +15,7 @@ services:
             - '@Elasticsuite\ResourceMetadata\Service\ResourceMetadataManager'
             - '@api_platform.graphql.types_container'
             - '@.inner'
+                
+    Elasticsuite\Entity\Filter\BooleanFilter:
+        arguments: [ '@doctrine', ~, '@?logger' ]
+        tags: [ 'api_platform.filter' ]
