@@ -29,7 +29,9 @@ use Elasticsuite\Category\Exception\SyncCategoryException;
 use Elasticsuite\Category\Model\Category;
 use Elasticsuite\Category\Model\Category\Configuration;
 use Elasticsuite\Category\Repository\CategoryConfigurationRepository;
+use Elasticsuite\Category\Repository\CategoryProductMerchandisingRepository;
 use Elasticsuite\Category\Repository\CategoryRepository;
+use Elasticsuite\Category\Service\CategoryProductPositionManager;
 use Elasticsuite\Category\Service\CategorySynchronizer;
 use Elasticsuite\Index\MutationResolver\BulkDeleteIndexMutation;
 use Elasticsuite\Index\MutationResolver\BulkIndexMutation;
@@ -218,14 +220,16 @@ class CategorySynchronizerTest extends AbstractTest
         $decorator->__invoke(null, ['args' => ['input' => ['data' => '[]']]]);
     }
 
-    private function retryTestDataProvider(): iterable
+    public function retryTestDataProvider(): iterable
     {
         $indexSettings = static::getContainer()->get(IndexSettings::class);
         $indexRepository = static::getContainer()->get(IndexRepository::class);
+        $categoryProductPositionManager = static::getContainer()->get(CategoryProductPositionManager::class);
+        $categoryProductMerchandisingRepository = static::getContainer()->get(CategoryProductMerchandisingRepository::class);
 
-        yield [InstallIndexMutation::class, SyncCategoryDataAfterInstall::class];
-        yield [BulkIndexMutation::class, SyncCategoryDataAfterBulk::class, [$indexSettings, $indexRepository]];
-        yield [BulkDeleteIndexMutation::class, SyncCategoryDataAfterBulkDelete::class, [$indexSettings, $indexRepository]];
+        yield [InstallIndexMutation::class, SyncCategoryDataAfterInstall::class, [$categoryProductPositionManager]];
+        yield [BulkIndexMutation::class, SyncCategoryDataAfterBulk::class, [$indexSettings, $indexRepository, $categoryProductPositionManager]];
+        yield [BulkDeleteIndexMutation::class, SyncCategoryDataAfterBulkDelete::class, [$indexSettings, $indexRepository, $categoryProductMerchandisingRepository]];
     }
 
     private function prepareIndex(int $catalogId, array $data): void

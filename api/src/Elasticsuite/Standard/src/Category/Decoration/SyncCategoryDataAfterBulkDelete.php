@@ -19,6 +19,7 @@ namespace Elasticsuite\Category\Decoration;
 use ApiPlatform\Core\GraphQl\Resolver\MutationResolverInterface;
 use Elasticsuite\Category\Exception\SyncCategoryException;
 use Elasticsuite\Category\Model\Category;
+use Elasticsuite\Category\Repository\CategoryProductMerchandisingRepository;
 use Elasticsuite\Category\Service\CategorySynchronizer;
 use Elasticsuite\Index\Api\IndexSettingsInterface;
 use Elasticsuite\Index\Model\Index;
@@ -32,6 +33,7 @@ class SyncCategoryDataAfterBulkDelete implements MutationResolverInterface
         private CategorySynchronizer $synchronizer,
         private IndexSettingsInterface $indexSettings,
         private IndexRepositoryInterface $indexRepository,
+        private CategoryProductMerchandisingRepository $categoryProductMerchandisingRepository,
     ) {
     }
 
@@ -44,16 +46,23 @@ class SyncCategoryDataAfterBulkDelete implements MutationResolverInterface
     {
         $index = $this->decorated->__invoke($item, $context);
 
-        if (
-            'category' === $index->getEntityType()          // Synchronize sql data for category entity
-            && $this->indexSettings->isInstalled($index)    // Don't synchronize if index is not installed
-        ) {
-            $this->indexRepository->refresh($index->getName()); // Force refresh to avoid missing data
-            try {
-                $this->synchronizer->synchronize($index);
-            } catch (SyncCategoryException) {
-                // If sync failed, retry sync once, then log the error.
-                $this->synchronizer->synchronize($index);
+        if (null !== $index->getEntityType() && $this->indexSettings->isInstalled($index)) { // Don't synchronize if index is not installed
+            if ('category' === $index->getEntityType()) { // Synchronize sql data for category entity
+                $this->indexRepository->refresh($index->getName()); // Force refresh to avoid missing data
+                try {
+                    $this->synchronizer->synchronize($index);
+                } catch (SyncCategoryException) {
+                    // If sync failed, retry sync once, then log the error.
+                    $this->synchronizer->synchronize($index);
+                }
+            }
+
+            if ('product' === $index->getEntityType()) {
+                // Todo: For the moment we remove only values in the scope localized catalog, the others scopes will be managed in ticket ESPP-437.
+                $this->categoryProductMerchandisingRepository->removeByProductIdAndLocalizedCatalog(
+                    $context['args']['input']['ids'],
+                    $index->getCatalog()
+                );
             }
         }
 

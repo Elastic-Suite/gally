@@ -1,0 +1,129 @@
+[
+  {
+    "index_name": "elasticsuite_b2c_fr_product",
+    "documents": [
+      {
+        "id": "1",
+        "name": "Sac de sport Jout",
+        "category": [
+          {
+            "id": "one"
+          },
+          {
+            "id": "two"
+          }
+        ]
+      },
+      {
+        "id": "2",
+        "name": "Sac à bandoulière Strive",
+        "category": [
+          {
+            "id": "one"
+          },
+          {
+            "id": "two"
+          }
+        ]
+      },
+      {
+        "id": "3",
+        "name": "Sac à dos Crown Summit",
+        "category": [
+          {
+            "id": "three"
+          }
+        ]
+      },
+      {
+        "id": "4",
+        "name": "Sac messager Wayfarer"
+      }
+    ]
+  },
+  {
+    "index_name": "elasticsuite_b2c_en_product",
+    "documents": [
+      {
+        "id": "1",
+        "name": "Joust Duffle Bag",
+        "category": [
+          {
+            "id": "one"
+          },
+          {
+            "id": "two"
+          }
+        ]
+      },
+      {
+        "id": "2",
+        "name": "Strive Shoulder Pack",
+        "category": [
+          {
+            "id": "one"
+          },
+          {
+            "id": "two"
+          }
+        ]
+      },
+      {
+        "id": "3",
+        "name": "Crown Summit Backpack",
+        "category": [
+          {
+            "id": "three"
+          }
+        ]
+      },
+      {
+        "id": "4",
+        "name": "Wayfarer Messenger Bag"
+      }
+    ]
+  },
+  {
+    "index_name": "elasticsuite_b2b_en_product",
+    "documents": [
+      {
+        "id": "1",
+        "name": "Joust Duffle Bag",
+        "category": [
+          {
+            "id": "one"
+          },
+          {
+            "id": "two"
+          }
+        ]
+      },
+      {
+        "id": "2",
+        "name": "Strive Shoulder Pack",
+        "category": [
+          {
+            "id": "one"
+          },
+          {
+            "id": "two"
+          }
+        ]
+      },
+      {
+        "id": "3",
+        "name": "Crown Summit Backpack"
+      },
+      {
+        "id": "4",
+        "name": "Wayfarer Messenger Bag",
+        "category": [
+          {
+            "id": "five"
+          }
+        ]
+      }
+    ]
+  }
+]
+

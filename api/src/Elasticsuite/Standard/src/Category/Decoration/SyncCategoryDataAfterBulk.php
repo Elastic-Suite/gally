@@ -19,6 +19,7 @@ namespace Elasticsuite\Category\Decoration;
 use ApiPlatform\Core\GraphQl\Resolver\MutationResolverInterface;
 use Elasticsuite\Category\Exception\SyncCategoryException;
 use Elasticsuite\Category\Model\Category;
+use Elasticsuite\Category\Service\CategoryProductPositionManager;
 use Elasticsuite\Category\Service\CategorySynchronizer;
 use Elasticsuite\Index\Api\IndexSettingsInterface;
 use Elasticsuite\Index\Model\Index;
@@ -32,6 +33,7 @@ class SyncCategoryDataAfterBulk implements MutationResolverInterface
         private CategorySynchronizer $synchronizer,
         private IndexSettingsInterface $indexSettings,
         private IndexRepositoryInterface $indexRepository,
+        private CategoryProductPositionManager $categoryProductPositionManager,
     ) {
     }
 
@@ -44,16 +46,23 @@ class SyncCategoryDataAfterBulk implements MutationResolverInterface
     {
         $index = $this->decorated->__invoke($item, $context);
 
-        if (
-            'category' === $index->getEntityType()          // Synchronize sql data for category entity
-            && $this->indexSettings->isInstalled($index)    // Don't synchronize if index is not installed
-        ) {
-            $this->indexRepository->refresh($index->getName()); // Force refresh to avoid missing data
-            try {
-                $this->synchronizer->synchronize($index, json_decode($context['args']['input']['data'], true));
-            } catch (SyncCategoryException) {
-                // If sync failed, retry sync once, then log the error.
-                $this->synchronizer->synchronize($index, json_decode($context['args']['input']['data'], true));
+        if (null !== $index->getEntityType() && $this->indexSettings->isInstalled($index)) { // Don't synchronize if index is not installed
+            if ('category' === $index->getEntityType()) { // Synchronize sql data for category entity
+                $this->indexRepository->refresh($index->getName()); // Force refresh to avoid missing data
+                try {
+                    $this->synchronizer->synchronize($index, json_decode($context['args']['input']['data'], true));
+                } catch (SyncCategoryException) {
+                    // If sync failed, retry sync once, then log the error.
+                    $this->synchronizer->synchronize($index, json_decode($context['args']['input']['data'], true));
+                }
+            }
+
+            if ('product' === $index->getEntityType()) {
+                $this->indexRepository->refresh($index->getName()); // Force refresh to avoid missing data
+                $this->categoryProductPositionManager->reindexPositionsByIndex(
+                    $index,
+                    array_column(json_decode($context['args']['input']['data'], true), 'id')
+                );
             }
         }
 

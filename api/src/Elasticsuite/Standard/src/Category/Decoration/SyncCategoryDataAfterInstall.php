@@ -18,6 +18,7 @@ namespace Elasticsuite\Category\Decoration;
 
 use ApiPlatform\Core\GraphQl\Resolver\MutationResolverInterface;
 use Elasticsuite\Category\Exception\SyncCategoryException;
+use Elasticsuite\Category\Service\CategoryProductPositionManager;
 use Elasticsuite\Category\Service\CategorySynchronizer;
 use Elasticsuite\Index\Model\Index;
 use Elasticsuite\Index\MutationResolver\InstallIndexMutation;
@@ -27,6 +28,7 @@ class SyncCategoryDataAfterInstall implements MutationResolverInterface
     public function __construct(
         private InstallIndexMutation $decorated,
         private CategorySynchronizer $synchronizer,
+        private CategoryProductPositionManager $categoryProductPositionManager,
     ) {
     }
 
@@ -47,6 +49,10 @@ class SyncCategoryDataAfterInstall implements MutationResolverInterface
                 // If sync failed, retry sync once, then log the error.
                 $this->synchronizer->synchronize($index);
             }
+        }
+
+        if ('product' === $index->getEntityType()) {
+            $this->categoryProductPositionManager->reindexPositionsByIndex($index);
         }
 
         return $index;
