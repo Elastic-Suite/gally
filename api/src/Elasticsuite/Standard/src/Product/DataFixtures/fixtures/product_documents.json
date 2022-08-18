@@ -14,7 +14,17 @@
             "label": "Black"
           }
         ],
-        "created_at": "2022-09-01"
+        "created_at": "2022-09-01",
+        "category": [
+          {
+            "id": "one",
+            "uid": "b25l"
+          },
+          {
+            "id": "two",
+            "uid": "dHdv"
+          }
+        ]
       },
       {
         "id": "2",
@@ -28,7 +38,17 @@
             "label": "Black"
           }
         ],
-        "created_at": "2022-09-01"
+        "created_at": "2022-09-01",
+        "category": [
+          {
+            "id": "one",
+            "uid": "b25l"
+          },
+          {
+            "id": "two",
+            "uid": "dHdv"
+          }
+        ]
       },
       {
         "id": "3",
@@ -261,6 +281,18 @@
             "value": "black",
             "label": "Noir"
           }
+        ],
+        "category": [
+          {
+            "id": "one",
+            "uid": "b25l",
+            "position": 1
+          },
+          {
+            "id": "two",
+            "uid": "dHdv",
+            "position": 2
+          }
         ]
       },
       {
@@ -281,6 +313,18 @@
           {
             "value": "black",
             "label": "Noir"
+          }
+        ],
+        "category": [
+          {
+            "id": "one",
+            "uid": "b25l",
+            "position": 2
+          },
+          {
+            "id": "two",
+            "uid": "dHdv",
+            "position": 1
           }
         ]
       },
@@ -306,6 +350,13 @@
           {
             "value": "grey",
             "label": "Gris"
+          }
+        ],
+        "category": [
+          {
+            "id": "three",
+            "uid": "dGhyZWU=",
+            "position": 99
           }
         ]
       },

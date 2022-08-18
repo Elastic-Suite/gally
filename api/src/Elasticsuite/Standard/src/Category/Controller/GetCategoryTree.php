@@ -18,7 +18,7 @@ namespace Elasticsuite\Category\Controller;
 
 use Elasticsuite\Category\Service\CategoryTreeBuilder;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 
 #[AsController]
@@ -26,13 +26,11 @@ class GetCategoryTree extends AbstractController
 {
     public function __construct(
         private CategoryTreeBuilder $categoryTreeBuilder,
-        private RequestStack $requestStack
     ) {
     }
 
-    public function __invoke()
+    public function __invoke(Request $request)
     {
-        $request = $this->requestStack->getCurrentRequest();
         $catalogId = $request->query->get('catalogId');
         $catalogId = $catalogId ? (int) $catalogId : null;
         $localizedCatalogId = (int) $request->query->get('localizedCatalogId');

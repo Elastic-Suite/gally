@@ -588,25 +588,25 @@ class SearchDocumentsTest extends AbstractTest
                 'product', // entity type.
                 'b2c_en', // catalog ID.
                 '{matchFilter: {field:"fake_source_field_match", match:"sacs"}}', // Filters.
-                "The source field 'fake_source_field_match' do not exist", // debug message
+                "The source field 'fake_source_field_match' does not exist", // debug message
             ],
             [
                 'product', // entity type.
                 'b2c_en', // catalog ID.
                 '{equalFilter: {field:"fake_source_field_equal", eq: "24-MB03"}}', // Filters.
-                "The source field 'fake_source_field_equal' do not exist", // debug message
+                "The source field 'fake_source_field_equal' does not exist", // debug message
             ],
             [
                 'product', // entity type.
                 'b2c_en', // catalog ID.
                 '{rangeFilter: {field:"fake_source_field_range", from: "0"}}', // Filters.
-                "The source field 'fake_source_field_range' do not exist", // debug message
+                "The source field 'fake_source_field_range' does not exist", // debug message
             ],
             [
                 'product', // entity type.
                 'b2c_en', // catalog ID.
                 '{matchFilter: {field:"fake_source_field", match:"sacs"}}', // Filters.
-                "The source field 'fake_source_field' do not exist", // debug message
+                "The source field 'fake_source_field' does not exist", // debug message
             ],
             [
                 'product', // entity type.

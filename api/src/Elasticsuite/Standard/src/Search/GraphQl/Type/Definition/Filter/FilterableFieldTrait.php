@@ -43,7 +43,7 @@ trait FilterableFieldTrait
          * because the sku would not filterable via the API for example.
          */
         if (!$sourceField instanceof SourceField) {
-            $errors[] = "The source field '{$sourceFieldCode}' do not exist";
+            $errors[] = "The source field '{$sourceFieldCode}' does not exist";
         }
 
         $this->sourceFieldsValidated[$sourceFieldCode] = true;

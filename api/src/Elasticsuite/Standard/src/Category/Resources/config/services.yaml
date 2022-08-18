@@ -38,6 +38,7 @@ services:
             - '@Elasticsuite\Category\Service\CategorySynchronizer'
             - '@Elasticsuite\Index\Service\IndexSettings'
             - '@Elasticsuite\Index\Repository\Index\IndexRepository'
+            - '@Elasticsuite\Category\Service\CategoryProductPositionManager'
         decoration_priority: 100
             
     Elasticsuite\Category\Decoration\SyncCategoryDataAfterBulkDelete:
@@ -47,6 +48,7 @@ services:
             - '@Elasticsuite\Category\Service\CategorySynchronizer'
             - '@Elasticsuite\Index\Service\IndexSettings'
             - '@Elasticsuite\Index\Repository\Index\IndexRepository'
+            - '@Elasticsuite\Category\Repository\CategoryProductMerchandisingRepository'
         decoration_priority: 100
             
     Elasticsuite\Category\Decoration\SyncCategoryDataAfterInstall:
@@ -54,6 +56,7 @@ services:
         arguments:
             - '@.inner'
             - '@Elasticsuite\Category\Service\CategorySynchronizer'
+            - '@Elasticsuite\Category\Service\CategoryProductPositionManager'
         decoration_priority: 100
         
     Elasticsuite\Category\DataProvider\CategorySortingOptionDataProvider:
@@ -74,7 +77,6 @@ services:
             - '@Elasticsuite\Catalog\Repository\CatalogRepository'
             - '@Elasticsuite\Catalog\Repository\LocalizedCatalogRepository'
             - '@Elasticsuite\Category\Repository\CategoryRepository'
-            - '@request_stack'
         calls:
             - [ setContainer, [ '@service_container' ] ]
         tags:
@@ -106,8 +108,82 @@ services:
     Elasticsuite\Category\Controller\GetCategoryTree:
         arguments:
             - '@Elasticsuite\Category\Service\CategoryTreeBuilder'
-            - '@request_stack'
         calls:
             - [ setContainer, [ '@service_container' ] ]
         tags:
             - { name: controller.service_arguments }
+    
+    Elasticsuite\Category\Repository\CategoryProductMerchandisingRepository:
+        arguments:
+            - '@Doctrine\Persistence\ManagerRegistry'
+        tags:
+            - { name: doctrine.repository_service }
+
+    Elasticsuite\Category\EventSubscriber\ReindexPosition:
+        arguments:
+            - '@Elasticsuite\Category\Service\CategoryProductPositionManager'
+            
+        tags:
+            - { name: doctrine.event_subscriber }
+
+    Elasticsuite\Category\Controller\CategoryProductPositionSave:
+        arguments:
+            - '@Elasticsuite\Category\Repository\CategoryRepository'
+            - '@Elasticsuite\Catalog\Repository\CatalogRepository'
+            - '@Elasticsuite\Catalog\Repository\LocalizedCatalogRepository'
+            - '@Elasticsuite\Category\Service\CategoryProductPositionManager'
+        calls:
+            - [ setContainer, [ '@service_container' ] ]
+        tags:
+            - { name: controller.service_arguments }
+ 
+    Elasticsuite\Category\Controller\CategoryProductPositionGet:
+        arguments:
+            - '@Elasticsuite\Category\Repository\CategoryRepository'
+            - '@Elasticsuite\Catalog\Repository\LocalizedCatalogRepository'
+            - '@Elasticsuite\Category\Service\CategoryProductPositionManager'
+        calls:
+            - [ setContainer, [ '@service_container' ] ]
+        tags:
+            - { name: controller.service_arguments }
+
+    Elasticsuite\Category\Resolver\PositionSaveResolver:
+        arguments:
+            - '@Elasticsuite\Catalog\Repository\CatalogRepository'
+            - '@Elasticsuite\Catalog\Repository\LocalizedCatalogRepository'
+            - '@Elasticsuite\Category\Service\CategoryProductPositionManager'
+            - '@Elasticsuite\Category\Repository\CategoryRepository'
+        tags:
+            - { name: api_platform.graphql.mutation_resolver }
+    
+    Elasticsuite\Category\Resolver\PositionGetResolver:
+        arguments:
+            - '@Elasticsuite\Catalog\Repository\LocalizedCatalogRepository'
+            - '@Elasticsuite\Category\Service\CategoryProductPositionManager'
+            - '@Elasticsuite\Category\Repository\CategoryRepository'
+        tags:
+            - { name: api_platform.graphql.query_resolver }
+
+    Elasticsuite\Category\Repository\CategoryProductPositionIndexer\CategoryProductPositionIndexerRepositoryInterface: '@Elasticsuite\Category\Repository\CategoryProductPositionIndexer\CategoryProductPositionIndexerRepository'
+    Elasticsuite\Category\Repository\CategoryProductPositionIndexer\CategoryProductPositionIndexerRepository:
+        arguments:
+            - '@api_platform.elasticsearch.client'
+            - '@Elasticsuite\Metadata\Repository\MetadataRepository'
+            - '@Elasticsuite\Index\Service\IndexSettings'
+            - '@Elasticsuite\Index\Repository\Index\IndexRepositoryInterface'
+            - '@logger'
+
+    Elasticsuite\Category\Service\CategoryProductPositionManager:
+        arguments:
+            - '@Elasticsuite\Category\Repository\CategoryProductMerchandisingRepository'
+            - '@Elasticsuite\Category\Repository\CategoryProductPositionIndexer\CategoryProductPositionIndexerRepositoryInterface'
+            - '@Elasticsuite\Metadata\Repository\MetadataRepository'
+            - '@doctrine.orm.entity_manager'
+            - '@Elasticsuite\Search\Elasticsearch\Builder\Request\SimpleRequestBuilder'
+            - '@Elasticsuite\Search\Elasticsearch\Adapter'
+            - '@Elasticsuite\Search\Elasticsearch\Request\QueryFactory'
+
+    Elasticsuite\Category\OpenApi\CategoryDecorator:
+        decorates: api_platform.openapi.factory
+        arguments:
+            - '@.inner'

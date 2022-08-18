@@ -72,6 +72,7 @@ use Elasticsuite\User\Constant\Role;
         'collection_query' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
         'get' => [
             'item_query' => ConfigurationResolver::class,
+            'security' => "is_granted('" . Role::ROLE_ADMIN . "')",
             'args' => [
                 'categoryId' => ['type' => 'String!'],
                 'catalogId' => ['type' => 'Int'],

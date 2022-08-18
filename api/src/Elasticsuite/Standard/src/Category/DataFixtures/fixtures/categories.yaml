@@ -39,3 +39,35 @@ Elasticsuite\Category\Model\Category\Configuration:
         catalog: '@catalog1'
         localizedCatalog: '@localized_catalog2'
         name: 'Category Two'
+        
+Elasticsuite\Category\Model\Category\ProductMerchandising:
+    position1:
+        category: '@categ1'
+        productId: 1
+        catalog: '@catalog1'
+        localizedCatalog: '@localized_catalog1'
+        position: 1
+    position2:
+        category: '@categ2'
+        productId: 1
+        catalog: '@catalog1'
+        localizedCatalog: '@localized_catalog1'
+        position: 2
+    position3:
+        category: '@categ1'
+        productId: 2
+        catalog: '@catalog1'
+        localizedCatalog: '@localized_catalog1'
+        position: 2
+    position4:
+        category: '@categ2'
+        productId: 2
+        catalog: '@catalog1'
+        localizedCatalog: '@localized_catalog1'
+        position: 1
+    position5:
+        category: '@categ3'
+        productId: 3
+        catalog: '@catalog1'
+        localizedCatalog: '@localized_catalog1'
+        position: 99
