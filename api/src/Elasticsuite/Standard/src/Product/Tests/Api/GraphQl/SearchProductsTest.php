@@ -384,9 +384,9 @@ class SearchProductsTest extends AbstractTest
                 'b2c_fr',   // catalog ID.
                 5,     // page size.
                 1,      // current page.
-                ['price.final_price' => SortOrderInterface::SORT_ASC], // sort order specifications.
+                ['price.price' => SortOrderInterface::SORT_ASC], // sort order specifications.
                 'id', // document data identifier.
-                // price.final_price ASC, then score DESC first, then id DESC (missing _first)
+                // price.price ASC, then score DESC first, then id DESC (missing _first)
                 [2, 1, 3, 12, 11],   // expected ordered document IDs
             ],
         ];

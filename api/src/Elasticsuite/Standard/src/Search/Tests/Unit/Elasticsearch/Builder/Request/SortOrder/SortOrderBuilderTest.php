@@ -134,15 +134,15 @@ class SortOrderBuilderTest extends AbstractTest
             [
                 'product',  // entity type.
                 [   // sort order specifications.
-                    'price.final_price' => [
-                        'field' => 'price.final_price',
+                    'price.price' => [
+                        'field' => 'price.price',
                         'direction' => SortOrderInterface::SORT_ASC,
                     ],
                 ],
                 [   // expected built sort orders.
                     [
                         'type' => SortOrderInterface::TYPE_NESTED,
-                        'field' => 'price.final_price',
+                        'field' => 'price.price',
                         'direction' => SortOrderInterface::SORT_ASC,
                         'nestedPath' => 'price',
                     ],
@@ -161,15 +161,15 @@ class SortOrderBuilderTest extends AbstractTest
             [
                 'product',  // entity type.
                 [   // sort order specifications.
-                    'price.final_price' => [
-                        'field' => 'price.final_price',
+                    'price.price' => [
+                        'field' => 'price.price',
                         'direction' => SortOrderInterface::SORT_DESC,
                     ],
                 ],
                 [   // expected built sort orders.
                     [
                         'type' => SortOrderInterface::TYPE_NESTED,
-                        'field' => 'price.final_price',
+                        'field' => 'price.price',
                         'direction' => SortOrderInterface::SORT_DESC,
                         'nestedPath' => 'price',
                     ],
@@ -188,8 +188,8 @@ class SortOrderBuilderTest extends AbstractTest
             [
                 'product',  // entity type.
                 [   // sort order specifications.
-                    'price.final_price' => [
-                        'field' => 'price.final_price',
+                    'price.price' => [
+                        'field' => 'price.price',
                         'direction' => SortOrderInterface::SORT_DESC,
                         'nestedFilter' => ['price.group_id' => 0],
                     ],
@@ -197,7 +197,7 @@ class SortOrderBuilderTest extends AbstractTest
                 [   // expected built sort orders.
                     [
                         'type' => SortOrderInterface::TYPE_NESTED,
-                        'field' => 'price.final_price',
+                        'field' => 'price.price',
                         'direction' => SortOrderInterface::SORT_DESC,
                         'nestedPath' => 'price',
                         'nestedFilter' => true,
@@ -217,8 +217,8 @@ class SortOrderBuilderTest extends AbstractTest
             [
                 'product',  // entity type.
                 [   // sort order specifications.
-                    'price.final_price' => [
-                        'field' => 'price.final_price',
+                    'price.price' => [
+                        'field' => 'price.price',
                         'direction' => SortOrderInterface::SORT_ASC,
                         'nestedFilter' => ['price.group_id' => 0],
                     ],
@@ -226,7 +226,7 @@ class SortOrderBuilderTest extends AbstractTest
                 [   // expected built sort orders.
                     [
                         'type' => SortOrderInterface::TYPE_NESTED,
-                        'field' => 'price.final_price',
+                        'field' => 'price.price',
                         'direction' => SortOrderInterface::SORT_ASC,
                         'nestedPath' => 'price',
                         'nestedFilter' => true,
