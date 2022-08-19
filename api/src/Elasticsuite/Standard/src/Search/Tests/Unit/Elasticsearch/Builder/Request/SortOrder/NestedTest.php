@@ -78,7 +78,7 @@ class NestedTest extends KernelTestCase
     {
         return [
             [
-                'price.final_price',    // field.
+                'price.price',          // field.
                 null,                   // direction.
                 'price',                // nested path.
                 null,                   // nested filter.
@@ -90,7 +90,7 @@ class NestedTest extends KernelTestCase
                 SortOrderInterface::SCORE_MODE_MIN, // expected score mode.
             ],
             [
-                'price.final_price',    // field.
+                'price.price',          // field.
                 null,                   // direction.
                 'price',                // nested path.
                 null,                   // nested filter.
@@ -102,7 +102,7 @@ class NestedTest extends KernelTestCase
                 SortOrderInterface::SCORE_MODE_MAX, // expected score mode.
             ],
             [
-                'price.final_price',        // field.
+                'price.price',              // field.
                 SortOrderInterface::SORT_ASC,   // direction.
                 'price',                    // nested path.
                 ['price.group_id', '0'],    // nested filter.
@@ -114,7 +114,7 @@ class NestedTest extends KernelTestCase
                 SortOrderInterface::SCORE_MODE_MIN, // expected score mode.
             ],
             [
-                'price.final_price',        // field.
+                'price.price',              // field.
                 SortOrderInterface::SORT_DESC,  // direction.
                 'price',                    // nested path.
                 ['price.group_id', '1'],    // nested filter.
@@ -126,7 +126,7 @@ class NestedTest extends KernelTestCase
                 SortOrderInterface::SCORE_MODE_MIN,  // expected score mode.
             ],
             [
-                'price.final_price',        // field.
+                'price.price',              // field.
                 null,                       // direction.
                 'price',                    // nested path.
                 ['price.group_id', '2'],    // nested filter.

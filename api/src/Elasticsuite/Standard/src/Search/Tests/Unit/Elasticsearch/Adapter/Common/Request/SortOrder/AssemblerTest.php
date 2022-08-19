@@ -158,15 +158,15 @@ class AssemblerTest extends AbstractTest
             [
                 'product',  // entity type.
                 [   // sort order specifications.
-                    'price.final_price' => [
-                        'field' => 'price.final_price',
+                    'price.price' => [
+                        'field' => 'price.price',
                         'direction' => SortOrderInterface::SORT_ASC,
                     ],
                 ],
                 [   // expected built sort orders.
                     [
                         'type' => SortOrderInterface::TYPE_NESTED,
-                        'field' => 'price.final_price',
+                        'field' => 'price.price',
                         'direction' => SortOrderInterface::SORT_ASC,
                         'nestedPath' => 'price',
                     ],
@@ -183,7 +183,7 @@ class AssemblerTest extends AbstractTest
                 ],
                 [   // expected assembled sort orders.
                     [
-                        'price.final_price' => [
+                        'price.price' => [
                             'order' => SortOrderInterface::SORT_ASC,
                             'missing' => SortOrderInterface::MISSING_LAST,
                             'unmapped_type' => 'keyword',
@@ -208,15 +208,15 @@ class AssemblerTest extends AbstractTest
             [
                 'product',  // entity type.
                 [   // sort order specifications.
-                    'price.final_price' => [
-                        'field' => 'price.final_price',
+                    'price.price' => [
+                        'field' => 'price.price',
                         'direction' => SortOrderInterface::SORT_DESC,
                     ],
                 ],
                 [   // expected built sort orders.
                     [
                         'type' => SortOrderInterface::TYPE_NESTED,
-                        'field' => 'price.final_price',
+                        'field' => 'price.price',
                         'direction' => SortOrderInterface::SORT_DESC,
                         'nestedPath' => 'price',
                     ],
@@ -234,7 +234,7 @@ class AssemblerTest extends AbstractTest
                 [
                     // expected assembled sort orders.
                     [
-                        'price.final_price' => [
+                        'price.price' => [
                             'order' => SortOrderInterface::SORT_DESC,
                             'missing' => SortOrderInterface::MISSING_FIRST,
                             'unmapped_type' => 'keyword',
@@ -259,8 +259,8 @@ class AssemblerTest extends AbstractTest
             [
                 'product',  // entity type.
                 [   // sort order specifications.
-                    'price.final_price' => [
-                        'field' => 'price.final_price',
+                    'price.price' => [
+                        'field' => 'price.price',
                         'direction' => SortOrderInterface::SORT_DESC,
                         'nestedFilter' => ['price.group_id' => 0],
                     ],
@@ -268,7 +268,7 @@ class AssemblerTest extends AbstractTest
                 [   // expected built sort orders.
                     [
                         'type' => SortOrderInterface::TYPE_NESTED,
-                        'field' => 'price.final_price',
+                        'field' => 'price.price',
                         'direction' => SortOrderInterface::SORT_DESC,
                         'nestedPath' => 'price',
                         'nestedFilter' => true,
@@ -286,7 +286,7 @@ class AssemblerTest extends AbstractTest
                 ],
                 [   // expected assembled sort orders.
                     [
-                        'price.final_price' => [
+                        'price.price' => [
                             'order' => SortOrderInterface::SORT_DESC,
                             'missing' => SortOrderInterface::MISSING_FIRST,
                             'nested' => [

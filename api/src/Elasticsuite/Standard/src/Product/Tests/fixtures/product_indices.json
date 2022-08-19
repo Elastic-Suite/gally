@@ -284,11 +284,14 @@
               "group_id": {
                 "type": "integer"
               },
-              "base_price": {
+              "original_price": {
                 "type": "double"
               },
-              "final_price": {
+              "price": {
                 "type": "double"
+              },
+              "is_discounted": {
+                "type": "boolean"
               }
             }
           },
@@ -643,10 +646,10 @@
               "group_id": {
                 "type": "integer"
               },
-              "base_price": {
+              "original_price": {
                 "type": "double"
               },
-              "final_price": {
+              "price": {
                 "type": "double"
               }
             }
