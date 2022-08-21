@@ -8,6 +8,8 @@ if (url && String(url).endsWith('/')) {
 }
 export const apiUrl = url
 export const gqlUrl = `${url}/graphql`
+export const apiUrlSort =
+  'https://localhost/category_sorting_options?pagination=true'
 
 export const authHeader = 'Authorization'
 export const languageHeader = 'Elasticsuite-Language'

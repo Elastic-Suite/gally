@@ -1,8 +1,8 @@
 import { Box, styled } from '@mui/system'
-import { useRef, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { ITreeItem } from '~/types'
+import { IHydraCatSort, ITreeItem } from '~/types'
 
 import PrimaryButton from '~/components/atoms/buttons/PrimaryButton'
 import TertiaryButton from '~/components/atoms/buttons/TertiaryButton'
@@ -11,6 +11,10 @@ import PageTile from '~/components/atoms/PageTitle/PageTitle'
 import StickyBar from '~/components/molecules/CustomTable/StickyBar/StickyBar'
 import ProductsTopAndBottom from '~/components/stateful/ProductsTopAndBottom/ProductsTopAndBottom'
 import Merchandize from '../Merchandize/Merchandize'
+
+import { useApiList } from '~/hooks'
+import { apiUrlSort } from '~/constants'
+// import { gqlUrl } from '~/constants'
 
 const Layout = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -28,6 +32,11 @@ interface IProps {
   category: ITreeItem
   handleVirtuel: () => void
   virtualCat: boolean
+}
+
+interface IPropsSort {
+  code: string | number
+  label: string
 }
 
 function ProductsContainer(props: IProps): JSX.Element {
@@ -48,13 +57,25 @@ function ProductsContainer(props: IProps): JSX.Element {
     setBottomSelectedRows([])
   }
 
-  /* args sort category / virtuel C */
+  const params = useMemo(() => {
+    return {
+      url: apiUrlSort,
+    }
+  }, [])
 
-  // const [virtualCat, setVirtualCat] = useState(true)
+  const [{ data }] = useApiList<IHydraCatSort>(params.url)
+
+  const selectSort = data
+    ? data[`hydra:member`].map((obj: IPropsSort) => ({
+        value: obj.code,
+        ...obj,
+      }))
+    : [{ label: 'Position', value: 'postion' }]
+
   const [catNameChange, setCatNameChange] = useState(false)
-  const [valSorting, setValSorting] = useState(10)
+  const [valSorting, setValSorting] = useState('name')
 
-  const handleChange = (val: number): void => {
+  const handleChange = (val: string): void => {
     setValSorting(val)
   }
 
@@ -76,13 +97,8 @@ function ProductsContainer(props: IProps): JSX.Element {
             args: {
               disabled: false,
               label: 'Default sorting',
-              value: 10,
-              options: [
-                { label: 'Position', value: 10 },
-                { label: 'Product Name', value: 20 },
-                { label: 'Price', value: 30 },
-                { label: 'Performance', value: 40 },
-              ],
+              value: 'name',
+              options: selectSort,
               required: false,
             },
           }}

@@ -10,8 +10,8 @@ interface IProps {
   categoryNameValue: boolean
   virtualCategoryValue: boolean
   args: ISelectProps
-  onChange?: (arg: number) => void
-  value?: number
+  onChange?: (arg: number | string) => void
+  value?: number | string
 }
 
 function Merchandize({
