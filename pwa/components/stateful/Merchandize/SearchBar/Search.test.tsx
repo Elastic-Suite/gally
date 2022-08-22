@@ -1,5 +1,5 @@
+import { renderWithProviders } from '~/utils/tests'
 import SearchBar from './SearchBar'
-import { renderWithProviders } from '~/services'
 
 describe('SearchBar match snapshot', () => {
   it('SearchBar', () => {
