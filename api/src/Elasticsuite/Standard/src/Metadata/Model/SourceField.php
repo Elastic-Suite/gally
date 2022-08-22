@@ -201,7 +201,7 @@ class SourceField
                     'editable' => true,
                     'position' => 80,
                     'context' => [
-                        'settings_attribute' => [
+                        'search_configuration_attributes' => [
                             'visible' => true,
                         ],
                     ],
@@ -222,7 +222,7 @@ class SourceField
                     'editable' => true,
                     'position' => 90,
                     'context' => [
-                        'settings_attribute' => [
+                        'search_configuration_attributes' => [
                             'visible' => true,
                         ],
                     ],
