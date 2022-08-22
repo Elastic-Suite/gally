@@ -2,7 +2,7 @@ import { Box, styled } from '@mui/system'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { ITreeItem } from '~/types'
+import { ICatalog, IHydraResponse, ITreeItem } from '~/types'
 
 import PrimaryButton from '~/components/atoms/buttons/PrimaryButton'
 import TertiaryButton from '~/components/atoms/buttons/TertiaryButton'
@@ -10,6 +10,7 @@ import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import PageTile from '~/components/atoms/PageTitle/PageTitle'
 import StickyBar from '~/components/molecules/CustomTable/StickyBar/StickyBar'
 import ProductsTopAndBottom from '~/components/stateful/ProductsTopAndBottom/ProductsTopAndBottom'
+import { getCatalogForSearchProductApi } from '~/services'
 
 const Layout = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -25,14 +26,27 @@ const ActionsButtonsContainer = styled(Box)({
 
 interface IProps {
   category: ITreeItem
+  catalog: number
+  localizedCatalog: number
+  catalogsData: IHydraResponse<ICatalog>
+  error: Error
 }
 
 function ProductsContainer(props: IProps): JSX.Element {
-  const { category } = props
+  const { category, catalog, localizedCatalog, catalogsData, error } = props
 
   const tableRef = useRef<HTMLDivElement>()
   const [topSelectedRows, setTopSelectedRows] = useState<string[]>([])
   const [bottomSelectedRows, setBottomSelectedRows] = useState<string[]>([])
+
+  const catalogId =
+    catalogsData && catalogsData['hydra:totalItems'] > 0
+      ? getCatalogForSearchProductApi(
+          catalog,
+          localizedCatalog,
+          catalogsData['hydra:member']
+        )
+      : null
 
   const { t } = useTranslation('categories')
 
@@ -43,6 +57,10 @@ function ProductsContainer(props: IProps): JSX.Element {
   function unselectAllRows(): void {
     setTopSelectedRows([])
     setBottomSelectedRows([])
+  }
+
+  if (error || !catalogsData) {
+    return null
   }
 
   return (
@@ -63,6 +81,7 @@ function ProductsContainer(props: IProps): JSX.Element {
           onTopSelectedRows={setTopSelectedRows}
           bottomSelectedRows={bottomSelectedRows}
           onBottomSelectedRows={setBottomSelectedRows}
+          catalogId={catalogId}
         />
       </Layout>
       <StickyBar positionRef={tableRef} show={showStickyBar}>
