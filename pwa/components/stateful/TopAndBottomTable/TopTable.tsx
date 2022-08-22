@@ -23,7 +23,6 @@ interface IProps {
 function TopTable(props: IProps): JSX.Element {
   const { selectedRows, onSelectedRows, catalogId } = props
 
-  // todo : when api product will be finalize, factorize code and exports this into a products service with top and bottom distinguish.
   const query = productsQuery
 
   const params: IFetchParams = useMemo(() => {

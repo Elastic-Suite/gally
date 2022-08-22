@@ -5,10 +5,10 @@ import { useContext, useEffect, useState } from 'react'
 
 import { breadcrumbContext } from '~/contexts'
 import { withAuth } from '~/hocs'
-import { useApiList, useResource } from '~/hooks'
-import { findBreadcrumbLabel, findDefaultCatalog } from '~/services'
+import { useApiList, useFetchApi, useResource } from '~/hooks'
+import { findBreadcrumbLabel } from '~/services'
 import { selectMenu, useAppSelector } from '~/store'
-import { ICatalog, ITreeItem } from '~/types'
+import { ICatalog, ICategories, ITreeItem } from '~/types'
 
 import TitleBlock from '~/components/molecules/layout/TitleBlock/TitleBlock'
 import TwoColsLayout from '~/components/molecules/layout/twoColsLayout/TwoColsLayout'
@@ -21,23 +21,17 @@ function Categories(): JSX.Element {
   const menu = useAppSelector(selectMenu)
   const [, setBreadcrumb] = useContext(breadcrumbContext)
 
-  const [selectedCategoryItem, setSelectedCategoryItem] = useState<
-    ITreeItem | undefined
-  >({} as ITreeItem)
+  const [selectedCategoryItem, setSelectedCategoryItem] = useState<ITreeItem>(
+    {}
+  )
 
   const resourceName = 'Catalog'
   const resource = useResource(resourceName)
   const [catalogsFields] = useApiList<ICatalog>(resource, false)
   const { data, error } = catalogsFields
 
-  const defaultCatalog = findDefaultCatalog(data ? data['hydra:member'] : null)
-
-  const [selectedCatalogId, setSelectedCatalogId] = useState<string | number>(
-    defaultCatalog?.id
-  )
-  const [selectedLocalizedCatalogId, setSelectedLocalizedCatalogId] = useState<
-    string | number
-  >(defaultCatalog?.localizedCatalogs[0].id)
+  const [catalogId, setCatalogId] = useState<number>(-1)
+  const [localizedCatalogId, setLocalizedCatalogId] = useState<number>(-1)
 
   useEffect(() => {
     setBreadcrumb(['merchandize', 'categories'])
@@ -47,9 +41,13 @@ function Categories(): JSX.Element {
 
   const { t } = useTranslation('categories')
 
-  function handleSelect(item: ITreeItem): void {
-    setSelectedCategoryItem(item)
-  }
+  const [categoryTreeFields] = useFetchApi<ICategories>(
+    `categoryTree?/&catalogId=${
+      catalogId !== -1 ? catalogId : null
+    }&localizedCatalogId=${
+      localizedCatalogId !== -1 ? localizedCatalogId : null
+    }`
+  )
 
   return (
     <>
@@ -61,20 +59,18 @@ function Categories(): JSX.Element {
           <TitleBlock key="categories" title={t('categories.title')}>
             <>
               <CatalogSwitcher
-                catalog={selectedCatalogId}
-                onCatalog={setSelectedCatalogId}
-                localizedCatalog={selectedLocalizedCatalogId}
-                onLocalizedCatalog={setSelectedLocalizedCatalogId}
+                catalog={catalogId}
+                onCatalog={setCatalogId}
+                localizedCatalog={localizedCatalogId}
+                onLocalizedCatalog={setLocalizedCatalogId}
                 catalogsData={data}
                 error={error}
-                defaultCatalogId={defaultCatalog ? defaultCatalog.id : ' '}
-                onCategory={handleSelect}
+                onCategory={setSelectedCategoryItem}
               />
               <CategoryTree
-                catalog={selectedCatalogId}
-                localizedCatalog={selectedLocalizedCatalogId}
+                categoryTreeFields={categoryTreeFields}
                 selectedItem={selectedCategoryItem}
-                onSelect={handleSelect}
+                onSelect={setSelectedCategoryItem}
               />
             </>
           </TitleBlock>,
@@ -83,7 +79,13 @@ function Categories(): JSX.Element {
           </TitleBlock>,
         ]}
       >
-        <ProductsContainer category={selectedCategoryItem} />
+        <ProductsContainer
+          catalog={catalogId}
+          localizedCatalog={localizedCatalogId}
+          catalogsData={data}
+          error={error}
+          category={selectedCategoryItem}
+        />
       </TwoColsLayout>
     </>
   )

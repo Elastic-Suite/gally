@@ -17,6 +17,7 @@ interface IProps {
   onTopSelectedRows: Dispatch<SetStateAction<(string | number)[]>>
   bottomSelectedRows: (string | number)[]
   onBottomSelectedRows: Dispatch<SetStateAction<(string | number)[]>>
+  catalogId: string
 }
 
 function ProductsTopAndBottom(
@@ -28,25 +29,26 @@ function ProductsTopAndBottom(
     onTopSelectedRows,
     bottomSelectedRows,
     onBottomSelectedRows,
+    catalogId,
   } = props
 
   const { t } = useTranslation('categories')
 
   return (
-    <Box sx={{ backgroundColor: 'colors.neutral.300' }}>
+    <Box sx={{ backgroundColor: 'colors.neutral.300', borderRadius: '8px' }}>
       <PreviewArea>{t('previewArea')}</PreviewArea>
       <Box sx={{ padding: '42px 16px 17px 16px' }}>
         <TopTable
           selectedRows={topSelectedRows}
           onSelectedRows={onTopSelectedRows}
-          catalogId="com_fr"
+          catalogId={catalogId}
         />
         <Box sx={{ marginTop: '24px' }}>
           <BottomTable
             ref={ref}
             selectedRows={bottomSelectedRows}
             onSelectedRows={onBottomSelectedRows}
-            catalogId="com_fr"
+            catalogId={catalogId}
           />
         </Box>
       </Box>
