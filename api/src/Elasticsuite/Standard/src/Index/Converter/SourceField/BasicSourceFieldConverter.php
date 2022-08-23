@@ -14,34 +14,39 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\Index\Converter;
+namespace Elasticsuite\Index\Converter\SourceField;
 
 use Elasticsuite\Index\Model\Index\Mapping;
 use Elasticsuite\Metadata\Model\SourceField;
 
-class SourceFieldToMappingField
+class BasicSourceFieldConverter implements SourceFieldConverterInterface
 {
     private array $typeMapping = [
-        SourceField\Type::TYPE_TEXT => Mapping\FieldInterface::FIELD_TYPE_TEXT,
         SourceField\Type::TYPE_KEYWORD => Mapping\FieldInterface::FIELD_TYPE_KEYWORD,
-        SourceField\Type::TYPE_SELECT => Mapping\FieldInterface::FIELD_TYPE_TEXT,
         SourceField\Type::TYPE_INT => Mapping\FieldInterface::FIELD_TYPE_INTEGER,
         SourceField\Type::TYPE_BOOLEAN => Mapping\FieldInterface::FIELD_TYPE_BOOLEAN,
         SourceField\Type::TYPE_FLOAT => Mapping\FieldInterface::FIELD_TYPE_DOUBLE,
-        SourceField\Type::TYPE_PRICE => Mapping\FieldInterface::FIELD_TYPE_DOUBLE,
-        SourceField\Type::TYPE_REFERENCE => Mapping\FieldInterface::FIELD_TYPE_KEYWORD,
-        SourceField\Type::TYPE_IMAGE => Mapping\FieldInterface::FIELD_TYPE_KEYWORD,
-        SourceField\Type::TYPE_OBJECT => Mapping\FieldInterface::FIELD_TYPE_OBJECT,
+        // SourceField\Type::TYPE_OBJECT => Mapping\FieldInterface::FIELD_TYPE_OBJECT,
     ];
 
     /**
-     * Create a mapping field from a source field.
+     * {@inheritDoc}
      */
-    public function convert(SourceField $sourceField): Mapping\FieldInterface
+    public function supports(SourceField $sourceField): bool
     {
+        return \in_array($sourceField->getType(), array_keys($this->typeMapping), true);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getFields(SourceField $sourceField): array
+    {
+        $fields = [];
+
         $fieldCode = $sourceField->getCode();
 
-        $fieldType = $this->typeMapping[$sourceField->getType() ?: SourceField\Type::TYPE_TEXT];
+        $fieldType = $this->typeMapping[$sourceField->getType() ?: SourceField\Type::TYPE_KEYWORD];
 
         $path = explode('.', $fieldCode);
         unset($path[\count($path) - 1]);
@@ -49,14 +54,14 @@ class SourceFieldToMappingField
 
         $fieldConfig = [
             'is_searchable' => $sourceField->getIsSearchable(),
-            'is_filterable' => $sourceField->getIsFilterable(),
+            'is_used_in_spellcheck' => $sourceField->getIsSpellchecked(),
+            'is_filterable' => $sourceField->getIsFilterable() || $sourceField->getIsUsedForRules(),
             'search_weight' => $sourceField->getWeight(),
             'is_used_for_sort_by' => $sourceField->getIsSortable(),
         ];
-        if ($sourceField->getIsSpellchecked()) {
-            $fieldConfig['is_used_in_spellcheck'] = true;
-        }
 
-        return new Mapping\Field($fieldCode, $fieldType, $path, $fieldConfig);
+        $fields[$fieldCode] = new Mapping\Field($fieldCode, $fieldType, $path, $fieldConfig);
+
+        return $fields;
     }
 }
