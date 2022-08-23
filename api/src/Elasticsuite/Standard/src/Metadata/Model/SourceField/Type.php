@@ -25,6 +25,7 @@ class Type
     public const TYPE_BOOLEAN = 'boolean';
     public const TYPE_FLOAT = 'float';
     public const TYPE_PRICE = 'price';
+    public const TYPE_STOCK = 'stock';
     public const TYPE_REFERENCE = 'reference';
     public const TYPE_IMAGE = 'image';
     public const TYPE_OBJECT = 'object';
@@ -37,6 +38,7 @@ class Type
         self::TYPE_BOOLEAN,
         self::TYPE_FLOAT,
         self::TYPE_PRICE,
+        self::TYPE_STOCK,
         self::TYPE_REFERENCE,
         self::TYPE_IMAGE,
         self::TYPE_OBJECT,

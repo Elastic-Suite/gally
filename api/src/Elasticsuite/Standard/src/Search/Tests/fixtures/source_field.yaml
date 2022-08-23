@@ -53,6 +53,7 @@ Elasticsuite\Metadata\Model\SourceField:
         metadata: '@product'
         code: 'sku'
         type: 'reference'
+        isUsedForRules: true
         isSystem: true
     product_price_group_id:
         metadata: '@product'
