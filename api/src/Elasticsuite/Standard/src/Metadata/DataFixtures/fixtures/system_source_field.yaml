@@ -23,6 +23,12 @@ Elasticsuite\Metadata\Model\SourceField:
         type: 'price'
         isSystem: true
         is_sortable: true
+    product_image:
+        metadata: '@product'
+        code: 'image'
+        type: 'image'
+        isFilterable: false
+        isSystem: true
     product_stock_status:
         metadata: '@product'
         code: 'stock.status'
@@ -34,4 +40,42 @@ Elasticsuite\Metadata\Model\SourceField:
         code: 'stock.qty'
         defaultLabel: 'Stock quantity'
         type: 'float'
+        isSystem: true
+    product_category_id:
+        metadata: '@product'
+        code: 'category.id'
+        type: 'int'
+        isSystem: true
+    product_category_uid:
+        metadata: '@product'
+        code: 'category.uid'
+        type: 'keyword'
+        isSystem: true
+    product_category_name:
+        metadata: '@product'
+        code: 'category.name'
+        type: 'text'
+        isSearchable: true
+        isSpellchecked: true
+        isFilterable: false
+        isSystem: true
+    product_category_is_parent:
+        metadata: '@product'
+        code: 'category.is_parent'
+        type: 'boolean'
+        isSystem: true
+    product_category_is_virtual:
+        metadata: '@product'
+        code: 'category.is_virtual'
+        type: 'boolean'
+        isSystem: true
+    product_category_is_blacklisted:
+        metadata: '@product'
+        code: 'category.is_blacklisted'
+        type: 'boolean'
+        isSystem: true
+    product_category_position:
+        metadata: '@product'
+        code: 'category.position'
+        type: 'int'
         isSystem: true

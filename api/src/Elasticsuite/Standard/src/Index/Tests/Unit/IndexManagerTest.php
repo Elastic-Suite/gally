@@ -59,8 +59,20 @@ class IndexManagerTest extends AbstractTest
                 [
                     'properties' => [
                         'id' => ['type' => 'integer'],
-                        'sku' => ['type' => 'keyword'],
-                        'price' => ['type' => 'double'],
+                        'sku' => [
+                            'type' => 'text',
+                            'analyzer' => 'keyword',
+                            'norms' => false,
+                        ],
+                        'price' => [
+                            'type' => 'nested',
+                            'properties' => [
+                                'original_price' => ['type' => 'double'],
+                                'price' => ['type' => 'double'],
+                                'is_discounted' => ['type' => 'boolean'],
+                                'group_id' => ['type' => 'keyword'],
+                            ],
+                        ],
                         'stock' => [
                             'type' => 'nested',
                             'properties' => [
@@ -89,9 +101,17 @@ class IndexManagerTest extends AbstractTest
                             'norms' => false,
                         ],
                         'brand' => [
-                            'type' => 'text',
-                            'analyzer' => 'keyword',
-                            'norms' => false,
+                            'type' => 'nested',
+                            'properties' => [
+                                'value' => [
+                                    'type' => 'keyword',
+                                ],
+                                'label' => [
+                                    'type' => 'text',
+                                    'analyzer' => 'keyword',
+                                    'norms' => false,
+                                ],
+                            ],
                         ],
                         'search' => [
                             'type' => 'text',
@@ -150,6 +170,7 @@ class IndexManagerTest extends AbstractTest
                             ],
                             'norms' => false,
                         ],
+                        // No 'short_description' on purpose because no 'type' on source field.
                         'search' => [
                             'type' => 'text',
                             'analyzer' => 'standard',

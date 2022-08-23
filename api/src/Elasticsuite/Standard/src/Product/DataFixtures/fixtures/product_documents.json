@@ -7,98 +7,226 @@
         "entity_id": "1",
         "sku": "24-MB01",
         "name": "Joust Duffle Bag",
-        "size" : 12
+        "size" : 12,
+        "color": [
+          {
+            "value": "black",
+            "label": "Black"
+          }
+        ]
       },
       {
         "id": "2",
         "entity_id": "2",
         "sku": "24-MB04",
         "name": "Strive Shoulder Pack",
-        "size" : 5
+        "size" : 5,
+        "color": [
+          {
+            "value": "black",
+            "label": "Black"
+          }
+        ]
       },
       {
         "id": "3",
         "entity_id": "3",
         "sku": "24-MB03",
         "name": "Crown Summit Backpack",
-        "size" : 8
+        "size" : 8,
+        "color": [
+          {
+            "value": "black",
+            "label": "Black"
+          },
+          {
+            "value": "grey",
+            "label": "Grey"
+          }
+        ]
       },
       {
         "id": "4",
         "entity_id": "4",
         "sku": "24-MB05",
         "name": "Wayfarer Messenger Bag",
-        "size" : 7
+        "size" : 7,
+        "color": [
+          {
+            "value": "black",
+            "label": "Black"
+          }
+        ]
       },
       {
         "id": "5",
         "entity_id": "5",
         "sku": "24-MB06",
         "name": "Rival Field Messenger",
-        "size" : 2
+        "size" : 2,
+        "color": [
+          {
+            "value": "grey",
+            "label": "Grey"
+          }
+        ]
       },
       {
         "id": "6",
         "entity_id": "6",
         "sku": "24-MB02",
         "name": "Fusion Backpack",
-        "size" : 9
+        "size" : 9,
+        "color": [
+          {
+            "value": "grey",
+            "label": "Grey"
+          },
+          {
+            "value": "black",
+            "label": "Black"
+          },
+          {
+            "value": "red",
+            "label": "Red"
+          }
+        ]
       },
       {
         "id": "7",
         "entity_id": "7",
         "sku": "24-UB02",
         "name": "Impulse Duffle",
-        "size" : 11
+        "size" : 11,
+        "color": [
+          {
+            "value": "black",
+            "label": "Black"
+          }
+        ]
       },
       {
         "id": "8",
         "entity_id": "8",
         "sku": "24-WB01",
         "name": "Voyage Yoga Bag",
-        "size" : 4
+        "size" : 4,
+        "color": [
+          {
+            "value": "black",
+            "label": "Black"
+          },
+          {
+            "value": "white",
+            "label": "White"
+          }
+        ]
       },
       {
         "id": "9",
         "entity_id": "9",
         "sku": "24-WB02",
         "name": "Compete Track Tote",
-        "size" : 11
+        "size" : 11,
+        "color": [
+          {
+            "value": "green",
+            "label": "Green"
+          },
+          {
+            "value": "white",
+            "label": "White"
+          }
+        ]
       },
       {
         "id": "10",
         "entity_id": "10",
         "sku": "24-WB05",
         "name": "Savvy Shoulder Tote",
-        "size" : 2
+        "size" : 2,
+        "color": [
+          {
+            "value": "pink",
+            "label": "Pink"
+          }
+        ]
       },
       {
         "id": "11",
         "entity_id": "11",
         "sku": "24-WB06",
         "name": "Endeavor Daytrip Backpack",
-        "size" : 5
+        "size" : 5,
+        "color": [
+          {
+            "value": "pink",
+            "label": "Pink"
+          },
+          {
+            "value": "fuchsia",
+            "label": "Fuchsia"
+          },
+          {
+            "value": "grey",
+            "label": "Grey"
+          },
+          {
+            "value": "black",
+            "label": "Black"
+          }
+        ]
       },
       {
         "id": "12",
         "entity_id": "12",
         "sku": "24-WB03",
         "name": "Driven Backpack",
-        "size" : 12
+        "size" : 12,
+        "color": [
+          {
+            "value": "grey",
+            "label": "Grey"
+          },
+          {
+            "value": "black",
+            "label": "Black"
+          }
+        ]
       },
       {
         "id": "13",
         "entity_id": "13",
         "sku": "24-WB07",
         "name": "Overnight Duffle",
-        "size" : 10
+        "size" : 10,
+        "color": [
+          {
+            "value": "brown",
+            "label": "Brown"
+          }
+        ]
       },
       {
         "id": "14",
         "entity_id": "14",
         "sku": "24-WB04",
         "name": "Push It Messenger Bag",
-        "size" : 9
+        "size" : 9,
+        "color": [
+          {
+            "value": "grey",
+            "label": "Grey"
+          },
+          {
+            "value": "blue",
+            "label": "Blue"
+          },
+          {
+            "value": "black",
+            "label": "Black"
+          }
+        ]
       }
     ]
   },
@@ -118,7 +246,13 @@
         "stock": {
           "status": 0,
           "qty": 0
-        }
+        },
+        "color": [
+          {
+            "value": "black",
+            "label": "Noir"
+          }
+        ]
       },
       {
         "id": "2",
@@ -133,7 +267,13 @@
         "stock": {
           "status": 1,
           "qty": 37
-        }
+        },
+        "color": [
+          {
+            "value": "black",
+            "label": "Noir"
+          }
+        ]
       },
       {
         "id": "3",
@@ -148,7 +288,17 @@
         "stock": {
           "status": 1,
           "qty": 12
-        }
+        },
+        "color": [
+          {
+            "value": "black",
+            "label": "Noir"
+          },
+          {
+            "value": "grey",
+            "label": "Gris"
+          }
+        ]
       },
       {
         "id": "4",
@@ -159,7 +309,13 @@
         "stock": {
           "status": 0,
           "qty": 0
-        }
+        },
+        "color": [
+          {
+            "value": "black",
+            "label": "Noir"
+          }
+        ]
       },
       {
         "id": "5",
@@ -170,7 +326,13 @@
         "stock": {
           "status": 1,
           "qty": 3
-        }
+        },
+        "color": [
+          {
+            "value": "grey",
+            "label": "Gris"
+          }
+        ]
       },
       {
         "id": "6",
@@ -181,7 +343,21 @@
         "stock": {
           "status": 1,
           "qty": 24
-        }
+        },
+        "color": [
+          {
+            "value": "grey",
+            "label": "Gris"
+          },
+          {
+            "value": "black",
+            "label": "Noir"
+          },
+          {
+            "value": "red",
+            "label": "Rouge"
+          }
+        ]
       },
       {
         "id": "7",
@@ -192,7 +368,13 @@
         "stock": {
           "status": 1,
           "qty": 7
-        }
+        },
+        "color": [
+          {
+            "value": "black",
+            "label": "Noir"
+          }
+        ]
       },
       {
         "id": "8",
@@ -203,7 +385,17 @@
         "stock": {
           "status": 0,
           "qty": -2
-        }
+        },
+        "color": [
+          {
+            "value": "black",
+            "label": "Noir"
+          },
+          {
+            "value": "white",
+            "label": "Blanc"
+          }
+        ]
       },
       {
         "id": "9",
@@ -214,7 +406,17 @@
         "stock": {
           "status": 0,
           "qty": 0
-        }
+        },
+        "color": [
+          {
+            "value": "green",
+            "label": "Vert"
+          },
+          {
+            "value": "white",
+            "label": "Blanc"
+          }
+        ]
       },
       {
         "id": "10",
@@ -225,7 +427,13 @@
         "stock": {
           "status": 1,
           "qty": 8
-        }
+        },
+        "color": [
+          {
+            "value": "pink",
+            "label": "Rose"
+          }
+        ]
       },
       {
         "id": "11",
@@ -236,7 +444,25 @@
         "stock": {
           "status": 1,
           "qty": 13
-        }
+        },
+        "color": [
+          {
+            "value": "pink",
+            "label": "Rose"
+          },
+          {
+            "value": "fuchsia",
+            "label": "Fuchsia"
+          },
+          {
+            "value": "grey",
+            "label": "Gris"
+          },
+          {
+            "value": "black",
+            "label": "Noir"
+          }
+        ]
       },
       {
         "id": "12",
@@ -247,7 +473,17 @@
         "stock": {
           "status": 1,
           "qty": 17
-        }
+        },
+        "color": [
+          {
+            "value": "grey",
+            "label": "Gris"
+          },
+          {
+            "value": "black",
+            "label": "Noir"
+          }
+        ]
       }
     ]
   }

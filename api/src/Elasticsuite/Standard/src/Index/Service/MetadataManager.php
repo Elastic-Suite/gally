@@ -16,18 +16,21 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Index\Service;
 
-use Elasticsuite\Index\Converter\SourceFieldToMappingField;
+use Elasticsuite\Index\Converter\SourceField\SourceFieldConverterInterface;
 use Elasticsuite\Index\Model\Index\Mapping;
 use Elasticsuite\Metadata\Model\Metadata;
 
 class MetadataManager
 {
     /**
-     * @param SourceFieldToMappingField $fieldConverter Source field converter
+     * @param SourceFieldConverterInterface[] $sourceFieldConverters Source field converters
      */
     public function __construct(
-        private SourceFieldToMappingField $fieldConverter,
+        private iterable $sourceFieldConverters = []
     ) {
+        $sourceFieldConverters = ($sourceFieldConverters instanceof \Traversable) ? iterator_to_array($sourceFieldConverters) : $sourceFieldConverters;
+
+        $this->sourceFieldConverters = $sourceFieldConverters;
     }
 
     /**
@@ -39,8 +42,11 @@ class MetadataManager
 
         // Dynamic fields
         foreach ($metadata->getSourceFields() as $sourceField) {
-            $field = $this->fieldConverter->convert($sourceField);
-            $fields[$field->getName()] = $field;
+            foreach ($this->sourceFieldConverters as $converter) {
+                if ($converter->supports($sourceField)) {
+                    $fields = $converter->getFields($sourceField) + $fields;
+                }
+            }
         }
 
         return new Mapping($fields);
