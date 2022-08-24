@@ -1,6 +1,6 @@
 [
   {
-    "index_name": "elasticsuite_com_en_product_20220604_100523",
+    "index_name": "elasticsuite_com_en_product",
     "documents": [
       {
         "id": "1",
@@ -103,7 +103,7 @@
     ]
   },
   {
-    "index_name": "elasticsuite_com_fr_product_20220603_095414",
+    "index_name": "elasticsuite_com_fr_product",
     "documents": [
       {
         "id": "1",
