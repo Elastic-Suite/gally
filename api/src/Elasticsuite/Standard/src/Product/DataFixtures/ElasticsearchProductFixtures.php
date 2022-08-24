@@ -18,18 +18,37 @@ namespace Elasticsuite\Product\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Elasticsuite\Catalog\Repository\LocalizedCatalogRepository;
 use Elasticsuite\Fixture\Service\ElasticsearchFixtures;
+use Elasticsuite\Index\Service\IndexOperation;
+use Elasticsuite\Metadata\Repository\MetadataRepository;
 
 class ElasticsearchProductFixtures extends Fixture
 {
     public function __construct(
         private ElasticsearchFixtures $elasticsearchFixtures,
+        private MetadataRepository $metadataRepository,
+        private LocalizedCatalogRepository $catalogRepository,
+        private IndexOperation $indexOperation
     ) {
     }
 
     public function load(ObjectManager $manager): void
     {
-        $this->elasticsearchFixtures->loadFixturesIndexFiles([__DIR__ . '/fixtures/product_indices.json']);
+        // $this->elasticsearchFixtures->loadFixturesIndexFiles([__DIR__ . '/fixtures/product_indices.json']);
+        $this->createProductIndices();
         $this->elasticsearchFixtures->loadFixturesDocumentFiles([__DIR__ . '/fixtures/product_documents.json']);
+    }
+
+    public function createProductIndices(): void
+    {
+        $catalogs = $this->catalogRepository->findAll();
+        foreach ($catalogs as $catalog) {
+            $index = $this->indexOperation->createIndex(
+                $this->metadataRepository->findByEntity('product'),
+                $catalog
+            );
+            $this->indexOperation->installIndexByName($index->getName());
+        }
     }
 }
