@@ -2,10 +2,7 @@ import { useTranslation } from 'next-i18next'
 import { useMemo } from 'react'
 
 import { useRouter } from 'next/router'
-import {
-  getFieldHeader,
-  updateHeaderPropertiesAccordingToPath,
-} from '~/services'
+import { getFieldHeader, updatePropertiesAccordingToPath } from '~/services'
 import { IField, IOptions, IResource, ITableHeader } from '~/types'
 
 export function useApiHeaders(resource: IResource): ITableHeader[] {
@@ -15,9 +12,7 @@ export function useApiHeaders(resource: IResource): ITableHeader[] {
 
   return useMemo(() => {
     return resource.supportedProperty
-      .map((field) =>
-        updateHeaderPropertiesAccordingToPath(field, router.asPath)
-      )
+      .map((field) => updatePropertiesAccordingToPath(field, router.asPath))
       .filter((field) => field.elasticsuite?.visible)
       .map((field) => getFieldHeader(field, t))
   }, [resource, t, router])
@@ -30,9 +25,7 @@ export function useApiEditableFieldOptions(
 
   return useMemo(() => {
     return resource.supportedProperty
-      .map((field) =>
-        updateHeaderPropertiesAccordingToPath(field, router.asPath)
-      )
+      .map((field) => updatePropertiesAccordingToPath(field, router.asPath))
       .filter(
         (field) =>
           field.elasticsuite?.visible &&

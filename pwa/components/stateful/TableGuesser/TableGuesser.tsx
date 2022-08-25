@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { ChangeEvent, useRef, useState } from 'react'
 
 import { defaultPageSize } from '~/constants'
 import { useApiEditableFieldOptions, useApiHeaders } from '~/hooks'
@@ -8,11 +8,11 @@ import {
   IHydraResponse,
   IResource,
   IResourceEditableMassUpdate,
-  ITableRow,
+  ITableRow
 } from '~/types'
 
-import PagerTable from '~/components/organisms/PagerTable/PagerTable'
 import StickyBar from '~/components/molecules/CustomTable/StickyBar/StickyBar'
+import PagerTable from '~/components/organisms/PagerTable/PagerTable'
 
 import FieldGuesser from '../FieldGuesser/FieldGuesser'
 import TableStickyBar from '../TableStickyBar/TableStickyBar'
@@ -30,6 +30,9 @@ interface IProps<T extends IHydraMember> {
   resource: IResource
   rowsPerPage?: number
   rowsPerPageOptions?: number[]
+  onRowsPerPageChange?: (
+    event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => void
 }
 
 function TableGuesser<T extends IHydraMember>(props: IProps<T>): JSX.Element {
@@ -42,6 +45,7 @@ function TableGuesser<T extends IHydraMember>(props: IProps<T>): JSX.Element {
     resource,
     rowsPerPage,
     rowsPerPageOptions,
+    onRowsPerPageChange,
   } = props
   const tableHeaders = useApiHeaders(resource)
   const fieldOptions = useApiEditableFieldOptions(resource)
@@ -83,6 +87,7 @@ function TableGuesser<T extends IHydraMember>(props: IProps<T>): JSX.Element {
         selectedRows={selectedRows}
         tableHeaders={tableHeaders}
         tableRows={tableRows}
+        onRowsPerPageChange={onRowsPerPageChange}
       />
       <StickyBar positionRef={tableRef} show={selectedRows.length > 0}>
         <TableStickyBar

@@ -150,10 +150,17 @@ exports[`CustomTable match snapshot with editable content 1`] = `
               class="MuiFormControl-root css-1c9gikl-MuiFormControl-root"
             >
               <label
-                class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-colorPrimary css-ssr94h-MuiFormLabel-root-MuiInputLabel-root"
+                class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-colorPrimary Mui-required css-ssr94h-MuiFormLabel-root-MuiInputLabel-root"
                 data-shrink="true"
               >
                 Test header dropdown
+                <span
+                  aria-hidden="true"
+                  class="MuiFormLabel-asterisk MuiInputLabel-asterisk css-1ufxisk-MuiFormLabel-asterisk"
+                >
+                   
+                  *
+                </span>
               </label>
               <button
                 aria-expanded="false"
