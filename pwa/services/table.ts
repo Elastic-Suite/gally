@@ -1,8 +1,6 @@
 import { TFunction } from 'react-i18next'
 
 import { booleanRegexp } from '~/constants'
-import { getFieldLabelTranslationArgs } from './format'
-import { getField, getFieldType } from './hydra'
 import {
   DataContentType,
   IField,
@@ -14,6 +12,10 @@ import {
   IResource,
   ITableHeader,
 } from '~/types'
+import { updatePropertiesAccordingToPath } from './field'
+
+import { getFieldLabelTranslationArgs } from './format'
+import { getField, getFieldType } from './hydra'
 
 interface IMapping extends IHydraMapping {
   field: IField
@@ -22,11 +24,24 @@ interface IMapping extends IHydraMapping {
 }
 
 export function getFieldDataContentType(field: IField): DataContentType {
+  if (field.elasticsuite?.input) {
+    return field.elasticsuite.input as DataContentType
+  }
   const type = getFieldType(field)
   if (type === 'boolean') {
     return DataContentType.BOOLEAN
   }
   return DataContentType.STRING
+}
+
+export function getOptions(field: IField): IOptions<string> {
+  if (!field.elasticsuite.options) {
+    return null
+  }
+  return field.elasticsuite.options.values.map((option) => ({
+    label: option.toString(),
+    value: option,
+  }))
 }
 
 export function getFieldHeader(field: IField, t: TFunction): ITableHeader {
@@ -35,6 +50,7 @@ export function getFieldHeader(field: IField, t: TFunction): ITableHeader {
     label:
       field.property.label ?? t(...getFieldLabelTranslationArgs(field.title)),
     type: getFieldDataContentType(field),
+    options: getOptions(field),
     editable: field.elasticsuite?.editable && field.writeable,
   }
 }
@@ -63,7 +79,8 @@ export function getFilter(mapping: IMapping, t: TFunction): IFilter {
 
 export function getMappings<T extends IHydraMember>(
   apiData: IHydraResponse<T>,
-  resource: IResource
+  resource: IResource,
+  path: string
 ): IMapping[] {
   const mappings: IMapping[] = apiData?.['hydra:search']['hydra:mapping'].map(
     (mapping) => ({
@@ -76,7 +93,15 @@ export function getMappings<T extends IHydraMember>(
     .filter((mapping) => mapping.multiple)
     .map((mapping) => mapping.property)
 
-  return mappings?.filter(
-    (mapping) => !arrayProperties.includes(mapping.property) || mapping.multiple
-  )
+  return mappings
+    ?.filter((mapping) =>
+      mapping.field.elasticsuite
+        ? updatePropertiesAccordingToPath(mapping.field, path).elasticsuite
+            .visible
+        : true
+    )
+    .filter(
+      (mapping) =>
+        !arrayProperties.includes(mapping.property) || mapping.multiple
+    )
 }

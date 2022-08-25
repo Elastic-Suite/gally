@@ -8,6 +8,7 @@ if (url && String(url).endsWith('/')) {
 }
 export const apiUrl = url
 export const gqlUrl = `${url}/graphql`
+export const searchableAttributeUrl = `${apiUrl}/source_fields?isSearchable=true`
 
 export const authHeader = 'Authorization'
 export const languageHeader = 'Elasticsuite-Language'

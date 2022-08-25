@@ -1,10 +1,10 @@
 import { mockedFieldWithContext, mockedFieldWithoutContext } from '~/mocks'
-import { updateHeaderPropertiesAccordingToPath } from './header'
+import { updatePropertiesAccordingToPath } from './field'
 
 describe('updateHeaderPropertiesAccordingToPath', () => {
   it('Should update properties with context', () => {
     expect(
-      updateHeaderPropertiesAccordingToPath(
+      updatePropertiesAccordingToPath(
         mockedFieldWithContext,
         'admin/settings/attributes'
       )
@@ -19,7 +19,7 @@ describe('updateHeaderPropertiesAccordingToPath', () => {
     })
 
     expect(
-      updateHeaderPropertiesAccordingToPath(
+      updatePropertiesAccordingToPath(
         mockedFieldWithContext,
         'search/configuration/attribute'
       )
@@ -35,7 +35,7 @@ describe('updateHeaderPropertiesAccordingToPath', () => {
   })
   it('Should update properties without context', () => {
     expect(
-      updateHeaderPropertiesAccordingToPath(
+      updatePropertiesAccordingToPath(
         mockedFieldWithoutContext,
         'admin/settings/attributes'
       )
@@ -51,10 +51,7 @@ describe('updateHeaderPropertiesAccordingToPath', () => {
   })
   it('Should update properties with useless context', () => {
     expect(
-      updateHeaderPropertiesAccordingToPath(
-        mockedFieldWithContext,
-        'test/useless'
-      )
+      updatePropertiesAccordingToPath(mockedFieldWithContext, 'test/useless')
     ).toEqual({
       ...mockedFieldWithContext,
       elasticsuite: {

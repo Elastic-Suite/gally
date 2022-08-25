@@ -22,6 +22,7 @@ import {
 } from '~/types'
 
 import { useApiFetch } from './useApi'
+import { useRouter } from 'next/router'
 
 export function useApiFilters<A extends IHydraMember, R extends IHydraMember>(
   apiData: IHydraResponse<A>,
@@ -36,11 +37,11 @@ export function useApiFilters<A extends IHydraMember, R extends IHydraMember>(
 
   const { t } = useTranslation('api')
   const fetchApi = useApiFetch<IHydraResponse<R>>()
+  const router = useRouter()
   const mappings = useMemo(
-    () => getMappings(apiData, resource),
-    [apiData, resource]
+    () => getMappings(apiData, resource, router.asPath),
+    [apiData, resource, router]
   )
-
   useEffect(() => {
     setReferences({ status: LoadStatus.LOADING })
     const promises = mappings
