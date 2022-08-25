@@ -34,6 +34,7 @@ use Elasticsuite\Search\Resolver\DummyDocumentResolver;
                 'args' => [
                     'entityType' => ['type' => 'String!', 'description' => 'Entity Type'],
                     'catalogId' => ['type' => 'String!', 'description' => 'Catalog ID'],
+                    'search' => ['type' => 'String', 'description' => 'Query Text'],
                     'currentPage' => ['type' => 'Int'],
                     'pageSize' => ['type' => 'Int'],
                     'sort' => ['type' => SortInputType::NAME],

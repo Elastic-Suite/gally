@@ -22,6 +22,9 @@ use Elasticsuite\Metadata\Model\Metadata;
 use Elasticsuite\Metadata\Repository\MetadataRepository;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\Aggregation\AggregationBuilder;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder;
+use Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Fulltext\FulltextQueryBuilder;
+use Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Fulltext\FuzzyFieldFilter;
+use Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Fulltext\SearchableFieldFilter;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\Query\QueryBuilder;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\SimpleRequestBuilder;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\SortOrder\SortOrderBuilder;
@@ -34,6 +37,7 @@ use Elasticsuite\Search\Elasticsearch\Request\Query\Filtered;
 use Elasticsuite\Search\Elasticsearch\Request\QueryFactory;
 use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
 use Elasticsuite\Search\Elasticsearch\RequestFactoryInterface;
+use Elasticsuite\Search\Elasticsearch\Spellchecker;
 use Elasticsuite\Standard\src\Test\AbstractTest;
 
 class SimpleRequestBuilderTest extends AbstractTest
@@ -44,6 +48,12 @@ class SimpleRequestBuilderTest extends AbstractTest
 
     private static QueryBuilder $queryBuilder;
 
+    private static SearchableFieldFilter $searchableFieldFilter;
+
+    private static FuzzyFieldFilter $fuzzyFieldFilter;
+
+    private static FulltextQueryBuilder $fulltextQueryBuilder;
+
     private static FilterQueryBuilder $filterQueryBuilder;
 
     private static SortOrderBuilder $sortOrderBuilder;
@@ -51,6 +61,10 @@ class SimpleRequestBuilderTest extends AbstractTest
     private static AggregationFactory $aggregationFactory;
 
     private static AggregationBuilder $aggregationBuilder;
+
+    private static Spellchecker\RequestFactory $spellcheckRequestFactory;
+
+    private static Spellchecker $spellchecker;
 
     private static ContainerConfigurationProvider $containerConfigProvider;
 
@@ -70,8 +84,13 @@ class SimpleRequestBuilderTest extends AbstractTest
         self::$requestFactory = static::getContainer()->get(RequestFactoryInterface::class);
         \assert(static::getContainer()->get(QueryFactory::class) instanceof QueryFactory);
         self::$queryFactory = static::getContainer()->get(QueryFactory::class);
+        \assert(static::getContainer()->get(SearchableFieldFilter::class) instanceof SearchableFieldFilter);
+        self::$searchableFieldFilter = static::getContainer()->get(SearchableFieldFilter::class);
+        \assert(static::getContainer()->get(FuzzyFieldFilter::class) instanceof FuzzyFieldFilter);
+        self::$fuzzyFieldFilter = static::getContainer()->get(FuzzyFieldFilter::class);
+        self::$fulltextQueryBuilder = new FulltextQueryBuilder(self::$queryFactory, self::$searchableFieldFilter, self::$fuzzyFieldFilter);
         self::$filterQueryBuilder = new FilterQueryBuilder(self::$queryFactory);
-        self::$queryBuilder = new QueryBuilder(self::$queryFactory, self::$filterQueryBuilder);
+        self::$queryBuilder = new QueryBuilder(self::$queryFactory, self::$fulltextQueryBuilder, self::$filterQueryBuilder);
         self::$sortOrderBuilder = new SortOrderBuilder(self::$filterQueryBuilder);
         \assert(static::getContainer()->get(AggregationFactory::class) instanceof AggregationFactory);
         self::$aggregationFactory = static::getContainer()->get(AggregationFactory::class);
@@ -80,16 +99,22 @@ class SimpleRequestBuilderTest extends AbstractTest
         self::$containerConfigProvider = static::getContainer()->get(ContainerConfigurationProvider::class);
         \assert(static::getContainer()->get(AggregationResolver::class) instanceof AggregationResolver);
         self::$aggregationResolver = static::getContainer()->get(AggregationResolver::class);
+        \assert(static::getContainer()->get('elasticsuite.search.spellchecker.request.factory') instanceof Spellchecker\RequestFactory);
+        self::$spellcheckRequestFactory = static::getContainer()->get('elasticsuite.search.spellchecker.request.factory');
+        \assert(static::getContainer()->get(Spellchecker::class) instanceof Spellchecker);
+        self::$spellchecker = static::getContainer()->get(Spellchecker::class);
         \assert(static::getContainer()->get(IndexSettingsInterface::class) instanceof IndexSettingsInterface);
         self::$metadataRepository = static::getContainer()->get(MetadataRepository::class);
         self::$localizedCatalogRepository = static::getContainer()->get(LocalizedCatalogRepository::class);
         self::$requestBuilder = new SimpleRequestBuilder(
             self::$requestFactory,
+            self::$containerConfigProvider,
             self::$queryBuilder,
             self::$sortOrderBuilder,
             self::$aggregationBuilder,
             self::$aggregationResolver,
-            self::$containerConfigProvider,
+            self::$spellcheckRequestFactory,
+            self::$spellchecker,
         );
 
         static::loadFixture([
@@ -109,11 +134,13 @@ class SimpleRequestBuilderTest extends AbstractTest
 
         $simpleBuilder = new SimpleRequestBuilder(
             self::$requestFactory,
+            self::$containerConfigProvider,
             self::$queryBuilder,
             self::$sortOrderBuilder,
             self::$aggregationBuilder,
             self::$aggregationResolver,
-            self::$containerConfigProvider,
+            self::$spellcheckRequestFactory,
+            self::$spellchecker,
         );
         $this->assertEquals($requestFactoryProperty->getValue($simpleBuilder), self::$requestFactory);
         $this->assertEquals($queryBuilderProperty->getValue($simpleBuilder), self::$queryBuilder);

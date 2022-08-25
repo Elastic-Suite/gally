@@ -73,10 +73,20 @@ services:
     Elasticsuite\Search\Elasticsearch\RequestFactoryInterface:
         public: true
         alias: elasticsuite.search.request.factory
+        
+    Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Fulltext\SearchableFieldFilter: ~
+    Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Fulltext\FuzzyFieldFilter: ~
+    
+    Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Fulltext\FulltextQueryBuilder:
+        arguments:
+            - '@Elasticsuite\Search\Elasticsearch\Request\QueryFactory'
+            - '@Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Fulltext\SearchableFieldFilter'
+            - '@Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Fulltext\FuzzyFieldFilter'
 
     Elasticsuite\Search\Elasticsearch\Builder\Request\Query\QueryBuilder:
         arguments:
             - '@Elasticsuite\Search\Elasticsearch\Request\QueryFactory'
+            - '@Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Fulltext\FulltextQueryBuilder'
             - '@Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
 
     Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder:
@@ -93,15 +103,21 @@ services:
             - '@Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
                 
     Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\AggregationResolver: ~
+    Elasticsuite\Search\Elasticsearch\Spellchecker:
+        arguments:
+            - '@api_platform.elasticsearch.client'
+            - '@Elasticsuite\Cache\Service\CacheManagerInterface'
 
     Elasticsuite\Search\Elasticsearch\Builder\Request\SimpleRequestBuilder:
         arguments:
             - '@Elasticsuite\Search\Elasticsearch\RequestFactoryInterface'
+            - '@Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider'
             - '@Elasticsuite\Search\Elasticsearch\Builder\Request\Query\QueryBuilder'
             - '@Elasticsuite\Search\Elasticsearch\Builder\Request\SortOrder\SortOrderBuilder'
             - '@Elasticsuite\Search\Elasticsearch\Builder\Request\Aggregation\AggregationBuilder'
             - '@Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\AggregationResolver'
-            - '@Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider'
+            - '@Elasticsuite\Search\Elasticsearch\Spellchecker\RequestFactoryInterface'
+            - '@Elasticsuite\Search\Elasticsearch\Spellchecker'
 
     Elasticsuite\Search\Elasticsearch\Builder\Response\AggregationBuilder: ~
 
@@ -216,3 +232,10 @@ services:
             - '@Elasticsuite\Index\Service\IndexSettings'
             - '@Elasticsuite\Index\Service\MetadataManager'
             - '@Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\GenericContainerConfigurationFactory'
+    
+    elasticsuite.search.spellchecker.request.factory:
+        class: Elasticsuite\Search\Elasticsearch\Spellchecker\RequestFactory
+
+    Elasticsuite\Search\Elasticsearch\Spellchecker\RequestFactoryInterface:
+        public: true
+        alias: elasticsuite.search.spellchecker.request.factory

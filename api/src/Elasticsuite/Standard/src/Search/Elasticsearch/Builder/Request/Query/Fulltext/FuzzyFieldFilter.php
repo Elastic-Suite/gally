@@ -14,25 +14,20 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\Search\Elasticsearch\Spellchecker;
+namespace Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Fulltext;
+
+use Elasticsuite\Index\Model\Index\Mapping\FieldInterface;
 
 /**
- * Spellchecking request interface.
+ * Indicates if a field is used in fuzzy search.
  */
-interface RequestInterface
+class FuzzyFieldFilter extends SearchableFieldFilter
 {
     /**
-     * Spellcheck request index name.
+     * {@inheritDoc}
      */
-    public function getIndexName(): string;
-
-    /**
-     * Spellcheck fulltext query.
-     */
-    public function getQueryText(): string;
-
-    /**
-     * Spellcheck cutoff frequency (used to detect stop-words).
-     */
-    public function getCutoffFrequency(): float;
+    public function filterField(FieldInterface $field): bool
+    {
+        return parent::filterField($field) && $field->isUsedInSpellcheck();
+    }
 }

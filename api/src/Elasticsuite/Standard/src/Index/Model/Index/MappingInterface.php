@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Index\Model\Index;
 
+use Elasticsuite\Index\Model\Index\Mapping\FieldFilterInterface;
 use Elasticsuite\Index\Model\Index\Mapping\FieldInterface;
 
 /**
@@ -54,4 +55,22 @@ interface MappingInterface
      * Field used as unique id for the doc.
      */
     public function getIdField(): FieldInterface;
+
+    /**
+     * Return an array with all searchable mapping properties as key and their weight as the value.
+     *
+     * @param string|null           $analyzer     search analyzer
+     * @param string|null           $defaultField Default field added to the list of fields.
+     *                                            All field weighted with 1 will be ignored if present.
+     * @param float                 $boost        a multiplier applied to fields default weight
+     * @param ?FieldFilterInterface $fieldFilter  a filter applied to fields
+     *
+     * @return float[]
+     */
+    public function getWeightedSearchProperties(
+        ?string $analyzer = null,
+        ?string $defaultField = null,
+        float $boost = 1,
+        ?FieldFilterInterface $fieldFilter = null
+    ): array;
 }

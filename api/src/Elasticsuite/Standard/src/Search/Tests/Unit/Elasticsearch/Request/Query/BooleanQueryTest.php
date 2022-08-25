@@ -58,7 +58,7 @@ class BooleanQueryTest extends KernelTestCase
      * @param array       $mustNot            MustNot clauses
      * @param int         $minimumShouldMatch Minimum should match
      * @param string|null $name               Optional query name
-     * @param int         $boost              Query boost
+     * @param float       $boost              Query boost
      * @param bool        $cached             Enabled cache or not
      */
     public function testCreate(
@@ -67,7 +67,7 @@ class BooleanQueryTest extends KernelTestCase
         array $mustNot,
         int $minimumShouldMatch,
         ?string $name,
-        int $boost,
+        float $boost,
         bool $cached
     ): void {
         $this->performCreateParamsTests($must, $should, $mustNot, $minimumShouldMatch, $name, $boost, $cached);
@@ -153,7 +153,7 @@ class BooleanQueryTest extends KernelTestCase
         $this->assertContainsOnlyInstancesOf(QueryInterface::class, $booleanQuery->getShould());
         $this->assertIsArray($booleanQuery->getMustNot());
         $this->assertContainsOnlyInstancesOf(QueryInterface::class, $booleanQuery->getMustNot());
-        $this->assertIsInt($booleanQuery->getBoost());
+        $this->assertIsFloat($booleanQuery->getBoost());
         $this->assertIsInt($booleanQuery->getMinimumShouldMatch());
         $this->assertIsBool($booleanQuery->isCached());
     }
@@ -164,7 +164,7 @@ class BooleanQueryTest extends KernelTestCase
      * @param array       $mustNot            MustNot clauses
      * @param int         $minimumShouldMatch Minimum should match
      * @param string|null $name               Optional query name
-     * @param int         $boost              Query boost
+     * @param float       $boost              Query boost
      * @param bool        $cached             Enabled cache or not
      */
     private function performCreateParamsTests(
@@ -173,7 +173,7 @@ class BooleanQueryTest extends KernelTestCase
         array $mustNot,
         int $minimumShouldMatch,
         ?string $name,
-        int $boost,
+        float $boost,
         bool $cached
     ): void {
         // TODO: use reflection to build mapping ?

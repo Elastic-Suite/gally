@@ -25,7 +25,7 @@ class Term implements QueryInterface
 {
     private ?string $name;
 
-    private int $boost;
+    private float $boost;
 
     private string|bool $value;
 
@@ -37,13 +37,13 @@ class Term implements QueryInterface
      * @param string|bool $value Search value
      * @param string      $field Search field
      * @param ?string     $name  Name of the query
-     * @param int         $boost Query boost
+     * @param float       $boost Query boost
      */
     public function __construct(
         string|bool $value,
         string $field,
         ?string $name = null,
-        int $boost = QueryInterface::DEFAULT_BOOST_VALUE
+        float $boost = QueryInterface::DEFAULT_BOOST_VALUE
     ) {
         $this->name = $name;
         $this->value = $value;
@@ -62,7 +62,7 @@ class Term implements QueryInterface
     /**
      * {@inheritDoc}
      */
-    public function getBoost(): int
+    public function getBoost(): float
     {
         return $this->boost;
     }

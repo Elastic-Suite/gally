@@ -6,30 +6,37 @@
         "entity_id": "1",
         "sku": "24-MB01",
         "name": "Joust Duffle Bag",
+        "description": "A super bag for winter.",
+        "seller_reference": "dufflebag",
         "size" : 12
       },
       {
         "entity_id": "2",
         "sku": "24-MB04",
         "name": "Strive Shoulder Pack",
+        "description": "A super bag for spring.",
+        "seller_reference": "striveshoulder",
         "size" : 5
       },
       {
         "entity_id": "3",
         "sku": "24-MB03",
         "name": "Crown Summit Backpack",
+        "description": "A super bag for summer and yoga.",
         "size" : 8
       },
       {
         "entity_id": "4",
         "sku": "24-MB05",
         "name": "Wayfarer Messenger Bag",
+        "description": "A super bag for autumn.",
         "size" : 7
       },
       {
         "entity_id": "5",
         "sku": "24-MB06",
         "name": "Rival Field Messenger",
+        "description": "A super bag for summer.",
         "size" : 2
       },
       {

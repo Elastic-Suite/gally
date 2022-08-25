@@ -14,25 +14,17 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\Search\Elasticsearch\Spellchecker;
+namespace Elasticsuite\Index\Model\Index\Mapping;
 
 /**
- * Spellchecking request interface.
+ * An interface that allowed to specify a field filter.
  */
-interface RequestInterface
+interface FieldFilterInterface
 {
     /**
-     * Spellcheck request index name.
+     * Indicates if the field has to be added to the list or not.
+     *
+     * @param FieldInterface $field field to be tested
      */
-    public function getIndexName(): string;
-
-    /**
-     * Spellcheck fulltext query.
-     */
-    public function getQueryText(): string;
-
-    /**
-     * Spellcheck cutoff frequency (used to detect stop-words).
-     */
-    public function getCutoffFrequency(): float;
+    public function filterField(FieldInterface $field): bool;
 }

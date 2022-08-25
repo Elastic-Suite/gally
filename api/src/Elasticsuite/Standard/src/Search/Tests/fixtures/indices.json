@@ -46,16 +46,290 @@
         ".catalog_2": { "is_hidden": true },
         ".entity_product": { "is_hidden": true }
       },
+      "settings": {
+        "max_shingle_diff": "9",
+        "analysis": {
+          "filter": {
+            "stemmer": {
+              "type": "stemmer",
+              "language": "english"
+            },
+            "phonetic": {
+              "type": "phonetic",
+              "encoder": "metaphone"
+            },
+            "lowercase": {
+              "type": "lowercase"
+            },
+            "trim": {
+              "type": "trim"
+            },
+            "reference_word_delimiter": {
+              "split_on_numerics": "true",
+              "generate_word_parts": "true",
+              "preserve_original": "false",
+              "catenate_words": "false",
+              "catenate_all": "false",
+              "split_on_case_change": "true",
+              "type": "word_delimiter",
+              "catenate_numbers": "false"
+            },
+            "ascii_folding": {
+              "type": "asciifolding",
+              "preserve_original": "false"
+            },
+            "shingle": {
+              "max_shingle_size": "2",
+              "min_shingle_size": "2",
+              "output_unigrams": "true",
+              "type": "shingle"
+            },
+            "truncate_to_max": {
+              "length": "8192",
+              "type": "truncate"
+            },
+            "reference_shingle": {
+              "max_shingle_size": "10",
+              "min_shingle_size": "2",
+              "token_separator": "",
+              "output_unigrams": "true",
+              "type": "shingle"
+            },
+            "word_delimiter": {
+              "split_on_numerics": "true",
+              "generate_word_parts": "true",
+              "preserve_original": "true",
+              "catenate_words": "true",
+              "catenate_all": "true",
+              "split_on_case_change": "true",
+              "type": "word_delimiter",
+              "catenate_numbers": "true"
+            }
+          },
+          "analyzer": {
+            "reference": {
+              "filter": [
+                "ascii_folding",
+                "trim",
+                "reference_word_delimiter",
+                "lowercase",
+                "reference_shingle"
+              ],
+              "char_filter": [
+                "html_strip"
+              ],
+              "type": "custom",
+              "tokenizer": "standard"
+            },
+            "standard": {
+              "filter": [
+                "ascii_folding",
+                "trim",
+                "word_delimiter",
+                "lowercase",
+                "stemmer"
+              ],
+              "char_filter": [
+                "html_strip"
+              ],
+              "type": "custom",
+              "tokenizer": "standard"
+            },
+            "phonetic": {
+              "filter": [
+                "ascii_folding",
+                "trim",
+                "word_delimiter",
+                "lowercase",
+                "phonetic"
+              ],
+              "char_filter": [
+                "html_strip"
+              ],
+              "type": "custom",
+              "tokenizer": "standard"
+            },
+            "shingle": {
+              "filter": [
+                "ascii_folding",
+                "trim",
+                "word_delimiter",
+                "lowercase",
+                "shingle"
+              ],
+              "char_filter": [
+                "html_strip"
+              ],
+              "type": "custom",
+              "tokenizer": "whitespace"
+            },
+            "sortable": {
+              "filter": [
+                "ascii_folding",
+                "trim",
+                "lowercase"
+              ],
+              "char_filter": [
+                "html_strip"
+              ],
+              "type": "custom",
+              "tokenizer": "keyword"
+            },
+            "keyword": {
+              "filter": [
+                "truncate_to_max"
+              ],
+              "char_filter": [
+
+              ],
+              "type": "custom",
+              "tokenizer": "keyword"
+            },
+            "whitespace": {
+              "filter": [
+                "ascii_folding",
+                "trim",
+                "word_delimiter",
+                "lowercase"
+              ],
+              "char_filter": [
+                "html_strip"
+              ],
+              "type": "custom",
+              "tokenizer": "standard"
+            }
+          },
+          "char_filter": {
+            "html_strip": {
+              "type": "html_strip"
+            }
+          }
+        }
+      },
       "mappings": {
         "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "description": {
+            "type": "text",
+            "fields": {
+              "shingle": {
+                "type": "text",
+                "analyzer": "shingle"
+              },
+              "standard": {
+                "type": "text",
+                "analyzer": "standard"
+              },
+              "whitespace": {
+                "type": "text",
+                "analyzer": "whitespace"
+              }
+            },
+            "copy_to": [
+              "search",
+              "spelling"
+            ],
+            "analyzer": "keyword"
+          },
           "name": {
-            "type": "text"
+            "type": "text",
+            "fields": {
+              "shingle": {
+                "type": "text",
+                "analyzer": "shingle"
+              },
+              "standard": {
+                "type": "text",
+                "analyzer": "standard"
+              },
+              "whitespace": {
+                "type": "text",
+                "analyzer": "whitespace"
+              }
+            },
+            "copy_to": [
+              "search",
+              "spelling"
+            ],
+            "analyzer": "keyword"
           },
           "length": {
             "type": "integer"
           },
+          "price": {
+            "type": "nested",
+            "properties": {
+              "group_id": {
+                "type": "integer"
+              },
+              "base_price": {
+                "type": "double"
+              },
+              "final_price": {
+                "type": "double"
+              }
+            }
+          },
+          "search": {
+            "type": "text",
+            "fields": {
+              "shingle": {
+                "type": "text",
+                "analyzer": "shingle"
+              },
+              "whitespace": {
+                "type": "text",
+                "analyzer": "whitespace"
+              }
+            },
+            "analyzer": "standard"
+          },
+          "seller_reference": {
+            "type": "text",
+            "fields": {
+              "shingle": {
+                "type": "text",
+                "analyzer": "shingle"
+              },
+              "standard": {
+                "type": "text",
+                "analyzer": "standard"
+              },
+              "whitespace": {
+                "type": "text",
+                "analyzer": "whitespace"
+              }
+            },
+            "copy_to": [
+              "search"
+            ],
+            "analyzer": "keyword"
+          },
+          "sku": {
+            "type": "keyword"
+          },
           "size": {
             "type": "integer"
+          },
+          "spelling": {
+            "type": "text",
+            "fields": {
+              "phonetic": {
+                "type": "text",
+                "analyzer": "phonetic"
+              },
+              "shingle": {
+                "type": "text",
+                "analyzer": "shingle"
+              },
+              "whitespace": {
+                "type": "text",
+                "analyzer": "whitespace"
+              }
+            },
+            "analyzer": "standard"
           },
           "weight": {
             "type": "integer"
@@ -72,31 +346,245 @@
         ".catalog_4": { "is_hidden": true },
         ".entity_product": { "is_hidden": true }
       },
+      "settings": {
+        "max_shingle_diff": "9",
+        "analysis": {
+          "filter": {
+            "stemmer": {
+              "type": "stemmer",
+              "language": "french"
+            },
+            "phonetic": {
+              "languageset": "french",
+              "type": "phonetic",
+              "encoder": "beider_morse"
+            },
+            "lowercase": {
+              "type": "lowercase"
+            },
+            "trim": {
+              "type": "trim"
+            },
+            "reference_word_delimiter": {
+              "split_on_numerics": "true",
+              "generate_word_parts": "true",
+              "preserve_original": "false",
+              "catenate_words": "false",
+              "catenate_all": "false",
+              "split_on_case_change": "true",
+              "type": "word_delimiter",
+              "catenate_numbers": "false"
+            },
+            "standard_override": {
+              "type": "stemmer_override",
+              "rules": [
+                "clous => clou",
+                "verrous => verrou",
+                "ecrous => ecrou"
+              ]
+            },
+            "ascii_folding": {
+              "type": "asciifolding",
+              "preserve_original": "false"
+            },
+            "elision": {
+              "type": "elision",
+              "articles": [
+                "l",
+                "m",
+                "t",
+                "qu",
+                "n",
+                "s",
+                "j",
+                "d",
+                "c"
+              ]
+            },
+            "shingle": {
+              "max_shingle_size": "2",
+              "min_shingle_size": "2",
+              "output_unigrams": "true",
+              "type": "shingle"
+            },
+            "truncate_to_max": {
+              "length": "8192",
+              "type": "truncate"
+            },
+            "reference_shingle": {
+              "max_shingle_size": "10",
+              "min_shingle_size": "2",
+              "token_separator": null,
+              "output_unigrams": "true",
+              "type": "shingle"
+            },
+            "word_delimiter": {
+              "split_on_numerics": "true",
+              "generate_word_parts": "true",
+              "preserve_original": "true",
+              "catenate_words": "true",
+              "catenate_all": "true",
+              "split_on_case_change": "true",
+              "type": "word_delimiter",
+              "catenate_numbers": "true"
+            }
+          },
+          "analyzer": {
+            "reference": {
+              "char_filters": [
+                "html_strip"
+              ],
+              "filters": [
+                "ascii_folding",
+                "trim",
+                "reference_word_delimiter",
+                "lowercase",
+                "elision",
+                "reference_shingle"
+              ],
+              "type": "custom",
+              "tokenizer": "standard"
+            },
+            "standard": {
+              "char_filters": [
+                "html_strip"
+              ],
+              "filters": [
+                "ascii_folding",
+                "trim",
+                "word_delimiter",
+                "lowercase",
+                "elision",
+                "standard_override",
+                "stemmer"
+              ],
+              "type": "custom",
+              "tokenizer": "standard"
+            },
+            "phonetic": {
+              "char_filters": [
+                "html_strip"
+              ],
+              "filters": [
+                "ascii_folding",
+                "trim",
+                "word_delimiter",
+                "lowercase",
+                "elision",
+                "phonetic"
+              ],
+              "type": "custom",
+              "tokenizer": "standard"
+            },
+            "shingle": {
+              "char_filters": [
+                "html_strip"
+              ],
+              "filters": [
+                "ascii_folding",
+                "trim",
+                "word_delimiter",
+                "lowercase",
+                "elision",
+                "shingle"
+              ],
+              "type": "custom",
+              "tokenizer": "whitespace"
+            },
+            "sortable": {
+              "char_filters": [
+                "html_strip"
+              ],
+              "filters": [
+                "ascii_folding",
+                "trim",
+                "lowercase"
+              ],
+              "type": "custom",
+              "tokenizer": "keyword"
+            },
+            "keyword": {
+              "char_filters": [
+
+              ],
+              "filters": [
+                "truncate_to_max"
+              ],
+              "type": "custom",
+              "tokenizer": "keyword"
+            },
+            "whitespace": {
+              "char_filters": [
+                "html_strip"
+              ],
+              "filters": [
+                "ascii_folding",
+                "trim",
+                "word_delimiter",
+                "lowercase",
+                "elision"
+              ],
+              "type": "custom",
+              "tokenizer": "standard"
+            }
+          },
+          "char_filter": {
+          "html_strip": {
+            "type": "html_strip"
+          }
+        }
+      }
+      },
       "mappings": {
         "properties": {
           "id": {
             "type": "integer"
           },
-          "sku": {
-            "type": "keyword"
+          "description": {
+            "type": "text",
+            "fields": {
+              "shingle": {
+                "type": "text",
+                "analyzer": "shingle"
+              },
+              "standard": {
+                "type": "text",
+                "analyzer": "standard"
+              },
+              "whitespace": {
+                "type": "text",
+                "analyzer": "whitespace"
+              }
+            },
+            "copy_to": [
+              "search",
+              "spelling"
+            ],
+            "analyzer": "keyword"
           },
           "name": {
             "type": "text",
             "fields": {
+              "shingle": {
+                "type": "text",
+                "analyzer": "shingle"
+              },
               "standard": {
                 "type": "text",
                 "analyzer": "standard"
+              },
+              "whitespace": {
+                "type": "text",
+                "analyzer": "whitespace"
               }
             },
+            "copy_to": [
+              "search",
+              "spelling"
+            ],
             "analyzer": "keyword"
           },
           "length": {
-            "type": "integer"
-          },
-          "size": {
-            "type": "integer"
-          },
-          "weight": {
             "type": "integer"
           },
           "price": {
@@ -112,6 +600,68 @@
                 "type": "double"
               }
             }
+          },
+          "search": {
+            "type": "text",
+            "fields": {
+              "shingle": {
+                "type": "text",
+                "analyzer": "shingle"
+              },
+              "whitespace": {
+                "type": "text",
+                "analyzer": "whitespace"
+              }
+            },
+            "analyzer": "standard"
+          },
+          "seller_reference": {
+            "type": "text",
+            "fields": {
+              "shingle": {
+                "type": "text",
+                "analyzer": "shingle"
+              },
+              "standard": {
+                "type": "text",
+                "analyzer": "standard"
+              },
+              "whitespace": {
+                "type": "text",
+                "analyzer": "whitespace"
+              }
+            },
+            "copy_to": [
+              "search"
+            ],
+            "analyzer": "keyword"
+          },
+          "sku": {
+            "type": "keyword"
+          },
+          "size": {
+            "type": "integer"
+          },
+          "spelling": {
+            "type": "text",
+            "fields": {
+              "phonetic": {
+                "type": "text",
+                "analyzer": "phonetic"
+              },
+              "shingle": {
+                "type": "text",
+                "analyzer": "shingle"
+              },
+              "whitespace": {
+                "type": "text",
+                "analyzer": "whitespace"
+              }
+            },
+            "analyzer": "standard"
+          },
+          "weight": {
+            "type": "integer"
           }
         }
       }

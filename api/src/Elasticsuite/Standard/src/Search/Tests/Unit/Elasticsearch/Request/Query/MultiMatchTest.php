@@ -72,7 +72,7 @@ class MultiMatchTest extends KernelTestCase
      * @param ?string                          $minimumShouldMatch Minimum should match
      * @param ?float                           $tieBreaker         Tie breaker config
      * @param ?string                          $name               Query name
-     * @param ?int                             $boost              Query boost
+     * @param ?float                           $boost              Query boost
      * @param ?FuzzinessConfigurationInterface $fuzzinessConfig    Fuzziness config
      * @param ?float                           $cutoffFrequency    Cut-off frequency
      * @param ?string                          $matchType          Match type
@@ -83,7 +83,7 @@ class MultiMatchTest extends KernelTestCase
         ?string $minimumShouldMatch,
         ?float $tieBreaker,
         ?string $name,
-        ?int $boost,
+        ?float $boost,
         ?FuzzinessConfigurationInterface $fuzzinessConfig,
         ?float $cutoffFrequency,
         ?string $matchType
@@ -299,7 +299,7 @@ class MultiMatchTest extends KernelTestCase
         if ($query->getName()) {
             $this->assertIsString($query->getName());
         }
-        $this->assertIsInt($query->getBoost());
+        $this->assertIsFloat($query->getBoost());
 
         /** @var MultiMatch $query */
         $this->assertIsString($query->getQueryText());
@@ -310,7 +310,7 @@ class MultiMatchTest extends KernelTestCase
         if ($query->getName()) {
             $this->assertIsString($query->getName());
         }
-        $this->assertIsInt($query->getBoost());
+        $this->assertIsFloat($query->getBoost());
         if ($query->getFuzzinessConfiguration()) {
             $this->assertInstanceOf(FuzzinessConfigurationInterface::class, $query->getFuzzinessConfiguration());
         }

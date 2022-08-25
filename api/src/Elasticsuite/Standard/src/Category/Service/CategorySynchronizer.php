@@ -164,7 +164,7 @@ class CategorySynchronizer
             $request = $this->requestFactory->create([
                 'name' => 'test',
                 'indexName' => $index->getName(),
-                'query' => $this->queryBuilder->createQuery($containerConfig, null, [], null),
+                'query' => $this->queryBuilder->createQuery($containerConfig, null, []),
                 'from' => $page * $pageSize,
                 'size' => $pageSize,
             ]);

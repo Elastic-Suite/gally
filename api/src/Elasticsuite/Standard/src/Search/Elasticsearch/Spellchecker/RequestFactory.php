@@ -16,23 +16,13 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Search\Elasticsearch\Spellchecker;
 
-/**
- * Spellchecking request interface.
- */
-interface RequestInterface
+class RequestFactory implements RequestFactoryInterface
 {
     /**
-     * Spellcheck request index name.
+     * {@inheritDoc}
      */
-    public function getIndexName(): string;
-
-    /**
-     * Spellcheck fulltext query.
-     */
-    public function getQueryText(): string;
-
-    /**
-     * Spellcheck cutoff frequency (used to detect stop-words).
-     */
-    public function getCutoffFrequency(): float;
+    public function create(array $data = []): RequestInterface
+    {
+        return new Request(...$data);
+    }
 }

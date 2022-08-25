@@ -64,14 +64,14 @@ class MatchPhrasePrefixTest extends KernelTestCase
      * @param string      $field         Target field
      * @param int|null    $maxExpansions Max expansions
      * @param string|null $name          Optional query name
-     * @param int|null    $boost         Query boost
+     * @param float|null  $boost         Query boost
      */
     public function testCreateComplexParams(
         string $queryText,
         string $field,
         ?int $maxExpansions,
         ?string $name,
-        ?int $boost
+        ?float $boost
     ): void {
         $queryParams = [
             'queryText' => $queryText,
@@ -153,7 +153,7 @@ class MatchPhrasePrefixTest extends KernelTestCase
         if ($query->getName()) {
             $this->assertIsString($query->getName());
         }
-        $this->assertIsInt($query->getBoost());
+        $this->assertIsFloat($query->getBoost());
 
         /** @var MatchPhrasePrefix $query */
         $this->assertIsString($query->getQueryText());

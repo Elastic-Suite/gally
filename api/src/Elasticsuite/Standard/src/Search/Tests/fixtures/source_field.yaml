@@ -7,7 +7,7 @@ Elasticsuite\Metadata\Model\SourceField:
         is_searchable: true
         is_filterable: false
         is_sortable: false
-        is_spellchecked: false
+        is_spellchecked: true
         is_used_for_rules: false
     category_name:
         metadata: '@category'
@@ -66,6 +66,23 @@ Elasticsuite\Metadata\Model\SourceField:
         metadata: '@product'
         code: 'price.final_price'
         type: 'float'
+    product_description:
+        metadata: '@product'
+        code: 'description'
+        type: 'text'
+        weight: 5
+        is_searchable: true
+        is_filterable: false
+        is_sortable: false
+        is_spellchecked: true
+        is_used_for_rules: false
+    product_seller_reference:
+        metadata: '@product'
+        code: 'seller_reference'
+        type: 'text'
+        weight: 5
+        is_searchable: true
+        is_spellchecked: false
     category_id:
         metadata: '@category'
         code: 'id'
