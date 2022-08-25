@@ -52,6 +52,8 @@ class LocalizedCatalogDataPersister implements DataPersisterInterface
         $this->entityManager->persist($data);
         $this->entityManager->flush();
 
+        $this->setOneAsDefault();
+
         return $data;
     }
 
@@ -64,5 +66,18 @@ class LocalizedCatalogDataPersister implements DataPersisterInterface
     {
         $this->entityManager->remove($data);
         $this->entityManager->flush();
+
+        $this->setOneAsDefault();
+    }
+
+    private function setOneAsDefault(): void
+    {
+        $defaultLocalizedCatalog = $this->localizedCatalogRepository->findOneBy(['isDefault' => true]);
+        if (!$defaultLocalizedCatalog) {
+            $defaultLocalizedCatalog = $this->localizedCatalogRepository->findOneBy([], ['id' => 'ASC']);
+            $defaultLocalizedCatalog->setIsDefault(true);
+            $this->entityManager->persist($defaultLocalizedCatalog);
+            $this->entityManager->flush();
+        }
     }
 }

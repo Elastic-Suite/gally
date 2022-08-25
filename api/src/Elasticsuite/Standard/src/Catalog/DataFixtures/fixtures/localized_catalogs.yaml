@@ -15,6 +15,7 @@ Elasticsuite\Catalog\Model\LocalizedCatalog:
         code: com_fr
         locale: fr_FR
         name: COM French Catalog
+        isDefault: true
     localized_catalog2:
         catalog: '@catalog1'
         code: com_en
