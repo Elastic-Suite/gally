@@ -17,9 +17,10 @@ declare(strict_types=1);
 namespace Elasticsuite\Search\Tests\Unit\Elasticsearch\Builder\Request\Query;
 
 use Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder;
+use Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Fulltext\FulltextQueryBuilder;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\Query\QueryBuilder;
-use Elasticsuite\Search\Elasticsearch\ContextInterface;
 use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
+use Elasticsuite\Search\Elasticsearch\Request\Query\Filtered;
 use Elasticsuite\Search\Elasticsearch\Request\QueryFactory;
 use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
 use Elasticsuite\Search\Elasticsearch\SpellcheckerInterface;
@@ -38,7 +39,7 @@ class QueryBuilderTest extends KernelTestCase
     {
         $builder = new QueryBuilder(
             $this->getQueryFactory(),
-//            $this->getFulltextQueryBuilder(),
+            $this->getFulltextQueryBuilder(),
             $this->getFilterQueryBuilder(),
             /*$this->getSearchContext()*/
         );
@@ -53,11 +54,9 @@ class QueryBuilderTest extends KernelTestCase
         $this->assertInstanceOf(QueryInterface::class, $query);
         $this->assertEquals(QueryInterface::TYPE_FILTER, $query->getType());
 
-        /** @var \Elasticsuite\Search\Elasticsearch\Request\Query\Filtered $query */
-        // TODO: implement fulltext queries builder first.
-        $this->assertNull($query->getQuery());
-        // $this->assertInstanceOf(QueryInterface::class, $query->getQuery());
-        // $this->assertEquals('fulltextQuery', $query->getQuery()->getType());
+        /** @var Filtered $query */
+        $this->assertInstanceOf(QueryInterface::class, $query->getQuery());
+        $this->assertEquals('fulltextQuery', $query->getQuery()->getType());
 
         $this->assertInstanceOf(QueryInterface::class, $query->getFilter());
         $this->assertEquals('filterQuery', $query->getFilter()->getType());
@@ -96,12 +95,10 @@ class QueryBuilderTest extends KernelTestCase
     /*
      * Mocks the fulltext query builder.
      */
-    /*
-    private function getFulltextQueryBuilder(): MockObject
+    private function getFulltextQueryBuilder(): FulltextQueryBuilder|MockObject
     {
-        return $this->getQueryBuilder(\Elasticsuite\Search\Request\Query\Fulltext\QueryBuilder::class, 'fulltextQuery');
+        return $this->getQueryBuilder(FulltextQueryBuilder::class, 'fulltextQuery');
     }
-    */
 
     /*
      * Mocks the filters query builder.

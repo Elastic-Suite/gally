@@ -33,7 +33,7 @@ class Nested implements QueryInterface
 
     private ?string $name;
 
-    private int $boost;
+    private float $boost;
 
     private string $path;
 
@@ -46,14 +46,14 @@ class Nested implements QueryInterface
      * @param ?QueryInterface $query     nested query
      * @param string          $scoreMode Score mode of the nested query
      * @param ?string         $name      query name
-     * @param int             $boost     query boost
+     * @param float           $boost     query boost
      */
     public function __construct(
         string $path,
         ?QueryInterface $query = null,
         string $scoreMode = self::SCORE_MODE_NONE,
         string $name = null,
-        int $boost = QueryInterface::DEFAULT_BOOST_VALUE
+        float $boost = QueryInterface::DEFAULT_BOOST_VALUE
     ) {
         $this->name = $name;
         $this->boost = $boost;
@@ -73,7 +73,7 @@ class Nested implements QueryInterface
     /**
      * {@inheritDoc}
      */
-    public function getBoost(): int
+    public function getBoost(): float
     {
         return $this->boost;
     }

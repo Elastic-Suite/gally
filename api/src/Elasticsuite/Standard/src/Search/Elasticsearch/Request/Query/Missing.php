@@ -27,19 +27,19 @@ class Missing implements QueryInterface
 
     private string $field;
 
-    private int $boost;
+    private float $boost;
 
     /**
      * Constructor.
      *
      * @param string  $field Query field
      * @param ?string $name  Query name
-     * @param int     $boost Query boost
+     * @param float   $boost Query boost
      */
     public function __construct(
         string $field,
         ?string $name = null,
-        int $boost = QueryInterface::DEFAULT_BOOST_VALUE
+        float $boost = QueryInterface::DEFAULT_BOOST_VALUE
     ) {
         $this->name = $name;
         $this->boost = $boost;
@@ -57,7 +57,7 @@ class Missing implements QueryInterface
     /**
      * {@inheritDoc}
      */
-    public function getBoost(): int
+    public function getBoost(): float
     {
         return $this->boost;
     }

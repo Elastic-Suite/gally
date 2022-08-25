@@ -25,7 +25,7 @@ class Boolean implements QueryInterface
 {
     private ?string $name;
 
-    private int $boost;
+    private float $boost;
 
     /**
      * @var QueryInterface[]
@@ -56,7 +56,7 @@ class Boolean implements QueryInterface
      * @param QueryInterface[] $mustNot            Must not clause queries
      * @param int              $minimumShouldMatch Minimum should match query clause
      * @param ?string          $name               Query name
-     * @param int              $boost              Query boost
+     * @param float            $boost              Query boost
      * @param bool             $cached             Should the query be cached or not
      */
     public function __construct(
@@ -65,7 +65,7 @@ class Boolean implements QueryInterface
         array $mustNot = [],
         int $minimumShouldMatch = 1,
         ?string $name = null,
-        int $boost = QueryInterface::DEFAULT_BOOST_VALUE,
+        float $boost = QueryInterface::DEFAULT_BOOST_VALUE,
         bool $cached = false
     ) {
         $this->must = $must;
@@ -96,7 +96,7 @@ class Boolean implements QueryInterface
     /**
      * {@inheritDoc}
      */
-    public function getBoost(): int
+    public function getBoost(): float
     {
         return $this->boost;
     }

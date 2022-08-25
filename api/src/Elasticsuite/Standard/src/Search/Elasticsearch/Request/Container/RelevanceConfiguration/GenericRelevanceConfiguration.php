@@ -20,6 +20,13 @@ use Elasticsuite\Search\Elasticsearch\Request\Container\RelevanceConfigurationIn
 
 class GenericRelevanceConfiguration implements RelevanceConfigurationInterface
 {
+    private FuzzinessConfigurationInterface $fuzzinessConfiguration;
+
+    public function __construct()
+    {
+        $this->fuzzinessConfiguration = new FuzzinessConfig('AUTO', 1, 10);
+    }
+
     public function getMinimumShouldMatch(): string
     {
         return '100%';
@@ -42,16 +49,16 @@ class GenericRelevanceConfiguration implements RelevanceConfigurationInterface
 
     public function getFuzzinessConfiguration(): ?FuzzinessConfigurationInterface
     {
-        return null;
+        return $this->fuzzinessConfiguration;
     }
 
     public function isFuzzinessEnabled(): bool
     {
-        return false;
+        return true;
     }
 
     public function isPhoneticSearchEnabled(): bool
     {
-        return false;
+        return true;
     }
 }

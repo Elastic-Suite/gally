@@ -23,31 +23,36 @@ use Elasticsuite\Search\Elasticsearch\Builder\Request\Query\QueryBuilder;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\SortOrder\SortOrderBuilder;
 use Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\AggregationResolverInterface;
 use Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider;
+use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
 use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
 use Elasticsuite\Search\Elasticsearch\RequestFactoryInterface;
 use Elasticsuite\Search\Elasticsearch\RequestInterface;
+use Elasticsuite\Search\Elasticsearch\Spellchecker;
 use Elasticsuite\Search\Elasticsearch\SpellcheckerInterface;
 
 class SimpleRequestBuilder
 {
     /**
      * Constructor.
-     * TODO add support for $spellcheckRequestFactory and $spellchecker.
      *
-     * @param RequestFactoryInterface $requestFactory     Factory used to build the request
-     * @param QueryBuilder            $queryBuilder       Builder for the query part of the request
-     * @param SortOrderBuilder        $sortOrderBuilder   Builder for the sort order(s) part of the request
-     * @param AggregationBuilder      $aggregationBuilder Builder for the aggregation part of the request
+     * @param RequestFactoryInterface              $requestFactory                 Factory used to build the request
+     * @param ContainerConfigurationProvider       $containerConfigurationProvider Container configuration provider
+     * @param QueryBuilder                         $queryBuilder                   Builder for the query part of the request
+     * @param SortOrderBuilder                     $sortOrderBuilder               Builder for the sort order(s) part of the request
+     * @param AggregationBuilder                   $aggregationBuilder             Builder for the aggregation part of the request
+     * @param AggregationResolverInterface         $aggregationResolver            Aggregation Resolver
+     * @param Spellchecker\RequestFactoryInterface $spellcheckRequestFactory       Spellchecker request factory
+     * @param SpellcheckerInterface                $spellchecker                   Spellchecker Spellchecker
      */
     public function __construct(
         private RequestFactoryInterface $requestFactory,
+        private ContainerConfigurationProvider $containerConfigurationProvider,
         private QueryBuilder $queryBuilder,
         private SortOrderBuilder $sortOrderBuilder,
         private AggregationBuilder $aggregationBuilder,
-//        private SpellcheckRequestFactory $spellcheckRequestFactory,
-//        private SpellcheckerInterface $spellchecker,
         private AggregationResolverInterface $aggregationResolver,
-        private ContainerConfigurationProvider $containerConfigurationProvider,
+        private Spellchecker\RequestFactoryInterface $spellcheckRequestFactory,
+        private SpellcheckerInterface $spellchecker,
     ) {
     }
 
@@ -84,11 +89,10 @@ class SimpleRequestBuilder
         $queryFilters = array_merge($queryFilters, array_diff_key($filters, $facetFilters));
 
         $spellingType = SpellcheckerInterface::SPELLING_TYPE_EXACT;
-        /*
-        if ($query && is_string($query)) {
+
+        if ($query && \is_string($query)) {
             $spellingType = $this->getSpellingType($containerConfig, $query);
         }
-        */
 
         $requestParams = [
             'name' => $containerConfig->getName(),
@@ -109,5 +113,24 @@ class SimpleRequestBuilder
         */
 
         return $this->requestFactory->create($requestParams);
+    }
+
+    /*
+     * Retrieve the spelling type for a fulltext query.
+     *
+     * @param ContainerConfigurationInterface $containerConfig Search request configuration
+     * @param string                          $queryText       Query text
+     */
+    private function getSpellingType(ContainerConfigurationInterface $containerConfig, string $queryText): int
+    {
+        $spellcheckRequestParams = [
+            'indexName' => $containerConfig->getIndexName(),
+            'queryText' => $queryText,
+            'cutoffFrequency' => $containerConfig->getRelevanceConfig()->getCutOffFrequency(),
+        ];
+
+        $spellcheckRequest = $this->spellcheckRequestFactory->create($spellcheckRequestParams);
+
+        return $this->spellchecker->getSpellingType($spellcheckRequest);
     }
 }

@@ -25,7 +25,7 @@ class Not implements QueryInterface
 {
     private ?string $name;
 
-    private int $boost;
+    private float $boost;
 
     private ?QueryInterface $query;
 
@@ -34,12 +34,12 @@ class Not implements QueryInterface
      *
      * @param ?QueryInterface $query Negated query
      * @param ?string         $name  Query name
-     * @param int             $boost Query boost
+     * @param float           $boost Query boost
      */
     public function __construct(
         ?QueryInterface $query = null,
         ?string $name = null,
-        int $boost = QueryInterface::DEFAULT_BOOST_VALUE
+        float $boost = QueryInterface::DEFAULT_BOOST_VALUE
     ) {
         $this->name = $name;
         $this->boost = $boost;
@@ -57,7 +57,7 @@ class Not implements QueryInterface
     /**
      * {@inheritDoc}
      */
-    public function getBoost(): int
+    public function getBoost(): float
     {
         return $this->boost;
     }

@@ -63,13 +63,13 @@ class TermsTest extends KernelTestCase
      * @param string|bool|array $values Search values
      * @param string            $field  Search field
      * @param ?string           $name   Query name
-     * @param ?int              $boost  Query boost
+     * @param ?float            $boost  Query boost
      */
     public function testCreateComplexParams(
         string|bool|array $values,
         string $field,
         ?string $name,
-        ?int $boost
+        ?float $boost
     ): void {
         // TODO: use reflection to build mapping ?
         $queryParams = [
@@ -154,7 +154,7 @@ class TermsTest extends KernelTestCase
         if ($query->getName()) {
             $this->assertIsString($query->getName());
         }
-        $this->assertIsInt($query->getBoost());
+        $this->assertIsFloat($query->getBoost());
 
         /** @var Terms $query */
         $this->assertIsArray($query->getValues());

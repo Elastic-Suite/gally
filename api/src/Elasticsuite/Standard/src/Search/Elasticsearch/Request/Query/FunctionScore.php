@@ -98,7 +98,7 @@ class FunctionScore implements QueryInterface
     /**
      * {@inheritDoc}
      */
-    public function getBoost(): int|null
+    public function getBoost(): float|null
     {
         return null;
     }

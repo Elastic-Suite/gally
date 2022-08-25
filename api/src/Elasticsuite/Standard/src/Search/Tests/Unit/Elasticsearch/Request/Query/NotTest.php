@@ -84,12 +84,12 @@ class NotTest extends KernelTestCase
     /**
      * @param QueryInterface|null $originalQuery Query to negate
      * @param string|null         $name          Query name
-     * @param int|null            $boost         Query boost
+     * @param float|null          $boost         Query boost
      */
     private function performCreateComplexParams(
         ?QueryInterface $originalQuery,
         ?string $name,
-        ?int $boost
+        ?float $boost
     ): void {
         // TODO: use reflection to build mapping ?
         $queryParams = [
@@ -133,7 +133,7 @@ class NotTest extends KernelTestCase
         if ($query->getName()) {
             $this->assertIsString($query->getName());
         }
-        $this->assertIsInt($query->getBoost());
+        $this->assertIsFloat($query->getBoost());
 
         /** @var Not $query */
         if ($query->getQuery()) {

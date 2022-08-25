@@ -63,10 +63,8 @@ class FilterQueryBuilder
      * @param ContainerConfigurationInterface $containerConfig Search request container configuration
      * @param array                           $filters         Filters to be built
      * @param string|null                     $currentPath     Current nested path or null
-     *
-     * @return QueryInterface
      */
-    public function create(ContainerConfigurationInterface $containerConfig, array $filters, string $currentPath = null)
+    public function create(ContainerConfigurationInterface $containerConfig, array $filters, string $currentPath = null): QueryInterface
     {
         $queries = [];
 
