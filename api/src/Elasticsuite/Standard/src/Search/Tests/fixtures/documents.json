@@ -1,6 +1,6 @@
 [
   {
-    "index_name": "elasticsuite_test_b2c_en_product_20220429_153000",
+    "index_name": "elasticsuite_b2c_en_product",
     "documents": [
       {
         "entity_id": "1",
@@ -96,7 +96,7 @@
     ]
   },
   {
-    "index_name": "elasticsuite_test_b2b_fr_product_20220601_171005",
+    "index_name": "elasticsuite_b2b_fr_product",
     "documents": [
       {
         "entity_id": "1",
