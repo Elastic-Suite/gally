@@ -70,8 +70,10 @@ class LocalizedCatalogsTest extends AbstractEntityTest
         $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
 
         return [
-            [$user, 1, ['id' => 1, 'code' => 'b2c_fr', 'locale' => 'fr_FR', 'name' => 'B2C French Store View', 'isDefault' => false, 'localName' => 'français (France)'], 200, 'fr_FR'],
-            [$user, 5, ['id' => 5, 'code' => 'empty_name', 'locale' => 'en_US', 'localName' => 'English (United States)'], 200, 'en_US'],
+            // The first created localized catalog should have been elected as the default one,
+            // this is why we test that the parameter isDefault is set to true even if we haven't specified it.
+            [$user, 1, ['id' => 1, 'code' => 'b2c_fr', 'locale' => 'fr_FR', 'name' => 'B2C French Store View', 'isDefault' => true, 'localName' => 'français (France)'], 200, 'fr_FR'],
+            [$user, 5, ['id' => 5, 'code' => 'empty_name', 'locale' => 'en_US', 'localName' => 'English (United States)', 'isDefault' => false], 200, 'en_US'],
             [$user, 10, [], 404],
         ];
     }
