@@ -1,4 +1,10 @@
-import { fieldBoolean, fieldRef, fieldString, resourceWithRef } from '~/mocks'
+import {
+  fieldBoolean,
+  fieldRef,
+  fieldString,
+  mockedFieldWithDropdown,
+  resourceWithRef,
+} from '~/mocks'
 import { DataContentType } from '~/types'
 import sourceFields from '~/public/mocks/source_fields.json'
 
@@ -29,6 +35,27 @@ describe('Table service', () => {
         label: 'Attribute code',
         type: DataContentType.STRING,
         editable: false,
+        options: null,
+      })
+    })
+    it('should return the field header with options in case of dropdown type', () => {
+      expect(
+        getFieldHeader(mockedFieldWithDropdown, (key: string) => key)
+      ).toEqual({
+        name: 'code',
+        label: 'Attribute code',
+        type: DataContentType.DROPDOWN,
+        editable: false,
+        options: [
+          {
+            label: 'option_test1',
+            value: 'option_test1',
+          },
+          {
+            label: 'option_test2',
+            value: 'option_test2',
+          },
+        ],
       })
     })
   })
@@ -94,7 +121,8 @@ describe('Table service', () => {
 
   describe('getMappings', () => {
     it('should return the mappings object', () => {
-      const mappings = getMappings(sourceFields, resourceWithRef)
+      const pathTest = 'test/no/specific/context'
+      const mappings = getMappings(sourceFields, resourceWithRef, pathTest)
       expect(mappings[1]).toEqual({
         '@type': 'IriTemplateMapping',
         variable: 'isFilterable',

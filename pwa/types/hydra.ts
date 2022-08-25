@@ -1,3 +1,4 @@
+import { DataContentType } from './customTables'
 import { Method } from './fetch'
 import {
   IJsonldBase,
@@ -91,6 +92,12 @@ export interface IElasticSuiteProperty {
   editable?: boolean
   position?: number
   context?: Record<string, IElasticSuiteProperty>
+  input?: DataContentType
+  options?: IDropdownOptions
+}
+
+export interface IDropdownOptions {
+  values: (string | number)[]
 }
 
 export interface IHydraSupportedProperty extends IJsonldType {

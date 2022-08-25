@@ -24,14 +24,14 @@ function updateProperties(
   return properties
 }
 
-export function updateHeaderPropertiesAccordingToPath(
+export function updatePropertiesAccordingToPath(
   field: IField,
   path: string
 ): IField {
   if (path.includes('admin/settings')) {
     path = 'settings_attribute'
   } else {
-    path = path.replaceAll('/', '_')
+    path = path.replaceAll('/', '_').replace('_admin_', '')
   }
   if (field.elasticsuite?.context) {
     const [_, newPropertiesvalues] = Object.entries(field.elasticsuite?.context)

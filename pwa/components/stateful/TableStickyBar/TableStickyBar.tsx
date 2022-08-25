@@ -9,7 +9,7 @@ import PrimaryButton from '~/components/atoms/buttons/PrimaryButton'
 import Dropdown from '~/components/atoms/form/DropDown'
 
 import FieldGuesser from '../FieldGuesser/FieldGuesser'
-import { getFieldDataContentType } from '~/services'
+import { getFieldDataContentType, getOptions } from '~/services'
 
 const ActionsButtonsContainer = styled(Box)({
   marginLeft: 'auto',
@@ -91,6 +91,7 @@ function TableStickyBar(props: IProps): JSX.Element {
           name={field.title}
           onChange={onChangeValue}
           type={getFieldDataContentType(field)}
+          options={getOptions(field)}
           useDropdownBoolean
           value={fieldValue}
         />

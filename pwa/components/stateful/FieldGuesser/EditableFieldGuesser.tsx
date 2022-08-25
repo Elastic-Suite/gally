@@ -49,6 +49,7 @@ function EditableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
     case DataContentType.DROPDOWN: {
       return (
         <DropDown
+          required
           label={label}
           multiple={multiple}
           options={options}
