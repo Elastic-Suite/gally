@@ -17,15 +17,22 @@ declare(strict_types=1);
 namespace Elasticsuite\Category\Resolver;
 
 use ApiPlatform\Core\GraphQl\Resolver\QueryItemResolverInterface;
+use Elasticsuite\Catalog\Repository\CatalogRepository;
+use Elasticsuite\Catalog\Repository\LocalizedCatalogRepository;
 use Elasticsuite\Category\Model\Category\Configuration;
 use Elasticsuite\Category\Repository\CategoryConfigurationRepository;
+use Elasticsuite\Category\Repository\CategoryRepository;
 use Exception;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ConfigurationResolver implements QueryItemResolverInterface
 {
-    public function __construct(private CategoryConfigurationRepository $configurationRepository)
-    {
+    public function __construct(
+        private CategoryConfigurationRepository $configurationRepository,
+        private CatalogRepository $catalogRepository,
+        private LocalizedCatalogRepository $localizedCatalogRepository,
+        private CategoryRepository $categoryRepository,
+    ) {
     }
 
     /**
@@ -37,11 +44,25 @@ class ConfigurationResolver implements QueryItemResolverInterface
      */
     public function __invoke($item, array $context)
     {
-        $config = $this->configurationRepository->findByContext(
-            $context['args']['categoryId'],
-            $context['args']['catalogId'] ?? null,
-            $context['args']['localizedCatalogId'] ?? null,
-        );
+        $categoryId = $context['args']['categoryId'];
+        $category = $this->categoryRepository->find($categoryId);
+        if (!$category) {
+            throw new NotFoundHttpException(sprintf('Category with id %s not found.', $categoryId));
+        }
+
+        $catalogId = $context['args']['catalogId'];
+        $catalog = $catalogId ? $this->catalogRepository->find($catalogId) : null;
+        if ($catalogId && !$catalog) {
+            throw new NotFoundHttpException(sprintf('Catalog with id %d not found.', $catalogId));
+        }
+
+        $localizedCatalogId = $context['args']['localizedCatalogId'];
+        $localizedCatalog = $localizedCatalogId ? $this->localizedCatalogRepository->find($localizedCatalogId) : null;
+        if ($localizedCatalogId && !$localizedCatalog) {
+            throw new NotFoundHttpException(sprintf('Localized catalog with id %d not found.', $localizedCatalogId));
+        }
+
+        $config = $this->configurationRepository->findOneMergedByContext($category, $catalog, $localizedCatalog);
         if (!$config) {
             throw new NotFoundHttpException('Not found');
         }

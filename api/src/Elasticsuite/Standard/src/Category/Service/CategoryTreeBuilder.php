@@ -53,16 +53,14 @@ class CategoryTreeBuilder
         if (!$localizedCatalog) {
             if (!$catalog) {
                 $localizedCatalog = $this->defaultCatalogProvider->getDefaultLocalizedCatalog();
-                $catalog = $localizedCatalog->getCatalog();
             } else {
                 $localizedCatalog = $catalog->getLocalizedCatalogs()->first();
             }
         }
 
-        $categoryConfigurations = $this->categoryConfigurationRepository->findMergedConfigurationByContext(
-            $catalog ?? $localizedCatalog->getCatalog(),
-            $localizedCatalog
-        );
+        $categoryConfigurations = $catalog
+            ? $this->categoryConfigurationRepository->findMergedByContext($catalog, $localizedCatalog)
+            : $this->categoryConfigurationRepository->findAllMerged($localizedCatalog);
 
         $sortedCategories = [];
         $categories = $this->categoryRepository->findAllIndexedById();
@@ -72,10 +70,10 @@ class CategoryTreeBuilder
             $categoryConfiguration = new Category\Configuration();
             $categoryConfiguration->setCategory($category);
             $categoryConfiguration->setName($categoryConfigurationData['name']);
-            $categoryConfiguration->setIsVirtual($categoryConfigurationData['isVirtual']);
+            $categoryConfiguration->setIsVirtual((bool) $categoryConfigurationData['isVirtual']);
             $categoryConfiguration->setDefaultSorting($categoryConfigurationData['defaultSorting']);
-            $categoryConfiguration->setUseNameInProductSearch($categoryConfigurationData['useNameInProductSearch']);
-            $categoryConfiguration->setIsActive($categoryConfigurationData['isActive']);
+            $categoryConfiguration->setUseNameInProductSearch((bool) $categoryConfigurationData['useNameInProductSearch']);
+            $categoryConfiguration->setIsActive((bool) $categoryConfigurationData['isActive']);
 
             if (!$shouldDisplayInactive && !$categoryConfiguration->getIsActive()) {
                 continue;

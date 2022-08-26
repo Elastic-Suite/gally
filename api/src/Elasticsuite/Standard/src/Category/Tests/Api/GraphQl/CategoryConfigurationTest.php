@@ -83,6 +83,24 @@ class CategoryConfigurationTest extends AbstractTest
     protected function getWithContextDataProvider(): iterable
     {
         yield [
+            'fake_category',
+            'fake_catalog',
+            'fake_localized_catalog',
+            ['errors' => [['debugMessage' => 'Category with id fake_category not found.']]],
+        ];
+        yield [
+            'one',
+            'fake_catalog',
+            'fake_localized_catalog',
+            ['errors' => [['debugMessage' => 'Catalog with id 123456 not found.']]],
+        ];
+        yield [
+            'one',
+            'b2c',
+            'fake_localized_catalog',
+            ['errors' => [['debugMessage' => 'Localized catalog with id 123456 not found.']]],
+        ];
+        yield [
             'one',
             'b2c',
             'b2c_fr',
@@ -103,25 +121,6 @@ class CategoryConfigurationTest extends AbstractTest
                 'data' => [
                     'getCategoryConfiguration' => [
                         'name' => 'One',
-                        'isVirtual' => null,
-                    ],
-                ],
-            ],
-        ];
-        yield [
-            'one',
-            'b2c',
-            'b2c_es',
-            ['errors' => [['debugMessage' => 'Not found']]],
-        ];
-        yield [
-            'one',
-            'b2c',
-            null,
-            [
-                'data' => [
-                    'getCategoryConfiguration' => [
-                        'name' => null,
                         'isVirtual' => false,
                     ],
                 ],
@@ -129,13 +128,52 @@ class CategoryConfigurationTest extends AbstractTest
         ];
         yield [
             'one',
+            'b2c',
+            null,
+            [
+                'data' => [
+                    'getCategoryConfiguration' => [
+                        'name' => 'Un',
+                        'isVirtual' => false,
+                    ],
+                ],
+            ],
+        ];
+        yield [
+            'one',
+            'b2b',
+            null,
+            [
+                'data' => [
+                    'getCategoryConfiguration' => [
+                        'name' => 'One',
+                        'isVirtual' => true,
+                    ],
+                ],
+            ],
+        ];
+        yield [
+            'one',
             null,
             null,
             [
                 'data' => [
                     'getCategoryConfiguration' => [
-                        'name' => null,
+                        'name' => 'Un',
                         'isVirtual' => true,
+                    ],
+                ],
+            ],
+        ];
+        yield [
+            'five',
+            null,
+            null,
+            [
+                'data' => [
+                    'getCategoryConfiguration' => [
+                        'name' => 'Five',
+                        'isVirtual' => false,
                     ],
                 ],
             ],
