@@ -8,3 +8,13 @@ services:
             - '%kernel.environment%'
             - false
         public: true
+
+    Elasticsuite\Fixture\Service\EntityIndicesFixturesInterface: '@Elasticsuite\Fixture\Service\EntityIndicesFixtures'
+    Elasticsuite\Fixture\Service\EntityIndicesFixtures:
+        arguments:
+            - '@Elasticsuite\Metadata\Repository\MetadataRepository'
+            - '@Elasticsuite\Catalog\Repository\LocalizedCatalogRepository'
+            - '@Elasticsuite\Index\Service\IndexOperation'
+            - '@Elasticsuite\Index\Repository\Index\IndexRepositoryInterface'
+            - '@Elasticsuite\Index\Api\IndexSettingsInterface'
+        public: true

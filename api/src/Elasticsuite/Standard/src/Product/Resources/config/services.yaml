@@ -20,8 +20,6 @@ services:
     Elasticsuite\Product\DataFixtures\ElasticsearchProductFixtures:
         arguments:
             - '@Elasticsuite\Fixture\Service\ElasticsearchFixtures'
-            - '@Elasticsuite\Metadata\Repository\MetadataRepository'
-            - '@Elasticsuite\Catalog\Repository\LocalizedCatalogRepository'
-            - '@Elasticsuite\Index\Service\IndexOperation'
+            - '@Elasticsuite\Fixture\Service\EntityIndicesFixturesInterface'
         tags:
             - { name: doctrine.fixture.orm }
