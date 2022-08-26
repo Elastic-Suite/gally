@@ -154,13 +154,13 @@ class ConfigTest extends AbstractTest
         $this->assertEquals('tokenizer', $defaultAnalyzers['analyzer_name']['tokenizer']);
         $this->assertEquals('custom', $defaultAnalyzers['analyzer_name']['type']);
 
-        $this->assertContains('char_filter_name', $defaultAnalyzers['analyzer_name']['char_filters']);
-        $this->assertContains('char_filter_with_params', $defaultAnalyzers['analyzer_name']['char_filters']);
-        $this->assertNotContains('invalid_char_filter', $defaultAnalyzers['analyzer_name']['char_filters']);
-        $this->assertNotContains('char_filter_override', $defaultAnalyzers['analyzer_name']['char_filters']);
+        $this->assertContains('char_filter_name', $defaultAnalyzers['analyzer_name']['char_filter']);
+        $this->assertContains('char_filter_with_params', $defaultAnalyzers['analyzer_name']['char_filter']);
+        $this->assertNotContains('invalid_char_filter', $defaultAnalyzers['analyzer_name']['char_filter']);
+        $this->assertNotContains('char_filter_override', $defaultAnalyzers['analyzer_name']['char_filter']);
 
-        $this->assertContains('filter_name', $defaultAnalyzers['analyzer_name']['filters']);
-        $this->assertContains('filter_with_params', $defaultAnalyzers['analyzer_name']['filters']);
+        $this->assertContains('filter_name', $defaultAnalyzers['analyzer_name']['filter']);
+        $this->assertContains('filter_with_params', $defaultAnalyzers['analyzer_name']['filter']);
     }
 
     /**
@@ -175,10 +175,10 @@ class ConfigTest extends AbstractTest
         $analyzerOverrides = self::$config->get('override_language')['analyzer'];
         $this->assertCount(1, $analyzerOverrides);
         $this->assertEquals('tokenizer_override', $analyzerOverrides['analyzer_name']['tokenizer']);
-        $this->assertContains('char_filter_name', $analyzerOverrides['analyzer_name']['char_filters']);
-        $this->assertContains('char_filter_with_params', $analyzerOverrides['analyzer_name']['char_filters']);
-        $this->assertNotContains('invalid_char_filter', $analyzerOverrides['analyzer_name']['char_filters']);
-        $this->assertContains('char_filter_override', $analyzerOverrides['analyzer_name']['char_filters']);
+        $this->assertContains('char_filter_name', $analyzerOverrides['analyzer_name']['char_filter']);
+        $this->assertContains('char_filter_with_params', $analyzerOverrides['analyzer_name']['char_filter']);
+        $this->assertNotContains('invalid_char_filter', $analyzerOverrides['analyzer_name']['char_filter']);
+        $this->assertContains('char_filter_override', $analyzerOverrides['analyzer_name']['char_filter']);
     }
 
     /**
@@ -192,13 +192,13 @@ class ConfigTest extends AbstractTest
         $this->assertArrayHasKey('normalizer_name', $defaultAnalyzers);
         $this->assertEquals('custom', $defaultAnalyzers['normalizer_name']['type']);
 
-        $this->assertContains('char_filter_name', $defaultAnalyzers['normalizer_name']['char_filters']);
-        $this->assertContains('char_filter_with_params', $defaultAnalyzers['normalizer_name']['char_filters']);
-        $this->assertNotContains('invalid_char_filter', $defaultAnalyzers['normalizer_name']['char_filters']);
-        $this->assertNotContains('char_filter_override', $defaultAnalyzers['normalizer_name']['char_filters']);
+        $this->assertContains('char_filter_name', $defaultAnalyzers['normalizer_name']['char_filter']);
+        $this->assertContains('char_filter_with_params', $defaultAnalyzers['normalizer_name']['char_filter']);
+        $this->assertNotContains('invalid_char_filter', $defaultAnalyzers['normalizer_name']['char_filter']);
+        $this->assertNotContains('char_filter_override', $defaultAnalyzers['normalizer_name']['char_filter']);
 
-        $this->assertContains('filter_name', $defaultAnalyzers['normalizer_name']['filters']);
-        $this->assertContains('filter_with_params', $defaultAnalyzers['normalizer_name']['filters']);
+        $this->assertContains('filter_name', $defaultAnalyzers['normalizer_name']['filter']);
+        $this->assertContains('filter_with_params', $defaultAnalyzers['normalizer_name']['filter']);
     }
 
     /**
@@ -208,15 +208,15 @@ class ConfigTest extends AbstractTest
     {
         $normalizerGeneratedLanguages = self::$config->get('normalizer_generated_language')['normalizer'];
         $this->assertCount(2, $normalizerGeneratedLanguages);
-        $this->assertContains('char_filter_name', $normalizerGeneratedLanguages['dummy']['char_filters']);
-        $this->assertNotContains('char_filter_with_params', $normalizerGeneratedLanguages['dummy']['char_filters']);
-        $this->assertNotContains('invalid_char_filter', $normalizerGeneratedLanguages['dummy']['char_filters']);
+        $this->assertContains('char_filter_name', $normalizerGeneratedLanguages['dummy']['char_filter']);
+        $this->assertNotContains('char_filter_with_params', $normalizerGeneratedLanguages['dummy']['char_filter']);
+        $this->assertNotContains('invalid_char_filter', $normalizerGeneratedLanguages['dummy']['char_filter']);
 
         $normalizerOverrides = self::$config->get('override_language')['normalizer'];
         $this->assertCount(1, $normalizerOverrides);
-        $this->assertContains('char_filter_name', $normalizerOverrides['normalizer_name']['char_filters']);
-        $this->assertContains('char_filter_with_params', $normalizerOverrides['normalizer_name']['char_filters']);
-        $this->assertNotContains('invalid_char_filter', $normalizerOverrides['normalizer_name']['char_filters']);
-        $this->assertContains('char_filter_override', $normalizerOverrides['normalizer_name']['char_filters']);
+        $this->assertContains('char_filter_name', $normalizerOverrides['normalizer_name']['char_filter']);
+        $this->assertContains('char_filter_with_params', $normalizerOverrides['normalizer_name']['char_filter']);
+        $this->assertNotContains('invalid_char_filter', $normalizerOverrides['normalizer_name']['char_filter']);
+        $this->assertContains('char_filter_override', $normalizerOverrides['normalizer_name']['char_filter']);
     }
 }
