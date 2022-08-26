@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Elasticsuite\Category\Model\Category;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Elasticsuite\Catalog\Model\Catalog;
@@ -99,6 +100,19 @@ class Configuration
 
     private ?bool $useNameInProductSearch = null;
 
+    #[ApiProperty(
+        attributes: [
+            'hydra:supportedProperty' => [
+                'elasticsuite' => [
+                    'input' => 'dropdown',
+                    'options' => [
+                        'api_rest' => '/category_sorting_options',
+                        'api_gaphql' => 'categorySortingOptions',
+                    ],
+                ],
+            ],
+        ],
+    )]
     private ?string $defaultSorting = null;
 
     private bool $isActive = true;
