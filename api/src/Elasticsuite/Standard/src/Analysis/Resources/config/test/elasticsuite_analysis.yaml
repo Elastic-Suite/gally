@@ -26,22 +26,22 @@ elasticsuite:
                             - item2
             analyzers:
                 analyzer_name:
-                    char_filters:
+                    char_filter:
                         - char_filter_name
                         - char_filter_with_params
                         - invalid_char_filter
                     tokenizer: tokenizer
-                    filters:
+                    filter:
                         - filter_name
                         - filter_with_params
                         - invalid_filter
             normalizers:
                 normalizer_name:
-                    char_filters:
+                    char_filter:
                         - char_filter_name
                         - char_filter_with_params
                         - invalid_char_filter
-                    filters:
+                    filter:
                         - filter_name
                         - filter_with_params
                         - invalid_filter
@@ -62,24 +62,24 @@ elasticsuite:
                     
             analyzers:
                 analyzer_name:
-                    char_filters:
+                    char_filter:
                         - char_filter_name
                         - char_filter_with_params
                         - char_filter_override
                         - invalid_char_filter
                     tokenizer: tokenizer_override
-                    filters:
+                    filter:
                         - filter_name
                         - filter_with_params
                         - invalid_filter
             normalizers:
                 normalizer_name:
-                    char_filters:
+                    char_filter:
                         - char_filter_name
                         - char_filter_with_params
                         - char_filter_override
                         - invalid_char_filter
-                    filters:
+                    filter:
                         - filter_name
                         - filter_with_params
                         - invalid_filter
@@ -97,12 +97,12 @@ elasticsuite:
         analyzer_generated_language:
             analyzers:
                 dummy:
-                    char_filters:
+                    char_filter:
                         - char_filter_name
                         - char_filter_with_params
                         - invalid_char_filter
                     tokenizer: dummy_tokenizer
-                    filters:
+                    filter:
                         - filter_name
                         - filter_with_params
                         - invalid_filter
@@ -110,10 +110,10 @@ elasticsuite:
         normalizer_generated_language:
             normalizers:
                 dummy:
-                    char_filters:
+                    char_filter:
                         - char_filter_name
                         - invalid_char_filter
-                    filters:
+                    filter:
                         - filter_name
                         - filter_with_params
                         - invalid_filter
