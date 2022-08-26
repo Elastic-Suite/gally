@@ -88,8 +88,8 @@ class Config
     private function cleanFilters(array $data, array $validCharFilters, array $validFilters): array
     {
         foreach ($data as $analyzerName => $analyzerData) {
-            $data[$analyzerName]['char_filters'] = array_values(array_intersect($analyzerData['char_filters'], $validCharFilters));
-            $data[$analyzerName]['filters'] = array_values(array_intersect($analyzerData['filters'], $validFilters));
+            $data[$analyzerName]['char_filter'] = array_values(array_intersect($analyzerData['char_filter'], $validCharFilters));
+            $data[$analyzerName]['filter'] = array_values(array_intersect($analyzerData['filter'], $validFilters));
         }
 
         return $data;

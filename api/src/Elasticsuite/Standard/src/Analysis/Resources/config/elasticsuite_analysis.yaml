@@ -37,7 +37,7 @@ elasticsuite:
                         min_shingle_size: 2
                         max_shingle_size: 10
                         output_unigrams: true
-                        token_separator: 
+                        token_separator: ""
                 reference_word_delimiter:
                     type: word_delimiter
                     params:
@@ -58,15 +58,15 @@ elasticsuite:
                         encoder: metaphone
             analyzers:
                 keyword:
-                    char_filters: ~
+                    char_filter: ~
                     tokenizer: keyword
-                    filters: 
+                    filter: 
                         - truncate_to_max
                 standard:
-                    char_filters:
+                    char_filter:
                         - html_strip
                     tokenizer: standard
-                    filters:
+                    filter:
                         - ascii_folding
                         - trim
                         - word_delimiter
@@ -75,20 +75,20 @@ elasticsuite:
                         - stemmer_override
                         - stemmer
                 whitespace:
-                    char_filters:
+                    char_filter:
                         - html_strip
                     tokenizer: standard
-                    filters:
+                    filter:
                         - ascii_folding
                         - trim
                         - word_delimiter
                         - lowercase
                         - elision
                 reference:
-                    char_filters:
+                    char_filter:
                         - html_strip
                     tokenizer: standard
-                    filters:
+                    filter:
                         - ascii_folding
                         - trim
                         - reference_word_delimiter
@@ -96,10 +96,10 @@ elasticsuite:
                         - elision
                         - reference_shingle
                 shingle:
-                    char_filters:
+                    char_filter:
                         - html_strip
                     tokenizer: whitespace
-                    filters:
+                    filter:
                         - ascii_folding
                         - trim
                         - word_delimiter
@@ -109,18 +109,18 @@ elasticsuite:
                         - stemmer
                         - shingle
                 sortable:
-                    char_filters:
+                    char_filter:
                         - html_strip
                     tokenizer: keyword
-                    filters:
+                    filter:
                         - ascii_folding
                         - trim
                         - lowercase
                 phonetic:
-                    char_filters:
+                    char_filter:
                         - html_strip
                     tokenizer: standard
-                    filters:
+                    filter:
                         - ascii_folding
                         - trim
                         - word_delimiter
