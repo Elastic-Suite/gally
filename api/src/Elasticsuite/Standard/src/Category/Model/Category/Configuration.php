@@ -97,7 +97,7 @@ class Configuration
 
     private ?bool $isVirtual = null;
 
-    private ?bool $useNameInProductSearch = false;
+    private ?bool $useNameInProductSearch = null;
 
     private ?string $defaultSorting = null;
 
@@ -106,6 +106,11 @@ class Configuration
     public function getId(): int
     {
         return $this->id;
+    }
+
+    public function setId(int $id): void
+    {
+        $this->id = $id;
     }
 
     public function getCategory(): Category
@@ -148,9 +153,9 @@ class Configuration
         $this->name = $name;
     }
 
-    public function getUseNameInProductSearch(): ?bool
+    public function getUseNameInProductSearch(): bool
     {
-        return $this->useNameInProductSearch;
+        return $this->useNameInProductSearch ?? true;
     }
 
     public function setUseNameInProductSearch(?bool $useNameInProductSearch): void
@@ -158,9 +163,9 @@ class Configuration
         $this->useNameInProductSearch = $useNameInProductSearch;
     }
 
-    public function getIsVirtual(): ?bool
+    public function getIsVirtual(): bool
     {
-        return $this->isVirtual;
+        return $this->isVirtual ?? false;
     }
 
     public function setIsVirtual(?bool $isVirtual): void
@@ -168,9 +173,9 @@ class Configuration
         $this->isVirtual = $isVirtual;
     }
 
-    public function getDefaultSorting(): ?string
+    public function getDefaultSorting(): string
     {
-        return $this->defaultSorting;
+        return $this->defaultSorting ?? 'position';
     }
 
     public function setDefaultSorting(?string $defaultSorting): void

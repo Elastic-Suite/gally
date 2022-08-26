@@ -43,3 +43,13 @@ Elasticsuite\Category\Model\Category\Configuration:
         catalog: '@catalog2'
         localizedCatalog: '@catalog2_en'
         name: 'Five'
+    conf10:
+        category: '@categ1'
+        catalog: '@catalog2'
+        localizedCatalog: '@catalog2_fr'
+        name: 'Un'
+    conf11:
+        category: '@categ1'
+        catalog: '@catalog2'
+        localizedCatalog: '@catalog2_en'
+        name: 'One'

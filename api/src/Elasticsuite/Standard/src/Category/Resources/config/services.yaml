@@ -70,6 +70,9 @@ services:
     Elasticsuite\Category\Controller\CategoryConfigurationGet:
         arguments:
             - '@Elasticsuite\Category\Repository\CategoryConfigurationRepository'
+            - '@Elasticsuite\Catalog\Repository\CatalogRepository'
+            - '@Elasticsuite\Catalog\Repository\LocalizedCatalogRepository'
+            - '@Elasticsuite\Category\Repository\CategoryRepository'
             - '@request_stack'
         calls:
             - [ setContainer, [ '@service_container' ] ]
@@ -79,6 +82,9 @@ services:
     Elasticsuite\Category\Resolver\ConfigurationResolver:
         arguments:
             - '@Elasticsuite\Category\Repository\CategoryConfigurationRepository'
+            - '@Elasticsuite\Catalog\Repository\CatalogRepository'
+            - '@Elasticsuite\Catalog\Repository\LocalizedCatalogRepository'
+            - '@Elasticsuite\Category\Repository\CategoryRepository'
         tags:
             - { name: api_platform.graphql.query_resolver }
     
