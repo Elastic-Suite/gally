@@ -34,28 +34,32 @@ class SearchDocumentsTest extends AbstractTest
             __DIR__ . '/../../fixtures/metadata.yaml',
             __DIR__ . '/../../fixtures/source_field.yaml',
         ]);
-        self::loadElasticsearchIndexFixtures([__DIR__ . '/../../fixtures/indices.json']);
+        self::createEntityElasticsearchIndices('product');
+        self::createEntityElasticsearchIndices('category');
         self::loadElasticsearchDocumentFixtures([__DIR__ . '/../../fixtures/documents.json']);
     }
 
     public static function tearDownAfterClass(): void
     {
         parent::tearDownAfterClass();
-        self::deleteElasticsearchFixtures();
+        self::deleteEntityElasticsearchIndices('product');
+        self::deleteEntityElasticsearchIndices('category');
     }
 
     /**
      * @dataProvider basicSearchDataProvider
      *
-     * @param string $entityType           Entity Type
-     * @param string $catalogId            Catalog ID or code
-     * @param ?int   $pageSize             Pagination size
-     * @param ?int   $currentPage          Current page
-     * @param ?array $expectedError        Expected error
-     * @param ?int   $expectedItemsCount   Expected items count in (paged) response
-     * @param ?int   $expectedTotalCount   Expected total items count
-     * @param ?int   $expectedItemsPerPage Expected pagination items per page
-     * @param ?int   $expectedLastPage     Expected number of the last page
+     * @param string  $entityType           Entity Type
+     * @param string  $catalogId            Catalog ID or code
+     * @param ?int    $pageSize             Pagination size
+     * @param ?int    $currentPage          Current page
+     * @param ?array  $expectedError        Expected error
+     * @param ?int    $expectedItemsCount   Expected items count in (paged) response
+     * @param ?int    $expectedTotalCount   Expected total items count
+     * @param ?int    $expectedItemsPerPage Expected pagination items per page
+     * @param ?int    $expectedLastPage     Expected number of the last page
+     * @param ?string $expectedIndexAlias   Expected index alias
+     * @param ?float  $expectedScore        Expected documents score
      */
     public function testBasicSearchDocuments(
         string $entityType,
@@ -67,7 +71,7 @@ class SearchDocumentsTest extends AbstractTest
         ?int $expectedTotalCount,
         ?int $expectedItemsPerPage,
         ?int $expectedLastPage,
-        ?string $expectedIndex,
+        ?string $expectedIndexAlias,
         ?float $expectedScore
     ): void {
         $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
@@ -112,7 +116,7 @@ class SearchDocumentsTest extends AbstractTest
                         $expectedTotalCount,
                         $expectedItemsPerPage,
                         $expectedLastPage,
-                        $expectedIndex,
+                        $expectedIndexAlias,
                         $expectedScore
                     ) {
                     if (!empty($expectedError)) {
@@ -143,7 +147,7 @@ class SearchDocumentsTest extends AbstractTest
                             $this->assertEquals($expectedScore, $document['score']);
 
                             $this->assertArrayHasKey('index', $document);
-                            $this->assertEquals($expectedIndex, $document['index']);
+                            $this->assertStringStartsWith($expectedIndexAlias, $document['index']);
                         }
                     }
                 }
@@ -164,7 +168,7 @@ class SearchDocumentsTest extends AbstractTest
                 null,   // expected total count.
                 null,   // expected items per page.
                 null,   // expected last page.
-                null,   // expected index.
+                null,   // expected index alias.
                 null,   // expected score.
             ],
             [
@@ -177,7 +181,7 @@ class SearchDocumentsTest extends AbstractTest
                 null,   // expected total count.
                 null,   // expected items per page.
                 null,   // expected last page.
-                null,   // expected index.
+                null,   // expected index alias.
                 null,   // expected score.
             ],
             [
@@ -190,7 +194,7 @@ class SearchDocumentsTest extends AbstractTest
                 0,      // expected total count.
                 30,     // expected items per page.
                 1,      // expected last page.
-                null,   // expected index.
+                null,   // expected index alias.
                 1.0,    // expected score.
             ],
             [
@@ -203,7 +207,7 @@ class SearchDocumentsTest extends AbstractTest
                 14,     // expected total count.
                 10,     // expected items per page.
                 2,      // expected last page.
-                ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_test_b2c_en_product_20220429_153000', // expected index.
+                ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_b2c_en_product', // expected index alias.
                 1.0,    // expected score.
             ],
             [
@@ -216,7 +220,7 @@ class SearchDocumentsTest extends AbstractTest
                 14,     // expected total count.
                 10,     // expected items per page.
                 2,      // expected last page.
-                ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_test_b2c_en_product_20220429_153000', // expected index.
+                ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_b2c_en_product', // expected index alias.
                 1.0,    // expected score.
             ],
             [
@@ -229,7 +233,7 @@ class SearchDocumentsTest extends AbstractTest
                 14,     // expected total count.
                 10,     // expected items per page.
                 2,      // expected last page.
-                ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_test_b2c_en_product_20220429_153000', // expected index.
+                ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_b2c_en_product', // expected index alias.
                 1.0,    // expected score.
             ],
             [
@@ -242,7 +246,7 @@ class SearchDocumentsTest extends AbstractTest
                 12,     // expected total count.
                 30,     // expected items per page.
                 1,      // expected last page.
-                ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_test_b2b_fr_product_20220601_171005', // expected index.
+                ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_b2b_fr_product', // expected index alias.
                 1.0,    // expected score.
             ],
             [
@@ -255,7 +259,7 @@ class SearchDocumentsTest extends AbstractTest
                 12,     // expected total count.
                 5,      // expected items per page.
                 3,      // expected last page.
-                ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_test_b2b_fr_product_20220601_171005', // expected index.
+                ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_b2b_fr_product', // expected index alias.
                 1.0,    // expected score.
             ],
             [
@@ -268,7 +272,7 @@ class SearchDocumentsTest extends AbstractTest
                 12,     // expected total count.
                 100,    // expected items per page.
                 1,      // expected last page.
-                ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_test_b2b_fr_product_20220601_171005', // expected index.
+                ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_b2b_fr_product', // expected index alias.
                 1.0,    // expected score.
             ],
         ];

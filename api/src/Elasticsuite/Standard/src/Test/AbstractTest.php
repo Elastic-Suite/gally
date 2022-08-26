@@ -18,6 +18,7 @@ namespace Elasticsuite\Standard\src\Test;
 
 use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
 use Elasticsuite\Fixture\Service\ElasticsearchFixtures;
+use Elasticsuite\Fixture\Service\EntityIndicesFixturesInterface;
 use Elasticsuite\User\Test\LoginTrait;
 use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
 use Symfony\Contracts\HttpClient\ResponseInterface;
@@ -35,6 +36,18 @@ abstract class AbstractTest extends ApiTestCase
         $databaseTool->loadAliceFixture(array_merge(static::getUserFixtures(), $paths));
         $entityManager = static::getContainer()->get('doctrine')->getManager();
         $entityManager->clear();
+    }
+
+    protected static function createEntityElasticsearchIndices(string $entityType, string|int|null $localizedCatalogIdentifier = null)
+    {
+        $entityIndicesFixtures = static::getContainer()->get(EntityIndicesFixturesInterface::class);
+        $entityIndicesFixtures->createEntityElasticsearchIndices($entityType, $localizedCatalogIdentifier);
+    }
+
+    protected static function deleteEntityElasticsearchIndices(string $entityType, string|int|null $localizedCatalogIdentifier = null)
+    {
+        $entityIndicesFixtures = static::getContainer()->get(EntityIndicesFixturesInterface::class);
+        $entityIndicesFixtures->deleteEntityElasticsearchIndices($entityType, $localizedCatalogIdentifier);
     }
 
     protected static function loadElasticsearchIndexFixtures(array $paths)
