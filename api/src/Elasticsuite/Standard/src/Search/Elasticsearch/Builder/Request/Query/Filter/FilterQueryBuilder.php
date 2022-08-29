@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter;
 
+use Elasticsuite\Exception\LogicException;
 use Elasticsuite\Index\Model\Index\Mapping\FieldInterface;
 use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
 use Elasticsuite\Search\Elasticsearch\Request\QueryFactory;
@@ -110,7 +111,7 @@ class FilterQueryBuilder
         if (null === $condition['field'] || isset($condition['queryText'])) {
             $analyzer = $field->getDefaultSearchAnalyzer();
             $property = $field->getMappingProperty($analyzer);
-            if ($property) {
+            if (null !== $property) {
                 $condition['field'] = $property;
 
                 if (isset($condition['queryText'])) {
@@ -118,6 +119,10 @@ class FilterQueryBuilder
                     $condition['minimumShouldMatch'] = '100%';
                 }
             }
+        }
+
+        if (null === $condition['field']) {
+            throw new LogicException(sprintf('Unable to identify the field property to use for filtering on "%s", possible invalid mapping', $field->getName()));
         }
 
         if ((QueryInterface::TYPE_TERMS === $queryType)
