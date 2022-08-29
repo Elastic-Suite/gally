@@ -135,6 +135,7 @@ class SearchDocumentsTest extends AbstractTest
                                         'lastPage' => $expectedLastPage,
                                         'totalCount' => $expectedTotalCount,
                                     ],
+                                    'collection' => [],
                                 ],
                             ],
                         ]);
@@ -341,6 +342,7 @@ class SearchDocumentsTest extends AbstractTest
                                 'paginationInfo' => [
                                     'itemsPerPage' => $pageSize,
                                 ],
+                                'collection' => [],
                             ],
                         ],
                     ]);
@@ -487,6 +489,14 @@ class SearchDocumentsTest extends AbstractTest
             new ExpectedResponse(
                 200,
                 function (ResponseInterface $response) {
+                    // Extra test on response structure because all exceptions might not throw an HTTP error code.
+                    $this->assertJsonContains([
+                        'data' => [
+                            'searchDocuments' => [
+                                'aggregations' => [],
+                            ],
+                        ],
+                    ]);
                     $responseData = $response->toArray();
                     $this->assertIsArray($responseData['data']['searchDocuments']['aggregations']);
                     foreach ($responseData['data']['searchDocuments']['aggregations'] as $data) {
@@ -674,6 +684,15 @@ class SearchDocumentsTest extends AbstractTest
                     $documentIdentifier,
                     $expectedOrderedDocIds
                 ) {
+                    // Extra test on response structure because all exceptions might not throw an HTTP error code.
+                    $this->assertJsonContains([
+                        'data' => [
+                            'searchDocuments' => [
+                                'collection' => [],
+                            ],
+                        ],
+                    ]);
+
                     $responseData = $response->toArray();
                     $this->assertIsArray($responseData['data']['searchDocuments']['collection']);
                     $this->assertCount(\count($expectedOrderedDocIds), $responseData['data']['searchDocuments']['collection']);
@@ -911,6 +930,14 @@ class SearchDocumentsTest extends AbstractTest
             new ExpectedResponse(
                 200,
                 function (ResponseInterface $response) use ($expectedResultCount, $expectedResultNames) {
+                    // Extra test on response structure because all exceptions might not throw an HTTP error code.
+                    $this->assertJsonContains([
+                        'data' => [
+                            'searchDocuments' => [
+                                'collection' => [],
+                            ],
+                        ],
+                    ]);
                     $responseData = $response->toArray();
                     $results = $responseData['data']['searchDocuments']['collection'];
                     $names = array_map(fn (array $item) => $item['source']['name'], $results);
