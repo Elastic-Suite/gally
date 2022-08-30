@@ -68,13 +68,15 @@ class ProductDenormalizerTest extends KernelTestCase
                 'price' => [
                     [
                         'group_id' => 0,
-                        'base_price' => 11.99,
-                        'final_price' => 10.99,
+                        'original_price' => 11.99,
+                        'price' => 10.99,
+                        'is_discounted' => true,
                     ],
                     [
                         'group_id' => 1,
-                        'base_price' => 11.99,
-                        'final_price' => 10.99,
+                        'original_price' => 11.99,
+                        'price' => 10.99,
+                        'is_discounted' => true,
                     ],
                 ],
                 'stock' => [

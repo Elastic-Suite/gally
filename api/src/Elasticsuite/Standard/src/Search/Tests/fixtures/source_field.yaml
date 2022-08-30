@@ -58,14 +58,18 @@ Elasticsuite\Metadata\Model\SourceField:
         metadata: '@product'
         code: 'price.group_id'
         type: 'int'
-    product_price_base_price:
+    product_price_original_price:
         metadata: '@product'
-        code: 'price.base_price'
+        code: 'price.original_price'
         type: 'float'
-    product_price_final_price:
+    product_price_price:
         metadata: '@product'
-        code: 'price.final_price'
+        code: 'price.price'
         type: 'float'
+    product_price_is_discounted:
+        metadata: '@product'
+        code: 'price.is_discounted'
+        type: 'boolean'
     product_description:
         metadata: '@product'
         code: 'description'
