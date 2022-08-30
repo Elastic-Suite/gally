@@ -1,11 +1,21 @@
 import { act } from '@testing-library/react-hooks'
+import { resource } from '~/mocks'
 import { fetchApi, log } from '~/services/api'
 import { IFetchError, IHydraMember, LoadStatus } from '~/types'
 import { renderHookWithProviders } from '~/utils/tests'
 
-import { useApiFetch, useApiList, useFetchApi } from './useApi'
+import {
+  useApiEditableList,
+  useApiFetch,
+  useApiList,
+  useFetchApi,
+} from './useApi'
 
 jest.mock('~/services/api')
+
+interface ITest extends IHydraMember {
+  hello: string
+}
 
 describe('useApi', () => {
   describe('useApiFetch', () => {
@@ -218,6 +228,128 @@ describe('useApi', () => {
         status: LoadStatus.SUCCEEDED,
         data: { 'hydra:member': [{ id: 0 }, { id: 1 }] },
       })
+    })
+  })
+
+  describe('useApiEditableList', () => {
+    it('calls and return the list and the resource operations', async () => {
+      ;(fetchApi as jest.Mock).mockClear()
+      const { result, waitForNextUpdate } = renderHookWithProviders(() =>
+        useApiEditableList(resource)
+      )
+      expect(result.current[1]).toMatchObject({
+        create: expect.any(Function),
+        remove: expect.any(Function),
+        replace: expect.any(Function),
+        update: expect.any(Function),
+      })
+      await waitForNextUpdate()
+      expect(result.current[0].data['hydra:member'].length).toEqual(2)
+      expect(fetchApi).toHaveBeenCalledWith(
+        'en',
+        resource,
+        { pagination: true, pageSize: 50, currentPage: 1, search: '' },
+        undefined,
+        true
+      )
+    })
+
+    it('should call the API (create)', async () => {
+      const { result, waitForNextUpdate } = renderHookWithProviders(() =>
+        useApiEditableList<ITest>(resource)
+      )
+      await waitForNextUpdate()
+      expect(result.current[0].data['hydra:member'].length).toEqual(2)
+      ;(fetchApi as jest.Mock).mockClear()
+      await act(() => result.current[1].create({ hello: 'world' }))
+      expect(fetchApi).toHaveBeenCalledWith(
+        'en',
+        'https://localhost/metadata',
+        undefined,
+        { body: '{"hello":"world"}', method: 'POST' },
+        true
+      )
+      expect(result.current[0].data['hydra:member'].length).toEqual(3)
+    })
+
+    it('should call the API (replace)', async () => {
+      const { result, waitForNextUpdate } = renderHookWithProviders(() =>
+        useApiEditableList<ITest>(resource)
+      )
+      await waitForNextUpdate()
+      expect(result.current[0].data['hydra:member'].length).toEqual(2)
+      ;(fetchApi as jest.Mock).mockClear()
+      await act(() => result.current[1].replace({ id: 1, hello: 'world' }))
+      expect(fetchApi).toHaveBeenCalledWith(
+        'en',
+        'https://localhost/metadata/1',
+        undefined,
+        { body: '{"id":1,"hello":"world"}', method: 'PUT' },
+        true
+      )
+      expect(result.current[0].data['hydra:member'].length).toEqual(2)
+    })
+
+    it('should call the API (update)', async () => {
+      const { result, waitForNextUpdate } = renderHookWithProviders(() =>
+        useApiEditableList<ITest>(resource)
+      )
+      await waitForNextUpdate()
+      expect(result.current[0].data['hydra:member'].length).toEqual(2)
+      ;(fetchApi as jest.Mock).mockClear()
+      await act(() => result.current[1].update(1, { hello: 'world' }))
+      expect(fetchApi).toHaveBeenCalledWith(
+        'en',
+        'https://localhost/metadata/1',
+        undefined,
+        {
+          body: '{"hello":"world"}',
+          headers: { 'Content-Type': 'application/merge-patch+json' },
+          method: 'PATCH',
+        },
+        true
+      )
+      expect(result.current[0].data['hydra:member'].length).toEqual(2)
+    })
+
+    it('should call the API (remove))', async () => {
+      const { result, waitForNextUpdate } = renderHookWithProviders(() =>
+        useApiEditableList<ITest>(resource)
+      )
+      await waitForNextUpdate()
+      expect(result.current[0].data['hydra:member'].length).toEqual(2)
+      ;(fetchApi as jest.Mock).mockClear()
+      await act(() => result.current[1].remove(1))
+      expect(fetchApi).toHaveBeenCalledWith(
+        'en',
+        'https://localhost/metadata/1',
+        undefined,
+        { method: 'DELETE' },
+        true
+      )
+      expect(result.current[0].data['hydra:member'].length).toEqual(1)
+    })
+
+    it('should call the API (massUpdate)', async () => {
+      const { result, waitForNextUpdate } = renderHookWithProviders(() =>
+        useApiEditableList<ITest>(resource)
+      )
+      await waitForNextUpdate()
+      expect(result.current[0].data['hydra:member'].length).toEqual(2)
+      ;(fetchApi as jest.Mock).mockClear()
+      await act(() => result.current[1].massUpdate([1], { hello: 'world' }))
+      expect(fetchApi).toHaveBeenCalledWith(
+        'en',
+        'https://localhost/metadata/1',
+        undefined,
+        {
+          body: '{"hello":"world"}',
+          headers: { 'Content-Type': 'application/merge-patch+json' },
+          method: 'PATCH',
+        },
+        true
+      )
+      expect(result.current[0].data['hydra:member'].length).toEqual(2)
     })
   })
 })

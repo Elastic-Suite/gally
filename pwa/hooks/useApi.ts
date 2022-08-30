@@ -14,12 +14,15 @@ import {
   IFetchError,
   IHydraMember,
   IHydraResponse,
+  ILoadResource,
   IResource,
+  IResourceEditableOperations,
   ISearchParameters,
   LoadStatus,
 } from '~/types'
 
 import { useLog } from './useLog'
+import { useResourceOperations } from './useResource'
 
 export function useApiFetch<T>(
   secure = true
@@ -58,20 +61,20 @@ export function useFetchApi<T>(
   resource: IResource | string,
   searchParameters?: ISearchParameters,
   options?: RequestInit
-): [IFetch<T>, Dispatch<SetStateAction<T>>] {
+): [IFetch<T>, Dispatch<SetStateAction<T>>, ILoadResource] {
   const fetchApi = useApiFetch<T>()
   const [response, setResponse] = useState<IFetch<T>>({
     status: LoadStatus.IDLE,
   })
 
-  function updateResponse(data: SetStateAction<T>): void {
+  const updateResponse = useCallback((data: SetStateAction<T>): void => {
     setResponse((prevState) => ({
       ...prevState,
       data: data instanceof Function ? data(prevState.data) : data,
     }))
-  }
+  }, [])
 
-  useEffect(() => {
+  const load = useCallback(() => {
     setResponse((prevState) => ({
       data: prevState.data,
       status: LoadStatus.LOADING,
@@ -85,31 +88,158 @@ export function useFetchApi<T>(
     })
   }, [fetchApi, options, resource, searchParameters])
 
-  return [response, updateResponse]
+  useEffect(() => {
+    load()
+  }, [load])
+
+  return [response, updateResponse, load]
 }
 
 export function useApiList<T extends IHydraMember>(
   resource: IResource | string,
   page: number | false = 0,
   searchParameters?: ISearchParameters,
-  searchValue?: string
-): [IFetch<IHydraResponse<T>>, Dispatch<SetStateAction<T[]>>] {
+  searchValue?: string,
+  rowsPerPage?: number
+): [IFetch<IHydraResponse<T>>, Dispatch<SetStateAction<T[]>>, ILoadResource] {
   const parameters = useMemo(
-    () => getListApiParameters(page, searchParameters, searchValue),
-    [page, searchParameters, searchValue]
+    () =>
+      getListApiParameters(page, rowsPerPage, searchParameters, searchValue),
+    [page, rowsPerPage, searchParameters, searchValue]
   )
-  const [response, updateResponse] = useFetchApi<IHydraResponse<T>>(
+  const [response, updateResponse, load] = useFetchApi<IHydraResponse<T>>(
     resource,
     parameters
   )
 
-  function updateList(data: SetStateAction<T[]>): void {
-    updateResponse((prevState) => ({
-      ...prevState,
-      'hydra:member':
-        data instanceof Function ? data(prevState['hydra:member']) : data,
-    }))
-  }
+  const updateList = useCallback(
+    (data: SetStateAction<T[]>): void => {
+      updateResponse((prevState) => ({
+        ...prevState,
+        'hydra:member':
+          data instanceof Function ? data(prevState['hydra:member']) : data,
+      }))
+    },
+    [updateResponse]
+  )
 
-  return [response, updateList]
+  return [response, updateList, load]
+}
+
+export function useApiEditableList<T extends IHydraMember>(
+  resource: IResource,
+  page: number | false = 0,
+  searchParameters?: ISearchParameters,
+  searchValue?: string,
+  rowsPerPage?: number
+): [IFetch<IHydraResponse<T>>, IResourceEditableOperations<T>] {
+  const [response, updateList, load] = useApiList<T>(
+    resource,
+    page,
+    searchParameters,
+    searchValue,
+    rowsPerPage
+  )
+  const { create, remove, replace, update } = useResourceOperations<T>(resource)
+
+  const editableUpdate = useCallback(
+    async (id: string | number, updatedItem: Partial<T>): Promise<void> => {
+      updateList((items) =>
+        items.map((item) =>
+          item.id === id ? { ...item, ...updatedItem } : item
+        )
+      )
+      const response = await update(id, updatedItem)
+      if (isFetchError(response)) {
+        load()
+      }
+    },
+    [load, update, updateList]
+  )
+
+  const massEditableUpdate = useCallback(
+    async (
+      ids: (string | number)[],
+      updatedItem: Partial<T>
+    ): Promise<void> => {
+      updateList((items) =>
+        items.map((item) =>
+          ids.includes(item.id) ? { ...item, ...updatedItem } : item
+        )
+      )
+      const promises = ids.map((id) => update(id, updatedItem))
+      const responses = await Promise.all(promises)
+      const isError = responses.some((response) => isFetchError(response))
+      if (isError) {
+        load()
+      }
+    },
+    [load, update, updateList]
+  )
+
+  const editableCreate = useCallback(
+    async (item: Omit<T, 'id' | '@id' | '@type'>): Promise<void> => {
+      const response = await create(item)
+      if (!isFetchError(response)) {
+        updateList((items) => items.concat(response))
+      }
+    },
+    [create, updateList]
+  )
+
+  const editableReplace = useCallback(
+    async (replacedItem: Omit<T, '@id' | '@type'>): Promise<void> => {
+      updateList((items) =>
+        items.map((item) =>
+          item.id === replacedItem.id ? { ...item, ...replacedItem } : item
+        )
+      )
+      const response = await replace(replacedItem)
+      if (isFetchError(response)) {
+        load()
+      }
+    },
+    [load, replace, updateList]
+  )
+
+  const editableRemove = useCallback(
+    async (id: string | number): Promise<void> => {
+      updateList((items) => items.filter((item) => item.id !== id))
+      const response = await remove(id)
+      if (isFetchError(response)) {
+        load()
+      }
+    },
+    [load, remove, updateList]
+  )
+
+  const operations = useMemo(() => {
+    const operations: IResourceEditableOperations<T> = {}
+    if (update) {
+      operations.update = editableUpdate
+      operations.massUpdate = massEditableUpdate
+    }
+    if (create) {
+      operations.create = editableCreate
+    }
+    if (replace) {
+      operations.replace = editableReplace
+    }
+    if (remove) {
+      operations.remove = editableRemove
+    }
+    return operations
+  }, [
+    create,
+    editableCreate,
+    editableRemove,
+    editableReplace,
+    editableUpdate,
+    massEditableUpdate,
+    remove,
+    replace,
+    update,
+  ])
+
+  return [response, operations]
 }

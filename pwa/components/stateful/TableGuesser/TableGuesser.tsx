@@ -1,17 +1,13 @@
-import { Dispatch, SetStateAction, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 
 import { defaultPageSize } from '~/constants'
-import {
-  useApiEditableFieldOptions,
-  useApiHeaders,
-  useResourceOperations,
-} from '~/hooks'
+import { useApiEditableFieldOptions, useApiHeaders } from '~/hooks'
 import {
   IField,
   IHydraMember,
   IHydraResponse,
   IResource,
-  ISourceField,
+  IResourceEditableMassUpdate,
   ITableRow,
 } from '~/types'
 
@@ -20,11 +16,11 @@ import StickyBar from '~/components/molecules/CustomTable/StickyBar/StickyBar'
 
 import FieldGuesser from '../FieldGuesser/FieldGuesser'
 import TableStickyBar from '../TableStickyBar/TableStickyBar'
-import { isFetchError } from '~/services'
 
 interface IProps<T extends IHydraMember> {
   apiData: IHydraResponse<T>
   currentPage?: number
+  onMassupdate: IResourceEditableMassUpdate<T>
   onPageChange: (page: number) => void
   onRowUpdate?: (
     id: string | number,
@@ -34,23 +30,21 @@ interface IProps<T extends IHydraMember> {
   resource: IResource
   rowsPerPage?: number
   rowsPerPageOptions?: number[]
-  updateSourceFields: Dispatch<SetStateAction<ISourceField[]>>
 }
 
 function TableGuesser<T extends IHydraMember>(props: IProps<T>): JSX.Element {
   const {
     apiData,
     currentPage,
+    onMassupdate,
     onPageChange,
     onRowUpdate,
     resource,
     rowsPerPage,
     rowsPerPageOptions,
-    updateSourceFields,
   } = props
   const tableHeaders = useApiHeaders(resource)
   const fieldOptions = useApiEditableFieldOptions(resource)
-  const { update } = useResourceOperations<ISourceField>(resource)
 
   const tableRef = useRef<HTMLDivElement>()
   const [selectedField, setSelectedField] = useState<IField | ''>('')
@@ -66,25 +60,11 @@ function TableGuesser<T extends IHydraMember>(props: IProps<T>): JSX.Element {
     setSelectedValue(value)
   }
 
-  async function handleApply(): Promise<void> {
-    if (update && selectedField !== '') {
-      // FIXME: change when the mass updae endpoint is available
-      const promises = selectedRows.map((id) =>
-        update(id, { [selectedField.title]: selectedValue })
-      )
-      const sourceFields = await Promise.all(promises)
-      const sourceFieldsMap = new Map(
-        sourceFields
-          .filter((sourceField) => !isFetchError(sourceField))
-          .map((sourceField: ISourceField) => [sourceField.id, sourceField])
-      )
-      updateSourceFields((items) =>
-        items.map((item) =>
-          selectedRows.includes(item.id) && sourceFieldsMap.has(item.id)
-            ? sourceFieldsMap.get(item.id)
-            : item
-        )
-      )
+  function handleApply(): void {
+    if (onMassupdate && selectedField !== '') {
+      onMassupdate(selectedRows, {
+        [selectedField.title]: selectedValue,
+      } as unknown as Partial<T>)
     }
   }
 

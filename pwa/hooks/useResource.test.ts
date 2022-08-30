@@ -28,9 +28,9 @@ describe('useResource', () => {
       )
       expect(result.current).toMatchObject({
         create: expect.any(Function),
+        remove: expect.any(Function),
         replace: expect.any(Function),
         update: expect.any(Function),
-        delete: expect.any(Function),
       })
     })
 
@@ -61,12 +61,12 @@ describe('useResource', () => {
       expect(fetchApi).toHaveBeenCalled()
     })
 
-    it('should call the API (delete))', () => {
+    it('should call the API (remove))', () => {
       ;(fetchApi as jest.Mock).mockClear()
       const { result } = renderHookWithProviders(() =>
         useResourceOperations<ITest>(resource)
       )
-      result.current.delete(1)
+      result.current.remove(1)
       expect(fetchApi).toHaveBeenCalled()
     })
   })

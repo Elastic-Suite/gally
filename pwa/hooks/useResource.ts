@@ -1,4 +1,4 @@
-import { useContext, useMemo } from 'react'
+import { useCallback, useContext, useMemo } from 'react'
 
 import { contentTypeHeader } from '~/constants'
 import { schemaContext } from '~/contexts'
@@ -25,47 +25,68 @@ export function useResourceOperations<T extends IHydraMember>(
   const fetchApi = useApiFetch<T>()
   const apiUrl = getApiUrl(resource.url)
 
-  return supportedOperation.reduce<IResourceOperations<T>>((acc, operation) => {
-    if (
-      typeof operation['@type'] === 'string' &&
-      operation.method === Method.PATCH
-    ) {
-      acc.update = (
-        id: string | number,
-        item: Partial<T>
-      ): Promise<T | IFetchError> =>
-        fetchApi(`${apiUrl}/${id}`, undefined, {
-          body: JSON.stringify(item),
-          method: operation.method,
-          headers: { [contentTypeHeader]: 'application/merge-patch+json' },
-        })
-    } else if (
-      operation['@type'] instanceof Array &&
-      operation['@type'].length === 2
-    ) {
-      if (operation['@type'][1] === 'http://schema.org/CreateAction') {
-        acc.create = (
-          item: Omit<T, 'id' | '@id' | '@type'>
-        ): Promise<T | IFetchError> =>
-          fetchApi(resource, undefined, {
-            body: JSON.stringify(item),
-            method: operation.method,
-          })
-      } else if (operation['@type'][1] === 'http://schema.org/ReplaceAction') {
-        acc.replace = (
-          item: Omit<T, '@id' | '@type'>
-        ): Promise<T | IFetchError> =>
-          fetchApi(`${apiUrl}/${item.id}`, undefined, {
-            body: JSON.stringify(item),
-            method: operation.method,
-          })
-      } else if (operation['@type'][1] === 'http://schema.org/DeleteAction') {
-        acc.delete = (id: string | number): Promise<T | IFetchError> =>
-          fetchApi(`${apiUrl}/${id}`, undefined, {
-            method: operation.method,
-          })
-      }
-    }
-    return acc
-  }, {})
+  const update = useCallback(
+    (id: string | number, item: Partial<T>): Promise<T | IFetchError> =>
+      fetchApi(`${apiUrl}/${id}`, undefined, {
+        body: JSON.stringify(item),
+        method: Method.PATCH,
+        headers: { [contentTypeHeader]: 'application/merge-patch+json' },
+      }),
+    [apiUrl, fetchApi]
+  )
+
+  const create = useCallback(
+    (item: Omit<T, 'id' | '@id' | '@type'>): Promise<T | IFetchError> =>
+      fetchApi(apiUrl, undefined, {
+        body: JSON.stringify(item),
+        method: Method.POST,
+      }),
+    [apiUrl, fetchApi]
+  )
+
+  const replace = useCallback(
+    (item: Omit<T, '@id' | '@type'>): Promise<T | IFetchError> =>
+      fetchApi(`${apiUrl}/${item.id}`, undefined, {
+        body: JSON.stringify(item),
+        method: Method.PUT,
+      }),
+    [apiUrl, fetchApi]
+  )
+
+  const remove = useCallback(
+    (id: string | number): Promise<T | IFetchError> =>
+      fetchApi(`${apiUrl}/${id}`, undefined, {
+        method: Method.DELETE,
+      }),
+    [apiUrl, fetchApi]
+  )
+
+  return useMemo(
+    () =>
+      supportedOperation.reduce<IResourceOperations<T>>((acc, operation) => {
+        if (
+          typeof operation['@type'] === 'string' &&
+          operation.method === Method.PATCH
+        ) {
+          acc.update = update
+        } else if (
+          operation['@type'] instanceof Array &&
+          operation['@type'].length === 2
+        ) {
+          if (operation['@type'][1] === 'http://schema.org/CreateAction') {
+            acc.create = create
+          } else if (
+            operation['@type'][1] === 'http://schema.org/ReplaceAction'
+          ) {
+            acc.replace = replace
+          } else if (
+            operation['@type'][1] === 'http://schema.org/DeleteAction'
+          ) {
+            acc.remove = remove
+          }
+        }
+        return acc
+      }, {}),
+    [create, remove, replace, supportedOperation, update]
+  )
 }

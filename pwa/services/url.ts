@@ -53,6 +53,7 @@ export function getListParameters(
 
 export function getListApiParameters(
   page: number | false = 0,
+  rowsPerPage: number = defaultPageSize,
   searchParameters: ISearchParameters = {},
   searchValue = ''
 ): ISearchParameters {
@@ -61,7 +62,7 @@ export function getListApiParameters(
       ...searchParameters,
       [currentPage]: page + 1,
       [usePagination]: true,
-      [pageSize]: defaultPageSize,
+      [pageSize]: rowsPerPage,
       [searchParameter]: searchValue,
     })
   }
