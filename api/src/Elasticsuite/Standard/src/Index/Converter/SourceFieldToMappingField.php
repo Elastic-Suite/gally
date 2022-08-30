@@ -23,6 +23,7 @@ class SourceFieldToMappingField
 {
     private array $typeMapping = [
         SourceField\Type::TYPE_TEXT => Mapping\FieldInterface::FIELD_TYPE_TEXT,
+        SourceField\Type::TYPE_KEYWORD => Mapping\FieldInterface::FIELD_TYPE_KEYWORD,
         SourceField\Type::TYPE_SELECT => Mapping\FieldInterface::FIELD_TYPE_TEXT,
         SourceField\Type::TYPE_INT => Mapping\FieldInterface::FIELD_TYPE_INTEGER,
         SourceField\Type::TYPE_BOOLEAN => Mapping\FieldInterface::FIELD_TYPE_BOOLEAN,

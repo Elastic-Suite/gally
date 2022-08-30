@@ -19,6 +19,7 @@ namespace Elasticsuite\Metadata\Model\SourceField;
 class Type
 {
     public const TYPE_TEXT = 'text';
+    public const TYPE_KEYWORD = 'keyword';
     public const TYPE_SELECT = 'select';
     public const TYPE_INT = 'int';
     public const TYPE_BOOLEAN = 'boolean';
@@ -32,6 +33,7 @@ class Type
     {
         return [
             self::TYPE_TEXT,
+            self::TYPE_KEYWORD,
             self::TYPE_SELECT,
             self::TYPE_INT,
             self::TYPE_BOOLEAN,
