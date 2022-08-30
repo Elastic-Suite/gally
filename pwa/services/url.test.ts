@@ -74,17 +74,19 @@ describe('URL service', () => {
     })
 
     it('should get API list parameters with pagination', () => {
-      expect(getListApiParameters(1, { foo: 'bar' }, 'baz')).toEqual({
+      expect(getListApiParameters(1, 10, { foo: 'bar' }, 'baz')).toEqual({
         currentPage: 2,
         pagination: true,
-        pageSize: 50,
+        pageSize: 10,
         foo: 'bar',
         search: 'baz',
       })
     })
 
     it('should get API list parameters without pagination', () => {
-      expect(getListApiParameters(false, { foo: 'bar' }, 'baz')).toEqual({
+      expect(
+        getListApiParameters(false, undefined, { foo: 'bar' }, 'baz')
+      ).toEqual({
         pagination: false,
         foo: 'bar',
         search: 'baz',
