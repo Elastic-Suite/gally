@@ -23,6 +23,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Elasticsuite\Entity\Filter\BooleanFilter;
+use Elasticsuite\Metadata\Model\SourceField\Type;
 use Elasticsuite\User\Constant\Role;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -116,6 +117,10 @@ class SourceField
                     'visible' => true,
                     'editable' => true,
                     'position' => 40,
+                    'input' => 'dropdown',
+                    'options' => [
+                        'values' => Type::AVAILABLE_TYPES,
+                    ],
                     'context' => [
                         'search_configuration_attributes' => [
                             'visible' => false,
