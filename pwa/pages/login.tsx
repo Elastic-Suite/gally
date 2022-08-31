@@ -6,7 +6,7 @@ import { Paper } from '@mui/material'
 
 import { tokenStorageKey } from '~/constants'
 import { useApiFetch, useUser } from '~/hooks'
-import { isFetchError, storageSet } from '~/services'
+import { isFetchError, isValidUser, storageSet } from '~/services'
 import { selectRequestedPath, useAppSelector } from '~/store'
 import { ILogin } from '~/types'
 
@@ -30,7 +30,7 @@ function Login(): JSX.Element {
   )
 
   useEffect(() => {
-    if (user) {
+    if (isValidUser(user)) {
       redirectToRequestedPath()
     }
   }, [redirectToRequestedPath, user])
