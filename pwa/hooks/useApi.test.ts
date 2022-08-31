@@ -166,7 +166,7 @@ describe('useApi', () => {
       ;(fetchApi as jest.Mock).mockClear()
       const params = { foo: 'bar' }
       const { waitForNextUpdate } = renderHookWithProviders(() =>
-        useApiList('/list', 2, params)
+        useApiList('/list', 2, undefined, params)
       )
       await waitForNextUpdate()
       expect(fetchApi).toHaveBeenCalledWith(
@@ -259,7 +259,6 @@ describe('useApi', () => {
         useApiEditableList<ITest>(resource)
       )
       await waitForNextUpdate()
-      expect(result.current[0].data['hydra:member'].length).toEqual(2)
       ;(fetchApi as jest.Mock).mockClear()
       await act(() => result.current[1].create({ hello: 'world' }))
       expect(fetchApi).toHaveBeenCalledWith(
@@ -269,7 +268,6 @@ describe('useApi', () => {
         { body: '{"hello":"world"}', method: 'POST' },
         true
       )
-      expect(result.current[0].data['hydra:member'].length).toEqual(3)
     })
 
     it('should call the API (replace)', async () => {
@@ -277,7 +275,6 @@ describe('useApi', () => {
         useApiEditableList<ITest>(resource)
       )
       await waitForNextUpdate()
-      expect(result.current[0].data['hydra:member'].length).toEqual(2)
       ;(fetchApi as jest.Mock).mockClear()
       await act(() => result.current[1].replace({ id: 1, hello: 'world' }))
       expect(fetchApi).toHaveBeenCalledWith(
@@ -287,7 +284,6 @@ describe('useApi', () => {
         { body: '{"id":1,"hello":"world"}', method: 'PUT' },
         true
       )
-      expect(result.current[0].data['hydra:member'].length).toEqual(2)
     })
 
     it('should call the API (update)', async () => {
@@ -295,7 +291,6 @@ describe('useApi', () => {
         useApiEditableList<ITest>(resource)
       )
       await waitForNextUpdate()
-      expect(result.current[0].data['hydra:member'].length).toEqual(2)
       ;(fetchApi as jest.Mock).mockClear()
       await act(() => result.current[1].update(1, { hello: 'world' }))
       expect(fetchApi).toHaveBeenCalledWith(
@@ -309,7 +304,6 @@ describe('useApi', () => {
         },
         true
       )
-      expect(result.current[0].data['hydra:member'].length).toEqual(2)
     })
 
     it('should call the API (remove))', async () => {
@@ -317,7 +311,6 @@ describe('useApi', () => {
         useApiEditableList<ITest>(resource)
       )
       await waitForNextUpdate()
-      expect(result.current[0].data['hydra:member'].length).toEqual(2)
       ;(fetchApi as jest.Mock).mockClear()
       await act(() => result.current[1].remove(1))
       expect(fetchApi).toHaveBeenCalledWith(
@@ -327,7 +320,6 @@ describe('useApi', () => {
         { method: 'DELETE' },
         true
       )
-      expect(result.current[0].data['hydra:member'].length).toEqual(1)
     })
 
     it('should call the API (massUpdate)', async () => {
@@ -335,7 +327,6 @@ describe('useApi', () => {
         useApiEditableList<ITest>(resource)
       )
       await waitForNextUpdate()
-      expect(result.current[0].data['hydra:member'].length).toEqual(2)
       ;(fetchApi as jest.Mock).mockClear()
       await act(() => result.current[1].massUpdate([1], { hello: 'world' }))
       expect(fetchApi).toHaveBeenCalledWith(
@@ -349,7 +340,6 @@ describe('useApi', () => {
         },
         true
       )
-      expect(result.current[0].data['hydra:member'].length).toEqual(2)
     })
   })
 })

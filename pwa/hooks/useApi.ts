@@ -8,6 +8,7 @@ import {
 } from 'react'
 import { useTranslation } from 'next-i18next'
 
+import { defaultPageSize } from '~/constants'
 import { fetchApi, getListApiParameters, isFetchError } from '~/services'
 import {
   IFetch,
@@ -98,9 +99,9 @@ export function useFetchApi<T>(
 export function useApiList<T extends IHydraMember>(
   resource: IResource | string,
   page: number | false = 0,
+  rowsPerPage: number = defaultPageSize,
   searchParameters?: ISearchParameters,
-  searchValue?: string,
-  rowsPerPage?: number
+  searchValue?: string
 ): [IFetch<IHydraResponse<T>>, Dispatch<SetStateAction<T[]>>, ILoadResource] {
   const parameters = useMemo(
     () =>
@@ -129,16 +130,16 @@ export function useApiList<T extends IHydraMember>(
 export function useApiEditableList<T extends IHydraMember>(
   resource: IResource,
   page: number | false = 0,
+  rowsPerPage: number = defaultPageSize,
   searchParameters?: ISearchParameters,
-  searchValue?: string,
-  rowsPerPage?: number
+  searchValue?: string
 ): [IFetch<IHydraResponse<T>>, IResourceEditableOperations<T>] {
   const [response, updateList, load] = useApiList<T>(
     resource,
     page,
+    rowsPerPage,
     searchParameters,
-    searchValue,
-    rowsPerPage
+    searchValue
   )
   const { create, remove, replace, update } = useResourceOperations<T>(resource)
 
@@ -149,8 +150,9 @@ export function useApiEditableList<T extends IHydraMember>(
           item.id === id ? { ...item, ...updatedItem } : item
         )
       )
-      const response = await update(id, updatedItem)
-      if (isFetchError(response)) {
+      const updateResponse = await update(id, updatedItem)
+      if (isFetchError(updateResponse)) {
+        // reload if error
         load()
       }
     },
@@ -171,6 +173,7 @@ export function useApiEditableList<T extends IHydraMember>(
       const responses = await Promise.all(promises)
       const isError = responses.some((response) => isFetchError(response))
       if (isError) {
+        // reload if error
         load()
       }
     },
@@ -179,12 +182,16 @@ export function useApiEditableList<T extends IHydraMember>(
 
   const editableCreate = useCallback(
     async (item: Omit<T, 'id' | '@id' | '@type'>): Promise<void> => {
-      const response = await create(item)
-      if (!isFetchError(response)) {
-        updateList((items) => items.concat(response))
+      const createResponse = await create(item)
+      if (
+        !isFetchError(createResponse) &&
+        response.data['hydra:member'].length < rowsPerPage
+      ) {
+        // reload if item has been added and we are on the last page
+        load()
       }
     },
-    [create, updateList]
+    [create, load, response, rowsPerPage]
   )
 
   const editableReplace = useCallback(
@@ -196,6 +203,7 @@ export function useApiEditableList<T extends IHydraMember>(
       )
       const response = await replace(replacedItem)
       if (isFetchError(response)) {
+        // reload if error
         load()
       }
     },
@@ -205,12 +213,17 @@ export function useApiEditableList<T extends IHydraMember>(
   const editableRemove = useCallback(
     async (id: string | number): Promise<void> => {
       updateList((items) => items.filter((item) => item.id !== id))
-      const response = await remove(id)
-      if (isFetchError(response)) {
+      const removeResponse = await remove(id)
+      if (
+        isFetchError(removeResponse) ||
+        response.data['hydra:member'].length === rowsPerPage
+      ) {
+        // reload if error
+        // and reload if we are not on the last page to fill the space left by the deleted item
         load()
       }
     },
-    [load, remove, updateList]
+    [load, remove, response, rowsPerPage, updateList]
   )
 
   const operations = useMemo(() => {
