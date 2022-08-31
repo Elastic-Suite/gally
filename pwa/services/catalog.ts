@@ -14,3 +14,23 @@ export function findDefaultCatalog(catalogsData: ICatalog[]): ICatalog | null {
   }
   return defaultCatalog ? defaultCatalog : null
 }
+
+export function getCatalogForSearchProductApi(
+  catalog: number,
+  localizedCatalog: number,
+  catalogsData: ICatalog[]
+): string {
+  if (catalog === -1) {
+    const defaultCatalog = findDefaultCatalog(catalogsData)
+    return defaultCatalog
+      ? defaultCatalog.localizedCatalogs[0].id.toString()
+      : ''
+  } else if (catalog !== -1 && localizedCatalog === -1) {
+    return catalogsData
+      .filter((ctl) => ctl.id === catalog)
+      .map((ctl) => ctl.localizedCatalogs[0].id)
+      .flat()[0]
+      .toString()
+  }
+  return localizedCatalog.toString()
+}

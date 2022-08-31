@@ -1,8 +1,7 @@
-import { useEffect } from 'react'
 import { styled } from '@mui/system'
 
-import { ICatalog, IHydraResponse, IOptions, ITreeItem } from '~/types'
 import { useTranslation } from 'next-i18next'
+import { ICatalog, IHydraResponse, IOptions, ITreeItem } from '~/types'
 
 import DropDown from '~/components/atoms/form/DropDown'
 
@@ -13,13 +12,12 @@ const SwitchersContainer = styled('div')({
 })
 
 interface IProps {
-  catalog: string | number
-  onCatalog: (ctl: string | number) => void
-  localizedCatalog: string | number
-  onLocalizedCatalog: (locCtl: string | number) => void
+  catalog: number
+  onCatalog: (ctl: number) => void
+  localizedCatalog: number
+  onLocalizedCatalog: (locCtl: number) => void
   catalogsData: IHydraResponse<ICatalog>
   error: Error
-  defaultCatalogId: string | number
   onCategory: (item: ITreeItem) => void
 }
 
@@ -31,48 +29,48 @@ function CatalogSwitcher(props: IProps): JSX.Element {
     onLocalizedCatalog,
     catalogsData,
     error,
-    defaultCatalogId,
     onCategory,
   } = props
 
   const { t } = useTranslation('categories')
 
-  const defaultCatalog = {
-    label: t('defaultCatalog.label'),
-    value: defaultCatalogId,
-  }
-
-  const catalogs: IOptions<string | number> = catalogsData
+  const catalogs: IOptions<number> = catalogsData
     ? catalogsData['hydra:member']
         .map((hydraMember) => ({
           label: hydraMember.name,
           value: hydraMember.id,
         }))
-        .concat(defaultCatalog)
-    : [defaultCatalog]
+        .concat({
+          label: t('allCatalogs'),
+          value: -1,
+        })
+    : [null]
 
-  function localizedCatalogs(
-    catalogId: string | number
-  ): IOptions<string | number> {
+  function localizedCatalogs(catalogId: number): IOptions<number> {
     return catalogsData['hydra:member']
       .filter((hydraMembers) => hydraMembers.id === catalogId)
       .map((hydraMember) =>
         hydraMember.localizedCatalogs.map((locCtl) => ({
-          label: locCtl.name,
+          label: locCtl.localName,
           value: locCtl.id,
         }))
       )
       .flat()
+      .concat({
+        label: t('allLocales'),
+        value: -1,
+      })
   }
 
-  useEffect(() => {
-    onCatalog(defaultCatalogId)
-  }, [onCatalog, defaultCatalogId])
-
-  const onCatalogChange = (catalogId: string): void => {
+  function onCatalogChange(catalogId: number): void {
     onCatalog(catalogId)
-    onLocalizedCatalog('')
-    onCategory(undefined)
+    onLocalizedCatalog(-1)
+    onCategory({})
+  }
+
+  function onLocalizedCatalogChange(localizedCatalogId: number): void {
+    onLocalizedCatalog(localizedCatalogId)
+    onCategory({})
   }
 
   if (error || !catalogsData) {
@@ -82,16 +80,20 @@ function CatalogSwitcher(props: IProps): JSX.Element {
   return (
     <SwitchersContainer>
       <DropDown
+        required
+        defaultValue={-1}
         style={{ fontSize: '12px' }}
         onChange={onCatalogChange}
         value={catalog}
         options={catalogs}
         label={t('catalog.dropdown.label')}
       />
-      {Boolean(catalog) && catalog !== defaultCatalogId && (
+      {Boolean(catalog) && catalog !== -1 && (
         <DropDown
+          required
+          defaultValue={-1}
           style={{ fontSize: '12px' }}
-          onChange={onLocalizedCatalog}
+          onChange={onLocalizedCatalogChange}
           value={localizedCatalog}
           options={localizedCatalogs(catalog)}
           label={t('localizedCatalog.dropdown.label')}

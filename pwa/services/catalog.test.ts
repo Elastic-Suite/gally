@@ -1,5 +1,5 @@
 import { ICatalog } from '~/types'
-import { findDefaultCatalog } from './catalog'
+import { findDefaultCatalog, getCatalogForSearchProductApi } from './catalog'
 
 const defaultCatalog = {
   '@type': 'test',
@@ -54,7 +54,7 @@ const mockCatalogs: ICatalog[] = [
       {
         '@type': 'test',
         '@id': 'test',
-        id: 11,
+        id: 14,
         name: 'test11',
         code: 'test11',
         locale: 'test',
@@ -64,7 +64,7 @@ const mockCatalogs: ICatalog[] = [
       {
         '@type': 'test',
         '@id': 'test',
-        id: 11,
+        id: 15,
         name: 'test11',
         code: 'test11',
         locale: 'test',
@@ -119,24 +119,36 @@ const mockCatalogsWithTwoDefault: ICatalog[] = [
 ]
 
 describe('Catalog service', () => {
-  it('should return default catalog', () => {
-    expect(findDefaultCatalog(mockCatalogs)).toEqual({
-      '@type': 'test',
-      '@id': 'test',
-      id: 1,
-      code: 'test',
-      name: 'test',
-      localizedCatalogs: [defaultCatalog],
+  describe('finddefaultca talog', () => {
+    it('should return default catalog', () => {
+      expect(findDefaultCatalog(mockCatalogs)).toEqual({
+        '@type': 'test',
+        '@id': 'test',
+        id: 1,
+        code: 'test',
+        name: 'test',
+        localizedCatalogs: [defaultCatalog],
+      })
+    })
+    it('should return first default catalogs in case of several default catalogs are present', () => {
+      expect(findDefaultCatalog(mockCatalogsWithTwoDefault)).toEqual({
+        '@type': 'test',
+        '@id': 'test',
+        id: 1,
+        code: 'test',
+        name: 'test',
+        localizedCatalogs: [defaultCatalog],
+      })
     })
   })
-  it('should return first default catalogs in case of several default catalogs are present', () => {
-    expect(findDefaultCatalog(mockCatalogsWithTwoDefault)).toEqual({
-      '@type': 'test',
-      '@id': 'test',
-      id: 1,
-      code: 'test',
-      name: 'test',
-      localizedCatalogs: [defaultCatalog],
+  describe('getCatalogForSearchProductApi', () => {
+    it('should find default catalog if All catalogs selected', () => {
+      expect(getCatalogForSearchProductApi(-1, -1, mockCatalogs)).toEqual(
+        defaultCatalog.id.toString()
+      )
+    })
+    it('should find first localized catalog if no loacl selected', () => {
+      expect(getCatalogForSearchProductApi(2, -1, mockCatalogs)).toEqual('14')
     })
   })
 })
