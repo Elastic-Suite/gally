@@ -33,7 +33,7 @@ module.exports = {
       },
       {
         source: '/admin/settings',
-        destination: '/admin/settings/scope',
+        destination: '/admin/settings/scope/catalogs',
         permanent: true,
       },
       {

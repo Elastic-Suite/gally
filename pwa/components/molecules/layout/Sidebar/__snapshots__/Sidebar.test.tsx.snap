@@ -18,6 +18,7 @@ exports[`SideBar match snapshot SideBarStateFalse 1`] = `
         >
           <div
             class="css-fqqimh"
+            href="/"
           >
             <div
               class="css-1buwrg5"
@@ -86,6 +87,7 @@ exports[`SideBar match snapshot SideBarStateFalse 1`] = `
                 >
                   <a
                     class="css-11ylqoy"
+                    href="/admin/dashboard"
                   >
                     <ion-icon
                       src="/images/home2.svg"
@@ -137,6 +139,7 @@ exports[`SideBar match snapshot SideBarStateFalse 1`] = `
                           >
                             <a
                               class="css-136al6x"
+                              href="/admin/analyze/catalog_structure"
                             >
                               Structure du catalogue
                             </a>
@@ -161,6 +164,7 @@ exports[`SideBar match snapshot SideBarStateFalse 1`] = `
                           >
                             <a
                               class="css-136al6x"
+                              href="/admin/analyze/search_usage"
                             >
                               Utilisation de la recherche
                             </a>
@@ -185,6 +189,7 @@ exports[`SideBar match snapshot SideBarStateFalse 1`] = `
                           >
                             <a
                               class="css-136al6x"
+                              href="/admin/analyze/ab_testing"
                             >
                               Tests A/B
                             </a>
@@ -230,6 +235,7 @@ exports[`SideBar match snapshot SideBarStateFalse 1`] = `
                           >
                             <a
                               class="css-136al6x"
+                              href="/admin/merchandize/categories"
                             >
                               Catégories
                             </a>
@@ -254,6 +260,7 @@ exports[`SideBar match snapshot SideBarStateFalse 1`] = `
                           >
                             <a
                               class="css-136al6x"
+                              href="/admin/merchandize/search_results"
                             >
                               Résultats de recherche
                             </a>
@@ -309,6 +316,7 @@ exports[`SideBar match snapshot SideBarStateFalse 1`] = `
                                     >
                                       <a
                                         class="css-136al6x"
+                                        href="/admin/merchandize/recommender/configuration"
                                       >
                                         Configuration générale
                                       </a>
@@ -331,6 +339,7 @@ exports[`SideBar match snapshot SideBarStateFalse 1`] = `
                                     >
                                       <a
                                         class="css-136al6x"
+                                        href="/admin/merchandize/recommender/manual_recommenders"
                                       >
                                         Recommendations manuelles
                                       </a>
@@ -353,6 +362,7 @@ exports[`SideBar match snapshot SideBarStateFalse 1`] = `
                                     >
                                       <a
                                         class="css-136al6x"
+                                        href="/admin/merchandize/recommender/auto_recommenders"
                                       >
                                         Recommendations automatiques
                                       </a>
@@ -375,6 +385,7 @@ exports[`SideBar match snapshot SideBarStateFalse 1`] = `
                                     >
                                       <a
                                         class="css-136al6x"
+                                        href="/admin/merchandize/recommender/behavioral_recommenders"
                                       >
                                         Recommendations comportementales
                                       </a>
@@ -404,6 +415,7 @@ exports[`SideBar match snapshot SideBarStateFalse 1`] = `
                           >
                             <a
                               class="css-136al6x"
+                              href="/admin/merchandize/recommender_boosts"
                             >
                               Boosts
                             </a>
@@ -480,6 +492,7 @@ exports[`SideBar match snapshot SideBarStateFalse 1`] = `
                                     >
                                       <a
                                         class="css-136al6x"
+                                        href="/admin/search/configuration/relevance"
                                       >
                                         Pertinence
                                       </a>
@@ -502,6 +515,7 @@ exports[`SideBar match snapshot SideBarStateFalse 1`] = `
                                     >
                                       <a
                                         class="css-136al6x"
+                                        href="/admin/search/configuration/autocompletion"
                                       >
                                         Autocomplétion
                                       </a>
@@ -524,6 +538,7 @@ exports[`SideBar match snapshot SideBarStateFalse 1`] = `
                                     >
                                       <a
                                         class="css-136al6x"
+                                        href="/admin/search/configuration/attributes"
                                       >
                                         Attributs
                                       </a>
@@ -553,6 +568,7 @@ exports[`SideBar match snapshot SideBarStateFalse 1`] = `
                           >
                             <a
                               class="css-136al6x"
+                              href="/admin/search/facets"
                             >
                               Facettes
                             </a>
@@ -577,6 +593,7 @@ exports[`SideBar match snapshot SideBarStateFalse 1`] = `
                           >
                             <a
                               class="css-136al6x"
+                              href="/admin/search/thesasurus"
                             >
                               Thésaurus
                             </a>
@@ -593,6 +610,7 @@ exports[`SideBar match snapshot SideBarStateFalse 1`] = `
                 >
                   <a
                     class="css-11ylqoy"
+                    href="/admin/monitoring"
                   >
                     <ion-icon
                       name="list"
@@ -612,6 +630,7 @@ exports[`SideBar match snapshot SideBarStateFalse 1`] = `
                 >
                   <a
                     class="css-11ylqoy"
+                    href="/admin/settings"
                   >
                     <ion-icon
                       name="settings-outline"
@@ -651,6 +670,7 @@ exports[`SideBar match snapshot SideBarStateTrue 1`] = `
         >
           <div
             class="css-fqqimh"
+            href="/"
           >
             <div
               class="css-1buwrg5"
@@ -719,6 +739,7 @@ exports[`SideBar match snapshot SideBarStateTrue 1`] = `
                 >
                   <a
                     class="css-bq1l1q"
+                    href="/admin/dashboard"
                   >
                     <ion-icon
                       src="/images/home2.svg"
@@ -770,6 +791,7 @@ exports[`SideBar match snapshot SideBarStateTrue 1`] = `
                           >
                             <a
                               class="css-136al6x"
+                              href="/admin/analyze/catalog_structure"
                             >
                               Structure du catalogue
                             </a>
@@ -794,6 +816,7 @@ exports[`SideBar match snapshot SideBarStateTrue 1`] = `
                           >
                             <a
                               class="css-136al6x"
+                              href="/admin/analyze/search_usage"
                             >
                               Utilisation de la recherche
                             </a>
@@ -818,6 +841,7 @@ exports[`SideBar match snapshot SideBarStateTrue 1`] = `
                           >
                             <a
                               class="css-136al6x"
+                              href="/admin/analyze/ab_testing"
                             >
                               Tests A/B
                             </a>
@@ -863,6 +887,7 @@ exports[`SideBar match snapshot SideBarStateTrue 1`] = `
                           >
                             <a
                               class="css-136al6x"
+                              href="/admin/merchandize/categories"
                             >
                               Catégories
                             </a>
@@ -887,6 +912,7 @@ exports[`SideBar match snapshot SideBarStateTrue 1`] = `
                           >
                             <a
                               class="css-136al6x"
+                              href="/admin/merchandize/search_results"
                             >
                               Résultats de recherche
                             </a>
@@ -942,6 +968,7 @@ exports[`SideBar match snapshot SideBarStateTrue 1`] = `
                                     >
                                       <a
                                         class="css-136al6x"
+                                        href="/admin/merchandize/recommender/configuration"
                                       >
                                         Configuration générale
                                       </a>
@@ -964,6 +991,7 @@ exports[`SideBar match snapshot SideBarStateTrue 1`] = `
                                     >
                                       <a
                                         class="css-136al6x"
+                                        href="/admin/merchandize/recommender/manual_recommenders"
                                       >
                                         Recommendations manuelles
                                       </a>
@@ -986,6 +1014,7 @@ exports[`SideBar match snapshot SideBarStateTrue 1`] = `
                                     >
                                       <a
                                         class="css-136al6x"
+                                        href="/admin/merchandize/recommender/auto_recommenders"
                                       >
                                         Recommendations automatiques
                                       </a>
@@ -1008,6 +1037,7 @@ exports[`SideBar match snapshot SideBarStateTrue 1`] = `
                                     >
                                       <a
                                         class="css-136al6x"
+                                        href="/admin/merchandize/recommender/behavioral_recommenders"
                                       >
                                         Recommendations comportementales
                                       </a>
@@ -1037,6 +1067,7 @@ exports[`SideBar match snapshot SideBarStateTrue 1`] = `
                           >
                             <a
                               class="css-136al6x"
+                              href="/admin/merchandize/recommender_boosts"
                             >
                               Boosts
                             </a>
@@ -1113,6 +1144,7 @@ exports[`SideBar match snapshot SideBarStateTrue 1`] = `
                                     >
                                       <a
                                         class="css-136al6x"
+                                        href="/admin/search/configuration/relevance"
                                       >
                                         Pertinence
                                       </a>
@@ -1135,6 +1167,7 @@ exports[`SideBar match snapshot SideBarStateTrue 1`] = `
                                     >
                                       <a
                                         class="css-136al6x"
+                                        href="/admin/search/configuration/autocompletion"
                                       >
                                         Autocomplétion
                                       </a>
@@ -1157,6 +1190,7 @@ exports[`SideBar match snapshot SideBarStateTrue 1`] = `
                                     >
                                       <a
                                         class="css-136al6x"
+                                        href="/admin/search/configuration/attributes"
                                       >
                                         Attributs
                                       </a>
@@ -1186,6 +1220,7 @@ exports[`SideBar match snapshot SideBarStateTrue 1`] = `
                           >
                             <a
                               class="css-136al6x"
+                              href="/admin/search/facets"
                             >
                               Facettes
                             </a>
@@ -1210,6 +1245,7 @@ exports[`SideBar match snapshot SideBarStateTrue 1`] = `
                           >
                             <a
                               class="css-136al6x"
+                              href="/admin/search/thesasurus"
                             >
                               Thésaurus
                             </a>
@@ -1226,6 +1262,7 @@ exports[`SideBar match snapshot SideBarStateTrue 1`] = `
                 >
                   <a
                     class="css-bq1l1q"
+                    href="/admin/monitoring"
                   >
                     <ion-icon
                       name="list"
@@ -1245,6 +1282,7 @@ exports[`SideBar match snapshot SideBarStateTrue 1`] = `
                 >
                   <a
                     class="css-bq1l1q"
+                    href="/admin/settings"
                   >
                     <ion-icon
                       name="settings-outline"
