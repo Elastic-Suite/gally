@@ -29,19 +29,21 @@ class Type
     public const TYPE_IMAGE = 'image';
     public const TYPE_OBJECT = 'object';
 
+    public const AVAILABLE_TYPES = [
+        self::TYPE_TEXT,
+        self::TYPE_KEYWORD,
+        self::TYPE_SELECT,
+        self::TYPE_INT,
+        self::TYPE_BOOLEAN,
+        self::TYPE_FLOAT,
+        self::TYPE_PRICE,
+        self::TYPE_REFERENCE,
+        self::TYPE_IMAGE,
+        self::TYPE_OBJECT,
+    ];
+
     public static function getAvailableTypes(): array
     {
-        return [
-            self::TYPE_TEXT,
-            self::TYPE_KEYWORD,
-            self::TYPE_SELECT,
-            self::TYPE_INT,
-            self::TYPE_BOOLEAN,
-            self::TYPE_FLOAT,
-            self::TYPE_PRICE,
-            self::TYPE_REFERENCE,
-            self::TYPE_IMAGE,
-            self::TYPE_OBJECT,
-        ];
+        return self::AVAILABLE_TYPES;
     }
 }
