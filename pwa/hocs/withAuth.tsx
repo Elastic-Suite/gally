@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 
 import { userContext } from '~/contexts'
 import { setRequestedPath, useAppDispatch } from '~/store'
+import { isValidUser } from '~/services'
 
 export function withAuth<P extends Record<string, unknown>>(
   Cmp: FunctionComponent<P>
@@ -13,13 +14,13 @@ export function withAuth<P extends Record<string, unknown>>(
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-      if (!user || Date.now() / 1000 > user.exp) {
+      if (!isValidUser(user)) {
         dispatch(setRequestedPath(asPath))
         push('/login')
       }
     }, [asPath, dispatch, push, user])
 
-    if (!user) {
+    if (!isValidUser(user)) {
       return null
     }
 
