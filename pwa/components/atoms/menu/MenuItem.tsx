@@ -205,7 +205,7 @@ function MenuItem(props: IProps): JSX.Element {
         <CustomLinePadding style={{ position: 'relative' }}>
           {!menuChildren && (
             <Line>
-              <Link href="/admin/[[...slug]]" as={`/admin/${href}`}>
+              <Link href={`/admin/${href}`} passHref>
                 <CustomLineAHref>{label}</CustomLineAHref>
               </Link>
               {isActive ? <CustomIndicatorLineActive /> : null}
