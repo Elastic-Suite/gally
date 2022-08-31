@@ -205,7 +205,7 @@ function MenuItemIcon(props: IProps): JSX.Element {
   }
   return (
     <CustomClassNameStyle lightStyle={!lightStyle} isActive={isActive}>
-      <Link href={`/admin/${href}`}>
+      <Link href={`/admin/${href}`} passHref>
         <CustomNoChildHover sidebarState={sidebarState}>
           <IonIcon
             name={code}
