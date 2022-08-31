@@ -1,0 +1,3 @@
+
+Elasticsuite Virtual Category Bundle
+============
