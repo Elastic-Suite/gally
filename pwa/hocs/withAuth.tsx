@@ -1,19 +1,29 @@
-import { FunctionComponent } from 'react'
+import { FunctionComponent, useContext, useEffect } from 'react'
+import { useRouter } from 'next/router'
 
-import SchemaProvider from '~/components/stateful-providers/SchemaProvider/SchemaProvider'
-import UserProvider from '~/components/stateful-providers/UserProvider/UserProvider'
+import { userContext } from '~/contexts'
+import { setRequestedPath, useAppDispatch } from '~/store'
 
 export function withAuth<P extends Record<string, unknown>>(
   Cmp: FunctionComponent<P>
 ): FunctionComponent<P> {
   function WithAuth(props: P): JSX.Element {
-    return (
-      <UserProvider>
-        <SchemaProvider>
-          <Cmp {...props} />
-        </SchemaProvider>
-      </UserProvider>
-    )
+    const { push, asPath } = useRouter()
+    const user = useContext(userContext)
+    const dispatch = useAppDispatch()
+
+    useEffect(() => {
+      if (!user || Date.now() / 1000 > user.exp) {
+        dispatch(setRequestedPath(asPath))
+        push('/login')
+      }
+    }, [asPath, dispatch, push, user])
+
+    if (!user) {
+      return null
+    }
+
+    return <Cmp {...props} />
   }
 
   WithAuth.displayName = `WithHoc(${getDisplayName(Cmp)})`
