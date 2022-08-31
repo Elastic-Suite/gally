@@ -135,7 +135,7 @@ exports[`SideBar match snapshot SideBarStateFalse 1`] = `
                           style="position: relative;"
                         >
                           <div
-                            class="css-1ylhpt2"
+                            class="css-1ooj8e9"
                           >
                             <a
                               class="css-136al6x"
@@ -143,6 +143,9 @@ exports[`SideBar match snapshot SideBarStateFalse 1`] = `
                             >
                               Structure du catalogue
                             </a>
+                            <div
+                              class="css-ukifpj"
+                            />
                           </div>
                         </div>
                       </div>
@@ -787,7 +790,7 @@ exports[`SideBar match snapshot SideBarStateTrue 1`] = `
                           style="position: relative;"
                         >
                           <div
-                            class="css-1ylhpt2"
+                            class="css-1ooj8e9"
                           >
                             <a
                               class="css-136al6x"
@@ -795,6 +798,9 @@ exports[`SideBar match snapshot SideBarStateTrue 1`] = `
                             >
                               Structure du catalogue
                             </a>
+                            <div
+                              class="css-ukifpj"
+                            />
                           </div>
                         </div>
                       </div>
