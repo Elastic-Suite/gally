@@ -22,7 +22,13 @@ function SettingsAttributes(props: ITabContentProps): JSX.Element {
   useFiltersRedirect(page, activeFilters, searchValue, active)
 
   const [sourceFields, { massUpdate, update }] =
-    useApiEditableList<ISourceField>(resource, page, activeFilters, searchValue)
+    useApiEditableList<ISourceField>(
+      resource,
+      page,
+      undefined,
+      activeFilters,
+      searchValue
+    )
   const { data, error } = sourceFields
 
   if (error || !data) {
