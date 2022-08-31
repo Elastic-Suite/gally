@@ -1,24 +1,18 @@
-import { useFetchApi } from '~/hooks'
-import { ICategories, ITreeItem } from '~/types'
+import { ICategories, IFetch, ITreeItem } from '~/types'
 
 import Tree from '~/components/atoms/tree/Tree'
 
 interface IProps {
-  catalog: string | number
-  localizedCatalog: string | number
+  categoryTreeFields: IFetch<ICategories>
   selectedItem: ITreeItem
   onSelect: (item: ITreeItem) => void
 }
 
 function CategoryTree({
-  catalog,
-  localizedCatalog,
+  categoryTreeFields,
   selectedItem,
   onSelect,
 }: IProps): JSX.Element {
-  const [categoryTreeFields] = useFetchApi<ICategories>(
-    `categoryTree?/&catalogId=${catalog}&localizedCatalogId=${localizedCatalog}`
-  )
   const { data, error } = categoryTreeFields
 
   if (error || !data) {
