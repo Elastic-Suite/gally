@@ -8,8 +8,10 @@ import Head from 'next/head'
 import nextI18nConfig from '~/next-i18next.config'
 import { setLanguage, setupStore } from '~/store'
 
-import 'assets/scss/style.scss'
 import AppProvider from '~/components/stateful-providers/AppProvider/AppProvider'
+import DataProvider from '~/components/stateful-providers/DataProvider/DataProvider'
+
+import 'assets/scss/style.scss'
 
 /*
  * Resolve for "Prop className did not match" between Server side and Client side
@@ -43,9 +45,11 @@ function MyApp(props: AppProps): JSX.Element {
         <title>Blink Admin</title>
       </Head>
       <AppProvider store={store}>
-        <Layout>
-          <Cmp {...pageProps} />
-        </Layout>
+        <DataProvider>
+          <Layout>
+            <Cmp {...pageProps} />
+          </Layout>
+        </DataProvider>
       </AppProvider>
       <Script
         type="module"
