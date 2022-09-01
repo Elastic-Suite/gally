@@ -16,6 +16,7 @@ describe('useApiTable', () => {
           type: 'string',
           editable: false,
           options: null,
+          required: true,
         },
         {
           name: 'defaultLabel',
@@ -23,6 +24,7 @@ describe('useApiTable', () => {
           type: 'string',
           editable: false,
           options: null,
+          required: false,
         },
         {
           name: 'type',
@@ -30,6 +32,7 @@ describe('useApiTable', () => {
           type: 'string',
           editable: false,
           options: null,
+          required: false,
         },
         {
           name: 'isFilterable',
@@ -37,6 +40,7 @@ describe('useApiTable', () => {
           type: 'boolean',
           editable: true,
           options: null,
+          required: false,
         },
         {
           name: 'isSearchable',
@@ -44,6 +48,7 @@ describe('useApiTable', () => {
           type: 'boolean',
           editable: true,
           options: null,
+          required: false,
         },
         {
           name: 'isSortable',
@@ -51,6 +56,7 @@ describe('useApiTable', () => {
           type: 'boolean',
           editable: true,
           options: null,
+          required: false,
         },
         {
           name: 'isUsedForRules',
@@ -58,6 +64,7 @@ describe('useApiTable', () => {
           type: 'boolean',
           editable: true,
           options: null,
+          required: false,
         },
       ])
     })
