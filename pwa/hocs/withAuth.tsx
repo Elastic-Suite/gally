@@ -5,6 +5,8 @@ import { userContext } from '~/contexts'
 import { setRequestedPath, useAppDispatch } from '~/store'
 import { isValidUser } from '~/services'
 
+import OptionsProvider from '~/components/stateful-providers/OptionsProvider/OptionsProvider'
+
 export function withAuth<P extends Record<string, unknown>>(
   Cmp: FunctionComponent<P>
 ): FunctionComponent<P> {
@@ -24,7 +26,11 @@ export function withAuth<P extends Record<string, unknown>>(
       return null
     }
 
-    return <Cmp {...props} />
+    return (
+      <OptionsProvider>
+        <Cmp {...props} />
+      </OptionsProvider>
+    )
   }
 
   WithAuth.displayName = `WithHoc(${getDisplayName(Cmp)})`

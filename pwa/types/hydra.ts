@@ -93,11 +93,16 @@ export interface IElasticSuiteProperty {
   position?: number
   context?: Record<string, IElasticSuiteProperty>
   input?: DataContentType
-  options?: IDropdownOptions
+  options?: IDropdownStaticOptions | IDropdownApiOptions
 }
 
-export interface IDropdownOptions {
+export interface IDropdownStaticOptions {
   values: (string | number)[]
+}
+
+export interface IDropdownApiOptions {
+  api_rest: string
+  api_gaphql: string
 }
 
 export interface IHydraSupportedProperty extends IJsonldType {
@@ -137,7 +142,7 @@ export interface IHydraSearch extends IJsonldType {
   'hydra:variableRepresentation': string
 }
 
-export interface IHydraResponse<Member extends IHydraMember>
+export interface IHydraResponse<Member>
   extends IJsonldContext,
     IJsonldType,
     IJsonldId {

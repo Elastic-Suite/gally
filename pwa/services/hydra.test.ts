@@ -1,3 +1,6 @@
+import categorySortingOptions from '~/public/mocks/category_sorting_options.json'
+import metadata from '~/public/mocks/metadata.json'
+
 import {
   api,
   fieldBoolean,
@@ -7,7 +10,6 @@ import {
   resource,
   resourceWithRef,
 } from '~/mocks'
-import metadata from '~/public/mocks/metadata.json'
 
 import {
   castFieldParameter,
@@ -15,7 +17,8 @@ import {
   getFieldName,
   getFieldType,
   getFilterParameters,
-  getOptionsFromApi,
+  getOptionsFromApiSchema,
+  getOptionsFromResource,
   getReferencedResource,
   getResource,
   isFieldValueValid,
@@ -69,9 +72,9 @@ describe('Hydra service', () => {
     })
   })
 
-  describe('getOptionsFromApi', () => {
+  describe('getOptionsFromResource', () => {
     it('Should return the options', () => {
-      expect(getOptionsFromApi(metadata)).toEqual([
+      expect(getOptionsFromResource(metadata)).toEqual([
         {
           id: 1,
           label: '/metadata/1',
@@ -81,6 +84,38 @@ describe('Hydra service', () => {
           id: 2,
           label: '/metadata/2',
           value: 2,
+        },
+      ])
+    })
+  })
+
+  describe('getOptionsFromApiSchema', () => {
+    it('Should return the options', () => {
+      expect(getOptionsFromApiSchema(categorySortingOptions)).toEqual([
+        {
+          id: 'position',
+          label: 'Position',
+          value: 'position',
+        },
+        {
+          id: 'id',
+          label: 'Id',
+          value: 'id',
+        },
+        {
+          id: 'stock.status',
+          label: 'Stock status',
+          value: 'stock.status',
+        },
+        {
+          id: 'sku',
+          label: 'Sku',
+          value: 'sku',
+        },
+        {
+          id: 'price',
+          label: 'Price',
+          value: 'price',
         },
       ])
     })

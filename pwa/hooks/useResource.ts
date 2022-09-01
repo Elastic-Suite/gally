@@ -1,8 +1,13 @@
 import { useCallback, useContext, useMemo } from 'react'
+import { useRouter } from 'next/router'
 
 import { contentTypeHeader } from '~/constants'
 import { schemaContext } from '~/contexts'
-import { getApiUrl, getResource } from '~/services'
+import {
+  getApiUrl,
+  getResource,
+  updatePropertiesAccordingToPath,
+} from '~/services'
 import {
   IFetchError,
   IHydraMember,
@@ -15,7 +20,17 @@ import { useApiFetch } from './useApi'
 
 export function useResource(resourceName: string): IResource {
   const api = useContext(schemaContext)
-  return useMemo(() => getResource(api, resourceName), [api, resourceName])
+  const { asPath } = useRouter()
+
+  return useMemo(() => {
+    const resource = getResource(api, resourceName)
+    return {
+      ...resource,
+      supportedProperty: resource.supportedProperty.map((field) =>
+        updatePropertiesAccordingToPath(field, asPath)
+      ),
+    }
+  }, [api, asPath, resourceName])
 }
 
 export function useResourceOperations<T extends IHydraMember>(

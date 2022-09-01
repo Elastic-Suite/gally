@@ -1,8 +1,8 @@
 import {
   fieldBoolean,
+  fieldDropdown,
   fieldRef,
   fieldString,
-  mockedFieldWithDropdown,
   resourceWithRef,
 } from '~/mocks'
 import { DataContentType } from '~/types'
@@ -19,6 +19,9 @@ import {
 describe('Table service', () => {
   describe('getFieldDataContentType', () => {
     it('should return the DataContent type', () => {
+      expect(getFieldDataContentType(fieldDropdown)).toEqual(
+        DataContentType.DROPDOWN
+      )
       expect(getFieldDataContentType(fieldString)).toEqual(
         DataContentType.STRING
       )
@@ -31,33 +34,12 @@ describe('Table service', () => {
   describe('getFieldHeader', () => {
     it('should return the field header', () => {
       expect(getFieldHeader(fieldString, (key: string) => key)).toEqual({
+        field: fieldString,
         name: 'code',
         label: 'Attribute code',
         type: DataContentType.STRING,
         editable: false,
-        options: null,
         required: true,
-      })
-    })
-    it('should return the field header with options in case of dropdown type', () => {
-      expect(
-        getFieldHeader(mockedFieldWithDropdown, (key: string) => key)
-      ).toEqual({
-        name: 'code',
-        label: 'Attribute code',
-        type: DataContentType.DROPDOWN,
-        editable: false,
-        required: true,
-        options: [
-          {
-            label: 'option_test1',
-            value: 'option_test1',
-          },
-          {
-            label: 'option_test2',
-            value: 'option_test2',
-          },
-        ],
       })
     })
   })
@@ -113,6 +95,7 @@ describe('Table service', () => {
         )
       ).toEqual({
         id: 'code',
+        field: fieldString,
         label: 'Attribute code',
         multiple: false,
         options: undefined,
@@ -123,8 +106,7 @@ describe('Table service', () => {
 
   describe('getMappings', () => {
     it('should return the mappings object', () => {
-      const pathTest = 'test/no/specific/context'
-      const mappings = getMappings(sourceFields, resourceWithRef, pathTest)
+      const mappings = getMappings(sourceFields, resourceWithRef)
       expect(mappings[1]).toEqual({
         '@type': 'IriTemplateMapping',
         variable: 'isFilterable',
@@ -140,14 +122,6 @@ describe('Table service', () => {
         required: false,
         field: fieldString,
         multiple: false,
-      })
-      expect(mappings[5]).toEqual({
-        '@type': 'IriTemplateMapping',
-        variable: 'metadata[]',
-        property: 'metadata',
-        required: false,
-        field: fieldRef,
-        multiple: true,
       })
     })
   })
