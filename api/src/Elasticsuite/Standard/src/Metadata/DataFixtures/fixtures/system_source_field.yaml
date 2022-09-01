@@ -17,12 +17,13 @@ Elasticsuite\Metadata\Model\SourceField:
         isSearchable: true
         isSortable: true
         isSpellchecked: true
+        isSystem: true
     product_price:
         metadata: '@product'
         code: 'price'
         type: 'price'
+        isSortable: true
         isSystem: true
-        is_sortable: true
     product_image:
         metadata: '@product'
         code: 'image'
