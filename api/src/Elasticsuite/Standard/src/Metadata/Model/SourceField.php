@@ -49,7 +49,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
     denormalizationContext: ['groups' => ['source_field:api']],
 )]
 #[ApiFilter(BooleanFilter::class, properties: ['isSearchable', 'isFilterable'], arguments: ['treatNullAsFalse' => true])]
-#[ApiFilter(SearchFilter::class, properties: ['code' => 'partial', 'defaultLabel' => 'partial', 'type' => 'partial', 'metadata' => 'exact'])]
+#[ApiFilter(SearchFilter::class, properties: ['code' => 'partial', 'defaultLabel' => 'partial', 'type' => 'partial', 'metadata' => 'exact', 'metadata.entity' => 'exact'])]
 class SourceField
 {
     private int $id;
