@@ -1,1 +1,16 @@
-services: ~
+services:
+    
+    Elasticsuite\VirtualCategory\Repository\ConfigurationRepository:
+        arguments:
+            - '@Doctrine\Persistence\ManagerRegistry'
+            - 'Elasticsuite\VirtualCategory\Model\Configuration'
+        tags:
+            - { name: doctrine.repository_service }
+    
+    Elasticsuite\VirtualCategory\Resolver\ConfigurationResolver:
+        arguments:
+            - '@Elasticsuite\VirtualCategory\Repository\ConfigurationRepository'
+            - '@Elasticsuite\Category\Repository\CategoryRepository'
+            - '@Elasticsuite\ScopedEntity\Service\ScopeValidator'
+        tags:
+            - { name: api_platform.graphql.query_resolver }

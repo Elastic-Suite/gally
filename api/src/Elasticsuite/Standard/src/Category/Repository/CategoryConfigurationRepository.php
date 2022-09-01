@@ -87,7 +87,6 @@ class CategoryConfigurationRepository extends ServiceEntityRepository
         $categoryConfiguration->setCatalog($catalog);
         $categoryConfiguration->setLocalizedCatalog($localizedCatalog);
         $categoryConfiguration->setName($result['name']);
-        $categoryConfiguration->setIsVirtual((bool) $result['isVirtual']);
         $categoryConfiguration->setDefaultSorting($result['defaultSorting']);
         $categoryConfiguration->setUseNameInProductSearch((bool) $result['useNameInProductSearch']);
         $categoryConfiguration->setIsActive((bool) $result['isActive']);
@@ -221,7 +220,6 @@ class CategoryConfigurationRepository extends ServiceEntityRepository
             ->select(
                 [
                     'MAX(IDENTITY(lc.category)) as category_id',
-                    'MAX(CASE WHEN ' . sprintf($mergeExpr, 'isVirtual') . ' = TRUE THEN 1 ELSE 0 END) as isVirtual',
                     'MAX(CASE WHEN ' . sprintf($mergeExpr, 'useNameInProductSearch') . ' = TRUE THEN 1 ELSE 0 END) as useNameInProductSearch',
                     'MAX(' . sprintf($mergeExpr, 'defaultSorting') . ') as defaultSorting',
                     'MAX(CASE WHEN lc.isActive = TRUE THEN 1 ELSE 0 END) as isActive',

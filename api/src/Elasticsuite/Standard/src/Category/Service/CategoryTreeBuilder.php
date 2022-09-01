@@ -70,7 +70,6 @@ class CategoryTreeBuilder
             $categoryConfiguration = new Category\Configuration();
             $categoryConfiguration->setCategory($category);
             $categoryConfiguration->setName($categoryConfigurationData['name']);
-            $categoryConfiguration->setIsVirtual((bool) $categoryConfigurationData['isVirtual']);
             $categoryConfiguration->setDefaultSorting($categoryConfigurationData['defaultSorting']);
             $categoryConfiguration->setUseNameInProductSearch((bool) $categoryConfigurationData['useNameInProductSearch']);
             $categoryConfiguration->setIsActive((bool) $categoryConfigurationData['isActive']);
@@ -121,7 +120,6 @@ class CategoryTreeBuilder
             'name' => $categoryConfiguration->getName(),
             'level' => $category->getLevel(),
             'path' => $category->getPath(),
-            'isVirtual' => $categoryConfiguration->getIsVirtual(),
         ];
 
         if (!empty($children)) {

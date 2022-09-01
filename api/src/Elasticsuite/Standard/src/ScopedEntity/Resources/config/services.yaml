@@ -1,0 +1,6 @@
+services:
+    Elasticsuite\ScopedEntity\Service\ScopeValidator: 
+        public: true
+        arguments:
+            - '@Elasticsuite\Catalog\Repository\CatalogRepository'
+            - '@Elasticsuite\Catalog\Repository\LocalizedCatalogRepository'

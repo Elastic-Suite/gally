@@ -15,12 +15,11 @@ return [
     Acme\DeclarativeGreetingsBundle\AcmeDeclarativeGreetingsBundle::class => ['all' => true],
     Acme\Example\AcmeExampleBundle::class => ['dev' => true, 'test' => true],
     Elasticsuite\ElasticsuiteBundle::class => ['all' => true],
+    Elasticsuite\VirtualCategory\ElasticVirtualCategoryBundle::class => ['all' => true],
     Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class => ['dev' => true, 'test' => true],
     Liip\TestFixturesBundle\LiipTestFixturesBundle::class => ['dev' => true, 'test' => true],
     Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle::class => ['dev' => true, 'test' => true],
     Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundle::class => ['dev' => true, 'test' => true],
     Hautelook\AliceBundle\HautelookAliceBundle::class => ['dev' => true, 'test' => true],
     Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle::class => ['all' => true],
-
-    Elasticsuite\VirtualCategory\ElasticVirtualCategoryBundle::class => ['all' => true],
 ];

@@ -29,15 +29,10 @@ class ElasticVirtualCategoryBundle extends Bundle
 
     public function build(ContainerBuilder $container): void
     {
-        $mappings = [
-            realpath(__DIR__ . '/Resources/config/doctrine') => 'Elasticsuite\VirtualCategory\Model',
-        ];
-
         $container->addCompilerPass(
             DoctrineOrmMappingsPass::createXmlMappingDriver(
-                $mappings,
-                ['doctrine.orm.entity_manager'],
-                false
+                [realpath(__DIR__ . '/Resources/config/doctrine') => 'Elasticsuite\VirtualCategory\Model'],
+                ['doctrine.orm.entity_manager']
             )
         );
     }

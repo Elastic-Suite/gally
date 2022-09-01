@@ -31,16 +31,16 @@ class ElasticVirtualCategoryExtension extends Extension implements PrependExtens
      */
     public function prepend(ContainerBuilder $container)
     {
-//        $container->prependExtensionConfig(
-//            'api_platform',
-//            [
-//                'mapping' => [
-//                    'paths' => [
-//                        __DIR__ . '/../Model/',
-//                    ],
-//                ],
-//            ]
-//        );
+        $container->prependExtensionConfig(
+            'api_platform',
+            [
+                'mapping' => [
+                    'paths' => [
+                        __DIR__ . '/../Model/',
+                    ],
+                ],
+            ]
+        );
     }
 
     /**
@@ -50,11 +50,7 @@ class ElasticVirtualCategoryExtension extends Extension implements PrependExtens
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        $loader = new YamlFileLoader(
-            $container,
-            new FileLocator(__DIR__ . '/../')
-        );
-
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../'));
         $loader->load('Resources/config/services.yaml');
     }
 }

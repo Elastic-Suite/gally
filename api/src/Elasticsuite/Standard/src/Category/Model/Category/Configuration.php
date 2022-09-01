@@ -96,8 +96,6 @@ class Configuration
 
     private ?string $name = null;
 
-    private ?bool $isVirtual = null;
-
     private ?bool $useNameInProductSearch = null;
 
     #[ApiProperty(
@@ -175,16 +173,6 @@ class Configuration
     public function setUseNameInProductSearch(?bool $useNameInProductSearch): void
     {
         $this->useNameInProductSearch = $useNameInProductSearch;
-    }
-
-    public function getIsVirtual(): bool
-    {
-        return $this->isVirtual ?? false;
-    }
-
-    public function setIsVirtual(?bool $isVirtual): void
-    {
-        $this->isVirtual = $isVirtual;
     }
 
     public function getDefaultSorting(): string
