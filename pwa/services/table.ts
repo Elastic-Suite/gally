@@ -52,6 +52,7 @@ export function getFieldHeader(field: IField, t: TFunction): ITableHeader {
     type: getFieldDataContentType(field),
     options: getOptions(field),
     editable: field.elasticsuite?.editable && field.writeable,
+    required: field.required,
   }
 }
 
@@ -82,13 +83,13 @@ export function getMappings<T extends IHydraMember>(
   resource: IResource,
   path: string
 ): IMapping[] {
-  const mappings: IMapping[] = apiData?.['hydra:search']['hydra:mapping'].map(
-    (mapping) => ({
+  const mappings: IMapping[] = apiData?.['hydra:search']['hydra:mapping']
+    .map((mapping) => ({
       ...mapping,
       field: getField(resource, mapping.property),
       multiple: mapping.variable.endsWith('[]'),
-    })
-  )
+    }))
+    .filter((mapping) => mapping.field)
   const arrayProperties = mappings
     .filter((mapping) => mapping.multiple)
     .map((mapping) => mapping.property)

@@ -8,7 +8,7 @@ import {
   IHydraResponse,
   IResource,
   IResourceEditableMassUpdate,
-  ITableRow
+  ITableRow,
 } from '~/types'
 
 import StickyBar from '~/components/molecules/CustomTable/StickyBar/StickyBar'
