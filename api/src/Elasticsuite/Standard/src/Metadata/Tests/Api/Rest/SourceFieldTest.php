@@ -47,7 +47,7 @@ class SourceFieldTest extends AbstractEntityTest
             [$adminUser, ['code' => 'description', 'metadata' => '/metadata/1'], 201],
             [$adminUser, ['code' => 'weight', 'metadata' => '/metadata/1'], 201],
             [$adminUser, ['code' => 'image', 'metadata' => '/metadata/2'], 201],
-            [$adminUser, ['code' => 'length', 'isSearchable' => true, 'metadata' => '/metadata/1'], 201],
+            [$adminUser, ['code' => 'length', 'isSearchable' => true, 'metadata' => '/metadata/1', 'weight' => 2], 201],
             [$adminUser, ['code' => 'description'], 422, 'metadata: This value should not be blank.'],
             [$adminUser, ['metadata' => '/metadata/1'], 422, 'code: This value should not be blank.'],
             [
@@ -68,6 +68,18 @@ class SourceFieldTest extends AbstractEntityTest
                 422,
                 'code: An field with this code already exist for this entity.',
             ],
+            [
+                $adminUser,
+                ['code' => 'color', 'isSearchable' => true, 'metadata' => '/metadata/1', 'weight' => 0],
+                422,
+                'weight: The value you selected is not a valid choice.',
+            ],
+            [
+                $adminUser,
+                ['code' => 'color', 'isSearchable' => true, 'metadata' => '/metadata/1', 'weight' => 11],
+                422,
+                'weight: The value you selected is not a valid choice.',
+            ],
         ];
     }
 
@@ -79,8 +91,9 @@ class SourceFieldTest extends AbstractEntityTest
         $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
 
         return [
-            [$user, 1, ['id' => 1, 'code' => 'name'], 200],
-            [$user, 10, ['id' => 10, 'code' => 'description'], 200],
+            [$user, 1, ['id' => 1, 'code' => 'name', 'weight' => 10], 200],
+            [$user, 10, ['id' => 10, 'code' => 'description', 'weight' => 1], 200],
+            [$user, 13, ['id' => 13, 'code' => 'length', 'weight' => 2], 200],
             [$user, 20, [], 404],
         ];
     }

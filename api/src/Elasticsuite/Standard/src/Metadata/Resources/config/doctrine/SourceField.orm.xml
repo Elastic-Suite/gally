@@ -14,7 +14,11 @@
         <field name="code" type="string" nullable="false"/>
         <field name="defaultLabel" type="string" nullable="true"/>
         <field name="type" type="string" nullable="true" />
-        <field name="weight" type="integer" nullable="true" />
+        <field name="weight" type="integer" nullable="false">
+            <options>
+                <option name="default">1</option>
+            </options>
+        </field>
         <field name="isSearchable" type="boolean" nullable="true" />
         <field name="isFilterable" type="boolean" nullable="true" />
         <field name="isSortable" type="boolean" nullable="true" />
