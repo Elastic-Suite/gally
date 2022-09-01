@@ -8,10 +8,10 @@ exports[`DropDown match snapshot BadgeDisabledFalse 1`] = `
     <button
       aria-expanded="false"
       aria-haspopup="listbox"
-      class="MuiSelectUnstyled-root css-17ts3f5"
+      class="MuiSelectUnstyled-root css-k616if"
       type="button"
     >
-      
+      <span />
       <ion-icon
         name="chevron-down"
       />
@@ -28,11 +28,11 @@ exports[`DropDown match snapshot BadgeDisabledTrue 1`] = `
     <button
       aria-expanded="false"
       aria-haspopup="listbox"
-      class="MuiSelectUnstyled-root Mui-disabled css-17ts3f5"
+      class="MuiSelectUnstyled-root Mui-disabled css-k616if"
       disabled=""
       type="button"
     >
-      
+      <span />
       <ion-icon
         name="chevron-down"
       />
@@ -55,10 +55,10 @@ exports[`DropDown match snapshot BadgeLabel 1`] = `
     <button
       aria-expanded="false"
       aria-haspopup="listbox"
-      class="MuiSelectUnstyled-root css-17ts3f5"
+      class="MuiSelectUnstyled-root css-k616if"
       type="button"
     >
-      
+      <span />
       <ion-icon
         name="chevron-down"
       />
@@ -81,10 +81,12 @@ exports[`DropDown match snapshot BadgeMultiple 1`] = `
     <button
       aria-expanded="false"
       aria-haspopup="listbox"
-      class="MuiSelectUnstyled-root css-17ts3f5"
+      class="MuiSelectUnstyled-root css-k616if"
       type="button"
     >
-      
+      <span>
+        
+      </span>
       <ion-icon
         name="chevron-down"
       />
@@ -101,10 +103,10 @@ exports[`DropDown match snapshot BadgeRequiredFalse 1`] = `
     <button
       aria-expanded="false"
       aria-haspopup="listbox"
-      class="MuiSelectUnstyled-root css-17ts3f5"
+      class="MuiSelectUnstyled-root css-k616if"
       type="button"
     >
-      
+      <span />
       <ion-icon
         name="chevron-down"
       />
@@ -121,10 +123,10 @@ exports[`DropDown match snapshot BadgeRequiredTrue 1`] = `
     <button
       aria-expanded="false"
       aria-haspopup="listbox"
-      class="MuiSelectUnstyled-root css-17ts3f5"
+      class="MuiSelectUnstyled-root css-k616if"
       type="button"
     >
-      
+      <span />
       <ion-icon
         name="chevron-down"
       />
