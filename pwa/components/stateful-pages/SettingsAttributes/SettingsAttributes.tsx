@@ -1,13 +1,11 @@
 import {
-  useApiList,
+  useApiEditableList,
   useFilters,
   useFiltersRedirect,
   usePage,
   useResource,
-  useResourceOperations,
   useSearch,
 } from '~/hooks'
-import { isFetchError } from '~/services'
 import { ISearchParameters, ISourceField, ITabContentProps } from '~/types'
 
 import FiltersGuesser from '~/components/stateful/FiltersGuesser/FiltersGuesser'
@@ -23,13 +21,14 @@ function SettingsAttributes(props: ITabContentProps): JSX.Element {
   const [searchValue, setSearchValue] = useSearch()
   useFiltersRedirect(page, activeFilters, searchValue, active)
 
-  const { update } = useResourceOperations<ISourceField>(resource)
-  const [sourceFields, updateSourceFields] = useApiList<ISourceField>(
-    resource,
-    page,
-    activeFilters,
-    searchValue
-  )
+  const [sourceFields, { massUpdate, update }] =
+    useApiEditableList<ISourceField>(
+      resource,
+      page,
+      undefined,
+      activeFilters,
+      searchValue
+    )
   const { data, error } = sourceFields
 
   if (error || !data) {
@@ -50,19 +49,13 @@ function SettingsAttributes(props: ITabContentProps): JSX.Element {
     setPage(page)
   }
 
-  async function handleRowChange(
+  function handleRowChange(
     id: string | number,
     name: string,
     value: boolean | number | string
-  ): Promise<void> {
+  ): void {
     if (update) {
-      // todo: should we use optimistic updates ?
-      const sourceField = await update(id, { [name]: value })
-      if (!isFetchError(sourceField)) {
-        updateSourceFields((items) =>
-          items.map((item) => (item.id === sourceField.id ? sourceField : item))
-        )
-      }
+      update(id, { [name]: value })
     }
   }
 
@@ -79,10 +72,10 @@ function SettingsAttributes(props: ITabContentProps): JSX.Element {
       <TableGuesser
         apiData={data}
         currentPage={page}
+        onMassupdate={massUpdate}
         onPageChange={handlePageChange}
         onRowUpdate={handleRowChange}
         resource={resource}
-        updateSourceFields={updateSourceFields}
       />
     </>
   )

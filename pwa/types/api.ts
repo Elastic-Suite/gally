@@ -43,7 +43,33 @@ export interface IResponseError {
 
 export interface IResourceOperations<T extends IHydraMember> {
   create?: (item: Omit<T, 'id' | '@id' | '@type'>) => Promise<T | IFetchError>
+  remove?: (id: string | number) => Promise<T | IFetchError>
   replace?: (item: Omit<T, '@id' | '@type'>) => Promise<T | IFetchError>
   update?: (id: string | number, item: Partial<T>) => Promise<T | IFetchError>
-  delete?: (id: string | number) => Promise<T | IFetchError>
 }
+
+export type IResourceEditableCreate<T> = (
+  item: Omit<T, 'id' | '@id' | '@type'>
+) => Promise<void>
+export type IResourceEditableMassUpdate<T> = (
+  ids: (string | number)[],
+  item: Partial<T>
+) => Promise<void>
+export type IResourceEditableRemove = (id: string | number) => Promise<void>
+export type IResourceEditableReplace<T> = (
+  item: Omit<T, '@id' | '@type'>
+) => Promise<void>
+export type IResourceEditableUpdate<T> = (
+  id: string | number,
+  item: Partial<T>
+) => Promise<void>
+
+export interface IResourceEditableOperations<T extends IHydraMember> {
+  create?: IResourceEditableCreate<T>
+  massUpdate?: IResourceEditableMassUpdate<T>
+  remove?: IResourceEditableRemove
+  replace?: IResourceEditableReplace<T>
+  update?: IResourceEditableUpdate<T>
+}
+
+export type ILoadResource = () => void
