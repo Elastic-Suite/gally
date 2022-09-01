@@ -13,6 +13,8 @@ Elasticsuite\Metadata\Model\SourceField:
             - NotBlank: ~
         type:
             - Choice: { callback: [Elasticsuite\Metadata\Model\SourceField\Type, getAvailableTypes] }
+        weight:
+            - Choice: { callback: [Elasticsuite\Metadata\Model\SourceField\Weight, getValidWeight] }
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
               fields: [ code, metadata ]
