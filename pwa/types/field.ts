@@ -1,8 +1,10 @@
+import { IField } from './api'
 import { DataContentType } from './customTables'
 import { IOptions } from './option'
 
 export interface IFieldGuesserProps {
   editable?: boolean
+  field?: IField
   name: string
   label?: string
   multiple?: boolean

@@ -1,6 +1,30 @@
 import { DataContentType, IApi, IField, IResource } from '~/types'
 
-export const mockedFieldWithDropdown: IField = {
+export const fieldDropdown = {
+  '@type': 'http://www.w3.org/ns/hydra/core#SupportedProperty',
+  elasticsuite: {
+    input: 'dropdown',
+    options: {
+      values: ['option_test1', 'option_test2'],
+    },
+    editable: false,
+    position: 10,
+    visible: true,
+  },
+  property: {
+    '@id': 'https://localhost/docs.jsonld#SourceField/code',
+    '@type': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#Property',
+    domain: { '@id': 'https://localhost/docs.jsonld#SourceField' },
+    range: { '@id': 'http://www.w3.org/2001/XMLSchema#string' },
+    label: 'Attribute code',
+  },
+  readable: true,
+  required: true,
+  title: 'code',
+  writeable: true,
+} as IField
+
+export const fieldDropdownWithContext = {
   '@type': 'http://www.w3.org/ns/hydra/core#SupportedProperty',
   elasticsuite: {
     input: 'dropdown' as DataContentType,
@@ -32,48 +56,14 @@ export const mockedFieldWithDropdown: IField = {
   required: true,
   title: 'code',
   writeable: true,
-}
+} as IField
 
-export const mockedFieldWithContext: IField = {
+export const fieldDropdownWithApiOptions = {
   '@type': 'http://www.w3.org/ns/hydra/core#SupportedProperty',
   elasticsuite: {
-    input: null,
+    input: 'dropdown',
     options: {
-      values: ['option_test1', 'option_test2'],
-    },
-    editable: false,
-    position: 10,
-    visible: true,
-    context: {
-      settings_attribute: {
-        visible: true,
-        position: 20,
-      },
-      search_configuration_attribute: {
-        visible: false,
-        position: 30,
-      },
-    },
-  },
-  property: {
-    '@id': 'https://localhost/docs.jsonld#SourceField/code',
-    '@type': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#Property',
-    domain: { '@id': 'https://localhost/docs.jsonld#SourceField' },
-    range: { '@id': 'http://www.w3.org/2001/XMLSchema#string' },
-    label: 'Attribute code',
-  },
-  readable: true,
-  required: true,
-  title: 'code',
-  writeable: true,
-}
-
-export const mockedFieldWithoutContext: IField = {
-  '@type': 'http://www.w3.org/ns/hydra/core#SupportedProperty',
-  elasticsuite: {
-    input: null,
-    options: {
-      values: ['option_test1', 'option_test2'],
+      api_rest: '/category_sorting_options',
     },
     editable: false,
     position: 10,
@@ -90,7 +80,7 @@ export const mockedFieldWithoutContext: IField = {
   required: true,
   title: 'code',
   writeable: true,
-}
+} as IField
 
 export const resources = [
   {

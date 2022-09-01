@@ -10,62 +10,55 @@ describe('useApiTable', () => {
         useApiHeaders(resourceWithRef)
       )
       expect(result.current).toEqual([
-        {
+        expect.objectContaining({
           name: 'code',
           label: 'Attribute code',
           type: 'string',
           editable: false,
-          options: null,
           required: true,
-        },
-        {
+        }),
+        expect.objectContaining({
           name: 'defaultLabel',
           label: 'Attribute label',
           type: 'string',
           editable: false,
-          options: null,
           required: false,
-        },
-        {
+        }),
+        expect.objectContaining({
           name: 'type',
           label: 'Attribute type',
           type: 'string',
           editable: false,
-          options: null,
           required: false,
-        },
-        {
+        }),
+        expect.objectContaining({
           name: 'isFilterable',
           label: 'Filterable',
           type: 'boolean',
           editable: true,
-          options: null,
           required: false,
-        },
-        {
+        }),
+        expect.objectContaining({
           name: 'isSearchable',
           label: 'Searchable',
           type: 'boolean',
           editable: true,
-          options: null,
           required: false,
-        },
-        {
+        }),
+        expect.objectContaining({
           name: 'isSortable',
           label: 'Sortable',
           type: 'boolean',
           editable: true,
-          options: null,
           required: false,
-        },
-        {
+        }),
+        expect.objectContaining({
           name: 'isUsedForRules',
           label: 'Use in rule engine',
           type: 'boolean',
           editable: true,
-          options: null,
           required: false,
-        },
+        }),
       ])
     })
   })
