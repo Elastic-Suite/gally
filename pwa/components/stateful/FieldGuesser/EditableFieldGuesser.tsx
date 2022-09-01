@@ -7,6 +7,7 @@ import DropDown from '~/components/atoms/form/DropDown'
 import InputText from '~/components/atoms/form/InputText'
 
 import ReadableFieldGuesser from './ReadableFieldGuesser'
+import EditableDropDownGuesser from './EditableDropDownGuesser'
 
 function EditableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
   const {
@@ -49,16 +50,7 @@ function EditableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
     }
 
     case DataContentType.DROPDOWN: {
-      return (
-        <DropDown
-          required={required}
-          label={label}
-          multiple={multiple}
-          options={options}
-          value={value}
-          onChange={handleChange}
-        />
-      )
+      return <EditableDropDownGuesser {...props} onChange={handleChange} />
     }
 
     case DataContentType.BOOLEAN: {

@@ -1,3 +1,4 @@
+import categorySortingOptions from '~/public/mocks/category_sorting_options.json'
 import metadata from '~/public/mocks/metadata.json'
 import { IResource, ISearchParameters } from '~/types'
 
@@ -14,6 +15,11 @@ export const fetchApi = jest.fn(
       (typeof resource === 'string' && resource.endsWith('metadata'))
     ) {
       data = { ...metadata }
+    } else if (
+      typeof resource === 'string' &&
+      resource.endsWith('category_sorting_options')
+    ) {
+      data = { ...categorySortingOptions }
     }
     return Promise.resolve(data)
   }
