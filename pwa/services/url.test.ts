@@ -80,7 +80,7 @@ describe('URL service', () => {
       ).toEqual({
         currentPage: 2,
         pagination: true,
-        pageSize: 10,
+        pageSize: 50,
         foo: 'bar',
         search: 'baz',
       })
