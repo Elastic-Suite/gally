@@ -1,47 +1,46 @@
-import { Dispatch, SetStateAction, useState } from 'react'
+import { useState } from 'react'
 
-import { useApiList, useResourceOperations } from '~/hooks'
-import { isFetchError } from '~/services'
-import { IResource, ISearchParameters, ISourceField } from '~/types'
 import { defaultPageSize, defaultRowsPerPageOptions } from '~/constants'
+import {
+  useApiEditableList,
+  useFilters,
+  useFiltersRedirect,
+  usePage,
+  useResource,
+  useSearch,
+} from '~/hooks'
+import { ISearchParameters, ISourceField } from '~/types'
 
 import FiltersGuesser from '~/components/stateful/FiltersGuesser/FiltersGuesser'
 import TableGuesser from '~/components/stateful/TableGuesser/TableGuesser'
 
 interface IProps {
-  page: number
-  setPage: Dispatch<SetStateAction<number>>
-  activeFilters: ISearchParameters
-  setActiveFilters: Dispatch<SetStateAction<ISearchParameters>>
-  searchValue: string
-  setSearchValue: Dispatch<SetStateAction<string>>
-  resource: IResource
-  url?: string
+  active?: boolean
+  urlParams?: string
 }
 
 function CommonGridFromSourceField(props: IProps): JSX.Element {
-  const {
-    page,
-    setPage,
-    activeFilters,
-    setActiveFilters,
-    searchValue,
-    setSearchValue,
-    resource,
-    url,
-  } = props
+  const { active, urlParams } = props
+
+  const resourceName = 'SourceField'
+  const resource = useResource(resourceName)
+  const [page, setPage] = usePage()
+  const [activeFilters, setActiveFilters] = useFilters(resource)
+  const [searchValue, setSearchValue] = useSearch()
+  useFiltersRedirect(page, activeFilters, searchValue, active ? active : true)
 
   const rowsPerPageOptions = defaultRowsPerPageOptions
   const [rowsPerPage, setRowsPerPage] = useState<number>(defaultPageSize)
 
-  const { update } = useResourceOperations<ISourceField>(resource)
-  const [sourceFields, updateSourceFields] = useApiList<ISourceField>(
-    url ? url : resource,
-    page,
-    activeFilters,
-    searchValue,
-    rowsPerPage
-  )
+  const [sourceFields, { massUpdate, update }] =
+    useApiEditableList<ISourceField>(
+      resource,
+      page,
+      rowsPerPage,
+      activeFilters,
+      searchValue,
+      urlParams ? `${resource.url}${urlParams}` : null
+    )
   const { data, error } = sourceFields
 
   if (error || !data) {
@@ -62,19 +61,14 @@ function CommonGridFromSourceField(props: IProps): JSX.Element {
     setPage(page)
   }
 
-  async function handleRowChange(
+  function handleRowChange(
     id: string | number,
     name: string,
     value: boolean | number | string
-  ): Promise<void> {
+  ): void {
     if (update) {
       // todo: should we use optimistic updates ?
-      const sourceField = await update(id, { [name]: value })
-      if (!isFetchError(sourceField)) {
-        updateSourceFields((items) =>
-          items.map((item) => (item.id === sourceField.id ? sourceField : item))
-        )
-      }
+      update(id, { [name]: value })
     }
   }
 
@@ -98,10 +92,10 @@ function CommonGridFromSourceField(props: IProps): JSX.Element {
       <TableGuesser
         apiData={data}
         currentPage={page}
+        onMassupdate={massUpdate}
         onPageChange={handlePageChange}
         onRowUpdate={handleRowChange}
         resource={resource}
-        updateSourceFields={updateSourceFields}
         rowsPerPageOptions={rowsPerPageOptions}
         onRowsPerPageChange={onRowsPerPageChange}
         rowsPerPage={rowsPerPage}

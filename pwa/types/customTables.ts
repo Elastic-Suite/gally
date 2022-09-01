@@ -27,6 +27,7 @@ export interface ITableHeader {
   sticky?: boolean
   options?: IOptions<unknown> | null
   boostInfos?: IBoost
+  required?: boolean
 }
 
 export interface IBaseStyle {

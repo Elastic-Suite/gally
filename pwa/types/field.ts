@@ -11,4 +11,5 @@ export interface IFieldGuesserProps {
   type?: DataContentType
   useDropdownBoolean?: boolean
   value: unknown
+  required?: boolean
 }
