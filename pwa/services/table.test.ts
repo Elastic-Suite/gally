@@ -36,6 +36,7 @@ describe('Table service', () => {
         type: DataContentType.STRING,
         editable: false,
         options: null,
+        required: true,
       })
     })
     it('should return the field header with options in case of dropdown type', () => {
@@ -46,6 +47,7 @@ describe('Table service', () => {
         label: 'Attribute code',
         type: DataContentType.DROPDOWN,
         editable: false,
+        required: true,
         options: [
           {
             label: 'option_test1',
