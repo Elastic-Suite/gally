@@ -152,10 +152,10 @@ exports[`CustomTable match snapshot with editable content 1`] = `
               <button
                 aria-expanded="false"
                 aria-haspopup="listbox"
-                class="MuiSelectUnstyled-root css-17ts3f5"
+                class="MuiSelectUnstyled-root css-k616if"
                 type="button"
               >
-                
+                <span />
                 <ion-icon
                   name="chevron-down"
                 />
