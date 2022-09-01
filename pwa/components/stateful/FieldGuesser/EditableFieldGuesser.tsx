@@ -18,6 +18,7 @@ function EditableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
     type,
     useDropdownBoolean,
     value,
+    required,
   } = props
   const { t } = useTranslation('common')
 
@@ -39,6 +40,7 @@ function EditableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
     case DataContentType.STRING: {
       return (
         <InputText
+          required={required}
           label={label}
           onChange={handleChange}
           value={String(value)}
@@ -49,7 +51,7 @@ function EditableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
     case DataContentType.DROPDOWN: {
       return (
         <DropDown
-          required
+          required={required}
           label={label}
           multiple={multiple}
           options={options}
@@ -63,6 +65,7 @@ function EditableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
       if (useDropdownBoolean) {
         return (
           <DropDown
+            required={required}
             label={label}
             multiple={multiple}
             options={
@@ -76,7 +79,13 @@ function EditableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
           />
         )
       }
-      return <Switch onChange={handleSwitchChange} checked={Boolean(value)} />
+      return (
+        <Switch
+          required={required}
+          onChange={handleSwitchChange}
+          checked={Boolean(value)}
+        />
+      )
     }
 
     default: {

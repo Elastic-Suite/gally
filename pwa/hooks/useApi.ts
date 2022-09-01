@@ -132,10 +132,11 @@ export function useApiEditableList<T extends IHydraMember>(
   page: number | false = 0,
   rowsPerPage: number = defaultPageSize,
   searchParameters?: ISearchParameters,
-  searchValue?: string
+  searchValue?: string,
+  url?: string
 ): [IFetch<IHydraResponse<T>>, IResourceEditableOperations<T>] {
   const [response, updateList, load] = useApiList<T>(
-    resource,
+    url ? url : resource,
     page,
     rowsPerPage,
     searchParameters,
