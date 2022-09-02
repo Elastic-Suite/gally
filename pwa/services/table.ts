@@ -51,10 +51,7 @@ export function isRequired(field: IField): boolean {
   if (!field.elasticsuite.options) {
     return false
   }
-  return (
-    field.elasticsuite.options.values.filter((value) => value === null)
-      .length === 0
-  )
+  return !field.elasticsuite.options.values.some((value) => value === null)
 }
 
 export function getFieldHeader(field: IField, t: TFunction): ITableHeader {
