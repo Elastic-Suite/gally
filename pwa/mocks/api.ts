@@ -34,6 +34,16 @@ export const mockedFieldWithDropdown: IField = {
   writeable: true,
 }
 
+export const mockedFieldWithNonRequiredDropdown: IField = {
+  ...mockedFieldWithDropdown,
+  elasticsuite: {
+    ...mockedFieldWithDropdown.elasticsuite,
+    options: {
+      values: ['option_test1', null],
+    },
+  },
+}
+
 export const mockedFieldWithContext: IField = {
   '@type': 'http://www.w3.org/ns/hydra/core#SupportedProperty',
   elasticsuite: {

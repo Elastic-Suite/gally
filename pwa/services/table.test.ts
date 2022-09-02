@@ -3,6 +3,7 @@ import {
   fieldRef,
   fieldString,
   mockedFieldWithDropdown,
+  mockedFieldWithNonRequiredDropdown,
   resourceWithRef,
 } from '~/mocks'
 import { DataContentType } from '~/types'
@@ -36,10 +37,10 @@ describe('Table service', () => {
         type: DataContentType.STRING,
         editable: false,
         options: null,
-        required: true,
+        required: false,
       })
     })
-    it('should return the field header with options in case of dropdown type', () => {
+    it('should return the field header with options in case of required dropdown type', () => {
       expect(
         getFieldHeader(mockedFieldWithDropdown, (key: string) => key)
       ).toEqual({
@@ -56,6 +57,26 @@ describe('Table service', () => {
           {
             label: 'option_test2',
             value: 'option_test2',
+          },
+        ],
+      })
+    })
+    it('should return the field header with options in case of non required dropdown type', () => {
+      expect(
+        getFieldHeader(
+          { ...mockedFieldWithNonRequiredDropdown },
+          (key: string) => key
+        )
+      ).toEqual({
+        name: 'code',
+        label: 'Attribute code',
+        type: DataContentType.DROPDOWN,
+        editable: false,
+        required: false,
+        options: [
+          {
+            label: 'option_test1',
+            value: 'option_test1',
           },
         ],
       })

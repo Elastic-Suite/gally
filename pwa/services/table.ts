@@ -38,10 +38,23 @@ export function getOptions(field: IField): IOptions<string> {
   if (!field.elasticsuite.options) {
     return null
   }
-  return field.elasticsuite.options.values.map((option) => ({
-    label: option.toString(),
-    value: option,
-  }))
+  const validOptions = field.elasticsuite.options.values
+    .filter((value) => value !== null)
+    .map((option) => ({
+      label: option.toString(),
+      value: option,
+    }))
+  return validOptions
+}
+
+export function isRequired(field: IField): boolean {
+  if (!field.elasticsuite.options) {
+    return false
+  }
+  return (
+    field.elasticsuite.options.values.filter((value) => value === null)
+      .length === 0
+  )
 }
 
 export function getFieldHeader(field: IField, t: TFunction): ITableHeader {
@@ -52,7 +65,7 @@ export function getFieldHeader(field: IField, t: TFunction): ITableHeader {
     type: getFieldDataContentType(field),
     options: getOptions(field),
     editable: field.elasticsuite?.editable && field.writeable,
-    required: field.required,
+    required: isRequired(field),
   }
 }
 

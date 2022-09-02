@@ -16,7 +16,7 @@ describe('useApiTable', () => {
           type: 'string',
           editable: false,
           options: null,
-          required: true,
+          required: false,
         },
         {
           name: 'defaultLabel',
