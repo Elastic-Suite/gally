@@ -33,6 +33,11 @@ class AggregationBuilder
      */
     public function create(string $field, array $rawAggregation): AggregationInterface
     {
+        // Nested aggregations support.
+        while (\array_key_exists($field, $rawAggregation)) {
+            $rawAggregation = $rawAggregation[$field];
+        }
+
         $values = isset($rawAggregation['buckets'])
             ? $this->getBucketValues($rawAggregation)
             : $this->getAggregationValues($rawAggregation);
