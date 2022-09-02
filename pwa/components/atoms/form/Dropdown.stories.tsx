@@ -20,6 +20,7 @@ Dropdown.args = {
     { label: 'Twenty', value: 20 },
     { label: 'Thirty', value: 30 },
     { label: 'Fourty', value: 40, disabled: true },
+    { label: 'Fifty', value: 50 },
   ],
   required: false,
 }
@@ -44,6 +45,7 @@ DropdownMultiple.args = {
     { label: 'Twenty', value: 20 },
     { label: 'Thirty', value: 30 },
     { label: 'Fourty', value: 40, disabled: true },
+    { label: 'Fifty', value: 50 },
   ],
   required: false,
 }

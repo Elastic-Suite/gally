@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import { defaultPageSize, defaultRowsPerPageOptions } from '~/constants'
 import {
@@ -16,17 +16,25 @@ import TableGuesser from '~/components/stateful/TableGuesser/TableGuesser'
 
 interface IProps {
   active?: boolean
+  filters?: ISearchParameters
   urlParams?: string
 }
 
 function CommonGridFromSourceField(props: IProps): JSX.Element {
-  const { active, urlParams } = props
+  const { active, filters, urlParams } = props
 
   const resourceName = 'SourceField'
   const resource = useResource(resourceName)
   const [page, setPage] = usePage()
   const [activeFilters, setActiveFilters] = useFilters(resource)
   const [searchValue, setSearchValue] = useSearch()
+  const parameters = useMemo(
+    () => ({
+      ...activeFilters,
+      ...filters,
+    }),
+    [activeFilters, filters]
+  )
   useFiltersRedirect(page, activeFilters, searchValue, active ? active : true)
 
   const rowsPerPageOptions = defaultRowsPerPageOptions
@@ -37,7 +45,7 @@ function CommonGridFromSourceField(props: IProps): JSX.Element {
       resource,
       page,
       rowsPerPage,
-      activeFilters,
+      parameters,
       searchValue,
       urlParams ? `${resource.url}${urlParams}` : null
     )
