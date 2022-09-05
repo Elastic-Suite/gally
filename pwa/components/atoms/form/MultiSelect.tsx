@@ -2,20 +2,36 @@ import { CSSProperties, ForwardedRef, forwardRef } from 'react'
 import MultiSelectUnstyled, {
   MultiSelectUnstyledProps,
 } from '@mui/base/MultiSelectUnstyled'
-import { StyledButton, StyledListbox, StyledPopper } from './Select.styled'
+import {
+  SmallStyledButton,
+  SmallTransparentStyledButton,
+  StyledButton,
+  StyledListbox,
+  StyledPopper,
+  TransparentStyledButton,
+} from './Select.styled'
 
 export interface IMultiSelectUnstyledProps
   extends Omit<MultiSelectUnstyledProps<unknown>, 'components'> {
+  small?: boolean
   style?: CSSProperties
+  transparent?: boolean
 }
 
 function MultiSelect(
   props: IMultiSelectUnstyledProps,
   ref: ForwardedRef<HTMLElement>
 ): JSX.Element {
-  const { style, ...otherProps } = props
+  const { small, style, transparent, ...otherProps } = props
+
   const components: MultiSelectUnstyledProps<unknown>['components'] = {
-    Root: StyledButton,
+    Root: transparent
+      ? small
+        ? SmallTransparentStyledButton
+        : TransparentStyledButton
+      : small
+      ? SmallStyledButton
+      : StyledButton,
     Listbox: StyledListbox,
     Popper: StyledPopper,
   }
