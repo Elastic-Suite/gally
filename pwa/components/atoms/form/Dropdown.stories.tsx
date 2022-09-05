@@ -14,6 +14,7 @@ export function Dropdown(args: ISelectProps): JSX.Element {
 }
 Dropdown.args = {
   disabled: false,
+  infoTooltip: 'Helpful info',
   label: 'Label',
   options: [
     { label: 'Ten', value: 10 },
@@ -23,7 +24,7 @@ Dropdown.args = {
     { label: 'Fifty', value: 50 },
   ],
   required: false,
-  infoTooltip: 'Helpful info',
+  small: false,
 }
 
 export function DropdownMultiple(args: IMultiSelectProps): JSX.Element {
@@ -40,6 +41,7 @@ export function DropdownMultiple(args: IMultiSelectProps): JSX.Element {
 }
 DropdownMultiple.args = {
   disabled: false,
+  infoTooltip: 'Helpful info',
   label: 'Label',
   options: [
     { label: 'Ten', value: 10 },
@@ -49,5 +51,5 @@ DropdownMultiple.args = {
     { label: 'Fifty', value: 50 },
   ],
   required: false,
-  infoTooltip: 'Helpful info',
+  small: false,
 }

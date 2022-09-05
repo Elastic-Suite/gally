@@ -1,0 +1,15 @@
+{
+  "addCondition": "Ajouter une condition",
+  "ALL": "toutes les",
+  "ANY": "une des",
+  "conditionsAre": "conditions est(sont)",
+  "false": "fausse(s)",
+  "true": "vraie(s)",
+  "IS_ONE_OF": "fait parti de",
+  "IS_NOT_ONE_OF": "ne fait pas parti de",
+  "GTE": "est supérieur ou égal à",
+  "LTE": "est inférieur ou égal à",
+  "EQ": "est égal",
+  "NEQ": "n'est pas égal",
+  "IS": "est"
+}

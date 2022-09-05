@@ -1,6 +1,6 @@
 import { styled } from '@mui/system'
 
-const CustomConditions = styled('div')(({ theme }) => ({
+const LinkLabel = styled('div')(({ theme }) => ({
   color: theme.palette.colors.neutral['900'],
   fontWeight: 600,
   fontSize: '12px',
@@ -17,9 +17,10 @@ const CustomConditions = styled('div')(({ theme }) => ({
   borderColor: theme.palette.colors.primary['200'],
   position: 'relative',
   zIndex: 2,
+  boxSizing: 'border-box',
 }))
 
-const CustomConditionSimple = styled(CustomConditions)(({ theme }) => ({
+const LinkLabelSimple = styled(LinkLabel)(({ theme }) => ({
   '&:before': {
     content: '""',
     position: 'absolute',
@@ -27,21 +28,14 @@ const CustomConditionSimple = styled(CustomConditions)(({ theme }) => ({
     borderColor: theme.palette.colors.neutral['500'],
     borderTop: 'none',
     borderRight: 'none',
-    width: '24px',
+    width: '22px',
     left: '50%',
     height: '36px',
     top: '100%',
   },
 }))
 
-const CustomConditionSimpleBig = styled(CustomConditionSimple)({
-  '&:before': {
-    content: '""',
-    height: '42px',
-  },
-})
-
-const CustomConditionDoubleNoBottom = styled(CustomConditions)(({ theme }) => ({
+const LinkLabelDouble = styled(LinkLabel)(({ theme }) => ({
   '&:before': {
     content: '""',
     position: 'absolute',
@@ -49,7 +43,7 @@ const CustomConditionDoubleNoBottom = styled(CustomConditions)(({ theme }) => ({
     borderColor: theme.palette.colors.neutral['500'],
     borderBottom: 'none',
     borderRight: 'none',
-    width: '24px',
+    width: '22px',
     left: '50%',
     height: '12px',
     bottom: '100%',
@@ -62,55 +56,46 @@ const CustomConditionDoubleNoBottom = styled(CustomConditions)(({ theme }) => ({
     borderColor: theme.palette.colors.neutral['500'],
     borderTop: 'none',
     borderRight: 'none',
-    width: '0',
+    width: '22px',
     left: '50%',
-    height: '11px',
+    height: '12px',
     top: '100%',
   },
 }))
 
-const CustomConditionDouble = styled(CustomConditionDoubleNoBottom)(
-  ({ theme }) => ({
-    '&:after': {
-      width: '24px',
-      height: '12px',
-    },
-  })
-)
+const LinkLabelDoubleMerged = styled(LinkLabelDouble)(() => ({
+  '&:before': {
+    width: '0',
+  },
+}))
+
+const DoubleLinkContainer = styled('div')(() => ({
+  alignSelf: 'flex-end',
+  transform: 'translateY(18px)',
+}))
 
 interface IProps {
-  big?: boolean
-  simple?: boolean
-  verySimple?: boolean
+  double?: boolean
   label: string
-  noBorderBottom?: boolean
+  merge?: boolean
 }
 
-const TypesConditions = ({
-  big,
-  simple,
-  verySimple,
-  label,
-  noBorderBottom,
-}: IProps): JSX.Element => {
-  let Condition
-  if (verySimple) {
-    Condition = CustomConditions
-  } else if (simple) {
-    if (big) {
-      Condition = CustomConditionSimpleBig
-    } else {
-      Condition = CustomConditionSimple
-    }
-  } else {
-    if (noBorderBottom) {
-      Condition = CustomConditionDoubleNoBottom
-    } else {
-      Condition = CustomConditionDouble
-    }
+function RuleLink(props: IProps): JSX.Element {
+  const { double, label, merge } = props
+
+  if (!double) {
+    return <LinkLabelSimple>{label}</LinkLabelSimple>
   }
 
-  return <Condition>{label}</Condition>
+  return (
+    <DoubleLinkContainer>
+      {merge ? (
+        <LinkLabelDoubleMerged>{label}</LinkLabelDoubleMerged>
+      ) : (
+        <LinkLabelDouble>{label}</LinkLabelDouble>
+      )}
+    </DoubleLinkContainer>
+  )
 }
 
-export default TypesConditions
+export default RuleLink

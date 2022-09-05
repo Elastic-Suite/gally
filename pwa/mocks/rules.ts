@@ -1,4 +1,4 @@
-export const basicRules = {
+export const complexRule = {
   type: 'combination',
   operator: 'all',
   value: 'true',
@@ -89,3 +89,6 @@ export const basicRules = {
     },
   ],
 }
+
+export const [attributeRule, , , combinationRule] =
+  complexRule.children[0].children
