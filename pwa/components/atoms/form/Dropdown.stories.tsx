@@ -24,6 +24,7 @@ Dropdown.args = {
   ],
   required: false,
   small: false,
+  transparent: false,
 }
 
 export function DropdownMultiple(args: IMultiSelectProps): JSX.Element {
@@ -50,4 +51,5 @@ DropdownMultiple.args = {
   ],
   required: false,
   small: false,
+  transparent: false,
 }

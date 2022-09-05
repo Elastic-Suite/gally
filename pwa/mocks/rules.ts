@@ -1,3 +1,5 @@
+import { IRuleAttribute, IRuleCombination } from '~/types'
+
 export const complexRule = {
   type: 'combination',
   operator: 'all',
@@ -90,5 +92,7 @@ export const complexRule = {
   ],
 }
 
-export const [attributeRule, , , combinationRule] =
-  complexRule.children[0].children
+export const attributeRule = complexRule.children[0]
+  .children[0] as IRuleAttribute
+export const combinationRule = complexRule.children[0]
+  .children[3] as IRuleCombination
