@@ -1,20 +1,35 @@
 import { CSSProperties, ForwardedRef, forwardRef } from 'react'
 import SelectUnstyled, { SelectUnstyledProps } from '@mui/base/SelectUnstyled'
-import { StyledButton, StyledListbox, StyledPopper } from './Select.styled'
+import {
+  SmallStyledButton,
+  SmallTransparentStyledButton,
+  StyledButton,
+  StyledListbox,
+  StyledPopper,
+  TransparentStyledButton,
+} from './Select.styled'
 
 export interface ISelectUnstyledProps
   extends Omit<SelectUnstyledProps<unknown>, 'components'> {
+  small?: boolean
   style?: CSSProperties
+  transparent?: boolean
 }
 
 function Select(
   props: ISelectUnstyledProps,
   ref: ForwardedRef<HTMLButtonElement>
 ): JSX.Element {
-  const { style, ...otherProps } = props
+  const { small, style, transparent, ...otherProps } = props
 
   const components: SelectUnstyledProps<unknown>['components'] = {
-    Root: StyledButton,
+    Root: transparent
+      ? small
+        ? SmallTransparentStyledButton
+        : TransparentStyledButton
+      : small
+      ? SmallStyledButton
+      : StyledButton,
     Listbox: StyledListbox,
     Popper: StyledPopper,
   }

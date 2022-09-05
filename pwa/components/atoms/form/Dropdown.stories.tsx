@@ -23,6 +23,7 @@ Dropdown.args = {
     { label: 'Fifty', value: 50 },
   ],
   required: false,
+  small: false,
 }
 
 export function DropdownMultiple(args: IMultiSelectProps): JSX.Element {
@@ -48,4 +49,5 @@ DropdownMultiple.args = {
     { label: 'Fifty', value: 50 },
   ],
   required: false,
+  small: false,
 }
