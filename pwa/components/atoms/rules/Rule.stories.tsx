@@ -1,28 +1,35 @@
+import { useState } from 'react'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
-import Rulee from './Rule'
+
+import { attributeRule, combinationRule } from '~/mocks'
+
+import RuleComponent from './Rule'
 
 export default {
   title: 'Atoms/Rules',
-  component: Rulee,
-} as ComponentMeta<typeof Rulee>
+  component: RuleComponent,
+} as ComponentMeta<typeof RuleComponent>
 
-const Template: ComponentStory<typeof Rulee> = (args) => <Rulee {...args} />
+const Template: ComponentStory<typeof RuleComponent> = (args) => {
+  const { rule, ...props } = args
+  const [ruleValue, setRuleValue] = useState(rule)
 
-export const Rule = Template.bind({})
-Rule.args = {
-  blockOne: [
-    { label: 'Any', value: 'any' },
-    { label: 'All', value: 'all' },
-    { label: 'Age', value: 'age' },
-  ],
-  blockTwo: [
-    { label: 'conditions are', value: 'conditions_are' },
-    { label: 'is one of', value: 'is_one_of' },
-    { label: 'is', value: 'is' },
-  ],
-  BlockThree: [
-    { label: 'true', value: 'true' },
-    { label: 'false', value: 'false' },
-    { label: 'red', value: 'red' },
-  ],
+  function handleChange(name: string, value: unknown): void {
+    setRuleValue((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }))
+  }
+
+  return <RuleComponent {...props} onChange={handleChange} rule={ruleValue} />
+}
+
+export const AttributeRule = Template.bind({})
+AttributeRule.args = {
+  rule: attributeRule,
+}
+
+export const CombinationRule = Template.bind({})
+CombinationRule.args = {
+  rule: combinationRule,
 }

@@ -1,14 +1,20 @@
-// import { ComponentMeta, ComponentStory } from '@storybook/react'
-// import CombinationRules from './CombinationRules'
+import { ComponentMeta, ComponentStory } from '@storybook/react'
 
-// export default {
-//   title: 'Atoms/Rules',
-//   component: CombinationRules,
-// } as ComponentMeta<typeof CombinationRules>
+import { complexRule } from '~/mocks'
 
-// const Template: ComponentStory<typeof CombinationRules> = (args) => (
-//   <CombinationRules {...args} />
-// )
+import CombinationRulesComponent from './CombinationRules'
 
-// export const Default = Template.bind({})
-// Default.args = {}
+export default {
+  title: 'Atoms/Rules',
+  component: CombinationRulesComponent,
+} as ComponentMeta<typeof CombinationRulesComponent>
+
+const Template: ComponentStory<typeof CombinationRulesComponent> = (args) => (
+  <CombinationRulesComponent {...args} />
+)
+
+export const ComplexRule = Template.bind({})
+ComplexRule.args = {
+  rule: complexRule,
+  first: true,
+}

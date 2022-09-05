@@ -1,0 +1,15 @@
+{
+  "addCondition": "Add condition",
+  "ALL": "all",
+  "ANY": "any",
+  "conditionsAre": "conditions are",
+  "false": "false",
+  "true": "true",
+  "IS_ONE_OF": "is one of",
+  "IS_NOT_ONE_OF": "is not one of",
+  "GTE": "is greater than or equal",
+  "LTE": "is less than or equal",
+  "EQ": "is equal",
+  "NEQ": "is not equal",
+  "IS": "is"
+}
