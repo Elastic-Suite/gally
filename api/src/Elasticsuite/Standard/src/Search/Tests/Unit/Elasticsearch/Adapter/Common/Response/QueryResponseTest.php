@@ -29,15 +29,88 @@ class QueryResponseTest extends KernelTestCase
     /**
      * @dataProvider queryResponseDocumentsOnlyDataProvider
      *
+     * @param array $searchResponse    Raw search response from Elasticsearch
+     * @param int   $expectedDocsCount Expected documents count in the query response
+     */
+    public function testTraversableCountable(array $searchResponse, int $expectedDocsCount): void
+    {
+        $queryResponse = new Response\QueryResponse($searchResponse, new AggregationBuilder());
+        $this->assertCount($expectedDocsCount, $queryResponse);
+        $this->assertContainsOnlyInstancesOf(DocumentInterface::class, $queryResponse);
+    }
+
+    public function queryResponseDocumentsOnlyDataProvider(): array
+    {
+        return [
+            [
+                [
+                    'hits' => [
+                        'hits' => [
+                            [
+                                '_id' => '1',
+                                '_score' => 1.0,
+                                '_source' => [
+                                    ['field' => 'value'],
+                                ],
+                            ],
+                        ],
+                        'total' => 1,
+                    ],
+                ],
+                1,
+            ],
+            [
+                [
+                    'hits' => [
+                        'hits' => [
+                            [
+                                '_id' => '1',
+                                '_score' => 1.1,
+                                '_source' => [
+                                    ['field' => 'value'],
+                                ],
+                            ],
+                            [
+                                '_id' => '2',
+                                '_score' => 1.0,
+                                '_source' => [
+                                    ['field1' => 'value1', 'field2' => 'value2'],
+                                ],
+                            ],
+                        ],
+                        'total' => ['value' => 2],
+                    ],
+                ],
+                2,
+            ],
+            [
+                [
+                    'hits' => [
+                        'hits' => [],
+                        'total' => 0,
+                    ],
+                ],
+                0,
+            ],
+            [
+                [],
+                0,
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider queryResponseDocumentsDataAndAggregationsDataProvider
+     *
      * @param array                           $searchResponse       Raw search response from Elasticsearch
      * @param int                             $expectedDocsCount    Expected documents count in the query response
      * @param Document[]                      $expectedDocuments    Expected documents in the query response
      * @param Response\AggregationInterface[] $expectedAggregations Expected aggregations in the query response
-     * @param int                             $expectedTotalItems   Expected total item count in the query response
+     * @param int                             $expectedTotalItems   Expected total items count matching the query
      *
      * @throws \Exception
      */
-    public function testTraversableCountable(
+    public function testDocumentsAndAggregationsExtraction(
         array $searchResponse,
         int $expectedDocsCount,
         array $expectedDocuments,
@@ -46,14 +119,14 @@ class QueryResponseTest extends KernelTestCase
     ): void {
         $response = new Response\QueryResponse($searchResponse, new AggregationBuilder());
         $this->assertContainsOnlyInstancesOf(DocumentInterface::class, $response);
+        $this->assertCount($expectedDocsCount, $response);
         $this->assertEquals($expectedDocsCount, $response->count());
-        $this->assertContainsOnlyInstancesOf(DocumentInterface::class, $response);
         $this->assertEquals($expectedDocuments, iterator_to_array($response->getIterator()));
         $this->assertEquals($expectedAggregations, $response->getAggregations());
         $this->assertEquals($expectedTotalItems, $response->getTotalItems());
     }
 
-    public function queryResponseDocumentsOnlyDataProvider(): array
+    public function queryResponseDocumentsDataAndAggregationsDataProvider(): array
     {
         $docTest1 = new Document(
             [
