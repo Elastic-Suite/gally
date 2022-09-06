@@ -48,14 +48,19 @@ const CustomCombination = styled('div')(({ theme }) => ({
 }))
 
 interface IProps {
-  onChange?: (name: string, value: unknown) => void
+  onChange?: (rule: IRule) => void
+  onDelete?: () => void
   rule: IRule
 }
 
 function Rule(props: IProps): JSX.Element {
-  const { onChange, rule } = props
+  const { onChange, onDelete, rule } = props
   const options = useContext(ruleOptionsContext)
   const { t } = useTranslation('rules')
+
+  function handleChange(property: string) {
+    return (value: unknown): void => onChange({ ...rule, [property]: value })
+  }
 
   let firstBlock
   let secondBlock
@@ -67,7 +72,7 @@ function Rule(props: IProps): JSX.Element {
     )
     firstBlock = (
       <DropDown
-        onChange={(value: unknown): void => onChange('operator', value)}
+        onChange={handleChange('operator')}
         options={operatorOptions}
         required
         small
@@ -77,7 +82,7 @@ function Rule(props: IProps): JSX.Element {
     secondBlock = <CustomCombination>{t('conditionsAre')}</CustomCombination>
     thirdBlock = (
       <DropDown
-        onChange={(value: unknown): void => onChange('value', value)}
+        onChange={handleChange('value')}
         options={valueOptions}
         required
         small
@@ -92,7 +97,7 @@ function Rule(props: IProps): JSX.Element {
     } = options.get(RuleType.ATTRIBUTE)
     firstBlock = (
       <DropDown
-        onChange={(value: unknown): void => onChange('field', value)}
+        onChange={handleChange('field')}
         options={fieldOptions}
         required
         value={rule.field}
@@ -101,7 +106,7 @@ function Rule(props: IProps): JSX.Element {
     )
     secondBlock = (
       <DropDown
-        onChange={(value: unknown): void => onChange('operator', value)}
+        onChange={handleChange('operator')}
         options={operatorOptions}
         required
         small
@@ -111,7 +116,7 @@ function Rule(props: IProps): JSX.Element {
     )
     thirdBlock = (
       <DropDown
-        onChange={(value: unknown): void => onChange('value', value)}
+        onChange={handleChange('value')}
         options={valueOptions}
         required
         small
@@ -125,7 +130,7 @@ function Rule(props: IProps): JSX.Element {
       {firstBlock}
       {secondBlock}
       {thirdBlock}
-      <Close>
+      <Close onClick={onDelete}>
         <IonIcon name="close" style={{ fontSize: '17.85px' }} />
       </Close>
     </Root>

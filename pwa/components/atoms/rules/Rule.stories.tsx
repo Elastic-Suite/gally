@@ -3,25 +3,17 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 
 import { attributeRule, combinationRule } from '~/mocks'
 
-import RuleComponent from './Rule'
+import Rule from './Rule'
 
 export default {
   title: 'Atoms/Rules',
-  component: RuleComponent,
-} as ComponentMeta<typeof RuleComponent>
+  component: Rule,
+} as ComponentMeta<typeof Rule>
 
-const Template: ComponentStory<typeof RuleComponent> = (args) => {
+const Template: ComponentStory<typeof Rule> = (args) => {
   const { rule, ...props } = args
   const [ruleValue, setRuleValue] = useState(rule)
-
-  function handleChange(name: string, value: unknown): void {
-    setRuleValue((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }))
-  }
-
-  return <RuleComponent {...props} onChange={handleChange} rule={ruleValue} />
+  return <Rule {...props} onChange={setRuleValue} rule={ruleValue} />
 }
 
 export const AttributeRule = Template.bind({})
