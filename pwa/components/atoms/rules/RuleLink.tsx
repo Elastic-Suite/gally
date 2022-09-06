@@ -16,7 +16,6 @@ const LinkLabel = styled('div')(({ theme }) => ({
   border: '1px solid',
   borderColor: theme.palette.colors.primary['200'],
   position: 'relative',
-  zIndex: 2,
   boxSizing: 'border-box',
 }))
 

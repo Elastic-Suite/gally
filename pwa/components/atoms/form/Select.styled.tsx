@@ -89,7 +89,7 @@ export const SmallStyledButton = styled(StyledButton)(({ theme }) => ({
   fontWeight: 600,
   fontFamily: 'Inter',
   lineHeight: '18px',
-  borderRadius: '99px',
+  borderRadius: '13px',
   fontSize: '12px',
 }))
 
@@ -126,6 +126,16 @@ export const StyledListbox = styled('ul')(({ theme }) => ({
   boxSizing: 'border-box',
   margin: '4px 0',
   outline: 0,
+}))
+
+export const SmallStyledListbox = styled(StyledListbox)(({ theme }) => ({
+  '& li': {
+    paddingTop: '5px',
+    paddingBottom: '5px',
+  },
+  '& .MuiButtonBase-root': {
+    padding: `${theme.spacing(0.5)}`,
+  },
 }))
 
 export const StyledPopper = styled(PopperUnstyled)(() => ({
