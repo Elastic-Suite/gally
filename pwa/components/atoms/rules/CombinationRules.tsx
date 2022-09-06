@@ -60,22 +60,42 @@ const RuleLinkPlaceholder = styled('div')(() => ({
 
 interface IProps {
   first?: boolean
+  onChange?: (rule: IRuleCombination) => void
+  onDelete?: () => void
   rule?: IRuleCombination
 }
 
 function CombinationRules(props: IProps): JSX.Element {
-  const { first, rule } = props
+  const { first, onChange, onDelete, rule } = props
   const { children, operator } = rule
   const { t } = useTranslation('rules')
 
   const Root = first ? RootWithoutBorder : RootWithBorder
   const Child = first ? Fragment : ChildWithBorder
 
+  function handleChildChange(key: number) {
+    return (childRule: IRule) =>
+      onChange({
+        ...rule,
+        children: children.map((item: IRule, index: number) =>
+          index === key ? childRule : item
+        ),
+      })
+  }
+
+  function handleChildDelete(key: number) {
+    return () =>
+      onChange({
+        ...rule,
+        children: children.filter((_: IRule, index: number) => index !== key),
+      })
+  }
+
   return (
     <Root>
       <RuleAndLinkContainer>
         <RuleLink label="if" />
-        <Rule rule={rule} />
+        <Rule onChange={onChange} onDelete={onDelete} rule={rule} />
       </RuleAndLinkContainer>
       {Boolean(children) && (
         <Child>
@@ -94,9 +114,17 @@ function CombinationRules(props: IProps): JSX.Element {
                 <RuleLinkPlaceholder />
               )}
               {isCombinationRule(item) ? (
-                <CombinationRules rule={item} />
+                <CombinationRules
+                  onChange={handleChildChange(key)}
+                  onDelete={handleChildDelete(key)}
+                  rule={item}
+                />
               ) : isAttributeRule(item) ? (
-                <Rule rule={item} />
+                <Rule
+                  onChange={handleChildChange(key)}
+                  onDelete={handleChildDelete(key)}
+                  rule={item}
+                />
               ) : null}
             </RuleAndLinkContainer>
           ))}
