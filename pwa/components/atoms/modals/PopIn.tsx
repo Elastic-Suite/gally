@@ -2,9 +2,8 @@ import { ReactChild, useState } from 'react'
 import { Box, Dialog, DialogActions } from '@mui/material'
 import { styled } from '@mui/material/styles'
 
+import Button from '~/components/atoms/buttons/Button'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
-import PrimaryButton from '~/components/atoms/buttons/PrimaryButton'
-import TertiaryButton from '~/components/atoms/buttons/TertiaryButton'
 
 const CustomClose = styled('div')(({ theme }) => ({
   position: 'absolute',
@@ -81,10 +80,12 @@ function PopIn({
           sx={{ padding: 0, marginLeft: 0, justifyContent: 'center', gap: 1 }}
         >
           <Box onClick={handleClose}>
-            <TertiaryButton size="large">{cancelName}</TertiaryButton>
+            <Button display="tertiary" size="large">
+              {cancelName}
+            </Button>
           </Box>
           <Box onClick={handleConfirm}>
-            <PrimaryButton size="large">{confirmName}</PrimaryButton>
+            <Button size="large">{confirmName}</Button>
           </Box>
         </DialogActions>
       </Dialog>

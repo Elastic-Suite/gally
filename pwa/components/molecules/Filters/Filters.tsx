@@ -4,8 +4,7 @@ import { Collapse, InputAdornment, Stack } from '@mui/material'
 
 import { DataContentType, IFilter } from '~/types'
 
-import PrimaryButton from '~/components/atoms/buttons/PrimaryButton'
-import TertiaryButton from '~/components/atoms/buttons/TertiaryButton'
+import Button from '~/components/atoms/buttons/Button'
 import InputText from '~/components/atoms/form/InputText'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import Tag from '~/components/atoms/form/Tag'
@@ -183,10 +182,10 @@ function Filters(props: IProps): JSX.Element {
             ))}
           </FiltersBox>
           <Stack spacing={1} direction="row">
-            <PrimaryButton type="submit">{t('filters.apply')}</PrimaryButton>
-            <TertiaryButton onClick={onClearAll}>
+            <Button type="submit">{t('filters.apply')}</Button>
+            <Button display="tertiary" onClick={onClearAll}>
               {t('filters.clearAll')}
-            </TertiaryButton>
+            </Button>
           </Stack>
         </ContentForm>
       </Collapse>

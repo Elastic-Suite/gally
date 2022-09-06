@@ -5,7 +5,7 @@ import { useTranslation } from 'next-i18next'
 import { isAttributeRule, isCombinationRule } from '~/services'
 import { IRule, IRuleCombination, RuleCombinationOperator } from '~/types'
 
-import TertiaryButton from '../buttons/TertiaryButton'
+import Button from '../buttons/Button'
 import IonIcon from '../IonIcon/IonIcon'
 
 import Rule from './Rule'
@@ -128,7 +128,8 @@ function CombinationRules(props: IProps): JSX.Element {
               ) : null}
             </RuleAndLinkContainer>
           ))}
-          <TertiaryButton
+          <Button
+            display="tertiary"
             style={{ whiteSpace: 'nowrap', marginLeft: first ? '40px' : 0 }}
           >
             <IonIcon
@@ -136,7 +137,7 @@ function CombinationRules(props: IProps): JSX.Element {
               style={{ marginRight: '4px', fontSize: '19px' }}
             />
             {t('addCondition')}
-          </TertiaryButton>
+          </Button>
         </Child>
       )}
     </Root>

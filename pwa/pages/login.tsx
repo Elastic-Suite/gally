@@ -10,9 +10,9 @@ import { isFetchError, isValidUser, storageSet } from '~/services'
 import { selectRequestedPath, useAppSelector } from '~/store'
 import { ILogin } from '~/types'
 
+import Button from '~/components/atoms/buttons/Button'
 import InputText from '~/components/atoms/form/InputText'
 import PageTitle from '~/components/atoms/PageTitle/PageTitle'
-import PrimaryButton from '~/components/atoms/buttons/PrimaryButton'
 
 function Login(): JSX.Element {
   const { t } = useTranslation('login')
@@ -73,7 +73,7 @@ function Login(): JSX.Element {
             value={password}
             withMargin
           />
-          <PrimaryButton type="submit">{t('action.login')}</PrimaryButton>
+          <Button type="submit">{t('action.login')}</Button>
         </form>
       </Paper>
     </div>

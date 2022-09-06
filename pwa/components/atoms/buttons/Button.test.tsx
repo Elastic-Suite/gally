@@ -1,60 +1,76 @@
 import { renderWithProviders } from '~/utils/tests'
 
-import PrimaryButton from './PrimaryButton'
-import SecondaryButton from './SecondaryButton'
-import TertiaryButton from './TertiaryButton'
+import Button from './Button'
 
 describe('Button match snapshot', () => {
   it('PrimaryButton', () => {
     const { container } = renderWithProviders(
-      <PrimaryButton disabled={false} endIcon="" size="medium" startIcon="">
+      <Button disabled={false} endIcon="" size="medium" startIcon="">
         Hello world
-      </PrimaryButton>
+      </Button>
     )
     expect(container).toMatchSnapshot()
   })
 
   it('SecondaryButton', () => {
     const { container } = renderWithProviders(
-      <SecondaryButton disabled={false} endIcon="" size="medium" startIcon="">
+      <Button
+        display="secondary"
+        disabled={false}
+        endIcon=""
+        size="medium"
+        startIcon=""
+      >
         Hello world
-      </SecondaryButton>
+      </Button>
     )
     expect(container).toMatchSnapshot()
   })
 
   it('TertiaryButton', () => {
     const { container } = renderWithProviders(
-      <TertiaryButton disabled={false} endIcon="" size="medium" startIcon="">
+      <Button
+        display="tertiary"
+        disabled={false}
+        endIcon=""
+        size="medium"
+        startIcon=""
+      >
         Hello world
-      </TertiaryButton>
+      </Button>
     )
     expect(container).toMatchSnapshot()
   })
 
   it('PrimaryButtonDisabledTrue', () => {
     const { container } = renderWithProviders(
-      <PrimaryButton disabled endIcon="" size="medium" startIcon="">
+      <Button disabled endIcon="" size="medium" startIcon="">
         Hello world
-      </PrimaryButton>
+      </Button>
     )
     expect(container).toMatchSnapshot()
   })
 
   it('SecondaryButtonDisabledTrue', () => {
     const { container } = renderWithProviders(
-      <SecondaryButton disabled endIcon="" size="medium" startIcon="">
+      <Button
+        display="secondary"
+        disabled
+        endIcon=""
+        size="medium"
+        startIcon=""
+      >
         Hello world
-      </SecondaryButton>
+      </Button>
     )
     expect(container).toMatchSnapshot()
   })
 
   it('TertiaryButtonDisabledTrue', () => {
     const { container } = renderWithProviders(
-      <TertiaryButton disabled endIcon="" size="medium" startIcon="">
+      <Button display="tertiary" disabled endIcon="" size="medium" startIcon="">
         Hello world
-      </TertiaryButton>
+      </Button>
     )
     expect(container).toMatchSnapshot()
   })
