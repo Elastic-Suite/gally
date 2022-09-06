@@ -2,6 +2,7 @@ import { CSSProperties, ForwardedRef, forwardRef } from 'react'
 import SelectUnstyled, { SelectUnstyledProps } from '@mui/base/SelectUnstyled'
 import {
   SmallStyledButton,
+  SmallStyledListbox,
   SmallTransparentStyledButton,
   StyledButton,
   StyledListbox,
@@ -30,7 +31,7 @@ function Select(
       : small
       ? SmallStyledButton
       : StyledButton,
-    Listbox: StyledListbox,
+    Listbox: small ? SmallStyledListbox : StyledListbox,
     Popper: StyledPopper,
   }
 

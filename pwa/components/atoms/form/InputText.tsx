@@ -9,11 +9,12 @@ import {
 import { styled } from '@mui/material/styles'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 
-interface IUnstyledInputText extends InputBaseProps {
+interface IUnstyledInputTextProps extends InputBaseProps {
+  small?: boolean
   value: string
 }
 
-function UnstyledInputText(props: IUnstyledInputText): JSX.Element {
+function UnstyledInputText(props: IUnstyledInputTextProps): JSX.Element {
   const { value } = props
 
   return (
@@ -28,7 +29,10 @@ function UnstyledInputText(props: IUnstyledInputText): JSX.Element {
   )
 }
 
-const InputTextStyled = styled(UnstyledInputText)(({ theme }) => ({
+const inputTextStyledProps = ['small']
+const InputTextStyled = styled(UnstyledInputText, {
+  shouldForwardProp: (prop: string) => !inputTextStyledProps.includes(prop),
+})(({ small, theme }) => ({
   borderRadius: 8,
   borderStyle: 'solid',
   borderWidth: '1px',
@@ -54,6 +58,11 @@ const InputTextStyled = styled(UnstyledInputText)(({ theme }) => ({
         WebkitTextFillColor: theme.palette.colors.neutral['500'],
       },
     },
+    ...(Boolean(small) && {
+      width: '72px',
+      fontSize: '12px',
+      fontWeight: 'bold',
+    }),
   },
   '&:hover': {
     borderColor: theme.palette.colors.neutral['400'],
@@ -64,6 +73,9 @@ const InputTextStyled = styled(UnstyledInputText)(({ theme }) => ({
   '& .MuiInputBase-input::placeholder': {
     color: theme.palette.colors.neutral['600'],
     opacity: 1,
+    ...(Boolean(small) && {
+      fontWeight: 'normal',
+    }),
   },
   'label + &': {
     marginTop: theme.spacing(3),
@@ -82,9 +94,18 @@ const InputTextStyled = styled(UnstyledInputText)(({ theme }) => ({
     fontSize: 14,
     color: theme.palette.colors.neutral['900'],
   },
+  ...(Boolean(small) && {
+    height: '26px',
+    width: 'max-content',
+    paddingTop: theme.spacing(0.5),
+    paddingBottom: theme.spacing(0.5),
+    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(1),
+    borderRadius: '13px',
+  }),
 }))
 
-export interface IProps extends Omit<InputBaseProps, 'onChange'> {
+interface IProps extends Omit<IUnstyledInputTextProps, 'onChange'> {
   fullWidth?: boolean
   label?: string
   helperText?: ReactChild
