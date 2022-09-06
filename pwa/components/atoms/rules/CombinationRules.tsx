@@ -3,7 +3,13 @@ import { styled } from '@mui/system'
 import { useTranslation } from 'next-i18next'
 
 import { isAttributeRule, isCombinationRule } from '~/services'
-import { IRule, IRuleCombination, RuleCombinationOperator } from '~/types'
+import {
+  IRule,
+  IRuleAttribute,
+  IRuleCombination,
+  RuleCombinationOperator,
+  RuleType,
+} from '~/types'
 
 import Button from '../buttons/Button'
 import IonIcon from '../IonIcon/IonIcon'
@@ -72,6 +78,10 @@ function CombinationRules(props: IProps): JSX.Element {
 
   const Root = first ? RootWithoutBorder : RootWithBorder
   const Child = first ? Fragment : ChildWithBorder
+  const options = [
+    { value: RuleType.COMBINATION, label: t('combinationRule') },
+    { value: RuleType.ATTRIBUTE, label: t('attributeRule') },
+  ]
 
   function handleChildChange(key: number) {
     return (childRule: IRule) =>
@@ -89,6 +99,31 @@ function CombinationRules(props: IProps): JSX.Element {
         ...rule,
         children: children.filter((_: IRule, index: number) => index !== key),
       })
+  }
+
+  function handleAdd(value: RuleType): void {
+    if (value === RuleType.COMBINATION) {
+      onChange({
+        ...rule,
+        children: children.concat({
+          type: RuleType.COMBINATION,
+          operator: 'all',
+          value: 'true',
+          children: [],
+        } as IRuleCombination),
+      })
+    } else if (value === RuleType.ATTRIBUTE) {
+      onChange({
+        ...rule,
+        children: children.concat({
+          type: RuleType.ATTRIBUTE,
+          field: '',
+          operator: '',
+          attribute_type: 'text',
+          value: '',
+        } as IRuleAttribute),
+      })
+    }
   }
 
   return (
@@ -130,6 +165,8 @@ function CombinationRules(props: IProps): JSX.Element {
           ))}
           <Button
             display="tertiary"
+            onSelect={handleAdd}
+            options={options}
             style={{ whiteSpace: 'nowrap', marginLeft: first ? '40px' : 0 }}
           >
             <IonIcon

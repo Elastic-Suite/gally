@@ -69,3 +69,18 @@ Default.args = {
   size: 'medium',
   startIcon: '',
 }
+
+export const WithOptions = Template.bind({})
+WithOptions.args = {
+  children: 'Label',
+  disabled: false,
+  display: 'primary',
+  endIcon: '',
+  icon: '',
+  size: 'medium',
+  startIcon: '',
+  options: [
+    { value: 1, label: 'Item 1' },
+    { value: 2, label: 'Item 2' },
+  ],
+}
