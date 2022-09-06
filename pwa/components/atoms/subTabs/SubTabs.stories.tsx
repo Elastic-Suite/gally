@@ -2,7 +2,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 
 import { IRouterTab, ITabContentProps } from '~/types'
 
-import PrimaryButton from '../buttons/PrimaryButton'
+import Button from '../buttons/Button'
 
 import SubTabs from './SubTabs'
 
@@ -11,7 +11,7 @@ interface IProps extends ITabContentProps {
 }
 
 function SubTabContent({ title }: IProps): JSX.Element {
-  return <PrimaryButton>{title}</PrimaryButton>
+  return <Button>{title}</Button>
 }
 
 const data: IRouterTab[] = [

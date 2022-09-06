@@ -4,8 +4,7 @@ import { Box, Checkbox } from '@mui/material'
 import { styled } from '@mui/system'
 
 import { IField, IOptions, ITableRow } from '~/types'
-import TertiaryButton from '~/components/atoms/buttons/TertiaryButton'
-import PrimaryButton from '~/components/atoms/buttons/PrimaryButton'
+import Button from '~/components/atoms/buttons/Button'
 import Dropdown from '~/components/atoms/form/DropDown'
 
 import FieldGuesser from '../FieldGuesser/FieldGuesser'
@@ -97,12 +96,12 @@ function TableStickyBar(props: IProps): JSX.Element {
         />
       )}
       <ActionsButtonsContainer>
-        <TertiaryButton onClick={(): void => onSelectedRows([])}>
+        <Button display="tertiary" onClick={(): void => onSelectedRows([])}>
           {t('table.cancel')}
-        </TertiaryButton>
-        <PrimaryButton sx={{ marginLeft: 1 }} type="submit">
+        </Button>
+        <Button sx={{ marginLeft: 1 }} type="submit">
           {t('table.apply')}
-        </PrimaryButton>
+        </Button>
       </ActionsButtonsContainer>
     </Form>
   )

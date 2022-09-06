@@ -1,7 +1,9 @@
 import { Paper, styled } from '@mui/material'
 
-import SecondaryButton from '~/components/atoms/buttons/SecondaryButton'
-import TertiaryButton from '~/components/atoms/buttons/TertiaryButton'
+import {
+  SecondaryButton,
+  TertiaryButton,
+} from '~/components/atoms/buttons/Button.styled'
 
 export const FiltersPaper = styled(Paper)(({ theme }) => ({
   border: `1px solid ${theme.palette.colors.neutral[300]}`,
