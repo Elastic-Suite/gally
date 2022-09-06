@@ -1,7 +1,7 @@
 import { styled } from '@mui/system'
 import { Button } from '@mui/material'
 
-const CommonStyledButton = styled(Button)(({ theme }) => ({
+export const PrimaryButton = styled(Button)(({ theme }) => ({
   color: `${theme.palette.colors.white}`,
   lineHeight: '24px',
   textTransform: 'none',
@@ -61,4 +61,36 @@ const CommonStyledButton = styled(Button)(({ theme }) => ({
   },
 }))
 
-export default CommonStyledButton
+export const SecondaryButton = styled(PrimaryButton)(({ theme }) => ({
+  color: theme.palette.colors.secondary['600'],
+  background: theme.palette.colors.secondary['100'],
+  boxShadow: theme.palette.colors.shadow.secondaryButton.sm,
+  '&::before': {
+    background: theme.palette.colors.secondary['200'],
+    boxShadow: theme.palette.colors.shadow.secondaryButton.md,
+  },
+  '&:hover': {
+    background: theme.palette.colors.secondary['100'],
+    boxShadow: theme.palette.colors.shadow.secondaryButton.sm,
+  },
+  '&& .MuiTouchRipple-child': {
+    backgroundColor: theme.palette.colors.secondary['300'],
+  },
+}))
+
+export const TertiaryButton = styled(PrimaryButton)(({ theme }) => ({
+  color: theme.palette.colors.neutral['900'],
+  background: 'none',
+  boxShadow: 'none',
+  '&::before': {
+    background: theme.palette.colors.neutral['200'],
+    boxShadow: 'none',
+  },
+  '&:hover': {
+    background: 'none',
+    boxShadow: 'none',
+  },
+  '&& .MuiTouchRipple-child': {
+    backgroundColor: theme.palette.colors.neutral['300'],
+  },
+}))

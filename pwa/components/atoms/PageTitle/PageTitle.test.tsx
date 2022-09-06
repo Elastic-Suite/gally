@@ -1,6 +1,6 @@
 import { renderWithProviders } from '~/utils/tests'
 
-import PrimaryButton from '../buttons/PrimaryButton'
+import Button from '../buttons/Button'
 
 import PageTitle from './PageTitle'
 
@@ -20,7 +20,7 @@ describe('PageTitle match snapshot', () => {
   it('PageTitleH3WithChildren', () => {
     const { container } = renderWithProviders(
       <PageTitle title="Hello World" variant="h3">
-        <PrimaryButton>Import (xlsx)</PrimaryButton>
+        <Button>Import (xlsx)</Button>
       </PageTitle>
     )
     expect(container).toMatchSnapshot()

@@ -10,8 +10,7 @@ import {
   ITreeItem,
 } from '~/types'
 
-import PrimaryButton from '~/components/atoms/buttons/PrimaryButton'
-import TertiaryButton from '~/components/atoms/buttons/TertiaryButton'
+import Button from '~/components/atoms/buttons/Button'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import PageTile from '~/components/atoms/PageTitle/PageTitle'
 import StickyBar from '~/components/molecules/CustomTable/StickyBar/StickyBar'
@@ -153,23 +152,23 @@ function ProductsContainer(props: IProps): JSX.Element {
           count: topSelectedRows.length + bottomSelectedRows.length,
         })}
         <ActionsButtonsContainer>
-          <TertiaryButton onClick={(): void => unselectAllRows()}>
+          <Button display="tertiary" onClick={(): void => unselectAllRows()}>
             {t('button.cancelSelection')}
-          </TertiaryButton>
-          <PrimaryButton
+          </Button>
+          <Button
             sx={{ marginLeft: 1 }}
             disabled={bottomSelectedRows.length === 0}
           >
             {t('pinToTop')}
             <IonIcon name="arrow-up-outline" style={{ marginLeft: '13px' }} />
-          </PrimaryButton>
-          <PrimaryButton
+          </Button>
+          <Button
             sx={{ marginLeft: 1 }}
             disabled={topSelectedRows.length === 0}
           >
             {t('pinToBottom')}
             <IonIcon name="arrow-down-outline" style={{ marginLeft: '13px' }} />
-          </PrimaryButton>
+          </Button>
         </ActionsButtonsContainer>
       </StickyBar>
     </Box>
