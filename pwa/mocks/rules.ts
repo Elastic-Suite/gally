@@ -14,7 +14,7 @@ export const complexRule = {
           type: 'attribute',
           field: 'color',
           operator: 'is_one_of',
-          attribute_type: 'select',
+          attribute_type: 'float',
           value: '35',
         },
         {
@@ -28,7 +28,7 @@ export const complexRule = {
           type: 'attribute',
           field: 'age',
           operator: 'is',
-          attribute_type: 'select',
+          attribute_type: 'number',
           value: '6-9 years old',
         },
         {

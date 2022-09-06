@@ -4,10 +4,11 @@ import { useTranslation } from 'next-i18next'
 
 import { ruleOptionsContext } from '~/contexts'
 import { isAttributeRule, isCombinationRule } from '~/services'
-import { IRule, RuleType } from '~/types'
+import { IRule, RuleAttributeType, RuleType } from '~/types'
 
 import IonIcon from '../IonIcon/IonIcon'
 import DropDown from '../form/DropDown'
+import InputText from '../form/InputText'
 
 const Root = styled('div')(({ theme }) => ({
   height: '42px',
@@ -67,6 +68,7 @@ function Rule(props: IProps): JSX.Element {
   let thirdBlock
 
   if (isCombinationRule(rule)) {
+    const { operator, value } = rule
     const { operator: operatorOptions, value: valueOptions } = options.get(
       RuleType.COMBINATION
     )
@@ -76,7 +78,7 @@ function Rule(props: IProps): JSX.Element {
         options={operatorOptions}
         required
         small
-        value={rule.operator}
+        value={operator}
       />
     )
     secondBlock = <CustomCombination>{t('conditionsAre')}</CustomCombination>
@@ -86,10 +88,11 @@ function Rule(props: IProps): JSX.Element {
         options={valueOptions}
         required
         small
-        value={rule.value}
+        value={value}
       />
     )
   } else if (isAttributeRule(rule)) {
+    const { attribute_type, field, operator, value } = rule
     const {
       field: fieldOptions,
       operator: operatorOptions,
@@ -100,7 +103,7 @@ function Rule(props: IProps): JSX.Element {
         onChange={handleChange('field')}
         options={fieldOptions}
         required
-        value={rule.field}
+        value={field}
         small
       />
     )
@@ -111,18 +114,36 @@ function Rule(props: IProps): JSX.Element {
         required
         small
         transparent
-        value={rule.operator}
+        value={operator}
       />
     )
-    thirdBlock = (
-      <DropDown
-        onChange={handleChange('value')}
-        options={valueOptions}
-        required
-        small
-        value={rule.value}
-      />
-    )
+    switch (attribute_type) {
+      case RuleAttributeType.SELECT:
+        thirdBlock = (
+          <DropDown
+            onChange={handleChange('value')}
+            options={valueOptions}
+            required
+            small
+            value={value}
+          />
+        )
+        break
+
+      default:
+        thirdBlock = (
+          <InputText
+            onChange={handleChange('value')}
+            required
+            small
+            type={
+              attribute_type === RuleAttributeType.FLOAT ? 'number' : 'text'
+            }
+            value={value}
+          />
+        )
+        break
+    }
   }
 
   return (
