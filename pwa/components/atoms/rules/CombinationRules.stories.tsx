@@ -1,17 +1,22 @@
+import { useState } from 'react'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 
 import { complexRule } from '~/mocks'
 
-import CombinationRulesComponent from './CombinationRules'
+import CombinationRules from './CombinationRules'
 
 export default {
   title: 'Atoms/Rules',
-  component: CombinationRulesComponent,
-} as ComponentMeta<typeof CombinationRulesComponent>
+  component: CombinationRules,
+} as ComponentMeta<typeof CombinationRules>
 
-const Template: ComponentStory<typeof CombinationRulesComponent> = (args) => (
-  <CombinationRulesComponent {...args} />
-)
+const Template: ComponentStory<typeof CombinationRules> = (args) => {
+  const { rule, ...props } = args
+  const [ruleValue, setRuleValue] = useState(rule)
+  return (
+    <CombinationRules {...props} onChange={setRuleValue} rule={ruleValue} />
+  )
+}
 
 export const ComplexRule = Template.bind({})
 ComplexRule.args = {
