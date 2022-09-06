@@ -17,6 +17,7 @@ export enum RuleAttributeOperator {
 export enum RuleAttributeType {
   SELECT = 'select',
   FLOAT = 'float',
+  TEXT = 'text',
 }
 
 export enum RuleCombinationOperator {
@@ -32,7 +33,7 @@ export interface IRule {
 export interface IRuleAttribute extends IRule {
   type: RuleType.ATTRIBUTE
   field: string
-  operator: RuleAttributeOperator
+  operator: RuleAttributeOperator | ''
   attribute_type: RuleAttributeType
 }
 
