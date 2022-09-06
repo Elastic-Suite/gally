@@ -6,6 +6,7 @@ const CustomRoot = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'row',
   gap: theme.spacing(1),
+  marginLeft: 'auto',
 }))
 
 function User(): JSX.Element {
