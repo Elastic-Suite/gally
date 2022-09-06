@@ -1,6 +1,6 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 
-import PrimaryButton from '../buttons/PrimaryButton'
+import Button from '../buttons/Button'
 
 import PageTitle from './PageTitle'
 
@@ -20,6 +20,6 @@ Default.args = {
 
 export const WithButtons = Template.bind({})
 WithButtons.args = {
-  children: <PrimaryButton>Import (xlsx)</PrimaryButton>,
+  children: <Button>Import (xlsx)</Button>,
   title: 'Page title',
 }
