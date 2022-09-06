@@ -11,5 +11,7 @@
   "LTE": "is less than or equal",
   "EQ": "is equal",
   "NEQ": "is not equal",
-  "IS": "is"
+  "IS": "is",
+  "attributeRule": "Attribute condition",
+  "combinationRule": "Combination condition"
 }
