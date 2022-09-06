@@ -94,7 +94,7 @@ export default function DropDown(props: IDropDownProps): JSX.Element {
       )}
       {isMultiple(props) ? (
         <MultiSelect
-          listboxOpen={listboxOpen}
+          listboxOpen
           onListboxOpenChange={handleListOpenChange}
           {...(selectProps as IMultiSelectProps)}
           value={props.value}

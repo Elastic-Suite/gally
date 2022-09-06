@@ -4,6 +4,7 @@ import MultiSelectUnstyled, {
 } from '@mui/base/MultiSelectUnstyled'
 import {
   SmallStyledButton,
+  SmallStyledListbox,
   SmallTransparentStyledButton,
   StyledButton,
   StyledListbox,
@@ -32,7 +33,7 @@ function MultiSelect(
       : small
       ? SmallStyledButton
       : StyledButton,
-    Listbox: StyledListbox,
+    Listbox: small ? SmallStyledListbox : StyledListbox,
     Popper: StyledPopper,
   }
 
