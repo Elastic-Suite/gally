@@ -1,6 +1,6 @@
 import { renderWithProviders } from '~/utils/tests'
 
-import PrimaryButton from '../../../atoms/buttons/PrimaryButton'
+import Button from '../../../atoms/buttons/Button'
 
 import TitleBlock from './TitleBlock'
 
@@ -15,9 +15,9 @@ describe('TitleBlock match snapshot', () => {
   it('PageTitle with Composant on Children', () => {
     const { container } = renderWithProviders(
       <TitleBlock title="Hello World">
-        <PrimaryButton disabled={false} endIcon="" size="medium" startIcon="">
+        <Button disabled={false} endIcon="" size="medium" startIcon="">
           Hello world
-        </PrimaryButton>
+        </Button>
       </TitleBlock>
     )
     expect(container).toMatchSnapshot()

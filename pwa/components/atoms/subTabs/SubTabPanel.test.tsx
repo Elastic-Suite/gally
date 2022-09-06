@@ -1,6 +1,6 @@
 import { renderWithProviders } from '~/utils/tests'
 
-import PrimaryButton from '../buttons/PrimaryButton'
+import Button from '../buttons/Button'
 
 import SubTabPanel from './SubTabPanel'
 
@@ -8,7 +8,7 @@ describe('SubTabPanel match snapshot', () => {
   it('SubTabPanel simple', () => {
     const { container } = renderWithProviders(
       <SubTabPanel id={5} value={5}>
-        <PrimaryButton>Hello</PrimaryButton>
+        <Button>Hello</Button>
       </SubTabPanel>
     )
     expect(container).toMatchSnapshot()
