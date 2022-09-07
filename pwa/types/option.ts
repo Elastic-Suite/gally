@@ -4,8 +4,8 @@ export interface IOption<T> {
   disabled?: boolean
   id?: string | number
   label: string
-  value: unknown
-  default?: T
+  value: T
+  default?: boolean
 }
 
 export type IOptions<T> = IOption<T>[]

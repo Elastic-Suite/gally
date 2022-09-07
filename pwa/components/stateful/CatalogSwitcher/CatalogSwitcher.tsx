@@ -38,7 +38,7 @@ function CatalogSwitcher(props: IProps): JSX.Element {
     ? catalogsData['hydra:member']
         .map((hydraMember) => ({
           label: hydraMember.name,
-          value: hydraMember.id,
+          value: hydraMember.id as number,
         }))
         .concat({
           label: t('allCatalogs'),
@@ -81,7 +81,6 @@ function CatalogSwitcher(props: IProps): JSX.Element {
     <SwitchersContainer>
       <DropDown
         required
-        defaultValue={-1}
         style={{ fontSize: '12px' }}
         onChange={onCatalogChange}
         value={catalog}
@@ -91,7 +90,6 @@ function CatalogSwitcher(props: IProps): JSX.Element {
       {Boolean(catalog) && catalog !== -1 && (
         <DropDown
           required
-          defaultValue={-1}
           style={{ fontSize: '12px' }}
           onChange={onLocalizedCatalogChange}
           value={localizedCatalog}

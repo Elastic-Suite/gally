@@ -44,6 +44,7 @@ const Template: ComponentStory<typeof InputTextComponent> = (args) => {
 export const InputText = Template.bind({})
 InputText.args = {
   id: 'input-text',
+  infoTooltip: '',
   label: 'Label',
   placeholder: 'Name',
   required: false,
@@ -53,11 +54,13 @@ InputText.args = {
   color: 'primary',
   endAdornment: null,
   small: false,
+  transparent: false,
 }
 
 export const SearchInputText = Template.bind({})
 SearchInputText.args = {
   id: 'input-text',
+  infoTooltip: '',
   label: 'Label',
   placeholder: 'Name',
   required: false,
@@ -71,4 +74,5 @@ SearchInputText.args = {
     </InputAdornment>
   ),
   small: false,
+  transparent: false,
 }

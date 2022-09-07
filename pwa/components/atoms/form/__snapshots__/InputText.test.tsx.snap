@@ -13,7 +13,7 @@ exports[`InputText match snapshot BadgeDisabledFalse 1`] = `
       Label
     </label>
     <div
-      class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-lp7epm-MuiInputBase-root"
+      class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-ozwfcn-MuiInputBase-root"
     >
       <input
         aria-invalid="false"
@@ -48,7 +48,7 @@ exports[`InputText match snapshot BadgeDisabledFalseRequired 1`] = `
       </span>
     </label>
     <div
-      class="MuiInputBase-root MuiInputBase-colorPrimary Mui-disabled MuiInputBase-formControl css-lp7epm-MuiInputBase-root"
+      class="MuiInputBase-root MuiInputBase-colorPrimary Mui-disabled MuiInputBase-formControl css-ozwfcn-MuiInputBase-root"
       required=""
     >
       <input

@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
-import Tag from '~/components/atoms/form/Tag'
+
+import Chip from '~/components/atoms/Chip/Chip'
 
 interface IProps {
   stockStatus: boolean
@@ -10,7 +11,7 @@ function Stock(props: IProps): JSX.Element {
   const { t } = useTranslation('common')
   const label = t(stockStatus ? 'stock.inStock' : 'stock.outOfStock')
 
-  return <Tag color={stockStatus ? 'success' : 'error'}>{label}</Tag>
+  return <Chip color={stockStatus ? 'success' : 'error'} label={label} />
 }
 
 export default Stock
