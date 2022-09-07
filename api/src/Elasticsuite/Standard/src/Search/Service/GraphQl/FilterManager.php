@@ -52,6 +52,12 @@ class FilterManager
         if (isset($context[SerializerContextBuilder::GRAPHQL_ELASTICSUITE_FILTERS_KEY]['filter'])) {
             foreach ($context[SerializerContextBuilder::GRAPHQL_ELASTICSUITE_FILTERS_KEY]['filter'] as $argFilters) {
                 foreach ($argFilters as $argName => $filter) {
+                    if (str_contains($argName, '.')) {
+                        // Api platform automatically replace nesting separator by '.',
+                        // but it keeps the value with nesting separator. In order to avoid applying
+                        // the filter twice, we have to skip the one with the '.'.
+                        continue;
+                    }
                     $filters[] = $this->fieldFilterInputType->transformToElasticsuiteFilter(
                         [$argName => $filter],
                         $containerConfig,

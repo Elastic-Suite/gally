@@ -5,6 +5,13 @@ Elasticsuite\Metadata\Model\SourceField:
         type: 'int'
         isSystem: true
         isSortable: true
+        isUsedForRules: true
+    product_sku:
+        metadata: '@product'
+        code: 'sku'
+        type: 'reference'
+        isSystem: true
+        isFilterable: true
     product_stock_status:
         metadata: '@product'
         code: 'stock.status'
@@ -23,7 +30,7 @@ Elasticsuite\Metadata\Model\SourceField:
         type: 'text'
         weight: 10
         isSearchable: true
-        isFilterable: false
+        isFilterable: true
         isSortable: false
         isSpellchecked: true
         isUsedForRules: false
@@ -65,7 +72,7 @@ Elasticsuite\Metadata\Model\SourceField:
         metadata: '@product'
         code: 'created_at'
         type: 'date'
-        isFilterable: true
+        isUsedForRules: true
         isSortable: true
     product_price_price:
         metadata: '@product'
@@ -92,7 +99,13 @@ Elasticsuite\Metadata\Model\SourceField:
         type: 'text'
         weight: 5
         isSearchable: true
-        isSpellchecked: false
+        isSpellchecked: false    
+    product_category_id:
+        metadata: '@product'
+        code: 'category.id'
+        type: 'keyword'
+        isFilterable: true
+        isSystem: true
     category_id:
         metadata: '@category'
         code: 'id'

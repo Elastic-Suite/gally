@@ -45,4 +45,25 @@ class SourceFieldRepository extends ServiceEntityRepository
             ]
         );
     }
+
+    /**
+     * @return SourceField[]
+     */
+    public function getFilterableInRequestFields(string $entityCode): array
+    {
+        $exprBuilder = $this->getEntityManager()->getExpressionBuilder();
+
+        $query = $this->createQueryBuilder('o')
+            ->where('o.metadata = :metadata')
+            ->andWhere(
+                $exprBuilder->orX(
+                    $exprBuilder->eq('o.isFilterable', 'true'),
+                    $exprBuilder->eq('o.isUsedForRules', 'true'),
+                )
+            )
+            ->setParameter('metadata', $this->metadataRepository->findOneBy(['entity' => $entityCode]))
+            ->getQuery();
+
+        return $query->getResult();
+    }
 }

@@ -66,7 +66,10 @@
             "label": "Grey"
           }
         ],
-        "created_at": "2022-09-01"
+        "created_at": "2022-09-01",
+        "category": {
+          "id": "one"
+        }
       },
       {
         "id": "4",
@@ -80,7 +83,10 @@
             "label": "Black"
           }
         ],
-        "created_at": "2022-09-05"
+        "created_at": "2022-09-05",
+        "category": {
+          "id": "two"
+        }
       },
       {
         "id": "5",
@@ -94,7 +100,10 @@
             "label": "Grey"
           }
         ],
-        "created_at": "2022-09-05"
+        "created_at": "2022-09-05",
+        "category": {
+          "id": "two"
+        }
       },
       {
         "id": "6",
@@ -116,7 +125,10 @@
             "label": "Red"
           }
         ],
-        "created_at": "2022-09-09"
+        "created_at": "2022-09-09",
+        "category": {
+          "id": "two"
+        }
       },
       {
         "id": "7",
@@ -130,7 +142,10 @@
             "label": "Black"
           }
         ],
-        "created_at": "2022-09-09"
+        "created_at": "2022-09-09",
+        "category": {
+          "id": "two"
+        }
       },
       {
         "id": "8",
@@ -148,7 +163,10 @@
             "label": "White"
           }
         ],
-        "created_at": "2022-09-09"
+        "created_at": "2022-09-09",
+        "category": {
+          "id": "two"
+        }
       },
       {
         "id": "9",
@@ -166,7 +184,10 @@
             "label": "White"
           }
         ],
-        "created_at": "2022-09-09"
+        "created_at": "2022-09-09",
+        "category": {
+          "id": "two"
+        }
       },
       {
         "id": "10",
@@ -375,7 +396,10 @@
             "value": "black",
             "label": "Noir"
           }
-        ]
+        ],
+        "category": {
+          "id": "one"
+        }
       },
       {
         "id": "5",
@@ -392,7 +416,10 @@
             "value": "grey",
             "label": "Gris"
           }
-        ]
+        ],
+        "category": {
+          "id": "two"
+        }
       },
       {
         "id": "6",
@@ -417,7 +444,10 @@
             "value": "red",
             "label": "Rouge"
           }
-        ]
+        ],
+        "category": {
+          "id": "two"
+        }
       },
       {
         "id": "7",
@@ -434,7 +464,10 @@
             "value": "black",
             "label": "Noir"
           }
-        ]
+        ],
+        "category": {
+          "id": "two"
+        }
       },
       {
         "id": "8",

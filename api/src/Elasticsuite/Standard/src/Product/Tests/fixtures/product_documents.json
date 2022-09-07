@@ -257,6 +257,11 @@
             "label": "Noir"
           }
         ],
+        "category": [
+          {
+            "id": "one"
+          }
+        ],
         "created_at": "2022-09-01"
       },
       {
@@ -277,6 +282,11 @@
           {
             "value": "black",
             "label": "Noir"
+          }
+        ],
+        "category": [
+          {
+            "id": "one"
           }
         ],
         "created_at": "2022-09-05"

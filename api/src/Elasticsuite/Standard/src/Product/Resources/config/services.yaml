@@ -1,4 +1,9 @@
 services:
+    Elasticsuite\Product\Service\GraphQl\FilterManager:
+        class: Elasticsuite\Search\Service\GraphQl\FilterManager
+        arguments:
+            - '@Elasticsuite\Product\GraphQl\Type\Definition\FieldFilterInputType'
+
     Elasticsuite\Product\DataProvider\ProductDataProvider:
         arguments:
             - '@serializer'
@@ -8,8 +13,10 @@ services:
             - '@Elasticsuite\Metadata\Repository\MetadataRepository'
             - '@Elasticsuite\Catalog\Repository\LocalizedCatalogRepository'
             - '@Elasticsuite\Search\Elasticsearch\Builder\Request\SimpleRequestBuilder'
+            - '@Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider'
             - '@Elasticsuite\Search\Elasticsearch\Adapter'
             - '@Elasticsuite\Product\GraphQl\Type\Definition\SortInputType'
+            - '@Elasticsuite\Product\Service\GraphQl\FilterManager'
         tags:
             - { name: api_platform.collection_data_provider }
 
@@ -30,5 +37,54 @@ services:
             - '@api_platform.graphql.types_container'
             - '@Elasticsuite\Metadata\Repository\SourceFieldRepository'
             - '%api_platform.graphql.nesting_separator%'
+        tags:
+            - { name: api_platform.graphql.type }
+                
+    Elasticsuite\Product\GraphQl\Type\Definition\Filter\TextTypeFilterInputType:
+        arguments:
+            - '@Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
+            - '%api_platform.graphql.nesting_separator%'
+        tags:
+            - { name: api_platform.graphql.type }
+            - { name: elasticsuite.product_api.filter }
+                
+    Elasticsuite\Product\GraphQl\Type\Definition\Filter\IntegerTypeFilterInputType:
+        arguments:
+            - '@Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
+            - '%api_platform.graphql.nesting_separator%'
+        tags:
+            - { name: api_platform.graphql.type }
+            - { name: elasticsuite.product_api.filter }
+                
+    Elasticsuite\Product\GraphQl\Type\Definition\Filter\FloatTypeFilterInputType:
+        arguments:
+            - '@Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
+            - '%api_platform.graphql.nesting_separator%'
+        tags:
+            - { name: api_platform.graphql.type }
+            - { name: elasticsuite.product_api.filter }
+                
+    Elasticsuite\Product\GraphQl\Type\Definition\Filter\DateTypeFilterInputType:
+        arguments:
+            - '@Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
+            - '%api_platform.graphql.nesting_separator%'
+        tags:
+            - { name: api_platform.graphql.type }
+            - { name: elasticsuite.product_api.filter }
+    
+    Elasticsuite\Product\GraphQl\Type\Definition\Filter\BoolFilterInputType:
+        lazy: true
+        arguments:
+            - '@Elasticsuite\Product\GraphQl\Type\Definition\FieldFilterInputType'
+            - '@Elasticsuite\Search\Elasticsearch\Request\QueryFactory'
+        tags:
+            - { name: api_platform.graphql.type }
+
+    Elasticsuite\Product\GraphQl\Type\Definition\FieldFilterInputType:
+        arguments:
+            - '@Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
+            - !tagged_iterator { tag: 'elasticsuite.product_api.filter' }
+            - '@Elasticsuite\Product\GraphQl\Type\Definition\Filter\BoolFilterInputType'
+            - '@Elasticsuite\Metadata\Repository\SourceFieldRepository'
         tags:
             - { name: api_platform.graphql.type }

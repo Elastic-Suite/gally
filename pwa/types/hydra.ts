@@ -102,7 +102,7 @@ export interface IDropdownStaticOptions {
 
 export interface IDropdownApiOptions {
   api_rest: string
-  api_gaphql: string
+  api_graphql: string
 }
 
 export interface IHydraSupportedProperty extends IJsonldType {

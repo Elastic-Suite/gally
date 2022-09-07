@@ -108,7 +108,7 @@ class Configuration
                     'input' => 'dropdown',
                     'options' => [
                         'api_rest' => '/category_sorting_options',
-                        'api_gaphql' => 'categorySortingOptions',
+                        'api_graphql' => 'categorySortingOptions',
                     ],
                 ],
             ],
