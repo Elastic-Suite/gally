@@ -1,114 +1,132 @@
-/* eslint-disable react/destructuring-assignment */
-import { useRef, useState } from 'react'
-import OptionUnstyled, { optionUnstyledClasses } from '@mui/base/OptionUnstyled'
-import { styled } from '@mui/system'
-import { FormControl, InputLabel } from '@mui/material'
+import {
+  CSSProperties,
+  HTMLAttributes,
+  ReactNode,
+  SyntheticEvent,
+  useMemo,
+  useState,
+} from 'react'
+import {
+  Autocomplete,
+  AutocompleteRenderOptionState,
+  FormControl,
+} from '@mui/material'
 
-import { IOptions } from '~/types'
+import { IOption, IOptions } from '~/types'
 
 import Checkbox from './Checkbox'
-import MultiSelect, { IMultiSelectUnstyledProps } from './MultiSelect'
-import Select, { ISelectUnstyledProps } from './Select'
+import { SmallStyledPaper, StyledPaper } from './DropDown.styled'
+import InputText from './InputText'
 
-const Option = styled(OptionUnstyled)(({ theme }) => ({
-  fontFamily: 'Inter',
-  listStyle: 'none',
-  padding: '8px 12px',
-  cursor: 'default',
-  fontWeight: 400,
-  fontSize: 12,
-  lineHeight: '18px',
-  color: theme.palette.colors.neutral['800'],
-  '&:last-of-type': {
-    borderBottom: 'none',
-  },
-  [`&.${optionUnstyledClasses.selected}`]: {
-    fontWeight: 'bold',
-  },
-  [`&.${optionUnstyledClasses.highlighted}`]: {
-    backgroundColor: theme.palette.colors.neutral['200'],
-  },
-  [`&.${optionUnstyledClasses.disabled}, &.${optionUnstyledClasses.disabled} label`]:
-    {
-      color: theme.palette.colors.neutral['400'],
-    },
-  [`&:hover:not(.${optionUnstyledClasses.disabled})`]: {
-    backgroundColor: theme.palette.colors.neutral['200'],
-  },
-}))
+import IonIcon from '~/components/atoms/IonIcon/IonIcon'
+import Chip from '~/components/atoms/Chip/Chip'
 
-function isMultiple(props: IDropDownProps): props is IMultiSelectProps {
-  return props.multiple
-}
-
-interface ICommonProps {
+export interface IDropDownProps<T> {
+  disabled?: boolean
   label?: string
   multiple?: boolean
-  options: IOptions<unknown>
+  onChange?: (value: T | T[]) => void
+  options: IOptions<T>
   required?: boolean
+  small?: boolean
+  style?: CSSProperties
+  transparent?: boolean
+  value?: T | T[]
 }
 
-export interface ISelectProps extends ISelectUnstyledProps, ICommonProps {}
+function DropDown<T>(props: IDropDownProps<T>): JSX.Element {
+  const {
+    disabled,
+    label,
+    multiple,
+    onChange,
+    options,
+    required,
+    small,
+    style,
+    transparent,
+    value,
+  } = props
+  const [search, setSearch] = useState('')
+  const optionMap = useMemo(
+    () => new Map(options.map((option) => [option.value, option])),
+    [options]
+  )
+  const optionValue =
+    value instanceof Array
+      ? value.map((val) => optionMap.get(val))
+      : optionMap.get(value) ?? null
 
-export interface IMultiSelectProps
-  extends IMultiSelectUnstyledProps,
-    ICommonProps {}
-
-export type IDropDownProps = ISelectProps | IMultiSelectProps
-
-export default function DropDown(props: IDropDownProps): JSX.Element {
-  const { label, multiple, options, required, value, ...selectProps } = props
-  const [listboxOpen, setListboxOpen] = useState(false)
-  const ignoreClick = useRef(false)
-
-  function handleCheckboxMouseDown(): void {
-    if (listboxOpen) {
-      ignoreClick.current = true
+  function handleChange(
+    _: SyntheticEvent,
+    option: IOption<T> | IOption<T>[]
+  ): void {
+    if (!option) {
+      onChange(null)
+    } else if (option instanceof Array) {
+      onChange(option.map(({ value }) => value))
+    } else {
+      onChange(option.value)
     }
   }
 
-  function handleListOpenChange(state: boolean): void {
-    if (!ignoreClick.current) {
-      setListboxOpen(state)
-    }
-    ignoreClick.current = false
+  let renderOption
+  let renderTags
+  if (multiple) {
+    // eslint-disable-next-line react/no-unstable-nested-components, react/function-component-definition, react/display-name
+    renderOption = (
+      props: HTMLAttributes<HTMLLIElement>,
+      { label }: IOption<T>,
+      { selected }: AutocompleteRenderOptionState
+    ): ReactNode => (
+      <li {...props}>
+        <Checkbox checked={selected} label={label} list />
+      </li>
+    )
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    renderTags = (value: IOption<T>[], getTagProps: any): ReactNode[] =>
+      value.map((option: IOption<T>, index: number) => (
+        <Chip
+          key={option.id ?? String(option.value)}
+          label={option.label}
+          size="small"
+          {...getTagProps({ index })}
+        />
+      ))
   }
 
   return (
     <FormControl variant="standard">
-      {label ? (
-        <InputLabel shrink required={required}>
-          {label}
-        </InputLabel>
-      ) : null}
-      {isMultiple(props) ? (
-        <MultiSelect
-          listboxOpen={listboxOpen}
-          onListboxOpenChange={handleListOpenChange}
-          {...(selectProps as IMultiSelectProps)}
-          value={props.value}
-        >
-          {options.map((option) => (
-            <Option key={option.id || String(option.value)} {...option}>
-              <Checkbox
-                checked={props.value.includes(option.value)}
-                label={option.label}
-                list
-                onMouseDown={handleCheckboxMouseDown}
-              />
-            </Option>
-          ))}
-        </MultiSelect>
-      ) : (
-        <Select {...(selectProps as ISelectProps)} value={props.value}>
-          {!required && <Option value="">&nbsp;</Option>}
-          {options.map((option) => (
-            <Option key={option.id || String(option.value)} {...option}>
-              {option.label}
-            </Option>
-          ))}
-        </Select>
-      )}
+      <Autocomplete
+        PaperComponent={small ? SmallStyledPaper : StyledPaper}
+        disabled={disabled}
+        getOptionDisabled={(option: IOption<T>): boolean => option.disabled}
+        multiple={multiple}
+        onChange={handleChange}
+        options={options}
+        popupIcon={<IonIcon name="chevron-down" />}
+        renderInput={(params): JSX.Element => {
+          const { InputLabelProps, InputProps, ...inputProps } = params
+          return (
+            <InputText
+              {...inputProps}
+              {...InputProps}
+              label={label}
+              onChange={setSearch}
+              required={required}
+              small={small}
+              transparent={transparent}
+              value={search}
+            />
+          )
+        }}
+        renderOption={renderOption}
+        renderTags={renderTags}
+        style={style}
+        value={optionValue}
+      />
     </FormControl>
   )
 }
+
+export default DropDown

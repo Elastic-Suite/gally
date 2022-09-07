@@ -53,6 +53,7 @@ InputText.args = {
   color: 'primary',
   endAdornment: null,
   small: false,
+  transparent: false,
 }
 
 export const SearchInputText = Template.bind({})
@@ -71,4 +72,5 @@ SearchInputText.args = {
     </InputAdornment>
   ),
   small: false,
+  transparent: false,
 }

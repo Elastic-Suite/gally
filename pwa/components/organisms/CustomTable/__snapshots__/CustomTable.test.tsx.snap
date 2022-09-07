@@ -149,17 +149,49 @@ exports[`CustomTable match snapshot with editable content 1`] = `
             <div
               class="MuiFormControl-root css-1c9gikl-MuiFormControl-root"
             >
-              <button
-                aria-expanded="false"
-                aria-haspopup="listbox"
-                class="MuiSelectUnstyled-root css-k616if"
-                type="button"
+              <div
+                class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-16awh2u-MuiAutocomplete-root"
               >
-                <span />
-                <ion-icon
-                  name="chevron-down"
-                />
-              </button>
+                <div
+                  class="MuiFormControl-root MuiFormControl-fullWidth css-1qc7p1k-MuiFormControl-root"
+                >
+                  <div
+                    class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-n2f5zc-MuiInputBase-root"
+                  >
+                    <input
+                      aria-autocomplete="list"
+                      aria-expanded="false"
+                      aria-invalid="false"
+                      autocapitalize="none"
+                      autocomplete="off"
+                      class="MuiInputBase-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-yz9k0d-MuiInputBase-input"
+                      id="mui-1"
+                      role="combobox"
+                      spellcheck="false"
+                      type="text"
+                      value=""
+                    />
+                    <div
+                      class="MuiAutocomplete-endAdornment css-1q60rmi-MuiAutocomplete-endAdornment"
+                    >
+                      <button
+                        aria-label="Open"
+                        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-qzbt6i-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
+                        tabindex="-1"
+                        title="Open"
+                        type="button"
+                      >
+                        <ion-icon
+                          name="chevron-down"
+                        />
+                        <span
+                          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                        />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </td>
         </tr>

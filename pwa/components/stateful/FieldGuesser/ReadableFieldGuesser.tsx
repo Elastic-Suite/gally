@@ -2,7 +2,7 @@ import { Box, Switch } from '@mui/material'
 
 import { DataContentType, IFieldGuesserProps, IScore, IStock } from '~/types'
 
-import Tag from '~/components/atoms/form/Tag'
+import Chip from '~/components/atoms/Chip/Chip'
 import Score from '~/components/atoms/score/Score'
 import Stock from '~/components/atoms/stock/Stock'
 import Price from '~/components/atoms/price/Price'
@@ -16,7 +16,7 @@ function ReadableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
     }
 
     case DataContentType.TAG: {
-      return <Tag color="neutral">{value as string}</Tag>
+      return <Chip label={value as string} />
     }
 
     case DataContentType.IMAGE: {

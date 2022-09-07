@@ -1,13 +1,13 @@
 import { useState } from 'react'
-import { ComponentMeta } from '@storybook/react'
-import DropDownComponent, { IMultiSelectProps, ISelectProps } from './DropDown'
+import { ComponentMeta, ComponentStory } from '@storybook/react'
+import DropDownComponent from './DropDown'
 
 export default {
   title: 'Atoms/Form',
   component: DropDownComponent,
 } as ComponentMeta<typeof DropDownComponent>
 
-export function Dropdown(args: ISelectProps): JSX.Element {
+export const Dropdown: ComponentStory<typeof DropDownComponent> = (args) => {
   const [value, setValue] = useState('')
   const handleChange = (value: string): void => setValue(value)
   return <DropDownComponent {...args} onChange={handleChange} value={value} />
@@ -27,7 +27,9 @@ Dropdown.args = {
   transparent: false,
 }
 
-export function DropdownMultiple(args: IMultiSelectProps): JSX.Element {
+export const DropdownMultiple: ComponentStory<typeof DropDownComponent> = (
+  args
+): JSX.Element => {
   const [multiValue, setMultiValue] = useState([])
   const handleChange = (value: string[]): void => setMultiValue(value)
   return (

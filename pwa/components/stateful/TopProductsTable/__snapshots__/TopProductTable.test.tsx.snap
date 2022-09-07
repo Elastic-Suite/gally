@@ -204,15 +204,15 @@ exports[`TopProductTable Should match snapschot 1`] = `
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-fyenha-MuiTableCell-root"
             >
-              <span
-                class="tag--color__error css-172fwkx"
+              <div
+                class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorError MuiChip-filledError css-1lw0qcm-MuiChip-root"
               >
                 <span
-                  class="tag--label"
+                  class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
                 >
                   stock.outOfStock
                 </span>
-              </span>
+              </div>
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-fyenha-MuiTableCell-root"
@@ -344,15 +344,15 @@ exports[`TopProductTable Should match snapschot 1`] = `
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-fyenha-MuiTableCell-root"
             >
-              <span
-                class="tag--color__error css-172fwkx"
+              <div
+                class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorError MuiChip-filledError css-1lw0qcm-MuiChip-root"
               >
                 <span
-                  class="tag--label"
+                  class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
                 >
                   stock.outOfStock
                 </span>
-              </span>
+              </div>
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-fyenha-MuiTableCell-root"

@@ -5,9 +5,9 @@ import { Collapse, InputAdornment, Stack } from '@mui/material'
 import { DataContentType, IFilter } from '~/types'
 
 import Button from '~/components/atoms/buttons/Button'
+import Chip from '~/components/atoms/Chip/Chip'
 import InputText from '~/components/atoms/form/InputText'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
-import Tag from '~/components/atoms/form/Tag'
 import FieldGuesser from '~/components/stateful/FieldGuesser/FieldGuesser'
 
 import {
@@ -153,12 +153,11 @@ function Filters(props: IProps): JSX.Element {
           </FilterSecondaryButton>
           <FacetteBox>
             {activeFilters.map(({ filter, label, value }) => (
-              <Tag
+              <Chip
                 key={`${filter.id}-${value}`}
-                onIconClick={(): void => handleClear(filter, value)}
-              >
-                {label}
-              </Tag>
+                label={label}
+                onDelete={(): void => handleClear(filter, value)}
+              />
             ))}
           </FacetteBox>
           <FilterTertiaryButton onClick={onClearAll}>
