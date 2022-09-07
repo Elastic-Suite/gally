@@ -4,46 +4,46 @@ Elasticsuite\Metadata\Model\SourceField:
         code: 'name'
         type: 'text'
         weight: 10
-        is_searchable: true
-        is_filterable: false
-        is_sortable: false
-        is_spellchecked: true
-        is_used_for_rules: false
+        isSearchable: true
+        isFilterable: false
+        isSortable: false
+        isSpellchecked: true
+        isUsedForRules: false
     category_name:
         metadata: '@category'
         code: 'name'
         type: 'text'
         weight: 10
-        is_searchable: false
-        is_filterable: true
-        is_sortable: false
-        is_spellchecked: false
-        is_used_for_rules: false
+        isSearchable: false
+        isFilterable: true
+        isSortable: false
+        isSpellchecked: false
+        isUsedForRules: false
     product_brand:
         metadata: '@product'
         code: 'brand'
         type: 'select'
-        is_filterable: true
+        isFilterable: true
     product_color:
         metadata: '@product'
         code: 'color'
         type: 'select'
-        is_filterable: true
+        isFilterable: true
     product_length:
         metadata: '@product'
         code: 'length'
         type: 'int'
-        is_filterable: true
+        isFilterable: true
     product_size:
         metadata: '@product'
         code: 'size'
         type: 'int'
-        is_filterable: true
+        isFilterable: true
     product_weight:
         metadata: '@product'
         code: 'weight'
         type: 'int'
-        is_filterable: true
+        isFilterable: true
     product_id:
         metadata: '@product'
         code: 'id'
@@ -76,18 +76,18 @@ Elasticsuite\Metadata\Model\SourceField:
         code: 'description'
         type: 'text'
         weight: 5
-        is_searchable: true
-        is_filterable: false
-        is_sortable: false
-        is_spellchecked: true
-        is_used_for_rules: false
+        isSearchable: true
+        isFilterable: false
+        isSortable: false
+        isSpellchecked: true
+        isUsedForRules: false
     product_seller_reference:
         metadata: '@product'
         code: 'seller_reference'
         type: 'text'
         weight: 5
-        is_searchable: true
-        is_spellchecked: false
+        isSearchable: true
+        isSpellchecked: false
     category_id:
         metadata: '@category'
         code: 'id'

@@ -26,3 +26,5 @@ api_platform:
             vary: ['Content-Type', 'Authorization', 'Origin']
             max_age: 0
             shared_max_age: 3600
+    graphql:
+        nesting_separator: __

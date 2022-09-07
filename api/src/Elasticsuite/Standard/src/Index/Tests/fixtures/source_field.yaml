@@ -4,33 +4,33 @@ Elasticsuite\Metadata\Model\SourceField:
         code: 'name'
         type: 'text'
         weight: 10
-        is_searchable: true
-        is_filterable: false
-        is_sortable: false
-        is_spellchecked: false
-        is_used_for_rules: false
+        isSearchable: true
+        isFilterable: false
+        isSortable: false
+        isSpellchecked: false
+        isUsedForRules: false
     category_name:
         metadata: '@category'
         code: 'name'
         type: 'text'
         weight: 10
-        is_searchable: false
-        is_filterable: false
-        is_sortable: false
-        is_spellchecked: false
-        is_used_for_rules: false
+        isSearchable: false
+        isFilterable: false
+        isSortable: false
+        isSpellchecked: false
+        isUsedForRules: false
     category_description:
         metadata: '@category'
         code: 'description'
         type: 'text'
-        is_searchable: true
-        is_spellchecked: true
+        isSearchable: true
+        isSpellchecked: true
     category_short_description:
         metadata: '@category'
         code: 'short_description'
         # missing type on purpose
-        is_searchable: true
-        is_spellchecked: true
+        isSearchable: true
+        isSpellchecked: true
     category_id:
         metadata: '@category'
         code: 'id'

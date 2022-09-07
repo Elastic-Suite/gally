@@ -139,6 +139,8 @@ services:
             - { name: api_platform.graphql.type }
 
     Elasticsuite\Search\GraphQl\Type\Definition\SortInputType:
+        arguments:
+            - '@api_platform.graphql.types_container'
         tags:
             - { name: api_platform.graphql.type }
 

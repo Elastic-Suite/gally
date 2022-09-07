@@ -29,6 +29,7 @@ class Type
     public const TYPE_REFERENCE = 'reference';
     public const TYPE_IMAGE = 'image';
     public const TYPE_OBJECT = 'object';
+    public const TYPE_DATE = 'date';
 
     public const AVAILABLE_TYPES = [
         self::TYPE_TEXT,
@@ -42,6 +43,7 @@ class Type
         self::TYPE_REFERENCE,
         self::TYPE_IMAGE,
         self::TYPE_OBJECT,
+        self::TYPE_DATE,
     ];
 
     public static function getAvailableTypes(): array
