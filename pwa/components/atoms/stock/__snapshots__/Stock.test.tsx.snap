@@ -2,14 +2,14 @@
 
 exports[`Stock Should match snapschot 1`] = `
 <div>
-  <span
-    class="tag--color__success css-172fwkx"
+  <div
+    class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorSuccess MuiChip-filledSuccess css-1klp0to-MuiChip-root"
   >
     <span
-      class="tag--label"
+      class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
     >
       stock.inStock
     </span>
-  </span>
+  </div>
 </div>
 `;

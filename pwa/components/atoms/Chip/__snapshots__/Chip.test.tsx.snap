@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Chip match snapshot (color error) 1`] = `
+<div>
+  <div
+    class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorError MuiChip-filledError css-1lw0qcm-MuiChip-root"
+  >
+    <span
+      class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
+    >
+      Hello world
+    </span>
+  </div>
+</div>
+`;
+
+exports[`Chip match snapshot (color success) 1`] = `
+<div>
+  <div
+    class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorSuccess MuiChip-filledSuccess css-1klp0to-MuiChip-root"
+  >
+    <span
+      class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
+    >
+      Hello world
+    </span>
+  </div>
+</div>
+`;
+
+exports[`Chip match snapshot (color warning) 1`] = `
+<div>
+  <div
+    class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorWarning MuiChip-filledWarning css-14rfje-MuiChip-root"
+  >
+    <span
+      class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
+    >
+      Hello world
+    </span>
+  </div>
+</div>
+`;
+
+exports[`Chip match snapshot 1`] = `
+<div>
+  <div
+    class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-filledDefault css-l1261j-MuiChip-root"
+  >
+    <span
+      class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
+    >
+      Hello world
+    </span>
+  </div>
+</div>
+`;
