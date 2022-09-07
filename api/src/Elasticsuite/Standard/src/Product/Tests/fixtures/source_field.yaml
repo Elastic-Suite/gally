@@ -4,6 +4,7 @@ Elasticsuite\Metadata\Model\SourceField:
         code: 'id'
         type: 'int'
         isSystem: true
+        isSortable: true
     product_stock_status:
         metadata: '@product'
         code: 'stock.status'
@@ -21,36 +22,37 @@ Elasticsuite\Metadata\Model\SourceField:
         code: 'name'
         type: 'text'
         weight: 10
-        is_searchable: true
-        is_filterable: false
-        is_sortable: false
-        is_spellchecked: false
-        is_used_for_rules: false
+        isSearchable: true
+        isFilterable: false
+        isSortable: false
+        isSpellchecked: false
+        isUsedForRules: false
     product_brand:
         metadata: '@product'
         code: 'brand'
         type: 'select'
-        is_filterable: true
+        isFilterable: true
     product_color:
         metadata: '@product'
         code: 'color'
         type: 'select'
-        is_filterable: true
+        isFilterable: true
     product_length:
         metadata: '@product'
         code: 'length'
         type: 'int'
-        is_filterable: true
+        isFilterable: true
     product_size:
         metadata: '@product'
         code: 'size'
         type: 'int'
-        is_filterable: true
+        isFilterable: true
+        isSortable: true
     product_weight:
         metadata: '@product'
         code: 'weight'
         type: 'int'
-        is_filterable: true
+        isFilterable: true
     product_price_group_id:
         metadata: '@product'
         code: 'price.group_id'
@@ -59,10 +61,17 @@ Elasticsuite\Metadata\Model\SourceField:
         metadata: '@product'
         code: 'price.original_price'
         type: 'float'
+    product_created_at:
+        metadata: '@product'
+        code: 'created_at'
+        type: 'date'
+        isFilterable: true
+        isSortable: true
     product_price_price:
         metadata: '@product'
         code: 'price.price'
         type: 'float'
+        isSortable: true
     product_price_is_discounted:
         metadata: '@product'
         code: 'price.is_discounted'
@@ -77,8 +86,8 @@ Elasticsuite\Metadata\Model\SourceField:
         code: 'name'
         type: 'text'
         weight: 10
-        is_searchable: false
-        is_filterable: true
-        is_sortable: false
-        is_spellchecked: false
-        is_used_for_rules: false
+        isSearchable: false
+        isFilterable: true
+        isSortable: false
+        isSpellchecked: false
+        isUsedForRules: false

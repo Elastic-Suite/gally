@@ -3,14 +3,20 @@ Elasticsuite\Metadata\Model\SourceField:
         metadata: '@product'
         code: 'brand'
         type: 'select'
-        is_filterable: true
+        isFilterable: true
     product_color:
         metadata: '@product'
         code: 'color'
         type: 'select'
-        is_filterable: true
+        isFilterable: true
     product_size:
         metadata: '@product'
         code: 'size'
         type: 'int'
-        is_filterable: true
+        isFilterable: true
+    product_created_at:
+        metadata: '@product'
+        code: 'created_at'
+        type: 'date'
+        isFilterable: true
+        isSortable: true

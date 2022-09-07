@@ -24,12 +24,12 @@ use ApiPlatform\Core\Exception\ResourceClassNotFoundException;
 use ApiPlatform\Core\Metadata\Resource\Factory\ResourceMetadataFactoryInterface;
 use Elasticsuite\Catalog\Repository\LocalizedCatalogRepository;
 use Elasticsuite\Metadata\Repository\MetadataRepository;
+use Elasticsuite\Product\GraphQl\Type\Definition\SortInputType;
 use Elasticsuite\Product\Model\Product;
 use Elasticsuite\ResourceMetadata\Service\ResourceMetadataManager;
 use Elasticsuite\Search\DataProvider\Paginator;
 use Elasticsuite\Search\Elasticsearch\Adapter;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\SimpleRequestBuilder as RequestBuilder;
-use Elasticsuite\Search\Elasticsearch\Request\SortOrderInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 class ProductDataProvider implements ContextAwareCollectionDataProviderInterface, RestrictedDataProviderInterface
@@ -43,6 +43,7 @@ class ProductDataProvider implements ContextAwareCollectionDataProviderInterface
         private LocalizedCatalogRepository $catalogRepository,
         private RequestBuilder $requestBuilder,
         private Adapter $adapter,
+        private SortInputType $sortInputType,
     ) {
     }
 
@@ -85,12 +86,7 @@ class ProductDataProvider implements ContextAwareCollectionDataProviderInterface
             throw new InvalidArgumentException(sprintf('Missing catalog [%s]', $catalogId));
         }
 
-        $sortOrders = [];
-        if (\array_key_exists('sort', $context['filters'])) {
-            $field = $context['filters']['sort']['field'];
-            $direction = $context['filters']['sort']['direction'] ?? SortOrderInterface::DEFAULT_SORT_DIRECTION;
-            $sortOrders = [$field => ['direction' => $direction]];
-        }
+        $this->sortInputType->validateSort($context);
 
         $limit = $this->pagination->getLimit($resourceClass, $operationName, $context);
         $offset = $this->pagination->getOffset($resourceClass, $operationName, $context);
@@ -101,7 +97,7 @@ class ProductDataProvider implements ContextAwareCollectionDataProviderInterface
             $offset,
             $limit,
             null,
-            $sortOrders
+            $this->sortInputType->formatSort($context),
         );
         $response = $this->adapter->search($request);
 

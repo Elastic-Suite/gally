@@ -17,14 +17,16 @@ declare(strict_types=1);
 namespace Elasticsuite\Search\GraphQl\Type\Definition;
 
 use ApiPlatform\Core\GraphQl\Type\Definition\TypeInterface;
+use ApiPlatform\Core\GraphQl\Type\TypesContainerInterface;
 use GraphQL\Type\Definition\InputObjectType;
 use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\Type as GraphQLType;
 
 class SortInputType extends InputObjectType implements TypeInterface
 {
     public const NAME = 'SortInput';
 
-    public function __construct()
+    public function __construct(private TypesContainerInterface $typesContainer)
     {
         $this->name = self::NAME;
 
@@ -36,7 +38,7 @@ class SortInputType extends InputObjectType implements TypeInterface
         return [
             'fields' => [
                 'field' => Type::nonNull(Type::string()),
-                'direction' => new SortEnumType(),
+                'direction' => $this->getSortEnumType(),
             ],
         ];
     }
@@ -47,5 +49,15 @@ class SortInputType extends InputObjectType implements TypeInterface
     public function getName(): string
     {
         return $this->name;
+    }
+
+    protected function getSortEnumType(): GraphQLType
+    {
+        $sortEnumType = $this->typesContainer->has(SortEnumType::NAME) // @phpstan-ignore-line
+            ? $this->typesContainer->get(SortEnumType::NAME)
+            : new SortEnumType();
+        $this->typesContainer->set(SortEnumType::NAME, $sortEnumType);
+
+        return $sortEnumType;
     }
 }

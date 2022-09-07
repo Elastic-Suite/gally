@@ -19,7 +19,7 @@ namespace Elasticsuite\Product\Model;
 use ApiPlatform\Core\Action\NotFoundAction;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Elasticsuite\Entity\Model\Attribute\AttributeInterface;
-use Elasticsuite\Search\GraphQl\Type\Definition\SortInputType;
+use Elasticsuite\Product\GraphQl\Type\Definition\SortInputType;
 use Elasticsuite\Search\Model\Document;
 use Elasticsuite\Search\Resolver\DummyDocumentResolver;
 
