@@ -1,4 +1,10 @@
-import { ChangeEvent, ReactChild } from 'react'
+import {
+  ChangeEvent,
+  ForwardedRef,
+  FunctionComponent,
+  ReactChild,
+  forwardRef,
+} from 'react'
 import {
   FormControl,
   FormHelperText,
@@ -9,41 +15,51 @@ import {
 import { styled } from '@mui/material/styles'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 
+import InfoTooltip from './InfoTooltip'
+
 interface IUnstyledInputTextProps extends InputBaseProps {
   small?: boolean
+  transparent?: boolean
   value: string
 }
 
-function UnstyledInputText(props: IUnstyledInputTextProps): JSX.Element {
-  const { value } = props
-
-  return (
-    <InputBase
-      {...props}
-      sx={
-        value?.length > 0
-          ? { borderColor: 'colors.neutral.400' }
-          : { borderColor: 'colors.neutral.300' }
-      }
-    />
-  )
-}
-
-const inputTextStyledProps = ['small']
-const InputTextStyled = styled(UnstyledInputText, {
-  shouldForwardProp: (prop: string) => !inputTextStyledProps.includes(prop),
-})(({ small, theme }) => ({
+const inputTextStyledProps = ['small', 'transparent']
+const InputTextStyled = styled(
+  InputBase as FunctionComponent<IUnstyledInputTextProps>,
+  {
+    shouldForwardProp: (prop: string) => !inputTextStyledProps.includes(prop),
+  }
+)(({ small, theme, transparent, value }) => ({
+  minHeight: '40px',
   borderRadius: 8,
   borderStyle: 'solid',
   borderWidth: '1px',
-  padding: '9px 16px',
-  width: 180,
+  borderColor: theme.palette.colors.neutral['300'],
+  padding: `3px ${theme.spacing(2)}`,
+  minWidth: 180,
   backgroundColor: theme.palette.colors.white,
   color: theme.palette.colors.neutral['900'],
   fontSize: 14,
   lineHeight: 20,
   fontWeight: 400,
   transition: 'border-color 0.3s linear',
+  ...(Boolean(value) && {
+    borderColor: theme.palette.colors.neutral['400'],
+  }),
+  ...(Boolean(small) && {
+    minHeight: '26px',
+    minWidth: 'initial',
+    width: 'max-content',
+    paddingTop: 0,
+    paddingBottom: 0,
+    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(1),
+    borderRadius: '13px',
+  }),
+  ...(Boolean(transparent) && {
+    background: 'transparent',
+    border: '0',
+  }),
   '& .MuiInputBase-input': {
     padding: 0,
     '&::placeholder': {
@@ -69,6 +85,9 @@ const InputTextStyled = styled(UnstyledInputText, {
   },
   '&:focus-within': {
     borderColor: theme.palette.colors.neutral['600'],
+    ...(Boolean(transparent) && {
+      backgroundColor: 'rgba(0, 0, 0, 0.075)',
+    }),
   },
   '& .MuiInputBase-input::placeholder': {
     color: theme.palette.colors.neutral['600'],
@@ -94,20 +113,31 @@ const InputTextStyled = styled(UnstyledInputText, {
     fontSize: 14,
     color: theme.palette.colors.neutral['900'],
   },
-  ...(Boolean(small) && {
-    height: '26px',
-    width: 'max-content',
-    paddingTop: theme.spacing(0.5),
-    paddingBottom: theme.spacing(0.5),
-    paddingLeft: theme.spacing(1),
-    paddingRight: theme.spacing(1),
-    borderRadius: '13px',
-  }),
+  '&.MuiAutocomplete-inputRoot': {
+    flexWrap: 'wrap',
+  },
+  '& .MuiAutocomplete-endAdornment': {
+    top: 0,
+    right: '12px',
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+  },
+  '& .MuiAutocomplete-popupIndicator ion-icon, & .MuiAutocomplete-clearIndicator svg':
+    {
+      fontSize: 14,
+      color: theme.palette.colors.neutral['900'],
+    },
+  '& .MuiAutocomplete-tag': {
+    marginTop: 0,
+    marginBottom: 0,
+  },
 }))
 
 export interface IInputTextProps
-  extends Omit<IUnstyledInputTextProps, 'onChange'> {
+  extends Omit<IUnstyledInputTextProps, 'onChange' | 'value'> {
   fullWidth?: boolean
+  infoTooltip?: string
   label?: string
   helperText?: ReactChild
   helperIcon?: string
@@ -116,10 +146,14 @@ export interface IInputTextProps
   withMargin?: boolean
 }
 
-function InputText(props: IInputTextProps): JSX.Element {
+function InputText(
+  props: IInputTextProps,
+  ref: ForwardedRef<HTMLDivElement>
+): JSX.Element {
   const {
     fullWidth,
     id,
+    infoTooltip,
     label,
     onChange,
     helperText,
@@ -132,7 +166,9 @@ function InputText(props: IInputTextProps): JSX.Element {
   function handleChange(
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ): void {
-    onChange(event.target.value)
+    if (onChange) {
+      onChange(event.target.value)
+    }
   }
 
   return (
@@ -141,16 +177,18 @@ function InputText(props: IInputTextProps): JSX.Element {
       sx={{ marginBottom: withMargin ? 4 : 0 }}
       variant="standard"
     >
-      {label ? (
+      {Boolean(label || infoTooltip) && (
         <InputLabel shrink htmlFor={id} required={required}>
           {label}
+          {infoTooltip ? <InfoTooltip title={infoTooltip} /> : null}
         </InputLabel>
-      ) : null}
+      )}
       <InputTextStyled
-        {...other}
         id={id}
         onChange={handleChange}
         required={required}
+        ref={ref}
+        {...other}
       />
       {helperText ? (
         <FormHelperText>
@@ -169,4 +207,4 @@ function InputText(props: IInputTextProps): JSX.Element {
   )
 }
 
-export default InputText
+export default forwardRef<HTMLDivElement, IInputTextProps>(InputText)
