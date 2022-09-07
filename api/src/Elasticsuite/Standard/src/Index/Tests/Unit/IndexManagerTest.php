@@ -19,7 +19,7 @@ namespace Elasticsuite\Index\Tests\Unit;
 use Doctrine\Persistence\ObjectManager;
 use Elasticsuite\Index\Service\MetadataManager;
 use Elasticsuite\Metadata\Repository\MetadataRepository;
-use Elasticsuite\Standard\src\Test\AbstractTest;
+use Elasticsuite\Test\AbstractTest;
 
 class IndexManagerTest extends AbstractTest
 {

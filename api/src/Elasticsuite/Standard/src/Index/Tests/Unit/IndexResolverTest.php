@@ -29,7 +29,7 @@ namespace Elasticsuite\Index\Tests\Unit;
 
 use Elasticsuite\Catalog\Model\LocalizedCatalog;
 use Elasticsuite\Index\Service\IndexSettings;
-use Elasticsuite\Standard\src\Test\AbstractTest;
+use Elasticsuite\Test\AbstractTest;
 
 class IndexResolverTest extends AbstractTest
 {

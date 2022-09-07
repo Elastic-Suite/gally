@@ -18,9 +18,9 @@ namespace Elasticsuite\Search\Tests\Api\GraphQl;
 
 use Elasticsuite\Fixture\Service\ElasticsearchFixturesInterface;
 use Elasticsuite\Search\Elasticsearch\Request\SortOrderInterface;
-use Elasticsuite\Standard\src\Test\AbstractTest;
-use Elasticsuite\Standard\src\Test\ExpectedResponse;
-use Elasticsuite\Standard\src\Test\RequestGraphQlToTest;
+use Elasticsuite\Test\AbstractTest;
+use Elasticsuite\Test\ExpectedResponse;
+use Elasticsuite\Test\RequestGraphQlToTest;
 use Elasticsuite\User\Constant\Role;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 

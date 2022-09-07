@@ -20,9 +20,9 @@ use Elasticsearch\Client;
 use Elasticsuite\Fixture\Service\ElasticsearchFixturesInterface;
 use Elasticsuite\Index\Model\Index;
 use Elasticsuite\Index\Repository\Index\IndexRepositoryInterface;
-use Elasticsuite\Standard\src\Test\AbstractEntityTest;
-use Elasticsuite\Standard\src\Test\ExpectedResponse;
-use Elasticsuite\Standard\src\Test\RequestToTest;
+use Elasticsuite\Test\AbstractEntityTest;
+use Elasticsuite\Test\ExpectedResponse;
+use Elasticsuite\Test\RequestToTest;
 use Elasticsuite\User\Constant\Role;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
