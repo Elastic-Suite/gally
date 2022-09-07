@@ -35,5 +35,5 @@ const Template: ComponentStory<typeof SearchBar> = (args): JSX.Element => {
 
 export const Default = Template.bind({})
 Default.args = {
-  nbRes: 1011,
+  nbResults: 1011,
 }

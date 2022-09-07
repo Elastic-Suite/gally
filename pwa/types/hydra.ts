@@ -67,7 +67,7 @@ export interface IRdfsRange {
   'owl:equivalentClass': IOwlEquivalentClass
 }
 
-export interface IHydraCatSort extends IJsonldBase {
+export interface ICategorySortingOption extends IJsonldBase {
   id: string
   label: string
   code: string

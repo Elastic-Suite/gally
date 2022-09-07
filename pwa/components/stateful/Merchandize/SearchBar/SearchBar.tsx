@@ -5,15 +5,21 @@ import InputText, {
 import { useTranslation } from 'next-i18next'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import { SearchResult, SearchTitle } from './Search.styled'
+
 interface IProps extends IInputTextProps {
-  resultsValue: number
+  nbResults: number
 }
 
 export default function SearchBar(props: IProps): JSX.Element {
-  const { resultsValue, ...inputTextProps } = props
-  const { t } = useTranslation('category')
+  const { nbResults, ...inputTextProps } = props
+  const { t } = useTranslation('categories')
 
-  const result = `${resultsValue} ${t('searchBar.results')}`
+  const value = {
+    value: nbResults,
+    result: t('searchBar.results', { count: nbResults }),
+  }
+
+  const result = t('searchBarResult', { value })
   return (
     <Paper variant="outlined">
       <Grid container justifyContent="space-between" sx={{ padding: '16px' }}>

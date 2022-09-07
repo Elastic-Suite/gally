@@ -6,7 +6,7 @@ describe('SearchBar match snapshot', () => {
     const val = ''
 
     const { container } = renderWithProviders(
-      <SearchBar resultsValue={1010} value={val} />
+      <SearchBar nbResults={1010} value={val} />
     )
     expect(container).toMatchSnapshot()
   })

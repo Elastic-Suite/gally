@@ -24,7 +24,7 @@ function Merchandize({
   sortValue,
   onSortChange,
 }: IProps): JSX.Element {
-  const { t } = useTranslation('category')
+  const { t } = useTranslation('categories')
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
     if (event.target.name === 'name') {

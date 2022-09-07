@@ -1,8 +1,8 @@
 import { Box, styled } from '@mui/system'
-import { useMemo, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { IHydraCatSort, IHydraMember, ITreeItem } from '~/types'
+import { ICategorySortingOption, IHydraMember, ITreeItem } from '~/types'
 
 import PrimaryButton from '~/components/atoms/buttons/PrimaryButton'
 import TertiaryButton from '~/components/atoms/buttons/TertiaryButton'
@@ -12,8 +12,7 @@ import StickyBar from '~/components/molecules/CustomTable/StickyBar/StickyBar'
 import ProductsTopAndBottom from '~/components/stateful/ProductsTopAndBottom/ProductsTopAndBottom'
 import Merchandize from '../Merchandize/Merchandize'
 
-import { apiUrlSort } from '~/constants'
-import { useApiList } from '~/hooks'
+import { useApiList, useResource } from '~/hooks'
 import SearchBar from '../Merchandize/SearchBar/SearchBar'
 
 const Layout = styled('div')(({ theme }) => ({
@@ -49,8 +48,14 @@ interface IPropsSort {
 }
 
 function ProductsContainer(props: IProps): JSX.Element {
-  const { catalogId, category, onVirtualChange, dataCat, onNameChange, onSortChange } =
-    props
+  const {
+    catalogId,
+    category,
+    onVirtualChange,
+    dataCat,
+    onNameChange,
+    onSortChange,
+  } = props
 
   const tableRef = useRef<HTMLDivElement>()
   const [topSelectedRows, setTopSelectedRows] = useState<string[]>([])
@@ -71,13 +76,9 @@ function ProductsContainer(props: IProps): JSX.Element {
     setBottomSelectedRows([])
   }
 
-  const params = useMemo(() => {
-    return {
-      url: apiUrlSort,
-    }
-  }, [])
-
-  const [{ data }] = useApiList<IHydraCatSort>(params.url)
+  const resour = 'CategorySortingOption'
+  const re = useResource(resour)
+  const [{ data }] = useApiList<ICategorySortingOption>(re)
 
   const sortOption = data
     ? data[`hydra:member`].map((obj: IPropsSort) => ({
@@ -107,7 +108,7 @@ function ProductsContainer(props: IProps): JSX.Element {
         />
 
         <SearchBar
-          resultsValue={10}
+          nbResults={10}
           value={searchValue}
           onChange={onSearchChange}
         />
