@@ -50,6 +50,7 @@ class StitchingFieldsBuilder implements FieldsBuilderInterface
         SourceFieldType::TYPE_REFERENCE => 'Elasticsuite\Entity\Model\Attribute\Type\TextAttribute',
         SourceFieldType::TYPE_IMAGE => 'Elasticsuite\Entity\Model\Attribute\Type\TextAttribute',
         SourceFieldType::TYPE_OBJECT => 'Elasticsuite\Entity\Model\Attribute\Type\TextAttribute',
+        SourceFieldType::TYPE_DATE => 'Elasticsuite\Entity\Model\Attribute\Type\TextAttribute',
     ];
 
     public function __construct(

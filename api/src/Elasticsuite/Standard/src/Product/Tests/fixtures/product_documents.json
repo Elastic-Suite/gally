@@ -1,60 +1,69 @@
 [
   {
-    "index_name": "elasticsuite_b2c_en_product_20220604_100523",
+    "index_name": "elasticsuite_b2c_en_product",
     "documents": [
       {
         "entity_id": "1",
         "sku": "24-MB01",
         "name": "Joust Duffle Bag",
-        "size" : 12
+        "size" : 12,
+        "created_at": "2022-09-01"
       },
       {
         "entity_id": "2",
         "sku": "24-MB04",
         "name": "Strive Shoulder Pack",
-        "size" : 5
+        "size" : 5,
+        "created_at": "2022-09-05"
       },
       {
         "entity_id": "3",
         "sku": "24-MB03",
         "name": "Crown Summit Backpack",
-        "size" : 8
+        "size" : 8,
+        "created_at": "2022-09-05"
       },
       {
         "entity_id": "4",
         "sku": "24-MB05",
         "name": "Wayfarer Messenger Bag",
-        "size" : 7
+        "size" : 7,
+        "created_at": "2022-09-05"
       },
       {
         "entity_id": "5",
         "sku": "24-MB06",
         "name": "Rival Field Messenger",
-        "size" : 2
+        "size" : 2,
+        "created_at": "2022-09-06"
       },
       {
         "entity_id": "6",
         "sku": "24-MB02",
         "name": "Fusion Backpack",
-        "size" : 9
+        "size" : 9,
+        "created_at": "2022-09-01"
       },
       {
         "entity_id": "7",
         "sku": "24-UB02",
         "name": "Impulse Duffle",
-        "size" : 11
+        "size" : 11,
+        "created_at": "2022-09-01"
       },
       {
         "entity_id": "8",
         "sku": "24-WB01",
         "name": "Voyage Yoga Bag",
-        "size" : 4
+        "size" : 4,
+        "created_at": "2022-09-01"
       },
       {
         "entity_id": "9",
         "sku": "24-WB02",
         "name": "Compete Track Tote",
-        "size" : 11
+        "size" : 11,
+        "created_at": "2022-09-01"
       },
       {
         "entity_id": "10",
@@ -66,19 +75,22 @@
         "entity_id": "11",
         "sku": "24-WB06",
         "name": "Endeavor Daytrip Backpack",
-        "size" : 5
+        "size" : 5,
+        "created_at": "2022-09-01"
       },
       {
         "entity_id": "12",
         "sku": "24-WB03",
         "name": "Driven Backpack",
-        "size" : 12
+        "size" : 12,
+        "created_at": "2022-09-01"
       },
       {
         "entity_id": "13",
         "sku": "24-WB07",
         "name": "Overnight Duffle",
-        "size" : 10
+        "size" : 10,
+        "created_at": "2022-09-01"
       },
       {
         "entity_id": "14",
@@ -89,7 +101,7 @@
     ]
   },
   {
-    "index_name": "elasticsuite_b2c_fr_product_20220603_095414",
+    "index_name": "elasticsuite_b2c_fr_product",
     "documents": [
       {
         "entity_id": "1",
@@ -101,9 +113,10 @@
           {"group_id": 1, "original_price": 11.99, "price": 10.99, "is_discounted": true}
         ],
         "stock": {
-          "status": 0,
+          "status": false,
           "qty": 0
-        }
+        },
+        "created_at": "2022-09-01"
       },
       {
         "id": "2",
@@ -116,9 +129,10 @@
           {"group_id": 1, "original_price": 17.99, "price": 17.99, "is_discounted": false}
         ],
         "stock": {
-          "status": 1,
+          "status": true,
           "qty": 37
-        }
+        },
+        "created_at": "2022-09-05"
       },
       {
         "id": "3",
@@ -131,9 +145,10 @@
           {"group_id": 1, "original_price": 25.99, "price": 20.99, "is_discounted": true}
         ],
         "stock": {
-          "status": 1,
+          "status": true,
           "qty": 12
-        }
+        },
+        "created_at": "2022-09-05"
       },
       {
         "id": "4",
@@ -142,9 +157,10 @@
         "name": "Sac messager Wayfarer",
         "size" : 7,
         "stock": {
-          "status": 0,
+          "status": false,
           "qty": 0
-        }
+        },
+        "created_at": "2022-09-05"
       },
       {
         "id": "5",
@@ -153,9 +169,10 @@
         "name": "Messager de terrain rival",
         "size" : 2,
         "stock": {
-          "status": 1,
+          "status": true,
           "qty": 3
-        }
+        },
+        "created_at": "2022-09-06"
       },
       {
         "id": "6",
@@ -164,9 +181,10 @@
         "name": "Sac à dos Fusion",
         "size" : 9,
         "stock": {
-          "status": 1,
+          "status": false,
           "qty": 24
-        }
+        },
+        "created_at": "2022-09-01"
       },
       {
         "id": "7",
@@ -175,9 +193,10 @@
         "name": "Sac de sport Impulse",
         "size" : 11,
         "stock": {
-          "status": 1,
+          "status": false,
           "qty": 7
-        }
+        },
+        "created_at": "2022-09-01"
       },
       {
         "id": "8",
@@ -186,9 +205,10 @@
         "name": "Sac de voyage Yoga",
         "size" : 4,
         "stock": {
-          "status": 0,
+          "status": false,
           "qty": -2
-        }
+        },
+        "created_at": "2022-09-01"
       },
       {
         "id": "9",
@@ -197,7 +217,7 @@
         "name": "Fourre-tout Compete Track",
         "size" : 11,
         "stock": {
-          "status": 0,
+          "status": false,
           "qty": 0
         }
       },
@@ -208,7 +228,7 @@
         "name": "Fourre-tout à bandoulière avisé",
         "size" : 2,
         "stock": {
-          "status": 1,
+          "status": true,
           "qty": 8
         }
       },
@@ -219,9 +239,10 @@
         "name": "Sac à dos d'excursion d'une journée Endeavour",
         "size" : 5,
         "stock": {
-          "status": 1,
+          "status": true,
           "qty": 13
-        }
+        },
+        "created_at": "2022-09-01"
       },
       {
         "id": "12",
@@ -230,9 +251,10 @@
         "name": "Sac à dos piloté",
         "size" : 12,
         "stock": {
-          "status": 1,
+          "status": true,
           "qty": 17
-        }
+        },
+        "created_at": "2022-09-01"
       }
     ]
   }

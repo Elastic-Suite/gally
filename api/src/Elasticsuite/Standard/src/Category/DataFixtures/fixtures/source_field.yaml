@@ -24,9 +24,9 @@ Elasticsuite\Metadata\Model\SourceField:
         code: 'name'
         type: 'text'
         weight: 10
-        is_searchable: true
-        is_filterable: false
-        is_sortable: false
-        is_spellchecked: false
-        is_used_for_rules: false
+        isSearchable: true
+        isFilterable: false
+        isSortable: false
+        isSpellchecked: false
+        isUsedForRules: false
         isSystem: true

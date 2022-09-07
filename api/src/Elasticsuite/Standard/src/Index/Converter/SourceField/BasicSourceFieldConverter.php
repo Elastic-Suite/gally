@@ -26,6 +26,7 @@ class BasicSourceFieldConverter implements SourceFieldConverterInterface
         SourceField\Type::TYPE_INT => Mapping\FieldInterface::FIELD_TYPE_INTEGER,
         SourceField\Type::TYPE_BOOLEAN => Mapping\FieldInterface::FIELD_TYPE_BOOLEAN,
         SourceField\Type::TYPE_FLOAT => Mapping\FieldInterface::FIELD_TYPE_DOUBLE,
+        SourceField\Type::TYPE_DATE => Mapping\FieldInterface::FIELD_TYPE_DATE,
         // SourceField\Type::TYPE_OBJECT => Mapping\FieldInterface::FIELD_TYPE_OBJECT,
     ];
 

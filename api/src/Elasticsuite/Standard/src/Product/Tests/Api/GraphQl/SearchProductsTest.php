@@ -34,27 +34,29 @@ class SearchProductsTest extends AbstractTest
             __DIR__ . '/../../fixtures/metadata.yaml',
             __DIR__ . '/../../fixtures/source_field.yaml',
         ]);
-        self::loadElasticsearchIndexFixtures([__DIR__ . '/../../fixtures/product_indices.json']);
+        self::createEntityElasticsearchIndices('product');
         self::loadElasticsearchDocumentFixtures([__DIR__ . '/../../fixtures/product_documents.json']);
     }
 
     public static function tearDownAfterClass(): void
     {
         parent::tearDownAfterClass();
-        self::deleteElasticsearchFixtures();
+        self::deleteEntityElasticsearchIndices('product');
     }
 
     /**
      * @dataProvider basicSearchProductsDataProvider
      *
-     * @param string $catalogId            Catalog ID or code
-     * @param ?int   $pageSize             Pagination size
-     * @param ?int   $currentPage          Current page
-     * @param ?array $expectedError        Expected error
-     * @param ?int   $expectedItemsCount   Expected items count in (paged) response
-     * @param ?int   $expectedTotalCount   Expected total items count
-     * @param ?int   $expectedItemsPerPage Expected pagination items per page
-     * @param ?int   $expectedLastPage     Expected number of the last page
+     * @param string  $catalogId            Catalog ID or code
+     * @param ?int    $pageSize             Pagination size
+     * @param ?int    $currentPage          Current page
+     * @param ?array  $expectedError        Expected error
+     * @param ?int    $expectedItemsCount   Expected items count in (paged) response
+     * @param ?int    $expectedTotalCount   Expected total items count
+     * @param ?int    $expectedItemsPerPage Expected pagination items per page
+     * @param ?int    $expectedLastPage     Expected number of the last page
+     * @param ?string $expectedIndexAlias   Expected index alias
+     * @param ?float  $expectedScore        Expected score
      */
     public function testBasicSearchProducts(
         string $catalogId,
@@ -65,7 +67,7 @@ class SearchProductsTest extends AbstractTest
         ?int $expectedTotalCount,
         ?int $expectedItemsPerPage,
         ?int $expectedLastPage,
-        ?string $expectedIndex,
+        ?string $expectedIndexAlias,
         ?float $expectedScore
     ): void {
         $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
@@ -109,7 +111,7 @@ class SearchProductsTest extends AbstractTest
                     $expectedTotalCount,
                     $expectedItemsPerPage,
                     $expectedLastPage,
-                    $expectedIndex,
+                    $expectedIndexAlias,
                     $expectedScore
                 ) {
                     if (!empty($expectedError)) {
@@ -140,7 +142,7 @@ class SearchProductsTest extends AbstractTest
                             $this->assertEquals($expectedScore, $document['score']);
 
                             $this->assertArrayHasKey('index', $document);
-                            $this->assertEquals($expectedIndex, $document['index']);
+                            $this->assertStringStartsWith($expectedIndexAlias, $document['index']);
                         }
                     }
                 }
@@ -172,7 +174,7 @@ class SearchProductsTest extends AbstractTest
                 14,     // expected total count.
                 10,     // expected items per page.
                 2,      // expected last page.
-                ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_b2c_en_product_20220604_100523', // expected index.
+                ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_b2c_en_product', // expected index alias.
                 1.0,    // expected score.
             ],
             [
@@ -184,7 +186,7 @@ class SearchProductsTest extends AbstractTest
                 14,     // expected total count.
                 10,     // expected items per page.
                 2,      // expected last page.
-                ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_b2c_en_product_20220604_100523', // expected index.
+                ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_b2c_en_product', // expected index alias.
                 1.0,    // expected score.
             ],
             [
@@ -196,7 +198,7 @@ class SearchProductsTest extends AbstractTest
                 14,     // expected total count.
                 10,     // expected items per page.
                 2,      // expected last page.
-                ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_b2c_en_product_20220604_100523', // expected index.
+                ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_b2c_en_product', // expected index alias.
                 1.0,    // expected score.
             ],
             [
@@ -208,7 +210,7 @@ class SearchProductsTest extends AbstractTest
                 12,     // expected total count.
                 30,     // expected items per page.
                 1,      // expected last page.
-                ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_b2c_fr_product_20220603_095414', // expected index.
+                ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_b2c_fr_product', // expected index alias.
                 1.0,    // expected score.
             ],
             [
@@ -220,7 +222,7 @@ class SearchProductsTest extends AbstractTest
                 12,     // expected total count.
                 5,      // expected items per page.
                 3,      // expected last page.
-                ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_b2c_fr_product_20220603_095414', // expected index.
+                ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_b2c_fr_product', // expected index alias.
                 1.0,    // expected score.
             ],
             [
@@ -232,7 +234,7 @@ class SearchProductsTest extends AbstractTest
                 12,     // expected total count.
                 100,    // expected items per page.
                 1,      // expected last page.
-                ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_b2c_fr_product_20220603_095414', // expected index.
+                ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_b2c_fr_product', // expected indexalias.
                 1.0,    // expected score.
             ],
         ];
@@ -268,7 +270,7 @@ class SearchProductsTest extends AbstractTest
         if (!empty($sortOrders)) {
             $sortArguments = [];
             foreach ($sortOrders as $field => $direction) {
-                $sortArguments[] = sprintf('field: "%s", direction: %s', $field, $direction);
+                $sortArguments[] = sprintf('%s: %s', $field, $direction);
             }
             $arguments .= sprintf(', sort: {%s}', implode(', ', $sortArguments));
         }
@@ -382,13 +384,88 @@ class SearchProductsTest extends AbstractTest
             ],
             [
                 'b2c_fr',   // catalog ID.
+                10,     // page size.
+                1,      // current page.
+                ['created_at' => SortOrderInterface::SORT_ASC], // sort order specifications.
+                'id', // document data identifier.
+                // size DESC, then score ASC first, then id ASC (missing _last)
+                [1, 12, 11, 8, 7, 6, 4, 3, 2, 5],   // expected ordered document IDs
+            ],
+            [
+                'b2c_fr',   // catalog ID.
                 5,     // page size.
                 1,      // current page.
-                ['price.price' => SortOrderInterface::SORT_ASC], // sort order specifications.
+                ['price__price' => SortOrderInterface::SORT_ASC], // sort order specifications.
                 'id', // document data identifier.
                 // price.price ASC, then score DESC first, then id DESC (missing _first)
                 [2, 1, 3, 12, 11],   // expected ordered document IDs
             ],
         ];
+    }
+
+    public function testSortedSearchProductsInvalidField(): void
+    {
+        $this->validateApiCall(
+            new RequestGraphQlToTest(
+                <<<GQL
+                    {
+                        searchProducts(catalogId: "b2c_fr", sort: { length: desc }) {
+                            collection { id }
+                        }
+                    }
+                GQL,
+                $this->getUser(Role::ROLE_CONTRIBUTOR)
+            ),
+            new ExpectedResponse(
+                200,
+                function (ResponseInterface $response) {
+                    $this->assertJsonContains([
+                        'errors' => [['message' => 'Field "length" is not defined by type ProductSortInput.']],
+                    ]);
+                }
+            )
+        );
+
+        $this->validateApiCall(
+            new RequestGraphQlToTest(
+                <<<GQL
+                    {
+                        searchProducts(catalogId: "b2c_fr", sort: { stock__qty: desc }) {
+                            collection { id }
+                        }
+                    }
+                GQL,
+                $this->getUser(Role::ROLE_CONTRIBUTOR)
+            ),
+            new ExpectedResponse(
+                200,
+                function (ResponseInterface $response) {
+                    $this->assertJsonContains([
+                        'errors' => [['message' => 'Field "stock__qty" is not defined by type ProductSortInput.']],
+                    ]);
+                }
+            )
+        );
+
+        $this->validateApiCall(
+            new RequestGraphQlToTest(
+                <<<GQL
+                    {
+                        searchProducts(catalogId: "b2c_fr", sort: { id: desc, size: asc }) {
+                            collection { id }
+                        }
+                    }
+                GQL,
+                $this->getUser(Role::ROLE_CONTRIBUTOR)
+            ),
+            new ExpectedResponse(
+                200,
+                function (ResponseInterface $response) {
+                    $this->assertJsonContains([
+                        'errors' => [['debugMessage' => 'Sort argument : You can\'t sort on multiple attribute.']],
+                    ]);
+                }
+            )
+        );
     }
 }
