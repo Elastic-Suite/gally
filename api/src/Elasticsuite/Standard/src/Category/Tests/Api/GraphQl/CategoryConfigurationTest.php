@@ -18,9 +18,9 @@ namespace Elasticsuite\Category\Tests\Api\GraphQl;
 
 use Elasticsuite\Catalog\Repository\CatalogRepository;
 use Elasticsuite\Catalog\Repository\LocalizedCatalogRepository;
-use Elasticsuite\Standard\src\Test\AbstractTest;
-use Elasticsuite\Standard\src\Test\ExpectedResponse;
-use Elasticsuite\Standard\src\Test\RequestGraphQlToTest;
+use Elasticsuite\Test\AbstractTest;
+use Elasticsuite\Test\ExpectedResponse;
+use Elasticsuite\Test\RequestGraphQlToTest;
 use Elasticsuite\User\Constant\Role;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 

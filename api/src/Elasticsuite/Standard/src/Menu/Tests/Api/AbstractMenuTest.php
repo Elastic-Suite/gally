@@ -16,7 +16,7 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Index\Tests\Api;
 
-use Elasticsuite\Standard\src\Test\AbstractTest;
+use Elasticsuite\Test\AbstractTest;
 
 abstract class AbstractMenuTest extends AbstractTest
 {

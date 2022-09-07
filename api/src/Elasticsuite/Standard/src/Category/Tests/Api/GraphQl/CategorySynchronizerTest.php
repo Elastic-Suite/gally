@@ -42,9 +42,9 @@ use Elasticsuite\Search\Elasticsearch\Adapter;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\Query\QueryBuilder;
 use Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider;
 use Elasticsuite\Search\Elasticsearch\RequestFactoryInterface;
-use Elasticsuite\Standard\src\Test\AbstractTest;
-use Elasticsuite\Standard\src\Test\ExpectedResponse;
-use Elasticsuite\Standard\src\Test\RequestGraphQlToTest;
+use Elasticsuite\Test\AbstractTest;
+use Elasticsuite\Test\ExpectedResponse;
+use Elasticsuite\Test\RequestGraphQlToTest;
 use Elasticsuite\User\Constant\Role;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 

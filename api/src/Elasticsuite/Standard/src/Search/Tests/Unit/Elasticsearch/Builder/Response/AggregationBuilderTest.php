@@ -19,7 +19,7 @@ namespace Elasticsuite\Search\Tests\Unit\Elasticsearch\Builder\Response;
 use Elasticsuite\Search\Elasticsearch\Adapter\Common\Response\Aggregation;
 use Elasticsuite\Search\Elasticsearch\Adapter\Common\Response\BucketValue;
 use Elasticsuite\Search\Elasticsearch\Builder\Response\AggregationBuilder;
-use Elasticsuite\Standard\src\Test\AbstractTest;
+use Elasticsuite\Test\AbstractTest;
 
 class AggregationBuilderTest extends AbstractTest
 {

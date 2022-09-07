@@ -17,7 +17,7 @@ declare(strict_types=1);
 namespace Elasticsuite\Metadata\Tests\Api\Rest;
 
 use Elasticsuite\Metadata\Model\SourceField;
-use Elasticsuite\Standard\src\Test\AbstractEntityTest;
+use Elasticsuite\Test\AbstractEntityTest;
 use Elasticsuite\User\Constant\Role;
 
 class SourceFieldTest extends AbstractEntityTest

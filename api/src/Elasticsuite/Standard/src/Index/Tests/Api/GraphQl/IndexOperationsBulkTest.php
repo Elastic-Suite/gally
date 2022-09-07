@@ -17,9 +17,9 @@ declare(strict_types=1);
 namespace Elasticsuite\Index\Tests\Api\GraphQl;
 
 use Elasticsuite\Fixture\Service\ElasticsearchFixturesInterface;
-use Elasticsuite\Standard\src\Test\AbstractTest;
-use Elasticsuite\Standard\src\Test\ExpectedResponse;
-use Elasticsuite\Standard\src\Test\RequestGraphQlToTest;
+use Elasticsuite\Test\AbstractTest;
+use Elasticsuite\Test\ExpectedResponse;
+use Elasticsuite\Test\RequestGraphQlToTest;
 use Elasticsuite\User\Constant\Role;
 use Elasticsuite\User\Model\User;
 use Symfony\Contracts\HttpClient\ResponseInterface;
