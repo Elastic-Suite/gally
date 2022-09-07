@@ -53,8 +53,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiFilter(SearchFilter::class, properties: ['code' => 'partial', 'defaultLabel' => 'partial', 'type' => 'partial', 'metadata' => 'exact', 'metadata.entity' => 'exact'])]
 class SourceField
 {
-    public const WEIGHT_VALID_VALUES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
     private int $id;
 
     #[ApiProperty(

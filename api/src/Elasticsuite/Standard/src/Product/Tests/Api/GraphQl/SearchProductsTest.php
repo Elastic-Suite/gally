@@ -600,4 +600,304 @@ class SearchProductsTest extends AbstractTest
             ],
         ];
     }
+
+    /**
+     * @dataProvider filteredSearchDocumentsValidationProvider
+     *
+     * @param string $catalogId    Catalog ID or code
+     * @param string $filter       Filters to apply
+     * @param array  $debugMessage Expected debug message
+     */
+    public function testFilteredSearchProductsGraphQlValidation(
+        string $catalogId,
+        string $filter,
+        array $debugMessage
+    ): void {
+        $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
+        $arguments = sprintf('catalogId: "%s", filter: {%s}', $catalogId, $filter);
+        $this->validateApiCall(
+            new RequestGraphQlToTest(
+                <<<GQL
+                    {
+                        searchProducts({$arguments}) {
+                            collection { id }
+                        }
+                    }
+                GQL,
+                $user
+            ),
+            new ExpectedResponse(
+                200,
+                function (ResponseInterface $response) use (
+                    $debugMessage
+                ) {
+                    $this->assertJsonContains(['errors' => [$debugMessage]]);
+                }
+            )
+        );
+    }
+
+    public function filteredSearchDocumentsValidationProvider(): array
+    {
+        return [
+            [
+                'b2c_en', // catalog ID.
+                'fake_source_field_match: { match:"sacs" }', // Filters.
+                [ // debug message
+                    'message' => 'Field "fake_source_field_match" is not defined by type ProductFieldFilterInput.',
+                ],
+            ],
+            [
+                'b2c_en', // catalog ID.
+                'size: { match: "id" }', // Filters.
+                [ // debug message
+                    'message' => 'Field "match" is not defined by type ProductIntegerTypeFilterInput.',
+                ],
+            ],
+            [
+                'b2c_en', // catalog ID.
+                'name: { in: ["Test"], eq: "Test" }', // Filters.
+                [ // debug message
+                    'debugMessage' => 'Filter argument name: Only \'eq\', \'in\' or \'match\' should be filled.',
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider filteredSearchDocumentsProvider
+     *
+     * @param string $catalogId             Catalog ID or code
+     * @param string $filter                Filters to apply
+     * @param array  $sortOrders            Sort order specifications
+     * @param string $documentIdentifier    Document identifier to check ordered results
+     * @param array  $expectedOrderedDocIds Expected ordered document identifiers
+     */
+    public function testFilteredSearchProducts(
+        string $catalogId,
+        array $sortOrders,
+        string $filter,
+        string $documentIdentifier,
+        array $expectedOrderedDocIds
+    ): void {
+        $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
+        $arguments = sprintf(
+            'catalogId: "%s", pageSize: %d, currentPage: %d, filter: {%s}',
+            $catalogId,
+            10,
+            1,
+            $filter
+        );
+
+        $this->addSortOrders($sortOrders, $arguments);
+
+        $this->validateApiCall(
+            new RequestGraphQlToTest(
+                <<<GQL
+                    {
+                        searchProducts({$arguments}) {
+                            collection { id source }
+                        }
+                    }
+                GQL,
+                $user
+            ),
+            new ExpectedResponse(
+                200,
+                function (ResponseInterface $response) use (
+                    $documentIdentifier,
+                    $expectedOrderedDocIds
+                ) {
+                    // Extra test on response structure because all exceptions might not throw an HTTP error code.
+                    $this->assertJsonContains([
+                        'data' => [
+                            'searchProducts' => [
+                                'collection' => [],
+                            ],
+                        ],
+                    ]);
+
+                    $responseData = $response->toArray();
+                    $this->assertIsArray($responseData['data']['searchProducts']['collection']);
+                    $this->assertCount(\count($expectedOrderedDocIds), $responseData['data']['searchProducts']['collection']);
+                    foreach ($responseData['data']['searchProducts']['collection'] as $index => $document) {
+                        $this->assertArrayHasKey('id', $document);
+                        $this->assertEquals("/products/{$expectedOrderedDocIds[$index]}", $document['id']);
+
+                        $this->assertArrayHasKey('source', $document);
+                        if (\array_key_exists($documentIdentifier, $document['source'])) {
+                            $this->assertEquals($expectedOrderedDocIds[$index], $document['source'][$documentIdentifier]);
+                        }
+                    }
+                }
+            )
+        );
+    }
+
+    public function filteredSearchDocumentsProvider(): array
+    {
+        return [
+            [
+                'b2c_fr', // catalog ID.
+                [], // sort order specifications.
+                'sku: { eq: "24-MB03" }',
+                'entity_id', // document data identifier.
+                [3], // expected ordered document IDs
+            ],
+            [
+                'b2c_fr', // catalog ID.
+                [], // sort order specifications.
+                'category__id: { eq: "one" }',
+                'entity_id', // document data identifier.
+                [1, 2], // expected ordered document IDs
+            ],
+            [
+                'b2c_fr', // catalog ID.
+                [], // sort order specifications.
+                'created_at: { from: "2022-09-01", to: "2022-09-05" }',
+                'entity_id', // document data identifier.
+                [1, 12, 11, 8, 7, 6, 4, 3, 2], // expected ordered document IDs
+            ],
+            [
+                'b2c_fr', // catalog ID.
+                ['id' => SortOrderInterface::SORT_ASC], // sort order specifications.
+                'sku: { in: ["24-MB02", "24-WB01"] }', // filter.
+                'entity_id', // document data identifier.
+                [6, 8], // expected ordered document IDs
+            ],
+            [
+                'b2c_fr', // catalog ID.
+                ['id' => SortOrderInterface::SORT_ASC], // sort order specifications.
+                'id: { from: 10, to: 12 }', // filter.
+                'entity_id', // document data identifier.
+                [10, 11, 12], // expected ordered document IDs
+            ],
+            [
+                'b2c_fr', // catalog ID.
+                ['id' => SortOrderInterface::SORT_ASC], // sort order specifications.
+                'name: { match: "Compete Track" }', // filter.
+                'entity_id', // document data identifier.
+                [9], // expected ordered document IDs
+            ],
+            [
+                'b2c_fr', // catalog ID.
+                ['id' => SortOrderInterface::SORT_ASC], // sort order specifications.
+                <<<GQL
+                  name: { match: "Sac" }
+                  sku: { in: ["24-WB06", "24-WB03"] }
+                GQL, // filter.
+                'entity_id', // document data identifier.
+                [11, 12], // expected ordered document IDs
+            ],
+            [
+                'b2c_fr', // catalog ID.
+                ['id' => SortOrderInterface::SORT_ASC], // sort order specifications.
+                <<<GQL
+                  boolFilter: {
+                    _must: [
+                      { name: { match:"Sac" }}
+                      { sku: { in: ["24-WB06", "24-WB03"] }}
+                    ]
+                   }
+                GQL, // filter.
+                'entity_id', // document data identifier.
+                [11, 12], // expected ordered document IDs
+            ],
+            [
+                'b2c_fr', // catalog ID.
+                ['id' => SortOrderInterface::SORT_ASC], // sort order specifications.
+                <<<GQL
+                  boolFilter: {
+                    _should: [
+                      { sku: { eq: "24-MB05" }}
+                      { sku: { eq: "24-UB02" }}
+                    ]
+                   }
+                GQL, // filter.
+                'entity_id', // document data identifier.
+                [4, 7], // expected ordered document IDs
+            ],
+            [
+                'b2c_fr', // catalog ID.
+                ['id' => SortOrderInterface::SORT_ASC], // sort order specifications.
+                <<<GQL
+                  boolFilter: {
+                    _not: [
+                      { name: { match:"Sac" }}
+                    ]
+                  }
+                GQL, // filter.
+                'entity_id', // document data identifier.
+                [5, 9, 10], // expected ordered document IDs
+            ],
+            [
+                'b2c_fr', // catalog ID.
+                ['id' => SortOrderInterface::SORT_ASC], // sort order specifications.
+                <<<GQL
+                  boolFilter: {
+                    _must: [
+                      {name: {match:"Sac"}}
+                    ]
+                    _should: [
+                      {sku: {eq: "24-WB06"}}
+                      {sku: {eq: "24-WB03"}}
+                    ]
+                  }
+                GQL, // filter.
+                'entity_id', // document data identifier.
+                [11, 12], // expected ordered document IDs
+            ],
+            [
+                'b2c_fr', // catalog ID.
+                ['id' => SortOrderInterface::SORT_ASC], // sort order specifications.
+                <<<GQL
+                  boolFilter: {
+                    _must: [
+                      {name: {match:"Sac"}}
+                    ]
+                    _should: [
+                      {sku: {eq: "24-WB01"}}
+                      {sku: {eq: "24-WB06"}}
+                      {sku: {eq: "24-WB03"}}
+                    ]
+                    _not: [
+                      {id: {eq: 11}}
+                    ]
+                  }
+                GQL, // filter.
+                'entity_id', // document data identifier.
+                [8, 12], // expected ordered document IDs
+            ],
+            [
+                'b2c_fr', // catalog ID.
+                ['id' => SortOrderInterface::SORT_ASC], // sort order specifications.
+                <<<GQL
+                  boolFilter: {
+                    _must: [
+                      {name: {match:"Sac"}}
+                      {boolFilter: {
+                        _should: [
+                          {sku: {eq: "24-WB06"}}
+                          {sku: {eq: "24-WB03"}}
+                        ]}
+                      }
+                    ]
+                  }
+                GQL, // filter.
+                'entity_id', // document data identifier.
+                [11, 12], // expected ordered document IDs
+            ],
+        ];
+    }
+
+    private function addSortOrders(array $sortOrders, string &$arguments): void
+    {
+        if (!empty($sortOrders)) {
+            $sortArguments = [];
+            foreach ($sortOrders as $field => $direction) {
+                $sortArguments[] = sprintf('%s : %s', $field, $direction);
+            }
+            $arguments .= sprintf(', sort: {%s}', implode(', ', $sortArguments));
+        }
+    }
 }
