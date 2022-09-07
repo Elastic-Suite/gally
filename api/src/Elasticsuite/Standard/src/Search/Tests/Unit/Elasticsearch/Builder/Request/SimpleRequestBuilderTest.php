@@ -38,7 +38,7 @@ use Elasticsuite\Search\Elasticsearch\Request\QueryFactory;
 use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
 use Elasticsuite\Search\Elasticsearch\RequestFactoryInterface;
 use Elasticsuite\Search\Elasticsearch\Spellchecker;
-use Elasticsuite\Standard\src\Test\AbstractTest;
+use Elasticsuite\Test\AbstractTest;
 
 class SimpleRequestBuilderTest extends AbstractTest
 {

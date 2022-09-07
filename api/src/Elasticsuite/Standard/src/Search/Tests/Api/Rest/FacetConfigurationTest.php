@@ -16,9 +16,9 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Search\Tests\Api\Rest;
 
-use Elasticsuite\Standard\src\Test\AbstractTest;
-use Elasticsuite\Standard\src\Test\ExpectedResponse;
-use Elasticsuite\Standard\src\Test\RequestToTest;
+use Elasticsuite\Test\AbstractTest;
+use Elasticsuite\Test\ExpectedResponse;
+use Elasticsuite\Test\RequestToTest;
 use Elasticsuite\User\Constant\Role;
 use Elasticsuite\User\Model\User;
 use Symfony\Contracts\HttpClient\ResponseInterface;

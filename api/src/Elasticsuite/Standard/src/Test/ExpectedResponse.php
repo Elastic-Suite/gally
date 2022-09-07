@@ -14,7 +14,7 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\Standard\src\Test;
+namespace Elasticsuite\Test;
 
 /**
  * @codeCoverageIgnore

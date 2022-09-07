@@ -18,7 +18,7 @@ namespace Elasticsuite\Analysis\Tests\Unit;
 
 use Elasticsuite\Analysis\Service\Config;
 use Elasticsuite\DependencyInjection\Configuration;
-use Elasticsuite\Standard\src\Test\AbstractTest;
+use Elasticsuite\Test\AbstractTest;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Yaml\Parser as YamlParser;
 

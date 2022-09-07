@@ -18,7 +18,7 @@ namespace Elasticsuite\Catalog\Tests\Unit;
 
 use Elasticsuite\Catalog\Exception\NoCatalogException;
 use Elasticsuite\Catalog\Service\DefaultCatalogProvider;
-use Elasticsuite\Standard\src\Test\AbstractTest;
+use Elasticsuite\Test\AbstractTest;
 
 class DefaultCatalogProviderTest extends AbstractTest
 {

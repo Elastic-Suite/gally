@@ -30,7 +30,7 @@ use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
 use Elasticsuite\Search\Elasticsearch\Request\QueryFactory;
 use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
 use Elasticsuite\Search\Elasticsearch\Request\SortOrderInterface;
-use Elasticsuite\Standard\src\Test\AbstractTest;
+use Elasticsuite\Test\AbstractTest;
 
 class AssemblerTest extends AbstractTest
 {

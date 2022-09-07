@@ -26,7 +26,7 @@ use Elasticsuite\Index\Converter\SourceField\StockSourceFieldConverter;
 use Elasticsuite\Index\Converter\SourceField\TextSourceFieldConverter;
 use Elasticsuite\Index\Model\Index\Mapping;
 use Elasticsuite\Metadata\Model\SourceField;
-use Elasticsuite\Standard\src\Test\AbstractTest;
+use Elasticsuite\Test\AbstractTest;
 use PHPUnit\Framework\MockObject\MockObject;
 
 class SourceFieldConverterTest extends AbstractTest

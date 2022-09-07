@@ -17,7 +17,7 @@ declare(strict_types=1);
 namespace Elasticsuite\Category\Tests\Api\Rest;
 
 use Elasticsuite\Category\Model\Category;
-use Elasticsuite\Standard\src\Test\AbstractEntityTest;
+use Elasticsuite\Test\AbstractEntityTest;
 use Elasticsuite\User\Constant\Role;
 use Elasticsuite\User\Model\User;
 

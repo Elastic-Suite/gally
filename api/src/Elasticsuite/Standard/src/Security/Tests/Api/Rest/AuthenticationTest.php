@@ -16,7 +16,7 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Security\Tests\Api\Rest;
 
-use Elasticsuite\Standard\src\Test\AbstractTest;
+use Elasticsuite\Test\AbstractTest;
 use Elasticsuite\User\Constant\Role;
 use Elasticsuite\User\Test\LoginTrait;
 

@@ -17,7 +17,7 @@ declare(strict_types=1);
 namespace Elasticsuite\Catalog\Tests\Api\Rest;
 
 use Elasticsuite\Catalog\Model\LocalizedCatalog;
-use Elasticsuite\Standard\src\Test\AbstractEntityTest;
+use Elasticsuite\Test\AbstractEntityTest;
 use Elasticsuite\User\Constant\Role;
 
 class LocalizedCatalogsTest extends AbstractEntityTest
