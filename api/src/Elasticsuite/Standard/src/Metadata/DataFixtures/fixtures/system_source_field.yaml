@@ -8,7 +8,8 @@ Elasticsuite\Metadata\Model\SourceField:
         metadata: '@product'
         code: 'sku'
         type: 'reference'
-        isSystem: true    
+        isSystem: true
+        isFilterable: true
     product_name:
         metadata: '@product'
         code: 'name'
@@ -18,6 +19,7 @@ Elasticsuite\Metadata\Model\SourceField:
         isSortable: true
         isSpellchecked: true
         isSystem: true
+        isFilterable: true
     product_price:
         metadata: '@product'
         code: 'price'
@@ -46,8 +48,8 @@ Elasticsuite\Metadata\Model\SourceField:
         metadata: '@product'
         code: 'category.id'
         type: 'keyword'
-        isSystem: true
         isFilterable: true
+        isSystem: true
     product_category_uid:
         metadata: '@product'
         code: 'category.uid'

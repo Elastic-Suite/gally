@@ -30,6 +30,8 @@ use Elasticsuite\ResourceMetadata\Service\ResourceMetadataManager;
 use Elasticsuite\Search\DataProvider\Paginator;
 use Elasticsuite\Search\Elasticsearch\Adapter;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\SimpleRequestBuilder as RequestBuilder;
+use Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider;
+use Elasticsuite\Search\Service\GraphQl\FilterManager;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 class ProductDataProvider implements ContextAwareCollectionDataProviderInterface, RestrictedDataProviderInterface
@@ -42,8 +44,10 @@ class ProductDataProvider implements ContextAwareCollectionDataProviderInterface
         private MetadataRepository $metadataRepository,
         private LocalizedCatalogRepository $catalogRepository,
         private RequestBuilder $requestBuilder,
+        private ContainerConfigurationProvider $containerConfigurationProvider,
         private Adapter $adapter,
         private SortInputType $sortInputType,
+        private FilterManager $filterManager,
     ) {
     }
 
@@ -62,6 +66,8 @@ class ProductDataProvider implements ContextAwareCollectionDataProviderInterface
      */
     public function getCollection(string $resourceClass, string $operationName = null, array $context = []): iterable
     {
+        $this->filterManager->validateFilters($context);
+
         $resourceMetadata = $this->resourceMetadataFactory->create($resourceClass);
         $entityType = $this->resourceMetadataManager->getMetadataEntity($resourceMetadata);
         if (null === $entityType) {
@@ -86,6 +92,8 @@ class ProductDataProvider implements ContextAwareCollectionDataProviderInterface
             throw new InvalidArgumentException(sprintf('Missing catalog [%s]', $catalogId));
         }
 
+        $containerConfig = $this->containerConfigurationProvider->get($metadata, $catalog);
+
         $this->sortInputType->validateSort($context);
 
         $searchQuery = $context['filters']['search'] ?? null;
@@ -99,6 +107,7 @@ class ProductDataProvider implements ContextAwareCollectionDataProviderInterface
             $limit,
             $searchQuery,
             $this->sortInputType->formatSort($context),
+            $this->filterManager->formatFilters($context, $containerConfig),
         );
         $response = $this->adapter->search($request);
 

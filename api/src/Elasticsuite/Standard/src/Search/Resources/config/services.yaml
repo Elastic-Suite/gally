@@ -146,10 +146,12 @@ services:
 
     Elasticsuite\Search\GraphQl\Type\Definition\FieldFilterInputType:
         arguments:
-            - '@Elasticsuite\Search\GraphQl\Type\Definition\Filter\BoolFilterInputType'
-            - '@Elasticsuite\Search\GraphQl\Type\Definition\Filter\EqualTypeFilterInputType'
-            - '@Elasticsuite\Search\GraphQl\Type\Definition\Filter\MatchFilterInputType'
-            - '@Elasticsuite\Search\GraphQl\Type\Definition\Filter\RangeFilterInputType'
+            - {
+                boolFilter: '@Elasticsuite\Search\GraphQl\Type\Definition\Filter\BoolFilterInputType',
+                equalFilter: '@Elasticsuite\Search\GraphQl\Type\Definition\Filter\EqualTypeFilterInputType',
+                matchFilter: '@Elasticsuite\Search\GraphQl\Type\Definition\Filter\MatchFilterInputType',
+                rangeFilter: '@Elasticsuite\Search\GraphQl\Type\Definition\Filter\RangeFilterInputType',
+            }
             - '@Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
         tags:
             - { name: api_platform.graphql.type }

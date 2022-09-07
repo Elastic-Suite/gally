@@ -21,21 +21,18 @@ use Elasticsuite\GraphQl\Type\Definition\FilterInterface;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder;
 use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
 use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
-use Elasticsuite\Search\GraphQl\Type\Definition\Filter\BoolFilterInputType;
-use Elasticsuite\Search\GraphQl\Type\Definition\Filter\EqualTypeFilterInputType;
-use Elasticsuite\Search\GraphQl\Type\Definition\Filter\MatchFilterInputType;
-use Elasticsuite\Search\GraphQl\Type\Definition\Filter\RangeFilterInputType;
 use GraphQL\Type\Definition\InputObjectType;
 
 class FieldFilterInputType extends InputObjectType implements TypeInterface, FilterInterface
 {
     public const NAME = 'FieldFilterInput';
 
+    /**
+     * @param FilterInterface[]  $availableTypes
+     * @param FilterQueryBuilder $filterQueryBuilder
+     */
     public function __construct(
-        private BoolFilterInputType $boolFilterInputType,
-        private EqualTypeFilterInputType $equalTypeFilterInputType,
-        private MatchFilterInputType $matchFilterInputType,
-        private RangeFilterInputType $rangeFilterInputType,
+        private iterable $availableTypes,
         private FilterQueryBuilder $filterQueryBuilder,
     ) {
         $this->name = self::NAME;
@@ -46,12 +43,10 @@ class FieldFilterInputType extends InputObjectType implements TypeInterface, Fil
     public function getConfig(): array
     {
         return [
-            'fields' => [
-                'boolFilter' => ['type' => $this->boolFilterInputType],
-                'equalFilter' => ['type' => $this->equalTypeFilterInputType],
-                'matchFilter' => ['type' => $this->matchFilterInputType],
-                'rangeFilter' => ['type' => $this->rangeFilterInputType],
-            ],
+            'fields' => array_map(
+                fn ($filterType) => ['type' => $filterType],
+                $this->availableTypes
+            ),
         ];
     }
 
@@ -63,21 +58,25 @@ class FieldFilterInputType extends InputObjectType implements TypeInterface, Fil
     public function validate(string $argName, mixed $inputData): array
     {
         $errors = [];
+        $config = $this->getConfig();
+
         foreach ($inputData as $filterInputData) {
-            if (isset($filterInputData['boolFilter'])) {
-                $errors = array_merge($errors, $this->boolFilterInputType->validate('boolFilter', $filterInputData['boolFilter']));
-            }
+            foreach ($filterInputData as $filterType => $data) {
+                if (str_contains($filterType, '.')) {
+                    // Api platform automatically replace nesting separator by '.',
+                    // but it keeps the value with nesting separator. In order to avoid applying
+                    // the filter twice, we have to skip the one with the '.'.
+                    continue;
+                }
 
-            if (isset($filterInputData['equalFilter'])) {
-                $errors = array_merge($errors, $this->equalTypeFilterInputType->validate('equalFilter', $filterInputData['equalFilter']));
-            }
+                if (!\array_key_exists($filterType, $config['fields'])) {
+                    $errors[] = "The filter type {$filterType} is not valid.";
+                    continue;
+                }
 
-            if (isset($filterInputData['rangeFilter'])) {
-                $errors = array_merge($errors, $this->rangeFilterInputType->validate('rangeFilter', $filterInputData['rangeFilter']));
-            }
-
-            if (isset($filterInputData['matchFilter'])) {
-                $errors = array_merge($errors, $this->matchFilterInputType->validate('matchFilter', $filterInputData['matchFilter']));
+                /** @var FilterInterface $type */
+                $type = $config['fields'][$filterType]['type'];
+                $errors = array_merge($errors, $type->validate($filterType, $data));
             }
         }
 
@@ -87,21 +86,22 @@ class FieldFilterInputType extends InputObjectType implements TypeInterface, Fil
     public function transformToElasticsuiteFilter(array $inputFilter, ContainerConfigurationInterface $containerConfig): QueryInterface
     {
         $filters = [];
+        $config = $this->getConfig();
 
-        if (isset($inputFilter['boolFilter'])) {
-            $filters[] = $this->boolFilterInputType->transformToElasticsuiteFilter($inputFilter['boolFilter'], $containerConfig);
-        }
+        foreach ($inputFilter as $filterType => $data) {
+            if (str_contains($filterType, '.')) {
+                // Api platform automatically replace nesting separator by '.',
+                // but it keeps the value with nesting separator. In order to avoid applying
+                // the filter twice, we have to skip the one with the '.'.
+                continue;
+            }
 
-        if (isset($inputFilter['equalFilter'])) {
-            $filters[] = $this->equalTypeFilterInputType->transformToElasticsuiteFilter($inputFilter['equalFilter'], $containerConfig);
-        }
-
-        if (isset($inputFilter['rangeFilter'])) {
-            $filters[] = $this->rangeFilterInputType->transformToElasticsuiteFilter($inputFilter['rangeFilter'], $containerConfig);
-        }
-
-        if (isset($inputFilter['matchFilter'])) {
-            $filters[] = $this->matchFilterInputType->transformToElasticsuiteFilter($inputFilter['matchFilter'], $containerConfig);
+            /** @var FilterInterface $type */
+            $type = $config['fields'][$filterType]['type'];
+            if (!\array_key_exists('field', $data)) {
+                $data['field'] = $filterType;
+            }
+            $filters[] = $type->transformToElasticsuiteFilter($data, $containerConfig);
         }
 
         return $this->filterQueryBuilder->create($containerConfig, $filters);
