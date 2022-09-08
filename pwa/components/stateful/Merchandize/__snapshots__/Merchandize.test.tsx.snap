@@ -1,0 +1,146 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Merchandize match snapshot testSelect 1`] = `
+<div>
+  <div
+    class="MuiPaper-root MuiPaper-outlined MuiPaper-rounded css-11hpgp0-MuiPaper-root"
+    style="height: auto; padding: 16px;"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-container css-1hbmzt3-MuiGrid-root"
+      style="width: 100%;"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-1r2s251-MuiGrid-root"
+        style="width: 50%;"
+      >
+        <div
+          class="MuiFormControl-root MuiFormControl-fullWidth css-12mfi9j-MuiFormControl-root"
+        >
+          <label
+            class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-colorPrimary css-ssr94h-MuiFormLabel-root-MuiInputLabel-root"
+            data-shrink="true"
+          >
+            name
+            <span
+              aria-label="name.tooltip"
+              class=""
+              data-mui-internal-clone-element="true"
+              style="display: inline-block; padding-left: 10px; margin-bottom: -5px;"
+            >
+              <ion-icon
+                name="information-circle-outline"
+                style="color: rgb(129, 135, 185); width: 20px; height: 20px; display: flex;"
+              />
+            </span>
+          </label>
+          <span
+            class="MuiSwitch-root MuiSwitch-sizeMedium css-najw49-MuiSwitch-root"
+          >
+            <span
+              class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-checked PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-checked Mui-checked css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
+            >
+              <input
+                checked=""
+                class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
+                name="name"
+                type="checkbox"
+              />
+              <span
+                class="MuiSwitch-thumb css-epwt2k-MuiSwitch-thumb"
+              />
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </span>
+            <span
+              class="MuiSwitch-track css-1mr4grv-MuiSwitch-track"
+            />
+          </span>
+        </div>
+        <div
+          class="MuiFormControl-root MuiFormControl-fullWidth css-12mfi9j-MuiFormControl-root"
+        >
+          <label
+            class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-colorPrimary css-ssr94h-MuiFormLabel-root-MuiInputLabel-root"
+            data-shrink="true"
+          >
+            virtual
+            <span
+              aria-label="virtual.tooltip"
+              class=""
+              data-mui-internal-clone-element="true"
+              style="display: inline-block; padding-left: 10px; margin-bottom: -5px;"
+            >
+              <ion-icon
+                name="information-circle-outline"
+                style="color: rgb(129, 135, 185); width: 20px; height: 20px; display: flex;"
+              />
+            </span>
+          </label>
+          <span
+            class="MuiSwitch-root MuiSwitch-sizeMedium css-najw49-MuiSwitch-root"
+          >
+            <span
+              class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-checked PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-checked Mui-checked css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
+            >
+              <input
+                checked=""
+                class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
+                name="virtual"
+                type="checkbox"
+              />
+              <span
+                class="MuiSwitch-thumb css-epwt2k-MuiSwitch-thumb"
+              />
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </span>
+            <span
+              class="MuiSwitch-track css-1mr4grv-MuiSwitch-track"
+            />
+          </span>
+        </div>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-container css-1e2bu2o-MuiGrid-root"
+        style="width: 50%;"
+      >
+        <div
+          class="MuiFormControl-root css-1c9gikl-MuiFormControl-root"
+        >
+          <label
+            class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-colorPrimary css-ssr94h-MuiFormLabel-root-MuiInputLabel-root"
+            data-shrink="true"
+          >
+            Default sorting
+            <span
+              aria-label="select.tooltip"
+              class=""
+              data-mui-internal-clone-element="true"
+              style="display: inline-block; padding-left: 10px; margin-bottom: -5px;"
+            >
+              <ion-icon
+                name="information-circle-outline"
+                style="color: rgb(129, 135, 185); width: 20px; height: 20px; display: flex;"
+              />
+            </span>
+          </label>
+          <button
+            aria-expanded="false"
+            aria-haspopup="listbox"
+            class="MuiSelectUnstyled-root css-k616if"
+            type="button"
+          >
+            <span />
+            <ion-icon
+              name="chevron-down"
+            />
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

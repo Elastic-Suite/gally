@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InfoTooltip match snapshot testInfoTitle 1`] = `
+<div>
+  <span
+    aria-label="salut"
+    class=""
+    data-mui-internal-clone-element="true"
+    style="display: inline-block; padding-left: 10px; margin-bottom: -5px;"
+  >
+    <ion-icon
+      name="information-circle-outline"
+      style="color: rgb(129, 135, 185); width: 20px; height: 20px; display: flex;"
+    />
+  </span>
+</div>
+`;
