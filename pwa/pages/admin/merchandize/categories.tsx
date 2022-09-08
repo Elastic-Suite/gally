@@ -15,7 +15,7 @@ import {
 } from '~/hooks'
 import { findBreadcrumbLabel } from '~/services'
 import { selectMenu, useAppSelector } from '~/store'
-import { ICatalog, ICategories, ICategory, ISearchParameters, IHydraResponse, } from '~/types'
+import { ICatalog, ICategories, ICategory, IHydraResponse, ISearchParameters, } from '~/types'
 
 import TitleBlock from '~/components/molecules/layout/TitleBlock/TitleBlock'
 import TwoColsLayout from '~/components/molecules/layout/twoColsLayout/TwoColsLayout'
@@ -168,14 +168,12 @@ function Categories(): JSX.Element {
             </>
           </TitleBlock>,
           <TitleBlock key="virtualRule" title={t('virtualRule.title')}>
-            <VirtualRule val={dataCat?.isVirtual}>
               <RulesManager
                 catalogId={catalogId}
                 localizedCatalogId={localizedCatalogId}
                 onChange={setRule}
                 rule={rule}
               />
-            </VirtualRule>
           </TitleBlock>,
         ]}
       >
@@ -206,6 +204,7 @@ function Categories(): JSX.Element {
             {t('placeholder')}
           </Box>
         )}
+       
       </TwoColsLayout>
     </>
   )
