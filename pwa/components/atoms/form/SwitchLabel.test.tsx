@@ -1,12 +1,12 @@
 import { renderWithProviders } from '~/utils/tests'
-import SwitchLabel from './SwitchLabel'
+import Switch from './Switch'
 
 describe('SwitchLabel match snapshot', () => {
   it('testSwitchTrue', () => {
     const first = true
 
     const { container } = renderWithProviders(
-      <SwitchLabel
+      <Switch
         label="label"
         labelInfo="labelInfo"
         checked={first}

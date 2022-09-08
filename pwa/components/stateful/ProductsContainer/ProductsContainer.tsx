@@ -2,7 +2,13 @@ import { Box, styled } from '@mui/system'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { ICategorySortingOption, IHydraMember, ITreeItem } from '~/types'
+import {
+  ICatalog,
+  ICategorySortingOption,
+  IHydraMember,
+  IHydraResponse,
+  ITreeItem,
+} from '~/types'
 
 import PrimaryButton from '~/components/atoms/buttons/PrimaryButton'
 import TertiaryButton from '~/components/atoms/buttons/TertiaryButton'
@@ -14,6 +20,7 @@ import Merchandize from '../Merchandize/Merchandize'
 
 import { useApiList, useResource } from '~/hooks'
 import SearchBar from '../Merchandize/SearchBar/SearchBar'
+import { getCatalogForSearchProductApi } from '~/services'
 
 const Layout = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -33,7 +40,10 @@ interface IProps {
   onNameChange: (val: boolean) => Promise<void>
   onSortChange: (val: string) => Promise<void>
   dataCat: IConfiguration
-  catalogId: number
+  catalog: number
+  localizedCatalog: number
+  catalogsData: IHydraResponse<ICatalog>
+  error: Error
 }
 
 export interface IConfiguration extends IHydraMember {
@@ -49,12 +59,15 @@ interface IPropsSort {
 
 function ProductsContainer(props: IProps): JSX.Element {
   const {
-    catalogId,
+    catalog,
     category,
     onVirtualChange,
     dataCat,
     onNameChange,
     onSortChange,
+    localizedCatalog,
+    catalogsData,
+    error,
   } = props
 
   const tableRef = useRef<HTMLDivElement>()
@@ -76,9 +89,18 @@ function ProductsContainer(props: IProps): JSX.Element {
     setBottomSelectedRows([])
   }
 
-  const resour = 'CategorySortingOption'
-  const re = useResource(resour)
-  const [{ data }] = useApiList<ICategorySortingOption>(re)
+  const catalogId =
+    catalogsData && catalogsData['hydra:totalItems'] > 0
+      ? getCatalogForSearchProductApi(
+          catalog,
+          localizedCatalog,
+          catalogsData['hydra:member']
+        )
+      : null
+
+  const resourceName = 'CategorySortingOption'
+  const resourceSortingOption = useResource(resourceName)
+  const [{ data }] = useApiList<ICategorySortingOption>(resourceSortingOption)
 
   const sortOption = data
     ? data[`hydra:member`].map((obj: IPropsSort) => ({
@@ -89,6 +111,10 @@ function ProductsContainer(props: IProps): JSX.Element {
 
   const [searchValue, setSearchValue] = useState('')
   const onSearchChange = (value: string): void => setSearchValue(value)
+
+  if (error || !catalogsData) {
+    return null
+  }
 
   return (
     <Box>
@@ -119,7 +145,7 @@ function ProductsContainer(props: IProps): JSX.Element {
           onTopSelectedRows={setTopSelectedRows}
           bottomSelectedRows={bottomSelectedRows}
           onBottomSelectedRows={setBottomSelectedRows}
-          catalogId={`${catalogId}`}
+          catalogId={catalogId}
         />
       </Layout>
       <StickyBar positionRef={tableRef} show={showStickyBar}>

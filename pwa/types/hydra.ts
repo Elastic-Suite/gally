@@ -67,12 +67,6 @@ export interface IRdfsRange {
   'owl:equivalentClass': IOwlEquivalentClass
 }
 
-export interface ICategorySortingOption extends IJsonldBase {
-  id: string
-  label: string
-  code: string
-}
-
 export interface IHydraSupportedOperation extends IJsonldType {
   expects?: string
   'hydra:method': Method

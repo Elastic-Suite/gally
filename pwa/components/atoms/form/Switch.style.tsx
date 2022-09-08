@@ -1,7 +1,7 @@
 import { styled } from '@mui/system'
-import { Box } from '@mui/material'
+import { FormControl } from '@mui/material'
 
-export const Font = styled(Box)(() => ({
+export const StyleFormControl = styled(FormControl)(() => ({
   fontFamily: 'Inter',
   fontStyle: 'normal',
   fontWeight: 500,

@@ -118,7 +118,10 @@ function Categories(): JSX.Element {
           onVirtualChange={handleUpdateCat('isVirtual')}
           onNameChange={handleUpdateCat('useNameInProductSearch')}
           onSortChange={handleUpdateCat('defaultSorting')}
-          catalogId={catalogId}
+          catalog={catalogId}
+          localizedCatalog={localizedCatalogId}
+          catalogsData={data}
+          error={error}
         />
       </TwoColsLayout>
     </>

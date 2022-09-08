@@ -2,7 +2,7 @@ import { ChangeEvent } from 'react'
 import { useTranslation } from 'next-i18next'
 import { Grid, Paper } from '@mui/material'
 import DropDown from '~/components/atoms/form/DropDown'
-import SwitchLabel from '~/components/atoms/form/SwitchLabel'
+import Switch from '~/components/atoms/form/Switch'
 import { IOptions } from '~/types'
 
 interface IProps {
@@ -49,14 +49,14 @@ function Merchandize({
           alignItems="flex-start"
           style={{ width: '50%' }}
         >
-          <SwitchLabel
+          <Switch
             label={t('name')}
             labelInfo={t('name.tooltip')}
             onChange={handleChange}
             checked={categoryNameValue}
             name="name"
           />
-          <SwitchLabel
+          <Switch
             label={t('virtual')}
             labelInfo={t('virtual.tooltip')}
             onChange={handleChange}
