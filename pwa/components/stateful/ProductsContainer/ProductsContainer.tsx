@@ -20,6 +20,8 @@ import Merchandize from '../Merchandize/Merchandize'
 import { useApiList, useResource } from '~/hooks'
 import SearchBar from '../Merchandize/SearchBar/SearchBar'
 import { getCatalogForSearchProductApi } from '~/services'
+import { Grid } from '@mui/material'
+import { PrimaryButton } from '~/components/atoms/buttons/Button.styled'
 
 const Layout = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -35,9 +37,11 @@ const ActionsButtonsContainer = styled(Box)({
 
 interface IProps {
   category: ICategory
-  onVirtualChange: (val: boolean) => Promise<void>
-  onNameChange: (val: boolean) => Promise<void>
-  onSortChange: (val: string) => Promise<void>
+  onVirtualChange: (val: boolean) => void
+  onNameChange: (val: boolean) => void
+  onSortChange: (val: string) => void
+  onSave: () => void
+  saveData: IConfigurationOptional
   dataCat: IConfiguration
   catalog: number
   localizedCatalog: number
@@ -50,11 +54,18 @@ export interface IConfiguration extends IHydraMember {
   isVirtual: boolean
   defaultSorting: string
 }
+export interface IConfigurationOptional {
+  useNameInProductSearch?: boolean
+  isVirtual?: boolean
+  defaultSorting?: string
+}
 
 function ProductsContainer(props: IProps): JSX.Element {
   const {
     catalog,
     category,
+    onSave,
+    saveData,
     onVirtualChange,
     dataCat,
     onNameChange,
@@ -113,7 +124,20 @@ function ProductsContainer(props: IProps): JSX.Element {
   return (
     <Box>
       <Layout>
-        <PageTile title={category?.name} sx={{ marginBottom: '12px' }} />
+        <PageTile
+          title={category?.name ? category?.name : category?.catalogName}
+          sx={{ marginBottom: '12px' }}
+        />
+        <Grid container justifyContent="flex-end">
+          <PrimaryButton
+            sx={{ width: '150px' }}
+            onClick={onSave}
+            disabled={!Object.entries(saveData).length}
+          >
+            Save
+          </PrimaryButton>
+        </Grid>
+
         <Merchandize
           onVirtualChange={onVirtualChange}
           virtualCategoryValue={isVirtual}
