@@ -74,12 +74,13 @@ class AddAggregationsData implements SerializeStageInterface
 
         $data = [
             'field' => $aggregation->getField(),
-            'label' => $sourceField->getLabel($containerConfig->getCatalog()->getId()),
+            'label' => $sourceField ? $sourceField->getLabel($containerConfig->getCatalog()->getId()) : $aggregation->getField(),
             'count' => $aggregation->getCount(),
             'options' => null,
         ];
         if (!empty($aggregation->getValues())) {
             $data['options'] = [];
+            $data['count'] = 0;
         }
         foreach ($aggregation->getValues() as $value) {
             if ($value instanceof BucketValueInterface) {

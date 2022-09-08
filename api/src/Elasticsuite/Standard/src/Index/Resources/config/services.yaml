@@ -1,3 +1,6 @@
+imports:
+    - { resource: conversion/sourcefield_to_mapping.yaml }
+
 services:
     Elasticsuite\Index\Decoration\Metadata\Document\Factory\AttributeDocumentMetadataFactory:
         decorates: api_platform.elasticsearch.metadata.document.metadata_factory
@@ -38,11 +41,9 @@ services:
             - { name: api_platform.item_data_provider }
             - { name: api_platform.collection_data_provider }
 
-    Elasticsuite\Index\Converter\SourceFieldToMappingField: ~
-    
     Elasticsuite\Index\Service\MetadataManager:
         arguments:
-            - '@Elasticsuite\Index\Converter\SourceFieldToMappingField'
+            - !tagged_iterator { tag: 'elasticsuite.mapping.source_field_converter' }
 
     Elasticsuite\Index\Helper\IndexSettings:
         arguments:

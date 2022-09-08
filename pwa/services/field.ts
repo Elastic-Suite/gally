@@ -1,4 +1,9 @@
-import { IElasticSuiteProperty, IField } from '~/types'
+import {
+  IDropdownApiOptions,
+  IDropdownStaticOptions,
+  IElasticSuiteProperty,
+  IField,
+} from '~/types'
 
 function updateProperties(
   properties: IElasticSuiteProperty,
@@ -24,17 +29,17 @@ function updateProperties(
   return properties
 }
 
-export function updateHeaderPropertiesAccordingToPath(
+export function updatePropertiesAccordingToPath(
   field: IField,
   path: string
 ): IField {
   if (path.includes('admin/settings')) {
     path = 'settings_attribute'
   } else {
-    path = path.replaceAll('/', '_')
+    path = path.replaceAll('/', '_').replace('_admin_', '')
   }
   if (field.elasticsuite?.context) {
-    const [_, newPropertiesvalues] = Object.entries(field.elasticsuite?.context)
+    const [, newPropertiesvalues] = Object.entries(field.elasticsuite?.context)
       .filter(([key, _]) => key === path)
       .flat()
     if (newPropertiesvalues) {
@@ -55,4 +60,14 @@ export function updateHeaderPropertiesAccordingToPath(
     }
   }
   return field
+}
+
+export function hasFieldOptions(field: IField): boolean {
+  return Boolean(field.elasticsuite?.options)
+}
+
+export function isDropdownStaticOptions(
+  options: IDropdownStaticOptions | IDropdownApiOptions
+): options is IDropdownStaticOptions {
+  return 'values' in options
 }

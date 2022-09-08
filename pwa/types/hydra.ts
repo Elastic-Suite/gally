@@ -1,3 +1,4 @@
+import { DataContentType } from './customTables'
 import { Method } from './fetch'
 import {
   IJsonldBase,
@@ -91,6 +92,17 @@ export interface IElasticSuiteProperty {
   editable?: boolean
   position?: number
   context?: Record<string, IElasticSuiteProperty>
+  input?: DataContentType
+  options?: IDropdownStaticOptions | IDropdownApiOptions
+}
+
+export interface IDropdownStaticOptions {
+  values: (string | number)[]
+}
+
+export interface IDropdownApiOptions {
+  api_rest: string
+  api_gaphql: string
 }
 
 export interface IHydraSupportedProperty extends IJsonldType {
@@ -130,7 +142,7 @@ export interface IHydraSearch extends IJsonldType {
   'hydra:variableRepresentation': string
 }
 
-export interface IHydraResponse<Member extends IHydraMember>
+export interface IHydraResponse<Member>
   extends IJsonldContext,
     IJsonldType,
     IJsonldId {

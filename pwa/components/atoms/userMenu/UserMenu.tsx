@@ -42,7 +42,6 @@ const CustomUserMenu = styled('div')(({ theme }) => ({
   top: `calc(100% + 4px)`,
   right: '0',
   opacity: 0,
-  height: 0,
   overflow: 'hidden',
   border: '1px solid',
   borderRadius: 8,
@@ -82,11 +81,7 @@ function UserMenu(): JSX.Element {
 
         <CustomUserMenu
           ref={useMenu}
-          style={
-            openUserMenu
-              ? { height: useMenu?.current?.scrollTopMax, opacity: 1 }
-              : {}
-          }
+          style={openUserMenu ? { opacity: 1 } : {}}
         >
           <UserMenuShow />
         </CustomUserMenu>

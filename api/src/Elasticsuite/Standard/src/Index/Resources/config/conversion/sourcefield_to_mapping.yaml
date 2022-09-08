@@ -1,0 +1,33 @@
+services:
+    Elasticsuite\Index\Converter\SourceField\BasicSourceFieldConverter:
+        tags:
+            - { name: elasticsuite.mapping.source_field_converter }
+            
+    Elasticsuite\Index\Converter\SourceField\ImageSourceFieldConverter:
+        tags:
+            - { name: elasticsuite.mapping.source_field_converter }
+        
+    Elasticsuite\Index\Converter\SourceField\ObjectSourceFieldConverter:
+        tags:
+            - { name: elasticsuite.mapping.source_field_converter }
+        
+    Elasticsuite\Index\Converter\SourceField\PriceSourceFieldConverter:
+        tags:
+            - { name: elasticsuite.mapping.source_field_converter }
+        
+    Elasticsuite\Index\Converter\SourceField\ReferenceSourceFieldConverter:
+        tags:
+            - { name: elasticsuite.mapping.source_field_converter }
+        
+    Elasticsuite\Index\Converter\SourceField\SelectSourceFieldConverter:
+        tags:
+            - { name: elasticsuite.mapping.source_field_converter }
+
+    Elasticsuite\Index\Converter\SourceField\StockSourceFieldConverter:
+        tags:
+            - { name: elasticsuite.mapping.source_field_converter }
+            
+    Elasticsuite\Index\Converter\SourceField\TextSourceFieldConverter:
+        tags:
+            - { name: elasticsuite.mapping.source_field_converter }
+        

@@ -3,6 +3,8 @@ import { ReactChild } from 'react'
 import { schemaContext, userContext } from '~/contexts'
 import { IApi, IUser } from '~/types'
 
+import OptionsProvider from '~/components/stateful-providers/OptionsProvider/OptionsProvider'
+
 interface IProps {
   api: IApi
   children: ReactChild
@@ -22,7 +24,9 @@ function TestProvider(props: IProps): JSX.Element {
   const { api, children } = props
   return (
     <userContext.Provider value={user}>
-      <schemaContext.Provider value={api}>{children}</schemaContext.Provider>
+      <schemaContext.Provider value={api}>
+        <OptionsProvider>{children}</OptionsProvider>
+      </schemaContext.Provider>
     </userContext.Provider>
   )
 }

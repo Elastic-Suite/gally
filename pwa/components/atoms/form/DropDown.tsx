@@ -29,9 +29,10 @@ const Option = styled(OptionUnstyled)(({ theme }) => ({
   [`&.${optionUnstyledClasses.highlighted}`]: {
     backgroundColor: theme.palette.colors.neutral['200'],
   },
-  [`&.${optionUnstyledClasses.disabled}`]: {
-    color: theme.palette.colors.neutral['400'],
-  },
+  [`&.${optionUnstyledClasses.disabled}, &.${optionUnstyledClasses.disabled} label`]:
+    {
+      color: theme.palette.colors.neutral['400'],
+    },
   [`&:hover:not(.${optionUnstyledClasses.disabled})`]: {
     backgroundColor: theme.palette.colors.neutral['200'],
   },

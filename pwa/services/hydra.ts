@@ -1,5 +1,6 @@
 import {
   IApi,
+  IApiSchemaOptions,
   IField,
   IHydraMember,
   IHydraResponse,
@@ -57,13 +58,23 @@ export function getReferencedResource(api: IApi, field: IField): IResource {
   return api.find((resource) => resource['@id'] === field.property.range['@id'])
 }
 
-export function getOptionsFromApi<T extends IHydraMember>(
+export function getOptionsFromResource<T extends IHydraMember>(
   response: IHydraResponse<T>
 ): IOptions<string | number> {
   return response['hydra:member'].map((member) => ({
     id: member.id,
     label: member['@id'],
     value: member.id,
+  }))
+}
+
+export function getOptionsFromApiSchema(
+  response: IHydraResponse<IApiSchemaOptions>
+): IOptions<string | number> {
+  return response['hydra:member'].map((member) => ({
+    id: member.code,
+    label: member.label,
+    value: member.code,
   }))
 }
 

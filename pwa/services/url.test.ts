@@ -1,3 +1,4 @@
+import { defaultPageSize } from '~/constants'
 import {
   clearParameters,
   getAppUrl,
@@ -74,10 +75,12 @@ describe('URL service', () => {
     })
 
     it('should get API list parameters with pagination', () => {
-      expect(getListApiParameters(1, 10, { foo: 'bar' }, 'baz')).toEqual({
+      expect(
+        getListApiParameters(1, defaultPageSize, { foo: 'bar' }, 'baz')
+      ).toEqual({
         currentPage: 2,
         pagination: true,
-        pageSize: 10,
+        pageSize: 50,
         foo: 'bar',
         search: 'baz',
       })

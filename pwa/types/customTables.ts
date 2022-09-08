@@ -1,3 +1,4 @@
+import { IField } from './api'
 import { IOptions } from './option'
 
 export enum MassiveSelectionType {
@@ -24,9 +25,11 @@ export interface ITableHeader {
   label: string
   type?: DataContentType
   editable?: boolean
+  field?: IField
   sticky?: boolean
   options?: IOptions<unknown> | null
   boostInfos?: IBoost
+  required?: boolean
 }
 
 export interface IBaseStyle {

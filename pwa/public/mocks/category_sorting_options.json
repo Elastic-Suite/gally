@@ -1,0 +1,28 @@
+{
+  "@context": "/contexts/CategorySortingOption",
+  "@id": "/category_sorting_options",
+  "@type": "hydra:Collection",
+  "hydra:member": [
+    {
+      "code": "position",
+      "label": "Position"
+    },
+    {
+      "code": "id",
+      "label": "Id"
+    },
+    {
+      "code": "stock.status",
+      "label": "Stock status"
+    },
+    {
+      "code": "sku",
+      "label": "Sku"
+    },
+    {
+      "code": "price",
+      "label": "Price"
+    }
+  ],
+  "hydra:totalItems": 5
+}

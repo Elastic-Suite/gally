@@ -18,8 +18,8 @@ namespace Elasticsuite\Index\Tests\Api\Rest;
 
 use Elasticsuite\Index\Tests\Api\AbstractMenuTest;
 use Elasticsuite\Locale\EventSubscriber\LocaleSubscriber;
-use Elasticsuite\Standard\src\Test\ExpectedResponse;
-use Elasticsuite\Standard\src\Test\RequestToTest;
+use Elasticsuite\Test\ExpectedResponse;
+use Elasticsuite\Test\RequestToTest;
 use Elasticsuite\User\Constant\Role;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 

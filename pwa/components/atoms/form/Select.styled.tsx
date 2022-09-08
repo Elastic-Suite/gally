@@ -11,7 +11,7 @@ function ButtonWithIcon(
   const { children } = props
   return (
     <button {...props} ref={ref} type="button">
-      {children}
+      <span>{children}</span>
       <IonIcon name="chevron-down" />
     </button>
   )
@@ -40,8 +40,14 @@ export const StyledButton = styled(ButtonWithIconRef)(({ theme }) => ({
   'label + &': {
     marginTop: theme.spacing(3),
   },
+  '& span': {
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+  },
   '& ion-icon': {
     float: 'right',
+    flexShrink: 0,
   },
   '&:hover': {
     borderColor: theme.palette.colors.neutral['400'],

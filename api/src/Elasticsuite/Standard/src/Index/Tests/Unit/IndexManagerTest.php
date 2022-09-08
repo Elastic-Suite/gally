@@ -19,7 +19,7 @@ namespace Elasticsuite\Index\Tests\Unit;
 use Doctrine\Persistence\ObjectManager;
 use Elasticsuite\Index\Service\MetadataManager;
 use Elasticsuite\Metadata\Repository\MetadataRepository;
-use Elasticsuite\Standard\src\Test\AbstractTest;
+use Elasticsuite\Test\AbstractTest;
 
 class IndexManagerTest extends AbstractTest
 {
@@ -48,7 +48,8 @@ class IndexManagerTest extends AbstractTest
     {
         $metadata = $this->metadataRepository->findOneBy(['entity' => $entity]);
         $this->entityManager->refresh($metadata); // Flush entity in order to avoid empty relations
-        $this->assertEquals($expectedMapping, $this->metadataManager->getMapping($metadata)->asArray());
+        $actualMapping = $this->metadataManager->getMapping($metadata)->asArray();
+        $this->assertEquals($expectedMapping, $actualMapping);
     }
 
     public function mappingDataProvider(): array
@@ -59,8 +60,20 @@ class IndexManagerTest extends AbstractTest
                 [
                     'properties' => [
                         'id' => ['type' => 'integer'],
-                        'sku' => ['type' => 'keyword'],
-                        'price' => ['type' => 'double'],
+                        'sku' => [
+                            'type' => 'text',
+                            'analyzer' => 'keyword',
+                            'norms' => false,
+                        ],
+                        'price' => [
+                            'type' => 'nested',
+                            'properties' => [
+                                'original_price' => ['type' => 'double'],
+                                'price' => ['type' => 'double'],
+                                'is_discounted' => ['type' => 'boolean'],
+                                'group_id' => ['type' => 'keyword'],
+                            ],
+                        ],
                         'stock' => [
                             'type' => 'nested',
                             'properties' => [
@@ -89,9 +102,17 @@ class IndexManagerTest extends AbstractTest
                             'norms' => false,
                         ],
                         'brand' => [
-                            'type' => 'text',
-                            'analyzer' => 'keyword',
-                            'norms' => false,
+                            'type' => 'nested',
+                            'properties' => [
+                                'value' => [
+                                    'type' => 'keyword',
+                                ],
+                                'label' => [
+                                    'type' => 'text',
+                                    'analyzer' => 'keyword',
+                                    'norms' => false,
+                                ],
+                            ],
                         ],
                         'search' => [
                             'type' => 'text',
@@ -122,6 +143,36 @@ class IndexManagerTest extends AbstractTest
                                 'phonetic' => [
                                     'type' => 'text',
                                     'analyzer' => 'phonetic',
+                                ],
+                            ],
+                        ],
+                        'children' => [
+                            'type' => 'object',
+                            'properties' => [
+                                'sku' => [
+                                    'type' => 'text',
+                                    'analyzer' => 'keyword',
+                                    'norms' => false,
+                                ],
+                                'name' => [
+                                    'type' => 'text',
+                                    'fields' => [
+                                        'whitespace' => [
+                                            'type' => 'text',
+                                            'analyzer' => 'whitespace',
+                                        ],
+                                        'shingle' => [
+                                            'type' => 'text',
+                                            'analyzer' => 'shingle',
+                                        ],
+                                        'standard' => [
+                                            'type' => 'text',
+                                            'analyzer' => 'standard',
+                                        ],
+                                    ],
+                                    'analyzer' => 'keyword',
+                                    'copy_to' => ['search'],
+                                    'norms' => false,
                                 ],
                             ],
                         ],
@@ -150,6 +201,7 @@ class IndexManagerTest extends AbstractTest
                             ],
                             'norms' => false,
                         ],
+                        // No 'short_description' on purpose because no 'type' on source field.
                         'search' => [
                             'type' => 'text',
                             'analyzer' => 'standard',
@@ -179,6 +231,28 @@ class IndexManagerTest extends AbstractTest
                                 'phonetic' => [
                                     'type' => 'text',
                                     'analyzer' => 'phonetic',
+                                ],
+                            ],
+                        ],
+                        'children' => [
+                            'type' => 'object',
+                            'properties' => [
+                                'name' => [
+                                    'type' => 'text',
+                                    'analyzer' => 'keyword',
+                                    'norms' => false,
+                                ],
+                                'description' => [
+                                    'type' => 'text',
+                                    'analyzer' => 'keyword',
+                                    'copy_to' => ['search', 'spelling'],
+                                    'fields' => [
+                                        'standard' => [
+                                            'type' => 'text',
+                                            'analyzer' => 'standard',
+                                        ],
+                                    ],
+                                    'norms' => false,
                                 ],
                             ],
                         ],

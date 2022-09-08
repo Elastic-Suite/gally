@@ -3,6 +3,9 @@ import { useRouter } from 'next/router'
 
 import { userContext } from '~/contexts'
 import { setRequestedPath, useAppDispatch } from '~/store'
+import { isValidUser } from '~/services'
+
+import OptionsProvider from '~/components/stateful-providers/OptionsProvider/OptionsProvider'
 
 export function withAuth<P extends Record<string, unknown>>(
   Cmp: FunctionComponent<P>
@@ -13,17 +16,21 @@ export function withAuth<P extends Record<string, unknown>>(
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-      if (!user || Date.now() / 1000 > user.exp) {
+      if (!isValidUser(user)) {
         dispatch(setRequestedPath(asPath))
         push('/login')
       }
     }, [asPath, dispatch, push, user])
 
-    if (!user) {
+    if (!isValidUser(user)) {
       return null
     }
 
-    return <Cmp {...props} />
+    return (
+      <OptionsProvider>
+        <Cmp {...props} />
+      </OptionsProvider>
+    )
   }
 
   WithAuth.displayName = `WithHoc(${getDisplayName(Cmp)})`
