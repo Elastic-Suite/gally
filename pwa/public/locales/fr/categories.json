@@ -10,5 +10,18 @@
   "allCatalogs": "Tous les catalogues",
   "AllLocales": "Toutes les locales",
   "catalog.dropdown.label": "Choisir un catalogue",
-  "localizedCatalog.dropdown.label": "Choisir une locale"
+  "localizedCatalog.dropdown.label": "Choisir une locale",
+  "searchBar.title": "Produits dans la catégorie",
+  "searchBar.results_one": "résultat",
+  "searchBar.results_zero": "résultat",
+  "searchBar.results_other": "résultats",
+  "searchBar.placeholder": "Recherche par nom...",
+  "required": "* Champ requis",
+  "name": "Utiliser le nom de la catégorie dans la recherche de produits",
+  "name.tooltip": "Utiliser le nom de la catégorie dans la recherche de produits",
+  "virtual": "Catégorie virtuelle",
+  "virtual.tooltip": "Catégorie virtuelle",
+  "select": "Sélectionnez",
+  "select.tooltip": "Quel tri sera utilisé pour la catégorie",
+  "searchBarResult": "{{value.value}} {{value.result}}"
 }

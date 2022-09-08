@@ -10,5 +10,18 @@
   "allCatalogs": "All catalog",
   "AllLocales": "All locals",
   "catalog.dropdown.label": "Choose a catalog",
-  "localizedCatalog.dropdown.label": "Choose a local"
+  "localizedCatalog.dropdown.label": "Choose a local",
+  "searchBar.title": "Products in category",
+  "searchBar.results_one": "result",
+  "searchBar.results_zero": "result",
+  "searchBar.results_other": "results",
+  "searchBar.placeholder": "Search by name...",
+  "required": "* Required field",
+  "name": "Use category name in product search",
+  "name.tooltip": "Use category name in product search",
+  "virtual": "Virtual category",
+  "virtual.tooltip": "Virtual category",
+  "select": "Select",
+  "select.tooltip": "What sorting will be used for the category",
+  "searchBarResult": "{{value.value}} {{value.result}}"
 }

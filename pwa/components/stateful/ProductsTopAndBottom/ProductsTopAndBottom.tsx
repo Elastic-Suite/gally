@@ -1,3 +1,4 @@
+import { Paper } from '@mui/material'
 import { Box, styled } from '@mui/system'
 import { Dispatch, MutableRefObject, SetStateAction, forwardRef } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -35,7 +36,7 @@ function ProductsTopAndBottom(
   const { t } = useTranslation('categories')
 
   return (
-    <Box sx={{ backgroundColor: 'colors.neutral.300', borderRadius: '8px' }}>
+    <Paper variant="outlined" sx={{ backgroundColor: 'colors.neutral.300' }}>
       <PreviewArea>{t('previewArea')}</PreviewArea>
       <Box sx={{ padding: '42px 16px 17px 16px' }}>
         <TopTable
@@ -52,7 +53,7 @@ function ProductsTopAndBottom(
           />
         </Box>
       </Box>
-    </Box>
+    </Paper>
   )
 }
 
