@@ -7,6 +7,7 @@ export interface ICategory {
   path: string
   level: number
   children?: ICategory[]
+  catalogName?: string
 }
 
 export interface ICategories extends IJsonldBase {

@@ -78,19 +78,25 @@ function Categories(): JSX.Element {
   const configuration = useResource('CategoryConfiguration')
   const { update } = useResourceOperations<IConfiguration>(configuration)
 
-  function handleUpdateCat(
-    name: string
-  ): (val: boolean | string) => Promise<void> {
-    return async function (val: boolean | string): Promise<void> {
-      await update(idCat, { [name]: val })
+  const [saveData, setSaveData] = useState({})
 
-      updateDataCat((categ) => {
-        return {
-          ...categ,
-          [name]: val,
-        }
-      })
+  function handleUpdateCat(name: string): (val: boolean | string) => void {
+    return (val) => {
+      if (catalogId !== -1 && localizedCatalogId !== -1) {
+        setSaveData((state) => ({ ...state, [name]: val }))
+        updateDataCat((categ) => {
+          return {
+            ...categ,
+            [name]: val,
+          }
+        })
+      }
     }
+  }
+
+  async function onSave(): Promise<void> {
+    await update(idCat, saveData)
+    setSaveData({})
   }
 
   return (
@@ -133,17 +139,19 @@ function Categories(): JSX.Element {
         ]}
       >
         {selectedCategoryItem?.id ? (
-          <ProductsContainer
-            category={selectedCategoryItem}
-            dataCat={dataCat.data}
-            onVirtualChange={handleUpdateCat('isVirtual')}
-            onNameChange={handleUpdateCat('useNameInProductSearch')}
-            onSortChange={handleUpdateCat('defaultSorting')}
-            catalog={catalogId}
-            localizedCatalog={localizedCatalogId}
-            catalogsData={data}
-            error={error}
-          />
+           <ProductsContainer
+           category={selectedCategoryItem}
+           dataCat={dataCat.data}
+           onVirtualChange={handleUpdateCat('isVirtual')}
+           onNameChange={handleUpdateCat('useNameInProductSearch')}
+           onSortChange={handleUpdateCat('defaultSorting')}
+           catalog={catalogId}
+           localizedCatalog={localizedCatalogId}
+           catalogsData={data}
+           error={error}
+           onSave={onSave}
+           saveData={saveData}
+         />
         ) : (
           <Box
             sx={{
@@ -157,6 +165,7 @@ function Categories(): JSX.Element {
             {t('placeholder')}
           </Box>
         )}
+       
       </TwoColsLayout>
     </>
   )
