@@ -4,13 +4,13 @@ import {
   ReactNode,
   SyntheticEvent,
   useMemo,
-  useState,
 } from 'react'
 import {
   Autocomplete,
   AutocompleteRenderOptionState,
   FormControl,
 } from '@mui/material'
+import { useTranslation } from 'next-i18next'
 
 import { IOption, IOptions } from '~/types'
 
@@ -25,6 +25,7 @@ export interface IDropDownProps<T> {
   disabled?: boolean
   infoTooltip?: string
   label?: string
+  limitTags?: number
   multiple?: boolean
   onChange?: (value: T | T[]) => void
   options: IOptions<T>
@@ -40,6 +41,7 @@ function DropDown<T>(props: IDropDownProps<T>): JSX.Element {
     disabled,
     infoTooltip,
     label,
+    limitTags,
     multiple,
     onChange,
     options,
@@ -49,7 +51,7 @@ function DropDown<T>(props: IDropDownProps<T>): JSX.Element {
     transparent,
     value,
   } = props
-  const [search, setSearch] = useState('')
+  const { t } = useTranslation('common')
   const optionMap = useMemo(
     () => new Map(options.map((option) => [option.value, option])),
     [options]
@@ -72,6 +74,10 @@ function DropDown<T>(props: IDropDownProps<T>): JSX.Element {
     }
   }
 
+  const clearText = t('form.clear')
+  const closeText = t('form.close')
+  const openText = t('form.open')
+
   let renderOption
   let renderTags
   if (multiple) {
@@ -91,7 +97,7 @@ function DropDown<T>(props: IDropDownProps<T>): JSX.Element {
         <Chip
           key={option.id ?? String(option.value)}
           label={option.label}
-          size="small"
+          size={small ? 'small' : 'medium'}
           {...getTagProps({ index })}
         />
       ))
@@ -101,10 +107,17 @@ function DropDown<T>(props: IDropDownProps<T>): JSX.Element {
     <FormControl variant="standard">
       <Autocomplete
         PaperComponent={small ? SmallStyledPaper : StyledPaper}
+        clearIcon={<IonIcon name="close" />}
+        clearText={clearText}
+        closeText={closeText}
+        componentsProps={{ popper: { placement: 'bottom-start' } }}
+        disableCloseOnSelect={multiple}
         disabled={disabled}
         getOptionDisabled={(option: IOption<T>): boolean => option.disabled}
+        limitTags={limitTags}
         multiple={multiple}
         onChange={handleChange}
+        openText={openText}
         options={options}
         popupIcon={<IonIcon name="chevron-down" />}
         renderInput={(params): JSX.Element => {
@@ -115,11 +128,9 @@ function DropDown<T>(props: IDropDownProps<T>): JSX.Element {
               {...InputProps}
               infoTooltip={infoTooltip}
               label={label}
-              onChange={setSearch}
               required={required}
               small={small}
               transparent={transparent}
-              value={search}
             />
           )
         }}

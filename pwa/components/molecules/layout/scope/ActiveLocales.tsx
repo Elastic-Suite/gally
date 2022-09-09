@@ -1,4 +1,4 @@
-import { styled } from '@mui/material/styles'
+import { styled } from '@mui/system'
 
 import { ICatalog, IHydraResponse, ITabContentProps } from '~/types'
 

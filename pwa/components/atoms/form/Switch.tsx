@@ -1,6 +1,6 @@
 import { ChangeEvent } from 'react'
 import { InputLabel, Switch as MuiSwitch } from '@mui/material'
-import { StyleFormControl } from './Switch.style'
+import { StyleFormControl } from './Switch.styled'
 import InfoTooltip from '~/components/atoms/form/InfoTooltip'
 
 interface IProps {

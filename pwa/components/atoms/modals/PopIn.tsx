@@ -1,6 +1,6 @@
 import { ReactChild, useState } from 'react'
 import { Box, Dialog, DialogActions } from '@mui/material'
-import { styled } from '@mui/material/styles'
+import { styled } from '@mui/system'
 
 import Button from '~/components/atoms/buttons/Button'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'

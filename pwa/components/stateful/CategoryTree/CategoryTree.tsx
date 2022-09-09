@@ -1,32 +1,30 @@
-import { ICategories, IFetch, ITreeItem } from '~/types'
+import { useState } from 'react'
+import { ICategories, ICategory } from '~/types'
 
 import Tree from '~/components/atoms/tree/Tree'
 
 interface IProps {
-  categoryTreeFields: IFetch<ICategories>
-  selectedItem: ITreeItem
-  onSelect: (item: ITreeItem) => void
+  categories: ICategories
+  selectedItem: ICategory
+  onSelect: (item: ICategory) => void
 }
 
-function CategoryTree({
-  categoryTreeFields,
-  selectedItem,
-  onSelect,
-}: IProps): JSX.Element {
-  const { data, error } = categoryTreeFields
+function CategoryTree(props: IProps): JSX.Element {
+  const { categories, selectedItem, onSelect } = props
+  const [openItems, setOpenItems] = useState<Record<string, boolean>>({})
 
-  if (error || !data) {
+  if (!categories) {
     return null
   }
 
   return (
-    categoryTreeFields.status === 3 && (
-      <Tree
-        selectedItem={selectedItem}
-        onSelect={onSelect}
-        data={data.categories}
-      />
-    )
+    <Tree
+      onChange={onSelect}
+      onToggle={setOpenItems}
+      openItems={openItems}
+      data={categories.categories}
+      value={selectedItem}
+    />
   )
 }
 

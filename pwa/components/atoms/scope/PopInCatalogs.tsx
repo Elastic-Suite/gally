@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Dialog } from '@mui/material'
-import { styled } from '@mui/material/styles'
+import { styled } from '@mui/system'
 
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import TitleScope from '~/components/atoms/scope/TitleScope'
