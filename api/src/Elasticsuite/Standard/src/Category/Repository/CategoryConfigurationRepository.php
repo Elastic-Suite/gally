@@ -244,7 +244,7 @@ class CategoryConfigurationRepository extends ServiceEntityRepository
                 $exprBuilder->andX(
                     $exprBuilder->eq('g.category', 'lc.category'),
                     $exprBuilder->isNull('g.catalog'),
-                    $exprBuilder->isNull('c.localizedCatalog'),
+                    $exprBuilder->isNull('g.localizedCatalog'),
                 )
             )
             ->groupBy('lc.category')
