@@ -28,7 +28,7 @@ interface BucketInterface extends AggregationInterface
     public const TYPE_HISTOGRAM = 'histogramBucket';
     public const TYPE_DATE_HISTOGRAM = 'dateHistogramBucket';
     public const TYPE_QUERY_GROUP = 'queryGroupBucket';
-    public const TYPE_SIGNIFICANT_TERM = 'significantTermBucket';
+    public const TYPE_SIGNIFICANT_TERMS = 'significantTermsBucket';
     public const TYPE_REVERSE_NESTED = 'reverseNestedBucket';
 
     public const SORT_ORDER_COUNT = '_count';

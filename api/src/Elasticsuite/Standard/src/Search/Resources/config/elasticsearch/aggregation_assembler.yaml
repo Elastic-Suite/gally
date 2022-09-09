@@ -90,11 +90,11 @@ services:
         tags:
             - { name: 'elasticsuite.search.request.aggregation.assembler', aggregationType: 'reverseNestedBucket' }
     
-    Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Bucket\SignificantTerm:
+    Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Bucket\SignificantTerms:
         abstract: false
         lazy: true
         tags:
-            - { name: 'elasticsuite.search.request.aggregation.assembler', aggregationType: 'significantTermBucket' }
+            - { name: 'elasticsuite.search.request.aggregation.assembler', aggregationType: 'significantTermsBucket' }
     
     Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Bucket\Terms:
         abstract: false

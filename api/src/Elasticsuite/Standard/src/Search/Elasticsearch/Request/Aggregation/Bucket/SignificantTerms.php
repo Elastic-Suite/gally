@@ -23,7 +23,7 @@ use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
 /**
  * Significant term bucket implementation.
  */
-class SignificantTerm extends AbstractBucket
+class SignificantTerms extends AbstractBucket
 {
     public const ALGORITHM_GND = 'gnd';
 
@@ -67,7 +67,7 @@ class SignificantTerm extends AbstractBucket
      */
     public function getType(): string
     {
-        return BucketInterface::TYPE_SIGNIFICANT_TERM;
+        return BucketInterface::TYPE_SIGNIFICANT_TERMS;
     }
 
     /**
