@@ -3,7 +3,7 @@
 exports[`Stock Should match snapschot 1`] = `
 <div>
   <div
-    class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorSuccess MuiChip-filledSuccess css-1klp0to-MuiChip-root"
+    class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorSuccess MuiChip-filledSuccess css-s7mah8-MuiChip-root"
   >
     <span
       class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"

@@ -4,10 +4,10 @@ import { useTranslation } from 'react-i18next'
 
 import {
   ICatalog,
+  ICategory,
   ICategorySortingOption,
   IHydraMember,
   IHydraResponse,
-  ITreeItem,
 } from '~/types'
 
 import Button from '~/components/atoms/buttons/Button'
@@ -34,7 +34,7 @@ const ActionsButtonsContainer = styled(Box)({
 })
 
 interface IProps {
-  category: ITreeItem
+  category: ICategory
   onVirtualChange: (val: boolean) => Promise<void>
   onNameChange: (val: boolean) => Promise<void>
   onSortChange: (val: string) => Promise<void>
@@ -113,10 +113,7 @@ function ProductsContainer(props: IProps): JSX.Element {
   return (
     <Box>
       <Layout>
-        <PageTile
-          title={category?.name ? category?.name : category?.catalogName}
-          sx={{ marginBottom: '12px' }}
-        />
+        <PageTile title={category?.name} sx={{ marginBottom: '12px' }} />
         <Merchandize
           onVirtualChange={onVirtualChange}
           virtualCategoryValue={isVirtual}

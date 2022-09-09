@@ -42,6 +42,9 @@ const Chip = styled((props: ChipProps) => (
     color: theme.palette.error.main,
     background: theme.palette.error.light,
   },
+  '&.MuiChip-sizeSmall': {
+    height: '20px',
+  },
   '& .MuiChip-label': {
     padding: 0,
   },

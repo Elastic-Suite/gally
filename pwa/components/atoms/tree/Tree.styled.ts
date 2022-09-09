@@ -2,12 +2,12 @@ import { keyframes, styled } from '@mui/system'
 
 export const CustomRoot = styled('ul')({
   margin: 0,
-  padding: 0,
+  padding: '2px 0',
   fontFamily: 'Inter',
   fontWeight: 500,
 })
 
-const opacity = keyframes`  
+const opacity = keyframes`
 from {
   opacity: 0;
 }
@@ -29,73 +29,16 @@ export const CustomTitle = styled('button')(({ theme }) => ({
   border: 'none',
   background: 'none',
   padding: 0,
-  '&:hover::before': {
-    content: '""',
-    position: 'absolute',
-    width: '100%',
-    height: '1px',
-    top: `calc(100% + 1px)`,
-    fontSize: '12px',
-    background: theme.palette.colors.secondary[600],
-  },
-  '&:hover': {
-    cursor: 'pointer',
-  },
+  cursor: 'pointer',
 }))
 
-export const CustomTitleBase = styled('button')(({ theme }) => ({
+export const CustomTitleBase = styled(CustomTitle)(({ theme }) => ({
   color: theme.palette.colors.neutral[900],
-  position: 'relative',
-  border: 'none',
-  padding: 0,
-  background: 'none',
-  '&:hover::before': {
-    content: '""',
-    position: 'absolute',
-    width: '100%',
-    height: '1px',
-    top: `calc(100% + 1px)`,
-    fontSize: '12px',
-    background: 'black',
-  },
-  '&:hover': {
-    cursor: 'pointer',
-  },
 }))
 
-export const CustomTitleBaseSelected = styled('button')(({ theme }) => ({
-  color: theme.palette.colors.neutral[900],
-  position: 'relative',
-  border: 'none',
-  padding: 0,
-  background: 'none',
-  '&::before': {
-    content: '""',
-    position: 'absolute',
-    width: '100%',
-    height: '1px',
-    top: `calc(100% + 1px)`,
-    fontSize: '12px',
-    background: theme.palette.colors.neutral[900],
-  },
-}))
-
-export const CustomTitleSelected = styled('button')(({ theme }) => ({
-  color: theme.palette.colors.secondary[600],
-  position: 'relative',
-  border: 'none',
-  padding: 0,
-  background: 'none',
-  '&::before': {
-    content: '""',
-    position: 'absolute',
-    width: '100%',
-    height: '1px',
-    top: `calc(100% + 1px)`,
-    fontSize: '12px',
-    background: theme.palette.colors.secondary[600],
-  },
-}))
+export const Underline = styled('span')({
+  textDecoration: 'underline',
+})
 
 export const CustomContainer = styled('div')({
   marginTop: 1,
@@ -104,6 +47,10 @@ export const CustomContainer = styled('div')({
   alignItems: 'center',
   gap: '4px',
   height: '24px',
+})
+
+export const SmallCustomContainer = styled(CustomContainer)({
+  height: '18px',
 })
 
 export const CustomVirtual = styled('span')(({ theme }) => ({
@@ -142,6 +89,13 @@ export const CustomBtn = styled('button')(({ theme }) => ({
     background: theme.palette.colors.secondary['100'],
   },
 }))
+
+export const SmallCustomBtn = styled(CustomBtn)({
+  height: '15px',
+  width: '15px',
+  padding: 0,
+  fontSize: '12px',
+})
 
 export const CustomTitleContainer = styled('div')({
   display: 'flex',

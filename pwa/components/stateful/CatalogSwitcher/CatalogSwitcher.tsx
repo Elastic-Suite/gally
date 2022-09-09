@@ -1,7 +1,7 @@
 import { styled } from '@mui/system'
 
 import { useTranslation } from 'next-i18next'
-import { ICatalog, IHydraResponse, IOptions, ITreeItem } from '~/types'
+import { ICatalog, ICategory, IHydraResponse, IOptions } from '~/types'
 
 import DropDown from '~/components/atoms/form/DropDown'
 
@@ -18,7 +18,7 @@ interface IProps {
   onLocalizedCatalog: (locCtl: number) => void
   catalogsData: IHydraResponse<ICatalog>
   error: Error
-  onCategory: (item: ITreeItem) => void
+  onCategory: (item?: ICategory) => void
 }
 
 function CatalogSwitcher(props: IProps): JSX.Element {
@@ -65,12 +65,12 @@ function CatalogSwitcher(props: IProps): JSX.Element {
   function onCatalogChange(catalogId: number): void {
     onCatalog(catalogId)
     onLocalizedCatalog(-1)
-    onCategory({})
+    onCategory()
   }
 
   function onLocalizedCatalogChange(localizedCatalogId: number): void {
     onLocalizedCatalog(localizedCatalogId)
-    onCategory({})
+    onCategory()
   }
 
   if (error || !catalogsData) {

@@ -44,8 +44,9 @@ export const DropdownMultiple: ComponentStory<typeof DropDownComponent> = (
 }
 DropdownMultiple.args = {
   disabled: false,
-  infoTooltip: 'Helpful info',
+  infoTooltip: '',
   label: 'Label',
+  limitTags: 2,
   options: [
     { label: 'Ten', value: 10 },
     { label: 'Twenty', value: 20 },

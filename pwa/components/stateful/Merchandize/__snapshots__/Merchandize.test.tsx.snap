@@ -135,7 +135,7 @@ exports[`Merchandize match snapshot testSelect 1`] = `
                 </span>
               </label>
               <div
-                class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-n2f5zc-MuiInputBase-root"
+                class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-5uzcdm-MuiInputBase-root"
               >
                 <input
                   aria-autocomplete="list"
@@ -154,10 +154,10 @@ exports[`Merchandize match snapshot testSelect 1`] = `
                   class="MuiAutocomplete-endAdornment css-1q60rmi-MuiAutocomplete-endAdornment"
                 >
                   <button
-                    aria-label="Open"
+                    aria-label="form.open"
                     class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-qzbt6i-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
                     tabindex="-1"
-                    title="Open"
+                    title="form.open"
                     type="button"
                   >
                     <ion-icon

@@ -12,7 +12,8 @@ import {
   InputBaseProps,
   InputLabel,
 } from '@mui/material'
-import { styled } from '@mui/material/styles'
+import { styled } from '@mui/system'
+
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 
 import InfoTooltip from './InfoTooltip'
@@ -20,7 +21,7 @@ import InfoTooltip from './InfoTooltip'
 interface IUnstyledInputTextProps extends InputBaseProps {
   small?: boolean
   transparent?: boolean
-  value: string
+  value?: string
 }
 
 const inputTextStyledProps = ['small', 'transparent']
@@ -40,7 +41,7 @@ const InputTextStyled = styled(
   backgroundColor: theme.palette.colors.white,
   color: theme.palette.colors.neutral['900'],
   fontSize: 14,
-  lineHeight: 20,
+  lineHeight: 0,
   fontWeight: 400,
   transition: 'border-color 0.3s linear',
   ...(Boolean(value) && {
@@ -113,8 +114,9 @@ const InputTextStyled = styled(
     fontSize: 14,
     color: theme.palette.colors.neutral['900'],
   },
+  // Autocomplete
   '&.MuiAutocomplete-inputRoot': {
-    flexWrap: 'wrap',
+    maxWidth: '400px',
   },
   '& .MuiAutocomplete-endAdornment': {
     top: 0,
@@ -123,26 +125,25 @@ const InputTextStyled = styled(
     display: 'flex',
     alignItems: 'center',
   },
-  '& .MuiAutocomplete-popupIndicator ion-icon, & .MuiAutocomplete-clearIndicator svg':
+  '& .MuiAutocomplete-popupIndicator ion-icon, & .MuiAutocomplete-clearIndicator ion-icon':
     {
       fontSize: 14,
       color: theme.palette.colors.neutral['900'],
     },
   '& .MuiAutocomplete-tag': {
-    marginTop: 0,
-    marginBottom: 0,
+    marginTop: '2px',
+    marginBottom: '2px',
   },
 }))
 
 export interface IInputTextProps
-  extends Omit<IUnstyledInputTextProps, 'onChange' | 'value'> {
+  extends Omit<IUnstyledInputTextProps, 'onChange'> {
   fullWidth?: boolean
   infoTooltip?: string
   label?: string
   helperText?: ReactChild
   helperIcon?: string
   onChange?: (value: string) => void
-  value: string
   withMargin?: boolean
 }
 

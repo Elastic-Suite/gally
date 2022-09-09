@@ -1,4 +1,4 @@
-import { styled } from '@mui/material/styles'
+import { styled } from '@mui/system'
 import { useTranslation } from 'next-i18next'
 
 const CustomRoot = styled('div')(({ theme }) => ({
