@@ -105,7 +105,8 @@ const InputTextStyled = styled(UnstyledInputText, {
   }),
 }))
 
-interface IProps extends Omit<IUnstyledInputTextProps, 'onChange'> {
+export interface IInputTextProps
+  extends Omit<IUnstyledInputTextProps, 'onChange'> {
   fullWidth?: boolean
   label?: string
   helperText?: ReactChild
@@ -115,7 +116,7 @@ interface IProps extends Omit<IUnstyledInputTextProps, 'onChange'> {
   withMargin?: boolean
 }
 
-function InputText(props: IProps): JSX.Element {
+function InputText(props: IInputTextProps): JSX.Element {
   const {
     fullWidth,
     id,
