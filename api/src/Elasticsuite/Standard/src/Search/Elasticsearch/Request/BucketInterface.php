@@ -24,6 +24,7 @@ interface BucketInterface extends AggregationInterface
     public const TYPE_TERMS = 'termsBucket';
     public const TYPE_RANGE = 'rangeBucket';
     public const TYPE_DYNAMIC = 'dynamicBucket';
+    public const TYPE_MULTI_TERMS = 'multiTermsBucket';
 
     public const TYPE_HISTOGRAM = 'histogramBucket';
     public const TYPE_DATE_HISTOGRAM = 'dateHistogramBucket';
