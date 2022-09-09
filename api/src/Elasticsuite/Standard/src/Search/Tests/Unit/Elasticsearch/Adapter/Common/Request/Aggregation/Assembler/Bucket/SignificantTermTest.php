@@ -79,9 +79,9 @@ class SignificantTermTest extends KernelTestCase
         $aggBuilder = new SignificantTermAssembler();
         $this->expectExceptionMessage('Aggregation assembler : invalid aggregation type invalidType.');
         $this->expectException(\InvalidArgumentException::class);
-        $termBucket = $this->getMockBuilder(BucketInterface::class)->getMock();
-        $termBucket->method('getType')->willReturn('invalidType');
+        $termsBucket = $this->getMockBuilder(BucketInterface::class)->getMock();
+        $termsBucket->method('getType')->willReturn('invalidType');
 
-        $aggBuilder->assembleAggregation($termBucket);
+        $aggBuilder->assembleAggregation($termsBucket);
     }
 }

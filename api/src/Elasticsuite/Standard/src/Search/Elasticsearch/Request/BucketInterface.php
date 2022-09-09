@@ -21,7 +21,7 @@ namespace Elasticsuite\Search\Elasticsearch\Request;
  */
 interface BucketInterface extends AggregationInterface
 {
-    public const TYPE_TERM = 'termBucket';
+    public const TYPE_TERMS = 'termsBucket';
     public const TYPE_RANGE = 'rangeBucket';
     public const TYPE_DYNAMIC = 'dynamicBucket';
 

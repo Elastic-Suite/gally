@@ -147,7 +147,7 @@ class GenericContainerConfiguration implements ContainerConfigurationInterface
             ],
             default => [
                 'name' => $field->getName(),
-                'type' => Request\BucketInterface::TYPE_TERM,
+                'type' => Request\BucketInterface::TYPE_TERMS,
             ],
         };
     }

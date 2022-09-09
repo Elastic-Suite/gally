@@ -21,9 +21,9 @@ use Elasticsuite\Search\Elasticsearch\Request\BucketInterface;
 use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
 
 /**
- * Term Bucket implementation.
+ * Terms Bucket implementation.
  */
-class Term extends AbstractBucket
+class Terms extends AbstractBucket
 {
     /**
      * Constructor.
@@ -63,7 +63,7 @@ class Term extends AbstractBucket
      */
     public function getType(): string
     {
-        return BucketInterface::TYPE_TERM;
+        return BucketInterface::TYPE_TERMS;
     }
 
     /**

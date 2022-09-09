@@ -96,11 +96,11 @@ services:
         tags:
             - { name: 'elasticsuite.search.request.aggregation.assembler', aggregationType: 'significantTermBucket' }
     
-    Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Bucket\Term:
+    Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Bucket\Terms:
         abstract: false
         lazy: true
         tags:
-            - { name: 'elasticsuite.search.request.aggregation.assembler', aggregationType: 'termBucket' }
+            - { name: 'elasticsuite.search.request.aggregation.assembler', aggregationType: 'termsBucket' }
     
     Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Pipeline\BucketSelector:
         abstract: false

@@ -34,12 +34,12 @@ services:
         tags:
             - { name: 'elasticsuite.search.request.aggregation.factory', aggregationType: 'significantTermBucket' }
             
-    elasticsuite.search.request.aggregation.bucket.term.factory:
+    elasticsuite.search.request.aggregation.bucket.terms.factory:
         parent: Elasticsuite\DependencyInjection\GenericFactory
         arguments:
-            - 'Elasticsuite\Search\Elasticsearch\Request\Aggregation\Bucket\Term'
+            - 'Elasticsuite\Search\Elasticsearch\Request\Aggregation\Bucket\Terms'
         tags:
-            - { name: 'elasticsuite.search.request.aggregation.factory', aggregationType: 'termBucket' }
+            - { name: 'elasticsuite.search.request.aggregation.factory', aggregationType: 'termsBucket' }
 
     elasticsuite.search.request.aggregation.metric.avg.factory:
         parent: Elasticsuite\DependencyInjection\GenericFactory
