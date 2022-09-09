@@ -1,7 +1,5 @@
 import { Grid, InputAdornment, Paper } from '@mui/material'
-import InputText, {
-  IProps as IInputTextProps,
-} from '~/components/atoms/form/InputText'
+import InputText, { IInputTextProps } from '~/components/atoms/form/InputText'
 import { useTranslation } from 'next-i18next'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import { SearchResult, SearchTitle } from './Search.styled'
