@@ -51,11 +51,6 @@ export interface IConfiguration extends IHydraMember {
   defaultSorting: string
 }
 
-interface IPropsSort {
-  code: string | number
-  label: string
-}
-
 function ProductsContainer(props: IProps): JSX.Element {
   const {
     catalog,
@@ -102,7 +97,7 @@ function ProductsContainer(props: IProps): JSX.Element {
   const [{ data }] = useApiList<ICategorySortingOption>(resourceSortingOption)
 
   const sortOption = data
-    ? data[`hydra:member`].map((obj: IPropsSort) => ({
+    ? data[`hydra:member`].map((obj: ICategorySortingOption) => ({
         value: obj.code,
         ...obj,
       }))

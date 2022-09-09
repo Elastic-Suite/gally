@@ -4,7 +4,7 @@ import { useTranslation } from 'next-i18next'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import { SearchResult, SearchTitle } from './Search.styled'
 
-interface IProps extends IInputTextProps {
+interface IProps extends Omit<IInputTextProps, 'ref'> {
   nbResults: number
 }
 
