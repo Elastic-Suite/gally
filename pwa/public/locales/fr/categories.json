@@ -23,5 +23,6 @@
   "virtual.tooltip": "Catégorie virtuelle",
   "select": "Sélectionnez",
   "select.tooltip": "Quel tri sera utilisé pour la catégorie",
-  "searchBarResult": "{{value.value}} {{value.result}}"
+  "searchBarResult": "{{value.value}} {{value.result}}",
+  "placeholder": "Aucune catégorie selectionnée."
 }
