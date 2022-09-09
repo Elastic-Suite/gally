@@ -58,15 +58,17 @@ function Categories(): JSX.Element {
     }`
   )
 
-  const categoryConfigurationParams: ISearchParameters = useMemo(() => {
-    return {
+  const categoryConfigurationParams: ISearchParameters = useMemo(
+    () => ({
       categoryId: selectedCategoryItem ? selectedCategoryItem.id : null,
       catalogId: catalogId !== -1 ? catalogId : null,
       localizedCatalogId: localizedCatalogId !== -1 ? localizedCatalogId : null,
-    }
-  }, [selectedCategoryItem, catalogId, localizedCatalogId])
+    }),
+    [selectedCategoryItem, catalogId, localizedCatalogId]
+  )
+  const categoryConfigurationResource = useResource('CategoryConfiguration')
   const [dataCat, updateDataCat] = useFetchApi<IConfiguration>(
-    useResource('CategoryConfiguration'),
+    categoryConfigurationResource,
     categoryConfigurationParams
   )
 
