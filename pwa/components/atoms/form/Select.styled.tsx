@@ -75,6 +75,46 @@ export const StyledButton = styled(ButtonWithIconRef)(({ theme }) => ({
   },
 }))
 
+export const SmallStyledButton = styled(StyledButton)(({ theme }) => ({
+  height: '26px',
+  paddingTop: theme.spacing(0.5),
+  paddingBottom: theme.spacing(0.5),
+  paddingLeft: theme.spacing(1),
+  paddingRight: theme.spacing(1),
+  width: 'max-content',
+  display: 'flex',
+  alignItems: 'center',
+  gap: '4px',
+  color: theme.palette.colors.neutral['900'],
+  fontWeight: 600,
+  fontFamily: 'Inter',
+  lineHeight: '18px',
+  borderRadius: '13px',
+  fontSize: '12px',
+}))
+
+export const TransparentStyledButton = styled(StyledButton)(() => ({
+  background: 'transparent',
+  border: '0',
+  '&.Mui-expanded': {
+    backgroundColor: 'rgba(0, 0, 0, 0.075)',
+  },
+  '& > span': {
+    fontWeight: 'normal',
+  },
+}))
+
+export const SmallTransparentStyledButton = styled(SmallStyledButton)(() => ({
+  background: 'transparent',
+  border: '0',
+  '&.Mui-expanded': {
+    backgroundColor: 'rgba(0, 0, 0, 0.075)',
+  },
+  '& > span': {
+    fontWeight: 'normal',
+  },
+}))
+
 export const StyledListbox = styled('ul')(({ theme }) => ({
   position: 'relative',
   padding: 0,
@@ -86,6 +126,16 @@ export const StyledListbox = styled('ul')(({ theme }) => ({
   boxSizing: 'border-box',
   margin: '4px 0',
   outline: 0,
+}))
+
+export const SmallStyledListbox = styled(StyledListbox)(({ theme }) => ({
+  '& li': {
+    paddingTop: '5px',
+    paddingBottom: '5px',
+  },
+  '& .MuiButtonBase-root': {
+    padding: `${theme.spacing(0.5)}`,
+  },
 }))
 
 export const StyledPopper = styled(PopperUnstyled)(() => ({

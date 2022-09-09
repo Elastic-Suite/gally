@@ -1,6 +1,8 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
+
+import Button from '../../../atoms/buttons/Button'
+
 import TitleBlock from './TitleBlock'
-import PrimaryButton from '../../../atoms/buttons/PrimaryButton'
 
 export default {
   title: 'Atoms/TitleBlock',
@@ -9,9 +11,9 @@ export default {
 
 const Template: ComponentStory<typeof TitleBlock> = (args) => (
   <TitleBlock {...args}>
-    <PrimaryButton disabled={false} endIcon="" size="medium" startIcon="">
+    <Button disabled={false} endIcon="" size="medium" startIcon="">
       Hello world
-    </PrimaryButton>
+    </Button>
   </TitleBlock>
 )
 

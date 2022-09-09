@@ -38,7 +38,7 @@ function Settings(): JSX.Element {
         url: '/admin/settings/scope',
       },
       {
-        // actions: <PrimaryButton>{t('action.import')} (xlsx)</PrimaryButton>,
+        // actions: <Button>{t('action.import')} (xlsx)</Button>,
         Component: SettingsAttributes,
         id: 1,
         label: t('tabs.attributes'),

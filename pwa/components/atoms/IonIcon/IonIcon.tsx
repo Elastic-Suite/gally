@@ -27,6 +27,7 @@ interface IProps extends IIonIconProps {
 
 export const iconSrcMapping = {
   dashboard: '/images/home2.svg',
+  arrow: '/images/arrow.svg',
 }
 
 export const iconAliasMapping = {

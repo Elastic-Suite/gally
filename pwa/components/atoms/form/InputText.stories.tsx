@@ -52,6 +52,7 @@ InputText.args = {
   helperIcon: '',
   color: 'primary',
   endAdornment: null,
+  small: false,
 }
 
 export const SearchInputText = Template.bind({})
@@ -69,4 +70,5 @@ SearchInputText.args = {
       <IonIcon name="search" />
     </InputAdornment>
   ),
+  small: false,
 }

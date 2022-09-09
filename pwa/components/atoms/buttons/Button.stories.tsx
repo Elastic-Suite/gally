@@ -4,19 +4,20 @@ import { ButtonProps } from '@mui/material'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import { icons } from '~/constants'
 
-import PrimaryButton from './PrimaryButton'
-import SecondaryButton from './SecondaryButton'
-import TertiaryButton from './TertiaryButton'
-import { FunctionComponent } from 'react'
+import Button from './Button'
 
 export default {
-  title: 'Atoms/Buttons',
-  component: PrimaryButton,
+  title: 'Atoms/Button',
+  component: Button,
   argTypes: {
     Component: { table: { disable: true } },
     controls: { table: { disable: true } },
     endIcon: {
       options: [''].concat(icons),
+      control: { type: 'select' },
+    },
+    display: {
+      options: ['primary', 'secondary', 'tertiary'],
       control: { type: 'select' },
     },
     icon: {
@@ -33,19 +34,18 @@ export default {
       control: { type: 'select' },
     },
   },
-} as ComponentMeta<typeof PrimaryButton>
+} as ComponentMeta<typeof Button>
 
 interface IProps extends ButtonProps {
-  Component: FunctionComponent<ButtonProps>
   endIcon: string
   icon: string
   startIcon: string
 }
 
 function Template(args: IProps): JSX.Element {
-  const { Component, children, icon, endIcon, startIcon, ...props } = args
+  const { children, icon, endIcon, startIcon, ...props } = args
   return (
-    <Component
+    <Button
       {...props}
       endIcon={
         endIcon ? <IonIcon name={endIcon} style={{ fontSize: 24 }} /> : null
@@ -55,39 +55,32 @@ function Template(args: IProps): JSX.Element {
       }
     >
       {icon ? <IonIcon name={icon} style={{ fontSize: 24 }} /> : children}
-    </Component>
+    </Button>
   )
 }
 
-export const Primary = Template.bind({})
-Primary.args = {
-  Component: PrimaryButton,
+export const Default = Template.bind({})
+Default.args = {
   children: 'Label',
   disabled: false,
+  display: 'primary',
   endIcon: '',
   icon: '',
   size: 'medium',
   startIcon: '',
 }
 
-export const Secondary = Template.bind({})
-Secondary.args = {
-  Component: SecondaryButton,
+export const WithOptions = Template.bind({})
+WithOptions.args = {
   children: 'Label',
   disabled: false,
+  display: 'primary',
   endIcon: '',
   icon: '',
   size: 'medium',
   startIcon: '',
-}
-
-export const Tertiary = Template.bind({})
-Tertiary.args = {
-  Component: TertiaryButton,
-  children: 'Label',
-  disabled: false,
-  endIcon: '',
-  icon: '',
-  size: 'medium',
-  startIcon: '',
+  options: [
+    { value: 1, label: 'Item 1' },
+    { value: 2, label: 'Item 2' },
+  ],
 }

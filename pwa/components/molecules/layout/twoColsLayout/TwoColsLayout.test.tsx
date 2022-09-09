@@ -1,6 +1,6 @@
 import { renderWithProviders } from '~/utils/tests'
 
-import PrimaryButton from '../../../atoms/buttons/PrimaryButton'
+import Button from '../../../atoms/buttons/Button'
 
 import TwoColsLayout from './TwoColsLayout'
 
@@ -15,9 +15,9 @@ describe('TitleBlock match snapshot', () => {
   it('TwoColsLayout with Array in left', () => {
     const { container } = renderWithProviders(
       <TwoColsLayout left={['hello world One', 'hello world Two']}>
-        <PrimaryButton disabled={false} endIcon="" size="medium" startIcon="">
+        <Button disabled={false} endIcon="" size="medium" startIcon="">
           Hello world
-        </PrimaryButton>
+        </Button>
       </TwoColsLayout>
     )
     expect(container).toMatchSnapshot()
