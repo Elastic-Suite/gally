@@ -1,7 +1,7 @@
 import { useTranslation } from 'next-i18next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useMemo, useState } from 'react'
 
 import { breadcrumbContext } from '~/contexts'
 import { withAuth } from '~/hocs'
@@ -13,8 +13,9 @@ import {
 } from '~/hooks'
 import { findBreadcrumbLabel } from '~/services'
 import { selectMenu, useAppSelector } from '~/store'
-import { ICatalog, ICategories, ITreeItem } from '~/types'
+import { ICatalog, ICategories, ISearchParameters, ITreeItem } from '~/types'
 
+import { Box } from '@mui/system'
 import VirtualRule from '~/components/molecules/layout/fade/VirtualRule'
 import TitleBlock from '~/components/molecules/layout/TitleBlock/TitleBlock'
 import TwoColsLayout from '~/components/molecules/layout/twoColsLayout/TwoColsLayout'
@@ -57,8 +58,17 @@ function Categories(): JSX.Element {
     }`
   )
 
-  const paramsCategory = `https://localhost/category_configurations/category/one?catalogId=${catalogId}&localizedCatalogId=${localizedCatalogId}`
-  const [dataCat, updateDataCat] = useFetchApi<IConfiguration>(paramsCategory)
+  const categoryConfigurationParams: ISearchParameters = useMemo(() => {
+    return {
+      categoryId: selectedCategoryItem ? selectedCategoryItem.id : null,
+      catalogId: catalogId !== -1 ? catalogId : null,
+      localizedCatalogId: localizedCatalogId !== -1 ? localizedCatalogId : null,
+    }
+  }, [selectedCategoryItem, catalogId, localizedCatalogId])
+  const [dataCat, updateDataCat] = useFetchApi<IConfiguration>(
+    useResource('CategoryConfiguration'),
+    categoryConfigurationParams
+  )
 
   const idCat = dataCat?.data?.id
 
@@ -112,17 +122,31 @@ function Categories(): JSX.Element {
           </TitleBlock>,
         ]}
       >
-        <ProductsContainer
-          category={selectedCategoryItem}
-          dataCat={dataCat.data}
-          onVirtualChange={handleUpdateCat('isVirtual')}
-          onNameChange={handleUpdateCat('useNameInProductSearch')}
-          onSortChange={handleUpdateCat('defaultSorting')}
-          catalog={catalogId}
-          localizedCatalog={localizedCatalogId}
-          catalogsData={data}
-          error={error}
-        />
+        {selectedCategoryItem?.id ? (
+          <ProductsContainer
+            category={selectedCategoryItem}
+            dataCat={dataCat.data}
+            onVirtualChange={handleUpdateCat('isVirtual')}
+            onNameChange={handleUpdateCat('useNameInProductSearch')}
+            onSortChange={handleUpdateCat('defaultSorting')}
+            catalog={catalogId}
+            localizedCatalog={localizedCatalogId}
+            catalogsData={data}
+            error={error}
+          />
+        ) : (
+          <Box
+            sx={{
+              fontSize: '12px',
+              fontFamily: 'inter',
+              lineHeight: '18px',
+              padding: '16px 0  0 16px',
+              color: 'colors.neutral.600',
+            }}
+          >
+            {t('placeholder')}
+          </Box>
+        )}
       </TwoColsLayout>
     </>
   )
