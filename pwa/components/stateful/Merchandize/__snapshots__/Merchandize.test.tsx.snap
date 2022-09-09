@@ -110,34 +110,67 @@ exports[`Merchandize match snapshot testSelect 1`] = `
         <div
           class="MuiFormControl-root css-1c9gikl-MuiFormControl-root"
         >
-          <label
-            class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-colorPrimary css-ssr94h-MuiFormLabel-root-MuiInputLabel-root"
-            data-shrink="true"
+          <div
+            class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-16awh2u-MuiAutocomplete-root"
           >
-            Default sorting
-            <span
-              aria-label="select.tooltip"
-              class=""
-              data-mui-internal-clone-element="true"
-              style="display: inline-block; padding-left: 10px; margin-bottom: -5px;"
+            <div
+              class="MuiFormControl-root MuiFormControl-fullWidth css-1qc7p1k-MuiFormControl-root"
             >
-              <ion-icon
-                name="information-circle-outline"
-                style="color: rgb(129, 135, 185); width: 20px; height: 20px; display: flex;"
-              />
-            </span>
-          </label>
-          <button
-            aria-expanded="false"
-            aria-haspopup="listbox"
-            class="MuiSelectUnstyled-root css-k616if"
-            type="button"
-          >
-            <span />
-            <ion-icon
-              name="chevron-down"
-            />
-          </button>
+              <label
+                class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-colorPrimary css-ssr94h-MuiFormLabel-root-MuiInputLabel-root"
+                data-shrink="true"
+                for="mui-4"
+              >
+                Default sorting
+                <span
+                  aria-label="select.tooltip"
+                  class=""
+                  data-mui-internal-clone-element="true"
+                  style="display: inline-block; padding-left: 10px; margin-bottom: -5px;"
+                >
+                  <ion-icon
+                    name="information-circle-outline"
+                    style="color: rgb(129, 135, 185); width: 20px; height: 20px; display: flex;"
+                  />
+                </span>
+              </label>
+              <div
+                class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-n2f5zc-MuiInputBase-root"
+              >
+                <input
+                  aria-autocomplete="list"
+                  aria-expanded="false"
+                  aria-invalid="false"
+                  autocapitalize="none"
+                  autocomplete="off"
+                  class="MuiInputBase-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-yz9k0d-MuiInputBase-input"
+                  id="mui-4"
+                  role="combobox"
+                  spellcheck="false"
+                  type="text"
+                  value=""
+                />
+                <div
+                  class="MuiAutocomplete-endAdornment css-1q60rmi-MuiAutocomplete-endAdornment"
+                >
+                  <button
+                    aria-label="Open"
+                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-qzbt6i-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
+                    tabindex="-1"
+                    title="Open"
+                    type="button"
+                  >
+                    <ion-icon
+                      name="chevron-down"
+                    />
+                    <span
+                      class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                    />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
