@@ -101,7 +101,13 @@ services:
         lazy: true
         tags:
             - { name: 'elasticsuite.search.request.aggregation.assembler', aggregationType: 'termsBucket' }
-    
+
+    Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Bucket\MultiTerms:
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'elasticsuite.search.request.aggregation.assembler', aggregationType: 'multiTermsBucket' }
+
     Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Pipeline\BucketSelector:
         abstract: false
         lazy: true

@@ -41,6 +41,13 @@ services:
         tags:
             - { name: 'elasticsuite.search.request.aggregation.factory', aggregationType: 'termsBucket' }
 
+    elasticsuite.search.request.aggregation.bucket.multiterms.factory:
+        parent: Elasticsuite\DependencyInjection\GenericFactory
+        arguments:
+            - 'Elasticsuite\Search\Elasticsearch\Request\Aggregation\Bucket\MultiTerms'
+        tags:
+            - { name: 'elasticsuite.search.request.aggregation.factory', aggregationType: 'multiTermsBucket' }
+
     elasticsuite.search.request.aggregation.metric.avg.factory:
         parent: Elasticsuite\DependencyInjection\GenericFactory
         arguments:
