@@ -17,7 +17,7 @@ declare(strict_types=1);
 namespace Elasticsuite\Search\Tests\Unit\Elasticsearch\Request\Aggregation\Bucket;
 
 use ArgumentCountError;
-use Elasticsuite\Search\Elasticsearch\Request\Aggregation\Bucket\Terms;
+use Elasticsuite\Search\Elasticsearch\Request\Aggregation\Bucket\MultiTerms;
 use Elasticsuite\Search\Elasticsearch\Request\BucketInterface;
 use Elasticsuite\Search\Elasticsearch\Request\MetricInterface;
 use Elasticsuite\Search\Elasticsearch\Request\QueryFactory;
@@ -25,12 +25,12 @@ use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
 use PHPUnit\Framework\Constraint\IsType;
 use PHPUnit\Framework\Constraint\LogicalOr;
 
-class TermsTest extends AbstractBucketTest
+class MultiTermsTest extends AbstractBucketTest
 {
     public function testFailedCreate(): void
     {
         $this->expectException(ArgumentCountError::class);
-        self::$aggregationFactory->create(BucketInterface::TYPE_TERMS);
+        self::$aggregationFactory->create(BucketInterface::TYPE_MULTI_TERMS);
     }
 
     /**
@@ -38,8 +38,8 @@ class TermsTest extends AbstractBucketTest
      */
     public function testDefaultCreate(array $params): void
     {
-        /** @var Terms $bucket */
-        $bucket = self::$aggregationFactory->create(BucketInterface::TYPE_TERMS, $params);
+        /** @var MultiTerms $bucket */
+        $bucket = self::$aggregationFactory->create(BucketInterface::TYPE_MULTI_TERMS, $params);
 
         $this->doStructureTest($bucket);
         $this->doContentTest($bucket, $params);
@@ -51,17 +51,20 @@ class TermsTest extends AbstractBucketTest
         yield [[
             'name' => 'test_bucket_name',
             'field' => 'test_field',
+            'additionalFields' => ['other_field'],
         ]];
 
         yield [[
             'name' => 'test_bucket_name',
             'field' => 'test_field',
+            'additionalFields' => ['other_field'],
             'size' => 10,
         ]];
 
         yield [[
             'name' => 'test_bucket_name',
             'field' => 'created_at',
+            'additionalFields' => ['author'],
             'nestedPath' => 'category',
             'size' => 10,
             'minDocCount' => 10,
@@ -70,6 +73,7 @@ class TermsTest extends AbstractBucketTest
         yield [[
             'name' => 'test_bucket_name',
             'field' => 'created_at',
+            'additionalFields' => ['author'],
             'nestedPath' => 'category',
             'size' => 10,
             'minDocCount' => 10,
@@ -79,6 +83,7 @@ class TermsTest extends AbstractBucketTest
         yield [[
             'name' => 'test_bucket_name',
             'field' => 'created_at',
+            'additionalFields' => ['author'],
             'nestedPath' => 'category',
             'size' => 10,
             'minDocCount' => 10,
@@ -92,6 +97,7 @@ class TermsTest extends AbstractBucketTest
         yield [[
             'name' => 'test_bucket_name',
             'field' => 'created_at',
+            'additionalFields' => ['author'],
             'nestedPath' => 'category',
             'size' => 10,
             'minDocCount' => 10,
@@ -105,6 +111,7 @@ class TermsTest extends AbstractBucketTest
         yield [[
             'name' => 'test_bucket_name',
             'field' => 'ca',
+            'additionalFields' => ['author'],
             'interval' => '2y',
             'filter' => $queryFactory->create(
                 QueryInterface::TYPE_TERM,
@@ -126,25 +133,27 @@ class TermsTest extends AbstractBucketTest
     protected function doStructureTest(mixed $bucket): void
     {
         parent::doStructureTest($bucket);
-        $this->assertInstanceOf(Terms::class, $bucket);
-        $this->assertEquals(BucketInterface::TYPE_TERMS, $bucket->getType());
+        $this->assertInstanceOf(MultiTerms::class, $bucket);
+        $this->assertEquals(BucketInterface::TYPE_MULTI_TERMS, $bucket->getType());
 
         $this->assertIsInt($bucket->getSize());
         $this->assertIsString($bucket->getSortOrder());
         $this->assertIsArray($bucket->getInclude());
         $this->assertIsArray($bucket->getExclude());
         $this->assertThat($bucket->getMinDocCount(), LogicalOr::fromConstraints(new IsType('null'), new IsType('int')));
+        $this->assertIsArray($bucket->getFields());
     }
 
     protected function doContentTest(mixed $bucket, array $params): void
     {
         parent::doContentTest($bucket, $params);
 
-        /** @var Terms $bucket */
+        /** @var MultiTerms $bucket */
         $this->assertEquals($params['size'] ?? BucketInterface::MAX_BUCKET_SIZE, $bucket->getSize());
         $this->assertEquals($params['sortOrder'] ?? BucketInterface::SORT_ORDER_COUNT, $bucket->getSortOrder());
         $this->assertEquals($params['include'] ?? [], $bucket->getInclude());
         $this->assertEquals($params['exclude'] ?? [], $bucket->getExclude());
         $this->assertEquals($params['minDocCount'] ?? null, $bucket->getMinDocCount());
+        $this->assertEquals(array_merge([$params['field']], $params['additionalFields']), $bucket->getFields());
     }
 }
