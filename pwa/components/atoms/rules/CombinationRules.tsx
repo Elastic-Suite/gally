@@ -143,7 +143,7 @@ function CombinationRules(props: IProps): JSX.Element {
                   label={
                     operator === RuleCombinationOperator.ALL ? 'and' : 'or'
                   }
-                  merge={key !== 0}
+                  merge={key !== 0 && item.type !== RuleType.COMBINATION}
                 />
               ) : (
                 <RuleLinkPlaceholder />
