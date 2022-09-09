@@ -1,183 +1,48 @@
 {
-  "data": {
-    "categoryTrees": [
-      {
-        "catalogCode": "com_fr",
-        "catalogName": "Cat One",
-        "id": 1,
-        "categories": [
-          {
-            "id": 2,
-            "name": "Cat One One",
-            "isVirtual": false
-          },
-          {
-            "id": 3,
-            "name": "Cat One Two",
-            "isVirtual": false,
-            "children": [
-              {
-                "id": 4,
-                "name": "Cat One Two One",
-                "isVirtual": false,
-                "children": [
-                  {
-                    "id": 5,
-                    "name": "Cat One Two One One",
-                    "isVirtual": false
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "id": 6,
-        "catalogCode": "codm_en",
-        "catalogName": "Cat Two",
-        "categories": [
-          {
-            "id": 7,
-            "name": "Cat Two One",
-            "isVirtual": false,
-            "children": [
-              {
-                "id": 8,
-                "name": "Cat Two One One",
-                "isVirtual": false,
-                "children": [
-                  {
-                    "id": 9,
-                    "name": "Cat Two One One One",
-                    "isVirtual": false
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "id": 10,
-            "name": "Cat Two two",
-            "isVirtual": false
-          }
-        ]
-      },
-      {
-        "id": 11,
-        "catalogCode": "coam_enT",
-        "catalogName": "Cat Three",
-        "categories": [
-          {
-            "id": 12,
-            "name": "Cat three One",
-            "isVirtual": false,
-            "children": [
-              {
-                "id": 13,
-                "name": "Cat three One One",
-                "isVirtual": false,
-                "children": [
-                  {
-                    "id": 14,
-                    "name": "Cat three One One One",
-                    "isVirtual": false
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "id": 15,
-            "name": "Cat three One One",
-            "isVirtual": false,
-            "children": [
-              {
-                "id": 16,
-                "name": "Cat three One One One",
-                "isVirtual": false
-              }
-            ]
-          },
-          {
-            "id": 17,
-            "name": "Cat three One One",
-            "isVirtual": false,
-            "children": [
-              {
-                "id": 18,
-                "name": "Cat three One One One",
-                "isVirtual": false
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "id": 19,
-        "catalogCode": "com_enThreeZ",
-        "catalogName": "Cat Four",
-        "categories": [
-          {
-            "id": 20,
-            "name": "Cat Four One",
-            "isVirtual": false
-          },
-          {
-            "id": 21,
-            "name": "Cat Four One",
-            "isVirtual": false
-          },
-          {
-            "id": 22,
-            "name": "Cat Four One",
-            "isVirtual": false
-          }
-        ]
-      },
-      {
-        "id": 23,
-        "catalogCode": "com_enThree",
-        "catalogName": "Cat Five",
-        "categories": [
-          {
-            "id": 24,
-            "name": "Cat Five One",
-            "isVirtual": false,
-            "children": [
-              {
-                "id": 25,
-                "name": "Cat Five Two",
-                "isVirtual": false,
-                "children": [
-                  {
-                    "id": 26,
-                    "name": "Cat Five Three",
-                    "isVirtual": false,
-                    "children": [
-                      {
-                        "id": 27,
-                        "name": "Cat Five Four",
-                        "isVirtual": false
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "id": 28,
-                "name": "Cat Five bis",
-                "isVirtual": false
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "id": 29,
-        "catalogCode": "com_fr4",
-        "catalogName": "Cat One"
-      }
-    ]
-  }
+  "@context": "/contexts/CategoryTree",
+  "@id": "/categoryTree?id=catalogId%3D0;localizedCatalogId%3D",
+  "@type": "CategoryTree",
+  "catalogId": 0,
+  "localizedCatalogId": null,
+  "categories": [
+    {
+      "id": "one",
+      "name": "Catégorie Une",
+      "level": 1,
+      "path": "one",
+      "isVirtual": false,
+      "children": [
+        {
+          "id": "three",
+          "name": "Catégorie Trois",
+          "level": 2,
+          "path": "one/three",
+          "isVirtual": false,
+          "children": [
+            {
+              "id": "five",
+              "name": "Catégorie Cinq",
+              "level": 4,
+              "path": "one/three/five",
+              "isVirtual": true
+            }
+          ]
+        },
+        {
+          "id": "four",
+          "name": "Catégorie Quatre",
+          "level": 3,
+          "path": "one/four",
+          "isVirtual": true
+        }
+      ]
+    },
+    {
+      "id": "two",
+      "name": "Catégorie Deux",
+      "level": 1,
+      "path": "two",
+      "isVirtual": false
+    }
+  ]
 }

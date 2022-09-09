@@ -1,41 +1,52 @@
 import { useState } from 'react'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
-import Tree from './Tree'
-import categories from '../../../public/mocks/categories.json'
+
 import { ITreeItem } from '~/types'
+import categories from '~/public/mocks/categories.json'
+
+import Tree from './Tree'
 
 export default {
   title: 'Atoms/Tree',
   component: Tree,
 } as ComponentMeta<typeof Tree>
 
-const Template: ComponentStory<typeof Tree> = (args) => {
-  const [selectedCategoryItem, setSelectedCategoryItem] = useState<
-    ITreeItem | undefined
-  >()
-
-  function handleSelect(item: ITreeItem): void {
-    setSelectedCategoryItem(item)
-  }
-
+export const Simple: ComponentStory<typeof Tree> = (args) => {
+  const [selectedItem, setSelectedItem] = useState<ITreeItem>()
+  const [openItems, setOpenItems] = useState<Record<string, boolean>>({})
   return (
-    <>
-      <Tree
-        {...args}
-        selectedItem={selectedCategoryItem}
-        onSelect={handleSelect}
-      />
-      {selectedCategoryItem ? (
-        <div style={{ marginTop: 30 }}>
-          Item sélectionné :{' '}
-          {selectedCategoryItem.catalogName || selectedCategoryItem.name}
-        </div>
-      ) : null}
-    </>
+    <Tree
+      {...args}
+      multiple={false}
+      onChange={setSelectedItem}
+      onToggle={setOpenItems}
+      openItems={openItems}
+      value={selectedItem}
+    />
   )
 }
+Simple.args = {
+  data: categories.categories,
+  search: '',
+  small: false,
+}
 
-export const Default = Template.bind({})
-Default.args = {
-  data: categories.data.categoryTrees,
+export const Multiple: ComponentStory<typeof Tree> = (args) => {
+  const [selectedItems, setSelectedItems] = useState<ITreeItem[]>([])
+  const [openItems, setOpenItems] = useState<Record<string, boolean>>({})
+  return (
+    <Tree
+      {...args}
+      multiple
+      onChange={setSelectedItems}
+      onToggle={setOpenItems}
+      openItems={openItems}
+      value={selectedItems}
+    />
+  )
+}
+Multiple.args = {
+  data: categories.categories,
+  search: '',
+  small: false,
 }

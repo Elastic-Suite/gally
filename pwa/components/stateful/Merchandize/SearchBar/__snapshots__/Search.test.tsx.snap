@@ -26,7 +26,7 @@ exports[`SearchBar match snapshot SearchBar 1`] = `
         class="MuiFormControl-root css-14yckze-MuiFormControl-root"
       >
         <div
-          class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd css-n2f5zc-MuiInputBase-root"
+          class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd css-5uzcdm-MuiInputBase-root"
         >
           <input
             aria-invalid="false"

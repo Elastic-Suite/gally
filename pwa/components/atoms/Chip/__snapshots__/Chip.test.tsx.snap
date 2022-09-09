@@ -3,7 +3,7 @@
 exports[`Chip match snapshot (color error) 1`] = `
 <div>
   <div
-    class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorError MuiChip-filledError css-1lw0qcm-MuiChip-root"
+    class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorError MuiChip-filledError css-1ywqr3b-MuiChip-root"
   >
     <span
       class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
@@ -17,7 +17,7 @@ exports[`Chip match snapshot (color error) 1`] = `
 exports[`Chip match snapshot (color success) 1`] = `
 <div>
   <div
-    class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorSuccess MuiChip-filledSuccess css-1klp0to-MuiChip-root"
+    class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorSuccess MuiChip-filledSuccess css-s7mah8-MuiChip-root"
   >
     <span
       class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
@@ -31,7 +31,7 @@ exports[`Chip match snapshot (color success) 1`] = `
 exports[`Chip match snapshot (color warning) 1`] = `
 <div>
   <div
-    class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorWarning MuiChip-filledWarning css-14rfje-MuiChip-root"
+    class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorWarning MuiChip-filledWarning css-1irumrb-MuiChip-root"
   >
     <span
       class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
@@ -45,7 +45,7 @@ exports[`Chip match snapshot (color warning) 1`] = `
 exports[`Chip match snapshot 1`] = `
 <div>
   <div
-    class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-filledDefault css-l1261j-MuiChip-root"
+    class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-filledDefault css-1fbrvbb-MuiChip-root"
   >
     <span
       class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"

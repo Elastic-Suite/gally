@@ -1,4 +1,4 @@
-import { styled } from '@mui/material/styles'
+import { styled } from '@mui/system'
 
 const CustomTitleScope = styled('div')(({ theme }) => ({
   color: theme.palette.colors.neutral[900],

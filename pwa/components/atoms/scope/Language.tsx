@@ -1,4 +1,4 @@
-import { styled } from '@mui/material/styles'
+import { styled } from '@mui/system'
 
 import { firstLetterUppercase } from '~/services'
 import { ICatalog } from '~/types'

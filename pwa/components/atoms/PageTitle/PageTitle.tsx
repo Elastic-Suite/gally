@@ -1,5 +1,5 @@
 import { Typography, TypographyProps } from '@mui/material'
-import { styled } from '@mui/material/styles'
+import { styled } from '@mui/system'
 import { ReactNode } from 'react'
 
 const Root = styled('div')(() => ({

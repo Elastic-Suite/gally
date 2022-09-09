@@ -13,7 +13,7 @@ import {
 } from '~/hooks'
 import { findBreadcrumbLabel } from '~/services'
 import { selectMenu, useAppSelector } from '~/store'
-import { ICatalog, ICategories, ISearchParameters, ITreeItem } from '~/types'
+import { ICatalog, ICategories, ICategory, ISearchParameters } from '~/types'
 
 import { Box } from '@mui/system'
 import VirtualRule from '~/components/molecules/layout/fade/VirtualRule'
@@ -30,9 +30,7 @@ function Categories(): JSX.Element {
   const menu = useAppSelector(selectMenu)
   const [, setBreadcrumb] = useContext(breadcrumbContext)
 
-  const [selectedCategoryItem, setSelectedCategoryItem] = useState<ITreeItem>(
-    {}
-  )
+  const [selectedCategoryItem, setSelectedCategoryItem] = useState<ICategory>()
 
   const resourceName = 'Catalog'
   const resource = useResource(resourceName)
@@ -50,7 +48,7 @@ function Categories(): JSX.Element {
 
   const { t } = useTranslation('categories')
 
-  const [categoryTreeFields] = useFetchApi<ICategories>(
+  const [categories] = useFetchApi<ICategories>(
     `categoryTree?/&catalogId=${
       catalogId !== -1 ? catalogId : null
     }&localizedCatalogId=${
@@ -111,7 +109,7 @@ function Categories(): JSX.Element {
                 onCategory={setSelectedCategoryItem}
               />
               <CategoryTree
-                categoryTreeFields={categoryTreeFields}
+                categories={categories.data}
                 selectedItem={selectedCategoryItem}
                 onSelect={setSelectedCategoryItem}
               />

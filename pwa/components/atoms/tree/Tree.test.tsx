@@ -7,21 +7,14 @@ import Tree from './Tree'
 describe('Tree', () => {
   it('match snapshot', () => {
     const { container } = renderWithProviders(
-      <Tree data={categories.data.categoryTrees} />
+      <Tree data={categories.categories} />
     )
     expect(container).toMatchSnapshot()
   })
 
   it('match snapshot with selected item', () => {
     const { container } = renderWithProviders(
-      <Tree
-        data={categories.data.categoryTrees}
-        selectedItem={{
-          catalogCode: 'com_fr',
-          catalogName: 'Cat One',
-          id: 1,
-        }}
-      />
+      <Tree data={categories.categories} value={categories.categories[0]} />
     )
     expect(container).toMatchSnapshot()
   })

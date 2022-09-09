@@ -12,7 +12,7 @@ exports[`DropDown match snapshot BadgeDisabledFalse 1`] = `
         class="MuiFormControl-root MuiFormControl-fullWidth css-1qc7p1k-MuiFormControl-root"
       >
         <div
-          class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-n2f5zc-MuiInputBase-root"
+          class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-5uzcdm-MuiInputBase-root"
         >
           <input
             aria-autocomplete="list"
@@ -31,10 +31,10 @@ exports[`DropDown match snapshot BadgeDisabledFalse 1`] = `
             class="MuiAutocomplete-endAdornment css-1q60rmi-MuiAutocomplete-endAdornment"
           >
             <button
-              aria-label="Open"
+              aria-label="form.open"
               class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-qzbt6i-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
               tabindex="-1"
-              title="Open"
+              title="form.open"
               type="button"
             >
               <ion-icon
@@ -64,7 +64,7 @@ exports[`DropDown match snapshot BadgeDisabledTrue 1`] = `
         class="MuiFormControl-root MuiFormControl-fullWidth css-1qc7p1k-MuiFormControl-root"
       >
         <div
-          class="MuiInputBase-root MuiInputBase-colorPrimary Mui-disabled MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-n2f5zc-MuiInputBase-root"
+          class="MuiInputBase-root MuiInputBase-colorPrimary Mui-disabled MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-5uzcdm-MuiInputBase-root"
         >
           <input
             aria-autocomplete="list"
@@ -84,11 +84,11 @@ exports[`DropDown match snapshot BadgeDisabledTrue 1`] = `
             class="MuiAutocomplete-endAdornment css-1q60rmi-MuiAutocomplete-endAdornment"
           >
             <button
-              aria-label="Open"
+              aria-label="form.open"
               class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-qzbt6i-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
               disabled=""
               tabindex="-1"
-              title="Open"
+              title="form.open"
               type="button"
             >
               <ion-icon
@@ -122,7 +122,7 @@ exports[`DropDown match snapshot BadgeLabel 1`] = `
           Label
         </label>
         <div
-          class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-n2f5zc-MuiInputBase-root"
+          class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-5uzcdm-MuiInputBase-root"
         >
           <input
             aria-autocomplete="list"
@@ -141,10 +141,10 @@ exports[`DropDown match snapshot BadgeLabel 1`] = `
             class="MuiAutocomplete-endAdornment css-1q60rmi-MuiAutocomplete-endAdornment"
           >
             <button
-              aria-label="Open"
+              aria-label="form.open"
               class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-qzbt6i-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
               tabindex="-1"
-              title="Open"
+              title="form.open"
               type="button"
             >
               <ion-icon
@@ -181,7 +181,7 @@ exports[`DropDown match snapshot BadgeMultiple 1`] = `
           Label
         </label>
         <div
-          class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-n2f5zc-MuiInputBase-root"
+          class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-5uzcdm-MuiInputBase-root"
         >
           <input
             aria-autocomplete="list"
@@ -200,10 +200,10 @@ exports[`DropDown match snapshot BadgeMultiple 1`] = `
             class="MuiAutocomplete-endAdornment css-1q60rmi-MuiAutocomplete-endAdornment"
           >
             <button
-              aria-label="Open"
+              aria-label="form.open"
               class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-qzbt6i-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
               tabindex="-1"
-              title="Open"
+              title="form.open"
               type="button"
             >
               <ion-icon
@@ -233,7 +233,7 @@ exports[`DropDown match snapshot BadgeRequiredFalse 1`] = `
         class="MuiFormControl-root MuiFormControl-fullWidth css-1qc7p1k-MuiFormControl-root"
       >
         <div
-          class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-n2f5zc-MuiInputBase-root"
+          class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-5uzcdm-MuiInputBase-root"
         >
           <input
             aria-autocomplete="list"
@@ -252,10 +252,10 @@ exports[`DropDown match snapshot BadgeRequiredFalse 1`] = `
             class="MuiAutocomplete-endAdornment css-1q60rmi-MuiAutocomplete-endAdornment"
           >
             <button
-              aria-label="Open"
+              aria-label="form.open"
               class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-qzbt6i-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
               tabindex="-1"
-              title="Open"
+              title="form.open"
               type="button"
             >
               <ion-icon
@@ -285,7 +285,7 @@ exports[`DropDown match snapshot BadgeRequiredTrue 1`] = `
         class="MuiFormControl-root MuiFormControl-fullWidth css-1qc7p1k-MuiFormControl-root"
       >
         <div
-          class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-n2f5zc-MuiInputBase-root"
+          class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-5uzcdm-MuiInputBase-root"
           required=""
         >
           <input
@@ -306,10 +306,10 @@ exports[`DropDown match snapshot BadgeRequiredTrue 1`] = `
             class="MuiAutocomplete-endAdornment css-1q60rmi-MuiAutocomplete-endAdornment"
           >
             <button
-              aria-label="Open"
+              aria-label="form.open"
               class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-qzbt6i-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
               tabindex="-1"
-              title="Open"
+              title="form.open"
               type="button"
             >
               <ion-icon
