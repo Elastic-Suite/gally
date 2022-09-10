@@ -56,10 +56,10 @@ class QueryGroupTest extends KernelTestCase
     {
         $this->expectExceptionMessage('Aggregation assembler : invalid aggregation type invalidType.');
         $this->expectException(\InvalidArgumentException::class);
-        $termBucket = $this->getMockBuilder(BucketInterface::class)->getMock();
-        $termBucket->method('getType')->willReturn('invalidType');
+        $termsBucket = $this->getMockBuilder(BucketInterface::class)->getMock();
+        $termsBucket->method('getType')->willReturn('invalidType');
 
-        $this->getQueryGroupAggregationAssembler()->assembleAggregation($termBucket);
+        $this->getQueryGroupAggregationAssembler()->assembleAggregation($termsBucket);
     }
 
     /**
