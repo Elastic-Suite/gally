@@ -20,7 +20,7 @@ use Elasticsuite\Index\Model\Index\Mapping;
 use Elasticsuite\Index\Model\Index\MappingInterface;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\Aggregation\AggregationBuilder;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder;
-use Elasticsuite\Search\Elasticsearch\Request\Aggregation\Bucket\Term;
+use Elasticsuite\Search\Elasticsearch\Request\Aggregation\Bucket\Terms;
 use Elasticsuite\Search\Elasticsearch\Request\AggregationFactory;
 use Elasticsuite\Search\Elasticsearch\Request\BucketInterface;
 use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
@@ -42,9 +42,9 @@ class AggregationBuilderTest extends KernelTestCase
         $builder = new AggregationBuilder($this->getAggregationFactory(), $this->getFilterQueryBuilder());
         $containerConfig = $this->getContainerConfiguration();
         $aggregationsData = [
-            ['name' => 'simpleField', 'type' => BucketInterface::TYPE_TERM, 'foo' => 'bar'],
-            ['name' => 'searchableField', 'type' => BucketInterface::TYPE_TERM, 'foo' => 'bar'],
-            ['name' => 'fieldNotInMapping', 'type' => BucketInterface::TYPE_TERM, 'foo' => 'bar'],
+            ['name' => 'simpleField', 'type' => BucketInterface::TYPE_TERMS, 'foo' => 'bar'],
+            ['name' => 'searchableField', 'type' => BucketInterface::TYPE_TERMS, 'foo' => 'bar'],
+            ['name' => 'fieldNotInMapping', 'type' => BucketInterface::TYPE_TERMS, 'foo' => 'bar'],
         ];
 
         /** @var BucketInterface[] $aggregations */
@@ -52,14 +52,14 @@ class AggregationBuilderTest extends KernelTestCase
 
         $this->assertCount(3, $aggregations);
 
-        $this->assertInstanceOf(Term::class, $aggregations[0]);
+        $this->assertInstanceOf(Terms::class, $aggregations[0]);
         $this->assertEquals('simpleField', $aggregations[0]->getField());
         $this->assertEquals('simpleField', $aggregations[0]->getName());
 
         $this->assertEquals('searchableField.untouched', $aggregations[1]->getField());
         $this->assertEquals('searchableField', $aggregations[1]->getName());
 
-        $this->assertInstanceOf(Term::class, $aggregations[2]);
+        $this->assertInstanceOf(Terms::class, $aggregations[2]);
         $this->assertEquals('fieldNotInMapping', $aggregations[2]->getField());
         $this->assertEquals('fieldNotInMapping', $aggregations[2]->getName());
     }
@@ -72,8 +72,8 @@ class AggregationBuilderTest extends KernelTestCase
         $builder = new AggregationBuilder($this->getAggregationFactory(), $this->getFilterQueryBuilder());
         $containerConfig = $this->getContainerConfiguration();
         $aggregationsData = [
-            ['name' => 'simpleField', 'type' => BucketInterface::TYPE_TERM, 'foo' => 'bar'],
-            ['name' => 'searchableField', 'type' => BucketInterface::TYPE_TERM, 'foo' => 'bar'],
+            ['name' => 'simpleField', 'type' => BucketInterface::TYPE_TERMS, 'foo' => 'bar'],
+            ['name' => 'searchableField', 'type' => BucketInterface::TYPE_TERMS, 'foo' => 'bar'],
         ];
 
         $filters = [
@@ -86,13 +86,13 @@ class AggregationBuilderTest extends KernelTestCase
 
         $this->assertCount(2, $aggregations);
 
-        $this->assertInstanceOf(Term::class, $aggregations[0]);
+        $this->assertInstanceOf(Terms::class, $aggregations[0]);
         $this->assertEquals('simpleField', $aggregations[0]->getField());
         $this->assertEquals('simpleField', $aggregations[0]->getName());
         $this->assertEquals('', $aggregations[0]->getNestedPath());
         $this->assertInstanceOf(QueryInterface::class, $aggregations[0]->getFilter());
 
-        $this->assertInstanceOf(Term::class, $aggregations[1]);
+        $this->assertInstanceOf(Terms::class, $aggregations[1]);
         $this->assertEquals('searchableField.untouched', $aggregations[1]->getField());
         $this->assertEquals('searchableField', $aggregations[1]->getName());
         $this->assertInstanceOf(QueryInterface::class, $aggregations[1]->getFilter());
@@ -108,7 +108,7 @@ class AggregationBuilderTest extends KernelTestCase
         $builder = new AggregationBuilder($this->getAggregationFactory(), $this->getFilterQueryBuilder());
         $containerConfig = $this->getContainerConfiguration();
         $aggregationsData = [
-            ['name' => 'nested.simpleField', 'type' => BucketInterface::TYPE_TERM, 'foo' => 'bar'],
+            ['name' => 'nested.simpleField', 'type' => BucketInterface::TYPE_TERMS, 'foo' => 'bar'],
         ];
 
         /** @var BucketInterface[] $aggregations */
@@ -116,7 +116,7 @@ class AggregationBuilderTest extends KernelTestCase
 
         $this->assertCount(1, $aggregations);
 
-        $this->assertInstanceOf(Term::class, $aggregations[0]);
+        $this->assertInstanceOf(Terms::class, $aggregations[0]);
         $this->assertEquals('nested.simpleField', $aggregations[0]->getField());
         $this->assertEquals('nested.simpleField', $aggregations[0]->getName());
         $this->assertEquals('nested', $aggregations[0]->getNestedPath());
@@ -134,10 +134,10 @@ class AggregationBuilderTest extends KernelTestCase
         $aggregationsData = [
             [
                 'name' => 'nested.simpleField',
-                'type' => BucketInterface::TYPE_TERM,
+                'type' => BucketInterface::TYPE_TERMS,
                 'foo' => 'bar',
                 'childAggregations' => [
-                    ['name' => 'simpleField', 'type' => BucketInterface::TYPE_TERM],
+                    ['name' => 'simpleField', 'type' => BucketInterface::TYPE_TERMS],
                 ],
             ],
         ];
@@ -147,10 +147,10 @@ class AggregationBuilderTest extends KernelTestCase
 
         $this->assertCount(1, $aggregations);
 
-        $this->assertInstanceOf(Term::class, $aggregations[0]);
+        $this->assertInstanceOf(Terms::class, $aggregations[0]);
         $this->assertEquals('nested.simpleField', $aggregations[0]->getField());
         $this->assertEquals('nested.simpleField', $aggregations[0]->getName());
-        $this->assertInstanceOf(Term::class, $aggregations[0]->getChildAggregations()[0]);
+        $this->assertInstanceOf(Terms::class, $aggregations[0]->getChildAggregations()[0]);
         $this->assertEquals('simpleField', $aggregations[0]->getChildAggregations()[0]->getField());
         $this->assertEquals('simpleField', $aggregations[0]->getChildAggregations()[0]->getName());
         $this->assertEquals('nested', $aggregations[0]->getNestedPath());
@@ -171,7 +171,7 @@ class AggregationBuilderTest extends KernelTestCase
         $aggregationsData = [
             [
                 'name' => 'nested.simpleField',
-                'type' => BucketInterface::TYPE_TERM,
+                'type' => BucketInterface::TYPE_TERMS,
                 'nestedFilter' => ['nested.searchableField' => 'simpleNestedFieldFilter'],
             ],
         ];
@@ -180,7 +180,7 @@ class AggregationBuilderTest extends KernelTestCase
         $aggregations = $builder->buildAggregations($containerConfig, $aggregationsData, $filters);
 
         $this->assertCount(1, $aggregations);
-        $this->assertInstanceOf(Term::class, $aggregations[0]);
+        $this->assertInstanceOf(Terms::class, $aggregations[0]);
         $this->assertEquals('nested.simpleField', $aggregations[0]->getField());
         $this->assertEquals('nested.simpleField', $aggregations[0]->getName());
         $this->assertEquals('nested', $aggregations[0]->getNestedPath());
