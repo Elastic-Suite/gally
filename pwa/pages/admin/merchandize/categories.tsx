@@ -94,10 +94,45 @@ function Categories(): JSX.Element {
     }
   }
 
+  const [saveTest, setSaveTest] = useState({})
+
+  useEffect(() => {
+    if (
+      localizedCatalogId !== -1 &&
+      catalogId !== -1 &&
+      !Object.entries(saveData).length
+    )
+      setSaveTest({
+        useNameInProductSearch: dataCat?.data.useNameInProductSearch,
+        isVirtual: dataCat?.data.isVirtual,
+        defaultSorting: dataCat?.data.defaultSorting,
+      })
+  }, [dataCat.data])
+
+  // console.log('save', saveTest)
+
   async function onSave(): Promise<void> {
     await update(idCat, saveData)
     setSaveData({})
   }
+
+  function testBtnSaveDisabled(): boolean {
+    if (
+      Object.entries(saveTest).find(
+        ([key, val]: [
+          key: (keyof typeof saveTest)['string'],
+          val: string | boolean
+        ]) => {
+          if (saveData[key] === undefined) return 0
+          else if (saveData[key] === val) return 0
+          return 1
+        }
+      )
+    )
+      return false
+    return true
+  }
+  const disableBtnSave = testBtnSaveDisabled()
 
   return (
     <>
@@ -150,7 +185,7 @@ function Categories(): JSX.Element {
            catalogsData={data}
            error={error}
            onSave={onSave}
-           saveData={saveData}
+           disableBtnSave={disableBtnSave}
          />
         ) : (
           <Box
@@ -166,6 +201,7 @@ function Categories(): JSX.Element {
           </Box>
         )}
        
+        
       </TwoColsLayout>
     </>
   )
