@@ -80,19 +80,18 @@ class MapperTest extends KernelTestCase
     /**
      * Test sort orders mapping.
      */
-    /*
     public function testSortOrdersMapping(): void
     {
-        $mapper  = $this->getMapper();
-        $query   = $this->getMockBuilder(QueryInterface::class)->getMock();
+        $mapper = $this->getMapper();
+        $query = $this->getMockBuilder(QueryInterface::class)->getMock();
+        $sortOrder = $this->getMockBuilder(Request\SortOrderInterface::class)->getMock();
 
-        $searchRequest = new Request('requestName', 'indexName', $query, null, ['sort' => 'sort'], 0, 10);
+        $searchRequest = new Request('requestName', 'indexName', $query, null, [$sortOrder], 0, 10);
 
         $mappedRequest = $mapper->assembleSearchRequest($searchRequest);
 
-        $this->assertEquals('sortOrders', $mappedRequest['sort']);
+        $this->assertEquals(['sortOrders'], $mappedRequest['sort']);
     }
-    */
 
     /**
      * Prepare the search request mapper used during tests.
@@ -103,7 +102,7 @@ class MapperTest extends KernelTestCase
         $queryAssemblerMock->method('assembleQuery')->willReturn(['mockQuery']);
 
         $sortOrderAssemblerMock = $this->getMockBuilder(SortOrderAssembler::class)->disableOriginalConstructor()->getMock();
-        $sortOrderAssemblerMock->method('assembleSortOrders')->willReturn([]);
+        $sortOrderAssemblerMock->method('assembleSortOrders')->willReturn(['sortOrders']);
 
         $aggregationAssemblerMock = $this->getMockBuilder(AggregationAssembler::class)->disableOriginalConstructor()->getMock();
         $aggregationAssemblerMock->method('assembleAggregations')->willReturn(['aggregations']);
