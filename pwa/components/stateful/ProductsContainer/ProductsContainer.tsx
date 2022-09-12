@@ -41,7 +41,7 @@ interface IProps {
   onNameChange: (val: boolean) => void
   onSortChange: (val: string) => void
   onSave: () => void
-  saveData: IConfigurationOptional
+  disableBtnSave: boolean
   dataCat: IConfiguration
   catalog: number
   localizedCatalog: number
@@ -65,7 +65,7 @@ function ProductsContainer(props: IProps): JSX.Element {
     catalog,
     category,
     onSave,
-    saveData,
+    disableBtnSave,
     onVirtualChange,
     dataCat,
     onNameChange,
@@ -132,7 +132,7 @@ function ProductsContainer(props: IProps): JSX.Element {
           <PrimaryButton
             sx={{ width: '150px' }}
             onClick={onSave}
-            disabled={!Object.entries(saveData).length}
+            disabled={disableBtnSave}
           >
             Save
           </PrimaryButton>
