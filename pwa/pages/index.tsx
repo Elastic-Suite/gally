@@ -43,7 +43,7 @@ function Welcome(): JSX.Element {
         </div>
       </section>
 
-      <style jsx global>{`
+      <style>{`
         @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700|Roboto+Slab:300,700');
 
         body {
@@ -369,7 +369,7 @@ function Admin(): JSX.Element {
       height={100}
       viewBox="0 0 646 646"
     >
-      <style jsx>
+      <style>
         {`
           .adminst0 {
             fill: #273942;
@@ -1228,7 +1228,7 @@ function Api(): JSX.Element {
       height={100}
       viewBox="0 0 646 646"
     >
-      <style jsx>
+      <style>
         {`
           .apist0 {
             fill: #273942;
