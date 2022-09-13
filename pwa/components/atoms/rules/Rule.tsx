@@ -1,52 +1,30 @@
 import { useContext } from 'react'
-import { styled } from '@mui/system'
 import { useTranslation } from 'next-i18next'
 
 import { ruleOptionsContext } from '~/contexts'
 import { isAttributeRule, isCombinationRule } from '~/services'
-import { IRule, RuleAttributeType, RuleType } from '~/types'
+import {
+  IOptions,
+  IRule,
+  IRuleAttribute,
+  ITreeItem,
+  RuleAttributeType,
+  RuleType,
+} from '~/types'
 
 import IonIcon from '../IonIcon/IonIcon'
 import DropDown from '../form/DropDown'
 import InputText from '../form/InputText'
+import TreeSelector from '../form/TreeSelector'
 
-const Root = styled('div')(({ theme }) => ({
-  height: '42px',
-  boxSizing: 'border-box',
-  background: theme.palette.colors.neutral['200'],
-  padding: theme.spacing(1),
-  display: 'flex',
-  justifyContent: 'center',
-  width: 'fit-content',
-  border: '1px solid',
-  borderColor: theme.palette.colors.neutral['300'],
-  borderRadius: theme.spacing(1),
-  alignItems: 'center',
-  gap: theme.spacing(0.5),
-}))
+import { Close, CustomCombination, Root } from './Rule.styled'
 
-const Close = styled('div')(({ theme }) => ({
-  display: 'flex',
-  cursor: 'pointer',
-  transition: 'all 500ms',
-  padding: theme.spacing(0.5),
-  borderRadius: theme.spacing(1),
-  color: theme.palette.colors.neutral['600'],
-  '&:hover': {
-    background: theme.palette.colors.neutral['300'],
-  },
-}))
-
-const CustomCombination = styled('div')(({ theme }) => ({
-  paddingLeft: theme.spacing(1),
-  paddingRight: theme.spacing(1),
-  fontFamily: 'Inter',
-  color: theme.palette.colors.neutral['900'],
-  fontWeight: 400,
-  lineHeight: '18px',
-  fontSize: '12px',
-  width: 'max-content',
-}))
+const numberTypes = [
+  RuleAttributeType.FLOAT,
+  RuleAttributeType.INT,
+  RuleAttributeType.NUMBER,
+  RuleAttributeType.PRICE,
+]
 
 interface IProps {
   onChange?: (rule: IRule) => void
@@ -56,101 +34,145 @@ interface IProps {
 
 function Rule(props: IProps): JSX.Element {
   const { onChange, onDelete, rule } = props
-  const options = useContext(ruleOptionsContext)
+  const {
+    getAttributeOperatorOptions,
+    getAttributeType,
+    loadAttributeValueOptions,
+    options,
+  } = useContext(ruleOptionsContext)
   const { t } = useTranslation('rules')
 
   function handleChange(property: string) {
     return (value: unknown): void => onChange({ ...rule, [property]: value })
   }
 
-  let firstBlock
-  let secondBlock
-  let thirdBlock
+  function handleFieldChange(value: string): void {
+    loadAttributeValueOptions(value)
+    onChange({
+      ...rule,
+      attribute_type: getAttributeType(value) ?? '',
+      field: value ?? '',
+      value: '',
+    } as IRuleAttribute)
+  }
 
-  if (isCombinationRule(rule)) {
-    const { operator, value } = rule
-    const { operator: operatorOptions, value: valueOptions } = options.get(
-      RuleType.COMBINATION
-    )
-    firstBlock = (
-      <DropDown
-        onChange={handleChange('operator')}
-        options={operatorOptions}
-        required
-        small
-        value={operator}
-      />
-    )
-    secondBlock = <CustomCombination>{t('conditionsAre')}</CustomCombination>
-    thirdBlock = (
-      <DropDown
-        onChange={handleChange('value')}
-        options={valueOptions}
-        required
-        small
-        value={value}
-      />
-    )
-  } else if (isAttributeRule(rule)) {
-    const { attribute_type, field, operator, value } = rule
-    const {
-      field: fieldOptions,
-      operator: operatorOptions,
-      value: valueOptions,
-    } = options.get(RuleType.ATTRIBUTE)
-    firstBlock = (
-      <DropDown
-        onChange={handleChange('field')}
-        options={fieldOptions}
-        required
-        value={field}
-        small
-      />
-    )
-    secondBlock = (
-      <DropDown
-        onChange={handleChange('operator')}
-        options={operatorOptions}
-        required
-        small
-        transparent
-        value={operator}
-      />
-    )
+  function getAttributeValueComponent(rule: IRuleAttribute): JSX.Element {
+    const { attribute_type, field, value } = rule
     switch (attribute_type) {
-      case RuleAttributeType.SELECT:
-        thirdBlock = (
+      case RuleAttributeType.BOOLEAN: {
+        return (
           <DropDown
             onChange={handleChange('value')}
-            options={valueOptions}
+            options={
+              (options.get(`type-${RuleAttributeType.BOOLEAN}`) ??
+                []) as IOptions<boolean>
+            }
             required
             small
             value={value}
           />
         )
-        break
+      }
 
-      default:
-        thirdBlock = (
+      case RuleAttributeType.CATEGORY: {
+        return (
+          <TreeSelector
+            data={
+              (options.get(`type-${RuleAttributeType.CATEGORY}`) ??
+                []) as ITreeItem[]
+            }
+            onChange={handleChange('value')}
+            value={value as string[]}
+          />
+        )
+      }
+
+      case RuleAttributeType.DROPDOWN:
+      case RuleAttributeType.SELECT: {
+        return (
+          <DropDown
+            onChange={handleChange('value')}
+            options={(options.get(field) ?? []) as IOptions<unknown>}
+            required
+            small
+            value={value}
+          />
+        )
+      }
+
+      default: {
+        const type = numberTypes.includes(attribute_type) ? 'number' : 'text'
+        return (
           <InputText
             onChange={handleChange('value')}
             required
             small
-            type={
-              attribute_type === RuleAttributeType.FLOAT ? 'number' : 'text'
-            }
-            value={value}
+            type={type}
+            value={value as string}
           />
         )
-        break
+      }
     }
+  }
+
+  let content
+  if (isCombinationRule(rule)) {
+    const { operator, value } = rule
+    content = (
+      <>
+        <DropDown
+          onChange={handleChange('operator')}
+          options={
+            (options.get(`${RuleType.COMBINATION}-operator`) ??
+              []) as IOptions<string>
+          }
+          required
+          small
+          value={operator}
+        />
+        <CustomCombination>{t('conditionsAre')}</CustomCombination>
+        <DropDown
+          onChange={handleChange('value')}
+          options={
+            (options.get(`type-${RuleAttributeType.BOOLEAN}`) ??
+              []) as IOptions<boolean>
+          }
+          required
+          small
+          value={value}
+        />
+      </>
+    )
+  } else if (isAttributeRule(rule)) {
+    const { field, operator } = rule
+    content = (
+      <>
+        <DropDown
+          onChange={handleFieldChange}
+          options={
+            (options.get(`${RuleType.ATTRIBUTE}-field`) ??
+              []) as IOptions<string>
+          }
+          required
+          value={field}
+          small
+        />
+        <DropDown
+          onChange={handleChange('operator')}
+          options={getAttributeOperatorOptions(field)}
+          required
+          small
+          transparent
+          value={operator}
+        />
+        {getAttributeValueComponent(rule)}
+      </>
+    )
   }
 
   return (
     <Root>
-      {firstBlock}
-      {secondBlock}
-      {thirdBlock}
+      {content}
       <Close onClick={onDelete}>
         <IonIcon name="close" style={{ fontSize: '17.85px' }} />
       </Close>

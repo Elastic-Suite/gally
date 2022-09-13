@@ -26,7 +26,7 @@ export function useResource(resourceName: string): IResource {
     const resource = getResource(api, resourceName)
     return {
       ...resource,
-      supportedProperty: resource.supportedProperty.map((field) =>
+      supportedProperty: resource?.supportedProperty.map((field) =>
         updatePropertiesAccordingToPath(field, asPath)
       ),
     }

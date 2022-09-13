@@ -4,7 +4,6 @@ import { schemaContext, userContext } from '~/contexts'
 import { IApi, IUser } from '~/types'
 
 import OptionsProvider from '~/components/stateful-providers/OptionsProvider/OptionsProvider'
-import RuleOptionsProvider from '~/components/stateful-providers/RuleOptionsProvider/RuleOptionsProvider'
 
 interface IProps {
   api: IApi
@@ -26,9 +25,7 @@ function TestProvider(props: IProps): JSX.Element {
   return (
     <userContext.Provider value={user}>
       <schemaContext.Provider value={api}>
-        <OptionsProvider>
-          <RuleOptionsProvider>{children}</RuleOptionsProvider>
-        </OptionsProvider>
+        <OptionsProvider>{children}</OptionsProvider>
       </schemaContext.Provider>
     </userContext.Provider>
   )

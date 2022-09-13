@@ -2,6 +2,7 @@ import {
   IApi,
   IApiSchemaOptions,
   IField,
+  IHydraLabelMember,
   IHydraMember,
   IHydraResponse,
   IOptions,
@@ -64,6 +65,16 @@ export function getOptionsFromResource<T extends IHydraMember>(
   return response['hydra:member'].map((member) => ({
     id: member.id,
     label: member['@id'],
+    value: member.id,
+  }))
+}
+
+export function getOptionsFromLabelResource<T extends IHydraLabelMember>(
+  response: IHydraResponse<T>
+): IOptions<string | number> {
+  return response['hydra:member'].map((member) => ({
+    id: member.id,
+    label: member.label,
     value: member.id,
   }))
 }
