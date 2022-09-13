@@ -139,6 +139,7 @@ function Categories(): JSX.Element {
       return false
     return true
   }
+
   const disableBtnSave = testBtnSaveDisabled()
 
   return (
@@ -203,8 +204,6 @@ function Categories(): JSX.Element {
             {t('placeholder')}
           </Box>
         )}
-       
-        
       </TwoColsLayout>
     </>
   )
