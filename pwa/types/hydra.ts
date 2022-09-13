@@ -130,6 +130,11 @@ export interface IHydraMember extends IJsonldBase {
   id: number | string
 }
 
+export interface IHydraLabelMember extends IHydraMember {
+  catalog: string
+  label: string
+}
+
 export interface IHydraMapping extends IJsonldType {
   variable: string
   property: string

@@ -1,22 +1,36 @@
+import { IOptions } from './option'
+import { ITreeItem } from './tree'
+
 export enum RuleType {
   ATTRIBUTE = 'attribute',
-  CONDITION = 'condition',
   COMBINATION = 'combination',
 }
 
 export enum RuleAttributeOperator {
+  CONTAINS = 'contains',
+  DOES_NOT_CONTAINS = 'does_not_contains',
   IS_ONE_OF = 'is_one_of',
   IS_NOT_ONE_OF = 'is_not_one_of',
   GTE = 'gte',
   LTE = 'lte',
+  GT = 'gt',
+  LT = 'lt',
   EQ = 'eq',
   NEQ = 'neq',
   IS = 'is',
+  IS_NOT = 'is_not',
 }
 
 export enum RuleAttributeType {
-  SELECT = 'select',
+  BOOLEAN = 'boolean',
+  CATEGORY = 'category',
+  DROPDOWN = 'dropdown',
   FLOAT = 'float',
+  INT = 'int',
+  NUMBER = 'number',
+  PRICE = 'price',
+  REFERENCE = 'reference',
+  SELECT = 'select',
   TEXT = 'text',
 }
 
@@ -27,7 +41,7 @@ export enum RuleCombinationOperator {
 
 export interface IRule {
   type: RuleType
-  value: string
+  value: string | string[]
 }
 
 export interface IRuleAttribute extends IRule {
@@ -37,12 +51,17 @@ export interface IRuleAttribute extends IRule {
   attribute_type: RuleAttributeType
 }
 
-export interface IRuleCondition extends IRule {
-  type: RuleType.CONDITION
-}
-
 export interface IRuleCombination extends IRule {
   type: RuleType.COMBINATION
   operator: RuleCombinationOperator
   children: IRule[]
+}
+
+export type IRuleOptions = Map<string, IOptions<unknown> | ITreeItem[]>
+
+export interface IRuleOptionsContext {
+  options: IRuleOptions
+  getAttributeOperatorOptions: (field: string) => IOptions<string>
+  getAttributeType: (field: string) => RuleAttributeType
+  loadAttributeValueOptions: (field: string) => void
 }

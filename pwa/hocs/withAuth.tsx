@@ -6,7 +6,6 @@ import { setRequestedPath, useAppDispatch } from '~/store'
 import { isValidUser } from '~/services'
 
 import OptionsProvider from '~/components/stateful-providers/OptionsProvider/OptionsProvider'
-import RuleOptionsProvider from '~/components/stateful-providers/RuleOptionsProvider/RuleOptionsProvider'
 
 export function withAuth<P extends Record<string, unknown>>(
   Cmp: FunctionComponent<P>
@@ -29,9 +28,7 @@ export function withAuth<P extends Record<string, unknown>>(
 
     return (
       <OptionsProvider>
-        <RuleOptionsProvider>
-          <Cmp {...props} />
-        </RuleOptionsProvider>
+        <Cmp {...props} />
       </OptionsProvider>
     )
   }

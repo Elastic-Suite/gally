@@ -24,6 +24,8 @@ import CategoryTree from '~/components/stateful/CategoryTree/CategoryTree'
 import ProductsContainer, {
   IConfiguration,
 } from '~/components/stateful/ProductsContainer/ProductsContainer'
+import RulesManager from '~/components/stateful/RulesManager/RulesManager'
+import { emptyCombinationRule } from '~/constants'
 
 function Categories(): JSX.Element {
   const router = useRouter()
@@ -39,6 +41,7 @@ function Categories(): JSX.Element {
 
   const [catalogId, setCatalogId] = useState<number>(-1)
   const [localizedCatalogId, setLocalizedCatalogId] = useState<number>(-1)
+  const [rule, setRule] = useState(emptyCombinationRule)
 
   useEffect(() => {
     setBreadcrumb(['merchandize', 'categories'])
@@ -117,7 +120,12 @@ function Categories(): JSX.Element {
           </TitleBlock>,
           <TitleBlock key="virtualRule" title={t('virtualRule.title')}>
             <VirtualRule val={dataCat?.data?.isVirtual}>
-              Virtual rule DATA
+              <RulesManager
+                catalogId={catalogId}
+                localizedCatalogId={localizedCatalogId}
+                onChange={setRule}
+                rule={rule}
+              />
             </VirtualRule>
           </TitleBlock>,
         ]}

@@ -2,10 +2,10 @@ import { Fragment } from 'react'
 import { styled } from '@mui/system'
 import { useTranslation } from 'next-i18next'
 
+import { emptyAttributeRule, emptyCombinationRule } from '~/constants'
 import { isAttributeRule, isCombinationRule } from '~/services'
 import {
   IRule,
-  IRuleAttribute,
   IRuleCombination,
   RuleCombinationOperator,
   RuleType,
@@ -64,18 +64,22 @@ const RuleLinkPlaceholder = styled('div')(() => ({
   width: '32px',
 }))
 
-interface IProps {
+export interface ICombinationRulesProps {
   first?: boolean
   onChange?: (rule: IRuleCombination) => void
   onDelete?: () => void
   rule?: IRuleCombination
 }
 
-function CombinationRules(props: IProps): JSX.Element {
+function CombinationRules(props: ICombinationRulesProps): JSX.Element {
   const { first, onChange, onDelete, rule } = props
-  const { children, operator } = rule
   const { t } = useTranslation('rules')
 
+  if (!rule) {
+    return null
+  }
+
+  const { children, operator } = rule
   const Root = first ? RootWithoutBorder : RootWithBorder
   const Child = first ? Fragment : ChildWithBorder
   const options = [
@@ -105,23 +109,12 @@ function CombinationRules(props: IProps): JSX.Element {
     if (value === RuleType.COMBINATION) {
       onChange({
         ...rule,
-        children: children.concat({
-          type: RuleType.COMBINATION,
-          operator: 'all',
-          value: 'true',
-          children: [],
-        } as IRuleCombination),
+        children: children.concat(emptyCombinationRule),
       })
     } else if (value === RuleType.ATTRIBUTE) {
       onChange({
         ...rule,
-        children: children.concat({
-          type: RuleType.ATTRIBUTE,
-          field: '',
-          operator: '',
-          attribute_type: 'text',
-          value: '',
-        } as IRuleAttribute),
+        children: children.concat(emptyAttributeRule),
       })
     }
   }

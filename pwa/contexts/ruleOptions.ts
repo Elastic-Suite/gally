@@ -1,6 +1,5 @@
 import { createContext } from 'react'
-import { IOptions } from '~/types'
 
-type TypeRuleOptions = Record<string, IOptions<string>>
-export const ruleOptionsContext =
-  createContext<Map<string, TypeRuleOptions>>(null)
+import { IRuleOptionsContext } from '~/types'
+
+export const ruleOptionsContext = createContext<IRuleOptionsContext>(null)

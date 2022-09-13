@@ -75,7 +75,6 @@ function CommonGridFromSourceField(props: IProps): JSX.Element {
     value: boolean | number | string
   ): void {
     if (update) {
-      // todo: should we use optimistic updates ?
       update(id, { [name]: value })
     }
   }
