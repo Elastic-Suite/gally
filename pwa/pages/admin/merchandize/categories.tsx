@@ -3,7 +3,6 @@ import { useTranslation } from 'next-i18next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { Box } from '@mui/system'
-import { Fade } from '@mui/material'
 
 import { emptyCombinationRule } from '~/constants'
 import { breadcrumbContext } from '~/contexts'
@@ -16,7 +15,7 @@ import {
 } from '~/hooks'
 import { findBreadcrumbLabel } from '~/services'
 import { selectMenu, useAppSelector } from '~/store'
-import { ICatalog, ICategories, ICategory, ISearchParameters } from '~/types'
+import { ICatalog, ICategories, ICategory, ISearchParameters, IHydraResponse, } from '~/types'
 
 import TitleBlock from '~/components/molecules/layout/TitleBlock/TitleBlock'
 import TwoColsLayout from '~/components/molecules/layout/twoColsLayout/TwoColsLayout'
@@ -68,12 +67,18 @@ function Categories(): JSX.Element {
     [selectedCategoryItem, catalogId, localizedCatalogId]
   )
   const categoryConfigurationResource = useResource('CategoryConfiguration')
-  const [dataCat, updateDataCat] = useFetchApi<IConfiguration>(
-    categoryConfigurationResource,
-    categoryConfigurationParams
-  )
+  const [dataCats, updateDataCats] = useFetchApi<
+    IHydraResponse<IConfiguration>
+  >(categoryConfigurationResource, categoryConfigurationParams)
 
-  const idCat = dataCat?.data?.id
+  const dataCat =
+    catalogId !== -1 &&
+    localizedCatalogId !== -1 &&
+    dataCats?.data['hydra:member']
+      ? dataCats?.data['hydra:member'].find((el) => el?.id === catalogId)
+      : undefined
+
+  const idCat = dataCat?.id
 
   const configuration = useResource('CategoryConfiguration')
   const { update } = useResourceOperations<IConfiguration>(configuration)
@@ -84,10 +89,14 @@ function Categories(): JSX.Element {
     return (val) => {
       if (catalogId !== -1 && localizedCatalogId !== -1) {
         setSaveData((state) => ({ ...state, [name]: val }))
-        updateDataCat((categ) => {
+
+        updateDataCats((categ) => {
           return {
             ...categ,
-            [name]: val,
+            'hydra:member': categ['hydra:member'].map((el) => {
+              if (el.id === catalogId) return { ...el, [name]: val }
+              return el
+            }),
           }
         })
       }
@@ -103,13 +112,11 @@ function Categories(): JSX.Element {
       !Object.entries(saveData).length
     )
       setSaveTest({
-        useNameInProductSearch: dataCat?.data.useNameInProductSearch,
-        isVirtual: dataCat?.data.isVirtual,
-        defaultSorting: dataCat?.data.defaultSorting,
+        useNameInProductSearch: dataCat.useNameInProductSearch,
+        isVirtual: dataCat.isVirtual,
+        defaultSorting: dataCat.defaultSorting,
       })
-  }, [dataCat.data])
-
-  // console.log('save', saveTest)
+  }, [dataCat])
 
   async function onSave(): Promise<void> {
     await update(idCat, saveData)
@@ -132,6 +139,7 @@ function Categories(): JSX.Element {
       return false
     return true
   }
+
   const disableBtnSave = testBtnSaveDisabled()
 
   return (
@@ -160,33 +168,31 @@ function Categories(): JSX.Element {
             </>
           </TitleBlock>,
           <TitleBlock key="virtualRule" title={t('virtualRule.title')}>
-            <Fade in={dataCat?.data?.isVirtual}>
-              <Box>
-                <RulesManager
-                  catalogId={catalogId}
-                  localizedCatalogId={localizedCatalogId}
-                  onChange={setRule}
-                  rule={rule}
-                />
-              </Box>
-            </Fade>
+            <VirtualRule val={dataCat?.isVirtual}>
+              <RulesManager
+                catalogId={catalogId}
+                localizedCatalogId={localizedCatalogId}
+                onChange={setRule}
+                rule={rule}
+              />
+            </VirtualRule>
           </TitleBlock>,
         ]}
       >
         {selectedCategoryItem?.id ? (
-           <ProductsContainer
-           category={selectedCategoryItem}
-           dataCat={dataCat.data}
-           onVirtualChange={handleUpdateCat('isVirtual')}
-           onNameChange={handleUpdateCat('useNameInProductSearch')}
-           onSortChange={handleUpdateCat('defaultSorting')}
-           catalog={catalogId}
-           localizedCatalog={localizedCatalogId}
-           catalogsData={data}
-           error={error}
-           onSave={onSave}
-           disableBtnSave={disableBtnSave}
-         />
+          <ProductsContainer
+            category={selectedCategoryItem}
+            dataCat={dataCat}
+            onVirtualChange={handleUpdateCat('isVirtual')}
+            onNameChange={handleUpdateCat('useNameInProductSearch')}
+            onSortChange={handleUpdateCat('defaultSorting')}
+            catalog={catalogId}
+            localizedCatalog={localizedCatalogId}
+            catalogsData={data}
+            error={error}
+            onSave={onSave}
+            disableBtnSave={disableBtnSave}
+          />
         ) : (
           <Box
             sx={{
@@ -200,8 +206,6 @@ function Categories(): JSX.Element {
             {t('placeholder')}
           </Box>
         )}
-       
-        
       </TwoColsLayout>
     </>
   )
