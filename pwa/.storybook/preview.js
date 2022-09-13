@@ -1,4 +1,5 @@
 import { Suspense } from 'react'
+import { RouterContext } from 'next/dist/shared/lib/router-context'
 
 import { api } from '~/mocks'
 import { setupStore } from '~/store'
@@ -18,6 +19,9 @@ export const parameters = {
       color: /color$/i,
       date: /date$/i,
     },
+  },
+  nextRouter: {
+    Provider: RouterContext.Provider,
   },
 }
 

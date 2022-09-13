@@ -55,7 +55,8 @@
     "react-beautiful-dnd": "^13.1.0",
     "react-dom": "^17.0.0",
     "react-redux": "^8.0.2",
-    "redux": "^4.2.0"
+    "redux": "^4.2.0",
+    "storybook-addon-next-router": "^4.0.0"
   },
   "browserslist": {
     "production": [
