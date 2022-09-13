@@ -17,25 +17,25 @@ declare(strict_types=1);
 namespace Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Bucket;
 
 use Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Aggregation\AssemblerInterface;
-use Elasticsuite\Search\Elasticsearch\Request\Aggregation\Bucket\SignificantTerms as SignificantTermsBucket;
+use Elasticsuite\Search\Elasticsearch\Request\Aggregation\Bucket\SignificantTerm as SignificantTermBucket;
 use Elasticsuite\Search\Elasticsearch\Request\AggregationInterface;
 use Elasticsuite\Search\Elasticsearch\Request\BucketInterface;
 
 /**
  * Assemble an ES significant term aggregation.
  */
-class SignificantTerms implements AssemblerInterface
+class SignificantTerm implements AssemblerInterface
 {
     /**
      * {@inheritDoc}
      */
     public function assembleAggregation(AggregationInterface $aggregation): array
     {
-        if (BucketInterface::TYPE_SIGNIFICANT_TERMS !== $aggregation->getType()) {
+        if (BucketInterface::TYPE_SIGNIFICANT_TERM !== $aggregation->getType()) {
             throw new \InvalidArgumentException("Aggregation assembler : invalid aggregation type {$aggregation->getType()}.");
         }
 
-        /** @var SignificantTermsBucket $aggregation */
+        /** @var SignificantTermBucket $aggregation */
         $aggregationParams = [
             'field' => $aggregation->getField(),
             'size' => $aggregation->getSize(),

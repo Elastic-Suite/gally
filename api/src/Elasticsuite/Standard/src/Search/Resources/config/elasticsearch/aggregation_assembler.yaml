@@ -90,17 +90,17 @@ services:
         tags:
             - { name: 'elasticsuite.search.request.aggregation.assembler', aggregationType: 'reverseNestedBucket' }
     
-    Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Bucket\SignificantTerms:
+    Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Bucket\SignificantTerm:
         abstract: false
         lazy: true
         tags:
-            - { name: 'elasticsuite.search.request.aggregation.assembler', aggregationType: 'significantTermsBucket' }
+            - { name: 'elasticsuite.search.request.aggregation.assembler', aggregationType: 'significantTermBucket' }
     
-    Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Bucket\Terms:
+    Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Bucket\Term:
         abstract: false
         lazy: true
         tags:
-            - { name: 'elasticsuite.search.request.aggregation.assembler', aggregationType: 'termsBucket' }
+            - { name: 'elasticsuite.search.request.aggregation.assembler', aggregationType: 'termBucket' }
     
     Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Pipeline\BucketSelector:
         abstract: false

@@ -17,17 +17,17 @@ declare(strict_types=1);
 namespace Elasticsuite\Search\Tests\Unit\Elasticsearch\Request\Aggregation\Bucket;
 
 use ArgumentCountError;
-use Elasticsuite\Search\Elasticsearch\Request\Aggregation\Bucket\SignificantTerms;
+use Elasticsuite\Search\Elasticsearch\Request\Aggregation\Bucket\SignificantTerm;
 use Elasticsuite\Search\Elasticsearch\Request\BucketInterface;
 use Elasticsuite\Search\Elasticsearch\Request\QueryFactory;
 use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
 
-class SignificantTermsTest extends AbstractBucketTest
+class SignificantTermTest extends AbstractBucketTest
 {
     public function testFailedCreate(): void
     {
         $this->expectException(ArgumentCountError::class);
-        self::$aggregationFactory->create(BucketInterface::TYPE_SIGNIFICANT_TERMS);
+        self::$aggregationFactory->create(BucketInterface::TYPE_SIGNIFICANT_TERM);
     }
 
     /**
@@ -35,8 +35,8 @@ class SignificantTermsTest extends AbstractBucketTest
      */
     public function testDefaultCreate(array $params): void
     {
-        /** @var SignificantTerms $bucket */
-        $bucket = self::$aggregationFactory->create(BucketInterface::TYPE_SIGNIFICANT_TERMS, $params);
+        /** @var SignificantTerm $bucket */
+        $bucket = self::$aggregationFactory->create(BucketInterface::TYPE_SIGNIFICANT_TERM, $params);
 
         $this->doStructureTest($bucket);
         $this->doContentTest($bucket, $params);
@@ -70,7 +70,7 @@ class SignificantTermsTest extends AbstractBucketTest
             'nestedPath' => 'category',
             'size' => 10,
             'minDocCount' => 10,
-            'algorithm' => SignificantTerms::ALGORITHM_PERCENTAGE,
+            'algorithm' => SignificantTerm::ALGORITHM_PERCENTAGE,
         ]];
 
         yield [[
@@ -98,8 +98,8 @@ class SignificantTermsTest extends AbstractBucketTest
     protected function doStructureTest(mixed $bucket): void
     {
         parent::doStructureTest($bucket);
-        $this->assertInstanceOf(SignificantTerms::class, $bucket);
-        $this->assertEquals(BucketInterface::TYPE_SIGNIFICANT_TERMS, $bucket->getType());
+        $this->assertInstanceOf(SignificantTerm::class, $bucket);
+        $this->assertEquals(BucketInterface::TYPE_SIGNIFICANT_TERM, $bucket->getType());
 
         $this->assertIsInt($bucket->getSize());
         $this->assertIsInt($bucket->getMinDocCount());
@@ -110,9 +110,9 @@ class SignificantTermsTest extends AbstractBucketTest
     {
         parent::doContentTest($bucket, $params);
 
-        /** @var SignificantTerms $bucket */
+        /** @var SignificantTerm $bucket */
         $this->assertEquals($params['size'] ?? BucketInterface::MAX_BUCKET_SIZE, $bucket->getSize());
         $this->assertEquals($params['minDocCount'] ?? 5, $bucket->getMinDocCount());
-        $this->assertEquals($params['algorithm'] ?? SignificantTerms::ALGORITHM_GND, $bucket->getAlgorithm());
+        $this->assertEquals($params['algorithm'] ?? SignificantTerm::ALGORITHM_GND, $bucket->getAlgorithm());
     }
 }

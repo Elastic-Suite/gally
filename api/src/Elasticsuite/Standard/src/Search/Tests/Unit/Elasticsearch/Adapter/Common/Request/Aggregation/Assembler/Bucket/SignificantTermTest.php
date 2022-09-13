@@ -16,23 +16,23 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Search\Tests\Unit\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Bucket;
 
-use Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Bucket\SignificantTerms as SignificantTermsAssembler;
-use Elasticsuite\Search\Elasticsearch\Request\Aggregation\Bucket\SignificantTerms;
+use Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Bucket\SignificantTerm as SignificantTermAssembler;
+use Elasticsuite\Search\Elasticsearch\Request\Aggregation\Bucket\SignificantTerm;
 use Elasticsuite\Search\Elasticsearch\Request\BucketInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
  * Search adapter significant term aggregation assembler test case.
  */
-class SignificantTermsTest extends KernelTestCase
+class SignificantTermTest extends KernelTestCase
 {
     /**
      * Build a significant term aggregation from a bucket.
      */
     public function testBasicAggregationBuild(): void
     {
-        $aggBuilder = new SignificantTermsAssembler();
-        $bucket = new SignificantTerms('aggregationName', 'fieldName');
+        $aggBuilder = new SignificantTermAssembler();
+        $bucket = new SignificantTerm('aggregationName', 'fieldName');
 
         $aggregation = $aggBuilder->assembleAggregation($bucket);
 
@@ -48,8 +48,8 @@ class SignificantTermsTest extends KernelTestCase
      */
     public function testComplexeAggregationBuild(): void
     {
-        $aggBuilder = new SignificantTermsAssembler();
-        $bucket = new SignificantTerms(
+        $aggBuilder = new SignificantTermAssembler();
+        $bucket = new SignificantTerm(
             'aggregationName',
             'fieldName',
             [],
@@ -58,7 +58,7 @@ class SignificantTermsTest extends KernelTestCase
             null,
             12,
             10,
-            SignificantTerms::ALGORITHM_PERCENTAGE,
+            SignificantTerm::ALGORITHM_PERCENTAGE,
         );
 
         $aggregation = $aggBuilder->assembleAggregation($bucket);
@@ -76,12 +76,12 @@ class SignificantTermsTest extends KernelTestCase
      */
     public function testInvalidBucketAggregationBuild(): void
     {
-        $aggBuilder = new SignificantTermsAssembler();
+        $aggBuilder = new SignificantTermAssembler();
         $this->expectExceptionMessage('Aggregation assembler : invalid aggregation type invalidType.');
         $this->expectException(\InvalidArgumentException::class);
-        $termsBucket = $this->getMockBuilder(BucketInterface::class)->getMock();
-        $termsBucket->method('getType')->willReturn('invalidType');
+        $termBucket = $this->getMockBuilder(BucketInterface::class)->getMock();
+        $termBucket->method('getType')->willReturn('invalidType');
 
-        $aggBuilder->assembleAggregation($termsBucket);
+        $aggBuilder->assembleAggregation($termBucket);
     }
 }

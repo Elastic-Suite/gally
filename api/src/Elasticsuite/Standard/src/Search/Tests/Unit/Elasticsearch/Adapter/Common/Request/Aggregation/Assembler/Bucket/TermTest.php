@@ -16,8 +16,8 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Search\Tests\Unit\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Bucket;
 
-use Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Bucket\Terms as TermsAssembler;
-use Elasticsuite\Search\Elasticsearch\Request\Aggregation\Bucket\Terms;
+use Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Bucket\Term as TermAssembler;
+use Elasticsuite\Search\Elasticsearch\Request\Aggregation\Bucket\Term;
 use Elasticsuite\Search\Elasticsearch\Request\BucketInterface;
 use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
 use Elasticsuite\Search\Elasticsearch\Request\SortOrderInterface;
@@ -26,7 +26,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 /**
  * Search adapter term aggregation assembler test case.
  */
-class TermsTest extends KernelTestCase
+class TermTest extends KernelTestCase
 {
     /**
      * Test the standard term aggregation building.
@@ -34,9 +34,9 @@ class TermsTest extends KernelTestCase
     public function testBasicTermAggregationBuild(): void
     {
         $aggBuilder = $this->getAggregationAssembler();
-        $termsBucket = new Terms('aggregationName', 'fieldName');
+        $termBucket = new Term('aggregationName', 'fieldName');
 
-        $aggregation = $aggBuilder->assembleAggregation($termsBucket);
+        $aggregation = $aggBuilder->assembleAggregation($termBucket);
 
         $this->assertArrayHasKey('terms', $aggregation);
         $this->assertEquals('fieldName', $aggregation['terms']['field']);
@@ -50,9 +50,9 @@ class TermsTest extends KernelTestCase
     public function testAlphabeticSortOrderTermAggregationBuild(): void
     {
         $aggBuilder = $this->getAggregationAssembler();
-        $termsBucket = new Terms('aggregationName', 'fieldName', [], null, null, null, 0, BucketInterface::SORT_ORDER_TERM, [], [], 1);
+        $termBucket = new Term('aggregationName', 'fieldName', [], null, null, null, 0, BucketInterface::SORT_ORDER_TERM, [], [], 1);
 
-        $aggregation = $aggBuilder->assembleAggregation($termsBucket);
+        $aggregation = $aggBuilder->assembleAggregation($termBucket);
 
         $this->assertArrayHasKey('terms', $aggregation);
         $this->assertEquals('fieldName', $aggregation['terms']['field']);
@@ -65,9 +65,9 @@ class TermsTest extends KernelTestCase
     public function testRelevanceSortOrderTermAggregationBuild(): void
     {
         $aggBuilder = $this->getAggregationAssembler();
-        $termsBucket = new Terms('aggregationName', 'fieldName', [], null, null, null, 0, BucketInterface::SORT_ORDER_RELEVANCE, [], [], 2);
+        $termBucket = new Term('aggregationName', 'fieldName', [], null, null, null, 0, BucketInterface::SORT_ORDER_RELEVANCE, [], [], 2);
 
-        $aggregation = $aggBuilder->assembleAggregation($termsBucket);
+        $aggregation = $aggBuilder->assembleAggregation($termBucket);
 
         $this->assertArrayHasKey('terms', $aggregation);
         $this->assertEquals('fieldName', $aggregation['terms']['field']);
@@ -86,7 +86,7 @@ class TermsTest extends KernelTestCase
         $filter->method('getName')->willReturn('filter1');
 
         $aggBuilder = $this->getAggregationAssembler();
-        $termsBucket = new Terms(
+        $termBucket = new Term(
             'aggregationName',
             'fieldName',
             [],
@@ -94,7 +94,7 @@ class TermsTest extends KernelTestCase
             $filter
         );
 
-        $aggregation = $aggBuilder->assembleAggregation($termsBucket);
+        $aggregation = $aggBuilder->assembleAggregation($termBucket);
 
         $this->assertArrayHasKey('terms', $aggregation);
         $this->assertEquals('fieldName', $aggregation['terms']['field']);
@@ -108,10 +108,10 @@ class TermsTest extends KernelTestCase
     {
         $this->expectExceptionMessage('Aggregation assembler : invalid aggregation type invalidType.');
         $this->expectException(\InvalidArgumentException::class);
-        $termsBucket = $this->getMockBuilder(BucketInterface::class)->getMock();
-        $termsBucket->method('getType')->willReturn('invalidType');
+        $termBucket = $this->getMockBuilder(BucketInterface::class)->getMock();
+        $termBucket->method('getType')->willReturn('invalidType');
 
-        $this->getAggregationAssembler()->assembleAggregation($termsBucket);
+        $this->getAggregationAssembler()->assembleAggregation($termBucket);
     }
 
     /**
@@ -125,9 +125,9 @@ class TermsTest extends KernelTestCase
     public function testBucketSize(int $size, int $expected): void
     {
         $aggBuilder = $this->getAggregationAssembler();
-        $termsBucket = new Terms('aggregationName', 'fieldName', [], null, null, null, $size);
+        $termBucket = new Term('aggregationName', 'fieldName', [], null, null, null, $size);
 
-        $aggregation = $aggBuilder->assembleAggregation($termsBucket);
+        $aggregation = $aggBuilder->assembleAggregation($termBucket);
 
         $this->assertEquals($expected, $aggregation['terms']['size']);
     }
@@ -148,8 +148,8 @@ class TermsTest extends KernelTestCase
     /**
      * Aggregation assembler used in tests.
      */
-    private function getAggregationAssembler(): TermsAssembler
+    private function getAggregationAssembler(): TermAssembler
     {
-        return new TermsAssembler();
+        return new TermAssembler();
     }
 }

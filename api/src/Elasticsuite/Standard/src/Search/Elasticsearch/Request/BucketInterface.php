@@ -21,14 +21,14 @@ namespace Elasticsuite\Search\Elasticsearch\Request;
  */
 interface BucketInterface extends AggregationInterface
 {
-    public const TYPE_TERMS = 'termsBucket';
+    public const TYPE_TERM = 'termBucket';
     public const TYPE_RANGE = 'rangeBucket';
     public const TYPE_DYNAMIC = 'dynamicBucket';
 
     public const TYPE_HISTOGRAM = 'histogramBucket';
     public const TYPE_DATE_HISTOGRAM = 'dateHistogramBucket';
     public const TYPE_QUERY_GROUP = 'queryGroupBucket';
-    public const TYPE_SIGNIFICANT_TERMS = 'significantTermsBucket';
+    public const TYPE_SIGNIFICANT_TERM = 'significantTermBucket';
     public const TYPE_REVERSE_NESTED = 'reverseNestedBucket';
 
     public const SORT_ORDER_COUNT = '_count';

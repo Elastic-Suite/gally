@@ -21,10 +21,18 @@ use Elasticsuite\Search\Elasticsearch\Request\BucketInterface;
 use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
 
 /**
- * Terms Bucket implementation.
+ * Significant term bucket implementation.
  */
-class Terms extends AbstractBucket
+class SignificantTerm extends AbstractBucket
 {
+    public const ALGORITHM_GND = 'gnd';
+
+    public const ALGORITHM_CHI_SQUARE = 'chi_square';
+
+    public const ALGORITHM_JLH = 'jlh';
+
+    public const ALGORITHM_PERCENTAGE = 'percentage';
+
     /**
      * Constructor.
      *
@@ -35,10 +43,8 @@ class Terms extends AbstractBucket
      * @param ?QueryInterface        $filter            Bucket filter
      * @param ?QueryInterface        $nestedFilter      Nested filter for the bucket
      * @param int                    $size              Bucket size
-     * @param string|string[]        $sortOrder         Bucket sort order
-     * @param string[]               $include           Include bucket filter
-     * @param string[]               $exclude           Exclude bucket filter
-     * @param ?int                   $minDocCount       Min doc count bucket filter
+     * @param int                    $minDocCount       Min doc count
+     * @param string                 $algorithm         Algorithm used
      */
     public function __construct(
         string $name,
@@ -48,10 +54,8 @@ class Terms extends AbstractBucket
         ?QueryInterface $filter = null,
         ?QueryInterface $nestedFilter = null,
         private int $size = 0,
-        private string|array $sortOrder = BucketInterface::SORT_ORDER_COUNT,
-        private array $include = [],
-        private array $exclude = [],
-        private ?int $minDocCount = null
+        private int $minDocCount = 5,
+        private string $algorithm = self::ALGORITHM_GND
     ) {
         parent::__construct($name, $field, $childAggregations, $nestedPath, $filter, $nestedFilter);
 
@@ -63,7 +67,7 @@ class Terms extends AbstractBucket
      */
     public function getType(): string
     {
-        return BucketInterface::TYPE_TERMS;
+        return BucketInterface::TYPE_SIGNIFICANT_TERM;
     }
 
     /**
@@ -75,38 +79,18 @@ class Terms extends AbstractBucket
     }
 
     /**
-     * Bucket sort order.
+     * Min doc count for a value to be displayed.
      */
-    public function getSortOrder(): string|array
-    {
-        return $this->sortOrder;
-    }
-
-    /**
-     * Bucket include filter.
-     *
-     * @return string[]
-     */
-    public function getInclude(): array
-    {
-        return $this->include;
-    }
-
-    /**
-     * Bucket exclude filter.
-     *
-     * @return string[]
-     */
-    public function getExclude(): array
-    {
-        return $this->exclude;
-    }
-
-    /**
-     * Bucket min doc count filter.
-     */
-    public function getMinDocCount(): ?int
+    public function getMinDocCount(): int
     {
         return $this->minDocCount;
+    }
+
+    /**
+     * Algorithm used for the value selection.
+     */
+    public function getAlgorithm(): string
+    {
+        return $this->algorithm;
     }
 }

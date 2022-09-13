@@ -17,26 +17,26 @@ declare(strict_types=1);
 namespace Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Bucket;
 
 use Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Aggregation\AssemblerInterface;
-use Elasticsuite\Search\Elasticsearch\Request\Aggregation\Bucket\Terms as TermsBucket;
+use Elasticsuite\Search\Elasticsearch\Request\Aggregation\Bucket\Term as TermBucket;
 use Elasticsuite\Search\Elasticsearch\Request\AggregationInterface;
 use Elasticsuite\Search\Elasticsearch\Request\BucketInterface;
 use Elasticsuite\Search\Elasticsearch\Request\SortOrderInterface;
 
 /**
- * Assemble an ES Terms aggregation.
+ * Assemble an ES Term aggregation.
  */
-class Terms implements AssemblerInterface
+class Term implements AssemblerInterface
 {
     /**
      * {@inheritDoc}
      */
     public function assembleAggregation(AggregationInterface $aggregation): array
     {
-        if (BucketInterface::TYPE_TERMS !== $aggregation->getType()) {
+        if (BucketInterface::TYPE_TERM !== $aggregation->getType()) {
             throw new \InvalidArgumentException("Aggregation assembler : invalid aggregation type {$aggregation->getType()}.");
         }
 
-        /** @var TermsBucket $aggregation */
+        /** @var TermBucket $aggregation */
         $aggregationEs = ['terms' => ['field' => $aggregation->getField(), 'size' => $aggregation->getSize()]];
 
         if (\is_array($aggregation->getSortOrder())) {

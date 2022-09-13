@@ -17,19 +17,19 @@ declare(strict_types=1);
 namespace Elasticsuite\Search\Tests\Unit\Elasticsearch\Request\Aggregation\Bucket;
 
 use ArgumentCountError;
-use Elasticsuite\Search\Elasticsearch\Request\Aggregation\Bucket\Terms;
+use Elasticsuite\Search\Elasticsearch\Request\Aggregation\Bucket\Term;
 use Elasticsuite\Search\Elasticsearch\Request\BucketInterface;
 use Elasticsuite\Search\Elasticsearch\Request\QueryFactory;
 use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
 use PHPUnit\Framework\Constraint\IsType;
 use PHPUnit\Framework\Constraint\LogicalOr;
 
-class TermsTest extends AbstractBucketTest
+class TermTest extends AbstractBucketTest
 {
     public function testFailedCreate(): void
     {
         $this->expectException(ArgumentCountError::class);
-        self::$aggregationFactory->create(BucketInterface::TYPE_TERMS);
+        self::$aggregationFactory->create(BucketInterface::TYPE_TERM);
     }
 
     /**
@@ -37,8 +37,8 @@ class TermsTest extends AbstractBucketTest
      */
     public function testDefaultCreate(array $params): void
     {
-        /** @var Terms $bucket */
-        $bucket = self::$aggregationFactory->create(BucketInterface::TYPE_TERMS, $params);
+        /** @var Term $bucket */
+        $bucket = self::$aggregationFactory->create(BucketInterface::TYPE_TERM, $params);
 
         $this->doStructureTest($bucket);
         $this->doContentTest($bucket, $params);
@@ -125,8 +125,8 @@ class TermsTest extends AbstractBucketTest
     protected function doStructureTest(mixed $bucket): void
     {
         parent::doStructureTest($bucket);
-        $this->assertInstanceOf(Terms::class, $bucket);
-        $this->assertEquals(BucketInterface::TYPE_TERMS, $bucket->getType());
+        $this->assertInstanceOf(Term::class, $bucket);
+        $this->assertEquals(BucketInterface::TYPE_TERM, $bucket->getType());
 
         $this->assertIsInt($bucket->getSize());
         $this->assertIsString($bucket->getSortOrder());
@@ -139,7 +139,7 @@ class TermsTest extends AbstractBucketTest
     {
         parent::doContentTest($bucket, $params);
 
-        /** @var Terms $bucket */
+        /** @var Term $bucket */
         $this->assertEquals($params['size'] ?? BucketInterface::MAX_BUCKET_SIZE, $bucket->getSize());
         $this->assertEquals($params['sortOrder'] ?? BucketInterface::SORT_ORDER_COUNT, $bucket->getSortOrder());
         $this->assertEquals($params['include'] ?? [], $bucket->getInclude());
