@@ -9,15 +9,17 @@ describe('Options service', () => {
         { value: 'all', label: 'ALL' },
         { value: 'any', label: 'ANY' },
       ])
-      expect(getOptionsFromEnum(RuleAttributeOperator, (x) => x)).toEqual([
-        { value: 'is_one_of', label: 'IS_ONE_OF' },
-        { value: 'is_not_one_of', label: 'IS_NOT_ONE_OF' },
-        { value: 'gte', label: 'GTE' },
-        { value: 'lte', label: 'LTE' },
-        { value: 'eq', label: 'EQ' },
-        { value: 'neq', label: 'NEQ' },
-        { value: 'is', label: 'IS' },
-      ])
+      expect(getOptionsFromEnum(RuleAttributeOperator, (x) => x)).toEqual(
+        expect.arrayContaining([
+          { value: 'is_one_of', label: 'IS_ONE_OF' },
+          { value: 'is_not_one_of', label: 'IS_NOT_ONE_OF' },
+          { value: 'gte', label: 'GTE' },
+          { value: 'lte', label: 'LTE' },
+          { value: 'eq', label: 'EQ' },
+          { value: 'neq', label: 'NEQ' },
+          { value: 'is', label: 'IS' },
+        ])
+      )
     })
   })
 })

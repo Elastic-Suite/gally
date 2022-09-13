@@ -1,3 +1,5 @@
+import { IResource } from './api'
+
 export enum HttpCode {
   OK = '200',
   CREATED = '201',
@@ -40,3 +42,9 @@ export type ISearchParameters = Record<
   string,
   string | number | boolean | (string | number | boolean)[]
 >
+
+export type IFetchApi<T> = (
+  resource: IResource | string,
+  searchParameters?: ISearchParameters,
+  options?: RequestInit
+) => Promise<T | IFetchError>

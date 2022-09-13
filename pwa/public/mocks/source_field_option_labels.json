@@ -1,0 +1,81 @@
+{
+  "@context": "/contexts/SourceFieldOptionLabel",
+  "@id": "/source_field_option_labels",
+  "@type": "hydra:Collection",
+  "hydra:member": [
+    {
+      "@id": "/source_field_option_labels/1",
+      "@type": "SourceFieldOptionLabel",
+      "id": 1,
+      "sourceFieldOption": "/source_field_options/1",
+      "catalog": "/localized_catalogs/1",
+      "label": "Marque 1"
+    },
+    {
+      "@id": "/source_field_option_labels/2",
+      "@type": "SourceFieldOptionLabel",
+      "id": 2,
+      "sourceFieldOption": "/source_field_options/2",
+      "catalog": "/localized_catalogs/1",
+      "label": "Marque 2"
+    },
+    {
+      "@id": "/source_field_option_labels/3",
+      "@type": "SourceFieldOptionLabel",
+      "id": 3,
+      "sourceFieldOption": "/source_field_options/1",
+      "catalog": "/localized_catalogs/2",
+      "label": "Brand 1"
+    },
+    {
+      "@id": "/source_field_option_labels/4",
+      "@type": "SourceFieldOptionLabel",
+      "id": 4,
+      "sourceFieldOption": "/source_field_options/2",
+      "catalog": "/localized_catalogs/2",
+      "label": "Brand 2"
+    }
+  ],
+  "hydra:totalItems": 4,
+  "hydra:view": {
+    "@id": "/source_field_option_labels?pageSize=30",
+    "@type": "hydra:PartialCollectionView"
+  },
+  "hydra:search": {
+    "@type": "hydra:IriTemplate",
+    "hydra:template": "/source_field_option_labels{?catalog,catalog[],sourceFieldOption.sourceField,sourceFieldOption.sourceField[],order[sourceFieldOption.position]}",
+    "hydra:variableRepresentation": "BasicRepresentation",
+    "hydra:mapping": [
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "catalog",
+        "property": "catalog",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "catalog[]",
+        "property": "catalog",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "sourceFieldOption.sourceField",
+        "property": "sourceFieldOption.sourceField",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "sourceFieldOption.sourceField[]",
+        "property": "sourceFieldOption.sourceField",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "order[sourceFieldOption.position]",
+        "property": "sourceFieldOption.position",
+        "required": false
+      }
+    ]
+  }
+}

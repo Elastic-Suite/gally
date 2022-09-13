@@ -1,5 +1,6 @@
 import categorySortingOptions from '~/public/mocks/category_sorting_options.json'
 import metadata from '~/public/mocks/metadata.json'
+import sourceFieldOptionLabels from '~/public/mocks/source_field_option_labels.json'
 import { IResource, ISearchParameters } from '~/types'
 
 export const getApiUrl = jest.fn((url: string): string => url)
@@ -20,6 +21,13 @@ export const fetchApi = jest.fn(
       resource.endsWith('category_sorting_options')
     ) {
       data = { ...categorySortingOptions }
+    } else if (
+      (typeof resource !== 'string' &&
+        resource.title.toLowerCase() === 'source_field_option_label') ||
+      (typeof resource === 'string' &&
+        resource.endsWith('source_field_option_labels'))
+    ) {
+      data = { ...sourceFieldOptionLabels }
     }
     return Promise.resolve(data)
   }

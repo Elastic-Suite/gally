@@ -1,5 +1,6 @@
 import categorySortingOptions from '~/public/mocks/category_sorting_options.json'
 import metadata from '~/public/mocks/metadata.json'
+import sourceFieldOptionLabels from '~/public/mocks/source_field_option_labels.json'
 
 import {
   api,
@@ -18,6 +19,7 @@ import {
   getFieldType,
   getFilterParameters,
   getOptionsFromApiSchema,
+  getOptionsFromLabelResource,
   getOptionsFromResource,
   getReferencedResource,
   getResource,
@@ -84,6 +86,35 @@ describe('Hydra service', () => {
           id: 2,
           label: '/metadata/2',
           value: 2,
+        },
+      ])
+    })
+  })
+
+  describe('getOptionsFromLabelResource', () => {
+    it('Should return the options', () => {
+      expect(
+        getOptionsFromLabelResource(sourceFieldOptionLabels as any)
+      ).toEqual([
+        {
+          id: 1,
+          label: 'Marque 1',
+          value: 1,
+        },
+        {
+          id: 2,
+          label: 'Marque 2',
+          value: 2,
+        },
+        {
+          id: 3,
+          label: 'Brand 1',
+          value: 3,
+        },
+        {
+          id: 4,
+          label: 'Brand 2',
+          value: 4,
         },
       ])
     })

@@ -12,7 +12,7 @@ import { defaultPageSize } from '~/constants'
 import { fetchApi, getListApiParameters, isFetchError } from '~/services'
 import {
   IFetch,
-  IFetchError,
+  IFetchApi,
   IHydraMember,
   IHydraResponse,
   ILoadResource,
@@ -25,13 +25,7 @@ import {
 import { useLog } from './useLog'
 import { useResourceOperations } from './useResource'
 
-export function useApiFetch<T>(
-  secure = true
-): (
-  resource: IResource | string,
-  searchParameters?: ISearchParameters,
-  options?: RequestInit
-) => Promise<T | IFetchError> {
+export function useApiFetch<T>(secure = true): IFetchApi<T> {
   const { i18n } = useTranslation('common')
   const log = useLog()
   return useCallback(
