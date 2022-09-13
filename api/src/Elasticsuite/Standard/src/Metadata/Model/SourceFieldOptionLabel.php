@@ -16,7 +16,10 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Metadata\Model;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Elasticsuite\Catalog\Model\LocalizedCatalog;
 use Elasticsuite\User\Constant\Role;
 
@@ -39,6 +42,8 @@ use Elasticsuite\User\Constant\Role;
         'delete' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
     ],
 )]
+#[ApiFilter(SearchFilter::class, properties: ['catalog' => 'exact', 'sourceFieldOption.sourceField' => 'exact'])]
+#[ApiFilter(OrderFilter::class, properties: ['sourceFieldOption.position'], arguments: ['orderParameterName' => 'order'])]
 class SourceFieldOptionLabel
 {
     private int $id;
