@@ -8,9 +8,13 @@ exports[`TitleBlock match snapshot PageTitle simple 1`] = `
     Hello World
   </div>
   <div
-    class="css-1fhr9tz"
+    class="css-6sa163"
   >
-    Hello
+    <div
+      class="css-l7et16"
+    >
+      Hello
+    </div>
   </div>
 </div>
 `;
@@ -23,20 +27,24 @@ exports[`TitleBlock match snapshot PageTitle with Composant on Children 1`] = `
     Hello World
   </div>
   <div
-    class="css-1fhr9tz"
+    class="css-6sa163"
   >
-    <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium css-13u4ebv-MuiButtonBase-root-MuiButton-root"
-      tabindex="0"
-      type="button"
+    <div
+      class="css-l7et16"
     >
-      
-      Hello world
-      
-      <span
-        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-      />
-    </button>
+      <button
+        class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium css-13u4ebv-MuiButtonBase-root-MuiButton-root"
+        tabindex="0"
+        type="button"
+      >
+        
+        Hello world
+        
+        <span
+          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+        />
+      </button>
+    </div>
   </div>
 </div>
 `;

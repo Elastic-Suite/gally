@@ -1,6 +1,8 @@
 import { styled } from '@mui/system'
 import { ReactChild } from 'react'
 
+import { getCustomScrollBarStyles } from '~/services'
+
 const CustomTitle = styled('div')(({ theme }) => ({
   color: theme.palette.colors.neutral[900],
   fontWeight: 600,
@@ -13,12 +15,18 @@ const CustomTitle = styled('div')(({ theme }) => ({
 }))
 
 const Container = styled('div')(({ theme }) => ({
-  padding: theme.spacing(2),
   borderBottom: '1px solid',
   borderColor: theme.palette.colors.neutral[300],
   '&:last-of-type': {
     borderBottom: 'none',
   },
+  overflow: 'auto',
+  ...getCustomScrollBarStyles(theme),
+}))
+
+const PaddingBox = styled('div')(({ theme }) => ({
+  display: 'inline-block',
+  padding: theme.spacing(2),
 }))
 
 interface IProps {
@@ -30,7 +38,9 @@ function TitleBlock({ title, children }: IProps): JSX.Element {
   return (
     <>
       <CustomTitle>{title}</CustomTitle>
-      <Container>{children}</Container>
+      <Container>
+        <PaddingBox>{children}</PaddingBox>
+      </Container>
     </>
   )
 }
