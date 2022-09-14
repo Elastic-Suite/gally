@@ -133,7 +133,7 @@ function TreeSelector(props: IProps): JSX.Element {
       // eslint-disable-next-line react/no-array-index-key
       key={index}
       label={getOptionLabel(option)}
-      size={small ? 'small' : 'medium'}
+      small={small}
       {...getCustomizedTagProps({ index })}
     />
   ))

@@ -12,17 +12,21 @@ export default {
   },
 } as ComponentMeta<typeof Chip>
 
-const Template: ComponentStory<typeof Chip> = (args) => <Chip {...args} />
-
-export const Default = Template.bind({})
+export const Default: ComponentStory<typeof Chip> = (args) => (
+  <Chip {...args} onDelete={null} />
+)
 Default.args = {
   label: 'Text',
   color: 'neutral',
+  small: false,
 }
 
-export const Removable = Template.bind({})
+export const Removable: ComponentStory<typeof Chip> = (args) => (
+  <Chip {...args} />
+)
 Removable.args = {
   label: 'Text',
   color: 'neutral',
   onDelete: (): null => null,
+  small: false,
 }

@@ -1,18 +1,10 @@
+import { HTMLAttributes, SyntheticEvent } from 'react'
 import { styled } from '@mui/system'
-import { ChipProps, IconButton, Chip as MuiChip } from '@mui/material'
+import { IconButton } from '@mui/material'
 
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 
-const Chip = styled((props: ChipProps) => (
-  <MuiChip
-    {...props}
-    deleteIcon={
-      <IconButton>
-        <IonIcon name="close" />
-      </IconButton>
-    }
-  />
-))(({ theme }) => ({
+const BadgeContainer = styled('span')(({ theme }) => ({
   display: 'inline-flex',
   height: '26px',
   color: theme.palette.colors.neutral['900'],
@@ -23,32 +15,28 @@ const Chip = styled((props: ChipProps) => (
   textAlign: 'center',
   alignItems: 'center',
   padding: `2px ${theme.spacing(1)}`,
+  margin: '2px',
   background: theme.palette.colors.neutral['300'],
   borderRadius: '13px',
   cursor: 'default',
-  '&.MuiChip-colorPrimary': {
+  boxSizing: 'border-box',
+  '&.badge--color__primary': {
     color: theme.palette.colors.secondary['600'],
     background: theme.palette.colors.secondary['100'],
   },
-  '&.MuiChip-colorSuccess': {
+  '&.badge--color__success': {
     color: theme.palette.success.main,
     background: theme.palette.success.light,
   },
-  '&.MuiChip-colorWarning': {
+  '&.badge--color__warning': {
     color: theme.palette.warning.main,
     background: theme.palette.warning.light,
   },
-  '&.MuiChip-colorError': {
+  '&.badge--color__error': {
     color: theme.palette.error.main,
     background: theme.palette.error.light,
   },
-  '&.MuiChip-sizeSmall': {
-    height: '20px',
-  },
-  '& .MuiChip-label': {
-    padding: 0,
-  },
-  '& .MuiChip-deleteIcon': {
+  '& .MuiButtonBase-root': {
     color: 'inherit',
     margin: `0 0 0 ${theme.spacing(0.5)}`,
     padding: 0,
@@ -60,4 +48,32 @@ const Chip = styled((props: ChipProps) => (
   },
 }))
 
-export default Chip
+interface IProps extends HTMLAttributes<HTMLSpanElement> {
+  color?: 'neutral' | 'primary' | 'success' | 'warning' | 'error'
+  label: string
+  onDelete?: (event: SyntheticEvent) => void
+  small?: boolean
+}
+
+function Badge(props: IProps): JSX.Element {
+  const { color, label, onDelete, small } = props
+  return (
+    <BadgeContainer
+      className={`badge--color__${color}`}
+      style={small ? { height: '20px' } : null}
+    >
+      <span className="badge--label">{label}</span>
+      {onDelete ? (
+        <IconButton onClick={onDelete}>
+          <IonIcon name="close" />
+        </IconButton>
+      ) : null}
+    </BadgeContainer>
+  )
+}
+
+Badge.defaultProps = {
+  color: 'neutral',
+}
+
+export default Badge

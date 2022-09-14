@@ -97,7 +97,7 @@ function DropDown<T>(props: IDropDownProps<T>): JSX.Element {
         <Chip
           key={option.id ?? String(option.value)}
           label={option.label}
-          size={small ? 'small' : 'medium'}
+          small={small}
           {...getTagProps({ index })}
         />
       ))
