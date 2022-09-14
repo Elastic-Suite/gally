@@ -13,12 +13,13 @@ const CustomBorder = styled('div')(({ theme }) => ({
   borderColor: theme.palette.colors.neutral[300],
 }))
 
-const CustomLeftSide = styled(CustomBorder)({
+const CustomLeftSide = styled(CustomBorder)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   minWidth: 390,
   boxSizing: 'border-box',
-})
+  backgroundColor: theme.palette.colors.white,
+}))
 
 const CustomRightSide = styled('div')({
   width: `calc(100% - 390px)`,

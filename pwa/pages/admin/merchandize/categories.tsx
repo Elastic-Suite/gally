@@ -1,8 +1,11 @@
+import { useContext, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'next-i18next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { useContext, useEffect, useMemo, useState } from 'react'
+import { Box } from '@mui/system'
+import { Fade } from '@mui/material'
 
+import { emptyCombinationRule } from '~/constants'
 import { breadcrumbContext } from '~/contexts'
 import { withAuth } from '~/hocs'
 import {
@@ -15,8 +18,6 @@ import { findBreadcrumbLabel } from '~/services'
 import { selectMenu, useAppSelector } from '~/store'
 import { ICatalog, ICategories, ICategory, ISearchParameters } from '~/types'
 
-import { Box } from '@mui/system'
-import VirtualRule from '~/components/molecules/layout/fade/VirtualRule'
 import TitleBlock from '~/components/molecules/layout/TitleBlock/TitleBlock'
 import TwoColsLayout from '~/components/molecules/layout/twoColsLayout/TwoColsLayout'
 import CatalogSwitcher from '~/components/stateful/CatalogSwitcher/CatalogSwitcher'
@@ -25,7 +26,6 @@ import ProductsContainer, {
   IConfiguration,
 } from '~/components/stateful/ProductsContainer/ProductsContainer'
 import RulesManager from '~/components/stateful/RulesManager/RulesManager'
-import { emptyCombinationRule } from '~/constants'
 
 function Categories(): JSX.Element {
   const router = useRouter()
@@ -119,14 +119,16 @@ function Categories(): JSX.Element {
             </>
           </TitleBlock>,
           <TitleBlock key="virtualRule" title={t('virtualRule.title')}>
-            <VirtualRule val={dataCat?.data?.isVirtual}>
-              <RulesManager
-                catalogId={catalogId}
-                localizedCatalogId={localizedCatalogId}
-                onChange={setRule}
-                rule={rule}
-              />
-            </VirtualRule>
+            <Fade in={dataCat?.data?.isVirtual}>
+              <Box>
+                <RulesManager
+                  catalogId={catalogId}
+                  localizedCatalogId={localizedCatalogId}
+                  onChange={setRule}
+                  rule={rule}
+                />
+              </Box>
+            </Fade>
           </TitleBlock>,
         ]}
       >
