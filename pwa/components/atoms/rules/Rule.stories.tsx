@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 
 import { attributeRule, combinationRule } from '~/mocks'
+import RuleOptionsTestProvider from '~/utils/RuleOptionsTestProvider'
 
 import Rule from './Rule'
 
@@ -13,7 +14,11 @@ export default {
 const Template: ComponentStory<typeof Rule> = (args) => {
   const { rule, ...props } = args
   const [ruleValue, setRuleValue] = useState(rule)
-  return <Rule {...props} onChange={setRuleValue} rule={ruleValue} />
+  return (
+    <RuleOptionsTestProvider>
+      <Rule {...props} onChange={setRuleValue} rule={ruleValue} />
+    </RuleOptionsTestProvider>
+  )
 }
 
 export const AttributeRule = Template.bind({})

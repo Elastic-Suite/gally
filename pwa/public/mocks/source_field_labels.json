@@ -1,0 +1,59 @@
+{
+  "@context": "/contexts/SourceFieldLabel",
+  "@id": "/source_field_labels",
+  "@type": "hydra:Collection",
+  "hydra:member": [
+    {
+      "@id": "/source_field_labels/3",
+      "@type": "SourceFieldLabel",
+      "id": 3,
+      "sourceField": "/source_fields/17",
+      "catalog": "/localized_catalogs/7",
+      "label": "Nom"
+    },
+    {
+      "@id": "/source_field_labels/4",
+      "@type": "SourceFieldLabel",
+      "id": 4,
+      "sourceField": "/source_fields/17",
+      "catalog": "/localized_catalogs/8",
+      "label": "Name"
+    }
+  ],
+  "hydra:totalItems": 2,
+  "hydra:view": {
+    "@id": "/source_field_labels?pageSize=30",
+    "@type": "hydra:PartialCollectionView"
+  },
+  "hydra:search": {
+    "@type": "hydra:IriTemplate",
+    "hydra:template": "/source_field_labels{?catalog,catalog[],sourceField,sourceField[]}",
+    "hydra:variableRepresentation": "BasicRepresentation",
+    "hydra:mapping": [
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "catalog",
+        "property": "catalog",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "catalog[]",
+        "property": "catalog",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "sourceField",
+        "property": "sourceField",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "sourceField[]",
+        "property": "sourceField",
+        "required": false
+      }
+    ]
+  }
+}
