@@ -5,9 +5,7 @@ import {
   tooltipClasses,
 } from '@mui/material'
 
-const Tooltip = styled(({ className, ...props }: TooltipProps) => (
-  <MuiTooltip {...props} arrow classes={{ popper: className }} />
-))(({ theme }) => ({
+const StyledTooltip = styled(MuiTooltip)(({ theme }) => ({
   [`& .${tooltipClasses.tooltip}`]: {
     backgroundColor: theme.palette.common.white,
     color: theme.palette.colors.neutral['900'],
@@ -20,5 +18,12 @@ const Tooltip = styled(({ className, ...props }: TooltipProps) => (
     color: theme.palette.common.white,
   },
 }))
+
+function Tooltip(props: TooltipProps): JSX.Element {
+  const { className, ...tooltipProps } = props
+  return (
+    <StyledTooltip {...tooltipProps} arrow classes={{ popper: className }} />
+  )
+}
 
 export default Tooltip
