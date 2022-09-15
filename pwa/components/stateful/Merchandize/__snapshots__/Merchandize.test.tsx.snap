@@ -24,7 +24,7 @@ exports[`Merchandize match snapshot testSelect 1`] = `
             name
             <span
               aria-label="name.tooltip"
-              class=""
+              class="css-1qtwfnr"
               data-mui-internal-clone-element="true"
               style="display: inline-block; padding-left: 10px; margin-bottom: -5px;"
             >
@@ -68,7 +68,7 @@ exports[`Merchandize match snapshot testSelect 1`] = `
             virtual
             <span
               aria-label="virtual.tooltip"
-              class=""
+              class="css-1qtwfnr"
               data-mui-internal-clone-element="true"
               style="display: inline-block; padding-left: 10px; margin-bottom: -5px;"
             >
@@ -124,7 +124,7 @@ exports[`Merchandize match snapshot testSelect 1`] = `
                 Default sorting
                 <span
                   aria-label="select.tooltip"
-                  class=""
+                  class="css-1qtwfnr"
                   data-mui-internal-clone-element="true"
                   style="display: inline-block; padding-left: 10px; margin-bottom: -5px;"
                 >
