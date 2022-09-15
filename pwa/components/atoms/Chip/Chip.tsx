@@ -3,16 +3,7 @@ import { ChipProps, IconButton, Chip as MuiChip } from '@mui/material'
 
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 
-const Chip = styled((props: ChipProps) => (
-  <MuiChip
-    {...props}
-    deleteIcon={
-      <IconButton>
-        <IonIcon name="close" />
-      </IconButton>
-    }
-  />
-))(({ theme }) => ({
+const StyledChip = styled(MuiChip)(({ theme }) => ({
   display: 'inline-flex',
   height: '26px',
   color: theme.palette.colors.neutral['900'],
@@ -59,5 +50,18 @@ const Chip = styled((props: ChipProps) => (
     },
   },
 }))
+
+function Chip(props: ChipProps): JSX.Element {
+  return (
+    <StyledChip
+      {...props}
+      deleteIcon={
+        <IconButton>
+          <IonIcon name="close" />
+        </IconButton>
+      }
+    />
+  )
+}
 
 export default Chip
