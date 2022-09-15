@@ -52,7 +52,7 @@ const RootWithoutBorder = styled('div')(({ theme }) => ({
   position: 'relative',
   display: 'flex',
   flexDirection: 'column',
-  gap: theme.spacing(2),
+  gap: theme.spacing(1),
   alignItems: 'flex-start',
 }))
 
