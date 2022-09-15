@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 
 import { complexRule } from '~/mocks'
+import RuleOptionsTestProvider from '~/utils/RuleOptionsTestProvider'
 
 import CombinationRules from './CombinationRules'
 
@@ -14,7 +15,9 @@ const Template: ComponentStory<typeof CombinationRules> = (args) => {
   const { rule, ...props } = args
   const [ruleValue, setRuleValue] = useState(rule)
   return (
-    <CombinationRules {...props} onChange={setRuleValue} rule={ruleValue} />
+    <RuleOptionsTestProvider>
+      <CombinationRules {...props} onChange={setRuleValue} rule={ruleValue} />
+    </RuleOptionsTestProvider>
   )
 }
 
