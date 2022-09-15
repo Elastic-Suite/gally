@@ -12,7 +12,7 @@ exports[`SwitchLabel match snapshot testSwitchTrue 1`] = `
       label
       <span
         aria-label="labelInfo"
-        class=""
+        class="css-1qtwfnr"
         data-mui-internal-clone-element="true"
         style="display: inline-block; padding-left: 10px; margin-bottom: -5px;"
       >
