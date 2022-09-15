@@ -4,7 +4,7 @@ exports[`Tooltip match snapshot TooltipBottom 1`] = `
 <div>
   <span
     aria-label="Hello World"
-    class=""
+    class="css-1qtwfnr"
     data-mui-internal-clone-element="true"
   >
     Hello World
@@ -16,7 +16,7 @@ exports[`Tooltip match snapshot TooltipLeft 1`] = `
 <div>
   <span
     aria-label="Hello World"
-    class=""
+    class="css-1qtwfnr"
     data-mui-internal-clone-element="true"
   >
     Hello World
@@ -28,7 +28,7 @@ exports[`Tooltip match snapshot TooltipRight 1`] = `
 <div>
   <span
     aria-label="Hello World"
-    class=""
+    class="css-1qtwfnr"
     data-mui-internal-clone-element="true"
   >
     Hello World
@@ -40,7 +40,7 @@ exports[`Tooltip match snapshot TooltipTop 1`] = `
 <div>
   <span
     aria-label="Hello World"
-    class=""
+    class="css-1qtwfnr"
     data-mui-internal-clone-element="true"
   >
     Hello World

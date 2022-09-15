@@ -7,7 +7,7 @@ interface IProps {
 
 function InfoTooltip({ title }: IProps): JSX.Element {
   return (
-    <Tooltip title={title} placement="left">
+    <Tooltip title={title} placement="right">
       <span
         style={{
           display: 'inline-block',
