@@ -6,35 +6,76 @@
         "entity_id": "1",
         "sku": "24-MB01",
         "name": "Joust Duffle Bag",
+        "description": "A super bag for winter.",
+        "seller_reference": "dufflebag",
         "size" : 12,
+        "color": [
+          {
+            "value": "black",
+            "label": "Black"
+          }
+        ],
         "created_at": "2022-09-01"
       },
       {
         "entity_id": "2",
         "sku": "24-MB04",
         "name": "Strive Shoulder Pack",
+        "description": "A super bag for spring.",
+        "seller_reference": "striveshoulder",
         "size" : 5,
+        "color": [
+          {
+            "value": "black",
+            "label": "Black"
+          }
+        ],
         "created_at": "2022-09-05"
       },
       {
         "entity_id": "3",
         "sku": "24-MB03",
         "name": "Crown Summit Backpack",
+        "description": "A super bag for summer and yoga.",
         "size" : 8,
+        "color": [
+          {
+            "value": "black",
+            "label": "Black"
+          },
+          {
+            "value": "grey",
+            "label": "Grey"
+          }
+        ],
         "created_at": "2022-09-05"
       },
       {
         "entity_id": "4",
         "sku": "24-MB05",
         "name": "Wayfarer Messenger Bag",
+        "description": "A super bag for autumn.",
         "size" : 7,
+        "color": [
+          {
+            "value": "black",
+            "label": "Black"
+          }
+        ],
         "created_at": "2022-09-05"
       },
       {
         "entity_id": "5",
         "sku": "24-MB06",
         "name": "Rival Field Messenger",
+        "description": "A super bag for summer.",
         "size" : 2,
+        "color": [
+          {
+            "value": "grey",
+            "label": "Grey"
+          }
+        ],
         "created_at": "2022-09-06"
       },
       {
@@ -42,6 +83,20 @@
         "sku": "24-MB02",
         "name": "Fusion Backpack",
         "size" : 9,
+        "color": [
+          {
+            "value": "grey",
+            "label": "Grey"
+          },
+          {
+            "value": "black",
+            "label": "Black"
+          },
+          {
+            "value": "red",
+            "label": "Red"
+          }
+        ],
         "created_at": "2022-09-01"
       },
       {
@@ -49,6 +104,12 @@
         "sku": "24-UB02",
         "name": "Impulse Duffle",
         "size" : 11,
+        "color": [
+          {
+            "value": "black",
+            "label": "Black"
+          }
+        ],
         "created_at": "2022-09-01"
       },
       {
@@ -56,6 +117,16 @@
         "sku": "24-WB01",
         "name": "Voyage Yoga Bag",
         "size" : 4,
+        "color": [
+          {
+            "value": "black",
+            "label": "Black"
+          },
+          {
+            "value": "white",
+            "label": "White"
+          }
+        ],
         "created_at": "2022-09-01"
       },
       {
@@ -63,19 +134,53 @@
         "sku": "24-WB02",
         "name": "Compete Track Tote",
         "size" : 11,
+        "color": [
+          {
+            "value": "green",
+            "label": "Green"
+          },
+          {
+            "value": "white",
+            "label": "White"
+          }
+        ],
         "created_at": "2022-09-01"
       },
       {
         "entity_id": "10",
         "sku": "24-WB05",
         "name": "Savvy Shoulder Tote",
-        "size" : 2
+        "size" : 2,
+        "color": [
+          {
+            "value": "pink",
+            "label": "Pink"
+          }
+        ]
       },
       {
         "entity_id": "11",
         "sku": "24-WB06",
         "name": "Endeavor Daytrip Backpack",
         "size" : 5,
+        "color": [
+          {
+            "value": "pink",
+            "label": "Pink"
+          },
+          {
+            "value": "fuchsia",
+            "label": "Fuchsia"
+          },
+          {
+            "value": "grey",
+            "label": "Grey"
+          },
+          {
+            "value": "black",
+            "label": "Black"
+          }
+        ],
         "created_at": "2022-09-01"
       },
       {
@@ -83,6 +188,16 @@
         "sku": "24-WB03",
         "name": "Driven Backpack",
         "size" : 12,
+        "color": [
+          {
+            "value": "grey",
+            "label": "Grey"
+          },
+          {
+            "value": "black",
+            "label": "Black"
+          }
+        ],
         "created_at": "2022-09-01"
       },
       {
@@ -90,13 +205,33 @@
         "sku": "24-WB07",
         "name": "Overnight Duffle",
         "size" : 10,
+        "color": [
+          {
+            "value": "brown",
+            "label": "Brown"
+          }
+        ],
         "created_at": "2022-09-01"
       },
       {
         "entity_id": "14",
         "sku": "24-WB04",
         "name": "Push It Messenger Bag",
-        "size" : 9
+        "size" : 9,
+        "color": [
+          {
+            "value": "grey",
+            "label": "Grey"
+          },
+          {
+            "value": "blue",
+            "label": "Blue"
+          },
+          {
+            "value": "black",
+            "label": "Black"
+          }
+        ]
       }
     ]
   },
@@ -116,6 +251,12 @@
           "status": false,
           "qty": 0
         },
+        "color": [
+          {
+            "value": "black",
+            "label": "Noir"
+          }
+        ],
         "created_at": "2022-09-01"
       },
       {
@@ -132,6 +273,12 @@
           "status": true,
           "qty": 37
         },
+        "color": [
+          {
+            "value": "black",
+            "label": "Noir"
+          }
+        ],
         "created_at": "2022-09-05"
       },
       {
@@ -148,6 +295,16 @@
           "status": true,
           "qty": 12
         },
+        "color": [
+          {
+            "value": "black",
+            "label": "Noir"
+          },
+          {
+            "value": "grey",
+            "label": "Gris"
+          }
+        ],
         "created_at": "2022-09-05"
       },
       {
@@ -160,6 +317,12 @@
           "status": false,
           "qty": 0
         },
+        "color": [
+          {
+            "value": "black",
+            "label": "Noir"
+          }
+        ],
         "created_at": "2022-09-05"
       },
       {
@@ -172,6 +335,12 @@
           "status": true,
           "qty": 3
         },
+        "color": [
+          {
+            "value": "grey",
+            "label": "Gris"
+          }
+        ],
         "created_at": "2022-09-06"
       },
       {
@@ -184,6 +353,20 @@
           "status": false,
           "qty": 24
         },
+        "color": [
+          {
+            "value": "grey",
+            "label": "Gris"
+          },
+          {
+            "value": "black",
+            "label": "Noir"
+          },
+          {
+            "value": "red",
+            "label": "Rouge"
+          }
+        ],
         "created_at": "2022-09-01"
       },
       {
@@ -196,6 +379,12 @@
           "status": false,
           "qty": 7
         },
+        "color": [
+          {
+            "value": "black",
+            "label": "Noir"
+          }
+        ],
         "created_at": "2022-09-01"
       },
       {
@@ -208,6 +397,16 @@
           "status": false,
           "qty": -2
         },
+        "color": [
+          {
+            "value": "black",
+            "label": "Noir"
+          },
+          {
+            "value": "white",
+            "label": "Blanc"
+          }
+        ],
         "created_at": "2022-09-01"
       },
       {
@@ -219,7 +418,17 @@
         "stock": {
           "status": false,
           "qty": 0
-        }
+        },
+        "color": [
+          {
+            "value": "green",
+            "label": "Vert"
+          },
+          {
+            "value": "white",
+            "label": "Blanc"
+          }
+        ]
       },
       {
         "id": "10",
@@ -230,7 +439,13 @@
         "stock": {
           "status": true,
           "qty": 8
-        }
+        },
+        "color": [
+          {
+            "value": "pink",
+            "label": "Rose"
+          }
+        ]
       },
       {
         "id": "11",
@@ -242,6 +457,24 @@
           "status": true,
           "qty": 13
         },
+        "color": [
+          {
+            "value": "pink",
+            "label": "Rose"
+          },
+          {
+            "value": "fuchsia",
+            "label": "Fuchsia"
+          },
+          {
+            "value": "grey",
+            "label": "Gris"
+          },
+          {
+            "value": "black",
+            "label": "Noir"
+          }
+        ],
         "created_at": "2022-09-01"
       },
       {
@@ -254,6 +487,16 @@
           "status": true,
           "qty": 17
         },
+        "color": [
+          {
+            "value": "grey",
+            "label": "Gris"
+          },
+          {
+            "value": "black",
+            "label": "Noir"
+          }
+        ],
         "created_at": "2022-09-01"
       }
     ]
