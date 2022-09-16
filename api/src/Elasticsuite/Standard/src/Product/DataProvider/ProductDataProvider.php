@@ -88,6 +88,7 @@ class ProductDataProvider implements ContextAwareCollectionDataProviderInterface
 
         $this->sortInputType->validateSort($context);
 
+        $searchQuery = $context['filters']['search'] ?? null;
         $limit = $this->pagination->getLimit($resourceClass, $operationName, $context);
         $offset = $this->pagination->getOffset($resourceClass, $operationName, $context);
 
@@ -96,7 +97,7 @@ class ProductDataProvider implements ContextAwareCollectionDataProviderInterface
             $catalog,
             $offset,
             $limit,
-            null,
+            $searchQuery,
             $this->sortInputType->formatSort($context),
         );
         $response = $this->adapter->search($request);

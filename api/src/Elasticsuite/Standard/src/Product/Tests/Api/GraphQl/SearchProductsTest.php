@@ -468,4 +468,136 @@ class SearchProductsTest extends AbstractTest
             )
         );
     }
+
+    /**
+     * @dataProvider fulltextSearchProductsProvider
+     *
+     * @param string $catalogId             Catalog ID or code
+     * @param int    $pageSize              Pagination size
+     * @param int    $currentPage           Current page
+     * @param string $searchQuery           Search query
+     * @param string $documentIdentifier    Document identifier to check ordered results
+     * @param array  $expectedOrderedDocIds Expected ordered document identifiers
+     */
+    public function testFulltextSearchProducts(
+        string $catalogId,
+        int $pageSize,
+        int $currentPage,
+        string $searchQuery,
+        string $documentIdentifier,
+        array $expectedOrderedDocIds
+    ): void {
+        $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
+
+        $arguments = sprintf(
+            'catalogId: "%s", pageSize: %d, currentPage: %d, search: "%s"',
+            $catalogId,
+            $pageSize,
+            $currentPage,
+            $searchQuery,
+        );
+
+        $this->validateApiCall(
+            new RequestGraphQlToTest(
+                <<<GQL
+                    {
+                        searchProducts({$arguments}) {
+                            collection { id score source }
+                        }
+                    }
+                GQL,
+                $user
+            ),
+            new ExpectedResponse(
+                200,
+                function (ResponseInterface $response) use (
+                    $documentIdentifier,
+                    $expectedOrderedDocIds
+                ) {
+                    $responseData = $response->toArray();
+                    $this->assertIsArray($responseData['data']['searchProducts']['collection']);
+                    $this->assertCount(\count($expectedOrderedDocIds), $responseData['data']['searchProducts']['collection']);
+                    foreach ($responseData['data']['searchProducts']['collection'] as $index => $document) {
+                        $this->assertArrayHasKey('id', $document);
+                        $this->assertEquals("/products/{$expectedOrderedDocIds[$index]}", $document['id']);
+
+                        $this->assertArrayHasKey('source', $document);
+                        if (\array_key_exists($documentIdentifier, $document['source'])) {
+                            $this->assertEquals($expectedOrderedDocIds[$index], $document['source'][$documentIdentifier]);
+                        }
+                    }
+                }
+            )
+        );
+    }
+
+    public function fulltextSearchProductsProvider(): array
+    {
+        return [
+            [
+                'b2c_en',   // catalog ID.
+                10,         // page size.
+                1,          // current page.
+                'striveshoulder', // query.
+                'id',       // document data identifier.
+                [2],        // expected ordered document IDs
+            ],
+            [
+                'b2c_en',   // catalog ID.
+                10,         // page size.
+                1,          // current page.
+                'bag',      // query.
+                'id',       // document data identifier.
+                [4, 1, 8, 14, 5, 2, 3],  // expected ordered document IDs
+            ],
+            [
+                'b2c_fr',   // catalog ID.
+                10,         // page size.
+                1,          // current page.
+                'bag',      // query.
+                'id',       // document data identifier.
+                [],  // expected ordered document IDs
+            ],
+            [
+                'b2c_en',   // catalog ID.
+                10,         // page size.
+                1,          // current page.
+                'summer',   // query: search in description field.
+                'id',       // document data identifier.
+                [5, 3],  // expected ordered document IDs
+            ],
+            [
+                'b2c_en',   // catalog ID.
+                10,         // page size.
+                1,          // current page.
+                'yoga',      // query: search in multiple field.
+                'id',       // document data identifier.
+                [8, 3],  // expected ordered document IDs
+            ],
+            [
+                'b2c_en',   // catalog ID.
+                10,         // page size.
+                1,          // current page.
+                'bag autumn', // query: search with multiple words.
+                'id',       // document data identifier.
+                [4],  // expected ordered document IDs
+            ],
+            [
+                'b2c_en',   // catalog ID.
+                10,         // page size.
+                1,          // current page.
+                'bag automn', // query: search with misspelled word.
+                'id',       // document data identifier.
+                [4],  // expected ordered document IDs
+            ],
+            [
+                'b2c_en',   // catalog ID.
+                10,         // page size.
+                1,          // current page.
+                'bohqpaq',  // query: search with word with same phonetic.
+                'id',       // document data identifier.
+                [6, 12, 11, 3],  // expected ordered document IDs
+            ],
+        ];
+    }
 }

@@ -47,6 +47,7 @@ Elasticsuite\Metadata\Model\SourceField:
         code: 'category.id'
         type: 'int'
         isSystem: true
+        isFilterable: true
     product_category_uid:
         metadata: '@product'
         code: 'category.uid'
