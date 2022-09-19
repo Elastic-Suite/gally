@@ -25,5 +25,6 @@
   "select.tooltip": "What sorting will be used for the category",
   "searchBarResult": "{{value.value}} {{value.result}}",
   "placeholder": "No category selected",
-  "default.sorting": "Default sorting"
+  "default.sorting": "Default sorting",
+  "buttonSave": "Save"
 }
