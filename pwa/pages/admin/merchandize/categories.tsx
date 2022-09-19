@@ -15,7 +15,13 @@ import {
 } from '~/hooks'
 import { findBreadcrumbLabel } from '~/services'
 import { selectMenu, useAppSelector } from '~/store'
-import { ICatalog, ICategories, ICategory, IHydraResponse, ISearchParameters, } from '~/types'
+import {
+  ICatalog,
+  ICategories,
+  ICategory,
+  IHydraResponse,
+  ISearchParameters,
+} from '~/types'
 
 import TitleBlock from '~/components/molecules/layout/TitleBlock/TitleBlock'
 import TwoColsLayout from '~/components/molecules/layout/twoColsLayout/TwoColsLayout'
@@ -103,7 +109,7 @@ function Categories(): JSX.Element {
     }
   }
 
-  const [saveTest, setSaveTest] = useState({})
+  const [saveButton, setSaveButton] = useState({})
 
   useEffect(() => {
     if (
@@ -111,12 +117,20 @@ function Categories(): JSX.Element {
       catalogId !== -1 &&
       !Object.entries(saveData).length
     )
-      setSaveTest({
+      setSaveButton({
         useNameInProductSearch: dataCat.useNameInProductSearch,
         isVirtual: dataCat.isVirtual,
         defaultSorting: dataCat.defaultSorting,
       })
-  }, [dataCat])
+  }, [
+    dataCat,
+    saveData,
+    dataCat?.useNameInProductSearch,
+    dataCat?.isVirtual,
+    dataCat?.defaultSorting,
+    catalogId,
+    localizedCatalogId,
+  ])
 
   async function onSave(): Promise<void> {
     await update(idCat, saveData)
@@ -125,9 +139,9 @@ function Categories(): JSX.Element {
 
   function testBtnSaveDisabled(): boolean {
     if (
-      Object.entries(saveTest).find(
+      Object.entries(saveButton).find(
         ([key, val]: [
-          key: (keyof typeof saveTest)['string'],
+          key: (keyof typeof saveButton)['string'],
           val: string | boolean
         ]) => {
           if (saveData[key] === undefined) return 0
@@ -168,12 +182,12 @@ function Categories(): JSX.Element {
             </>
           </TitleBlock>,
           <TitleBlock key="virtualRule" title={t('virtualRule.title')}>
-              <RulesManager
-                catalogId={catalogId}
-                localizedCatalogId={localizedCatalogId}
-                onChange={setRule}
-                rule={rule}
-              />
+            <RulesManager
+              catalogId={catalogId}
+              localizedCatalogId={localizedCatalogId}
+              onChange={setRule}
+              rule={rule}
+            />
           </TitleBlock>,
         ]}
       >
