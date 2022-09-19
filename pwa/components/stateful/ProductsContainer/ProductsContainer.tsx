@@ -127,16 +127,17 @@ function ProductsContainer(props: IProps): JSX.Element {
         <PageTile
           title={category?.name ? category?.name : category?.catalogName}
           sx={{ marginBottom: '12px' }}
-        />
-        <Grid container justifyContent="flex-end">
-          <PrimaryButton
-            sx={{ width: '150px' }}
-            onClick={onSave}
-            disabled={disableBtnSave}
-          >
-            Save
-          </PrimaryButton>
-        </Grid>
+        >
+          <Grid container justifyContent="flex-end">
+            <PrimaryButton
+              sx={{ width: '150px' }}
+              onClick={onSave}
+              disabled={disableBtnSave}
+            >
+              {t('buttonSave')}
+            </PrimaryButton>
+          </Grid>
+        </PageTile>
 
         <Merchandize
           onVirtualChange={onVirtualChange}
