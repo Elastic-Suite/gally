@@ -80,10 +80,6 @@ eslint: ## Run eslint in fix mode
 eslint: yarn
 	@$(DOCKER_COMP) exec pwa yarn eslint
 
-stylelint: ## Run stylelint
-stylelint: yarn
-	@$(DOCKER_COMP) exec pwa yarn stylelint
-
 prettier: ## Run prettier
 prettier: yarn
 	@$(DOCKER_COMP) exec pwa yarn prettier
@@ -93,7 +89,6 @@ qa: phpcsfixer
 qa: phpstan
 qa: typescript
 qa: eslint
-qa: stylelint
 qa: prettier
 
 phpunit: ## Run php unit tests, pass the parameter "p=" to launch tests on a specific path
