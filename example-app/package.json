@@ -1,0 +1,69 @@
+{
+  "name": "example-app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
+    "@mui/material": "^5.10.5",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.11.59",
+    "@types/react": "^18.0.20",
+    "@types/react-dom": "^18.0.6",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.4.0",
+    "react-scripts": "5.0.1",
+    "typescript": "^4.8.3",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "eslint": "eslint --fix --ignore-path .gitignore .",
+    "eslint:ci": "eslint --ignore-path .gitignore .",
+    "prettier": "prettier --write --ignore-unknown --ignore-path .gitignore .",
+    "prettier:ci": "prettier --check --ignore-unknown --ignore-path .gitignore .",
+    "typescript": "tsc --noEmit",
+    "typescript:ci": "tsc --noEmit",
+    "prepare": "cd .. && husky install example-app/.husky"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@typescript-eslint/parser": "^5.37.0",
+    "eslint": "^8.23.1",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-react-app": "^7.0.1",
+    "husky": "^8.0.1",
+    "prettier": "^2.7.1",
+    "tsc-files": "^1.1.3"
+  },
+  "lint-staged": {
+    "*": "prettier --write --ignore-unknown --ignore-path .gitignore",
+    "*.{ts,tsx}": "tsc-files --noEmit global.d.ts",
+    "*.{js,jsx,ts,tsx}": "eslint --fix --ignore-path .gitignore",
+    "*.{css,scss,sass}": "stylelint --fix --ignore-path .gitignore"
+  }
+}
