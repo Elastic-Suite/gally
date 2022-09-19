@@ -14,7 +14,7 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "incremental": true,
     "paths": {
       "~/*": ["./*"]
@@ -23,6 +23,5 @@
     "noUnusedParameters": true,
     "noImplicitAny": true
   },
-  "include": ["global.d.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "include": ["src"]
 }
