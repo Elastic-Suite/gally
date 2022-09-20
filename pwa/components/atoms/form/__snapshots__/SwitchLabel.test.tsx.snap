@@ -6,7 +6,7 @@ exports[`SwitchLabel match snapshot testSwitchTrue 1`] = `
     class="MuiFormControl-root MuiFormControl-fullWidth css-12mfi9j-MuiFormControl-root"
   >
     <label
-      class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-colorPrimary css-ssr94h-MuiFormLabel-root-MuiInputLabel-root"
+      class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-colorPrimary css-1ghtd4k-MuiFormLabel-root-MuiInputLabel-root"
       data-shrink="true"
     >
       label
@@ -23,7 +23,7 @@ exports[`SwitchLabel match snapshot testSwitchTrue 1`] = `
       </span>
     </label>
     <span
-      class="MuiSwitch-root MuiSwitch-sizeMedium css-najw49-MuiSwitch-root"
+      class="MuiSwitch-root MuiSwitch-sizeMedium css-nww90q-MuiSwitch-root"
     >
       <span
         class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-checked PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-checked Mui-checked css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"

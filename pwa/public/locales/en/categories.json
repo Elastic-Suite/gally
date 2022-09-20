@@ -20,7 +20,7 @@
   "name": "Use category name in product search",
   "name.tooltip": "Use category name in product search",
   "virtual": "Virtual category",
-  "virtual.tooltip": "Virtual category",
+  "virtual.tooltip": "Is the category is virtual or not ?",
   "select": "Select",
   "select.tooltip": "What sorting will be used for the category",
   "searchBarResult": "{{value.value}} {{value.result}}",

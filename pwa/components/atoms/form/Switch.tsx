@@ -15,12 +15,15 @@ function Switch({ label, labelInfo, ...args }: IProps): JSX.Element {
   return (
     <StyleFormControl variant="standard" fullWidth>
       {label || labelInfo ? (
-        <InputLabel shrink>
+        <InputLabel sx={{ maxWidth: '90%' }} shrink>
           {label ? label : null}
           {labelInfo ? <InfoTooltip title={labelInfo} /> : null}
         </InputLabel>
       ) : undefined}
-      <MuiSwitch {...args} sx={{ margin: '15px', marginLeft: '-12px' }} />
+      <MuiSwitch
+        {...args}
+        sx={{ margin: '15px', marginLeft: '-12px', marginTop: '22px' }}
+      />
     </StyleFormControl>
   )
 }

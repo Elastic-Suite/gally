@@ -1,6 +1,6 @@
 import { ChangeEvent } from 'react'
 import { useTranslation } from 'next-i18next'
-import { Grid, Paper } from '@mui/material'
+import { Box, Grid, Paper } from '@mui/material'
 import DropDown from '~/components/atoms/form/DropDown'
 import Switch from '~/components/atoms/form/Switch'
 import { IOptions } from '~/types'
@@ -35,7 +35,7 @@ function Merchandize({
   }
 
   return (
-    <Paper variant="outlined" style={{ height: 'auto', padding: '16px' }}>
+    <Paper variant="outlined" style={{ height: 'auto', padding: '22px' }}>
       <Grid
         container
         justifyContent="center"
@@ -44,39 +44,36 @@ function Merchandize({
       >
         <Grid
           container
-          direction="column"
           justifyContent="flex-start"
           alignItems="flex-start"
-          style={{ width: '50%' }}
+          style={{ width: '100%' }}
         >
-          <Switch
-            label={t('name')}
-            labelInfo={t('name.tooltip')}
-            onChange={handleChange}
-            checked={categoryNameValue}
-            name="name"
-          />
+          <Box sx={{ width: '50%' }}>
+            <Switch
+              label={t('name')}
+              labelInfo={t('name.tooltip')}
+              onChange={handleChange}
+              checked={categoryNameValue}
+              name="name"
+            />
+          </Box>
+          <Box sx={{ width: '50%' }}>
+            <DropDown
+              options={sortOptions}
+              label="Default sorting"
+              value={sortValue}
+              onChange={onSortChange}
+              infoTooltip={t('select.tooltip')}
+            />
+          </Box>
+        </Grid>
+        <Grid container justifyContent="flex-start" alignItems="center">
           <Switch
             label={t('virtual')}
             labelInfo={t('virtual.tooltip')}
             onChange={handleChange}
             checked={virtualCategoryValue}
             name="virtual"
-          />
-        </Grid>
-
-        <Grid
-          container
-          style={{ width: '50%' }}
-          justifyContent="flex-start"
-          alignItems="center"
-        >
-          <DropDown
-            options={sortOptions}
-            label={t('default.sorting')}
-            value={sortValue}
-            onChange={onSortChange}
-            infoTooltip={t('select.tooltip')}
           />
         </Grid>
       </Grid>
