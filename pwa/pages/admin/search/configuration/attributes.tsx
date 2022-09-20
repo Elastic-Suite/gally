@@ -34,11 +34,13 @@ function Attributes(): JSX.Element {
         <title>{title}</title>
       </Head>
       <PageTitle title={title} />
-      {visibleAlertAttributes ? <Alert
+      {visibleAlertAttributes ? (
+        <Alert
           message={t('attributesAlert')}
           onClose={(): void => setVisibleAlertAttributes(false)}
           style={{ marginBottom: '16px' }}
-        /> : null}
+        />
+      ) : null}
       <CommonGridFromSourceField
         active={false}
         urlParams={searchableAttributeUrl}
