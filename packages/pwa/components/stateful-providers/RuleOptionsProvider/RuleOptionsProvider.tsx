@@ -1,5 +1,5 @@
 import { useTranslation } from 'next-i18next'
-import { ReactChild, useCallback, useEffect, useMemo } from 'react'
+import { ReactNode, useCallback, useEffect, useMemo } from 'react'
 
 import { ruleOptionsContext } from '~/contexts'
 import { useResource, useSingletonLoader } from '~/hooks'
@@ -32,7 +32,7 @@ export interface IField {
 
 interface IProps {
   catalogId: number
-  children: ReactChild
+  children: ReactNode
   fields: IField[]
   localizedCatalogId: number
 }

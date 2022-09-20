@@ -1,7 +1,14 @@
 import { useMemo } from 'react'
 import { useTranslation } from 'next-i18next'
 
-import { IFilter, IHydraMember, IHydraResponse, IResource, getFilter, getMappings } from 'shared'
+import {
+  IFilter,
+  IHydraMember,
+  IHydraResponse,
+  IResource,
+  getFilter,
+  getMappings,
+} from 'shared'
 
 export function useApiFilters<A extends IHydraMember>(
   apiData: IHydraResponse<A>,

@@ -1,4 +1,4 @@
-import { ICatalog } from '~/types'
+import { ICatalog } from '../types'
 import { getUniqueLocalName } from './local'
 
 describe('Local service', () => {

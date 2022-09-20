@@ -19,7 +19,9 @@ import {
   ISearchParameters,
   LoadStatus,
   defaultPageSize,
-  fetchApi, getListApiParameters, isFetchError 
+  fetchApi,
+  getListApiParameters,
+  isFetchError,
 } from 'shared'
 
 import { useLog } from './useLog'

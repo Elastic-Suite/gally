@@ -4,7 +4,6 @@ import { IMenu, IMenuChild } from 'shared'
 import MenuItemIcon from '~/components/atoms/menu/MenuItemIcon'
 import MenuItem from '~/components/atoms/menu/MenuItem'
 
-
 /*
  * Create function to create path from code of the menu item
  */

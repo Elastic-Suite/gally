@@ -2,7 +2,7 @@ import fetchMock from 'fetch-mock-jest'
 
 import { fetchJson, isFetchError, normalizeUrl } from './fetch'
 
-jest.mock('~/services/storage')
+jest.mock('../services/storage')
 
 describe('Fetch service', () => {
   describe('isFetchError', () => {

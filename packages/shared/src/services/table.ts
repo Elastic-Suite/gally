@@ -1,6 +1,6 @@
 import { TFunction } from 'react-i18next'
 
-import { booleanRegexp } from '~/constants'
+import { booleanRegexp } from '../constants'
 import {
   DataContentType,
   IField,
@@ -11,7 +11,7 @@ import {
   IOptions,
   IResource,
   ITableHeader,
-} from '~/types'
+} from '../types'
 
 import { getFieldLabelTranslationArgs } from './format'
 import { getField, getFieldType } from './hydra'

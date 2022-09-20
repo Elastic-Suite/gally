@@ -19,11 +19,7 @@ function Header(props: IProps): JSX.Element {
         >
           <MenuIcon />
         </IconButton>
-        <Typography
-          component={Link}
-          to="/"
-          variant="h6"
-        >
+        <Typography component={Link} to="/" variant="h6">
           Example App{' '}
         </Typography>
       </Toolbar>

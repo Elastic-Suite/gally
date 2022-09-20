@@ -1,7 +1,7 @@
-import categorySortingOptions from '~/mocks/static/category_sorting_options.json'
-import metadata from '~/mocks/static/metadata.json'
-import sourceFieldOptionLabels from '~/mocks/static/source_field_option_labels.json'
-import { IResource, ISearchParameters } from '~/types'
+import categorySortingOptions from '../../mocks/static/category_sorting_options.json'
+import metadata from '../../mocks/static/metadata.json'
+import sourceFieldOptionLabels from '../../mocks/static/source_field_option_labels.json'
+import { IResource, ISearchParameters } from '../../types'
 
 export const getApiUrl = jest.fn((url: string): string => url)
 

@@ -1,4 +1,4 @@
-import { RuleAttributeOperator, RuleCombinationOperator } from '~/types'
+import { RuleAttributeOperator, RuleCombinationOperator } from '../types'
 
 import { getOptionsFromEnum } from './options'
 

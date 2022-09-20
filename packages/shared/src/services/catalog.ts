@@ -1,4 +1,4 @@
-import { ICatalog } from '~/types'
+import { ICatalog } from '../types'
 
 export function findDefaultCatalog(catalogsData: ICatalog[]): ICatalog | null {
   const defaultCatalog = catalogsData

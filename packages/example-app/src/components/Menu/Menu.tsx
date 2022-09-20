@@ -38,7 +38,12 @@ function Menu(props: IProps): JSX.Element {
         }}
       >
         <Box onClick={onMenuToggle} sx={{ textAlign: 'center' }}>
-          <Typography component={RouterLink} to="/" sx={{ display: 'inline-block', my: 1 }} variant="h6">
+          <Typography
+            component={RouterLink}
+            to="/"
+            sx={{ display: 'inline-block', my: 1 }}
+            variant="h6"
+          >
             Example App
           </Typography>
           <Divider />

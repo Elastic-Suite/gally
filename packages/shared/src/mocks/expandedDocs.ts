@@ -1,5 +1,5 @@
 /* eslint-disable prefer-destructuring */
-import { IExpandedDocsJsonld, IExpandedEntrypoint } from '~/types'
+import { IExpandedDocsJsonld, IExpandedEntrypoint } from '../types'
 
 export const expandedEntrypoint = {
   '@id': 'https://localhost/',

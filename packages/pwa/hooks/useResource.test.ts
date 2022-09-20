@@ -1,10 +1,9 @@
-import { IHydraMember, resource, resourceWithRef } from 'shared'
-import { fetchApi } from 'shared/api'
+import { IHydraMember, fetchApi, resource, resourceWithRef } from 'shared'
 import { renderHookWithProviders } from '~/utils/tests'
 
 import { useResource, useResourceOperations } from './useResource'
 
-jest.mock('shared/api')
+jest.mock('shared')
 
 interface ITest extends IHydraMember {
   hello: string

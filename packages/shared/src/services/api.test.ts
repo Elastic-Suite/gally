@@ -1,6 +1,6 @@
-import { resource } from '~/mocks'
-import { fetchJson } from '~/services/fetch'
-import { storageGet, storageRemove } from '~/services/storage'
+import { resource } from '../mocks'
+import { fetchJson } from '../services/fetch'
+import { storageGet, storageRemove } from '../services/storage'
 
 import {
   ApiError,
@@ -12,8 +12,8 @@ import {
   removeEmptyParameters,
 } from './api'
 
-jest.mock('~/services/fetch')
-jest.mock('~/services/storage')
+jest.mock('../services/fetch')
+jest.mock('../services/storage')
 
 describe('Api service', () => {
   describe('isApiError', () => {

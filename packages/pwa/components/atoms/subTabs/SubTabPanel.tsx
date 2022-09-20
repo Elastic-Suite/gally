@@ -1,7 +1,7 @@
-import { ReactChild, useEffect, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 
 interface IProps {
-  children?: ReactChild
+  children?: ReactNode
   id: number
   value: number
 }

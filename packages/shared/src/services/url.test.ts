@@ -1,4 +1,4 @@
-import { defaultPageSize } from '~/constants'
+import { defaultPageSize } from '../constants'
 import {
   clearParameters,
   getAppUrl,

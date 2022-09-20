@@ -1,5 +1,5 @@
-import { IScore, IStock } from "./customTables"
-import { ISearchParameters } from "./fetch"
+import { IScore, IStock } from './customTables'
+import { ISearchParameters } from './fetch'
 
 export interface ISearchProducts {
   searchProducts: ISearchProduct

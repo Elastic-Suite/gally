@@ -1,10 +1,10 @@
-import { ReactChild } from 'react'
+import { ReactNode } from 'react'
 
 import SchemaProvider from '~/components/stateful-providers/SchemaProvider/SchemaProvider'
 import UserProvider from '~/components/stateful-providers/UserProvider/UserProvider'
 
 interface IProps {
-  children: ReactChild
+  children: ReactNode
 }
 
 function DataProvider(props: IProps): JSX.Element {

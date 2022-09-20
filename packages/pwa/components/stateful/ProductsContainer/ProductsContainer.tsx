@@ -8,7 +8,7 @@ import {
   ICategorySortingOption,
   IHydraMember,
   IHydraResponse,
-  getCatalogForSearchProductApi
+  getCatalogForSearchProductApi,
 } from 'shared'
 
 import Button from '~/components/atoms/buttons/Button'

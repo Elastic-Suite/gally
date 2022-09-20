@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect } from 'react'
+import { useEffect } from 'react'
 import { appWithTranslation, useTranslation } from 'next-i18next'
 import type { AppProps } from 'next/app'
 import dynamic from 'next/dynamic'
@@ -22,13 +22,13 @@ const Layout = dynamic(
   {
     ssr: false,
   }
-) as FunctionComponent
+)
 
 const store = setupStore()
 
 function MyApp(props: AppProps): JSX.Element {
   const { Component, pageProps } = props
-  const Cmp = Component as FunctionComponent
+  const Cmp = Component
 
   const { i18n } = useTranslation('common')
 

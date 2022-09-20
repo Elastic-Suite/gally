@@ -1,4 +1,4 @@
-import { DataContentType, IApi, IField, IResource } from '~/types'
+import { DataContentType, IApi, IField, IResource } from '../types'
 
 export const fieldDropdown = {
   '@type': 'http://www.w3.org/ns/hydra/core#SupportedProperty',
