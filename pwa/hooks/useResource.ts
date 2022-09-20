@@ -20,17 +20,17 @@ import { useApiFetch } from './useApi'
 
 export function useResource(resourceName: string): IResource {
   const api = useContext(schemaContext)
-  const { asPath } = useRouter()
+  const { pathname } = useRouter()
 
   return useMemo(() => {
     const resource = getResource(api, resourceName)
     return {
       ...resource,
       supportedProperty: resource?.supportedProperty.map((field) =>
-        updatePropertiesAccordingToPath(field, asPath)
+        updatePropertiesAccordingToPath(field, pathname)
       ),
     }
-  }, [api, asPath, resourceName])
+  }, [api, pathname, resourceName])
 }
 
 export function useResourceOperations<T extends IHydraMember>(
