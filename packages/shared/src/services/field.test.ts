@@ -3,7 +3,7 @@ import {
   fieldDropdown,
   fieldDropdownWithApiOptions,
   fieldDropdownWithContext,
-} from '~/mocks'
+} from '../mocks'
 
 import {
   hasFieldOptions,

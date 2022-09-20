@@ -14,7 +14,14 @@ import {
   useResourceOperations,
 } from '~/hooks'
 import { selectMenu, useAppSelector } from '~/store'
-import { ICatalog, ICategories, ICategory, emptyCombinationRule, findBreadcrumbLabel, isFetchError } from 'shared'
+import {
+  ICatalog,
+  ICategories,
+  ICategory,
+  emptyCombinationRule,
+  findBreadcrumbLabel,
+  isFetchError,
+} from 'shared'
 
 import TitleBlock from '~/components/molecules/layout/TitleBlock/TitleBlock'
 import TwoColsLayout from '~/components/molecules/layout/twoColsLayout/TwoColsLayout'

@@ -1,6 +1,6 @@
 import { findBreadcrumbLabel, getSlugArray } from './breadcrumb'
 
-import menu from '~/mocks/static/menu.json'
+import menu from '../mocks/static/menu.json'
 
 describe('Breadcrumb service', () => {
   describe('getSlugArray', () => {

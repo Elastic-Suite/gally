@@ -1,5 +1,5 @@
 import { styled } from '@mui/system'
-import { ReactChild } from 'react'
+import { ReactNode } from 'react'
 
 const CustomRoot = styled('div')({
   display: 'flex',
@@ -27,8 +27,8 @@ const CustomRightSide = styled('div')({
 })
 
 interface IProps {
-  left: ReactChild[] | ReactChild
-  children: ReactChild
+  left: ReactNode[] | ReactNode
+  children: ReactNode
 }
 
 function TwoColsLayout({ left, children }: IProps): JSX.Element {

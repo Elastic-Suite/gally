@@ -1,10 +1,10 @@
-import { ReactChild, useMemo } from 'react'
+import { ReactNode, useMemo } from 'react'
 
 import { optionsContext } from '~/contexts'
 import { useOptions } from '~/hooks'
 
 interface IProps {
-  children: ReactChild
+  children: ReactNode
 }
 
 function OptionsProvider(props: IProps): JSX.Element {

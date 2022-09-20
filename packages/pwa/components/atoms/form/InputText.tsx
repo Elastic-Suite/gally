@@ -2,7 +2,7 @@ import {
   ChangeEvent,
   ForwardedRef,
   FunctionComponent,
-  ReactChild,
+  ReactNode,
   forwardRef,
 } from 'react'
 import {
@@ -141,7 +141,7 @@ export interface IInputTextProps
   fullWidth?: boolean
   infoTooltip?: string
   label?: string
-  helperText?: ReactChild
+  helperText?: ReactNode
   helperIcon?: string
   onChange?: (value: string) => void
   withMargin?: boolean

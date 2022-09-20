@@ -12,6 +12,7 @@
 
 # production
 /build
+/dist
 storybook-static
 
 # debug

@@ -9,7 +9,8 @@ import {
   ITreeItem,
   RuleAttributeType,
   RuleType,
-  isAttributeRule, isCombinationRule
+  isAttributeRule,
+  isCombinationRule,
 } from 'shared'
 
 import IonIcon from '../IonIcon/IonIcon'

@@ -4,9 +4,9 @@ import {
   fieldRef,
   fieldString,
   resourceWithRef,
-} from '~/mocks'
-import { DataContentType } from '~/types'
-import sourceFields from '~/mocks/static/source_fields.json'
+} from '../mocks'
+import { DataContentType } from '../types'
+import sourceFields from '../mocks/static/source_fields.json'
 
 import {
   getFieldDataContentType,

@@ -5,7 +5,7 @@ import {
   RuleAttributeType,
   RuleCombinationOperator,
   RuleType,
-} from '~/types'
+} from '../types'
 
 export const emptyCombinationRule: IRuleCombination = {
   type: RuleType.COMBINATION,

@@ -1,6 +1,6 @@
 import jsonld, { JsonLdDocument } from 'jsonld'
 
-import { headerRegexp } from '~/constants'
+import { headerRegexp } from '../constants'
 import {
   IApi,
   IEntrypoint,
@@ -11,7 +11,7 @@ import {
   IJsonldId,
   IJsonldRange,
   IResource,
-} from '~/types'
+} from '../types'
 
 import { fetchJson } from './fetch'
 

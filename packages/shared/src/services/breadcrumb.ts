@@ -1,4 +1,4 @@
-import { IMenuChild } from '~/types'
+import { IMenuChild } from '../types'
 
 export function getSlugArray(data: string[] | string): string[] {
   if (typeof data === 'string') {

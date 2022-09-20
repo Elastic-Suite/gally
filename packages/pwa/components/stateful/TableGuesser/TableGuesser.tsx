@@ -8,7 +8,7 @@ import {
   IResource,
   IResourceEditableMassUpdate,
   ITableRow,
-  defaultPageSize
+  defaultPageSize,
 } from 'shared'
 
 import StickyBar from '~/components/molecules/CustomTable/StickyBar/StickyBar'

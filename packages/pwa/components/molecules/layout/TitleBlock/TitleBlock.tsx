@@ -1,5 +1,5 @@
 import { styled } from '@mui/system'
-import { ReactChild } from 'react'
+import { ReactNode } from 'react'
 
 import { getCustomScrollBarStyles } from 'shared'
 
@@ -31,7 +31,7 @@ const PaddingBox = styled('div')(({ theme }) => ({
 
 interface IProps {
   title: string
-  children: ReactChild
+  children: ReactNode
 }
 
 function TitleBlock({ title, children }: IProps): JSX.Element {

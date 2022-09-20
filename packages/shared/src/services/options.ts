@@ -1,6 +1,6 @@
 import { TFunction } from 'react-i18next'
 
-import { IOptions } from '~/types'
+import { IOptions } from '../types'
 
 export function getOptionsFromEnum<T extends string | number>(
   enumObject: Record<string, T>,

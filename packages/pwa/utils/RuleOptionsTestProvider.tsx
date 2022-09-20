@@ -1,4 +1,4 @@
-import { ReactChild } from 'react'
+import { ReactNode } from 'react'
 
 import sourceFields from '~/public/mocks/source_fields.json'
 import sourceFieldLabels from '~/public/mocks/source_field_labels.json'
@@ -7,7 +7,7 @@ import { RuleAttributeType } from 'shared'
 import RuleOptionsProvider from '~/components/stateful-providers/RuleOptionsProvider/RuleOptionsProvider'
 
 interface IProps {
-  children: ReactChild
+  children: ReactNode
 }
 
 const sourceFieldLabelsMap = new Map(

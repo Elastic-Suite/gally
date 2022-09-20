@@ -4,7 +4,8 @@ import {
   INonStickyStyle,
   ISelectionStyle,
   IStickyStyle,
-  reorderingColumnWidth, stickyColunWidth
+  reorderingColumnWidth,
+  stickyColunWidth,
 } from 'shared'
 import { stickyBorderStyle } from '../CustomTable.service'
 

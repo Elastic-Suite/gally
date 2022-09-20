@@ -1,9 +1,9 @@
-import { Dispatch, ReactChild, SetStateAction, useMemo, useState } from 'react'
+import { Dispatch, ReactNode, SetStateAction, useMemo, useState } from 'react'
 
 import { breadcrumbContext } from '~/contexts'
 
 interface IProps {
-  children: ReactChild
+  children: ReactNode
 }
 
 function BreadcrumbProvider(props: IProps): JSX.Element {

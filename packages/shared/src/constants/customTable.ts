@@ -1,4 +1,4 @@
-import { DataContentType, ITableHeader } from '~/types'
+import { DataContentType, ITableHeader } from '../types'
 
 export const reorderingColumnWidth = 48 // 48px provide by Figma
 export const selectionColumnWidth = 80 // 68px provide by Figma ( TODO : dicuss with Morgane to rework this part if needed to be exactly like figma )

@@ -1,5 +1,5 @@
-import { apiUrl } from '~/constants'
-import { IFetchError, Method } from '~/types'
+import { apiUrl } from '../constants'
+import { IFetchError, Method } from '../types'
 
 export function isFetchError<T>(json: T | IFetchError): json is IFetchError {
   return 'error' in json

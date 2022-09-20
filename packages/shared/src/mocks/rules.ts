@@ -1,4 +1,4 @@
-import { IRuleAttribute, IRuleCombination } from '~/types'
+import { IRuleAttribute, IRuleCombination } from '../types'
 
 export const complexRule = {
   type: 'combination',

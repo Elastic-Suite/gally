@@ -1,8 +1,8 @@
-import { ReactChild, useEffect, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import { Box } from '@mui/material'
 
 interface IProps {
-  children?: ReactChild
+  children?: ReactNode
   id: number
   value: number
 }

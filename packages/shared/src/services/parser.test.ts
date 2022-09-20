@@ -1,4 +1,4 @@
-import { expandedDocs, expandedProperty, expandedRange } from '~/mocks'
+import { expandedDocs, expandedProperty, expandedRange } from '../mocks'
 import {
   fetchDocs,
   findRelatedClass,

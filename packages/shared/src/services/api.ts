@@ -6,8 +6,8 @@ import {
   contentTypeHeader,
   languageHeader,
   tokenStorageKey,
-} from '~/constants'
-import { IResource, IResponseError, ISearchParameters } from '~/types'
+} from '../constants'
+import { IResource, IResponseError, ISearchParameters } from '../types'
 
 import { fetchJson } from './fetch'
 import { storageGet, storageRemove } from './storage'

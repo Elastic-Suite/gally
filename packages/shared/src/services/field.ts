@@ -3,7 +3,7 @@ import {
   IDropdownStaticOptions,
   IElasticSuiteProperty,
   IField,
-} from '~/types'
+} from '../types'
 
 function updateProperties(
   properties: IElasticSuiteProperty,

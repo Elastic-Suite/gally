@@ -1,4 +1,4 @@
-import { ICatalog } from '~/types'
+import { ICatalog } from '../types'
 import { findDefaultCatalog, getCatalogForSearchProductApi } from './catalog'
 
 const defaultCatalog = {

@@ -5,10 +5,7 @@ const path = require('path')
 
 module.exports = {
   stories: ['../**/*.stories.mdx', '../**/*.stories.@(js|jsx|ts|tsx)'],
-  addons: [
-    '@storybook/addon-essentials',
-    'storybook-addon-next-router',
-  ],
+  addons: ['@storybook/addon-essentials', 'storybook-addon-next-router'],
   framework: '@storybook/react',
   core: {
     builder: '@storybook/builder-webpack5',

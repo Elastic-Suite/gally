@@ -8,7 +8,12 @@ import {
   useResource,
   useSearch,
 } from '~/hooks'
-import { ISearchParameters, ISourceField, defaultPageSize, defaultRowsPerPageOptions  } from 'shared'
+import {
+  ISearchParameters,
+  ISourceField,
+  defaultPageSize,
+  defaultRowsPerPageOptions,
+} from 'shared'
 
 import FiltersGuesser from '~/components/stateful/FiltersGuesser/FiltersGuesser'
 import TableGuesser from '~/components/stateful/TableGuesser/TableGuesser'

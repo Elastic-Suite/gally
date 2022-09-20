@@ -4,7 +4,7 @@ import { renderHookWithProviders } from '~/utils/tests'
 
 import { useApiFilters } from './useApiFilters'
 
-jest.mock('shared/api')
+jest.mock('shared')
 
 describe('useApiFilters', () => {
   it('should return the filters from a resource', () => {

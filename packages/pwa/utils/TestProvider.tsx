@@ -1,4 +1,4 @@
-import { ReactChild } from 'react'
+import { ReactNode } from 'react'
 
 import { schemaContext, userContext } from '~/contexts'
 import { IApi, IUser } from 'shared'
@@ -7,7 +7,7 @@ import OptionsProvider from '~/components/stateful-providers/OptionsProvider/Opt
 
 interface IProps {
   api: IApi
-  children: ReactChild
+  children: ReactNode
 }
 
 const timestamp = Math.floor(Date.now() / 1000)
