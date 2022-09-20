@@ -30,6 +30,5 @@
   "table.apply": "Apply",
   "table.cancel": "Cancel",
   "table.selected_one": "{{count}} selected row",
-  "table.selected_other": "{{count}} selected rows",
-  "attributes": "Searchable attributes"
+  "table.selected_other": "{{count}} selected rows"
 }
