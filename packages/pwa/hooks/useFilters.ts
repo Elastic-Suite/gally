@@ -1,13 +1,16 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 
-import { IResource, ISearchParameters,
+import {
+  IResource,
+  ISearchParameters,
   getAppUrl,
   getFilterParameters,
   getPageParameter,
   getParametersFromUrl,
   getRouterUrl,
-  getSearchParameter, } from 'shared'
+  getSearchParameter,
+} from 'shared'
 
 export function useFiltersRedirect(
   page: number | false = 0,

@@ -1,10 +1,10 @@
-import { ReactChild } from 'react'
+import { ReactNode } from 'react'
 
 import { schemaContext } from '~/contexts'
 import { useSchemaLoader } from '~/hooks'
 
 interface IProps {
-  children: ReactChild
+  children: ReactNode
 }
 
 function SchemaProvider(props: IProps): JSX.Element {

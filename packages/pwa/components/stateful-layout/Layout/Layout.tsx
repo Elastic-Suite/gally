@@ -1,4 +1,4 @@
-import { ReactChild, useCallback, useContext, useEffect } from 'react'
+import { ReactNode, useCallback, useContext, useEffect } from 'react'
 import { styled } from '@mui/system'
 
 import { breadcrumbContext } from '~/contexts'
@@ -102,7 +102,7 @@ const CustomToOpen = styled(CustomButtonCollapse)({
 })
 
 interface IProps {
-  children: ReactChild
+  children: ReactNode
 }
 
 function Layout({ children }: IProps): JSX.Element {

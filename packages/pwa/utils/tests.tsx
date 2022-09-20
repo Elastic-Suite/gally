@@ -1,6 +1,6 @@
 import { RenderOptions, render, renderHook } from '@testing-library/react'
 import { PreloadedState } from '@reduxjs/toolkit'
-import { ReactChild } from 'react'
+import { ReactNode } from 'react'
 
 import AppProvider from '~/components/stateful-providers/AppProvider/AppProvider'
 import { api } from 'shared'
@@ -26,7 +26,7 @@ export function renderWithProviders(
     ...renderOptions
   }: IExtendedRenderOptions = {}
 ) {
-  function Wrapper({ children }: { children: ReactChild }): JSX.Element {
+  function Wrapper({ children }: { children: ReactNode }): JSX.Element {
     return (
       <AppProvider store={store}>
         <TestProvider api={api}>{children}</TestProvider>
@@ -46,7 +46,7 @@ export function renderHookWithProviders<R>(
     ...renderOptions
   }: IExtendedRenderOptions = {}
 ) {
-  function Wrapper({ children }: { children: ReactChild }): JSX.Element {
+  function Wrapper({ children }: { children: ReactNode }): JSX.Element {
     return (
       <AppProvider store={store}>
         <TestProvider api={api}>{children}</TestProvider>

@@ -1,4 +1,4 @@
-import { ReactChild, useState } from 'react'
+import { ReactNode, useState } from 'react'
 import { Box, Dialog, DialogActions } from '@mui/material'
 import { styled } from '@mui/system'
 
@@ -33,7 +33,7 @@ const CustomTitle = styled('div')(({ theme }) => ({
 
 interface IProps {
   onConfirm?: () => void
-  title: ReactChild
+  title: ReactNode
   cancelName: string
   confirmName: string
   titlePopIn: string

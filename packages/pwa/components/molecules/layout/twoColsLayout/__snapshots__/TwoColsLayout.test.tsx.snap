@@ -38,9 +38,7 @@ exports[`TitleBlock match snapshot TwoColsLayout with Array in left 1`] = `
         tabindex="0"
         type="button"
       >
-        
         Hello world
-        
         <span
           class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
         />

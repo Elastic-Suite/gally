@@ -8,7 +8,9 @@ import {
   ITableHeader,
   ITableRow,
   LoadStatus,
-  gqlUrl, productTableheader, productsQuery
+  gqlUrl,
+  productTableheader,
+  productsQuery,
 } from 'shared'
 
 import FieldGuesser from '../FieldGuesser/FieldGuesser'

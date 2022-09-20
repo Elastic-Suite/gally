@@ -28,7 +28,7 @@ exports[`MassiveSelection should match snapshot with indeterminate state 1`] = `
     />
   </span>
   <button
-    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit  css-poyljr-MuiButtonBase-root-MuiButton-root"
+    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit css-poyljr-MuiButtonBase-root-MuiButton-root"
     data-testid="massive-selection-dropdown"
     tabindex="0"
     type="button"
@@ -71,7 +71,7 @@ exports[`MassiveSelection should match snapshot without indeterminate state 1`] 
     />
   </span>
   <button
-    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit  css-poyljr-MuiButtonBase-root-MuiButton-root"
+    class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit css-poyljr-MuiButtonBase-root-MuiButton-root"
     data-testid="massive-selection-dropdown"
     tabindex="0"
     type="button"

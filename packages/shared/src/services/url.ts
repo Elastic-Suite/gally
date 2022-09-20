@@ -4,8 +4,8 @@ import {
   pageSize,
   searchParameter,
   usePagination,
-} from '~/constants'
-import { ISearchParameters } from '~/types'
+} from '../constants'
+import { ISearchParameters } from '../types'
 
 import { removeEmptyParameters } from './api'
 

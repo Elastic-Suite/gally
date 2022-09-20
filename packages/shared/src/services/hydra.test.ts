@@ -1,6 +1,6 @@
-import categorySortingOptions from '~/mocks/static/category_sorting_options.json'
-import metadata from '~/mocks/static/metadata.json'
-import sourceFieldOptionLabels from '~/mocks/static/source_field_option_labels.json'
+import categorySortingOptions from '../mocks/static/category_sorting_options.json'
+import metadata from '../mocks/static/metadata.json'
+import sourceFieldOptionLabels from '../mocks/static/source_field_option_labels.json'
 
 import {
   api,
@@ -10,7 +10,7 @@ import {
   fieldString,
   resource,
   resourceWithRef,
-} from '~/mocks'
+} from '../mocks'
 
 import {
   castFieldParameter,

@@ -1,4 +1,4 @@
-import { attributeRule, combinationRule } from '~/mocks'
+import { attributeRule, combinationRule } from '../mocks'
 
 import { isAttributeRule, isCombinationRule } from './rules'
 

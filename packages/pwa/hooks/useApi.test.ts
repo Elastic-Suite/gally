@@ -1,6 +1,13 @@
-import { act } from '@testing-library/react'
+import { act, waitFor } from '@testing-library/react'
 
-import { IFetchError, IHydraMember, LoadStatus, fetchApi, log, resource } from 'shared'
+import {
+  IFetchError,
+  IHydraMember,
+  LoadStatus,
+  fetchApi,
+  log,
+  resource,
+} from 'shared'
 import { renderHookWithProviders } from '~/utils/tests'
 
 import {
@@ -10,13 +17,17 @@ import {
   useFetchApi,
 } from './useApi'
 
-jest.mock('shared/api')
+jest.mock('shared')
 
 interface ITest extends IHydraMember {
   hello: string
 }
 
 describe('useApi', () => {
+  beforeEach(() => {
+    ;(fetchApi as jest.Mock).mockClear()
+  })
+
   describe('useApiFetch', () => {
     it('should return the apiFetch function prefilled', async () => {
       ;(fetchApi as jest.Mock).mockClear()
@@ -48,17 +59,16 @@ describe('useApi', () => {
   describe('useFetchApi', () => {
     it('calls and return the api result', async () => {
       ;(fetchApi as jest.Mock).mockClear()
-      const { result, waitForNextUpdate } = renderHookWithProviders(() =>
+      const { result } = renderHookWithProviders(() =>
         useFetchApi('/test')
       )
       expect(result.current[0]).toEqual({
         status: LoadStatus.LOADING,
       })
-      await waitForNextUpdate()
-      expect(result.current[0]).toEqual({
+      await waitFor(() => expect(result.current[0]).toEqual({
         status: LoadStatus.SUCCEEDED,
         data: { hello: 'world' },
-      })
+      }))
       expect(fetchApi).toHaveBeenCalledWith(
         'en',
         '/test',
@@ -73,17 +83,16 @@ describe('useApi', () => {
       const options: RequestInit = {
         body: 'gqlQuery',
       }
-      const { result, waitForNextUpdate } = renderHookWithProviders(() =>
+      const { result } = renderHookWithProviders(() =>
         useFetchApi('/test', null, options)
       )
       expect(result.current[0]).toEqual({
         status: LoadStatus.LOADING,
       })
-      await waitForNextUpdate()
-      expect(result.current[0]).toEqual({
+      await waitFor(() => expect(result.current[0]).toEqual({
         status: LoadStatus.SUCCEEDED,
         data: { hello: 'world' },
-      })
+      }))
       expect(fetchApi).toHaveBeenCalledWith(
         'en',
         '/test',
@@ -97,14 +106,13 @@ describe('useApi', () => {
 
     it('should update the data in the response', async () => {
       ;(fetchApi as jest.Mock).mockClear()
-      const { result, waitForNextUpdate } = renderHookWithProviders(() =>
+      const { result } = renderHookWithProviders(() =>
         useFetchApi('/test')
       )
-      await waitForNextUpdate()
-      expect(result.current[0]).toEqual({
+      await waitFor(() => expect(result.current[0]).toEqual({
         status: LoadStatus.SUCCEEDED,
         data: { hello: 'world' },
-      })
+      }))
       act(() => result.current[1]({ hello: 'foo' }))
       expect(result.current[0]).toEqual({
         status: LoadStatus.SUCCEEDED,
@@ -114,14 +122,13 @@ describe('useApi', () => {
 
     it('should update the data in the response (using an update function)', async () => {
       ;(fetchApi as jest.Mock).mockClear()
-      const { result, waitForNextUpdate } = renderHookWithProviders(() =>
+      const { result } = renderHookWithProviders(() =>
         useFetchApi('/test')
       )
-      await waitForNextUpdate()
-      expect(result.current[0]).toEqual({
+      await waitFor(() => expect(result.current[0]).toEqual({
         status: LoadStatus.SUCCEEDED,
         data: { hello: 'world' },
-      })
+      }))
       act(() => result.current[1]((data: any) => ({ ...data, foo: 'bar' })))
       expect(result.current[0]).toEqual({
         status: LoadStatus.SUCCEEDED,
@@ -133,14 +140,17 @@ describe('useApi', () => {
   describe('useApiList', () => {
     it('calls and return the list result with pagination disabled', async () => {
       ;(fetchApi as jest.Mock).mockClear()
-      const { waitForNextUpdate } = renderHookWithProviders(() =>
+      const { result } = renderHookWithProviders(() =>
         useApiList('/list', false)
       )
-      await waitForNextUpdate()
+      await waitFor(() => expect(result.current[0]).toEqual({
+        status: LoadStatus.SUCCEEDED,
+        data: { hello: 'world' },
+      }))
       expect(fetchApi).toHaveBeenCalledWith(
         'en',
         '/list',
-        { pagination: false, search: '' },
+        { pagination: false },
         undefined,
         true
       )
@@ -148,14 +158,17 @@ describe('useApi', () => {
 
     it('calls and return the list result with pagination enabled', async () => {
       ;(fetchApi as jest.Mock).mockClear()
-      const { waitForNextUpdate } = renderHookWithProviders(() =>
+      const { result } = renderHookWithProviders(() =>
         useApiList('/list')
       )
-      await waitForNextUpdate()
+      await waitFor(() => expect(result.current[0]).toEqual({
+        status: LoadStatus.SUCCEEDED,
+        data: { hello: 'world' },
+      }))
       expect(fetchApi).toHaveBeenCalledWith(
         'en',
         '/list',
-        { pagination: true, pageSize: 50, currentPage: 1, search: '' },
+        { pagination: true, pageSize: 50, currentPage: 1 },
         undefined,
         true
       )
@@ -164,10 +177,13 @@ describe('useApi', () => {
     it('calls and return the list result with page and filters', async () => {
       ;(fetchApi as jest.Mock).mockClear()
       const params = { foo: 'bar' }
-      const { waitForNextUpdate } = renderHookWithProviders(() =>
+      const { result } = renderHookWithProviders(() =>
         useApiList('/list', 2, undefined, params)
       )
-      await waitForNextUpdate()
+      await waitFor(() => expect(result.current[0]).toEqual({
+        status: LoadStatus.SUCCEEDED,
+        data: { hello: 'world' },
+      }))
       expect(fetchApi).toHaveBeenCalledWith(
         'en',
         '/list',
@@ -176,7 +192,6 @@ describe('useApi', () => {
           pageSize: 50,
           currentPage: 3,
           foo: 'bar',
-          search: '',
         },
         undefined,
         true
@@ -189,14 +204,13 @@ describe('useApi', () => {
       mock.mockImplementationOnce(() =>
         Promise.resolve({ 'hydra:member': [{ id: 0 }] })
       )
-      const { result, waitForNextUpdate } = renderHookWithProviders(() =>
+      const { result } = renderHookWithProviders(() =>
         useApiList('/list', false)
       )
-      await waitForNextUpdate()
-      expect(result.current[0]).toEqual({
+      await waitFor(() => expect(result.current[0]).toEqual({
         status: LoadStatus.SUCCEEDED,
         data: { 'hydra:member': [{ id: 0 }] },
-      })
+      }))
       act(() => result.current[1]([{ id: 1 } as unknown as IHydraMember]))
       expect(result.current[0]).toEqual({
         status: LoadStatus.SUCCEEDED,
@@ -210,14 +224,13 @@ describe('useApi', () => {
       mock.mockImplementationOnce(() =>
         Promise.resolve({ 'hydra:member': [{ id: 0 }] })
       )
-      const { result, waitForNextUpdate } = renderHookWithProviders(() =>
+      const { result } = renderHookWithProviders(() =>
         useApiList('/list', false)
       )
-      await waitForNextUpdate()
-      expect(result.current[0]).toEqual({
+      await waitFor(() => expect(result.current[0]).toEqual({
         status: LoadStatus.SUCCEEDED,
         data: { 'hydra:member': [{ id: 0 }] },
-      })
+      }))
       act(() =>
         result.current[1]((list) =>
           list.concat([{ id: 1 } as unknown as IHydraMember])
@@ -233,7 +246,7 @@ describe('useApi', () => {
   describe('useApiEditableList', () => {
     it('calls and return the list and the resource operations', async () => {
       ;(fetchApi as jest.Mock).mockClear()
-      const { result, waitForNextUpdate } = renderHookWithProviders(() =>
+      const { result } = renderHookWithProviders(() =>
         useApiEditableList(resource)
       )
       expect(result.current[1]).toMatchObject({
@@ -242,22 +255,21 @@ describe('useApi', () => {
         replace: expect.any(Function),
         update: expect.any(Function),
       })
-      await waitForNextUpdate()
-      expect(result.current[0].data['hydra:member'].length).toEqual(2)
+      await waitFor(() => expect(result.current[0].data['hydra:member'].length).toEqual(2))
       expect(fetchApi).toHaveBeenCalledWith(
         'en',
         resource,
-        { pagination: true, pageSize: 50, currentPage: 1, search: '' },
+        { pagination: true, pageSize: 50, currentPage: 1 },
         undefined,
         true
       )
     })
 
     it('should call the API (create)', async () => {
-      const { result, waitForNextUpdate } = renderHookWithProviders(() =>
+      const { result } = renderHookWithProviders(() =>
         useApiEditableList<ITest>(resource)
       )
-      await waitForNextUpdate()
+      await waitFor(() => expect(result.current[0].data['hydra:member'].length).toEqual(2))
       ;(fetchApi as jest.Mock).mockClear()
       await act(() => result.current[1].create({ hello: 'world' }))
       expect(fetchApi).toHaveBeenCalledWith(
@@ -270,10 +282,10 @@ describe('useApi', () => {
     })
 
     it('should call the API (replace)', async () => {
-      const { result, waitForNextUpdate } = renderHookWithProviders(() =>
+      const { result } = renderHookWithProviders(() =>
         useApiEditableList<ITest>(resource)
       )
-      await waitForNextUpdate()
+      await waitFor(() => expect(result.current[0].data['hydra:member'].length).toEqual(2))
       ;(fetchApi as jest.Mock).mockClear()
       await act(() => result.current[1].replace({ id: 1, hello: 'world' }))
       expect(fetchApi).toHaveBeenCalledWith(
@@ -286,10 +298,10 @@ describe('useApi', () => {
     })
 
     it('should call the API (update)', async () => {
-      const { result, waitForNextUpdate } = renderHookWithProviders(() =>
+      const { result } = renderHookWithProviders(() =>
         useApiEditableList<ITest>(resource)
       )
-      await waitForNextUpdate()
+      await waitFor(() => expect(result.current[0].data['hydra:member'].length).toEqual(2))
       ;(fetchApi as jest.Mock).mockClear()
       await act(() => result.current[1].update(1, { hello: 'world' }))
       expect(fetchApi).toHaveBeenCalledWith(
@@ -306,10 +318,10 @@ describe('useApi', () => {
     })
 
     it('should call the API (remove))', async () => {
-      const { result, waitForNextUpdate } = renderHookWithProviders(() =>
+      const { result } = renderHookWithProviders(() =>
         useApiEditableList<ITest>(resource)
       )
-      await waitForNextUpdate()
+      await waitFor(() => expect(result.current[0].data['hydra:member'].length).toEqual(2))
       ;(fetchApi as jest.Mock).mockClear()
       await act(() => result.current[1].remove(1))
       expect(fetchApi).toHaveBeenCalledWith(
@@ -322,10 +334,10 @@ describe('useApi', () => {
     })
 
     it('should call the API (massUpdate)', async () => {
-      const { result, waitForNextUpdate } = renderHookWithProviders(() =>
+      const { result } = renderHookWithProviders(() =>
         useApiEditableList<ITest>(resource)
       )
-      await waitForNextUpdate()
+      await waitFor(() => expect(result.current[0].data['hydra:member'].length).toEqual(2))
       ;(fetchApi as jest.Mock).mockClear()
       await act(() => result.current[1].massUpdate([1], { hello: 'world' }))
       expect(fetchApi).toHaveBeenCalledWith(

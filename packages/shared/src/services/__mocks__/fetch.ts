@@ -1,6 +1,6 @@
-import docs from '~/mocks/static/docs.json'
-import entrypoint from '~/mocks/static/index.json'
-import graphql from '~/mocks/static/graphql.json'
+import docs from '../../mocks/static/docs.json'
+import entrypoint from '../../mocks/static/index.json'
+import graphql from '../../mocks/static/graphql.json'
 
 const body = { hello: 'world' }
 

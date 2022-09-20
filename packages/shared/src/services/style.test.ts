@@ -1,4 +1,4 @@
-import { theme } from '~/constants'
+import { theme } from '../constants'
 
 import { getCustomScrollBarStyles } from './style'
 

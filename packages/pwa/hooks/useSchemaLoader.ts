@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { IApi, IFetch, LoadStatus,  getApiUrl, parseSchema } from 'shared'
+import { IApi, IFetch, LoadStatus, getApiUrl, parseSchema } from 'shared'
 
 import { useLog } from './useLog'
 

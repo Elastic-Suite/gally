@@ -8,7 +8,7 @@ import {
   IOptions,
   IResource,
   ISearchParameters,
-} from '~/types'
+} from '../types'
 
 export function getResource(api: IApi, resourceName: string): IResource {
   return api.find(

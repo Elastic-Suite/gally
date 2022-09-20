@@ -1,4 +1,10 @@
-import { DataContentType, IDraggableColumnStyle, IStickyStyle, reorderingColumnWidth, stickyColunWidth } from 'shared'
+import {
+  DataContentType,
+  IDraggableColumnStyle,
+  IStickyStyle,
+  reorderingColumnWidth,
+  stickyColunWidth,
+} from 'shared'
 import {
   draggableColumnStyle,
   nonStickyStyle,

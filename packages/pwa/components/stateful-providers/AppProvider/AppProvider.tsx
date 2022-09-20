@@ -1,4 +1,4 @@
-import { ReactChild } from 'react'
+import { ReactNode } from 'react'
 import { ThemeProvider } from '@mui/material/styles'
 import { StyledEngineProvider } from '@mui/styled-engine'
 import { Provider } from 'react-redux'
@@ -9,7 +9,7 @@ import { AppStore } from '~/store'
 import BreadcrumbProvider from '~/components/stateful-providers/BreadcrumbProvider/BreadcrumbProvider'
 
 interface IProps {
-  children: ReactChild
+  children: ReactNode
   store: AppStore
 }
 

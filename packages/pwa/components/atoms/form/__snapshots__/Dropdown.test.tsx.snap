@@ -6,7 +6,7 @@ exports[`DropDown match snapshot BadgeDisabledFalse 1`] = `
     class="MuiFormControl-root css-1c9gikl-MuiFormControl-root"
   >
     <div
-      class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-16awh2u-MuiAutocomplete-root"
+      class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-1qqsdnr-MuiAutocomplete-root"
     >
       <div
         class="MuiFormControl-root MuiFormControl-fullWidth css-1qc7p1k-MuiFormControl-root"
@@ -21,7 +21,7 @@ exports[`DropDown match snapshot BadgeDisabledFalse 1`] = `
             autocapitalize="none"
             autocomplete="off"
             class="MuiInputBase-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-yz9k0d-MuiInputBase-input"
-            id="mui-1"
+            id=":r0:"
             role="combobox"
             spellcheck="false"
             type="text"
@@ -58,7 +58,7 @@ exports[`DropDown match snapshot BadgeDisabledTrue 1`] = `
     class="MuiFormControl-root css-1c9gikl-MuiFormControl-root"
   >
     <div
-      class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-16awh2u-MuiAutocomplete-root"
+      class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-1qqsdnr-MuiAutocomplete-root"
     >
       <div
         class="MuiFormControl-root MuiFormControl-fullWidth css-1qc7p1k-MuiFormControl-root"
@@ -74,7 +74,7 @@ exports[`DropDown match snapshot BadgeDisabledTrue 1`] = `
             autocomplete="off"
             class="MuiInputBase-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-yz9k0d-MuiInputBase-input"
             disabled=""
-            id="mui-2"
+            id=":r1:"
             role="combobox"
             spellcheck="false"
             type="text"
@@ -109,7 +109,7 @@ exports[`DropDown match snapshot BadgeLabel 1`] = `
     class="MuiFormControl-root css-1c9gikl-MuiFormControl-root"
   >
     <div
-      class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-16awh2u-MuiAutocomplete-root"
+      class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-1qqsdnr-MuiAutocomplete-root"
     >
       <div
         class="MuiFormControl-root MuiFormControl-fullWidth css-1qc7p1k-MuiFormControl-root"
@@ -117,7 +117,7 @@ exports[`DropDown match snapshot BadgeLabel 1`] = `
         <label
           class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-colorPrimary css-ssr94h-MuiFormLabel-root-MuiInputLabel-root"
           data-shrink="true"
-          for="mui-3"
+          for=":r2:"
         >
           Label
         </label>
@@ -131,7 +131,7 @@ exports[`DropDown match snapshot BadgeLabel 1`] = `
             autocapitalize="none"
             autocomplete="off"
             class="MuiInputBase-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-yz9k0d-MuiInputBase-input"
-            id="mui-3"
+            id=":r2:"
             role="combobox"
             spellcheck="false"
             type="text"
@@ -168,7 +168,7 @@ exports[`DropDown match snapshot BadgeMultiple 1`] = `
     class="MuiFormControl-root css-1c9gikl-MuiFormControl-root"
   >
     <div
-      class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-16awh2u-MuiAutocomplete-root"
+      class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-1qqsdnr-MuiAutocomplete-root"
     >
       <div
         class="MuiFormControl-root MuiFormControl-fullWidth css-1qc7p1k-MuiFormControl-root"
@@ -176,7 +176,7 @@ exports[`DropDown match snapshot BadgeMultiple 1`] = `
         <label
           class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-colorPrimary css-ssr94h-MuiFormLabel-root-MuiInputLabel-root"
           data-shrink="true"
-          for="mui-6"
+          for=":r5:"
         >
           Label
         </label>
@@ -190,7 +190,7 @@ exports[`DropDown match snapshot BadgeMultiple 1`] = `
             autocapitalize="none"
             autocomplete="off"
             class="MuiInputBase-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-yz9k0d-MuiInputBase-input"
-            id="mui-6"
+            id=":r5:"
             role="combobox"
             spellcheck="false"
             type="text"
@@ -227,7 +227,7 @@ exports[`DropDown match snapshot BadgeRequiredFalse 1`] = `
     class="MuiFormControl-root css-1c9gikl-MuiFormControl-root"
   >
     <div
-      class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-16awh2u-MuiAutocomplete-root"
+      class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-1qqsdnr-MuiAutocomplete-root"
     >
       <div
         class="MuiFormControl-root MuiFormControl-fullWidth css-1qc7p1k-MuiFormControl-root"
@@ -242,7 +242,7 @@ exports[`DropDown match snapshot BadgeRequiredFalse 1`] = `
             autocapitalize="none"
             autocomplete="off"
             class="MuiInputBase-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-yz9k0d-MuiInputBase-input"
-            id="mui-4"
+            id=":r3:"
             role="combobox"
             spellcheck="false"
             type="text"
@@ -279,7 +279,7 @@ exports[`DropDown match snapshot BadgeRequiredTrue 1`] = `
     class="MuiFormControl-root css-1c9gikl-MuiFormControl-root"
   >
     <div
-      class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-16awh2u-MuiAutocomplete-root"
+      class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-1qqsdnr-MuiAutocomplete-root"
     >
       <div
         class="MuiFormControl-root MuiFormControl-fullWidth css-1qc7p1k-MuiFormControl-root"
@@ -295,7 +295,7 @@ exports[`DropDown match snapshot BadgeRequiredTrue 1`] = `
             autocapitalize="none"
             autocomplete="off"
             class="MuiInputBase-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-yz9k0d-MuiInputBase-input"
-            id="mui-5"
+            id=":r4:"
             required=""
             role="combobox"
             spellcheck="false"

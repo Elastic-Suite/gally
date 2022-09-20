@@ -1,7 +1,13 @@
 import { useTranslation } from 'next-i18next'
 import { useMemo } from 'react'
 
-import { IField, IOptions, IResource, ITableHeader, getFieldHeader } from 'shared'
+import {
+  IField,
+  IOptions,
+  IResource,
+  ITableHeader,
+  getFieldHeader,
+} from 'shared'
 
 export function useApiHeaders(resource: IResource): ITableHeader[] {
   const { t } = useTranslation('api')

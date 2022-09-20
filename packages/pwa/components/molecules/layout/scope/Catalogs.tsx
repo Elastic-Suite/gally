@@ -1,7 +1,12 @@
 import { styled } from '@mui/system'
 import { useTranslation } from 'next-i18next'
 
-import { ICatalog, IHydraResponse, ITabContentProps, getUniqueLocalName } from 'shared'
+import {
+  ICatalog,
+  IHydraResponse,
+  ITabContentProps,
+  getUniqueLocalName,
+} from 'shared'
 
 import TitleScope from '~/components/atoms/scope/TitleScope'
 import NbActiveLocales from '~/components/atoms/scope/NbActiveLocales'

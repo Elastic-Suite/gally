@@ -146,3 +146,9 @@ declare module '@mui/material/styles' {
     }
   }
 }
+
+declare global {
+  interface Window {
+    showErrors?: boolean
+  }
+}

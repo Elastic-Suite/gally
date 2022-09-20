@@ -1,10 +1,10 @@
-import { ReactChild } from 'react'
+import { ReactNode } from 'react'
 
 import { userContext } from '~/contexts'
 import { useUser } from '~/hooks'
 
 interface IProps {
-  children: ReactChild
+  children: ReactNode
 }
 
 function UserProvider(props: IProps): JSX.Element {

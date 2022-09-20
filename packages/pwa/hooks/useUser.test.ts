@@ -1,9 +1,9 @@
-import { storageGet } from 'shared/storage'
+import { storageGet } from 'shared'
 import { renderHookWithProviders } from '~/utils/tests'
 
 import { useUser } from './useUser'
 
-jest.mock('shared/storage')
+jest.mock('shared')
 
 describe('useUser', () => {
   it('should return null when not connected', () => {

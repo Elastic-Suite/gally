@@ -4,7 +4,7 @@ import { renderHookWithProviders } from '~/utils/tests'
 
 import { ILoader, useSingletonLoader } from './useSingletonLoader'
 
-jest.mock('shared/api')
+jest.mock('shared')
 
 describe('useSingletonLoader', () => {
   it('should update the state', () => {
@@ -33,7 +33,7 @@ describe('useSingletonLoader', () => {
       Promise.all([
         result.current.fetch('batman', spy as unknown as ILoader<unknown>),
         result.current.fetch('batman', spy as unknown as ILoader<unknown>),
-      ])
+      ]).then(() => undefined)
     )
     expect(result.current.map).toEqual(new Map([['batman', 'robin']]))
     expect(spy).toHaveBeenCalledTimes(1)

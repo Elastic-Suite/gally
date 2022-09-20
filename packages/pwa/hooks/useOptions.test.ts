@@ -1,12 +1,16 @@
 import { act } from '@testing-library/react'
 
-import { fieldDropdown, fieldDropdownWithApiOptions, fieldRef } from 'shared'
-import { fetchApi } from 'shared/api'
+import {
+  fetchApi,
+  fieldDropdown,
+  fieldDropdownWithApiOptions,
+  fieldRef,
+} from 'shared'
 import { renderHookWithProviders } from '~/utils/tests'
 
 import { useOptions } from './useOptions'
 
-jest.mock('shared/api')
+jest.mock('shared')
 
 describe('useOptions', () => {
   it('should load the field schema static options', async () => {
@@ -58,7 +62,7 @@ describe('useOptions', () => {
       Promise.all([
         result.current.load(fieldRef),
         result.current.load(fieldRef),
-      ])
+      ]).then(() => undefined)
     )
     expect(result.current.fieldOptions.get(fieldRef.property['@id'])).toEqual([
       { id: 1, value: 1, label: '/metadata/1' },
