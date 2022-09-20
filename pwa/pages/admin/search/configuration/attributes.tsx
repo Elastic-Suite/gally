@@ -1,16 +1,17 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
 import { useContext, useEffect } from 'react'
 
 import { searchableAttributeUrl } from '~/constants'
 import { breadcrumbContext } from '~/contexts'
 import { withAuth } from '~/hocs'
-import { firstLetterUppercase } from '~/services'
 
 import PageTitle from '~/components/atoms/PageTitle/PageTitle'
 import CommonGridFromSourceField from '~/components/stateful-pages/CommonGridFromSourceField/CommonGridFromSourceField'
 
 const pagesSlug = ['search', 'configuration', 'attributes']
+const fixedFilters = { 'metadata.entity': 'product' }
 
 function Attributes(): JSX.Element {
   const router = useRouter()
@@ -20,15 +21,21 @@ function Attributes(): JSX.Element {
     setBreadcrumb(pagesSlug)
   }, [router.query, setBreadcrumb])
 
-  const title = pagesSlug.slice(-1).flat()
+  const { t } = useTranslation('common')
+
+  const title = t(pagesSlug.slice(-1).flat().pop())
 
   return (
     <>
       <Head>
         <title>{title}</title>
       </Head>
-      <PageTitle title={firstLetterUppercase(title.pop())} />
-      <CommonGridFromSourceField urlParams={`${searchableAttributeUrl}`} />
+      <PageTitle title={title} />
+      <CommonGridFromSourceField
+        active={false}
+        urlParams={searchableAttributeUrl}
+        filters={fixedFilters}
+      />
     </>
   )
 }
