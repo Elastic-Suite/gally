@@ -96,6 +96,7 @@ function CommonGridFromSourceField(props: IProps): JSX.Element {
         resource={resource}
         searchValue={searchValue}
       />
+      {console.log(resource)}
       <TableGuesser
         apiData={data}
         currentPage={page}

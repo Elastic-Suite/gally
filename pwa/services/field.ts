@@ -33,10 +33,10 @@ export function updatePropertiesAccordingToPath(
   field: IField,
   path: string
 ): IField {
-  if (path.includes('admin/settings')) {
+  if (path?.includes('admin/settings')) {
     path = 'settings_attribute'
   } else {
-    path = path.replaceAll('/', '_').replace('_admin_', '')
+    path = path?.replaceAll('/', '_').replace('_admin_', '')
   }
   if (field.elasticsuite?.context) {
     const [, newPropertiesvalues] = Object.entries(field.elasticsuite?.context)
