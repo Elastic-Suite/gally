@@ -14,7 +14,7 @@ function App(): JSX.Element {
   }
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/example">
       <Header onMenuToggle={handleMenuToggle} />
       <Menu menuOpen={menuOpen} onMenuToggle={handleMenuToggle} />
       <Routes>
