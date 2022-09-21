@@ -37,9 +37,17 @@ jobs:
           done
           exit 1
       - name: Check HTTP reachability
+        id: http_reachability
         run: curl -v -o /dev/null http://localhost
+      - name: HTTP Failure
+        if: ${{ failure() && steps.tests.http_reachability == 'failure' }}  
+        run: docker-compose logs
       - name: Check HTTPS reachability
+        id: https_reachability
         run: curl  -vk -o /dev/null https://localhost
+      - name: HTTPS Failure
+        if: ${{ failure() && steps.tests.https_reachability == 'failure' }}
+        run: docker-compose logs
       - name: Create test database
         run: |
           docker-compose exec -e XDEBUG_MODE=off -T php bin/console -e test doctrine:database:create
@@ -102,7 +110,10 @@ jobs:
           path: pwa/coverage/cobertura-coverage.xml
           minimum_coverage: 1
           fail_below_threshold: false
-          
+      - name: "[End] Job failed, gathering logs"
+        if: ${{ failure() }}
+        run: docker-compose logs
+                   
   Deploy:
     needs: tests
     if: github.ref == 'refs/heads/master'
