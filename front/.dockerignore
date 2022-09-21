@@ -13,8 +13,12 @@
 **/docker-compose.yml
 **/Dockerfile
 **/Thumbs.db
-.editorconfig
-.env.*.local
-.env.local
-build/
-node_modules/
+**/.editorconfig
+**/.env.*.local
+**/.env.local
+**/.next/
+**/build/
+**/coverage/
+**/dist/
+**/node_modules/
+**/storybook-static/

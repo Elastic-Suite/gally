@@ -1,0 +1,13 @@
+{
+  "private": true,
+  "workspaces": ["example-app", "pwa", "shared"],
+  "scripts": {
+    "dev": "yarn --cwd ./pwa dev",
+    "build": "yarn --cwd ./pwa build",
+    "build:shared": "yarn --cwd ./shared build",
+    "build:example": "yarn --cwd ./example-app build",
+    "build-storybook": "yarn --cwd ./pwa build-storybook",
+    "start": "yarn --cwd ./pwa start",
+    "start:example": "yarn --cwd ./example-app start"
+  }
+}

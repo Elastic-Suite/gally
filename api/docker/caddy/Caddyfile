@@ -19,6 +19,8 @@
         || {path}.startsWith("/images")
         || {path}.startsWith("/storybook-static")`
 
+    @example expression `({env.EXAMPLE_UPSTREAM} != '' && {path}.startsWith("/example"))`
+
 
     root * /srv/api/public
 #    mercure {
@@ -46,6 +48,8 @@
     # Comment the following line if you don't want Next.js to catch requests for HTML documents.
     # In this case, they will be handled by the PHP app.
     reverse_proxy @pwa http://{$PWA_UPSTREAM}
+
+    reverse_proxy @example http://{$EXAMPLE_UPSTREAM}
 
     php_fastcgi unix//var/run/php/php-fpm.sock {
         trusted_proxies {$CADDY_TRUSTED_PROXIES}

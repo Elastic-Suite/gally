@@ -33,16 +33,28 @@ services:
 
   pwa:
     build:
-      context: ./pwa
+      context: ./front
       target: api_platform_pwa_dev
     volumes:
-      - ./pwa:/usr/src/pwa:rw,cached
+      - ./front:/usr/src/front:rw,cached
+
+  example:
+    build:
+      context: ./front
+      target: api_platform_example_dev
+    volumes:
+      - ./front:/usr/src/front:rw,cached
 
   caddy:
     volumes:
       - ./api/docker/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
       - ./api/public:/srv/api/public:ro
-    # environment:
+    depends_on:
+      - php
+      - pwa
+      - example
+    environment:
+      EXAMPLE_UPSTREAM: example:3001
       # MERCURE_EXTRA_DIRECTIVES: demo
 
 ###> doctrine/doctrine-bundle ###

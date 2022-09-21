@@ -39,7 +39,7 @@
     "react-beautiful-dnd": "13.1.1",
     "react-dom": "18.2.0",
     "react-redux": "8.0.2",
-    "shared": "workspace:*",
+    "shared": "*",
     "storybook-addon-next-router": "4.0.0"
   },
   "browserslist": {
