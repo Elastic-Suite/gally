@@ -15,6 +15,10 @@
     "prettier": "yarn --cwd shared prettier && yarn --cwd pwa prettier && yarn --cwd example-app prettier",
     "prettier:ci": "yarn --cwd shared prettier:ci && yarn --cwd pwa prettier:ci && yarn --cwd example-app prettier:ci",
     "typescript": "yarn --cwd shared typescript && yarn --cwd pwa typescript && yarn --cwd example-app typescript",
-    "typescript:ci": "yarn --cwd shared typescript:ci && yarn --cwd pwa typescript:ci && yarn --cwd example-app typescript:ci"
+    "typescript:ci": "yarn --cwd shared typescript:ci && yarn --cwd pwa typescript:ci && yarn --cwd example-app typescript:ci",
+    "prepare": "cd .. && husky install front/.husky"
+  },
+  "devDependencies": {
+    "husky": "8.0.1"
   }
 }
