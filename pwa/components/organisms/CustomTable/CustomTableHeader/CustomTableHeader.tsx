@@ -11,6 +11,7 @@ import {
 } from '~/constants'
 import { DataContentType, ITableHeader, ITableHeaderSticky } from '~/types'
 import { manageStickyHeaders, stickyBorderStyle } from '../CustomTable.service'
+import { useTranslation } from 'next-i18next'
 
 interface IProps {
   cssLeftValues: number[]
@@ -38,6 +39,7 @@ function CustomTableHeader(props: IProps): JSX.Element {
   const stickyHeaders: ITableHeaderSticky[] = manageStickyHeaders(tableHeaders)
   const isOnlyDraggable = !withSelection && stickyHeaders.length === 0
   const cssLeftValuesIterator = cssLeftValues.entries()
+  const { t } = useTranslation('table')
 
   return (
     <TableHead>
@@ -132,7 +134,7 @@ function CustomTableHeader(props: IProps): JSX.Element {
                 }),
               }}
             >
-              {header.label}
+              {t(header.label)}
             </BaseTableCell>
           ))}
       </TableRow>
