@@ -1,7 +1,6 @@
 export * from './useApi'
 export * from './useApiFilters'
 export * from './useApiTable'
-export * from './useSchemaLoader'
 export * from './useFilters'
 export * from './useIsHorizontalOverflow'
 export * from './useLog'
