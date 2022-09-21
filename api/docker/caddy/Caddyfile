@@ -4,7 +4,7 @@
     # HTTP/3 support
     servers {
        protocol {
-           experimental_http3
+           h3
        }
     }
 }
