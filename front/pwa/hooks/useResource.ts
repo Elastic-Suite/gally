@@ -1,7 +1,6 @@
 import { useCallback, useContext, useMemo } from 'react'
 import { useRouter } from 'next/router'
 
-import { schemaContext } from '~/contexts'
 import {
   IFetchError,
   IHydraMember,
@@ -11,6 +10,7 @@ import {
   contentTypeHeader,
   getApiUrl,
   getResource,
+  schemaContext,
   updatePropertiesAccordingToPath,
 } from 'shared'
 
