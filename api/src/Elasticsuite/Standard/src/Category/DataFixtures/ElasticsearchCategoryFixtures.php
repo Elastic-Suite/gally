@@ -19,17 +19,19 @@ namespace Elasticsuite\Category\DataFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Elasticsuite\Fixture\Service\ElasticsearchFixtures;
+use Elasticsuite\Fixture\Service\EntityIndicesFixturesInterface;
 
 class ElasticsearchCategoryFixtures extends Fixture
 {
     public function __construct(
         private ElasticsearchFixtures $elasticsearchFixtures,
+        private EntityIndicesFixturesInterface $entityIndicesFixtures,
     ) {
     }
 
     public function load(ObjectManager $manager): void
     {
-        $this->elasticsearchFixtures->loadFixturesIndexFiles([__DIR__ . '/fixtures/categories_indices.json']);
+        $this->entityIndicesFixtures->createEntityElasticsearchIndices('category');
         $this->elasticsearchFixtures->loadFixturesDocumentFiles([__DIR__ . '/fixtures/categories_documents.json']);
     }
 }
