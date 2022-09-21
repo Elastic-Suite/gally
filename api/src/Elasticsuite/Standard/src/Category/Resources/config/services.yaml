@@ -15,6 +15,7 @@ services:
     Elasticsuite\Category\DataFixtures\ElasticsearchCategoryFixtures:
         arguments:
             - '@Elasticsuite\Fixture\Service\ElasticsearchFixtures'
+            - '@Elasticsuite\Fixture\Service\EntityIndicesFixturesInterface'
         tags:
             - { name: doctrine.fixture.orm }
 
