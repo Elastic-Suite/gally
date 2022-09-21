@@ -10,8 +10,9 @@ services:
       # MERCURE_JWT_SECRET: ${CADDY_MERCURE_JWT_SECRET}
       XDEBUG_MODE: 'off'
 
-  # caddy:
-    # environment:
+  caddy:
+    environment:
+      EXAMPLE_UPSTREAM: pwa:3000
       # MERCURE_PUBLISHER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET}
       # MERCURE_SUBSCRIBER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET}
 
@@ -21,5 +22,5 @@ services:
 
   pwa:
     build:
-      context: ./pwa
+      context: ./front
       target: api_platform_pwa_int
