@@ -21,7 +21,7 @@ const Drawer = styled(MuiDrawer)(({ theme }) => ({
 
 interface IProps {
   menuOpen: boolean
-  onMenuToggle: () => void
+  onMenuToggle?: () => void
 }
 
 function Menu(props: IProps): JSX.Element {
