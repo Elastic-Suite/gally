@@ -3,5 +3,16 @@
 
 . "$(dirname -- "$0")/_/husky.sh"
 
+cd front
+
+cd shared
+yarn lint-staged
+cd ..
+
 cd pwa
 yarn lint-staged
+cd ..
+
+cd example-app
+yarn lint-staged
+cd ..
