@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 
-import { schemaContext, userContext } from '~/contexts'
-import { IApi, IUser } from 'shared'
+import { userContext } from '~/contexts'
+import { IApi, IUser, schemaContext } from 'shared'
 
 import OptionsProvider from '~/components/stateful-providers/OptionsProvider/OptionsProvider'
 

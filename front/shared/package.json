@@ -30,6 +30,7 @@
     "@babel/core": "7.19.1",
     "@babel/plugin-syntax-flow": "7.18.6",
     "@babel/plugin-transform-react-jsx": "7.19.0",
+    "@babel/preset-react": "7.18.6",
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "13.4.0",
     "@types/inflection": "1.13.0",
@@ -53,7 +54,7 @@
   },
   "lint-staged": {
     "*": "prettier --write --ignore-unknown --ignore-path .gitignore",
-    "*.{ts,tsx}": "tsc-files --noEmit global.d.ts",
+    "*.{ts,tsx}": "tsc-files --noEmit src/global.d.ts",
     "*.{js,jsx,ts,tsx}": "eslint --fix --ignore-path .gitignore"
   }
 }

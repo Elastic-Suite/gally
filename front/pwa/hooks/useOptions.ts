@@ -1,6 +1,5 @@
 import { useCallback, useContext } from 'react'
 
-import { schemaContext } from '~/contexts'
 import {
   IApiSchemaOptions,
   IFetchApi,
@@ -16,6 +15,7 @@ import {
   isDropdownStaticOptions,
   isFetchError,
   isReferenceField,
+  schemaContext,
 } from 'shared'
 import { useSingletonLoader } from './useSingletonLoader'
 
