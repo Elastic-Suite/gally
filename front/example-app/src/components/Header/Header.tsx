@@ -3,7 +3,7 @@ import MenuIcon from '@mui/icons-material/Menu'
 import { Link } from 'react-router-dom'
 
 interface IProps {
-  onMenuToggle: () => void
+  onMenuToggle?: () => void
 }
 
 function Header(props: IProps): JSX.Element {
