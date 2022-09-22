@@ -98,6 +98,8 @@ class Configuration
 
     private ?bool $isVirtual = null;
 
+    private ?string $virtualRule = null;
+
     private ?bool $useNameInProductSearch = null;
 
     #[ApiProperty(
@@ -185,6 +187,16 @@ class Configuration
     public function setIsVirtual(?bool $isVirtual): void
     {
         $this->isVirtual = $isVirtual;
+    }
+
+    public function getVirtualRule(): ?string
+    {
+        return $this->virtualRule ?? '';
+    }
+
+    public function setVirtualRule(?string $virtualRule): void
+    {
+        $this->virtualRule = $virtualRule;
     }
 
     public function getDefaultSorting(): string

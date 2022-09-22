@@ -71,6 +71,7 @@ class CategoryTreeBuilder
             $categoryConfiguration->setCategory($category);
             $categoryConfiguration->setName($categoryConfigurationData['name']);
             $categoryConfiguration->setIsVirtual((bool) $categoryConfigurationData['isVirtual']);
+            $categoryConfiguration->setVirtualRule($categoryConfigurationData['virtualRule']);
             $categoryConfiguration->setDefaultSorting($categoryConfigurationData['defaultSorting']);
             $categoryConfiguration->setUseNameInProductSearch((bool) $categoryConfigurationData['useNameInProductSearch']);
             $categoryConfiguration->setIsActive((bool) $categoryConfigurationData['isActive']);

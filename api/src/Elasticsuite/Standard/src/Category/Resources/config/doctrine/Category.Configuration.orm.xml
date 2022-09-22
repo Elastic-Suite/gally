@@ -45,6 +45,7 @@
 
         <field name="name" type="string" length="255" nullable="true" />
         <field name="isVirtual" type="boolean" nullable="true" />
+        <field name="virtualRule" type="text" nullable="true" />
         <field name="useNameInProductSearch" type="boolean" nullable="true" />
         <field name="defaultSorting" type="string" length="255" nullable="true" />
         <field name="isActive" type="boolean" nullable="false" />
