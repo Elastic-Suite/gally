@@ -121,7 +121,7 @@ exports[`Merchandize match snapshot testSelect 1`] = `
                 data-shrink="true"
                 for="mui-4"
               >
-                Default sorting
+                default.sorting
                 <span
                   aria-label="select.tooltip"
                   class="css-1qtwfnr"
