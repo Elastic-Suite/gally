@@ -39,7 +39,7 @@ function CustomTableHeader(props: IProps): JSX.Element {
   const stickyHeaders: ITableHeaderSticky[] = manageStickyHeaders(tableHeaders)
   const isOnlyDraggable = !withSelection && stickyHeaders.length === 0
   const cssLeftValuesIterator = cssLeftValues.entries()
-  const { t } = useTranslation('table')
+  const { t } = useTranslation('api')
 
   return (
     <TableHead>
