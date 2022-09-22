@@ -6,9 +6,7 @@ import Header from './Header'
 
 describe('Header', () => {
   it('match snapshot', async () => {
-    const { container } = renderWithProviders(
-      <Header catalogId="" localizedCatalogId="" />
-    )
+    const { container } = renderWithProviders(<Header />)
     await waitFor(() => {
       const select = screen.getByTestId('header-catalog-select')
       return expect(select.dataset.testlength).toEqual('3')

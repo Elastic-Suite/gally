@@ -1,4 +1,4 @@
-import { useId } from 'react'
+import { useContext, useId } from 'react'
 import {
   AppBar,
   IconButton,
@@ -13,9 +13,8 @@ import {
 } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import { Link } from 'react-router-dom'
-import { ICatalog } from 'shared'
 
-import { useApiList, useResource } from '../../hooks'
+import { catalogContext } from '../../contexts'
 
 const FormControl = styled(MuiFormControl)(({ theme }) => ({
   marginLeft: theme.spacing(1),
@@ -47,29 +46,23 @@ const FormControl = styled(MuiFormControl)(({ theme }) => ({
 }))
 
 interface IProps {
-  catalogId: string | number
-  localizedCatalogId: string | number
-  onCatalogIdChange?: (catalogId: string | number) => void
-  onLocalizedCatalogIdChange?: (localizedCatalogId: string | number) => void
   onMenuToggle?: () => void
 }
 
 function Header(props: IProps): JSX.Element {
-  const {
-    catalogId,
-    localizedCatalogId,
-    onCatalogIdChange,
-    onLocalizedCatalogIdChange,
-    onMenuToggle,
-  } = props
+  const { onMenuToggle } = props
   const catalogLabelId = useId()
   const catalogSelectId = useId()
   const localizedCatalogLabelId = useId()
   const localizedCatalogSelectId = useId()
-
-  const resourceName = 'Catalog'
-  const resource = useResource(resourceName)
-  const [catalogs] = useApiList<ICatalog>(resource, false)
+  const {
+    catalog,
+    catalogId,
+    catalogs,
+    localizedCatalogId,
+    onCatalogIdChange,
+    onLocalizedCatalogIdChange,
+  } = useContext(catalogContext)
 
   function handleCatalogChange(event: SelectChangeEvent<number>): void {
     onCatalogIdChange(event.target.value)
@@ -81,10 +74,6 @@ function Header(props: IProps): JSX.Element {
   ): void {
     onLocalizedCatalogIdChange(event.target.value)
   }
-
-  const catalog = catalogs.data?.['hydra:member'].find(
-    (catalog) => catalog.id === catalogId
-  )
 
   return (
     <AppBar component="nav">
@@ -111,9 +100,9 @@ function Header(props: IProps): JSX.Element {
             label="Catalog"
             onChange={handleCatalogChange}
             data-testid="header-catalog-select"
-            data-testlength={catalogs.data?.['hydra:member'].length}
+            data-testlength={catalogs.length}
           >
-            {catalogs.data?.['hydra:member'].map((catalog) => (
+            {catalogs.map((catalog) => (
               <MenuItem key={catalog.id} value={catalog.id}>
                 {catalog.name}
               </MenuItem>
