@@ -3,8 +3,6 @@ import { renderHookWithProviders } from '~/utils/tests'
 
 import { useResource, useResourceOperations } from './useResource'
 
-jest.mock('shared')
-
 interface ITest extends IHydraMember {
   hello: string
 }

@@ -4,8 +4,6 @@ import { renderHookWithProviders } from '~/utils/tests'
 
 import { ILoader, useSingletonLoader } from './useSingletonLoader'
 
-jest.mock('shared')
-
 describe('useSingletonLoader', () => {
   it('should update the state', () => {
     const { result } = renderHookWithProviders(() => useSingletonLoader())

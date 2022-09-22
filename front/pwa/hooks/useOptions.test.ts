@@ -10,8 +10,6 @@ import { renderHookWithProviders } from '~/utils/tests'
 
 import { useOptions } from './useOptions'
 
-jest.mock('shared')
-
 describe('useOptions', () => {
   it('should load the field schema static options', async () => {
     const { result } = renderHookWithProviders(() => useOptions())

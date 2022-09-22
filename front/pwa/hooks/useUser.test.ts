@@ -3,8 +3,6 @@ import { renderHookWithProviders } from '~/utils/tests'
 
 import { useUser } from './useUser'
 
-jest.mock('shared')
-
 describe('useUser', () => {
   it('should return null when not connected', () => {
     const { result } = renderHookWithProviders(() => useUser())
