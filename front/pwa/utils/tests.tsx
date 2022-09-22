@@ -1,9 +1,9 @@
 import { RenderOptions, render, renderHook } from '@testing-library/react'
 import { PreloadedState } from '@reduxjs/toolkit'
 import { ReactNode } from 'react'
+import { api } from 'shared'
 
 import AppProvider from '~/components/stateful-providers/AppProvider/AppProvider'
-import { api } from 'shared'
 import { AppStore, RootState, setupStore } from '~/store'
 
 import TestProvider from './TestProvider'

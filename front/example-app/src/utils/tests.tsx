@@ -1,6 +1,9 @@
 import { RenderOptions, render, renderHook } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { ReactNode } from 'react'
+import { api } from 'shared'
+
+import TestProvider from './TestProvider'
 
 export type IExtendedRenderOptions = Omit<RenderOptions, 'queries'>
 
@@ -12,7 +15,7 @@ export function renderWithProviders(
   function Wrapper({ children }: { children: ReactNode }): JSX.Element {
     return (
       <MemoryRouter>
-        {children}
+        <TestProvider api={api}>{children}</TestProvider>
       </MemoryRouter>
     )
   }
@@ -28,7 +31,7 @@ export function renderHookWithProviders<R>(
   function Wrapper({ children }: { children: ReactNode }): JSX.Element {
     return (
       <MemoryRouter>
-        {children}
+        <TestProvider api={api}>{children}</TestProvider>
       </MemoryRouter>
     )
   }
