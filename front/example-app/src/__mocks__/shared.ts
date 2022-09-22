@@ -1,5 +1,6 @@
 import { api } from 'shared/src/mocks'
 
+import catalog from 'shared/src/mocks/static/catalog.json'
 import categorySortingOptions from 'shared/src/mocks/static/category_sorting_options.json'
 import docs from 'shared/src/mocks/static/docs.json'
 import entrypoint from 'shared/src/mocks/static/index.json'
@@ -29,7 +30,8 @@ const body = { hello: 'world' }
 /* api */
 export const getApiUrl = jest.fn((url) => url)
 
-export const fetchApi = jest.fn((_, resource) => {
+export const fetchApi = jest.fn()
+fetchApi.mockImplementation((_, resource) => {
   let data: unknown = { ...body }
   if (
     (typeof resource !== 'string' &&
@@ -49,6 +51,12 @@ export const fetchApi = jest.fn((_, resource) => {
       resource.endsWith('source_field_option_labels'))
   ) {
     data = { ...sourceFieldOptionLabels }
+  } else if (
+    (typeof resource !== 'string' &&
+      resource.title.toLowerCase() === 'catalog') ||
+    (typeof resource === 'string' && resource.endsWith('catalog'))
+  ) {
+    data = { ...catalog }
   }
   return Promise.resolve(data)
 })

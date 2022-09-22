@@ -70,5 +70,19 @@
     "*": "prettier --write --ignore-unknown --ignore-path .gitignore",
     "*.{ts,tsx}": "tsc-files --noEmit",
     "*.{js,jsx,ts,tsx}": "eslint --fix --ignore-path .gitignore"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/components/**/*.{jsx,tsx,js,ts}",
+      "src/hooks/**/*.{jsx,tsx,js,ts}",
+      "src/pages/**/*.{jsx,tsx,js,ts}"
+    ],
+    "coverageReporters": [
+      "lcov",
+      "text-summary",
+      "cobertura"
+    ],
+    "resetMocks": false,
+    "restoreMocks": false
   }
 }
