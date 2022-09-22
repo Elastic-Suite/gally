@@ -7,7 +7,7 @@ export function useLog(): (error: NetworkError) => void {
   const dispatch = useAppDispatch()
   return useCallback(
     (error: NetworkError) =>
-      log((message: string) => dispatch(addMessage(message)), error),
+      log(error, (message: string) => dispatch(addMessage(message))),
     [dispatch]
   )
 }

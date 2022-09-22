@@ -1,36 +1,30 @@
 import { FunctionComponent, useContext, useEffect } from 'react'
-import { useRouter } from 'next/router'
-
-import { userContext } from '~/contexts'
-import { setRequestedPath, useAppDispatch } from '~/store'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { isValidUser } from 'shared'
 
-import OptionsProvider from '~/components/stateful-providers/OptionsProvider/OptionsProvider'
+import { requestedPathContext, userContext } from '../contexts'
 
 export function withAuth<P extends Record<string, unknown>>(
   Cmp: FunctionComponent<P>
 ): FunctionComponent<P> {
   function WithAuth(props: P): JSX.Element {
-    const { push, asPath } = useRouter()
-    const user = useContext(userContext)
-    const dispatch = useAppDispatch()
+    const navigate = useNavigate()
+    const { pathname } = useLocation()
+    const { user } = useContext(userContext)
+    const { setRequestedPath } = useContext(requestedPathContext)
 
     useEffect(() => {
       if (!isValidUser(user)) {
-        dispatch(setRequestedPath(asPath))
-        push('/login')
+        setRequestedPath(pathname)
+        navigate('/login')
       }
-    }, [asPath, dispatch, push, user])
+    }, [navigate, pathname, setRequestedPath, user])
 
     if (!isValidUser(user)) {
       return null
     }
 
-    return (
-      <OptionsProvider>
-        <Cmp {...props} />
-      </OptionsProvider>
-    )
+    return <Cmp {...props} />
   }
 
   WithAuth.displayName = `WithAuth(${getDisplayName(Cmp)})`

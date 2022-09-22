@@ -124,7 +124,7 @@ describe('Api service', () => {
   describe('log', () => {
     it('should call the funtion passed in arguments', () => {
       const spy = jest.fn()
-      log(spy, new Error('error'))
+      log(new Error('error'), spy)
       expect(spy).toHaveBeenCalledWith('error')
     })
   })
