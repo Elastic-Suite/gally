@@ -554,5 +554,24 @@ export const theme = createTheme({
         indicator: { backgroundColor: '#2C19CD' },
       },
     },
+
+    MuiTooltip: {
+      styleOverrides: {
+        tooltip: {
+          backgroundColor: '#FFF',
+          color: '#151A47',
+          fontSize: '12px',
+          fontFamily: 'Inter',
+          fontWeight: '400',
+          lineHeight: '18px',
+          padding: '16px',
+          borderRadius: '8px',
+          boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',
+        },
+        arrow: {
+          color: '#FFF',
+        },
+      },
+    },
   },
 })
