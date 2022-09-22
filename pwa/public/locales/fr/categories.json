@@ -24,5 +24,6 @@
   "select": "Sélectionnez",
   "select.tooltip": "Quel tri sera utilisé pour la catégorie",
   "searchBarResult": "{{value.value}} {{value.result}}",
-  "placeholder": "Aucune catégorie selectionnée."
+  "placeholder": "Aucune catégorie selectionnée.",
+  "default.sorting": "Tri par défaut"
 }
