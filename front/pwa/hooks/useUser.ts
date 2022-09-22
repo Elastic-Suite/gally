@@ -1,7 +1,6 @@
 import { useMemo } from 'react'
-import jwtDecode from 'jwt-decode'
 
-import { IUser, storageGet, tokenStorageKey } from 'shared'
+import { IUser, getUser, storageGet, tokenStorageKey } from 'shared'
 
 import { useLog } from './useLog'
 
@@ -11,7 +10,7 @@ export function useUser(): IUser {
   return useMemo(() => {
     try {
       if (token) {
-        return jwtDecode(token) as IUser
+        return getUser(token)
       }
     } catch (error) {
       log(error)

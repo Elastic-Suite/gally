@@ -77,8 +77,11 @@ export function removeEmptyParameters(
   )
 }
 
-export type NetworkError = Error | ApiError | AuthError
-export function log(log: (message: string) => void, error: NetworkError): void {
+export type NetworkError = Error | ApiError | AuthError | string
+export function log(
+  error: NetworkError,
+  log?: (message: string) => void
+): void {
   if (
     process.env.NODE_ENV === 'development' ||
     (typeof window !== 'undefined' && window.showErrors === true)
@@ -86,5 +89,7 @@ export function log(log: (message: string) => void, error: NetworkError): void {
     // eslint-disable-next-line no-console
     console.error(error)
   }
-  log(error.message)
+  if (log) {
+    log(typeof error === 'string' ? error : error.message)
+  }
 }

@@ -21,6 +21,7 @@
     "@mui/material": "5.10.5",
     "inflection": "1.13.4",
     "jsonld": "8.1.0",
+    "jwt-decode": "3.1.2",
     "next": "12.3.0",
     "next-i18next": "12.0.1",
     "react": "18.2.0",

@@ -1,4 +1,5 @@
 import { resourceWithRef } from 'shared'
+
 import { renderHookWithProviders } from '../utils/tests'
 
 import { useResource } from './useResource'
