@@ -57,7 +57,7 @@ export const removeEmptyParameters = jest.fn(
   (searchParameters = {}) => searchParameters
 )
 
-export const log = jest.fn((log, error) => log(error.message))
+export const log = jest.fn((error, log) => log(error.message))
 
 /* fetch */
 export const isFetchError = jest.fn((json) => 'error' in json)

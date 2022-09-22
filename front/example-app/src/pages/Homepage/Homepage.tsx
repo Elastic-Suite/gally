@@ -1,5 +1,7 @@
+import { withAuth } from '../../hocs'
+
 function Homepage(): JSX.Element {
   return <div>Homepage</div>
 }
 
-export default Homepage
+export default withAuth(Homepage)

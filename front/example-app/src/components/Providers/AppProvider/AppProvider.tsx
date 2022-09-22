@@ -1,7 +1,9 @@
 import { ReactNode } from 'react'
 
-import SchemaProvider from '../SchemaProvider/SchemaProvider'
 import CatalogProvider from '../CatalogProvider/CatalogProvider'
+import RequestedPathProvider from '../RequestedPathProvider/RequestedPathProvider'
+import SchemaProvider from '../SchemaProvider/SchemaProvider'
+import UserProvider from '../UserProvider/UserProvider'
 
 interface IProps {
   children: ReactNode
@@ -10,9 +12,13 @@ interface IProps {
 function AppProvider(props: IProps): JSX.Element {
   const { children } = props
   return (
-    <SchemaProvider>
-      <CatalogProvider>{children}</CatalogProvider>
-    </SchemaProvider>
+    <UserProvider>
+      <SchemaProvider>
+        <CatalogProvider>
+          <RequestedPathProvider>{children}</RequestedPathProvider>
+        </CatalogProvider>
+      </SchemaProvider>
+    </UserProvider>
   )
 }
 
