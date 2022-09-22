@@ -28,6 +28,7 @@ interface IProps extends IIonIconProps {
 export const iconSrcMapping = {
   dashboard: '/images/home2.svg',
   arrow: '/images/arrow.svg',
+  telescope: '/images/telescope-outline.svg',
 }
 
 export const iconAliasMapping = {
@@ -39,7 +40,6 @@ export const iconAliasMapping = {
   more: 'add-circle',
   settings: 'settings-outline',
 }
-
 export const customIcons = [
   ...Object.keys(iconSrcMapping),
   ...Object.keys(iconAliasMapping),

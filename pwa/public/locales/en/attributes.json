@@ -1,4 +1,6 @@
 {
-  "attributes": "Attributs cherchables",
-  "attributesAlert": "Attributes displayed here have been set as searchable"
+  "attributes": "Searchable attributes",
+  "attributes.alert": "Attributes displayed here have been set as searchable",
+  "attributes.none": "No attributes were specified as filterable in the settings",
+  "attributes.none.btn": "Add filterable attributes"
 }

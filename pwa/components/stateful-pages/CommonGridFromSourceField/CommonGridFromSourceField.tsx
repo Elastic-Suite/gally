@@ -14,6 +14,9 @@ import { ISearchParameters, ISourceField } from '~/types'
 import FiltersGuesser from '~/components/stateful/FiltersGuesser/FiltersGuesser'
 import TableGuesser from '~/components/stateful/TableGuesser/TableGuesser'
 
+import NoAttributes from '~/components/atoms/noAttributes/NoAttributes'
+import { useTranslation } from 'next-i18next'
+
 interface IProps {
   active?: boolean
   filters?: ISearchParameters
@@ -21,6 +24,7 @@ interface IProps {
 }
 
 function CommonGridFromSourceField(props: IProps): JSX.Element {
+  const { t } = useTranslation('attributes')
   const { active, filters, urlParams } = props
 
   const resourceName = 'SourceField'
@@ -88,25 +92,35 @@ function CommonGridFromSourceField(props: IProps): JSX.Element {
 
   return (
     <>
-      <FiltersGuesser
-        activeFilters={activeFilters}
-        apiData={data}
-        onFilterChange={handleFilterChange}
-        onSearch={handleSearchValue}
-        resource={resource}
-        searchValue={searchValue}
-      />
-      <TableGuesser
-        apiData={data}
-        currentPage={page}
-        onMassupdate={massUpdate}
-        onPageChange={handlePageChange}
-        onRowUpdate={handleRowChange}
-        resource={resource}
-        rowsPerPageOptions={rowsPerPageOptions}
-        onRowsPerPageChange={onRowsPerPageChange}
-        rowsPerPage={rowsPerPage}
-      />
+      {data['hydra:member'].length === 0 ? (
+        <NoAttributes
+          title={t('attributes.none')}
+          btnTitle={t('attributes.none.btn')}
+          btnHref="admin/settings/attributes"
+        />
+      ) : (
+        <>
+          <FiltersGuesser
+            activeFilters={activeFilters}
+            apiData={data}
+            onFilterChange={handleFilterChange}
+            onSearch={handleSearchValue}
+            resource={resource}
+            searchValue={searchValue}
+          />
+          <TableGuesser
+            apiData={data}
+            currentPage={page}
+            onMassupdate={massUpdate}
+            onPageChange={handlePageChange}
+            onRowUpdate={handleRowChange}
+            resource={resource}
+            rowsPerPageOptions={rowsPerPageOptions}
+            onRowsPerPageChange={onRowsPerPageChange}
+            rowsPerPage={rowsPerPage}
+          />
+        </>
+      )}
     </>
   )
 }

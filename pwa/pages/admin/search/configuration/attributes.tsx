@@ -36,7 +36,7 @@ function Attributes(): JSX.Element {
       <PageTitle title={title} />
       {visibleAlertAttributes ? (
         <Alert
-          message={t('attributesAlert')}
+          message={t('attributes.alert')}
           onClose={(): void => setVisibleAlertAttributes(false)}
           style={{ marginBottom: '16px' }}
         />
