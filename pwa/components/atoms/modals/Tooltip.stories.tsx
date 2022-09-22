@@ -39,4 +39,5 @@ ToolTip.args = {
     </span>
   ),
   placement: 'left',
+  arrow: true,
 }
