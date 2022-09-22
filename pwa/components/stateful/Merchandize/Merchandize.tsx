@@ -73,7 +73,7 @@ function Merchandize({
         >
           <DropDown
             options={sortOptions}
-            label="Default sorting"
+            label={t('default.sorting')}
             value={sortValue}
             onChange={onSortChange}
             infoTooltip={t('select.tooltip')}
