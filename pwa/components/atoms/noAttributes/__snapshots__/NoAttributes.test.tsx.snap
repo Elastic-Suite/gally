@@ -12,7 +12,7 @@ exports[`NoAttributes match snapshot 1`] = `
     <div
       class="css-1y7c3cz"
     >
-      Aucun attribut n'a été indiqué comme filtrable dans les settings blabla faut trouver un truc mieux tavu
+      No attributes were specified as filterable in the settings
     </div>
     <button
       class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge css-vnxxyn-MuiButtonBase-root-MuiButton-root"
