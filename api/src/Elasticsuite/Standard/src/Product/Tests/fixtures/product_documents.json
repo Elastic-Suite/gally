@@ -402,7 +402,6 @@
         "entity_id": "8",
         "sku": "24-WB01",
         "name": "Sac de voyage Yoga",
-        "size" : 4,
         "stock": {
           "status": false,
           "qty": -2

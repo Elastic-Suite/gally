@@ -88,7 +88,7 @@ class FilterQueryBuilderTest extends KernelTestCase
      */
     public function testRangeQueryFilters(): void
     {
-        $rangeConditions = ['from', 'to', 'lteq', 'lte', 'lt', 'gteq', 'gte', 'moreq', 'gt'];
+        $rangeConditions = ['lteq', 'lte', 'lt', 'gteq', 'gte', 'moreq', 'gt'];
         foreach ($rangeConditions as $condition) {
             $query = $this->buildQuery(['id' => [$condition => 1]]);
             $this->assertInstanceOf(QueryInterface::class, $query);

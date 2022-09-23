@@ -371,7 +371,7 @@ class SearchProductsTest extends AbstractTest
                 ['size' => SortOrderInterface::SORT_ASC], // sort order specifications.
                 'id', // document data identifier.
                 // size ASC, then score DESC first, then id DESC (missing _first)
-                [10, 5, 8, 11, 2, 4, 3, 6, 9, 7],   // expected ordered document IDs
+                [10, 5, 11, 2, 4, 3, 6, 9, 7, 1],   // expected ordered document IDs
             ],
             [
                 'b2c_fr',   // catalog ID.
@@ -380,7 +380,7 @@ class SearchProductsTest extends AbstractTest
                 ['size' => SortOrderInterface::SORT_DESC], // sort order specifications.
                 'id', // document data identifier.
                 // size DESC, then score ASC first, then id ASC (missing _last)
-                [12, 1, 7, 9, 6, 3, 4, 2, 11, 8],   // expected ordered document IDs
+                [8, 12, 1, 7, 9, 6, 3, 4, 2, 11],   // expected ordered document IDs
             ],
             [
                 'b2c_fr',   // catalog ID.
@@ -658,7 +658,14 @@ class SearchProductsTest extends AbstractTest
                 'b2c_en', // catalog ID.
                 'name: { in: ["Test"], eq: "Test" }', // Filters.
                 [ // debug message
-                    'debugMessage' => 'Filter argument name: Only \'eq\', \'in\' or \'match\' should be filled.',
+                    'debugMessage' => 'Filter argument name: Only \'eq\', \'in\', \'match\' or \'exist\' should be filled.',
+                ],
+            ],
+            [
+                'b2c_en', // catalog ID.
+                'created_at: { gt: "2022-09-23", gte: "2022-09-23" }', // Filters.
+                [ // debug message
+                    'debugMessage' => 'Filter argument created_at: Do not use \'gt\' and \'gte\' in the same filter.',
                 ],
             ],
         ];
@@ -754,7 +761,7 @@ class SearchProductsTest extends AbstractTest
             [
                 'b2c_fr', // catalog ID.
                 [], // sort order specifications.
-                'created_at: { from: "2022-09-01", to: "2022-09-05" }',
+                'created_at: { gte: "2022-09-01", lte: "2022-09-05" }',
                 'entity_id', // document data identifier.
                 [1, 12, 11, 8, 7, 6, 4, 3, 2], // expected ordered document IDs
             ],
@@ -768,9 +775,16 @@ class SearchProductsTest extends AbstractTest
             [
                 'b2c_fr', // catalog ID.
                 ['id' => SortOrderInterface::SORT_ASC], // sort order specifications.
-                'id: { from: 10, to: 12 }', // filter.
+                'id: { gte: 10, lte: 12 }', // filter.
                 'entity_id', // document data identifier.
                 [10, 11, 12], // expected ordered document IDs
+            ],
+            [
+                'b2c_fr', // catalog ID.
+                ['id' => SortOrderInterface::SORT_ASC], // sort order specifications.
+                'id: { gt: 10, lt: 12 }', // filter.
+                'entity_id', // document data identifier.
+                [11], // expected ordered document IDs
             ],
             [
                 'b2c_fr', // catalog ID.
@@ -778,6 +792,20 @@ class SearchProductsTest extends AbstractTest
                 'name: { match: "Compete Track" }', // filter.
                 'entity_id', // document data identifier.
                 [9], // expected ordered document IDs
+            ],
+            [
+                'b2c_fr', // catalog ID.
+                ['id' => SortOrderInterface::SORT_ASC], // sort order specifications.
+                'size: { exist: true }', // filter.
+                'entity_id', // document data identifier.
+                [2, 3, 4, 5, 6, 7, 9, 10, 11, 12], // expected ordered document IDs
+            ],
+            [
+                'b2c_fr', // catalog ID.
+                ['id' => SortOrderInterface::SORT_ASC], // sort order specifications.
+                'size: { exist: false }', // filter.
+                'entity_id', // document data identifier.
+                [8], // expected ordered document IDs
             ],
             [
                 'b2c_fr', // catalog ID.

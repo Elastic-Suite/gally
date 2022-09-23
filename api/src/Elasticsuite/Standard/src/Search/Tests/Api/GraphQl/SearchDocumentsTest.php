@@ -412,7 +412,7 @@ class SearchDocumentsTest extends AbstractTest
                 ['size' => SortOrderInterface::SORT_ASC], // sort order specifications.
                 'id', // document data identifier.
                 // size ASC, then score DESC first, then id DESC (missing _first)
-                [10, 5, 8, 11, 2, 4, 3, 6, 9, 7],   // expected ordered document IDs
+                [5, 8, 11, 2, 4, 3, 6, 9, 7, 1],   // expected ordered document IDs
             ],
             [
                 'product',  // entity type.
@@ -422,7 +422,7 @@ class SearchDocumentsTest extends AbstractTest
                 ['size' => SortOrderInterface::SORT_DESC], // sort order specifications.
                 'id', // document data identifier.
                 // size DESC, then score ASC first, then id ASC (missing _last)
-                [12, 1, 7, 9, 6, 3, 4, 2, 11, 8],   // expected ordered document IDs
+                [10, 12, 1, 7, 9, 6, 3, 4, 2, 11],   // expected ordered document IDs
             ],
             [
                 'product',  // entity type.
@@ -599,7 +599,7 @@ class SearchDocumentsTest extends AbstractTest
             [
                 'product', // entity type.
                 'b2c_en', // catalog ID.
-                '{rangeFilter: {field:"fake_source_field_range", from: "0"}}', // Filters.
+                '{rangeFilter: {field:"fake_source_field_range", gt: "0"}}', // Filters.
                 "The source field 'fake_source_field_range' does not exist", // debug message
             ],
             [
@@ -612,7 +612,13 @@ class SearchDocumentsTest extends AbstractTest
                 'product', // entity type.
                 'b2c_en', // catalog ID.
                 '{rangeFilter: {field:"id"}}', // Filters.
-                "Filter argument rangeFilter: At least 'from' or 'to' should be filled", // debug message
+                "Filter argument rangeFilter: At least 'gt', 'tl, 'gte or 'lte' should be filled.", // debug message
+            ],
+            [
+                'product', // entity type.
+                'b2c_en', // catalog ID.
+                '{rangeFilter: {field:"id", gt: "1", gte: "1"}}', // Filters.
+                "Filter argument rangeFilter: Do not use 'gt' and 'gte' in the same filter.", // debug message
             ],
             [
                 'product', // entity type.
@@ -739,9 +745,19 @@ class SearchDocumentsTest extends AbstractTest
                 10, // page size.
                 1,  // current page.
                 ['id' => SortOrderInterface::SORT_ASC], // sort order specifications.
-                '{rangeFilter: {field:"id", from: "10", to: "12"}}', // filter.
+                '{rangeFilter: {field:"id", gte: "10", lte: "12"}}', // filter.
                 'entity_id', // document data identifier.
                 [10, 11, 12], // expected ordered document IDs
+            ],
+            [
+                'product', // entity type.
+                'b2b_fr', // catalog ID.
+                10, // page size.
+                1,  // current page.
+                ['id' => SortOrderInterface::SORT_ASC], // sort order specifications.
+                '{rangeFilter: {field:"id", gt: "10", lt: "12"}}', // filter.
+                'entity_id', // document data identifier.
+                [11], // expected ordered document IDs
             ],
             [
                 'product', // entity type.
@@ -752,6 +768,16 @@ class SearchDocumentsTest extends AbstractTest
                 '{matchFilter: {field: "name", match: "Compete Track"}}', // filter.
                 'entity_id', // document data identifier.
                 [9], // expected ordered document IDs
+            ],
+            [
+                'product', // entity type.
+                'b2b_fr', // catalog ID.
+                10, // page size.
+                1,  // current page.
+                ['id' => SortOrderInterface::SORT_ASC], // sort order specifications.
+                '{existFilter: {field: "size"}}', // filter.
+                'entity_id', // document data identifier.
+                [2, 3, 4, 5, 6, 7, 8, 9, 11, 12], // expected ordered document IDs
             ],
             [
                 'product', // entity type.
@@ -782,6 +808,22 @@ class SearchDocumentsTest extends AbstractTest
                 GQL, // filter.
                 'entity_id', // document data identifier.
                 [11, 12], // expected ordered document IDs
+            ],
+            [
+                'product', // entity type.
+                'b2b_fr', // catalog ID.
+                10, // page size.
+                1,  // current page.
+                ['id' => SortOrderInterface::SORT_ASC], // sort order specifications.
+                <<<GQL
+                  {boolFilter: {
+                    _not: [
+                      {existFilter: {field:"size"}}
+                    ]}
+                  }
+                GQL, // filter.
+                'entity_id', // document data identifier.
+                [10], // expected ordered document IDs
             ],
             [
                 'product', // entity type.

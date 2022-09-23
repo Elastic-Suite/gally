@@ -43,6 +43,7 @@ services:
     Elasticsuite\Product\GraphQl\Type\Definition\Filter\TextTypeFilterInputType:
         arguments:
             - '@Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
+            - '@Elasticsuite\Search\Elasticsearch\Request\QueryFactory'
             - '%api_platform.graphql.nesting_separator%'
         tags:
             - { name: api_platform.graphql.type }
@@ -51,6 +52,7 @@ services:
     Elasticsuite\Product\GraphQl\Type\Definition\Filter\IntegerTypeFilterInputType:
         arguments:
             - '@Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
+            - '@Elasticsuite\Search\Elasticsearch\Request\QueryFactory'
             - '%api_platform.graphql.nesting_separator%'
         tags:
             - { name: api_platform.graphql.type }
@@ -59,6 +61,7 @@ services:
     Elasticsuite\Product\GraphQl\Type\Definition\Filter\FloatTypeFilterInputType:
         arguments:
             - '@Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
+            - '@Elasticsuite\Search\Elasticsearch\Request\QueryFactory'
             - '%api_platform.graphql.nesting_separator%'
         tags:
             - { name: api_platform.graphql.type }
@@ -67,6 +70,7 @@ services:
     Elasticsuite\Product\GraphQl\Type\Definition\Filter\DateTypeFilterInputType:
         arguments:
             - '@Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
+            - '@Elasticsuite\Search\Elasticsearch\Request\QueryFactory'
             - '%api_platform.graphql.nesting_separator%'
         tags:
             - { name: api_platform.graphql.type }
