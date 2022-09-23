@@ -25,20 +25,28 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class CategoryTreeTest extends \Elasticsuite\Index\Tests\Api\GraphQl\CategoryTreeTest
 {
+    public function testInvalidCatalog(): void
+    {
+        $this->getCategoryTree('b2c_it');
+    }
+
     protected function getCategoryTree(?string $catalogCode = null, ?string $localizedCatalogCode = null): array
     {
+        $expectedResponseCode = 200;
         $responseData = [];
         $localizedCatalogRepository = static::getContainer()->get(LocalizedCatalogRepository::class);
         $catalogRepository = static::getContainer()->get(CatalogRepository::class);
 
         $params = [];
         if ($catalogCode) {
-            $params[] = 'catalogId='
-                . $catalogRepository->findOneBy(['code' => $catalogCode])->getId();
+            $catalog = $catalogRepository->findOneBy(['code' => $catalogCode]);
+            $params[] = 'catalogId=' . ($catalog ? $catalog->getId() : '999');
+            $expectedResponseCode = $catalog ? 200 : 404;
         }
         if ($localizedCatalogCode) {
-            $params[] = 'localizedCatalogId='
-                . $localizedCatalogRepository->findOneBy(['code' => $localizedCatalogCode])->getId();
+            $localizedCatalog = $localizedCatalogRepository->findOneBy(['code' => $localizedCatalogCode]);
+            $params[] = 'localizedCatalogId=' . ($localizedCatalog ? $localizedCatalog->getId() : '999');
+            $expectedResponseCode = $localizedCatalog ? 200 : 404;
         }
 
         $query = !empty($params) ? '?' . implode('&', $params) : '';
@@ -46,7 +54,7 @@ class CategoryTreeTest extends \Elasticsuite\Index\Tests\Api\GraphQl\CategoryTre
         $this->validateApiCall(
             new RequestToTest('GET', "categoryTree$query", $this->getUser(Role::ROLE_ADMIN)),
             new ExpectedResponse(
-                200,
+                $expectedResponseCode,
                 function (ResponseInterface $response) use (&$responseData) {
                     $responseData = $response->toArray()['categories'];
                 }

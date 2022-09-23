@@ -33,7 +33,7 @@ class GetCategoryTree extends AbstractController
     {
         $catalogId = $request->query->get('catalogId');
         $catalogId = $catalogId ? (int) $catalogId : null;
-        $localizedCatalogId = (int) $request->query->get('localizedCatalogId');
+        $localizedCatalogId = $request->query->get('localizedCatalogId');
         $localizedCatalogId = $localizedCatalogId ? (int) $localizedCatalogId : null;
 
         return $this->categoryTreeBuilder->buildTree($catalogId, $localizedCatalogId);
