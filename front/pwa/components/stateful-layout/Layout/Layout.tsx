@@ -22,7 +22,7 @@ import AppBar from '~/components/molecules/layout/appBar/AppBar'
 import Sidebar from '~/components/molecules/layout/Sidebar/Sidebar'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import Messages from '~/components/stateful/Messages/Messages'
-import { IMenu, LoadStatus, isFetchError } from 'shared'
+import { IMenu, LoadStatus, isError } from 'shared'
 
 /*
  * TODO: THIBO: Update AppBar
@@ -121,7 +121,7 @@ function Layout({ children }: IProps): JSX.Element {
     if (user) {
       dispatch(setMenu({ status: LoadStatus.LOADING }))
       fetchApi('menu').then((json) => {
-        if (isFetchError(json)) {
+        if (isError(json)) {
           dispatch(setMenu({ error: json.error, status: LoadStatus.FAILED }))
         } else {
           dispatch(setMenu({ data: json, status: LoadStatus.SUCCEEDED }))

@@ -1,14 +1,11 @@
 import { Dispatch, SetStateAction, useMemo } from 'react'
 
-import { useFetchApi } from '~/hooks'
+import { useGraphqlApi } from '~/hooks'
 import {
-  IFetchParams,
-  IFetchProducts,
-  ISearchParameters,
+  ISearchProducts,
   ITableHeader,
   ITableRow,
   LoadStatus,
-  gqlUrl,
   productTableheader,
   productsQuery,
 } from 'shared'
@@ -25,26 +22,9 @@ interface IProps {
 function TopTable(props: IProps): JSX.Element {
   const { selectedRows, onSelectedRows, catalogId } = props
 
-  const query = productsQuery
-
-  const params: IFetchParams = useMemo(() => {
-    const variables = { catalogId }
-    return {
-      options: {
-        body: JSON.stringify({ query, variables }),
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-      },
-      searchParameters: {} as ISearchParameters,
-    }
-  }, [query, catalogId])
-
-  const [products] = useFetchApi<IFetchProducts>(
-    gqlUrl,
-    params.searchParameters,
-    params.options
-  )
-  const tableRows: ITableRow[] = products?.data?.data?.searchProducts
+  const variables = useMemo(() => ({ catalogId }), [catalogId])
+  const [products] = useGraphqlApi<ISearchProducts>(productsQuery, variables)
+  const tableRows: ITableRow[] = products?.data?.searchProducts
     ?.collection as unknown as ITableRow[]
 
   const tableHeaders: ITableHeader[] = productTableheader
@@ -52,7 +32,7 @@ function TopTable(props: IProps): JSX.Element {
   return (
     <>
       {products.status === LoadStatus.SUCCEEDED &&
-        Boolean(products?.data?.data?.searchProducts) && (
+        Boolean(products?.data?.searchProducts) && (
           <TopProductsTable
             Field={FieldGuesser}
             selectedRows={selectedRows}

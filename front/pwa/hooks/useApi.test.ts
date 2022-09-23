@@ -1,7 +1,7 @@
 import { act, waitFor } from '@testing-library/react'
 
 import {
-  IFetchError,
+  IError,
   IHydraMember,
   LoadStatus,
   fetchApi,
@@ -49,7 +49,7 @@ describe('useApi', () => {
       mock.mockImplementationOnce(() => Promise.reject(new Error('error')))
       const { result } = renderHookWithProviders(() => useApiFetch())
       const json = await result.current('/test')
-      expect((json as IFetchError).error.message).toEqual('error')
+      expect((json as IError).error.message).toEqual('error')
       expect(log).toHaveBeenCalled()
     })
   })

@@ -13,7 +13,7 @@ import {
   getReferencedResource,
   hasFieldOptions,
   isDropdownStaticOptions,
-  isFetchError,
+  isError,
   isReferenceField,
   schemaContext,
 } from 'shared'
@@ -39,7 +39,7 @@ export function useOptions(): IOptionsContext {
           }
           // options from api
           const response = await fetchApi(field.elasticsuite.options.api_rest)
-          if (!isFetchError(response)) {
+          if (!isError(response)) {
             return getOptionsFromApiSchema(
               response as IHydraResponse<IApiSchemaOptions>
             )
@@ -50,7 +50,7 @@ export function useOptions(): IOptionsContext {
           const response = await fetchApi(
             getReferencedResource(api, field)?.url
           )
-          if (!isFetchError(response)) {
+          if (!isError(response)) {
             return getOptionsFromResource(
               response as IHydraResponse<IHydraMember>
             )
