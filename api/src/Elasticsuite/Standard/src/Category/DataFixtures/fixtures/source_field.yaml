@@ -30,3 +30,283 @@ Elasticsuite\Metadata\Model\SourceField:
         isSpellchecked: false
         isUsedForRules: false
         isSystem: true
+    categories_all_children:
+        metadata: '@category'
+        code: all_children
+        type: text
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    categories_children:
+        metadata: '@category'
+        code: children
+        type: text
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    categories_custom_apply_to_products:
+        metadata: '@category'
+        code: custom_apply_to_products
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    categories_custom_design:
+        metadata: '@category'
+        code: custom_design
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    categories_custom_design_from:
+        metadata: '@category'
+        code: custom_design_from
+        type: text
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    categories_custom_design_to:
+        metadata: '@category'
+        code: custom_design_to
+        type: text
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    categories_custom_use_parent_settings:
+        metadata: '@category'
+        code: custom_use_parent_settings
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    categories_description:
+        metadata: '@category'
+        code: description
+        type: text
+        isSearchable: true
+        weight: 1
+        isSpellchecked: true
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    categories_display_mode:
+        metadata: '@category'
+        code: display_mode
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    categories_filter_price_range:
+        metadata: '@category'
+        code: filter_price_range
+        type: float
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    categories_generate_root_category_subtree:
+        metadata: '@category'
+        code: generate_root_category_subtree
+        type: int
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    categories_include_in_menu:
+        metadata: '@category'
+        code: include_in_menu
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    categories_is_active:
+        metadata: '@category'
+        code: is_active
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    categories_is_anchor:
+        metadata: '@category'
+        code: is_anchor
+        type: int
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    categories_is_displayed_in_autocomplete:
+        metadata: '@category'
+        code: is_displayed_in_autocomplete
+        type: select
+        isSearchable: true
+        weight: 1
+        isSpellchecked: true
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    categories_is_virtual_category:
+        metadata: '@category'
+        code: is_virtual_category
+        type: int
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    categories_landing_page:
+        metadata: '@category'
+        code: landing_page
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    categories_meta_description:
+        metadata: '@category'
+        code: meta_description
+        type: text
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    categories_meta_keywords:
+        metadata: '@category'
+        code: meta_keywords
+        type: text
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    categories_meta_title:
+        metadata: '@category'
+        code: meta_title
+        type: text
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    categories_page_layout:
+        metadata: '@category'
+        code: page_layout
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    categories_path_in_store:
+        metadata: '@category'
+        code: path_in_store
+        type: text
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    categories_url_key:
+        metadata: '@category'
+        code: url_key
+        type: text
+        isSearchable: true
+        weight: 1
+        isSpellchecked: true
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    categories_url_path:
+        metadata: '@category'
+        code: url_path
+        type: text
+        isSearchable: true
+        weight: 1
+        isSpellchecked: true
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    categories_use_name_in_product_search:
+        metadata: '@category'
+        code: use_name_in_product_search
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    categories_use_store_positions:
+        metadata: '@category'
+        code: use_store_positions
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    categories_virtual_category_root:
+        metadata: '@category'
+        code: virtual_category_root
+        type: int
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    categories_virtual_rule:
+        metadata: '@category'
+        code: virtual_rule
+        type: text
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false

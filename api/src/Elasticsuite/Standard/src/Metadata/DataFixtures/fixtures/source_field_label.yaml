@@ -1,9 +1,497 @@
 Elasticsuite\Metadata\Model\SourceFieldLabel:
-    product_name_fr:
+    product_accessory_announcement_date_com_en:
+        source_field: '@product_accessory_announcement_date'
+        catalog: '@com_en'
+        label: 'Announcement Date'
+    product_accessory_announcement_date_com_fr:
+        source_field: '@product_accessory_announcement_date'
+        catalog: '@com_fr'
+        label: 'Announcement Date'
+    product_accessory_brand_com_en:
+        source_field: '@product_accessory_brand'
+        catalog: '@com_en'
+        label: Brand
+    product_accessory_brand_com_fr:
+        source_field: '@product_accessory_brand'
+        catalog: '@com_fr'
+        label: Brand
+    product_accessory_custom_engraving_text_com_en:
+        source_field: '@product_accessory_custom_engraving_text'
+        catalog: '@com_en'
+        label: 'Custom Engraving Text'
+    product_accessory_custom_engraving_text_com_fr:
+        source_field: '@product_accessory_custom_engraving_text'
+        catalog: '@com_fr'
+        label: 'Custom Engraving Text'
+    product_accessory_description_detailed_extra_com_en:
+        source_field: '@product_accessory_description_detailed_extra'
+        catalog: '@com_en'
+        label: 'Description Detailed Extra'
+    product_accessory_description_detailed_extra_com_fr:
+        source_field: '@product_accessory_description_detailed_extra'
+        catalog: '@com_fr'
+        label: 'Description Detailed Extra'
+    product_accessory_description_extra_com_en:
+        source_field: '@product_accessory_description_extra'
+        catalog: '@com_en'
+        label: 'Description Extra'
+    product_accessory_description_extra_com_fr:
+        source_field: '@product_accessory_description_extra'
+        catalog: '@com_fr'
+        label: 'Description Extra'
+    product_accessory_description_pagebuilder_extra_com_en:
+        source_field: '@product_accessory_description_pagebuilder_extra'
+        catalog: '@com_en'
+        label: 'Description PageBuilder Extra'
+    product_accessory_description_pagebuilder_extra_com_fr:
+        source_field: '@product_accessory_description_pagebuilder_extra'
+        catalog: '@com_fr'
+        label: 'Description PageBuilder Extra'
+    product_accessory_gemstone_addon_com_en:
+        source_field: '@product_accessory_gemstone_addon'
+        catalog: '@com_en'
+        label: 'Gemstone Addon'
+    product_accessory_gemstone_addon_com_fr:
+        source_field: '@product_accessory_gemstone_addon'
+        catalog: '@com_fr'
+        label: 'Gemstone Addon'
+    product_accessory_recyclable_material_com_en:
+        source_field: '@product_accessory_recyclable_material'
+        catalog: '@com_en'
+        label: 'Recyclable Material'
+    product_accessory_recyclable_material_com_fr:
+        source_field: '@product_accessory_recyclable_material'
+        catalog: '@com_fr'
+        label: 'Recyclable Material'
+    product_color_com_en:
+        source_field: '@product_color'
+        catalog: '@com_en'
+        label: Color
+    product_color_com_fr:
+        source_field: '@product_color'
+        catalog: '@com_fr'
+        label: Color
+    product_cost_com_en:
+        source_field: '@product_cost'
+        catalog: '@com_en'
+        label: Cost
+    product_cost_com_fr:
+        source_field: '@product_cost'
+        catalog: '@com_fr'
+        label: Cost
+    product_country_of_manufacture_com_en:
+        source_field: '@product_country_of_manufacture'
+        catalog: '@com_en'
+        label: 'Country of Manufacture'
+    product_country_of_manufacture_com_fr:
+        source_field: '@product_country_of_manufacture'
+        catalog: '@com_fr'
+        label: 'Country of Manufacture'
+    product_custom_design_com_en:
+        source_field: '@product_custom_design'
+        catalog: '@com_en'
+        label: 'New Theme'
+    product_custom_design_com_fr:
+        source_field: '@product_custom_design'
+        catalog: '@com_fr'
+        label: 'New Theme'
+    product_custom_design_from_com_en:
+        source_field: '@product_custom_design_from'
+        catalog: '@com_en'
+        label: 'Active From'
+    product_custom_design_from_com_fr:
+        source_field: '@product_custom_design_from'
+        catalog: '@com_fr'
+        label: 'Active From'
+    product_custom_design_to_com_en:
+        source_field: '@product_custom_design_to'
+        catalog: '@com_en'
+        label: 'Active To'
+    product_custom_design_to_com_fr:
+        source_field: '@product_custom_design_to'
+        catalog: '@com_fr'
+        label: 'Active To'
+    product_custom_layout_com_en:
+        source_field: '@product_custom_layout'
+        catalog: '@com_en'
+        label: 'New Layout'
+    product_custom_layout_com_fr:
+        source_field: '@product_custom_layout'
+        catalog: '@com_fr'
+        label: 'New Layout'
+    product_description_com_en:
+        source_field: '@product_description'
+        catalog: '@com_en'
+        label: Description
+    product_description_com_fr:
+        source_field: '@product_description'
+        catalog: '@com_fr'
+        label: Description
+    product_description_extra_com_en:
+        source_field: '@product_description_extra'
+        catalog: '@com_en'
+        label: 'Description Extra'
+    product_description_extra_com_fr:
+        source_field: '@product_description_extra'
+        catalog: '@com_fr'
+        label: 'Description Extra'
+    product_fashion_color_com_en:
+        source_field: '@product_fashion_color'
+        catalog: '@com_en'
+        label: 'Fashion Color'
+    product_fashion_color_com_fr:
+        source_field: '@product_fashion_color'
+        catalog: '@com_fr'
+        label: Couleur
+    product_fashion_material_com_en:
+        source_field: '@product_fashion_material'
+        catalog: '@com_en'
+        label: 'Fashion Material'
+    product_fashion_material_com_fr:
+        source_field: '@product_fashion_material'
+        catalog: '@com_fr'
+        label: Matière
+    product_fashion_size_com_en:
+        source_field: '@product_fashion_size'
+        catalog: '@com_en'
+        label: 'Fashion Size'
+    product_fashion_size_com_fr:
+        source_field: '@product_fashion_size'
+        catalog: '@com_fr'
+        label: Size
+    product_fashion_style_com_en:
+        source_field: '@product_fashion_style'
+        catalog: '@com_en'
+        label: 'Fashion Style'
+    product_fashion_style_com_fr:
+        source_field: '@product_fashion_style'
+        catalog: '@com_fr'
+        label: Style
+    product_gallery_com_en:
+        source_field: '@product_gallery'
+        catalog: '@com_en'
+        label: 'Image Gallery'
+    product_gallery_com_fr:
+        source_field: '@product_gallery'
+        catalog: '@com_fr'
+        label: 'Image Gallery'
+    product_gift_message_available_com_en:
+        source_field: '@product_gift_message_available'
+        catalog: '@com_en'
+        label: 'Allow Gift Message'
+    product_gift_message_available_com_fr:
+        source_field: '@product_gift_message_available'
+        catalog: '@com_fr'
+        label: 'Allow Gift Message'
+    product_has_video_com_en:
+        source_field: '@product_has_video'
+        catalog: '@com_en'
+        label: 'Has Video'
+    product_has_video_com_fr:
+        source_field: '@product_has_video'
+        catalog: '@com_fr'
+        label: 'Has Video'
+    product_image_com_en:
+        source_field: '@product_image'
+        catalog: '@com_en'
+        label: Base
+    product_image_com_fr:
+        source_field: '@product_image'
+        catalog: '@com_fr'
+        label: Base
+    product_image_label_com_en:
+        source_field: '@product_image_label'
+        catalog: '@com_en'
+        label: 'Image Label'
+    product_image_label_com_fr:
+        source_field: '@product_image_label'
+        catalog: '@com_fr'
+        label: 'Image Label'
+    product_links_purchased_separately_com_en:
+        source_field: '@product_links_purchased_separately'
+        catalog: '@com_en'
+        label: 'Links can be purchased separately'
+    product_links_purchased_separately_com_fr:
+        source_field: '@product_links_purchased_separately'
+        catalog: '@com_fr'
+        label: 'Links can be purchased separately'
+    product_links_title_com_en:
+        source_field: '@product_links_title'
+        catalog: '@com_en'
+        label: 'Links title'
+    product_links_title_com_fr:
+        source_field: '@product_links_title'
+        catalog: '@com_fr'
+        label: 'Links title'
+    product_manufacturer_com_en:
+        source_field: '@product_manufacturer'
+        catalog: '@com_en'
+        label: Manufacturer
+    product_manufacturer_com_fr:
+        source_field: '@product_manufacturer'
+        catalog: '@com_fr'
+        label: Manufacturer
+    product_meta_description_com_en:
+        source_field: '@product_meta_description'
+        catalog: '@com_en'
+        label: 'Meta Description'
+    product_meta_description_com_fr:
+        source_field: '@product_meta_description'
+        catalog: '@com_fr'
+        label: 'Meta Description'
+    product_meta_keyword_com_en:
+        source_field: '@product_meta_keyword'
+        catalog: '@com_en'
+        label: 'Meta Keywords'
+    product_meta_keyword_com_fr:
+        source_field: '@product_meta_keyword'
+        catalog: '@com_fr'
+        label: 'Meta Keywords'
+    product_meta_title_com_en:
+        source_field: '@product_meta_title'
+        catalog: '@com_en'
+        label: 'Meta Title'
+    product_meta_title_com_fr:
+        source_field: '@product_meta_title'
+        catalog: '@com_fr'
+        label: 'Meta Title'
+    product_minimal_price_com_en:
+        source_field: '@product_minimal_price'
+        catalog: '@com_en'
+        label: 'Minimal Price'
+    product_minimal_price_com_fr:
+        source_field: '@product_minimal_price'
+        catalog: '@com_fr'
+        label: 'Minimal Price'
+    product_msrp_com_en:
+        source_field: '@product_msrp'
+        catalog: '@com_en'
+        label: 'Minimum Advertised Price'
+    product_msrp_com_fr:
+        source_field: '@product_msrp'
+        catalog: '@com_fr'
+        label: 'Minimum Advertised Price'
+    product_msrp_display_actual_price_type_com_en:
+        source_field: '@product_msrp_display_actual_price_type'
+        catalog: '@com_en'
+        label: 'Display Actual Price'
+    product_msrp_display_actual_price_type_com_fr:
+        source_field: '@product_msrp_display_actual_price_type'
+        catalog: '@com_fr'
+        label: 'Display Actual Price'
+    product_name_com_en:
         source_field: '@product_name'
-        catalog: '@localized_catalog1'
-        label: 'Nom'
-    product_name_en:
+        catalog: '@com_en'
+        label: 'Product Name'
+    product_name_com_fr:
         source_field: '@product_name'
-        catalog: '@localized_catalog2'
-        label: 'Name'
+        catalog: '@com_fr'
+        label: 'Product Name'
+    product_news_from_date_com_en:
+        source_field: '@product_news_from_date'
+        catalog: '@com_en'
+        label: 'Set Product as New from Date'
+    product_news_from_date_com_fr:
+        source_field: '@product_news_from_date'
+        catalog: '@com_fr'
+        label: 'Set Product as New from Date'
+    product_news_to_date_com_en:
+        source_field: '@product_news_to_date'
+        catalog: '@com_en'
+        label: 'Set Product as New to Date'
+    product_news_to_date_com_fr:
+        source_field: '@product_news_to_date'
+        catalog: '@com_fr'
+        label: 'Set Product as New to Date'
+    product_options_container_com_en:
+        source_field: '@product_options_container'
+        catalog: '@com_en'
+        label: 'Display Product Options In'
+    product_options_container_com_fr:
+        source_field: '@product_options_container'
+        catalog: '@com_fr'
+        label: 'Display Product Options In'
+    product_page_layout_com_en:
+        source_field: '@product_page_layout'
+        catalog: '@com_en'
+        label: Layout
+    product_page_layout_com_fr:
+        source_field: '@product_page_layout'
+        catalog: '@com_fr'
+        label: Layout
+    product_price_type_com_en:
+        source_field: '@product_price_type'
+        catalog: '@com_en'
+        label: 'Dynamic Price'
+    product_price_type_com_fr:
+        source_field: '@product_price_type'
+        catalog: '@com_fr'
+        label: 'Dynamic Price'
+    product_price_view_com_en:
+        source_field: '@product_price_view'
+        catalog: '@com_en'
+        label: 'Price View'
+    product_price_view_com_fr:
+        source_field: '@product_price_view'
+        catalog: '@com_fr'
+        label: 'Price View'
+    product_samples_title_com_en:
+        source_field: '@product_samples_title'
+        catalog: '@com_en'
+        label: 'Samples title'
+    product_samples_title_com_fr:
+        source_field: '@product_samples_title'
+        catalog: '@com_fr'
+        label: 'Samples title'
+    product_shipment_type_com_en:
+        source_field: '@product_shipment_type'
+        catalog: '@com_en'
+        label: 'Ship Bundle Items'
+    product_shipment_type_com_fr:
+        source_field: '@product_shipment_type'
+        catalog: '@com_fr'
+        label: 'Ship Bundle Items'
+    product_short_description_com_en:
+        source_field: '@product_short_description'
+        catalog: '@com_en'
+        label: 'Short Description'
+    product_short_description_com_fr:
+        source_field: '@product_short_description'
+        catalog: '@com_fr'
+        label: 'Short Description'
+    product_sku_type_com_en:
+        source_field: '@product_sku_type'
+        catalog: '@com_en'
+        label: 'Dynamic SKU'
+    product_sku_type_com_fr:
+        source_field: '@product_sku_type'
+        catalog: '@com_fr'
+        label: 'Dynamic SKU'
+    product_small_image_com_en:
+        source_field: '@product_small_image'
+        catalog: '@com_en'
+        label: Small
+    product_small_image_com_fr:
+        source_field: '@product_small_image'
+        catalog: '@com_fr'
+        label: Small
+    product_small_image_label_com_en:
+        source_field: '@product_small_image_label'
+        catalog: '@com_en'
+        label: 'Small Image Label'
+    product_small_image_label_com_fr:
+        source_field: '@product_small_image_label'
+        catalog: '@com_fr'
+        label: 'Small Image Label'
+    product_special_from_date_com_en:
+        source_field: '@product_special_from_date'
+        catalog: '@com_en'
+        label: 'Special Price From Date'
+    product_special_from_date_com_fr:
+        source_field: '@product_special_from_date'
+        catalog: '@com_fr'
+        label: 'Special Price From Date'
+    product_special_price_com_en:
+        source_field: '@product_special_price'
+        catalog: '@com_en'
+        label: 'Special Price'
+    product_special_price_com_fr:
+        source_field: '@product_special_price'
+        catalog: '@com_fr'
+        label: 'Special Price'
+    product_special_to_date_com_en:
+        source_field: '@product_special_to_date'
+        catalog: '@com_en'
+        label: 'Special Price To Date'
+    product_special_to_date_com_fr:
+        source_field: '@product_special_to_date'
+        catalog: '@com_fr'
+        label: 'Special Price To Date'
+    product_status_com_en:
+        source_field: '@product_status'
+        catalog: '@com_en'
+        label: 'Enable Product'
+    product_status_com_fr:
+        source_field: '@product_status'
+        catalog: '@com_fr'
+        label: 'Enable Product'
+    product_swatch_image_com_en:
+        source_field: '@product_swatch_image'
+        catalog: '@com_en'
+        label: Swatch
+    product_swatch_image_com_fr:
+        source_field: '@product_swatch_image'
+        catalog: '@com_fr'
+        label: Swatch
+    product_tax_class_id_com_en:
+        source_field: '@product_tax_class_id'
+        catalog: '@com_en'
+        label: 'Tax Class'
+    product_tax_class_id_com_fr:
+        source_field: '@product_tax_class_id'
+        catalog: '@com_fr'
+        label: 'Tax Class'
+    product_thumbnail_com_en:
+        source_field: '@product_thumbnail'
+        catalog: '@com_en'
+        label: Thumbnail
+    product_thumbnail_com_fr:
+        source_field: '@product_thumbnail'
+        catalog: '@com_fr'
+        label: Thumbnail
+    product_thumbnail_label_com_en:
+        source_field: '@product_thumbnail_label'
+        catalog: '@com_en'
+        label: 'Thumbnail Label'
+    product_thumbnail_label_com_fr:
+        source_field: '@product_thumbnail_label'
+        catalog: '@com_fr'
+        label: 'Thumbnail Label'
+    product_tier_price_com_en:
+        source_field: '@product_tier_price'
+        catalog: '@com_en'
+        label: 'Tier Price'
+    product_tier_price_com_fr:
+        source_field: '@product_tier_price'
+        catalog: '@com_fr'
+        label: 'Tier Price'
+    product_url_key_com_en:
+        source_field: '@product_url_key'
+        catalog: '@com_en'
+        label: 'URL Key'
+    product_url_key_com_fr:
+        source_field: '@product_url_key'
+        catalog: '@com_fr'
+        label: 'URL Key'
+    product_video_file_com_en:
+        source_field: '@product_video_file'
+        catalog: '@com_en'
+        label: 'Video File'
+    product_video_file_com_fr:
+        source_field: '@product_video_file'
+        catalog: '@com_fr'
+        label: 'Video File'
+    product_visibility_com_en:
+        source_field: '@product_visibility'
+        catalog: '@com_en'
+        label: Visibility
+    product_visibility_com_fr:
+        source_field: '@product_visibility'
+        catalog: '@com_fr'
+        label: Visibility
+    product_weight_com_en:
+        source_field: '@product_weight'
+        catalog: '@com_en'
+        label: Weight
+    product_weight_com_fr:
+        source_field: '@product_weight'
+        catalog: '@com_fr'
+        label: Weight
+    product_weight_type_com_en:
+        source_field: '@product_weight_type'
+        catalog: '@com_en'
+        label: 'Dynamic Weight'
+    product_weight_type_com_fr:
+        source_field: '@product_weight_type'
+        catalog: '@com_fr'
+        label: 'Dynamic Weight'

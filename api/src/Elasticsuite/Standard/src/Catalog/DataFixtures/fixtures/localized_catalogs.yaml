@@ -1,43 +1,43 @@
 Elasticsuite\Catalog\Model\Catalog:
-    catalog1:
+    com:
         code: com
         name: COM Catalog
-    catalog2:
+    fr:
         code: fr
         name: FR Catalog
-    catalog3:
+    uk:
         code: uk
         name: UK Catalog
 
 Elasticsuite\Catalog\Model\LocalizedCatalog:
-    localized_catalog1:
-        catalog: '@catalog1'
+    com_fr:
+        catalog: '@com'
         code: com_fr
         locale: fr_FR
         name: COM French Catalog
         isDefault: true
-    localized_catalog2:
-        catalog: '@catalog1'
+    com_en:
+        catalog: '@com'
         code: com_en
         locale: en_US
         name: COM English Catalog        
-    localized_catalog3:
-        catalog: '@catalog2'
+    fr_fr:
+        catalog: '@fr'
         code: fr_fr
         locale: fr_FR
         name: FR French Catalog
-    localized_catalog4:
-        catalog: '@catalog2'
+    fr_en:
+        catalog: '@fr'
         code: fr_en
         locale: en_US
         name: FR English Catalog        
-    localized_catalog5:
-        catalog: '@catalog3'
+    en_fr:
+        catalog: '@uk'
         code: en_fr
         locale: fr_FR
         name: EN French Catalog
-    localized_catalog6:
-        catalog: '@catalog3'
+    en_en:
+        catalog: '@uk'
         code: en_en
         locale: en_US
         name: EN English Catalog        
