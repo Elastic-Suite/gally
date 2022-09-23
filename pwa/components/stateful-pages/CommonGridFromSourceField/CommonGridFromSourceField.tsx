@@ -90,14 +90,51 @@ function CommonGridFromSourceField(props: IProps): JSX.Element {
     setPage(0)
   }
 
+  function isValueInObjectEmpty(object: object): boolean {
+    let result = false
+    Object.entries(object)
+      .flat()
+      .map((item, i) => {
+        if (result === false) {
+          return (result = i % 2 !== 0 ? item !== '' && true : false)
+        }
+        return (result = false)
+      })
+    return result
+  }
+
   return (
     <>
       {data['hydra:member'].length === 0 ? (
-        <NoAttributes
-          title={t('attributes.none')}
-          btnTitle={t('attributes.none.btn')}
-          btnHref="admin/settings/attributes"
-        />
+        searchValue !== '' || isValueInObjectEmpty(activeFilters) ? (
+          <>
+            <FiltersGuesser
+              activeFilters={activeFilters}
+              apiData={data}
+              onFilterChange={handleFilterChange}
+              onSearch={handleSearchValue}
+              resource={resource}
+              searchValue={searchValue}
+            />
+            <div
+              style={{
+                color: '#424880',
+                fontFamily: 'Inter',
+                fontSize: '18px',
+                fontWeight: '400',
+                lineHeight: '24px',
+              }}
+            >
+              No result
+            </div>
+          </>
+        ) : (
+          <NoAttributes
+            title={t('attributes.none')}
+            btnTitle={t('attributes.none.btn')}
+            btnHref="admin/settings/attributes"
+          />
+        )
       ) : (
         <>
           <FiltersGuesser

@@ -12,7 +12,7 @@ const Template: ComponentStory<typeof NoAttributes> = (args) => (
 
 export const Default = Template.bind({})
 Default.args = {
-  title: 'No attributes were specified as filterable in the settings',
-  btnTitle: 'Add filtrable attributes',
+  title: 'No attributes were specified as searchable in the settings',
+  btnTitle: 'Add searchable attributes',
   btnHref: 'admin/settings/attributes',
 }
