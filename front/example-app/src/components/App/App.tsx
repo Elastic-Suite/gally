@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
+import Category from '../../pages/Category/Category'
 import Homepage from '../../pages/Homepage/Homepage'
 import Login from '../../pages/Login/Login'
 
@@ -14,6 +15,7 @@ function App(): JSX.Element {
           <Routes>
             <Route path="/" element={<Homepage />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/category/:id" element={<Category />} />
           </Routes>
         </Layout>
       </AppProvider>

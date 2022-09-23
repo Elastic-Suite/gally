@@ -57,20 +57,19 @@ function Header(props: IProps): JSX.Element {
   const localizedCatalogSelectId = useId()
   const {
     catalog,
-    catalogId,
     catalogs,
-    localizedCatalogId,
+    localizedCatalog,
     onCatalogIdChange,
     onLocalizedCatalogIdChange,
   } = useContext(catalogContext)
 
-  function handleCatalogChange(event: SelectChangeEvent<number>): void {
+  function handleCatalogChange(event: SelectChangeEvent<string>): void {
     onCatalogIdChange(event.target.value)
     onLocalizedCatalogIdChange('')
   }
 
   function handleLocalizedCatalogChange(
-    event: SelectChangeEvent<number>
+    event: SelectChangeEvent<string>
   ): void {
     onLocalizedCatalogIdChange(event.target.value)
   }
@@ -96,7 +95,7 @@ function Header(props: IProps): JSX.Element {
           <Select
             labelId={catalogLabelId}
             id={catalogSelectId}
-            value={catalogId}
+            value={catalog?.id ?? ''}
             label="Catalog"
             onChange={handleCatalogChange}
             data-testid="header-catalog-select"
@@ -117,16 +116,13 @@ function Header(props: IProps): JSX.Element {
             <Select
               labelId={localizedCatalogLabelId}
               id={localizedCatalogSelectId}
-              value={localizedCatalogId}
+              value={localizedCatalog?.id ?? ''}
               label="Localized Catalog"
               onChange={handleLocalizedCatalogChange}
             >
-              {catalog.localizedCatalogs.map((localizedCatalogs) => (
-                <MenuItem
-                  key={localizedCatalogs.id}
-                  value={localizedCatalogs.id}
-                >
-                  {localizedCatalogs.name}
+              {catalog.localizedCatalogs.edges.map(({ node }) => (
+                <MenuItem key={node.id} value={node.id}>
+                  {node.name}
                 </MenuItem>
               ))}
             </Select>

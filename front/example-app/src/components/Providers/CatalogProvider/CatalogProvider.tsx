@@ -1,8 +1,9 @@
 import { ReactNode, useMemo, useState } from 'react'
-import { ICatalog } from 'shared'
+import { IGraphqlCatalogs } from 'shared'
 
+import { getCalogsQuery } from '../../../constants'
 import { catalogContext } from '../../../contexts'
-import { useApiList, useResource } from '../../../hooks'
+import { useGraphqlApi } from '../../../hooks'
 
 interface IProps {
   children: ReactNode
@@ -10,34 +11,29 @@ interface IProps {
 
 function CatalogProvider(props: IProps): JSX.Element {
   const { children } = props
-  const [catalogId, setCatalogId] = useState<string | number>('')
-  const [localizedCatalogId, setLocalizedCatalogId] = useState<string | number>(
-    ''
-  )
+  const [catalogId, setCatalogId] = useState<string>('')
+  const [localizedCatalogId, setLocalizedCatalogId] = useState<string>('')
+  const [catalogs] = useGraphqlApi<IGraphqlCatalogs>(getCalogsQuery)
 
-  const resourceName = 'Catalog'
-  const resource = useResource(resourceName)
-  const [catalogs] = useApiList<ICatalog>(resource, false)
-
-  const catalog = catalogs.data?.['hydra:member'].find(
-    (catalog) => catalog.id === catalogId
-  )
-  const localizedCatalog = catalog?.localizedCatalogs.find(
-    (localizedCatalog) => localizedCatalog.id === localizedCatalogId
-  )
-
-  const context = useMemo(
-    () => ({
-      catalog,
-      catalogId,
-      catalogs: catalogs.data?.['hydra:member'] ?? [],
-      localizedCatalog,
-      localizedCatalogId,
+  const context = useMemo(() => {
+    const catalog = catalogs.data?.catalogs.edges.find(
+      ({ node }) => node.id === catalogId
+    )
+    const localizedCatalog = catalog?.node.localizedCatalogs.edges.find(
+      ({ node }) => node.id === localizedCatalogId
+    )
+    return {
+      catalog: catalog?.node,
+      catalogId: Number(catalogId.substring(catalogId.lastIndexOf('/') + 1)),
+      catalogs: catalogs.data?.catalogs.edges.map(({ node }) => node) ?? [],
+      localizedCatalog: localizedCatalog?.node,
+      localizedCatalogId: Number(
+        localizedCatalogId.substring(localizedCatalogId.lastIndexOf('/') + 1)
+      ),
       onCatalogIdChange: setCatalogId,
       onLocalizedCatalogIdChange: setLocalizedCatalogId,
-    }),
-    [catalog, catalogId, catalogs, localizedCatalog, localizedCatalogId]
-  )
+    }
+  }, [catalogId, catalogs, localizedCatalogId])
 
   return (
     <catalogContext.Provider value={context}>

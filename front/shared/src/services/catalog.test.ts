@@ -1,4 +1,4 @@
-import { ICatalog } from '../types'
+import { IHydraCatalog } from '../types'
 import { findDefaultCatalog, getCatalogForSearchProductApi } from './catalog'
 
 const defaultCatalog = {
@@ -23,7 +23,7 @@ const defaultCatalog2 = {
   localName: 'test12',
 }
 
-const mockCatalogs: ICatalog[] = [
+const mockCatalogs: IHydraCatalog[] = [
   {
     '@type': 'test',
     '@id': 'test',
@@ -75,7 +75,7 @@ const mockCatalogs: ICatalog[] = [
   },
 ]
 
-const mockCatalogsWithTwoDefault: ICatalog[] = [
+const mockCatalogsWithTwoDefault: IHydraCatalog[] = [
   {
     '@type': 'test',
     '@id': 'test',
