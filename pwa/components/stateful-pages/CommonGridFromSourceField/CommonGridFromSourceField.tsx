@@ -17,6 +17,9 @@ import TableGuesser from '~/components/stateful/TableGuesser/TableGuesser'
 import NoAttributes from '~/components/atoms/noAttributes/NoAttributes'
 import { useTranslation } from 'next-i18next'
 
+function isObjectNotEmpty(object: object): boolean {
+  return Object.values(object).some((value) => value)
+}
 interface IProps {
   active?: boolean
   filters?: ISearchParameters
@@ -90,44 +93,35 @@ function CommonGridFromSourceField(props: IProps): JSX.Element {
     setPage(0)
   }
 
-  function isValueInObjectEmpty(object: object): boolean {
-    let result = false
-    Object.entries(object)
-      .flat()
-      .map((item, i) => {
-        if (result === false) {
-          return (result = i % 2 !== 0 ? item !== '' && true : false)
-        }
-        return (result = false)
-      })
-    return result
-  }
+  const filterOrSearchAreUp =
+    searchValue !== '' || isObjectNotEmpty(activeFilters)
 
   return (
     <>
+      {data['hydra:member'].length !== 0 || filterOrSearchAreUp ? (
+        <FiltersGuesser
+          activeFilters={activeFilters}
+          apiData={data}
+          onFilterChange={handleFilterChange}
+          onSearch={handleSearchValue}
+          resource={resource}
+          searchValue={searchValue}
+        />
+      ) : null}
+
       {data['hydra:member'].length === 0 ? (
-        searchValue !== '' || isValueInObjectEmpty(activeFilters) ? (
-          <>
-            <FiltersGuesser
-              activeFilters={activeFilters}
-              apiData={data}
-              onFilterChange={handleFilterChange}
-              onSearch={handleSearchValue}
-              resource={resource}
-              searchValue={searchValue}
-            />
-            <div
-              style={{
-                color: '#424880',
-                fontFamily: 'Inter',
-                fontSize: '18px',
-                fontWeight: '400',
-                lineHeight: '24px',
-              }}
-            >
-              No result
-            </div>
-          </>
+        filterOrSearchAreUp ? (
+          <div
+            style={{
+              color: '#424880',
+              fontFamily: 'Inter',
+              fontSize: '18px',
+              fontWeight: '400',
+              lineHeight: '24px',
+            }}
+          >
+            No result
+          </div>
         ) : (
           <NoAttributes
             title={t('attributes.none')}
@@ -136,27 +130,17 @@ function CommonGridFromSourceField(props: IProps): JSX.Element {
           />
         )
       ) : (
-        <>
-          <FiltersGuesser
-            activeFilters={activeFilters}
-            apiData={data}
-            onFilterChange={handleFilterChange}
-            onSearch={handleSearchValue}
-            resource={resource}
-            searchValue={searchValue}
-          />
-          <TableGuesser
-            apiData={data}
-            currentPage={page}
-            onMassupdate={massUpdate}
-            onPageChange={handlePageChange}
-            onRowUpdate={handleRowChange}
-            resource={resource}
-            rowsPerPageOptions={rowsPerPageOptions}
-            onRowsPerPageChange={onRowsPerPageChange}
-            rowsPerPage={rowsPerPage}
-          />
-        </>
+        <TableGuesser
+          apiData={data}
+          currentPage={page}
+          onMassupdate={massUpdate}
+          onPageChange={handlePageChange}
+          onRowUpdate={handleRowChange}
+          resource={resource}
+          rowsPerPageOptions={rowsPerPageOptions}
+          onRowsPerPageChange={onRowsPerPageChange}
+          rowsPerPage={rowsPerPage}
+        />
       )}
     </>
   )
