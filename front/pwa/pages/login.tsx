@@ -8,7 +8,7 @@ import { useApiFetch, useUser } from '~/hooks'
 import { selectRequestedPath, useAppSelector } from '~/store'
 import {
   ILogin,
-  isFetchError,
+  isError,
   isValidUser,
   storageSet,
   tokenStorageKey,
@@ -46,7 +46,7 @@ function Login(): JSX.Element {
       body: JSON.stringify({ email, password }),
       headers: new Headers({ 'Content-Type': 'application/json' }),
     }).then((json) => {
-      if (!isFetchError(json)) {
+      if (!isError(json)) {
         storageSet(tokenStorageKey, json.token)
         redirectToRequestedPath()
       }

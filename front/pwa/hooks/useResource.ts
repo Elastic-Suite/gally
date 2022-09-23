@@ -2,7 +2,7 @@ import { useCallback, useContext, useMemo } from 'react'
 import { useRouter } from 'next/router'
 
 import {
-  IFetchError,
+  IError,
   IHydraMember,
   IResource,
   IResourceOperations,
@@ -39,7 +39,7 @@ export function useResourceOperations<T extends IHydraMember>(
   const apiUrl = getApiUrl(resource.url)
 
   const update = useCallback(
-    (id: string | number, item: Partial<T>): Promise<T | IFetchError> =>
+    (id: string | number, item: Partial<T>): Promise<T | IError> =>
       fetchApi(`${apiUrl}/${id}`, undefined, {
         body: JSON.stringify(item),
         method: Method.PATCH,
@@ -49,7 +49,7 @@ export function useResourceOperations<T extends IHydraMember>(
   )
 
   const create = useCallback(
-    (item: Omit<T, 'id' | '@id' | '@type'>): Promise<T | IFetchError> =>
+    (item: Omit<T, 'id' | '@id' | '@type'>): Promise<T | IError> =>
       fetchApi(apiUrl, undefined, {
         body: JSON.stringify(item),
         method: Method.POST,
@@ -58,7 +58,7 @@ export function useResourceOperations<T extends IHydraMember>(
   )
 
   const replace = useCallback(
-    (item: Omit<T, '@id' | '@type'>): Promise<T | IFetchError> =>
+    (item: Omit<T, '@id' | '@type'>): Promise<T | IError> =>
       fetchApi(`${apiUrl}/${item.id}`, undefined, {
         body: JSON.stringify(item),
         method: Method.PUT,
@@ -67,7 +67,7 @@ export function useResourceOperations<T extends IHydraMember>(
   )
 
   const remove = useCallback(
-    (id: string | number): Promise<T | IFetchError> =>
+    (id: string | number): Promise<T | IError> =>
       fetchApi(`${apiUrl}/${id}`, undefined, {
         method: Method.DELETE,
       }),

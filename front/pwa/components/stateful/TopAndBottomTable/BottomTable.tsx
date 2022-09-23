@@ -7,17 +7,14 @@ import {
   useState,
 } from 'react'
 
-import { useFetchApi } from '~/hooks'
+import { useGraphqlApi } from '~/hooks'
 import {
-  IFetchParams,
-  IFetchProducts,
-  ISearchParameters,
+  ISearchProducts,
   ITableHeader,
   ITableRow,
   LoadStatus,
   defaultPageSize,
   defaultRowsPerPageOptions,
-  gqlUrl,
   productTableheader,
   productsQuery,
 } from 'shared'
@@ -42,26 +39,12 @@ function BottomTable(
   const rowsPerPageOptions = defaultRowsPerPageOptions
 
   // todo : when api product will be finalize, factorize code and exports this into a products service with top and bottom distinguish.
-  const query = productsQuery
-
-  const params: IFetchParams = useMemo(() => {
-    const variables = { catalogId, currentPage, pageSize: rowsPerPage }
-    return {
-      options: {
-        body: JSON.stringify({ query, variables }),
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-      },
-      searchParameters: {} as ISearchParameters,
-    }
-  }, [query, catalogId, currentPage, rowsPerPage])
-
-  const [products] = useFetchApi<IFetchProducts>(
-    gqlUrl,
-    params.searchParameters,
-    params.options
+  const variables = useMemo(
+    () => ({ catalogId, currentPage, pageSize: rowsPerPage }),
+    [catalogId, currentPage, rowsPerPage]
   )
-  const tableRows: ITableRow[] = products?.data?.data?.searchProducts
+  const [products] = useGraphqlApi<ISearchProducts>(productsQuery, variables)
+  const tableRows: ITableRow[] = products?.data?.searchProducts
     ?.collection as unknown as ITableRow[]
   const tableHeaders: ITableHeader[] = productTableheader
 
@@ -80,7 +63,7 @@ function BottomTable(
   return (
     <>
       {products.status === LoadStatus.SUCCEEDED &&
-        Boolean(products?.data?.data?.searchProducts) && (
+        Boolean(products?.data?.searchProducts) && (
           <PagerTable
             Field={FieldGuesser}
             currentPage={
@@ -95,7 +78,7 @@ function BottomTable(
             tableRows={tableRows}
             selectedRows={selectedRows}
             onSelectedRows={onSelectedRows}
-            count={products.data.data.searchProducts.paginationInfo.totalCount}
+            count={products.data.searchProducts.paginationInfo.totalCount}
           />
         )}
     </>
