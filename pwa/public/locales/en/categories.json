@@ -26,5 +26,7 @@
   "searchBarResult": "{{value.value}} {{value.result}}",
   "placeholder": "No category selected",
   "default.sorting": "Default sorting",
-  "buttonSave": "Save"
+  "buttonSave": "Save",
+  "alert": "Save data with success",
+  "alert.error": "An error has occurred"
 }
