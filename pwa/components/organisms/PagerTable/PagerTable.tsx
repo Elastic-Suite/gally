@@ -6,9 +6,21 @@ import CustomTable, {
   ICustomTableProps,
 } from '~/components/organisms/CustomTable/CustomTable'
 
+import { useTranslation } from 'next-i18next'
+
 const Root = styled('div')(({ theme }) => ({
   borderRadius: theme.shape.borderRadius,
   border: `1px solid ${theme.palette.colors.neutral[300]}`,
+}))
+
+const CustomNoResult = styled('div')(({ theme }) => ({
+  fontFamily: 'inter',
+  fontWeight: 500,
+  fontSize: 14,
+  lineHeight: '20px',
+  color: theme.palette.colors.black,
+  textAlign: 'center',
+  marginTop: theme.spacing(3),
 }))
 
 interface IProps extends ICustomTableProps {
@@ -20,6 +32,7 @@ interface IProps extends ICustomTableProps {
   rowsPerPage: number
   rowsPerPageOptions: number[]
   count: number
+  noResult?: boolean
 }
 
 function PagerTable(
@@ -33,8 +46,10 @@ function PagerTable(
     rowsPerPage,
     rowsPerPageOptions,
     count,
+    noResult,
     ...tableProps
   } = props
+  const { t } = useTranslation('common')
 
   return (
     <Root ref={ref}>
@@ -47,6 +62,7 @@ function PagerTable(
         count={count}
       />
       <CustomTable {...tableProps} />
+      {noResult ? <CustomNoResult>{t('no.result')}</CustomNoResult> : null}
       <Pagination
         currentPage={currentPage}
         isBottom

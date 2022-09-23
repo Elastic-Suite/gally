@@ -111,17 +111,13 @@ function CommonGridFromSourceField(props: IProps): JSX.Element {
 
       {data['hydra:member'].length === 0 ? (
         filterOrSearchAreUp ? (
-          <div
-            style={{
-              color: '#424880',
-              fontFamily: 'Inter',
-              fontSize: '18px',
-              fontWeight: '400',
-              lineHeight: '24px',
-            }}
-          >
-            No result
-          </div>
+          <TableGuesser
+            apiData={data}
+            onMassupdate={massUpdate}
+            onPageChange={handlePageChange}
+            resource={resource}
+            noResult
+          />
         ) : (
           <NoAttributes
             title={t('attributes.none')}
