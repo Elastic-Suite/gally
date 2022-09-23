@@ -16,7 +16,7 @@ const CustomBorder = styled('div')(({ theme }) => ({
 const CustomLeftSide = styled(CustomBorder)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  minWidth: 390,
+  width: 402,
   boxSizing: 'border-box',
   backgroundColor: theme.palette.colors.white,
 }))
