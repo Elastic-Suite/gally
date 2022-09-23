@@ -26,5 +26,7 @@
   "searchBarResult": "{{value.value}} {{value.result}}",
   "placeholder": "Aucune catégorie selectionnée.",
   "default.sorting": "Tri par défaut",
-  "buttonSave": "Sauvegarde"
+  "buttonSave": "Sauvegarde",
+  "alert": "Sauvegarde des données avec succès",
+  "alert.error": "Une erreur s'est produite"
 }
