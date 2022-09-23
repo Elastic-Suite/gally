@@ -19,7 +19,7 @@ import {
   defaultPageSize,
   fetchApi,
   getListApiParameters,
-  isFetchError,
+  isError,
 } from 'shared'
 
 export function useApiFetch<T>(secure = true): IFetchApi<T> {
@@ -69,7 +69,7 @@ export function useFetchApi<T>(
       status: LoadStatus.LOADING,
     }))
     fetchApi(resource, searchParameters, options).then((json) => {
-      if (isFetchError(json)) {
+      if (isError(json)) {
         setResponse({ error: json.error, status: LoadStatus.FAILED })
       } else {
         setResponse({ data: json, status: LoadStatus.SUCCEEDED })

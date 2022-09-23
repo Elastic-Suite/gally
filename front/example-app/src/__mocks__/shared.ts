@@ -68,7 +68,7 @@ export const removeEmptyParameters = jest.fn(
 export const log = jest.fn((error, log) => log?.(error.message))
 
 /* fetch */
-export const isFetchError = jest.fn((json) => 'error' in json)
+export const isError = jest.fn((json) => 'error' in json)
 export const fetchJson = jest.fn((url) => {
   switch (url) {
     case 'http://localhost/':

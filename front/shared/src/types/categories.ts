@@ -15,3 +15,7 @@ export interface ICategories extends IJsonldBase {
   localizedCatalogId?: number
   categories?: ICategory[]
 }
+
+export interface IGraphqlCategories {
+  getCategoryTree: Partial<ICategories>
+}

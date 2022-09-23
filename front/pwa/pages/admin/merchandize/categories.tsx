@@ -15,9 +15,9 @@ import {
 } from '~/hooks'
 import { selectMenu, useAppSelector } from '~/store'
 import {
-  ICatalog,
   ICategories,
   ICategory,
+  IHydraCatalog,
   emptyCombinationRule,
   findBreadcrumbLabel,
   isFetchError,
@@ -41,7 +41,7 @@ function Categories(): JSX.Element {
 
   const resourceName = 'Catalog'
   const resource = useResource(resourceName)
-  const [catalogsFields] = useApiList<ICatalog>(resource, false)
+  const [catalogsFields] = useApiList<IHydraCatalog>(resource, false)
   const { data, error } = catalogsFields
 
   const [catalogId, setCatalogId] = useState<number>(-1)
