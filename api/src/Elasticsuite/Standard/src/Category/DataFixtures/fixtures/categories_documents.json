@@ -1,28 +1,1073 @@
-[
-  {
-    "index_name": "elasticsuite_com_fr_category",
-    "documents": [
-      {
-        "id": "one",
-        "parentId" : "",
-        "level" : 1,
-        "path" : "one",
-        "name": "Category One"
-      },
-      {
-        "id": "two",
-        "parentId" : "",
-        "level" : 1,
-        "path" : "two",
-        "name": "Category Two"
-      },
-      {
-        "id": "three",
-        "parentId" : "1",
-        "level" : 2,
-        "path" : "one/three",
-        "name": "Category Three"
-      }
-    ]
-  }
-]
+[{
+  "index_name": "elasticsuite_com_en_category",
+  "documents": [
+    {
+      "entity_id": "3",
+      "attribute_set_id": "3",
+      "parent_id": "2",
+      "created_at": "2022-09-07 14:52:26",
+      "updated_at": "2022-09-23 09:19:20",
+      "path": "cat_2\/cat_3",
+      "position": "4",
+      "level": "2",
+      "children_count": "3",
+      "is_active": "1",
+      "is_displayed_in_autocomplete": [
+        {
+          "id": true,
+          "label": "Display Category in Autocomplete"
+        }
+      ],
+      "name": [
+        "Accessories"
+      ],
+      "url_key": [
+        "venia-accessories"
+      ],
+      "url_path": [
+        "venia-accessories"
+      ],
+      "id": "cat_3"
+    },
+    {
+      "entity_id": "4",
+      "attribute_set_id": "3",
+      "parent_id": "3",
+      "created_at": "2022-09-07 14:52:26",
+      "updated_at": "2022-09-23 09:19:34",
+      "path": "cat_2\/cat_3\/cat_4",
+      "position": "1",
+      "level": "3",
+      "children_count": "0",
+      "is_active": "1",
+      "is_displayed_in_autocomplete": [
+        {
+          "id": true,
+          "label": "Display Category in Autocomplete"
+        }
+      ],
+      "name": [
+        "Belts"
+      ],
+      "url_key": [
+        "venia-belts"
+      ],
+      "url_path": [
+        "venia-accessories\/venia-belts"
+      ],
+      "id": "cat_4"
+    },
+    {
+      "entity_id": "5",
+      "attribute_set_id": "3",
+      "parent_id": "3",
+      "created_at": "2022-09-07 14:52:26",
+      "updated_at": "2022-09-23 09:19:48",
+      "path": "cat_2\/cat_3\/cat_5",
+      "position": "2",
+      "level": "3",
+      "children_count": "0",
+      "is_active": "1",
+      "is_displayed_in_autocomplete": [
+        {
+          "id": true,
+          "label": "Display Category in Autocomplete"
+        }
+      ],
+      "name": [
+        "Jewelry"
+      ],
+      "url_key": [
+        "venia-jewelry"
+      ],
+      "url_path": [
+        "venia-accessories\/venia-jewelry"
+      ],
+      "id": "cat_5"
+    },
+    {
+      "entity_id": "6",
+      "attribute_set_id": "3",
+      "parent_id": "3",
+      "created_at": "2022-09-07 14:52:27",
+      "updated_at": "2022-09-23 09:20:08",
+      "path": "cat_2\/cat_3\/cat_6",
+      "position": "3",
+      "level": "3",
+      "children_count": "0",
+      "is_active": "1",
+      "is_displayed_in_autocomplete": [
+        {
+          "id": true,
+          "label": "Display Category in Autocomplete"
+        }
+      ],
+      "name": [
+        "Scarves"
+      ],
+      "url_key": [
+        "venia-scarves"
+      ],
+      "url_path": [
+        "venia-accessories\/venia-scarves"
+      ],
+      "id": "cat_6"
+    },
+    {
+      "entity_id": "7",
+      "attribute_set_id": "3",
+      "parent_id": "2",
+      "created_at": "2022-09-07 14:52:41",
+      "updated_at": "2022-09-07 14:52:41",
+      "path": "cat_2\/cat_7",
+      "position": "6",
+      "level": "2",
+      "children_count": "0",
+      "is_active": "1",
+      "is_displayed_in_autocomplete": [
+        {
+          "id": true,
+          "label": "Display Category in Autocomplete"
+        }
+      ],
+      "name": [
+        "New Products"
+      ],
+      "url_key": [
+        "new-products3"
+      ],
+      "url_path": [
+        "new-products3"
+      ],
+      "id": "cat_7"
+    },
+    {
+      "entity_id": "8",
+      "attribute_set_id": "3",
+      "parent_id": "2",
+      "created_at": "2022-09-07 14:57:13",
+      "updated_at": "2022-09-23 09:17:26",
+      "path": "cat_2\/cat_8",
+      "position": "1",
+      "level": "2",
+      "children_count": "2",
+      "is_active": "1",
+      "is_displayed_in_autocomplete": [
+        {
+          "id": true,
+          "label": "Display Category in Autocomplete"
+        }
+      ],
+      "name": [
+        "Tops"
+      ],
+      "url_key": [
+        "venia-tops"
+      ],
+      "url_path": [
+        "venia-tops"
+      ],
+      "id": "cat_8"
+    },
+    {
+      "entity_id": "9",
+      "attribute_set_id": "3",
+      "parent_id": "8",
+      "created_at": "2022-09-07 14:57:13",
+      "updated_at": "2022-09-23 09:17:48",
+      "path": "cat_2\/cat_8\/cat_9",
+      "position": "1",
+      "level": "3",
+      "children_count": "0",
+      "is_active": "1",
+      "is_displayed_in_autocomplete": [
+        {
+          "id": true,
+          "label": "Display Category in Autocomplete"
+        }
+      ],
+      "name": [
+        "Blouses & Shirts"
+      ],
+      "url_key": [
+        "venia-blouses"
+      ],
+      "url_path": [
+        "venia-tops\/venia-blouses"
+      ],
+      "id": "cat_9"
+    },
+    {
+      "entity_id": "10",
+      "attribute_set_id": "3",
+      "parent_id": "8",
+      "created_at": "2022-09-07 14:57:13",
+      "updated_at": "2022-09-23 09:18:03",
+      "path": "cat_2\/cat_8\/cat_10",
+      "position": "2",
+      "level": "3",
+      "children_count": "0",
+      "is_active": "1",
+      "is_displayed_in_autocomplete": [
+        {
+          "id": true,
+          "label": "Display Category in Autocomplete"
+        }
+      ],
+      "name": [
+        "Sweaters"
+      ],
+      "url_key": [
+        "venia-sweaters"
+      ],
+      "url_path": [
+        "venia-tops\/venia-sweaters"
+      ],
+      "id": "cat_10"
+    },
+    {
+      "entity_id": "11",
+      "attribute_set_id": "3",
+      "parent_id": "2",
+      "created_at": "2022-09-07 14:57:13",
+      "updated_at": "2022-09-23 09:18:17",
+      "path": "cat_2\/cat_11",
+      "position": "2",
+      "level": "2",
+      "children_count": "2",
+      "is_active": "1",
+      "is_displayed_in_autocomplete": [
+        {
+          "id": true,
+          "label": "Display Category in Autocomplete"
+        }
+      ],
+      "name": [
+        "Bottoms"
+      ],
+      "url_key": [
+        "venia-bottoms"
+      ],
+      "url_path": [
+        "venia-bottoms"
+      ],
+      "id": "cat_11"
+    },
+    {
+      "entity_id": "12",
+      "attribute_set_id": "3",
+      "parent_id": "11",
+      "created_at": "2022-09-07 14:57:13",
+      "updated_at": "2022-09-23 09:18:34",
+      "path": "cat_2\/cat_11\/cat_12",
+      "position": "1",
+      "level": "3",
+      "children_count": "0",
+      "is_active": "1",
+      "is_displayed_in_autocomplete": [
+        {
+          "id": true,
+          "label": "Display Category in Autocomplete"
+        }
+      ],
+      "name": [
+        "Pants & Shorts"
+      ],
+      "url_key": [
+        "venia-pants"
+      ],
+      "url_path": [
+        "venia-bottoms\/venia-pants"
+      ],
+      "id": "cat_12"
+    },
+    {
+      "entity_id": "13",
+      "attribute_set_id": "3",
+      "parent_id": "11",
+      "created_at": "2022-09-07 14:57:13",
+      "updated_at": "2022-09-23 09:18:51",
+      "path": "cat_2\/cat_11\/cat_13",
+      "position": "2",
+      "level": "3",
+      "children_count": "0",
+      "is_active": "1",
+      "is_displayed_in_autocomplete": [
+        {
+          "id": true,
+          "label": "Display Category in Autocomplete"
+        }
+      ],
+      "name": [
+        "Skirts"
+      ],
+      "url_key": [
+        "venia-skirts"
+      ],
+      "url_path": [
+        "venia-bottoms\/venia-skirts"
+      ],
+      "id": "cat_13"
+    },
+    {
+      "entity_id": "14",
+      "attribute_set_id": "3",
+      "parent_id": "2",
+      "created_at": "2022-09-07 14:57:13",
+      "updated_at": "2022-09-23 09:19:05",
+      "path": "cat_2\/cat_14",
+      "position": "3",
+      "level": "2",
+      "children_count": "0",
+      "is_active": "1",
+      "is_displayed_in_autocomplete": [
+        {
+          "id": true,
+          "label": "Display Category in Autocomplete"
+        }
+      ],
+      "name": [
+        "Dresses"
+      ],
+      "url_key": [
+        "venia-dresses"
+      ],
+      "url_path": [
+        "venia-dresses"
+      ],
+      "id": "cat_14"
+    },
+    {
+      "entity_id": "15",
+      "attribute_set_id": "3",
+      "parent_id": "2",
+      "created_at": "2022-09-07 14:57:13",
+      "updated_at": "2022-09-07 14:57:14",
+      "path": "cat_2\/cat_15",
+      "position": "5",
+      "level": "2",
+      "children_count": "6",
+      "is_active": "1",
+      "is_displayed_in_autocomplete": [
+        {
+          "id": true,
+          "label": "Display Category in Autocomplete"
+        }
+      ],
+      "name": [
+        "Shop The Look"
+      ],
+      "url_key": [
+        "shop-the-look"
+      ],
+      "url_path": [
+        "shop-the-look"
+      ],
+      "id": "cat_15"
+    },
+    {
+      "entity_id": "16",
+      "attribute_set_id": "3",
+      "parent_id": "15",
+      "created_at": "2022-09-07 14:57:13",
+      "updated_at": "2022-09-07 14:57:13",
+      "path": "cat_2\/cat_15\/cat_16",
+      "position": "1",
+      "level": "3",
+      "children_count": "0",
+      "is_active": "1",
+      "is_displayed_in_autocomplete": [
+        {
+          "id": true,
+          "label": "Display Category in Autocomplete"
+        }
+      ],
+      "name": [
+        "Minimalist Sensibility"
+      ],
+      "url_key": [
+        "minimalist-sensibility"
+      ],
+      "url_path": [
+        "shop-the-look\/minimalist-sensibility"
+      ],
+      "id": "cat_16"
+    },
+    {
+      "entity_id": "17",
+      "attribute_set_id": "3",
+      "parent_id": "15",
+      "created_at": "2022-09-07 14:57:14",
+      "updated_at": "2022-09-07 14:57:14",
+      "path": "cat_2\/cat_15\/cat_17",
+      "position": "2",
+      "level": "3",
+      "children_count": "0",
+      "is_active": "1",
+      "is_displayed_in_autocomplete": [
+        {
+          "id": true,
+          "label": "Display Category in Autocomplete"
+        }
+      ],
+      "name": [
+        "Outside the Lines"
+      ],
+      "url_key": [
+        "outside-the-lines"
+      ],
+      "url_path": [
+        "shop-the-look\/outside-the-lines"
+      ],
+      "id": "cat_17"
+    },
+    {
+      "entity_id": "18",
+      "attribute_set_id": "3",
+      "parent_id": "15",
+      "created_at": "2022-09-07 14:57:14",
+      "updated_at": "2022-09-07 14:57:14",
+      "path": "cat_2\/cat_15\/cat_18",
+      "position": "3",
+      "level": "3",
+      "children_count": "0",
+      "is_active": "1",
+      "is_displayed_in_autocomplete": [
+        {
+          "id": true,
+          "label": "Display Category in Autocomplete"
+        }
+      ],
+      "name": [
+        "Carefree Days"
+      ],
+      "url_key": [
+        "carefree-days"
+      ],
+      "url_path": [
+        "shop-the-look\/carefree-days"
+      ],
+      "id": "cat_18"
+    },
+    {
+      "entity_id": "19",
+      "attribute_set_id": "3",
+      "parent_id": "15",
+      "created_at": "2022-09-07 14:57:14",
+      "updated_at": "2022-09-07 14:57:14",
+      "path": "cat_2\/cat_15\/cat_19",
+      "position": "4",
+      "level": "3",
+      "children_count": "0",
+      "is_active": "1",
+      "is_displayed_in_autocomplete": [
+        {
+          "id": true,
+          "label": "Display Category in Autocomplete"
+        }
+      ],
+      "name": [
+        "Perfectly Beachy"
+      ],
+      "url_key": [
+        "perfectly-beachy"
+      ],
+      "url_path": [
+        "shop-the-look\/perfectly-beachy"
+      ],
+      "id": "cat_19"
+    },
+    {
+      "entity_id": "20",
+      "attribute_set_id": "3",
+      "parent_id": "15",
+      "created_at": "2022-09-07 14:57:14",
+      "updated_at": "2022-09-07 14:57:14",
+      "path": "cat_2\/cat_15\/cat_20",
+      "position": "5",
+      "level": "3",
+      "children_count": "0",
+      "is_active": "1",
+      "is_displayed_in_autocomplete": [
+        {
+          "id": true,
+          "label": "Display Category in Autocomplete"
+        }
+      ],
+      "name": [
+        "Retire your LBD"
+      ],
+      "url_key": [
+        "retire-your-lbd"
+      ],
+      "url_path": [
+        "shop-the-look\/retire-your-lbd"
+      ],
+      "id": "cat_20"
+    },
+    {
+      "entity_id": "21",
+      "attribute_set_id": "3",
+      "parent_id": "15",
+      "created_at": "2022-09-07 14:57:14",
+      "updated_at": "2022-09-07 14:57:14",
+      "path": "cat_2\/cat_15\/cat_21",
+      "position": "6",
+      "level": "3",
+      "children_count": "0",
+      "is_active": "1",
+      "is_displayed_in_autocomplete": [
+        {
+          "id": true,
+          "label": "Display Category in Autocomplete"
+        }
+      ],
+      "name": [
+        "Timeless Sophistication"
+      ],
+      "url_key": [
+        "timeless-sophistication"
+      ],
+      "url_path": [
+        "shop-the-look\/timeless-sophistication"
+      ],
+      "id": "cat_21"
+    }
+  ]
+},{
+  "index_name": "elasticsuite_com_fr_category",
+  "documents": [
+    {
+      "entity_id": "3",
+      "attribute_set_id": "3",
+      "parent_id": "2",
+      "created_at": "2022-09-07 14:52:26",
+      "updated_at": "2022-09-23 09:19:20",
+      "path": "cat_2\/cat_3",
+      "position": "4",
+      "level": "2",
+      "children_count": "3",
+      "is_active": "1",
+      "is_displayed_in_autocomplete": [
+        {
+          "id": true,
+          "label": "Display Category in Autocomplete"
+        }
+      ],
+      "name": [
+        "Accessoires"
+      ],
+      "url_key": [
+        "venia-accessories"
+      ],
+      "url_path": [
+        "venia-accessories"
+      ],
+      "id": "cat_3"
+    },
+    {
+      "entity_id": "4",
+      "attribute_set_id": "3",
+      "parent_id": "3",
+      "created_at": "2022-09-07 14:52:26",
+      "updated_at": "2022-09-23 09:19:34",
+      "path": "cat_2\/cat_3\/cat_4",
+      "position": "1",
+      "level": "3",
+      "children_count": "0",
+      "is_active": "1",
+      "is_displayed_in_autocomplete": [
+        {
+          "id": true,
+          "label": "Display Category in Autocomplete"
+        }
+      ],
+      "name": [
+        "Ceintures"
+      ],
+      "url_key": [
+        "venia-belts"
+      ],
+      "url_path": [
+        "venia-accessories\/venia-belts"
+      ],
+      "id": "cat_4"
+    },
+    {
+      "entity_id": "5",
+      "attribute_set_id": "3",
+      "parent_id": "3",
+      "created_at": "2022-09-07 14:52:26",
+      "updated_at": "2022-09-23 09:19:48",
+      "path": "cat_2\/cat_3\/cat_5",
+      "position": "2",
+      "level": "3",
+      "children_count": "0",
+      "is_active": "1",
+      "is_displayed_in_autocomplete": [
+        {
+          "id": true,
+          "label": "Display Category in Autocomplete"
+        }
+      ],
+      "name": [
+        "Bijoux"
+      ],
+      "url_key": [
+        "venia-jewelry"
+      ],
+      "url_path": [
+        "venia-accessories\/venia-jewelry"
+      ],
+      "id": "cat_5"
+    },
+    {
+      "entity_id": "6",
+      "attribute_set_id": "3",
+      "parent_id": "3",
+      "created_at": "2022-09-07 14:52:27",
+      "updated_at": "2022-09-23 09:20:08",
+      "path": "cat_2\/cat_3\/cat_6",
+      "position": "3",
+      "level": "3",
+      "children_count": "0",
+      "is_active": "1",
+      "is_displayed_in_autocomplete": [
+        {
+          "id": true,
+          "label": "Display Category in Autocomplete"
+        }
+      ],
+      "name": [
+        "\u00c9charpes"
+      ],
+      "url_key": [
+        "venia-scarves"
+      ],
+      "url_path": [
+        "venia-accessories\/venia-scarves"
+      ],
+      "id": "cat_6"
+    },
+    {
+      "entity_id": "7",
+      "attribute_set_id": "3",
+      "parent_id": "2",
+      "created_at": "2022-09-07 14:52:41",
+      "updated_at": "2022-09-07 14:52:41",
+      "path": "cat_2\/cat_7",
+      "position": "6",
+      "level": "2",
+      "children_count": "0",
+      "is_active": "1",
+      "is_displayed_in_autocomplete": [
+        {
+          "id": true,
+          "label": "Display Category in Autocomplete"
+        }
+      ],
+      "name": [
+        "New Products"
+      ],
+      "url_key": [
+        "new-products3"
+      ],
+      "url_path": [
+        "new-products3"
+      ],
+      "id": "cat_7"
+    },
+    {
+      "entity_id": "8",
+      "attribute_set_id": "3",
+      "parent_id": "2",
+      "created_at": "2022-09-07 14:57:13",
+      "updated_at": "2022-09-23 09:17:26",
+      "path": "cat_2\/cat_8",
+      "position": "1",
+      "level": "2",
+      "children_count": "2",
+      "is_active": "1",
+      "is_displayed_in_autocomplete": [
+        {
+          "id": true,
+          "label": "Display Category in Autocomplete"
+        }
+      ],
+      "name": [
+        "Hauts"
+      ],
+      "url_key": [
+        "venia-tops"
+      ],
+      "url_path": [
+        "venia-tops"
+      ],
+      "id": "cat_8"
+    },
+    {
+      "entity_id": "9",
+      "attribute_set_id": "3",
+      "parent_id": "8",
+      "created_at": "2022-09-07 14:57:13",
+      "updated_at": "2022-09-23 09:17:48",
+      "path": "cat_2\/cat_8\/cat_9",
+      "position": "1",
+      "level": "3",
+      "children_count": "0",
+      "is_active": "1",
+      "is_displayed_in_autocomplete": [
+        {
+          "id": true,
+          "label": "Display Category in Autocomplete"
+        }
+      ],
+      "name": [
+        "Chemisiers et T-shirts"
+      ],
+      "url_key": [
+        "venia-blouses"
+      ],
+      "url_path": [
+        "venia-tops\/venia-blouses"
+      ],
+      "id": "cat_9"
+    },
+    {
+      "entity_id": "10",
+      "attribute_set_id": "3",
+      "parent_id": "8",
+      "created_at": "2022-09-07 14:57:13",
+      "updated_at": "2022-09-23 09:18:03",
+      "path": "cat_2\/cat_8\/cat_10",
+      "position": "2",
+      "level": "3",
+      "children_count": "0",
+      "is_active": "1",
+      "is_displayed_in_autocomplete": [
+        {
+          "id": true,
+          "label": "Display Category in Autocomplete"
+        }
+      ],
+      "name": [
+        "Sweats"
+      ],
+      "url_key": [
+        "venia-sweaters"
+      ],
+      "url_path": [
+        "venia-tops\/venia-sweaters"
+      ],
+      "id": "cat_10"
+    },
+    {
+      "entity_id": "11",
+      "attribute_set_id": "3",
+      "parent_id": "2",
+      "created_at": "2022-09-07 14:57:13",
+      "updated_at": "2022-09-23 09:18:17",
+      "path": "cat_2\/cat_11",
+      "position": "2",
+      "level": "2",
+      "children_count": "2",
+      "is_active": "1",
+      "is_displayed_in_autocomplete": [
+        {
+          "id": true,
+          "label": "Display Category in Autocomplete"
+        }
+      ],
+      "name": [
+        "Bas"
+      ],
+      "url_key": [
+        "venia-bottoms"
+      ],
+      "url_path": [
+        "venia-bottoms"
+      ],
+      "id": "cat_11"
+    },
+    {
+      "entity_id": "12",
+      "attribute_set_id": "3",
+      "parent_id": "11",
+      "created_at": "2022-09-07 14:57:13",
+      "updated_at": "2022-09-23 09:18:34",
+      "path": "cat_2\/cat_11\/cat_12",
+      "position": "1",
+      "level": "3",
+      "children_count": "0",
+      "is_active": "1",
+      "is_displayed_in_autocomplete": [
+        {
+          "id": true,
+          "label": "Display Category in Autocomplete"
+        }
+      ],
+      "name": [
+        "Pantalons & Shorts"
+      ],
+      "url_key": [
+        "venia-pants"
+      ],
+      "url_path": [
+        "venia-bottoms\/venia-pants"
+      ],
+      "id": "cat_12"
+    },
+    {
+      "entity_id": "13",
+      "attribute_set_id": "3",
+      "parent_id": "11",
+      "created_at": "2022-09-07 14:57:13",
+      "updated_at": "2022-09-23 09:18:51",
+      "path": "cat_2\/cat_11\/cat_13",
+      "position": "2",
+      "level": "3",
+      "children_count": "0",
+      "is_active": "1",
+      "is_displayed_in_autocomplete": [
+        {
+          "id": true,
+          "label": "Display Category in Autocomplete"
+        }
+      ],
+      "name": [
+        "Jupes"
+      ],
+      "url_key": [
+        "venia-skirts"
+      ],
+      "url_path": [
+        "venia-bottoms\/venia-skirts"
+      ],
+      "id": "cat_13"
+    },
+    {
+      "entity_id": "14",
+      "attribute_set_id": "3",
+      "parent_id": "2",
+      "created_at": "2022-09-07 14:57:13",
+      "updated_at": "2022-09-23 09:19:05",
+      "path": "cat_2\/cat_14",
+      "position": "3",
+      "level": "2",
+      "children_count": "0",
+      "is_active": "1",
+      "is_displayed_in_autocomplete": [
+        {
+          "id": true,
+          "label": "Display Category in Autocomplete"
+        }
+      ],
+      "name": [
+        "Robes"
+      ],
+      "url_key": [
+        "venia-dresses"
+      ],
+      "url_path": [
+        "venia-dresses"
+      ],
+      "id": "cat_14"
+    },
+    {
+      "entity_id": "15",
+      "attribute_set_id": "3",
+      "parent_id": "2",
+      "created_at": "2022-09-07 14:57:13",
+      "updated_at": "2022-09-07 14:57:14",
+      "path": "cat_2\/cat_15",
+      "position": "5",
+      "level": "2",
+      "children_count": "6",
+      "is_active": "1",
+      "is_displayed_in_autocomplete": [
+        {
+          "id": true,
+          "label": "Display Category in Autocomplete"
+        }
+      ],
+      "name": [
+        "Shop The Look"
+      ],
+      "url_key": [
+        "shop-the-look"
+      ],
+      "url_path": [
+        "shop-the-look"
+      ],
+      "id": "cat_15"
+    },
+    {
+      "entity_id": "16",
+      "attribute_set_id": "3",
+      "parent_id": "15",
+      "created_at": "2022-09-07 14:57:13",
+      "updated_at": "2022-09-07 14:57:13",
+      "path": "cat_2\/cat_15\/cat_16",
+      "position": "1",
+      "level": "3",
+      "children_count": "0",
+      "is_active": "1",
+      "is_displayed_in_autocomplete": [
+        {
+          "id": true,
+          "label": "Display Category in Autocomplete"
+        }
+      ],
+      "name": [
+        "Minimalist Sensibility"
+      ],
+      "url_key": [
+        "minimalist-sensibility"
+      ],
+      "url_path": [
+        "shop-the-look\/minimalist-sensibility"
+      ],
+      "id": "cat_16"
+    },
+    {
+      "entity_id": "17",
+      "attribute_set_id": "3",
+      "parent_id": "15",
+      "created_at": "2022-09-07 14:57:14",
+      "updated_at": "2022-09-07 14:57:14",
+      "path": "cat_2\/cat_15\/cat_17",
+      "position": "2",
+      "level": "3",
+      "children_count": "0",
+      "is_active": "1",
+      "is_displayed_in_autocomplete": [
+        {
+          "id": true,
+          "label": "Display Category in Autocomplete"
+        }
+      ],
+      "name": [
+        "Outside the Lines"
+      ],
+      "url_key": [
+        "outside-the-lines"
+      ],
+      "url_path": [
+        "shop-the-look\/outside-the-lines"
+      ],
+      "id": "cat_17"
+    },
+    {
+      "entity_id": "18",
+      "attribute_set_id": "3",
+      "parent_id": "15",
+      "created_at": "2022-09-07 14:57:14",
+      "updated_at": "2022-09-07 14:57:14",
+      "path": "cat_2\/cat_15\/cat_18",
+      "position": "3",
+      "level": "3",
+      "children_count": "0",
+      "is_active": "1",
+      "is_displayed_in_autocomplete": [
+        {
+          "id": true,
+          "label": "Display Category in Autocomplete"
+        }
+      ],
+      "name": [
+        "Carefree Days"
+      ],
+      "url_key": [
+        "carefree-days"
+      ],
+      "url_path": [
+        "shop-the-look\/carefree-days"
+      ],
+      "id": "cat_18"
+    },
+    {
+      "entity_id": "19",
+      "attribute_set_id": "3",
+      "parent_id": "15",
+      "created_at": "2022-09-07 14:57:14",
+      "updated_at": "2022-09-07 14:57:14",
+      "path": "cat_2\/cat_15\/cat_19",
+      "position": "4",
+      "level": "3",
+      "children_count": "0",
+      "is_active": "1",
+      "is_displayed_in_autocomplete": [
+        {
+          "id": true,
+          "label": "Display Category in Autocomplete"
+        }
+      ],
+      "name": [
+        "Perfectly Beachy"
+      ],
+      "url_key": [
+        "perfectly-beachy"
+      ],
+      "url_path": [
+        "shop-the-look\/perfectly-beachy"
+      ],
+      "id": "cat_19"
+    },
+    {
+      "entity_id": "20",
+      "attribute_set_id": "3",
+      "parent_id": "15",
+      "created_at": "2022-09-07 14:57:14",
+      "updated_at": "2022-09-07 14:57:14",
+      "path": "cat_2\/cat_15\/cat_20",
+      "position": "5",
+      "level": "3",
+      "children_count": "0",
+      "is_active": "1",
+      "is_displayed_in_autocomplete": [
+        {
+          "id": true,
+          "label": "Display Category in Autocomplete"
+        }
+      ],
+      "name": [
+        "Retire your LBD"
+      ],
+      "url_key": [
+        "retire-your-lbd"
+      ],
+      "url_path": [
+        "shop-the-look\/retire-your-lbd"
+      ],
+      "id": "cat_20"
+    },
+    {
+      "entity_id": "21",
+      "attribute_set_id": "3",
+      "parent_id": "15",
+      "created_at": "2022-09-07 14:57:14",
+      "updated_at": "2022-09-07 14:57:14",
+      "path": "cat_2\/cat_15\/cat_21",
+      "position": "6",
+      "level": "3",
+      "children_count": "0",
+      "is_active": "1",
+      "is_displayed_in_autocomplete": [
+        {
+          "id": true,
+          "label": "Display Category in Autocomplete"
+        }
+      ],
+      "name": [
+        "Timeless Sophistication"
+      ],
+      "url_key": [
+        "timeless-sophistication"
+      ],
+      "url_path": [
+        "shop-the-look\/timeless-sophistication"
+      ],
+      "id": "cat_21"
+    }
+  ]
+}]

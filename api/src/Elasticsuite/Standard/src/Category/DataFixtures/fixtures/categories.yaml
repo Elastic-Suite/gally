@@ -1,73 +1,327 @@
 Elasticsuite\Category\Model\Category:
-    categ1:
-        id: one
+    cat_2:
+        id: cat_2
         level: 1
-        path: one
-    categ2:
-        id: two
-        level: 1
-        path: two
-    categ3:
-        id: three
-        parentId: one
+        path: cat_2
+    cat_3:
+        id: cat_3
+        parentId: cat_2
         level: 2
-        path: one/three
-        
+        path: cat_2/cat_3
+    cat_4:
+        id: cat_4
+        parentId: cat_3
+        level: 3
+        path: cat_2/cat_3/cat_4
+    cat_5:
+        id: cat_5
+        parentId: cat_3
+        level: 3
+        path: cat_2/cat_3/cat_5
+    cat_6:
+        id: cat_6
+        parentId: cat_3
+        level: 3
+        path: cat_2/cat_3/cat_6
+    cat_7:
+        id: cat_7
+        parentId: cat_2
+        level: 2
+        path: cat_2/cat_7
+    cat_8:
+        id: cat_8
+        parentId: cat_2
+        level: 2
+        path: cat_2/cat_8
+    cat_9:
+        id: cat_9
+        parentId: cat_8
+        level: 3
+        path: cat_2/cat_8/cat_9
+    cat_10:
+        id: cat_10
+        parentId: cat_8
+        level: 3
+        path: cat_2/cat_8/cat_10
+    cat_11:
+        id: cat_11
+        parentId: cat_2
+        level: 2
+        path: cat_2/cat_11
+    cat_12:
+        id: cat_12
+        parentId: cat_11
+        level: 3
+        path: cat_2/cat_11/cat_12
+    cat_13:
+        id: cat_13
+        parentId: cat_11
+        level: 3
+        path: cat_2/cat_11/cat_13
+    cat_14:
+        id: cat_14
+        parentId: cat_2
+        level: 2
+        path: cat_2/cat_14
+    cat_15:
+        id: cat_15
+        parentId: cat_2
+        level: 2
+        path: cat_2/cat_15
+    cat_16:
+        id: cat_16
+        parentId: cat_15
+        level: 3
+        path: cat_2/cat_15/cat_16
+    cat_17:
+        id: cat_17
+        parentId: cat_15
+        level: 3
+        path: cat_2/cat_15/cat_17
+    cat_18:
+        id: cat_18
+        parentId: cat_15
+        level: 3
+        path: cat_2/cat_15/cat_18
+    cat_19:
+        id: cat_19
+        parentId: cat_15
+        level: 3
+        path: cat_2/cat_15/cat_19
+    cat_20:
+        id: cat_20
+        parentId: cat_15
+        level: 3
+        path: cat_2/cat_15/cat_20
+    cat_21:
+        id: cat_21
+        parentId: cat_15
+        level: 3
+        path: cat_2/cat_15/cat_21
 Elasticsuite\Category\Model\Category\Configuration:
-    config1:
-        category: '@categ1'
-        catalog: '@catalog1'
-        localizedCatalog: '@localized_catalog1'
-        name: 'Catégorie Une'
-    config2:
-        category: '@categ2'
-        catalog: '@catalog1'
-        localizedCatalog: '@localized_catalog1'
-        name: 'Catégorie Deux'
-    config3:
-        category: '@categ3'
-        catalog: '@catalog1'
-        localizedCatalog: '@localized_catalog1'
-        name: 'Catégorie Trois'
-    config4:
-        category: '@categ1'
-        catalog: '@catalog1'
-        localizedCatalog: '@localized_catalog2'
-        name: 'Category One'
-    config5:
-        category: '@categ2'
-        catalog: '@catalog1'
-        localizedCatalog: '@localized_catalog2'
-        name: 'Category Two'
+    config_cat_2_com_en:
+        category: '@cat_2'
+        catalog: '@com'
+        localizedCatalog: '@com_en'
+        name: 'Default Category'
+    config_cat_2_com_fr:
+        category: '@cat_2'
+        catalog: '@com'
+        localizedCatalog: '@com_fr'
+        name: 'Default Category'
+    config_cat_3_com_en:
+        category: '@cat_3'
+        catalog: '@com'
+        localizedCatalog: '@com_en'
+        name: Accessories
+    config_cat_4_com_en:
+        category: '@cat_4'
+        catalog: '@com'
+        localizedCatalog: '@com_en'
+        name: Belts
+    config_cat_5_com_en:
+        category: '@cat_5'
+        catalog: '@com'
+        localizedCatalog: '@com_en'
+        name: Jewelry
+    config_cat_6_com_en:
+        category: '@cat_6'
+        catalog: '@com'
+        localizedCatalog: '@com_en'
+        name: Scarves
+    config_cat_7_com_en:
+        category: '@cat_7'
+        catalog: '@com'
+        localizedCatalog: '@com_en'
+        name: 'New Products'
+    config_cat_8_com_en:
+        category: '@cat_8'
+        catalog: '@com'
+        localizedCatalog: '@com_en'
+        name: Tops
+    config_cat_9_com_en:
+        category: '@cat_9'
+        catalog: '@com'
+        localizedCatalog: '@com_en'
+        name: 'Blouses & Shirts'
+    config_cat_10_com_en:
+        category: '@cat_10'
+        catalog: '@com'
+        localizedCatalog: '@com_en'
+        name: Sweaters
+    config_cat_11_com_en:
+        category: '@cat_11'
+        catalog: '@com'
+        localizedCatalog: '@com_en'
+        name: Bottoms
+    config_cat_12_com_en:
+        category: '@cat_12'
+        catalog: '@com'
+        localizedCatalog: '@com_en'
+        name: 'Pants & Shorts'
+    config_cat_13_com_en:
+        category: '@cat_13'
+        catalog: '@com'
+        localizedCatalog: '@com_en'
+        name: Skirts
+    config_cat_14_com_en:
+        category: '@cat_14'
+        catalog: '@com'
+        localizedCatalog: '@com_en'
+        name: Dresses
+    config_cat_15_com_en:
+        category: '@cat_15'
+        catalog: '@com'
+        localizedCatalog: '@com_en'
+        name: 'Shop The Look'
+    config_cat_16_com_en:
+        category: '@cat_16'
+        catalog: '@com'
+        localizedCatalog: '@com_en'
+        name: 'Minimalist Sensibility'
+    config_cat_17_com_en:
+        category: '@cat_17'
+        catalog: '@com'
+        localizedCatalog: '@com_en'
+        name: 'Outside the Lines'
+    config_cat_18_com_en:
+        category: '@cat_18'
+        catalog: '@com'
+        localizedCatalog: '@com_en'
+        name: 'Carefree Days'
+    config_cat_19_com_en:
+        category: '@cat_19'
+        catalog: '@com'
+        localizedCatalog: '@com_en'
+        name: 'Perfectly Beachy'
+    config_cat_20_com_en:
+        category: '@cat_20'
+        catalog: '@com'
+        localizedCatalog: '@com_en'
+        name: 'Retire your LBD'
+    config_cat_21_com_en:
+        category: '@cat_21'
+        catalog: '@com'
+        localizedCatalog: '@com_en'
+        name: 'Timeless Sophistication'
+    config_cat_3_com_fr:
+        category: '@cat_3'
+        catalog: '@com'
+        localizedCatalog: '@com_fr'
+        name: Accessoires
+    config_cat_4_com_fr:
+        category: '@cat_4'
+        catalog: '@com'
+        localizedCatalog: '@com_fr'
+        name: Ceintures
+    config_cat_5_com_fr:
+        category: '@cat_5'
+        catalog: '@com'
+        localizedCatalog: '@com_fr'
+        name: Bijoux
+    config_cat_6_com_fr:
+        category: '@cat_6'
+        catalog: '@com'
+        localizedCatalog: '@com_fr'
+        name: Écharpes
+    config_cat_7_com_fr:
+        category: '@cat_7'
+        catalog: '@com'
+        localizedCatalog: '@com_fr'
+        name: 'New Products'
+    config_cat_8_com_fr:
+        category: '@cat_8'
+        catalog: '@com'
+        localizedCatalog: '@com_fr'
+        name: Hauts
+    config_cat_9_com_fr:
+        category: '@cat_9'
+        catalog: '@com'
+        localizedCatalog: '@com_fr'
+        name: 'Chemisiers et T-shirts'
+    config_cat_10_com_fr:
+        category: '@cat_10'
+        catalog: '@com'
+        localizedCatalog: '@com_fr'
+        name: Sweats
+    config_cat_11_com_fr:
+        category: '@cat_11'
+        catalog: '@com'
+        localizedCatalog: '@com_fr'
+        name: Bas
+    config_cat_12_com_fr:
+        category: '@cat_12'
+        catalog: '@com'
+        localizedCatalog: '@com_fr'
+        name: 'Pantalons & Shorts'
+    config_cat_13_com_fr:
+        category: '@cat_13'
+        catalog: '@com'
+        localizedCatalog: '@com_fr'
+        name: Jupes
+    config_cat_14_com_fr:
+        category: '@cat_14'
+        catalog: '@com'
+        localizedCatalog: '@com_fr'
+        name: Robes
+    config_cat_15_com_fr:
+        category: '@cat_15'
+        catalog: '@com'
+        localizedCatalog: '@com_fr'
+        name: 'Shop The Look'
+    config_cat_16_com_fr:
+        category: '@cat_16'
+        catalog: '@com'
+        localizedCatalog: '@com_fr'
+        name: 'Minimalist Sensibility'
+    config_cat_17_com_fr:
+        category: '@cat_17'
+        catalog: '@com'
+        localizedCatalog: '@com_fr'
+        name: 'Outside the Lines'
+    config_cat_18_com_fr:
+        category: '@cat_18'
+        catalog: '@com'
+        localizedCatalog: '@com_fr'
+        name: 'Carefree Days'
+    config_cat_19_com_fr:
+        category: '@cat_19'
+        catalog: '@com'
+        localizedCatalog: '@com_fr'
+        name: 'Perfectly Beachy'
+    config_cat_20_com_fr:
+        category: '@cat_20'
+        catalog: '@com'
+        localizedCatalog: '@com_fr'
+        name: 'Retire your LBD'
+    config_cat_21_com_fr:
+        category: '@cat_21'
+        catalog: '@com'
+        localizedCatalog: '@com_fr'
+        name: 'Timeless Sophistication'
         
 Elasticsuite\Category\Model\Category\ProductMerchandising:
     position1:
-        category: '@categ1'
+        category: '@cat_3'
         productId: 1
-        catalog: '@catalog1'
-        localizedCatalog: '@localized_catalog1'
+        catalog: '@com'
+        localizedCatalog: '@com_fr'
         position: 1
-    position2:
-        category: '@categ2'
-        productId: 1
-        catalog: '@catalog1'
-        localizedCatalog: '@localized_catalog1'
-        position: 2
     position3:
-        category: '@categ1'
+        category: '@cat_3'
         productId: 2
-        catalog: '@catalog1'
-        localizedCatalog: '@localized_catalog1'
+        catalog: '@com'
+        localizedCatalog: '@com_fr'
         position: 2
     position4:
-        category: '@categ2'
-        productId: 2
-        catalog: '@catalog1'
-        localizedCatalog: '@localized_catalog1'
-        position: 1
-    position5:
-        category: '@categ3'
+        category: '@cat_3'
         productId: 3
-        catalog: '@catalog1'
-        localizedCatalog: '@localized_catalog1'
+        catalog: '@com'
+        localizedCatalog: '@com_fr'
+        position: 3
+    position5:
+        category: '@cat_3'
+        productId: 1160
+        catalog: '@com'
+        localizedCatalog: '@com_fr'
         position: 99

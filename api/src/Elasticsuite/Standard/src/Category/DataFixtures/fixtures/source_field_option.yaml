@@ -1,0 +1,88 @@
+Elasticsuite\Metadata\Model\SourceFieldOption:
+    categories_custom_apply_to_products_option_1:
+        source_field: '@categories_custom_apply_to_products'
+        position: 0
+    categories_custom_apply_to_products_option_0:
+        source_field: '@categories_custom_apply_to_products'
+        position: 1
+    categories_custom_design_option_1:
+        source_field: '@categories_custom_design'
+        position: 0
+    categories_custom_design_option_3:
+        source_field: '@categories_custom_design'
+        position: 1
+    categories_custom_use_parent_settings_option_1:
+        source_field: '@categories_custom_use_parent_settings'
+        position: 0
+    categories_custom_use_parent_settings_option_0:
+        source_field: '@categories_custom_use_parent_settings'
+        position: 1
+    categories_display_mode_option_PRODUCTS:
+        source_field: '@categories_display_mode'
+        position: 0
+    categories_display_mode_option_PAGE:
+        source_field: '@categories_display_mode'
+        position: 1
+    categories_display_mode_option_PRODUCTS_AND_PAGE:
+        source_field: '@categories_display_mode'
+        position: 2
+    categories_include_in_menu_option_1:
+        source_field: '@categories_include_in_menu'
+        position: 0
+    categories_include_in_menu_option_0:
+        source_field: '@categories_include_in_menu'
+        position: 1
+    categories_is_active_option_1:
+        source_field: '@categories_is_active'
+        position: 0
+    categories_is_active_option_0:
+        source_field: '@categories_is_active'
+        position: 1
+    categories_is_displayed_in_autocomplete_option_1:
+        source_field: '@categories_is_displayed_in_autocomplete'
+        position: 0
+    categories_is_displayed_in_autocomplete_option_0:
+        source_field: '@categories_is_displayed_in_autocomplete'
+        position: 1
+    categories_landing_page_option_:
+        source_field: '@categories_landing_page'
+        position: 0
+    categories_page_layout_option_:
+        source_field: '@categories_page_layout'
+        position: 0
+    categories_page_layout_option_empty:
+        source_field: '@categories_page_layout'
+        position: 1
+    categories_page_layout_option_1column:
+        source_field: '@categories_page_layout'
+        position: 2
+    categories_page_layout_option_2columns-left:
+        source_field: '@categories_page_layout'
+        position: 3
+    categories_page_layout_option_2columns-right:
+        source_field: '@categories_page_layout'
+        position: 4
+    categories_page_layout_option_3columns:
+        source_field: '@categories_page_layout'
+        position: 5
+    categories_page_layout_option_cms-full-width:
+        source_field: '@categories_page_layout'
+        position: 6
+    categories_page_layout_option_category-full-width:
+        source_field: '@categories_page_layout'
+        position: 7
+    categories_page_layout_option_product-full-width:
+        source_field: '@categories_page_layout'
+        position: 8
+    categories_use_name_in_product_search_option_1:
+        source_field: '@categories_use_name_in_product_search'
+        position: 0
+    categories_use_name_in_product_search_option_0:
+        source_field: '@categories_use_name_in_product_search'
+        position: 1
+    categories_use_store_positions_option_1:
+        source_field: '@categories_use_store_positions'
+        position: 0
+    categories_use_store_positions_option_0:
+        source_field: '@categories_use_store_positions'
+        position: 1
