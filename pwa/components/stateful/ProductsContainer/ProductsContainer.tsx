@@ -20,7 +20,6 @@ import Merchandize from '../Merchandize/Merchandize'
 import { useApiList, useResource } from '~/hooks'
 import SearchBar from '../Merchandize/SearchBar/SearchBar'
 import { getCatalogForSearchProductApi } from '~/services'
-import { Grid } from '@mui/material'
 import { PrimaryButton } from '~/components/atoms/buttons/Button.styled'
 
 const Layout = styled('div')(({ theme }) => ({
@@ -128,17 +127,10 @@ function ProductsContainer(props: IProps): JSX.Element {
           title={category?.name ? category?.name : category?.catalogName}
           sx={{ marginBottom: '12px' }}
         >
-          <Grid container justifyContent="flex-end">
-            <PrimaryButton
-              sx={{ width: '150px' }}
-              onClick={onSave}
-              disabled={disableBtnSave}
-            >
-              {t('buttonSave')}
-            </PrimaryButton>
-          </Grid>
+          <PrimaryButton onClick={onSave} disabled={disableBtnSave}>
+            {t('buttonSave')}
+          </PrimaryButton>
         </PageTile>
-
         <Merchandize
           onVirtualChange={onVirtualChange}
           virtualCategoryValue={isVirtual}
