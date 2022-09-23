@@ -21,7 +21,7 @@ import {
   defaultPageSize,
   fetchApi,
   getListApiParameters,
-  isFetchError,
+  isError,
 } from 'shared'
 
 import { useLog } from './useLog'
@@ -77,7 +77,7 @@ export function useFetchApi<T>(
       status: LoadStatus.LOADING,
     }))
     fetchApi(resource, searchParameters, options).then((json) => {
-      if (isFetchError(json)) {
+      if (isError(json)) {
         setResponse({ error: json.error, status: LoadStatus.FAILED })
       } else {
         setResponse({ data: json, status: LoadStatus.SUCCEEDED })
@@ -148,7 +148,7 @@ export function useApiEditableList<T extends IHydraMember>(
         )
       )
       const updateResponse = await update(id, updatedItem)
-      if (isFetchError(updateResponse)) {
+      if (isError(updateResponse)) {
         // reload if error
         load()
       }
@@ -168,8 +168,8 @@ export function useApiEditableList<T extends IHydraMember>(
       )
       const promises = ids.map((id) => update(id, updatedItem))
       const responses = await Promise.all(promises)
-      const isError = responses.some((response) => isFetchError(response))
-      if (isError) {
+      const hasError = responses.some((response) => isError(response))
+      if (hasError) {
         // reload if error
         load()
       }
@@ -181,7 +181,7 @@ export function useApiEditableList<T extends IHydraMember>(
     async (item: Omit<T, 'id' | '@id' | '@type'>): Promise<void> => {
       const createResponse = await create(item)
       if (
-        !isFetchError(createResponse) &&
+        !isError(createResponse) &&
         response.data['hydra:member'].length < rowsPerPage
       ) {
         // reload if item has been added and we are on the last page
@@ -199,7 +199,7 @@ export function useApiEditableList<T extends IHydraMember>(
         )
       )
       const response = await replace(replacedItem)
-      if (isFetchError(response)) {
+      if (isError(response)) {
         // reload if error
         load()
       }
@@ -212,7 +212,7 @@ export function useApiEditableList<T extends IHydraMember>(
       updateList((items) => items.filter((item) => item.id !== id))
       const removeResponse = await remove(id)
       if (
-        isFetchError(removeResponse) ||
+        isError(removeResponse) ||
         response.data['hydra:member'].length === rowsPerPage
       ) {
         // reload if error

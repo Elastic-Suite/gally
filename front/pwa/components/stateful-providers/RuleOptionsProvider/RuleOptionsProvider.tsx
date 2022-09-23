@@ -17,7 +17,7 @@ import {
   getListApiParameters,
   getOptionsFromEnum,
   getOptionsFromLabelResource,
-  isFetchError,
+  isError,
   operatorsByType,
 } from 'shared'
 
@@ -119,7 +119,7 @@ function RuleOptionsProvider(props: IProps): JSX.Element {
               localizedCatalogId !== -1 ? localizedCatalogId : null
             }`
           )
-          if (!isFetchError(response)) {
+          if (!isError(response)) {
             return response.categories
           }
           throw new Error('error')
@@ -137,7 +137,7 @@ function RuleOptionsProvider(props: IProps): JSX.Element {
               'sourceFieldOption.sourceField': `/source_fields/${field.id}`,
             })
           )
-          if (!isFetchError(response)) {
+          if (!isError(response)) {
             return getOptionsFromLabelResource(
               response as IHydraResponse<IHydraLabelMember>
             )
