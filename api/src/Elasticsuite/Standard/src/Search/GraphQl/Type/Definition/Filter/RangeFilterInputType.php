@@ -45,8 +45,10 @@ class RangeFilterInputType extends InputObjectType implements TypeInterface, Fil
         return [
             'fields' => [
                 'field' => ['type' => Type::nonNull(Type::string())],
-                'from' => Type::string(),
-                'to' => Type::string(),
+                'gte' => Type::string(),
+                'lte' => Type::string(),
+                'gt' => Type::string(),
+                'lt' => Type::string(),
             ],
         ];
     }
@@ -58,11 +60,18 @@ class RangeFilterInputType extends InputObjectType implements TypeInterface, Fil
 
     public function validate(string $argName, mixed $inputData): array
     {
-        $errors = [];
+        $errors = $this->validateIsFilterable($inputData['field']);
 
-        $errors = array_merge($errors, $this->validateIsFilterable($inputData['field']));
-        if (!isset($inputData['from']) && !isset($inputData['to'])) {
-            $errors[] = "Filter argument {$argName}: At least 'from' or 'to' should be filled";
+        if (\count($inputData) < 2) {
+            $errors[] = "Filter argument {$argName}: At least 'gt', 'tl, 'gte or 'lte' should be filled.";
+        }
+
+        if (isset($inputData['gt']) && isset($inputData['gte'])) {
+            $errors[] = "Filter argument {$argName}: Do not use 'gt' and 'gte' in the same filter.";
+        }
+
+        if (isset($inputData['lt']) && isset($inputData['lte'])) {
+            $errors[] = "Filter argument {$argName}: Do not use 'lt' and 'lte' in the same filter.";
         }
 
         return $errors;
@@ -71,7 +80,7 @@ class RangeFilterInputType extends InputObjectType implements TypeInterface, Fil
     public function transformToElasticsuiteFilter(array $inputFilter, ContainerConfigurationInterface $containerConfig): QueryInterface
     {
         $conditions = [];
-        foreach (['from', 'to'] as $condition) {
+        foreach (['gte', 'gt', 'lte', 'lt'] as $condition) {
             if (isset($inputFilter[$condition])) {
                 $conditions = array_merge($conditions, [$condition => $inputFilter[$condition]]);
             }

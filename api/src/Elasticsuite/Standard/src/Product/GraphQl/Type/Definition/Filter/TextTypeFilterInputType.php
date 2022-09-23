@@ -45,6 +45,7 @@ class TextTypeFilterInputType extends AbstractFilter
                 'eq' => Type::string(),
                 'in' => Type::listOf(Type::string()),
                 'match' => Type::string(),
+                'exist' => Type::boolean(),
             ],
         ];
     }
@@ -54,11 +55,11 @@ class TextTypeFilterInputType extends AbstractFilter
         $errors = [];
 
         if (\count($inputData) < 1) {
-            $errors[] = "Filter argument {$argName}: At least 'eq', 'in' or 'match' should be filled.";
+            $errors[] = "Filter argument {$argName}: At least 'eq', 'in', 'match' or 'exist' should be filled.";
         }
 
         if (\count($inputData) > 1) {
-            $errors[] = "Filter argument {$argName}: Only 'eq', 'in' or 'match' should be filled.";
+            $errors[] = "Filter argument {$argName}: Only 'eq', 'in', 'match' or 'exist' should be filled.";
         }
 
         return $errors;

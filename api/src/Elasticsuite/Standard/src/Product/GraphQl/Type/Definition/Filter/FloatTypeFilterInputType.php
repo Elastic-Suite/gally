@@ -41,8 +41,11 @@ class FloatTypeFilterInputType extends IntegerTypeFilterInputType
             'fields' => [
                 'eq' => Type::float(),
                 'in' => Type::listOf(Type::float()),
-                'from' => Type::float(),
-                'to' => Type::float(),
+                'gte' => Type::float(),
+                'gt' => Type::float(),
+                'lt' => Type::float(),
+                'lte' => Type::float(),
+                'exist' => Type::boolean(),
             ],
         ];
     }
