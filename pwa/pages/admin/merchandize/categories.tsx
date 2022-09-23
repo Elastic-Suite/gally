@@ -99,14 +99,18 @@ function Categories(): JSX.Element {
         prevDataCat.current = val
         setDataCat(val)
         dispatch(addMessage(t('alert')))
-      } else dispatch(addMessage(t('alert.error')))
+      } else {
+        dispatch(addMessage(t('alert.error')))
+      }
     } else {
       const val = await update(dataCat.id, dataCat)
       if (!isFetchError(val)) {
         prevDataCat.current = val
         setDataCat(val)
         dispatch(addMessage(t('alert')))
-      } else dispatch(addMessage(t('alert.error')))
+      } else {
+        dispatch(addMessage(t('alert.error')))
+      }
     }
   }
 

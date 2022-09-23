@@ -15,7 +15,7 @@ exports[`Merchandize match snapshot testSelect 1`] = `
         style="width: 100%;"
       >
         <div
-          class="MuiBox-root css-11ze7cv"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1osj8n2-MuiGrid-root"
         >
           <div
             class="MuiFormControl-root MuiFormControl-fullWidth css-12mfi9j-MuiFormControl-root"
@@ -63,7 +63,7 @@ exports[`Merchandize match snapshot testSelect 1`] = `
           </div>
         </div>
         <div
-          class="MuiBox-root css-11ze7cv"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1osj8n2-MuiGrid-root"
         >
           <div
             class="MuiFormControl-root css-1c9gikl-MuiFormControl-root"
