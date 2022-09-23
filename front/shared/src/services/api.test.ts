@@ -4,13 +4,12 @@ import { storageGet, storageRemove } from '../services/storage'
 
 import {
   ApiError,
-  AuthError,
   fetchApi,
   getApiUrl,
   isApiError,
-  log,
   removeEmptyParameters,
 } from './api'
+import { AuthError } from './network'
 
 jest.mock('../services/fetch')
 jest.mock('../services/storage')
@@ -51,7 +50,6 @@ describe('Api service', () => {
       ;(fetchJson as jest.Mock).mockClear()
       const json = await fetchApi('en', resource)
       expect(json).toEqual({ hello: 'world' })
-      expect(json).toEqual({ hello: 'world' })
       expect(fetchJson).toHaveBeenCalledWith('https://localhost/metadata', {
         headers: {
           'Content-Type': 'application/json',
@@ -66,7 +64,6 @@ describe('Api service', () => {
       ;(fetchJson as jest.Mock).mockClear()
       mock.mockImplementationOnce(() => 'token')
       const json = await fetchApi('en', '/test')
-      expect(json).toEqual({ hello: 'world' })
       expect(json).toEqual({ hello: 'world' })
       expect(fetchJson).toHaveBeenCalledWith('http://localhost/test', {
         headers: {
@@ -118,14 +115,6 @@ describe('Api service', () => {
       expect(removeEmptyParameters({ foo: null, bar: '', baz: 42 })).toEqual({
         baz: 42,
       })
-    })
-  })
-
-  describe('log', () => {
-    it('should call the funtion passed in arguments', () => {
-      const spy = jest.fn()
-      log(new Error('error'), spy)
-      expect(spy).toHaveBeenCalledWith('error')
     })
   })
 })
