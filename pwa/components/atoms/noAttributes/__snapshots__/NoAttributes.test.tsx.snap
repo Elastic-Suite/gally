@@ -12,7 +12,7 @@ exports[`NoAttributes match snapshot 1`] = `
     <div
       class="css-1y7c3cz"
     >
-      No attributes were specified as filterable in the settings
+      No attributes were specified as searchable in the settings
     </div>
     <button
       class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge css-vnxxyn-MuiButtonBase-root-MuiButton-root"
@@ -23,7 +23,7 @@ exports[`NoAttributes match snapshot 1`] = `
         href="/admin/settings/attributes"
         style="text-decoration: none;"
       >
-        Add filtrable attributes
+        Add searchable attributes
       </a>
       <span
         class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
