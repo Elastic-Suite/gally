@@ -1,17 +1,19 @@
+import { useContext, useMemo } from 'react'
 import {
   Box,
   Divider,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
   Drawer as MuiDrawer,
   Typography,
   styled,
 } from '@mui/material'
 import { Link as RouterLink } from 'react-router-dom'
+import { IGraphqlCategories } from 'shared'
 
-const navItems = ['Home', 'About', 'Contact']
+import { getCategoriesQuery } from '../../constants'
+import { catalogContext } from '../../contexts'
+import { useGraphqlApi } from '../../hooks'
+
+import MenuList from './MenuList'
 
 const Drawer = styled(MuiDrawer)(({ theme }) => ({
   '& .MuiDrawer-paper': {
@@ -26,6 +28,15 @@ interface IProps {
 
 function Menu(props: IProps): JSX.Element {
   const { menuOpen, onMenuToggle } = props
+  const { localizedCatalogId } = useContext(catalogContext)
+  const variables = useMemo(
+    () => ({ localizedCatalogId: Number(localizedCatalogId) }),
+    [localizedCatalogId]
+  )
+  const [categories] = useGraphqlApi<IGraphqlCategories>(
+    getCategoriesQuery,
+    variables
+  )
 
   return (
     <Box component="nav">
@@ -46,16 +57,12 @@ function Menu(props: IProps): JSX.Element {
           >
             Example App
           </Typography>
-          <Divider />
-          <List dense>
-            {navItems.map((item) => (
-              <ListItem key={item} disablePadding>
-                <ListItemButton component={RouterLink} to={item}>
-                  <ListItemText primary={item} />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
+          <Divider sx={{ mb: 1 }} />
+          {Boolean(categories.data?.getCategoryTree.categories.length) && (
+            <MenuList
+              categories={categories.data?.getCategoryTree.categories}
+            />
+          )}
         </Box>
       </Drawer>
     </Box>

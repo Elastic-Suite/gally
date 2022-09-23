@@ -7,8 +7,8 @@ import {
   useState,
 } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Button, Paper, TextField } from '@mui/material'
-import { ILogin, isFetchError, isValidUser } from 'shared'
+import { Button, TextField } from '@mui/material'
+import { ILogin, isError, isValidUser } from 'shared'
 
 import { requestedPathContext, userContext } from '../../contexts'
 import { useApiFetch } from '../../hooks'
@@ -42,7 +42,7 @@ function Login(): JSX.Element {
       body: JSON.stringify({ email, password }),
       headers: new Headers({ 'Content-Type': 'application/json' }),
     }).then((json) => {
-      if (!isFetchError(json)) {
+      if (!isError(json)) {
         setToken(json.token)
         // redirectToRequestedPath()
       }
@@ -58,8 +58,8 @@ function Login(): JSX.Element {
   }
 
   return (
-    <Paper sx={{ padding: 4 }}>
-      <Title>Login</Title>
+    <div style={{ padding: 4 }}>
+      <Title title="Login" />
       <form onSubmit={handleSubmit}>
         <TextField
           fullWidth
@@ -80,7 +80,7 @@ function Login(): JSX.Element {
           Login
         </Button>
       </form>
-    </Paper>
+    </div>
   )
 }
 

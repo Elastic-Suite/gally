@@ -2,19 +2,19 @@ import { useEffect } from 'react'
 import { Typography } from '@mui/material'
 
 interface IProps {
-  children: string
+  title: string
 }
 
 function Title(props: IProps): JSX.Element {
-  const { children } = props
+  const { title } = props
 
   useEffect(() => {
-    if (typeof document !== 'undefined' && typeof children === 'string') {
-      document.title = children
+    if (typeof document !== 'undefined') {
+      document.title = title
     }
-  }, [children])
+  }, [title])
 
-  return <Typography variant="h1">{children}</Typography>
+  return <Typography variant="h1">{title}</Typography>
 }
 
 export default Title

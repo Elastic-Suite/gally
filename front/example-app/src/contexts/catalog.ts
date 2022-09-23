@@ -1,22 +1,22 @@
 import { createContext } from 'react'
-import { ICatalog, ILocalizedCatalog } from 'shared'
+import { IGraphqlCatalog, ILocalizedCatalog } from 'shared'
 
 interface ICatalogContext {
-  catalog: ICatalog
-  catalogId: string | number
-  catalogs: ICatalog[]
-  localizedCatalog: ILocalizedCatalog
-  localizedCatalogId: string | number
-  onCatalogIdChange?: (catalogId: string | number) => void
-  onLocalizedCatalogIdChange?: (localizedCatalogId: string | number) => void
+  catalog: Partial<IGraphqlCatalog>
+  catalogId: number
+  catalogs: Partial<IGraphqlCatalog>[]
+  localizedCatalog: Partial<ILocalizedCatalog>
+  localizedCatalogId: number
+  onCatalogIdChange?: (catalogId: string) => void
+  onLocalizedCatalogIdChange?: (localizedCatalogId: string) => void
 }
 
 export const catalogContext = createContext<ICatalogContext>({
   catalog: null,
-  catalogId: '',
+  catalogId: -1,
   catalogs: [],
   localizedCatalog: null,
-  localizedCatalogId: '',
+  localizedCatalogId: -1,
   onCatalogIdChange: null,
   onLocalizedCatalogIdChange: null,
 })

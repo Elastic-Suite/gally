@@ -1,5 +1,13 @@
 import { IError } from './network'
 
+export interface IGraphqlNode<T> {
+  node: T
+}
+
+export interface IGraphqlEdges<T> {
+  edges: IGraphqlNode<T>[]
+}
+
 export interface IGraphqlErrorLocation {
   line: number
   column: number
