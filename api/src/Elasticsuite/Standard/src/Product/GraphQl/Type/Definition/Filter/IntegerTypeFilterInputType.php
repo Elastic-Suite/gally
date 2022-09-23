@@ -41,8 +41,11 @@ class IntegerTypeFilterInputType extends AbstractFilter
             'fields' => [
                 'eq' => Type::int(),
                 'in' => Type::listOf(Type::int()),
-                'from' => Type::int(),
-                'to' => Type::int(),
+                'gte' => Type::int(),
+                'gt' => Type::int(),
+                'lt' => Type::int(),
+                'lte' => Type::int(),
+                'exist' => Type::boolean(),
             ],
         ];
     }
@@ -52,14 +55,15 @@ class IntegerTypeFilterInputType extends AbstractFilter
         $errors = [];
 
         if (empty($inputData)) {
-            $errors[] = "Filter argument {$argName}: At least 'eq', 'in', 'from' or 'to' should be filled.";
+            $errors[] = "Filter argument {$argName}: At least 'eq', 'in', 'gte', 'gt, 'lt', 'lte or 'exist' should be filled.";
         }
 
-        if (
-            \count($inputData) > 1
-            && (\count($inputData) > 2 || !isset($inputData['from']) || !isset($inputData['to']))
-        ) {
-            $errors[] = "Filter argument {$argName}: Only 'from' and 'to' can be used together.";
+        if (isset($inputData['gt']) && isset($inputData['gte'])) {
+            $errors[] = "Filter argument {$argName}: Do not use 'gt' and 'gte' in the same filter.";
+        }
+
+        if (isset($inputData['lt']) && isset($inputData['lte'])) {
+            $errors[] = "Filter argument {$argName}: Do not use 'lt' and 'lte' in the same filter.";
         }
 
         return $errors;

@@ -19,6 +19,7 @@ namespace Elasticsuite\Product\GraphQl\Type\Definition\Filter;
 use ApiPlatform\Core\GraphQl\Type\Definition\TypeInterface;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder;
 use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
+use Elasticsuite\Search\Elasticsearch\Request\QueryFactory;
 use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
 use GraphQL\Type\Definition\InputObjectType;
 
@@ -26,6 +27,7 @@ abstract class AbstractFilter extends InputObjectType implements TypeInterface, 
 {
     public function __construct(
         protected FilterQueryBuilder $filterQueryBuilder,
+        private QueryFactory $queryFactory,
         private string $nestingSeparator,
     ) {
         parent::__construct($this->getConfig());
@@ -50,6 +52,14 @@ abstract class AbstractFilter extends InputObjectType implements TypeInterface, 
 
     public function transformToElasticsuiteFilter(array $inputFilter, ContainerConfigurationInterface $containerConfig): QueryInterface
     {
+        if (isset($inputFilter['exist'])) {
+            $existQuery = $this->queryFactory->create(QueryInterface::TYPE_EXISTS, $inputFilter);
+
+            return $inputFilter['exist']
+                ? $existQuery
+                : $this->queryFactory->create(QueryInterface::TYPE_BOOL, ['mustNot' => [$existQuery]]);
+        }
+
         $conditions = [];
         foreach ($this->getConditions() as $condition) {
             if (isset($inputFilter[$condition])) {

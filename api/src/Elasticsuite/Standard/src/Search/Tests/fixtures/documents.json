@@ -415,7 +415,6 @@
         "entity_id": "10",
         "sku": "24-WB05",
         "name": "Fourre-tout à bandoulière avisé",
-        "size" : 2,
         "stock": {
           "status": 1,
           "qty": 8

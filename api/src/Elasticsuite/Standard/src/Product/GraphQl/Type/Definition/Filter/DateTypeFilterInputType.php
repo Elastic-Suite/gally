@@ -41,8 +41,11 @@ class DateTypeFilterInputType extends IntegerTypeFilterInputType
             'fields' => [
                 'eq' => Type::string(),
                 'in' => Type::listOf(Type::string()),
-                'from' => Type::string(),
-                'to' => Type::string(),
+                'gte' => Type::string(),
+                'gt' => Type::string(),
+                'lt' => Type::string(),
+                'lte' => Type::string(),
+                'exist' => Type::boolean(),
             ],
         ];
     }

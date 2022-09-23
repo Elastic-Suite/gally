@@ -151,6 +151,7 @@ services:
                 equalFilter: '@Elasticsuite\Search\GraphQl\Type\Definition\Filter\EqualTypeFilterInputType',
                 matchFilter: '@Elasticsuite\Search\GraphQl\Type\Definition\Filter\MatchFilterInputType',
                 rangeFilter: '@Elasticsuite\Search\GraphQl\Type\Definition\Filter\RangeFilterInputType',
+                existFilter: '@Elasticsuite\Search\GraphQl\Type\Definition\Filter\ExistFilterInputType',
             }
             - '@Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
         tags:
@@ -160,6 +161,14 @@ services:
         lazy: true
         arguments:
             - '@Elasticsuite\Search\GraphQl\Type\Definition\FieldFilterInputType'
+            - '@Elasticsuite\Search\Elasticsearch\Request\QueryFactory'
+        tags:
+            - { name: api_platform.graphql.type }
+
+    Elasticsuite\Search\GraphQl\Type\Definition\Filter\ExistFilterInputType:
+        lazy: true
+        arguments:
+            - '@Elasticsuite\Metadata\Repository\SourceFieldRepository'
             - '@Elasticsuite\Search\Elasticsearch\Request\QueryFactory'
         tags:
             - { name: api_platform.graphql.type }
