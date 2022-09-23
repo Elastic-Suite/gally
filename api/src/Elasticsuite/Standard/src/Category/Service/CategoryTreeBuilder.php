@@ -25,6 +25,7 @@ use Elasticsuite\Category\Model\Category;
 use Elasticsuite\Category\Model\CategoryTree;
 use Elasticsuite\Category\Repository\CategoryConfigurationRepository;
 use Elasticsuite\Category\Repository\CategoryRepository;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CategoryTreeBuilder
 {
@@ -39,8 +40,18 @@ class CategoryTreeBuilder
 
     public function buildTree(?int $catalogId, ?int $localizedCatalogId): CategoryTree
     {
-        $catalog = $catalogId ? $this->catalogRepository->find($catalogId) : null;
         $localizedCatalog = $localizedCatalogId ? $this->localizedCatalogRepository->find($localizedCatalogId) : null;
+        if ($localizedCatalogId && !$localizedCatalog) {
+            throw new NotFoundHttpException(sprintf('Localized catalog with id %d not found.', $localizedCatalogId));
+        }
+
+        $catalog = $catalogId
+            ? $this->catalogRepository->find($catalogId)
+            : $localizedCatalog?->getCatalog();
+        if ($catalogId && !$catalog) {
+            throw new NotFoundHttpException(sprintf('Catalog with id %d not found.', $catalogId));
+        }
+
         $sortedCategories = $this->getSortedCategories($catalog, $localizedCatalog);
 
         return new CategoryTree($catalogId, $localizedCatalogId, $this->buildCategoryTree($sortedCategories));
