@@ -33,6 +33,7 @@ interface IProps<T extends IHydraMember> {
   onRowsPerPageChange?: (
     event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => void
+  noResult?: boolean
 }
 
 function TableGuesser<T extends IHydraMember>(props: IProps<T>): JSX.Element {
@@ -46,6 +47,7 @@ function TableGuesser<T extends IHydraMember>(props: IProps<T>): JSX.Element {
     rowsPerPage,
     rowsPerPageOptions,
     onRowsPerPageChange,
+    noResult,
   } = props
   const tableHeaders = useApiHeaders(resource)
   const fieldOptions = useApiEditableFieldOptions(resource)
@@ -88,6 +90,7 @@ function TableGuesser<T extends IHydraMember>(props: IProps<T>): JSX.Element {
         tableHeaders={tableHeaders}
         tableRows={tableRows}
         onRowsPerPageChange={onRowsPerPageChange}
+        noResult={noResult}
       />
       <StickyBar positionRef={tableRef} show={selectedRows.length > 0}>
         <TableStickyBar
