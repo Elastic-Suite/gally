@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'next-i18next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
@@ -8,20 +8,15 @@ import { emptyCombinationRule } from '~/constants'
 import { breadcrumbContext } from '~/contexts'
 import { withAuth } from '~/hocs'
 import {
+  useApiFetch,
   useApiList,
   useFetchApi,
   useResource,
   useResourceOperations,
 } from '~/hooks'
-import { findBreadcrumbLabel } from '~/services'
-import { selectMenu, useAppSelector } from '~/store'
-import {
-  ICatalog,
-  ICategories,
-  ICategory,
-  IHydraResponse,
-  ISearchParameters,
-} from '~/types'
+import { findBreadcrumbLabel, isFetchError } from '~/services'
+import { addMessage, selectMenu, useAppDispatch, useAppSelector } from '~/store'
+import { ICatalog, ICategories, ICategory } from '~/types'
 
 import TitleBlock from '~/components/molecules/layout/TitleBlock/TitleBlock'
 import TwoColsLayout from '~/components/molecules/layout/twoColsLayout/TwoColsLayout'
@@ -64,103 +59,73 @@ function Categories(): JSX.Element {
     }`
   )
 
-  const categoryConfigurationParams: ISearchParameters = useMemo(
-    () => ({
-      categoryId: selectedCategoryItem ? selectedCategoryItem.id : null,
-      catalogId: catalogId !== -1 ? catalogId : null,
-      localizedCatalogId: localizedCatalogId !== -1 ? localizedCatalogId : null,
-    }),
-    [selectedCategoryItem, catalogId, localizedCatalogId]
-  )
   const categoryConfigurationResource = useResource('CategoryConfiguration')
-  const [dataCats, updateDataCats] = useFetchApi<
-    IHydraResponse<IConfiguration>
-  >(categoryConfigurationResource, categoryConfigurationParams)
 
-  const dataCat =
-    catalogId !== -1 &&
-    localizedCatalogId !== -1 &&
-    dataCats?.data['hydra:member']
-      ? dataCats?.data['hydra:member'].find((el) => el?.id === catalogId)
-      : undefined
+  const fetchApi = useApiFetch<IConfiguration>()
+  const [dataCat, setDataCat] = useState<IConfiguration>()
+  const prevDataCat = useRef<IConfiguration>()
 
-  const idCat = dataCat?.id
+  useEffect(() => {
+    if (selectedCategoryItem) {
+      fetchApi(
+        `${categoryConfigurationResource.url}/category/${selectedCategoryItem.id}`
+      ).then((dataCat) => {
+        if (!isFetchError(dataCat)) {
+          prevDataCat.current = dataCat
+          setDataCat(dataCat)
+        }
+      })
+    }
+  }, [fetchApi, selectedCategoryItem, categoryConfigurationResource.url])
 
-  const configuration = useResource('CategoryConfiguration')
-  const { update } = useResourceOperations<IConfiguration>(configuration)
-
-  const [saveData, setSaveData] = useState({})
+  const { update, create } = useResourceOperations<IConfiguration>(
+    categoryConfigurationResource
+  )
 
   function handleUpdateCat(name: string): (val: boolean | string) => void {
     return (val) => {
       if (catalogId !== -1 && localizedCatalogId !== -1) {
-        setSaveData((state) => ({ ...state, [name]: val }))
-
-        updateDataCats((categ) => {
-          return {
-            ...categ,
-            'hydra:member': categ['hydra:member'].map((el) => {
-              if (el.id === catalogId) return { ...el, [name]: val }
-              return el
-            }),
-          }
-        })
+        setDataCat((el) => ({ ...el, [name]: val }))
       }
     }
   }
 
-  const [saveButton, setSaveButton] = useState({})
-
-  useEffect(() => {
-    if (
-      localizedCatalogId !== -1 &&
-      catalogId !== -1 &&
-      !Object.entries(saveData).length
-    )
-      setSaveButton({
-        useNameInProductSearch: dataCat.useNameInProductSearch,
-        isVirtual: dataCat.isVirtual,
-        defaultSorting: dataCat.defaultSorting,
-      })
-  }, [
-    dataCat,
-    saveData,
-    dataCat?.useNameInProductSearch,
-    dataCat?.isVirtual,
-    dataCat?.defaultSorting,
-    catalogId,
-    localizedCatalogId,
-  ])
+  const dispatch = useAppDispatch()
 
   async function onSave(): Promise<void> {
-    await update(idCat, saveData)
-    setSaveData({})
+    if (!dataCat.id) {
+      const val = await create(dataCat)
+      if (!isFetchError(val)) {
+        prevDataCat.current = val
+        setDataCat(val)
+        dispatch(addMessage(t('alert')))
+      } else dispatch(addMessage(t('alert.error')))
+    } else {
+      const val = await update(dataCat.id, dataCat)
+      if (!isFetchError(val)) {
+        prevDataCat.current = val
+        setDataCat(val)
+        dispatch(addMessage(t('alert')))
+      } else dispatch(addMessage(t('alert.error')))
+    }
   }
 
-  function testBtnSaveDisabled(): boolean {
-    if (
-      Object.entries(saveButton).find(
-        ([key, val]: [
-          key: (keyof typeof saveButton)['string'],
-          val: string | boolean
-        ]) => {
-          if (saveData[key] === undefined) return 0
-          else if (saveData[key] === val) return 0
-          return 1
-        }
+  const dirty = prevDataCat.current
+    ? Object.entries(dataCat ?? {}).some(
+        ([key, val]: [key: keyof typeof dataCat, val: string | boolean]) =>
+          !(
+            prevDataCat.current[key] === undefined ||
+            prevDataCat.current[key] === val
+          )
       )
-    )
-      return false
-    return true
-  }
-
-  const disableBtnSave = testBtnSaveDisabled()
+    : false
 
   return (
     <>
       <Head>
         <title>{title}</title>
       </Head>
+
       <TwoColsLayout
         left={[
           <TitleBlock key="categories" title={t('categories.title')}>
@@ -203,7 +168,7 @@ function Categories(): JSX.Element {
             catalogsData={data}
             error={error}
             onSave={onSave}
-            disableBtnSave={disableBtnSave}
+            disableBtnSave={!dirty}
           />
         ) : (
           <Box
