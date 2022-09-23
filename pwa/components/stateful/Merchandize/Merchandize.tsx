@@ -1,6 +1,6 @@
 import { ChangeEvent } from 'react'
 import { useTranslation } from 'next-i18next'
-import { Box, Grid, Paper } from '@mui/material'
+import { Grid, Paper } from '@mui/material'
 import DropDown from '~/components/atoms/form/DropDown'
 import Switch from '~/components/atoms/form/Switch'
 import { IOptions } from '~/types'
@@ -48,7 +48,7 @@ function Merchandize({
           alignItems="flex-start"
           style={{ width: '100%' }}
         >
-          <Box sx={{ width: '50%' }}>
+          <Grid item xs={6}>
             <Switch
               label={t('name')}
               labelInfo={t('name.tooltip')}
@@ -56,8 +56,8 @@ function Merchandize({
               checked={categoryNameValue}
               name="name"
             />
-          </Box>
-          <Box sx={{ width: '50%' }}>
+          </Grid>
+          <Grid item xs={6}>
             <DropDown
               options={sortOptions}
               label="Default sorting"
@@ -65,7 +65,7 @@ function Merchandize({
               onChange={onSortChange}
               infoTooltip={t('select.tooltip')}
             />
-          </Box>
+          </Grid>
         </Grid>
         <Grid container justifyContent="flex-start" alignItems="center">
           <Switch
