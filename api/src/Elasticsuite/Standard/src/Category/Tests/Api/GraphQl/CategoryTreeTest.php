@@ -37,6 +37,14 @@ class CategoryTreeTest extends AbstractTest
         ]);
     }
 
+    public function testInvalidCatalog(): void
+    {
+        $this->assertSame(
+            'Catalog with id 999 not found.',
+            $this->getCategoryTree('b2c_it')[0]['debugMessage'],
+        );
+    }
+
     public function testGetCategoryTree(): void
     {
         $this->assertSame(
@@ -155,12 +163,12 @@ class CategoryTreeTest extends AbstractTest
 
         $params = [];
         if ($catalogCode) {
-            $params[] = 'catalogId:'
-                . $catalogRepository->findOneBy(['code' => $catalogCode])->getId();
+            $catalog = $catalogRepository->findOneBy(['code' => $catalogCode]);
+            $params[] = 'catalogId:' . ($catalog ? $catalog->getId() : '999');
         }
         if ($localizedCatalogCode) {
-            $params[] = 'localizedCatalogId:'
-                . $localizedCatalogRepository->findOneBy(['code' => $localizedCatalogCode])->getId();
+            $localizedCatalog = $localizedCatalogRepository->findOneBy(['code' => $localizedCatalogCode]);
+            $params[] = 'localizedCatalogId:' . ($localizedCatalog ? $localizedCatalog->getId() : '999');
         }
 
         $query = !empty($params) ? '(' . implode(',', $params) . ')' : '';
@@ -179,7 +187,12 @@ class CategoryTreeTest extends AbstractTest
             new ExpectedResponse(
                 200,
                 function (ResponseInterface $response) use (&$responseData) {
-                    $responseData = $response->toArray()['data']['getCategoryTree']['categories'];
+                    $response = $response->toArray();
+                    if (\array_key_exists('errors', $response)) {
+                        $responseData = $response['errors'];
+                    } else {
+                        $responseData = $response['data']['getCategoryTree']['categories'];
+                    }
                 }
             )
         );
