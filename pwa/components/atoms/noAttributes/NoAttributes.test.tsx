@@ -5,8 +5,8 @@ describe('NoAttributes', () => {
   it('match snapshot', () => {
     const { container } = renderWithProviders(
       <NoAttributes
-        title="No attributes were specified as filterable in the settings"
-        btnTitle="Add filtrable attributes"
+        title="No attributes were specified as searchable in the settings"
+        btnTitle="Add searchable attributes"
         btnHref="admin/settings/attributes"
       />
     )

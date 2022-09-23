@@ -1,6 +1,6 @@
 {
   "attributes": "Attributs cherchables",
   "attributes.alert": "Les attributs affichés ici ont été définis comme recherchables",
-  "attributes.none": "Aucun attribut n'a été indiqué comme filtrable dans les paramètres",
-  "attributes.none.btn": "Ajouter des attributs filtrables"
+  "attributes.none": "Aucun attribut n'a été indiqué comme cherchable dans les paramètres",
+  "attributes.none.btn": "Ajouter des attributs cherchables"
 }
