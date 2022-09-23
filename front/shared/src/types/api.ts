@@ -1,6 +1,6 @@
-import { IFetchError, Method } from './fetch'
 import { IElasticSuiteProperty, IHydraMember } from './hydra'
 import { IJsonldBase, IJsonldId, IJsonldType } from './jsonld'
+import { IError, Method } from './network'
 
 export interface IProperty extends IJsonldBase {
   domain: IJsonldId
@@ -42,10 +42,10 @@ export interface IResponseError {
 }
 
 export interface IResourceOperations<T extends IHydraMember> {
-  create?: (item: Omit<T, 'id' | '@id' | '@type'>) => Promise<T | IFetchError>
-  remove?: (id: string | number) => Promise<T | IFetchError>
-  replace?: (item: Omit<T, '@id' | '@type'>) => Promise<T | IFetchError>
-  update?: (id: string | number, item: Partial<T>) => Promise<T | IFetchError>
+  create?: (item: Omit<T, 'id' | '@id' | '@type'>) => Promise<T | IError>
+  remove?: (id: string | number) => Promise<T | IError>
+  replace?: (item: Omit<T, '@id' | '@type'>) => Promise<T | IError>
+  update?: (id: string | number, item: Partial<T>) => Promise<T | IError>
 }
 
 export type IResourceEditableCreate<T> = (

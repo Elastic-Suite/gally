@@ -1,5 +1,5 @@
 import { DataContentType } from './customTables'
-import { Method } from './fetch'
+import { Method } from './network'
 import {
   IJsonldBase,
   IJsonldBoolean,

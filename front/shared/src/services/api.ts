@@ -1,4 +1,3 @@
-/* eslint-disable max-classes-per-file */
 import {
   apiUrl,
   authErrorCodes,
@@ -10,12 +9,11 @@ import {
 import { IResource, IResponseError, ISearchParameters } from '../types'
 
 import { fetchJson } from './fetch'
+import { AuthError } from './network'
 import { storageGet, storageRemove } from './storage'
 import { getUrl } from './url'
 
 export class ApiError extends Error {}
-
-export class AuthError extends Error {}
 
 export function isApiError<T>(
   json: T | IResponseError
@@ -75,21 +73,4 @@ export function removeEmptyParameters(
       ([_, value]) => (value ?? '') !== ''
     )
   )
-}
-
-export type NetworkError = Error | ApiError | AuthError | string
-export function log(
-  error: NetworkError,
-  log?: (message: string) => void
-): void {
-  if (
-    process.env.NODE_ENV === 'development' ||
-    (typeof window !== 'undefined' && window.showErrors === true)
-  ) {
-    // eslint-disable-next-line no-console
-    console.error(error)
-  }
-  if (log) {
-    log(typeof error === 'string' ? error : error.message)
-  }
 }

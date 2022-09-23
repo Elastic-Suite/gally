@@ -22,6 +22,7 @@ export const fetchJson = jest.fn((url: string): Promise<unknown> => {
     case 'http://localhost/graphql':
       return Promise.resolve({
         json: graphql,
+        response: { status: 200 },
       })
     default:
       return Promise.resolve({
