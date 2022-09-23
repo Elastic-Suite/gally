@@ -10,10 +10,6 @@ export interface ISearchProduct {
   paginationInfo: IProductPaginationInfo
 }
 
-export interface IFetchProducts {
-  data: ISearchProducts
-}
-
 export interface IProduct {
   id: string
   price: string

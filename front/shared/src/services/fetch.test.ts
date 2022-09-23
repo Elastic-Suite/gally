@@ -1,17 +1,10 @@
 import fetchMock from 'fetch-mock-jest'
 
-import { fetchJson, isFetchError, normalizeUrl } from './fetch'
+import { fetchJson, normalizeUrl } from './fetch'
 
 jest.mock('../services/storage')
 
 describe('Fetch service', () => {
-  describe('isFetchError', () => {
-    it('should check if response is a fetch error', () => {
-      expect(isFetchError({ error: 'Unauthorized' })).toEqual(true)
-      expect(isFetchError({ hello: 'world' })).toEqual(false)
-    })
-  })
-
   describe('normalizeUrl', () => {
     const OLD_ENV = process.env
 

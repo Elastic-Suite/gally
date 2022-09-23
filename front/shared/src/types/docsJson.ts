@@ -1,5 +1,5 @@
-import { HttpCode, Method } from './fetch'
 import { HydraPropertyType } from './hydra'
+import { HttpCode, Method } from './network'
 
 export interface IDocsJsonContent {
   schema: HydraPropertyType

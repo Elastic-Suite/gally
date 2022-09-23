@@ -1,9 +1,5 @@
 import { apiUrl } from '../constants'
-import { IFetchError, Method } from '../types'
-
-export function isFetchError<T>(json: T | IFetchError): json is IFetchError {
-  return 'error' in json
-}
+import { Method } from '../types'
 
 export function normalizeUrl(url = ''): string {
   if (process.env.NEXT_PUBLIC_LOCAL) {
