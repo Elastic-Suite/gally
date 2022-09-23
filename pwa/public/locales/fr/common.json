@@ -30,5 +30,6 @@
   "table.apply": "Appliquer",
   "table.cancel": "Annuler",
   "table.selected_one": "{{count}} ligne sélectionnée",
-  "table.selected_other": "{{count}} lignes sélectionnées"
+  "table.selected_other": "{{count}} lignes sélectionnées",
+  "no.result": "Aucun résultat ne correspond à votre demande"
 }
