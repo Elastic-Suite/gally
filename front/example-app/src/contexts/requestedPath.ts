@@ -1,6 +1,6 @@
 import { createContext } from 'react'
 
-interface IRequestedPathContext {
+export interface IRequestedPathContext {
   requestedPath: string
   setRequestedPath: (requestedPath: string) => void
 }
