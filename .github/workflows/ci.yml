@@ -99,7 +99,7 @@ jobs:
           path: api/coverage/coverage.xml
                   
       - name: Jest
-        run: docker-compose exec -T pwa yarn test --ci --passWithNoTests
+        run: docker-compose exec -T pwa yarn test:ci
 
       - name: Frontend Coverage Report
         uses: 5monkeys/cobertura-action@v12

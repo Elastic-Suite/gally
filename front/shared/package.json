@@ -7,6 +7,7 @@
   "scripts": {
     "build": "tsup src/index.ts --format cjs --dts --splitting",
     "test": "jest",
+    "test:ci": "jest",
     "test:debug": "jest --runInBand",
     "eslint": "eslint --fix --ignore-path .gitignore .",
     "eslint:ci": "eslint --ignore-path .gitignore .",
