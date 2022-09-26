@@ -40,10 +40,10 @@ jobs:
       - name: Yarn Install dependencies
         working-directory: front
         run: yarn --frozen-lockfile
+      - name: Build shared
+        working-directory: front
+        run: yarn build:shared
       - name: Typescript
-        env:
-          # 7 GiB by default on GitHub, setting this to 16 GiB
-          NODE_OPTIONS: --max-old-space-size=16384
         working-directory: front
         run: yarn typescript:ci
       - name: EsLint

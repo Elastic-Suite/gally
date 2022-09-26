@@ -8,6 +8,7 @@
     "build": "set NODE_OPTIONS=--max-old-space-size=12288 && next build",
     "start": "next start",
     "test": "jest",
+    "test:ci": "jest",
     "test:debug": "jest --runInBand",
     "test:update": "jest --update-snapshot",
     "eslint": "eslint --fix --ignore-path .gitignore .",

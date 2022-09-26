@@ -10,12 +10,13 @@
     "start": "yarn --cwd ./pwa start",
     "start:example": "yarn --cwd ./example-app start",
     "test": "yarn --cwd shared test && yarn --cwd pwa test && yarn --cwd example-app test",
+    "test:ci": "yarn --cwd shared test:ci && yarn --cwd pwa test:ci && yarn --cwd example-app test:ci",
     "eslint": "yarn --cwd shared eslint && yarn --cwd pwa eslint && yarn --cwd example-app eslint",
-    "eslint:ci": "yarn build:shared && yarn --cwd shared eslint:ci && yarn --cwd pwa eslint:ci && yarn --cwd example-app eslint:ci",
+    "eslint:ci": "yarn --cwd shared eslint:ci && yarn --cwd pwa eslint:ci && yarn --cwd example-app eslint:ci",
     "prettier": "yarn --cwd shared prettier && yarn --cwd pwa prettier && yarn --cwd example-app prettier",
-    "prettier:ci": "yarn build:shared && yarn --cwd shared prettier:ci && yarn --cwd pwa prettier:ci && yarn --cwd example-app prettier:ci",
+    "prettier:ci": "yarn --cwd shared prettier:ci && yarn --cwd pwa prettier:ci && yarn --cwd example-app prettier:ci",
     "typescript": "yarn --cwd shared typescript && yarn --cwd pwa typescript && yarn --cwd example-app typescript",
-    "typescript:ci": "yarn build:shared && yarn --cwd shared typescript:ci && yarn --cwd pwa typescript:ci && yarn --cwd example-app typescript:ci",
+    "typescript:ci": "yarn --cwd shared typescript:ci && yarn --cwd pwa typescript:ci && yarn --cwd example-app typescript:ci",
     "prepare": "cd .. && husky install front/.husky"
   },
   "devDependencies": {
