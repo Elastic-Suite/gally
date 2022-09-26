@@ -56,7 +56,7 @@ function CatalogSwitcher(props: IProps): JSX.Element {
           hydraMember.localizedCatalogs.map((locCtl) => ({
             label:
               locCtl.localName[0].toUpperCase() + locCtl.localName.substring(1),
-            value: locCtl.id,
+            value: locCtl.id as number,
           }))
         )
         .flat()
