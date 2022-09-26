@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Elasticsuite\Product\GraphQl\Type\Definition\Filter;
 
 use Elasticsuite\Metadata\Model\SourceField;
+use Elasticsuite\Search\Constant\FilterOperator;
 use GraphQL\Type\Definition\Type;
 
 class FloatTypeFilterInputType extends IntegerTypeFilterInputType
@@ -39,14 +40,19 @@ class FloatTypeFilterInputType extends IntegerTypeFilterInputType
     {
         return [
             'fields' => [
-                'eq' => Type::float(),
-                'in' => Type::listOf(Type::float()),
-                'gte' => Type::float(),
-                'gt' => Type::float(),
-                'lt' => Type::float(),
-                'lte' => Type::float(),
-                'exist' => Type::boolean(),
+                FilterOperator::EQ => Type::float(),
+                FilterOperator::IN => Type::listOf(Type::float()),
+                FilterOperator::GTE => Type::float(),
+                FilterOperator::GT => Type::float(),
+                FilterOperator::LT => Type::float(),
+                FilterOperator::LTE => Type::float(),
+                FilterOperator::EXIST => Type::boolean(),
             ],
         ];
+    }
+
+    public function validateValueType(string $field, string $operator, mixed $value): void
+    {
+        $this->validateValueTypeByType($field, $operator, $value, 'float');
     }
 }

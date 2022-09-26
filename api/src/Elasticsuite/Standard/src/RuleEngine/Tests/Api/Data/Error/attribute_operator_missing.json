@@ -1,0 +1,17 @@
+{
+  "rule" : {
+    "type": "combination",
+    "operator": "all",
+    "value": "true",
+    "children": [
+      {
+        "type": "attribute",
+        "field": "name",
+        "attribute_type": "text",
+        "value": "bag"
+      }
+    ]
+  },
+  "expectedError" : "Operator is missing in an attribute rule.",
+  "responseCode" : 500
+}

@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Elasticsuite\Product\GraphQl\Type\Definition\Filter;
 
 use Elasticsuite\Metadata\Model\SourceField;
+use Elasticsuite\Search\Constant\FilterOperator;
 use GraphQL\Type\Definition\Type;
 
 class TextTypeFilterInputType extends AbstractFilter
@@ -42,10 +43,10 @@ class TextTypeFilterInputType extends AbstractFilter
     {
         return [
             'fields' => [
-                'eq' => Type::string(),
-                'in' => Type::listOf(Type::string()),
-                'match' => Type::string(),
-                'exist' => Type::boolean(),
+                FilterOperator::EQ => Type::string(),
+                FilterOperator::IN => Type::listOf(Type::string()),
+                FilterOperator::MATCH => Type::string(),
+                FilterOperator::EXIST => Type::boolean(),
             ],
         ];
     }
@@ -55,11 +56,25 @@ class TextTypeFilterInputType extends AbstractFilter
         $errors = [];
 
         if (\count($inputData) < 1) {
-            $errors[] = "Filter argument {$argName}: At least 'eq', 'in', 'match' or 'exist' should be filled.";
+            $errors[] = sprintf(
+                "Filter argument %s: At least '%s', '%s', '%s' or '%s' should be filled.",
+                $argName,
+                FilterOperator::EQ,
+                FilterOperator::IN,
+                FilterOperator::MATCH,
+                FilterOperator::EXIST,
+            );
         }
 
         if (\count($inputData) > 1) {
-            $errors[] = "Filter argument {$argName}: Only 'eq', 'in', 'match' or 'exist' should be filled.";
+            $errors[] = sprintf(
+                "Filter argument %s: Only '%s', '%s', '%s' or '%s' should be filled.",
+                $argName,
+                FilterOperator::EQ,
+                FilterOperator::IN,
+                FilterOperator::MATCH,
+                FilterOperator::EXIST,
+            );
         }
 
         return $errors;

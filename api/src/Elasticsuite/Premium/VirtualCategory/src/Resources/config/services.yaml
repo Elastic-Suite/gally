@@ -1,1 +1,12 @@
-services: ~
+services: 
+    Elasticsuite\VirtualCategory\Decoration\Product\GraphQl\Type\Definition\Filter\TextTypeFilterInputType:
+        decorates: Elasticsuite\Product\GraphQl\Type\Definition\Filter\TextTypeFilterInputType
+        arguments:
+            - '@Elasticsuite\RuleEngine\Service\RuleEngineManager'
+            - '@Elasticsuite\Category\Repository\CategoryRepository'
+            - '@Elasticsuite\Category\Repository\CategoryConfigurationRepository'
+            - '@Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
+            - '@Elasticsuite\Search\Elasticsearch\Request\QueryFactory'
+            - '@.inner'
+            - '%api_platform.graphql.nesting_separator%'
+        decoration_priority: 10

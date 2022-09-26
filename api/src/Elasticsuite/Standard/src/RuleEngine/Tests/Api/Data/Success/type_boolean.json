@@ -1,0 +1,41 @@
+{
+  "rule" : {
+    "type": "combination",
+    "operator": "all",
+    "value": "true",
+    "children": [
+      {
+        "type": "attribute",
+        "field": "is_new",
+        "operator": "eq",
+        "attribute_type": "boolean",
+        "value": "true"
+      },
+      {
+        "type": "attribute",
+        "field": "is_new",
+        "operator": "eq",
+        "attribute_type": "boolean",
+        "value": "false"
+      }
+    ]
+  },
+  "expectedFilters" : {
+    "boolFilter": {
+      "_must": [
+        {
+          "is_new": {
+            "eq": "true"
+          }
+        },
+        {
+          "is_new": {
+            "eq": "false"
+          }
+        }
+      ]
+    }
+  },
+  "responseCode" : 200
+}
+

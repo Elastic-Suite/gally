@@ -1,0 +1,47 @@
+Elasticsuite\Metadata\Model\SourceField:
+    product_id:
+        metadata: '@product'
+        code: 'id'
+        type: 'int'
+        isSystem: true
+        isFilterable: true
+    product_sku:
+        metadata: '@product'
+        code: 'sku'
+        type: 'reference'
+        isSystem: true
+        isFilterable: true
+    product_name:
+        metadata: '@product'
+        code: 'name'
+        type: 'text'
+        isUsedForRules: true
+    product_weight:
+        metadata: '@product'
+        code: 'weight'
+        type: 'float'
+        isUsedForRules: true
+    product_uid:
+        metadata: '@product'
+        code: 'uid'
+        type: 'keyword'
+        isUsedForRules: true
+        isSystem: true
+    product_is_new:
+        metadata: '@product'
+        code: 'is_new'
+        type: 'boolean'
+        isUsedForRules: true
+        isSystem: true
+    product_created_at:
+        metadata: '@product'
+        code: 'created_at'
+        type: 'date'
+        isUsedForRules: true
+        isSystem: true
+    product_updated_at:
+        metadata: '@product'
+        code: 'updated_at'
+        type: 'date'
+        isUsedForRules: false
+        isFilterable: false

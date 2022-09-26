@@ -1,0 +1,107 @@
+{
+  "rule" : {
+    "type": "combination",
+    "operator": "all",
+    "value": "true",
+    "children": [
+      {
+        "type": "attribute",
+        "field": "sku",
+        "operator": "match",
+        "attribute_type": "reference",
+        "value": "my_sku"
+      },
+      {
+        "type": "attribute",
+        "field": "sku",
+        "operator": "!match",
+        "attribute_type": "reference",
+        "value": "my_sku"
+      },
+      {
+        "type": "attribute",
+        "field": "sku",
+        "operator": "eq",
+        "attribute_type": "reference",
+        "value": "my_sku"
+      },
+      {
+        "type": "attribute",
+        "field": "sku",
+        "operator": "!eq",
+        "attribute_type": "reference",
+        "value": "my_sku"
+      },
+      {
+        "type": "attribute",
+        "field": "sku",
+        "operator": "in",
+        "attribute_type": "reference",
+        "value": ["my_sku1", "my_sku2"]
+      },
+      {
+        "type": "attribute",
+        "field": "sku",
+        "operator": "!in",
+        "attribute_type": "reference",
+        "value": ["my_sku1", "my_sku2"]
+      }
+    ]
+  },
+  "expectedFilters" : {
+    "boolFilter": {
+      "_must": [
+        {
+          "sku": {
+            "match": "my_sku"
+          }
+        },
+        {
+          "boolFilter": {
+            "_not": {
+              "sku": {
+                "match": "my_sku"
+              }
+            }
+          }
+        },
+        {
+          "sku": {
+            "eq": "my_sku"
+          }
+        },
+        {
+          "boolFilter": {
+            "_not": {
+              "sku": {
+                "eq": "my_sku"
+              }
+            }
+          }
+        },
+        {
+          "sku": {
+            "in": [
+              "my_sku1",
+              "my_sku2"
+            ]
+          }
+        },
+        {
+          "boolFilter": {
+            "_not": {
+              "sku": {
+                "in": [
+                  "my_sku1",
+                  "my_sku2"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "responseCode" : 200
+}
+
