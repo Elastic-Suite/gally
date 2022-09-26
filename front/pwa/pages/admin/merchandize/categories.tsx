@@ -13,14 +13,14 @@ import {
   useResource,
   useResourceOperations,
 } from '~/hooks'
-import { selectMenu, useAppSelector } from '~/store'
+import { addMessage, selectMenu, useAppDispatch, useAppSelector } from '~/store'
 import {
   ICategories,
   ICategory,
   IHydraCatalog,
   emptyCombinationRule,
   findBreadcrumbLabel,
-  isFetchError,
+  isError,
 } from 'shared'
 
 import TitleBlock from '~/components/molecules/layout/TitleBlock/TitleBlock'
@@ -75,7 +75,7 @@ function Categories(): JSX.Element {
       fetchApi(
         `${categoryConfigurationResource.url}/category/${selectedCategoryItem.id}`
       ).then((dataCat) => {
-        if (!isFetchError(dataCat)) {
+        if (!isError(dataCat)) {
           prevDataCat.current = dataCat
           setDataCat(dataCat)
         }
@@ -100,7 +100,7 @@ function Categories(): JSX.Element {
   async function onSave(): Promise<void> {
     if (!dataCat.id) {
       const val = await create(dataCat)
-      if (!isFetchError(val)) {
+      if (!isError(val)) {
         prevDataCat.current = val
         setDataCat(val)
         dispatch(addMessage(t('alert')))
@@ -109,7 +109,7 @@ function Categories(): JSX.Element {
       }
     } else {
       const val = await update(dataCat.id, dataCat)
-      if (!isFetchError(val)) {
+      if (!isError(val)) {
         prevDataCat.current = val
         setDataCat(val)
         dispatch(addMessage(t('alert')))
