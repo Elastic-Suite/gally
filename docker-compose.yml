@@ -33,14 +33,6 @@ services:
       API_PLATFORM_CLIENT_GENERATOR_ENTRYPOINT: https://caddy
       NEXT_PUBLIC_ENTRYPOINT: https://caddy
 
-  pwa:
-    build:
-      context: ./front
-      target: api_platform_pwa_prod
-    environment:
-      API_PLATFORM_CLIENT_GENERATOR_ENTRYPOINT: https://caddy
-      NEXT_PUBLIC_ENTRYPOINT: https://caddy
-
   caddy:
     build:
       context: api/
