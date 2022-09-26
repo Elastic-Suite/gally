@@ -16,13 +16,20 @@ WORKDIR /usr/src/front
 ENV NEXT_TELEMETRY_DISABLED 1
 
 # prevent the reinstallation of node modules at every changes in the source code
-#COPY package.json yarn.lock ./
-#COPY example-app/package.json ./example-app
-#COPY pwa/package.json ./pwa
-#COPY shared/package.json ./shared
-COPY . ./
+RUN mkdir ./example-app ./pwa ./shared
+COPY package.json yarn.lock ./
+COPY example-app/package.json ./example-app
+COPY pwa/package.json ./pwa
+COPY shared/package.json ./shared
+
 RUN yarn install
 
+COPY . ./
+
+VOLUME /usr/src/front/node_modules
+VOLUME /usr/src/front/shared/node_modules
+VOLUME /usr/src/front/pwa/node_modules
+VOLUME /usr/src/front/example-app/node_modules
 
 
 
