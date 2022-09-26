@@ -3,7 +3,6 @@ import {
   SetStateAction,
   useCallback,
   useContext,
-  useEffect,
   useState,
 } from 'react'
 
@@ -75,10 +74,6 @@ export function useGraphqlApi<T>(
       }
     })
   }, [graphqlApi, options, query, variables])
-
-  useEffect(() => {
-    load()
-  }, [load])
 
   return [response, updateResponse, load]
 }

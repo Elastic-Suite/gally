@@ -1,7 +1,7 @@
-import { ReactNode, useMemo, useState } from 'react'
+import { ReactNode, useEffect, useMemo, useState } from 'react'
 import { IGraphqlCatalogs } from 'shared'
 
-import { getCalogsQuery } from '../../../constants'
+import { catalogsQuery } from '../../../constants'
 import { catalogContext } from '../../../contexts'
 import { useGraphqlApi } from '../../../hooks'
 
@@ -13,7 +13,11 @@ function CatalogProvider(props: IProps): JSX.Element {
   const { children } = props
   const [catalogId, setCatalogId] = useState<string>('')
   const [localizedCatalogId, setLocalizedCatalogId] = useState<string>('')
-  const [catalogs] = useGraphqlApi<IGraphqlCatalogs>(getCalogsQuery)
+  const [catalogs, , load] = useGraphqlApi<IGraphqlCatalogs>(catalogsQuery)
+
+  useEffect(() => {
+    load()
+  }, [load])
 
   const context = useMemo(() => {
     const catalog = catalogs.data?.catalogs.edges.find(

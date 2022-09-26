@@ -1,4 +1,4 @@
-import { useContext, useMemo } from 'react'
+import { useContext } from 'react'
 import {
   Box,
   Divider,
@@ -7,11 +7,8 @@ import {
   styled,
 } from '@mui/material'
 import { Link as RouterLink } from 'react-router-dom'
-import { IGraphqlCategories } from 'shared'
 
-import { getCategoriesQuery } from '../../constants'
-import { catalogContext } from '../../contexts'
-import { useGraphqlApi } from '../../hooks'
+import { categoryContext } from '../../contexts'
 
 import MenuList from './MenuList'
 
@@ -28,15 +25,7 @@ interface IProps {
 
 function Menu(props: IProps): JSX.Element {
   const { menuOpen, onMenuToggle } = props
-  const { localizedCatalogId } = useContext(catalogContext)
-  const variables = useMemo(
-    () => ({ localizedCatalogId: Number(localizedCatalogId) }),
-    [localizedCatalogId]
-  )
-  const [categories] = useGraphqlApi<IGraphqlCategories>(
-    getCategoriesQuery,
-    variables
-  )
+  const categories = useContext(categoryContext)
 
   return (
     <Box component="nav">
@@ -58,11 +47,7 @@ function Menu(props: IProps): JSX.Element {
             Example App
           </Typography>
           <Divider sx={{ mb: 1 }} />
-          {Boolean(categories.data?.getCategoryTree.categories.length) && (
-            <MenuList
-              categories={categories.data?.getCategoryTree.categories}
-            />
-          )}
+          {Boolean(categories.length) && <MenuList categories={categories} />}
         </Box>
       </Drawer>
     </Box>

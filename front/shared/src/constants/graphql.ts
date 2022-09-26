@@ -1,4 +1,4 @@
-export const productsQuery = `query getProducts($catalogId: String!, $currentPage: Int, $pageSize: Int) {
+export const searchProductsQuery = `query getProducts($catalogId: String!, $currentPage: Int, $pageSize: Int) {
   searchProducts(catalogId: $catalogId, currentPage: $currentPage, pageSize: $pageSize ) {
     collection {
       ... on Product {

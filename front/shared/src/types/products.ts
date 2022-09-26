@@ -1,16 +1,16 @@
 import { IScore, IStock } from './customTables'
 import { ISearchParameters } from './fetch'
 
-export interface ISearchProducts {
-  searchProducts: ISearchProduct
+export interface IGraphqlSearchProducts {
+  searchProducts: IGraphqlSearchProduct
 }
 
-export interface ISearchProduct {
-  collection: IProduct[]
-  paginationInfo: IProductPaginationInfo
+export interface IGraphqlSearchProduct {
+  collection: IGraphqlProduct[]
+  paginationInfo: IGraphqlProductPaginationInfo
 }
 
-export interface IProduct {
+export interface IGraphqlProduct {
   id: string
   price: string
   sku: string
@@ -20,7 +20,7 @@ export interface IProduct {
   score: IScore
 }
 
-export interface IProductPaginationInfo {
+export interface IGraphqlProductPaginationInfo {
   lastPage: number
   totalCount: number
 }

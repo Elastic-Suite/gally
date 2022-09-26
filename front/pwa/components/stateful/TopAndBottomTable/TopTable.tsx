@@ -2,12 +2,12 @@ import { Dispatch, SetStateAction, useMemo } from 'react'
 
 import { useGraphqlApi } from '~/hooks'
 import {
-  ISearchProducts,
+  IGraphqlSearchProducts,
   ITableHeader,
   ITableRow,
   LoadStatus,
   productTableheader,
-  productsQuery,
+  searchProductsQuery,
 } from 'shared'
 
 import FieldGuesser from '../FieldGuesser/FieldGuesser'
@@ -23,7 +23,10 @@ function TopTable(props: IProps): JSX.Element {
   const { selectedRows, onSelectedRows, catalogId } = props
 
   const variables = useMemo(() => ({ catalogId }), [catalogId])
-  const [products] = useGraphqlApi<ISearchProducts>(productsQuery, variables)
+  const [products] = useGraphqlApi<IGraphqlSearchProducts>(
+    searchProductsQuery,
+    variables
+  )
   const tableRows: ITableRow[] = products?.data?.searchProducts
     ?.collection as unknown as ITableRow[]
 
