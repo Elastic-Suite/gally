@@ -1,4 +1,4 @@
-import { act, waitFor } from '@testing-library/react'
+import { act } from '@testing-library/react'
 
 import { IError, LoadStatus, fetchGraphql, log } from 'shared'
 import { renderHookWithProviders } from '../utils/tests'
@@ -52,14 +52,13 @@ describe('useGraphql', () => {
       ;(fetchGraphql as jest.Mock).mockClear()
       const { result } = renderHookWithProviders(() => useGraphqlApi(testQuery))
       expect(result.current[0]).toEqual({
-        status: LoadStatus.LOADING,
+        status: LoadStatus.IDLE,
       })
-      await waitFor(() =>
-        expect(result.current[0]).toEqual({
-          status: LoadStatus.SUCCEEDED,
-          data: { hello: 'world' },
-        })
-      )
+      await act(() => result.current[2]())
+      expect(result.current[0]).toEqual({
+        status: LoadStatus.SUCCEEDED,
+        data: { hello: 'world' },
+      })
       expect(fetchGraphql).toHaveBeenCalledWith(
         'en',
         testQuery,
@@ -68,35 +67,24 @@ describe('useGraphql', () => {
       )
     })
 
-    it('should update the data in the response', async () => {
+    it('should update the data in the response', () => {
       ;(fetchGraphql as jest.Mock).mockClear()
       const { result } = renderHookWithProviders(() => useGraphqlApi(testQuery))
-      await waitFor(() =>
-        expect(result.current[0]).toEqual({
-          status: LoadStatus.SUCCEEDED,
-          data: { hello: 'world' },
-        })
-      )
       act(() => result.current[1]({ hello: 'foo' }))
       expect(result.current[0]).toEqual({
-        status: LoadStatus.SUCCEEDED,
+        status: LoadStatus.IDLE,
         data: { hello: 'foo' },
       })
     })
 
-    it('should update the data in the response (using an update function)', async () => {
+    it('should update the data in the response (using an update function)', () => {
       ;(fetchGraphql as jest.Mock).mockClear()
       const { result } = renderHookWithProviders(() => useGraphqlApi(testQuery))
-      await waitFor(() =>
-        expect(result.current[0]).toEqual({
-          status: LoadStatus.SUCCEEDED,
-          data: { hello: 'world' },
-        })
-      )
+      act(() => result.current[1]({ hello: 'foo' }))
       act(() => result.current[1]((data: any) => ({ ...data, foo: 'bar' })))
       expect(result.current[0]).toEqual({
-        status: LoadStatus.SUCCEEDED,
-        data: { hello: 'world', foo: 'bar' },
+        status: LoadStatus.IDLE,
+        data: { hello: 'foo', foo: 'bar' },
       })
     })
   })

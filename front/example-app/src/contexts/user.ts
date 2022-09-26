@@ -1,7 +1,7 @@
 import { createContext } from 'react'
 import { IUser } from 'shared'
 
-interface IUserContext {
+export interface IUserContext {
   user: IUser
   setToken: (token: string) => void
 }

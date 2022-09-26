@@ -66,7 +66,7 @@ export function useGraphqlApi<T>(
       data: prevState.data,
       status: LoadStatus.LOADING,
     }))
-    graphqlApi(query, variables, options).then((json) => {
+    return graphqlApi(query, variables, options).then((json) => {
       if (isError(json)) {
         setResponse({ error: json.error, status: LoadStatus.FAILED })
       } else {
