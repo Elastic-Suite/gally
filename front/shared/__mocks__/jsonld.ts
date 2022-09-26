@@ -1,4 +1,4 @@
-import { expandedDocs, expandedEntrypoint } from 'shared'
+import { expandedDocs, expandedEntrypoint } from '../src/mocks'
 
 function expand(doc: Record<string, unknown>): Promise<[unknown]> {
   if (doc['@type'] === 'Entrypoint') {
