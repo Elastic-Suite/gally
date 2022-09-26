@@ -1,7 +1,7 @@
 import { createContext } from 'react'
 import { IGraphqlCatalog, ILocalizedCatalog } from 'shared'
 
-interface ICatalogContext {
+export interface ICatalogContext {
   catalog: Partial<IGraphqlCatalog>
   catalogId: number
   catalogs: Partial<IGraphqlCatalog>[]

@@ -96,6 +96,12 @@ export const fetchJson = jest.fn((url) => {
   }
 })
 
+/* graphql */
+export const fetchGraphql = jest.fn(() => {
+  const data: unknown = { ...body }
+  return Promise.resolve(data)
+})
+
 /* parser */
 export const parseSchema = jest.fn(() => Promise.resolve(api))
 
