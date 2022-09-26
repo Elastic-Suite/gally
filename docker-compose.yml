@@ -85,7 +85,7 @@ services:
     #   - SERVERNAME=${SERVER_NAME:-localhost, caddy:80}
     # If http2 not already supported out of the box
     # command: "-p default_keep=300 -p feature=+http2"
-    command: "-p default_keep=300"
+    command: "-p default_keep=300 -p http_resp_hdr_len=65k"
     # restart: unless-stopped
     # ports: 
     #  - target: 80
