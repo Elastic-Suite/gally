@@ -58,7 +58,7 @@ function Login(): JSX.Element {
   }
 
   return (
-    <div style={{ padding: 4 }}>
+    <>
       <Title title="Login" />
       <form onSubmit={handleSubmit}>
         <TextField
@@ -80,7 +80,7 @@ function Login(): JSX.Element {
           Login
         </Button>
       </form>
-    </div>
+    </>
   )
 }
 
