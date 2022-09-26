@@ -22,11 +22,19 @@ export interface IGraphqlExtensions {
   }
 }
 
+export interface IGraphqlTrace {
+  call: string
+  file: string
+  line: number
+}
+
 export interface IGraphqlError {
+  debugMessage?: string
   message: string
   extensions: IGraphqlExtensions
   locations: IGraphqlErrorLocation[]
   path?: string[]
+  trace?: IGraphqlTrace[]
 }
 
 export interface IGraphql<D> {

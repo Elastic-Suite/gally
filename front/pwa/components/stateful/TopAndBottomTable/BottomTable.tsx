@@ -9,14 +9,14 @@ import {
 
 import { useGraphqlApi } from '~/hooks'
 import {
-  ISearchProducts,
+  IGraphqlSearchProducts,
   ITableHeader,
   ITableRow,
   LoadStatus,
   defaultPageSize,
   defaultRowsPerPageOptions,
   productTableheader,
-  productsQuery,
+  searchProductsQuery,
 } from 'shared'
 
 import PagerTable from '../../organisms/PagerTable/PagerTable'
@@ -43,7 +43,10 @@ function BottomTable(
     () => ({ catalogId, currentPage, pageSize: rowsPerPage }),
     [catalogId, currentPage, rowsPerPage]
   )
-  const [products] = useGraphqlApi<ISearchProducts>(productsQuery, variables)
+  const [products] = useGraphqlApi<IGraphqlSearchProducts>(
+    searchProductsQuery,
+    variables
+  )
   const tableRows: ITableRow[] = products?.data?.searchProducts
     ?.collection as unknown as ITableRow[]
   const tableHeaders: ITableHeader[] = productTableheader

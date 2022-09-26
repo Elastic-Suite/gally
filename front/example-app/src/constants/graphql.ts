@@ -1,4 +1,4 @@
-export const getCalogsQuery = `query getCalogs {
+export const catalogsQuery = `query getCalogs {
   catalogs {
     edges {
       node {
@@ -20,23 +20,8 @@ export const getCalogsQuery = `query getCalogs {
   }
 }`
 
-export const getCategoriesQuery = `query getCategories($localizedCatalogId: Int) {
+export const getCategoryTreeQuery = `query getCategories($localizedCatalogId: Int) {
   getCategoryTree (localizedCatalogId: $localizedCatalogId) {
     categories
-  }
-}`
-
-export const getProductsQuery = `query getProducts($localizedCatalogId: String) {
-  searchProducts (
-    catalogId: $localizedCatalogId
-    filter: {
-      category__id: { in: ["one"] }
-    }
-  ) {
-    collection {
-      sku
-      name
-      price
-    }
   }
 }`
