@@ -38,17 +38,17 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
       - name: Yarn Install dependencies
-        working-directory: pwa
+        working-directory: front
         run: yarn --frozen-lockfile
       - name: Typescript
         env:
           # 7 GiB by default on GitHub, setting this to 16 GiB
           NODE_OPTIONS: --max-old-space-size=16384
-        working-directory: pwa
+        working-directory: front
         run: yarn typescript:ci
       - name: EsLint
-        working-directory: pwa
+        working-directory: front
         run: yarn eslint:ci
       - name: Prettier
-        working-directory: pwa
+        working-directory: front
         run: yarn prettier:ci
