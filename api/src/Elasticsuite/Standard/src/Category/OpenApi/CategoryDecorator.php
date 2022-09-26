@@ -19,10 +19,12 @@ namespace Elasticsuite\Category\OpenApi;
 use ApiPlatform\Core\OpenApi\Factory\OpenApiFactoryInterface;
 use ApiPlatform\Core\OpenApi\Model\Parameter;
 use ApiPlatform\Core\OpenApi\OpenApi;
+use Elasticsuite\OpenApi\Helper\Documentation as DocumentationHelper;
 
 final class CategoryDecorator implements OpenApiFactoryInterface
 {
     public function __construct(
+        private DocumentationHelper $documentationHelper,
         private OpenApiFactoryInterface $decorated
     ) {
     }
@@ -36,18 +38,10 @@ final class CategoryDecorator implements OpenApiFactoryInterface
         $openApi->getPaths()->addPath('/category_product_merchandisings/{id}', $path->withGet(null));
 
         // Remove id parameter added automatically by API Platform
-        $path = $openApi->getPaths()->getPath('/category_product_merchandisings/getPositions/{categoryId}/{localizedCatalogId}');
-        $parametersWithoutId = [];
-        /** @var Parameter $parameter */
-        foreach ($path->getGet()->getParameters() as $parameter) {
-            if ('id' !== $parameter->getName()) {
-                $parametersWithoutId[] = $parameter;
-            }
-        }
-
-        $openApi->getPaths()->addPath(
+        $this->documentationHelper->removeFieldFromEndpoint(
+            $openApi,
             '/category_product_merchandisings/getPositions/{categoryId}/{localizedCatalogId}',
-            $path->withGet($path->getGet()->withParameters($parametersWithoutId))
+            'id'
         );
 
         return $openApi;

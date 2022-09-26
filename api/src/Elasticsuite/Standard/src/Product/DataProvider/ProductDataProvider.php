@@ -107,7 +107,10 @@ class ProductDataProvider implements ContextAwareCollectionDataProviderInterface
             $limit,
             $searchQuery,
             $this->sortInputType->formatSort($context),
-            $this->filterManager->formatFilters($context, $containerConfig),
+            $this->filterManager->transformToElasticsuiteFilters(
+                $this->filterManager->getFiltersFromContext($context),
+                $containerConfig
+            ),
         );
         $response = $this->adapter->search($request);
 

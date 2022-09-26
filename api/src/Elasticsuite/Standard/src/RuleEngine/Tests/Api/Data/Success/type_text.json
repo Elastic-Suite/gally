@@ -1,0 +1,107 @@
+{
+  "rule" : {
+    "type": "combination",
+    "operator": "all",
+    "value": "true",
+    "children": [
+      {
+        "type": "attribute",
+        "field": "name",
+        "operator": "match",
+        "attribute_type": "text",
+        "value": "bag"
+      },
+      {
+        "type": "attribute",
+        "field": "name",
+        "operator": "!match",
+        "attribute_type": "text",
+        "value": "bag"
+      },
+      {
+        "type": "attribute",
+        "field": "name",
+        "operator": "eq",
+        "attribute_type": "text",
+        "value": "bag"
+      },
+      {
+        "type": "attribute",
+        "field": "name",
+        "operator": "!eq",
+        "attribute_type": "text",
+        "value": "bag"
+      },
+      {
+        "type": "attribute",
+        "field": "name",
+        "operator": "in",
+        "attribute_type": "text",
+        "value": ["bag", "watch"]
+      },
+      {
+        "type": "attribute",
+        "field": "name",
+        "operator": "!in",
+        "attribute_type": "text",
+        "value": ["bag", "watch"]
+      }
+    ]
+  },
+  "expectedFilters" : {
+    "boolFilter": {
+      "_must": [
+        {
+          "name": {
+            "match": "bag"
+          }
+        },
+        {
+          "boolFilter": {
+            "_not": {
+              "name": {
+                "match": "bag"
+              }
+            }
+          }
+        },
+        {
+          "name": {
+            "eq": "bag"
+          }
+        },
+        {
+          "boolFilter": {
+            "_not": {
+              "name": {
+                "eq": "bag"
+              }
+            }
+          }
+        },
+        {
+          "name": {
+            "in": [
+              "bag",
+              "watch"
+            ]
+          }
+        },
+        {
+          "boolFilter": {
+            "_not": {
+              "name": {
+                "in": [
+                  "bag",
+                  "watch"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "responseCode" : 200
+}
+

@@ -19,6 +19,7 @@ namespace Elasticsuite\Search\GraphQl\Type\Definition\Filter;
 use ApiPlatform\Core\GraphQl\Type\Definition\TypeInterface;
 use Elasticsuite\GraphQl\Type\Definition\FilterInterface;
 use Elasticsuite\Metadata\Repository\SourceFieldRepository;
+use Elasticsuite\Search\Constant\FilterOperator;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder;
 use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
 use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
@@ -45,8 +46,8 @@ class EqualTypeFilterInputType extends InputObjectType implements TypeInterface,
         return [
             'fields' => [
                 'field' => Type::nonNull(Type::string()),
-                'eq' => Type::string(),
-                'in' => Type::listOf(Type::string()),
+                FilterOperator::EQ => Type::string(),
+                FilterOperator::IN => Type::listOf(Type::string()),
             ],
         ];
     }
@@ -61,12 +62,22 @@ class EqualTypeFilterInputType extends InputObjectType implements TypeInterface,
         $errors = [];
 
         $errors = array_merge($errors, $this->validateIsFilterable($inputData['field']));
-        if (!isset($inputData['eq']) && !isset($inputData['in'])) {
-            $errors[] = "Filter argument {$argName}: At least 'eq' or 'in' should be filled.";
+        if (!isset($inputData[FilterOperator::EQ]) && !isset($inputData[FilterOperator::IN])) {
+            $errors[] = sprintf(
+                "Filter argument %s: At least '%s' or '%s' should be filled.",
+                $argName,
+                FilterOperator::EQ,
+                FilterOperator::IN
+            );
         }
 
-        if (isset($inputData['eq']) && isset($inputData['in'])) {
-            $errors[] = "Filter argument {$argName}: Only 'eq' or only 'in' should be filled, not both.";
+        if (isset($inputData[FilterOperator::EQ]) && isset($inputData[FilterOperator::IN])) {
+            $errors[] = sprintf(
+                "Filter argument %s: Only '%s' or only '%s' should be filled, not both.",
+                $argName,
+                FilterOperator::EQ,
+                FilterOperator::IN
+            );
         }
 
         return $errors;
@@ -75,7 +86,7 @@ class EqualTypeFilterInputType extends InputObjectType implements TypeInterface,
     public function transformToElasticsuiteFilter(array $inputFilter, ContainerConfigurationInterface $containerConfig): QueryInterface
     {
         $conditions = [];
-        foreach (['eq', 'in'] as $condition) {
+        foreach ([FilterOperator::EQ, FilterOperator::IN] as $condition) {
             if (isset($inputFilter[$condition])) {
                 $conditions = array_merge($conditions, [$condition => $inputFilter[$condition]]);
             }

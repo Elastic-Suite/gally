@@ -41,31 +41,34 @@ class FilterManager
         !\count($errors) ?: throw new \InvalidArgumentException(implode(', ', $errors));
     }
 
+    public function getFiltersFromContext(array $context): array
+    {
+        return $context[SerializerContextBuilder::GRAPHQL_ELASTICSUITE_FILTERS_KEY]['filter'] ?? [];
+    }
+
     /**
      * Transform GraphQL filters in understandable Elasticsuite filters.
      *
-     * @param array $context context
+     * @param array $graphQlFilters context
      */
-    public function formatFilters(array $context, ContainerConfigurationInterface $containerConfig): array
+    public function transformToElasticsuiteFilters(array $graphQlFilters, ContainerConfigurationInterface $containerConfig): array
     {
-        $filters = [];
-        if (isset($context[SerializerContextBuilder::GRAPHQL_ELASTICSUITE_FILTERS_KEY]['filter'])) {
-            foreach ($context[SerializerContextBuilder::GRAPHQL_ELASTICSUITE_FILTERS_KEY]['filter'] as $argFilters) {
-                foreach ($argFilters as $argName => $filter) {
-                    if (str_contains($argName, '.')) {
-                        // Api platform automatically replace nesting separator by '.',
-                        // but it keeps the value with nesting separator. In order to avoid applying
-                        // the filter twice, we have to skip the one with the '.'.
-                        continue;
-                    }
-                    $filters[] = $this->fieldFilterInputType->transformToElasticsuiteFilter(
-                        [$argName => $filter],
-                        $containerConfig,
-                    );
+        $esFilters = [];
+        foreach ($graphQlFilters as $filters) {
+            foreach ($filters as $sourceFieldName => $condition) {
+                if (str_contains($sourceFieldName, '.')) {
+                    // Api platform automatically replace nesting separator by '.',
+                    // but it keeps the value with nesting separator. In order to avoid applying
+                    // the filter twice, we have to skip the one with the '.'.
+                    continue;
                 }
+                $esFilters[] = $this->fieldFilterInputType->transformToElasticsuiteFilter(
+                    [$sourceFieldName => $condition],
+                    $containerConfig,
+                );
             }
         }
 
-        return $filters;
+        return $esFilters;
     }
 }

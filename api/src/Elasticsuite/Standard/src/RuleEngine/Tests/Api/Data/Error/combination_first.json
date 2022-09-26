@@ -1,0 +1,12 @@
+{
+  "rule" : {
+    "type": "attribute",
+    "field": "is_new",
+    "operator": "eq",
+    "attribute_type": "boolean",
+    "value": "true"
+  },
+  "expectedError" : "The first rule node should be a combination.",
+  "responseCode" : 500
+}
+

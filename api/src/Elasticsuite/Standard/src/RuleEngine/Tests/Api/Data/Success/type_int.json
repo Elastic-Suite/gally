@@ -1,0 +1,127 @@
+{
+  "rule" : {
+    "type": "combination",
+    "operator": "all",
+    "value": "true",
+    "children": [
+      {
+        "type": "attribute",
+        "field": "id",
+        "operator": "eq",
+        "attribute_type": "int",
+        "value": 1
+      },
+      {
+        "type": "attribute",
+        "field": "id",
+        "operator": "!eq",
+        "attribute_type": "int",
+        "value": 1
+      },
+      {
+        "type": "attribute",
+        "field": "id",
+        "operator": "in",
+        "attribute_type": "int",
+        "value": [1, 2]
+      },
+      {
+        "type": "attribute",
+        "field": "id",
+        "operator": "!in",
+        "attribute_type": "int",
+        "value": [1, 2]
+      },
+      {
+        "type": "attribute",
+        "field": "id",
+        "operator": "gte",
+        "attribute_type": "int",
+        "value": 1
+      },
+      {
+        "type": "attribute",
+        "field": "id",
+        "operator": "gt",
+        "attribute_type": "int",
+        "value": 1
+      },
+      {
+        "type": "attribute",
+        "field": "id",
+        "operator": "lte",
+        "attribute_type": "int",
+        "value": 2
+      },
+      {
+        "type": "attribute",
+        "field": "id",
+        "operator": "lt",
+        "attribute_type": "int",
+        "value": 2
+      }
+    ]
+  },
+  "expectedFilters" : {
+    "boolFilter": {
+      "_must": [
+        {
+          "id": {
+            "eq": 1
+          }
+        },
+        {
+          "boolFilter": {
+            "_not": {
+              "id": {
+                "eq": 1
+              }
+            }
+          }
+        },
+        {
+          "id": {
+            "in": [
+              1,
+              2
+            ]
+          }
+        },
+        {
+          "boolFilter": {
+            "_not": {
+              "id": {
+                "in": [
+                  1,
+                  2
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": {
+            "gte": 1
+          }
+        },
+        {
+          "id": {
+            "gt": 1
+          }
+        },
+        {
+          "id": {
+            "lte": 2
+          }
+        },
+        {
+          "id": {
+            "lt": 2
+          }
+        }
+      ]
+    }
+  },
+  "responseCode" : 200
+}
+

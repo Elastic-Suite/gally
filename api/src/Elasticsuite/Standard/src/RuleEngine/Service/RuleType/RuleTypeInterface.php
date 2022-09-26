@@ -14,16 +14,11 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\Product\GraphQl\Type\Definition\Filter;
+namespace Elasticsuite\RuleEngine\Service\RuleType;
 
-use Elasticsuite\GraphQl\Type\Definition\FilterInterface as SearchFilterInterface;
-use Elasticsuite\Metadata\Model\SourceField;
-
-interface FilterInterface extends SearchFilterInterface
+interface RuleTypeInterface
 {
-    public function support(SourceField $sourceField): bool;
+    public function transformRuleNodeToGraphQlFilter(array $ruleNode): array;
 
-    public function getGraphQlFieldName(string $mappingFieldName): string;
-
-    public function getMappingFieldName(string $graphqlFieldName): string;
+    public function getRuleType(): string;
 }

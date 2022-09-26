@@ -186,4 +186,5 @@ services:
     Elasticsuite\Category\OpenApi\CategoryDecorator:
         decorates: api_platform.openapi.factory
         arguments:
+            - '@Elasticsuite\OpenApi\Helper\Documentation'
             - '@.inner'

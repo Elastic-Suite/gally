@@ -56,6 +56,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
                         __DIR__ . '/../Search/Model/',
                         __DIR__ . '/../Category/Model/',
                         __DIR__ . '/../Product/Model/',
+                        __DIR__ . '/../RuleEngine/Model/',
                     ],
                 ],
             ]
@@ -141,6 +142,8 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
         $loader->load('Hydra/Resources/config/services.yaml');
         $loader->load('Locale/Resources/config/services.yaml');
         $loader->load('GraphQl/Resources/config/services.yaml');
+        $loader->load('RuleEngine/Resources/config/services.yaml');
+        $loader->load('OpenApi/Resources/config/services.yaml');
 
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);

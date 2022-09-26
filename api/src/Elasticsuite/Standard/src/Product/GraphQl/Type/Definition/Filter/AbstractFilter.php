@@ -17,13 +17,17 @@ declare(strict_types=1);
 namespace Elasticsuite\Product\GraphQl\Type\Definition\Filter;
 
 use ApiPlatform\Core\GraphQl\Type\Definition\TypeInterface;
+use Elasticsuite\Exception\LogicException;
+use Elasticsuite\Metadata\Model\SourceField;
+use Elasticsuite\RuleEngine\GraphQl\Type\Definition\RuleFilterInterface;
+use Elasticsuite\Search\Constant\FilterOperator;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder;
 use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
 use Elasticsuite\Search\Elasticsearch\Request\QueryFactory;
 use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
 use GraphQL\Type\Definition\InputObjectType;
 
-abstract class AbstractFilter extends InputObjectType implements TypeInterface, FilterInterface
+abstract class AbstractFilter extends InputObjectType implements TypeInterface, ProductFilterInterface, RuleFilterInterface
 {
     public function __construct(
         protected FilterQueryBuilder $filterQueryBuilder,
@@ -79,5 +83,45 @@ abstract class AbstractFilter extends InputObjectType implements TypeInterface, 
     protected function getConditions(): array
     {
         return array_keys($this->getConfig()['fields']);
+    }
+
+    public function getGraphQlFilterAsArray(SourceField $sourceField, array $fields): array
+    {
+        return [
+            $this->getGraphQlFieldName($sourceField->getCode()) => $fields,
+        ];
+    }
+
+    public function validateValueType(string $field, string $operator, mixed $value): void
+    {
+        $this->validateValueTypeByType($field, $operator, $value);
+    }
+
+    public function validateValueTypeByType(string $field, string $operator, mixed $value, string $type = 'string')
+    {
+        $typeFunction = "is_{$type}";
+        if ('float' === $type) {
+            // Specific behavior for float @see https://www.php.net/manual/fr/function.gettype
+            $typeFunction = 'is_double';
+        }
+
+        if (FilterOperator::EXIST == $operator) {
+            if (!\is_bool($value)) {
+                throw new LogicException("For the field '{$field}' the value '{$value}' is not a boolean.");
+            }
+        } elseif (FilterOperator::IN === $operator || FilterOperator::NOT_IN == $operator) {
+            if (!\is_array($value)) {
+                throw new LogicException("Expected an array as 'value' for rule on field '{$field}' and operator '{$operator}', received '{$value}'.");
+            }
+            foreach ($value as $item) {
+                if (!$typeFunction($item)) {
+                    throw new LogicException("Expected an array of '{$type}' for rule on field '{$field}' and operator '{$operator}', got: " . print_r($value, true));
+                }
+            }
+        } else {
+            if (!$typeFunction($value)) {
+                throw new LogicException("For the field '{$field}' the value '" . print_r($value, true) . "' is not of type '{$type}'.");
+            }
+        }
     }
 }
