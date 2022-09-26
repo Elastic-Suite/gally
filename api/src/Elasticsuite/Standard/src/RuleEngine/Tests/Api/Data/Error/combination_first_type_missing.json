@@ -1,0 +1,11 @@
+{
+  "rule" : {
+    "field": "is_new",
+    "operator": "eq",
+    "attribute_type": "boolean",
+    "value": "true"
+  },
+  "expectedError" : "The rule type is not set.",
+  "responseCode" : 500
+}
+

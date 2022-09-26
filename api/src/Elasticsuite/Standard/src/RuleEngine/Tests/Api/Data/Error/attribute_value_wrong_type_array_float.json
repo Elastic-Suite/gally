@@ -1,0 +1,18 @@
+{
+  "rule" : {
+    "type": "combination",
+    "operator": "all",
+    "value": "true",
+    "children": [
+      {
+        "type": "attribute",
+        "field": "weight",
+        "operator": "in",
+        "attribute_type": "float",
+        "value": [25, "26"]
+      }
+    ]
+  },
+  "expectedError" : "Expected an array of 'float' for rule on field 'weight' and operator 'in', got: Array\n(\n    [0] => 25\n    [1] => 26\n)\n",
+  "responseCode" : 500
+}

@@ -612,7 +612,7 @@ class SearchDocumentsTest extends AbstractTest
                 'product', // entity type.
                 'b2c_en', // catalog ID.
                 '{rangeFilter: {field:"id"}}', // Filters.
-                "Filter argument rangeFilter: At least 'gt', 'tl, 'gte or 'lte' should be filled.", // debug message
+                "Filter argument rangeFilter: At least 'gt', 'lt', 'gte' or 'lte' should be filled.", // debug message
             ],
             [
                 'product', // entity type.

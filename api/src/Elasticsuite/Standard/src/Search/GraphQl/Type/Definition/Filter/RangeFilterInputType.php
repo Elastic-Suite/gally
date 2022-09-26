@@ -19,6 +19,7 @@ namespace Elasticsuite\Search\GraphQl\Type\Definition\Filter;
 use ApiPlatform\Core\GraphQl\Type\Definition\TypeInterface;
 use Elasticsuite\GraphQl\Type\Definition\FilterInterface;
 use Elasticsuite\Metadata\Repository\SourceFieldRepository;
+use Elasticsuite\Search\Constant\FilterOperator;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder;
 use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
 use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
@@ -45,10 +46,10 @@ class RangeFilterInputType extends InputObjectType implements TypeInterface, Fil
         return [
             'fields' => [
                 'field' => ['type' => Type::nonNull(Type::string())],
-                'gte' => Type::string(),
-                'lte' => Type::string(),
-                'gt' => Type::string(),
-                'lt' => Type::string(),
+                FilterOperator::GTE => Type::string(),
+                FilterOperator::LTE => Type::string(),
+                FilterOperator::GT => Type::string(),
+                FilterOperator::LT => Type::string(),
             ],
         ];
     }
@@ -63,15 +64,32 @@ class RangeFilterInputType extends InputObjectType implements TypeInterface, Fil
         $errors = $this->validateIsFilterable($inputData['field']);
 
         if (\count($inputData) < 2) {
-            $errors[] = "Filter argument {$argName}: At least 'gt', 'tl, 'gte or 'lte' should be filled.";
+            $errors[] = sprintf(
+                "Filter argument %s: At least '%s', '%s', '%s' or '%s' should be filled.",
+                $argName,
+                FilterOperator::GT,
+                FilterOperator::LT,
+                FilterOperator::GTE,
+                FilterOperator::LTE,
+            );
         }
 
-        if (isset($inputData['gt']) && isset($inputData['gte'])) {
-            $errors[] = "Filter argument {$argName}: Do not use 'gt' and 'gte' in the same filter.";
+        if (isset($inputData[FilterOperator::GT]) && isset($inputData[FilterOperator::GTE])) {
+            $errors[] = sprintf(
+                "Filter argument %s: Do not use '%s' and '%s' in the same filter.",
+                $argName,
+                FilterOperator::GT,
+                FilterOperator::GTE,
+            );
         }
 
-        if (isset($inputData['lt']) && isset($inputData['lte'])) {
-            $errors[] = "Filter argument {$argName}: Do not use 'lt' and 'lte' in the same filter.";
+        if (isset($inputData[FilterOperator::LT]) && isset($inputData[FilterOperator::LTE])) {
+            $errors[] = sprintf(
+                "Filter argument %s: Do not use '%s' and '%s' in the same filter.",
+                $argName,
+                FilterOperator::LT,
+                FilterOperator::LTE,
+            );
         }
 
         return $errors;
@@ -80,7 +98,7 @@ class RangeFilterInputType extends InputObjectType implements TypeInterface, Fil
     public function transformToElasticsuiteFilter(array $inputFilter, ContainerConfigurationInterface $containerConfig): QueryInterface
     {
         $conditions = [];
-        foreach (['gte', 'gt', 'lte', 'lt'] as $condition) {
+        foreach ([FilterOperator::GT, FilterOperator::LT, FilterOperator::GTE, FilterOperator::LTE] as $condition) {
             if (isset($inputFilter[$condition])) {
                 $conditions = array_merge($conditions, [$condition => $inputFilter[$condition]]);
             }

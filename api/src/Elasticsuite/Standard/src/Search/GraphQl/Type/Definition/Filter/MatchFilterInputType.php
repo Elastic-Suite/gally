@@ -19,6 +19,7 @@ namespace Elasticsuite\Search\GraphQl\Type\Definition\Filter;
 use ApiPlatform\Core\GraphQl\Type\Definition\TypeInterface;
 use Elasticsuite\GraphQl\Type\Definition\FilterInterface;
 use Elasticsuite\Metadata\Repository\SourceFieldRepository;
+use Elasticsuite\Search\Constant\FilterOperator;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder;
 use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
 use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
@@ -45,7 +46,7 @@ class MatchFilterInputType extends InputObjectType implements TypeInterface, Fil
         return [
             'fields' => [
                 'field' => Type::nonNull(Type::string()),
-                'match' => Type::nonNull(Type::string()),
+                FilterOperator::MATCH => Type::nonNull(Type::string()),
             ],
         ];
     }
@@ -64,7 +65,7 @@ class MatchFilterInputType extends InputObjectType implements TypeInterface, Fil
     {
         $filterData = [
             $inputFilter['field'] => [
-                'match' => $inputFilter['match'],
+                FilterOperator::MATCH => $inputFilter['match'],
             ],
         ];
 

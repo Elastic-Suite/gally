@@ -80,7 +80,10 @@ class DocumentDataProvider implements ContextAwareCollectionDataProviderInterfac
             $limit,
             $searchQuery,
             $sortOrders,
-            $this->filterManager->formatFilters($context, $containerConfig),
+            $this->filterManager->transformToElasticsuiteFilters(
+                $this->filterManager->getFiltersFromContext($context),
+                $containerConfig
+            ),
             [],
             ($context['need_aggregations'] ?? false) ? [] : null
         );

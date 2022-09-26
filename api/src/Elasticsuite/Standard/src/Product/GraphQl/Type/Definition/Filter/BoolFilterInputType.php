@@ -23,4 +23,11 @@ class BoolFilterInputType extends BaseBoolFilterInputType
     public const NAME = 'ProductBoolFilterInput';
 
     public $name = self::NAME;
+
+    public function getGraphQlFilter(array $fields): array
+    {
+        return [
+            'boolFilter' => $fields,
+        ];
+    }
 }

@@ -88,7 +88,14 @@ abstract class AbstractTest extends ApiTestCase
         $response = $this->request($request);
         $this->assertResponseStatusCodeSame($expectedResponse->getResponseCode());
 
-        if ($expectedResponse->getResponseCode() >= 400) {
+        if (401 === $expectedResponse->getResponseCode()) {
+            $this->assertJsonContains(
+                [
+                    'code' => 401,
+                    'message' => 'JWT Token not found',
+                ]
+            );
+        } elseif ($expectedResponse->getResponseCode() >= 400) {
             $errorType = 'hydra:Error';
             $errorContext = 'Error';
             if (\array_key_exists('violations', $response->toArray(false))) {
