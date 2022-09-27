@@ -17,23 +17,24 @@ declare(strict_types=1);
 namespace Elasticsuite\Entity\Model\Attribute\Type;
 
 use Elasticsuite\Entity\Model\Attribute\AttributeInterface;
-use Elasticsuite\Entity\Model\Attribute\GraphQlAttributeInterface;
-use GraphQL\Type\Definition\Type as GraphQLType;
 
 /**
- * Used for normalization/de-normalization and graphql schema stitching of scalar text source fields.
- * Also used for graphql schema stitching of nested text source fields.
+ * Used for normalization/de-normalization only of nested fields.
  */
-class TextAttribute implements AttributeInterface, GraphQlAttributeInterface
+class NestedAttribute implements AttributeInterface
 {
     protected string $attributeCode;
 
     protected mixed $value;
 
-    public function __construct($attributeCode, $value)
+    /** @var string[] */
+    protected array $fields;
+
+    public function __construct($attributeCode, $value, array $fields)
     {
         $this->attributeCode = $attributeCode;
         $this->value = $value;
+        $this->fields = $fields;
     }
 
     /**
@@ -49,14 +50,18 @@ class TextAttribute implements AttributeInterface, GraphQlAttributeInterface
      */
     public function getValue(): mixed
     {
-        return $this->value;
-    }
+        if (\is_array($this->value)) {
+            // TODO : iterate on elements and intersect keys with $this->fields ?
+            $value = $this->value;
+            $hasSingleEntry = \count(array_intersect(array_keys($this->value), $this->fields)) > 0;
+            if (!$hasSingleEntry) {
+                $value = current($this->value);
+            }
 
-    /**
-     * {@inheritDoc}
-     */
-    public static function getGraphQlType(): mixed
-    {
-        return GraphQLType::string();
+            return $value;
+        }
+
+        // TODO return [$this->value] ?
+        return $this->value;
     }
 }
