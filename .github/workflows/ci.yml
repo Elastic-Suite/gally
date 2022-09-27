@@ -101,15 +101,36 @@ jobs:
       - name: Jest
         run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec -T pwa yarn test:ci
 
+      - name: Frontend Shared Coverage Report
+        uses: 5monkeys/cobertura-action@v12
+        if: ${{ github.event_name == 'pull_request' }}
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          report_name: "Frontend Shared Coverage of this branch"
+          path: front/shared/coverage/cobertura-coverage.xml
+          minimum_coverage: 1
+          fail_below_threshold: false
+
+      - name: Frontend PWA Coverage Report
+        uses: 5monkeys/cobertura-action@v12
+        if: ${{ github.event_name == 'pull_request' }}
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          report_name: "Frontend PWA Coverage of this branch"
+          path: front/pwa/coverage/cobertura-coverage.xml
+          minimum_coverage: 1
+          fail_below_threshold: false
+
       - name: Frontend Coverage Report
         uses: 5monkeys/cobertura-action@v12
         if: ${{ github.event_name == 'pull_request' }}
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           report_name: "Frontend Coverage of this branch"
-          path: pwa/coverage/cobertura-coverage.xml
+          path: front/example-app/coverage/cobertura-coverage.xml
           minimum_coverage: 1
           fail_below_threshold: false
+
       - name: "[End] Job failed, gathering logs"
         if: ${{ failure() }}
         run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml logs
