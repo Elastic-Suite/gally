@@ -32,24 +32,14 @@ services:
       PHP_IDE_CONFIG: serverName=api-platform
 
   pwa:
-    user: ${UUID?You must set UUID env var}:${GUID?You must set GUID env var}
     build:
       context: ./front
-      target: api_platform_pwa_dev
-    volumes:
-      - ./front:/usr/src/front:rw,cached
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      target: api_platform_pwa_ci
 
   example:
-    user: ${UUID?You must set UUID env var}:${GUID?You must set GUID env var}
     build:
       context: ./front
-      target: api_platform_example_dev
-    volumes:
-      - ./front:/usr/src/front:rw,cached
-    depends_on:
-      - pwa
+      target: api_platform_example_ci
 
   caddy:
     volumes:
