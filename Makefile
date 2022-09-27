@@ -35,6 +35,7 @@ up: ## Start the docker hub in detached mode (no logs)
 start: build up ## Build and start the containers
 
 down: ## Stop the docker hub
+	$(MAKE) .env
 	@$(DOCKER_COMP) down --remove-orphans
 
 logs: ## Show live logs, pass the parameter "s=" to get logs of a given service, example: make logs s=elasticsearch

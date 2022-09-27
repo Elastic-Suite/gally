@@ -37,16 +37,33 @@ COPY . ./
 FROM api_platform_pwa_common AS api_platform_shared_build
 
 RUN set -eux; \
-	yarn build:shared; \
-	ls -lah shared shared/*;
+	yarn build:shared
 
 
 
-FROM api_platform_pwa_common AS api_platform_pwa_dev
+FROM api_platform_pwa_common AS api_platform_pwa_ci
+
+COPY --from=api_platform_shared_build /usr/src/front/shared/dist /usr/src/front/shared/dist
+
+CMD ["yarn", "dev"]
+
+
+
+FROM api_platform_pwa_common AS api_platform_example_ci
+
+COPY --from=api_platform_shared_build /usr/src/front/shared/dist /usr/src/front/shared/dist
+
+CMD ["yarn", "start:example"]
+
+
+
+
+FROM api_platform_pwa_ci AS api_platform_pwa_dev
 
 COPY --from=api_platform_shared_build /usr/src/front/shared/dist /usr/src/front/shared/dist
 ADD ./docker-entrypoint.sh /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
+
 # alpine
 RUN addgroup -g 1042 docker && \
     adduser -u 1042 -G docker -h /home/docker -s /bin/sh -D docker
@@ -65,34 +82,33 @@ CMD ["yarn", "dev"]
 
 
 
-FROM api_platform_pwa_common AS api_platform_example_dev
+FROM api_platform_example_ci AS api_platform_example_dev
 
-COPY --from=api_platform_shared_build /usr/src/front/shared/dist /usr/src/front/shared/dist
-ADD ./docker-entrypoint.sh /docker-entrypoint.sh
-ENTRYPOINT ["/docker-entrypoint.sh"]
+# ADD ./docker-entrypoint.sh /docker-entrypoint.sh
+# ENTRYPOINT ["/docker-entrypoint.sh"]
 
 
-# alpine
-RUN addgroup -g 1042 docker && \
-    adduser -u 1042 -G docker -h /home/docker -s /bin/sh -D docker
+# # alpine
+# RUN addgroup -g 1042 docker && \
+#     adduser -u 1042 -G docker -h /home/docker -s /bin/sh -D docker
 
-RUN USER=docker && \
-    GROUP=docker && \
-	apk add --no-cache curl; \
-    curl -SsL https://github.com/boxboat/fixuid/releases/download/v0.5.1/fixuid-0.5.1-linux-amd64.tar.gz | tar -C /usr/local/bin -xzf - && \
-    chown root:root /usr/local/bin/fixuid && \
-    chmod 4755 /usr/local/bin/fixuid && \
-    mkdir -p /etc/fixuid && \
-    printf "user: $USER\ngroup: $GROUP\npaths:\n  - /usr/src/front" > /etc/fixuid/config.yml
+# RUN USER=docker && \
+#     GROUP=docker && \
+# 	apk add --no-cache curl; \
+#     curl -SsL https://github.com/boxboat/fixuid/releases/download/v0.5.1/fixuid-0.5.1-linux-amd64.tar.gz | tar -C /usr/local/bin -xzf - && \
+#     chown root:root /usr/local/bin/fixuid && \
+#     chmod 4755 /usr/local/bin/fixuid && \
+#     mkdir -p /etc/fixuid && \
+#     printf "user: $USER\ngroup: $GROUP\npaths:\n  - /usr/src/front" > /etc/fixuid/config.yml
 
-USER 1042
+# USER 1042
 CMD ["yarn", "start:example"]
 
 
 
 # "build" stage
 # depends on the "common" stage above
-FROM api_platform_pwa_common AS api_platform_pwa_int
+FROM api_platform_pwa_ci AS api_platform_pwa_int
 
 COPY --from=api_platform_shared_build /usr/src/front/shared/dist /usr/src/front/shared/dist
 
@@ -112,7 +128,7 @@ CMD ["yarn", "start"]
 
 # "build" stage
 # depends on the "common" stage above
-FROM api_platform_pwa_common AS api_platform_pwa_prod
+FROM api_platform_pwa_ci AS api_platform_pwa_prod
 
 COPY --from=api_platform_shared_build /usr/src/front/shared/dist /usr/src/front/shared/dist
 
