@@ -22,12 +22,14 @@ use ApiPlatform\Core\Metadata\Resource\Factory\ResourceMetadataFactoryInterface;
 use ApiPlatform\Core\Metadata\Resource\ResourceMetadata;
 use Doctrine\ORM\EntityNotFoundException;
 use Elasticsuite\Entity\Model\Attribute\GraphQlAttributeInterface;
+use Elasticsuite\Entity\Model\Attribute\StructuredAttributeInterface;
 use Elasticsuite\Metadata\Model\Metadata;
 use Elasticsuite\Metadata\Model\SourceField;
 use Elasticsuite\Metadata\Model\SourceField\Type as SourceFieldType;
 use Elasticsuite\Metadata\Repository\MetadataRepository;
 use Elasticsuite\ResourceMetadata\Service\ResourceMetadataManager;
 use GraphQL\Type\Definition\ObjectType;
+use GraphQL\Type\Definition\Type as GraphQLType;
 
 /**
  * Allows to add dynamically attributes to an entity on GraphQL documentation.
@@ -42,7 +44,7 @@ class StitchingFieldsBuilder implements FieldsBuilderInterface
     public const STITCHING_ATTRIBUTE_CLASS_TYPE = [
         SourceFieldType::TYPE_TEXT => 'Elasticsuite\Entity\Model\Attribute\Type\TextAttribute',
         SourceFieldType::TYPE_KEYWORD => 'Elasticsuite\Entity\Model\Attribute\Type\TextAttribute',
-        SourceFieldType::TYPE_SELECT => 'Elasticsuite\Entity\Model\Attribute\Type\TextAttribute',
+        SourceFieldType::TYPE_SELECT => 'Elasticsuite\Entity\Model\Attribute\Type\SelectAttribute',
         SourceFieldType::TYPE_INT => 'Elasticsuite\Entity\Model\Attribute\Type\IntAttribute',
         SourceFieldType::TYPE_BOOLEAN => 'Elasticsuite\Entity\Model\Attribute\Type\BooleanAttribute',
         SourceFieldType::TYPE_FLOAT => 'Elasticsuite\Entity\Model\Attribute\Type\FloatAttribute',
@@ -103,29 +105,61 @@ class StitchingFieldsBuilder implements FieldsBuilderInterface
 
         unset($fields[$stitchingProperty]);
         $nonScalarFields = [];
+        $objectTypes = [];
         /** @var SourceField $sourceField */
         foreach ($metadata->getSourceFields() as $sourceField) {
             if (!isset($fields[$sourceField->getCode()])) {
                 /** @var GraphQlAttributeInterface|string|null $attributeClassType */
                 $attributeClassType = self::STITCHING_ATTRIBUTE_CLASS_TYPE[$sourceField->getType()] ?? null;
 
-                if (null === $attributeClassType || !is_subclass_of($attributeClassType, GraphQlAttributeInterface::class)) {
-                    throw new \LogicException(sprintf("The class '%s' doesn't implement the interface '%s'", $attributeClassType, GraphQlAttributeInterface::class));
+                if (
+                    null === $attributeClassType
+                    || (
+                        !is_subclass_of($attributeClassType, GraphQlAttributeInterface::class)
+                        && !is_subclass_of($attributeClassType, StructuredAttributeInterface::class)
+                    )
+                ) {
+                    throw new \LogicException(sprintf("The class '%s' doesn't implement neither the interface '%s' nor the interface '%s'", $attributeClassType, GraphQlAttributeInterface::class, StructuredAttributeInterface::class));
                 }
 
-                if (false === $sourceField->isNested()) {
+                if (is_subclass_of($attributeClassType, StructuredAttributeInterface::class)) {
+                    $objectTypes[$sourceField->getCode()] = $attributeClassType::getFields();
+                } elseif (false === $sourceField->isNested()) {
                     $fields[$sourceField->getCode()] = $this->getField($attributeClassType);
                 } else {
                     // There are max two levels.
                     // 'stock.qty' become $nonScalarFields['stock']['qty'].
-                    $attributeHierarchy = explode('.', $sourceField->getCode());
-                    $nonScalarFields[$attributeHierarchy[0]][$attributeHierarchy[1]]['source_field'] = $sourceField;
-                    $nonScalarFields[$attributeHierarchy[0]][$attributeHierarchy[1]]['class_type'] = $attributeClassType;
+                    [$path, $code] = [$sourceField->getNestedPath(), $sourceField->getNestedCode()];
+                    $nonScalarFields[$path][$code]['source_field'] = $sourceField;
+                    $nonScalarFields[$path][$code]['class_type'] = $attributeClassType;
                 }
             }
         }
 
+        $fields = $this->processObjectTypes($objectTypes, $fields);
+
         return $this->processNonScalarFields($nonScalarFields, $fields);
+    }
+
+    public function getObjectType(string $typeName, string $description, array $fields): GraphQLType
+    {
+        if ($this->typesContainer->has($typeName)) {
+            return $this->typesContainer->get($typeName);
+        }
+
+        $configuration = [
+            'name' => $typeName,
+            'description' => $description,
+            'interfaces' => [],
+        ];
+        foreach ($fields as $fieldName => $field) {
+            $configuration['fields'][$fieldName] = $this->getField($field['class_type']);
+        }
+
+        $objectType = new ObjectType($configuration);
+        $this->typesContainer->set($typeName, $objectType);
+
+        return $objectType;
     }
 
     public function processNonScalarFields(array $nonScalarFields, array $fields): array
@@ -133,24 +167,33 @@ class StitchingFieldsBuilder implements FieldsBuilderInterface
         // This part has been inspired by the function \ApiPlatform\Core\GraphQl\Type\TypeBuilder::getResourceObjectType.
         foreach ($nonScalarFields as $parent => $children) {
             $shortName = ucfirst($parent) . 'Attribute';
-            if ($this->typesContainer->has($shortName)) {
-                $objectType = $this->typesContainer->get($shortName);
-            } else {
-                $configuration = [
-                    'name' => $shortName,
-                    'description' => ucfirst($parent) . ' attribute.',
-                    'interfaces' => [],
-                ];
+            $typeDescription = ucfirst($parent) . ' attribute.';
 
-                foreach ($children as $childName => $child) {
-                    $configuration['fields'][$childName] = $this->getField($child['class_type']);
-                }
-                $objectType = new ObjectType($configuration);
-                $this->typesContainer->set($shortName, $objectType);
-            }
+            $objectType = $this->getObjectType($shortName, $typeDescription, $children);
 
             $fields[$parent] = [
                 'type' => $objectType,
+                'description' => null,
+                'args' => [],
+                'resolve' => null,
+                'deprecationReason' => null,
+            ];
+        }
+
+        return $fields;
+    }
+
+    public function processObjectTypes(array $objectTypes, array $fields): array
+    {
+        // This part has been inspired by the function \ApiPlatform\Core\GraphQl\Type\TypeBuilder::getResourceObjectType.
+        foreach ($objectTypes as $parent => $children) {
+            $shortName = ucfirst($parent) . 'Attribute';
+            $typeDescription = ucfirst($parent) . ' attribute.';
+
+            $objectType = $this->getObjectType($shortName, $typeDescription, $children);
+
+            $fields[$parent] = [
+                'type' => GraphQLType::listOf($objectType),
                 'description' => null,
                 'args' => [],
                 'resolve' => null,

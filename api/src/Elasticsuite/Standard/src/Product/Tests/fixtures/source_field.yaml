@@ -58,7 +58,7 @@ Elasticsuite\Metadata\Model\SourceField:
     product_weight:
         metadata: '@product'
         code: 'weight'
-        type: 'int'
+        type: 'float'
         isFilterable: true
     product_price_group_id:
         metadata: '@product'
@@ -68,6 +68,10 @@ Elasticsuite\Metadata\Model\SourceField:
         metadata: '@product'
         code: 'price.original_price'
         type: 'float'
+    product_is_eco_friendly:
+        metadata: '@product'
+        code: 'is_eco_friendly'
+        type: 'boolean'
     product_created_at:
         metadata: '@product'
         code: 'created_at'

@@ -20,6 +20,10 @@ use Elasticsuite\Entity\Model\Attribute\AttributeInterface;
 use Elasticsuite\Entity\Model\Attribute\GraphQlAttributeInterface;
 use GraphQL\Type\Definition\Type as GraphQLType;
 
+/**
+ * Used for normalization/de-normalization and graphql schema stitching of scalar boolean source fields.
+ * Also used for graphql schema stitching of nested boolean source fields.
+ */
 class BooleanAttribute implements AttributeInterface, GraphQlAttributeInterface
 {
     protected string $attributeCode;
@@ -32,16 +36,25 @@ class BooleanAttribute implements AttributeInterface, GraphQlAttributeInterface
         $this->value = $value;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getAttributeCode(): string
     {
         return $this->attributeCode;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getValue(): mixed
     {
         return $this->value;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public static function getGraphQlType(): mixed
     {
         return GraphQLType::boolean();

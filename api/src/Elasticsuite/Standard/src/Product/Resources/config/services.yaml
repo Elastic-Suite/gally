@@ -21,6 +21,8 @@ services:
             - { name: api_platform.collection_data_provider }
 
     Elasticsuite\Product\Serializer\ProductDenormalizer:
+        arguments:
+            - '@Elasticsuite\Metadata\Repository\MetadataRepository'
         tags:
             - { name: serializer.normalizer }
 

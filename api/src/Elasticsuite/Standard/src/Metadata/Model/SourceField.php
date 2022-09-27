@@ -250,6 +250,8 @@ class SourceField
 
     private ?string $nestedPath = null;
 
+    private ?string $nestedCode = null;
+
     /** @var Collection<SourceFieldLabel> */
     private Collection $labels;
 
@@ -439,6 +441,18 @@ class SourceField
         }
 
         return $this->nestedPath;
+    }
+
+    public function getNestedCode(): ?string
+    {
+        if (null === $this->nestedCode) {
+            $this->nestedCode = $this->getCode();
+            if ($this->isNested() && (null !== $this->getNestedPath())) {
+                $this->nestedCode = substr($this->nestedCode, \strlen($this->getNestedPath()) + 1);
+            }
+        }
+
+        return $this->nestedCode;
     }
 
     /**

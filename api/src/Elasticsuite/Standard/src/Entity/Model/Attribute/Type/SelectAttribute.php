@@ -17,14 +17,12 @@ declare(strict_types=1);
 namespace Elasticsuite\Entity\Model\Attribute\Type;
 
 use Elasticsuite\Entity\Model\Attribute\AttributeInterface;
-use Elasticsuite\Entity\Model\Attribute\GraphQlAttributeInterface;
-use GraphQL\Type\Definition\Type as GraphQLType;
+use Elasticsuite\Entity\Model\Attribute\StructuredAttributeInterface;
 
 /**
- * Used for normalization/de-normalization and graphql schema stitching of scalar text source fields.
- * Also used for graphql schema stitching of nested text source fields.
+ * Used for normalization/de-normalization and graphql schema stitching of select boolean source fields.
  */
-class TextAttribute implements AttributeInterface, GraphQlAttributeInterface
+class SelectAttribute implements AttributeInterface, StructuredAttributeInterface
 {
     protected string $attributeCode;
 
@@ -55,8 +53,11 @@ class TextAttribute implements AttributeInterface, GraphQlAttributeInterface
     /**
      * {@inheritDoc}
      */
-    public static function getGraphQlType(): mixed
+    public static function getFields(): array
     {
-        return GraphQLType::string();
+        return [
+            'label' => ['class_type' => \Elasticsuite\Entity\Model\Attribute\Type\TextAttribute::class],
+            'value' => ['class_type' => \Elasticsuite\Entity\Model\Attribute\Type\TextAttribute::class],
+        ];
     }
 }

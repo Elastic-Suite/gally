@@ -74,23 +74,35 @@ class StitchingNormalizer implements ContextAwareNormalizerInterface, Normalizer
 
         $sourceFieldNames = [];
         $productMetadata = $this->metadataRepository->findOneBy(['entity' => $metadataEntity]);
+        /*
+         * TODO : either a hard global (all source fields) cache existing between calls
+         *        OR a hard per-request (context attributes only) cache existing between calls
+         */
         /** @var SourceField $sourceField */
         foreach ($productMetadata->getSourceFields() as $sourceField) {
             if (true === $sourceField->isNested()) {
                 // 'stock.qty' become $sourceFieldNames = ['stock' => [0 => 'qty']].
-                $attributeHierarchy = explode('.', $sourceField->getCode());
-                $sourceFieldNames[$attributeHierarchy[0]][] = $attributeHierarchy[1];
+                [$path, $code] = [$sourceField->getNestedPath(), $sourceField->getNestedCode()];
+                $sourceFieldNames[$path][] = $code;
             }
             $sourceFieldNames[$sourceField->getCode()] = true;
         }
 
+        /*
+         * No need to loop here on context|attributes here if the entity-specific de-normalizer already did
+         * when hydrating the object.
+         */
         foreach ($object->{$stitchingProperty} as $attribute) {
             if (isset($sourceFieldNames[$attribute->getAttributeCode()])) {
                 if (\is_array($sourceFieldNames[$attribute->getAttributeCode()])) {
                     $value = null !== $attribute->getValue() ? $attribute->getValue() : '';
-                    $values = json_decode($value, true);
-                    foreach ($sourceFieldNames[$attribute->getAttributeCode()] as $subAttribute) {
-                        $data[$attribute->getAttributeCode()][$subAttribute] = $values[$subAttribute] ?? null;
+                    if (\is_string($value)) {
+                        $values = json_decode($value, true);
+                        foreach ($sourceFieldNames[$attribute->getAttributeCode()] as $subAttribute) {
+                            $data[$attribute->getAttributeCode()][$subAttribute] = $values[$subAttribute] ?? null;
+                        }
+                    } else {
+                        $data[$attribute->getAttributeCode()] = $attribute->getValue();
                     }
                 } else {
                     $data[$attribute->getAttributeCode()] = $attribute->getValue();
