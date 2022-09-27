@@ -29,6 +29,7 @@ build_fast: ## Builds the Docker images (with cache)
 	@$(DOCKER_COMP) build
 
 up: ## Start the docker hub in detached mode (no logs)
+	$(MAKE) .env
 	@$(DOCKER_COMP) up --detach
 
 start: build up ## Build and start the containers
@@ -129,3 +130,8 @@ fixtures_append: ## Append fixtures
 index_clear: ## Delete all Elasticsearch indices
 index_clear: c=elasticsuite:index:clear
 index_clear: sf
+
+
+.env:
+	grep "UUID" .env || echo "UUID=$(shell id -u)" >> .env
+	grep "GUID" .env || echo "GUID=$(shell id -g)" >> .env
