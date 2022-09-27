@@ -17,17 +17,14 @@ declare(strict_types=1);
 namespace Elasticsuite\Entity\Model\Attribute;
 
 /**
- * Attribute hydration interface for dynamic attributes.
+ * Structured source field/entity attribute stitching description interface.
  */
-interface AttributeInterface
+interface StructuredAttributeInterface
 {
     /**
-     * Get the attribute identifier under which the attribute value will be stored in the entity dynamic attributes.
+     * Get the inner fields of a structured source field which will act as inner attributes.
+     *
+     * @return array An array whose keys are the inner field names and the values their corresponding stitching class
      */
-    public function getAttributeCode(): string;
-
-    /**
-     * Get the attribute value to store when hydrating the entity.
-     */
-    public function getValue(): mixed;
+    public static function getFields(): array;
 }

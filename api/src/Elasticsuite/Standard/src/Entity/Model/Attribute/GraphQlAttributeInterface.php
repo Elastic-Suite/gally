@@ -16,7 +16,13 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Entity\Model\Attribute;
 
+/**
+ * GraphQL schema dynamic attributes stitching interface for scalar attributes.
+ */
 interface GraphQlAttributeInterface
 {
+    /**
+     * Return the GraphQL type to use to represent the scalar attribute.
+     */
     public static function getGraphQlType(): mixed;
 }
