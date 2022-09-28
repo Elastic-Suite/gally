@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 
-import { ITableRow } from 'shared'
+import { ITableHeader, ITableRow } from 'shared'
 
 import FieldGuesser from '~/components/stateful/FieldGuesser/FieldGuesser'
 
 import CustomTableComponent from './CustomTable'
+import { useRef } from '@storybook/addons'
 
 export default {
   title: 'Organisms/CustomTable',
@@ -20,102 +21,133 @@ const Template: ComponentStory<typeof CustomTableComponent> = (args) => {
     setCurrentRows(tableRows)
   }, [tableRows])
 
+  function handleUpdate(
+    id: string | number,
+    name: string,
+    value: boolean | number | string
+  ): void {
+    setCurrentRows((prevState) =>
+      prevState.map((row) => (row.id === id ? { ...row, [name]: value } : row))
+    )
+  }
+
   return (
     <CustomTableComponent
       {...props}
       onReorder={setCurrentRows}
+      onRowUpdate={handleUpdate}
       tableRows={currentRows}
     />
   )
 }
 
 const selectedRows: string[] = []
+const tableHeaders = [
+  {
+    name: 'field',
+    label: 'Non editable boolean',
+    type: 'boolean',
+    editable: false,
+    sticky: false,
+  },
+  {
+    name: 'field2',
+    label: 'Editable boolean',
+    type: 'boolean',
+    editable: true,
+    sticky: false,
+  },
+  {
+    name: 'field3',
+    label: 'Non editable text',
+    type: 'string',
+    editable: false,
+    sticky: false,
+  },
+  {
+    name: 'field4',
+    label: 'Editable text',
+    type: 'string',
+    editable: true,
+    sticky: false,
+  },
+  {
+    name: 'field5',
+    label: 'Editable dropdown',
+    type: 'dropdown',
+    editable: true,
+    sticky: false,
+    options: [
+      { label: 'Select an item', value: 0 },
+      { label: 'Ten', value: 10 },
+      { label: 'Twenty', value: 20 },
+      { label: 'Thirty', value: 30 },
+    ],
+  },
+  {
+    name: 'field6',
+    label: 'Tag',
+    type: 'tag',
+    editable: false,
+    sticky: false,
+  },
+  {
+    name: 'field7',
+    label: 'Image',
+    type: 'image',
+    editable: false,
+    sticky: false,
+  },
+] as ITableHeader[]
 
-const mockedHeadersAndRows = {
-  tableHeaders: [
-    {
-      name: 'field',
-      label: 'Test header switch',
-      type: 'boolean',
-      editable: false,
-      sticky: false,
-    },
-    {
-      name: 'field2',
-      label: 'Test header text',
-      type: 'string',
-      editable: false,
-      sticky: false,
-    },
-    {
-      name: 'field3',
-      label: 'Test header long text',
-      type: 'string',
-      editable: false,
-      sticky: false,
-    },
-    {
-      name: 'field4',
-      label: 'Test header label',
-      type: 'string',
-      editable: false,
-      sticky: false,
-    },
-    {
-      name: 'field5',
-      label: 'Test header dropdown',
-      type: 'dropdown',
-      editable: true,
-      sticky: false,
-      options: [
-        { label: 'Select an item', value: 0 },
-        { label: 'Ten', value: 10 },
-        { label: 'Twenty', value: 20 },
-        { label: 'Thirty', value: 30 },
-      ],
-    },
-    {
-      name: 'field6',
-      label: 'Test header Tag',
-      type: 'tag',
-      editable: false,
-      sticky: false,
-    },
-    {
-      name: 'field7',
-      label: 'Test header image',
-      type: 'image',
-      editable: false,
-      sticky: false,
-    },
-  ],
-  tableRows: [
-    {
-      id: '1',
-      name: true,
-      field2: 'hello1',
-      field3: 'Here you will find a fake product description.',
-      field4: 'One field',
-      field5: 10,
-      field6: 'I am a tag',
-      field7: 'static/media/assets/img/scarf_elastic.png',
-    },
-    {
-      id: '2',
-      name: true,
-      field2: 'hello2',
-      field3: 'Here description',
-      field4: 'One field',
-      field5: 10,
-      field6: 'I am a tag',
-      field7: 'static/media/assets/img/scarf_elastic.png',
-    },
-  ],
+const tableRows = [
+  {
+    id: '1',
+    name: true,
+    field: false,
+    field2: false,
+    field3: 'Description',
+    field4: 'Edit me',
+    field5: 10,
+    field6: 'I am a tag',
+    field7: 'static/media/assets/img/scarf_elastic.png',
+  },
+  {
+    id: '2',
+    name: true,
+    field: true,
+    field2: true,
+    field3: 'Description',
+    field4: 'Edit me',
+    field5: 10,
+    field6: 'I am a tag',
+    field7: 'static/media/assets/img/scarf_elastic.png',
+  },
+] as ITableRow[]
+
+export const Default = Template.bind({})
+Default.args = {
+  Field: FieldGuesser,
+  tableHeaders,
+  tableRows,
   selectedRows,
 }
 
-export const CustomTable = Template.bind({})
-CustomTable.args = {
+export const WithDirtyState: ComponentStory<typeof CustomTableComponent> = (
+  args
+) => {
+  const { tableRows } = args
+  const prevRows = useRef(tableRows)
+
+  useEffect(() => {
+    prevRows.current = tableRows
+  }, [tableRows])
+
+  return <Template {...args} prevRows={prevRows.current} />
+}
+WithDirtyState.args = {
   Field: FieldGuesser,
-  ...mockedHeadersAndRows,
+  tableHeaders,
+  tableRows,
+  selectedRows,
 }

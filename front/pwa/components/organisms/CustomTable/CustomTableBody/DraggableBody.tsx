@@ -16,6 +16,7 @@ interface IProps {
     value: boolean | number | string
   ) => void
   onSelectRows: (arr: (string | number)[]) => void
+  prevRows?: ITableRow[]
   selectedRows: (string | number)[]
   shadow: boolean
   tableHeaders: ITableHeader[]
@@ -30,6 +31,7 @@ function DraggableBody(props: IProps): JSX.Element {
     isHorizontalOverflow,
     onRowUpdate,
     onSelectRows,
+    prevRows,
     selectedRows,
     shadow,
     tableHeaders,
@@ -50,16 +52,17 @@ function DraggableBody(props: IProps): JSX.Element {
               {(provider): JSX.Element => (
                 <DraggableRow
                   Field={Field}
-                  tableRow={tableRow}
-                  onRowUpdate={onRowUpdate}
-                  tableHeaders={tableHeaders}
-                  selectedRows={selectedRows}
-                  onSelectRows={onSelectRows}
-                  provider={provider}
-                  withSelection={withSelection}
                   cssLeftValuesIterator={cssLeftValues.entries()}
                   isHorizontalOverflow={isHorizontalOverflow}
+                  onRowUpdate={onRowUpdate}
+                  onSelectRows={onSelectRows}
+                  prevRow={prevRows?.[index]}
+                  provider={provider}
+                  selectedRows={selectedRows}
                   shadow={shadow}
+                  tableHeaders={tableHeaders}
+                  tableRow={tableRow}
+                  withSelection={withSelection}
                 />
               )}
             </Draggable>

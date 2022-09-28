@@ -35,6 +35,7 @@ interface IProps {
     value: boolean | number | string
   ) => void
   onSelectRows: (arr: (string | number)[]) => void
+  prevRow?: ITableRow
   provider: DraggableProvided
   selectedRows: (string | number)[]
   shadow: boolean
@@ -50,6 +51,7 @@ function DraggableRow(props: IProps): JSX.Element {
     isHorizontalOverflow,
     onRowUpdate,
     onSelectRows,
+    prevRow,
     provider,
     selectedRows,
     shadow,
@@ -124,6 +126,11 @@ function DraggableRow(props: IProps): JSX.Element {
         >
           <Field
             {...stickyHeader}
+            dirty={
+              prevRow
+                ? prevRow[stickyHeader.name] !== tableRow[stickyHeader.name]
+                : false
+            }
             label=""
             onChange={handleChange}
             value={tableRow[stickyHeader.name]}
@@ -135,6 +142,9 @@ function DraggableRow(props: IProps): JSX.Element {
         <BaseTableCell sx={nonStickyStyle(header.type)} key={header.name}>
           <Field
             {...header}
+            dirty={
+              prevRow ? prevRow[header.name] !== tableRow[header.name] : false
+            }
             label=""
             onChange={handleChange}
             value={tableRow[header.name]}
