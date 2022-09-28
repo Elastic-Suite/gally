@@ -4,6 +4,7 @@
 
 # https://docs.docker.com/engine/reference/builder/#understand-how-arg-and-from-interact
 ARG NODE_VERSION=16
+ARG public_url
 
 # "common" stage
 FROM node:${NODE_VERSION}-alpine AS api_platform_pwa_common
@@ -93,9 +94,9 @@ FROM api_platform_pwa_ci AS api_platform_pwa_int
 COPY --from=api_platform_shared_build /usr/src/front/shared/dist /usr/src/front/shared/dist
 
 ENV NODE_ENV production
-ARG public_url=https://ec2-34-243-11-163.eu-west-1.compute.amazonaws.com/example/
-ENV PUBLIC_URL=$public_url
 ARG NEXT_PUBLIC_ENTRYPOINT
+ARG public_url
+ENV PUBLIC_URL $public_url
 
 RUN set -eux; \
 	yarn build; \
