@@ -43,6 +43,7 @@ const Template: ComponentStory<typeof InputTextComponent> = (args) => {
 
 export const InputText = Template.bind({})
 InputText.args = {
+  dirty: false,
   id: 'input-text',
   infoTooltip: '',
   label: 'Label',
@@ -59,6 +60,7 @@ InputText.args = {
 
 export const SearchInputText = Template.bind({})
 SearchInputText.args = {
+  dirty: false,
   id: 'input-text',
   infoTooltip: '',
   label: 'Label',

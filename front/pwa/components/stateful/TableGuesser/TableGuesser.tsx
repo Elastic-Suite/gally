@@ -27,6 +27,7 @@ interface IProps<T extends IHydraMember> {
     name: string,
     value: boolean | number | string
   ) => void
+  prevData: T[]
   resource: IResource
   rowsPerPage?: number
   rowsPerPageOptions?: number[]
@@ -43,6 +44,7 @@ function TableGuesser<T extends IHydraMember>(props: IProps<T>): JSX.Element {
     onMassupdate,
     onPageChange,
     onRowUpdate,
+    prevData,
     resource,
     rowsPerPage,
     rowsPerPageOptions,
@@ -83,6 +85,7 @@ function TableGuesser<T extends IHydraMember>(props: IProps<T>): JSX.Element {
         onPageChange={onPageChange}
         onRowUpdate={onRowUpdate}
         onSelectedRows={setSelectedRows}
+        prevRows={prevData as unknown as ITableRow[]}
         ref={tableRef}
         rowsPerPage={rowsPerPage ?? defaultPageSize}
         rowsPerPageOptions={rowsPerPageOptions ?? []}

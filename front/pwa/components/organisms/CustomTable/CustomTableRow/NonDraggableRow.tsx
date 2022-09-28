@@ -33,6 +33,7 @@ interface IProps {
   ) => void
   onSelectRows: (arr: (string | number)[]) => void
   selectedRows: (string | number)[]
+  prevRow?: ITableRow
   shadow: boolean
   tableHeaders: ITableHeader[]
   tableRow: ITableRow
@@ -46,6 +47,7 @@ function NonDraggableRow(props: IProps): JSX.Element {
     isHorizontalOverflow,
     onRowUpdate,
     onSelectRows,
+    prevRow,
     selectedRows,
     shadow,
     tableHeaders,
@@ -110,6 +112,11 @@ function NonDraggableRow(props: IProps): JSX.Element {
         >
           <Field
             {...stickyHeader}
+            dirty={
+              prevRow
+                ? prevRow[stickyHeader.name] !== tableRow[stickyHeader.name]
+                : false
+            }
             label=""
             onChange={handleChange}
             value={tableRow[stickyHeader.name]}
@@ -121,6 +128,9 @@ function NonDraggableRow(props: IProps): JSX.Element {
         <BaseTableCell sx={nonStickyStyle(header.type)} key={header.name}>
           <Field
             {...header}
+            dirty={
+              prevRow ? prevRow[header.name] !== tableRow[header.name] : false
+            }
             label=""
             onChange={handleChange}
             value={tableRow[header.name]}

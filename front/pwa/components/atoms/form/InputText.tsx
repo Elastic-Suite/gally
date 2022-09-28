@@ -19,18 +19,19 @@ import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import InfoTooltip from './InfoTooltip'
 
 interface IUnstyledInputTextProps extends InputBaseProps {
+  dirty?: boolean
   small?: boolean
   transparent?: boolean
   value?: string
 }
 
-const inputTextStyledProps = ['small', 'transparent']
+const inputTextStyledProps = ['dirty', 'small', 'transparent']
 const InputTextStyled = styled(
   InputBase as FunctionComponent<IUnstyledInputTextProps>,
   {
     shouldForwardProp: (prop: string) => !inputTextStyledProps.includes(prop),
   }
-)(({ small, theme, transparent, value }) => ({
+)(({ dirty, small, theme, transparent, value }) => ({
   minHeight: '40px',
   borderRadius: 8,
   borderStyle: 'solid',
@@ -60,6 +61,9 @@ const InputTextStyled = styled(
   ...(Boolean(transparent) && {
     background: 'transparent',
     border: '0',
+  }),
+  ...(Boolean(dirty) && {
+    fontWeight: 'bold',
   }),
   '& .MuiInputBase-input': {
     padding: 0,
