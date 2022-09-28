@@ -19,7 +19,7 @@
         || {path}.startsWith("/images")
         || {path}.startsWith("/storybook-static")`
 
-    @example expression `({env.EXAMPLE_UPSTREAM} != '' && {path}.startsWith("/example"))`
+    @example expression `{env.EXAMPLE_UPSTREAM} != '' && ({path}.startsWith("/example") || {path}.startsWith("/ws"))`
 
 
     root * /srv/api/public
