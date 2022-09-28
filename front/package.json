@@ -2,13 +2,18 @@
   "private": true,
   "workspaces": ["example-app", "pwa", "shared"],
   "scripts": {
-    "dev": "yarn --cwd ./pwa dev",
+    "dev": "concurrently \"yarn dev:pwa\" \"yarn start:shared\"",
+    "dev:pwa": "yarn --cwd ./pwa dev",
     "build": "yarn --cwd ./pwa build",
+    "build:pwa": "yarn --cwd ./pwa build",
     "build:shared": "yarn --cwd ./shared build",
     "build:example": "yarn --cwd ./example-app build",
+    "build:storybook": "yarn --cwd ./pwa build-storybook",
     "build-storybook": "yarn --cwd ./pwa build-storybook",
     "start": "yarn --cwd ./pwa start",
+    "start:pwa": "yarn --cwd ./pwa start",
     "start:example": "yarn --cwd ./example-app start",
+    "start:shared": "yarn --cwd ./shared start",
     "test": "yarn --cwd shared test && yarn --cwd pwa test && yarn --cwd example-app test",
     "test:ci": "yarn --cwd shared test:ci && yarn --cwd pwa test:ci && yarn --cwd example-app test:ci",
     "eslint": "yarn --cwd shared eslint && yarn --cwd pwa eslint && yarn --cwd example-app eslint",
@@ -20,6 +25,7 @@
     "prepare": "cd .. && husky install front/.husky"
   },
   "devDependencies": {
+    "concurrently": "7.4.0",
     "husky": "8.0.1"
   }
 }

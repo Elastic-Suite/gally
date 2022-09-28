@@ -14,6 +14,7 @@ function App(): JSX.Element {
         <Layout>
           <Routes>
             <Route path="/" element={<Homepage />} />
+            <Route path="/index.html" element={<Homepage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/category/:id" element={<Category />} />
           </Routes>

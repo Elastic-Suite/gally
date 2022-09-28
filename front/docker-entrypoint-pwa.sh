@@ -2,7 +2,7 @@
 
 fixuid || :
 
-yarn install
+yarn install --frozen-lockfile
 [ -d shared/dist ] || (yarn build:shared)
 
 exec $@
