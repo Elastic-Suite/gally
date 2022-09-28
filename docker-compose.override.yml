@@ -38,18 +38,15 @@ services:
       target: api_platform_pwa_dev
     volumes:
       - ./front:/usr/src/front:rw,cached
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000"]
 
   example:
-    user: ${UUID?You must set UUID env var}:${GUID?You must set GUID env var}
     build:
       context: ./front
       target: api_platform_example_dev
     volumes:
       - ./front:/usr/src/front:rw,cached
-    depends_on:
-      - pwa
+    environment:
+      PUBLIC_URL: https://localhost/example
 
   caddy:
     volumes:
