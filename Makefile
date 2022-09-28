@@ -23,10 +23,10 @@ help: ## Outputs this help screen
 
 ## —— Docker 🐳 ————————————————————————————————————————————————————————————————
 build: ## Builds the Docker images
-	@$(DOCKER_COMP) build --pull --no-cache
-
-build_fast: ## Builds the Docker images (with cache)
 	@$(DOCKER_COMP) build
+
+build_no_cache: ## Builds the Docker images (without cache)
+	@$(DOCKER_COMP) build --pull --no-cache
 
 up: ## Start the docker hub in detached mode (no logs)
 	$(MAKE) .env
