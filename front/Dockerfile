@@ -24,7 +24,7 @@ COPY pwa/package.json ./pwa
 COPY shared/package.json ./shared
 
 RUN set -xe; \
-	yarn install;
+	yarn install --frozen-lockfile;
 
 COPY . ./
 
@@ -56,10 +56,13 @@ CMD ["yarn", "start:example"]
 FROM api_platform_pwa_ci AS api_platform_pwa_dev
 
 COPY --from=api_platform_shared_build /usr/src/front/shared/dist /usr/src/front/shared/dist
-ADD ./docker-entrypoint-pwa.sh /docker-entrypoint.sh
+
+# env variable needed for chokidar-cli
+ENV SHELL /bin/sh
+
+COPY ./docker-entrypoint-pwa.sh /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
-# alpine
 RUN addgroup -g 1042 docker && \
 	adduser -u 1042 -G docker -h /home/docker -s /bin/sh -D docker
 
@@ -79,8 +82,10 @@ CMD ["yarn", "dev"]
 
 FROM api_platform_example_ci AS api_platform_example_dev
 
+ENV WDS_SOCKET_PORT 443
+
 RUN apk add --no-cache curl
-ADD ./docker-entrypoint-example.sh /docker-entrypoint.sh
+COPY ./docker-entrypoint-example.sh /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
 CMD ["yarn", "start:example"]

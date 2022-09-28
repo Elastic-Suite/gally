@@ -63,6 +63,7 @@ function Login(): JSX.Element {
       <Paper sx={{ padding: 4 }}>
         <form onSubmit={handleSubmit}>
           <InputText
+            autoComplete="email"
             fullWidth
             label={t('label.email')}
             onChange={setEmail}
@@ -70,6 +71,7 @@ function Login(): JSX.Element {
             withMargin
           />
           <InputText
+            autoComplete="current-password"
             fullWidth
             label={t('label.password')}
             onChange={setPassword}
