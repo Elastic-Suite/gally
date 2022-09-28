@@ -134,5 +134,8 @@ index_clear: sf
 
 
 .env:
+ifeq (,$(wildcard ./env))
+	touch .env
+endif
 	grep "UUID" .env || echo "UUID=$(shell id -u)" >> .env
 	grep "GUID" .env || echo "GUID=$(shell id -g)" >> .env
