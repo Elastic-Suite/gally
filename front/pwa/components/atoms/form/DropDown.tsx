@@ -22,6 +22,7 @@ import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import Chip from '~/components/atoms/Chip/Chip'
 
 export interface IDropDownProps<T> {
+  dirty?: boolean
   disabled?: boolean
   infoTooltip?: string
   label?: string
@@ -38,6 +39,7 @@ export interface IDropDownProps<T> {
 
 function DropDown<T>(props: IDropDownProps<T>): JSX.Element {
   const {
+    dirty,
     disabled,
     infoTooltip,
     label,
@@ -126,6 +128,7 @@ function DropDown<T>(props: IDropDownProps<T>): JSX.Element {
             <InputText
               {...inputProps}
               {...InputProps}
+              dirty={dirty}
               infoTooltip={infoTooltip}
               label={label}
               required={required}

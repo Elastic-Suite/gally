@@ -9,7 +9,8 @@ interface IProps extends Omit<IFieldGuesserProps, 'onChange'> {
 }
 
 function EditableDropDownGuesser(props: IProps): JSX.Element {
-  const { field, label, multiple, onChange, options, required, value } = props
+  const { dirty, field, label, multiple, onChange, options, required, value } =
+    props
   const { fieldOptions, load } = useContext(optionsContext)
   const dropDownOptions =
     options ?? fieldOptions.get(field.property['@id']) ?? []
@@ -22,6 +23,7 @@ function EditableDropDownGuesser(props: IProps): JSX.Element {
 
   return (
     <DropDown
+      dirty={dirty}
       label={label}
       multiple={multiple}
       options={dropDownOptions}

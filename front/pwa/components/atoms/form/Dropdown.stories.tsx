@@ -13,6 +13,7 @@ export const Dropdown: ComponentStory<typeof DropDownComponent> = (args) => {
   return <DropDownComponent {...args} onChange={handleChange} value={value} />
 }
 Dropdown.args = {
+  dirty: false,
   disabled: false,
   infoTooltip: 'Helpful info',
   label: 'Label',
@@ -43,6 +44,7 @@ export const DropdownMultiple: ComponentStory<typeof DropDownComponent> = (
   )
 }
 DropdownMultiple.args = {
+  dirty: false,
   disabled: false,
   infoTooltip: '',
   label: 'Label',
