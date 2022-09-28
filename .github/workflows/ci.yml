@@ -161,5 +161,6 @@ jobs:
             git fetch --all &&
             git reset --hard origin/master &&
             git pull origin master &&
+            make .env &&
             SERVER_NAME=$HOSTNAME APP_SECRET=$APP_SECRET POSTGRES_PASSWORD=$POSTGRES_PASSWORD docker-compose -f docker-compose.yml -f docker-compose.int.yml up -d --build 
           "
