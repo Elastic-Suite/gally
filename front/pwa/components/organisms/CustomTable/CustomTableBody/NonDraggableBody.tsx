@@ -14,6 +14,7 @@ interface IProps {
     value: boolean | number | string
   ) => void
   onSelectRows: (arr: (string | number)[]) => void
+  prevRows?: ITableRow[]
   selectedRows: (string | number)[]
   shadow: boolean
   tableHeaders: ITableHeader[]
@@ -28,6 +29,7 @@ function NonDraggableBody(props: IProps): JSX.Element {
     isHorizontalOverflow,
     onRowUpdate,
     onSelectRows,
+    prevRows,
     selectedRows,
     shadow,
     tableHeaders,
@@ -37,19 +39,20 @@ function NonDraggableBody(props: IProps): JSX.Element {
 
   return (
     <TableBody>
-      {tableRows.map((tableRow) => (
+      {tableRows.map((tableRow, index) => (
         <NonDraggableRow
           Field={Field}
-          key={tableRow.id}
-          tableRow={tableRow}
-          onRowUpdate={onRowUpdate}
-          tableHeaders={tableHeaders}
-          withSelection={withSelection}
-          selectedRows={selectedRows}
-          onSelectRows={onSelectRows}
           cssLeftValuesIterator={cssLeftValues.entries()}
           isHorizontalOverflow={isHorizontalOverflow}
+          key={tableRow.id}
+          onRowUpdate={onRowUpdate}
+          onSelectRows={onSelectRows}
+          prevRow={prevRows?.[index]}
+          selectedRows={selectedRows}
           shadow={shadow}
+          tableHeaders={tableHeaders}
+          tableRow={tableRow}
+          withSelection={withSelection}
         />
       ))}
     </TableBody>

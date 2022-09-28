@@ -38,6 +38,7 @@ export interface ICustomTableProps {
     name: string,
     value: boolean | number | string
   ) => void
+  prevRows?: ITableRow[]
   tableHeaders: ITableHeader[]
   tableRows: ITableRow[]
   selectedRows?: (string | number)[]
@@ -53,6 +54,7 @@ function CustomTable(
     draggable,
     onReorder,
     onRowUpdate,
+    prevRows,
     tableHeaders,
     tableRows,
     selectedRows,
@@ -168,29 +170,31 @@ function CustomTable(
             {Boolean(!draggable) && (
               <NonDraggableBody
                 Field={Field}
-                tableRows={tableRows}
-                onRowUpdate={onRowUpdate}
-                tableHeaders={tableHeaders}
-                withSelection={withSelection}
-                onSelectRows={onSelectedRows}
-                selectedRows={selectedRows}
                 cssLeftValues={cssLeftValues}
                 isHorizontalOverflow={isOverflow}
+                onRowUpdate={onRowUpdate}
+                onSelectRows={onSelectedRows}
+                prevRows={prevRows}
+                selectedRows={selectedRows}
                 shadow={shadow}
+                tableHeaders={tableHeaders}
+                tableRows={tableRows}
+                withSelection={withSelection}
               />
             )}
             {Boolean(draggable) && (
               <DraggableBody
                 Field={Field}
-                tableRows={tableRows}
-                onRowUpdate={onRowUpdate}
-                tableHeaders={tableHeaders}
-                withSelection={withSelection}
-                onSelectRows={onSelectedRows}
-                selectedRows={selectedRows}
                 cssLeftValues={cssLeftValues}
                 isHorizontalOverflow={isOverflow}
+                onRowUpdate={onRowUpdate}
+                onSelectRows={onSelectedRows}
+                prevRows={prevRows}
+                selectedRows={selectedRows}
                 shadow={shadow}
+                tableHeaders={tableHeaders}
+                tableRows={tableRows}
+                withSelection={withSelection}
               />
             )}
           </StyledTable>

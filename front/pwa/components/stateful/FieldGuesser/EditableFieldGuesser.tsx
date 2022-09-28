@@ -1,6 +1,5 @@
 import { Switch } from '@mui/material'
 import { useTranslation } from 'next-i18next'
-
 import { DataContentType, IFieldGuesserProps } from 'shared'
 
 import DropDown from '~/components/atoms/form/DropDown'
@@ -11,6 +10,7 @@ import EditableDropDownGuesser from './EditableDropDownGuesser'
 
 function EditableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
   const {
+    dirty,
     label,
     multiple,
     name,
@@ -41,6 +41,7 @@ function EditableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
     case DataContentType.STRING: {
       return (
         <InputText
+          dirty={dirty}
           required={required}
           label={label}
           onChange={handleChange}
@@ -50,14 +51,20 @@ function EditableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
     }
 
     case DataContentType.DROPDOWN: {
-      return <EditableDropDownGuesser {...props} onChange={handleChange} />
+      return (
+        <EditableDropDownGuesser
+          {...props}
+          dirty={dirty}
+          onChange={handleChange}
+        />
+      )
     }
 
     case DataContentType.BOOLEAN: {
       if (useDropdownBoolean) {
         return (
           <DropDown
-            required={required}
+            dirty={dirty}
             label={label}
             multiple={multiple}
             options={
@@ -66,6 +73,7 @@ function EditableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
                 { label: t('filter.no'), value: false },
               ]
             }
+            required={required}
             value={value}
             onChange={handleChange}
           />
