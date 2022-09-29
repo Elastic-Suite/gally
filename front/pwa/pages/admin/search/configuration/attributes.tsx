@@ -42,7 +42,7 @@ function Attributes(): JSX.Element {
         />
       ) : null}
       <ResourceTable
-        resourceName='SourceField'
+        resourceName="SourceField"
         active={false}
         urlParams={searchableAttributeUrl}
         filters={fixedFilters}
