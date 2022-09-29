@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Elasticsuite\Search\Model\Facet;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Elasticsuite\Category\Model\Category;
@@ -74,21 +75,115 @@ class Configuration
     #[Groups(['facet_configuration:read'])]
     private ?Category $category;
 
+    #[ApiProperty(
+        attributes: [
+            'hydra:supportedProperty' => [
+                'hydra:property' => [
+                    'rdfs:label' => 'Display',
+                ],
+                'elasticsuite' => [
+                    'visible' => true,
+                    'editable' => true,
+                    'position' => 20,
+                    'input' => 'dropdown',
+                    // Todo: move the options values in the proper class and add validation constraint (will be done in the ticket ESPP-223)
+                    'options' => [
+                        'values' => ['auto' => 'Auto', 'display' => 'Display', 'hidden' => 'Hidden'],
+                    ],
+                ],
+            ],
+        ],
+    )]
     #[Groups(['facet_configuration:read', 'facet_configuration:write'])]
     private ?string $displayMode = null;
 
+    #[ApiProperty(
+        attributes: [
+            'hydra:supportedProperty' => [
+                'hydra:property' => [
+                    'rdfs:label' => 'Coverage',
+                ],
+                'elasticsuite' => [
+                    'visible' => true,
+                    'editable' => true,
+                    'position' => 30,
+                ],
+            ],
+        ],
+    )]
     #[Groups(['facet_configuration:read', 'facet_configuration:write'])]
     private ?int $coverageRate = null;
 
+    #[ApiProperty(
+        attributes: [
+            'hydra:supportedProperty' => [
+                'hydra:property' => [
+                    'rdfs:label' => 'Max size',
+                ],
+                'elasticsuite' => [
+                    'visible' => true,
+                    'editable' => true,
+                    'position' => 40,
+                ],
+            ],
+        ],
+    )]
     #[Groups(['facet_configuration:read', 'facet_configuration:write'])]
     private ?int $maxSize = null;
 
+    #[ApiProperty(
+        attributes: [
+            'hydra:supportedProperty' => [
+                'hydra:property' => [
+                    'rdfs:label' => 'Sort order',
+                ],
+                'elasticsuite' => [
+                    'visible' => true,
+                    'editable' => true,
+                    'position' => 50,
+                    'input' => 'dropdown',
+                    // Todo: move the options values in the proper class and add validation constraint (will be done in the ticket ESPP-226)
+                    'options' => [
+                        'values' => ['result_count' => 'Result count', 'admin_sort' => 'Admin sort', 'name' => 'Name', 'relevance' => 'Relevance'],
+                    ],
+                ],
+            ],
+        ],
+    )]
     #[Groups(['facet_configuration:read', 'facet_configuration:write'])]
     private ?string $sortOrder = null;
 
+    #[ApiProperty(
+        attributes: [
+            'hydra:supportedProperty' => [
+                'hydra:property' => [
+                    'rdfs:label' => 'Facet recommenders',
+                ],
+                'elasticsuite' => [
+                    'visible' => true,
+                    'editable' => true,
+                    'position' => 60,
+                ],
+            ],
+        ],
+    )]
     #[Groups(['facet_configuration:read', 'facet_configuration:write'])]
     private ?bool $isRecommendable = null;
 
+    #[ApiProperty(
+        attributes: [
+            'hydra:supportedProperty' => [
+                'hydra:property' => [
+                    'rdfs:label' => 'Virtual attributes',
+                ],
+                'elasticsuite' => [
+                    'visible' => true,
+                    'editable' => true,
+                    'position' => 70,
+                ],
+            ],
+        ],
+    )]
     #[Groups(['facet_configuration:read', 'facet_configuration:write'])]
     private ?bool $isVirtual = null;
 
@@ -230,6 +325,26 @@ class Configuration
     public function getDefaultIsVirtual(): ?bool
     {
         return $this->defaultIsVirtual;
+    }
+
+    #[ApiProperty(
+        attributes: [
+            'hydra:supportedProperty' => [
+                'hydra:property' => [
+                    'rdfs:label' => 'Attribute code',
+                ],
+                'elasticsuite' => [
+                    'visible' => true,
+                    'editable' => false,
+                    'position' => 10,
+                ],
+            ],
+        ],
+    )]
+    #[Groups(['facet_configuration:read'])]
+    public function getSourceFieldCode(): string
+    {
+        return $this->getSourceField()->getCode();
     }
 
     public function initDefaultValue(self $defaultConfiguration)
