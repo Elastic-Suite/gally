@@ -13,7 +13,7 @@ export function useApiHeaders(resource: IResource): ITableHeader[] {
   const { t } = useTranslation('api')
   return useMemo(() => {
     return resource.supportedProperty
-      .filter((field) => field.elasticsuite?.visible)
+      .filter((field) => (field.elasticsuite?.visible ?? true))
       .map((field) => getFieldHeader(field, t))
   }, [resource, t])
 }
@@ -25,8 +25,8 @@ export function useApiEditableFieldOptions(
     return resource.supportedProperty
       .filter(
         (field) =>
-          field.elasticsuite?.visible &&
-          field.elasticsuite?.editable &&
+          (field.elasticsuite?.visible ?? true) &&
+          (field.elasticsuite?.editable ?? true) &&
           field.writeable
       )
       .map((field) => ({
@@ -36,3 +36,4 @@ export function useApiEditableFieldOptions(
       }))
   }, [resource])
 }
+

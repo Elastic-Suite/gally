@@ -3,6 +3,7 @@ import { renderHookWithProviders } from '~/utils/tests'
 
 import { useApiEditableFieldOptions, useApiHeaders } from './useApiTable'
 
+
 describe('useApiTable', () => {
   describe('useApiHeaders', () => {
     it('should return the headers from a resource', () => {
@@ -59,6 +60,34 @@ describe('useApiTable', () => {
           editable: true,
           required: false,
         }),
+        expect.objectContaining({
+          name: 'isSystem',
+          label: 'isSystem',
+          type: 'boolean',
+          editable: true,
+          required: false,
+        }),
+        expect.objectContaining({
+          name: 'metadata',
+          label: 'metadata',
+          type: 'string',
+          editable: true,
+          required: true,
+        }),
+        expect.objectContaining({
+          name: 'labels',
+          label: 'labels',
+          type: 'string',
+          editable: true,
+          required: false,
+        }),
+        expect.objectContaining({
+          name: 'options',
+          label: 'options',
+          type: 'string',
+          editable: true,
+          required: false,
+        }),
       ])
     })
   })
@@ -68,6 +97,7 @@ describe('useApiTable', () => {
       const { result } = renderHookWithProviders(() =>
         useApiEditableFieldOptions(resourceWithRef)
       )
+
       expect(result.current).toEqual([
         expect.objectContaining({
           id: 'isFilterable',
@@ -84,6 +114,22 @@ describe('useApiTable', () => {
         expect.objectContaining({
           id: 'isUsedForRules',
           label: 'Use in rule engine',
+        }),
+        expect.objectContaining({
+          id: 'isSystem',
+          label: 'isSystem',
+        }),
+        expect.objectContaining({
+          id: 'metadata',
+          label: 'metadata',
+        }),
+        expect.objectContaining({
+          id: 'labels',
+          label: 'labels',
+        }),
+        expect.objectContaining({
+          id: 'options',
+          label: 'options',
         }),
       ])
     })
