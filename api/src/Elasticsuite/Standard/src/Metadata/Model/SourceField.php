@@ -49,8 +49,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
     normalizationContext: ['groups' => ['source_field:api']],
     denormalizationContext: ['groups' => ['source_field:api']],
 )]
-#[ApiFilter(BooleanFilter::class, properties: ['isSearchable', 'isFilterable'], arguments: ['treatNullAsFalse' => true])]
-#[ApiFilter(SearchFilter::class, properties: ['code' => 'ipartial', 'defaultLabel' => 'ipartial', 'type' => 'ipartial', 'metadata.entity' => 'exact'])]
+#[ApiFilter(SearchFilter::class, properties: ['code' => 'ipartial', 'defaultLabel' => 'ipartial', 'type' => 'ipartial', 'metadata.entity' => 'exact', 'weight' => 'exact'])]
+#[ApiFilter(BooleanFilter::class, properties: ['isSearchable', 'isFilterable', 'isSpellchecked'], arguments: ['treatNullAsFalse' => true])]
 class SourceField
 {
     private int $id;
