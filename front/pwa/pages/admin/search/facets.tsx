@@ -12,6 +12,7 @@ import TwoColsLayout from '~/components/molecules/layout/twoColsLayout/TwoColsLa
 import CategoryTree from '~/components/stateful/CategoryTree/CategoryTree'
 
 import { ICategories, ICategory } from '~/../shared'
+import ResourceTable from '~/components/stateful-pages/ResourceTable/ResourceTable'
 
 const pagesSlug = ['search', 'facets']
 
@@ -51,7 +52,7 @@ function Facets(): JSX.Element {
           </TitleBlock>,
         ]}
       >
-        {/* <ResourceTable resourceName="FacetConfiguration" /> */}
+        <ResourceTable resourceName="FacetConfiguration" />
       </TwoColsLayout>
     </>
   )
