@@ -46,6 +46,7 @@ module.exports = {
     'no-console': 'warn',
     'no-constant-binary-expression': 'error',
     'no-constructor-return': 'error',
+    'no-debugger': 'warn',
     'no-duplicate-imports': 'error',
     'no-else-return': 'error',
     'no-empty-function': 'error',

@@ -38,36 +38,29 @@ function Merchandize({
     <Paper variant="outlined" style={{ height: 'auto', padding: '22px' }}>
       <Grid
         container
-        justifyContent="center"
-        alignItems="center"
-        style={{ width: '100%' }}
+        justifyContent="flex-start"
+        alignItems="flex-start"
+        spacing={2}
       >
-        <Grid
-          container
-          justifyContent="flex-start"
-          alignItems="flex-start"
-          style={{ width: '100%' }}
-        >
-          <Grid item xs={6}>
-            <Switch
-              label={t('name')}
-              labelInfo={t('name.tooltip')}
-              onChange={handleChange}
-              checked={categoryNameValue}
-              name="name"
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <DropDown
-              options={sortOptions}
-              label="Default sorting"
-              value={sortValue}
-              onChange={onSortChange}
-              infoTooltip={t('select.tooltip')}
-            />
-          </Grid>
+        <Grid item xs={6}>
+          <Switch
+            label={t('name')}
+            labelInfo={t('name.tooltip')}
+            onChange={handleChange}
+            checked={categoryNameValue}
+            name="name"
+          />
         </Grid>
-        <Grid container justifyContent="flex-start" alignItems="center">
+        <Grid item xs={6}>
+          <DropDown
+            options={sortOptions}
+            label="Default sorting"
+            value={sortValue}
+            onChange={onSortChange}
+            infoTooltip={t('select.tooltip')}
+          />
+        </Grid>
+        <Grid item xs={6}>
           <Switch
             label={t('virtual')}
             labelInfo={t('virtual.tooltip')}

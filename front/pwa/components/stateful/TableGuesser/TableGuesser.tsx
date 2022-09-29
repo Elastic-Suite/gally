@@ -82,10 +82,10 @@ function TableGuesser<T extends IHydraMember>(props: IProps<T>): JSX.Element {
         Field={FieldGuesser}
         count={apiData['hydra:totalItems']}
         currentPage={currentPage ?? 0}
+        diffRows={prevData as unknown as ITableRow[]}
         onPageChange={onPageChange}
         onRowUpdate={onRowUpdate}
         onSelectedRows={setSelectedRows}
-        prevRows={prevData as unknown as ITableRow[]}
         ref={tableRef}
         rowsPerPage={rowsPerPage ?? defaultPageSize}
         rowsPerPageOptions={rowsPerPageOptions ?? []}
