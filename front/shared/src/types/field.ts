@@ -3,7 +3,7 @@ import { DataContentType } from './customTables'
 import { IOptions } from './option'
 
 export interface IFieldGuesserProps {
-  dirty?: boolean
+  diffValue?: unknown
   editable?: boolean
   field?: IField
   name: string
