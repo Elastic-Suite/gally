@@ -16,6 +16,10 @@ services:
             - '@api_platform.graphql.types_container'
             - '@.inner'
                 
-    Elasticsuite\Entity\Filter\BooleanFilter:
+    Elasticsuite\Entity\Filter\SearchColumnsFilter:
+        arguments: [ '@doctrine', ~, '@?logger' ]
+        tags: [ 'api_platform.filter' ]
+
+    Elasticsuite\Entity\Filter\Col:
         arguments: [ '@doctrine', ~, '@?logger' ]
         tags: [ 'api_platform.filter' ]
