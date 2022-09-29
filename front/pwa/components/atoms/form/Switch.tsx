@@ -1,17 +1,24 @@
-import { ChangeEvent } from 'react'
-import { InputLabel, Switch as MuiSwitch } from '@mui/material'
+import {
+  FormHelperText,
+  InputLabel,
+  Switch as MuiSwitch,
+  SwitchProps,
+} from '@mui/material'
 import { StyleFormControl } from './Switch.styled'
+
+import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import InfoTooltip from '~/components/atoms/form/InfoTooltip'
 
-interface IProps {
-  label: string
-  labelInfo: string
-  onChange?: (event: ChangeEvent<HTMLInputElement>) => void
-  name: string
-  checked: boolean
+interface IProps extends SwitchProps {
+  helperIcon?: string
+  helperText?: string
+  label?: string
+  labelInfo?: string
 }
 
-function Switch({ label, labelInfo, ...args }: IProps): JSX.Element {
+function Switch(props: IProps): JSX.Element {
+  const { helperIcon, helperText, label, labelInfo, ...switchProps } = props
+
   return (
     <StyleFormControl variant="standard" fullWidth>
       {label || labelInfo ? (
@@ -21,9 +28,22 @@ function Switch({ label, labelInfo, ...args }: IProps): JSX.Element {
         </InputLabel>
       ) : undefined}
       <MuiSwitch
-        {...args}
-        sx={{ margin: '15px', marginLeft: '-12px', marginTop: '22px' }}
+        {...switchProps}
+        sx={
+          label || labelInfo ? { marginLeft: '-12px', marginTop: '20px' } : {}
+        }
       />
+      {Boolean(helperText) && (
+        <FormHelperText>
+          {Boolean(helperIcon) && (
+            <IonIcon
+              name={helperIcon}
+              style={{ fontSize: 18, marginRight: 2 }}
+            />
+          )}
+          {helperText}
+        </FormHelperText>
+      )}
     </StyleFormControl>
   )
 }

@@ -133,19 +133,19 @@ Default.args = {
   selectedRows,
 }
 
-export const WithDirtyState: ComponentStory<typeof CustomTableComponent> = (
+export const WithDefaultValues: ComponentStory<typeof CustomTableComponent> = (
   args
 ) => {
   const { tableRows } = args
-  const prevRows = useRef(tableRows)
+  const diffRows = useRef(tableRows)
 
   useEffect(() => {
-    prevRows.current = tableRows
+    diffRows.current = tableRows
   }, [tableRows])
 
-  return <Template {...args} prevRows={prevRows.current} />
+  return <Template {...args} diffRows={diffRows.current} />
 }
-WithDirtyState.args = {
+WithDefaultValues.args = {
   Field: FieldGuesser,
   tableHeaders,
   tableRows,

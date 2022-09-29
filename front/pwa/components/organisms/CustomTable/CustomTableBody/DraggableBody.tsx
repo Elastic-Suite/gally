@@ -9,6 +9,7 @@ import DraggableRow from '../CustomTableRow/DraggableRow'
 interface IProps {
   Field: FunctionComponent<IFieldGuesserProps>
   cssLeftValues: number[]
+  diffRows?: ITableRow[]
   isHorizontalOverflow: boolean
   onRowUpdate?: (
     id: string | number,
@@ -16,7 +17,6 @@ interface IProps {
     value: boolean | number | string
   ) => void
   onSelectRows: (arr: (string | number)[]) => void
-  prevRows?: ITableRow[]
   selectedRows: (string | number)[]
   shadow: boolean
   tableHeaders: ITableHeader[]
@@ -28,10 +28,10 @@ function DraggableBody(props: IProps): JSX.Element {
   const {
     Field,
     cssLeftValues,
+    diffRows,
     isHorizontalOverflow,
     onRowUpdate,
     onSelectRows,
-    prevRows,
     selectedRows,
     shadow,
     tableHeaders,
@@ -56,7 +56,7 @@ function DraggableBody(props: IProps): JSX.Element {
                   isHorizontalOverflow={isHorizontalOverflow}
                   onRowUpdate={onRowUpdate}
                   onSelectRows={onSelectRows}
-                  prevRow={prevRows?.[index]}
+                  diffRow={diffRows?.[index]}
                   provider={provider}
                   selectedRows={selectedRows}
                   shadow={shadow}

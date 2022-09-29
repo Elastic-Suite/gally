@@ -25,6 +25,7 @@ import {
 interface IProps {
   Field: FunctionComponent<IFieldGuesserProps>
   cssLeftValuesIterator: IterableIterator<[number, number]>
+  diffRow?: ITableRow
   isHorizontalOverflow: boolean
   onRowUpdate?: (
     id: string | number,
@@ -33,7 +34,6 @@ interface IProps {
   ) => void
   onSelectRows: (arr: (string | number)[]) => void
   selectedRows: (string | number)[]
-  prevRow?: ITableRow
   shadow: boolean
   tableHeaders: ITableHeader[]
   tableRow: ITableRow
@@ -44,10 +44,10 @@ function NonDraggableRow(props: IProps): JSX.Element {
   const {
     Field,
     cssLeftValuesIterator,
+    diffRow,
     isHorizontalOverflow,
     onRowUpdate,
     onSelectRows,
-    prevRow,
     selectedRows,
     shadow,
     tableHeaders,
@@ -112,11 +112,7 @@ function NonDraggableRow(props: IProps): JSX.Element {
         >
           <Field
             {...stickyHeader}
-            dirty={
-              prevRow
-                ? prevRow[stickyHeader.name] !== tableRow[stickyHeader.name]
-                : false
-            }
+            diffValue={diffRow?.[stickyHeader.name]}
             label=""
             onChange={handleChange}
             value={tableRow[stickyHeader.name]}
@@ -128,9 +124,7 @@ function NonDraggableRow(props: IProps): JSX.Element {
         <BaseTableCell sx={nonStickyStyle(header.type)} key={header.name}>
           <Field
             {...header}
-            dirty={
-              prevRow ? prevRow[header.name] !== tableRow[header.name] : false
-            }
+            diffValue={diffRow?.[header.name]}
             label=""
             onChange={handleChange}
             value={tableRow[header.name]}

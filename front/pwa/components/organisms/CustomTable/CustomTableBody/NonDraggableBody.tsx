@@ -7,6 +7,7 @@ import NonDraggableRow from '../CustomTableRow/NonDraggableRow'
 interface IProps {
   Field: FunctionComponent<IFieldGuesserProps>
   cssLeftValues: number[]
+  diffRows?: ITableRow[]
   isHorizontalOverflow: boolean
   onRowUpdate?: (
     id: string | number,
@@ -14,7 +15,6 @@ interface IProps {
     value: boolean | number | string
   ) => void
   onSelectRows: (arr: (string | number)[]) => void
-  prevRows?: ITableRow[]
   selectedRows: (string | number)[]
   shadow: boolean
   tableHeaders: ITableHeader[]
@@ -26,10 +26,10 @@ function NonDraggableBody(props: IProps): JSX.Element {
   const {
     Field,
     cssLeftValues,
+    diffRows,
     isHorizontalOverflow,
     onRowUpdate,
     onSelectRows,
-    prevRows,
     selectedRows,
     shadow,
     tableHeaders,
@@ -43,11 +43,11 @@ function NonDraggableBody(props: IProps): JSX.Element {
         <NonDraggableRow
           Field={Field}
           cssLeftValuesIterator={cssLeftValues.entries()}
+          diffRow={diffRows?.[index]}
           isHorizontalOverflow={isHorizontalOverflow}
           key={tableRow.id}
           onRowUpdate={onRowUpdate}
           onSelectRows={onSelectRows}
-          prevRow={prevRows?.[index]}
           selectedRows={selectedRows}
           shadow={shadow}
           tableHeaders={tableHeaders}

@@ -1,16 +1,16 @@
-import { Switch } from '@mui/material'
 import { useTranslation } from 'next-i18next'
 import { DataContentType, IFieldGuesserProps } from 'shared'
 
 import DropDown from '~/components/atoms/form/DropDown'
 import InputText from '~/components/atoms/form/InputText'
+import Switch from '~/components/atoms/form/Switch'
 
 import ReadableFieldGuesser from './ReadableFieldGuesser'
 import EditableDropDownGuesser from './EditableDropDownGuesser'
 
 function EditableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
   const {
-    dirty,
+    diffValue,
     label,
     multiple,
     name,
@@ -22,6 +22,7 @@ function EditableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
     required,
   } = props
   const { t } = useTranslation('common')
+  const dirty = diffValue !== undefined && diffValue !== value
 
   function handleChange(value: number | string): void {
     if (onChange) {
@@ -42,22 +43,19 @@ function EditableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
       return (
         <InputText
           dirty={dirty}
-          required={required}
+          helperText={
+            Boolean(dirty) && t('form.defaultValue', { value: diffValue })
+          }
           label={label}
           onChange={handleChange}
+          required={required}
           value={String(value)}
         />
       )
     }
 
     case DataContentType.DROPDOWN: {
-      return (
-        <EditableDropDownGuesser
-          {...props}
-          dirty={dirty}
-          onChange={handleChange}
-        />
-      )
+      return <EditableDropDownGuesser {...props} onChange={handleChange} />
     }
 
     case DataContentType.BOOLEAN: {
@@ -65,6 +63,9 @@ function EditableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
         return (
           <DropDown
             dirty={dirty}
+            helperText={
+              Boolean(dirty) && t('form.defaultValue', { value: diffValue })
+            }
             label={label}
             multiple={multiple}
             options={
@@ -81,9 +82,13 @@ function EditableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
       }
       return (
         <Switch
-          required={required}
-          onChange={handleSwitchChange}
           checked={Boolean(value)}
+          helperText={
+            Boolean(dirty) &&
+            t('form.defaultValue', { value: t(`switch.${diffValue}`) })
+          }
+          onChange={handleSwitchChange}
+          required={required}
         />
       )
     }

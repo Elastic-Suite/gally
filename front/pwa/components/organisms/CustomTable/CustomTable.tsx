@@ -31,6 +31,7 @@ import CustomTableHeader from '~/components/organisms/CustomTable/CustomTableHea
 
 export interface ICustomTableProps {
   Field: FunctionComponent<IFieldGuesserProps>
+  diffRows?: ITableRow[]
   draggable?: boolean
   onReorder?: (rows: ITableRow[]) => void
   onRowUpdate?: (
@@ -38,7 +39,6 @@ export interface ICustomTableProps {
     name: string,
     value: boolean | number | string
   ) => void
-  prevRows?: ITableRow[]
   tableHeaders: ITableHeader[]
   tableRows: ITableRow[]
   selectedRows?: (string | number)[]
@@ -51,10 +51,10 @@ function CustomTable(
 ): JSX.Element {
   const {
     Field,
+    diffRows,
     draggable,
     onReorder,
     onRowUpdate,
-    prevRows,
     tableHeaders,
     tableRows,
     selectedRows,
@@ -171,10 +171,10 @@ function CustomTable(
               <NonDraggableBody
                 Field={Field}
                 cssLeftValues={cssLeftValues}
+                diffRows={diffRows}
                 isHorizontalOverflow={isOverflow}
                 onRowUpdate={onRowUpdate}
                 onSelectRows={onSelectedRows}
-                prevRows={prevRows}
                 selectedRows={selectedRows}
                 shadow={shadow}
                 tableHeaders={tableHeaders}
@@ -186,10 +186,10 @@ function CustomTable(
               <DraggableBody
                 Field={Field}
                 cssLeftValues={cssLeftValues}
+                diffRows={diffRows}
                 isHorizontalOverflow={isOverflow}
                 onRowUpdate={onRowUpdate}
                 onSelectRows={onSelectedRows}
-                prevRows={prevRows}
                 selectedRows={selectedRows}
                 shadow={shadow}
                 tableHeaders={tableHeaders}

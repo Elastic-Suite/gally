@@ -24,6 +24,7 @@ import Chip from '~/components/atoms/Chip/Chip'
 export interface IDropDownProps<T> {
   dirty?: boolean
   disabled?: boolean
+  helperText?: string
   infoTooltip?: string
   label?: string
   limitTags?: number
@@ -41,6 +42,7 @@ function DropDown<T>(props: IDropDownProps<T>): JSX.Element {
   const {
     dirty,
     disabled,
+    helperText,
     infoTooltip,
     label,
     limitTags,
@@ -129,6 +131,7 @@ function DropDown<T>(props: IDropDownProps<T>): JSX.Element {
               {...inputProps}
               {...InputProps}
               dirty={dirty}
+              helperText={helperText}
               infoTooltip={infoTooltip}
               label={label}
               required={required}
