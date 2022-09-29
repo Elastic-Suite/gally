@@ -9,7 +9,7 @@ import { searchableAttributeUrl } from 'shared'
 
 import Alert from '~/components/atoms/Alert/Alert'
 import PageTitle from '~/components/atoms/PageTitle/PageTitle'
-import CommonGridFromSourceField from '~/components/stateful-pages/ResourceTable/ResourceTable'
+import ResourceTable from '~/components/stateful-pages/ResourceTable/ResourceTable'
 
 const pagesSlug = ['search', 'configuration', 'attributes']
 const fixedFilters = { 'metadata.entity': 'product' }
@@ -41,8 +41,8 @@ function Attributes(): JSX.Element {
           style={{ marginBottom: '16px' }}
         />
       ) : null}
-      <CommonGridFromSourceField
-        resourceName="SourceField"
+      <ResourceTable
+        resourceName='SourceField'
         active={false}
         urlParams={searchableAttributeUrl}
         filters={fixedFilters}
