@@ -195,19 +195,17 @@ function InputText(
         ref={ref}
         {...other}
       />
-      {helperText ? (
+      {Boolean(helperText) && (
         <FormHelperText>
-          {helperIcon ? (
+          {Boolean(helperIcon) && (
             <IonIcon
               name={helperIcon}
               style={{ fontSize: 18, marginRight: 2 }}
             />
-          ) : (
-            ''
           )}
           {helperText}
         </FormHelperText>
-      ) : null}
+      )}
     </FormControl>
   )
 }

@@ -12,6 +12,7 @@
   "form.clear": "Clear",
   "form.close": "Close",
   "form.open": "Open",
+  "form.defaultValue": "Default: {{value}}",
   "massiveselection.all": "All",
   "massiveselection.allOnCurrentPage": "All on this page",
   "massiveselection.none": "None",
@@ -31,5 +32,7 @@
   "table.cancel": "Cancel",
   "table.selected_one": "{{count}} selected row",
   "table.selected_other": "{{count}} selected rows",
-  "no.result": "No results match your request"
+  "no.result": "No results match your request",
+  "switch.true": "true",
+  "switch.false": "false"
 }
