@@ -3,7 +3,6 @@ import { renderHookWithProviders } from '~/utils/tests'
 
 import { useApiEditableFieldOptions, useApiHeaders } from './useApiTable'
 
-
 describe('useApiTable', () => {
   describe('useApiHeaders', () => {
     it('should return the headers from a resource', () => {
