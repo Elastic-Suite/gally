@@ -18,7 +18,10 @@ namespace Elasticsuite\Metadata\Tests\Api\Rest;
 
 use Elasticsuite\Metadata\Model\SourceField;
 use Elasticsuite\Test\AbstractEntityTest;
+use Elasticsuite\Test\ExpectedResponse;
+use Elasticsuite\Test\RequestToTest;
 use Elasticsuite\User\Constant\Role;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class SourceFieldTest extends AbstractEntityTest
 {
@@ -122,5 +125,27 @@ class SourceFieldTest extends AbstractEntityTest
         return [
             [$this->getUser(Role::ROLE_CONTRIBUTOR), 11, 200],
         ];
+    }
+
+    public function testSearchColumnsFilter(): void
+    {
+        $expectedItemNumber = 1;
+        $request = new RequestToTest('GET', $this->getApiPath() . '?defaultLabel=sku', $this->getUser(Role::ROLE_CONTRIBUTOR));
+        $expectedResponse = new ExpectedResponse(
+            200,
+            function (ResponseInterface $response) use ($expectedItemNumber) {
+                $shortName = $this->getShortName();
+                $this->assertJsonContains(
+                    [
+                        '@context' => "/contexts/$shortName",
+                        '@id' => $this->getApiPath(),
+                        '@type' => 'hydra:Collection',
+                        'hydra:totalItems' => $expectedItemNumber,
+                    ],
+                );
+            }
+        );
+
+        $this->validateApiCall($request, $expectedResponse);
     }
 }

@@ -23,6 +23,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Elasticsuite\Entity\Filter\BooleanFilter;
+use Elasticsuite\Entity\Filter\SearchColumnsFilter;
 use Elasticsuite\Metadata\Model\SourceField\Type;
 use Elasticsuite\Metadata\Model\SourceField\Weight;
 use Elasticsuite\User\Constant\Role;
@@ -49,7 +50,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
     normalizationContext: ['groups' => ['source_field:api']],
     denormalizationContext: ['groups' => ['source_field:api']],
 )]
-#[ApiFilter(SearchFilter::class, properties: ['code' => 'ipartial', 'defaultLabel' => 'ipartial', 'type' => 'ipartial', 'metadata.entity' => 'exact', 'weight' => 'exact'])]
+
+#[ApiFilter(SearchFilter::class, properties: ['code' => 'ipartial', 'type' => 'ipartial', 'metadata.entity' => 'exact', 'weight' => 'exact'])]
+#[ApiFilter(SearchColumnsFilter::class, properties: ['defaultLabel' => ['code']])]
 #[ApiFilter(BooleanFilter::class, properties: ['isSearchable', 'isFilterable', 'isSpellchecked'], arguments: ['treatNullAsFalse' => true])]
 class SourceField
 {
