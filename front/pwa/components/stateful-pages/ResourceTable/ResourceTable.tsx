@@ -28,13 +28,13 @@ interface IProps {
   active?: boolean
   filters?: ISearchParameters
   urlParams?: string
+  resourceName: string
 }
 
-function CommonGridFromSourceField(props: IProps): JSX.Element {
+function ResourceTable(props: IProps): JSX.Element {
   const { t } = useTranslation('attributes')
-  const { active, filters, urlParams } = props
+  const { active, filters, urlParams, resourceName } = props
 
-  const resourceName = 'SourceField'
   const resource = useResource(resourceName)
   const [page, setPage] = usePage()
   const [activeFilters, setActiveFilters] = useFilters(resource)
@@ -146,4 +146,4 @@ function CommonGridFromSourceField(props: IProps): JSX.Element {
   )
 }
 
-export default CommonGridFromSourceField
+export default ResourceTable

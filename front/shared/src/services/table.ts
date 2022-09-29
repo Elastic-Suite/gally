@@ -40,7 +40,7 @@ export function getFieldHeader(field: IField, t: TFunction): ITableHeader {
     label:
       field.property.label ?? t(...getFieldLabelTranslationArgs(field.title)),
     type: getFieldDataContentType(field),
-    editable: field.elasticsuite?.editable && field.writeable,
+    editable: (field.elasticsuite?.editable ?? true) && field.writeable,
     required: field.required,
   }
 }
