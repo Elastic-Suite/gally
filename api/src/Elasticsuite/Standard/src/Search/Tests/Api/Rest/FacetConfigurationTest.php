@@ -54,25 +54,25 @@ class FacetConfigurationTest extends AbstractTest
             [
                 null,
                 [
-                    ['sourceField' => 3],
-                    ['sourceField' => 4],
-                    ['sourceField' => 5],
+                    ['sourceField' => 3, 'sourceFieldCode' => 'brand'],
+                    ['sourceField' => 4, 'sourceFieldCode' => 'color'],
+                    ['sourceField' => 5, 'sourceFieldCode' => 'length'],
                 ],
             ],
             [
                 'one',
                 [
-                    ['sourceField' => 3, 'category' => 'one'],
-                    ['sourceField' => 4, 'category' => 'one'],
-                    ['sourceField' => 5, 'category' => 'one'],
+                    ['sourceField' => 3, 'category' => 'one', 'sourceFieldCode' => 'brand'],
+                    ['sourceField' => 4, 'category' => 'one', 'sourceFieldCode' => 'color'],
+                    ['sourceField' => 5, 'category' => 'one', 'sourceFieldCode' => 'length'],
                 ],
             ],
             [
                 'two',
                 [
-                    ['sourceField' => 3, 'category' => 'two'],
-                    ['sourceField' => 4, 'category' => 'two'],
-                    ['sourceField' => 5, 'category' => 'two'],
+                    ['sourceField' => 3, 'category' => 'two', 'sourceFieldCode' => 'brand'],
+                    ['sourceField' => 4, 'category' => 'two', 'sourceFieldCode' => 'color'],
+                    ['sourceField' => 5, 'category' => 'two', 'sourceFieldCode' => 'length'],
                 ],
             ],
         ];
@@ -118,25 +118,25 @@ class FacetConfigurationTest extends AbstractTest
             [
                 null,
                 [
-                    ['sourceField' => 3, 'coverageRate' => 0], // product_brand.
-                    ['sourceField' => 4], // product_color.
-                    ['sourceField' => 5], // product_length.
+                    ['sourceField' => 3, 'coverageRate' => 0, 'sourceFieldCode' => 'brand'], // product_brand.
+                    ['sourceField' => 4, 'sourceFieldCode' => 'color'], // product_color.
+                    ['sourceField' => 5, 'sourceFieldCode' => 'length'], // product_length.
                 ],
             ],
             [
                 'one',
                 [
-                    ['sourceField' => 3, 'category' => 'one', 'coverageRate' => 10, 'defaultCoverageRate' => 0],
-                    ['sourceField' => 4, 'category' => 'one', 'coverageRate' => 10],
-                    ['sourceField' => 5, 'category' => 'one', 'coverageRate' => 90],
+                    ['sourceField' => 3, 'category' => 'one', 'coverageRate' => 10, 'defaultCoverageRate' => 0, 'sourceFieldCode' => 'brand'],
+                    ['sourceField' => 4, 'category' => 'one', 'coverageRate' => 10, 'sourceFieldCode' => 'color'],
+                    ['sourceField' => 5, 'category' => 'one', 'coverageRate' => 90, 'sourceFieldCode' => 'length'],
                 ],
             ],
             [
                 'two',
                 [
-                    ['sourceField' => 3, 'category' => 'two', 'coverageRate' => 20, 'defaultCoverageRate' => 0],
-                    ['sourceField' => 4, 'category' => 'two', 'coverageRate' => 90],
-                    ['sourceField' => 5, 'category' => 'two', 'coverageRate' => 90],
+                    ['sourceField' => 3, 'category' => 'two', 'coverageRate' => 20, 'defaultCoverageRate' => 0, 'sourceFieldCode' => 'brand'],
+                    ['sourceField' => 4, 'category' => 'two', 'coverageRate' => 90, 'sourceFieldCode' => 'color'],
+                    ['sourceField' => 5, 'category' => 'two', 'coverageRate' => 90, 'sourceFieldCode' => 'length'],
                 ],
             ],
         ];

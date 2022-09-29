@@ -79,6 +79,7 @@ class FacetConfigurationTest extends RestFacetConfigurationTest
                             defaultCoverageRate
                             category { id }
                             sourceField { id }
+                            sourceFieldCode
                           }
                         }
                       }
