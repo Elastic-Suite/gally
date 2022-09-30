@@ -31,10 +31,18 @@ export function useOptions(): IOptionsContext {
           // get options from the schema
           if (isDropdownStaticOptions(field.elasticsuite?.options)) {
             // static options
-            const options = field.elasticsuite.options.values.map((option) => ({
-              label: String(option),
-              value: option,
-            }))
+            if (field.elasticsuite.options.values instanceof Array) {
+              const options = field.elasticsuite.options.values.map(
+                (option) => ({
+                  label: String(option),
+                  value: option,
+                })
+              )
+              return options
+            }
+            const options = Object.entries(
+              field.elasticsuite.options.values
+            ).map(([value, label]) => ({ label, value }))
             return options
           }
           // options from api
