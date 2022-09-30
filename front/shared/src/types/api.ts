@@ -62,7 +62,7 @@ export type IResourceEditableReplace<T> = (
 export type IResourceEditableUpdate<T> = (
   id: string | number,
   item: Partial<T>
-) => Promise<void>
+) => void
 
 export interface IResourceEditableOperations<T extends IHydraMember> {
   create?: IResourceEditableCreate<T>
