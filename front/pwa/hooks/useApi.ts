@@ -7,6 +7,7 @@ import {
   useState,
 } from 'react'
 import { useTranslation } from 'next-i18next'
+import debounce from 'lodash.debounce'
 
 import {
   IFetch,
@@ -26,6 +27,8 @@ import {
 
 import { useLog } from './useLog'
 import { useResourceOperations } from './useResource'
+
+const debounceDelay = 400
 
 export function useApiFetch<T>(secure = true): IFetchApi<T> {
   const { i18n } = useTranslation('common')
@@ -140,20 +143,31 @@ export function useApiEditableList<T extends IHydraMember>(
   )
   const { create, remove, replace, update } = useResourceOperations<T>(resource)
 
+  const debouncedUpdate = useMemo(
+    () =>
+      debounce(
+        async (id: string | number, updatedItem: Partial<T>): Promise<void> => {
+          const updateResponse = await update(id, updatedItem)
+          if (isError(updateResponse)) {
+            // reload if error
+            load()
+          }
+        },
+        debounceDelay
+      ),
+    [load, update]
+  )
+
   const editableUpdate = useCallback(
-    async (id: string | number, updatedItem: Partial<T>): Promise<void> => {
+    (id: string | number, updatedItem: Partial<T>): void => {
       updateList((items) =>
         items.map((item) =>
           item.id === id ? { ...item, ...updatedItem } : item
         )
       )
-      const updateResponse = await update(id, updatedItem)
-      if (isError(updateResponse)) {
-        // reload if error
-        load()
-      }
+      debouncedUpdate(id, updatedItem)
     },
-    [load, update, updateList]
+    [debouncedUpdate, updateList]
   )
 
   const massEditableUpdate = useCallback(
