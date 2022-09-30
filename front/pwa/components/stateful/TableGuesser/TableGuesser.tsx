@@ -9,6 +9,7 @@ import {
   IResourceEditableMassUpdate,
   ITableRow,
   defaultPageSize,
+  getNameFromDefault,
 } from 'shared'
 
 import StickyBar from '~/components/molecules/CustomTable/StickyBar/StickyBar'
@@ -20,6 +21,7 @@ import TableStickyBar from '../TableStickyBar/TableStickyBar'
 interface IProps<T extends IHydraMember> {
   apiData: IHydraResponse<T>
   currentPage?: number
+  diffDefaultValues?: boolean
   onMassupdate: IResourceEditableMassUpdate<T>
   onPageChange: (page: number) => void
   onRowUpdate?: (
@@ -27,7 +29,6 @@ interface IProps<T extends IHydraMember> {
     name: string,
     value: boolean | number | string
   ) => void
-  prevData: T[]
   resource: IResource
   rowsPerPage?: number
   rowsPerPageOptions?: number[]
@@ -41,10 +42,10 @@ function TableGuesser<T extends IHydraMember>(props: IProps<T>): JSX.Element {
   const {
     apiData,
     currentPage,
+    diffDefaultValues,
     onMassupdate,
     onPageChange,
     onRowUpdate,
-    prevData,
     resource,
     rowsPerPage,
     rowsPerPageOptions,
@@ -59,6 +60,17 @@ function TableGuesser<T extends IHydraMember>(props: IProps<T>): JSX.Element {
   const [selectedValue, setSelectedValue] = useState<boolean | ''>('')
   const [selectedRows, setSelectedRows] = useState<(string | number)[]>([])
   const tableRows = apiData['hydra:member'] as unknown as ITableRow[]
+
+  let diffRows: ITableRow[]
+  if (diffDefaultValues) {
+    diffRows = tableRows.map((row) =>
+      Object.fromEntries(
+        Object.entries(row)
+          .filter(([key]) => key.startsWith('default'))
+          .map(([key, value]) => [getNameFromDefault(key), value])
+      )
+    ) as ITableRow[]
+  }
 
   function handleChangeField(id: IField | ''): void {
     setSelectedField(id)
@@ -82,7 +94,7 @@ function TableGuesser<T extends IHydraMember>(props: IProps<T>): JSX.Element {
         Field={FieldGuesser}
         count={apiData['hydra:totalItems']}
         currentPage={currentPage ?? 0}
-        diffRows={prevData as unknown as ITableRow[]}
+        diffRows={diffRows}
         onPageChange={onPageChange}
         onRowUpdate={onRowUpdate}
         onSelectedRows={setSelectedRows}
