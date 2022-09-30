@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { ReactNode, useCallback, useState } from 'react'
 
 import { useApiFilters } from '~/hooks'
 import { IFilter, IHydraMember, IHydraResponse, IResource } from 'shared'
@@ -8,6 +8,7 @@ import Filters from '~/components/molecules/Filters/Filters'
 interface IProps<T extends IHydraMember> {
   activeFilters: Record<string, unknown>
   apiData: IHydraResponse<T>
+  children?: ReactNode
   onFilterChange: (values: Record<string, unknown>) => void
   onSearch: (value: string) => void
   resource: IResource
@@ -18,6 +19,7 @@ function FiltersGuesser<T extends IHydraMember>(props: IProps<T>): JSX.Element {
   const {
     activeFilters,
     apiData,
+    children,
     onFilterChange,
     onSearch,
     resource,
@@ -79,7 +81,9 @@ function FiltersGuesser<T extends IHydraMember>(props: IProps<T>): JSX.Element {
       onSearch={onSearch}
       searchValue={searchValue}
       showSearch
-    />
+    >
+      {children}
+    </Filters>
   )
 }
 

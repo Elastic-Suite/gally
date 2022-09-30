@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react'
+import { FormEvent, ReactNode, useState } from 'react'
 import { useTranslation } from 'next-i18next'
 import { Collapse, InputAdornment, Stack } from '@mui/material'
 
@@ -11,6 +11,7 @@ import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import FieldGuesser from '~/components/stateful/FieldGuesser/FieldGuesser'
 
 import {
+  Container,
   ContentForm,
   FacetteBox,
   FilterBox,
@@ -30,6 +31,7 @@ interface IActiveFilter {
 
 interface IProps {
   activeValues: Record<string, unknown>
+  children?: ReactNode
   filters: IFilter[]
   filterValues: Record<string, unknown>
   onApply: () => void
@@ -60,6 +62,7 @@ function getActiveFilter(
 function Filters(props: IProps): JSX.Element {
   const {
     activeValues,
+    children,
     filters,
     filterValues,
     onApply,
@@ -188,6 +191,7 @@ function Filters(props: IProps): JSX.Element {
           </Stack>
         </ContentForm>
       </Collapse>
+      {Boolean(children) && <Container>{children}</Container>}
     </FiltersPaper>
   )
 }
