@@ -8,6 +8,10 @@ export function firstLetterLowercase(item: string): string {
   return item[0].toLowerCase() + item.slice(1)
 }
 
+export function getNameFromDefault(name: string): string {
+  return firstLetterLowercase(name.substring(7))
+}
+
 export function humanize(label: string): string {
   return inflection.transform(label, ['underscore', 'humanize'])
 }
