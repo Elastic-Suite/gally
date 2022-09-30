@@ -29,6 +29,8 @@ export function getFieldDataContentType(field: IField): DataContentType {
   const type = getFieldType(field)
   if (type === 'boolean') {
     return DataContentType.BOOLEAN
+  } else if (type === 'integer' || type === 'float') {
+    return DataContentType.NUMBER
   }
   return DataContentType.STRING
 }

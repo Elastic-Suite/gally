@@ -39,6 +39,7 @@ function EditableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
   }
 
   switch (type) {
+    case DataContentType.NUMBER:
     case DataContentType.STRING: {
       return (
         <InputText
@@ -49,6 +50,7 @@ function EditableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
           label={label}
           onChange={handleChange}
           required={required}
+          type={type === DataContentType.NUMBER ? 'number' : 'text'}
           value={String(value)}
         />
       )

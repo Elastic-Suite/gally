@@ -147,7 +147,7 @@ export interface IInputTextProps
   label?: string
   helperText?: ReactNode
   helperIcon?: string
-  onChange?: (value: string) => void
+  onChange?: (value: string | number) => void
   withMargin?: boolean
 }
 
@@ -167,12 +167,15 @@ function InputText(
     withMargin,
     ...other
   } = props
+  const { type } = props
 
   function handleChange(
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ): void {
     if (onChange) {
-      onChange(event.target.value)
+      onChange(
+        type === 'number' ? Number(event.target.value) : event.target.value
+      )
     }
   }
 
