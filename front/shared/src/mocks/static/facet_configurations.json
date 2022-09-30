@@ -1,0 +1,107 @@
+{
+  "@context": "/contexts/FacetConfiguration",
+  "@id": "/facet_configurations",
+  "@type": "hydra:Collection",
+  "hydra:member": [
+    {
+      "@id": "/facet_configurations/15-0",
+      "@type": "FacetConfiguration",
+      "id": "15-0",
+      "sourceField": "/source_fields/15",
+      "displayMode": "auto",
+      "coverageRate": 90,
+      "maxSize": 10,
+      "sortOrder": "result_count",
+      "isRecommendable": false,
+      "isVirtual": false,
+      "defaultDisplayMode": "auto",
+      "defaultCoverageRate": 90,
+      "defaultMaxSize": 10,
+      "defaultSortOrder": "result_count",
+      "defaultIsRecommendable": false,
+      "defaultIsVirtual": false,
+      "sourceFieldCode": "brand"
+    },
+    {
+      "@id": "/facet_configurations/16-0",
+      "@type": "FacetConfiguration",
+      "id": "16-0",
+      "sourceField": "/source_fields/16",
+      "displayMode": "auto",
+      "coverageRate": 90,
+      "maxSize": 10,
+      "sortOrder": "result_count",
+      "isRecommendable": false,
+      "isVirtual": false,
+      "defaultDisplayMode": "auto",
+      "defaultCoverageRate": 90,
+      "defaultMaxSize": 10,
+      "defaultSortOrder": "result_count",
+      "defaultIsRecommendable": false,
+      "defaultIsVirtual": false,
+      "sourceFieldCode": "color"
+    },
+    {
+      "@id": "/facet_configurations/17-0",
+      "@type": "FacetConfiguration",
+      "id": "17-0",
+      "sourceField": "/source_fields/17",
+      "displayMode": "auto",
+      "coverageRate": 90,
+      "maxSize": 10,
+      "sortOrder": "result_count",
+      "isRecommendable": false,
+      "isVirtual": false,
+      "defaultDisplayMode": "auto",
+      "defaultCoverageRate": 90,
+      "defaultMaxSize": 10,
+      "defaultSortOrder": "result_count",
+      "defaultIsRecommendable": false,
+      "defaultIsVirtual": false,
+      "sourceFieldCode": "size"
+    },
+    {
+      "@id": "/facet_configurations/18-0",
+      "@type": "FacetConfiguration",
+      "id": "18-0",
+      "sourceField": "/source_fields/18",
+      "displayMode": "auto",
+      "coverageRate": 90,
+      "maxSize": 10,
+      "sortOrder": "result_count",
+      "isRecommendable": false,
+      "isVirtual": false,
+      "defaultDisplayMode": "auto",
+      "defaultCoverageRate": 90,
+      "defaultMaxSize": 10,
+      "defaultSortOrder": "result_count",
+      "defaultIsRecommendable": false,
+      "defaultIsVirtual": false,
+      "sourceFieldCode": "created_at"
+    }
+  ],
+  "hydra:totalItems": 4,
+  "hydra:view": {
+    "@id": "/facet_configurations?pagination=true\u0026pageSize=50",
+    "@type": "hydra:PartialCollectionView"
+  },
+  "hydra:search": {
+    "@type": "hydra:IriTemplate",
+    "hydra:template": "/facet_configurations{?category,category[]}",
+    "hydra:variableRepresentation": "BasicRepresentation",
+    "hydra:mapping": [
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "category",
+        "property": "category",
+        "required": false
+      },
+      {
+        "@type": "IriTemplateMapping",
+        "variable": "category[]",
+        "property": "category",
+        "required": false
+      }
+    ]
+  }
+}
