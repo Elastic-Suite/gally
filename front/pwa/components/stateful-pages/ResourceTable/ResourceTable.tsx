@@ -26,6 +26,7 @@ function isObjectNotEmpty(object: object): boolean {
 }
 interface IProps {
   active?: boolean
+  diffDefaultValues?: boolean
   filters?: ISearchParameters
   urlParams?: string
   resourceName: string
@@ -33,7 +34,7 @@ interface IProps {
 
 function ResourceTable(props: IProps): JSX.Element {
   const { t } = useTranslation('attributes')
-  const { active, filters, urlParams, resourceName } = props
+  const { active, diffDefaultValues, filters, urlParams, resourceName } = props
 
   const resource = useResource(resourceName)
   const [page, setPage] = usePage()
@@ -133,6 +134,7 @@ function ResourceTable(props: IProps): JSX.Element {
         <TableGuesser
           apiData={data}
           currentPage={page}
+          diffDefaultValues={diffDefaultValues}
           onMassupdate={massUpdate}
           onPageChange={handlePageChange}
           onRowUpdate={handleRowChange}

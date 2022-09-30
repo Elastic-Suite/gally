@@ -52,7 +52,7 @@ function Facets(): JSX.Element {
           </TitleBlock>,
         ]}
       >
-        <ResourceTable resourceName="FacetConfiguration" />
+        <ResourceTable diffDefaultValues resourceName="FacetConfiguration" />
       </TwoColsLayout>
     </>
   )

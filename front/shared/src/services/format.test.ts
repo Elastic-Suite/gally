@@ -3,6 +3,7 @@ import {
   firstLetterUppercase,
   formatPrice,
   getFieldLabelTranslationArgs,
+  getNameFromDefault,
   humanize,
 } from './format'
 
@@ -16,6 +17,12 @@ describe('Format service', () => {
   describe('firstLetterLowercase', () => {
     it('Should set first letter to lowercase', () => {
       expect(firstLetterLowercase('Hello there')).toEqual('hello there')
+    })
+  })
+
+  describe('getNameFromDefault', () => {
+    it('Should get the name without the default part', () => {
+      expect(getNameFromDefault('defaultMaxSize')).toEqual('maxSize')
     })
   })
 
