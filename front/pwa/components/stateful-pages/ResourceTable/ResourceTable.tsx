@@ -174,68 +174,52 @@ function ResourceTable(props: IProps): JSX.Element {
   }
   return (
     <>
-      {tableRows.length !== 0 || filterOrSearchAreUp ? (
-        <FiltersGuesser
-          activeFilters={activeFilters}
-          apiData={data}
-          onFilterChange={handleFilterChange}
-          onSearch={handleSearchValue}
-          resource={resource}
-          searchValue={searchValue}
-        >
-          {Boolean(diffDefaultValues) && (
-            <FitlerContent>
-              <Button
-                disabled={diffCount === 0}
-                display="secondary"
-                onClick={handleReset}
-              >
-                {t('default.button')}
-              </Button>
-              <Paragraph
-                dangerouslySetInnerHTML={{
-                  __html: t('default.customValue', {
-                    count: diffCount,
-                    value: `<strong>${diffCount}</strong>`,
-                  }),
-                }}
-              />
-            </FitlerContent>
-          )}
-        </FiltersGuesser>
-      ) : null}
-
-      {tableRows.length === 0 ? (
-        filterOrSearchAreUp ? (
-          <TableGuesser
-            onMassupdate={massUpdate}
-            onPageChange={handlePageChange}
-            resource={resource}
-            noResult
-            tableRows={tableRows}
-          />
-        ) : (
-          <NoAttributes
-            title={t('attributes.none')}
-            btnTitle={t('attributes.none.btn')}
-            btnHref="admin/settings/attributes"
-          />
-        )
-      ) : (
-        <TableGuesser
-          count={data['hydra:totalItems']}
-          currentPage={page}
-          diffRows={diffRows}
-          onMassupdate={massUpdate}
-          onPageChange={handlePageChange}
-          onRowUpdate={handleRowChange}
-          resource={resource}
-          rowsPerPageOptions={rowsPerPageOptions}
-          onRowsPerPageChange={onRowsPerPageChange}
-          rowsPerPage={rowsPerPage}
-          tableRows={tableRows}
-        />
-      )}
+      <FiltersGuesser
+        activeFilters={activeFilters}
+        apiData={data}
+        onFilterChange={handleFilterChange}
+        onSearch={handleSearchValue}
+        resource={resource}
+        searchValue={searchValue}
+      >
+        {Boolean(diffDefaultValues) && (
+          <FitlerContent>
+            <Button
+              disabled={diffCount === 0}
+              display="secondary"
+              onClick={handleReset}
+            >
+              {t('default.button')}
+            </Button>
+            <Paragraph
+              dangerouslySetInnerHTML={{
+                __html: t('default.customValue', {
+                  count: diffCount,
+                  value: `<strong>${diffCount}</strong>`,
+                }),
+              }}
+            />
+          </FitlerContent>
+        )}
+      </FiltersGuesser>
+      <TableGuesser
+        count={data['hydra:totalItems']}
+        currentPage={page}
+        diffRows={diffRows}
+        onMassupdate={massUpdate}
+        onPageChange={handlePageChange}
+        onRowUpdate={handleRowChange}
+        resource={resource}
+        rowsPerPageOptions={rowsPerPageOptions}
+        onRowsPerPageChange={onRowsPerPageChange}
+        rowsPerPage={rowsPerPage}
+        tableRows={tableRows}
+        noResult={
+          data['hydra:member'].length === 0 &&
+          sourceFields.status === LoadStatus.SUCCEEDED &&
+          filterOrSearchAreUp
+        }
+      />
     </>
   )
 }
