@@ -2,5 +2,9 @@
   "attributes": "Searchable attributes",
   "attributes.alert": "Attributes displayed here have been set as searchable",
   "attributes.none": "No attributes were specified as searchable in the settings",
-  "attributes.none.btn": "Add searchable attributes"
+  "attributes.none.btn": "Add searchable attributes",
+  "default.customValue_zero": "You don't have any custom value",
+  "default.customValue_one": "You are using {{value}} custom value",
+  "default.customValue_other": "You are using {{value}} custom values",
+  "default.button": "Switch to default values"
 }

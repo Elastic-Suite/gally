@@ -78,3 +78,13 @@ export const FiltersBox = styled('div')(({ theme }) => ({
   rowGap: theme.spacing(3),
   paddingBottom: theme.spacing(3),
 }))
+
+export const Container = styled('div')(({ theme }) => ({
+  borderColor: theme.palette.colors.neutral[300],
+  borderStyle: 'solid',
+  borderWidth: '1px 0 0 0',
+  paddingBottom: theme.spacing(2),
+  paddingLeft: theme.spacing(3),
+  paddingRight: theme.spacing(3),
+  paddingTop: theme.spacing(2),
+}))

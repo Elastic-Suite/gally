@@ -4,12 +4,10 @@ import { useApiEditableFieldOptions, useApiHeaders } from '~/hooks'
 import {
   IField,
   IHydraMember,
-  IHydraResponse,
   IResource,
   IResourceEditableMassUpdate,
   ITableRow,
   defaultPageSize,
-  getNameFromDefault,
 } from 'shared'
 
 import StickyBar from '~/components/molecules/CustomTable/StickyBar/StickyBar'
@@ -19,9 +17,9 @@ import FieldGuesser from '../FieldGuesser/FieldGuesser'
 import TableStickyBar from '../TableStickyBar/TableStickyBar'
 
 interface IProps<T extends IHydraMember> {
-  apiData: IHydraResponse<T>
+  count?: number
   currentPage?: number
-  diffDefaultValues?: boolean
+  diffRows?: ITableRow[]
   onMassupdate: IResourceEditableMassUpdate<T>
   onPageChange: (page: number) => void
   onRowUpdate?: (
@@ -36,13 +34,14 @@ interface IProps<T extends IHydraMember> {
     event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => void
   noResult?: boolean
+  tableRows: ITableRow[]
 }
 
 function TableGuesser<T extends IHydraMember>(props: IProps<T>): JSX.Element {
   const {
-    apiData,
+    count,
     currentPage,
-    diffDefaultValues,
+    diffRows,
     onMassupdate,
     onPageChange,
     onRowUpdate,
@@ -51,6 +50,7 @@ function TableGuesser<T extends IHydraMember>(props: IProps<T>): JSX.Element {
     rowsPerPageOptions,
     onRowsPerPageChange,
     noResult,
+    tableRows,
   } = props
   const tableHeaders = useApiHeaders(resource)
   const fieldOptions = useApiEditableFieldOptions(resource)
@@ -59,18 +59,6 @@ function TableGuesser<T extends IHydraMember>(props: IProps<T>): JSX.Element {
   const [selectedField, setSelectedField] = useState<IField | ''>('')
   const [selectedValue, setSelectedValue] = useState<boolean | ''>('')
   const [selectedRows, setSelectedRows] = useState<(string | number)[]>([])
-  const tableRows = apiData['hydra:member'] as unknown as ITableRow[]
-
-  let diffRows: ITableRow[]
-  if (diffDefaultValues) {
-    diffRows = tableRows.map((row) =>
-      Object.fromEntries(
-        Object.entries(row)
-          .filter(([key]) => key.startsWith('default'))
-          .map(([key, value]) => [getNameFromDefault(key), value])
-      )
-    ) as ITableRow[]
-  }
 
   function handleChangeField(id: IField | ''): void {
     setSelectedField(id)
@@ -92,7 +80,7 @@ function TableGuesser<T extends IHydraMember>(props: IProps<T>): JSX.Element {
     <>
       <PagerTable
         Field={FieldGuesser}
-        count={apiData['hydra:totalItems']}
+        count={count}
         currentPage={currentPage ?? 0}
         diffRows={diffRows}
         onPageChange={onPageChange}

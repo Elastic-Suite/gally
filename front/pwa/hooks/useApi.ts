@@ -28,7 +28,7 @@ import {
 import { useLog } from './useLog'
 import { useResourceOperations } from './useResource'
 
-const debounceDelay = 400
+const debounceDelay = 200
 
 export function useApiFetch<T>(secure = true): IFetchApi<T> {
   const { i18n } = useTranslation('common')
@@ -133,7 +133,11 @@ export function useApiEditableList<T extends IHydraMember>(
   searchParameters?: ISearchParameters,
   searchValue?: string,
   url?: string
-): [IFetch<IHydraResponse<T>>, IResourceEditableOperations<T>] {
+): [
+  IFetch<IHydraResponse<T>>,
+  IResourceEditableOperations<T>,
+  Dispatch<SetStateAction<T[]>>
+] {
   const [response, updateList, load] = useApiList<T>(
     url ? url : resource,
     page,
@@ -265,5 +269,5 @@ export function useApiEditableList<T extends IHydraMember>(
     update,
   ])
 
-  return [response, operations]
+  return [response, operations, updateList]
 }
