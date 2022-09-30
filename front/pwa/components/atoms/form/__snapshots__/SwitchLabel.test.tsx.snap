@@ -23,7 +23,7 @@ exports[`SwitchLabel match snapshot testSwitchTrue 1`] = `
       </span>
     </label>
     <span
-      class="MuiSwitch-root MuiSwitch-sizeMedium css-nww90q-MuiSwitch-root"
+      class="MuiSwitch-root MuiSwitch-sizeMedium css-44y1r7-MuiSwitch-root"
     >
       <span
         class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-checked PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-checked Mui-checked css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"

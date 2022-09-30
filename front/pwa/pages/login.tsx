@@ -66,7 +66,7 @@ function Login(): JSX.Element {
             autoComplete="email"
             fullWidth
             label={t('label.email')}
-            onChange={setEmail}
+            onChange={(value: string): void => setEmail(value)}
             value={email}
             withMargin
           />
@@ -74,7 +74,7 @@ function Login(): JSX.Element {
             autoComplete="current-password"
             fullWidth
             label={t('label.password')}
-            onChange={setPassword}
+            onChange={(value: string): void => setPassword(value)}
             type="password"
             value={password}
             withMargin
