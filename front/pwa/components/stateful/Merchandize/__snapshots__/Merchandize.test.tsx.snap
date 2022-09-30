@@ -7,125 +7,119 @@ exports[`Merchandize match snapshot testSelect 1`] = `
     style="height: auto; padding: 22px;"
   >
     <div
-      class="MuiGrid-root MuiGrid-container css-1hbmzt3-MuiGrid-root"
-      style="width: 100%;"
+      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-flggza-MuiGrid-root"
     >
       <div
-        class="MuiGrid-root MuiGrid-container css-1c1ljyi-MuiGrid-root"
-        style="width: 100%;"
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1osj8n2-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1osj8n2-MuiGrid-root"
+          class="MuiFormControl-root MuiFormControl-fullWidth css-12mfi9j-MuiFormControl-root"
         >
-          <div
-            class="MuiFormControl-root MuiFormControl-fullWidth css-12mfi9j-MuiFormControl-root"
+          <label
+            class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-colorPrimary css-1ghtd4k-MuiFormLabel-root-MuiInputLabel-root"
+            data-shrink="true"
           >
-            <label
-              class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-colorPrimary css-1ghtd4k-MuiFormLabel-root-MuiInputLabel-root"
-              data-shrink="true"
-            >
-              name
-              <span
-                aria-label="name.tooltip"
-                class=""
-                data-mui-internal-clone-element="true"
-                style="display: inline-block; padding-left: 10px; margin-bottom: -5px;"
-              >
-                <ion-icon
-                  name="information-circle-outline"
-                  style="color: rgb(129, 135, 185); width: 20px; height: 20px; display: flex;"
-                />
-              </span>
-            </label>
+            name
             <span
-              class="MuiSwitch-root MuiSwitch-sizeMedium css-nww90q-MuiSwitch-root"
+              aria-label="name.tooltip"
+              class=""
+              data-mui-internal-clone-element="true"
+              style="display: inline-block; padding-left: 10px; margin-bottom: -5px;"
             >
-              <span
-                class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-checked PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-checked Mui-checked css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
-              >
-                <input
-                  checked=""
-                  class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
-                  name="name"
-                  type="checkbox"
-                />
-                <span
-                  class="MuiSwitch-thumb css-epwt2k-MuiSwitch-thumb"
-                />
-                <span
-                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                />
-              </span>
-              <span
-                class="MuiSwitch-track css-1mr4grv-MuiSwitch-track"
+              <ion-icon
+                name="information-circle-outline"
+                style="color: rgb(129, 135, 185); width: 20px; height: 20px; display: flex;"
               />
             </span>
-          </div>
+          </label>
+          <span
+            class="MuiSwitch-root MuiSwitch-sizeMedium css-44y1r7-MuiSwitch-root"
+          >
+            <span
+              class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-checked PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-checked Mui-checked css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
+            >
+              <input
+                checked=""
+                class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
+                name="name"
+                type="checkbox"
+              />
+              <span
+                class="MuiSwitch-thumb css-epwt2k-MuiSwitch-thumb"
+              />
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </span>
+            <span
+              class="MuiSwitch-track css-1mr4grv-MuiSwitch-track"
+            />
+          </span>
         </div>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1osj8n2-MuiGrid-root"
+      >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1osj8n2-MuiGrid-root"
+          class="MuiFormControl-root css-1c9gikl-MuiFormControl-root"
         >
           <div
-            class="MuiFormControl-root css-1c9gikl-MuiFormControl-root"
+            class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-1qqsdnr-MuiAutocomplete-root"
           >
             <div
-              class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-1qqsdnr-MuiAutocomplete-root"
+              class="MuiFormControl-root MuiFormControl-fullWidth css-1qc7p1k-MuiFormControl-root"
             >
-              <div
-                class="MuiFormControl-root MuiFormControl-fullWidth css-1qc7p1k-MuiFormControl-root"
+              <label
+                class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-colorPrimary css-ssr94h-MuiFormLabel-root-MuiInputLabel-root"
+                data-shrink="true"
+                for=":r1:"
               >
-                <label
-                  class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-colorPrimary css-ssr94h-MuiFormLabel-root-MuiInputLabel-root"
-                  data-shrink="true"
-                  for=":r1:"
+                Default sorting
+                <span
+                  aria-label="select.tooltip"
+                  class=""
+                  data-mui-internal-clone-element="true"
+                  style="display: inline-block; padding-left: 10px; margin-bottom: -5px;"
                 >
-                  Default sorting
-                  <span
-                    aria-label="select.tooltip"
-                    class=""
-                    data-mui-internal-clone-element="true"
-                    style="display: inline-block; padding-left: 10px; margin-bottom: -5px;"
+                  <ion-icon
+                    name="information-circle-outline"
+                    style="color: rgb(129, 135, 185); width: 20px; height: 20px; display: flex;"
+                  />
+                </span>
+              </label>
+              <div
+                class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-5uzcdm-MuiInputBase-root"
+              >
+                <input
+                  aria-autocomplete="list"
+                  aria-expanded="false"
+                  aria-invalid="false"
+                  autocapitalize="none"
+                  autocomplete="off"
+                  class="MuiInputBase-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-yz9k0d-MuiInputBase-input"
+                  id=":r1:"
+                  role="combobox"
+                  spellcheck="false"
+                  type="text"
+                  value=""
+                />
+                <div
+                  class="MuiAutocomplete-endAdornment css-1q60rmi-MuiAutocomplete-endAdornment"
+                >
+                  <button
+                    aria-label="form.open"
+                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-qzbt6i-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
+                    tabindex="-1"
+                    title="form.open"
+                    type="button"
                   >
                     <ion-icon
-                      name="information-circle-outline"
-                      style="color: rgb(129, 135, 185); width: 20px; height: 20px; display: flex;"
+                      name="chevron-down"
                     />
-                  </span>
-                </label>
-                <div
-                  class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-5uzcdm-MuiInputBase-root"
-                >
-                  <input
-                    aria-autocomplete="list"
-                    aria-expanded="false"
-                    aria-invalid="false"
-                    autocapitalize="none"
-                    autocomplete="off"
-                    class="MuiInputBase-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-yz9k0d-MuiInputBase-input"
-                    id=":r1:"
-                    role="combobox"
-                    spellcheck="false"
-                    type="text"
-                    value=""
-                  />
-                  <div
-                    class="MuiAutocomplete-endAdornment css-1q60rmi-MuiAutocomplete-endAdornment"
-                  >
-                    <button
-                      aria-label="form.open"
-                      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-qzbt6i-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
-                      tabindex="-1"
-                      title="form.open"
-                      type="button"
-                    >
-                      <ion-icon
-                        name="chevron-down"
-                      />
-                      <span
-                        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                      />
-                    </button>
-                  </div>
+                    <span
+                      class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                    />
+                  </button>
                 </div>
               </div>
             </div>
@@ -133,7 +127,7 @@ exports[`Merchandize match snapshot testSelect 1`] = `
         </div>
       </div>
       <div
-        class="MuiGrid-root MuiGrid-container css-1e2bu2o-MuiGrid-root"
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1osj8n2-MuiGrid-root"
       >
         <div
           class="MuiFormControl-root MuiFormControl-fullWidth css-12mfi9j-MuiFormControl-root"
@@ -156,7 +150,7 @@ exports[`Merchandize match snapshot testSelect 1`] = `
             </span>
           </label>
           <span
-            class="MuiSwitch-root MuiSwitch-sizeMedium css-nww90q-MuiSwitch-root"
+            class="MuiSwitch-root MuiSwitch-sizeMedium css-44y1r7-MuiSwitch-root"
           >
             <span
               class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-checked PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-checked Mui-checked css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"

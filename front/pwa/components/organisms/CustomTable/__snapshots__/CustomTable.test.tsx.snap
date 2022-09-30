@@ -120,28 +120,32 @@ exports[`CustomTable match snapshot with editable content 1`] = `
           <td
             class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-fyenha-MuiTableCell-root"
           >
-            <span
-              class="MuiSwitch-root MuiSwitch-sizeMedium css-tnsvld-MuiSwitch-root"
+            <div
+              class="MuiFormControl-root MuiFormControl-fullWidth css-12mfi9j-MuiFormControl-root"
             >
               <span
-                class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-checked PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-checked Mui-checked css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
+                class="MuiSwitch-root MuiSwitch-sizeMedium css-tnsvld-MuiSwitch-root"
               >
-                <input
-                  checked=""
-                  class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
-                  type="checkbox"
-                />
                 <span
-                  class="MuiSwitch-thumb css-epwt2k-MuiSwitch-thumb"
-                />
+                  class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-checked PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-checked Mui-checked css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
+                >
+                  <input
+                    checked=""
+                    class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
+                    type="checkbox"
+                  />
+                  <span
+                    class="MuiSwitch-thumb css-epwt2k-MuiSwitch-thumb"
+                  />
+                  <span
+                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                  />
+                </span>
                 <span
-                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                  class="MuiSwitch-track css-1mr4grv-MuiSwitch-track"
                 />
               </span>
-              <span
-                class="MuiSwitch-track css-1mr4grv-MuiSwitch-track"
-              />
-            </span>
+            </div>
           </td>
           <td
             class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-w76ctl-MuiTableCell-root"
