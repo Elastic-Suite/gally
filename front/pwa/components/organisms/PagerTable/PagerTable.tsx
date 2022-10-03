@@ -14,13 +14,13 @@ const Root = styled('div')(({ theme }) => ({
 }))
 
 const CustomNoResult = styled('div')(({ theme }) => ({
-  fontFamily: 'inter',
+  fontFamily: 'Inter',
   fontWeight: 500,
   fontSize: 14,
   lineHeight: '20px',
   color: theme.palette.colors.black,
   textAlign: 'center',
-  marginTop: theme.spacing(3),
+  padding: theme.spacing(3),
 }))
 
 interface IProps extends ICustomTableProps {
