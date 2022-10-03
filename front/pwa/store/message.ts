@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
-import { IMessages } from 'shared'
+import { IMessages, MessageSeverity } from 'shared'
 
 import { RootState } from './store'
 
@@ -18,8 +18,11 @@ const messageSlice = createSlice({
   name: 'message',
   initialState,
   reducers: {
-    addMessage(state, action: PayloadAction<string>) {
-      state.messages.push({ id: state.lastId++, message: action.payload })
+    addMessage(
+      state,
+      action: PayloadAction<{ message: string; severity?: MessageSeverity }>
+    ) {
+      state.messages.push({ ...action.payload, id: state.lastId++ })
     },
     removeMessage(state, action: PayloadAction<number>) {
       state.messages = state.messages.filter(({ id }) => id !== action.payload)
