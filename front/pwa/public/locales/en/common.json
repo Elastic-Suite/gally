@@ -32,7 +32,16 @@
   "table.cancel": "Cancel",
   "table.selected_one": "{{count}} selected row",
   "table.selected_other": "{{count}} selected rows",
-  "no.result": "No results match your request",
   "switch.true": "true",
-  "switch.false": "false"
+  "switch.false": "false",
+  "no.result": "No results match your request",
+  "formError.badInput": "Bad input",
+  "formError.patternMismatch": "The value does not follow the pattern",
+  "formError.rangeOverflow": "The value is too high",
+  "formError.rangeUnderflow": "The value is too low",
+  "formError.stepMismatch": "The value does not match the step",
+  "formError.tooLong": "The value is too long",
+  "formError.tooShort": "The value is too short",
+  "formError.typeMismatch": "The value is not in the correct format",
+  "formError.valueMissing": "The value is required"
 }
