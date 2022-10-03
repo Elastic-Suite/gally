@@ -18,7 +18,9 @@ describe('messageReducer', () => {
   })
 
   it('should add a message', () => {
-    expect(messageReducer(initialState, addMessage('Hello world'))).toEqual({
+    expect(
+      messageReducer(initialState, addMessage({ message: 'Hello world' }))
+    ).toEqual({
       lastId: 1,
       messages: [{ id: 0, message: 'Hello world' }],
     })
