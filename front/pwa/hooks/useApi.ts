@@ -2,7 +2,7 @@ import {
   Dispatch,
   SetStateAction,
   useCallback,
-  useEffect,
+  useLayoutEffect,
   useMemo,
   useState,
 } from 'react'
@@ -88,7 +88,7 @@ export function useFetchApi<T>(
     })
   }, [fetchApi, options, resource, searchParameters])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     load()
   }, [load])
 
