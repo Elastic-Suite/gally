@@ -1,13 +1,17 @@
 import { useCallback } from 'react'
+import { MessageSeverity, NetworkError, log } from 'shared'
 
-import { NetworkError, log } from 'shared'
 import { addMessage, useAppDispatch } from '~/store'
 
-export function useLog(): (error: NetworkError) => void {
+export function useLog(
+  severity: MessageSeverity = 'error'
+): (error: NetworkError) => void {
   const dispatch = useAppDispatch()
   return useCallback(
     (error: NetworkError) =>
-      log(error, (message: string) => dispatch(addMessage(message))),
-    [dispatch]
+      log(error, (message: string) =>
+        dispatch(addMessage({ message, severity }))
+      ),
+    [dispatch, severity]
   )
 }

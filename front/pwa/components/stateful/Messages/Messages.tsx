@@ -13,10 +13,10 @@ function Messages(): JSX.Element {
 
   return (
     <>
-      {messages.map(({ id, message }) => (
+      {messages.map(({ id, ...props }) => (
         <Alert
           key={id}
-          message={message}
+          {...props}
           onClose={(): void => void dispatch(removeMessage(id))}
           style={{ marginBottom: '16px' }}
         />

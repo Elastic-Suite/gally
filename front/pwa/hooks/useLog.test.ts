@@ -14,6 +14,9 @@ describe('useLog', () => {
     ;(addMessage as unknown as jest.Mock).mockClear()
     const { result } = renderHookWithProviders(() => useLog())
     result.current(new Error('error'))
-    expect(addMessage).toHaveBeenCalledWith('error')
+    expect(addMessage).toHaveBeenCalledWith({
+      message: 'error',
+      severity: 'error',
+    })
   })
 })

@@ -103,18 +103,18 @@ function Categories(): JSX.Element {
       if (!isError(val)) {
         prevDataCat.current = val
         setDataCat(val)
-        dispatch(addMessage(t('alert')))
+        dispatch(addMessage({ message: t('alert'), severity: 'success' }))
       } else {
-        dispatch(addMessage(t('alert.error')))
+        dispatch(addMessage({ message: t('alert.error'), severity: 'error' }))
       }
     } else {
       const val = await update(dataCat.id, dataCat)
       if (!isError(val)) {
         prevDataCat.current = val
         setDataCat(val)
-        dispatch(addMessage(t('alert')))
+        dispatch(addMessage({ message: t('alert'), severity: 'success' }))
       } else {
-        dispatch(addMessage(t('alert.error')))
+        dispatch(addMessage({ message: t('alert.error'), severity: 'error' }))
       }
     }
   }
