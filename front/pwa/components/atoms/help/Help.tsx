@@ -1,7 +1,9 @@
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import HelpOver from './HelpOver'
 import { styled } from '@mui/system'
+import Collapse from '@mui/material/Collapse'
+import Box from '@mui/material/Box'
 
 const CustomHelp = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -30,46 +32,38 @@ const CustomHelp = styled('div')(({ theme }) => ({
 }))
 
 const CustomHelpInit = styled('div')(({ theme }) => ({
+  marginTop: theme.spacing(0.4),
   width: 'max-content',
-  position: 'absolute',
-  top: `calc(100% + 4px)`,
-  left: '0',
   border: '1px solid',
   borderRadius: 8,
   borderColor: theme.palette.colors.neutral['300'],
   backgroundColor: theme.palette.background.default,
-  opacity: 0,
-  height: 0,
-  overflow: 'hidden',
-  transition: 'opacity 500ms ,height 500ms',
 }))
 
 function Help(): JSX.Element {
   const [helpVisible, setHelpVisible] = useState(false)
-  const useHelp = useRef(null)
 
   return (
-    <CustomHelp
+    <Box
       onMouseOver={(): void => setHelpVisible(true)}
       onMouseLeave={(): void => setHelpVisible(false)}
       onFocus={(): void => setHelpVisible(true)}
       onBlur={(): void => setHelpVisible(false)}
     >
-      <IonIcon
-        name="help-circle-outline"
-        style={{ fontSize: '18px', color: '#8187B9' }}
-      />
-      <CustomHelpInit
-        ref={useHelp}
-        style={
-          helpVisible
-            ? { height: useHelp?.current?.scrollHeight, opacity: 1 }
-            : {}
-        }
-      >
-        <HelpOver />
-      </CustomHelpInit>
-    </CustomHelp>
+      <CustomHelp>
+        <IonIcon
+          name="help-circle-outline"
+          style={{ fontSize: '18px', color: '#8187B9' }}
+        />
+      </CustomHelp>
+      <Box sx={{ position: 'relative' }}>
+        <Collapse in={helpVisible} sx={{ position: 'absolute', right: 0 }}>
+          <CustomHelpInit>
+            <HelpOver />
+          </CustomHelpInit>
+        </Collapse>
+      </Box>
+    </Box>
   )
 }
 

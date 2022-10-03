@@ -1,8 +1,10 @@
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import CloseComponent from '../closeComponent/CloseComponent'
 import UserMenuShow from './UserMenuShow'
 import { styled } from '@mui/system'
+import Collapse from '@mui/material/Collapse'
+import Box from '@mui/material/Box'
 
 const CustomUser = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -37,14 +39,10 @@ const CustomArrow = styled('div')({
 })
 
 const CustomUserMenu = styled('div')(({ theme }) => ({
-  transition: 'opacity 500ms ,height 500ms',
-  position: 'absolute',
-  top: `calc(100% + 4px)`,
-  right: '0',
-  opacity: 0,
-  overflow: 'hidden',
+  position: 'relative',
   border: '1px solid',
   borderRadius: 8,
+  marginTop: theme.spacing(0.4),
   borderColor: theme.palette.colors.neutral['300'],
   paddingTop: theme.spacing(1),
   paddingBottom: theme.spacing(1),
@@ -58,11 +56,10 @@ const CustomUserMenu = styled('div')(({ theme }) => ({
 
 function UserMenu(): JSX.Element {
   const [openUserMenu, setOpenUserMenu] = useState(false)
-  const useMenu = useRef(null)
 
   return (
     <>
-      <div style={{ position: 'relative' }}>
+      <Box>
         <CustomUser onClick={(): void => setOpenUserMenu(!openUserMenu)}>
           <IonIcon
             name="person-outline"
@@ -78,14 +75,14 @@ function UserMenu(): JSX.Element {
             />
           </CustomArrow>
         </CustomUser>
-
-        <CustomUserMenu
-          ref={useMenu}
-          style={openUserMenu ? { opacity: 1 } : {}}
-        >
-          <UserMenuShow />
-        </CustomUserMenu>
-      </div>
+        <Box sx={{ position: 'relative' }}>
+          <Collapse in={openUserMenu} sx={{ position: 'absolute', right: 0 }}>
+            <CustomUserMenu>
+              <UserMenuShow />
+            </CustomUserMenu>
+          </Collapse>
+        </Box>
+      </Box>
       {openUserMenu ? (
         <CloseComponent onClose={(): void => setOpenUserMenu(false)} />
       ) : null}
