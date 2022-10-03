@@ -8,6 +8,7 @@ import {
   defaultPageSize,
   defaultRowsPerPageOptions,
   getNameFromDefault,
+  LoadStatus,
 } from 'shared'
 
 import {
@@ -158,6 +159,19 @@ function ResourceTable(props: IProps): JSX.Element {
   const filterOrSearchAreUp =
     searchValue !== '' || isObjectNotEmpty(activeFilters)
 
+  if (
+    data['hydra:member'].length === 0 &&
+    sourceFields.status === LoadStatus.SUCCEEDED &&
+    !filterOrSearchAreUp
+  ) {
+    return (
+      <NoAttributes
+        title={t('attributes.none')}
+        btnTitle={t('attributes.none.btn')}
+        btnHref="admin/settings/attributes"
+      />
+    )
+  }
   return (
     <>
       {tableRows.length !== 0 || filterOrSearchAreUp ? (
