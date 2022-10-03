@@ -3,23 +3,44 @@
 exports[`Help match snapshot Help simple 1`] = `
 <div>
   <div
-    class="css-l3v3zn"
+    class="MuiBox-root css-0"
   >
-    <ion-icon
-      name="help-circle-outline"
-      style="font-size: 18px; color: rgb(129, 135, 185);"
-    />
     <div
-      class="css-1g5ufcu"
+      class="css-l3v3zn"
+    >
+      <ion-icon
+        name="help-circle-outline"
+        style="font-size: 18px; color: rgb(129, 135, 185);"
+      />
+    </div>
+    <div
+      class="MuiBox-root css-79elbk"
     >
       <div
-        class="css-ykyq1f"
+        class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-199euq-MuiCollapse-root"
+        style="min-height: 0px;"
       >
-        <div>
-          Helpdesk
-        </div>
-        <div>
-          User guide
+        <div
+          class="MuiCollapse-wrapper MuiCollapse-vertical css-1642zpf-MuiCollapse-wrapper"
+        >
+          <div
+            class="MuiCollapse-wrapperInner MuiCollapse-vertical css-xxknsj-MuiCollapse-wrapperInner"
+          >
+            <div
+              class="css-c7ciki"
+            >
+              <div
+                class="css-ykyq1f"
+              >
+                <div>
+                  Helpdesk
+                </div>
+                <div>
+                  User guide
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

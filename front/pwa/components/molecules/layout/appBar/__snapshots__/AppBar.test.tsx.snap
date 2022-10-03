@@ -31,29 +31,50 @@ exports[`AppBar match snapshot AppBar simple 1`] = `
       class="css-1gzl8uu"
     >
       <div
-        class="css-l3v3zn"
+        class="MuiBox-root css-0"
       >
-        <ion-icon
-          name="help-circle-outline"
-          style="font-size: 18px; color: rgb(129, 135, 185);"
-        />
         <div
-          class="css-1g5ufcu"
+          class="css-l3v3zn"
+        >
+          <ion-icon
+            name="help-circle-outline"
+            style="font-size: 18px; color: rgb(129, 135, 185);"
+          />
+        </div>
+        <div
+          class="MuiBox-root css-79elbk"
         >
           <div
-            class="css-ykyq1f"
+            class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-199euq-MuiCollapse-root"
+            style="min-height: 0px;"
           >
-            <div>
-              Helpdesk
-            </div>
-            <div>
-              User guide
+            <div
+              class="MuiCollapse-wrapper MuiCollapse-vertical css-1642zpf-MuiCollapse-wrapper"
+            >
+              <div
+                class="MuiCollapse-wrapperInner MuiCollapse-vertical css-xxknsj-MuiCollapse-wrapperInner"
+              >
+                <div
+                  class="css-c7ciki"
+                >
+                  <div
+                    class="css-ykyq1f"
+                  >
+                    <div>
+                      Helpdesk
+                    </div>
+                    <div>
+                      User guide
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div
-        style="position: relative;"
+        class="MuiBox-root css-0"
       >
         <div
           class="css-1gbhtbv"
@@ -77,33 +98,50 @@ exports[`AppBar match snapshot AppBar simple 1`] = `
           </div>
         </div>
         <div
-          class="css-9akiq3"
+          class="MuiBox-root css-79elbk"
         >
           <div
-            class="css-9inyfk"
+            class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-199euq-MuiCollapse-root"
+            style="min-height: 0px;"
           >
             <div
-              class="css-1bt56fy"
+              class="MuiCollapse-wrapper MuiCollapse-vertical css-1642zpf-MuiCollapse-wrapper"
             >
-              Admin name
-            </div>
-            <div
-              class="css-3lsmy"
-            >
-              adminame@mail.com
-            </div>
-            <div
-              class="css-1772pc6"
-            />
-            <div
-              class="css-12w2p0s"
-            >
-              Account
-            </div>
-            <div
-              class="css-12w2p0s"
-            >
-              Log out
+              <div
+                class="MuiCollapse-wrapperInner MuiCollapse-vertical css-xxknsj-MuiCollapse-wrapperInner"
+              >
+                <div
+                  class="css-1vcaigq"
+                >
+                  <div
+                    class="css-9inyfk"
+                  >
+                    <div
+                      class="css-1bt56fy"
+                    >
+                      Admin name
+                    </div>
+                    <div
+                      class="css-3lsmy"
+                    >
+                      adminame@mail.com
+                    </div>
+                    <div
+                      class="css-1772pc6"
+                    />
+                    <div
+                      class="css-12w2p0s"
+                    >
+                      Account
+                    </div>
+                    <div
+                      class="css-12w2p0s"
+                    >
+                      Log out
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -182,29 +220,50 @@ exports[`AppBar match snapshot AppBarThreeSlug 1`] = `
       class="css-1gzl8uu"
     >
       <div
-        class="css-l3v3zn"
+        class="MuiBox-root css-0"
       >
-        <ion-icon
-          name="help-circle-outline"
-          style="font-size: 18px; color: rgb(129, 135, 185);"
-        />
         <div
-          class="css-1g5ufcu"
+          class="css-l3v3zn"
+        >
+          <ion-icon
+            name="help-circle-outline"
+            style="font-size: 18px; color: rgb(129, 135, 185);"
+          />
+        </div>
+        <div
+          class="MuiBox-root css-79elbk"
         >
           <div
-            class="css-ykyq1f"
+            class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-199euq-MuiCollapse-root"
+            style="min-height: 0px;"
           >
-            <div>
-              Helpdesk
-            </div>
-            <div>
-              User guide
+            <div
+              class="MuiCollapse-wrapper MuiCollapse-vertical css-1642zpf-MuiCollapse-wrapper"
+            >
+              <div
+                class="MuiCollapse-wrapperInner MuiCollapse-vertical css-xxknsj-MuiCollapse-wrapperInner"
+              >
+                <div
+                  class="css-c7ciki"
+                >
+                  <div
+                    class="css-ykyq1f"
+                  >
+                    <div>
+                      Helpdesk
+                    </div>
+                    <div>
+                      User guide
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div
-        style="position: relative;"
+        class="MuiBox-root css-0"
       >
         <div
           class="css-1gbhtbv"
@@ -228,33 +287,50 @@ exports[`AppBar match snapshot AppBarThreeSlug 1`] = `
           </div>
         </div>
         <div
-          class="css-9akiq3"
+          class="MuiBox-root css-79elbk"
         >
           <div
-            class="css-9inyfk"
+            class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-199euq-MuiCollapse-root"
+            style="min-height: 0px;"
           >
             <div
-              class="css-1bt56fy"
+              class="MuiCollapse-wrapper MuiCollapse-vertical css-1642zpf-MuiCollapse-wrapper"
             >
-              Admin name
-            </div>
-            <div
-              class="css-3lsmy"
-            >
-              adminame@mail.com
-            </div>
-            <div
-              class="css-1772pc6"
-            />
-            <div
-              class="css-12w2p0s"
-            >
-              Account
-            </div>
-            <div
-              class="css-12w2p0s"
-            >
-              Log out
+              <div
+                class="MuiCollapse-wrapperInner MuiCollapse-vertical css-xxknsj-MuiCollapse-wrapperInner"
+              >
+                <div
+                  class="css-1vcaigq"
+                >
+                  <div
+                    class="css-9inyfk"
+                  >
+                    <div
+                      class="css-1bt56fy"
+                    >
+                      Admin name
+                    </div>
+                    <div
+                      class="css-3lsmy"
+                    >
+                      adminame@mail.com
+                    </div>
+                    <div
+                      class="css-1772pc6"
+                    />
+                    <div
+                      class="css-12w2p0s"
+                    >
+                      Account
+                    </div>
+                    <div
+                      class="css-12w2p0s"
+                    >
+                      Log out
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -314,29 +390,50 @@ exports[`AppBar match snapshot AppBarTwoSlug 1`] = `
       class="css-1gzl8uu"
     >
       <div
-        class="css-l3v3zn"
+        class="MuiBox-root css-0"
       >
-        <ion-icon
-          name="help-circle-outline"
-          style="font-size: 18px; color: rgb(129, 135, 185);"
-        />
         <div
-          class="css-1g5ufcu"
+          class="css-l3v3zn"
+        >
+          <ion-icon
+            name="help-circle-outline"
+            style="font-size: 18px; color: rgb(129, 135, 185);"
+          />
+        </div>
+        <div
+          class="MuiBox-root css-79elbk"
         >
           <div
-            class="css-ykyq1f"
+            class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-199euq-MuiCollapse-root"
+            style="min-height: 0px;"
           >
-            <div>
-              Helpdesk
-            </div>
-            <div>
-              User guide
+            <div
+              class="MuiCollapse-wrapper MuiCollapse-vertical css-1642zpf-MuiCollapse-wrapper"
+            >
+              <div
+                class="MuiCollapse-wrapperInner MuiCollapse-vertical css-xxknsj-MuiCollapse-wrapperInner"
+              >
+                <div
+                  class="css-c7ciki"
+                >
+                  <div
+                    class="css-ykyq1f"
+                  >
+                    <div>
+                      Helpdesk
+                    </div>
+                    <div>
+                      User guide
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div
-        style="position: relative;"
+        class="MuiBox-root css-0"
       >
         <div
           class="css-1gbhtbv"
@@ -360,33 +457,50 @@ exports[`AppBar match snapshot AppBarTwoSlug 1`] = `
           </div>
         </div>
         <div
-          class="css-9akiq3"
+          class="MuiBox-root css-79elbk"
         >
           <div
-            class="css-9inyfk"
+            class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-199euq-MuiCollapse-root"
+            style="min-height: 0px;"
           >
             <div
-              class="css-1bt56fy"
+              class="MuiCollapse-wrapper MuiCollapse-vertical css-1642zpf-MuiCollapse-wrapper"
             >
-              Admin name
-            </div>
-            <div
-              class="css-3lsmy"
-            >
-              adminame@mail.com
-            </div>
-            <div
-              class="css-1772pc6"
-            />
-            <div
-              class="css-12w2p0s"
-            >
-              Account
-            </div>
-            <div
-              class="css-12w2p0s"
-            >
-              Log out
+              <div
+                class="MuiCollapse-wrapperInner MuiCollapse-vertical css-xxknsj-MuiCollapse-wrapperInner"
+              >
+                <div
+                  class="css-1vcaigq"
+                >
+                  <div
+                    class="css-9inyfk"
+                  >
+                    <div
+                      class="css-1bt56fy"
+                    >
+                      Admin name
+                    </div>
+                    <div
+                      class="css-3lsmy"
+                    >
+                      adminame@mail.com
+                    </div>
+                    <div
+                      class="css-1772pc6"
+                    />
+                    <div
+                      class="css-12w2p0s"
+                    >
+                      Account
+                    </div>
+                    <div
+                      class="css-12w2p0s"
+                    >
+                      Log out
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
