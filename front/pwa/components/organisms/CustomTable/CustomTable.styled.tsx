@@ -15,11 +15,12 @@ export const StyledTable = styled(Table)({
 })
 
 export const BaseTableCell = styled(TableCell)({
-  height: '48px',
+  height: '40px',
   maxHeight: '80px',
   maxWidth: '20%',
   textOverflow: 'ellipsis',
   overflow: 'hidden',
+  verticalAlign: 'top',
 })
 
 export const StickyTableCell = styled(BaseTableCell)({
@@ -27,6 +28,7 @@ export const StickyTableCell = styled(BaseTableCell)({
   left: 0,
   padding: 0,
   height: '100%',
+  verticalAlign: 'middle',
   '&:last-of-type': {
     borderRight: '2px solid',
     borderRightColor: 'colors.neutral.600',
