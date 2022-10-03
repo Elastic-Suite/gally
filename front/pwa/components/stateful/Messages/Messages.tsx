@@ -1,25 +1,14 @@
-import {
-  removeMessage,
-  selectMessages,
-  useAppDispatch,
-  useAppSelector,
-} from '~/store'
+import { selectMessages, useAppSelector } from '~/store'
 
-import Alert from '~/components/atoms/Alert/Alert'
+import Message from './Message'
 
 function Messages(): JSX.Element {
-  const dispatch = useAppDispatch()
   const messages = useAppSelector(selectMessages)
 
   return (
     <>
-      {messages.map(({ id, ...props }) => (
-        <Alert
-          key={id}
-          {...props}
-          onClose={(): void => void dispatch(removeMessage(id))}
-          style={{ marginBottom: '16px' }}
-        />
+      {messages.map((messageData) => (
+        <Message key={messageData.id} {...messageData} />
       ))}
     </>
   )

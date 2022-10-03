@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { AlertProps, IconButton, Alert as MuiAlert } from '@mui/material'
 import { styled } from '@mui/system'
 
@@ -40,13 +41,21 @@ const StyledAlert = styled(MuiAlert)(({ severity, theme }) => ({
   },
 }))
 
-interface IProps extends AlertProps {
+export interface IAlertProps extends AlertProps {
+  delay?: number
   message: string
   onClose?: () => void
 }
 
-export default function Alert(props: IProps): JSX.Element {
-  const { message, onClose, ...alertProps } = props
+export default function Alert(props: IAlertProps): JSX.Element {
+  const { delay, message, onClose, ...alertProps } = props
+
+  useEffect(() => {
+    if (delay) {
+      const timeout = setTimeout(onClose, delay)
+      return () => clearTimeout(timeout)
+    }
+  }, [delay, onClose])
 
   return (
     <StyledAlert
