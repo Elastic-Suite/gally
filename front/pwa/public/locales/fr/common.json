@@ -32,7 +32,16 @@
   "table.cancel": "Annuler",
   "table.selected_one": "{{count}} ligne sélectionnée",
   "table.selected_other": "{{count}} lignes sélectionnées",
-  "no.result": "Aucun résultat ne correspond à votre demande",
   "switch.true": "vrai",
-  "switch.false": "faux"
+  "switch.false": "faux",
+  "no.result": "Aucun résultat ne correspond à votre demande",
+  "formError.badInput": "Mauvaise valeur",
+  "formError.patternMismatch": "La valeur ne respecte pas le motif",
+  "formError.rangeOverflow": "La valeur est trop grande",
+  "formError.rangeUnderflow": "La valeur est trop petite",
+  "formError.stepMismatch": "La valeur ne respecte pas le pas",
+  "formError.tooLong": "La valeur est trop longue",
+  "formError.tooShort": "La valeur est trop petite",
+  "formError.typeMismatch": "La valeur n'est pas dans le bon format",
+  "formError.valueMissing": "La valeur est requise"
 }

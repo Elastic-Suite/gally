@@ -1,144 +1,24 @@
 import {
   ChangeEvent,
   ForwardedRef,
-  FunctionComponent,
   ReactNode,
   forwardRef,
+  useState,
 } from 'react'
-import {
-  FormControl,
-  FormHelperText,
-  InputBase,
-  InputBaseProps,
-  InputLabel,
-} from '@mui/material'
-import { styled } from '@mui/system'
+import { FormHelperText, InputLabel } from '@mui/material'
+import { useTranslation } from 'next-i18next'
+import { getFormValidityError } from 'shared'
 
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 
 import InfoTooltip from './InfoTooltip'
-
-interface IUnstyledInputTextProps extends InputBaseProps {
-  dirty?: boolean
-  small?: boolean
-  transparent?: boolean
-  value?: string
-}
-
-const inputTextStyledProps = ['dirty', 'small', 'transparent']
-const InputTextStyled = styled(
-  InputBase as FunctionComponent<IUnstyledInputTextProps>,
-  {
-    shouldForwardProp: (prop: string) => !inputTextStyledProps.includes(prop),
-  }
-)(({ dirty, small, theme, transparent, value }) => ({
-  minHeight: '40px',
-  borderRadius: 8,
-  borderStyle: 'solid',
-  borderWidth: '1px',
-  borderColor: theme.palette.colors.neutral['300'],
-  padding: `3px ${theme.spacing(2)}`,
-  minWidth: 180,
-  backgroundColor: theme.palette.colors.white,
-  color: theme.palette.colors.neutral['900'],
-  fontSize: 14,
-  lineHeight: 0,
-  fontWeight: 400,
-  transition: 'border-color 0.3s linear',
-  ...(Boolean(value) && {
-    borderColor: theme.palette.colors.neutral['400'],
-  }),
-  ...(Boolean(small) && {
-    minHeight: '26px',
-    minWidth: 'initial',
-    width: 'max-content',
-    paddingTop: 0,
-    paddingBottom: 0,
-    paddingLeft: theme.spacing(1),
-    paddingRight: theme.spacing(1),
-    borderRadius: '13px',
-  }),
-  ...(Boolean(transparent) && {
-    background: 'transparent',
-    border: '0',
-  }),
-  ...(Boolean(dirty) && {
-    fontWeight: 'bold',
-  }),
-  '& .MuiInputBase-input': {
-    padding: 0,
-    '&::placeholder': {
-      color: theme.palette.colors.neutral['600'],
-      opacity: 1,
-    },
-    '&.Mui-disabled': {
-      color: theme.palette.colors.neutral['600'],
-      WebkitTextFillColor: theme.palette.colors.neutral['600'],
-      '&.MuiInputBase-inputAdornedEnd': {
-        color: theme.palette.colors.neutral['500'],
-        WebkitTextFillColor: theme.palette.colors.neutral['500'],
-      },
-    },
-    ...(Boolean(small) && {
-      width: '72px',
-      fontSize: '12px',
-      fontWeight: 'bold',
-    }),
-  },
-  '&:hover': {
-    borderColor: theme.palette.colors.neutral['400'],
-  },
-  '&:focus-within': {
-    borderColor: theme.palette.colors.neutral['600'],
-    ...(Boolean(transparent) && {
-      backgroundColor: 'rgba(0, 0, 0, 0.075)',
-    }),
-  },
-  '& .MuiInputBase-input::placeholder': {
-    color: theme.palette.colors.neutral['600'],
-    opacity: 1,
-    ...(Boolean(small) && {
-      fontWeight: 'normal',
-    }),
-  },
-  'label + &': {
-    marginTop: theme.spacing(3),
-  },
-  '&.MuiInputBase-colorSuccess': {
-    borderColor: theme.palette.success.main,
-  },
-  '&.MuiInputBase-colorError': {
-    borderColor: theme.palette.error.main,
-  },
-  '&.Mui-disabled': {
-    borderColor: theme.palette.colors.neutral['300'],
-    backgroundColor: theme.palette.colors.neutral['300'],
-  },
-  '& .MuiInputAdornment-root': {
-    fontSize: 14,
-    color: theme.palette.colors.neutral['900'],
-  },
-  // Autocomplete
-  '&.MuiAutocomplete-inputRoot': {
-    maxWidth: '400px',
-  },
-  '& .MuiAutocomplete-endAdornment': {
-    top: 0,
-    right: '12px',
-    height: '100%',
-    display: 'flex',
-    alignItems: 'center',
-  },
-  '& .MuiAutocomplete-popupIndicator ion-icon, & .MuiAutocomplete-clearIndicator ion-icon':
-    {
-      fontSize: 14,
-      color: theme.palette.colors.neutral['900'],
-    },
-  '& .MuiAutocomplete-tag': {
-    marginTop: '2px',
-    marginBottom: '2px',
-  },
-}))
+import {
+  IUnstyledInputTextProps,
+  InputTextStyled,
+  StyledFormControl,
+  Sufix,
+  Wrapper,
+} from './InputText.styled'
 
 export interface IInputTextProps
   extends Omit<IUnstyledInputTextProps, 'onChange'> {
@@ -148,6 +28,7 @@ export interface IInputTextProps
   helperText?: ReactNode
   helperIcon?: string
   onChange?: (value: string | number) => void
+  sufix?: ReactNode
   withMargin?: boolean
 }
 
@@ -159,28 +40,44 @@ function InputText(
     fullWidth,
     id,
     infoTooltip,
+    inputProps,
     label,
     onChange,
-    helperText,
-    helperIcon,
     required,
+    sufix,
     withMargin,
     ...other
   } = props
   const { type } = props
+  // eslint-disable-next-line prefer-const
+  let { helperText, helperIcon, ...InputProps } = other
+  const { t } = useTranslation('common')
+
+  const [error, setError] = useState('')
+  if (error) {
+    helperText ||= t(`formError.${error}`)
+    helperIcon ||= 'close'
+  }
 
   function handleChange(
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ): void {
+    const { validity, value } = event.target
+    if (!validity.valid) {
+      setError(getFormValidityError(validity))
+    } else {
+      setError('')
+    }
     if (onChange) {
       onChange(
-        type === 'number' ? Number(event.target.value) : event.target.value
+        type === 'number' ? Number(value) : value
       )
     }
   }
 
   return (
-    <FormControl
+    <StyledFormControl
+      error={Boolean(error)}
       fullWidth={fullWidth}
       sx={{ marginBottom: withMargin ? 4 : 0 }}
       variant="standard"
@@ -191,13 +88,17 @@ function InputText(
           {infoTooltip ? <InfoTooltip title={infoTooltip} /> : null}
         </InputLabel>
       )}
-      <InputTextStyled
-        id={id}
-        onChange={handleChange}
-        required={required}
-        ref={ref}
-        {...other}
-      />
+      <Wrapper className="InputText__Wrapper">
+        <InputTextStyled
+          id={id}
+          onChange={handleChange}
+          required={required}
+          ref={ref}
+          {...InputProps}
+          inputProps={inputProps}
+        />
+        {Boolean(sufix) && <Sufix>{sufix}</Sufix>}
+      </Wrapper>
       {Boolean(helperText) && (
         <FormHelperText>
           {Boolean(helperIcon) && (
@@ -209,7 +110,7 @@ function InputText(
           {helperText}
         </FormHelperText>
       )}
-    </FormControl>
+    </StyledFormControl>
   )
 }
 
