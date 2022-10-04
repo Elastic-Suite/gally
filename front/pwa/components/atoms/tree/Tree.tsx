@@ -104,7 +104,7 @@ function Tree<Multiple extends boolean | undefined>(
           const onChange = props.onChange as (item?: ITreeItem) => void
           const value = props.value as ITreeItem
           const checked = value === item
-          checked ? onChange() : onChange(item)
+          !checked && onChange(item)
         }
       }
     }

@@ -8,11 +8,14 @@ export function findDefaultCatalog(catalogsData: ICatalog[]): ICatalog | null {
     : null
 
   if (defaultCatalog) {
-    defaultCatalog.localizedCatalogs = defaultCatalog.localizedCatalogs.filter(
-      (localizedCtl) => localizedCtl.isDefault
-    )
+    return {
+      ...defaultCatalog,
+      localizedCatalogs: defaultCatalog.localizedCatalogs.filter(
+        (localizedCtl) => localizedCtl.isDefault
+      ),
+    }
   }
-  return defaultCatalog ? defaultCatalog : null
+  return null
 }
 
 export function getCatalogForSearchProductApi(
