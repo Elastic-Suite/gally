@@ -21,6 +21,7 @@ import {
   emptyCombinationRule,
   findBreadcrumbLabel,
   isError,
+  LoadStatus,
 } from 'shared'
 
 import TitleBlock from '~/components/molecules/layout/TitleBlock/TitleBlock'
@@ -118,6 +119,42 @@ function Categories(): JSX.Element {
       }
     }
   }
+
+  function findCategory(
+    selectedCategoryItem: ICategory,
+    categories: ICategory[]
+  ): ICategory {
+    let sameCateInOtherCatalog = categories.map((element: ICategory) => {
+      return element.id === selectedCategoryItem.id
+        ? element
+        : element.children &&
+            findCategory(selectedCategoryItem, element.children)
+    })
+
+    if (sameCateInOtherCatalog) {
+      return sameCateInOtherCatalog.filter((item: ICategory) => item)[0]
+    }
+
+    return undefined
+  }
+
+  useEffect(() => {
+    if (categories.status !== LoadStatus.SUCCEEDED) {
+      return
+    }
+
+    if (!categories.data.categories[0]) {
+      return setSelectedCategoryItem(undefined)
+    }
+
+    if (selectedCategoryItem === undefined) {
+      return setSelectedCategoryItem(categories.data.categories[0])
+    }
+
+    return setSelectedCategoryItem(
+      findCategory(selectedCategoryItem, categories.data.categories)
+    )
+  }, [categories.status])
 
   const dirty = prevDataCat.current
     ? Object.entries(dataCat ?? {}).some(
