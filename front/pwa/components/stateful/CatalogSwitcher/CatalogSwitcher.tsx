@@ -66,7 +66,6 @@ function CatalogSwitcher(props: IProps): JSX.Element {
   function onCatalogChange(catalogId: number): void {
     onCatalog(catalogId)
     onLocalizedCatalog(-1)
-    onCategory()
   }
 
   function onLocalizedCatalogChange(localizedCatalogId: number): void {
