@@ -113,7 +113,7 @@ class StitchingFieldsBuilder implements FieldsBuilderInterface
                     throw new \LogicException(sprintf("The class '%s' doesn't implement the interface '%s'", $attributeClassType, GraphQlAttributeInterface::class));
                 }
 
-                if (false === str_contains($sourceField->getCode(), '.')) {
+                if (false === $sourceField->isNested()) {
                     $fields[$sourceField->getCode()] = $this->getField($attributeClassType);
                 } else {
                     // There are max two levels.

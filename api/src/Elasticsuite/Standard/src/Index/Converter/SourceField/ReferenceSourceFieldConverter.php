@@ -39,9 +39,7 @@ class ReferenceSourceFieldConverter implements SourceFieldConverterInterface
         $fieldCode = $sourceField->getCode();
         $fieldType = Mapping\FieldInterface::FIELD_TYPE_TEXT;
 
-        $path = explode('.', $fieldCode);
-        unset($path[\count($path) - 1]);
-        $path = \count($path) ? implode('.', $path) : null;
+        $path = $sourceField->getNestedPath();
 
         $fieldConfig = [
             'is_searchable' => $sourceField->getIsSearchable(),

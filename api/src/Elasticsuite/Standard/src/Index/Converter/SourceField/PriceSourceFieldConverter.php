@@ -41,9 +41,7 @@ class PriceSourceFieldConverter implements SourceFieldConverterInterface
          * Do NOT support nested price source fields for the moment, ie super.my_price
          * to generate super.my_price.original_price, super.my_price.price, etc.
          * ---
-         * $path = explode('.', $fieldCode);
-         * unset($path[\count($path) - 1]);
-         * $path = \count($path) ? implode('.', $path) : null;
+         * $path = $sourceField->getNestedPath();
          */
         $innerFields = $this->getInnerFieldsConfig($sourceField);
 
