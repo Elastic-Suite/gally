@@ -1,6 +1,6 @@
 import { ITabContentProps } from 'shared'
-
 import ResourceTable from '../ResourceTable/ResourceTable'
+
 
 const fixedFilters = { 'metadata.entity': 'product' }
 
