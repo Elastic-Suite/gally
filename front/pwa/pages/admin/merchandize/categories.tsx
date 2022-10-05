@@ -57,13 +57,7 @@ function Categories(): JSX.Element {
 
   const { t } = useTranslation('categories')
 
-  const [categories] = useFetchApi<ICategories>(
-    `categoryTree?/&catalogId=${
-      catalogId !== -1 ? catalogId : null
-    }&localizedCatalogId=${
-      localizedCatalogId !== -1 ? localizedCatalogId : null
-    }`
-  )
+  const [categories] = useFetchApi<ICategories>(`categoryTree`)
 
   const categoryConfigurationResource = useResource('CategoryConfiguration')
 
@@ -90,9 +84,7 @@ function Categories(): JSX.Element {
 
   function handleUpdateCat(name: string): (val: boolean | string) => void {
     return (val) => {
-      if (catalogId !== -1 && localizedCatalogId !== -1) {
-        setDataCat((el) => ({ ...el, [name]: val }))
-      }
+      setDataCat((el) => ({ ...el, [name]: val }))
     }
   }
 
@@ -188,12 +180,14 @@ function Categories(): JSX.Element {
             </>
           </TitleBlock>,
           <TitleBlock key="virtualRule" title={t('virtualRule.title')}>
-            <RulesManager
-              catalogId={catalogId}
-              localizedCatalogId={localizedCatalogId}
-              onChange={setRule}
-              rule={rule}
-            />
+            {dataCat?.id && dataCat?.isVirtual ? (
+              <RulesManager
+                catalogId={catalogId}
+                localizedCatalogId={localizedCatalogId}
+                onChange={setRule}
+                rule={rule}
+              />
+            ) : undefined}
           </TitleBlock>,
         ]}
       >
