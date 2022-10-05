@@ -12,13 +12,38 @@ import TwoColsLayout from '~/components/molecules/layout/twoColsLayout/TwoColsLa
 import CategoryTree from '~/components/stateful/CategoryTree/CategoryTree'
 
 import { ICategories, ICategory } from '~/../shared'
+import { styled } from '@mui/system'
+import ResourceTable from '~/components/stateful-pages/ResourceTable/ResourceTable'
+import IonIcon from '~/components/atoms/IonIcon/IonIcon'
+import PageTitle from '~/components/atoms/PageTitle/PageTitle'
 
 const pagesSlug = ['search', 'facets']
+
+const ButtonSetting = styled('div')(() => ({
+  color: '#2C19CD',
+  display: 'flex',
+  justifyContent: 'center',
+  cursor: 'pointer',
+  '&:hover': {
+    color: 'green',
+  },
+}))
+
+const IonIconStyle = styled(IonIcon)(() => ({
+  width: '30px',
+  fontSize: '20px',
+}))
+
+const FontSetting = styled('div')(() => ({
+  borderBottom: '1px solid',
+  fontWeight: 450,
+  marginLeft: '5px',
+}))
 
 function Facets(): JSX.Element {
   const router = useRouter()
   const [, setBreadcrumb] = useContext(breadcrumbContext)
-  const { t } = useTranslation('facets')
+  const { t } = useTranslation('facet')
   const [selectedCategoryItem, setSelectedCategoryItem] = useState<ICategory>()
 
   useEffect(() => {
@@ -36,13 +61,26 @@ function Facets(): JSX.Element {
       </Head>
       <TwoColsLayout
         left={[
-          <TitleBlock key="title" title={t('categories')}>
-            {t('categories')}
+          <TitleBlock key="title" title={t('facet.title')} line={false} />,
+          <TitleBlock
+            key="configuration"
+            title={t('facet.configuration')}
+            line={false}
+            style={{ color: '#425880' }}
+          >
+            <ButtonSetting
+              onClick={(): void => setSelectedCategoryItem(undefined)}
+            >
+              <IonIconStyle name="settings" />
+              <FontSetting>{t('facet.button.setting')}</FontSetting>
+            </ButtonSetting>
           </TitleBlock>,
-          <TitleBlock key="configuration" title={t('configuration')}>
-            TODO : Set default values here
-          </TitleBlock>,
-          <TitleBlock key="categories" title={t('byCategory')}>
+          <TitleBlock
+            key="categories"
+            title={t('facet.byCategory')}
+            line={false}
+            style={{ color: '#425880' }}
+          >
             <CategoryTree
               categories={categories.data}
               selectedItem={selectedCategoryItem}
@@ -51,7 +89,18 @@ function Facets(): JSX.Element {
           </TitleBlock>,
         ]}
       >
-        {/* <ResourceTable resourceName="FacetConfiguration" /> */}
+        <PageTitle
+          title={
+            selectedCategoryItem?.name
+              ? selectedCategoryItem?.name
+              : selectedCategoryItem?.catalogName
+          }
+          sx={{ marginBottom: '32px' }}
+        />
+        <ResourceTable
+          resourceName="FacetConfiguration"
+          category={selectedCategoryItem?.id}
+        />
       </TwoColsLayout>
     </>
   )
