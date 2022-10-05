@@ -42,9 +42,7 @@ class SelectSourceFieldConverter implements SourceFieldConverterInterface
          * Do NOT support nested select fields for the moment, ie super.brand
          * to generate super.brand.value and super.brand.label
          * ---
-         * $path = explode('.', $fieldCode);
-         * unset($path[\count($path) - 1]);
-         * $path = \count($path) ? implode('.', $path) : null;
+         * $path = $sourceField->getNestedPath();
          *
          * $fieldType = Mapping\FieldInterface::FIELD_TYPE_INT;
          */
