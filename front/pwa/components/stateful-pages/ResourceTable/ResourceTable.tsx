@@ -5,10 +5,10 @@ import {
   ISearchParameters,
   ISourceField,
   ITableRow,
+  LoadStatus,
   defaultPageSize,
   defaultRowsPerPageOptions,
   getNameFromDefault,
-  LoadStatus,
 } from 'shared'
 
 import {
