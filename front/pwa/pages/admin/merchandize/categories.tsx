@@ -18,10 +18,10 @@ import {
   ICategories,
   ICategory,
   IHydraCatalog,
+  LoadStatus,
   emptyCombinationRule,
   findBreadcrumbLabel,
   isError,
-  LoadStatus,
 } from 'shared'
 
 import TitleBlock from '~/components/molecules/layout/TitleBlock/TitleBlock'
@@ -124,7 +124,7 @@ function Categories(): JSX.Element {
     selectedCategoryItem: ICategory,
     categories: ICategory[]
   ): ICategory {
-    let sameCateInOtherCatalog = categories.map((element: ICategory) => {
+    const sameCateInOtherCatalog = categories.map((element: ICategory) => {
       return element.id === selectedCategoryItem.id
         ? element
         : element.children &&
