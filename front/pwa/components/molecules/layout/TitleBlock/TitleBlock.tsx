@@ -1,16 +1,25 @@
+import { Box, BoxProps } from '@mui/material'
 import { styled } from '@mui/system'
-import { ReactNode } from 'react'
+import { FunctionComponent, ReactNode } from 'react'
 
 import { getCustomScrollBarStyles } from 'shared'
 
-const CustomTitle = styled('div')(({ theme }) => ({
+interface ICustomTitleProps extends BoxProps {
+  line?: boolean
+}
+const customTitleProps = ['line']
+
+const CustomTitle = styled(Box as FunctionComponent<ICustomTitleProps>, {
+  shouldForwardProp: (prop: string) => !customTitleProps.includes(prop),
+})(({ theme, line }) => ({
   color: theme.palette.colors.neutral[900],
   fontWeight: 600,
   fontSize: '14px',
   lineHeight: '20px',
   fontFamily: 'Inter',
   padding: theme.spacing(2),
-  borderBottom: '1px solid',
+  paddingBottom: line ? theme.spacing(0) : theme.spacing(2),
+  borderBottom: line ? 'none' : '1px solid',
   borderColor: theme.palette.colors.neutral[300],
 }))
 
@@ -24,6 +33,17 @@ const Container = styled('div')(({ theme }) => ({
   ...getCustomScrollBarStyles(theme),
 }))
 
+const ContainerPadding = styled('div')(({ theme }) => ({
+  borderBottom: '1px solid',
+  borderColor: theme.palette.colors.neutral[300],
+  '&:last-of-type': {
+    borderBottom: 'none',
+  },
+  overflow: 'auto',
+  paddingBottom: theme.spacing(2),
+  ...getCustomScrollBarStyles(theme),
+}))
+
 const PaddingBox = styled('div')(({ theme }) => ({
   display: 'inline-block',
   padding: theme.spacing(2),
@@ -31,16 +51,30 @@ const PaddingBox = styled('div')(({ theme }) => ({
 
 interface IProps {
   title: string
-  children: ReactNode
+  children?: ReactNode
+  line?: boolean
+  style?: object
 }
 
-function TitleBlock({ title, children }: IProps): JSX.Element {
+function TitleBlock({
+  title,
+  children,
+  line = true,
+  style,
+}: IProps): JSX.Element {
+  const isChildren = Boolean(children)
   return (
     <>
-      <CustomTitle>{title}</CustomTitle>
-      <Container>
-        <PaddingBox>{children}</PaddingBox>
-      </Container>
+      <CustomTitle line={!line} style={style}>
+        {title}
+      </CustomTitle>
+      {isChildren ? (
+        <Container>
+          <PaddingBox>{children}</PaddingBox>
+        </Container>
+      ) : (
+        <ContainerPadding />
+      )}
     </>
   )
 }

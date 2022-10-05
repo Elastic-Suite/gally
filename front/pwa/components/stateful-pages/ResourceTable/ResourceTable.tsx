@@ -46,11 +46,19 @@ interface IProps {
   filters?: ISearchParameters
   urlParams?: string
   resourceName: string
+  category?: string
 }
 
 function ResourceTable(props: IProps): JSX.Element {
   const { t } = useTranslation('attributes')
-  const { active, diffDefaultValues, filters, urlParams, resourceName } = props
+  const {
+    active,
+    filters,
+    urlParams,
+    resourceName,
+    category,
+    diffDefaultValues,
+  } = props
 
   const resource = useResource(resourceName)
   const [page, setPage] = usePage()
@@ -60,8 +68,9 @@ function ResourceTable(props: IProps): JSX.Element {
     () => ({
       ...activeFilters,
       ...filters,
+      category: category ?? '',
     }),
-    [activeFilters, filters]
+    [activeFilters, filters, category]
   )
   useFiltersRedirect(page, activeFilters, searchValue, active ? active : true)
 

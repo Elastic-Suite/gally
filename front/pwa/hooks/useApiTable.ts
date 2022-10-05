@@ -13,7 +13,11 @@ export function useApiHeaders(resource: IResource): ITableHeader[] {
   const { t } = useTranslation('api')
   return useMemo(() => {
     return resource.supportedProperty
+<<<<<<< HEAD
       .filter((field) => field.elasticsuite?.visible)
+=======
+      .filter((field) => field.elasticsuite?.visible ?? true)
+>>>>>>> feat/ESPP-search-facet-categories
       .map((field) => getFieldHeader(field, t))
   }, [resource, t])
 }
