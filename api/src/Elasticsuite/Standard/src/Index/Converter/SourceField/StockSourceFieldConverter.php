@@ -41,9 +41,7 @@ class StockSourceFieldConverter implements SourceFieldConverterInterface
          * Do NOT support nested stock source fields for the moment, ie super.my_stock
          * to generate super.my_stock.status, super.my_stock.qty, etc.
          * ---
-         * $path = explode('.', $fieldCode);
-         * unset($path[\count($path) - 1]);
-         * $path = \count($path) ? implode('.', $path) : null;
+         * $path = $sourceField->getNestedPath();
          */
         $innerFields = $this->getInnerFieldsConfig($sourceField);
 
