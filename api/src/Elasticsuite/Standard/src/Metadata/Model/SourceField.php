@@ -246,6 +246,10 @@ class SourceField
 
     private Metadata $metadata;
 
+    private ?bool $isNested = null;
+
+    private ?string $nestedPath = null;
+
     /** @var Collection<SourceFieldLabel> */
     private Collection $labels;
 
@@ -415,6 +419,26 @@ class SourceField
         $this->metadata = $metadata;
 
         return $this;
+    }
+
+    public function isNested(): bool
+    {
+        if (null == $this->isNested) {
+            $this->isNested = str_contains($this->getCode(), '.');
+        }
+
+        return $this->isNested;
+    }
+
+    public function getNestedPath(): ?string
+    {
+        if ($this->isNested() && (null === $this->nestedPath)) {
+            // Alternative: all elements minus the last one.
+            $path = explode('.', $this->getCode());
+            $this->nestedPath = current($path);
+        }
+
+        return $this->nestedPath;
     }
 
     /**
