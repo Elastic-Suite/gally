@@ -24,6 +24,7 @@ const CustomLeftSide = styled(CustomBorder)(({ theme }) => ({
 const CustomRightSide = styled('div')({
   width: `calc(100% - 390px)`,
   boxSizing: 'border-box',
+  paddingLeft: '25px',
 })
 
 interface IProps {

@@ -1,10 +1,4 @@
 {
-  "attributes": "Attributs cherchables",
-  "attributes.alert": "Les attributs affichés ici ont été définis comme recherchables",
-  "attributes.none": "Aucun attribut n'a été indiqué comme cherchable dans les paramètres",
-  "attributes.none.btn": "Ajouter des attributs cherchables",
-  "default.customValue_zero": "Vous n'avez pas de valeur personnalisée",
-  "default.customValue_one": "Vous utilisez {{value}} valeur personnalisée",
-  "default.customValue_other": "Vous utilisez {{value}} valeurs personnalisées",
-  "default.button": "Passer aux valeurs par défaut"
+  "attributes": "Attributs recherchables",
+  "attributes.alert": "Les attributs affichés ici ont été définis comme recherchables"
 }

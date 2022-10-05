@@ -1,0 +1,10 @@
+{
+  "attributes.none": "No attributes were specified as searchable in the settings",
+  "attributes.none.btn": "Add searchable attributes",
+  "facets.none": "No attributes were specified as filterable in the settings",
+  "facets.none.btn": "Add filterable attributes",
+  "default.customValue_zero": "You don't have any custom value",
+  "default.customValue_one": "You are using {{value}} custom value",
+  "default.customValue_other": "You are using {{value}} custom values",
+  "default.button": "Switch to default values"
+}
