@@ -47,6 +47,7 @@ interface IProps {
   urlParams?: string
   resourceName: string
   isFacets?: boolean
+  category?: string
 }
 
 function ResourceTable(props: IProps): JSX.Element {
@@ -58,6 +59,7 @@ function ResourceTable(props: IProps): JSX.Element {
     urlParams,
     resourceName,
     isFacets,
+    category
   } = props
 
   const resource = useResource(resourceName)
@@ -68,8 +70,9 @@ function ResourceTable(props: IProps): JSX.Element {
     () => ({
       ...activeFilters,
       ...filters,
+      category: category ?? '',
     }),
-    [activeFilters, filters]
+    [activeFilters, filters, category]
   )
   useFiltersRedirect(page, activeFilters, searchValue, active ? active : true)
 
