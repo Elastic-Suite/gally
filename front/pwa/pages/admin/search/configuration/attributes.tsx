@@ -12,10 +12,9 @@ import PageTitle from '~/components/atoms/PageTitle/PageTitle'
 import ResourceTable from '~/components/stateful-pages/ResourceTable/ResourceTable'
 
 const pagesSlug = ['search', 'configuration', 'attributes']
-const fixedFilters = { 'metadata.entity': 'product' }
 
 function Attributes(): JSX.Element {
-  const [visibleAlertAttributes, setVisibleAlertAttributes] = useState(true)
+  const [isVisibleAlertAttributes, setIsVisibleAlertAttributes] = useState(true)
 
   const router = useRouter()
   const [, setBreadcrumb] = useContext(breadcrumbContext)
@@ -33,19 +32,18 @@ function Attributes(): JSX.Element {
       <Head>
         <title>{title}</title>
       </Head>
-      <PageTitle title={title} />
-      {visibleAlertAttributes ? (
+      <PageTitle title={title} sx={{ marginBottom: '32px' }} />
+      {Boolean(isVisibleAlertAttributes) && (
         <Alert
           message={t('attributes.alert')}
-          onClose={(): void => setVisibleAlertAttributes(false)}
+          onClose={(): void => setIsVisibleAlertAttributes(false)}
           style={{ marginBottom: '16px' }}
         />
-      ) : null}
+      )}
       <ResourceTable
         resourceName="SourceField"
         active={false}
         urlParams={searchableAttributeUrl}
-        filters={fixedFilters}
       />
     </>
   )

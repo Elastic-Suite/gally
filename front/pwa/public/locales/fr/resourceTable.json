@@ -1,0 +1,10 @@
+{
+  "attributes.none": "Aucun attribut n'a été indiqué comme recherchables dans les paramètres",
+  "attributes.none.btn": "Ajouter des attributs recherchables",
+  "facets.none": "Aucun attribut n'a été indiqué comme filtrable dans les paramètres",
+  "facets.none.btn": "Ajouter des attributs filtrables",
+  "default.customValue_zero": "Vous n'avez pas de valeur personnalisée",
+  "default.customValue_one": "Vous utilisez {{value}} valeur personnalisée",
+  "default.customValue_other": "Vous utilisez {{value}} valeurs personnalisées",
+  "default.button": "Passer aux valeurs par défaut"
+}
