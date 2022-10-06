@@ -66,18 +66,18 @@ function Login(): JSX.Element {
             autoComplete="email"
             fullWidth
             label={t('label.email')}
+            margin="normal"
             onChange={(value: string): void => setEmail(value)}
             value={email}
-            withMargin
           />
           <InputText
             autoComplete="current-password"
             fullWidth
             label={t('label.password')}
+            margin="normal"
             onChange={(value: string): void => setPassword(value)}
             type="password"
             value={password}
-            withMargin
           />
           <Button type="submit">{t('action.login')}</Button>
         </form>

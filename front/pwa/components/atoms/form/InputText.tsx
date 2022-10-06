@@ -2,12 +2,11 @@ import {
   ChangeEvent,
   ForwardedRef,
   ReactNode,
+  Ref,
+  SyntheticEvent,
   forwardRef,
-  useState,
 } from 'react'
 import { FormHelperText, InputLabel } from '@mui/material'
-import { useTranslation } from 'next-i18next'
-import { getFormValidityError } from 'shared'
 
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 
@@ -21,15 +20,17 @@ import {
 } from './InputText.styled'
 
 export interface IInputTextProps
-  extends Omit<IUnstyledInputTextProps, 'onChange'> {
+  extends Omit<IUnstyledInputTextProps, 'margin' | 'onChange'> {
+  error?: boolean
   fullWidth?: boolean
   infoTooltip?: string
+  inputRef?: Ref<HTMLInputElement>
   label?: string
+  margin?: 'none' | 'dense' | 'normal'
   helperText?: ReactNode
   helperIcon?: string
-  onChange?: (value: string | number) => void
+  onChange?: (value: string | number, event: SyntheticEvent) => void
   sufix?: ReactNode
-  withMargin?: boolean
 }
 
 function InputText(
@@ -37,49 +38,36 @@ function InputText(
   ref: ForwardedRef<HTMLDivElement>
 ): JSX.Element {
   const {
+    error,
     fullWidth,
+    helperText,
+    helperIcon,
     id,
     infoTooltip,
     inputProps,
     label,
+    margin,
     onChange,
     required,
     sufix,
-    withMargin,
-    ...other
+    ...InputProps
   } = props
   const { type } = props
-  // eslint-disable-next-line prefer-const
-  let { helperText, helperIcon, ...InputProps } = other
-  const { t } = useTranslation('common')
-
-  const [error, setError] = useState('')
-  if (error) {
-    helperText ||= t(`formError.${error}`)
-    helperIcon ||= 'close'
-  }
 
   function handleChange(
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ): void {
-    const { validity, value } = event.target
-    if (!validity.valid) {
-      setError(getFormValidityError(validity))
-    } else {
-      setError('')
-    }
+    const { value } = event.target
     if (onChange) {
-      onChange(
-        type === 'number' ? Number(value) : value
-      )
+      onChange(type === 'number' ? Number(value) : value, event)
     }
   }
 
   return (
     <StyledFormControl
-      error={Boolean(error)}
+      error={error}
       fullWidth={fullWidth}
-      sx={{ marginBottom: withMargin ? 4 : 0 }}
+      margin={margin}
       variant="standard"
     >
       {Boolean(label || infoTooltip) && (
