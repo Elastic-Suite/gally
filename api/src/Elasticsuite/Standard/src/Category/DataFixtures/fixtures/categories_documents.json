@@ -11,10 +11,15 @@
       "position": "4",
       "level": "2",
       "children_count": "3",
-      "is_active": "1",
+      "is_active": [
+        {
+          "value": true,
+          "label": "Yes"
+        }
+      ],
       "is_displayed_in_autocomplete": [
         {
-          "id": true,
+          "value": true,
           "label": "Display Category in Autocomplete"
         }
       ],
@@ -39,10 +44,15 @@
       "position": "1",
       "level": "3",
       "children_count": "0",
-      "is_active": "1",
+      "is_active": [
+        {
+          "value": true,
+          "label": "Yes"
+        }
+      ],
       "is_displayed_in_autocomplete": [
         {
-          "id": true,
+          "value": true,
           "label": "Display Category in Autocomplete"
         }
       ],
@@ -67,10 +77,15 @@
       "position": "2",
       "level": "3",
       "children_count": "0",
-      "is_active": "1",
+      "is_active": [
+        {
+          "value": true,
+          "label": "Yes"
+        }
+      ],
       "is_displayed_in_autocomplete": [
         {
-          "id": true,
+          "value": true,
           "label": "Display Category in Autocomplete"
         }
       ],
@@ -95,10 +110,15 @@
       "position": "3",
       "level": "3",
       "children_count": "0",
-      "is_active": "1",
+      "is_active": [
+        {
+          "value": true,
+          "label": "Yes"
+        }
+      ],
       "is_displayed_in_autocomplete": [
         {
-          "id": true,
+          "value": true,
           "label": "Display Category in Autocomplete"
         }
       ],
@@ -123,10 +143,15 @@
       "position": "6",
       "level": "2",
       "children_count": "0",
-      "is_active": "1",
+      "is_active": [
+        {
+          "value": true,
+          "label": "Yes"
+        }
+      ],
       "is_displayed_in_autocomplete": [
         {
-          "id": true,
+          "value": true,
           "label": "Display Category in Autocomplete"
         }
       ],
@@ -151,10 +176,15 @@
       "position": "1",
       "level": "2",
       "children_count": "2",
-      "is_active": "1",
+      "is_active": [
+        {
+          "value": true,
+          "label": "Yes"
+        }
+      ],
       "is_displayed_in_autocomplete": [
         {
-          "id": true,
+          "value": true,
           "label": "Display Category in Autocomplete"
         }
       ],
@@ -179,10 +209,15 @@
       "position": "1",
       "level": "3",
       "children_count": "0",
-      "is_active": "1",
+      "is_active": [
+        {
+          "value": true,
+          "label": "Yes"
+        }
+      ],
       "is_displayed_in_autocomplete": [
         {
-          "id": true,
+          "value": true,
           "label": "Display Category in Autocomplete"
         }
       ],
@@ -207,10 +242,15 @@
       "position": "2",
       "level": "3",
       "children_count": "0",
-      "is_active": "1",
+      "is_active": [
+        {
+          "value": true,
+          "label": "Yes"
+        }
+      ],
       "is_displayed_in_autocomplete": [
         {
-          "id": true,
+          "value": true,
           "label": "Display Category in Autocomplete"
         }
       ],
@@ -235,10 +275,15 @@
       "position": "2",
       "level": "2",
       "children_count": "2",
-      "is_active": "1",
+      "is_active": [
+        {
+          "value": true,
+          "label": "Yes"
+        }
+      ],
       "is_displayed_in_autocomplete": [
         {
-          "id": true,
+          "value": true,
           "label": "Display Category in Autocomplete"
         }
       ],
@@ -263,10 +308,15 @@
       "position": "1",
       "level": "3",
       "children_count": "0",
-      "is_active": "1",
+      "is_active": [
+        {
+          "value": true,
+          "label": "Yes"
+        }
+      ],
       "is_displayed_in_autocomplete": [
         {
-          "id": true,
+          "value": true,
           "label": "Display Category in Autocomplete"
         }
       ],
@@ -291,10 +341,15 @@
       "position": "2",
       "level": "3",
       "children_count": "0",
-      "is_active": "1",
+      "is_active": [
+        {
+          "value": true,
+          "label": "Yes"
+        }
+      ],
       "is_displayed_in_autocomplete": [
         {
-          "id": true,
+          "value": true,
           "label": "Display Category in Autocomplete"
         }
       ],
@@ -319,10 +374,15 @@
       "position": "3",
       "level": "2",
       "children_count": "0",
-      "is_active": "1",
+      "is_active": [
+        {
+          "value": true,
+          "label": "Yes"
+        }
+      ],
       "is_displayed_in_autocomplete": [
         {
-          "id": true,
+          "value": true,
           "label": "Display Category in Autocomplete"
         }
       ],
@@ -347,10 +407,15 @@
       "position": "5",
       "level": "2",
       "children_count": "6",
-      "is_active": "1",
+      "is_active": [
+        {
+          "value": true,
+          "label": "Yes"
+        }
+      ],
       "is_displayed_in_autocomplete": [
         {
-          "id": true,
+          "value": true,
           "label": "Display Category in Autocomplete"
         }
       ],
@@ -375,10 +440,15 @@
       "position": "1",
       "level": "3",
       "children_count": "0",
-      "is_active": "1",
+      "is_active": [
+        {
+          "value": true,
+          "label": "Yes"
+        }
+      ],
       "is_displayed_in_autocomplete": [
         {
-          "id": true,
+          "value": true,
           "label": "Display Category in Autocomplete"
         }
       ],
@@ -403,10 +473,15 @@
       "position": "2",
       "level": "3",
       "children_count": "0",
-      "is_active": "1",
+      "is_active": [
+        {
+          "value": true,
+          "label": "Yes"
+        }
+      ],
       "is_displayed_in_autocomplete": [
         {
-          "id": true,
+          "value": true,
           "label": "Display Category in Autocomplete"
         }
       ],
@@ -431,10 +506,15 @@
       "position": "3",
       "level": "3",
       "children_count": "0",
-      "is_active": "1",
+      "is_active": [
+        {
+          "value": true,
+          "label": "Yes"
+        }
+      ],
       "is_displayed_in_autocomplete": [
         {
-          "id": true,
+          "value": true,
           "label": "Display Category in Autocomplete"
         }
       ],
@@ -459,10 +539,15 @@
       "position": "4",
       "level": "3",
       "children_count": "0",
-      "is_active": "1",
+      "is_active": [
+        {
+          "value": true,
+          "label": "Yes"
+        }
+      ],
       "is_displayed_in_autocomplete": [
         {
-          "id": true,
+          "value": true,
           "label": "Display Category in Autocomplete"
         }
       ],
@@ -487,10 +572,15 @@
       "position": "5",
       "level": "3",
       "children_count": "0",
-      "is_active": "1",
+      "is_active": [
+        {
+          "value": true,
+          "label": "Yes"
+        }
+      ],
       "is_displayed_in_autocomplete": [
         {
-          "id": true,
+          "value": true,
           "label": "Display Category in Autocomplete"
         }
       ],
@@ -515,10 +605,15 @@
       "position": "6",
       "level": "3",
       "children_count": "0",
-      "is_active": "1",
+      "is_active": [
+        {
+          "value": true,
+          "label": "Yes"
+        }
+      ],
       "is_displayed_in_autocomplete": [
         {
-          "id": true,
+          "value": true,
           "label": "Display Category in Autocomplete"
         }
       ],
@@ -547,10 +642,15 @@
       "position": "4",
       "level": "2",
       "children_count": "3",
-      "is_active": "1",
-      "is_displayed_in_autocomplete": [
+      "is_active": [
         {
           "id": true,
+          "label": "Oui"
+        }
+      ],
+      "is_displayed_in_autocomplete": [
+        {
+          "value": true,
           "label": "Display Category in Autocomplete"
         }
       ],
@@ -575,10 +675,15 @@
       "position": "1",
       "level": "3",
       "children_count": "0",
-      "is_active": "1",
-      "is_displayed_in_autocomplete": [
+      "is_active": [
         {
           "id": true,
+          "label": "Oui"
+        }
+      ],
+      "is_displayed_in_autocomplete": [
+        {
+          "value": true,
           "label": "Display Category in Autocomplete"
         }
       ],
@@ -603,10 +708,15 @@
       "position": "2",
       "level": "3",
       "children_count": "0",
-      "is_active": "1",
-      "is_displayed_in_autocomplete": [
+      "is_active": [
         {
           "id": true,
+          "label": "Oui"
+        }
+      ],
+      "is_displayed_in_autocomplete": [
+        {
+          "value": true,
           "label": "Display Category in Autocomplete"
         }
       ],
@@ -631,10 +741,15 @@
       "position": "3",
       "level": "3",
       "children_count": "0",
-      "is_active": "1",
-      "is_displayed_in_autocomplete": [
+      "is_active": [
         {
           "id": true,
+          "label": "Oui"
+        }
+      ],
+      "is_displayed_in_autocomplete": [
+        {
+          "value": true,
           "label": "Display Category in Autocomplete"
         }
       ],
@@ -659,10 +774,15 @@
       "position": "6",
       "level": "2",
       "children_count": "0",
-      "is_active": "1",
-      "is_displayed_in_autocomplete": [
+      "is_active": [
         {
           "id": true,
+          "label": "Oui"
+        }
+      ],
+      "is_displayed_in_autocomplete": [
+        {
+          "value": true,
           "label": "Display Category in Autocomplete"
         }
       ],
@@ -687,10 +807,15 @@
       "position": "1",
       "level": "2",
       "children_count": "2",
-      "is_active": "1",
-      "is_displayed_in_autocomplete": [
+      "is_active": [
         {
           "id": true,
+          "label": "Oui"
+        }
+      ],
+      "is_displayed_in_autocomplete": [
+        {
+          "value": true,
           "label": "Display Category in Autocomplete"
         }
       ],
@@ -715,10 +840,15 @@
       "position": "1",
       "level": "3",
       "children_count": "0",
-      "is_active": "1",
-      "is_displayed_in_autocomplete": [
+      "is_active": [
         {
           "id": true,
+          "label": "Oui"
+        }
+      ],
+      "is_displayed_in_autocomplete": [
+        {
+          "value": true,
           "label": "Display Category in Autocomplete"
         }
       ],
@@ -743,10 +873,15 @@
       "position": "2",
       "level": "3",
       "children_count": "0",
-      "is_active": "1",
-      "is_displayed_in_autocomplete": [
+      "is_active": [
         {
           "id": true,
+          "label": "Oui"
+        }
+      ],
+      "is_displayed_in_autocomplete": [
+        {
+          "value": true,
           "label": "Display Category in Autocomplete"
         }
       ],
@@ -771,10 +906,15 @@
       "position": "2",
       "level": "2",
       "children_count": "2",
-      "is_active": "1",
-      "is_displayed_in_autocomplete": [
+      "is_active": [
         {
           "id": true,
+          "label": "Oui"
+        }
+      ],
+      "is_displayed_in_autocomplete": [
+        {
+          "value": true,
           "label": "Display Category in Autocomplete"
         }
       ],
@@ -799,10 +939,15 @@
       "position": "1",
       "level": "3",
       "children_count": "0",
-      "is_active": "1",
-      "is_displayed_in_autocomplete": [
+      "is_active": [
         {
           "id": true,
+          "label": "Oui"
+        }
+      ],
+      "is_displayed_in_autocomplete": [
+        {
+          "value": true,
           "label": "Display Category in Autocomplete"
         }
       ],
@@ -827,10 +972,15 @@
       "position": "2",
       "level": "3",
       "children_count": "0",
-      "is_active": "1",
-      "is_displayed_in_autocomplete": [
+      "is_active": [
         {
           "id": true,
+          "label": "Oui"
+        }
+      ],
+      "is_displayed_in_autocomplete": [
+        {
+          "value": true,
           "label": "Display Category in Autocomplete"
         }
       ],
@@ -855,10 +1005,15 @@
       "position": "3",
       "level": "2",
       "children_count": "0",
-      "is_active": "1",
-      "is_displayed_in_autocomplete": [
+      "is_active": [
         {
           "id": true,
+          "label": "Oui"
+        }
+      ],
+      "is_displayed_in_autocomplete": [
+        {
+          "value": true,
           "label": "Display Category in Autocomplete"
         }
       ],
@@ -883,10 +1038,15 @@
       "position": "5",
       "level": "2",
       "children_count": "6",
-      "is_active": "1",
-      "is_displayed_in_autocomplete": [
+      "is_active": [
         {
           "id": true,
+          "label": "Oui"
+        }
+      ],
+      "is_displayed_in_autocomplete": [
+        {
+          "value": true,
           "label": "Display Category in Autocomplete"
         }
       ],
@@ -911,10 +1071,15 @@
       "position": "1",
       "level": "3",
       "children_count": "0",
-      "is_active": "1",
-      "is_displayed_in_autocomplete": [
+      "is_active": [
         {
           "id": true,
+          "label": "Oui"
+        }
+      ],
+      "is_displayed_in_autocomplete": [
+        {
+          "value": true,
           "label": "Display Category in Autocomplete"
         }
       ],
@@ -939,10 +1104,15 @@
       "position": "2",
       "level": "3",
       "children_count": "0",
-      "is_active": "1",
-      "is_displayed_in_autocomplete": [
+      "is_active": [
         {
           "id": true,
+          "label": "Oui"
+        }
+      ],
+      "is_displayed_in_autocomplete": [
+        {
+          "value": true,
           "label": "Display Category in Autocomplete"
         }
       ],
@@ -967,10 +1137,15 @@
       "position": "3",
       "level": "3",
       "children_count": "0",
-      "is_active": "1",
-      "is_displayed_in_autocomplete": [
+      "is_active": [
         {
           "id": true,
+          "label": "Oui"
+        }
+      ],
+      "is_displayed_in_autocomplete": [
+        {
+          "value": true,
           "label": "Display Category in Autocomplete"
         }
       ],
@@ -995,10 +1170,15 @@
       "position": "4",
       "level": "3",
       "children_count": "0",
-      "is_active": "1",
-      "is_displayed_in_autocomplete": [
+      "is_active": [
         {
           "id": true,
+          "label": "Oui"
+        }
+      ],
+      "is_displayed_in_autocomplete": [
+        {
+          "value": true,
           "label": "Display Category in Autocomplete"
         }
       ],
@@ -1023,10 +1203,15 @@
       "position": "5",
       "level": "3",
       "children_count": "0",
-      "is_active": "1",
-      "is_displayed_in_autocomplete": [
+      "is_active": [
         {
           "id": true,
+          "label": "Oui"
+        }
+      ],
+      "is_displayed_in_autocomplete": [
+        {
+          "value": true,
           "label": "Display Category in Autocomplete"
         }
       ],
@@ -1051,10 +1236,15 @@
       "position": "6",
       "level": "3",
       "children_count": "0",
-      "is_active": "1",
-      "is_displayed_in_autocomplete": [
+      "is_active": [
         {
           "id": true,
+          "label": "Oui"
+        }
+      ],
+      "is_displayed_in_autocomplete": [
+        {
+          "value": true,
           "label": "Display Category in Autocomplete"
         }
       ],
