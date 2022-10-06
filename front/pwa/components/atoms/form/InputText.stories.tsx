@@ -1,11 +1,14 @@
-import { FormEvent, useState } from 'react'
+import { useState } from 'react'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
-import InputTextComponent from './InputText'
 import { InputAdornment } from '@mui/material'
+
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 
+import InputTextComponent from './InputText'
+import InputTextError from './InputTextError'
+
 export default {
-  title: 'Atoms/Form',
+  title: 'Atoms/Form/InputText',
   component: InputTextComponent,
   argTypes: {
     color: {
@@ -34,24 +37,19 @@ export default {
 const Template: ComponentStory<typeof InputTextComponent> = (args) => {
   const { endAdornment, ...props } = args
   const [value, setValue] = useState('')
-
   const handleChange = (value: string): void => setValue(value)
-  const handleSubmit = (event: FormEvent): void => event.preventDefault()
-
   return (
-    <form onSubmit={handleSubmit}>
-      <InputTextComponent
-        {...props}
-        value={value}
-        onChange={handleChange}
-        endAdornment={endAdornment}
-      />
-    </form>
+    <InputTextComponent
+      {...props}
+      value={value}
+      onChange={handleChange}
+      endAdornment={endAdornment}
+    />
   )
 }
 
-export const InputText = Template.bind({})
-InputText.args = {
+export const Default = Template.bind({})
+Default.args = {
   color: 'primary',
   dirty: false,
   disabled: false,
@@ -70,8 +68,8 @@ InputText.args = {
   type: 'text',
 }
 
-export const SearchInputText = Template.bind({})
-SearchInputText.args = {
+export const Search = Template.bind({})
+Search.args = {
   color: 'primary',
   dirty: false,
   disabled: false,
@@ -88,6 +86,29 @@ SearchInputText.args = {
   label: 'Label',
   placeholder: 'Name',
   required: false,
+  small: false,
+  sufix: '',
+  transparent: false,
+  type: 'text',
+}
+
+const FormErrorTemplate: ComponentStory<typeof InputTextComponent> = (args) => {
+  const [value, setValue] = useState('')
+  const handleChange = (value: string): void => setValue(value)
+  return <InputTextError {...args} value={value} onChange={handleChange} />
+}
+
+export const WithError = FormErrorTemplate.bind({})
+WithError.args = {
+  color: 'primary',
+  disabled: false,
+  endAdornment: null,
+  id: 'input-text',
+  infoTooltip: '',
+  inputProps: {},
+  label: 'Label',
+  placeholder: 'Name',
+  required: true,
   small: false,
   sufix: '',
   transparent: false,

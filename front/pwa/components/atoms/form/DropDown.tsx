@@ -4,6 +4,7 @@ import {
   ReactNode,
   SyntheticEvent,
   useMemo,
+  useRef,
 } from 'react'
 import {
   Autocomplete,
@@ -16,46 +17,36 @@ import { IOption, IOptions } from 'shared'
 
 import Checkbox from './Checkbox'
 import { SmallStyledPaper, StyledPaper } from './DropDown.styled'
-import InputText from './InputText'
+import InputText, { IInputTextProps } from './InputText'
 
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import Chip from '~/components/atoms/Chip/Chip'
 
-export interface IDropDownProps<T> {
-  dirty?: boolean
+export interface IDropDownProps<T>
+  extends Omit<IInputTextProps, 'onChange' | 'value'> {
   disabled?: boolean
-  helperText?: string
-  infoTooltip?: string
-  label?: string
   limitTags?: number
   multiple?: boolean
-  onChange?: (value: T | T[]) => void
+  onChange?: (value: T | T[], event: SyntheticEvent) => void
   options: IOptions<T>
-  required?: boolean
-  small?: boolean
   style?: CSSProperties
-  transparent?: boolean
   value?: T | T[]
 }
 
 function DropDown<T>(props: IDropDownProps<T>): JSX.Element {
   const {
-    dirty,
     disabled,
-    helperText,
-    infoTooltip,
-    label,
     limitTags,
     multiple,
     onChange,
     options,
-    required,
-    small,
     style,
-    transparent,
     value,
+    ...otherProps
   } = props
+  const { small } = props
   const { t } = useTranslation('common')
+  const inputRef = useRef()
   const optionMap = useMemo(
     () => new Map(options.map((option) => [option.value, option])),
     [options]
@@ -66,16 +57,22 @@ function DropDown<T>(props: IDropDownProps<T>): JSX.Element {
       : optionMap.get(value) ?? null
 
   function handleChange(
-    _: SyntheticEvent,
+    event: SyntheticEvent,
     option: IOption<T> | IOption<T>[]
   ): void {
-    if (!option) {
-      onChange(null)
-    } else if (option instanceof Array) {
-      onChange(option.map(({ value }) => value))
-    } else {
-      onChange(option.value)
-    }
+    const dropdownEvent = { ...event, target: inputRef.current }
+    setTimeout(() => {
+      if (!option) {
+        onChange(null, dropdownEvent)
+      } else if (option instanceof Array) {
+        onChange(
+          option.map(({ value }) => value),
+          dropdownEvent
+        )
+      } else {
+        onChange(option.value, dropdownEvent)
+      }
+    }, 0)
   }
 
   const clearText = t('form.clear')
@@ -128,15 +125,10 @@ function DropDown<T>(props: IDropDownProps<T>): JSX.Element {
           const { InputLabelProps, InputProps, ...inputProps } = params
           return (
             <InputText
+              {...otherProps}
               {...inputProps}
               {...InputProps}
-              dirty={dirty}
-              helperText={helperText}
-              infoTooltip={infoTooltip}
-              label={label}
-              required={required}
-              small={small}
-              transparent={transparent}
+              inputRef={inputRef}
             />
           )
         }}
