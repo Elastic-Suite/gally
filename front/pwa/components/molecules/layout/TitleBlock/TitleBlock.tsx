@@ -1,6 +1,6 @@
 import { Box, BoxProps } from '@mui/material'
 import { styled } from '@mui/system'
-import { FunctionComponent, ReactNode } from 'react'
+import { CSSProperties, FunctionComponent, ReactNode } from 'react'
 
 import { getCustomScrollBarStyles } from 'shared'
 
@@ -53,7 +53,7 @@ interface IProps {
   title: string
   children?: ReactNode
   line?: boolean
-  style?: object
+  style?: CSSProperties
 }
 
 function TitleBlock({
