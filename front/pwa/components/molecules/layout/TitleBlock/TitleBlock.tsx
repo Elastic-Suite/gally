@@ -1,25 +1,37 @@
-import { Box, BoxProps } from '@mui/material'
 import { styled } from '@mui/system'
-import { CSSProperties, FunctionComponent, ReactNode } from 'react'
+import { CSSProperties, ReactNode } from 'react'
 
 import { getCustomScrollBarStyles } from 'shared'
 
-interface ICustomTitleProps extends BoxProps {
-  line?: boolean
-}
-const customTitleProps = ['line']
-
-const CustomTitle = styled(Box as FunctionComponent<ICustomTitleProps>, {
-  shouldForwardProp: (prop: string) => !customTitleProps.includes(prop),
-})(({ theme, line }) => ({
+const CustomTitleNoBorder = styled('div')(({ theme }) => ({
   color: theme.palette.colors.neutral[900],
   fontWeight: 600,
   fontSize: '14px',
   lineHeight: '20px',
   fontFamily: 'Inter',
   padding: theme.spacing(2),
-  paddingBottom: line ? theme.spacing(0) : theme.spacing(2),
-  borderBottom: line ? 'none' : '1px solid',
+  paddingBottom: 0,
+}))
+
+const CustomTitleBorder = styled(CustomTitleNoBorder)(({ theme }) => ({
+  paddingBottom: theme.spacing(2),
+  borderBottom: '1px solid',
+  borderColor: theme.palette.colors.neutral[300],
+}))
+
+const CustomSousTitleNoBorder = styled('div')(({ theme }) => ({
+  color: theme.palette.colors.neutral[600],
+  fontWeight: 400,
+  fontSize: '12px',
+  lineHeight: '18px',
+  fontFamily: 'Inter',
+  padding: theme.spacing(2),
+  paddingBottom: 0,
+}))
+
+const CustomSousTitleBorder = styled(CustomSousTitleNoBorder)(({ theme }) => ({
+  paddingBottom: theme.spacing(2),
+  borderBottom: '1px solid',
   borderColor: theme.palette.colors.neutral[300],
 }))
 
@@ -33,17 +45,6 @@ const Container = styled('div')(({ theme }) => ({
   ...getCustomScrollBarStyles(theme),
 }))
 
-const ContainerPadding = styled('div')(({ theme }) => ({
-  borderBottom: '1px solid',
-  borderColor: theme.palette.colors.neutral[300],
-  '&:last-of-type': {
-    borderBottom: 'none',
-  },
-  overflow: 'auto',
-  paddingBottom: theme.spacing(2),
-  ...getCustomScrollBarStyles(theme),
-}))
-
 const PaddingBox = styled('div')(({ theme }) => ({
   display: 'inline-block',
   padding: theme.spacing(2),
@@ -52,29 +53,26 @@ const PaddingBox = styled('div')(({ theme }) => ({
 interface IProps {
   title: string
   children?: ReactNode
-  line?: boolean
   style?: CSSProperties
+  borderBottom?: boolean
+  sousTitle?: boolean
 }
 
-function TitleBlock({
-  title,
-  children,
-  line = true,
-  style,
-}: IProps): JSX.Element {
-  const isChildren = Boolean(children)
+function TitleBlock(props: IProps): JSX.Element {
+  const { title, children, style, borderBottom = true, sousTitle } = props
+  const CustomTitle = borderBottom
+    ? sousTitle
+      ? CustomSousTitleBorder
+      : CustomTitleBorder
+    : sousTitle
+    ? CustomSousTitleNoBorder
+    : CustomTitleNoBorder
   return (
     <>
-      <CustomTitle line={!line} style={style}>
-        {title}
-      </CustomTitle>
-      {isChildren ? (
-        <Container>
+      <CustomTitle style={style}>{title}</CustomTitle>
+      {children ? <Container>
           <PaddingBox>{children}</PaddingBox>
-        </Container>
-      ) : (
-        <ContainerPadding />
-      )}
+        </Container> : null}
     </>
   )
 }
