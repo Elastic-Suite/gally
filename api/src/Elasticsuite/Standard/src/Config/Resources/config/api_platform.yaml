@@ -22,6 +22,8 @@ api_platform:
         stateless: true
         cache_headers:
             vary: ['Content-Type', 'Authorization', 'Origin']
+            max_age: 0
+            shared_max_age: 3600
     collection:
         pagination:
             client_enabled: true # Enabled by default because this value cannot be specified by GraphQL endpoint

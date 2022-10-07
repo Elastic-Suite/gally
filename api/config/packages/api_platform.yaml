@@ -19,12 +19,5 @@ api_platform:
         max_age: 3600
         shared_max_age: 7200
         public: true
-    # Good cache defaults for REST APIs
-    defaults:
-        stateless: true
-        cache_headers:
-            vary: ['Content-Type', 'Authorization', 'Origin']
-            max_age: 0
-            shared_max_age: 3600
     graphql:
         nesting_separator: __
