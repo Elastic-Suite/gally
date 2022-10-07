@@ -40,3 +40,7 @@ services:
             - null
         tags:
             - { name: console.command }
+ 
+    Elasticsuite\Cache\EventSubscriber\ResponseSubscriber:
+        tags:
+            - { name: kernel.event_subscriber }
