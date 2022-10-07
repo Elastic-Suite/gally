@@ -131,7 +131,7 @@ function Categories(): JSX.Element {
             findCategory(selectedCategoryItem, element.children)
     })
 
-    return sameCateInOtherCatalog ? sameCateInOtherCatalog : undefined
+    return sameCateInOtherCatalog
   }
 
   useEffect(() => {
