@@ -22,8 +22,10 @@ const pagesSlug = ['search', 'facets']
 const ButtonSetting = styled('div')(() => ({
   color: '#2C19CD',
   display: 'flex',
+  alignItems: 'center',
   justifyContent: 'center',
   cursor: 'pointer',
+  gap: '5px',
   '&:hover': {
     color: 'green',
   },
@@ -35,9 +37,11 @@ const IonIconStyle = styled(IonIcon)(() => ({
 }))
 
 const FontSetting = styled('div')(() => ({
-  borderBottom: '1px solid',
-  fontWeight: 450,
-  marginLeft: '5px',
+  textDecoration: 'underline',
+  fontWeight: 500,
+  fontFamily: 'Inter',
+  lineHeight: '18px',
+  fontSize: '12px',
 }))
 
 function Facets(): JSX.Element {
@@ -61,12 +65,12 @@ function Facets(): JSX.Element {
       </Head>
       <TwoColsLayout
         left={[
-          <TitleBlock key="title" title={t('facet.title')} line={false} />,
+          <TitleBlock key="title" title={t('facet.title')} />,
           <TitleBlock
+            sousTitle
+            borderBottom={false}
             key="configuration"
             title={t('facet.configuration')}
-            line={false}
-            style={{ color: '#425880' }}
           >
             <ButtonSetting
               onClick={(): void => setSelectedCategoryItem(undefined)}
@@ -76,10 +80,10 @@ function Facets(): JSX.Element {
             </ButtonSetting>
           </TitleBlock>,
           <TitleBlock
+            borderBottom={false}
+            sousTitle
             key="categories"
             title={t('facet.byCategory')}
-            line={false}
-            style={{ color: '#425880' }}
           >
             <CategoryTree
               categories={categories.data}
