@@ -19,15 +19,16 @@ import PageTitle from '~/components/atoms/PageTitle/PageTitle'
 
 const pagesSlug = ['search', 'facets']
 
-const ButtonSetting = styled('div')(() => ({
-  color: '#2C19CD',
+const ButtonSetting = styled('div')(({ theme }) => ({
+  color: theme.palette.colors.neutral[900],
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   cursor: 'pointer',
   gap: '5px',
   '&:hover': {
-    color: 'green',
+    color: theme.palette.colors.secondary[600],
+    textDecoration: 'underline',
   },
 }))
 
@@ -37,7 +38,6 @@ const IonIconStyle = styled(IonIcon)(() => ({
 }))
 
 const FontSetting = styled('div')(() => ({
-  textDecoration: 'underline',
   fontWeight: 500,
   fontFamily: 'Inter',
   lineHeight: '18px',
