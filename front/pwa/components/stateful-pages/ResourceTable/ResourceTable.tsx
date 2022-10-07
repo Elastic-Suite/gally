@@ -59,7 +59,7 @@ function ResourceTable(props: IProps): JSX.Element {
     urlParams,
     resourceName,
     isFacets,
-    category
+    category,
   } = props
 
   const resource = useResource(resourceName)
