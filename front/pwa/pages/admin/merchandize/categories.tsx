@@ -124,18 +124,14 @@ function Categories(): JSX.Element {
     selectedCategoryItem: ICategory,
     categories: ICategory[]
   ): ICategory {
-    const sameCateInOtherCatalog = categories.map((element: ICategory) => {
+    const sameCateInOtherCatalog = categories.find((element: ICategory) => {
       return element.id === selectedCategoryItem.id
         ? element
         : element.children &&
             findCategory(selectedCategoryItem, element.children)
     })
 
-    if (sameCateInOtherCatalog) {
-      return sameCateInOtherCatalog.filter((item: ICategory) => item)[0]
-    }
-
-    return undefined
+    return sameCateInOtherCatalog ? sameCateInOtherCatalog : undefined
   }
 
   useEffect(() => {
@@ -183,7 +179,6 @@ function Categories(): JSX.Element {
                 onLocalizedCatalog={setLocalizedCatalogId}
                 catalogsData={data}
                 error={error}
-                onCategory={setSelectedCategoryItem}
               />
               <CategoryTree
                 categories={categories.data}
