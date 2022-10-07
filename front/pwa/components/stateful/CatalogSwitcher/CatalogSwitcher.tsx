@@ -1,7 +1,7 @@
 import { styled } from '@mui/system'
 
 import { useTranslation } from 'next-i18next'
-import { ICatalog, ICategory, IHydraResponse, IOptions } from 'shared'
+import { ICatalog, IHydraResponse, IOptions } from 'shared'
 
 import DropDown from '~/components/atoms/form/DropDown'
 
@@ -18,7 +18,6 @@ interface IProps {
   onLocalizedCatalog: (locCtl: number) => void
   catalogsData: IHydraResponse<ICatalog>
   error: Error
-  onCategory: (item?: ICategory) => void
 }
 
 function CatalogSwitcher(props: IProps): JSX.Element {
@@ -29,7 +28,6 @@ function CatalogSwitcher(props: IProps): JSX.Element {
     onLocalizedCatalog,
     catalogsData,
     error,
-    onCategory,
   } = props
 
   const { t } = useTranslation('categories')
@@ -70,7 +68,6 @@ function CatalogSwitcher(props: IProps): JSX.Element {
 
   function onLocalizedCatalogChange(localizedCatalogId: number): void {
     onLocalizedCatalog(localizedCatalogId)
-    onCategory()
   }
 
   if (error || !catalogsData) {

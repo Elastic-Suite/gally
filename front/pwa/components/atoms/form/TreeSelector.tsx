@@ -191,7 +191,6 @@ function TreeSelector(props: IProps): JSX.Element {
                 data={data}
                 getItemProps={getItemProps}
                 getListboxProps={getListboxProps}
-                multiple
                 onToggle={setOpenItems}
                 openItems={openItems}
                 search={search}
