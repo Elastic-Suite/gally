@@ -67,7 +67,7 @@ function Facets(): JSX.Element {
         left={[
           <TitleBlock key="title" title={t('facet.title')} />,
           <TitleBlock
-            sousTitle
+            hasSubTitle
             borderBottom={false}
             key="configuration"
             title={t('facet.configuration')}
@@ -81,7 +81,7 @@ function Facets(): JSX.Element {
           </TitleBlock>,
           <TitleBlock
             borderBottom={false}
-            sousTitle
+            hasSubTitle
             key="categories"
             title={t('facet.byCategory')}
           >

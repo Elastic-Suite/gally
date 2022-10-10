@@ -43,7 +43,6 @@ function isObjectNotEmpty(object: object): boolean {
 interface IProps {
   active?: boolean
   diffDefaultValues?: boolean
-  filters?: ISearchParameters
   urlParams?: string
   resourceName: string
   category?: string
@@ -51,27 +50,14 @@ interface IProps {
 
 function ResourceTable(props: IProps): JSX.Element {
   const { t } = useTranslation('attributes')
-  const {
-    active,
-    filters,
-    urlParams,
-    resourceName,
-    category,
-    diffDefaultValues,
-  } = props
+  const { active, urlParams, resourceName, category, diffDefaultValues } = props
 
   const resource = useResource(resourceName)
   const [page, setPage] = usePage()
   const [activeFilters, setActiveFilters] = useFilters(resource)
   const [searchValue, setSearchValue] = useSearch()
-  const parameters = useMemo(
-    () => ({
-      ...activeFilters,
-      ...filters,
-      category: category ?? '',
-    }),
-    [activeFilters, filters, category]
-  )
+  const filters = useMemo(() => ({ category }), [activeFilters, category])
+
   useFiltersRedirect(page, activeFilters, searchValue, active ? active : true)
 
   const rowsPerPageOptions = defaultRowsPerPageOptions
@@ -82,7 +68,7 @@ function ResourceTable(props: IProps): JSX.Element {
       resource,
       page,
       rowsPerPage,
-      parameters,
+      filters,
       searchValue,
       urlParams ? `${resource.url}${urlParams}` : null
     )

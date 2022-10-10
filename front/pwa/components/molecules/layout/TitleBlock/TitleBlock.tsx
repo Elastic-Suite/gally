@@ -19,7 +19,7 @@ const CustomTitleBorder = styled(CustomTitleNoBorder)(({ theme }) => ({
   borderColor: theme.palette.colors.neutral[300],
 }))
 
-const CustomSousTitleNoBorder = styled('div')(({ theme }) => ({
+const CustomSubTitleNoBorder = styled('div')(({ theme }) => ({
   color: theme.palette.colors.neutral[600],
   fontWeight: 400,
   fontSize: '12px',
@@ -29,7 +29,7 @@ const CustomSousTitleNoBorder = styled('div')(({ theme }) => ({
   paddingBottom: 0,
 }))
 
-const CustomSousTitleBorder = styled(CustomSousTitleNoBorder)(({ theme }) => ({
+const CustomSubTitleBorder = styled(CustomSubTitleNoBorder)(({ theme }) => ({
   paddingBottom: theme.spacing(2),
   borderBottom: '1px solid',
   borderColor: theme.palette.colors.neutral[300],
@@ -55,24 +55,26 @@ interface IProps {
   children?: ReactNode
   style?: CSSProperties
   borderBottom?: boolean
-  sousTitle?: boolean
+  hasSubTitle?: boolean
 }
 
 function TitleBlock(props: IProps): JSX.Element {
-  const { title, children, style, borderBottom = true, sousTitle } = props
+  const { title, children, style, borderBottom = true, hasSubTitle } = props
   const CustomTitle = borderBottom
-    ? sousTitle
-      ? CustomSousTitleBorder
+    ? hasSubTitle
+      ? CustomSubTitleBorder
       : CustomTitleBorder
-    : sousTitle
-    ? CustomSousTitleNoBorder
+    : hasSubTitle
+    ? CustomSubTitleNoBorder
     : CustomTitleNoBorder
   return (
     <>
       <CustomTitle style={style}>{title}</CustomTitle>
-      {children ? <Container>
+      {Boolean(children) && (
+        <Container>
           <PaddingBox>{children}</PaddingBox>
-        </Container> : null}
+        </Container>
+      )}
     </>
   )
 }

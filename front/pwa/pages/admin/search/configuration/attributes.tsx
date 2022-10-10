@@ -12,7 +12,6 @@ import PageTitle from '~/components/atoms/PageTitle/PageTitle'
 import ResourceTable from '~/components/stateful-pages/ResourceTable/ResourceTable'
 
 const pagesSlug = ['search', 'configuration', 'attributes']
-const fixedFilters = { 'metadata.entity': 'product' }
 
 function Attributes(): JSX.Element {
   const [visibleAlertAttributes, setVisibleAlertAttributes] = useState(true)
@@ -45,7 +44,6 @@ function Attributes(): JSX.Element {
         resourceName="SourceField"
         active={false}
         urlParams={searchableAttributeUrl}
-        filters={fixedFilters}
       />
     </>
   )
