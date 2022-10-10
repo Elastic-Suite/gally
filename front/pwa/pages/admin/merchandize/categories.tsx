@@ -180,14 +180,14 @@ function Categories(): JSX.Element {
             </>
           </TitleBlock>,
           <TitleBlock key="virtualRule" title={t('virtualRule.title')}>
-            {dataCat?.id && dataCat?.isVirtual ? (
+            {Boolean(dataCat?.id && dataCat?.isVirtual) && (
               <RulesManager
                 catalogId={catalogId}
                 localizedCatalogId={localizedCatalogId}
                 onChange={setRule}
                 rule={rule}
               />
-            ) : undefined}
+            )}
           </TitleBlock>,
         ]}
       >
