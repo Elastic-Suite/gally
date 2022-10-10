@@ -3,7 +3,7 @@
 exports[`TitleBlock match snapshot PageTitle simple 1`] = `
 <div>
   <div
-    class="css-1sl3yy7"
+    class="css-1smabgz"
   >
     Hello World
   </div>
@@ -22,7 +22,7 @@ exports[`TitleBlock match snapshot PageTitle simple 1`] = `
 exports[`TitleBlock match snapshot PageTitle with Composant on Children 1`] = `
 <div>
   <div
-    class="css-1sl3yy7"
+    class="css-1smabgz"
   >
     Hello World
   </div>

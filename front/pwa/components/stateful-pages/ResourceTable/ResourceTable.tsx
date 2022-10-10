@@ -46,11 +46,19 @@ interface IProps {
   urlParams?: string
   resourceName: string
   category?: string
+  isFacets?: boolean
 }
 
 function ResourceTable(props: IProps): JSX.Element {
-  const { t } = useTranslation('attributes')
-  const { active, urlParams, resourceName, category, diffDefaultValues } = props
+  const { t } = useTranslation('resourceTable')
+  const {
+    active,
+    urlParams,
+    resourceName,
+    category,
+    diffDefaultValues,
+    isFacets,
+  } = props
 
   const resource = useResource(resourceName)
   const [page, setPage] = usePage()
@@ -131,9 +139,9 @@ function ResourceTable(props: IProps): JSX.Element {
   }
 
   function onRowsPerPageChange(
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    event?: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ): void {
-    setRowsPerPage(Number(event.target.value))
+    event && setRowsPerPage(Number(event.target.value))
     setPage(0)
   }
 
@@ -160,11 +168,13 @@ function ResourceTable(props: IProps): JSX.Element {
     !filterOrSearchAreUp
   ) {
     return (
-      <NoAttributes
-        title={t('attributes.none')}
-        btnTitle={t('attributes.none.btn')}
-        btnHref="admin/settings/attributes"
-      />
+      <>
+        <NoAttributes
+          title={isFacets ? t('facets.none') : t('attributes.none')}
+          btnTitle={isFacets ? t('facets.none.btn') : t('attributes.none.btn')}
+          btnHref="admin/settings/attributes"
+        />
+      </>
     )
   }
   return (

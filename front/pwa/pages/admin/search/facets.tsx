@@ -16,6 +16,7 @@ import { styled } from '@mui/system'
 import ResourceTable from '~/components/stateful-pages/ResourceTable/ResourceTable'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import PageTitle from '~/components/atoms/PageTitle/PageTitle'
+import Alert from '~/components/atoms/Alert/Alert'
 
 const pagesSlug = ['search', 'facets']
 
@@ -58,6 +59,11 @@ function Facets(): JSX.Element {
 
   const [categories] = useFetchApi<ICategories>(`categoryTree`)
 
+  const hasFacets = selectedCategoryItem?.name
+    ? selectedCategoryItem?.name
+    : selectedCategoryItem?.catalogName
+  const [isVisibleAlertFacets, setIsVisibleAlertFacets] = useState(true)
+
   return (
     <>
       <Head>
@@ -94,16 +100,20 @@ function Facets(): JSX.Element {
         ]}
       >
         <PageTitle
-          title={
-            selectedCategoryItem?.name
-              ? selectedCategoryItem?.name
-              : selectedCategoryItem?.catalogName
-          }
+          title={hasFacets ? hasFacets : t('facets')}
           sx={{ marginBottom: '32px' }}
         />
+        {Boolean(isVisibleAlertFacets) && (
+          <Alert
+            message={t('facet.alert')}
+            onClose={(): void => setIsVisibleAlertFacets(false)}
+            style={{ marginBottom: '16px' }}
+          />
+        )}
         <ResourceTable
           resourceName="FacetConfiguration"
           category={selectedCategoryItem?.id}
+          isFacets
         />
       </TwoColsLayout>
     </>

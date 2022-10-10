@@ -11,7 +11,7 @@ exports[`TitleBlock match snapshot TwoColsLayout simple 1`] = `
       Hello World
     </div>
     <div
-      class="css-8o5tc6"
+      class="css-w4yc1"
     >
       Hello
     </div>
@@ -31,7 +31,7 @@ exports[`TitleBlock match snapshot TwoColsLayout with Array in left 1`] = `
       hello world Two
     </div>
     <div
-      class="css-8o5tc6"
+      class="css-w4yc1"
     >
       <button
         class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium css-13u4ebv-MuiButtonBase-root-MuiButton-root"
