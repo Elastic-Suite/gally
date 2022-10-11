@@ -228,7 +228,9 @@ class CategoryProductPositionManager
             self::MAX_POSITION_COUNT,
             null,
             [],
-            [$query]
+            [$query],
+            [],
+            null
         );
 
         $response = $this->adapter->search($request);
