@@ -48,7 +48,8 @@ class StitchingFieldsBuilder implements FieldsBuilderInterface
         SourceFieldType::TYPE_INT => 'Elasticsuite\Entity\Model\Attribute\Type\IntAttribute',
         SourceFieldType::TYPE_BOOLEAN => 'Elasticsuite\Entity\Model\Attribute\Type\BooleanAttribute',
         SourceFieldType::TYPE_FLOAT => 'Elasticsuite\Entity\Model\Attribute\Type\FloatAttribute',
-        SourceFieldType::TYPE_PRICE => 'Elasticsuite\Entity\Model\Attribute\Type\TextAttribute',
+        SourceFieldType::TYPE_PRICE => 'Elasticsuite\Entity\Model\Attribute\Type\PriceAttribute',
+        SourceFieldType::TYPE_STOCK => 'Elasticsuite\Entity\Model\Attribute\Type\StockAttribute',
         SourceFieldType::TYPE_REFERENCE => 'Elasticsuite\Entity\Model\Attribute\Type\TextAttribute',
         SourceFieldType::TYPE_IMAGE => 'Elasticsuite\Entity\Model\Attribute\Type\TextAttribute',
         SourceFieldType::TYPE_OBJECT => 'Elasticsuite\Entity\Model\Attribute\Type\TextAttribute',
@@ -104,8 +105,8 @@ class StitchingFieldsBuilder implements FieldsBuilderInterface
         }
 
         unset($fields[$stitchingProperty]);
-        $nonScalarFields = [];
-        $objectTypes = [];
+        $basicNestedFields = [];
+        $structuredFields = [];
         /** @var SourceField $sourceField */
         foreach ($metadata->getSourceFields() as $sourceField) {
             if (!isset($fields[$sourceField->getCode()])) {
@@ -123,22 +124,22 @@ class StitchingFieldsBuilder implements FieldsBuilderInterface
                 }
 
                 if (is_subclass_of($attributeClassType, StructuredAttributeInterface::class)) {
-                    $objectTypes[$sourceField->getCode()] = $attributeClassType::getFields();
+                    $structuredFields[$sourceField->getCode()] = $attributeClassType;
                 } elseif (false === $sourceField->isNested()) {
                     $fields[$sourceField->getCode()] = $this->getField($attributeClassType);
                 } else {
                     // There are max two levels.
                     // 'stock.qty' become $nonScalarFields['stock']['qty'].
                     [$path, $code] = [$sourceField->getNestedPath(), $sourceField->getNestedCode()];
-                    $nonScalarFields[$path][$code]['source_field'] = $sourceField;
-                    $nonScalarFields[$path][$code]['class_type'] = $attributeClassType;
+                    $basicNestedFields[$path][$code]['source_field'] = $sourceField;
+                    $basicNestedFields[$path][$code]['class_type'] = $attributeClassType;
                 }
             }
         }
 
-        $fields = $this->processObjectTypes($objectTypes, $fields);
+        $fields = $this->processStructuredFields($structuredFields, $fields);
 
-        return $this->processNonScalarFields($nonScalarFields, $fields);
+        return $this->processBasicNestedFields($basicNestedFields, $fields);
     }
 
     public function getObjectType(string $typeName, string $description, array $fields): GraphQLType
@@ -162,16 +163,16 @@ class StitchingFieldsBuilder implements FieldsBuilderInterface
         return $objectType;
     }
 
-    public function processNonScalarFields(array $nonScalarFields, array $fields): array
+    public function processBasicNestedFields(array $basicNestedFields, array $fields): array
     {
         // This part has been inspired by the function \ApiPlatform\Core\GraphQl\Type\TypeBuilder::getResourceObjectType.
-        foreach ($nonScalarFields as $parent => $children) {
-            $shortName = ucfirst($parent) . 'Attribute';
-            $typeDescription = ucfirst($parent) . ' attribute.';
+        foreach ($basicNestedFields as $nestedPath => $children) {
+            $shortName = ucfirst($nestedPath) . 'Attribute';
+            $typeDescription = ucfirst($nestedPath) . ' attribute.';
 
             $objectType = $this->getObjectType($shortName, $typeDescription, $children);
 
-            $fields[$parent] = [
+            $fields[$nestedPath] = [
                 'type' => $objectType,
                 'description' => null,
                 'args' => [],
@@ -183,17 +184,21 @@ class StitchingFieldsBuilder implements FieldsBuilderInterface
         return $fields;
     }
 
-    public function processObjectTypes(array $objectTypes, array $fields): array
+    public function processStructuredFields(array $structuredFields, array $fields): array
     {
         // This part has been inspired by the function \ApiPlatform\Core\GraphQl\Type\TypeBuilder::getResourceObjectType.
-        foreach ($objectTypes as $parent => $children) {
-            $shortName = ucfirst($parent) . 'Attribute';
-            $typeDescription = ucfirst($parent) . ' attribute.';
+        /**
+         * @var StructuredAttributeInterface $structuredAttributeClass
+         */
+        foreach ($structuredFields as $structuredFieldName => $structuredAttributeClass) {
+            $shortName = ucfirst($structuredFieldName) . 'Attribute';
+            $typeDescription = ucfirst($structuredFieldName) . ' attribute.';
 
-            $objectType = $this->getObjectType($shortName, $typeDescription, $children);
+            $objectType = $this->getObjectType($shortName, $typeDescription, $structuredAttributeClass::getFields());
 
-            $fields[$parent] = [
-                'type' => GraphQLType::listOf($objectType),
+            $parentType = $structuredAttributeClass::isList() ? GraphQLType::listOf($objectType) : $objectType;
+            $fields[$structuredFieldName] = [
+                'type' => $parentType,
                 'description' => null,
                 'args' => [],
                 'resolve' => null,
