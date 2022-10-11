@@ -56,6 +56,12 @@ use Elasticsuite\User\Constant\Role;
             ],
         ],
     ],
+    attributes: [
+        'elasticsuite' => [
+            // Allows to add cache tags related to these resources in the HTTP response.
+            'cache_tag' => ['resource_classes' => [Category::class, Category\Configuration::class]],
+        ],
+    ],
     paginationEnabled: false,
 )]
 class CategoryTree
