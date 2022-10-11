@@ -112,7 +112,7 @@ function Facets(): JSX.Element {
         )}
         <ResourceTable
           resourceName="FacetConfiguration"
-          category={selectedCategoryItem?.id}
+          diffDefaultValues
           isFacets
         />
       </TwoColsLayout>

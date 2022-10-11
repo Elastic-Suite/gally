@@ -13,7 +13,6 @@ export function useApiHeaders(resource: IResource): ITableHeader[] {
   const { t } = useTranslation('api')
   return useMemo(() => {
     return resource.supportedProperty
-
       .filter((field) => field.elasticsuite?.visible)
       .map((field) => getFieldHeader(field, t))
   }, [resource, t])

@@ -43,9 +43,9 @@ function isObjectNotEmpty(object: object): boolean {
 interface IProps {
   active?: boolean
   diffDefaultValues?: boolean
+  filters?: ISearchParameters
   urlParams?: string
   resourceName: string
-  category?: string
   isFacets?: boolean
 }
 
@@ -53,10 +53,10 @@ function ResourceTable(props: IProps): JSX.Element {
   const { t } = useTranslation('resourceTable')
   const {
     active,
+    diffDefaultValues,
+    filters,
     urlParams,
     resourceName,
-    category,
-    diffDefaultValues,
     isFacets,
   } = props
 
@@ -64,8 +64,13 @@ function ResourceTable(props: IProps): JSX.Element {
   const [page, setPage] = usePage()
   const [activeFilters, setActiveFilters] = useFilters(resource)
   const [searchValue, setSearchValue] = useSearch()
-  const filters = useMemo(() => ({ category }), [activeFilters, category])
-
+  const parameters = useMemo(
+    () => ({
+      ...activeFilters,
+      ...filters,
+    }),
+    [activeFilters, filters]
+  )
   useFiltersRedirect(page, activeFilters, searchValue, active ? active : true)
 
   const rowsPerPageOptions = defaultRowsPerPageOptions
@@ -76,7 +81,7 @@ function ResourceTable(props: IProps): JSX.Element {
       resource,
       page,
       rowsPerPage,
-      filters,
+      parameters,
       searchValue,
       urlParams ? `${resource.url}${urlParams}` : null
     )
@@ -168,11 +173,13 @@ function ResourceTable(props: IProps): JSX.Element {
     !filterOrSearchAreUp
   ) {
     return (
-      <NoAttributes
-        title={isFacets ? t('facets.none') : t('attributes.none')}
-        btnTitle={isFacets ? t('facets.none.btn') : t('attributes.none.btn')}
-        btnHref="admin/settings/attributes"
-      />
+      <>
+        <NoAttributes
+          title={isFacets ? t('facets.none') : t('attributes.none')}
+          btnTitle={isFacets ? t('facets.none.btn') : t('attributes.none.btn')}
+          btnHref="admin/settings/attributes"
+        />
+      </>
     )
   }
   return (
