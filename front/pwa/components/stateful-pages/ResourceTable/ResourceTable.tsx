@@ -168,13 +168,11 @@ function ResourceTable(props: IProps): JSX.Element {
     !filterOrSearchAreUp
   ) {
     return (
-      <>
-        <NoAttributes
-          title={isFacets ? t('facets.none') : t('attributes.none')}
-          btnTitle={isFacets ? t('facets.none.btn') : t('attributes.none.btn')}
-          btnHref="admin/settings/attributes"
-        />
-      </>
+      <NoAttributes
+        title={isFacets ? t('facets.none') : t('attributes.none')}
+        btnTitle={isFacets ? t('facets.none.btn') : t('attributes.none.btn')}
+        btnHref="admin/settings/attributes"
+      />
     )
   }
   return (
