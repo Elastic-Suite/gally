@@ -92,7 +92,13 @@ function Categories(): JSX.Element {
 
   async function onSave(): Promise<void> {
     if (!dataCat.id) {
-      const val = await create(dataCat)
+      const val = await create({
+        useNameInProductSearch: dataCat.useNameInProductSearch,
+        isVirtual: dataCat.isVirtual,
+        defaultSorting: dataCat.defaultSorting,
+        category: dataCat.category,
+        name: dataCat.name,
+      })
       if (!isError(val)) {
         prevDataCat.current = val
         setDataCat(val)
