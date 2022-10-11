@@ -32,18 +32,6 @@ Elasticsuite\Metadata\Model\SourceFieldOption:
     categories_include_in_menu_option_0:
         source_field: '@categories_include_in_menu'
         position: 1
-    categories_is_active_option_1:
-        source_field: '@categories_is_active'
-        position: 0
-    categories_is_active_option_0:
-        source_field: '@categories_is_active'
-        position: 1
-    categories_is_displayed_in_autocomplete_option_1:
-        source_field: '@categories_is_displayed_in_autocomplete'
-        position: 0
-    categories_is_displayed_in_autocomplete_option_0:
-        source_field: '@categories_is_displayed_in_autocomplete'
-        position: 1
     categories_landing_page_option_:
         source_field: '@categories_landing_page'
         position: 0
