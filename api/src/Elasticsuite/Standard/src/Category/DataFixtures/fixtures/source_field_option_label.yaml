@@ -43,22 +43,6 @@ Elasticsuite\Metadata\Model\SourceFieldOptionLabel:
         source_field_option: '@categories_include_in_menu_option_0'
         catalog: '@com_fr'
         label: 'No'
-    categories_is_active_option_1_com_fr:
-        source_field_option: '@categories_is_active_option_1'
-        catalog: '@com_fr'
-        label: 'Yes'
-    categories_is_active_option_0_com_fr:
-        source_field_option: '@categories_is_active_option_0'
-        catalog: '@com_fr'
-        label: 'No'
-    categories_is_displayed_in_autocomplete_option_1_com_fr:
-        source_field_option: '@categories_is_displayed_in_autocomplete_option_1'
-        catalog: '@com_fr'
-        label: 'Yes'
-    categories_is_displayed_in_autocomplete_option_0_com_fr:
-        source_field_option: '@categories_is_displayed_in_autocomplete_option_0'
-        catalog: '@com_fr'
-        label: 'No'
     categories_landing_page_option__com_fr:
         source_field_option: '@categories_landing_page_option_'
         catalog: '@com_fr'
