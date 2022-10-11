@@ -11,7 +11,7 @@ import TitleBlock from '~/components/molecules/layout/TitleBlock/TitleBlock'
 import TwoColsLayout from '~/components/molecules/layout/twoColsLayout/TwoColsLayout'
 import CategoryTree from '~/components/stateful/CategoryTree/CategoryTree'
 
-import { ICategories, ICategory } from '~/../shared'
+import { ICategories, ICategory, LoadStatus } from '~/../shared'
 import { styled } from '@mui/system'
 import ResourceTable from '~/components/stateful-pages/ResourceTable/ResourceTable'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
@@ -63,6 +63,38 @@ function Facets(): JSX.Element {
     ? selectedCategoryItem?.name
     : selectedCategoryItem?.catalogName
   const [isVisibleAlertFacets, setIsVisibleAlertFacets] = useState(true)
+
+  function findCategory(
+    selectedCategoryItem: ICategory,
+    categories: ICategory[]
+  ): ICategory {
+    const sameCateInOtherCatalog = categories.find((element: ICategory) => {
+      return element.id === selectedCategoryItem.id
+        ? element
+        : element.children &&
+            findCategory(selectedCategoryItem, element.children)
+    })
+
+    return sameCateInOtherCatalog
+  }
+
+  useEffect(() => {
+    if (categories.status !== LoadStatus.SUCCEEDED) {
+      return
+    }
+
+    if (!categories.data.categories[0]) {
+      return setSelectedCategoryItem(undefined)
+    }
+
+    if (selectedCategoryItem === undefined) {
+      return setSelectedCategoryItem(categories.data.categories[0])
+    }
+
+    return setSelectedCategoryItem(
+      findCategory(selectedCategoryItem, categories.data.categories)
+    )
+  }, [categories.status])
 
   return (
     <>
