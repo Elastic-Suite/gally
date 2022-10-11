@@ -395,9 +395,9 @@ class SearchProductsTest extends AbstractTest
                 'b2c_fr',   // catalog ID.
                 5,     // page size.
                 1,      // current page.
-                ['price__price' => SortOrderInterface::SORT_ASC], // sort order specifications.
+                ['price_as_nested__price' => SortOrderInterface::SORT_ASC], // sort order specifications.
                 'id', // document data identifier.
-                // price.price ASC, then score DESC first, then id DESC (missing _first)
+                // price_as_nested.price ASC, then score DESC first, then id DESC (missing _first)
                 [2, 1, 3, 12, 11],   // expected ordered document IDs
             ],
         ];
@@ -442,6 +442,48 @@ class SearchProductsTest extends AbstractTest
                 function (ResponseInterface $response) {
                     $this->assertJsonContains([
                         'errors' => [['message' => 'Field "stock__qty" is not defined by type ProductSortInput.']],
+                    ]);
+                }
+            )
+        );
+
+        $this->validateApiCall(
+            new RequestGraphQlToTest(
+                <<<GQL
+                    {
+                        searchProducts(catalogId: "b2c_fr", sort: { price__price: desc }) {
+                            collection { id }
+                        }
+                    }
+                GQL,
+                $this->getUser(Role::ROLE_CONTRIBUTOR)
+            ),
+            new ExpectedResponse(
+                200,
+                function (ResponseInterface $response) {
+                    $this->assertJsonContains([
+                        'errors' => [['message' => 'Field "price__price" is not defined by type ProductSortInput.']],
+                    ]);
+                }
+            )
+        );
+
+        $this->validateApiCall(
+            new RequestGraphQlToTest(
+                <<<GQL
+                    {
+                        searchProducts(catalogId: "b2c_fr", sort: { stock_as_nested__qty: desc }) {
+                            collection { id }
+                        }
+                    }
+                GQL,
+                $this->getUser(Role::ROLE_CONTRIBUTOR)
+            ),
+            new ExpectedResponse(
+                200,
+                function (ResponseInterface $response) {
+                    $this->assertJsonContains([
+                        'errors' => [['message' => 'Field "stock_as_nested__qty" is not defined by type ProductSortInput; Did you mean price_as_nested__price?']],
                     ]);
                 }
             )
