@@ -51,6 +51,8 @@ export interface IConfiguration extends IHydraMember {
   useNameInProductSearch: boolean
   isVirtual: boolean
   defaultSorting: string
+  name: string
+  category: string
 }
 export interface IConfigurationOptional {
   useNameInProductSearch?: boolean
