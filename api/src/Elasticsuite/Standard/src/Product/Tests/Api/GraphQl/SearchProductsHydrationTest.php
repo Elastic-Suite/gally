@@ -169,7 +169,9 @@ class SearchProductsHydrationTest extends AbstractTest
             weight
             size
             is_eco_friendly
+            stock_as_nested { status qty }
             stock { status qty }
+            price_as_nested { group_id original_price price is_discounted }
             price { group_id original_price price is_discounted }
         ATT;
 
@@ -193,6 +195,8 @@ class SearchProductsHydrationTest extends AbstractTest
                         ],
                     ],
                     'stock' => null,
+                    'stock_as_nested' => null,
+                    'price_as_nested' => null,
                     'price' => null,
                     // 'created_at' => '2022-09-01',
                 ],
@@ -214,6 +218,8 @@ class SearchProductsHydrationTest extends AbstractTest
                         ],
                     ],
                     'stock' => null,
+                    'stock_as_nested' => null,
+                    'price_as_nested' => null,
                     'price' => null,
                     // 'created_at' => '2022-09-05',
                 ],
@@ -238,6 +244,8 @@ class SearchProductsHydrationTest extends AbstractTest
                         ],
                     ],
                     'stock' => null,
+                    'stock_as_nested' => null,
+                    'price_as_nested' => null,
                     'price' => null,
                     // 'created_at' => '2022-09-05',
                 ],
@@ -258,6 +266,8 @@ class SearchProductsHydrationTest extends AbstractTest
                         ],
                     ],
                     'stock' => null,
+                    'stock_as_nested' => null,
+                    'price_as_nested' => null,
                     'price' => null,
                     // 'created_at' => '2022-09-05',
                 ],
@@ -278,6 +288,8 @@ class SearchProductsHydrationTest extends AbstractTest
                         ],
                     ],
                     'stock' => null,
+                    'stock_as_nested' => null,
+                    'price_as_nested' => null,
                     'price' => null,
                     // 'created_at' => '2022-09-06',
                 ],
@@ -306,6 +318,8 @@ class SearchProductsHydrationTest extends AbstractTest
                         ],
                     ],
                     'stock' => null,
+                    'stock_as_nested' => null,
+                    'price_as_nested' => null,
                     'price' => null,
                     // 'created_at' => '2022-09-01',
                 ],
@@ -326,6 +340,8 @@ class SearchProductsHydrationTest extends AbstractTest
                         ],
                     ],
                     'stock' => null,
+                    'stock_as_nested' => null,
+                    'price_as_nested' => null,
                     'price' => null,
                     // 'created_at' => '2022-09-01',
                 ],
@@ -350,6 +366,8 @@ class SearchProductsHydrationTest extends AbstractTest
                         ],
                     ],
                     'stock' => null,
+                    'stock_as_nested' => null,
+                    'price_as_nested' => null,
                     'price' => null,
                     // 'created_at' => '2022-09-01',
                 ],
@@ -374,6 +392,8 @@ class SearchProductsHydrationTest extends AbstractTest
                         ],
                     ],
                     'stock' => null,
+                    'stock_as_nested' => null,
+                    'price_as_nested' => null,
                     'price' => null,
                     // 'created_at' => '2022-09-01',
                 ],
@@ -394,6 +414,8 @@ class SearchProductsHydrationTest extends AbstractTest
                         ],
                     ],
                     'stock' => null,
+                    'stock_as_nested' => null,
+                    'price_as_nested' => null,
                     'price' => null,
                 ],
                 '11' => [
@@ -425,6 +447,8 @@ class SearchProductsHydrationTest extends AbstractTest
                         ],
                     ],
                     'stock' => null,
+                    'stock_as_nested' => null,
+                    'price_as_nested' => null,
                     'price' => null,
                     // 'created_at' => '2022-09-01',
                 ],
@@ -449,6 +473,8 @@ class SearchProductsHydrationTest extends AbstractTest
                         ],
                     ],
                     'stock' => null,
+                    'stock_as_nested' => null,
+                    'price_as_nested' => null,
                     'price' => null,
                     // 'created_at' => '2022-09-01',
                 ],
@@ -469,6 +495,8 @@ class SearchProductsHydrationTest extends AbstractTest
                         ],
                     ],
                     'stock' => null,
+                    'stock_as_nested' => null,
+                    'price_as_nested' => null,
                     'price' => null,
                     // 'created_at' => '2022-09-01',
                 ],
@@ -497,6 +525,8 @@ class SearchProductsHydrationTest extends AbstractTest
                         ],
                     ],
                     'stock' => null,
+                    'stock_as_nested' => null,
+                    'price_as_nested' => null,
                     'price' => null,
                 ],
             ],
@@ -510,7 +540,7 @@ class SearchProductsHydrationTest extends AbstractTest
                     'weight' => 1.200,
                     'size' => 12,
                     'is_eco_friendly' => false,
-                    'price' => [
+                    'price_as_nested' => [
                         /* nested fields are always single value for the time being
                         [
                             'group_id' => 0,
@@ -529,7 +559,26 @@ class SearchProductsHydrationTest extends AbstractTest
                         'price' => 10.99,
                         'is_discounted' => true,
                     ],
+                    'price' => [
+                        /* price source fields are always multiple values for the time being */
+                        [
+                            'group_id' => 0,
+                            'original_price' => 11.99,
+                            'price' => 10.99,
+                            'is_discounted' => true,
+                        ],
+                        [
+                            'group_id' => 1,
+                            'original_price' => 11.99,
+                            'price' => 10.99,
+                            'is_discounted' => true,
+                        ],
+                    ],
                     'stock' => [
+                        'status' => false,
+                        'qty' => 0,
+                    ],
+                    'stock_as_nested' => [
                         'status' => false,
                         'qty' => 0,
                     ],
@@ -558,7 +607,7 @@ class SearchProductsHydrationTest extends AbstractTest
                     'weight' => 1.100,
                     'size' => 5,
                     'is_eco_friendly' => false,
-                    'price' => [
+                    'price_as_nested' => [
                         /* nested fields are always single value for the time being
                         [
                             'group_id' => 0,
@@ -577,7 +626,26 @@ class SearchProductsHydrationTest extends AbstractTest
                         'price' => 8.99,
                         'is_discounted' => true,
                     ],
+                    'price' => [
+                        /* price source fields are always multiple values for the time being */
+                        [
+                            'group_id' => 0,
+                            'original_price' => 17.99,
+                            'price' => 8.99,
+                            'is_discounted' => true,
+                        ],
+                        [
+                            'group_id' => 1,
+                            'original_price' => 17.99,
+                            'price' => 17.99,
+                            'is_discounted' => false,
+                        ],
+                    ],
                     'stock' => [
+                        'status' => true,
+                        'qty' => 37,
+                    ],
+                    'stock_as_nested' => [
                         'status' => true,
                         'qty' => 37,
                     ],
@@ -606,7 +674,7 @@ class SearchProductsHydrationTest extends AbstractTest
                     'weight' => 0.750,
                     'size' => 8,
                     'is_eco_friendly' => true,
-                    'price' => [
+                    'price_as_nested' => [
                         /* nested fields are always single value for the time being
                         [
                             'group_id' => 0,
@@ -625,7 +693,26 @@ class SearchProductsHydrationTest extends AbstractTest
                         'price' => 25.99,
                         'is_discounted' => false,
                     ],
+                    'price' => [
+                        /* price source fields are always multiple values for the time being */
+                        [
+                            'group_id' => 0,
+                            'original_price' => 25.99,
+                            'price' => 25.99,
+                            'is_discounted' => false,
+                        ],
+                        [
+                            'group_id' => 1,
+                            'original_price' => 25.99,
+                            'price' => 20.99,
+                            'is_discounted' => true,
+                        ],
+                    ],
                     'stock' => [
+                        'status' => true,
+                        'qty' => 12,
+                    ],
+                    'stock_as_nested' => [
                         'status' => true,
                         'qty' => 12,
                     ],
@@ -655,6 +742,10 @@ class SearchProductsHydrationTest extends AbstractTest
                         'status' => false,
                         'qty' => 0,
                     ],
+                    'stock_as_nested' => [
+                        'status' => false,
+                        'qty' => 0,
+                    ],
                     'brand' => null,
                     'color' => [
                         [
@@ -662,6 +753,8 @@ class SearchProductsHydrationTest extends AbstractTest
                             'label' => 'Noir',
                         ],
                     ],
+                    'price_as_nested' => null,
+                    'price' => null,
                     // 'created_at' => '2022-09-05',
                 ],
                 '5' => [
@@ -677,6 +770,10 @@ class SearchProductsHydrationTest extends AbstractTest
                         'status' => true,
                         'qty' => 3,
                     ],
+                    'stock_as_nested' => [
+                        'status' => true,
+                        'qty' => 3,
+                    ],
                     'brand' => null,
                     'color' => [
                         [
@@ -684,6 +781,8 @@ class SearchProductsHydrationTest extends AbstractTest
                             'label' => 'Gris',
                         ],
                     ],
+                    'price_as_nested' => null,
+                    'price' => null,
                     // 'created_at' => '2022-09-06',
                 ],
                 '6' => [
@@ -696,6 +795,10 @@ class SearchProductsHydrationTest extends AbstractTest
                     'size' => 9,
                     'is_eco_friendly' => true,
                     'stock' => [
+                        'status' => false,
+                        'qty' => 24,
+                    ],
+                    'stock_as_nested' => [
                         'status' => false,
                         'qty' => 24,
                     ],
@@ -714,6 +817,8 @@ class SearchProductsHydrationTest extends AbstractTest
                             'label' => 'Rouge',
                         ],
                     ],
+                    'price_as_nested' => null,
+                    'price' => null,
                     // 'created_at' => '2022-09-01',
                 ],
                 '7' => [
@@ -729,6 +834,10 @@ class SearchProductsHydrationTest extends AbstractTest
                         'status' => false,
                         'qty' => 7,
                     ],
+                    'stock_as_nested' => [
+                        'status' => false,
+                        'qty' => 7,
+                    ],
                     'brand' => null,
                     'color' => [
                         [
@@ -736,6 +845,8 @@ class SearchProductsHydrationTest extends AbstractTest
                             'label' => 'Noir',
                         ],
                     ],
+                    'price_as_nested' => null,
+                    'price' => null,
                     // 'created_at' => '2022-09-01',
                 ],
                 '8' => [
@@ -751,6 +862,10 @@ class SearchProductsHydrationTest extends AbstractTest
                         'status' => false,
                         'qty' => -2,
                     ],
+                    'stock_as_nested' => [
+                        'status' => false,
+                        'qty' => -2,
+                    ],
                     'brand' => null,
                     'color' => [
                         [
@@ -762,6 +877,8 @@ class SearchProductsHydrationTest extends AbstractTest
                             'label' => 'Blanc',
                         ],
                     ],
+                    'price_as_nested' => null,
+                    'price' => null,
                     // 'created_at' => '2022-09-01',
                 ],
                 '9' => [
@@ -777,6 +894,10 @@ class SearchProductsHydrationTest extends AbstractTest
                         'status' => false,
                         'qty' => 0,
                     ],
+                    'stock_as_nested' => [
+                        'status' => false,
+                        'qty' => 0,
+                    ],
                     'brand' => null,
                     'color' => [
                         [
@@ -788,6 +909,8 @@ class SearchProductsHydrationTest extends AbstractTest
                             'label' => 'Blanc',
                         ],
                     ],
+                    'price_as_nested' => null,
+                    'price' => null,
                 ],
                 '10' => [
                     '_id' => '10',
@@ -802,6 +925,10 @@ class SearchProductsHydrationTest extends AbstractTest
                         'status' => true,
                         'qty' => 8,
                     ],
+                    'stock_as_nested' => [
+                        'status' => true,
+                        'qty' => 8,
+                    ],
                     'brand' => null,
                     'color' => [
                         [
@@ -809,6 +936,8 @@ class SearchProductsHydrationTest extends AbstractTest
                             'label' => 'Rose',
                         ],
                     ],
+                    'price_as_nested' => null,
+                    'price' => null,
                 ],
                 '11' => [
                     '_id' => '11',
@@ -820,6 +949,10 @@ class SearchProductsHydrationTest extends AbstractTest
                     'size' => 5,
                     'is_eco_friendly' => null,
                     'stock' => [
+                        'status' => true,
+                        'qty' => 13,
+                    ],
+                    'stock_as_nested' => [
                         'status' => true,
                         'qty' => 13,
                     ],
@@ -842,6 +975,8 @@ class SearchProductsHydrationTest extends AbstractTest
                             'label' => 'Noir',
                         ],
                     ],
+                    'price_as_nested' => null,
+                    'price' => null,
                     // 'created_at' => '2022-09-01',
                 ],
                 '12' => [
@@ -857,6 +992,10 @@ class SearchProductsHydrationTest extends AbstractTest
                         'status' => true,
                         'qty' => 17,
                     ],
+                    'stock_as_nested' => [
+                        'status' => true,
+                        'qty' => 17,
+                    ],
                     'brand' => null,
                     'color' => [
                         [
@@ -868,6 +1007,8 @@ class SearchProductsHydrationTest extends AbstractTest
                             'label' => 'Noir',
                         ],
                     ],
+                    'price_as_nested' => null,
+                    'price' => null,
                     // 'created_at' => '2022-09-01',
                 ],
             ],
