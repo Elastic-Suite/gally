@@ -44,3 +44,16 @@ services:
     Elasticsuite\Cache\EventSubscriber\ResponseSubscriber:
         tags:
             - { name: kernel.event_subscriber }
+    
+    Elasticsuite\Cache\EventSubscriber\AddProxyCacheTagsSubscriber:
+        arguments:
+            - '@Elasticsuite\Cache\Service\ProxyCacheManager'
+        tags:
+            - { name: kernel.event_subscriber }
+                
+    Elasticsuite\Cache\Service\ProxyCacheManager:
+        arguments:
+            - '@request_stack'
+            - '@Elasticsuite\ResourceMetadata\Service\ResourceMetadataManager'
+            - '@ApiPlatform\Core\Metadata\Resource\Factory\ResourceMetadataFactoryInterface'
+            - '@api_platform.iri_converter'

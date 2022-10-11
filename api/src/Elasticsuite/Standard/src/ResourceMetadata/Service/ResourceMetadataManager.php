@@ -40,6 +40,11 @@ class ResourceMetadataManager
         return $this->getResourceMetadataValue($resourceMetadata, 'stitching/property');
     }
 
+    public function getCacheTagResourceClasses(ResourceMetadata $resourceMetadata): ?array
+    {
+        return $this->getResourceMetadataValue($resourceMetadata, 'cache_tag/resource_classes');
+    }
+
     /**
      * Get resource metadata value.
      *
