@@ -11,18 +11,8 @@
       "position": "4",
       "level": "2",
       "children_count": "3",
-      "is_active": [
-        {
-          "value": true,
-          "label": "Yes"
-        }
-      ],
-      "is_displayed_in_autocomplete": [
-        {
-          "value": true,
-          "label": "Display Category in Autocomplete"
-        }
-      ],
+      "is_active": true,
+      "is_displayed_in_autocomplete": true,
       "name": [
         "Accessories"
       ],
@@ -44,18 +34,8 @@
       "position": "1",
       "level": "3",
       "children_count": "0",
-      "is_active": [
-        {
-          "value": true,
-          "label": "Yes"
-        }
-      ],
-      "is_displayed_in_autocomplete": [
-        {
-          "value": true,
-          "label": "Display Category in Autocomplete"
-        }
-      ],
+      "is_active": true,
+      "is_displayed_in_autocomplete": true,
       "name": [
         "Belts"
       ],
@@ -77,18 +57,8 @@
       "position": "2",
       "level": "3",
       "children_count": "0",
-      "is_active": [
-        {
-          "value": true,
-          "label": "Yes"
-        }
-      ],
-      "is_displayed_in_autocomplete": [
-        {
-          "value": true,
-          "label": "Display Category in Autocomplete"
-        }
-      ],
+      "is_active": true,
+      "is_displayed_in_autocomplete": true,
       "name": [
         "Jewelry"
       ],
@@ -110,18 +80,8 @@
       "position": "3",
       "level": "3",
       "children_count": "0",
-      "is_active": [
-        {
-          "value": true,
-          "label": "Yes"
-        }
-      ],
-      "is_displayed_in_autocomplete": [
-        {
-          "value": true,
-          "label": "Display Category in Autocomplete"
-        }
-      ],
+      "is_active": true,
+      "is_displayed_in_autocomplete": true,
       "name": [
         "Scarves"
       ],
@@ -143,18 +103,8 @@
       "position": "6",
       "level": "2",
       "children_count": "0",
-      "is_active": [
-        {
-          "value": true,
-          "label": "Yes"
-        }
-      ],
-      "is_displayed_in_autocomplete": [
-        {
-          "value": true,
-          "label": "Display Category in Autocomplete"
-        }
-      ],
+      "is_active": true,
+      "is_displayed_in_autocomplete": true,
       "name": [
         "New Products"
       ],
@@ -176,18 +126,8 @@
       "position": "1",
       "level": "2",
       "children_count": "2",
-      "is_active": [
-        {
-          "value": true,
-          "label": "Yes"
-        }
-      ],
-      "is_displayed_in_autocomplete": [
-        {
-          "value": true,
-          "label": "Display Category in Autocomplete"
-        }
-      ],
+      "is_active": true,
+      "is_displayed_in_autocomplete": true,
       "name": [
         "Tops"
       ],
@@ -209,18 +149,8 @@
       "position": "1",
       "level": "3",
       "children_count": "0",
-      "is_active": [
-        {
-          "value": true,
-          "label": "Yes"
-        }
-      ],
-      "is_displayed_in_autocomplete": [
-        {
-          "value": true,
-          "label": "Display Category in Autocomplete"
-        }
-      ],
+      "is_active": true,
+      "is_displayed_in_autocomplete": true,
       "name": [
         "Blouses & Shirts"
       ],
@@ -242,18 +172,8 @@
       "position": "2",
       "level": "3",
       "children_count": "0",
-      "is_active": [
-        {
-          "value": true,
-          "label": "Yes"
-        }
-      ],
-      "is_displayed_in_autocomplete": [
-        {
-          "value": true,
-          "label": "Display Category in Autocomplete"
-        }
-      ],
+      "is_active": true,
+      "is_displayed_in_autocomplete": true,
       "name": [
         "Sweaters"
       ],
@@ -275,18 +195,8 @@
       "position": "2",
       "level": "2",
       "children_count": "2",
-      "is_active": [
-        {
-          "value": true,
-          "label": "Yes"
-        }
-      ],
-      "is_displayed_in_autocomplete": [
-        {
-          "value": true,
-          "label": "Display Category in Autocomplete"
-        }
-      ],
+      "is_active": true,
+      "is_displayed_in_autocomplete": true,
       "name": [
         "Bottoms"
       ],
@@ -308,18 +218,8 @@
       "position": "1",
       "level": "3",
       "children_count": "0",
-      "is_active": [
-        {
-          "value": true,
-          "label": "Yes"
-        }
-      ],
-      "is_displayed_in_autocomplete": [
-        {
-          "value": true,
-          "label": "Display Category in Autocomplete"
-        }
-      ],
+      "is_active": true,
+      "is_displayed_in_autocomplete": true,
       "name": [
         "Pants & Shorts"
       ],
@@ -341,18 +241,8 @@
       "position": "2",
       "level": "3",
       "children_count": "0",
-      "is_active": [
-        {
-          "value": true,
-          "label": "Yes"
-        }
-      ],
-      "is_displayed_in_autocomplete": [
-        {
-          "value": true,
-          "label": "Display Category in Autocomplete"
-        }
-      ],
+      "is_active": true,
+      "is_displayed_in_autocomplete": true,
       "name": [
         "Skirts"
       ],
@@ -374,18 +264,8 @@
       "position": "3",
       "level": "2",
       "children_count": "0",
-      "is_active": [
-        {
-          "value": true,
-          "label": "Yes"
-        }
-      ],
-      "is_displayed_in_autocomplete": [
-        {
-          "value": true,
-          "label": "Display Category in Autocomplete"
-        }
-      ],
+      "is_active": true,
+      "is_displayed_in_autocomplete": true,
       "name": [
         "Dresses"
       ],
@@ -407,18 +287,8 @@
       "position": "5",
       "level": "2",
       "children_count": "6",
-      "is_active": [
-        {
-          "value": true,
-          "label": "Yes"
-        }
-      ],
-      "is_displayed_in_autocomplete": [
-        {
-          "value": true,
-          "label": "Display Category in Autocomplete"
-        }
-      ],
+      "is_active": true,
+      "is_displayed_in_autocomplete": true,
       "name": [
         "Shop The Look"
       ],
@@ -440,18 +310,8 @@
       "position": "1",
       "level": "3",
       "children_count": "0",
-      "is_active": [
-        {
-          "value": true,
-          "label": "Yes"
-        }
-      ],
-      "is_displayed_in_autocomplete": [
-        {
-          "value": true,
-          "label": "Display Category in Autocomplete"
-        }
-      ],
+      "is_active": true,
+      "is_displayed_in_autocomplete": true,
       "name": [
         "Minimalist Sensibility"
       ],
@@ -473,18 +333,8 @@
       "position": "2",
       "level": "3",
       "children_count": "0",
-      "is_active": [
-        {
-          "value": true,
-          "label": "Yes"
-        }
-      ],
-      "is_displayed_in_autocomplete": [
-        {
-          "value": true,
-          "label": "Display Category in Autocomplete"
-        }
-      ],
+      "is_active": true,
+      "is_displayed_in_autocomplete": true,
       "name": [
         "Outside the Lines"
       ],
@@ -506,18 +356,8 @@
       "position": "3",
       "level": "3",
       "children_count": "0",
-      "is_active": [
-        {
-          "value": true,
-          "label": "Yes"
-        }
-      ],
-      "is_displayed_in_autocomplete": [
-        {
-          "value": true,
-          "label": "Display Category in Autocomplete"
-        }
-      ],
+      "is_active": true,
+      "is_displayed_in_autocomplete": true,
       "name": [
         "Carefree Days"
       ],
@@ -539,18 +379,8 @@
       "position": "4",
       "level": "3",
       "children_count": "0",
-      "is_active": [
-        {
-          "value": true,
-          "label": "Yes"
-        }
-      ],
-      "is_displayed_in_autocomplete": [
-        {
-          "value": true,
-          "label": "Display Category in Autocomplete"
-        }
-      ],
+      "is_active": true,
+      "is_displayed_in_autocomplete": true,
       "name": [
         "Perfectly Beachy"
       ],
@@ -572,18 +402,8 @@
       "position": "5",
       "level": "3",
       "children_count": "0",
-      "is_active": [
-        {
-          "value": true,
-          "label": "Yes"
-        }
-      ],
-      "is_displayed_in_autocomplete": [
-        {
-          "value": true,
-          "label": "Display Category in Autocomplete"
-        }
-      ],
+      "is_active": true,
+      "is_displayed_in_autocomplete": true,
       "name": [
         "Retire your LBD"
       ],
@@ -605,18 +425,8 @@
       "position": "6",
       "level": "3",
       "children_count": "0",
-      "is_active": [
-        {
-          "value": true,
-          "label": "Yes"
-        }
-      ],
-      "is_displayed_in_autocomplete": [
-        {
-          "value": true,
-          "label": "Display Category in Autocomplete"
-        }
-      ],
+      "is_active": true,
+      "is_displayed_in_autocomplete": true,
       "name": [
         "Timeless Sophistication"
       ],
@@ -648,12 +458,7 @@
           "label": "Oui"
         }
       ],
-      "is_displayed_in_autocomplete": [
-        {
-          "value": true,
-          "label": "Display Category in Autocomplete"
-        }
-      ],
+      "is_displayed_in_autocomplete": true,
       "name": [
         "Accessoires"
       ],
@@ -681,12 +486,7 @@
           "label": "Oui"
         }
       ],
-      "is_displayed_in_autocomplete": [
-        {
-          "value": true,
-          "label": "Display Category in Autocomplete"
-        }
-      ],
+      "is_displayed_in_autocomplete": true,
       "name": [
         "Ceintures"
       ],
@@ -714,12 +514,7 @@
           "label": "Oui"
         }
       ],
-      "is_displayed_in_autocomplete": [
-        {
-          "value": true,
-          "label": "Display Category in Autocomplete"
-        }
-      ],
+      "is_displayed_in_autocomplete": true,
       "name": [
         "Bijoux"
       ],
@@ -747,12 +542,7 @@
           "label": "Oui"
         }
       ],
-      "is_displayed_in_autocomplete": [
-        {
-          "value": true,
-          "label": "Display Category in Autocomplete"
-        }
-      ],
+      "is_displayed_in_autocomplete": true,
       "name": [
         "\u00c9charpes"
       ],
@@ -780,12 +570,7 @@
           "label": "Oui"
         }
       ],
-      "is_displayed_in_autocomplete": [
-        {
-          "value": true,
-          "label": "Display Category in Autocomplete"
-        }
-      ],
+      "is_displayed_in_autocomplete": true,
       "name": [
         "New Products"
       ],
@@ -813,12 +598,7 @@
           "label": "Oui"
         }
       ],
-      "is_displayed_in_autocomplete": [
-        {
-          "value": true,
-          "label": "Display Category in Autocomplete"
-        }
-      ],
+      "is_displayed_in_autocomplete": true,
       "name": [
         "Hauts"
       ],
@@ -846,12 +626,7 @@
           "label": "Oui"
         }
       ],
-      "is_displayed_in_autocomplete": [
-        {
-          "value": true,
-          "label": "Display Category in Autocomplete"
-        }
-      ],
+      "is_displayed_in_autocomplete": true,
       "name": [
         "Chemisiers et T-shirts"
       ],
@@ -879,12 +654,7 @@
           "label": "Oui"
         }
       ],
-      "is_displayed_in_autocomplete": [
-        {
-          "value": true,
-          "label": "Display Category in Autocomplete"
-        }
-      ],
+      "is_displayed_in_autocomplete": true,
       "name": [
         "Sweats"
       ],
@@ -912,12 +682,7 @@
           "label": "Oui"
         }
       ],
-      "is_displayed_in_autocomplete": [
-        {
-          "value": true,
-          "label": "Display Category in Autocomplete"
-        }
-      ],
+      "is_displayed_in_autocomplete": true,
       "name": [
         "Bas"
       ],
@@ -945,12 +710,7 @@
           "label": "Oui"
         }
       ],
-      "is_displayed_in_autocomplete": [
-        {
-          "value": true,
-          "label": "Display Category in Autocomplete"
-        }
-      ],
+      "is_displayed_in_autocomplete": true,
       "name": [
         "Pantalons & Shorts"
       ],
@@ -978,12 +738,7 @@
           "label": "Oui"
         }
       ],
-      "is_displayed_in_autocomplete": [
-        {
-          "value": true,
-          "label": "Display Category in Autocomplete"
-        }
-      ],
+      "is_displayed_in_autocomplete": true,
       "name": [
         "Jupes"
       ],
@@ -1011,12 +766,7 @@
           "label": "Oui"
         }
       ],
-      "is_displayed_in_autocomplete": [
-        {
-          "value": true,
-          "label": "Display Category in Autocomplete"
-        }
-      ],
+      "is_displayed_in_autocomplete": true,
       "name": [
         "Robes"
       ],
@@ -1044,12 +794,7 @@
           "label": "Oui"
         }
       ],
-      "is_displayed_in_autocomplete": [
-        {
-          "value": true,
-          "label": "Display Category in Autocomplete"
-        }
-      ],
+      "is_displayed_in_autocomplete": true,
       "name": [
         "Shop The Look"
       ],
@@ -1077,12 +822,7 @@
           "label": "Oui"
         }
       ],
-      "is_displayed_in_autocomplete": [
-        {
-          "value": true,
-          "label": "Display Category in Autocomplete"
-        }
-      ],
+      "is_displayed_in_autocomplete": true,
       "name": [
         "Minimalist Sensibility"
       ],
@@ -1110,12 +850,7 @@
           "label": "Oui"
         }
       ],
-      "is_displayed_in_autocomplete": [
-        {
-          "value": true,
-          "label": "Display Category in Autocomplete"
-        }
-      ],
+      "is_displayed_in_autocomplete": true,
       "name": [
         "Outside the Lines"
       ],
@@ -1143,12 +878,7 @@
           "label": "Oui"
         }
       ],
-      "is_displayed_in_autocomplete": [
-        {
-          "value": true,
-          "label": "Display Category in Autocomplete"
-        }
-      ],
+      "is_displayed_in_autocomplete": true,
       "name": [
         "Carefree Days"
       ],
@@ -1176,12 +906,7 @@
           "label": "Oui"
         }
       ],
-      "is_displayed_in_autocomplete": [
-        {
-          "value": true,
-          "label": "Display Category in Autocomplete"
-        }
-      ],
+      "is_displayed_in_autocomplete": true,
       "name": [
         "Perfectly Beachy"
       ],
@@ -1209,12 +934,7 @@
           "label": "Oui"
         }
       ],
-      "is_displayed_in_autocomplete": [
-        {
-          "value": true,
-          "label": "Display Category in Autocomplete"
-        }
-      ],
+      "is_displayed_in_autocomplete": true,
       "name": [
         "Retire your LBD"
       ],
@@ -1242,12 +962,7 @@
           "label": "Oui"
         }
       ],
-      "is_displayed_in_autocomplete": [
-        {
-          "value": true,
-          "label": "Display Category in Autocomplete"
-        }
-      ],
+      "is_displayed_in_autocomplete": true,
       "name": [
         "Timeless Sophistication"
       ],

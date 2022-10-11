@@ -143,7 +143,7 @@ Elasticsuite\Metadata\Model\SourceField:
     categories_is_active:
         metadata: '@category'
         code: is_active
-        type: select
+        type: 'boolean'
         isSearchable: false
         weight: 1
         isSpellchecked: false
@@ -163,10 +163,10 @@ Elasticsuite\Metadata\Model\SourceField:
     categories_is_displayed_in_autocomplete:
         metadata: '@category'
         code: is_displayed_in_autocomplete
-        type: select
-        isSearchable: true
+        type: 'boolean'
+        isSearchable: false
         weight: 1
-        isSpellchecked: true
+        isSpellchecked: false
         isFilterable: false
         isSortable: false
         isUsedForRules: false
