@@ -1,11 +1,11 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useMemo, useState } from 'react'
 
 import { useTranslation } from 'next-i18next'
 import { breadcrumbContext } from '~/contexts'
 import { withAuth } from '~/hocs'
-import { useFetchApi } from '~/hooks'
+import { useFetchApi, useFilters, useResource } from '~/hooks'
 
 import TitleBlock from '~/components/molecules/layout/TitleBlock/TitleBlock'
 import TwoColsLayout from '~/components/molecules/layout/twoColsLayout/TwoColsLayout'
@@ -96,6 +96,13 @@ function Facets(): JSX.Element {
     )
   }, [categories.status])
 
+  const resource = useResource('FacetConfiguration')
+  const [activeFilters, setActiveFilters] = useFilters(resource)
+  const filters = useMemo(
+    () => ({ category: selectedCategoryItem?.id }),
+    [selectedCategoryItem?.id]
+  )
+
   return (
     <>
       <Head>
@@ -143,6 +150,9 @@ function Facets(): JSX.Element {
           />
         )}
         <ResourceTable
+          activeFilters={activeFilters}
+          setActiveFilters={setActiveFilters}
+          filters={filters}
           resourceName="FacetConfiguration"
           diffDefaultValues
           isFacets

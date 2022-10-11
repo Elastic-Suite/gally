@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { Dispatch, SetStateAction, useMemo, useState } from 'react'
 import { useTranslation } from 'next-i18next'
 import { styled } from '@mui/system'
 import {
@@ -13,7 +13,6 @@ import {
 
 import {
   useApiEditableList,
-  useFilters,
   useFiltersRedirect,
   usePage,
   useResource,
@@ -48,6 +47,8 @@ interface IProps {
   resourceName: string
   isFacets?: boolean
   category?: string
+  activeFilters: ISearchParameters
+  setActiveFilters: Dispatch<SetStateAction<ISearchParameters>>
 }
 
 function ResourceTable(props: IProps): JSX.Element {
@@ -60,11 +61,12 @@ function ResourceTable(props: IProps): JSX.Element {
     resourceName,
     isFacets,
     category,
+    activeFilters,
+    setActiveFilters,
   } = props
 
   const resource = useResource(resourceName)
   const [page, setPage] = usePage()
-  const [activeFilters, setActiveFilters] = useFilters(resource)
   const [searchValue, setSearchValue] = useSearch()
   const parameters = useMemo(
     () => ({
