@@ -261,6 +261,14 @@
           {"group_id": 0, "original_price": 11.99, "price": 10.99, "is_discounted": true},
           {"group_id": 1, "original_price": 11.99, "price": 10.99, "is_discounted": true}
         ],
+        "price_as_nested": [
+          {"group_id": 0, "original_price": 11.99, "price": 10.99, "is_discounted": true},
+          {"group_id": 1, "original_price": 11.99, "price": 10.99, "is_discounted": true}
+        ],
+        "stock_as_nested": {
+          "status": false,
+          "qty": 0
+        },
         "stock": {
           "status": false,
           "qty": 0
@@ -290,6 +298,14 @@
           {"group_id": 0, "original_price": 17.99, "price": 8.99, "is_discounted": true},
           {"group_id": 1, "original_price": 17.99, "price": 17.99, "is_discounted": false}
         ],
+        "price_as_nested": [
+          {"group_id": 0, "original_price": 17.99, "price": 8.99, "is_discounted": true},
+          {"group_id": 1, "original_price": 17.99, "price": 17.99, "is_discounted": false}
+        ],
+        "stock_as_nested": {
+          "status": true,
+          "qty": 37
+        },
         "stock": {
           "status": true,
           "qty": 37
@@ -319,6 +335,14 @@
           {"group_id": 0, "original_price": 25.99, "price": 25.99, "is_discounted": false},
           {"group_id": 1, "original_price": 25.99, "price": 20.99, "is_discounted": true}
         ],
+        "price_as_nested": [
+          {"group_id": 0, "original_price": 25.99, "price": 25.99, "is_discounted": false},
+          {"group_id": 1, "original_price": 25.99, "price": 20.99, "is_discounted": true}
+        ],
+        "stock_as_nested": {
+          "status": true,
+          "qty": 12
+        },
         "stock": {
           "status": true,
           "qty": 12
@@ -342,6 +366,10 @@
         "sku": "24-MB05",
         "name": "Sac messager Wayfarer",
         "size" : 7,
+        "stock_as_nested": {
+          "status": false,
+          "qty": 0
+        },
         "stock": {
           "status": false,
           "qty": 0
@@ -361,6 +389,10 @@
         "sku": "24-MB06",
         "name": "Messager de terrain rival",
         "size" : 2,
+        "stock_as_nested": {
+          "status": true,
+          "qty": 3
+        },
         "stock": {
           "status": true,
           "qty": 3
@@ -380,6 +412,10 @@
         "sku": "24-MB02",
         "name": "Sac à dos Fusion",
         "size" : 9,
+        "stock_as_nested": {
+          "status": false,
+          "qty": 24
+        },
         "stock": {
           "status": false,
           "qty": 24
@@ -407,6 +443,10 @@
         "sku": "24-UB02",
         "name": "Sac de sport Impulse",
         "size" : 11,
+        "stock_as_nested": {
+          "status": false,
+          "qty": 7
+        },
         "stock": {
           "status": false,
           "qty": 7
@@ -425,6 +465,10 @@
         "entity_id": "8",
         "sku": "24-WB01",
         "name": "Sac de voyage Yoga",
+        "stock_as_nested": {
+          "status": false,
+          "qty": -2
+        },
         "stock": {
           "status": false,
           "qty": -2
@@ -448,6 +492,10 @@
         "sku": "24-WB02",
         "name": "Fourre-tout Compete Track",
         "size" : 11,
+        "stock_as_nested": {
+          "status": false,
+          "qty": 0
+        },
         "stock": {
           "status": false,
           "qty": 0
@@ -469,6 +517,10 @@
         "sku": "24-WB05",
         "name": "Fourre-tout à bandoulière avisé",
         "size" : 2,
+        "stock_as_nested": {
+          "status": true,
+          "qty": 8
+        },
         "stock": {
           "status": true,
           "qty": 8
@@ -487,6 +539,10 @@
         "sku": "24-WB06",
         "name": "Sac à dos d'excursion d'une journée Endeavour",
         "size" : 5,
+        "stock_as_nested": {
+          "status": true,
+          "qty": 13
+        },
         "stock": {
           "status": true,
           "qty": 13
@@ -517,6 +573,10 @@
         "sku": "24-WB03",
         "name": "Sac à dos piloté",
         "size" : 12,
+        "stock_as_nested": {
+          "status": true,
+          "qty": 17
+        },
         "stock": {
           "status": true,
           "qty": 17

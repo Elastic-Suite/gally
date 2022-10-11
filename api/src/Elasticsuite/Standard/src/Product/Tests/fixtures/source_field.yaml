@@ -12,15 +12,21 @@ Elasticsuite\Metadata\Model\SourceField:
         type: 'reference'
         isSystem: true
         isFilterable: true
-    product_stock_status:
+    product_stock:
         metadata: '@product'
-        code: 'stock.status'
+        code: 'stock'
+        defaultLabel: 'Stock data'
+        type: 'stock'
+        isSystem: true
+    product_stock_as_nested_status:
+        metadata: '@product'
+        code: 'stock_as_nested.status'
         defaultLabel: 'Stock status'
         type: 'boolean'
         isSystem: true
-    product_stock_qty:
+    product_stock_as_nested_qty:
         metadata: '@product'
-        code: 'stock.qty'
+        code: 'stock_as_nested.qty'
         defaultLabel: 'Stock quantity'
         type: 'float'
         isSystem: true
@@ -60,14 +66,27 @@ Elasticsuite\Metadata\Model\SourceField:
         code: 'weight'
         type: 'float'
         isFilterable: true
-    product_price_group_id:
+    product_price:
         metadata: '@product'
-        code: 'price.group_id'
+        code: 'price'
+        type: 'price'
+    product_price_as_nested_group_id:
+        metadata: '@product'
+        code: 'price_as_nested.group_id'
         type: 'int'
-    product_price_original_price:
+    product_price_as_nested_original_price:
         metadata: '@product'
-        code: 'price.original_price'
+        code: 'price_as_nested.original_price'
         type: 'float'
+    product_price_as_nested_price:
+        metadata: '@product'
+        code: 'price_as_nested.price'
+        type: 'float'
+        isSortable: true
+    product_price_as_nested_is_discounted:
+        metadata: '@product'
+        code: 'price_as_nested.is_discounted'
+        type: 'boolean'
     product_is_eco_friendly:
         metadata: '@product'
         code: 'is_eco_friendly'
@@ -78,15 +97,6 @@ Elasticsuite\Metadata\Model\SourceField:
         type: 'date'
         isUsedForRules: true
         isSortable: true
-    product_price_price:
-        metadata: '@product'
-        code: 'price.price'
-        type: 'float'
-        isSortable: true
-    product_price_is_discounted:
-        metadata: '@product'
-        code: 'price.is_discounted'
-        type: 'boolean'
     product_description:
         metadata: '@product'
         code: 'description'
