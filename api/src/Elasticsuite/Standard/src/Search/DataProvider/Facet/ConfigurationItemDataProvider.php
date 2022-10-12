@@ -46,7 +46,6 @@ final class ConfigurationItemDataProvider implements RestrictedDataProviderInter
         $manager = $this->managerRegistry->getManagerForClass($resourceClass);
         /** @var ConfigurationRepository $repository */
         $repository = $manager->getRepository($resourceClass);
-        $repository->setCategoryId($categoryId);
 
         // Force loading sub-entity in order to avoid having proxies.
         /** @var SourceField $sourceField */
@@ -54,14 +53,14 @@ final class ConfigurationItemDataProvider implements RestrictedDataProviderInter
         /** @var Category $category */
         $category = $this->itemDataProvider->getItem(Category::class, ['id' => $categoryId]);
 
-        $facetConfiguration = $this->itemDataProviderNoEagerLoading->getItem(
-            Facet\Configuration::class,
-            $id,
-            $operationName,
-            $context
-        );
         $defaultFacetConfiguration = null;
-        if ($categoryId) {
+        if ($categoryId
+            && (
+                ('get' === ($context['item_operation_name'] ?? null))
+                || ('item_query' === ($context['graphql_operation_name'] ?? null))
+            )
+        ) {
+            $repository->setCategoryId(null);
             $defaultFacetConfiguration = $this->itemDataProviderNoEagerLoading->getItem(
                 Facet\Configuration::class,
                 ['id' => implode('-', [$sourceFieldId, 0])],
@@ -74,9 +73,16 @@ final class ConfigurationItemDataProvider implements RestrictedDataProviderInter
             $defaultFacetConfiguration = new Facet\Configuration($sourceField, null);
         }
 
+        $repository->setCategoryId($categoryId);
         $defaultFacetConfiguration->setSourceField($sourceField);
         $defaultFacetConfiguration->setCategory($category);
 
+        $facetConfiguration = $this->itemDataProviderNoEagerLoading->getItem(
+            Facet\Configuration::class,
+            $id,
+            $operationName,
+            $context
+        );
         $facetConfiguration = $facetConfiguration ?: new Facet\Configuration($sourceField, $category);
 
         $facetConfiguration->initDefaultValue($defaultFacetConfiguration);

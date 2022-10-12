@@ -97,6 +97,7 @@ class FacetConfigurationTest extends AbstractTest
         return [
             [$this->getUser(Role::ROLE_CONTRIBUTOR), '3-0', ['coverageRate' => 0], 403],
             [$admin, '3-0', ['coverageRate' => 0], 200],
+            [$admin, '3-0', ['coverageRate' => 1, 'maxSize' => 100], 200],
             [$admin, '3-one', ['coverageRate' => 10], 200],
             [$admin, '4-one', ['coverageRate' => 10], 200],
             [$admin, '3-two', ['coverageRate' => 20], 200],
@@ -118,7 +119,7 @@ class FacetConfigurationTest extends AbstractTest
             [
                 null,
                 [
-                    ['sourceField' => 3, 'coverageRate' => 0, 'sourceFieldCode' => 'brand'], // product_brand.
+                    ['sourceField' => 3, 'coverageRate' => 1, 'sourceFieldCode' => 'brand', 'maxSize' => 100], // product_brand.
                     ['sourceField' => 4, 'sourceFieldCode' => 'color'], // product_color.
                     ['sourceField' => 5, 'sourceFieldCode' => 'length'], // product_length.
                 ],
@@ -126,7 +127,7 @@ class FacetConfigurationTest extends AbstractTest
             [
                 'one',
                 [
-                    ['sourceField' => 3, 'category' => 'one', 'coverageRate' => 10, 'defaultCoverageRate' => 0, 'sourceFieldCode' => 'brand'],
+                    ['sourceField' => 3, 'category' => 'one', 'coverageRate' => 10, 'maxSize' => 100, 'defaultCoverageRate' => 1, 'defaultMaxSize' => 100, 'sourceFieldCode' => 'brand'],
                     ['sourceField' => 4, 'category' => 'one', 'coverageRate' => 10, 'sourceFieldCode' => 'color'],
                     ['sourceField' => 5, 'category' => 'one', 'coverageRate' => 90, 'sourceFieldCode' => 'length'],
                 ],
@@ -134,7 +135,7 @@ class FacetConfigurationTest extends AbstractTest
             [
                 'two',
                 [
-                    ['sourceField' => 3, 'category' => 'two', 'coverageRate' => 20, 'defaultCoverageRate' => 0, 'sourceFieldCode' => 'brand'],
+                    ['sourceField' => 3, 'category' => 'two', 'coverageRate' => 20, 'maxSize' => 100, 'defaultCoverageRate' => 1,  'defaultMaxSize' => 100, 'sourceFieldCode' => 'brand'],
                     ['sourceField' => 4, 'category' => 'two', 'coverageRate' => 90, 'sourceFieldCode' => 'color'],
                     ['sourceField' => 5, 'category' => 'two', 'coverageRate' => 90, 'sourceFieldCode' => 'length'],
                 ],
