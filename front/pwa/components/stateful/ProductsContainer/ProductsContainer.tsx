@@ -86,7 +86,7 @@ function ProductsContainer(props: IProps): JSX.Element {
     setBottomSelectedRows([])
   }
 
-  const catalogId =
+  const localizedCatalogId =
     catalogsData && catalogsData['hydra:totalItems'] > 0
       ? getCatalogForSearchProductApi(
           catalog,
@@ -144,7 +144,9 @@ function ProductsContainer(props: IProps): JSX.Element {
         <ProductsTopAndBottom
           ref={tableRef}
           bottomSelectedRows={bottomSelectedRows}
-          catalogId={catalogId}
+          catalogId={catalog}
+          category={category}
+          localizedCatalogId={localizedCatalogId}
           productGraphqlFilters={productGraphqlFilters}
           onBottomSelectedRows={setBottomSelectedRows}
           onTopSelectedRows={setTopSelectedRows}

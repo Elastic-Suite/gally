@@ -15,14 +15,15 @@ import FieldGuesser from '../FieldGuesser/FieldGuesser'
 import TopProductsTable from '../TopProductsTable/TopProductsTable'
 
 interface IProps {
-  catalogId: string
+  catalogId: number
+  localizedCatalogId: string
   onSelectedRows: Dispatch<SetStateAction<(string | number)[]>>
   productGraphqlFilters: IProductFieldFilterInput
   selectedRows: (string | number)[]
 }
 
 function TopTable(props: IProps): JSX.Element {
-  const { catalogId, onSelectedRows, productGraphqlFilters, selectedRows } =
+  const { catalogId, localizedCatalogId, onSelectedRows, productGraphqlFilters, selectedRows } =
     props
 
   const variables = useMemo(() => ({ catalogId }), [catalogId])
@@ -33,11 +34,11 @@ function TopTable(props: IProps): JSX.Element {
   const tableRows: ITableRow[] = products?.data?.searchProducts
     ?.collection as unknown as ITableRow[]
 
-  const tableHeaders: ITableHeader[] = productTableheader
+  // const tableHeaders: ITableHeader[] = productTableheader
 
   return (
     <>
-      {products.status === LoadStatus.SUCCEEDED &&
+      {/* {products.status === LoadStatus.SUCCEEDED &&
         Boolean(products?.data?.searchProducts) && (
           <TopProductsTable
             Field={FieldGuesser}
@@ -47,7 +48,8 @@ function TopTable(props: IProps): JSX.Element {
             tableRows={tableRows}
             draggable
           />
-        )}
+        )} */}
+      A
     </>
   )
 }
