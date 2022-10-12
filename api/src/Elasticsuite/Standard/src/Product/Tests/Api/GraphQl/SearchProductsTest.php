@@ -796,7 +796,7 @@ class SearchProductsTest extends AbstractTest
             [
                 'b2c_fr', // catalog ID.
                 [], // sort order specifications.
-                'category__id: { eq: "one" }',
+                'category_as_nested__id: { eq: "one" }',
                 'entity_id', // document data identifier.
                 [1, 2], // expected ordered document IDs
             ],
