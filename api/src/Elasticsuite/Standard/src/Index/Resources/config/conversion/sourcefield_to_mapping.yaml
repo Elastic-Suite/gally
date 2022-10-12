@@ -26,7 +26,11 @@ services:
     Elasticsuite\Index\Converter\SourceField\StockSourceFieldConverter:
         tags:
             - { name: elasticsuite.mapping.source_field_converter }
-            
+
+    Elasticsuite\Index\Converter\SourceField\CategorySourceFieldConverter:
+        tags:
+            - { name: elasticsuite.mapping.source_field_converter }
+
     Elasticsuite\Index\Converter\SourceField\TextSourceFieldConverter:
         tags:
             - { name: elasticsuite.mapping.source_field_converter }
