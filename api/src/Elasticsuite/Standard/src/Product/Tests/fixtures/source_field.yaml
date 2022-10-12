@@ -113,10 +113,15 @@ Elasticsuite\Metadata\Model\SourceField:
         type: 'text'
         weight: 5
         isSearchable: true
-        isSpellchecked: false    
+        isSpellchecked: false
+    product_category:
+        metadata: '@product'
+        code: 'category'
+        type: 'category'
+        isSystem: true
     product_category_id:
         metadata: '@product'
-        code: 'category.id'
+        code: 'category_as_nested.id'
         type: 'keyword'
         isFilterable: true
         isSystem: true

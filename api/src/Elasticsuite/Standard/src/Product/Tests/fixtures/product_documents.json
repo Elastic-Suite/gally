@@ -279,9 +279,28 @@
             "label": "Noir"
           }
         ],
-        "category": [
+        "category_as_nested": [
           {
             "id": "one"
+          }
+        ],
+        "category": [
+          {
+            "id": "one",
+            "uid": "one",
+            "name": "One",
+            "is_parent": true,
+            "is_virtual": false,
+            "is_blacklisted": false
+          },
+          {
+            "id": "two",
+            "uid": "two",
+            "name": "Two",
+            "is_parent": false,
+            "is_virtual": false,
+            "is_blacklisted": false,
+            "position": 1
           }
         ],
         "is_eco_friendly": false,
@@ -316,9 +335,20 @@
             "label": "Noir"
           }
         ],
-        "category": [
+        "category_as_nested": [
           {
             "id": "one"
+          }
+        ],
+        "category": [
+          {
+            "id": "one",
+            "uid": "one",
+            "name": "One",
+            "is_parent": true,
+            "is_virtual": false,
+            "is_blacklisted": false,
+            "position": 1
           }
         ],
         "is_eco_friendly": false,
