@@ -54,9 +54,10 @@ final class FacetConfigurationHydrator extends ObjectHydrator
         $id = $this->idTemplate;
         $nonemptyComponents = [];
         $rowData = $this->gatherRowData($row, $id, $nonemptyComponents);
+        $configurationFields = array_keys($rowData['data']['o']);
 
         $defaultValues = array_merge(
-            ['id' => null],
+            array_fill_keys($configurationFields, null),
             $this->filterData($rowData['data']['default'] ?? [])    // Source field default values
         );
 

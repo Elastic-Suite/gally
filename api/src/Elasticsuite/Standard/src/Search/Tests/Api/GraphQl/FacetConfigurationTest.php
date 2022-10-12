@@ -77,6 +77,7 @@ class FacetConfigurationTest extends RestFacetConfigurationTest
                             maxSize
                             isVirtual
                             defaultCoverageRate
+                            defaultMaxSize
                             category { id }
                             sourceField { id }
                             sourceFieldCode
@@ -134,6 +135,7 @@ class FacetConfigurationTest extends RestFacetConfigurationTest
             'maxSize' => 10,
             'isVirtual' => false,
             'defaultCoverageRate' => 90,
+            'defaultMaxSize' => 10,
         ];
 
         if ($categoryId) {
