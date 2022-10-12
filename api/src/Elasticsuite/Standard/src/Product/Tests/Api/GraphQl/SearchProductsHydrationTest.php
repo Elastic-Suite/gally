@@ -173,6 +173,8 @@ class SearchProductsHydrationTest extends AbstractTest
             stock { status qty }
             price_as_nested { group_id original_price price is_discounted }
             price { group_id original_price price is_discounted }
+            category_as_nested { id }
+            category { id uid name is_parent is_virtual is_blacklisted position }
         ATT;
 
         $productData = [
@@ -589,13 +591,33 @@ class SearchProductsHydrationTest extends AbstractTest
                             'label' => 'Noir',
                         ],
                     ],
-                    /*
-                    'category' => [
+                    'category_as_nested' => [
+                        /* nested fields are always single value for the time being
                         [
                             'id' => 'one',
                         ],
+                        */
+                        'id' => 'one',
                     ],
-                    */
+                    'category' => [
+                        [
+                            'id' => 'one',
+                            'uid' => 'one',
+                            'name' => 'One',
+                            'is_parent' => true,
+                            'is_virtual' => false,
+                            'is_blacklisted' => false,
+                        ],
+                        [
+                            'id' => 'two',
+                            'uid' => 'two',
+                            'name' => 'Two',
+                            'is_parent' => false,
+                            'is_virtual' => false,
+                            'is_blacklisted' => false,
+                            'position' => 1,
+                        ],
+                    ],
                     // 'created_at' => '2022-09-01',
                 ],
                 '2' => [
@@ -656,13 +678,25 @@ class SearchProductsHydrationTest extends AbstractTest
                             'label' => 'Noir',
                         ],
                     ],
-                    /*
-                    'category' => [
+                    'category_as_nested' => [
+                        /* nested fields are always single value for the time being
                         [
                             'id' => 'one',
                         ],
+                        */
+                        'id' => 'one',
                     ],
-                    */
+                    'category' => [
+                        [
+                            'id' => 'one',
+                            'uid' => 'one',
+                            'name' => 'One',
+                            'is_parent' => true,
+                            'is_virtual' => false,
+                            'is_blacklisted' => false,
+                            'position' => 1,
+                        ],
+                    ],
                     // 'created_at' => '2022-09-05',
                 ],
                 '3' => [

@@ -50,6 +50,7 @@ class StitchingFieldsBuilder implements FieldsBuilderInterface
         SourceFieldType::TYPE_FLOAT => 'Elasticsuite\Entity\Model\Attribute\Type\FloatAttribute',
         SourceFieldType::TYPE_PRICE => 'Elasticsuite\Entity\Model\Attribute\Type\PriceAttribute',
         SourceFieldType::TYPE_STOCK => 'Elasticsuite\Entity\Model\Attribute\Type\StockAttribute',
+        SourceFieldType::TYPE_CATEGORY => 'Elasticsuite\Entity\Model\Attribute\Type\CategoryAttribute',
         SourceFieldType::TYPE_REFERENCE => 'Elasticsuite\Entity\Model\Attribute\Type\TextAttribute',
         SourceFieldType::TYPE_IMAGE => 'Elasticsuite\Entity\Model\Attribute\Type\TextAttribute',
         SourceFieldType::TYPE_OBJECT => 'Elasticsuite\Entity\Model\Attribute\Type\TextAttribute',
