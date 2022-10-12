@@ -6,10 +6,12 @@ import { Box } from '@mui/system'
 import debounce from 'lodash.debounce'
 import { closeSnackbar, enqueueSnackbar } from 'notistack'
 import {
+  ICatalog,
   ICategories,
   ICategory,
   ICategoryConfiguration,
   IHydraCatalog,
+  ILocalizedCatalog,
   IParsedCategoryConfiguration,
   IProductFieldFilterInput,
   IRuleCombination,
@@ -215,6 +217,19 @@ function Categories(): JSX.Element {
     setIsSaving(false)
   }
 
+  function getLocalizedCodeByDefault(): string | number {
+    const listOfLocalizedCatalogs = catalogsFields.data['hydra:member'].map(
+      (item: ICatalog) => item.localizedCatalogs
+    )
+    const localizedCatalogIdByDefault = listOfLocalizedCatalogs
+      .flat()
+      .find((item: ILocalizedCatalog) => item.isDefault)
+
+    return localizedCatalogId === -1
+      ? localizedCatalogIdByDefault.id
+      : localizedCatalogId
+  }
+
   const dirty = prevCatConf.current
     ? Object.entries(catConf ?? {}).some(
         ([key, val]: [key: keyof typeof catConf, val: string | boolean]) =>
@@ -224,6 +239,9 @@ function Categories(): JSX.Element {
           )
       )
     : false
+
+  const realLocalizedId =
+    categories.status === LoadStatus.SUCCEEDED && getLocalizedCodeByDefault()
 
   return (
     <>
