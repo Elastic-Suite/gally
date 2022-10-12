@@ -48,3 +48,23 @@ export function getSearchProductsQuery(
     },
   })
 }
+
+export const getProductPined = `query pined($catalogId : String!,) { searchProducts(
+  catalogId:"com_en" filter:[
+    {id:{in:[1164,1165]}}
+    {category__id:{eq:"cat_2"}}
+  ]){
+    collection {
+      id
+      data
+    }
+  }
+}
+`
+
+export const getProductPostion = `query getPosition( $categoryId: String!,  $localizedCatalogId : Int! ) {
+  getPositionsCategoryProductMerchandising(categoryId: $categoryId, localizedCatalogId : $localizedCatalogId ) {
+    result
+  }
+}
+`
