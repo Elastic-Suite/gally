@@ -45,6 +45,7 @@ export interface ICustomTableProps {
   tableRows: ITableRow[]
   selectedRows?: (string | number)[]
   onSelectedRows?: Dispatch<SetStateAction<(string | number)[]>>
+  setListproductsPinedHooks?: any
 }
 
 function CustomTable(
@@ -55,12 +56,12 @@ function CustomTable(
     Field,
     diffRows,
     draggable,
-    onReorder,
     onRowUpdate,
     tableHeaders,
     tableRows,
     selectedRows,
     onSelectedRows,
+    setListproductsPinedHooks,
   } = props
 
   const [scrollLength, setScrollLength] = useState<number>(0)
@@ -104,7 +105,8 @@ function CustomTable(
       const tempData = Array.from(tableRows)
       const [source_data] = tempData.splice(e.source.index, 1)
       tempData.splice(e.destination.index, 0, source_data)
-      onReorder(tempData)
+      console.log(tempData)
+      setListproductsPinedHooks(tempData)
     }
   }
 

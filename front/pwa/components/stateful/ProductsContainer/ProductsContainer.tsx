@@ -1,5 +1,5 @@
 import { Box, styled } from '@mui/system'
-import { useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -10,6 +10,9 @@ import {
   IParsedCategoryConfiguration,
   IProductFieldFilterInput,
   getCatalogForSearchProductApi,
+  savePositions,
+  storageGet,
+  tokenStorageKey,
 } from 'shared'
 
 import Button from '~/components/atoms/buttons/Button'
@@ -19,7 +22,7 @@ import StickyBar from '~/components/molecules/CustomTable/StickyBar/StickyBar'
 import ProductsTopAndBottom from '~/components/stateful/ProductsTopAndBottom/ProductsTopAndBottom'
 import Merchandize from '../Merchandize/Merchandize'
 
-import { useApiList, useResource } from '~/hooks'
+import { useApiList, useGraphqlApi, useResource } from '~/hooks'
 import SearchBar from '../Merchandize/SearchBar/SearchBar'
 
 const Layout = styled('div')(({ theme }) => ({
@@ -109,12 +112,81 @@ function ProductsContainer(props: IProps): JSX.Element {
   const [searchValue, setSearchValue] = useState('')
   const onSearchChange = (value: string): void => setSearchValue(value)
 
+  const [listproductsPinedHooks, setListproductsPinedHooks] = useState([])
+  const [listproductsUnPinedHooks, setListproductsUnPinedHooks] = useState([])
+
+  function pinToUnPin(): void {
+    const unPinToPin = listproductsPinedHooks.filter((el: any) => {
+      return topSelectedRows.indexOf(el.id) === -1
+    })
+
+    const pinToUnPin = listproductsPinedHooks.filter((el: any) => {
+      return topSelectedRows.indexOf(el.id) !== -1
+    })
+
+    setListproductsPinedHooks(unPinToPin)
+    setListproductsUnPinedHooks(listproductsUnPinedHooks.concat(pinToUnPin))
+  }
+
+  function unPinToPin(): void {
+    const pinToUnPin = listproductsUnPinedHooks.filter((el: any) => {
+      return bottomSelectedRows.indexOf(el.id) === -1
+    })
+
+    const unPinToPin = listproductsUnPinedHooks.filter((el: any) => {
+      return bottomSelectedRows.indexOf(el.id) !== -1
+    })
+
+    setListproductsUnPinedHooks(pinToUnPin)
+    setListproductsPinedHooks(
+      listproductsPinedHooks.concat(
+        unPinToPin.map((item, key) => {
+          return { ...item, position: listproductsPinedHooks.length + 1 + key }
+        })
+      )
+    )
+  }
+
+  const [
+    savePositionsCategoryProductMerchandising,
+    setSavePositionsCategoryProductMerchandising,
+  ] = useState([])
+
+  useEffect(() => {
+    const savePositionsCategory = listproductsPinedHooks.map((item, key) => {
+      return { productId: Number(item.id.split('/')[2]), position: 1 + key }
+    })
+    return setSavePositionsCategoryProductMerchandising(savePositionsCategory)
+  }, [listproductsPinedHooks])
+
+  // console.log(savePositionsCategoryProductMerchandising)
+
+  // function savePositionCategoryProduct() {
+  const variables = useMemo(
+    () => ({
+      categoryId: category.id,
+      savePositionsCategory: savePositionsCategoryProductMerchandising,
+    }),
+    []
+  )
+
+  const options = useMemo(
+    () => ({
+      headers: { Authorization: `Bearer ${storageGet(tokenStorageKey)}` },
+    }),
+    [storageGet(tokenStorageKey)]
+  )
+  const [listProductsIdPined] = useGraphqlApi<any>(savePositions)
+  // }
+  console.log(JSON.stringify([{ productId: 1164, position: 2 }]))
+
   if (error || !catalogsData) {
     return null
   }
 
   return (
     <Box>
+      <div>SAVE AAAA</div>
       <Layout>
         <PageTitle
           sticky
@@ -151,6 +223,10 @@ function ProductsContainer(props: IProps): JSX.Element {
           onBottomSelectedRows={setBottomSelectedRows}
           onTopSelectedRows={setTopSelectedRows}
           topSelectedRows={topSelectedRows}
+          setListproductsPinedHooks={setListproductsPinedHooks}
+          listproductsPinedHooks={listproductsPinedHooks}
+          listproductsUnPinedHooks={listproductsUnPinedHooks}
+          setListproductsUnPinedHooks={setListproductsUnPinedHooks}
         />
       </Layout>
       <StickyBar positionRef={tableRef} show={showStickyBar}>
@@ -164,6 +240,7 @@ function ProductsContainer(props: IProps): JSX.Element {
           <Button
             sx={{ marginLeft: 1 }}
             disabled={bottomSelectedRows.length === 0}
+            onClick={unPinToPin}
           >
             {t('pinToTop')}
             <IonIcon name="arrow-up-outline" style={{ marginLeft: '13px' }} />
@@ -171,6 +248,7 @@ function ProductsContainer(props: IProps): JSX.Element {
           <Button
             sx={{ marginLeft: 1 }}
             disabled={topSelectedRows.length === 0}
+            onClick={pinToUnPin}
           >
             {t('pinToBottom')}
             <IonIcon name="arrow-down-outline" style={{ marginLeft: '13px' }} />
