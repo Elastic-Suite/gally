@@ -7,11 +7,13 @@ import {
   forwardRef,
   useMemo,
   useState,
+  useEffect,
 } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   ICategory,
   IProductFieldFilterInput,
+  LoadStatus,
   defaultPageSize,
   getProductPostion,
   storageGet,
@@ -34,11 +36,15 @@ interface IProps {
   bottomSelectedRows: (string | number)[]
   catalogId: number
   category: ICategory
+  listproductsPinedHooks: any
+  listproductsUnPinedHooks: any
   localizedCatalogId: string
   onBottomSelectedRows: Dispatch<SetStateAction<(string | number)[]>>
   onTopSelectedRows: Dispatch<SetStateAction<(string | number)[]>>
   productGraphqlFilters: IProductFieldFilterInput
   topSelectedRows: (string | number)[]
+  setListproductsPinedHooks: any
+  setListproductsUnPinedHooks: any
 }
 
 function ProductsTopAndBottom(
@@ -49,11 +55,15 @@ function ProductsTopAndBottom(
     bottomSelectedRows,
     catalogId,
     category,
+    listproductsPinedHooks,
+    listproductsUnPinedHooks,
     localizedCatalogId,
     onBottomSelectedRows,
     onTopSelectedRows,
     productGraphqlFilters,
     topSelectedRows,
+    setListproductsPinedHooks,
+    setListproductsUnPinedHooks,
   } = props
 
   const [currentPage, setCurrentPage] = useState<number>(1)
@@ -63,45 +73,82 @@ function ProductsTopAndBottom(
 
   const variables = useMemo(
     () => ({
-      categoryId: category.id,
       localizedCatalogId,
+      categoryId: category.id,
+      currentPage,
+      pageSize: rowsPerPage,
     }),
-    [localizedCatalogId, currentPage, rowsPerPage]
+    [localizedCatalogId, currentPage, category, rowsPerPage]
   )
 
-  const options = {
-    headers: { Authorization: `Bearer ${storageGet(tokenStorageKey)}` },
-  }
-  // console.log(variables)
+  const options = useMemo(
+    () => ({
+      headers: { Authorization: `Bearer ${storageGet(tokenStorageKey)}` },
+    }),
+    [storageGet(tokenStorageKey)]
+  )
 
-  const [listProductIdPined] = useGraphqlApi<any>(getProductPostion, variables)
+  const [listProductsIdPined] = useGraphqlApi<any>(
+    getProductPostion,
+    variables,
+    options
+  )
+
+  function converteToArrayId(dataUncoded: any): any {
+    let result = JSON.parse(dataUncoded)
+    result = result.map((item: any) => {
+      return item.productId
+    })
+    return result
+  }
+
+  const [productsIdPined, setProductsIdPined] = useState([])
+
+  useEffect(() => {
+    if (listProductsIdPined.status === LoadStatus.SUCCEEDED) {
+      setProductsIdPined(
+        converteToArrayId(
+          listProductsIdPined.data.getPositionsCategoryProductMerchandising
+            .result
+        )
+      )
+    }
+  }, [listProductsIdPined.status])
 
   return (
     <Paper variant="outlined" sx={{ backgroundColor: 'colors.neutral.300' }}>
       <PreviewArea>{t('previewArea')}</PreviewArea>
-      <Box sx={{ padding: '42px 16px 17px 16px' }}>
-        <TopTable
-          catalogId={catalogId}
-          localizedCatalogId={localizedCatalogId}
-          productGraphqlFilters={productGraphqlFilters}
-          onSelectedRows={onTopSelectedRows}
-          selectedRows={topSelectedRows}
-        />
-        <Box sx={{ marginTop: '24px' }}>
-          <BottomTable
-            ref={ref}
-            catalogId={catalogId}
-            currentPage={currentPage}
+      {listProductsIdPined.status === LoadStatus.SUCCEEDED && (
+        <Box sx={{ padding: '42px 16px 17px 16px' }}>
+          <TopTable
+            selectedRows={topSelectedRows}
+            onSelectedRows={onTopSelectedRows}
             localizedCatalogId={localizedCatalogId}
-            productGraphqlFilters={productGraphqlFilters}
-            onSelectedRows={onBottomSelectedRows}
-            rowsPerPage={rowsPerPage}
-            selectedRows={bottomSelectedRows}
-            setCurrentPage={setCurrentPage}
-            setRowsPerPage={setRowsPerPage}
+            listproductsIdPined={productsIdPined}
+            categoryId={category.id}
+            setListproductsPinedHooks={setListproductsPinedHooks}
+            listproductsPinedHooks={listproductsPinedHooks}
           />
+          <Box sx={{ marginTop: '24px' }}>
+            <BottomTable
+              ref={ref}
+              catalogId={catalogId}
+              selectedRows={bottomSelectedRows}
+              onSelectedRows={onBottomSelectedRows}
+              localizedCatalogId={localizedCatalogId}
+              listProductsIdPined={productsIdPined}
+              categoryId={category.id}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              rowsPerPage={rowsPerPage}
+              setRowsPerPage={setRowsPerPage}
+              listproductsUnPinedHooks={listproductsUnPinedHooks}
+              setListproductsUnPinedHooks={setListproductsUnPinedHooks}
+              productGraphqlFilters={productGraphqlFilters}
+            />
+          </Box>
         </Box>
-      </Box>
+      )}
     </Paper>
   )
 }
