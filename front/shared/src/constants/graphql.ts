@@ -49,14 +49,30 @@ export function getSearchProductsQuery(
   })
 }
 
-export const getProductPined = `query pined($catalogId : String!,) { searchProducts(
-  catalogId:"com_en" filter:[
-    {id:{in:[1164,1165]}}
-    {category__id:{eq:"cat_2"}}
+// TODO: check if pined product shold be filtered with categoryId or virtual product rules
+export const getProductPined = `query pined($localizedCatalogId : String!,$listproductsIdPined : [Int]!, $categoryId: String!) {
+  searchProducts(
+    catalogId: $localizedCatalogId
+  filter:[
+    {id:{in: $listproductsIdPined }}
+    {category__id:{eq:$categoryId}}
   ]){
     collection {
-      id
-      data
+      ... on Product {
+        id
+        sku
+        name
+        score
+        stock {
+          status
+        }
+        price
+      }
+    }
+    paginationInfo {
+      lastPage
+      itemsPerPage
+      totalCount
     }
   }
 }
@@ -66,5 +82,34 @@ export const getProductPostion = `query getPosition( $categoryId: String!,  $loc
   getPositionsCategoryProductMerchandising(categoryId: $categoryId, localizedCatalogId : $localizedCatalogId ) {
     result
   }
+}
+`
+
+// export const savePositions = `mutation savePositionsCategoryProductMerchandising( $categoryId: String!, $savePositionsCategory : [] ){
+//     savePositionsCategoryProductMerchandising (
+//       input: {
+//         categoryId: $categoryId
+//         positions: $savePositionsCategory
+//       }
+//     )
+//     {categoryProductMerchandising {result}}
+// }
+// `
+
+// export const savePositions = `mutation savePositionsCategoryProductMerchandising { savePositionsCategoryProductMerchandising(input: {
+//   categoryId:"cat_2",
+//   positions:
+//     "[{\"productId\": 1164, \"position\": 2}, {\"productId\": 1165, \"position\": 50}]"
+//   })
+
+// {categoryProductMerchandising {id,result}}
+// }`
+
+export const savePositions = `mutation savePositionsCategoryProductMerchandising {
+  savePositionsCategoryProductMerchandising ( input: {
+    categoryId:"cat_2"
+    positions: "[{productId:"1164", position:"2"}]"
+    })
+  {categoryProductMerchandising {id,result}}
 }
 `

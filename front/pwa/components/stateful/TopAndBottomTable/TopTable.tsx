@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useMemo } from 'react'
+import { Dispatch, SetStateAction, useEffect, useMemo } from 'react'
 
 import { useGraphqlApi } from '~/hooks'
 import {
@@ -7,49 +7,85 @@ import {
   ITableHeader,
   ITableRow,
   LoadStatus,
+  getProductPined,
   getSearchProductsQuery,
   productTableheader,
+  storageGet,
+  tokenStorageKey,
 } from 'shared'
 
 import FieldGuesser from '../FieldGuesser/FieldGuesser'
 import TopProductsTable from '../TopProductsTable/TopProductsTable'
 
 interface IProps {
-  catalogId: number
+  categoryId: string
   localizedCatalogId: string
+  listproductsIdPined: Array<number>
+  listproductsPinedHooks: any
   onSelectedRows: Dispatch<SetStateAction<(string | number)[]>>
-  productGraphqlFilters: IProductFieldFilterInput
   selectedRows: (string | number)[]
+  setListproductsPinedHooks: any
 }
 
 function TopTable(props: IProps): JSX.Element {
-  const { catalogId, localizedCatalogId, onSelectedRows, productGraphqlFilters, selectedRows } =
-    props
+  const {
+    selectedRows,
+    onSelectedRows,
+    localizedCatalogId,
+    listproductsIdPined,
+    categoryId,
+    setListproductsPinedHooks,
+    listproductsPinedHooks,
+  } = props
 
-  const variables = useMemo(() => ({ catalogId }), [catalogId])
-  const [products] = useGraphqlApi<IGraphqlSearchProducts>(
-    getSearchProductsQuery(productGraphqlFilters),
-    variables
+  const variables = useMemo(
+    () => ({
+      listproductsIdPined,
+      localizedCatalogId: localizedCatalogId.toString(),
+      categoryId,
+    }),
+    [listproductsIdPined, categoryId]
   )
-  const tableRows: ITableRow[] = products?.data?.searchProducts
-    ?.collection as unknown as ITableRow[]
 
-  // const tableHeaders: ITableHeader[] = productTableheader
+  const options = useMemo(
+    () => ({
+      headers: { Authorization: `Bearer ${storageGet(tokenStorageKey)}` },
+    }),
+    [storageGet(tokenStorageKey)]
+  )
+
+  const [products] = useGraphqlApi<IGraphqlSearchProducts>(
+    getProductPined,
+    variables,
+    options
+  )
+
+  useEffect(() => {
+    if (products.status === LoadStatus.SUCCEEDED) {
+      setListproductsPinedHooks(products?.data?.searchProducts?.collection)
+    }
+  }, [products])
+
+  // NE PAS SUPPRIMER
+  // const tableRows: ITableRow[] = products?.data?.searchProducts
+  //   ?.collection as unknown as ITableRow[]
+
+  const tableHeaders: ITableHeader[] = productTableheader
 
   return (
     <>
-      {/* {products.status === LoadStatus.SUCCEEDED &&
+      {products.status === LoadStatus.SUCCEEDED &&
         Boolean(products?.data?.searchProducts) && (
           <TopProductsTable
             Field={FieldGuesser}
             selectedRows={selectedRows}
             onSelectedRows={onSelectedRows}
             tableHeaders={tableHeaders}
-            tableRows={tableRows}
+            tableRows={listproductsPinedHooks}
+            setListproductsPinedHooks={setListproductsPinedHooks}
             draggable
           />
-        )} */}
-      A
+        )}
     </>
   )
 }
