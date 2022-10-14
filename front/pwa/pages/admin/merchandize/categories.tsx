@@ -21,8 +21,11 @@ import {
   findBreadcrumbLabel,
   isError,
   parseCatConf,
+  savePositions,
   serializeCatConf,
   serializeRule,
+  storageGet,
+  tokenStorageKey,
 } from 'shared'
 
 import { breadcrumbContext } from '~/contexts'
@@ -31,6 +34,7 @@ import {
   useApiFetch,
   useApiList,
   useFetchApi,
+  useGraphqlApi,
   useResource,
   useResourceOperations,
 } from '~/hooks'
@@ -177,6 +181,32 @@ function Categories(): JSX.Element {
     setCatConf((catConf) => ({ ...catConf, virtualRule: rule }))
   }
 
+  const [
+    savePositionsCategoryProductMerchandising,
+    setSavePositionsCategoryProductMerchandising,
+  ] = useState([])
+
+  const variables = useMemo(
+    () => ({
+      categoryId: selectedCategoryItem?.id,
+      savePositionsCategory: savePositionsCategoryProductMerchandising,
+    }),
+    [savePositionsCategoryProductMerchandising]
+  )
+
+  const options = useMemo(
+    () => ({
+      headers: { Authorization: `Bearer ${storageGet(tokenStorageKey)}` },
+    }),
+    [storageGet(tokenStorageKey)]
+  )
+
+  // const [listProductsIdPined] = useGraphqlApi<any>(
+  //   savePositions,
+  //   variables,
+  //   options
+  // )
+
   async function onSave(): Promise<void> {
     setIsSaving(true)
     const serializedCatConf = serializeCatConf(catConf, ruleOperators)
@@ -270,17 +300,23 @@ function Categories(): JSX.Element {
         (!catConf?.virtualRule || productGraphqlFilters) ? (
           <ProductsContainer
             catConf={catConf}
+            savePositionsCategoryProductMerchandising={
+              savePositionsCategoryProductMerchandising
+            }
+            setSavePositionsCategoryProductMerchandising={
+              setSavePositionsCategoryProductMerchandising
+            }
+            category={selectedCategoryItem}
+            onVirtualChange={handleUpdateCat('isVirtual')}
+            onNameChange={handleUpdateCat('useNameInProductSearch')}
+            onSortChange={handleUpdateCat('defaultSorting')}
             catalog={catalogId}
             catalogsData={data}
-            category={selectedCategoryItem}
             disableBtnSave={!dirty}
             error={error}
             isSaving={isSaving}
             localizedCatalog={localizedCatalogId}
-            onNameChange={handleUpdateCat('useNameInProductSearch')}
             onSave={onSave}
-            onSortChange={handleUpdateCat('defaultSorting')}
-            onVirtualChange={handleUpdateCat('isVirtual')}
             productGraphqlFilters={productGraphqlFilters}
           />
         ) : (

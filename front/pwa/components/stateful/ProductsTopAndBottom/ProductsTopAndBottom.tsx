@@ -75,10 +75,8 @@ function ProductsTopAndBottom(
     () => ({
       localizedCatalogId,
       categoryId: category.id,
-      currentPage,
-      pageSize: rowsPerPage,
     }),
-    [localizedCatalogId, currentPage, category, rowsPerPage]
+    [localizedCatalogId, category]
   )
 
   const options = useMemo(
