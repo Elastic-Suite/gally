@@ -5,9 +5,9 @@ import {
   MutableRefObject,
   SetStateAction,
   forwardRef,
+  useEffect,
   useMemo,
   useState,
-  useEffect,
 } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
@@ -97,7 +97,7 @@ function ProductsTopAndBottom(
   function converteToArrayId(dataUncoded: any): any {
     let result = JSON.parse(dataUncoded)
     result = result.map((item: any) => {
-      return item.productId
+      return { id: item.productId, position: item.position }
     })
     return result
   }
@@ -129,7 +129,11 @@ function ProductsTopAndBottom(
             setListproductsPinedHooks={setListproductsPinedHooks}
             listproductsPinedHooks={listproductsPinedHooks}
           />
-          <Box sx={{ marginTop: '24px' }}>
+          <Box
+            sx={
+              listproductsPinedHooks.length !== 0 ? { marginTop: '24px' } : {}
+            }
+          >
             <BottomTable
               ref={ref}
               catalogId={catalogId}

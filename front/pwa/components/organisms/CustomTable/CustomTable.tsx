@@ -46,6 +46,7 @@ export interface ICustomTableProps {
   selectedRows?: (string | number)[]
   onSelectedRows?: Dispatch<SetStateAction<(string | number)[]>>
   setListproductsPinedHooks?: any
+  listproductsPinedHooks?: any
 }
 
 function CustomTable(
@@ -105,7 +106,7 @@ function CustomTable(
       const tempData = Array.from(tableRows)
       const [source_data] = tempData.splice(e.source.index, 1)
       tempData.splice(e.destination.index, 0, source_data)
-      console.log(tempData)
+      // console.log(tempData)
       setListproductsPinedHooks(tempData)
     }
   }
