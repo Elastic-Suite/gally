@@ -50,7 +50,7 @@ export function getSearchProductsQuery(
 }
 
 // TODO: check if pined product shold be filtered with categoryId or virtual product rules
-export const getProductPined = `query pined($localizedCatalogId : String!,$listproductsIdPined : [Int]!, $categoryId: String!) {
+export const getProductPined = `query pined($localizedCatalogId : String!, $listproductsIdPined : [Int]!, $categoryId: String!) {
   searchProducts(
     catalogId: $localizedCatalogId
   filter:[
