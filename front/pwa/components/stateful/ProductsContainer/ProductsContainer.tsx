@@ -51,6 +51,8 @@ interface IProps {
   onSave: () => void
   onVirtualChange: (val: boolean) => void
   productGraphqlFilters: IProductFieldFilterInput
+  savePositionsCategoryProductMerchandising: any
+  setSavePositionsCategoryProductMerchandising: any
 }
 
 function ProductsContainer(props: IProps): JSX.Element {
@@ -68,6 +70,8 @@ function ProductsContainer(props: IProps): JSX.Element {
     onSortChange,
     onVirtualChange,
     productGraphqlFilters,
+    savePositionsCategoryProductMerchandising,
+    setSavePositionsCategoryProductMerchandising,
   } = props
 
   const tableRef = useRef<HTMLDivElement>()
@@ -151,40 +155,15 @@ function ProductsContainer(props: IProps): JSX.Element {
     setBottomSelectedRows([])
   }
 
-  const [
-    savePositionsCategoryProductMerchandising,
-    setSavePositionsCategoryProductMerchandising,
-  ] = useState([])
-
   useEffect(() => {
     const savePositionsCategory = listproductsPinedHooks.map((item, key) => {
-      return { productId: Number(item.id.split('/')[2]), position: 1 + key }
+      return {
+        productId: Number(item.id.split('/')[2]),
+        position: key + 1,
+      }
     })
     return setSavePositionsCategoryProductMerchandising(savePositionsCategory)
   }, [listproductsPinedHooks])
-
-  // const variables = useMemo(
-  //   () => ({
-  //     categoryId: category.id,
-  //     savePositionsCategory: JSON.stringify(
-  //       savePositionsCategoryProductMerchandising
-  //     ),
-  //   }),
-  //   []
-  // )
-
-  // const options = useMemo(
-  //   () => ({
-  //     headers: { Authorization: `Bearer ${storageGet(tokenStorageKey)}` },
-  //   }),
-  //   [storageGet(tokenStorageKey)]
-  // )
-
-  // const [listProductsIdPined] = useGraphqlApi<any>(
-  //   savePositions,
-  //   variables,
-  //   options
-  // )
 
   if (error || !catalogsData) {
     return null
@@ -192,7 +171,6 @@ function ProductsContainer(props: IProps): JSX.Element {
 
   return (
     <Box>
-      <div>SAVE AAAA</div>
       <Layout>
         <PageTitle
           sticky
