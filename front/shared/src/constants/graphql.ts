@@ -85,31 +85,13 @@ export const getProductPostion = `query getPosition( $categoryId: String!,  $loc
 }
 `
 
-// export const savePositions = `mutation savePositionsCategoryProductMerchandising( $categoryId: String!, $savePositionsCategory : [] ){
-//     savePositionsCategoryProductMerchandising (
-//       input: {
-//         categoryId: $categoryId
-//         positions: $savePositionsCategory
-//       }
-//     )
-//     {categoryProductMerchandising {result}}
-// }
-// `
-
-// export const savePositions = `mutation savePositionsCategoryProductMerchandising { savePositionsCategoryProductMerchandising(input: {
-//   categoryId:"cat_2",
-//   positions:
-//     "[{\"productId\": 1164, \"position\": 2}, {\"productId\": 1165, \"position\": 50}]"
-//   })
-
-// {categoryProductMerchandising {id,result}}
-// }`
-
-export const savePositions = `mutation savePositionsCategoryProductMerchandising {
-  savePositionsCategoryProductMerchandising ( input: {
-    categoryId:"cat_2"
-    positions: "[{productId:"1164", position:"2"}]"
-    })
-  {categoryProductMerchandising {id,result}}
+export const savePositions = `mutation savePositionsCategoryProductMerchandising( $categoryId: String!, $savePositionsCategory : String! ){
+    savePositionsCategoryProductMerchandising (
+      input: {
+        categoryId: $categoryId
+        positions: $savePositionsCategory
+      }
+    )
+    {categoryProductMerchandising {result}}
 }
 `
