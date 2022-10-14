@@ -116,6 +116,8 @@ function ProductsContainer(props: IProps): JSX.Element {
   const [listproductsUnPinedHooks, setListproductsUnPinedHooks] = useState([])
 
   function pinToUnPin(): void {
+    if (bottomSelectedRows.length + listproductsPinedHooks.length > 25) return
+
     const unPinToPin = listproductsPinedHooks.filter((el: any) => {
       return topSelectedRows.indexOf(el.id) === -1
     })
@@ -126,6 +128,7 @@ function ProductsContainer(props: IProps): JSX.Element {
 
     setListproductsPinedHooks(unPinToPin)
     setListproductsUnPinedHooks(listproductsUnPinedHooks.concat(pinToUnPin))
+    setTopSelectedRows([])
   }
 
   function unPinToPin(): void {
@@ -145,6 +148,7 @@ function ProductsContainer(props: IProps): JSX.Element {
         })
       )
     )
+    setBottomSelectedRows([])
   }
 
   const [
@@ -159,26 +163,28 @@ function ProductsContainer(props: IProps): JSX.Element {
     return setSavePositionsCategoryProductMerchandising(savePositionsCategory)
   }, [listproductsPinedHooks])
 
-  // console.log(savePositionsCategoryProductMerchandising)
+  // const variables = useMemo(
+  //   () => ({
+  //     categoryId: category.id,
+  //     savePositionsCategory: JSON.stringify(
+  //       savePositionsCategoryProductMerchandising
+  //     ),
+  //   }),
+  //   []
+  // )
 
-  // function savePositionCategoryProduct() {
-  const variables = useMemo(
-    () => ({
-      categoryId: category.id,
-      savePositionsCategory: savePositionsCategoryProductMerchandising,
-    }),
-    []
-  )
+  // const options = useMemo(
+  //   () => ({
+  //     headers: { Authorization: `Bearer ${storageGet(tokenStorageKey)}` },
+  //   }),
+  //   [storageGet(tokenStorageKey)]
+  // )
 
-  const options = useMemo(
-    () => ({
-      headers: { Authorization: `Bearer ${storageGet(tokenStorageKey)}` },
-    }),
-    [storageGet(tokenStorageKey)]
-  )
-  const [listProductsIdPined] = useGraphqlApi<any>(savePositions)
-  // }
-  console.log(JSON.stringify([{ productId: 1164, position: 2 }]))
+  // const [listProductsIdPined] = useGraphqlApi<any>(
+  //   savePositions,
+  //   variables,
+  //   options
+  // )
 
   if (error || !catalogsData) {
     return null
@@ -239,7 +245,10 @@ function ProductsContainer(props: IProps): JSX.Element {
           </Button>
           <Button
             sx={{ marginLeft: 1 }}
-            disabled={bottomSelectedRows.length === 0}
+            disabled={
+              bottomSelectedRows.length === 0 ||
+              bottomSelectedRows.length + listproductsPinedHooks.length > 25
+            }
             onClick={unPinToPin}
           >
             {t('pinToTop')}

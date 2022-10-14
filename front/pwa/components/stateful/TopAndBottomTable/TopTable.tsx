@@ -40,11 +40,11 @@ function TopTable(props: IProps): JSX.Element {
 
   const variables = useMemo(
     () => ({
-      listproductsIdPined,
+      listproductsIdPined: listproductsIdPined.map((item: any) => item.id),
       localizedCatalogId: localizedCatalogId.toString(),
       categoryId,
     }),
-    [listproductsIdPined, categoryId]
+    [listproductsIdPined, categoryId, localizedCatalogId]
   )
 
   const options = useMemo(
@@ -60,9 +60,27 @@ function TopTable(props: IProps): JSX.Element {
     options
   )
 
+  function reOrder(listProduct: any): any[] {
+    const b = listproductsIdPined
+      .sort((a: any, b: any) => a.position - b.position)
+      .map((item: any) => {
+        const a = listProduct.find(
+          (element: any) => element.id === `/products/${item.id}`
+        )
+        if (a) {
+          return { ...a, position: item.position }
+        }
+      })
+    return b
+  }
+
   useEffect(() => {
     if (products.status === LoadStatus.SUCCEEDED) {
-      setListproductsPinedHooks(products?.data?.searchProducts?.collection)
+      if (products.data.searchProducts.collection.length > 0) {
+        setListproductsPinedHooks(
+          reOrder(products?.data?.searchProducts?.collection)
+        )
+      }
     }
   }, [products])
 
@@ -75,6 +93,7 @@ function TopTable(props: IProps): JSX.Element {
   return (
     <>
       {products.status === LoadStatus.SUCCEEDED &&
+        listproductsPinedHooks.length > 0 &&
         Boolean(products?.data?.searchProducts) && (
           <TopProductsTable
             Field={FieldGuesser}
