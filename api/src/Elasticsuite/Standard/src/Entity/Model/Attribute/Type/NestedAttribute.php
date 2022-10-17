@@ -16,52 +16,37 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Entity\Model\Attribute\Type;
 
-use Elasticsuite\Entity\Model\Attribute\AttributeInterface;
-
 /**
  * Used for normalization/de-normalization only of nested fields.
  */
-class NestedAttribute implements AttributeInterface
+class NestedAttribute extends AbstractAttribute
 {
-    protected string $attributeCode;
-
-    protected mixed $value;
-
     /** @var string[] */
     protected array $fields;
 
     public function __construct($attributeCode, $value, array $fields)
     {
-        $this->attributeCode = $attributeCode;
-        $this->value = $value;
+        // TODO throw exception if fields list is empty ?
         $this->fields = $fields;
+        parent::__construct($attributeCode, $value);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getAttributeCode(): string
+    protected function getSanitizedData(mixed $value): mixed
     {
-        return $this->attributeCode;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getValue(): mixed
-    {
-        if (\is_array($this->value)) {
+        if (\is_array($value) && !empty($value)) {
             // TODO : iterate on elements and intersect keys with $this->fields ?
-            $value = $this->value;
-            $hasSingleEntry = \count(array_intersect(array_keys($this->value), $this->fields)) > 0;
+            $hasSingleEntry = \count(array_intersect(array_keys($value), $this->fields)) > 0;
+            // TODO add an extra check to make sure value is an array of arrays ?
             if (!$hasSingleEntry) {
-                $value = current($this->value);
+                $value = current($value);
             }
 
             return $value;
         }
 
-        // TODO return [$this->value] ?
-        return $this->value;
+        return $value;
     }
 }
