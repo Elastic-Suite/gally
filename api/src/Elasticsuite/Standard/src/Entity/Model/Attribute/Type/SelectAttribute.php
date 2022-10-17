@@ -22,35 +22,8 @@ use Elasticsuite\Entity\Model\Attribute\StructuredAttributeInterface;
 /**
  * Used for normalization/de-normalization and graphql schema stitching of select boolean source fields.
  */
-class SelectAttribute implements AttributeInterface, StructuredAttributeInterface
+class SelectAttribute extends AbstractStructuredAttribute implements AttributeInterface, StructuredAttributeInterface
 {
-    protected string $attributeCode;
-
-    protected mixed $value;
-
-    public function __construct($attributeCode, $value)
-    {
-        $this->attributeCode = $attributeCode;
-        $this->value = $value;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getAttributeCode(): string
-    {
-        return $this->attributeCode;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getValue(): mixed
-    {
-        // TODO take inspiration from what is done in @see PriceAttribute
-        return $this->value;
-    }
-
     /**
      * {@inheritDoc}
      */
@@ -60,13 +33,5 @@ class SelectAttribute implements AttributeInterface, StructuredAttributeInterfac
             'label' => ['class_type' => TextAttribute::class],
             'value' => ['class_type' => TextAttribute::class],
         ];
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public static function isList(): bool
-    {
-        return true;
     }
 }

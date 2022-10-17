@@ -16,21 +16,16 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Entity\Model\Attribute\Type;
 
-use Elasticsuite\Entity\Model\Attribute\AttributeInterface;
 use Elasticsuite\Entity\Model\Attribute\StructuredAttributeInterface;
 
-class StockAttribute extends AbstractStructuredAttribute implements AttributeInterface, StructuredAttributeInterface
+abstract class AbstractStructuredAttribute extends AbstractAttribute implements StructuredAttributeInterface
 {
     /**
      * {@inheritDoc}
      */
     public static function getFields(): array
     {
-        // Possible additional fields in the future.
-        return [
-            'status' => ['class_type' => BooleanAttribute::class],
-            'qty' => ['class_type' => FloatAttribute::class],
-        ];
+        return [];
     }
 
     /**
@@ -38,6 +33,23 @@ class StockAttribute extends AbstractStructuredAttribute implements AttributeInt
      */
     public static function isList(): bool
     {
-        return false;
+        return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function getSanitizedData(mixed $value): mixed
+    {
+        if (\is_array($value) && !empty($value)) {
+            $hasSingleEntry = \count(array_intersect(array_keys($value), array_keys(static::getFields()))) > 0;
+            if ($hasSingleEntry && static::isList()) {
+                $value = [$value];
+            } elseif (!$hasSingleEntry && (false === static::isList())) {
+                $value = current($value);
+            }
+        }
+
+        return $value;
     }
 }

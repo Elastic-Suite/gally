@@ -19,47 +19,8 @@ namespace Elasticsuite\Entity\Model\Attribute\Type;
 use Elasticsuite\Entity\Model\Attribute\AttributeInterface;
 use Elasticsuite\Entity\Model\Attribute\StructuredAttributeInterface;
 
-class CategoryAttribute implements AttributeInterface, StructuredAttributeInterface
+class CategoryAttribute extends AbstractStructuredAttribute implements AttributeInterface, StructuredAttributeInterface
 {
-    protected string $attributeCode;
-
-    protected mixed $value;
-
-    public function __construct($attributeCode, $value)
-    {
-        $this->attributeCode = $attributeCode;
-        $this->value = $value;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getAttributeCode(): string
-    {
-        return $this->attributeCode;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getValue(): mixed
-    {
-        if (\is_array($this->value)) {
-            $value = $this->value;
-
-            $hasSingleEntry = \count(array_intersect(array_keys($this->value), array_keys(self::getFields()))) > 0;
-            if ($hasSingleEntry && self::isList()) {
-                $value = [$value];
-            } elseif (!$hasSingleEntry && (false === self::isList())) {
-                $value = current($value);
-            }
-
-            return $value;
-        }
-
-        return $this->value;
-    }
-
     /**
      * {@inheritDoc}
      */
@@ -74,13 +35,5 @@ class CategoryAttribute implements AttributeInterface, StructuredAttributeInterf
             'is_blacklisted' => ['class_type' => BooleanAttribute::class],
             'position' => ['class_type' => IntAttribute::class],
         ];
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public static function isList(): bool
-    {
-        return true;
     }
 }
