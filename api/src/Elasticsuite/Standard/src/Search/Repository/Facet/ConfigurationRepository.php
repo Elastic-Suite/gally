@@ -79,13 +79,6 @@ class ConfigurationRepository extends ServiceEntityRepository
                     Join::WITH,
                     "sf.id = {$alias}.sourceField and {$alias}.category = :category"
                 )
-                ->leftJoin(
-                    $this->_entityName,
-                    'default',
-                    Join::WITH,
-                    'sf.id = default.sourceField and default.category is NULL'
-                )
-                ->addSelect('default')
                 ->leftJoin(Category::class, 'category', Join::WITH, "{$alias}.category = category.id")
                 ->addSelect("CONCAT('', :category) as category_id");
         } else {
@@ -96,6 +89,15 @@ class ConfigurationRepository extends ServiceEntityRepository
                 "sf.id = {$alias}.sourceField and {$alias}.category is NULL"
             );
         }
+
+        $queryBuilder
+            ->leftJoin(
+                $this->_entityName,
+                'default',
+                Join::WITH,
+                'sf.id = default.sourceField and default.category is NULL'
+            )
+            ->addSelect('default');
 
         $this->getEntityManager()
             ->getConfiguration()
