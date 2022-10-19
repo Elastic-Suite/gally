@@ -19,9 +19,9 @@ namespace Elasticsuite\Search\Model\Facet;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Elasticsuite\Category\Model\Category;
+use Elasticsuite\Entity\Filter\RangeFilterWithDefault;
+use Elasticsuite\Entity\Filter\SearchFilterWithDefault;
 use Elasticsuite\Metadata\Model\SourceField;
 use Elasticsuite\User\Constant\Role;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -64,10 +64,19 @@ use Symfony\Component\Serializer\Annotation\Groups;
     normalizationContext: ['groups' => ['facet_configuration:read']],
     denormalizationContext: ['groups' => ['facet_configuration:read']],
 )]
-#[ApiFilter(SearchFilter::class, properties: ['category' => 'exact', 'displayMode' => 'exact', 'sortOrder' => 'exact'])]
-#[ApiFilter(RangeFilter::class, properties: ['coverageRate', 'maxSize'])]
+#[ApiFilter(SearchFilterWithDefault::class, properties: ['category' => 'exact', 'displayMode' => 'exact', 'sortOrder' => 'exact'], arguments: ['defaultValues' => self::DEFAULT_VALUES])]
+#[ApiFilter(RangeFilterWithDefault::class, properties: ['coverageRate', 'maxSize'], arguments: ['defaultValues' => self::DEFAULT_VALUES])]
 class Configuration
 {
+    private const DEFAULT_VALUES = [
+        'displayMode' => 'auto',
+        'coverageRate' => 90,
+        'maxSize' => 10,
+        'sortOrder' => 'result_count',
+        'isRecommendable' => false,
+        'isVirtual' => false,
+    ];
+
     #[Groups(['facet_configuration:read'])]
     private string $id;
 
@@ -359,11 +368,11 @@ class Configuration
 
     public function initDefaultValue(self $defaultConfiguration)
     {
-        $this->defaultDisplayMode = $defaultConfiguration->getDisplayMode() ?? 'auto';
-        $this->defaultCoverageRate = $defaultConfiguration->getCoverageRate() ?? 90;
-        $this->defaultMaxSize = $defaultConfiguration->getMaxSize() ?? 10;
-        $this->defaultSortOrder = $defaultConfiguration->getSortOrder() ?? 'result_count';
-        $this->defaultIsRecommendable = $defaultConfiguration->getIsRecommendable() ?? false;
-        $this->defaultIsVirtual = $defaultConfiguration->getIsVirtual() ?? false;
+        $this->defaultDisplayMode = $defaultConfiguration->getDisplayMode() ?? self::DEFAULT_VALUES['displayMode'];
+        $this->defaultCoverageRate = $defaultConfiguration->getCoverageRate() ?? self::DEFAULT_VALUES['coverageRate'];
+        $this->defaultMaxSize = $defaultConfiguration->getMaxSize() ?? self::DEFAULT_VALUES['maxSize'];
+        $this->defaultSortOrder = $defaultConfiguration->getSortOrder() ?? self::DEFAULT_VALUES['sortOrder'];
+        $this->defaultIsRecommendable = $defaultConfiguration->getIsRecommendable() ?? self::DEFAULT_VALUES['isRecommendable'];
+        $this->defaultIsVirtual = $defaultConfiguration->getIsVirtual() ?? self::DEFAULT_VALUES['isVirtual'];
     }
 }
