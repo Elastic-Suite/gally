@@ -19,6 +19,7 @@ namespace Elasticsuite\Search\Model\Facet;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Elasticsuite\Category\Model\Category;
 use Elasticsuite\Metadata\Model\SourceField;
@@ -63,7 +64,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
     normalizationContext: ['groups' => ['facet_configuration:read']],
     denormalizationContext: ['groups' => ['facet_configuration:read']],
 )]
-#[ApiFilter(SearchFilter::class, properties: ['category' => 'exact'])]
+#[ApiFilter(SearchFilter::class, properties: ['category' => 'exact', 'displayMode' => 'exact', 'sortOrder' => 'exact'])]
+#[ApiFilter(RangeFilter::class, properties: ['coverageRate', 'maxSize'])]
 class Configuration
 {
     #[Groups(['facet_configuration:read'])]
@@ -88,7 +90,7 @@ class Configuration
                     'input' => 'select',
                     // Todo: move the options values in the proper class and add validation constraint (will be done in the ticket ESPP-223)
                     'options' => [
-                        'values' => ['auto' => 'Auto', 'displayed' => 'Display', 'hidden' => 'Hidden'],
+                        'values' => ['auto' => 'Auto', 'displayed' => 'Displayed', 'hidden' => 'Hidden'],
                     ],
                 ],
             ],
