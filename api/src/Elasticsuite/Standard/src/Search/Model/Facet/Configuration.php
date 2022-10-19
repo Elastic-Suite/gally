@@ -107,6 +107,11 @@ class Configuration
                     'visible' => true,
                     'editable' => true,
                     'position' => 30,
+                    'type' => 'percentage',
+                    'validation' => [
+                        'min' => 0,
+                        'max' => 100,
+                    ],
                 ],
             ],
         ],
@@ -124,6 +129,9 @@ class Configuration
                     'visible' => true,
                     'editable' => true,
                     'position' => 40,
+                    'validation' => [
+                        'min' => 0,
+                    ],
                 ],
             ],
         ],
