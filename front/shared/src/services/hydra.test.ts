@@ -58,6 +58,28 @@ describe('Hydra service', () => {
       expect(getFieldType(fieldString)).toEqual('text')
       expect(getFieldType(fieldInteger)).toEqual('integer')
       expect(getFieldType(fieldBoolean)).toEqual('boolean')
+      expect(
+        getFieldType({
+          ...fieldString,
+          property: {
+            ...fieldString.property,
+            range: {
+              '@id': 'http://www.w3.org/2001/XMLSchema#integer',
+            },
+          },
+        })
+      ).toEqual('integer')
+    })
+
+    it('Should return the field type from elasticsuite override', () => {
+      expect(
+        getFieldType({
+          ...fieldString,
+          elasticsuite: {
+            type: 'percentage',
+          },
+        })
+      ).toEqual('percentage')
     })
   })
 

@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { Box } from '@mui/system'
 
 import { breadcrumbContext } from '~/contexts'
-import { withAuth } from '~/hocs'
+import { withAuth, withOptions } from '~/hocs'
 import {
   useApiFetch,
   useApiList,
@@ -229,4 +229,4 @@ function Categories(): JSX.Element {
   )
 }
 
-export default withAuth(Categories)
+export default withAuth(withOptions(Categories))

@@ -32,6 +32,10 @@ export function getField(resource: IResource, name: string): IField {
 }
 
 export function getFieldType(field: IField): string {
+  if (field.elasticsuite?.type) {
+    return field.elasticsuite?.type
+  }
+
   switch (field.property?.range['@id']) {
     case 'http://www.w3.org/2001/XMLSchema#array':
       return 'array'

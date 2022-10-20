@@ -1,4 +1,4 @@
-import { ChangeEvent, FunctionComponent } from 'react'
+import { ChangeEvent, FunctionComponent, SyntheticEvent } from 'react'
 import { Checkbox, TableRow } from '@mui/material'
 
 import {
@@ -30,7 +30,8 @@ interface IProps {
   onRowUpdate?: (
     id: string | number,
     name: string,
-    value: boolean | number | string
+    value: boolean | number | string,
+    event: SyntheticEvent
   ) => void
   onSelectRows: (arr: (string | number)[]) => void
   selectedRows: (string | number)[]
@@ -59,8 +60,12 @@ function NonDraggableRow(props: IProps): JSX.Element {
   const nonStickyHeaders = tableHeaders.filter((header) => !header.sticky)
   const isOnlyDraggable = !withSelection && stickyHeaders.length === 0
 
-  function handleChange(name: string, value: boolean | number | string): void {
-    onRowUpdate(tableRow.id, name, value)
+  function handleChange(
+    name: string,
+    value: boolean | number | string,
+    event: SyntheticEvent
+  ): void {
+    onRowUpdate(tableRow.id, name, value, event)
   }
 
   return (

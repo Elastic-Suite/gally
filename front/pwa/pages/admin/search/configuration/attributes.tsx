@@ -4,7 +4,7 @@ import { useTranslation } from 'next-i18next'
 import { useContext, useEffect, useState } from 'react'
 
 import { breadcrumbContext } from '~/contexts'
-import { withAuth } from '~/hocs'
+import { withAuth, withOptions } from '~/hocs'
 import { searchableAttributeUrl } from 'shared'
 
 import Alert from '~/components/atoms/Alert/Alert'
@@ -55,4 +55,4 @@ function Attributes(): JSX.Element {
   )
 }
 
-export default withAuth(Attributes)
+export default withAuth(withOptions(Attributes))
