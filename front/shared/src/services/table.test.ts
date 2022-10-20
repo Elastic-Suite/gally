@@ -28,6 +28,25 @@ describe('Table service', () => {
       expect(getFieldDataContentType(fieldBoolean)).toEqual(
         DataContentType.BOOLEAN
       )
+      expect(
+        getFieldDataContentType({
+          ...fieldString,
+          property: {
+            ...fieldString.property,
+            range: {
+              '@id': 'http://www.w3.org/2001/XMLSchema#integer',
+            },
+          },
+        })
+      ).toEqual(DataContentType.NUMBER)
+      expect(
+        getFieldDataContentType({
+          ...fieldString,
+          elasticsuite: {
+            type: 'percentage',
+          },
+        })
+      ).toEqual(DataContentType.PERCENTAGE)
     })
   })
 

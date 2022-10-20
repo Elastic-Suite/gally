@@ -1,4 +1,4 @@
-import { FunctionComponent } from 'react'
+import { FunctionComponent, SyntheticEvent } from 'react'
 import { TableBody } from '@mui/material'
 import { Draggable, Droppable } from 'react-beautiful-dnd'
 
@@ -14,7 +14,8 @@ interface IProps {
   onRowUpdate?: (
     id: string | number,
     name: string,
-    value: boolean | number | string
+    value: boolean | number | string,
+    event: SyntheticEvent
   ) => void
   onSelectRows: (arr: (string | number)[]) => void
   selectedRows: (string | number)[]

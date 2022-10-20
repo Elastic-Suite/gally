@@ -1,8 +1,9 @@
+import { ChangeEvent, SyntheticEvent } from 'react'
 import { useTranslation } from 'next-i18next'
 import { DataContentType, IFieldGuesserProps } from 'shared'
 
 import DropDown from '~/components/atoms/form/DropDown'
-import InputText from '~/components/atoms/form/InputText'
+import InputTextError from '~/components/atoms/form/InputTextError'
 import Switch from '~/components/atoms/form/Switch'
 
 import ReadableFieldGuesser from './ReadableFieldGuesser'
@@ -20,37 +21,43 @@ function EditableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
     useDropdownBoolean,
     value,
     required,
+    validation,
   } = props
   const { t } = useTranslation('common')
   const dirty = diffValue !== undefined && diffValue !== value
 
-  function handleChange(value: number | string): void {
+  function handleChange(value: number | string, event: SyntheticEvent): void {
     if (onChange) {
-      onChange(name, value)
+      onChange(name, value, event)
     }
   }
 
-  function handleSwitchChange(
-    event: React.ChangeEvent<HTMLInputElement>
-  ): void {
+  function handleSwitchChange(event: ChangeEvent<HTMLInputElement>): void {
     if (onChange) {
-      onChange(name, event.target.checked)
+      onChange(name, event.target.checked, event)
     }
   }
 
   switch (type) {
     case DataContentType.NUMBER:
+    case DataContentType.PERCENTAGE:
     case DataContentType.STRING: {
       return (
-        <InputText
+        <InputTextError
           dirty={dirty}
           helperText={
             Boolean(dirty) && t('form.defaultValue', { value: diffValue })
           }
+          inputProps={validation}
           label={label}
           onChange={handleChange}
           required={required}
-          type={type === DataContentType.NUMBER ? 'number' : 'text'}
+          sufix={type === DataContentType.PERCENTAGE ? '%' : ''}
+          type={
+            type === DataContentType.NUMBER || DataContentType.PERCENTAGE
+              ? 'number'
+              : 'text'
+          }
           value={String(value)}
         />
       )

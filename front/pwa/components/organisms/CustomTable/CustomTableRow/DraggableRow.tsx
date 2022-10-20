@@ -1,4 +1,4 @@
-import { ChangeEvent, FunctionComponent } from 'react'
+import { ChangeEvent, FunctionComponent, SyntheticEvent } from 'react'
 import { Box, Checkbox, TableRow } from '@mui/material'
 import { DraggableProvided } from 'react-beautiful-dnd'
 
@@ -33,7 +33,8 @@ interface IProps {
   onRowUpdate?: (
     id: string | number,
     name: string,
-    value: boolean | number | string
+    value: boolean | number | string,
+    event: SyntheticEvent
   ) => void
   onSelectRows: (arr: (string | number)[]) => void
   provider: DraggableProvided
@@ -64,8 +65,12 @@ function DraggableRow(props: IProps): JSX.Element {
   const nonStickyHeaders = tableHeaders.filter((header) => !header.sticky)
   const isOnlyDraggable = !withSelection && stickyHeaders.length === 0
 
-  function handleChange(name: string, value: boolean | number | string): void {
-    onRowUpdate(tableRow.id, name, value)
+  function handleChange(
+    name: string,
+    value: boolean | number | string,
+    event: SyntheticEvent
+  ): void {
+    onRowUpdate(tableRow.id, name, value, event)
   }
 
   return (

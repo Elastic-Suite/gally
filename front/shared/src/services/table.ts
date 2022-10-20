@@ -32,6 +32,9 @@ export function getFieldDataContentType(field: IField): DataContentType {
   } else if (type === 'integer' || type === 'float') {
     return DataContentType.NUMBER
   }
+  if (type === 'percentage') {
+    return DataContentType.PERCENTAGE
+  }
   return DataContentType.STRING
 }
 
@@ -44,6 +47,7 @@ export function getFieldHeader(field: IField, t: TFunction): ITableHeader {
     type: getFieldDataContentType(field),
     editable: field.elasticsuite?.editable && field.writeable,
     required: field.required,
+    validation: field.elasticsuite?.validation,
   }
 }
 

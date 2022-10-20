@@ -88,12 +88,14 @@ export interface IHydraProperty extends IJsonldBase {
 }
 
 export interface IElasticSuiteProperty {
-  visible?: boolean
-  editable?: boolean
-  position?: number
   context?: Record<string, IElasticSuiteProperty>
+  editable?: boolean
   input?: DataContentType
   options?: IDropdownStaticOptions | IDropdownApiOptions
+  position?: number
+  type?: string
+  validation?: Record<string, string | number>
+  visible?: boolean
 }
 
 export interface IDropdownStaticOptions {

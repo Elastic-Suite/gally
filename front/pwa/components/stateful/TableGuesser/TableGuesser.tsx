@@ -1,4 +1,4 @@
-import { ChangeEvent, useRef, useState } from 'react'
+import { ChangeEvent, SyntheticEvent, useRef, useState } from 'react'
 
 import { useApiEditableFieldOptions, useApiHeaders } from '~/hooks'
 import {
@@ -25,7 +25,8 @@ interface IProps<T extends IHydraMember> {
   onRowUpdate?: (
     id: string | number,
     name: string,
-    value: boolean | number | string
+    value: boolean | number | string,
+    event: SyntheticEvent
   ) => void
   resource: IResource
   rowsPerPage?: number
