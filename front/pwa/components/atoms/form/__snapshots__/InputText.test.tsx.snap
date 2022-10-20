@@ -3,7 +3,7 @@
 exports[`InputText match snapshot BadgeDisabledFalse 1`] = `
 <div>
   <div
-    class="MuiFormControl-root css-14yckze-MuiFormControl-root"
+    class="MuiFormControl-root css-1pl6002-MuiFormControl-root"
   >
     <label
       class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-colorPrimary MuiFormLabel-filled css-ssr94h-MuiFormLabel-root-MuiInputLabel-root"
@@ -13,16 +13,20 @@ exports[`InputText match snapshot BadgeDisabledFalse 1`] = `
       Label
     </label>
     <div
-      class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-1af0n5d-MuiInputBase-root"
+      class="InputText__Wrapper css-newnfq"
     >
-      <input
-        aria-invalid="false"
-        class="MuiInputBase-input css-yz9k0d-MuiInputBase-input"
-        id="input-text"
-        placeholder="Name"
-        type="text"
-        value="hello world"
-      />
+      <div
+        class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-aw2prs-MuiInputBase-root"
+      >
+        <input
+          aria-invalid="false"
+          class="MuiInputBase-input css-yz9k0d-MuiInputBase-input"
+          id="input-text"
+          placeholder="Name"
+          type="text"
+          value="hello world"
+        />
+      </div>
     </div>
   </div>
 </div>
@@ -31,7 +35,7 @@ exports[`InputText match snapshot BadgeDisabledFalse 1`] = `
 exports[`InputText match snapshot BadgeDisabledFalseRequired 1`] = `
 <div>
   <div
-    class="MuiFormControl-root css-14yckze-MuiFormControl-root"
+    class="MuiFormControl-root css-1pl6002-MuiFormControl-root"
   >
     <label
       class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-colorPrimary MuiFormLabel-filled Mui-required css-ssr94h-MuiFormLabel-root-MuiInputLabel-root"
@@ -48,19 +52,23 @@ exports[`InputText match snapshot BadgeDisabledFalseRequired 1`] = `
       </span>
     </label>
     <div
-      class="MuiInputBase-root MuiInputBase-colorPrimary Mui-disabled MuiInputBase-formControl css-1af0n5d-MuiInputBase-root"
-      required=""
+      class="InputText__Wrapper css-newnfq"
     >
-      <input
-        aria-invalid="false"
-        class="MuiInputBase-input Mui-disabled css-yz9k0d-MuiInputBase-input"
-        disabled=""
-        id="input-text"
-        placeholder="Name"
+      <div
+        class="MuiInputBase-root MuiInputBase-colorPrimary Mui-disabled MuiInputBase-formControl css-aw2prs-MuiInputBase-root"
         required=""
-        type="text"
-        value="hello world"
-      />
+      >
+        <input
+          aria-invalid="false"
+          class="MuiInputBase-input Mui-disabled css-yz9k0d-MuiInputBase-input"
+          disabled=""
+          id="input-text"
+          placeholder="Name"
+          required=""
+          type="text"
+          value="hello world"
+        />
+      </div>
     </div>
   </div>
 </div>

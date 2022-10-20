@@ -23,25 +23,29 @@ exports[`SearchBar match snapshot SearchBar 1`] = `
         </div>
       </div>
       <div
-        class="MuiFormControl-root css-14yckze-MuiFormControl-root"
+        class="MuiFormControl-root css-1pl6002-MuiFormControl-root"
       >
         <div
-          class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd css-5uzcdm-MuiInputBase-root"
+          class="InputText__Wrapper css-newnfq"
         >
-          <input
-            aria-invalid="false"
-            class="MuiInputBase-input MuiInputBase-inputAdornedEnd css-yz9k0d-MuiInputBase-input"
-            id="input-text"
-            placeholder="searchBar.placeholder"
-            type="text"
-            value=""
-          />
           <div
-            class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
+            class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd css-w8c12a-MuiInputBase-root"
           >
-            <ion-icon
-              name="search"
+            <input
+              aria-invalid="false"
+              class="MuiInputBase-input MuiInputBase-inputAdornedEnd css-yz9k0d-MuiInputBase-input"
+              id="input-text"
+              placeholder="searchBar.placeholder"
+              type="text"
+              value=""
             />
+            <div
+              class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
+            >
+              <ion-icon
+                name="search"
+              />
+            </div>
           </div>
         </div>
       </div>

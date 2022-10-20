@@ -9,41 +9,45 @@ exports[`DropDown match snapshot BadgeDisabledFalse 1`] = `
       class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-1qqsdnr-MuiAutocomplete-root"
     >
       <div
-        class="MuiFormControl-root MuiFormControl-fullWidth css-1qc7p1k-MuiFormControl-root"
+        class="MuiFormControl-root MuiFormControl-fullWidth css-x119s1-MuiFormControl-root"
       >
         <div
-          class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-5uzcdm-MuiInputBase-root"
+          class="InputText__Wrapper css-newnfq"
         >
-          <input
-            aria-autocomplete="list"
-            aria-expanded="false"
-            aria-invalid="false"
-            autocapitalize="none"
-            autocomplete="off"
-            class="MuiInputBase-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-yz9k0d-MuiInputBase-input"
-            id=":r0:"
-            role="combobox"
-            spellcheck="false"
-            type="text"
-            value=""
-          />
           <div
-            class="MuiAutocomplete-endAdornment css-1q60rmi-MuiAutocomplete-endAdornment"
+            class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-w8c12a-MuiInputBase-root"
           >
-            <button
-              aria-label="form.open"
-              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-qzbt6i-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
-              tabindex="-1"
-              title="form.open"
-              type="button"
+            <input
+              aria-autocomplete="list"
+              aria-expanded="false"
+              aria-invalid="false"
+              autocapitalize="none"
+              autocomplete="off"
+              class="MuiInputBase-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-yz9k0d-MuiInputBase-input"
+              id=":r0:"
+              role="combobox"
+              spellcheck="false"
+              type="text"
+              value=""
+            />
+            <div
+              class="MuiAutocomplete-endAdornment css-1q60rmi-MuiAutocomplete-endAdornment"
             >
-              <ion-icon
-                name="chevron-down"
-              />
-              <span
-                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-              />
-            </button>
+              <button
+                aria-label="form.open"
+                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-qzbt6i-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
+                tabindex="-1"
+                title="form.open"
+                type="button"
+              >
+                <ion-icon
+                  name="chevron-down"
+                />
+                <span
+                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -61,40 +65,44 @@ exports[`DropDown match snapshot BadgeDisabledTrue 1`] = `
       class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-1qqsdnr-MuiAutocomplete-root"
     >
       <div
-        class="MuiFormControl-root MuiFormControl-fullWidth css-1qc7p1k-MuiFormControl-root"
+        class="MuiFormControl-root MuiFormControl-fullWidth css-x119s1-MuiFormControl-root"
       >
         <div
-          class="MuiInputBase-root MuiInputBase-colorPrimary Mui-disabled MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-5uzcdm-MuiInputBase-root"
+          class="InputText__Wrapper css-newnfq"
         >
-          <input
-            aria-autocomplete="list"
-            aria-expanded="false"
-            aria-invalid="false"
-            autocapitalize="none"
-            autocomplete="off"
-            class="MuiInputBase-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-yz9k0d-MuiInputBase-input"
-            disabled=""
-            id=":r1:"
-            role="combobox"
-            spellcheck="false"
-            type="text"
-            value=""
-          />
           <div
-            class="MuiAutocomplete-endAdornment css-1q60rmi-MuiAutocomplete-endAdornment"
+            class="MuiInputBase-root MuiInputBase-colorPrimary Mui-disabled MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-w8c12a-MuiInputBase-root"
           >
-            <button
-              aria-label="form.open"
-              class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-qzbt6i-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
+            <input
+              aria-autocomplete="list"
+              aria-expanded="false"
+              aria-invalid="false"
+              autocapitalize="none"
+              autocomplete="off"
+              class="MuiInputBase-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-yz9k0d-MuiInputBase-input"
               disabled=""
-              tabindex="-1"
-              title="form.open"
-              type="button"
+              id=":r1:"
+              role="combobox"
+              spellcheck="false"
+              type="text"
+              value=""
+            />
+            <div
+              class="MuiAutocomplete-endAdornment css-1q60rmi-MuiAutocomplete-endAdornment"
             >
-              <ion-icon
-                name="chevron-down"
-              />
-            </button>
+              <button
+                aria-label="form.open"
+                class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-qzbt6i-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
+                disabled=""
+                tabindex="-1"
+                title="form.open"
+                type="button"
+              >
+                <ion-icon
+                  name="chevron-down"
+                />
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -112,7 +120,7 @@ exports[`DropDown match snapshot BadgeLabel 1`] = `
       class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-1qqsdnr-MuiAutocomplete-root"
     >
       <div
-        class="MuiFormControl-root MuiFormControl-fullWidth css-1qc7p1k-MuiFormControl-root"
+        class="MuiFormControl-root MuiFormControl-fullWidth css-x119s1-MuiFormControl-root"
       >
         <label
           class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-colorPrimary css-ssr94h-MuiFormLabel-root-MuiInputLabel-root"
@@ -122,38 +130,42 @@ exports[`DropDown match snapshot BadgeLabel 1`] = `
           Label
         </label>
         <div
-          class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-5uzcdm-MuiInputBase-root"
+          class="InputText__Wrapper css-newnfq"
         >
-          <input
-            aria-autocomplete="list"
-            aria-expanded="false"
-            aria-invalid="false"
-            autocapitalize="none"
-            autocomplete="off"
-            class="MuiInputBase-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-yz9k0d-MuiInputBase-input"
-            id=":r2:"
-            role="combobox"
-            spellcheck="false"
-            type="text"
-            value=""
-          />
           <div
-            class="MuiAutocomplete-endAdornment css-1q60rmi-MuiAutocomplete-endAdornment"
+            class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-w8c12a-MuiInputBase-root"
           >
-            <button
-              aria-label="form.open"
-              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-qzbt6i-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
-              tabindex="-1"
-              title="form.open"
-              type="button"
+            <input
+              aria-autocomplete="list"
+              aria-expanded="false"
+              aria-invalid="false"
+              autocapitalize="none"
+              autocomplete="off"
+              class="MuiInputBase-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-yz9k0d-MuiInputBase-input"
+              id=":r2:"
+              role="combobox"
+              spellcheck="false"
+              type="text"
+              value=""
+            />
+            <div
+              class="MuiAutocomplete-endAdornment css-1q60rmi-MuiAutocomplete-endAdornment"
             >
-              <ion-icon
-                name="chevron-down"
-              />
-              <span
-                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-              />
-            </button>
+              <button
+                aria-label="form.open"
+                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-qzbt6i-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
+                tabindex="-1"
+                title="form.open"
+                type="button"
+              >
+                <ion-icon
+                  name="chevron-down"
+                />
+                <span
+                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -171,7 +183,7 @@ exports[`DropDown match snapshot BadgeMultiple 1`] = `
       class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-1qqsdnr-MuiAutocomplete-root"
     >
       <div
-        class="MuiFormControl-root MuiFormControl-fullWidth css-1qc7p1k-MuiFormControl-root"
+        class="MuiFormControl-root MuiFormControl-fullWidth css-x119s1-MuiFormControl-root"
       >
         <label
           class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-colorPrimary css-ssr94h-MuiFormLabel-root-MuiInputLabel-root"
@@ -181,38 +193,42 @@ exports[`DropDown match snapshot BadgeMultiple 1`] = `
           Label
         </label>
         <div
-          class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-5uzcdm-MuiInputBase-root"
+          class="InputText__Wrapper css-newnfq"
         >
-          <input
-            aria-autocomplete="list"
-            aria-expanded="false"
-            aria-invalid="false"
-            autocapitalize="none"
-            autocomplete="off"
-            class="MuiInputBase-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-yz9k0d-MuiInputBase-input"
-            id=":r5:"
-            role="combobox"
-            spellcheck="false"
-            type="text"
-            value=""
-          />
           <div
-            class="MuiAutocomplete-endAdornment css-1q60rmi-MuiAutocomplete-endAdornment"
+            class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-w8c12a-MuiInputBase-root"
           >
-            <button
-              aria-label="form.open"
-              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-qzbt6i-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
-              tabindex="-1"
-              title="form.open"
-              type="button"
+            <input
+              aria-autocomplete="list"
+              aria-expanded="false"
+              aria-invalid="false"
+              autocapitalize="none"
+              autocomplete="off"
+              class="MuiInputBase-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-yz9k0d-MuiInputBase-input"
+              id=":r5:"
+              role="combobox"
+              spellcheck="false"
+              type="text"
+              value=""
+            />
+            <div
+              class="MuiAutocomplete-endAdornment css-1q60rmi-MuiAutocomplete-endAdornment"
             >
-              <ion-icon
-                name="chevron-down"
-              />
-              <span
-                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-              />
-            </button>
+              <button
+                aria-label="form.open"
+                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-qzbt6i-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
+                tabindex="-1"
+                title="form.open"
+                type="button"
+              >
+                <ion-icon
+                  name="chevron-down"
+                />
+                <span
+                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -230,41 +246,45 @@ exports[`DropDown match snapshot BadgeRequiredFalse 1`] = `
       class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-1qqsdnr-MuiAutocomplete-root"
     >
       <div
-        class="MuiFormControl-root MuiFormControl-fullWidth css-1qc7p1k-MuiFormControl-root"
+        class="MuiFormControl-root MuiFormControl-fullWidth css-x119s1-MuiFormControl-root"
       >
         <div
-          class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-5uzcdm-MuiInputBase-root"
+          class="InputText__Wrapper css-newnfq"
         >
-          <input
-            aria-autocomplete="list"
-            aria-expanded="false"
-            aria-invalid="false"
-            autocapitalize="none"
-            autocomplete="off"
-            class="MuiInputBase-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-yz9k0d-MuiInputBase-input"
-            id=":r3:"
-            role="combobox"
-            spellcheck="false"
-            type="text"
-            value=""
-          />
           <div
-            class="MuiAutocomplete-endAdornment css-1q60rmi-MuiAutocomplete-endAdornment"
+            class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-w8c12a-MuiInputBase-root"
           >
-            <button
-              aria-label="form.open"
-              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-qzbt6i-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
-              tabindex="-1"
-              title="form.open"
-              type="button"
+            <input
+              aria-autocomplete="list"
+              aria-expanded="false"
+              aria-invalid="false"
+              autocapitalize="none"
+              autocomplete="off"
+              class="MuiInputBase-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-yz9k0d-MuiInputBase-input"
+              id=":r3:"
+              role="combobox"
+              spellcheck="false"
+              type="text"
+              value=""
+            />
+            <div
+              class="MuiAutocomplete-endAdornment css-1q60rmi-MuiAutocomplete-endAdornment"
             >
-              <ion-icon
-                name="chevron-down"
-              />
-              <span
-                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-              />
-            </button>
+              <button
+                aria-label="form.open"
+                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-qzbt6i-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
+                tabindex="-1"
+                title="form.open"
+                type="button"
+              >
+                <ion-icon
+                  name="chevron-down"
+                />
+                <span
+                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -282,43 +302,47 @@ exports[`DropDown match snapshot BadgeRequiredTrue 1`] = `
       class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-1qqsdnr-MuiAutocomplete-root"
     >
       <div
-        class="MuiFormControl-root MuiFormControl-fullWidth css-1qc7p1k-MuiFormControl-root"
+        class="MuiFormControl-root MuiFormControl-fullWidth css-x119s1-MuiFormControl-root"
       >
         <div
-          class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-5uzcdm-MuiInputBase-root"
-          required=""
+          class="InputText__Wrapper css-newnfq"
         >
-          <input
-            aria-autocomplete="list"
-            aria-expanded="false"
-            aria-invalid="false"
-            autocapitalize="none"
-            autocomplete="off"
-            class="MuiInputBase-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-yz9k0d-MuiInputBase-input"
-            id=":r4:"
-            required=""
-            role="combobox"
-            spellcheck="false"
-            type="text"
-            value=""
-          />
           <div
-            class="MuiAutocomplete-endAdornment css-1q60rmi-MuiAutocomplete-endAdornment"
+            class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-w8c12a-MuiInputBase-root"
+            required=""
           >
-            <button
-              aria-label="form.open"
-              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-qzbt6i-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
-              tabindex="-1"
-              title="form.open"
-              type="button"
+            <input
+              aria-autocomplete="list"
+              aria-expanded="false"
+              aria-invalid="false"
+              autocapitalize="none"
+              autocomplete="off"
+              class="MuiInputBase-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-yz9k0d-MuiInputBase-input"
+              id=":r4:"
+              required=""
+              role="combobox"
+              spellcheck="false"
+              type="text"
+              value=""
+            />
+            <div
+              class="MuiAutocomplete-endAdornment css-1q60rmi-MuiAutocomplete-endAdornment"
             >
-              <ion-icon
-                name="chevron-down"
-              />
-              <span
-                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-              />
-            </button>
+              <button
+                aria-label="form.open"
+                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-qzbt6i-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
+                tabindex="-1"
+                title="form.open"
+                type="button"
+              >
+                <ion-icon
+                  name="chevron-down"
+                />
+                <span
+                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
+              </button>
+            </div>
           </div>
         </div>
       </div>
