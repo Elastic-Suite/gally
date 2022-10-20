@@ -6,41 +6,45 @@ exports[`TreeSelector should match snapshot 1`] = `
     class="css-1baulvz"
   >
     <div
-      class="MuiFormControl-root css-14yckze-MuiFormControl-root"
+      class="MuiFormControl-root css-1pl6002-MuiFormControl-root"
     >
       <div
-        class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedStart MuiInputBase-adornedEnd  css-xrz2lz-MuiInputBase-root"
+        class="InputText__Wrapper css-newnfq"
       >
-        <input
-          aria-autocomplete="list"
-          aria-expanded="false"
-          aria-invalid="false"
-          autocapitalize="none"
-          autocomplete="off"
-          class="MuiInputBase-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-yz9k0d-MuiInputBase-input"
-          id=":r0:"
-          role="combobox"
-          spellcheck="false"
-          type="text"
-          value=""
-        />
         <div
-          class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1uab8qk-MuiInputAdornment-root"
+          class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedStart MuiInputBase-adornedEnd  css-1ftmy7z-MuiInputBase-root"
         >
-          <button
-            aria-label="form.open"
-            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-1x878dy-MuiButtonBase-root-MuiIconButton-root"
-            tabindex="-1"
-            title="form.open"
-            type="button"
+          <input
+            aria-autocomplete="list"
+            aria-expanded="false"
+            aria-invalid="false"
+            autocapitalize="none"
+            autocomplete="off"
+            class="MuiInputBase-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-yz9k0d-MuiInputBase-input"
+            id=":r0:"
+            role="combobox"
+            spellcheck="false"
+            type="text"
+            value=""
+          />
+          <div
+            class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1uab8qk-MuiInputAdornment-root"
           >
-            <ion-icon
-              name="chevron-down"
-            />
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
-          </button>
+            <button
+              aria-label="form.open"
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-1x878dy-MuiButtonBase-root-MuiIconButton-root"
+              tabindex="-1"
+              title="form.open"
+              type="button"
+            >
+              <ion-icon
+                name="chevron-down"
+              />
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
+          </div>
         </div>
       </div>
     </div>
