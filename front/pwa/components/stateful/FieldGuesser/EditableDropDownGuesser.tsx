@@ -1,12 +1,12 @@
+import { SyntheticEvent, useContext, useEffect } from 'react'
 import { useTranslation } from 'next-i18next'
 import { IFieldGuesserProps } from 'shared'
 
 import DropDown from '~/components/atoms/form/DropDown'
-import { useContext, useEffect } from 'react'
 import { optionsContext } from '~/contexts'
 
 interface IProps extends Omit<IFieldGuesserProps, 'onChange'> {
-  onChange: (value: number | string) => void
+  onChange: (value: number | string, event: SyntheticEvent) => void
 }
 
 function EditableDropDownGuesser(props: IProps): JSX.Element {

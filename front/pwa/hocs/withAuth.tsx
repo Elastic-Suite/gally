@@ -1,11 +1,9 @@
 import { FunctionComponent, useContext, useEffect } from 'react'
 import { useRouter } from 'next/router'
+import { getDisplayName, isValidUser } from 'shared'
 
 import { userContext } from '~/contexts'
 import { setRequestedPath, useAppDispatch } from '~/store'
-import { isValidUser } from 'shared'
-
-import OptionsProvider from '~/components/stateful-providers/OptionsProvider/OptionsProvider'
 
 export function withAuth<P extends Record<string, unknown>>(
   Cmp: FunctionComponent<P>
@@ -26,17 +24,9 @@ export function withAuth<P extends Record<string, unknown>>(
       return null
     }
 
-    return (
-      <OptionsProvider>
-        <Cmp {...props} />
-      </OptionsProvider>
-    )
+    return <Cmp {...props} />
   }
 
   WithAuth.displayName = `WithAuth(${getDisplayName(Cmp)})`
   return WithAuth
-}
-
-function getDisplayName<P>(Cmp: FunctionComponent<P>): string {
-  return Cmp.displayName || Cmp.name || 'Component'
 }

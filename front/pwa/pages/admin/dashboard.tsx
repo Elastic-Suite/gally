@@ -1,7 +1,8 @@
-import { withAuth } from '~/hocs'
-import React, { useContext, useEffect } from 'react'
-import { breadcrumbContext } from '~/contexts'
+import { useContext, useEffect } from 'react'
 import { useRouter } from 'next/router'
+
+import { withAuth, withOptions } from '~/hocs'
+import { breadcrumbContext } from '~/contexts'
 
 function Dashboard(): JSX.Element {
   const router = useRouter()
@@ -16,4 +17,4 @@ function Dashboard(): JSX.Element {
   return <div>Dashboard</div>
 }
 
-export default withAuth(Dashboard)
+export default withAuth(withOptions(Dashboard))

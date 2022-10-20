@@ -4,6 +4,7 @@ import {
   FunctionComponent,
   MutableRefObject,
   SetStateAction,
+  SyntheticEvent,
   forwardRef,
   useEffect,
   useRef,
@@ -37,7 +38,8 @@ export interface ICustomTableProps {
   onRowUpdate?: (
     id: string | number,
     name: string,
-    value: boolean | number | string
+    value: boolean | number | string,
+    event: SyntheticEvent
   ) => void
   tableHeaders: ITableHeader[]
   tableRows: ITableRow[]

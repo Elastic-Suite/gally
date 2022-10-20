@@ -1,10 +1,10 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useMemo, useState } from 'react'
-
 import { useTranslation } from 'next-i18next'
+
 import { breadcrumbContext } from '~/contexts'
-import { withAuth } from '~/hocs'
+import { withAuth, withOptions } from '~/hocs'
 import { useFetchApi, useFilters, useResource } from '~/hooks'
 
 import TitleBlock from '~/components/molecules/layout/TitleBlock/TitleBlock'
@@ -162,4 +162,4 @@ function Facets(): JSX.Element {
   )
 }
 
-export default withAuth(Facets)
+export default withAuth(withOptions(Facets))
