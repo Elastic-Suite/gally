@@ -1,1081 +1,1441 @@
 Elasticsuite\Metadata\Model\SourceFieldOption:
     product_accessory_brand_option_13:
+        code: '13'
         source_field: '@product_accessory_brand'
         position: 0
     product_accessory_brand_option_14:
+        code: '14'
         source_field: '@product_accessory_brand'
         position: 1
     product_accessory_gemstone_addon_option_15:
+        code: '15'
         source_field: '@product_accessory_gemstone_addon'
         position: 0
     product_accessory_gemstone_addon_option_16:
+        code: '16'
         source_field: '@product_accessory_gemstone_addon'
         position: 1
     product_accessory_recyclable_material_option_1:
+        code: '0'
         source_field: '@product_accessory_recyclable_material'
         position: 0
     product_accessory_recyclable_material_option_0:
+        code: '1'
         source_field: '@product_accessory_recyclable_material'
         position: 1
     product_country_of_manufacture_option_:
+        code: 'default'
         source_field: '@product_country_of_manufacture'
         position: 0
     product_country_of_manufacture_option_AF:
+        code: 'AF'
         source_field: '@product_country_of_manufacture'
         position: 1
     product_country_of_manufacture_option_AL:
+        code: 'AL'
         source_field: '@product_country_of_manufacture'
         position: 2
     product_country_of_manufacture_option_DZ:
+        code: 'DZ'
         source_field: '@product_country_of_manufacture'
         position: 3
     product_country_of_manufacture_option_AS:
+        code: 'AS'
         source_field: '@product_country_of_manufacture'
         position: 4
     product_country_of_manufacture_option_AD:
+        code: 'AD'
         source_field: '@product_country_of_manufacture'
         position: 5
     product_country_of_manufacture_option_AO:
+        code: 'AO'
         source_field: '@product_country_of_manufacture'
         position: 6
     product_country_of_manufacture_option_AI:
+        code: 'AI'
         source_field: '@product_country_of_manufacture'
         position: 7
     product_country_of_manufacture_option_AQ:
+        code: 'AQ'
         source_field: '@product_country_of_manufacture'
         position: 8
     product_country_of_manufacture_option_AG:
+        code: 'AG'
         source_field: '@product_country_of_manufacture'
         position: 9
     product_country_of_manufacture_option_AR:
+        code: 'AR'
         source_field: '@product_country_of_manufacture'
         position: 10
     product_country_of_manufacture_option_AM:
+        code: 'AM'
         source_field: '@product_country_of_manufacture'
         position: 11
     product_country_of_manufacture_option_AW:
+        code: 'AW'
         source_field: '@product_country_of_manufacture'
         position: 12
     product_country_of_manufacture_option_AU:
+        code: 'AU'
         source_field: '@product_country_of_manufacture'
         position: 13
     product_country_of_manufacture_option_AT:
+        code: 'AT'
         source_field: '@product_country_of_manufacture'
         position: 14
     product_country_of_manufacture_option_AZ:
+        code: 'AZ'
         source_field: '@product_country_of_manufacture'
         position: 15
     product_country_of_manufacture_option_BS:
+        code: 'BS'
         source_field: '@product_country_of_manufacture'
         position: 16
     product_country_of_manufacture_option_BH:
+        code: 'BH'
         source_field: '@product_country_of_manufacture'
         position: 17
     product_country_of_manufacture_option_BD:
+        code: 'BD'
         source_field: '@product_country_of_manufacture'
         position: 18
     product_country_of_manufacture_option_BB:
+        code: 'BB'
         source_field: '@product_country_of_manufacture'
         position: 19
     product_country_of_manufacture_option_BY:
+        code: 'BY'
         source_field: '@product_country_of_manufacture'
         position: 20
     product_country_of_manufacture_option_BE:
+        code: 'BE'
         source_field: '@product_country_of_manufacture'
         position: 21
     product_country_of_manufacture_option_BZ:
+        code: 'BZ'
         source_field: '@product_country_of_manufacture'
         position: 22
     product_country_of_manufacture_option_BJ:
+        code: 'BJ'
         source_field: '@product_country_of_manufacture'
         position: 23
     product_country_of_manufacture_option_BM:
+        code: 'BM'
         source_field: '@product_country_of_manufacture'
         position: 24
     product_country_of_manufacture_option_BT:
+        code: 'BT'
         source_field: '@product_country_of_manufacture'
         position: 25
     product_country_of_manufacture_option_BO:
+        code: 'BO'
         source_field: '@product_country_of_manufacture'
         position: 26
     product_country_of_manufacture_option_BA:
+        code: 'BA'
         source_field: '@product_country_of_manufacture'
         position: 27
     product_country_of_manufacture_option_BW:
+        code: 'BW'
         source_field: '@product_country_of_manufacture'
         position: 28
     product_country_of_manufacture_option_BV:
+        code: 'BV'
         source_field: '@product_country_of_manufacture'
         position: 29
     product_country_of_manufacture_option_BR:
+        code: 'BR'
         source_field: '@product_country_of_manufacture'
         position: 30
     product_country_of_manufacture_option_IO:
+        code: 'IO'
         source_field: '@product_country_of_manufacture'
         position: 31
     product_country_of_manufacture_option_VG:
+        code: 'VG'
         source_field: '@product_country_of_manufacture'
         position: 32
     product_country_of_manufacture_option_BN:
+        code: 'BN'
         source_field: '@product_country_of_manufacture'
         position: 33
     product_country_of_manufacture_option_BG:
+        code: 'BG'
         source_field: '@product_country_of_manufacture'
         position: 34
     product_country_of_manufacture_option_BF:
+        code: 'BF'
         source_field: '@product_country_of_manufacture'
         position: 35
     product_country_of_manufacture_option_BI:
+        code: 'BI'
         source_field: '@product_country_of_manufacture'
         position: 36
     product_country_of_manufacture_option_KH:
+        code: 'KH'
         source_field: '@product_country_of_manufacture'
         position: 37
     product_country_of_manufacture_option_CM:
+        code: 'CM'
         source_field: '@product_country_of_manufacture'
         position: 38
     product_country_of_manufacture_option_CA:
+        code: 'CA'
         source_field: '@product_country_of_manufacture'
         position: 39
     product_country_of_manufacture_option_CV:
+        code: 'CV'
         source_field: '@product_country_of_manufacture'
         position: 40
     product_country_of_manufacture_option_BQ:
+        code: 'BQ'
         source_field: '@product_country_of_manufacture'
         position: 41
     product_country_of_manufacture_option_KY:
+        code: 'KY'
         source_field: '@product_country_of_manufacture'
         position: 42
     product_country_of_manufacture_option_CF:
+        code: 'CF'
         source_field: '@product_country_of_manufacture'
         position: 43
     product_country_of_manufacture_option_TD:
+        code: 'TD'
         source_field: '@product_country_of_manufacture'
         position: 44
     product_country_of_manufacture_option_CL:
+        code: 'CL'
         source_field: '@product_country_of_manufacture'
         position: 45
     product_country_of_manufacture_option_CN:
+        code: 'CN'
         source_field: '@product_country_of_manufacture'
         position: 46
     product_country_of_manufacture_option_CX:
+        code: 'CX'
         source_field: '@product_country_of_manufacture'
         position: 47
     product_country_of_manufacture_option_CC:
+        code: 'CC'
         source_field: '@product_country_of_manufacture'
         position: 48
     product_country_of_manufacture_option_CO:
+        code: 'CO'
         source_field: '@product_country_of_manufacture'
         position: 49
     product_country_of_manufacture_option_KM:
+        code: 'KM'
         source_field: '@product_country_of_manufacture'
         position: 50
     product_country_of_manufacture_option_CG:
+        code: 'CG'
         source_field: '@product_country_of_manufacture'
         position: 51
     product_country_of_manufacture_option_CD:
+        code: 'CD'
         source_field: '@product_country_of_manufacture'
         position: 52
     product_country_of_manufacture_option_CK:
+        code: 'CK'
         source_field: '@product_country_of_manufacture'
         position: 53
     product_country_of_manufacture_option_CR:
+        code: 'CR'
         source_field: '@product_country_of_manufacture'
         position: 54
     product_country_of_manufacture_option_HR:
+        code: 'HR'
         source_field: '@product_country_of_manufacture'
         position: 55
     product_country_of_manufacture_option_CU:
+        code: 'CU'
         source_field: '@product_country_of_manufacture'
         position: 56
     product_country_of_manufacture_option_CW:
+        code: 'CW'
         source_field: '@product_country_of_manufacture'
         position: 57
     product_country_of_manufacture_option_CY:
+        code: 'CY'
         source_field: '@product_country_of_manufacture'
         position: 58
     product_country_of_manufacture_option_CZ:
+        code: 'CZ'
         source_field: '@product_country_of_manufacture'
         position: 59
     product_country_of_manufacture_option_CI:
+        code: 'CI'
         source_field: '@product_country_of_manufacture'
         position: 60
     product_country_of_manufacture_option_DK:
+        code: 'DK'
         source_field: '@product_country_of_manufacture'
         position: 61
     product_country_of_manufacture_option_DJ:
+        code: 'DJ'
         source_field: '@product_country_of_manufacture'
         position: 62
     product_country_of_manufacture_option_DM:
+        code: 'DM'
         source_field: '@product_country_of_manufacture'
         position: 63
     product_country_of_manufacture_option_DO:
+        code: 'DO'
         source_field: '@product_country_of_manufacture'
         position: 64
     product_country_of_manufacture_option_EC:
+        code: 'EC'
         source_field: '@product_country_of_manufacture'
         position: 65
     product_country_of_manufacture_option_EG:
+        code: 'EG'
         source_field: '@product_country_of_manufacture'
         position: 66
     product_country_of_manufacture_option_SV:
+        code: 'SV'
         source_field: '@product_country_of_manufacture'
         position: 67
     product_country_of_manufacture_option_GQ:
+        code: 'GQ'
         source_field: '@product_country_of_manufacture'
         position: 68
     product_country_of_manufacture_option_ER:
+        code: 'ER'
         source_field: '@product_country_of_manufacture'
         position: 69
     product_country_of_manufacture_option_EE:
+        code: 'EE'
         source_field: '@product_country_of_manufacture'
         position: 70
     product_country_of_manufacture_option_SZ:
+        code: 'SZ'
         source_field: '@product_country_of_manufacture'
         position: 71
     product_country_of_manufacture_option_ET:
+        code: 'ET'
         source_field: '@product_country_of_manufacture'
         position: 72
     product_country_of_manufacture_option_FK:
+        code: 'FK'
         source_field: '@product_country_of_manufacture'
         position: 73
     product_country_of_manufacture_option_FO:
+        code: 'FO'
         source_field: '@product_country_of_manufacture'
         position: 74
     product_country_of_manufacture_option_FJ:
+        code: 'FJ'
         source_field: '@product_country_of_manufacture'
         position: 75
     product_country_of_manufacture_option_FI:
+        code: 'FI'
         source_field: '@product_country_of_manufacture'
         position: 76
     product_country_of_manufacture_option_FR:
+        code: 'FR'
         source_field: '@product_country_of_manufacture'
         position: 77
     product_country_of_manufacture_option_GF:
+        code: 'GF'
         source_field: '@product_country_of_manufacture'
         position: 78
     product_country_of_manufacture_option_PF:
+        code: 'PF'
         source_field: '@product_country_of_manufacture'
         position: 79
     product_country_of_manufacture_option_TF:
+        code: 'TF'
         source_field: '@product_country_of_manufacture'
         position: 80
     product_country_of_manufacture_option_GA:
+        code: 'GA'
         source_field: '@product_country_of_manufacture'
         position: 81
     product_country_of_manufacture_option_GM:
+        code: 'GM'
         source_field: '@product_country_of_manufacture'
         position: 82
     product_country_of_manufacture_option_GE:
+        code: 'GE'
         source_field: '@product_country_of_manufacture'
         position: 83
     product_country_of_manufacture_option_DE:
+        code: 'DE'
         source_field: '@product_country_of_manufacture'
         position: 84
     product_country_of_manufacture_option_GH:
+        code: 'GH'
         source_field: '@product_country_of_manufacture'
         position: 85
     product_country_of_manufacture_option_GI:
+        code: 'GI'
         source_field: '@product_country_of_manufacture'
         position: 86
     product_country_of_manufacture_option_GR:
+        code: 'GR'
         source_field: '@product_country_of_manufacture'
         position: 87
     product_country_of_manufacture_option_GL:
+        code: 'GL'
         source_field: '@product_country_of_manufacture'
         position: 88
     product_country_of_manufacture_option_GD:
+        code: 'GD'
         source_field: '@product_country_of_manufacture'
         position: 89
     product_country_of_manufacture_option_GP:
+        code: 'GP'
         source_field: '@product_country_of_manufacture'
         position: 90
     product_country_of_manufacture_option_GU:
+        code: 'GU'
         source_field: '@product_country_of_manufacture'
         position: 91
     product_country_of_manufacture_option_GT:
+        code: 'GT'
         source_field: '@product_country_of_manufacture'
         position: 92
     product_country_of_manufacture_option_GG:
+        code: 'GG'
         source_field: '@product_country_of_manufacture'
         position: 93
     product_country_of_manufacture_option_GN:
+        code: 'GN'
         source_field: '@product_country_of_manufacture'
         position: 94
     product_country_of_manufacture_option_GW:
+        code: 'GW'
         source_field: '@product_country_of_manufacture'
         position: 95
     product_country_of_manufacture_option_GY:
+        code: 'GY'
         source_field: '@product_country_of_manufacture'
         position: 96
     product_country_of_manufacture_option_HT:
+        code: 'HT'
         source_field: '@product_country_of_manufacture'
         position: 97
     product_country_of_manufacture_option_HM:
+        code: 'HM'
         source_field: '@product_country_of_manufacture'
         position: 98
     product_country_of_manufacture_option_HN:
+        code: 'HN'
         source_field: '@product_country_of_manufacture'
         position: 99
     product_country_of_manufacture_option_HK:
+        code: 'HK'
         source_field: '@product_country_of_manufacture'
         position: 100
     product_country_of_manufacture_option_HU:
+        code: 'HU'
         source_field: '@product_country_of_manufacture'
         position: 101
     product_country_of_manufacture_option_IS:
+        code: 'IS'
         source_field: '@product_country_of_manufacture'
         position: 102
     product_country_of_manufacture_option_IN:
+        code: 'IN'
         source_field: '@product_country_of_manufacture'
         position: 103
     product_country_of_manufacture_option_ID:
+        code: 'ID'
         source_field: '@product_country_of_manufacture'
         position: 104
     product_country_of_manufacture_option_IR:
+        code: 'IR'
         source_field: '@product_country_of_manufacture'
         position: 105
     product_country_of_manufacture_option_IQ:
+        code: 'IQ'
         source_field: '@product_country_of_manufacture'
         position: 106
     product_country_of_manufacture_option_IE:
+        code: 'IE'
         source_field: '@product_country_of_manufacture'
         position: 107
     product_country_of_manufacture_option_IM:
+        code: 'IM'
         source_field: '@product_country_of_manufacture'
         position: 108
     product_country_of_manufacture_option_IL:
+        code: 'IL'
         source_field: '@product_country_of_manufacture'
         position: 109
     product_country_of_manufacture_option_IT:
+        code: 'IT'
         source_field: '@product_country_of_manufacture'
         position: 110
     product_country_of_manufacture_option_JM:
+        code: 'JM'
         source_field: '@product_country_of_manufacture'
         position: 111
     product_country_of_manufacture_option_JP:
+        code: 'JP'
         source_field: '@product_country_of_manufacture'
         position: 112
     product_country_of_manufacture_option_JE:
+        code: 'JE'
         source_field: '@product_country_of_manufacture'
         position: 113
     product_country_of_manufacture_option_JO:
+        code: 'JO'
         source_field: '@product_country_of_manufacture'
         position: 114
     product_country_of_manufacture_option_KZ:
+        code: 'KZ'
         source_field: '@product_country_of_manufacture'
         position: 115
     product_country_of_manufacture_option_KE:
+        code: 'KE'
         source_field: '@product_country_of_manufacture'
         position: 116
     product_country_of_manufacture_option_KI:
+        code: 'KI'
         source_field: '@product_country_of_manufacture'
         position: 117
     product_country_of_manufacture_option_XK:
+        code: 'XK'
         source_field: '@product_country_of_manufacture'
         position: 118
     product_country_of_manufacture_option_KW:
+        code: 'KW'
         source_field: '@product_country_of_manufacture'
         position: 119
     product_country_of_manufacture_option_KG:
+        code: 'KG'
         source_field: '@product_country_of_manufacture'
         position: 120
     product_country_of_manufacture_option_LA:
+        code: 'LA'
         source_field: '@product_country_of_manufacture'
         position: 121
     product_country_of_manufacture_option_LV:
+        code: 'LV'
         source_field: '@product_country_of_manufacture'
         position: 122
     product_country_of_manufacture_option_LB:
+        code: 'LB'
         source_field: '@product_country_of_manufacture'
         position: 123
     product_country_of_manufacture_option_LS:
+        code: 'LS'
         source_field: '@product_country_of_manufacture'
         position: 124
     product_country_of_manufacture_option_LR:
+        code: 'LR'
         source_field: '@product_country_of_manufacture'
         position: 125
     product_country_of_manufacture_option_LY:
+        code: 'LY'
         source_field: '@product_country_of_manufacture'
         position: 126
     product_country_of_manufacture_option_LI:
+        code: 'LI'
         source_field: '@product_country_of_manufacture'
         position: 127
     product_country_of_manufacture_option_LT:
+        code: 'LT'
         source_field: '@product_country_of_manufacture'
         position: 128
     product_country_of_manufacture_option_LU:
+        code: 'LU'
         source_field: '@product_country_of_manufacture'
         position: 129
     product_country_of_manufacture_option_MO:
+        code: 'MO'
         source_field: '@product_country_of_manufacture'
         position: 130
     product_country_of_manufacture_option_MG:
+        code: 'MG'
         source_field: '@product_country_of_manufacture'
         position: 131
     product_country_of_manufacture_option_MW:
+        code: 'MW'
         source_field: '@product_country_of_manufacture'
         position: 132
     product_country_of_manufacture_option_MY:
+        code: 'MY'
         source_field: '@product_country_of_manufacture'
         position: 133
     product_country_of_manufacture_option_MV:
+        code: 'MV'
         source_field: '@product_country_of_manufacture'
         position: 134
     product_country_of_manufacture_option_ML:
+        code: 'ML'
         source_field: '@product_country_of_manufacture'
         position: 135
     product_country_of_manufacture_option_MT:
+        code: 'MT'
         source_field: '@product_country_of_manufacture'
         position: 136
     product_country_of_manufacture_option_MH:
+        code: 'MH'
         source_field: '@product_country_of_manufacture'
         position: 137
     product_country_of_manufacture_option_MQ:
+        code: 'MQ'
         source_field: '@product_country_of_manufacture'
         position: 138
     product_country_of_manufacture_option_MR:
+        code: 'MR'
         source_field: '@product_country_of_manufacture'
         position: 139
     product_country_of_manufacture_option_MU:
+        code: 'MU'
         source_field: '@product_country_of_manufacture'
         position: 140
     product_country_of_manufacture_option_YT:
+        code: 'YT'
         source_field: '@product_country_of_manufacture'
         position: 141
     product_country_of_manufacture_option_MX:
+        code: 'MX'
         source_field: '@product_country_of_manufacture'
         position: 142
     product_country_of_manufacture_option_FM:
+        code: 'FM'
         source_field: '@product_country_of_manufacture'
         position: 143
     product_country_of_manufacture_option_MD:
+        code: 'MD'
         source_field: '@product_country_of_manufacture'
         position: 144
     product_country_of_manufacture_option_MC:
+        code: 'MC'
         source_field: '@product_country_of_manufacture'
         position: 145
     product_country_of_manufacture_option_MN:
+        code: 'MN'
         source_field: '@product_country_of_manufacture'
         position: 146
     product_country_of_manufacture_option_ME:
+        code: 'ME'
         source_field: '@product_country_of_manufacture'
         position: 147
     product_country_of_manufacture_option_MS:
+        code: 'MS'
         source_field: '@product_country_of_manufacture'
         position: 148
     product_country_of_manufacture_option_MA:
+        code: 'MA'
         source_field: '@product_country_of_manufacture'
         position: 149
     product_country_of_manufacture_option_MZ:
+        code: 'MZ'
         source_field: '@product_country_of_manufacture'
         position: 150
     product_country_of_manufacture_option_MM:
+        code: 'MM'
         source_field: '@product_country_of_manufacture'
         position: 151
     product_country_of_manufacture_option_NA:
+        code: 'NA'
         source_field: '@product_country_of_manufacture'
         position: 152
     product_country_of_manufacture_option_NR:
+        code: 'NR'
         source_field: '@product_country_of_manufacture'
         position: 153
     product_country_of_manufacture_option_NP:
+        code: 'NP'
         source_field: '@product_country_of_manufacture'
         position: 154
     product_country_of_manufacture_option_NL:
+        code: 'NL'
         source_field: '@product_country_of_manufacture'
         position: 155
     product_country_of_manufacture_option_NC:
+        code: 'NC'
         source_field: '@product_country_of_manufacture'
         position: 156
     product_country_of_manufacture_option_NZ:
+        code: 'NZ'
         source_field: '@product_country_of_manufacture'
         position: 157
     product_country_of_manufacture_option_NI:
+        code: 'NI'
         source_field: '@product_country_of_manufacture'
         position: 158
     product_country_of_manufacture_option_NE:
+        code: 'NE'
         source_field: '@product_country_of_manufacture'
         position: 159
     product_country_of_manufacture_option_NG:
+        code: 'NG'
         source_field: '@product_country_of_manufacture'
         position: 160
     product_country_of_manufacture_option_NU:
+        code: 'NU'
         source_field: '@product_country_of_manufacture'
         position: 161
     product_country_of_manufacture_option_NF:
+        code: 'NF'
         source_field: '@product_country_of_manufacture'
         position: 162
     product_country_of_manufacture_option_KP:
+        code: 'KP'
         source_field: '@product_country_of_manufacture'
         position: 163
     product_country_of_manufacture_option_MK:
+        code: 'MK'
         source_field: '@product_country_of_manufacture'
         position: 164
     product_country_of_manufacture_option_MP:
+        code: 'MP'
         source_field: '@product_country_of_manufacture'
         position: 165
     product_country_of_manufacture_option_NO:
+        code: 'NO'
         source_field: '@product_country_of_manufacture'
         position: 166
     product_country_of_manufacture_option_OM:
+        code: 'OM'
         source_field: '@product_country_of_manufacture'
         position: 167
     product_country_of_manufacture_option_PK:
+        code: 'PK'
         source_field: '@product_country_of_manufacture'
         position: 168
     product_country_of_manufacture_option_PW:
+        code: 'PW'
         source_field: '@product_country_of_manufacture'
         position: 169
     product_country_of_manufacture_option_PS:
+        code: 'PS'
         source_field: '@product_country_of_manufacture'
         position: 170
     product_country_of_manufacture_option_PA:
+        code: 'PA'
         source_field: '@product_country_of_manufacture'
         position: 171
     product_country_of_manufacture_option_PG:
+        code: 'PG'
         source_field: '@product_country_of_manufacture'
         position: 172
     product_country_of_manufacture_option_PY:
+        code: 'PY'
         source_field: '@product_country_of_manufacture'
         position: 173
     product_country_of_manufacture_option_PE:
+        code: 'PE'
         source_field: '@product_country_of_manufacture'
         position: 174
     product_country_of_manufacture_option_PH:
+        code: 'PH'
         source_field: '@product_country_of_manufacture'
         position: 175
     product_country_of_manufacture_option_PN:
+        code: 'PN'
         source_field: '@product_country_of_manufacture'
         position: 176
     product_country_of_manufacture_option_PL:
+        code: 'PL'
         source_field: '@product_country_of_manufacture'
         position: 177
     product_country_of_manufacture_option_PT:
+        code: 'PT'
         source_field: '@product_country_of_manufacture'
         position: 178
     product_country_of_manufacture_option_QA:
+        code: 'QA'
         source_field: '@product_country_of_manufacture'
         position: 179
     product_country_of_manufacture_option_RO:
+        code: 'RO'
         source_field: '@product_country_of_manufacture'
         position: 180
     product_country_of_manufacture_option_RU:
+        code: 'RU'
         source_field: '@product_country_of_manufacture'
         position: 181
     product_country_of_manufacture_option_RW:
+        code: 'RW'
         source_field: '@product_country_of_manufacture'
         position: 182
     product_country_of_manufacture_option_RE:
+        code: 'RE'
         source_field: '@product_country_of_manufacture'
         position: 183
     product_country_of_manufacture_option_WS:
+        code: 'WS'
         source_field: '@product_country_of_manufacture'
         position: 184
     product_country_of_manufacture_option_SM:
+        code: 'SM'
         source_field: '@product_country_of_manufacture'
         position: 185
     product_country_of_manufacture_option_SA:
+        code: 'SA'
         source_field: '@product_country_of_manufacture'
         position: 186
     product_country_of_manufacture_option_SN:
+        code: 'SN'
         source_field: '@product_country_of_manufacture'
         position: 187
     product_country_of_manufacture_option_RS:
+        code: 'RS'
         source_field: '@product_country_of_manufacture'
         position: 188
     product_country_of_manufacture_option_SC:
+        code: 'SC'
         source_field: '@product_country_of_manufacture'
         position: 189
     product_country_of_manufacture_option_SL:
+        code: 'SL'
         source_field: '@product_country_of_manufacture'
         position: 190
     product_country_of_manufacture_option_SG:
+        code: 'SG'
         source_field: '@product_country_of_manufacture'
         position: 191
     product_country_of_manufacture_option_SX:
+        code: 'SX'
         source_field: '@product_country_of_manufacture'
         position: 192
     product_country_of_manufacture_option_SK:
+        code: 'SK'
         source_field: '@product_country_of_manufacture'
         position: 193
     product_country_of_manufacture_option_SI:
+        code: 'SI'
         source_field: '@product_country_of_manufacture'
         position: 194
     product_country_of_manufacture_option_SB:
+        code: 'SB'
         source_field: '@product_country_of_manufacture'
         position: 195
     product_country_of_manufacture_option_SO:
+        code: 'SO'
         source_field: '@product_country_of_manufacture'
         position: 196
     product_country_of_manufacture_option_ZA:
+        code: 'ZA'
         source_field: '@product_country_of_manufacture'
         position: 197
     product_country_of_manufacture_option_GS:
+        code: 'GS'
         source_field: '@product_country_of_manufacture'
         position: 198
     product_country_of_manufacture_option_KR:
+        code: 'KR'
         source_field: '@product_country_of_manufacture'
         position: 199
     product_country_of_manufacture_option_ES:
+        code: 'ES'
         source_field: '@product_country_of_manufacture'
         position: 200
     product_country_of_manufacture_option_LK:
+        code: 'LK'
         source_field: '@product_country_of_manufacture'
         position: 201
     product_country_of_manufacture_option_BL:
+        code: 'BL'
         source_field: '@product_country_of_manufacture'
         position: 202
     product_country_of_manufacture_option_SH:
+        code: 'SH'
         source_field: '@product_country_of_manufacture'
         position: 203
     product_country_of_manufacture_option_KN:
+        code: 'KN'
         source_field: '@product_country_of_manufacture'
         position: 204
     product_country_of_manufacture_option_LC:
+        code: 'LC'
         source_field: '@product_country_of_manufacture'
         position: 205
     product_country_of_manufacture_option_MF:
+        code: 'MF'
         source_field: '@product_country_of_manufacture'
         position: 206
     product_country_of_manufacture_option_PM:
+        code: 'PM'
         source_field: '@product_country_of_manufacture'
         position: 207
     product_country_of_manufacture_option_VC:
+        code: 'VC'
         source_field: '@product_country_of_manufacture'
         position: 208
     product_country_of_manufacture_option_SD:
+        code: 'SD'
         source_field: '@product_country_of_manufacture'
         position: 209
     product_country_of_manufacture_option_SR:
+        code: 'SR'
         source_field: '@product_country_of_manufacture'
         position: 210
     product_country_of_manufacture_option_SJ:
+        code: 'SJ'
         source_field: '@product_country_of_manufacture'
         position: 211
     product_country_of_manufacture_option_SE:
+        code: 'SE'
         source_field: '@product_country_of_manufacture'
         position: 212
     product_country_of_manufacture_option_CH:
+        code: 'CH'
         source_field: '@product_country_of_manufacture'
         position: 213
     product_country_of_manufacture_option_SY:
+        code: 'SY'
         source_field: '@product_country_of_manufacture'
         position: 214
     product_country_of_manufacture_option_ST:
+        code: 'ST'
         source_field: '@product_country_of_manufacture'
         position: 215
     product_country_of_manufacture_option_TW:
+        code: 'TW'
         source_field: '@product_country_of_manufacture'
         position: 216
     product_country_of_manufacture_option_TJ:
+        code: 'TJ'
         source_field: '@product_country_of_manufacture'
         position: 217
     product_country_of_manufacture_option_TZ:
+        code: 'TZ'
         source_field: '@product_country_of_manufacture'
         position: 218
     product_country_of_manufacture_option_TH:
+        code: 'TH'
         source_field: '@product_country_of_manufacture'
         position: 219
     product_country_of_manufacture_option_TL:
+        code: 'TL'
         source_field: '@product_country_of_manufacture'
         position: 220
     product_country_of_manufacture_option_TG:
+        code: 'TG'
         source_field: '@product_country_of_manufacture'
         position: 221
     product_country_of_manufacture_option_TK:
+        code: 'TK'
         source_field: '@product_country_of_manufacture'
         position: 222
     product_country_of_manufacture_option_TO:
+        code: 'TO'
         source_field: '@product_country_of_manufacture'
         position: 223
     product_country_of_manufacture_option_TT:
+        code: 'TT'
         source_field: '@product_country_of_manufacture'
         position: 224
     product_country_of_manufacture_option_TN:
+        code: 'TN'
         source_field: '@product_country_of_manufacture'
         position: 225
     product_country_of_manufacture_option_TR:
+        code: 'TR'
         source_field: '@product_country_of_manufacture'
         position: 226
     product_country_of_manufacture_option_TM:
+        code: 'TM'
         source_field: '@product_country_of_manufacture'
         position: 227
     product_country_of_manufacture_option_TC:
+        code: 'TC'
         source_field: '@product_country_of_manufacture'
         position: 228
     product_country_of_manufacture_option_TV:
+        code: 'TV'
         source_field: '@product_country_of_manufacture'
         position: 229
     product_country_of_manufacture_option_UM:
+        code: 'UM'
         source_field: '@product_country_of_manufacture'
         position: 230
     product_country_of_manufacture_option_VI:
+        code: 'VI'
         source_field: '@product_country_of_manufacture'
         position: 231
     product_country_of_manufacture_option_UG:
+        code: 'UG'
         source_field: '@product_country_of_manufacture'
         position: 232
     product_country_of_manufacture_option_UA:
+        code: 'UA'
         source_field: '@product_country_of_manufacture'
         position: 233
     product_country_of_manufacture_option_AE:
+        code: 'AE'
         source_field: '@product_country_of_manufacture'
         position: 234
     product_country_of_manufacture_option_GB:
+        code: 'GB'
         source_field: '@product_country_of_manufacture'
         position: 235
     product_country_of_manufacture_option_US:
+        code: 'US'
         source_field: '@product_country_of_manufacture'
         position: 236
     product_country_of_manufacture_option_UY:
+        code: 'UY'
         source_field: '@product_country_of_manufacture'
         position: 237
     product_country_of_manufacture_option_UZ:
+        code: 'UZ'
         source_field: '@product_country_of_manufacture'
         position: 238
     product_country_of_manufacture_option_VU:
+        code: 'VU'
         source_field: '@product_country_of_manufacture'
         position: 239
     product_country_of_manufacture_option_VA:
+        code: 'VA'
         source_field: '@product_country_of_manufacture'
         position: 240
     product_country_of_manufacture_option_VE:
+        code: 'VE'
         source_field: '@product_country_of_manufacture'
         position: 241
     product_country_of_manufacture_option_VN:
+        code: 'VN'
         source_field: '@product_country_of_manufacture'
         position: 242
     product_country_of_manufacture_option_WF:
+        code: 'WF'
         source_field: '@product_country_of_manufacture'
         position: 243
     product_country_of_manufacture_option_EH:
+        code: 'EH'
         source_field: '@product_country_of_manufacture'
         position: 244
     product_country_of_manufacture_option_YE:
+        code: 'YE'
         source_field: '@product_country_of_manufacture'
         position: 245
     product_country_of_manufacture_option_ZM:
+        code: 'ZM'
         source_field: '@product_country_of_manufacture'
         position: 246
     product_country_of_manufacture_option_ZW:
+        code: 'ZW'
         source_field: '@product_country_of_manufacture'
         position: 247
     product_country_of_manufacture_option_AX:
+        code: 'AX'
         source_field: '@product_country_of_manufacture'
         position: 248
     product_custom_design_option_1:
+        code: '1'
         source_field: '@product_custom_design'
         position: 0
     product_custom_design_option_3:
+        code: '3'
         source_field: '@product_custom_design'
         position: 1
     product_custom_layout_option_:
+        code: 'default'
         source_field: '@product_custom_layout'
         position: 0
     product_custom_layout_option_empty:
+        code: 'empty'
         source_field: '@product_custom_layout'
         position: 1
     product_custom_layout_option_1column:
+        code: '1column'
         source_field: '@product_custom_layout'
         position: 2
     product_custom_layout_option_2columns-left:
+        code: '2columns-left'
         source_field: '@product_custom_layout'
         position: 3
     product_custom_layout_option_2columns-right:
+        code: '2columns-right'
         source_field: '@product_custom_layout'
         position: 4
     product_custom_layout_option_3columns:
+        code: '3columns'
         source_field: '@product_custom_layout'
         position: 5
     product_custom_layout_option_cms-full-width:
+        code: 'cms-full-width'
         source_field: '@product_custom_layout'
         position: 6
     product_custom_layout_option_category-full-width:
+        code: 'category-full-width'
         source_field: '@product_custom_layout'
         position: 7
     product_custom_layout_option_product-full-width:
+        code: 'product-full-width'
         source_field: '@product_custom_layout'
         position: 8
     product_fashion_color_option_5:
+        code: '5'
         source_field: '@product_fashion_color'
         position: 0
     product_fashion_color_option_22:
+        code: '22'
         source_field: '@product_fashion_color'
         position: 1
     product_fashion_color_option_23:
+        code: '23'
         source_field: '@product_fashion_color'
         position: 2
     product_fashion_color_option_6:
+        code: '6'
         source_field: '@product_fashion_color'
         position: 3
     product_fashion_color_option_24:
+        code: '24'
         source_field: '@product_fashion_color'
         position: 4
     product_fashion_color_option_25:
+        code: '25'
         source_field: '@product_fashion_color'
         position: 5
     product_fashion_color_option_26:
+        code: '26'
         source_field: '@product_fashion_color'
         position: 6
     product_fashion_color_option_27:
+        code: '27'
         source_field: '@product_fashion_color'
         position: 7
     product_fashion_color_option_28:
+        code: '28'
         source_field: '@product_fashion_color'
         position: 8
     product_fashion_color_option_29:
+        code: '29'
         source_field: '@product_fashion_color'
         position: 9
     product_fashion_color_option_30:
+        code: '30'
         source_field: '@product_fashion_color'
         position: 10
     product_fashion_color_option_31:
+        code: '31'
         source_field: '@product_fashion_color'
         position: 11
     product_fashion_color_option_32:
+        code: '32'
         source_field: '@product_fashion_color'
         position: 12
     product_fashion_material_option_7:
+        code: '7'
         source_field: '@product_fashion_material'
         position: 0
     product_fashion_material_option_45:
+        code: '45'
         source_field: '@product_fashion_material'
         position: 0
     product_fashion_material_option_46:
+        code: '46'
         source_field: '@product_fashion_material'
         position: 1
     product_fashion_material_option_8:
+        code: '8'
         source_field: '@product_fashion_material'
         position: 1
     product_fashion_material_option_47:
+        code: '47'
         source_field: '@product_fashion_material'
         position: 2
     product_fashion_material_option_48:
+        code: '48'
         source_field: '@product_fashion_material'
         position: 3
     product_fashion_material_option_49:
+        code: '49'
         source_field: '@product_fashion_material'
         position: 4
     product_fashion_material_option_50:
+        code: '50'
         source_field: '@product_fashion_material'
         position: 5
     product_fashion_material_option_51:
+        code: '51'
         source_field: '@product_fashion_material'
         position: 6
     product_fashion_material_option_52:
+        code: '52'
         source_field: '@product_fashion_material'
         position: 7
     product_fashion_material_option_53:
+        code: '53'
         source_field: '@product_fashion_material'
         position: 8
     product_fashion_material_option_54:
+        code: '54'
         source_field: '@product_fashion_material'
         position: 9
     product_fashion_material_option_55:
+        code: '55'
         source_field: '@product_fashion_material'
         position: 10
     product_fashion_material_option_56:
+        code: '56'
         source_field: '@product_fashion_material'
         position: 11
     product_fashion_material_option_57:
+        code: '57'
         source_field: '@product_fashion_material'
         position: 12
     product_fashion_size_option_33:
+        code: '33'
         source_field: '@product_fashion_size'
         position: 0
     product_fashion_size_option_34:
+        code: '34'
         source_field: '@product_fashion_size'
         position: 1
     product_fashion_size_option_35:
+        code: '35'
         source_field: '@product_fashion_size'
         position: 2
     product_fashion_size_option_36:
+        code: '36'
         source_field: '@product_fashion_size'
         position: 3
     product_fashion_size_option_37:
+        code: '37'
         source_field: '@product_fashion_size'
         position: 4
     product_fashion_size_option_38:
+        code: '38'
         source_field: '@product_fashion_size'
         position: 5
     product_fashion_size_option_39:
+        code: '39'
         source_field: '@product_fashion_size'
         position: 6
     product_fashion_size_option_40:
+        code: '40'
         source_field: '@product_fashion_size'
         position: 7
     product_fashion_size_option_41:
+        code: '41'
         source_field: '@product_fashion_size'
         position: 8
     product_fashion_size_option_42:
+        code: '42'
         source_field: '@product_fashion_size'
         position: 9
     product_fashion_size_option_43:
+        code: '43'
         source_field: '@product_fashion_size'
         position: 10
     product_fashion_style_option_58:
+        code: '58'
         source_field: '@product_fashion_style'
         position: 0
     product_fashion_style_option_59:
+        code: '59'
         source_field: '@product_fashion_style'
         position: 1
     product_fashion_style_option_60:
+        code: '60'
         source_field: '@product_fashion_style'
         position: 2
     product_fashion_style_option_61:
+        code: '61'
         source_field: '@product_fashion_style'
         position: 3
     product_fashion_style_option_62:
+        code: '62'
         source_field: '@product_fashion_style'
         position: 4
     product_fashion_style_option_63:
+        code: '63'
         source_field: '@product_fashion_style'
         position: 5
     product_fashion_style_option_64:
+        code: '64'
         source_field: '@product_fashion_style'
         position: 6
     product_fashion_style_option_65:
+        code: '65'
         source_field: '@product_fashion_style'
         position: 7
     product_fashion_style_option_66:
+        code: '66'
         source_field: '@product_fashion_style'
         position: 8
     product_fashion_style_option_67:
+        code: '67'
         source_field: '@product_fashion_style'
         position: 9
     product_fashion_style_option_68:
+        code: '68'
         source_field: '@product_fashion_style'
         position: 10
     product_fashion_style_option_69:
+        code: '69'
         source_field: '@product_fashion_style'
         position: 11
     product_fashion_style_option_70:
+        code: '70'
         source_field: '@product_fashion_style'
         position: 12
     product_fashion_style_option_71:
+        code: '71'
         source_field: '@product_fashion_style'
         position: 13
     product_fashion_style_option_72:
+        code: '72'
         source_field: '@product_fashion_style'
         position: 14
     product_fashion_style_option_73:
+        code: '73'
         source_field: '@product_fashion_style'
         position: 15
     product_fashion_style_option_74:
+        code: '74'
         source_field: '@product_fashion_style'
         position: 16
     product_fashion_style_option_75:
+        code: '75'
         source_field: '@product_fashion_style'
         position: 17
     product_fashion_style_option_76:
+        code: '76'
         source_field: '@product_fashion_style'
         position: 18
     product_fashion_style_option_77:
+        code: '77'
         source_field: '@product_fashion_style'
         position: 19
     product_fashion_style_option_78:
+        code: '78'
         source_field: '@product_fashion_style'
         position: 20
     product_fashion_style_option_79:
+        code: '79'
         source_field: '@product_fashion_style'
         position: 21
     product_fashion_style_option_80:
+        code: '80'
         source_field: '@product_fashion_style'
         position: 22
     product_fashion_style_option_81:
+        code: '81'
         source_field: '@product_fashion_style'
         position: 23
     product_gift_message_available_option_1:
+        code: '1'
         source_field: '@product_gift_message_available'
         position: 0
     product_gift_message_available_option_0:
+        code: '0'
         source_field: '@product_gift_message_available'
         position: 1
     product_gift_message_available_option_2:
+        code: '2'
         source_field: '@product_gift_message_available'
         position: 2
     product_has_video_option_1:
+        code: '1'
         source_field: '@product_has_video'
         position: 0
     product_has_video_option_0:
+        code: '0'
         source_field: '@product_has_video'
         position: 1
     product_msrp_display_actual_price_type_option_0:
+        code: '0'
         source_field: '@product_msrp_display_actual_price_type'
         position: 0
     product_msrp_display_actual_price_type_option_1:
+        code: '1'
         source_field: '@product_msrp_display_actual_price_type'
         position: 1
     product_msrp_display_actual_price_type_option_2:
+        code: '2'
         source_field: '@product_msrp_display_actual_price_type'
         position: 2
     product_msrp_display_actual_price_type_option_3:
+        code: '3'
         source_field: '@product_msrp_display_actual_price_type'
         position: 3
     product_options_container_option_container1:
+        code: 'container1'
         source_field: '@product_options_container'
         position: 0
     product_options_container_option_container2:
+        code: 'container2'
         source_field: '@product_options_container'
         position: 1
     product_page_layout_option_:
+        code: 'default'
         source_field: '@product_page_layout'
         position: 0
     product_page_layout_option_empty:
+        code: 'empty'
         source_field: '@product_page_layout'
         position: 1
     product_page_layout_option_1column:
+        code: '1column'
         source_field: '@product_page_layout'
         position: 2
     product_page_layout_option_2columns-left:
+        code: '2columns-left'
         source_field: '@product_page_layout'
         position: 3
     product_page_layout_option_2columns-right:
+        code: '2columns-right'
         source_field: '@product_page_layout'
         position: 4
     product_page_layout_option_3columns:
+        code: '3columns'
         source_field: '@product_page_layout'
         position: 5
     product_page_layout_option_cms-full-width:
+        code: 'cms-full-width'
         source_field: '@product_page_layout'
         position: 6
     product_page_layout_option_category-full-width:
+        code: 'category-full-width'
         source_field: '@product_page_layout'
         position: 7
     product_page_layout_option_product-full-width:
+        code: 'product-full-width'
         source_field: '@product_page_layout'
         position: 8
     product_price_view_option_0:
+        code: '0'
         source_field: '@product_price_view'
         position: 0
     product_price_view_option_1:
+        code: '1'
         source_field: '@product_price_view'
         position: 1
     product_shipment_type_option_0:
+        code: '0'
         source_field: '@product_shipment_type'
         position: 0
     product_shipment_type_option_1:
+        code: '1'
         source_field: '@product_shipment_type'
         position: 1
     product_status_option_1:
+        code: '1'
         source_field: '@product_status'
         position: 0
     product_status_option_2:
+        code: '2'
         source_field: '@product_status'
         position: 1
     product_tax_class_id_option_2:
+        code: '2'
         source_field: '@product_tax_class_id'
         position: 0
     product_visibility_option_1:
+        code: '1'
         source_field: '@product_visibility'
         position: 0
     product_visibility_option_2:
+        code: '2'
         source_field: '@product_visibility'
         position: 1
     product_visibility_option_3:
+        code: '3'
         source_field: '@product_visibility'
         position: 2
     product_visibility_option_4:
+        code: '4'
         source_field: '@product_visibility'
         position: 3

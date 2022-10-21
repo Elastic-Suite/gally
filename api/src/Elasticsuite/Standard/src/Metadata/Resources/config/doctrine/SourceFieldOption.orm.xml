@@ -9,6 +9,7 @@
         <id name="id" type="integer">
             <generator strategy="AUTO"/>
         </id>
+        <field name="code" type="string" nullable="false" />
         <field name="position" type="integer" nullable="true" />
 
         <many-to-one field="sourceField"
@@ -22,5 +23,9 @@
                 <cascade-persist/>
             </cascade>
         </one-to-many>
+
+        <unique-constraints>
+            <unique-constraint columns="source_field_id,code" name="unique_code_source_field" />
+        </unique-constraints>
     </entity>
 </doctrine-mapping>
