@@ -20,12 +20,7 @@ import TreeSelector from '../form/TreeSelector'
 
 import { Close, CustomCombination, Root } from './Rule.styled'
 
-const numberTypes = [
-  RuleAttributeType.FLOAT,
-  RuleAttributeType.INT,
-  RuleAttributeType.NUMBER,
-  RuleAttributeType.PRICE,
-]
+const numberTypes = [RuleAttributeType.FLOAT, RuleAttributeType.INT]
 
 interface IProps {
   onChange?: (rule: IRule) => void
@@ -88,7 +83,6 @@ function Rule(props: IProps): JSX.Element {
         )
       }
 
-      case RuleAttributeType.DROPDOWN:
       case RuleAttributeType.SELECT: {
         return (
           <DropDown

@@ -9,8 +9,8 @@ import {
   IHydraLabelMember,
   IHydraResponse,
   IOptions,
+  IRuleEngineOperators,
   ITreeItem,
-  RuleAttributeOperator,
   RuleAttributeType,
   RuleCombinationOperator,
   RuleType,
@@ -18,10 +18,7 @@ import {
   getOptionsFromEnum,
   getOptionsFromLabelResource,
   isError,
-  operatorsByType,
 } from 'shared'
-
-const selectTypes = [RuleAttributeType.DROPDOWN, RuleAttributeType.SELECT]
 
 export interface IField {
   id: number | string
@@ -35,10 +32,13 @@ interface IProps {
   children: ReactNode
   fields: IField[]
   localizedCatalogId: number
+  ruleOperators: IRuleEngineOperators
 }
 
 function RuleOptionsProvider(props: IProps): JSX.Element {
-  const { catalogId, children, fields, localizedCatalogId } = props
+  const { catalogId, children, fields, localizedCatalogId, ruleOperators } =
+    props
+  const { operators, operatorsBySourceFieldType } = ruleOperators
   const sourceFieldOptionLabelResource = useResource('SourceFieldOptionLabel')
   const { t } = useTranslation('rules')
   const { fetch, map, setMap } = useSingletonLoader<
@@ -73,8 +73,13 @@ function RuleOptionsProvider(props: IProps): JSX.Element {
   }, [fields, setMap])
 
   const attributeOperatorOptions = useMemo(
-    () => getOptionsFromEnum(RuleAttributeOperator, t),
-    [t]
+    () =>
+      Object.entries(operators).map(([operator, label]) => ({
+        value: operator,
+        label: t(`operator.${label}`),
+        id: operator,
+      })),
+    [operators, t]
   )
 
   const getAttributeOperatorOptions = useCallback(
@@ -83,7 +88,7 @@ function RuleOptionsProvider(props: IProps): JSX.Element {
       if (!field) {
         return []
       }
-      const operators = operatorsByType.get(field.type)
+      const operators = operatorsBySourceFieldType[field.type]
       if (!operators) {
         return []
       }
@@ -91,7 +96,7 @@ function RuleOptionsProvider(props: IProps): JSX.Element {
         operators.includes(option.value)
       )
     },
-    [attributeOperatorOptions, fields]
+    [attributeOperatorOptions, fields, operatorsBySourceFieldType]
   )
 
   const getAttributeType = useCallback(
@@ -125,7 +130,7 @@ function RuleOptionsProvider(props: IProps): JSX.Element {
           throw new Error('error')
         })
       }
-      if (selectTypes.includes(field.type)) {
+      if (field.type === RuleAttributeType.SELECT) {
         return fetch(field.code, async (fetchApi: IFetchApi) => {
           const response = await fetchApi<ICategories>(
             sourceFieldOptionLabelResource,
