@@ -10,7 +10,7 @@ import { IFetchApi, ILoadStatuses, LoadStatus } from 'shared'
 
 import { useApiFetch } from '~/hooks'
 
-export type ILoader<T> = (fetchApi: IFetchApi<unknown>) => Promise<T>
+export type ILoader<T> = (fetchApi: IFetchApi) => Promise<T>
 
 type IFetch<T> = (id: string, loader: ILoader<T>) => void
 

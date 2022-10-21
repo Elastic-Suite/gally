@@ -111,8 +111,8 @@ function RuleOptionsProvider(props: IProps): JSX.Element {
         return
       }
       if (field.type === RuleAttributeType.CATEGORY) {
-        return fetch(field.code, async (fetchApi: IFetchApi<ICategories>) => {
-          const response = await fetchApi(
+        return fetch(field.code, async (fetchApi: IFetchApi) => {
+          const response = await fetchApi<ICategories>(
             `categoryTree?/&catalogId=${
               catalogId !== -1 ? catalogId : null
             }&localizedCatalogId=${
@@ -126,8 +126,8 @@ function RuleOptionsProvider(props: IProps): JSX.Element {
         })
       }
       if (selectTypes.includes(field.type)) {
-        return fetch(field.code, async (fetchApi: IFetchApi<ICategories>) => {
-          const response = await fetchApi(
+        return fetch(field.code, async (fetchApi: IFetchApi) => {
+          const response = await fetchApi<ICategories>(
             sourceFieldOptionLabelResource,
             getListApiParameters(false, undefined, {
               catalog: `/localized_catalogs/${
