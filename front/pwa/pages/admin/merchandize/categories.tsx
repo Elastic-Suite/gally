@@ -130,7 +130,7 @@ function Categories(): JSX.Element {
   // Category configuration
   const catConfResource = useResource('CategoryConfiguration')
   const [catConf, setCatConf] = useState<IParsedCategoryConfiguration>()
-  const prevDataCat = useRef<IParsedCategoryConfiguration>()
+  const prevCatConf = useRef<IParsedCategoryConfiguration>()
   const { update, create } =
     useResourceOperations<ICategoryConfiguration>(catConfResource)
   useEffect(() => {
@@ -141,7 +141,7 @@ function Categories(): JSX.Element {
       ).then((catConf) => {
         if (!isError(catConf)) {
           const parsedCatConf = parseCatConf(catConf, ruleOperators)
-          prevDataCat.current = parsedCatConf
+          prevCatConf.current = parsedCatConf
           setCatConf(parsedCatConf)
         }
       })
@@ -195,7 +195,7 @@ function Categories(): JSX.Element {
       const newCatConf = await create(serializedCatConf)
       if (!isError(newCatConf)) {
         const parsedCatConf = parseCatConf(newCatConf, ruleOperators)
-        prevDataCat.current = parsedCatConf
+        prevCatConf.current = parsedCatConf
         setCatConf(parsedCatConf)
         dispatch(addMessage({ message: t('alert'), severity: 'success' }))
       } else {
@@ -205,7 +205,7 @@ function Categories(): JSX.Element {
       const newCatConf = await update(serializedCatConf.id, serializedCatConf)
       if (!isError(newCatConf)) {
         const parsedCatConf = parseCatConf(newCatConf, ruleOperators)
-        prevDataCat.current = parsedCatConf
+        prevCatConf.current = parsedCatConf
         setCatConf(parsedCatConf)
         dispatch(addMessage({ message: t('alert'), severity: 'success' }))
       } else {
@@ -214,12 +214,12 @@ function Categories(): JSX.Element {
     }
   }
 
-  const dirty = prevDataCat.current
+  const dirty = prevCatConf.current
     ? Object.entries(catConf ?? {}).some(
         ([key, val]: [key: keyof typeof catConf, val: string | boolean]) =>
           !(
-            prevDataCat.current[key] === undefined ||
-            prevDataCat.current[key] === val
+            prevCatConf.current[key] === undefined ||
+            prevCatConf.current[key] === val
           )
       )
     : false
@@ -249,8 +249,8 @@ function Categories(): JSX.Element {
               />
             </>
           </TitleBlock>,
-          <TitleBlock key="virtualRule" title={t('virtualRule.title')}>
-            {Boolean(ruleOperators && catConf?.isVirtual) && (
+          Boolean(catConf?.id && catConf?.isVirtual) && (
+            <TitleBlock key="virtualRule" title={t('virtualRule.title')}>
               <RulesManager
                 catalogId={catalogId}
                 localizedCatalogId={localizedCatalogId}
@@ -258,8 +258,8 @@ function Categories(): JSX.Element {
                 rule={catConf.virtualRule}
                 ruleOperators={ruleOperators}
               />
-            )}
-          </TitleBlock>,
+            </TitleBlock>
+          ),
         ]}
       >
         {selectedCategoryItem?.id &&
