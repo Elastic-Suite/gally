@@ -85,7 +85,7 @@ class Configuration
                     'visible' => true,
                     'editable' => true,
                     'position' => 20,
-                    'input' => 'dropdown',
+                    'input' => 'select',
                     // Todo: move the options values in the proper class and add validation constraint (will be done in the ticket ESPP-223)
                     'options' => [
                         'values' => ['auto' => 'Auto', 'display' => 'Display', 'hidden' => 'Hidden'],
@@ -107,7 +107,7 @@ class Configuration
                     'visible' => true,
                     'editable' => true,
                     'position' => 30,
-                    'type' => 'percentage',
+                    'input' => 'percentage',
                     'validation' => [
                         'min' => 0,
                         'max' => 100,
@@ -149,7 +149,7 @@ class Configuration
                     'visible' => true,
                     'editable' => true,
                     'position' => 50,
-                    'input' => 'dropdown',
+                    'input' => 'select',
                     // Todo: move the options values in the proper class and add validation constraint (will be done in the ticket ESPP-226)
                     'options' => [
                         'values' => ['result_count' => 'Result count', 'admin_sort' => 'Admin sort', 'name' => 'Name', 'relevance' => 'Relevance'],

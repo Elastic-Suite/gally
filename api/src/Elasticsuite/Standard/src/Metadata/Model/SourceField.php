@@ -100,7 +100,7 @@ class SourceField
                     'visible' => true,
                     'editable' => false,
                     'position' => 30,
-                    'input' => 'dropdown',
+                    'input' => 'select',
                     'options' => [
                         'values' => Type::AVAILABLE_TYPES,
                     ],
@@ -209,7 +209,7 @@ class SourceField
                     'visible' => false,
                     'editable' => true,
                     'position' => 80,
-                    'input' => 'dropdown',
+                    'input' => 'select',
                     'options' => [
                         'values' => Weight::WEIGHT_VALID_VALUES,
                     ],
