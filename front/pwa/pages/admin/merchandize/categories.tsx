@@ -3,6 +3,17 @@ import { useTranslation } from 'next-i18next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { Box } from '@mui/system'
+import {
+  ICategories,
+  ICategory,
+  IHydraCatalog,
+  IRuleCombination,
+  IRuleEngineOperators,
+  LoadStatus,
+  emptyCombinationRule,
+  findBreadcrumbLabel,
+  isError,
+} from 'shared'
 
 import { breadcrumbContext } from '~/contexts'
 import { withAuth, withOptions } from '~/hocs'
@@ -14,16 +25,6 @@ import {
   useResourceOperations,
 } from '~/hooks'
 import { addMessage, selectMenu, useAppDispatch, useAppSelector } from '~/store'
-import {
-  ICategories,
-  ICategory,
-  IHydraCatalog,
-  IRuleCombination,
-  LoadStatus,
-  emptyCombinationRule,
-  findBreadcrumbLabel,
-  isError,
-} from 'shared'
 
 import TitleBlock from '~/components/molecules/layout/TitleBlock/TitleBlock'
 import TwoColsLayout from '~/components/molecules/layout/twoColsLayout/TwoColsLayout'
@@ -47,27 +48,25 @@ function getParsedCatConf(catConf: IConfiguration): IParsedConfiguration {
 
 function Categories(): JSX.Element {
   const router = useRouter()
+  const fetchApi = useApiFetch()
+  const dispatch = useAppDispatch()
+  const { t } = useTranslation('categories')
+
+  // Breadcrumb
   const menu = useAppSelector(selectMenu)
   const [, setBreadcrumb] = useContext(breadcrumbContext)
+  const title = findBreadcrumbLabel(0, ['merchandize'], menu.hierarchy)
 
-  const [selectedCategoryItem, setSelectedCategoryItem] = useState<ICategory>()
-
+  // Catalogs
   const resourceName = 'Catalog'
   const resource = useResource(resourceName)
   const [catalogsFields] = useApiList<IHydraCatalog>(resource, false)
   const { data, error } = catalogsFields
-
   const [catalogId, setCatalogId] = useState<number>(-1)
   const [localizedCatalogId, setLocalizedCatalogId] = useState<number>(-1)
 
-  useEffect(() => {
-    setBreadcrumb(['merchandize', 'categories'])
-  }, [router.query, setBreadcrumb])
-
-  const title = findBreadcrumbLabel(0, ['merchandize'], menu.hierarchy)
-
-  const { t } = useTranslation('categories')
-
+  // Categories
+  const [selectedCategoryItem, setSelectedCategoryItem] = useState<ICategory>()
   const filters = useMemo(() => {
     const filters: { catalogId?: number; localizedCatalogId?: number } = {}
     if (catalogId !== -1) {
@@ -80,15 +79,23 @@ function Categories(): JSX.Element {
   }, [catalogId, localizedCatalogId])
   const [categories] = useFetchApi<ICategories>(`categoryTree`, filters)
 
+  // Category configuration
   const catConfResource = useResource('CategoryConfiguration')
-
-  const fetchApi = useApiFetch<IConfiguration>()
   const [catConf, setCatConf] = useState<IParsedConfiguration>()
   const prevDataCat = useRef<IParsedConfiguration>()
+  const { update, create } =
+    useResourceOperations<IConfiguration>(catConfResource)
+
+  // Rule engine operators
+  const [ruleOperators, setRuleOperators] = useState<IRuleEngineOperators>()
+
+  useEffect(() => {
+    setBreadcrumb(['merchandize', 'categories'])
+  }, [router.query, setBreadcrumb])
 
   useEffect(() => {
     if (selectedCategoryItem) {
-      fetchApi(
+      fetchApi<IConfiguration>(
         `${catConfResource.url}/category/${selectedCategoryItem.id}`
       ).then((catConf) => {
         if (!isError(catConf)) {
@@ -100,8 +107,13 @@ function Categories(): JSX.Element {
     }
   }, [fetchApi, selectedCategoryItem, catConfResource.url])
 
-  const { update, create } =
-    useResourceOperations<IConfiguration>(catConfResource)
+  useEffect(() => {
+    fetchApi<IRuleEngineOperators>('rule_engine_operators').then((json) => {
+      if (!isError(json)) {
+        setRuleOperators(json)
+      }
+    })
+  }, [fetchApi])
 
   function handleUpdateCat(name: string): (val: boolean | string) => void {
     return (val) => {
@@ -112,8 +124,6 @@ function Categories(): JSX.Element {
   function handleUpdateRule(rule: IRuleCombination): void {
     setCatConf((catConf) => ({ ...catConf, virtualRule: rule }))
   }
-
-  const dispatch = useAppDispatch()
 
   async function onSave(): Promise<void> {
     const apiCatConf = {
@@ -211,12 +221,13 @@ function Categories(): JSX.Element {
             </>
           </TitleBlock>,
           <TitleBlock key="virtualRule" title={t('virtualRule.title')}>
-            {Boolean(catConf?.id && catConf?.isVirtual) && (
+            {Boolean(ruleOperators && catConf?.id && catConf?.isVirtual) && (
               <RulesManager
                 catalogId={catalogId}
                 localizedCatalogId={localizedCatalogId}
                 onChange={handleUpdateRule}
                 rule={catConf.virtualRule}
+                ruleOperators={ruleOperators}
               />
             )}
           </TitleBlock>,

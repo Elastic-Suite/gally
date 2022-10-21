@@ -30,11 +30,11 @@ import { useResourceOperations } from './useResource'
 
 const debounceDelay = 200
 
-export function useApiFetch<T>(secure = true): IFetchApi<T> {
+export function useApiFetch(secure = true): IFetchApi {
   const { i18n } = useTranslation('common')
   const log = useLog()
-  return useCallback(
-    async (
+  return useCallback<IFetchApi>(
+    async <T>(
       resource: IResource | string,
       searchParameters?: ISearchParameters,
       options?: RequestInit
@@ -62,7 +62,7 @@ export function useFetchApi<T>(
   searchParameters?: ISearchParameters,
   options?: RequestInit
 ): [IFetch<T>, Dispatch<SetStateAction<T>>, ILoadResource] {
-  const fetchApi = useApiFetch<T>()
+  const fetchApi = useApiFetch()
   const [response, setResponse] = useState<IFetch<T>>({
     status: LoadStatus.IDLE,
   })
@@ -79,7 +79,7 @@ export function useFetchApi<T>(
       data: prevState.data,
       status: LoadStatus.LOADING,
     }))
-    fetchApi(resource, searchParameters, options).then((json) => {
+    fetchApi<T>(resource, searchParameters, options).then((json) => {
       if (isError(json)) {
         setResponse({ error: json.error, status: LoadStatus.FAILED })
       } else {

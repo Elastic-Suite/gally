@@ -1,18 +1,26 @@
 import { useMemo } from 'react'
 
 import { useApiList, useResource } from '~/hooks'
-import { ISourceField, ISourceFieldLabel, RuleAttributeType } from 'shared'
+import {
+  IRuleEngineOperators,
+  ISourceField,
+  ISourceFieldLabel,
+  RuleAttributeType,
+} from 'shared'
 
 import CombinationRules, {
   ICombinationRulesProps,
 } from '~/components/atoms/rules/CombinationRules'
 import RuleOptionsProvider from '~/components/stateful-providers/RuleOptionsProvider/RuleOptionsProvider'
 
-const sourceFieldFixedFilters = { 'metadata.entity': 'product' }
+const sourceFieldFixedFilters = {
+  'metadata.entity': 'product',
+}
 
 interface IProps extends ICombinationRulesProps {
   catalogId: number
   localizedCatalogId: number
+  ruleOperators: IRuleEngineOperators
 }
 
 function RulesManager(props: IProps): JSX.Element {

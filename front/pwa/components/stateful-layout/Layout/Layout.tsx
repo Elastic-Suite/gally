@@ -113,14 +113,14 @@ function Layout({ children }: IProps): JSX.Element {
   const childrenState = useAppSelector(selectChildrenState)
   const menu = useAppSelector(selectMenu)
   const [breadcrumb] = useContext(breadcrumbContext)
-  const fetchApi = useApiFetch<IMenu>()
+  const fetchApi = useApiFetch()
   const user = useUser()
 
   // Load menu
   useEffect(() => {
     if (user) {
       dispatch(setMenu({ status: LoadStatus.LOADING }))
-      fetchApi('menu').then((json) => {
+      fetchApi<IMenu>('menu').then((json) => {
         if (isError(json)) {
           dispatch(setMenu({ error: json.error, status: LoadStatus.FAILED }))
         } else {

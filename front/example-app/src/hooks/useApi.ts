@@ -22,9 +22,9 @@ import {
   isError,
 } from 'shared'
 
-export function useApiFetch<T>(secure = true): IFetchApi<T> {
-  return useCallback(
-    async (
+export function useApiFetch(secure = true): IFetchApi {
+  return useCallback<IFetchApi>(
+    async <T>(
       resource: IResource | string,
       searchParameters?: ISearchParameters,
       options?: RequestInit
@@ -51,7 +51,7 @@ export function useFetchApi<T>(
   searchParameters?: ISearchParameters,
   options?: RequestInit
 ): [IFetch<T>, Dispatch<SetStateAction<T>>, ILoadResource] {
-  const fetchApi = useApiFetch<T>()
+  const fetchApi = useApiFetch()
   const [response, setResponse] = useState<IFetch<T>>({
     status: LoadStatus.IDLE,
   })
@@ -68,7 +68,7 @@ export function useFetchApi<T>(
       data: prevState.data,
       status: LoadStatus.LOADING,
     }))
-    fetchApi(resource, searchParameters, options).then((json) => {
+    fetchApi<T>(resource, searchParameters, options).then((json) => {
       if (isError(json)) {
         setResponse({ error: json.error, status: LoadStatus.FAILED })
       } else {

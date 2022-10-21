@@ -23,7 +23,7 @@ export type ISearchParameters = Record<
   string | number | boolean | (string | number | boolean)[]
 >
 
-export type IFetchApi<T> = (
+export type IFetchApi = <T>(
   resource: IResource | string,
   searchParameters?: ISearchParameters,
   options?: RequestInit

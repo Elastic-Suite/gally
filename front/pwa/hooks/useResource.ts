@@ -35,12 +35,12 @@ export function useResourceOperations<T extends IHydraMember>(
   resource: IResource
 ): IResourceOperations<T> {
   const { supportedOperation } = resource
-  const fetchApi = useApiFetch<T>()
+  const fetchApi = useApiFetch()
   const apiUrl = getApiUrl(resource.url)
 
   const update = useCallback(
     (id: string | number, item: Partial<T>): Promise<T | IError> =>
-      fetchApi(`${apiUrl}/${id}`, undefined, {
+      fetchApi<T>(`${apiUrl}/${id}`, undefined, {
         body: JSON.stringify(item),
         method: Method.PATCH,
         headers: { [contentTypeHeader]: 'application/merge-patch+json' },
