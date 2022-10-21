@@ -44,10 +44,12 @@ class SourceFieldOptionTest extends AbstractEntityTest
         $adminUser = $this->getUser(Role::ROLE_ADMIN);
 
         return [
-            [$this->getUser(Role::ROLE_CONTRIBUTOR), ['sourceField' => '/source_fields/4', 'position' => 10], 403],
-            [$adminUser, ['sourceField' => '/source_fields/4', 'position' => 10], 201],
-            [$adminUser, ['sourceField' => '/source_fields/4'], 201],
-            [$adminUser, ['position' => 3], 422, 'sourceField: This value should not be blank.'],
+            [$this->getUser(Role::ROLE_CONTRIBUTOR), ['sourceField' => '/source_fields/4', 'code' => 'A', 'position' => 10], 403],
+            [$adminUser, ['sourceField' => '/source_fields/4', 'code' => 'A', 'position' => 10], 201],
+            [$adminUser, ['sourceField' => '/source_fields/4', 'code' => 'B'], 201],
+            [$adminUser, ['position' => 3, 'code' => 'A'], 422, 'sourceField: This value should not be blank.'],
+            [$adminUser, ['sourceField' => '/source_fields/4', 'position' => 3], 422, 'code: This value should not be blank.'],
+            [$adminUser, ['sourceField' => '/source_fields/4', 'code' => 'A', 'position' => 3], 422, 'sourceField: An option with this code is already defined for this sourceField.'],
         ];
     }
 
