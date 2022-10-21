@@ -18,6 +18,7 @@ import {
   ICategories,
   ICategory,
   IHydraCatalog,
+  IRuleCombination,
   LoadStatus,
   emptyCombinationRule,
   findBreadcrumbLabel,
@@ -30,8 +31,19 @@ import CatalogSwitcher from '~/components/stateful/CatalogSwitcher/CatalogSwitch
 import CategoryTree from '~/components/stateful/CategoryTree/CategoryTree'
 import ProductsContainer, {
   IConfiguration,
+  IParsedConfiguration,
 } from '~/components/stateful/ProductsContainer/ProductsContainer'
 import RulesManager from '~/components/stateful/RulesManager/RulesManager'
+
+function getParsedCatConf(catConf: IConfiguration): IParsedConfiguration {
+  let virtualRule: IRuleCombination
+  try {
+    virtualRule = JSON.parse(catConf.virtualRule)
+  } catch {
+    virtualRule = emptyCombinationRule
+  }
+  return { ...catConf, virtualRule }
+}
 
 function Categories(): JSX.Element {
   const router = useRouter()
@@ -47,7 +59,6 @@ function Categories(): JSX.Element {
 
   const [catalogId, setCatalogId] = useState<number>(-1)
   const [localizedCatalogId, setLocalizedCatalogId] = useState<number>(-1)
-  const [rule, setRule] = useState(emptyCombinationRule)
 
   useEffect(() => {
     setBreadcrumb(['merchandize', 'categories'])
@@ -69,58 +80,62 @@ function Categories(): JSX.Element {
   }, [catalogId, localizedCatalogId])
   const [categories] = useFetchApi<ICategories>(`categoryTree`, filters)
 
-  const categoryConfigurationResource = useResource('CategoryConfiguration')
+  const catConfResource = useResource('CategoryConfiguration')
 
   const fetchApi = useApiFetch<IConfiguration>()
-  const [dataCat, setDataCat] = useState<IConfiguration>()
-  const prevDataCat = useRef<IConfiguration>()
+  const [catConf, setCatConf] = useState<IParsedConfiguration>()
+  const prevDataCat = useRef<IParsedConfiguration>()
 
   useEffect(() => {
     if (selectedCategoryItem) {
       fetchApi(
-        `${categoryConfigurationResource.url}/category/${selectedCategoryItem.id}`
-      ).then((dataCat) => {
-        if (!isError(dataCat)) {
-          prevDataCat.current = dataCat
-          setDataCat(dataCat)
+        `${catConfResource.url}/category/${selectedCategoryItem.id}`
+      ).then((catConf) => {
+        if (!isError(catConf)) {
+          const parsedCatConf = getParsedCatConf(catConf)
+          prevDataCat.current = parsedCatConf
+          setCatConf(parsedCatConf)
         }
       })
     }
-  }, [fetchApi, selectedCategoryItem, categoryConfigurationResource.url])
+  }, [fetchApi, selectedCategoryItem, catConfResource.url])
 
-  const { update, create } = useResourceOperations<IConfiguration>(
-    categoryConfigurationResource
-  )
+  const { update, create } =
+    useResourceOperations<IConfiguration>(catConfResource)
 
   function handleUpdateCat(name: string): (val: boolean | string) => void {
     return (val) => {
-      setDataCat((el) => ({ ...el, [name]: val }))
+      setCatConf((catConf) => ({ ...catConf, [name]: val }))
     }
+  }
+
+  function handleUpdateRule(rule: IRuleCombination): void {
+    setCatConf((catConf) => ({ ...catConf, virtualRule: rule }))
   }
 
   const dispatch = useAppDispatch()
 
   async function onSave(): Promise<void> {
-    if (!dataCat.id) {
-      const val = await create({
-        useNameInProductSearch: dataCat.useNameInProductSearch,
-        isVirtual: dataCat.isVirtual,
-        defaultSorting: dataCat.defaultSorting,
-        category: dataCat.category,
-        name: dataCat.name,
-      })
-      if (!isError(val)) {
-        prevDataCat.current = val
-        setDataCat(val)
+    const apiCatConf = {
+      ...catConf,
+      virtualRule: JSON.stringify(catConf.virtualRule),
+    }
+    if (!catConf.id) {
+      const newCatConf = await create(apiCatConf)
+      if (!isError(newCatConf)) {
+        const parsedCatConf = getParsedCatConf(newCatConf)
+        prevDataCat.current = parsedCatConf
+        setCatConf(parsedCatConf)
         dispatch(addMessage({ message: t('alert'), severity: 'success' }))
       } else {
         dispatch(addMessage({ message: t('alert.error'), severity: 'error' }))
       }
     } else {
-      const val = await update(dataCat.id, dataCat)
-      if (!isError(val)) {
-        prevDataCat.current = val
-        setDataCat(val)
+      const newCatConf = await update(apiCatConf.id, apiCatConf)
+      if (!isError(newCatConf)) {
+        const parsedCatConf = getParsedCatConf(newCatConf)
+        prevDataCat.current = parsedCatConf
+        setCatConf(parsedCatConf)
         dispatch(addMessage({ message: t('alert'), severity: 'success' }))
       } else {
         dispatch(addMessage({ message: t('alert.error'), severity: 'error' }))
@@ -161,8 +176,8 @@ function Categories(): JSX.Element {
   }, [categories.status])
 
   const dirty = prevDataCat.current
-    ? Object.entries(dataCat ?? {}).some(
-        ([key, val]: [key: keyof typeof dataCat, val: string | boolean]) =>
+    ? Object.entries(catConf ?? {}).some(
+        ([key, val]: [key: keyof typeof catConf, val: string | boolean]) =>
           !(
             prevDataCat.current[key] === undefined ||
             prevDataCat.current[key] === val
@@ -196,12 +211,12 @@ function Categories(): JSX.Element {
             </>
           </TitleBlock>,
           <TitleBlock key="virtualRule" title={t('virtualRule.title')}>
-            {Boolean(dataCat?.id && dataCat?.isVirtual) && (
+            {Boolean(catConf?.id && catConf?.isVirtual) && (
               <RulesManager
                 catalogId={catalogId}
                 localizedCatalogId={localizedCatalogId}
-                onChange={setRule}
-                rule={rule}
+                onChange={handleUpdateRule}
+                rule={catConf.virtualRule}
               />
             )}
           </TitleBlock>,
@@ -210,7 +225,7 @@ function Categories(): JSX.Element {
         {selectedCategoryItem?.id ? (
           <ProductsContainer
             category={selectedCategoryItem}
-            dataCat={dataCat}
+            catConf={catConf}
             onVirtualChange={handleUpdateCat('isVirtual')}
             onNameChange={handleUpdateCat('useNameInProductSearch')}
             onSortChange={handleUpdateCat('defaultSorting')}

@@ -8,6 +8,7 @@ import {
   ICategorySortingOption,
   IHydraMember,
   IHydraResponse,
+  IRuleCombination,
   getCatalogForSearchProductApi,
 } from 'shared'
 
@@ -33,41 +34,49 @@ const ActionsButtonsContainer = styled(Box)({
   marginLeft: 'auto',
 })
 
-interface IProps {
-  category: ICategory
-  onVirtualChange: (val: boolean) => void
-  onNameChange: (val: boolean) => void
-  onSortChange: (val: string) => void
-  onSave: () => void
-  disableBtnSave: boolean
-  dataCat: IConfiguration
-  catalog: number
-  localizedCatalog: number
-  catalogsData: IHydraResponse<ICatalog>
-  error: Error
-}
-
 export interface IConfiguration extends IHydraMember {
   useNameInProductSearch: boolean
+  isActive: boolean
   isVirtual: boolean
   defaultSorting: string
   name: string
   category: string
+  virtualRule: string
 }
+
+export interface IParsedConfiguration
+  extends Omit<IConfiguration, 'virtualRule'> {
+  virtualRule: IRuleCombination
+}
+
 export interface IConfigurationOptional {
   useNameInProductSearch?: boolean
   isVirtual?: boolean
   defaultSorting?: string
 }
 
+interface IProps {
+  catConf: IParsedConfiguration
+  category: ICategory
+  onVirtualChange: (val: boolean) => void
+  onNameChange: (val: boolean) => void
+  onSortChange: (val: string) => void
+  onSave: () => void
+  disableBtnSave: boolean
+  catalog: number
+  localizedCatalog: number
+  catalogsData: IHydraResponse<ICatalog>
+  error: Error
+}
+
 function ProductsContainer(props: IProps): JSX.Element {
   const {
+    catConf,
     catalog,
     category,
     onSave,
     disableBtnSave,
     onVirtualChange,
-    dataCat,
     onNameChange,
     onSortChange,
     localizedCatalog,
@@ -79,9 +88,9 @@ function ProductsContainer(props: IProps): JSX.Element {
   const [topSelectedRows, setTopSelectedRows] = useState<string[]>([])
   const [bottomSelectedRows, setBottomSelectedRows] = useState<string[]>([])
 
-  const useNameInProductSearch = dataCat?.useNameInProductSearch ?? false
-  const isVirtual = dataCat?.isVirtual ?? false
-  const defaultSorting = dataCat?.defaultSorting ?? ''
+  const useNameInProductSearch = catConf?.useNameInProductSearch ?? false
+  const isVirtual = catConf?.isVirtual ?? false
+  const defaultSorting = catConf?.defaultSorting ?? ''
 
   const { t } = useTranslation('categories')
 
