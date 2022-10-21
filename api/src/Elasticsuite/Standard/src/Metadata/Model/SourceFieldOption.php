@@ -42,6 +42,7 @@ use Elasticsuite\User\Constant\Role;
 class SourceFieldOption
 {
     private int $id;
+    private string $code;
     private SourceField $sourceField;
     private ?int $position;
 
@@ -51,6 +52,18 @@ class SourceFieldOption
     public function getId(): int
     {
         return $this->id;
+    }
+
+    public function getCode(): string
+    {
+        return $this->code;
+    }
+
+    public function setCode(string $code): self
+    {
+        $this->code = $code;
+
+        return $this;
     }
 
     public function getSourceField(): ?SourceField
