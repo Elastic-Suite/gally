@@ -27,7 +27,7 @@ export function useOptions(): IOptionsContext {
   const load = useCallback(
     (field: IField) => {
       const id = field.property['@id']
-      return fetch(id, async (fetchApi: IFetchApi<unknown>) => {
+      return fetch(id, async (fetchApi: IFetchApi) => {
         if (hasFieldOptions(field)) {
           // get options from the schema
           if (isDropdownStaticOptions(field.elasticsuite?.options)) {

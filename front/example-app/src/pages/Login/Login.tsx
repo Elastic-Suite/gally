@@ -20,7 +20,7 @@ function Login(): JSX.Element {
   const { user, setToken } = useContext(userContext)
   const { requestedPath } = useContext(requestedPathContext)
 
-  const fetchApi = useApiFetch<ILogin>()
+  const fetchApi = useApiFetch()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
@@ -37,7 +37,7 @@ function Login(): JSX.Element {
 
   function handleSubmit(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault()
-    fetchApi('/authentication_token', undefined, {
+    fetchApi<ILogin>('/authentication_token', undefined, {
       method: 'POST',
       body: JSON.stringify({ email, password }),
       headers: new Headers({ 'Content-Type': 'application/json' }),
