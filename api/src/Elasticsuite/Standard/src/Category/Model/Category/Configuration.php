@@ -107,7 +107,7 @@ class Configuration
         attributes: [
             'hydra:supportedProperty' => [
                 'elasticsuite' => [
-                    'input' => 'dropdown',
+                    'input' => 'select',
                     'options' => [
                         'api_rest' => '/category_sorting_options',
                         'api_graphql' => 'categorySortingOptions',
