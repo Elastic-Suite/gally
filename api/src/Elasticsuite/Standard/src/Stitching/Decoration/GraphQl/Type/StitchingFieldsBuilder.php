@@ -14,7 +14,7 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\Entity\Decoration\GraphQl\Type;
+namespace Elasticsuite\Stitching\Decoration\GraphQl\Type;
 
 use ApiPlatform\Core\GraphQl\Type\FieldsBuilderInterface;
 use ApiPlatform\Core\GraphQl\Type\TypesContainerInterface;
