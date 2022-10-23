@@ -22,7 +22,7 @@ services:
 
     Elasticsuite\Product\Serializer\ProductDenormalizer:
         arguments:
-            - '@Elasticsuite\Metadata\Repository\MetadataRepository'
+            - '@Elasticsuite\Stitching\Service\SerializerService'
         tags:
             - { name: serializer.normalizer }
 
