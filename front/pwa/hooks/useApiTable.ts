@@ -14,6 +14,7 @@ export function useApiHeaders(resource: IResource): ITableHeader[] {
   return useMemo(() => {
     return resource.supportedProperty
       .filter((field) => field.elasticsuite?.visible)
+      .sort((a, b) => a.elasticsuite?.position - b.elasticsuite?.position)
       .map((field) => getFieldHeader(field, t))
   }, [resource, t])
 }

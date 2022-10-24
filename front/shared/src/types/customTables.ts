@@ -9,13 +9,13 @@ export enum MassiveSelectionType {
 
 export enum DataContentType {
   BOOLEAN = 'boolean',
-  DROPDOWN = 'dropdown',
   IMAGE = 'image',
   LABEL = 'label',
   NUMBER = 'number',
   PERCENTAGE = 'percentage',
   PRICE = 'price',
   SCORE = 'score',
+  SELECT = 'select',
   STOCK = 'stock',
   STRING = 'string',
   TAG = 'tag',
@@ -25,6 +25,7 @@ export interface ITableHeader {
   boostInfos?: IBoost
   editable?: boolean
   field?: IField
+  input?: DataContentType
   label: string
   name: string
   options?: IOptions<unknown> | null

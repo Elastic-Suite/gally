@@ -3,7 +3,7 @@ import { DataContentType, IApi, IField, IResource } from '../types'
 export const fieldDropdown = {
   '@type': 'http://www.w3.org/ns/hydra/core#SupportedProperty',
   elasticsuite: {
-    input: 'dropdown',
+    input: 'select',
     options: {
       values: ['option_test1', 'option_test2'],
     },
@@ -27,7 +27,7 @@ export const fieldDropdown = {
 export const fieldDropdownWithContext = {
   '@type': 'http://www.w3.org/ns/hydra/core#SupportedProperty',
   elasticsuite: {
-    input: 'dropdown' as DataContentType,
+    input: 'select' as DataContentType,
     options: {
       values: ['option_test1', 'option_test2'],
     },
@@ -61,7 +61,7 @@ export const fieldDropdownWithContext = {
 export const fieldDropdownWithApiOptions = {
   '@type': 'http://www.w3.org/ns/hydra/core#SupportedProperty',
   elasticsuite: {
-    input: 'dropdown',
+    input: 'select',
     options: {
       api_rest: '/category_sorting_options',
     },

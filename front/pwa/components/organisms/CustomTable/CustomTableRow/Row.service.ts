@@ -54,7 +54,7 @@ export function stickyStyle(
     borderBottomColor: 'colors.neutral.300',
     backgroundColor: 'colors.white',
     ...(isLastSticky && stickyBorderStyle(shadow)),
-    ...(type === DataContentType.DROPDOWN && { overflow: 'visible' }),
+    ...(type === DataContentType.SELECT && { overflow: 'visible' }),
   }
 }
 
@@ -79,6 +79,6 @@ export function nonStickyStyle(type: DataContentType): INonStickyStyle {
   return {
     backgroundColor: 'colors.white',
     borderBottomColor: 'colors.neutral.300',
-    ...(type === DataContentType.DROPDOWN && { overflow: 'visible' }),
+    ...(type === DataContentType.SELECT && { overflow: 'visible' }),
   }
 }

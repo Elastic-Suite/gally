@@ -81,7 +81,7 @@ function ResourceTable(props: IProps): JSX.Element {
   const rowsPerPageOptions = defaultRowsPerPageOptions
   const [rowsPerPage, setRowsPerPage] = useState<number>(defaultPageSize)
 
-  const [sourceFields, { massUpdate, replace, update }] =
+  const [resourceData, { massUpdate, replace, update }] =
     useApiEditableList<ISourceField>(
       resource,
       page,
@@ -90,7 +90,7 @@ function ResourceTable(props: IProps): JSX.Element {
       searchValue,
       urlParams ? `${resource.url}${urlParams}` : null
     )
-  const { data, error } = sourceFields
+  const { data, error } = resourceData
 
   const tableRows = data?.['hydra:member'] as unknown as ITableRow[]
   const diffRows: ITableRow[] = useMemo(() => {
@@ -174,7 +174,7 @@ function ResourceTable(props: IProps): JSX.Element {
 
   if (
     data['hydra:member'].length === 0 &&
-    sourceFields.status === LoadStatus.SUCCEEDED &&
+    resourceData.status === LoadStatus.SUCCEEDED &&
     !filterOrSearchAreUp
   ) {
     return (
@@ -231,7 +231,7 @@ function ResourceTable(props: IProps): JSX.Element {
         tableRows={tableRows}
         noResult={
           data['hydra:member'].length === 0 &&
-          sourceFields.status === LoadStatus.SUCCEEDED &&
+          resourceData.status === LoadStatus.SUCCEEDED &&
           filterOrSearchAreUp
         }
       />

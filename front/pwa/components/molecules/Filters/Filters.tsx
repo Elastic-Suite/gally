@@ -1,8 +1,7 @@
 import { FormEvent, ReactNode, useState } from 'react'
 import { useTranslation } from 'next-i18next'
 import { Collapse, InputAdornment, Stack } from '@mui/material'
-
-import { DataContentType, IFilter } from 'shared'
+import { IFilter } from 'shared'
 
 import Button from '~/components/atoms/buttons/Button'
 import Chip from '~/components/atoms/Chip/Chip'
@@ -76,30 +75,21 @@ function Filters(props: IProps): JSX.Element {
   const [open, setOpen] = useState(false)
   const { t } = useTranslation('common')
 
-  const augmentedFilters = filters.map((filter) => ({
-    ...filter,
-    options:
-      filter.type === DataContentType.BOOLEAN && !filter.options?.length
-        ? [
-            { label: t('filter.yes'), value: true },
-            { label: t('filter.no'), value: false },
-          ]
-        : filter.options,
-  }))
-
   const filterMap = new Map<string, IFilter>(
-    augmentedFilters.map((filter) => [filter.id, filter])
+    filters.map((filter) => [filter.id, filter])
   )
   const activeFilters = Object.entries(activeValues)
     .filter(([_, value]) => value !== '')
     .reduce<IActiveFilter[]>((acc, [id, value]) => {
       const filter = filterMap.get(id)
-      if (filter.multiple) {
-        return acc.concat(
-          (value as unknown[]).map((v) => getActiveFilter(filter, v))
-        )
+      if (filter) {
+        if (filter.multiple) {
+          return acc.concat(
+            (value as unknown[]).map((v) => getActiveFilter(filter, v))
+          )
+        }
+        acc.push(getActiveFilter(filter, value))
       }
-      acc.push(getActiveFilter(filter, value))
       return acc
     }, [])
 
@@ -171,7 +161,7 @@ function Filters(props: IProps): JSX.Element {
       <Collapse in={open} timeout="auto">
         <ContentForm onSubmit={handleSubmit}>
           <FiltersBox>
-            {augmentedFilters.map((filter) => (
+            {filters.map((filter) => (
               <FieldGuesser
                 key={filter.id}
                 editable
