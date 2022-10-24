@@ -1,4 +1,5 @@
 import { IOptions } from './option'
+import { IOperatorsValueType } from './ruleEngineOperators'
 import { ITreeItem } from './tree'
 
 export enum RuleType {
@@ -23,7 +24,7 @@ export enum RuleCombinationOperator {
 
 export interface IRule {
   type: RuleType
-  value: string | string[]
+  value: string | string[] | number | number[] | boolean
 }
 
 export interface IRuleAttribute extends IRule {
@@ -42,8 +43,9 @@ export interface IRuleCombination extends IRule {
 export type IRuleOptions = Map<string, IOptions<unknown> | ITreeItem[]>
 
 export interface IRuleOptionsContext {
-  options: IRuleOptions
   getAttributeOperatorOptions: (field: string) => IOptions<string>
   getAttributeType: (field: string) => RuleAttributeType
   loadAttributeValueOptions: (field: string) => void
+  operatorsValueType: IOperatorsValueType
+  options: IRuleOptions
 }

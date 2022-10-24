@@ -9,7 +9,7 @@ import {
 export const emptyCombinationRule: IRuleCombination = {
   type: RuleType.COMBINATION,
   operator: RuleCombinationOperator.ALL,
-  value: 'true',
+  value: true,
   children: [],
 }
 
@@ -20,3 +20,6 @@ export const emptyAttributeRule: IRuleAttribute = {
   attribute_type: RuleAttributeType.TEXT,
   value: '',
 }
+
+export const ruleValueNumberTypes = ['Int', 'Float']
+export const ruleArrayValueSeparator = ','
