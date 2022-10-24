@@ -51,8 +51,10 @@ trait CategoryTestTrait
                 $productDataFromEs[$productId] = [];
                 foreach ($categories as $category) {
                     $productDataFromEs[$productId][$category['id']] = [];
-                    if (isset($category['position'])) {
-                        $productDataFromEs[$productId][$category['id']] = ['position' => $category['position']];
+                    foreach (self::$subCategoryFields as $subCategoryField) {
+                        if (isset($category[$subCategoryField])) {
+                            $productDataFromEs[$productId][$category['id']][$subCategoryField] = $category[$subCategoryField];
+                        }
                     }
                 }
             }

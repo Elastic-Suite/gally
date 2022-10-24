@@ -1,4 +1,4 @@
-services: 
+services:
     Elasticsuite\VirtualCategory\Decoration\Product\GraphQl\Type\Definition\Filter\CategoryTypeDefaultFilterInputType:
         decorates: Elasticsuite\Product\GraphQl\Type\Definition\Filter\CategoryTypeDefaultFilterInputType
         arguments:
@@ -9,4 +9,16 @@ services:
             - '@Elasticsuite\Search\Elasticsearch\Request\QueryFactory'
             - '@.inner'
             - '%api_platform.graphql.nesting_separator%'
+        decoration_priority: 10
+
+    Elasticsuite\VirtualCategory\Decoration\Repository\CategoryProductPositionIndexer\CategoryProductPositionIndexerRepository:
+        decorates: Elasticsuite\Category\Repository\CategoryProductPositionIndexer\CategoryProductPositionIndexerRepository
+        arguments:
+            - '@api_platform.elasticsearch.client'
+            - '@Elasticsuite\Metadata\Repository\MetadataRepository'
+            - '@Elasticsuite\Index\Service\IndexSettings'
+            - '@Elasticsuite\Index\Repository\Index\IndexRepositoryInterface'
+            - '@logger'
+            - '@Elasticsuite\Category\Repository\CategoryConfigurationRepository'
+            - '@Elasticsuite\Category\Repository\CategoryRepository'
         decoration_priority: 10
