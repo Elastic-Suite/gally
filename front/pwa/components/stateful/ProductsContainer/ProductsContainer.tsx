@@ -35,31 +35,33 @@ const ActionsButtonsContainer = styled(Box)({
 
 interface IProps {
   catConf: IParsedCategoryConfiguration
+  catalog: number
+  catalogsData: IHydraResponse<ICatalog>
   category: ICategory
-  onVirtualChange: (val: boolean) => void
+  disableBtnSave: boolean
+  error: Error
+  localizedCatalog: number
   onNameChange: (val: boolean) => void
   onSortChange: (val: string) => void
   onSave: () => void
-  disableBtnSave: boolean
-  catalog: number
-  localizedCatalog: number
-  catalogsData: IHydraResponse<ICatalog>
-  error: Error
+  onVirtualChange: (val: boolean) => void
+  productGraphqlFilters: unknown
 }
 
 function ProductsContainer(props: IProps): JSX.Element {
   const {
     catConf,
     catalog,
-    category,
-    onSave,
-    disableBtnSave,
-    onVirtualChange,
-    onNameChange,
-    onSortChange,
-    localizedCatalog,
     catalogsData,
+    category,
+    disableBtnSave,
     error,
+    localizedCatalog,
+    onNameChange,
+    onSave,
+    onSortChange,
+    onVirtualChange,
+    productGraphqlFilters,
   } = props
 
   const tableRef = useRef<HTMLDivElement>()
@@ -137,11 +139,12 @@ function ProductsContainer(props: IProps): JSX.Element {
 
         <ProductsTopAndBottom
           ref={tableRef}
-          topSelectedRows={topSelectedRows}
-          onTopSelectedRows={setTopSelectedRows}
           bottomSelectedRows={bottomSelectedRows}
-          onBottomSelectedRows={setBottomSelectedRows}
           catalogId={catalogId}
+          productGraphqlFilters={productGraphqlFilters}
+          onBottomSelectedRows={setBottomSelectedRows}
+          onTopSelectedRows={setTopSelectedRows}
+          topSelectedRows={topSelectedRows}
         />
       </Layout>
       <StickyBar positionRef={tableRef} show={showStickyBar}>
