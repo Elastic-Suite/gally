@@ -49,7 +49,7 @@ const mockedHeadersAndRows = {
     {
       name: 'field2',
       label: 'Test header dropdown',
-      type: DataContentType.DROPDOWN,
+      type: DataContentType.SELECT,
       editable: true,
       sticky: false,
       options: [

@@ -5,6 +5,7 @@ import { IOptions } from './option'
 export interface IFilter {
   field: IField
   id: string
+  input?: DataContentType
   label: string
   multiple?: boolean
   options?: IOptions<unknown>

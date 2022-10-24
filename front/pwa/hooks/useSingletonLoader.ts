@@ -1,7 +1,14 @@
-import { Dispatch, SetStateAction, useCallback, useRef, useState } from 'react'
+import {
+  Dispatch,
+  MutableRefObject,
+  SetStateAction,
+  useCallback,
+  useRef,
+  useState,
+} from 'react'
+import { IFetchApi, ILoadStatuses, LoadStatus } from 'shared'
 
 import { useApiFetch } from '~/hooks'
-import { IFetchApi, LoadStatus } from 'shared'
 
 export type ILoader<T> = (fetchApi: IFetchApi<unknown>) => Promise<T>
 
@@ -11,12 +18,13 @@ interface IUseLoader<T> {
   fetch: IFetch<T>
   map: Map<string, T>
   setMap: Dispatch<SetStateAction<Map<string, T>>>
+  statuses: MutableRefObject<ILoadStatuses>
 }
 
 export function useSingletonLoader<T>(defaultState = new Map()): IUseLoader<T> {
   const fetchApi = useApiFetch()
   const [map, setMap] = useState<Map<string, T>>(defaultState)
-  const fieldOptionsStatuses = useRef<Map<string, LoadStatus>>(new Map())
+  const fieldOptionsStatuses = useRef<ILoadStatuses>(new Map())
 
   const updateFieldOptions = useCallback((id: string, options: T) => {
     fieldOptionsStatuses.current.set(id, LoadStatus.SUCCEEDED)
@@ -43,5 +51,5 @@ export function useSingletonLoader<T>(defaultState = new Map()): IUseLoader<T> {
     [fetchApi, updateFieldOptions]
   )
 
-  return { fetch, map, setMap }
+  return { fetch, map, setMap, statuses: fieldOptionsStatuses }
 }

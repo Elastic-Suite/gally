@@ -139,7 +139,7 @@
             "visible": true,
             "editable": false,
             "position": 30,
-            "input": "dropdown",
+            "input": "select",
             "options": {
               "values": [
                 "text",
@@ -266,7 +266,7 @@
             "visible": false,
             "editable": true,
             "position": 80,
-            "input": "dropdown",
+            "input": "select",
             "options": { "values": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] },
             "context": {
               "search_configuration_attributes": { "visible": true }
@@ -1330,7 +1330,7 @@
             "visible": true,
             "editable": true,
             "position": 20,
-            "input": "dropdown",
+            "input": "select",
             "options": {
               "values": {
                 "auto": "Auto",
@@ -1357,7 +1357,7 @@
             "visible": true,
             "editable": true,
             "position": 30,
-            "type": "percentage",
+            "input": "percentage",
             "validation": {
               "min": 0,
               "max": 100
@@ -1403,7 +1403,7 @@
             "visible": true,
             "editable": true,
             "position": 50,
-            "input": "dropdown",
+            "input": "select",
             "options": {
               "values": {
                 "result_count": "Result count",
@@ -1767,7 +1767,7 @@
           "hydra:readable": true,
           "hydra:writeable": true,
           "elasticsuite": {
-            "input": "dropdown",
+            "input": "select",
             "options": {
               "api_rest": "/category_sorting_options",
               "api_graphql": "categorySortingOptions"

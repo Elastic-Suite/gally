@@ -12,12 +12,12 @@ import EditableDropDownGuesser from './EditableDropDownGuesser'
 function EditableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
   const {
     diffValue,
+    input,
     label,
     multiple,
     name,
     onChange,
     options,
-    type,
     useDropdownBoolean,
     value,
     required,
@@ -38,7 +38,7 @@ function EditableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
     }
   }
 
-  switch (type) {
+  switch (input) {
     case DataContentType.NUMBER:
     case DataContentType.PERCENTAGE:
     case DataContentType.STRING: {
@@ -52,9 +52,9 @@ function EditableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
           label={label}
           onChange={handleChange}
           required={required}
-          sufix={type === DataContentType.PERCENTAGE ? '%' : ''}
+          sufix={input === DataContentType.PERCENTAGE ? '%' : ''}
           type={
-            type === DataContentType.NUMBER || DataContentType.PERCENTAGE
+            input === DataContentType.NUMBER || DataContentType.PERCENTAGE
               ? 'number'
               : 'text'
           }
@@ -63,7 +63,7 @@ function EditableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
       )
     }
 
-    case DataContentType.DROPDOWN: {
+    case DataContentType.SELECT: {
       return <EditableDropDownGuesser {...props} onChange={handleChange} />
     }
 

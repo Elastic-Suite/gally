@@ -8,6 +8,7 @@ export interface IFieldGuesserProps {
   diffValue?: unknown
   editable?: boolean
   field?: IField
+  input?: DataContentType
   name: string
   label?: string
   multiple?: boolean
