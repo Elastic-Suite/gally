@@ -11,18 +11,6 @@ describe('useApiFilters', () => {
     )
     expect(result.current).toEqual([
       expect.objectContaining({
-        id: 'isSearchable',
-        label: 'Searchable',
-        multiple: false,
-        type: 'boolean',
-      }),
-      expect.objectContaining({
-        id: 'isFilterable',
-        label: 'Filterable',
-        multiple: false,
-        type: 'boolean',
-      }),
-      expect.objectContaining({
         id: 'code',
         label: 'Attribute code',
         multiple: false,
@@ -39,6 +27,18 @@ describe('useApiFilters', () => {
         label: 'Attribute type',
         multiple: false,
         type: 'string',
+      }),
+      expect.objectContaining({
+        id: 'isFilterable',
+        label: 'Filterable',
+        multiple: false,
+        type: 'boolean',
+      }),
+      expect.objectContaining({
+        id: 'isSearchable',
+        label: 'Searchable',
+        multiple: false,
+        type: 'boolean',
       }),
     ])
   })

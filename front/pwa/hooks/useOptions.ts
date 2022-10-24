@@ -1,4 +1,4 @@
-import { useCallback, useContext } from 'react'
+import { useCallback, useContext, useMemo } from 'react'
 
 import {
   IApiSchemaOptions,
@@ -20,7 +20,8 @@ import {
 import { useSingletonLoader } from './useSingletonLoader'
 
 export function useOptions(): IOptionsContext {
-  const { fetch, map } = useSingletonLoader<IOptions<string | number>>()
+  const { fetch, map, statuses } =
+    useSingletonLoader<IOptions<string | number>>()
   const api = useContext(schemaContext)
 
   const load = useCallback(
@@ -70,5 +71,8 @@ export function useOptions(): IOptionsContext {
     [api, fetch]
   )
 
-  return { fieldOptions: map, load }
+  return useMemo(
+    () => ({ fieldOptions: map, load, statuses }),
+    [load, map, statuses]
+  )
 }

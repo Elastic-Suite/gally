@@ -87,7 +87,7 @@ Default.args = {
         { label: 'Four', value: 4 },
         { label: 'Five', value: 5 },
       ],
-      type: DataContentType.DROPDOWN,
+      type: DataContentType.SELECT,
     },
     {
       id: 'filterable',

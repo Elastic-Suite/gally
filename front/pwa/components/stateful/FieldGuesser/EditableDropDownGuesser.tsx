@@ -1,6 +1,6 @@
 import { SyntheticEvent, useContext, useEffect } from 'react'
 import { useTranslation } from 'next-i18next'
-import { IFieldGuesserProps } from 'shared'
+import { IFieldGuesserProps, LoadStatus } from 'shared'
 
 import DropDown from '~/components/atoms/form/DropDown'
 import { optionsContext } from '~/contexts'
@@ -22,7 +22,7 @@ function EditableDropDownGuesser(props: IProps): JSX.Element {
   } = props
 
   const { t } = useTranslation('common')
-  const { fieldOptions, load } = useContext(optionsContext)
+  const { fieldOptions, load, statuses } = useContext(optionsContext)
   const dropDownOptions =
     options ?? fieldOptions.get(field.property['@id']) ?? []
   const dirty = diffValue !== undefined && diffValue !== value
@@ -32,6 +32,15 @@ function EditableDropDownGuesser(props: IProps): JSX.Element {
       load(field)
     }
   }, [field, load, options])
+
+  // Wait to load the options before rendering to avoid problems
+  if (
+    value &&
+    dropDownOptions.length === 0 &&
+    statuses.current.get(field.property['@id']) !== LoadStatus.SUCCEEDED
+  ) {
+    return null
+  }
 
   return (
     <DropDown

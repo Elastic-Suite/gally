@@ -8,13 +8,13 @@ import Stock from '~/components/atoms/stock/Stock'
 import Price from '~/components/atoms/price/Price'
 
 function ReadableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
-  const { type, value } = props
+  const { input, value } = props
 
   if (value === undefined || value === null) {
     return null
   }
 
-  switch (type) {
+  switch (input) {
     case DataContentType.BOOLEAN: {
       return <Switch disabled defaultChecked={value as boolean} />
     }

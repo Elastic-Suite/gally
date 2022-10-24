@@ -1,4 +1,4 @@
-import { ReactNode, useMemo } from 'react'
+import { ReactNode } from 'react'
 
 import { optionsContext } from '~/contexts'
 import { useOptions } from '~/hooks'
@@ -9,8 +9,7 @@ interface IProps {
 
 function OptionsProvider(props: IProps): JSX.Element {
   const { children } = props
-  const { fieldOptions, load } = useOptions()
-  const context = useMemo(() => ({ load, fieldOptions }), [fieldOptions, load])
+  const context = useOptions()
   return (
     <optionsContext.Provider value={context}>
       {children}

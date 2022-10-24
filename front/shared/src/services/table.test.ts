@@ -19,9 +19,6 @@ import {
 describe('Table service', () => {
   describe('getFieldDataContentType', () => {
     it('should return the DataContent type', () => {
-      expect(getFieldDataContentType(fieldDropdown)).toEqual(
-        DataContentType.DROPDOWN
-      )
       expect(getFieldDataContentType(fieldString)).toEqual(
         DataContentType.STRING
       )
@@ -39,14 +36,6 @@ describe('Table service', () => {
           },
         })
       ).toEqual(DataContentType.NUMBER)
-      expect(
-        getFieldDataContentType({
-          ...fieldString,
-          elasticsuite: {
-            type: 'percentage',
-          },
-        })
-      ).toEqual(DataContentType.PERCENTAGE)
     })
   })
 
@@ -54,11 +43,23 @@ describe('Table service', () => {
     it('should return the field header', () => {
       expect(getFieldHeader(fieldString, (key: string) => key)).toEqual({
         field: fieldString,
+        input: DataContentType.STRING,
         name: 'code',
         label: 'Attribute code',
         type: DataContentType.STRING,
         editable: false,
         required: true,
+        validation: undefined,
+      })
+      expect(getFieldHeader(fieldDropdown, (key: string) => key)).toEqual({
+        field: fieldDropdown,
+        input: DataContentType.SELECT,
+        name: 'code',
+        label: 'Attribute code',
+        type: DataContentType.STRING,
+        editable: false,
+        required: true,
+        validation: undefined,
       })
     })
   })
@@ -94,7 +95,7 @@ describe('Table service', () => {
           field: fieldRef,
           multiple: true,
         })
-      ).toEqual(DataContentType.DROPDOWN)
+      ).toEqual(DataContentType.SELECT)
     })
   })
 
@@ -114,10 +115,10 @@ describe('Table service', () => {
         )
       ).toEqual({
         id: 'code',
+        input: DataContentType.STRING,
         field: fieldString,
         label: 'Attribute code',
         multiple: false,
-        options: undefined,
         type: DataContentType.STRING,
       })
     })
@@ -126,20 +127,20 @@ describe('Table service', () => {
   describe('getMappings', () => {
     it('should return the mappings object', () => {
       const mappings = getMappings(sourceFields, resourceWithRef)
-      expect(mappings[1]).toEqual({
-        '@type': 'IriTemplateMapping',
-        variable: 'isFilterable',
-        property: 'isFilterable',
-        required: false,
-        field: fieldBoolean,
-        multiple: false,
-      })
-      expect(mappings[2]).toEqual({
+      expect(mappings[0]).toEqual({
         '@type': 'IriTemplateMapping',
         variable: 'code',
         property: 'code',
         required: false,
         field: fieldString,
+        multiple: false,
+      })
+      expect(mappings[3]).toEqual({
+        '@type': 'IriTemplateMapping',
+        variable: 'isFilterable',
+        property: 'isFilterable',
+        required: false,
+        field: fieldBoolean,
         multiple: false,
       })
     })

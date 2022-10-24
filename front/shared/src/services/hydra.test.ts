@@ -70,17 +70,6 @@ describe('Hydra service', () => {
         })
       ).toEqual('integer')
     })
-
-    it('Should return the field type from elasticsuite override', () => {
-      expect(
-        getFieldType({
-          ...fieldString,
-          elasticsuite: {
-            type: 'percentage',
-          },
-        })
-      ).toEqual('percentage')
-    })
   })
 
   describe('isReferenceField', () => {

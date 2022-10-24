@@ -58,7 +58,7 @@ describe('RowService', () => {
         leftValue: '10',
         shadow: false,
         isLastSticky: true,
-        type: DataContentType.DROPDOWN,
+        type: DataContentType.SELECT,
       }
       const cssStyle: IStickyStyle = stickyStyle(
         mockInput.leftValue,
@@ -110,7 +110,7 @@ describe('RowService', () => {
 
   describe('nonStickyStyle', () => {
     it('Should set overflow visible', () => {
-      const cssStyle = nonStickyStyle(DataContentType.DROPDOWN)
+      const cssStyle = nonStickyStyle(DataContentType.SELECT)
       expect(cssStyle.overflow).toEqual('visible')
     })
     it('Should set overflow not visible', () => {
