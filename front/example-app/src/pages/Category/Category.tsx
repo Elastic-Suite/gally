@@ -6,7 +6,7 @@ import {
   ICategory,
   IGraphqlSearchProducts,
   LoadStatus,
-  searchProductsQuery,
+  getSearchProductsQuery,
 } from 'shared'
 
 import { catalogContext, categoryContext } from '../../contexts'
@@ -63,7 +63,7 @@ function Category(): JSX.Element {
     [localizedCatalogId, page, pageSize]
   )
   const [products, setProducts, load] = useGraphqlApi<IGraphqlSearchProducts>(
-    searchProductsQuery,
+    getSearchProductsQuery(),
     variables
   )
   const category = findCategory(categories, id)

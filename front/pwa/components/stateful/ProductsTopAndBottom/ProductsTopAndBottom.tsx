@@ -14,11 +14,12 @@ const PreviewArea = styled(Box)(({ theme }) => ({
 }))
 
 interface IProps {
-  topSelectedRows: (string | number)[]
-  onTopSelectedRows: Dispatch<SetStateAction<(string | number)[]>>
   bottomSelectedRows: (string | number)[]
-  onBottomSelectedRows: Dispatch<SetStateAction<(string | number)[]>>
   catalogId: string
+  onBottomSelectedRows: Dispatch<SetStateAction<(string | number)[]>>
+  onTopSelectedRows: Dispatch<SetStateAction<(string | number)[]>>
+  productGraphqlFilters: unknown
+  topSelectedRows: (string | number)[]
 }
 
 function ProductsTopAndBottom(
@@ -26,11 +27,12 @@ function ProductsTopAndBottom(
   ref: MutableRefObject<HTMLDivElement>
 ): JSX.Element {
   const {
-    topSelectedRows,
-    onTopSelectedRows,
     bottomSelectedRows,
-    onBottomSelectedRows,
     catalogId,
+    onBottomSelectedRows,
+    onTopSelectedRows,
+    productGraphqlFilters,
+    topSelectedRows,
   } = props
 
   const { t } = useTranslation('categories')
@@ -40,16 +42,18 @@ function ProductsTopAndBottom(
       <PreviewArea>{t('previewArea')}</PreviewArea>
       <Box sx={{ padding: '42px 16px 17px 16px' }}>
         <TopTable
-          selectedRows={topSelectedRows}
-          onSelectedRows={onTopSelectedRows}
           catalogId={catalogId}
+          productGraphqlFilters={productGraphqlFilters}
+          onSelectedRows={onTopSelectedRows}
+          selectedRows={topSelectedRows}
         />
         <Box sx={{ marginTop: '24px' }}>
           <BottomTable
             ref={ref}
-            selectedRows={bottomSelectedRows}
-            onSelectedRows={onBottomSelectedRows}
             catalogId={catalogId}
+            productGraphqlFilters={productGraphqlFilters}
+            onSelectedRows={onBottomSelectedRows}
+            selectedRows={bottomSelectedRows}
           />
         </Box>
       </Box>

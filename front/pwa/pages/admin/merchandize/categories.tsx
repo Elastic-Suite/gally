@@ -3,6 +3,7 @@ import { useTranslation } from 'next-i18next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { Box } from '@mui/system'
+import debounce from 'lodash.debounce'
 import {
   ICategories,
   ICategory,
@@ -10,12 +11,14 @@ import {
   IHydraCatalog,
   IParsedCategoryConfiguration,
   IRuleCombination,
+  IRuleEngineGraphqlFilters,
   IRuleEngineOperators,
   LoadStatus,
   findBreadcrumbLabel,
   isError,
   parseCatConf,
   serializeCatConf,
+  serializeRule,
 } from 'shared'
 
 import { breadcrumbContext } from '~/contexts'
@@ -35,6 +38,8 @@ import CatalogSwitcher from '~/components/stateful/CatalogSwitcher/CatalogSwitch
 import CategoryTree from '~/components/stateful/CategoryTree/CategoryTree'
 import ProductsContainer from '~/components/stateful/ProductsContainer/ProductsContainer'
 import RulesManager from '~/components/stateful/RulesManager/RulesManager'
+
+const debounceDelay = 200
 
 function Categories(): JSX.Element {
   const router = useRouter()
@@ -79,6 +84,23 @@ function Categories(): JSX.Element {
   // Rule engine operators
   const [ruleOperators, setRuleOperators] = useState<IRuleEngineOperators>()
 
+  // Rule engine graphql filters
+  const [productGraphqlFilters, setProductGraphqlFilters] = useState(null)
+  const debouncedFetch = useMemo(
+    () =>
+      debounce(async (rule: string): Promise<void> => {
+        const json = await fetchApi<IRuleEngineGraphqlFilters>(
+          'rule_engine_graphql_filters',
+          undefined,
+          { body: JSON.stringify({ rule }), method: 'POST' }
+        )
+        if (!isError(json)) {
+          setProductGraphqlFilters(json.graphQlFilters)
+        }
+      }, debounceDelay),
+    [fetchApi]
+  )
+
   useEffect(() => {
     setBreadcrumb(['merchandize', 'categories'])
   }, [router.query, setBreadcrumb])
@@ -104,6 +126,14 @@ function Categories(): JSX.Element {
       }
     })
   }, [fetchApi])
+
+  useEffect(() => {
+    if (catConf?.virtualRule) {
+      debouncedFetch(
+        JSON.stringify(serializeRule(catConf.virtualRule, ruleOperators))
+      )
+    }
+  }, [catConf?.virtualRule, debouncedFetch, ruleOperators])
 
   function handleUpdateCat(name: string): (val: boolean | string) => void {
     return (val) => {
@@ -222,17 +252,18 @@ function Categories(): JSX.Element {
       >
         {selectedCategoryItem?.id ? (
           <ProductsContainer
-            category={selectedCategoryItem}
             catConf={catConf}
-            onVirtualChange={handleUpdateCat('isVirtual')}
-            onNameChange={handleUpdateCat('useNameInProductSearch')}
-            onSortChange={handleUpdateCat('defaultSorting')}
             catalog={catalogId}
-            localizedCatalog={localizedCatalogId}
             catalogsData={data}
-            error={error}
-            onSave={onSave}
+            category={selectedCategoryItem}
             disableBtnSave={!dirty}
+            error={error}
+            localizedCatalog={localizedCatalogId}
+            onNameChange={handleUpdateCat('useNameInProductSearch')}
+            onSave={onSave}
+            onSortChange={handleUpdateCat('defaultSorting')}
+            onVirtualChange={handleUpdateCat('isVirtual')}
+            productGraphqlFilters={productGraphqlFilters}
           />
         ) : (
           <Box

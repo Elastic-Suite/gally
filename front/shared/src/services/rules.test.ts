@@ -11,6 +11,7 @@ import {
   isCombinationRule,
   parseCatConf,
   serializeCatConf,
+  serializeRule,
 } from './rules'
 
 describe('Rules service', () => {
@@ -130,8 +131,60 @@ describe('Rules service', () => {
     })
   })
 
+  describe('serializeRule', () => {
+    it('should serialize the rule', () => {
+      expect(
+        serializeRule(
+          parsedVirtualRule,
+          ruleEngineOperators as IRuleEngineOperators
+        )
+      ).toEqual({
+        type: 'combination',
+        operator: 'all',
+        value: 'true',
+        children: [
+          {
+            type: 'attribute',
+            field: 'sku',
+            operator: 'in',
+            attribute_type: 'reference',
+            value: ['42', '45'],
+          },
+          {
+            type: 'attribute',
+            field: 'size',
+            operator: 'in',
+            attribute_type: 'int',
+            value: [42, 45],
+          },
+          {
+            type: 'attribute',
+            field: 'stock',
+            operator: 'eq',
+            attribute_type: 'boolean',
+            value: 'true',
+          },
+          {
+            type: 'attribute',
+            field: 'brand',
+            operator: 'eq',
+            attribute_type: 'text',
+            value: 'gally',
+          },
+          {
+            type: 'attribute',
+            field: 'id',
+            operator: 'eq',
+            attribute_type: 'int',
+            value: 42,
+          },
+        ],
+      })
+    })
+  })
+
   describe('serializeCatConf', () => {
-    it('should serializeCatConf the category configuration', () => {
+    it('should serialize the category configuration', () => {
       expect(
         serializeCatConf(
           { ...catConf, virtualRule: parsedVirtualRule },
