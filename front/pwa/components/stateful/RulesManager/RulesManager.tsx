@@ -13,12 +13,10 @@ import CombinationRules, {
 } from '~/components/atoms/rules/CombinationRules'
 import RuleOptionsProvider from '~/components/stateful-providers/RuleOptionsProvider/RuleOptionsProvider'
 
-// todo: fix filters
 const sourceFieldFixedFilters = {
   'metadata.entity': 'product',
   isFilterable: true,
-  // 'isUsedInRule': true,
-  // 'type': [], // list of allowed types from ruleOperators
+  isUsedForRules: true,
 }
 
 interface IProps extends ICombinationRulesProps {
@@ -32,11 +30,18 @@ function RulesManager(props: IProps): JSX.Element {
 
   // Source fields
   const sourceFieldResource = useResource('SourceField')
+  const filters = useMemo(
+    () => ({
+      ...sourceFieldFixedFilters,
+      'type[]': Object.keys(ruleOperators.operatorsValueType),
+    }),
+    [ruleOperators.operatorsValueType]
+  )
   const [sourceFields] = useApiList<ISourceField>(
     sourceFieldResource,
     false,
     undefined,
-    sourceFieldFixedFilters
+    filters
   )
 
   // Source field labels
