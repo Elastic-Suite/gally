@@ -38,7 +38,8 @@ interface IProps {
 function RuleOptionsProvider(props: IProps): JSX.Element {
   const { catalogId, children, fields, localizedCatalogId, ruleOperators } =
     props
-  const { operators, operatorsBySourceFieldType } = ruleOperators
+  const { operators, operatorsBySourceFieldType, operatorsValueType } =
+    ruleOperators
   const sourceFieldOptionLabelResource = useResource('SourceFieldOptionLabel')
   const { t } = useTranslation('rules')
   const { fetch, map, setMap } = useSingletonLoader<
@@ -165,6 +166,7 @@ function RuleOptionsProvider(props: IProps): JSX.Element {
       getAttributeOperatorOptions,
       getAttributeType,
       loadAttributeValueOptions,
+      operatorsValueType,
       options: map,
     }),
     [
@@ -172,6 +174,7 @@ function RuleOptionsProvider(props: IProps): JSX.Element {
       getAttributeType,
       loadAttributeValueOptions,
       map,
+      operatorsValueType,
     ]
   )
 

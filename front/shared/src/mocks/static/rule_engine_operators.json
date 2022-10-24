@@ -1,0 +1,83 @@
+{
+  "@context": "/contexts/RuleEngineOperators",
+  "@id": "/rule_engine_operators?id=rule_engine_operators",
+  "@type": "RuleEngineOperators",
+  "id": "rule_engine_operators",
+  "operators": {
+    "eq": "is",
+    "!eq": "is not",
+    "gte": "equals or greater than",
+    "lte": "equals or less than",
+    "gt": "greater than",
+    "lt": "less than",
+    "match": "contains",
+    "!match": "does not contain",
+    "in": "is one of",
+    "!in": "is not one of",
+    "exist": "is defined"
+  },
+  "operatorsBySourceFieldType": {
+    "text": ["eq", "!eq", "match", "!match", "in", "!in"],
+    "reference": ["eq", "!eq", "match", "!match", "in", "!in"],
+    "keyword": ["eq", "!eq", "match", "!match", "in", "!in"],
+    "int": ["eq", "!eq", "gt", "gte", "lt", "lte", "in", "!in"],
+    "float": ["eq", "!eq", "gt", "gte", "lt", "lte", "in", "!in"],
+    "boolean": ["eq"],
+    "date": ["eq", "!eq", "gt", "gte", "lt", "lte"]
+  },
+  "operatorsValueType": {
+    "text": {
+      "eq": "String",
+      "!eq": "String",
+      "match": "String",
+      "!match": "String",
+      "in": "[String]",
+      "!in": "[String]"
+    },
+    "reference": {
+      "eq": "String",
+      "!eq": "String",
+      "match": "String",
+      "!match": "String",
+      "in": "[String]",
+      "!in": "[String]"
+    },
+    "keyword": {
+      "eq": "String",
+      "!eq": "String",
+      "match": "String",
+      "!match": "String",
+      "in": "[String]",
+      "!in": "[String]"
+    },
+    "int": {
+      "eq": "Int",
+      "!eq": "Int",
+      "gt": "Int",
+      "gte": "Int",
+      "lt": "Int",
+      "lte": "Int",
+      "in": "[Int]",
+      "!in": "[Int]"
+    },
+    "float": {
+      "eq": "Float",
+      "!eq": "Float",
+      "gt": "Float",
+      "gte": "Float",
+      "lt": "Float",
+      "lte": "Float",
+      "in": "[Float]",
+      "!in": "[Float]"
+    },
+    "boolean": { "eq": "String" },
+    "date": {
+      "eq": "String",
+      "!eq": "String",
+      "gt": "String",
+      "gte": "String",
+      "lt": "String",
+      "lte": "String"
+    }
+  }
+}
