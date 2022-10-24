@@ -22,6 +22,7 @@
     "@emotion/styled": "11.10.4",
     "@mui/material": "5.10.5",
     "inflection": "1.13.4",
+    "json-to-graphql-query": "2.2.4",
     "jsonld": "8.1.0",
     "jwt-decode": "3.1.2",
     "next": "12.3.0",

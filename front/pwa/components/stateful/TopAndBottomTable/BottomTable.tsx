@@ -15,8 +15,8 @@ import {
   LoadStatus,
   defaultPageSize,
   defaultRowsPerPageOptions,
+  getSearchProductsQuery,
   productTableheader,
-  searchProductsQuery,
 } from 'shared'
 
 import PagerTable from '../../organisms/PagerTable/PagerTable'
@@ -24,16 +24,18 @@ import PagerTable from '../../organisms/PagerTable/PagerTable'
 import FieldGuesser from '../FieldGuesser/FieldGuesser'
 
 interface IProps {
-  selectedRows: (string | number)[]
-  onSelectedRows: Dispatch<SetStateAction<(string | number)[]>>
   catalogId: string
+  onSelectedRows: Dispatch<SetStateAction<(string | number)[]>>
+  productGraphqlFilters: unknown
+  selectedRows: (string | number)[]
 }
 
 function BottomTable(
   props: IProps,
   ref: MutableRefObject<HTMLDivElement>
 ): JSX.Element {
-  const { selectedRows, onSelectedRows, catalogId } = props
+  const { catalogId, onSelectedRows, productGraphqlFilters, selectedRows } =
+    props
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [rowsPerPage, setRowsPerPage] = useState<number>(defaultPageSize)
   const rowsPerPageOptions = defaultRowsPerPageOptions
@@ -44,7 +46,7 @@ function BottomTable(
     [catalogId, currentPage, rowsPerPage]
   )
   const [products] = useGraphqlApi<IGraphqlSearchProducts>(
-    searchProductsQuery,
+    getSearchProductsQuery(productGraphqlFilters),
     variables
   )
   const tableRows: ITableRow[] = products?.data?.searchProducts

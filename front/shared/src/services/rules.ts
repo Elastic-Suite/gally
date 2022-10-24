@@ -27,22 +27,25 @@ function parseRule<R extends IRule>(
   ruleOperators: IRuleEngineOperators
 ): R {
   if (isCombinationRule(rule)) {
-    rule.children = rule.children.map((rule) => parseRule(rule, ruleOperators))
-    rule.value = rule.value === 'true'
-    return rule
+    return {
+      ...rule,
+      value: rule.value === 'true',
+      children: rule.children.map((rule) => parseRule(rule, ruleOperators)),
+    }
   } else if (isAttributeRule(rule)) {
     const valueType =
       ruleOperators.operatorsValueType[rule.attribute_type]?.[rule.operator]
+    let ruleValue = rule.value
     if (
       valueType.startsWith('[') &&
       valueType.endsWith(']') &&
       rule.value instanceof Array
     ) {
-      rule.value = rule.value.join(ruleArrayValueSeparator)
+      ruleValue = rule.value.join(ruleArrayValueSeparator)
     } else if (rule.attribute_type === RuleAttributeType.BOOLEAN) {
-      rule.value = rule.value === 'true'
+      ruleValue = rule.value === 'true'
     }
-    return rule
+    return { ...rule, value: ruleValue }
   }
   return rule
 }
@@ -60,36 +63,37 @@ export function parseCatConf(
   return { ...catConf, virtualRule }
 }
 
-function serializeRule<R extends IRule>(
+export function serializeRule<R extends IRule>(
   rule: R,
   ruleOperators: IRuleEngineOperators
 ): R {
   if (isCombinationRule(rule)) {
-    rule.children = rule.children.map((rule) =>
-      serializeRule(rule, ruleOperators)
-    )
-    rule.value = String(rule.value)
-    return rule
+    return {
+      ...rule,
+      value: String(rule.value),
+      children: rule.children.map((rule) => serializeRule(rule, ruleOperators)),
+    }
   } else if (isAttributeRule(rule)) {
     const valueType =
       ruleOperators.operatorsValueType[rule.attribute_type]?.[rule.operator]
+    let ruleValue: string | string[] | number | number[] | boolean = String(
+      rule.value
+    )
     if (
       valueType.startsWith('[') &&
       valueType.endsWith(']') &&
       typeof rule.value === 'string'
     ) {
-      rule.value = rule.value.split(ruleArrayValueSeparator)
+      ruleValue = rule.value.split(ruleArrayValueSeparator)
       if (ruleValueNumberTypes.includes(valueType.slice(1, -1))) {
-        rule.value = rule.value.map(Number)
+        ruleValue = ruleValue.map(Number)
       } else {
-        rule.value = rule.value.map(String)
+        ruleValue = ruleValue.map(String)
       }
     } else if (ruleValueNumberTypes.includes(valueType)) {
-      rule.value = Number(rule.value)
-    } else {
-      rule.value = String(rule.value)
+      ruleValue = Number(rule.value)
     }
-    return rule
+    return { ...rule, value: ruleValue }
   }
   return rule
 }

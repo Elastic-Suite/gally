@@ -6,25 +6,27 @@ import {
   ITableHeader,
   ITableRow,
   LoadStatus,
+  getSearchProductsQuery,
   productTableheader,
-  searchProductsQuery,
 } from 'shared'
 
 import FieldGuesser from '../FieldGuesser/FieldGuesser'
 import TopProductsTable from '../TopProductsTable/TopProductsTable'
 
 interface IProps {
-  selectedRows: (string | number)[]
-  onSelectedRows: Dispatch<SetStateAction<(string | number)[]>>
   catalogId: string
+  onSelectedRows: Dispatch<SetStateAction<(string | number)[]>>
+  productGraphqlFilters: unknown
+  selectedRows: (string | number)[]
 }
 
 function TopTable(props: IProps): JSX.Element {
-  const { selectedRows, onSelectedRows, catalogId } = props
+  const { catalogId, onSelectedRows, productGraphqlFilters, selectedRows } =
+    props
 
   const variables = useMemo(() => ({ catalogId }), [catalogId])
   const [products] = useGraphqlApi<IGraphqlSearchProducts>(
-    searchProductsQuery,
+    getSearchProductsQuery(productGraphqlFilters),
     variables
   )
   const tableRows: ITableRow[] = products?.data?.searchProducts
