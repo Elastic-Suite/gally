@@ -14,7 +14,7 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\Category\Tests\Api\Rest;
+namespace Elasticsuite\Category\Tests\Api\GraphQl;
 
 use Elasticsearch\Client;
 use Elasticsuite\Catalog\Repository\LocalizedCatalogRepository;
@@ -31,14 +31,16 @@ class SyncCategoryProductMerchandisingDataTest extends AbstractTest
 {
     use CategoryTestTrait;
 
-    private static Client $client;
-    private static IndexSettings $indexSettings;
+    protected static Client $client;
+    protected static IndexSettings $indexSettings;
+    protected static array $subCategoryFields;
 
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
         self::$client = static::getContainer()->get('api_platform.elasticsearch.client');
         self::$indexSettings = static::getContainer()->get(IndexSettings::class);
+        self::$subCategoryFields = ['position'];
 
         self::loadFixture([
             __DIR__ . '/../../fixtures/catalogs.yaml',
@@ -104,10 +106,15 @@ class SyncCategoryProductMerchandisingDataTest extends AbstractTest
      */
     public function testBulkIndex(string $indexName, array $expectedPositions)
     {
-        $indexFound = false;
         $documentsFile = __DIR__ . '/../../fixtures/product_documents_bulk.json';
         $indices = file_get_contents(__DIR__ . '/../../fixtures/product_documents_bulk.json');
         $indices = json_decode($indices, true);
+        $this->validateBulkIndexData($indices, $documentsFile, $indexName, $expectedPositions);
+    }
+
+    protected function validateBulkIndexData(array $indices, string $documentsFile, string $indexName, array $expectedPositions)
+    {
+        $indexFound = false;
         foreach ($indices as $index) {
             if ($index['index_name'] === $indexName) {
                 $indexNameTest = ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . $index['index_name'];
@@ -172,7 +179,7 @@ class SyncCategoryProductMerchandisingDataTest extends AbstractTest
         ];
     }
 
-    private function installIndex(string $indexName): void
+    protected function installIndex(string $indexName): void
     {
         $this->validateApiCall(
             new RequestGraphQlToTest(
@@ -195,7 +202,7 @@ class SyncCategoryProductMerchandisingDataTest extends AbstractTest
         );
     }
 
-    private function bulkIndex(string $indexName, array $data): void
+    protected function bulkIndex(string $indexName, array $data): void
     {
         $data = addslashes(json_encode($data));
         $this->validateApiCall(
@@ -216,7 +223,7 @@ class SyncCategoryProductMerchandisingDataTest extends AbstractTest
         );
     }
 
-    private function bulkDeleteIndex(string $indexName, array $ids): void
+    protected function bulkDeleteIndex(string $indexName, array $ids): void
     {
         $ids = json_encode($ids);
         $this->validateApiCall(

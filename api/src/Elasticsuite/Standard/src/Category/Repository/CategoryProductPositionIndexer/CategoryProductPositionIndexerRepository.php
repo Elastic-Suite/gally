@@ -114,7 +114,7 @@ class CategoryProductPositionIndexerRepository implements CategoryProductPositio
         }
     }
 
-    private function reindexDocuments(array $products, array $response, string $indexAlias)
+    protected function reindexDocuments(array $products, array $response, string $indexAlias)
     {
         $documentUpdated = false;
         foreach ($response['hits']['hits'] as $document) {
@@ -123,49 +123,65 @@ class CategoryProductPositionIndexerRepository implements CategoryProductPositio
                 continue;
             }
 
-            // If the category node does not exist in the document we don't set the position to avoid data inconsistency.
             $categories = $document['_source']['category'] ?? [];
-            if (!empty($categories)) {
-                $origCategories = $categories;
-                foreach ($categories as &$category) {
-                    if (isset($category['id'])
-                        && isset($products[$productId][$category['id']])) {
-                        $productData = $products[$productId][$category['id']];
-                        $category['position'] = $productData['position'];
-                        if (null === $productData['position']) { // if the position is null, that means the position has been deleted.
-                            unset($category['position']);
-                        }
-                    }
-                }
+            $origCategories = $categories;
+            $categories = $this->getCategoriesWithUpdatedData($categories, $products[$productId]);
 
-                if ($origCategories != $categories) {
-                    $documentUpdated = true;
-                    $params = [
-                        'id' => $document['_id'],
-                        'index' => $indexAlias,
-                        'body' => [
-                            'doc' => [
-                                'category' => $categories,
-                            ],
-                        ],
-                    ];
-
-                    $result = $this->client->update($params);
-                    if (!isset($result['_shards']['failed']) || $result['_shards']['failed'] > 0) {
-                        $this->logger->error(
-                            'Error during position update',
-                            [
-                                'params' => $params,
-                                'result' => $result,
-                            ]
-                        );
-                    }
-                }
+            if ($origCategories != $categories) {
+                $documentUpdated = true;
+                $this->updateDocument($document, $indexAlias, $categories);
             }
         }
 
         if ($documentUpdated) {
             $this->indexRepository->refresh($indexAlias);
+        }
+    }
+
+    /**
+     * Add/update position data in $productCategories.
+     */
+    protected function getCategoriesWithUpdatedData(array $productCategories, array $newPositionsByCategory): array
+    {
+        foreach ($newPositionsByCategory as $categoryId => $newPositionByCategory) {
+            $key = array_search($categoryId, array_column($productCategories, 'id'), true);
+            if (false !== $key) {
+                $productCategories[$key]['id'] = $categoryId;
+                $productCategories[$key]['position'] = $newPositionByCategory['position'];
+                // if the position is null, that means the position has been deleted.
+                if (null === $newPositionByCategory['position']) {
+                    unset($productCategories[$key]['position']);
+                }
+            }
+        }
+
+        return $productCategories;
+    }
+
+    /**
+     * Performs a query to update the document in ElasticSearch.
+     */
+    protected function updateDocument(array $document, string $indexAlias, array $categories): void
+    {
+        $params = [
+            'id' => $document['_id'],
+            'index' => $indexAlias,
+            'body' => [
+                'doc' => [
+                    'category' => $categories,
+                ],
+            ],
+        ];
+
+        $result = $this->client->update($params);
+        if (!isset($result['_shards']['failed']) || $result['_shards']['failed'] > 0) {
+            $this->logger->error(
+                'Error during position update',
+                [
+                    'params' => $params,
+                    'result' => $result,
+                ]
+            );
         }
     }
 }
