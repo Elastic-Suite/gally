@@ -6,13 +6,16 @@ import { Box } from '@mui/system'
 import {
   ICategories,
   ICategory,
+  ICategoryConfiguration,
   IHydraCatalog,
+  IParsedCategoryConfiguration,
   IRuleCombination,
   IRuleEngineOperators,
   LoadStatus,
-  emptyCombinationRule,
   findBreadcrumbLabel,
   isError,
+  parseCatConf,
+  serializeCatConf,
 } from 'shared'
 
 import { breadcrumbContext } from '~/contexts'
@@ -30,21 +33,8 @@ import TitleBlock from '~/components/molecules/layout/TitleBlock/TitleBlock'
 import TwoColsLayout from '~/components/molecules/layout/twoColsLayout/TwoColsLayout'
 import CatalogSwitcher from '~/components/stateful/CatalogSwitcher/CatalogSwitcher'
 import CategoryTree from '~/components/stateful/CategoryTree/CategoryTree'
-import ProductsContainer, {
-  IConfiguration,
-  IParsedConfiguration,
-} from '~/components/stateful/ProductsContainer/ProductsContainer'
+import ProductsContainer from '~/components/stateful/ProductsContainer/ProductsContainer'
 import RulesManager from '~/components/stateful/RulesManager/RulesManager'
-
-function getParsedCatConf(catConf: IConfiguration): IParsedConfiguration {
-  let virtualRule: IRuleCombination
-  try {
-    virtualRule = JSON.parse(catConf.virtualRule)
-  } catch {
-    virtualRule = emptyCombinationRule
-  }
-  return { ...catConf, virtualRule }
-}
 
 function Categories(): JSX.Element {
   const router = useRouter()
@@ -81,10 +71,10 @@ function Categories(): JSX.Element {
 
   // Category configuration
   const catConfResource = useResource('CategoryConfiguration')
-  const [catConf, setCatConf] = useState<IParsedConfiguration>()
-  const prevDataCat = useRef<IParsedConfiguration>()
+  const [catConf, setCatConf] = useState<IParsedCategoryConfiguration>()
+  const prevDataCat = useRef<IParsedCategoryConfiguration>()
   const { update, create } =
-    useResourceOperations<IConfiguration>(catConfResource)
+    useResourceOperations<ICategoryConfiguration>(catConfResource)
 
   // Rule engine operators
   const [ruleOperators, setRuleOperators] = useState<IRuleEngineOperators>()
@@ -94,18 +84,18 @@ function Categories(): JSX.Element {
   }, [router.query, setBreadcrumb])
 
   useEffect(() => {
-    if (selectedCategoryItem) {
-      fetchApi<IConfiguration>(
+    if (ruleOperators && selectedCategoryItem) {
+      fetchApi<ICategoryConfiguration>(
         `${catConfResource.url}/category/${selectedCategoryItem.id}`
       ).then((catConf) => {
         if (!isError(catConf)) {
-          const parsedCatConf = getParsedCatConf(catConf)
+          const parsedCatConf = parseCatConf(catConf, ruleOperators)
           prevDataCat.current = parsedCatConf
           setCatConf(parsedCatConf)
         }
       })
     }
-  }, [fetchApi, selectedCategoryItem, catConfResource.url])
+  }, [fetchApi, ruleOperators, selectedCategoryItem, catConfResource.url])
 
   useEffect(() => {
     fetchApi<IRuleEngineOperators>('rule_engine_operators').then((json) => {
@@ -126,14 +116,11 @@ function Categories(): JSX.Element {
   }
 
   async function onSave(): Promise<void> {
-    const apiCatConf = {
-      ...catConf,
-      virtualRule: JSON.stringify(catConf.virtualRule),
-    }
+    const serializedCatConf = serializeCatConf(catConf, ruleOperators)
     if (!catConf.id) {
-      const newCatConf = await create(apiCatConf)
+      const newCatConf = await create(serializedCatConf)
       if (!isError(newCatConf)) {
-        const parsedCatConf = getParsedCatConf(newCatConf)
+        const parsedCatConf = parseCatConf(newCatConf, ruleOperators)
         prevDataCat.current = parsedCatConf
         setCatConf(parsedCatConf)
         dispatch(addMessage({ message: t('alert'), severity: 'success' }))
@@ -141,9 +128,9 @@ function Categories(): JSX.Element {
         dispatch(addMessage({ message: t('alert.error'), severity: 'error' }))
       }
     } else {
-      const newCatConf = await update(apiCatConf.id, apiCatConf)
+      const newCatConf = await update(serializedCatConf.id, serializedCatConf)
       if (!isError(newCatConf)) {
-        const parsedCatConf = getParsedCatConf(newCatConf)
+        const parsedCatConf = parseCatConf(newCatConf, ruleOperators)
         prevDataCat.current = parsedCatConf
         setCatConf(parsedCatConf)
         dispatch(addMessage({ message: t('alert'), severity: 'success' }))
@@ -221,7 +208,7 @@ function Categories(): JSX.Element {
             </>
           </TitleBlock>,
           <TitleBlock key="virtualRule" title={t('virtualRule.title')}>
-            {Boolean(ruleOperators && catConf?.id && catConf?.isVirtual) && (
+            {Boolean(ruleOperators && catConf?.isVirtual) && (
               <RulesManager
                 catalogId={catalogId}
                 localizedCatalogId={localizedCatalogId}

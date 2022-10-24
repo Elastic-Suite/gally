@@ -6,21 +6,18 @@ import {
   IOptions,
   IRule,
   IRuleAttribute,
-  ITreeItem,
   RuleAttributeType,
   RuleType,
   isAttributeRule,
   isCombinationRule,
+  ruleValueNumberTypes,
 } from 'shared'
 
 import IonIcon from '../IonIcon/IonIcon'
 import DropDown from '../form/DropDown'
 import InputText from '../form/InputText'
-import TreeSelector from '../form/TreeSelector'
 
 import { Close, CustomCombination, Root } from './Rule.styled'
-
-const numberTypes = [RuleAttributeType.FLOAT, RuleAttributeType.INT]
 
 interface IProps {
   onChange?: (rule: IRule) => void
@@ -34,9 +31,18 @@ function Rule(props: IProps): JSX.Element {
     getAttributeOperatorOptions,
     getAttributeType,
     loadAttributeValueOptions,
+    operatorsValueType,
     options,
   } = useContext(ruleOptionsContext)
   const { t } = useTranslation('rules')
+
+  function getInputType(rule: IRuleAttribute): 'number' | 'text' {
+    const valueType = operatorsValueType[rule.attribute_type]?.[rule.operator]
+    if (ruleValueNumberTypes.includes(valueType)) {
+      return 'number'
+    }
+    return 'text'
+  }
 
   function handleChange(property: string) {
     return (value: unknown): void => onChange({ ...rule, [property]: value })
@@ -52,62 +58,67 @@ function Rule(props: IProps): JSX.Element {
     } as IRuleAttribute)
   }
 
+  function handleOperatorChange(operator: string): void {
+    const attributeRule = rule as IRuleAttribute
+    const newRule: IRuleAttribute = {
+      ...attributeRule,
+      operator,
+    }
+    const prevType = getInputType(attributeRule)
+    const newType = getInputType(newRule)
+    onChange({
+      ...newRule,
+      value: prevType === newType ? rule.value : '',
+    })
+  }
+
   function getAttributeValueComponent(rule: IRuleAttribute): JSX.Element {
     const { attribute_type, field, value } = rule
-    switch (attribute_type) {
-      case RuleAttributeType.BOOLEAN: {
-        return (
-          <DropDown
-            onChange={handleChange('value')}
-            options={
-              (options.get(`type-${RuleAttributeType.BOOLEAN}`) ??
-                []) as IOptions<boolean>
-            }
-            required
-            small
-            value={value}
-          />
-        )
-      }
-
-      case RuleAttributeType.CATEGORY: {
-        return (
-          <TreeSelector
-            data={
-              (options.get(`type-${RuleAttributeType.CATEGORY}`) ??
-                []) as ITreeItem[]
-            }
-            onChange={handleChange('value')}
-            value={value as string[]}
-          />
-        )
-      }
-
-      case RuleAttributeType.SELECT: {
-        return (
-          <DropDown
-            onChange={handleChange('value')}
-            options={(options.get(field) ?? []) as IOptions<unknown>}
-            required
-            small
-            value={value}
-          />
-        )
-      }
-
-      default: {
-        const type = numberTypes.includes(attribute_type) ? 'number' : 'text'
-        return (
-          <InputText
-            onChange={handleChange('value')}
-            required
-            small
-            type={type}
-            value={value as string}
-          />
-        )
-      }
+    if (attribute_type === RuleAttributeType.BOOLEAN) {
+      return (
+        <DropDown
+          onChange={handleChange('value')}
+          options={
+            (options.get(`type-${RuleAttributeType.BOOLEAN}`) ??
+              []) as IOptions<boolean>
+          }
+          required
+          small
+          value={value}
+        />
+      )
+    } else if (attribute_type === RuleAttributeType.SELECT) {
+      return (
+        <DropDown
+          onChange={handleChange('value')}
+          options={(options.get(field) ?? []) as IOptions<unknown>}
+          required
+          small
+          value={value}
+        />
+      )
     }
+    return (
+      <InputText
+        onChange={handleChange('value')}
+        required
+        small
+        type={getInputType(rule)}
+        value={value as string}
+      />
+    )
+
+    // Category selector
+    // return (
+    //   <TreeSelector
+    //     data={
+    //       (options.get(`type-${RuleAttributeType.CATEGORY}`) ??
+    //         []) as ITreeItem[]
+    //     }
+    //     onChange={handleChange('value')}
+    //     value={value as string[]}
+    //   />
+    // )
   }
 
   let content
@@ -153,7 +164,7 @@ function Rule(props: IProps): JSX.Element {
           small
         />
         <DropDown
-          onChange={handleChange('operator')}
+          onChange={handleOperatorChange}
           options={getAttributeOperatorOptions(field)}
           required
           small

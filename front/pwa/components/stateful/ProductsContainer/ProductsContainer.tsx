@@ -6,9 +6,8 @@ import {
   ICatalog,
   ICategory,
   ICategorySortingOption,
-  IHydraMember,
   IHydraResponse,
-  IRuleCombination,
+  IParsedCategoryConfiguration,
   getCatalogForSearchProductApi,
 } from 'shared'
 
@@ -34,29 +33,8 @@ const ActionsButtonsContainer = styled(Box)({
   marginLeft: 'auto',
 })
 
-export interface IConfiguration extends IHydraMember {
-  useNameInProductSearch: boolean
-  isActive: boolean
-  isVirtual: boolean
-  defaultSorting: string
-  name: string
-  category: string
-  virtualRule: string
-}
-
-export interface IParsedConfiguration
-  extends Omit<IConfiguration, 'virtualRule'> {
-  virtualRule: IRuleCombination
-}
-
-export interface IConfigurationOptional {
-  useNameInProductSearch?: boolean
-  isVirtual?: boolean
-  defaultSorting?: string
-}
-
 interface IProps {
-  catConf: IParsedConfiguration
+  catConf: IParsedCategoryConfiguration
   category: ICategory
   onVirtualChange: (val: boolean) => void
   onNameChange: (val: boolean) => void
