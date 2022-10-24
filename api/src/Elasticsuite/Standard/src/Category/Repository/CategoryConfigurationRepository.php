@@ -104,19 +104,26 @@ class CategoryConfigurationRepository extends ServiceEntityRepository
      * Get category configurations for given context.
      * If a parameter is not defined in this context, we get the value from the parent context
      * (ex: if isVirtual is null for this localized catalog, we get the value for this category on the catalog).
+     *
+     * @param Category[]|null $categories
      */
-    public function findMergedByContext(Catalog $catalog, LocalizedCatalog $localizedCatalog): array
+    public function findMergedByContext(Catalog $catalog, LocalizedCatalog $localizedCatalog, ?array $categories = null): array
     {
         $mergeExpr = 'case when lc.%1$s IS NOT NULL then lc.%1$s else ' .
             '(case when c.%1$s IS NOT NULL then c.%1$s else g.%1$s end) end';
-
-        return $this->buildMergeQuery($mergeExpr)
+        $queryBuilder = $this->buildMergeQuery($mergeExpr)
             ->addSelect('MAX(lc.name) as name')
             ->where('lc.localizedCatalog = :localizedCatalog')
             ->andWhere('lc.catalog = :catalog')
             ->setParameter('catalog', $catalog)
-            ->setParameter('localizedCatalog', $localizedCatalog)
-            ->getQuery()
+            ->setParameter('localizedCatalog', $localizedCatalog);
+
+        if (null !== $categories) {
+            $queryBuilder->andWhere('lc.category IN (:categories)')
+                ->setParameter('categories', $categories);
+        }
+
+        return $queryBuilder->getQuery()
             ->getResult();
     }
 

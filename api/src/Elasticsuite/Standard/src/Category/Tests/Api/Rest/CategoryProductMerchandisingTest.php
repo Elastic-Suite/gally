@@ -31,14 +31,16 @@ class CategoryProductMerchandisingTest extends AbstractTest
 {
     use CategoryTestTrait;
 
-    private static Client $client;
-    private static IndexSettings $indexSettings;
+    protected static Client $client;
+    protected static IndexSettings $indexSettings;
+    protected static array $subCategoryFields;
 
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
         self::$client = static::getContainer()->get('api_platform.elasticsearch.client');
         self::$indexSettings = static::getContainer()->get(IndexSettings::class);
+        self::$subCategoryFields = ['position'];
 
         self::loadFixture([
             __DIR__ . '/../../fixtures/catalogs.yaml',
@@ -225,6 +227,35 @@ class CategoryProductMerchandisingTest extends AbstractTest
             [ // Add global config.
                 $admin,
                 $categoryIdOne,
+                null, // catalogId
+                null, // localizedCatalogId
+                json_encode([['productId' => 1, 'position' => 1], ['productId' => 2, 'position' => 2]]),
+                [
+                    $localizedCatalogIdB2cFr => [
+                        $productId1 => [$categoryIdOne => ['position' => 1], $categoryIdTwo => []],
+                        $productId2 => [$categoryIdOne => ['position' => 2], $categoryIdTwo => []],
+                        $productId3 => [$categoryIdThree => []],
+                        $productId4 => [],
+                    ],
+                    $localizedCatalogIdB2cEn => [
+                        $productId1 => [$categoryIdOne => ['position' => 1], $categoryIdTwo => []],
+                        $productId2 => [$categoryIdOne => ['position' => 2], $categoryIdTwo => []],
+                        $productId3 => [],
+                        $productId4 => [],
+                    ],
+                    $localizedCatalogIdb2bEn => [
+                        $productId1 => [$categoryIdOne => ['position' => 1], $categoryIdTwo => []],
+                        $productId2 => [$categoryIdOne => ['position' => 2], $categoryIdTwo => []],
+                        $productId3 => [],
+                        $productId4 => [],
+                    ],
+                ],
+                null,
+                200,
+            ],
+            [ // If the category id not present in the ES document the position is not added.
+                $admin,
+                $categoryIdThree,
                 null, // catalogId
                 null, // localizedCatalogId
                 json_encode([['productId' => 1, 'position' => 1], ['productId' => 2, 'position' => 2]]),
