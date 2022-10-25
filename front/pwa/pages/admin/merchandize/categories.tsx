@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'next-i18next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
@@ -57,7 +57,17 @@ function Categories(): JSX.Element {
 
   const { t } = useTranslation('categories')
 
-  const [categories] = useFetchApi<ICategories>(`categoryTree`)
+  const filters = useMemo(() => {
+    const filters: { catalogId?: number; localizedCatalogId?: number } = {}
+    if (catalogId !== -1) {
+      filters.catalogId = catalogId
+    }
+    if (localizedCatalogId !== -1) {
+      filters.localizedCatalogId = localizedCatalogId
+    }
+    return filters
+  }, [catalogId, localizedCatalogId])
+  const [categories] = useFetchApi<ICategories>(`categoryTree`, filters)
 
   const categoryConfigurationResource = useResource('CategoryConfiguration')
 
