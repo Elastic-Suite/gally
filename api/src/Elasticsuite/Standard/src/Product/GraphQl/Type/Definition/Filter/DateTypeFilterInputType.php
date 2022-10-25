@@ -26,7 +26,7 @@ class DateTypeFilterInputType extends AbstractFilter
 
     public $name = self::NAME;
 
-    public function support(SourceField $sourceField): bool
+    public function supports(SourceField $sourceField): bool
     {
         return \in_array(
             $sourceField->getType(),

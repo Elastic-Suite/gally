@@ -20,39 +20,39 @@ use Elasticsuite\Metadata\Model\SourceField;
 use Elasticsuite\Search\Constant\FilterOperator;
 use GraphQL\Type\Definition\Type;
 
-class FloatTypeFilterInputType extends IntegerTypeFilterInputType
+class CategoryTypeDefaultFilterInputType extends TextTypeFilterInputType
 {
-    public const NAME = 'ProductFloatTypeFilterInput';
+    public const SPECIFIC_NAME = 'CategoryTypeDefaultFilterInputType';
 
-    public $name = self::NAME;
+    public $name = self::SPECIFIC_NAME;
 
+    /**
+     * {@inheritDoc}
+     */
     public function supports(SourceField $sourceField): bool
     {
-        return \in_array(
-            $sourceField->getType(),
-            [
-                SourceField\Type::TYPE_FLOAT,
-            ], true
-        );
+        return SourceField\Type::TYPE_CATEGORY === $sourceField->getType();
     }
 
     public function getConfig(): array
     {
         return [
             'fields' => [
-                FilterOperator::EQ => Type::float(),
-                FilterOperator::IN => Type::listOf(Type::float()),
-                FilterOperator::GTE => Type::float(),
-                FilterOperator::GT => Type::float(),
-                FilterOperator::LT => Type::float(),
-                FilterOperator::LTE => Type::float(),
-                FilterOperator::EXIST => Type::boolean(),
+                FilterOperator::EQ => Type::string(),
+                FilterOperator::IN => Type::listOf(Type::string()),
             ],
         ];
     }
 
-    public function validateValueType(string $field, string $operator, mixed $value): void
+    /**
+     * {@inheritDoc}
+     */
+    public function getGraphQlFieldName(string $sourceFieldCode): string
     {
-        $this->validateValueTypeByType($field, $operator, $value, 'float');
+        /*
+         * No complementarity between getGraphQlFieldName and getMappingFieldName for complex types.
+         * getGraphQlFieldName(A) != getGraphQlFieldName(getMappingFieldName(getGraphQlFieldName(A))
+         */
+        return str_replace('.', $this->nestingSeparator, $sourceFieldCode . '.id');
     }
 }

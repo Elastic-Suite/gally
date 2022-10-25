@@ -19,7 +19,7 @@ namespace Elasticsuite\VirtualCategory\Decoration\Product\GraphQl\Type\Definitio
 use Elasticsuite\Category\Model\Category;
 use Elasticsuite\Category\Repository\CategoryConfigurationRepository;
 use Elasticsuite\Category\Repository\CategoryRepository;
-use Elasticsuite\Product\GraphQl\Type\Definition\Filter\TextTypeFilterInputType as BaseTextTypeFilterInputType;
+use Elasticsuite\Product\GraphQl\Type\Definition\Filter\CategoryTypeDefaultFilterInputType as BaseCategoryTypeDefaultFilterInputType;
 use Elasticsuite\RuleEngine\Service\RuleEngineManager;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder;
 use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
@@ -29,9 +29,9 @@ use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
 /**
  * Allows to convert a category filter in Es query filters.
  */
-class TextTypeFilterInputType extends BaseTextTypeFilterInputType
+class CategoryTypeDefaultFilterInputType extends BaseCategoryTypeDefaultFilterInputType
 {
-    public $name = BaseTextTypeFilterInputType::NAME;
+    public $name = BaseCategoryTypeDefaultFilterInputType::SPECIFIC_NAME;
 
     public function __construct(
         private RuleEngineManager $ruleEngineManager,
@@ -39,8 +39,8 @@ class TextTypeFilterInputType extends BaseTextTypeFilterInputType
         private CategoryConfigurationRepository $categoryConfigurationRepository,
         protected FilterQueryBuilder $filterQueryBuilder,
         private QueryFactory $queryFactory,
-        private BaseTextTypeFilterInputType $decorated,
-        private string $nestingSeparator,
+        private BaseCategoryTypeDefaultFilterInputType $decorated,
+        protected string $nestingSeparator,
     ) {
         parent::__construct($this->filterQueryBuilder, $this->queryFactory, $this->nestingSeparator);
     }
@@ -51,7 +51,7 @@ class TextTypeFilterInputType extends BaseTextTypeFilterInputType
      */
     public function transformToElasticsuiteFilter(array $inputFilter, ContainerConfigurationInterface $containerConfig): QueryInterface
     {
-        if (isset($inputFilter['field']) && 'category__id' == $inputFilter['field'] && isset($inputFilter['eq'])) {
+        if (isset($inputFilter['eq'])) {
             $category = $this->categoryRepository->find(trim($inputFilter['eq']));
 
             if ($category instanceof Category) {

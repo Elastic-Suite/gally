@@ -185,7 +185,7 @@ class AttributeRule extends AbstractRuleType implements RuleTypeInterface
     {
         /** @var ProductFilterInterface $filterType */
         foreach ($this->filterTypes as $filterType) {
-            if ($filterType->support($sourceField) && $filterType instanceof RuleFilterInterface) {
+            if ($filterType->supports($sourceField) && $filterType instanceof RuleFilterInterface) {
                 return $filterType;
             }
         }
