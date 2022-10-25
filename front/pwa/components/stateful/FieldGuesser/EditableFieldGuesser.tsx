@@ -54,7 +54,8 @@ function EditableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
           required={required}
           sufix={input === DataContentType.PERCENTAGE ? '%' : ''}
           type={
-            input === DataContentType.NUMBER || DataContentType.PERCENTAGE
+            input === DataContentType.NUMBER ||
+            input === DataContentType.PERCENTAGE
               ? 'number'
               : 'text'
           }
