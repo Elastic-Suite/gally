@@ -30,7 +30,9 @@ export function getSearchProductsQuery(filter: unknown = null): string {
             stock: {
               status: true,
             },
-            price: true,
+            price: {
+              price: true,
+            },
           },
         },
         paginationInfo: {
