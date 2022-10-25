@@ -45,7 +45,7 @@ class FieldFilterInputType extends BaseFieldFilterInputType
 
         foreach ($this->sourceFieldRepository->getFilterableInRequestFields('product') as $filterableField) {
             foreach ($this->availableTypes as $type) {
-                if ($type->support($filterableField)) {
+                if ($type->supports($filterableField)) {
                     $fields[$type->getGraphQlFieldName($filterableField->getCode())] = ['type' => $type];
                 }
             }

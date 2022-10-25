@@ -26,6 +26,7 @@ Elasticsuite\Metadata\Model\SourceField:
         code: 'price'
         type: 'price'
         isSortable: true
+        isFilterable: true
         isSystem: true
     product_image:
         metadata: '@product'

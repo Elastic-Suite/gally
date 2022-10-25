@@ -1,6 +1,6 @@
 services: 
-    Elasticsuite\VirtualCategory\Decoration\Product\GraphQl\Type\Definition\Filter\TextTypeFilterInputType:
-        decorates: Elasticsuite\Product\GraphQl\Type\Definition\Filter\TextTypeFilterInputType
+    Elasticsuite\VirtualCategory\Decoration\Product\GraphQl\Type\Definition\Filter\CategoryTypeDefaultFilterInputType:
+        decorates: Elasticsuite\Product\GraphQl\Type\Definition\Filter\CategoryTypeDefaultFilterInputType
         arguments:
             - '@Elasticsuite\RuleEngine\Service\RuleEngineManager'
             - '@Elasticsuite\Category\Repository\CategoryRepository'

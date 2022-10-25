@@ -32,7 +32,7 @@ abstract class AbstractFilter extends InputObjectType implements TypeInterface, 
     public function __construct(
         protected FilterQueryBuilder $filterQueryBuilder,
         private QueryFactory $queryFactory,
-        private string $nestingSeparator,
+        protected string $nestingSeparator
     ) {
         parent::__construct($this->getConfig());
     }
@@ -44,11 +44,17 @@ abstract class AbstractFilter extends InputObjectType implements TypeInterface, 
         return $this->name;
     }
 
-    public function getGraphQlFieldName(string $mappingFieldName): string
+    /**
+     * {@inheritDoc}
+     */
+    public function getGraphQlFieldName(string $sourceFieldCode): string
     {
-        return str_replace('.', $this->nestingSeparator, $mappingFieldName);
+        return str_replace('.', $this->nestingSeparator, $sourceFieldCode);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getMappingFieldName(string $graphqlFieldName): string
     {
         return str_replace($this->nestingSeparator, '.', $graphqlFieldName);
