@@ -1,6 +1,12 @@
 import { Box, Switch } from '@mui/material'
 
-import { DataContentType, IFieldGuesserProps, IScore, IStock } from 'shared'
+import {
+  DataContentType,
+  IFieldGuesserProps,
+  IPrice,
+  IScore,
+  IStock,
+} from 'shared'
 
 import Chip from '~/components/atoms/Chip/Chip'
 import Score from '~/components/atoms/score/Score'
@@ -48,10 +54,12 @@ function ReadableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
     }
 
     case DataContentType.PRICE: {
+      if (!value) {
+        return null
+      }
+      const [{ price }] = value as IPrice[]
       // todo : how backend will handle currency ?
-      return (
-        <Price price={value as number} countryCode="fr-FR" currency="EUR" />
-      )
+      return <Price price={price} countryCode="fr-FR" currency="EUR" />
     }
 
     default: {

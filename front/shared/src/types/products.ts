@@ -1,4 +1,4 @@
-import { IScore, IStock } from './customTables'
+import { IPrice, IStock } from './customTables'
 import { ISearchParameters } from './fetch'
 
 export interface IGraphqlSearchProducts {
@@ -12,12 +12,12 @@ export interface IGraphqlSearchProduct {
 
 export interface IGraphqlProduct {
   id: string
-  price: string
+  price?: IPrice[]
   sku: string
   name: string
-  brand: string
+  brand?: string
   stock: IStock
-  score: IScore
+  score: number
 }
 
 export interface IGraphqlProductPaginationInfo {

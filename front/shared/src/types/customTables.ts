@@ -72,7 +72,7 @@ export interface IStickyBorderStyle {
 
 export interface ITableRow {
   id: string | number
-  [key: string]: string | boolean | number | IScore | IStock
+  [key: string]: string | boolean | number | IScore | IStock | IPrice[]
 }
 
 export interface IHorizontalOverflow {
@@ -84,10 +84,17 @@ export interface ITableHeaderSticky extends ITableHeader {
   isLastSticky: boolean
 }
 
+export type BoostType = 'up' | 'down' | 'no boost'
+
 export interface IBoost {
-  type: 'up' | 'down' | 'no boost'
+  type: BoostType
   boostNumber: number
   boostMultiplicator: number
+}
+
+export interface IStock {
+  status: boolean
+  qty?: number
 }
 
 export interface IScore {
@@ -95,9 +102,6 @@ export interface IScore {
   boostInfos?: IBoost
 }
 
-export type BoostType = 'up' | 'down' | 'no boost'
-
-export interface IStock {
-  status: boolean
-  qty: number
+export interface IPrice {
+  price: number
 }
