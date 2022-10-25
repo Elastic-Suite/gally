@@ -250,7 +250,9 @@ function Categories(): JSX.Element {
           </TitleBlock>,
         ]}
       >
-        {selectedCategoryItem?.id ? (
+        {selectedCategoryItem?.id &&
+        catConf &&
+        (!catConf?.virtualRule || productGraphqlFilters) ? (
           <ProductsContainer
             catConf={catConf}
             catalog={catalogId}
