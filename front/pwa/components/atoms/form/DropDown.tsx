@@ -44,7 +44,7 @@ function DropDown<T>(props: IDropDownProps<T>): JSX.Element {
     value,
     ...otherProps
   } = props
-  const { small } = props
+  const { required, small } = otherProps
   const { t } = useTranslation('common')
   const inputRef = useRef()
   const optionMap = useMemo(
@@ -62,14 +62,14 @@ function DropDown<T>(props: IDropDownProps<T>): JSX.Element {
   ): void {
     const dropdownEvent = { ...event, target: inputRef.current }
     setTimeout(() => {
-      if (!option) {
+      if (!option && !required) {
         onChange(null, dropdownEvent)
       } else if (option instanceof Array) {
         onChange(
           option.map(({ value }) => value),
           dropdownEvent
         )
-      } else {
+      } else if (option) {
         onChange(option.value, dropdownEvent)
       }
     }, 0)
@@ -112,6 +112,7 @@ function DropDown<T>(props: IDropDownProps<T>): JSX.Element {
         clearText={clearText}
         closeText={closeText}
         componentsProps={{ popper: { placement: 'bottom-start' } }}
+        disableClearable={required}
         disableCloseOnSelect={multiple}
         disabled={disabled}
         getOptionDisabled={(option: IOption<T>): boolean => option.disabled}
