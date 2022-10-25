@@ -1,5 +1,6 @@
 import { ReactNode } from 'react'
 
+import ruleEngineOperator from '~/public/mocks/rule_engine_operators.json'
 import sourceFields from '~/public/mocks/source_fields.json'
 import sourceFieldLabels from '~/public/mocks/source_field_labels.json'
 import { RuleAttributeType } from 'shared'
@@ -30,7 +31,12 @@ const fields = sourceFields['hydra:member'].map((field) => {
 function RuleOptionsTestProvider(props: IProps): JSX.Element {
   const { children } = props
   return (
-    <RuleOptionsProvider catalogId={-1} localizedCatalogId={-1} fields={fields}>
+    <RuleOptionsProvider
+      catalogId={-1}
+      localizedCatalogId={-1}
+      fields={fields}
+      ruleOperators={ruleEngineOperator}
+    >
       {children}
     </RuleOptionsProvider>
   )
