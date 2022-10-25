@@ -137,6 +137,25 @@ export interface IHydraLabelMember extends IHydraMember {
   label: string
 }
 
+export interface IHydraTrace {
+  args: [string, unknown][]
+  class: string
+  file: string
+  function: string
+  line: number
+  namespace: string
+  short_class: string
+  type: string
+}
+
+export interface IHydraError extends IJsonldType, IJsonldContext {
+  '@context': '/contexts/Error'
+  '@type': 'hydra:Error'
+  'hydra:description': string
+  'hydra:title': string
+  trace: IHydraTrace[]
+}
+
 export interface IHydraMapping extends IJsonldType {
   variable: string
   property: string

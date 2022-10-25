@@ -9,6 +9,7 @@ import {
   isApiError,
   removeEmptyParameters,
 } from './api'
+import { HydraError } from './hydra'
 import { AuthError } from './network'
 
 jest.mock('../services/fetch')
@@ -74,10 +75,9 @@ describe('Api service', () => {
       })
     })
 
-    it('should throw an error and remove token from storage (ApiError)', async () => {
+    it('should throw an error (ApiError)', async () => {
       const mock = fetchJson as jest.Mock
       mock.mockClear()
-      ;(storageRemove as jest.Mock).mockClear()
       mock.mockImplementationOnce(() =>
         Promise.resolve({ json: { code: 401, message: 'Unauthorized' } })
       )
@@ -88,7 +88,21 @@ describe('Api service', () => {
           'Elasticsuite-Language': 'en',
         },
       })
-      expect(storageRemove).toHaveBeenCalledWith('elasticSuiteToken')
+    })
+
+    it('should throw an error (HydraError)', async () => {
+      const mock = fetchJson as jest.Mock
+      mock.mockClear()
+      mock.mockImplementationOnce(() =>
+        Promise.resolve({ json: { '@type': 'hydra:Error' } })
+      )
+      await expect(fetchApi('en', '/restricted')).rejects.toThrow(HydraError)
+      expect(fetchJson).toHaveBeenCalledWith('http://localhost/restricted', {
+        headers: {
+          'Content-Type': 'application/json',
+          'Elasticsuite-Language': 'en',
+        },
+      })
     })
 
     it('should throw an error and remove token from storage (AuthError)', async () => {

@@ -2,13 +2,33 @@ import {
   IApi,
   IApiSchemaOptions,
   IField,
+  IHydraError,
   IHydraLabelMember,
   IHydraMember,
   IHydraResponse,
+  IJsonldType,
   IOptions,
   IResource,
   ISearchParameters,
 } from '../types'
+
+export class HydraError extends Error {
+  error: IHydraError
+  constructor(error: IHydraError) {
+    super(error['hydra:description'])
+    this.error = error
+  }
+}
+
+export function isJSonldType<T>(json: T | IJsonldType): json is IJsonldType {
+  return '@type' in json
+}
+
+export function isHydraError<T extends IJsonldType>(
+  json: T | IHydraError
+): json is IHydraError {
+  return json['@type'] === 'hydra:Error'
+}
 
 export function getResource(api: IApi, resourceName: string): IResource {
   return api.find(

@@ -24,10 +24,33 @@ import {
   getReferencedResource,
   getResource,
   isFieldValueValid,
+  isHydraError,
+  isJSonldType,
   isReferenceField,
 } from './hydra'
 
 describe('Hydra service', () => {
+  describe('isJSonldType', () => {
+    it('should check if object is a JsonldBase', () => {
+      expect(
+        isJSonldType({
+          '@context': 'test',
+          '@type': 'test',
+        })
+      ).toEqual(true)
+    })
+  })
+
+  describe('isHydraError', () => {
+    it('should check if response is a hydra error', () => {
+      expect(
+        isHydraError({
+          '@type': 'hydra:Error',
+        })
+      ).toEqual(true)
+    })
+  })
+
   describe('getResource', () => {
     it('Should return the resource', () => {
       expect(getResource(api, 'SourceField')).toEqual(resourceWithRef)
