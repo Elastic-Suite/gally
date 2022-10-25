@@ -21,9 +21,24 @@ use Elasticsuite\Metadata\Model\SourceField;
 
 interface ProductFilterInterface extends SearchFilterInterface
 {
-    public function support(SourceField $sourceField): bool;
+    /**
+     * Returns true if the filter input type supports the provided source field.
+     *
+     * @param SourceField $sourceField Source field
+     */
+    public function supports(SourceField $sourceField): bool;
 
-    public function getGraphQlFieldName(string $mappingFieldName): string;
+    /**
+     * Get the filter input graphql field name corresponding to the source field identified by its code.
+     *
+     * @param string $sourceFieldCode Source field code
+     */
+    public function getGraphQlFieldName(string $sourceFieldCode): string;
 
+    /**
+     * Get the Elasticsearch mapping field name corresponding to the provided graphql filter input field name.
+     *
+     * @param string $graphqlFieldName GraphQL field name
+     */
     public function getMappingFieldName(string $graphqlFieldName): string;
 }
