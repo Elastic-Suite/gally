@@ -9,6 +9,7 @@ import {
 import { IResource, IResponseError, ISearchParameters } from '../types'
 
 import { fetchJson } from './fetch'
+import { HydraError, isHydraError, isJSonldType } from './hydra'
 import { AuthError } from './network'
 import { storageGet, storageRemove } from './storage'
 import { getUrl } from './url'
@@ -53,11 +54,12 @@ export function fetchApi<T>(
     ...options,
     headers,
   }).then(({ json, response }) => {
-    // fixme: should we redirect to login if 401/403 error ?
     if (isApiError(json)) {
-      storageRemove(tokenStorageKey)
       throw new ApiError(json.message)
+    } else if (isJSonldType(json) && isHydraError(json)) {
+      throw new HydraError(json)
     } else if (authErrorCodes.includes(response.status)) {
+      // fixme: should we redirect to login if 401/403 error ?
       storageRemove(tokenStorageKey)
       throw new AuthError('Unauthorized/Forbidden')
     }

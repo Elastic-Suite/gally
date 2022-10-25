@@ -37,8 +37,8 @@ function parseRule<R extends IRule>(
       ruleOperators.operatorsValueType[rule.attribute_type]?.[rule.operator]
     let ruleValue = rule.value
     if (
-      valueType.startsWith('[') &&
-      valueType.endsWith(']') &&
+      valueType?.startsWith('[') &&
+      valueType?.endsWith(']') &&
       rule.value instanceof Array
     ) {
       ruleValue = rule.value.join(ruleArrayValueSeparator)
@@ -80,8 +80,8 @@ export function serializeRule<R extends IRule>(
       rule.value
     )
     if (
-      valueType.startsWith('[') &&
-      valueType.endsWith(']') &&
+      valueType?.startsWith('[') &&
+      valueType?.endsWith(']') &&
       typeof rule.value === 'string'
     ) {
       ruleValue = rule.value.split(ruleArrayValueSeparator)
