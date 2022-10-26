@@ -5,76 +5,80 @@ import FieldGuesser from '~/components/stateful/FieldGuesser/FieldGuesser'
 
 import CustomTable from './CustomTable'
 
-const mockedHeadersAndRows = {
-  tableHeadersWithoutSticky: [
-    {
-      name: 'field',
-      label: 'Test header switch',
-      type: DataContentType.BOOLEAN,
-      editable: false,
-      sticky: false,
-    },
-    {
-      name: 'field2',
-      label: 'Test header switch',
-      type: DataContentType.BOOLEAN,
-      editable: false,
-      sticky: false,
-    },
-  ],
-  tableHeadersWithSticky: [
-    {
-      name: 'field',
-      label: 'Test header switch',
-      type: DataContentType.BOOLEAN,
-      editable: false,
-      sticky: false,
-    },
-    {
-      name: 'field2',
-      label: 'Test header switch',
-      type: DataContentType.BOOLEAN,
-      editable: false,
-      sticky: false,
-    },
-  ],
-  tableHeadersEditable: [
-    {
-      name: 'field',
-      label: 'Test header switch',
-      type: DataContentType.BOOLEAN,
-      editable: true,
-      sticky: false,
-    },
-    {
-      name: 'field2',
-      label: 'Test header dropdown',
-      type: DataContentType.SELECT,
-      editable: true,
-      sticky: false,
-      options: [
-        { label: 'Select an item', value: 0 },
-        { label: 'Ten', value: 10 },
-        { label: 'Twenty', value: 20 },
-        { label: 'Thirty', value: 30 },
-      ],
-    },
-  ],
-  tableRows: [
-    {
-      id: '1',
-      field: true,
-    },
-  ],
-}
+const tableHeadersWithoutSticky = [
+  {
+    input: DataContentType.BOOLEAN,
+    name: 'field',
+    label: 'Test header switch',
+    type: DataContentType.BOOLEAN,
+    editable: false,
+    sticky: false,
+  },
+  {
+    input: DataContentType.BOOLEAN,
+    name: 'field2',
+    label: 'Test header switch',
+    type: DataContentType.BOOLEAN,
+    editable: false,
+    sticky: false,
+  },
+]
+const tableHeadersWithSticky = [
+  {
+    input: DataContentType.BOOLEAN,
+    name: 'field',
+    label: 'Test header switch',
+    type: DataContentType.BOOLEAN,
+    editable: false,
+    sticky: false,
+  },
+  {
+    input: DataContentType.BOOLEAN,
+    name: 'field2',
+    label: 'Test header switch',
+    type: DataContentType.BOOLEAN,
+    editable: false,
+    sticky: false,
+  },
+]
+const tableHeadersEditable = [
+  {
+    input: DataContentType.BOOLEAN,
+    name: 'field',
+    label: 'Test header switch',
+    type: DataContentType.BOOLEAN,
+    editable: true,
+    sticky: false,
+  },
+  {
+    input: DataContentType.SELECT,
+    name: 'field2',
+    label: 'Test header dropdown',
+    type: DataContentType.SELECT,
+    editable: true,
+    sticky: false,
+    options: [
+      { label: 'Select an item', value: 0 },
+      { label: 'Ten', value: 10 },
+      { label: 'Twenty', value: 20 },
+      { label: 'Thirty', value: 30 },
+    ],
+  },
+]
+const tableRows = [
+  {
+    id: '1',
+    field: true,
+  },
+]
 
 describe('CustomTable', () => {
   it('match snapshot without selection, without draggable, without sticky headers', () => {
     const { container } = renderWithProviders(
       <CustomTable
         Field={FieldGuesser}
-        tableHeaders={mockedHeadersAndRows.tableHeadersWithoutSticky}
-        tableRows={mockedHeadersAndRows.tableRows}
+        tableHeaders={tableHeadersWithoutSticky}
+        tableRows={tableRows}
       />
     )
 
@@ -85,8 +89,8 @@ describe('CustomTable', () => {
     const { container } = renderWithProviders(
       <CustomTable
         Field={FieldGuesser}
-        tableHeaders={mockedHeadersAndRows.tableHeadersWithSticky}
-        tableRows={mockedHeadersAndRows.tableRows}
+        tableHeaders={tableHeadersWithSticky}
+        tableRows={tableRows}
       />
     )
 
@@ -97,8 +101,8 @@ describe('CustomTable', () => {
     const { container } = renderWithProviders(
       <CustomTable
         Field={FieldGuesser}
-        tableHeaders={mockedHeadersAndRows.tableHeadersWithoutSticky}
-        tableRows={mockedHeadersAndRows.tableRows}
+        tableHeaders={tableHeadersWithoutSticky}
+        tableRows={tableRows}
         selectedRows={['fake_id']}
       />
     )
@@ -110,8 +114,8 @@ describe('CustomTable', () => {
     const { container } = renderWithProviders(
       <CustomTable
         Field={FieldGuesser}
-        tableHeaders={mockedHeadersAndRows.tableHeadersWithSticky}
-        tableRows={mockedHeadersAndRows.tableRows}
+        tableHeaders={tableHeadersWithSticky}
+        tableRows={tableRows}
         selectedRows={['fake_id']}
       />
     )
@@ -123,8 +127,8 @@ describe('CustomTable', () => {
     const { container } = renderWithProviders(
       <CustomTable
         Field={FieldGuesser}
-        tableHeaders={mockedHeadersAndRows.tableHeadersWithoutSticky}
-        tableRows={mockedHeadersAndRows.tableRows}
+        tableHeaders={tableHeadersWithoutSticky}
+        tableRows={tableRows}
         selectedRows={['fake_id']}
         draggable
       />
@@ -137,8 +141,8 @@ describe('CustomTable', () => {
     const { container } = renderWithProviders(
       <CustomTable
         Field={FieldGuesser}
-        tableHeaders={mockedHeadersAndRows.tableHeadersWithSticky}
-        tableRows={mockedHeadersAndRows.tableRows}
+        tableHeaders={tableHeadersWithSticky}
+        tableRows={tableRows}
         selectedRows={['fake_id']}
         draggable
       />
@@ -151,8 +155,8 @@ describe('CustomTable', () => {
     const { container } = renderWithProviders(
       <CustomTable
         Field={FieldGuesser}
-        tableHeaders={mockedHeadersAndRows.tableHeadersEditable}
-        tableRows={mockedHeadersAndRows.tableRows}
+        tableHeaders={tableHeadersEditable}
+        tableRows={tableRows}
         selectedRows={['fake_id']}
         draggable
       />

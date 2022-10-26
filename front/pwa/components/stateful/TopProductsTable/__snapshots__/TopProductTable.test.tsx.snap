@@ -173,11 +173,11 @@ exports[`TopProductTable Should match snapschot 1`] = `
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1h3ont0-MuiTableCell-root"
             >
-              <div
-                class="MuiBox-root css-8uhtka"
-              >
-                static/media/assets/img/scarf_elastic.png
-              </div>
+              <img
+                alt=""
+                class="MuiBox-root css-1qpslqa"
+                src="static/media/assets/img/scarf_elastic.png"
+              />
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1h3ont0-MuiTableCell-root"
@@ -192,33 +192,63 @@ exports[`TopProductTable Should match snapschot 1`] = `
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1h3ont0-MuiTableCell-root"
             >
               <div
-                class="MuiBox-root css-8uhtka"
+                class="MuiBox-root css-0"
               >
-                100.11
+                <div
+                  class="MuiBox-root css-1sm7xfn"
+                >
+                  100.11
+                </div>
               </div>
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1h3ont0-MuiTableCell-root"
             >
               <div
-                class="MuiBox-root css-8uhtka"
-              />
-            </td>
-            <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1h3ont0-MuiTableCell-root"
-            >
-              <div
-                class="MuiBox-root css-8uhtka"
+                class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorSuccess MuiChip-filledSuccess css-s7mah8-MuiChip-root"
               >
-                10
+                <span
+                  class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
+                >
+                  stock.inStock
+                </span>
               </div>
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1h3ont0-MuiTableCell-root"
             >
               <div
-                class="MuiBox-root css-8uhtka"
-              />
+                class="MuiBox-root css-1u92jb9"
+              >
+                 
+                10,00 €
+              </div>
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1h3ont0-MuiTableCell-root"
+            >
+              <span
+                class="MuiSwitch-root MuiSwitch-sizeMedium css-tnsvld-MuiSwitch-root"
+              >
+                <span
+                  aria-disabled="true"
+                  class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled Mui-disabled PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled Mui-checked Mui-disabled css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
+                  tabindex="-1"
+                >
+                  <input
+                    checked=""
+                    class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
+                    disabled=""
+                    type="checkbox"
+                  />
+                  <span
+                    class="MuiSwitch-thumb css-epwt2k-MuiSwitch-thumb"
+                  />
+                </span>
+                <span
+                  class="MuiSwitch-track css-1mr4grv-MuiSwitch-track"
+                />
+              </span>
             </td>
           </tr>
           <tr
@@ -283,11 +313,11 @@ exports[`TopProductTable Should match snapschot 1`] = `
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1h3ont0-MuiTableCell-root"
             >
-              <div
-                class="MuiBox-root css-8uhtka"
-              >
-                static/media/assets/img/scarf_elastic.png
-              </div>
+              <img
+                alt=""
+                class="MuiBox-root css-1qpslqa"
+                src="static/media/assets/img/scarf_elastic.png"
+              />
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1h3ont0-MuiTableCell-root"
@@ -302,33 +332,63 @@ exports[`TopProductTable Should match snapschot 1`] = `
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1h3ont0-MuiTableCell-root"
             >
               <div
-                class="MuiBox-root css-8uhtka"
+                class="MuiBox-root css-0"
               >
-                100.11
+                <div
+                  class="MuiBox-root css-1sm7xfn"
+                >
+                  100.11
+                </div>
               </div>
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1h3ont0-MuiTableCell-root"
             >
               <div
-                class="MuiBox-root css-8uhtka"
-              />
-            </td>
-            <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1h3ont0-MuiTableCell-root"
-            >
-              <div
-                class="MuiBox-root css-8uhtka"
+                class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorError MuiChip-filledError css-1ywqr3b-MuiChip-root"
               >
-                10
+                <span
+                  class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
+                >
+                  stock.outOfStock
+                </span>
               </div>
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1h3ont0-MuiTableCell-root"
             >
               <div
-                class="MuiBox-root css-8uhtka"
-              />
+                class="MuiBox-root css-1u92jb9"
+              >
+                 
+                10,00 €
+              </div>
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1h3ont0-MuiTableCell-root"
+            >
+              <span
+                class="MuiSwitch-root MuiSwitch-sizeMedium css-tnsvld-MuiSwitch-root"
+              >
+                <span
+                  aria-disabled="true"
+                  class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled Mui-disabled PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-disabled Mui-checked Mui-disabled css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
+                  tabindex="-1"
+                >
+                  <input
+                    checked=""
+                    class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
+                    disabled=""
+                    type="checkbox"
+                  />
+                  <span
+                    class="MuiSwitch-thumb css-epwt2k-MuiSwitch-thumb"
+                  />
+                </span>
+                <span
+                  class="MuiSwitch-track css-1mr4grv-MuiSwitch-track"
+                />
+              </span>
             </td>
           </tr>
         </tbody>
