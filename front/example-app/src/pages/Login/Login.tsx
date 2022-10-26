@@ -20,7 +20,7 @@ function Login(): JSX.Element {
   const { user, setToken } = useContext(userContext)
   const { requestedPath } = useContext(requestedPathContext)
 
-  const fetchApi = useApiFetch()
+  const fetchApi = useApiFetch(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 

@@ -55,6 +55,9 @@ export function fetchApi<T>(
     headers,
   }).then(({ json, response }) => {
     if (isApiError(json)) {
+      if (authErrorCodes.includes(json.code)) {
+        storageRemove(tokenStorageKey)
+      }
       throw new ApiError(json.message)
     } else if (isJSonldType(json) && isHydraError(json)) {
       throw new HydraError(json)
