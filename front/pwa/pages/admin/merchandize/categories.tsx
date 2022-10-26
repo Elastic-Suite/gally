@@ -1,4 +1,11 @@
-import { useContext, useEffect, useMemo, useRef, useState } from 'react'
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import { useTranslation } from 'next-i18next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
@@ -51,6 +58,9 @@ function Categories(): JSX.Element {
   const menu = useAppSelector(selectMenu)
   const [, setBreadcrumb] = useContext(breadcrumbContext)
   const title = findBreadcrumbLabel(0, ['merchandize'], menu.hierarchy)
+  useEffect(() => {
+    setBreadcrumb(['merchandize', 'categories'])
+  }, [router.query, setBreadcrumb])
 
   // Catalogs
   const resourceName = 'Catalog'
@@ -59,6 +69,16 @@ function Categories(): JSX.Element {
   const { data, error } = catalogsFields
   const [catalogId, setCatalogId] = useState<number>(-1)
   const [localizedCatalogId, setLocalizedCatalogId] = useState<number>(-1)
+
+  // Rule engine operators
+  const [ruleOperators, setRuleOperators] = useState<IRuleEngineOperators>()
+  useEffect(() => {
+    fetchApi<IRuleEngineOperators>('rule_engine_operators').then((json) => {
+      if (!isError(json)) {
+        setRuleOperators(json)
+      }
+    })
+  }, [fetchApi])
 
   // Categories
   const [selectedCategoryItem, setSelectedCategoryItem] = useState<ICategory>()
@@ -73,6 +93,39 @@ function Categories(): JSX.Element {
     return filters
   }, [catalogId, localizedCatalogId])
   const [categories] = useFetchApi<ICategories>(`categoryTree`, filters)
+  const findCategory = useCallback(
+    (category: ICategory, categories: ICategory[]): ICategory => {
+      let foundCategory
+      function recursiveFind(element: ICategory): boolean {
+        if (element.id === category.id) {
+          foundCategory = element
+          return true
+        }
+        if (element.children && element.children.length > 0) {
+          return element.children.some(recursiveFind)
+        }
+        return false
+      }
+      categories.some(recursiveFind)
+      return foundCategory
+    },
+    []
+  )
+  useEffect(() => {
+    if (categories.status !== LoadStatus.SUCCEEDED) {
+      return
+    }
+    setSelectedCategoryItem((prevState) => {
+      if (!categories.data.categories[0]) {
+        return undefined
+      }
+      if (prevState === undefined) {
+        return categories.data.categories[0]
+      }
+      const cat = findCategory(prevState, categories.data.categories)
+      return cat
+    })
+  }, [categories, findCategory])
 
   // Category configuration
   const catConfResource = useResource('CategoryConfiguration')
@@ -80,31 +133,6 @@ function Categories(): JSX.Element {
   const prevDataCat = useRef<IParsedCategoryConfiguration>()
   const { update, create } =
     useResourceOperations<ICategoryConfiguration>(catConfResource)
-
-  // Rule engine operators
-  const [ruleOperators, setRuleOperators] = useState<IRuleEngineOperators>()
-
-  // Rule engine graphql filters
-  const [productGraphqlFilters, setProductGraphqlFilters] = useState(null)
-  const debouncedFetch = useMemo(
-    () =>
-      debounce(async (rule: string): Promise<void> => {
-        const json = await fetchApi<IRuleEngineGraphqlFilters>(
-          'rule_engine_graphql_filters',
-          undefined,
-          { body: JSON.stringify({ rule }), method: 'POST' }
-        )
-        if (!isError(json)) {
-          setProductGraphqlFilters(json.graphQlFilters)
-        }
-      }, debounceDelay),
-    [fetchApi]
-  )
-
-  useEffect(() => {
-    setBreadcrumb(['merchandize', 'categories'])
-  }, [router.query, setBreadcrumb])
-
   useEffect(() => {
     if (ruleOperators && selectedCategoryItem) {
       fetchApi<ICategoryConfiguration>(
@@ -126,14 +154,22 @@ function Categories(): JSX.Element {
     catConfResource.url,
   ])
 
-  useEffect(() => {
-    fetchApi<IRuleEngineOperators>('rule_engine_operators').then((json) => {
-      if (!isError(json)) {
-        setRuleOperators(json)
-      }
-    })
-  }, [fetchApi])
-
+  // Rule engine graphql filters
+  const [productGraphqlFilters, setProductGraphqlFilters] = useState(null)
+  const debouncedFetch = useMemo(
+    () =>
+      debounce(async (rule: string): Promise<void> => {
+        const json = await fetchApi<IRuleEngineGraphqlFilters>(
+          'rule_engine_graphql_filters',
+          undefined,
+          { body: JSON.stringify({ rule }), method: 'POST' }
+        )
+        if (!isError(json)) {
+          setProductGraphqlFilters(json.graphQlFilters)
+        }
+      }, debounceDelay),
+    [fetchApi]
+  )
   useEffect(() => {
     if (catConf?.virtualRule) {
       debouncedFetch(
@@ -177,38 +213,6 @@ function Categories(): JSX.Element {
       }
     }
   }
-
-  function findCategory(
-    selectedCategoryItem: ICategory,
-    categories: ICategory[]
-  ): ICategory {
-    const sameCateInOtherCatalog = categories.find((element: ICategory) => {
-      return element.id === selectedCategoryItem.id
-        ? element
-        : element.children &&
-            findCategory(selectedCategoryItem, element.children)
-    })
-
-    return sameCateInOtherCatalog
-  }
-
-  useEffect(() => {
-    if (categories.status !== LoadStatus.SUCCEEDED) {
-      return
-    }
-
-    if (!categories.data.categories[0]) {
-      return setSelectedCategoryItem(undefined)
-    }
-
-    if (selectedCategoryItem === undefined) {
-      return setSelectedCategoryItem(categories.data.categories[0])
-    }
-
-    return setSelectedCategoryItem(
-      findCategory(selectedCategoryItem, categories.data.categories)
-    )
-  }, [categories.status])
 
   const dirty = prevDataCat.current
     ? Object.entries(catConf ?? {}).some(
