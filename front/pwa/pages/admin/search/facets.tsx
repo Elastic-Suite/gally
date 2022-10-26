@@ -4,7 +4,7 @@ import { useContext, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'next-i18next'
 
 import { breadcrumbContext } from '~/contexts'
-import { withAuth, withOptions } from '~/hocs'
+import { withAuth } from '~/hocs'
 import { useFetchApi, useFilters, useResource } from '~/hooks'
 
 import TitleBlock from '~/components/molecules/layout/TitleBlock/TitleBlock'
@@ -17,6 +17,7 @@ import ResourceTable from '~/components/stateful-pages/ResourceTable/ResourceTab
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import PageTitle from '~/components/atoms/PageTitle/PageTitle'
 import Alert from '~/components/atoms/Alert/Alert'
+import { withOptions } from '~/hocs/withOptions'
 
 const pagesSlug = ['search', 'facets']
 

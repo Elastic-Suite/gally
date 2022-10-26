@@ -29,7 +29,7 @@ import {
 } from 'shared'
 
 import { breadcrumbContext } from '~/contexts'
-import { withAuth, withOptions } from '~/hocs'
+import { withAuth } from '~/hocs'
 import {
   useApiFetch,
   useApiList,
@@ -45,6 +45,7 @@ import CatalogSwitcher from '~/components/stateful/CatalogSwitcher/CatalogSwitch
 import CategoryTree from '~/components/stateful/CategoryTree/CategoryTree'
 import ProductsContainer from '~/components/stateful/ProductsContainer/ProductsContainer'
 import RulesManager from '~/components/stateful/RulesManager/RulesManager'
+import { withOptions } from '~/hocs/withOptions'
 
 const debounceDelay = 200
 
