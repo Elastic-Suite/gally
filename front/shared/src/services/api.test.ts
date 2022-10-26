@@ -41,7 +41,7 @@ describe('Api service', () => {
       expect(json).toEqual({ hello: 'world' })
       expect(fetchJson).toHaveBeenCalledWith('http://localhost/test', {
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/ld+json',
           'Elasticsuite-Language': 'en',
         },
       })
@@ -53,7 +53,7 @@ describe('Api service', () => {
       expect(json).toEqual({ hello: 'world' })
       expect(fetchJson).toHaveBeenCalledWith('https://localhost/metadata', {
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/ld+json',
           'Elasticsuite-Language': 'en',
         },
       })
@@ -69,7 +69,7 @@ describe('Api service', () => {
       expect(fetchJson).toHaveBeenCalledWith('http://localhost/test', {
         headers: {
           Authorization: 'Bearer token',
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/ld+json',
           'Elasticsuite-Language': 'en',
         },
       })
@@ -84,7 +84,7 @@ describe('Api service', () => {
       await expect(fetchApi('en', '/restricted')).rejects.toThrow(ApiError)
       expect(fetchJson).toHaveBeenCalledWith('http://localhost/restricted', {
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/ld+json',
           'Elasticsuite-Language': 'en',
         },
       })
@@ -100,7 +100,7 @@ describe('Api service', () => {
       await expect(fetchApi('en', '/restricted')).rejects.toThrow(ApiError)
       expect(fetchJson).toHaveBeenCalledWith('http://localhost/restricted', {
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/ld+json',
           'Elasticsuite-Language': 'en',
         },
       })
@@ -116,7 +116,7 @@ describe('Api service', () => {
       await expect(fetchApi('en', '/restricted')).rejects.toThrow(HydraError)
       expect(fetchJson).toHaveBeenCalledWith('http://localhost/restricted', {
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/ld+json',
           'Elasticsuite-Language': 'en',
         },
       })
@@ -132,7 +132,7 @@ describe('Api service', () => {
       await expect(fetchApi('en', '/restricted')).rejects.toThrow(AuthError)
       expect(fetchJson).toHaveBeenCalledWith('http://localhost/restricted', {
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/ld+json',
           'Elasticsuite-Language': 'en',
         },
       })

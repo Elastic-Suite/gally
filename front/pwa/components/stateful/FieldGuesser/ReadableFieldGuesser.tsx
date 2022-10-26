@@ -49,8 +49,7 @@ function ReadableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
     }
 
     case DataContentType.STOCK: {
-      const stock = value as IStock
-      return <Stock stockStatus={stock.status} />
+      return <Stock stockStatus={(value as IStock).status} />
     }
 
     case DataContentType.PRICE: {
