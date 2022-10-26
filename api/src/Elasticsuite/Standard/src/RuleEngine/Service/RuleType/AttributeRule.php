@@ -17,8 +17,10 @@ declare(strict_types=1);
 namespace Elasticsuite\RuleEngine\Service\RuleType;
 
 use Elasticsuite\Exception\LogicException;
+use Elasticsuite\Metadata\Model\Metadata;
 use Elasticsuite\Metadata\Model\SourceField;
 use Elasticsuite\Metadata\Model\SourceField\Type;
+use Elasticsuite\Metadata\Repository\MetadataRepository;
 use Elasticsuite\Metadata\Repository\SourceFieldRepository;
 use Elasticsuite\Product\GraphQl\Type\Definition\Filter\AbstractFilter;
 use Elasticsuite\Product\GraphQl\Type\Definition\Filter\BoolFilterInputType;
@@ -75,9 +77,17 @@ class AttributeRule extends AbstractRuleType implements RuleTypeInterface
         //        TYPE::TYPE_SELECT => [FilterOperator::IN, FilterOperator::NOT_IN],
     ];
 
+    private ?Metadata $productMetadata = null;
+
+    /**
+     * @var SourceField[]
+     */
+    private array $sourceFields = [];
+
     public function __construct(
         private BoolFilterInputType $boolFilterInputType,
         private SourceFieldRepository $sourceFieldRepository,
+        private MetadataRepository $metadataRepository,
         private iterable $filterTypes,
     ) {
     }
@@ -114,7 +124,20 @@ class AttributeRule extends AbstractRuleType implements RuleTypeInterface
         if (!isset($ruleNode['field'])) {
             throw new LogicException("The field 'field' is missing in an attribute rule.");
         }
-        $sourceField = $this->sourceFieldRepository->findOneBy(['code' => $ruleNode['field']]);
+
+        if (null === $this->productMetadata) {
+            $this->productMetadata = $this->metadataRepository->findOneBy(['entity' => 'product']);
+        }
+
+        if (!isset($this->sourceFields[$ruleNode['field']])) {
+            $this->sourceFields[$ruleNode['field']] = $this->sourceFieldRepository->findOneBy(
+                [
+                    'metadata' => $this->productMetadata,
+                    'code' => $ruleNode['field'],
+                ]
+            );
+        }
+        $sourceField = $this->sourceFields[$ruleNode['field']];
 
         $this->validateAttributeRuleData($sourceField, $ruleNode);
 
