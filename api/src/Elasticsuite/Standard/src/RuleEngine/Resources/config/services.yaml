@@ -10,6 +10,7 @@ services:
         arguments:
             - '@Elasticsuite\Product\GraphQl\Type\Definition\Filter\BoolFilterInputType'
             - '@Elasticsuite\Metadata\Repository\SourceFieldRepository'
+            - '@Elasticsuite\Metadata\Repository\MetadataRepository'
             - !tagged_iterator { tag: 'elasticsuite.product_api.filter' }
         tags:
             - { name: elasticsuite.rule_engine.rule_type }
