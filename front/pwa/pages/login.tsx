@@ -24,7 +24,7 @@ function Login(): JSX.Element {
   const user = useUser()
   const requestedPath = useAppSelector(selectRequestedPath)
 
-  const fetchApi = useApiFetch()
+  const fetchApi = useApiFetch(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
