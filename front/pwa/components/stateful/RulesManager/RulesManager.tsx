@@ -15,7 +15,6 @@ import RuleOptionsProvider from '~/components/stateful-providers/RuleOptionsProv
 
 const sourceFieldFixedFilters = {
   'metadata.entity': 'product',
-  isFilterable: true,
   isUsedForRules: true,
 }
 

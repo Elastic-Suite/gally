@@ -108,7 +108,8 @@ function Categories(): JSX.Element {
   useEffect(() => {
     if (ruleOperators && selectedCategoryItem) {
       fetchApi<ICategoryConfiguration>(
-        `${catConfResource.url}/category/${selectedCategoryItem.id}`
+        `${catConfResource.url}/category/${selectedCategoryItem.id}`,
+        filters
       ).then((catConf) => {
         if (!isError(catConf)) {
           const parsedCatConf = parseCatConf(catConf, ruleOperators)
@@ -117,7 +118,13 @@ function Categories(): JSX.Element {
         }
       })
     }
-  }, [fetchApi, ruleOperators, selectedCategoryItem, catConfResource.url])
+  }, [
+    fetchApi,
+    filters,
+    ruleOperators,
+    selectedCategoryItem,
+    catConfResource.url,
+  ])
 
   useEffect(() => {
     fetchApi<IRuleEngineOperators>('rule_engine_operators').then((json) => {
@@ -148,6 +155,7 @@ function Categories(): JSX.Element {
   async function onSave(): Promise<void> {
     const serializedCatConf = serializeCatConf(catConf, ruleOperators)
     if (!catConf.id) {
+      delete serializedCatConf['@id']
       const newCatConf = await create(serializedCatConf)
       if (!isError(newCatConf)) {
         const parsedCatConf = parseCatConf(newCatConf, ruleOperators)
