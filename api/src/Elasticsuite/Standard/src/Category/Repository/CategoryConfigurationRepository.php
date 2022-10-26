@@ -53,7 +53,6 @@ class CategoryConfigurationRepository extends ServiceEntityRepository
             $mergeExpr = 'case when lc.%1$s IS NOT NULL then lc.%1$s else ' .
                 '(case when c.%1$s IS NOT NULL then c.%1$s else g.%1$s end) end';
         } elseif ($catalog) {
-            $localizedCatalog = $catalog->getLocalizedCatalogs()->first();
             $mergeExpr = 'case when c.%1$s IS NOT NULL then c.%1$s else g.%1$s end';
         } else {
             $mergeExpr = 'g.%1$s';
@@ -68,8 +67,9 @@ class CategoryConfigurationRepository extends ServiceEntityRepository
             $queryBuilder->addSelect('MAX(' . ($localizedCatalog ? 'lc.id' : 'c.id') . ') as id')
                 ->andWhere('lc.localizedCatalog = :localizedCatalog')
                 ->andWhere('lc.catalog = :catalog')
-                ->setParameter('catalog', $catalog)
-                ->setParameter('localizedCatalog', $localizedCatalog);
+                ->setParameter('catalog', $catalog);
+            $localizedCatalog = $localizedCatalog ?: $catalog->getLocalizedCatalogs()->first();
+            $queryBuilder->setParameter('localizedCatalog', $localizedCatalog);
         } else {
             $queryBuilder->addSelect('MAX(g.id) as id')
                 ->andWhere($exprBuilder->isNotNull('lc.localizedCatalog'))
@@ -77,7 +77,11 @@ class CategoryConfigurationRepository extends ServiceEntityRepository
         }
 
         $results = $queryBuilder->getQuery()->getResult();
+
         $result = reset($results);
+        if (!$result) {
+            return null;
+        }
         $categoryConfiguration = new Category\Configuration();
 
         // Api can't return data without IRI, so without id.
