@@ -79,20 +79,17 @@ function Category(): JSX.Element {
   const rows = useMemo(
     () =>
       products.data?.searchProducts.collection.map((product) => {
-        let price
         try {
           if (product.price) {
-            const parsedPrice = JSON.parse(product.price)
-            // eslint-disable-next-line prefer-destructuring
-            price = parsedPrice[0].price
+            return {
+              ...product,
+              price: product.price[0].price,
+            }
           }
         } catch {
           // no price
         }
-        return {
-          ...product,
-          price,
-        }
+        return product
       }) ?? [],
     [products]
   )
