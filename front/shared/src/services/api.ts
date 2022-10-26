@@ -43,7 +43,7 @@ export function fetchApi<T>(
     typeof resource === 'string' ? getApiUrl(resource) : getApiUrl(resource.url)
   const headers: Record<string, string> = {
     [languageHeader]: language,
-    [contentTypeHeader]: 'application/json',
+    [contentTypeHeader]: 'application/ld+json',
     ...(options.headers as Record<string, string>),
   }
   const token = storageGet(tokenStorageKey)
