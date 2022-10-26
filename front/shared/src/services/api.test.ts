@@ -75,9 +75,25 @@ describe('Api service', () => {
       })
     })
 
-    it('should throw an error (ApiError)', async () => {
+    it('should throw an error (ApiError 500)', async () => {
       const mock = fetchJson as jest.Mock
       mock.mockClear()
+      mock.mockImplementationOnce(() =>
+        Promise.resolve({ json: { code: 500, message: 'Internal error' } })
+      )
+      await expect(fetchApi('en', '/restricted')).rejects.toThrow(ApiError)
+      expect(fetchJson).toHaveBeenCalledWith('http://localhost/restricted', {
+        headers: {
+          'Content-Type': 'application/json',
+          'Elasticsuite-Language': 'en',
+        },
+      })
+    })
+
+    it('should throw an error and remove token from storage (ApiError 401)', async () => {
+      const mock = fetchJson as jest.Mock
+      mock.mockClear()
+      ;(storageRemove as jest.Mock).mockClear()
       mock.mockImplementationOnce(() =>
         Promise.resolve({ json: { code: 401, message: 'Unauthorized' } })
       )
@@ -88,6 +104,7 @@ describe('Api service', () => {
           'Elasticsuite-Language': 'en',
         },
       })
+      expect(storageRemove).toHaveBeenCalledWith('elasticSuiteToken')
     })
 
     it('should throw an error (HydraError)', async () => {
