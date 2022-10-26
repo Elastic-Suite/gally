@@ -88,7 +88,7 @@ class Configuration
                     'input' => 'select',
                     // Todo: move the options values in the proper class and add validation constraint (will be done in the ticket ESPP-223)
                     'options' => [
-                        'values' => ['auto' => 'Auto', 'display' => 'Display', 'hidden' => 'Hidden'],
+                        'values' => ['auto' => 'Auto', 'displayed' => 'Display', 'hidden' => 'Hidden'],
                     ],
                 ],
             ],
