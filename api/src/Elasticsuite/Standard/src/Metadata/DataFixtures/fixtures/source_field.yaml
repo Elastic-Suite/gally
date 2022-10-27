@@ -1,4 +1,53 @@
 Elasticsuite\Metadata\Model\SourceField:
+    product_simple_category_id:
+        metadata: '@product'
+        code: 'simple_category.id'
+        type: 'keyword'
+        isFilterable: true
+        isSystem: true
+    product_simple_category_uid:
+        metadata: '@product'
+        code: 'simple_category.uid'
+        type: 'keyword'
+        isSystem: true
+    product_simple_category_name:
+        metadata: '@product'
+        code: 'simple_category.name'
+        type: 'text'
+        isSearchable: true
+        isSpellchecked: true
+        isFilterable: false
+        isSystem: true
+    product_simple_category_is_parent:
+        metadata: '@product'
+        code: 'simple_category.is_parent'
+        type: 'boolean'
+        isSystem: true
+    product_simple_category_is_virtual:
+        metadata: '@product'
+        code: 'simple_category.is_virtual'
+        type: 'boolean'
+        isSystem: true
+    product_simple_category_is_blacklisted:
+        metadata: '@product'
+        code: 'simple_category.is_blacklisted'
+        type: 'boolean'
+        isSystem: true
+    product_simple_category_position:
+        metadata: '@product'
+        code: 'simple_category.position'
+        type: 'int'
+        isSystem: true
+    product_simple_stock_status:
+        metadata: '@product'
+        code: 'simple_stock.status'
+        defaultLabel: 'Simple Stock status'
+        type: 'boolean'
+    product_simple_stock_qty:
+        metadata: '@product'
+        code: 'simple_stock.qty'
+        defaultLabel: 'Simple Stock quantity'
+        type: 'float'
     product_accessory_announcement_date:
         metadata: '@product'
         code: accessory_announcement_date
