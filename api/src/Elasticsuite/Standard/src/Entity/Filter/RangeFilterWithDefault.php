@@ -71,7 +71,7 @@ class RangeFilterWithDefault extends BaseRangeFilter
                 }
 
                 $queryBuilder
-                    ->andWhere(sprintf('%1$s BETWEEN :%2$s_1 AND :%2$s_2', $fieldWithDefault, $valueParameter))
+                    ->andWhere(sprintf('%1$s >= :%2$s_1 AND %1$s <= :%2$s_2', $fieldWithDefault, $valueParameter))
                     ->setParameter(sprintf('%s_1', $valueParameter), $rangeValue[0])
                     ->setParameter(sprintf('%s_2', $valueParameter), $rangeValue[1]);
 
