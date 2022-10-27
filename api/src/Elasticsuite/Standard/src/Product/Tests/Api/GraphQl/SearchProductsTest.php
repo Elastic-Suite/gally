@@ -30,11 +30,14 @@ class SearchProductsTest extends AbstractTest
     {
         parent::setUpBeforeClass();
         self::loadFixture([
-            __DIR__ . '/../../fixtures/catalogs.yaml',
-            __DIR__ . '/../../fixtures/source_field.yaml',
-            __DIR__ . '/../../fixtures/source_field_label.yaml',
-            __DIR__ . '/../../fixtures/source_field_option.yaml',
+            __DIR__ . '/../../fixtures/facet_configuration.yaml',
             __DIR__ . '/../../fixtures/source_field_option_label.yaml',
+            __DIR__ . '/../../fixtures/source_field_option.yaml',
+            __DIR__ . '/../../fixtures/source_field_label.yaml',
+            __DIR__ . '/../../fixtures/source_field.yaml',
+            __DIR__ . '/../../fixtures/category_configurations.yaml',
+            __DIR__ . '/../../fixtures/categories.yaml',
+            __DIR__ . '/../../fixtures/catalogs.yaml',
             __DIR__ . '/../../fixtures/metadata.yaml',
         ]);
         self::createEntityElasticsearchIndices('product');
@@ -776,7 +779,7 @@ class SearchProductsTest extends AbstractTest
             [
                 'b2c_fr', // catalog ID.
                 [], // sort order specifications.
-                'category_as_nested__id: { eq: "one" }',
+                'category_as_nested__id: { eq: "cat_1" }',
                 'entity_id', // document data identifier.
                 [1, 2], // expected ordered document IDs
             ],
@@ -1007,14 +1010,14 @@ class SearchProductsTest extends AbstractTest
             [
                 'b2c_fr', // catalog ID.
                 [], // sort order specifications.
-                'one', // current category id.
+                'cat_1', // current category id.
                 'entity_id', // document data identifier.
                 [1, 2], // expected ordered document IDs
             ],
             [
                 'b2c_fr', // catalog ID.
                 [], // sort order specifications.
-                'two', // current category id.
+                'cat_2', // current category id.
                 'entity_id', // document data identifier.
                 [1], // expected ordered document IDs
             ],
@@ -1024,15 +1027,17 @@ class SearchProductsTest extends AbstractTest
     /**
      * @dataProvider searchWithAggregationDataProvider
      *
-     * @param string $requestType          Request Type
-     * @param string $catalogId            Catalog ID or code
-     * @param int    $pageSize             Pagination size
-     * @param int    $currentPage          Current page
-     * @param array  $expectedAggregations expected aggregations sample
+     * @param string      $requestType          Request Type
+     * @param string      $catalogId            Catalog ID or code
+     * @param string|null $categoryId           Category id to search in
+     * @param int         $pageSize             Pagination size
+     * @param int         $currentPage          Current page
+     * @param array|null  $expectedAggregations expected aggregations sample
      */
     public function testSearchProductsWithAggregation(
         string $requestType,
         string $catalogId,
+        ?string $categoryId,
         int $pageSize,
         int $currentPage,
         ?array $expectedAggregations,
@@ -1046,6 +1051,10 @@ class SearchProductsTest extends AbstractTest
             $pageSize,
             $currentPage
         );
+
+        if ($categoryId) {
+            $arguments .= ", currentCategoryId: \"$categoryId\"";
+        }
 
         $this->validateApiCall(
             new RequestGraphQlToTest(
@@ -1107,6 +1116,7 @@ class SearchProductsTest extends AbstractTest
             [
                 'product_catalog',
                 'b2c_en',   // catalog ID.
+                null, // Current category id.
                 10,     // page size.
                 1,      // current page.
                 [       // expected aggregations sample.
@@ -1123,7 +1133,6 @@ class SearchProductsTest extends AbstractTest
                             ],
                         ],
                     ],
-                    ['field' => 'length', 'label' => 'Length', 'type' => 'slider'],
                     ['field' => 'weight', 'label' => 'Weight', 'type' => 'slider'],
                     [
                         'field' => 'category',
@@ -1131,8 +1140,8 @@ class SearchProductsTest extends AbstractTest
                         'type' => 'checkbox',
                         'options' => [
                             [
-                                'label' => 'cat_2',
-                                'value' => 'cat_2',
+                                'label' => 'cat_1',
+                                'value' => 'cat_1',
                                 'count' => 2,
                             ],
                             [
@@ -1146,7 +1155,89 @@ class SearchProductsTest extends AbstractTest
             ],
             [
                 'product_catalog',
+                'b2c_en',   // catalog ID.
+                'cat_1', // Current category id.
+                10,     // page size.
+                1,      // current page.
+                [       // expected aggregations sample.
+                    [
+                        'field' => 'color',
+                        'label' => 'Color',
+                        'type' => 'checkbox',
+                        'options' => [
+                            [
+                                'label' => 'Black',
+                                'value' => 'black',
+                                'count' => 2,
+                            ],
+                        ],
+                    ],
+                    ['field' => 'weight', 'label' => 'Weight', 'type' => 'slider'],
+                    [
+                        'field' => 'category',
+                        'label' => 'Category',
+                        'type' => 'checkbox',
+                        'options' => [
+                            [
+                                'label' => 'cat_1',
+                                'value' => 'cat_1',
+                                'count' => 2,
+                            ],
+                            [
+                                'label' => 'Accessories',
+                                'value' => 'cat_3',
+                                'count' => 2,
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            [
+                'product_catalog',
+                'b2c_en',   // catalog ID.
+                'cat_5', // Current category id.
+                10,     // page size.
+                1,      // current page.
+                [       // expected aggregations sample.
+                    ['field' => 'size', 'label' => 'Size', 'type' => 'slider'],
+                    [
+                        'field' => 'color',
+                        'label' => 'Color',
+                        'type' => 'checkbox',
+                        'options' => [
+                            [
+                                'label' => 'Black',
+                                'value' => 'black',
+                                'count' => 1,
+                            ],
+                        ],
+                    ],
+                    ['field' => 'weight', 'label' => 'Weight', 'type' => 'slider'],
+                    [
+                        'field' => 'category',
+                        'label' => 'Category',
+                        'type' => 'checkbox',
+                        'options' => [
+                            [
+                                'label' => 'cat_1',
+                                'value' => 'cat_1',
+                                'count' => 1,
+                            ],
+                            [
+                                'label' => 'Accessories',
+                                'value' => 'cat_3',
+                                'count' => 1,
+                            ],
+                        ],
+                    ],
+                    ['field' => 'is_eco_friendly', 'label' => 'Is_eco_friendly', 'type' => 'checkbox'],
+                    ['field' => 'brand', 'label' => 'Brand', 'type' => 'checkbox'],
+                ],
+            ],
+            [
+                'product_catalog',
                 'b2c_fr',   // catalog ID.
+                null,   // Current category id.
                 10,     // page size.
                 1,      // current page.
                 [       // expected aggregations sample.
@@ -1172,6 +1263,7 @@ class SearchProductsTest extends AbstractTest
             [
                 'test_search_query',
                 'b2c_fr',   // catalog ID.
+                null,   // Current category id.
                 10,     // page size.
                 1,      // current page.
                 null,   // expected aggregations sample.

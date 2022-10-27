@@ -69,7 +69,7 @@ services:
         arguments:
             - '@Elasticsuite\Metadata\Repository\SourceFieldRepository'
             - !tagged_iterator { tag: 'elasticsuite.search.aggregation.resolver' }
-            - !tagged_iterator { tag: 'elasticsuite.search.aggregation.modifier' }
+            - {}
 
     elasticsuite.search.request.factory:
         class: Elasticsuite\Search\Elasticsearch\RequestFactory
@@ -262,3 +262,7 @@ services:
     Elasticsuite\Search\Elasticsearch\Spellchecker\RequestFactoryInterface:
         public: true
         alias: elasticsuite.search.spellchecker.request.factory
+
+    Elasticsuite\Search\EventSubscriber\GenerateFacetConfigurationId:
+        tags:
+            - { name: doctrine.event_subscriber }

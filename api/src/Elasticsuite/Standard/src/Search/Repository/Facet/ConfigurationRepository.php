@@ -34,7 +34,7 @@ use Elasticsuite\Search\Model\Facet;
  */
 class ConfigurationRepository extends ServiceEntityRepository
 {
-    private ?string $categoryId;
+    private ?string $categoryId = null;
 
     public function __construct(
         ManagerRegistry $registry
@@ -50,6 +50,23 @@ class ConfigurationRepository extends ServiceEntityRepository
     public function setCategoryId(?string $categoryId): void
     {
         $this->categoryId = $categoryId;
+    }
+
+    /**
+     * Get configuration for given source fields.
+     *
+     * @param SourceField[] $sourceFields
+     *
+     * @return Facet\Configuration[]
+     */
+    public function getConfigurationForSourceFields(array $sourceFields): array
+    {
+        $query = $this->createQueryBuilder('o')
+            ->andWhere('sf in (:sourceFields)') // sf is the alias of the sourceField table join in createQueryBuilder
+            ->setParameter('sourceFields', $sourceFields)
+            ->getQuery();
+
+        return $query->getResult($query->getHydrationMode());
     }
 
     public function createQueryBuilder($alias, $indexBy = null): QueryBuilder|\Doctrine\ORM\QueryBuilder

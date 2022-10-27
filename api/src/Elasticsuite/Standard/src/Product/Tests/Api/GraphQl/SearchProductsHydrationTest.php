@@ -189,7 +189,12 @@ class SearchProductsHydrationTest extends AbstractTest
                     'weight' => 1.200,
                     'size' => 12,
                     'is_eco_friendly' => false,
-                    'brand' => null,
+                    'brand' => [
+                        [
+                            'label' => 'Test brand',
+                            'value' => 'brand_test',
+                        ],
+                    ],
                     'color' => [
                         [
                             'value' => 'black',
@@ -597,11 +602,11 @@ class SearchProductsHydrationTest extends AbstractTest
                             'id' => 'one',
                         ],
                         */
-                        'id' => 'one',
+                        'id' => 'cat_1',
                     ],
                     'category' => [
                         [
-                            'id' => 'one',
+                            'id' => 'cat_1',
                             'uid' => 'one',
                             'name' => 'One',
                             'is_parent' => true,
@@ -609,7 +614,7 @@ class SearchProductsHydrationTest extends AbstractTest
                             'is_blacklisted' => false,
                         ],
                         [
-                            'id' => 'two',
+                            'id' => 'cat_2',
                             'uid' => 'two',
                             'name' => 'Two',
                             'is_parent' => false,
@@ -684,11 +689,11 @@ class SearchProductsHydrationTest extends AbstractTest
                             'id' => 'one',
                         ],
                         */
-                        'id' => 'one',
+                        'id' => 'cat_1',
                     ],
                     'category' => [
                         [
-                            'id' => 'one',
+                            'id' => 'cat_1',
                             'uid' => 'one',
                             'name' => 'One',
                             'is_parent' => true,

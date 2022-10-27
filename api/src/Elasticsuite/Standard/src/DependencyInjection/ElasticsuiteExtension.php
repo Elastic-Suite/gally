@@ -155,6 +155,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
         $container->setParameter('elasticsuite.menu', $config['menu'] ?? []);
         $container->setParameter('elasticsuite.analysis', $config['analysis'] ?? []);
         $container->setParameter('elasticsuite.graphql_query_renaming', $config['graphql_query_renaming'] ?? []);
+        $container->setParameter('elasticsuite.search_settings', $config['search_settings'] ?? []);
 
         //@Todo : Use this feature https://symfony.com/doc/current/bundles/extension.html ?
 //        $this->addAnnotatedClassesToCompile([

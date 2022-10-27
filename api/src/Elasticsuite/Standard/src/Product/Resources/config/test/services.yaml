@@ -3,7 +3,7 @@ services:
         arguments:
             - '@Elasticsuite\Metadata\Repository\SourceFieldRepository'
             - !tagged_iterator { tag: 'elasticsuite.search.aggregation.resolver' }
-            - !tagged_iterator { tag: 'elasticsuite.search.aggregation.modifier' }
+            - []
     
     elasticsuite.container_configuration.test_search_query.factory:
         parent: Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\GenericContainerConfigurationFactory
@@ -11,3 +11,8 @@ services:
             $aggregationProvider: '@Elasticsuite\Product\Tests\AggregationProvider\DummyAggregationProvider'
         tags:
             - { name: elasticsuite.container_configuration.factory, requestType: test_search_query, metadata: product }
+
+    Elasticsuite\Product\Service\SearchSettingsProvider:
+        class: Elasticsuite\Product\Tests\Service\SearchSettingsProvider
+        arguments:
+            - '%elasticsuite.search_settings%'

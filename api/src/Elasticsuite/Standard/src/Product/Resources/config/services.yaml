@@ -3,9 +3,9 @@ imports:
 
 services:
     Elasticsuite\Product\Service\GraphQl\FilterManager:
-        class: Elasticsuite\Search\Service\GraphQl\FilterManager
         arguments:
             - '@Elasticsuite\Product\GraphQl\Type\Definition\FieldFilterInputType'
+            - '@Elasticsuite\Product\Service\CurrentCategoryProvider'
 
     Elasticsuite\Product\DataProvider\ProductDataProvider:
         arguments:
@@ -59,9 +59,45 @@ services:
             - '@Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider'
         tags:
             - { name: api_platform.graphql.type }
-
+    
+    Elasticsuite\Product\Service\CurrentCategoryProvider:
+        arguments:
+            - '@Elasticsuite\Category\Repository\CategoryRepository'
+            -
     Elasticsuite\Product\Decoration\GraphQl\AddEntityTypeInContext:
         decorates: api_platform.graphql.resolver.stage.serialize
         decoration_priority: 1
         arguments:
             - '@.inner'
+            
+    Elasticsuite\Product\Service\SearchSettingsProvider:
+        arguments:
+            - '%elasticsuite.search_settings%'
+            
+    Elasticsuite\Product\Elasticsearch\Request\Aggregation\Provider\CoverageAggregationProvider:
+        arguments:
+            - '@Elasticsuite\Metadata\Repository\SourceFieldRepository'
+            - '@Elasticsuite\Search\Elasticsearch\Request\QueryFactory'
+            - '@Elasticsuite\Product\Service\SearchSettingsProvider'
+    
+    elasticsuite.search.coverage.request.builder:
+        parent: Elasticsuite\Search\Elasticsearch\Builder\Request\SimpleRequestBuilder
+
+    Elasticsuite\Product\Elasticsearch\Request\Aggregation\CoverageProvider:
+        arguments:
+            - '@Elasticsuite\Search\Elasticsearch\Adapter'
+
+    Elasticsuite\Product\Elasticsearch\Request\Aggregation\Modifier\Coverage:
+        arguments:
+            - '@elasticsuite.search.coverage.request.builder'
+            - '@Elasticsuite\Product\Elasticsearch\Request\Aggregation\CoverageProvider'
+            - '@Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider'
+            - '@Elasticsuite\Search\Repository\Facet\ConfigurationRepository'
+            - '@Elasticsuite\Product\Service\CurrentCategoryProvider'
+    
+    elasticsuite.search.product.filterableSourceFields:
+        parent: Elasticsuite\Search\Elasticsearch\Request\Aggregation\Provider\FilterableSourceFields
+        arguments:
+            $modifiersPool: {
+                coverageModifier: '@Elasticsuite\Product\Elasticsearch\Request\Aggregation\Modifier\Coverage',
+            }

@@ -74,8 +74,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiFilter(RangeFilterWithDefault::class, properties: ['coverageRate', 'maxSize'], arguments: ['defaultValues' => self::DEFAULT_VALUES])]
 class Configuration
 {
+    public const DISPLAY_MODE_AUTO = 'auto';
+    public const DISPLAY_MODE_ALWAYS_DISPLAYED = 'displayed';
+    public const DISPLAY_MODE_ALWAYS_HIDDEN = 'hidden';
+
     private const DEFAULT_VALUES = [
-        'displayMode' => 'auto',
+        'displayMode' => self::DISPLAY_MODE_AUTO,
         'coverageRate' => 90,
         'maxSize' => 10,
         'sortOrder' => 'result_count',
@@ -103,12 +107,11 @@ class Configuration
                     'editable' => true,
                     'position' => 20,
                     'input' => 'select',
-                    // Todo: move the options values in the proper class and add validation constraint (will be done in the ticket ESPP-223)
                     'options' => [
                         'values' => [
-                            ['value' => 'auto', 'label' => 'Auto'],
-                            ['value' => 'displayed', 'label' => 'Displayed'],
-                            ['value' => 'hidden', 'label' => 'Hidden'],
+                            ['value' => self::DISPLAY_MODE_AUTO, 'label' => 'Auto'],
+                            ['value' => self::DISPLAY_MODE_ALWAYS_DISPLAYED, 'label' => 'Displayed'],
+                            ['value' => self::DISPLAY_MODE_ALWAYS_HIDDEN, 'label' => 'Hidden'],
                         ],
                     ],
                 ],
@@ -243,12 +246,16 @@ class Configuration
     {
         $this->sourceField = $sourceField;
         $this->category = $category;
-        $this->id = implode('-', [$sourceField->getId(), $category ? $category->getId() : 0]);
     }
 
     public function getId(): string
     {
         return $this->id;
+    }
+
+    public function setId(string $id): void
+    {
+        $this->id = $id;
     }
 
     public function getSourceField(): SourceField
@@ -389,5 +396,14 @@ class Configuration
         $this->defaultSortOrder = $defaultConfiguration->getSortOrder() ?? self::DEFAULT_VALUES['sortOrder'];
         $this->defaultIsRecommendable = $defaultConfiguration->getIsRecommendable() ?? self::DEFAULT_VALUES['isRecommendable'];
         $this->defaultIsVirtual = $defaultConfiguration->getIsVirtual() ?? self::DEFAULT_VALUES['isVirtual'];
+    }
+
+    public static function getAvailableDisplayModes(): array
+    {
+        return [
+            self::DISPLAY_MODE_AUTO,
+            self::DISPLAY_MODE_ALWAYS_DISPLAYED,
+            self::DISPLAY_MODE_ALWAYS_HIDDEN,
+        ];
     }
 }
