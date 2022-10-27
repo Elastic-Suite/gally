@@ -18,7 +18,6 @@ namespace Elasticsuite\Product\Decoration\GraphQl;
 
 use ApiPlatform\Core\GraphQl\Resolver\Stage\SerializeStageInterface;
 use Elasticsuite\Product\Model\Product;
-use Elasticsuite\Search\Model\Document;
 
 /**
  * Add aggregations data in graphql search document response.

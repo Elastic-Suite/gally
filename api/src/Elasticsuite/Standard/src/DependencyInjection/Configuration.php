@@ -138,7 +138,7 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
 
-                // Menu config
+                // Rename graphQL query
                 ->arrayNode('graphql_query_renaming')
                     ->useAttributeAsKey('ressource_class')
                     ->arrayPrototype()
@@ -147,6 +147,20 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
+
+                // Indices setting config
+                ->arrayNode('search_settings')
+                    ->children()
+                        ->arrayNode('aggregations')
+                            ->children()
+                                ->booleanNode('coverage_use_indexed_fields_property')
+                                    ->defaultFalse()
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+
             ->end();
 
         return $treeBuilder;

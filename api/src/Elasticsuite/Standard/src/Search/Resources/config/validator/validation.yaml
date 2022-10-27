@@ -5,7 +5,7 @@ Elasticsuite\Search\Model\Facet\Configuration:
             - Elasticsuite\Search\Validator\ProductFieldConstraint: ~
             - Elasticsuite\Search\Validator\FilterableFieldConstraint: ~
         displayMode:
-            - Choice: [auto, hidden, displayed]
+            - Choice: { callback: [ Elasticsuite\Search\Model\Facet\Configuration, getAvailableDisplayModes ] }
         coverageRate:
             - Range:
                 min: 0
