@@ -64,9 +64,9 @@ class CategorySynchronizerTest extends AbstractTest
         self::$categoryRepository = static::getContainer()->get(CategoryRepository::class);
         self::$categoryConfigurationRepository = static::getContainer()->get(CategoryConfigurationRepository::class);
         self::loadFixture([
-            __DIR__ . '/../../fixtures/metadata.yaml',
             __DIR__ . '/../../fixtures/catalogs.yaml',
             __DIR__ . '/../../fixtures/source_field.yaml',
+            __DIR__ . '/../../fixtures/metadata.yaml',
         ]);
     }
 

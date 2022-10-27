@@ -18,6 +18,7 @@ namespace Elasticsuite\Metadata\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Elasticsuite\Metadata\Model\Metadata;
 use Elasticsuite\Metadata\Model\SourceField;
 
 /**
@@ -62,6 +63,21 @@ class SourceFieldRepository extends ServiceEntityRepository
                 )
             )
             ->setParameter('metadata', $this->metadataRepository->findOneBy(['entity' => $entityCode]))
+            ->getQuery();
+
+        return $query->getResult();
+    }
+
+    /**
+     * @return SourceField[]
+     */
+    public function findByCodePrefix(string $codePrefix, Metadata $metadata): array
+    {
+        $exprBuilder = $this->getEntityManager()->getExpressionBuilder();
+        $query = $this->createQueryBuilder('s')
+            ->where('s.metadata = :metadata')
+            ->andWhere($exprBuilder->like('s.code', $exprBuilder->concat("'$codePrefix'", "'%'")))
+            ->setParameter('metadata', $metadata)
             ->getQuery();
 
         return $query->getResult();

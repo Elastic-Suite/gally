@@ -28,8 +28,8 @@ class SourceFieldTest extends AbstractEntityTest
     protected static function getFixtureFiles(): array
     {
         return [
-            __DIR__ . '/../../fixtures/metadata.yaml',
             __DIR__ . '/../../fixtures/source_field.yaml',
+            __DIR__ . '/../../fixtures/metadata.yaml',
         ];
     }
 
@@ -83,6 +83,20 @@ class SourceFieldTest extends AbstractEntityTest
                 422,
                 'weight: The value you selected is not a valid choice.',
             ],
+            [$adminUser, ['code' => 'my_category', 'metadata' => '/metadata/1', 'type' => 'category'], 201],
+            [
+                $adminUser,
+                ['code' => 'my_category.id', 'metadata' => '/metadata/1', 'type' => 'keyword'],
+                500,
+                "You can't create a source field with the code 'my_category.id' because a source field with the code 'my_category' exists.",
+            ],
+            [$adminUser, ['code' => 'my_price.price', 'metadata' => '/metadata/1', 'type' => 'float'], 201],
+            [
+                $adminUser,
+                ['code' => 'my_price', 'metadata' => '/metadata/1', 'type' => 'price'],
+                500,
+                "You can't create a source field with the code 'my_price' because a source field with the code 'my_price.*' exists.",
+            ],
         ];
     }
 
@@ -123,7 +137,7 @@ class SourceFieldTest extends AbstractEntityTest
     public function getCollectionDataProvider(): iterable
     {
         return [
-            [$this->getUser(Role::ROLE_CONTRIBUTOR), 11, 200],
+            [$this->getUser(Role::ROLE_CONTRIBUTOR), 13, 200],
         ];
     }
 

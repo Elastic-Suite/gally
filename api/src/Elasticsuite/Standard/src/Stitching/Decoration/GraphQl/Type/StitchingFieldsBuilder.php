@@ -21,11 +21,11 @@ use ApiPlatform\Core\GraphQl\Type\TypesContainerInterface;
 use ApiPlatform\Core\Metadata\Resource\Factory\ResourceMetadataFactoryInterface;
 use ApiPlatform\Core\Metadata\Resource\ResourceMetadata;
 use Doctrine\ORM\EntityNotFoundException;
+use Elasticsuite\Entity\Constant\SourceFieldAttributeMapping;
 use Elasticsuite\Entity\Model\Attribute\GraphQlAttributeInterface;
 use Elasticsuite\Entity\Model\Attribute\StructuredAttributeInterface;
 use Elasticsuite\Metadata\Model\Metadata;
 use Elasticsuite\Metadata\Model\SourceField;
-use Elasticsuite\Metadata\Model\SourceField\Type as SourceFieldType;
 use Elasticsuite\Metadata\Repository\MetadataRepository;
 use Elasticsuite\ResourceMetadata\Service\ResourceMetadataManager;
 use GraphQL\Type\Definition\ObjectType;
@@ -38,25 +38,6 @@ use GraphQL\Type\Definition\Type as GraphQLType;
  */
 class StitchingFieldsBuilder implements FieldsBuilderInterface
 {
-    /**
-     * @Todo: Move STITCHING_ATTRIBUTE_CLASS_TYPE to config.
-     */
-    public const STITCHING_ATTRIBUTE_CLASS_TYPE = [
-        SourceFieldType::TYPE_TEXT => 'Elasticsuite\Entity\Model\Attribute\Type\TextAttribute',
-        SourceFieldType::TYPE_KEYWORD => 'Elasticsuite\Entity\Model\Attribute\Type\TextAttribute',
-        SourceFieldType::TYPE_SELECT => 'Elasticsuite\Entity\Model\Attribute\Type\SelectAttribute',
-        SourceFieldType::TYPE_INT => 'Elasticsuite\Entity\Model\Attribute\Type\IntAttribute',
-        SourceFieldType::TYPE_BOOLEAN => 'Elasticsuite\Entity\Model\Attribute\Type\BooleanAttribute',
-        SourceFieldType::TYPE_FLOAT => 'Elasticsuite\Entity\Model\Attribute\Type\FloatAttribute',
-        SourceFieldType::TYPE_PRICE => 'Elasticsuite\Entity\Model\Attribute\Type\PriceAttribute',
-        SourceFieldType::TYPE_STOCK => 'Elasticsuite\Entity\Model\Attribute\Type\StockAttribute',
-        SourceFieldType::TYPE_CATEGORY => 'Elasticsuite\Entity\Model\Attribute\Type\CategoryAttribute',
-        SourceFieldType::TYPE_REFERENCE => 'Elasticsuite\Entity\Model\Attribute\Type\TextAttribute',
-        SourceFieldType::TYPE_IMAGE => 'Elasticsuite\Entity\Model\Attribute\Type\TextAttribute',
-        SourceFieldType::TYPE_OBJECT => 'Elasticsuite\Entity\Model\Attribute\Type\TextAttribute',
-        SourceFieldType::TYPE_DATE => 'Elasticsuite\Entity\Model\Attribute\Type\TextAttribute',
-    ];
-
     public function __construct(
         private MetadataRepository $metadataRepository,
         private ResourceMetadataFactoryInterface $resourceMetadataFactory,
@@ -112,7 +93,7 @@ class StitchingFieldsBuilder implements FieldsBuilderInterface
         foreach ($metadata->getSourceFields() as $sourceField) {
             if (!isset($fields[$sourceField->getCode()])) {
                 /** @var GraphQlAttributeInterface|string|null $attributeClassType */
-                $attributeClassType = self::STITCHING_ATTRIBUTE_CLASS_TYPE[$sourceField->getType()] ?? null;
+                $attributeClassType = SourceFieldAttributeMapping::TYPES[$sourceField->getType()] ?? null;
 
                 if (
                     null === $attributeClassType
