@@ -38,7 +38,7 @@ Elasticsuite\Metadata\Model\SourceField:
         metadata: '@product'
         code: 'stock.status'
         defaultLabel: 'Stock status'
-        type: 'int'
+        type: 'boolean'
         isSystem: true
     product_stock_qty:
         metadata: '@product'
