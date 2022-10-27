@@ -91,4 +91,42 @@ class SelectTypeDefaultFilterInputTypeTest extends KernelTestCase
         $this->assertEquals('my_select##value', $selectTypeDefaultFilterInputType->getGraphQlFieldName('my_select'));
         $this->assertEquals('my_select.value', $selectTypeDefaultFilterInputType->getMappingFieldName('my_select##value'));
     }
+
+    /**
+     * @dataProvider validateDataProvider
+     *
+     * @param string $fieldName      Field name
+     * @param array  $inputData      Input data
+     * @param array  $expectedErrors Array of expected error messages (empty if no errors expected)
+     */
+    public function testValidate(string $fieldName, array $inputData, array $expectedErrors): void
+    {
+        $selectTypeDefaultFilterInputType = new SelectTypeDefaultFilterInputType(
+            self::$filterQueryBuilder,
+            self::$queryFactory,
+            '__'
+        );
+
+        $errors = $selectTypeDefaultFilterInputType->validate($fieldName, $inputData);
+        $this->assertEquals($expectedErrors, $errors);
+    }
+
+    public function validateDataProvider(): array
+    {
+        return [
+            ['fashion_color__value', ['eq' => '24'], []],
+            ['fashion_color__value', ['in' => ['25', '37']], []],
+            ['fashion_color__value', ['exist' => true], []],
+            [
+                'fashion_color__value',
+                ['eq' => '24', 'in' => ['25', '37']],
+                ["Filter argument fashion_color__value: Only 'eq', 'in' or 'exist' should be filled."],
+            ],
+            [
+                'fashion_color__value',
+                [],
+                ["Filter argument fashion_color__value: At least 'eq', 'in' or 'exist' should be filled."],
+            ],
+        ];
+    }
 }

@@ -55,4 +55,29 @@ class StockTypeDefaultFilterInputType extends TextTypeFilterInputType
          */
         return str_replace('.', $this->nestingSeparator, $sourceFieldCode . '.status');
     }
+
+    public function validate(string $argName, mixed $inputData): array
+    {
+        $errors = [];
+
+        if (\count($inputData) < 1) {
+            $errors[] = sprintf(
+                "Filter argument %s: At least '%s' or '%s' should be filled.",
+                $argName,
+                FilterOperator::EQ,
+                FilterOperator::EXIST,
+            );
+        }
+
+        if (\count($inputData) > 1) {
+            $errors[] = sprintf(
+                "Filter argument %s: Only '%s' or '%s' should be filled.",
+                $argName,
+                FilterOperator::EQ,
+                FilterOperator::EXIST,
+            );
+        }
+
+        return $errors;
+    }
 }
