@@ -40,6 +40,7 @@ class CategoryTypeDefaultFilterInputType extends TextTypeFilterInputType
             'fields' => [
                 FilterOperator::EQ => Type::string(),
                 FilterOperator::IN => Type::listOf(Type::string()),
+                FilterOperator::EXIST => Type::boolean(),
             ],
         ];
     }
@@ -54,5 +55,32 @@ class CategoryTypeDefaultFilterInputType extends TextTypeFilterInputType
          * getGraphQlFieldName(A) != getGraphQlFieldName(getMappingFieldName(getGraphQlFieldName(A))
          */
         return str_replace('.', $this->nestingSeparator, $sourceFieldCode . '.id');
+    }
+
+    public function validate(string $argName, mixed $inputData): array
+    {
+        $errors = [];
+
+        if (\count($inputData) < 1) {
+            $errors[] = sprintf(
+                "Filter argument %s: At least '%s', '%s' or '%s' should be filled.",
+                $argName,
+                FilterOperator::EQ,
+                FilterOperator::IN,
+                FilterOperator::EXIST,
+            );
+        }
+
+        if (\count($inputData) > 1) {
+            $errors[] = sprintf(
+                "Filter argument %s: Only '%s', '%s' or '%s' should be filled.",
+                $argName,
+                FilterOperator::EQ,
+                FilterOperator::IN,
+                FilterOperator::EXIST,
+            );
+        }
+
+        return $errors;
     }
 }
