@@ -28,8 +28,8 @@ class CategorySortingOptionTest extends AbstractTest
     {
         parent::setUpBeforeClass();
         self::loadFixture([
-            __DIR__ . '/../../fixtures/metadata.yaml',
             __DIR__ . '/../../fixtures/source_field.yaml',
+            __DIR__ . '/../../fixtures/metadata.yaml',
         ]);
     }
 

@@ -26,10 +26,10 @@ class SourceFieldOptionLabelTest extends AbstractEntityTest
     {
         return [
             __DIR__ . '/../../fixtures/catalogs.yaml',
-            __DIR__ . '/../../fixtures/metadata.yaml',
-            __DIR__ . '/../../fixtures/source_field.yaml',
-            __DIR__ . '/../../fixtures/source_field_option.yaml',
             __DIR__ . '/../../fixtures/source_field_option_label.yaml',
+            __DIR__ . '/../../fixtures/source_field_option.yaml',
+            __DIR__ . '/../../fixtures/source_field.yaml',
+            __DIR__ . '/../../fixtures/metadata.yaml',
         ];
     }
 

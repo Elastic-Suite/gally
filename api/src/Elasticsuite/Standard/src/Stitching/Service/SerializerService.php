@@ -16,9 +16,9 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Stitching\Service;
 
+use Elasticsuite\Entity\Constant\SourceFieldAttributeMapping;
 use Elasticsuite\Metadata\Repository\MetadataRepository;
 use Elasticsuite\Metadata\Repository\SourceFieldRepository;
-use Elasticsuite\Stitching\Decoration\GraphQl\Type\StitchingFieldsBuilder;
 
 class SerializerService
 {
@@ -112,14 +112,14 @@ class SerializerService
 
                 foreach ($sourceFields as $sourceField) {
                     $sourceFieldCode = $sourceField->getCode();
-                    if (!\in_array($sourceField->getType(), array_keys(StitchingFieldsBuilder::STITCHING_ATTRIBUTE_CLASS_TYPE), true)) {
+                    if (!\in_array($sourceField->getType(), array_keys(SourceFieldAttributeMapping::TYPES), true)) {
                         continue;
                     }
                     if ($sourceField->isNested()) {
                         [$path, $field] = [$sourceField->getNestedPath(), $sourceField->getNestedCode()];
-                        $sourceFieldsTypes[$path][$field] = StitchingFieldsBuilder::STITCHING_ATTRIBUTE_CLASS_TYPE[$sourceField->getType()];
+                        $sourceFieldsTypes[$path][$field] = SourceFieldAttributeMapping::TYPES[$sourceField->getType()];
                     } else {
-                        $sourceFieldsTypes[$sourceFieldCode] = StitchingFieldsBuilder::STITCHING_ATTRIBUTE_CLASS_TYPE[$sourceField->getType()];
+                        $sourceFieldsTypes[$sourceFieldCode] = SourceFieldAttributeMapping::TYPES[$sourceField->getType()];
                     }
                 }
             }

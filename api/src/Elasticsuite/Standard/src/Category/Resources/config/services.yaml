@@ -122,7 +122,6 @@ services:
     Elasticsuite\Category\EventSubscriber\ReindexPosition:
         arguments:
             - '@Elasticsuite\Category\Service\CategoryProductPositionManager'
-            
         tags:
             - { name: doctrine.event_subscriber }
 

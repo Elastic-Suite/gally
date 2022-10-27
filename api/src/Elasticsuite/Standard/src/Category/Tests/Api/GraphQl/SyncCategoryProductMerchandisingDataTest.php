@@ -43,8 +43,8 @@ class SyncCategoryProductMerchandisingDataTest extends AbstractTest
         self::loadFixture([
             __DIR__ . '/../../fixtures/catalogs.yaml',
             __DIR__ . '/../../fixtures/categories.yaml',
-            __DIR__ . '/../../fixtures/metadata.yaml',
             __DIR__ . '/../../fixtures/source_field.yaml',
+            __DIR__ . '/../../fixtures/metadata.yaml',
             __DIR__ . '/../../fixtures/configurations.yaml',
             __DIR__ . '/../../fixtures/product_merchandising_bulk.yaml',
         ]);
@@ -89,8 +89,8 @@ class SyncCategoryProductMerchandisingDataTest extends AbstractTest
         self::loadFixture([
             __DIR__ . '/../../fixtures/catalogs.yaml',
             __DIR__ . '/../../fixtures/categories.yaml',
-            __DIR__ . '/../../fixtures/metadata.yaml',
             __DIR__ . '/../../fixtures/source_field.yaml',
+            __DIR__ . '/../../fixtures/metadata.yaml',
             __DIR__ . '/../../fixtures/configurations.yaml',
             __DIR__ . '/../../fixtures/product_merchandising_bulk.yaml',
         ]);
