@@ -43,6 +43,9 @@ interface IProps {
 }
 
 function getActiveFilterLabel(filter: IFilter, value: unknown): string {
+  if (filter.id.endsWith('[between]')) {
+    value = (value as (string | number)[]).join('-')
+  }
   let label = `${filter?.label}: ${value}`
   if (filter?.options) {
     const option = filter?.options.find((option) => option.value === value)
@@ -83,12 +86,18 @@ function Filters(props: IProps): JSX.Element {
     .reduce<IActiveFilter[]>((acc, [id, value]) => {
       const filter = filterMap.get(id)
       if (filter) {
-        if (filter.multiple) {
+        if (filter.id.endsWith('[between]')) {
+          const val = value as (string | number)[]
+          if (val[0] || val[1]) {
+            acc.push(getActiveFilter(filter, val))
+          }
+        } else if (filter.multiple) {
           return acc.concat(
             (value as unknown[]).map((v) => getActiveFilter(filter, v))
           )
+        } else {
+          acc.push(getActiveFilter(filter, value))
         }
-        acc.push(getActiveFilter(filter, value))
       }
       return acc
     }, [])

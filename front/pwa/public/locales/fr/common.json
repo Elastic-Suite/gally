@@ -13,6 +13,8 @@
   "form.close": "Fermer",
   "form.open": "Ouvrir",
   "form.defaultValue": "Défaut: {{value}}",
+  "form.from": "Entre",
+  "form.to": "et",
   "massiveselection.all": "Toutes",
   "massiveselection.allOnCurrentPage": "Toute sur la page",
   "massiveselection.none": "Aucune",

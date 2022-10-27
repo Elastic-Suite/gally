@@ -15,6 +15,7 @@ export interface IFieldGuesserProps {
   onChange?: (name: string, value: unknown, event?: SyntheticEvent) => void
   options?: IOptions<unknown> | null
   required?: boolean
+  suffix?: string
   type?: DataContentType
   useDropdownBoolean?: boolean
   validation?: Record<string, string | number>

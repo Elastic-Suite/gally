@@ -4,6 +4,7 @@ import { DataContentType, IFieldGuesserProps } from 'shared'
 
 import DropDown from '~/components/atoms/form/DropDown'
 import InputTextError from '~/components/atoms/form/InputTextError'
+import Range from '~/components/atoms/form/Range'
 import Switch from '~/components/atoms/form/Switch'
 
 import ReadableFieldGuesser from './ReadableFieldGuesser'
@@ -21,12 +22,16 @@ function EditableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
     useDropdownBoolean,
     value,
     required,
+    suffix,
     validation,
   } = props
   const { t } = useTranslation('common')
   const dirty = diffValue !== undefined && diffValue !== value
 
-  function handleChange(value: number | string, event: SyntheticEvent): void {
+  function handleChange(
+    value: number | string | (number | string)[],
+    event: SyntheticEvent
+  ): void {
     if (onChange) {
       onChange(name, value, event)
     }
@@ -40,7 +45,6 @@ function EditableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
 
   switch (input) {
     case DataContentType.NUMBER:
-    case DataContentType.PERCENTAGE:
     case DataContentType.STRING: {
       return (
         <InputTextError
@@ -52,14 +56,26 @@ function EditableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
           label={label}
           onChange={handleChange}
           required={required}
-          sufix={input === DataContentType.PERCENTAGE ? '%' : ''}
-          type={
-            input === DataContentType.NUMBER ||
-            input === DataContentType.PERCENTAGE
-              ? 'number'
-              : 'text'
-          }
+          suffix={suffix}
+          type={input === DataContentType.NUMBER ? 'number' : 'text'}
           value={String(value)}
+        />
+      )
+    }
+
+    case DataContentType.RANGE: {
+      return (
+        <Range
+          dirty={dirty}
+          helperText={
+            Boolean(dirty) && t('form.defaultValue', { value: diffValue })
+          }
+          inputProps={validation}
+          label={label}
+          onChange={handleChange}
+          required={required}
+          suffix={suffix}
+          value={value as (string | number)[]}
         />
       )
     }

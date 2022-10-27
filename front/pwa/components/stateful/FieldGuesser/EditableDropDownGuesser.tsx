@@ -6,7 +6,10 @@ import DropDown from '~/components/atoms/form/DropDown'
 import { optionsContext } from '~/contexts'
 
 interface IProps extends Omit<IFieldGuesserProps, 'onChange'> {
-  onChange: (value: number | string, event: SyntheticEvent) => void
+  onChange: (
+    value: number | string | (number | string)[],
+    event: SyntheticEvent
+  ) => void
 }
 
 function EditableDropDownGuesser(props: IProps): JSX.Element {
