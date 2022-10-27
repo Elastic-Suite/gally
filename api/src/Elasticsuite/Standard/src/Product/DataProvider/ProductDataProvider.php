@@ -110,6 +110,8 @@ class ProductDataProvider implements ContextAwareCollectionDataProviderInterface
                 $this->filterManager->getFiltersFromContext($context),
                 $containerConfig
             ),
+            [],
+            ($context['need_aggregations'] ?? false) ? [] : null
         );
         $response = $this->adapter->search($request);
 

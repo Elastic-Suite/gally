@@ -81,6 +81,8 @@ services:
     Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Bucket\QueryGroup:
         abstract: false
         lazy: true
+        arguments:
+            - '@Elasticsuite\Search\Elasticsearch\Adapter\Common\Request\Query\Assembler'
         tags:
             - { name: 'elasticsuite.search.request.aggregation.assembler', aggregationType: 'queryGroupBucket' }
     

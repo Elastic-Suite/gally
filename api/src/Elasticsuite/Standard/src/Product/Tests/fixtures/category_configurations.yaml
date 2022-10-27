@@ -1,0 +1,26 @@
+Elasticsuite\Category\Model\Category\Configuration:
+    conf1:
+        category: '@categ1'
+        catalog: '@catalog1'
+        localizedCatalog: '@catalog1_en'
+        name: 'One'
+    conf2:
+        category: '@categ2'
+        catalog: '@catalog1'
+        localizedCatalog: '@catalog1_en'
+        name: 'Two'
+    conf3:
+        category: '@categ3'
+        catalog: '@catalog1'
+        localizedCatalog: '@catalog1_en'
+        name: 'Three'
+    conf4:
+        category: '@categ4'
+        catalog: '@catalog1'
+        localizedCatalog: '@catalog1_en'
+        name: 'Four'
+    conf5:
+        category: '@categ5'
+        catalog: '@catalog1'
+        localizedCatalog: '@catalog1_en'
+        name: 'Five'

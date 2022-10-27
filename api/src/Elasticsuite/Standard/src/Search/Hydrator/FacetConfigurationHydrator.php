@@ -82,7 +82,7 @@ final class FacetConfigurationHydrator extends ObjectHydrator
 
         $obj->initDefaultValue($default);
 
-        $result[] = $obj;
+        $result[$obj->getSourceField()->getId()] = $obj;
     }
 
     private function filterData(array $data): array

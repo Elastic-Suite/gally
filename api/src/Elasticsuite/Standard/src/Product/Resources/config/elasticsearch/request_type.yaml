@@ -1,10 +1,21 @@
 services:
     elasticsuite.container_configuration.product_catalog.factory:
         parent: 'Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\GenericContainerConfigurationFactory'
+        arguments:
+            $aggregationProvider: '@elasticsuite.search.product.filterableSourceFields'
         tags:
             - { name: elasticsuite.container_configuration.factory, requestType: product_catalog, metadata: product }
 
     elasticsuite.container_configuration.product_search.factory:
         parent: 'Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\GenericContainerConfigurationFactory'
+        arguments:
+            $aggregationProvider: '@elasticsuite.search.product.filterableSourceFields'
         tags:
             - { name: elasticsuite.container_configuration.factory, requestType: product_search, metadata: product }
+
+    elasticsuite.container_configuration.coverage_rate.factory:
+        parent: 'Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\GenericContainerConfigurationFactory'
+        arguments:
+            $aggregationProvider: '@Elasticsuite\Product\Elasticsearch\Request\Aggregation\Provider\CoverageAggregationProvider'
+        tags:
+            - { name: elasticsuite.container_configuration.factory, requestType: product_coverage_rate, metadata: product }
