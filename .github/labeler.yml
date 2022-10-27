@@ -1,11 +1,11 @@
 # Add 'infra' label to any change to docker files
 infra:
-    - any: ['api/docker/**', 'docker*', 'pwa/Dockerfile', 'helm/**', '.github/**']
+    - any: ['api/docker/**', 'docker*', 'front/Dockerfile', 'helm/**', '.github/**']
 
 # Add 'backend` label to any change to files under /api/ except docker related files.
 backend:
     - any: ['api/**/*', '!api/docker/*']
 
-# Add 'frontend` label to any change to files under /api/ except docker related files.
+# Add 'frontend` label to any change to files under /front/ except docker related files.
 frontend:
-    - any: ['pwa/**/*', '!pwa/Dockerfile']
+    - any: ['front/**/*', '!front/Dockerfile']
