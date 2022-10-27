@@ -13,6 +13,8 @@
   "form.close": "Close",
   "form.open": "Open",
   "form.defaultValue": "Default: {{value}}",
+  "form.from": "From",
+  "form.to": "to",
   "massiveselection.all": "All",
   "massiveselection.allOnCurrentPage": "All on this page",
   "massiveselection.none": "None",

@@ -13,6 +13,7 @@ import {
 
 import {
   useApiEditableList,
+  useFilterParameters,
   useFiltersRedirect,
   usePage,
   useResource,
@@ -46,7 +47,6 @@ interface IProps {
   urlParams?: string
   resourceName: string
   isFacets?: boolean
-  category?: string
   activeFilters: ISearchParameters
   setActiveFilters: Dispatch<SetStateAction<ISearchParameters>>
 }
@@ -60,7 +60,6 @@ function ResourceTable(props: IProps): JSX.Element {
     urlParams,
     resourceName,
     isFacets,
-    category,
     activeFilters,
     setActiveFilters,
   } = props
@@ -68,14 +67,7 @@ function ResourceTable(props: IProps): JSX.Element {
   const resource = useResource(resourceName)
   const [page, setPage] = usePage()
   const [searchValue, setSearchValue] = useSearch()
-  const parameters = useMemo(
-    () => ({
-      ...activeFilters,
-      ...filters,
-      category: category ?? '',
-    }),
-    [activeFilters, filters, category]
-  )
+  const parameters = useFilterParameters(activeFilters, filters)
   useFiltersRedirect(page, activeFilters, searchValue, active ? active : true)
 
   const rowsPerPageOptions = defaultRowsPerPageOptions
