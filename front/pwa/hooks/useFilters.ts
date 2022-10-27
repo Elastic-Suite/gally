@@ -1,9 +1,10 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react'
 import { useRouter } from 'next/router'
 
 import {
   IResource,
   ISearchParameters,
+  getApiFilters,
   getAppUrl,
   getFilterParameters,
   getPageParameter,
@@ -61,4 +62,14 @@ export function useSearch(): [string, Dispatch<SetStateAction<string>>] {
     return getSearchParameter(parameters)
   })
   return [searchValue, setSearchValue]
+}
+
+export function useFilterParameters(
+  ...filters: ISearchParameters[]
+): ISearchParameters {
+  return useMemo(
+    () => getApiFilters(Object.assign({}, ...filters)),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    filters
+  )
 }

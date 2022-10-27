@@ -41,6 +41,9 @@ export function getFieldName(property: string): string {
   if (property.endsWith('[]')) {
     return property.slice(0, -2)
   }
+  if (property.endsWith('[between]')) {
+    return property.slice(0, -9)
+  }
   return property
 }
 
@@ -123,7 +126,7 @@ export function castFieldParameter(
   }
   switch (getFieldType(field)) {
     case 'integer':
-      return Number(value)
+      return value ? Number(value) : value
     case 'boolean':
       return value !== 'true' && value !== 'false' ? null : value === 'true'
     default:
@@ -140,7 +143,7 @@ export function isFieldValueValid(field: IField, value: unknown): boolean {
   }
   switch (getFieldType(field)) {
     case 'integer':
-      return typeof value === 'number' && !isNaN(value)
+      return (typeof value === 'number' && !isNaN(value)) || value === ''
     case 'boolean':
       return typeof value === 'boolean'
     default:

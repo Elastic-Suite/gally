@@ -9,5 +9,6 @@ export interface IFilter {
   label: string
   multiple?: boolean
   options?: IOptions<unknown>
+  suffix?: string
   type?: DataContentType
 }

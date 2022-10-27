@@ -12,8 +12,8 @@ export enum DataContentType {
   IMAGE = 'image',
   LABEL = 'label',
   NUMBER = 'number',
-  PERCENTAGE = 'percentage',
   PRICE = 'price',
+  RANGE = 'range',
   SCORE = 'score',
   SELECT = 'select',
   STOCK = 'stock',
@@ -31,6 +31,7 @@ export interface ITableHeader {
   options?: IOptions<unknown> | null
   required?: boolean
   sticky?: boolean
+  suffix?: string
   type?: DataContentType
   validation?: Record<string, string | number>
 }

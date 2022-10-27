@@ -3,6 +3,7 @@ import {
   defaultPageSize,
   pageSize,
   searchParameter,
+  urlRangeSeparator,
   usePagination,
 } from '../constants'
 import { ISearchParameters } from '../types'
@@ -16,7 +17,12 @@ export function getUrl(
   const url: URL = urlParam instanceof URL ? urlParam : new URL(urlParam)
 
   Object.entries(searchParameters).forEach(([key, value]) => {
-    if (value instanceof Array) {
+    if (key.endsWith('[between]')) {
+      value = value as (string | number)[]
+      if (value[0] !== '' || value[1] !== '') {
+        url.searchParams.append(key, value.join(urlRangeSeparator))
+      }
+    } else if (value instanceof Array) {
       value.forEach((value) => url.searchParams.append(key, String(value)))
     } else {
       url.searchParams.append(key, String(value))
@@ -96,7 +102,9 @@ export function getAppUrl(
 export function getParametersFromUrl(url: URL): ISearchParameters {
   return Object.fromEntries(
     [...url.searchParams.entries()].reduce((acc, [key, value]) => {
-      if (key.endsWith('[]')) {
+      if (key.endsWith('[between]')) {
+        acc.push([key, value.split(urlRangeSeparator)])
+      } else if (key.endsWith('[]')) {
         const existingValue = acc.find(([accKey]) => accKey === key)?.[1]
         if (existingValue) {
           existingValue.push(value)

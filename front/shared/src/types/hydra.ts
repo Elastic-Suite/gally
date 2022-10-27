@@ -1,4 +1,3 @@
-import { DataContentType } from './customTables'
 import { Method } from './network'
 import {
   IJsonldBase,
@@ -90,7 +89,7 @@ export interface IHydraProperty extends IJsonldBase {
 export interface IElasticSuiteProperty {
   context?: Record<string, IElasticSuiteProperty>
   editable?: boolean
-  input?: DataContentType
+  input?: string
   options?: IDropdownStaticOptions | IDropdownApiOptions
   position?: number
   type?: string

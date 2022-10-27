@@ -9,7 +9,7 @@ import {
 import { IResource, IResponseError, ISearchParameters } from '../types'
 
 import { fetchJson } from './fetch'
-import { HydraError, isHydraError, isJSonldType } from './hydra'
+import { HydraError, getFieldName, isHydraError, isJSonldType } from './hydra'
 import { AuthError } from './network'
 import { storageGet, storageRemove } from './storage'
 import { getUrl } from './url'
@@ -77,5 +77,29 @@ export function removeEmptyParameters(
     Object.entries(searchParameters).filter(
       ([_, value]) => (value ?? '') !== ''
     )
+  )
+}
+
+export function getApiFilters(
+  filters: ISearchParameters = {}
+): ISearchParameters {
+  return Object.fromEntries(
+    Object.entries(filters).reduce<
+      [string, string | number | boolean | (string | number | boolean)[]][]
+    >((acc, [key, value]) => {
+      if (key.endsWith('[between]')) {
+        const baseKey = getFieldName(key)
+        value = value as (string | number)[]
+        if (value[0] !== '') {
+          acc.push([`${baseKey}[gte]`, value[0]])
+        }
+        if (value[1] !== '') {
+          acc.push([`${baseKey}[lte]`, value[1]])
+        }
+      } else {
+        acc.push([key, value])
+      }
+      return acc
+    }, [])
   )
 }

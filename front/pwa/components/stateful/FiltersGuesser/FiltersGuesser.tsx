@@ -1,7 +1,13 @@
 import { ReactNode, useCallback, useState } from 'react'
 
 import { useApiFilters } from '~/hooks'
-import { IFilter, IHydraMember, IHydraResponse, IResource } from 'shared'
+import {
+  DataContentType,
+  IFilter,
+  IHydraMember,
+  IHydraResponse,
+  IResource,
+} from 'shared'
 
 import Filters from '~/components/molecules/Filters/Filters'
 
@@ -34,7 +40,12 @@ function FiltersGuesser<T extends IHydraMember>(props: IProps<T>): JSX.Element {
       Object.fromEntries(
         filters.map((filter) => [
           filter.id,
-          fallback[filter.id] ?? (filter.multiple ? [] : ''),
+          fallback[filter.id] ??
+            (filter.multiple
+              ? []
+              : filter.input === DataContentType.RANGE
+              ? ['', '']
+              : ''),
         ])
       ),
     [filters]

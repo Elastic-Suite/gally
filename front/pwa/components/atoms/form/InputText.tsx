@@ -15,7 +15,7 @@ import {
   IUnstyledInputTextProps,
   InputTextStyled,
   StyledFormControl,
-  Sufix,
+  Suffix,
   Wrapper,
 } from './InputText.styled'
 
@@ -30,7 +30,7 @@ export interface IInputTextProps
   helperText?: ReactNode
   helperIcon?: string
   onChange?: (value: string | number, event: SyntheticEvent) => void
-  sufix?: ReactNode
+  suffix?: ReactNode
 }
 
 function InputText(
@@ -49,17 +49,21 @@ function InputText(
     margin,
     onChange,
     required,
-    sufix,
+    suffix,
     ...InputProps
   } = props
-  const { type } = props
+  const { type } = InputProps
 
   function handleChange(
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ): void {
     const { value } = event.target
     if (onChange) {
-      onChange(type === 'number' ? Number(value) : value, event)
+      if (type === 'number') {
+        onChange(!required && value === '' ? value : Number(value), event)
+      } else {
+        onChange(value, event)
+      }
     }
   }
 
@@ -85,7 +89,7 @@ function InputText(
           {...InputProps}
           inputProps={inputProps}
         />
-        {Boolean(sufix) && <Sufix>{sufix}</Sufix>}
+        {Boolean(suffix) && <Suffix>{suffix}</Suffix>}
       </Wrapper>
       {Boolean(helperText) && (
         <FormHelperText>
