@@ -18,6 +18,7 @@ namespace Elasticsuite\Category\Model\Source;
 
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Elasticsuite\Metadata\Model\SourceField;
 
 #[ApiResource(
     itemOperations: [],
@@ -26,6 +27,12 @@ use ApiPlatform\Core\Annotation\ApiResource;
     ],
     graphql: [
         'collection_query' => ['pagination_enabled' => false],
+    ],
+    attributes: [
+        'elasticsuite' => [
+            // Allows to add cache tag "/source_fields" in the HTTP response to invalidate proxy cache when a source field is saved.
+            'cache_tag' => ['resource_classes' => [SourceField::class]],
+        ],
     ],
 )]
 class CategorySortingOption
