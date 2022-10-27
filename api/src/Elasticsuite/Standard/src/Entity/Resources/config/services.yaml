@@ -3,6 +3,6 @@ services:
         arguments: [ '@doctrine', ~, '@?logger' ]
         tags: [ 'api_platform.filter' ]
 
-    Elasticsuite\Entity\Filter\Col:
+    Elasticsuite\Entity\Filter\BooleanFilter:
         arguments: [ '@doctrine', ~, '@?logger' ]
         tags: [ 'api_platform.filter' ]
