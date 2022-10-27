@@ -26,8 +26,8 @@ class CategoryTest extends AbstractEntityTest
     protected static function getFixtureFiles(): array
     {
         return [
-            __DIR__ . '/../../fixtures/metadata.yaml',
             __DIR__ . '/../../fixtures/source_field.yaml',
+            __DIR__ . '/../../fixtures/metadata.yaml',
             __DIR__ . '/../../fixtures/catalogs.yaml',
             __DIR__ . '/../../fixtures/categories.yaml',
         ];

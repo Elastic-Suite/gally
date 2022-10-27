@@ -35,9 +35,9 @@ class IndexManagerTest extends AbstractTest
         $this->entityManager = static::getContainer()->get('doctrine')->getManager();
         $this->loadFixture([
             __DIR__ . '/../fixtures/catalogs.yaml',
-            __DIR__ . '/../fixtures/metadata.yaml',
-            __DIR__ . '/../fixtures/source_field.yaml',
             __DIR__ . '/../fixtures/source_field_option.yaml',
+            __DIR__ . '/../fixtures/source_field.yaml',
+            __DIR__ . '/../fixtures/metadata.yaml',
         ]);
     }
 

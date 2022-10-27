@@ -35,3 +35,9 @@ services:
             - '@doctrine.orm.entity_manager'
         tags:
             - { name: api_platform.data_persister }
+
+    Elasticsuite\Metadata\EventSubscriber\ValidateSourceFieldCode:
+        arguments:
+            - '@Elasticsuite\Metadata\Repository\SourceFieldRepository'
+        tags:
+            - { name: doctrine.event_subscriber }

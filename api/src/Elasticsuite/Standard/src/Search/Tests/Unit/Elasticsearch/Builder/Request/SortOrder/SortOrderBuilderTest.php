@@ -54,8 +54,8 @@ class SortOrderBuilderTest extends AbstractTest
         self::$metadataManager = static::getContainer()->get(MetadataManager::class);
         self::loadFixture([
             __DIR__ . '/../../../../../fixtures/catalogs.yaml',
-            __DIR__ . '/../../../../../fixtures/metadata.yaml',
             __DIR__ . '/../../../../../fixtures/source_field.yaml',
+            __DIR__ . '/../../../../../fixtures/metadata.yaml',
         ]);
     }
 

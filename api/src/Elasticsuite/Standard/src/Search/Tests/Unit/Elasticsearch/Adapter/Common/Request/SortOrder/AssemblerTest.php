@@ -60,8 +60,8 @@ class AssemblerTest extends AbstractTest
         self::$sortAssembler = new SortAssembler(self::$queryAssembler);
 
         self::loadFixture([
-            __DIR__ . '/../../../../../../fixtures/metadata.yaml',
             __DIR__ . '/../../../../../../fixtures/source_field.yaml',
+            __DIR__ . '/../../../../../../fixtures/metadata.yaml',
         ]);
 
         self::$metadataRepository = static::getContainer()->get(MetadataRepository::class);

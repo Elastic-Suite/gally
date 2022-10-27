@@ -31,8 +31,8 @@ class SearchProductsTest extends AbstractTest
         parent::setUpBeforeClass();
         self::loadFixture([
             __DIR__ . '/../../fixtures/catalogs.yaml',
-            __DIR__ . '/../../fixtures/metadata.yaml',
             __DIR__ . '/../../fixtures/source_field.yaml',
+            __DIR__ . '/../../fixtures/metadata.yaml',
         ]);
         self::createEntityElasticsearchIndices('product');
         self::loadElasticsearchDocumentFixtures([__DIR__ . '/../../fixtures/product_documents.json']);
