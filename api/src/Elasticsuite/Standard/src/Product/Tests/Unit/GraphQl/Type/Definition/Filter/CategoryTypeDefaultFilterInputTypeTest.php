@@ -55,6 +55,7 @@ class CategoryTypeDefaultFilterInputTypeTest extends KernelTestCase
                 'fields' => [
                     FilterOperator::EQ => Type::string(),
                     FilterOperator::IN => Type::listOf(Type::string()),
+                    FilterOperator::EXIST => Type::boolean(),
                 ],
             ],
             $categoryTypeDefaultFilterInputType->getConfig()
@@ -89,5 +90,43 @@ class CategoryTypeDefaultFilterInputTypeTest extends KernelTestCase
 
         $this->assertEquals('my_category##id', $categoryTypeDefaultFilterInputType->getGraphQlFieldName('my_category'));
         $this->assertEquals('my_category.id', $categoryTypeDefaultFilterInputType->getMappingFieldName('my_category##id'));
+    }
+
+    /**
+     * @dataProvider validateDataProvider
+     *
+     * @param string $fieldName      Field name
+     * @param array  $inputData      Input data
+     * @param array  $expectedErrors Array of expected error messages (empty if no errors expected)
+     */
+    public function testValidate(string $fieldName, array $inputData, array $expectedErrors): void
+    {
+        $categoryTypeDefaultFilterInputType = new CategoryTypeDefaultFilterInputType(
+            self::$filterQueryBuilder,
+            self::$queryFactory,
+            '__'
+        );
+
+        $errors = $categoryTypeDefaultFilterInputType->validate($fieldName, $inputData);
+        $this->assertEquals($expectedErrors, $errors);
+    }
+
+    public function validateDataProvider(): array
+    {
+        return [
+            ['category__id', ['eq' => 'cat_1'], []],
+            ['category__id', ['in' => ['cat_1', 'cat_2']], []],
+            ['category__id', ['exist' => true], []],
+            [
+                'category__id',
+                ['eq' => ['cat_1'], 'in' => ['cat_1', 'cat_2']],
+                ["Filter argument category__id: Only 'eq', 'in' or 'exist' should be filled."],
+            ],
+            [
+                'category__id',
+                [],
+                ["Filter argument category__id: At least 'eq', 'in' or 'exist' should be filled."],
+            ],
+        ];
     }
 }

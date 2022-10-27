@@ -56,4 +56,31 @@ class SelectTypeDefaultFilterInputType extends TextTypeFilterInputType
          */
         return str_replace('.', $this->nestingSeparator, $sourceFieldCode . '.value');
     }
+
+    public function validate(string $argName, mixed $inputData): array
+    {
+        $errors = [];
+
+        if (\count($inputData) < 1) {
+            $errors[] = sprintf(
+                "Filter argument %s: At least '%s', '%s' or '%s' should be filled.",
+                $argName,
+                FilterOperator::EQ,
+                FilterOperator::IN,
+                FilterOperator::EXIST,
+            );
+        }
+
+        if (\count($inputData) > 1) {
+            $errors[] = sprintf(
+                "Filter argument %s: Only '%s', '%s' or '%s' should be filled.",
+                $argName,
+                FilterOperator::EQ,
+                FilterOperator::IN,
+                FilterOperator::EXIST,
+            );
+        }
+
+        return $errors;
+    }
 }

@@ -90,4 +90,41 @@ class StockTypeDefaultFilterInputTest extends KernelTestCase
         $this->assertEquals('my_stock##status', $stockTypeDefaultFilterInputType->getGraphQlFieldName('my_stock'));
         $this->assertEquals('my_stock.status', $stockTypeDefaultFilterInputType->getMappingFieldName('my_stock##status'));
     }
+
+    /**
+     * @dataProvider validateDataProvider
+     *
+     * @param string $fieldName      Field name
+     * @param array  $inputData      Input data
+     * @param array  $expectedErrors Array of expected error messages (empty if no errors expected)
+     */
+    public function testValidate(string $fieldName, array $inputData, array $expectedErrors): void
+    {
+        $stockTypeDefaultFilterInputType = new StockTypeDefaultFilterInputType(
+            self::$filterQueryBuilder,
+            self::$queryFactory,
+            '__'
+        );
+
+        $errors = $stockTypeDefaultFilterInputType->validate($fieldName, $inputData);
+        $this->assertEquals($expectedErrors, $errors);
+    }
+
+    public function validateDataProvider(): array
+    {
+        return [
+            ['stock__status', ['eq' => true], []],
+            ['stock__status', ['exist' => true], []],
+            [
+                'stock__status',
+                ['eq' => true, 'exist' => true],
+                ["Filter argument stock__status: Only 'eq' or 'exist' should be filled."],
+            ],
+            [
+                'stock__status',
+                [],
+                ["Filter argument stock__status: At least 'eq' or 'exist' should be filled."],
+            ],
+        ];
+    }
 }
