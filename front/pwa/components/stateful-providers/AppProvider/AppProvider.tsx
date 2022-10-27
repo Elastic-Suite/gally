@@ -3,6 +3,8 @@ import { ThemeProvider } from '@mui/material/styles'
 import { StyledEngineProvider } from '@mui/styled-engine'
 import { Provider } from 'react-redux'
 import { SnackbarProvider } from 'notistack'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 
 import { theme } from 'shared'
 import { AppStore } from '~/store'
@@ -33,7 +35,9 @@ function AppProvider(props: IProps): JSX.Element {
             autoHideDuration={5000}
             maxSnack={3}
           >
-            <BreadcrumbProvider>{children}</BreadcrumbProvider>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <BreadcrumbProvider>{children}</BreadcrumbProvider>
+            </LocalizationProvider>
           </SnackbarProvider>
         </StyledEngineProvider>
       </ThemeProvider>
