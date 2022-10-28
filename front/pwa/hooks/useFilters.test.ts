@@ -4,6 +4,7 @@ import { resourceWithRef } from 'shared'
 import { renderHookWithProviders } from '~/utils/tests'
 
 import {
+  useFilterParameters,
   useFilters,
   useFiltersRedirect,
   usePage,
@@ -13,9 +14,6 @@ import {
 describe('useFilters', () => {
   describe('useFiltersRedirect', () => {
     it('should not redirect if there is no need to redirect', () => {
-      // const getAppUrlMock = getAppUrl as jest.Mock
-      // getAppUrlMock.mockClear();
-      // getAppUrlMock.mockImplementationOnce(() => new URL('http://localhost/test'))
       const router = useRouter()
       const pushSpy = router.push as jest.Mock
       pushSpy.mockClear()
@@ -24,9 +22,6 @@ describe('useFilters', () => {
     })
 
     it('should redirect with parameters', () => {
-      // const getAppUrlMock = getAppUrl as jest.Mock
-      // getAppUrlMock.mockClear();
-      // getAppUrlMock.mockImplementationOnce(() => new URL('http://localhost/test?foo=bar&currentPage=1&search=baz'))
       const router = useRouter()
       const pushSpy = router.push as jest.Mock
       pushSpy.mockClear()
@@ -58,9 +53,6 @@ describe('useFilters', () => {
     })
 
     it('should get the page state initialized from router parameter', () => {
-      // const getPageParameterMock = getPageParameter as jest.Mock
-      // getPageParameterMock.mockClear();
-      // getPageParameterMock.mockImplementationOnce(() => 42)
       const router = useRouter()
       const oldPath = router.asPath
       router.asPath = '/test?currentPage=42'
@@ -108,6 +100,18 @@ describe('useFilters', () => {
       const { result } = renderHookWithProviders(() => useSearch())
       expect(result.current[0]).toEqual('foo')
       router.asPath = oldPath
+    })
+  })
+
+  describe('useFilterParameters', () => {
+    it('should get the filter as parameters', () => {
+      const { result } = renderHookWithProviders(() =>
+        useFilterParameters({ foo: 'bar' }, { hello: 'world' })
+      )
+      expect(result.current).toEqual({
+        foo: 'bar',
+        hello: 'world',
+      })
     })
   })
 })

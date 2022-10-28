@@ -42,20 +42,24 @@ describe('Table service', () => {
   describe('getFieldHeader', () => {
     it('should return the field header', () => {
       expect(getFieldHeader(fieldString, (key: string) => key)).toEqual({
+        id: 'code',
         field: fieldString,
         input: DataContentType.STRING,
         name: 'code',
         label: 'Attribute code',
+        suffix: '',
         type: DataContentType.STRING,
         editable: false,
         required: true,
         validation: undefined,
       })
       expect(getFieldHeader(fieldDropdown, (key: string) => key)).toEqual({
+        id: 'code',
         field: fieldDropdown,
         input: DataContentType.SELECT,
         name: 'code',
         label: 'Attribute code',
+        suffix: '',
         type: DataContentType.STRING,
         editable: false,
         required: true,
@@ -114,12 +118,17 @@ describe('Table service', () => {
           (key: string) => key
         )
       ).toEqual({
+        editable: true,
         id: 'code',
         input: DataContentType.STRING,
         field: fieldString,
         label: 'Attribute code',
         multiple: false,
+        name: 'code',
+        required: true,
+        suffix: '',
         type: DataContentType.STRING,
+        validation: undefined,
       })
     })
   })

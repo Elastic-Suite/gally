@@ -165,7 +165,7 @@ exports[`TopProductTable Should match snapschot 1`] = `
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1h3ont0-MuiTableCell-root"
             >
               <div
-                class="MuiBox-root css-8uhtka"
+                class="css-12hsf1n"
               >
                 VA03
               </div>
@@ -174,8 +174,8 @@ exports[`TopProductTable Should match snapschot 1`] = `
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1h3ont0-MuiTableCell-root"
             >
               <img
-                alt=""
-                class="MuiBox-root css-1qpslqa"
+                alt="field.productImage"
+                class="css-1qpslqa"
                 src="static/media/assets/img/scarf_elastic.png"
               />
             </td>
@@ -183,7 +183,7 @@ exports[`TopProductTable Should match snapschot 1`] = `
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1h3ont0-MuiTableCell-root"
             >
               <div
-                class="MuiBox-root css-8uhtka"
+                class="css-12hsf1n"
               >
                 Product name
               </div>
@@ -305,7 +305,7 @@ exports[`TopProductTable Should match snapschot 1`] = `
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1h3ont0-MuiTableCell-root"
             >
               <div
-                class="MuiBox-root css-8uhtka"
+                class="css-12hsf1n"
               >
                 VA03
               </div>
@@ -314,8 +314,8 @@ exports[`TopProductTable Should match snapschot 1`] = `
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1h3ont0-MuiTableCell-root"
             >
               <img
-                alt=""
-                class="MuiBox-root css-1qpslqa"
+                alt="field.productImage"
+                class="css-1qpslqa"
                 src="static/media/assets/img/scarf_elastic.png"
               />
             </td>
@@ -323,7 +323,7 @@ exports[`TopProductTable Should match snapschot 1`] = `
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1h3ont0-MuiTableCell-root"
             >
               <div
-                class="MuiBox-root css-8uhtka"
+                class="css-12hsf1n"
               >
                 Product name
               </div>

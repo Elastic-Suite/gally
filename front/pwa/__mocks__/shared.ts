@@ -59,6 +59,8 @@ export const removeEmptyParameters = jest.fn(
 
 export const log = jest.fn((error, log) => log(error.message))
 
+export const getApiFilters = jest.fn((x) => x)
+
 /* fetch */
 export const isError = jest.fn((json) => 'error' in json)
 export const fetchJson = jest.fn((url) => {
@@ -87,6 +89,10 @@ export const fetchJson = jest.fn((url) => {
       })
   }
 })
+
+/* form */
+
+export const getFormValidityError = jest.fn(() => 'test')
 
 /* graphql */
 export const fetchGraphql = jest.fn(() => {

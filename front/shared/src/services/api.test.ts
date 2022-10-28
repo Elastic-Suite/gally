@@ -5,6 +5,7 @@ import { storageGet, storageRemove } from '../services/storage'
 import {
   ApiError,
   fetchApi,
+  getApiFilters,
   getApiUrl,
   isApiError,
   removeEmptyParameters,
@@ -145,6 +146,25 @@ describe('Api service', () => {
       expect(removeEmptyParameters()).toEqual({})
       expect(removeEmptyParameters({ foo: null, bar: '', baz: 42 })).toEqual({
         baz: 42,
+      })
+    })
+  })
+
+  describe('getApiFilters', () => {
+    it('should', () => {
+      expect(
+        getApiFilters({
+          'coverage[between]': [80, 90],
+          'maxSize[between]': [50, ''],
+          'size[between]': ['', 12],
+          display: 'auto',
+        })
+      ).toEqual({
+        'coverage[gte]': 80,
+        'coverage[lte]': 90,
+        'maxSize[gte]': 50,
+        'size[lte]': 12,
+        display: 'auto',
       })
     })
   })
