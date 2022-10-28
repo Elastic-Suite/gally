@@ -6,6 +6,7 @@ describe('CustomTableService', () => {
     it('Should manage sticky headers', () => {
       const tableHeaders: ITableHeader[] = [
         {
+          id: 'field1',
           name: 'field1',
           label: 'Test header switch',
           type: DataContentType.BOOLEAN,
@@ -13,6 +14,7 @@ describe('CustomTableService', () => {
           sticky: true,
         },
         {
+          id: 'field2',
           name: 'field2',
           label: 'Test header switch',
           type: DataContentType.BOOLEAN,
@@ -20,6 +22,7 @@ describe('CustomTableService', () => {
           sticky: false,
         },
         {
+          id: 'field3',
           name: 'field3',
           label: 'Test header switch',
           type: DataContentType.BOOLEAN,
@@ -30,6 +33,7 @@ describe('CustomTableService', () => {
       const result: ITableHeaderSticky[] = manageStickyHeaders(tableHeaders)
       expect(result).toEqual([
         {
+          id: 'field1',
           name: 'field1',
           label: 'Test header switch',
           type: DataContentType.BOOLEAN,
@@ -38,6 +42,7 @@ describe('CustomTableService', () => {
           isLastSticky: false,
         },
         {
+          id: 'field3',
           name: 'field3',
           label: 'Test header switch',
           type: DataContentType.BOOLEAN,

@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import { useTranslation } from 'next-i18next'
 
 import {
-  IFilter,
+  IFieldConfig,
   IHydraMember,
   IHydraResponse,
   IResource,
@@ -13,7 +13,7 @@ import {
 export function useApiFilters<A extends IHydraMember>(
   apiData: IHydraResponse<A>,
   resource: IResource
-): IFilter[] {
+): IFieldConfig[] {
   const { t } = useTranslation('api')
   const mappings = useMemo(
     () => getMappings(apiData, resource),

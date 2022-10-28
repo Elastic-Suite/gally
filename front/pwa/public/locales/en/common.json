@@ -45,5 +45,6 @@
   "formError.tooLong": "The value is too long",
   "formError.tooShort": "The value is too short",
   "formError.typeMismatch": "The value is not in the correct format",
-  "formError.valueMissing": "The value is required"
+  "formError.valueMissing": "The value is required",
+  "field.productImage": "Product image"
 }

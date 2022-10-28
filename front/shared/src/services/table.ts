@@ -4,12 +4,11 @@ import { booleanRegexp } from '../constants'
 import {
   DataContentType,
   IField,
-  IFilter,
+  IFieldConfig,
   IHydraMapping,
   IHydraMember,
   IHydraResponse,
   IResource,
-  ITableHeader,
 } from '../types'
 
 import { getFieldLabelTranslationArgs } from './format'
@@ -50,17 +49,19 @@ export function getFieldInput(
   return fallback
 }
 
-export function getFieldHeader(field: IField, t: TFunction): ITableHeader {
+export function getFieldHeader(field: IField, t: TFunction): IFieldConfig {
   const type = getFieldDataContentType(field)
+  const id = field.title
   const input = getFieldInput(field, type)
   return {
     editable: field.elasticsuite?.editable && field.writeable,
     field,
+    id,
     input,
-    name: field.title,
     label:
       field.property.label ?? t(...getFieldLabelTranslationArgs(field.title)),
-    required: field.required,
+    name: id,
+    required: field.elasticsuite?.required ?? field.required,
     suffix: field.elasticsuite?.input === 'percentage' ? '%' : '',
     type,
     validation: field.elasticsuite?.validation,
@@ -75,12 +76,14 @@ export function getFilterType(mapping: IMapping): DataContentType {
     : DataContentType.STRING
 }
 
-export function getFilter(mapping: IMapping, t: TFunction): IFilter {
+export function getFilter(mapping: IMapping, t: TFunction): IFieldConfig {
   const type = getFilterType(mapping)
+  const id = mapping.variable
   const input = getFieldInput(mapping.field, type)
   return {
+    editable: true,
     field: mapping.field,
-    id: mapping.variable,
+    id,
     input: mapping.variable.endsWith('[between]')
       ? DataContentType.RANGE
       : input,
@@ -89,8 +92,11 @@ export function getFilter(mapping: IMapping, t: TFunction): IFilter {
         t(...getFieldLabelTranslationArgs(mapping.field.title))
       : t(...getFieldLabelTranslationArgs(mapping.property)),
     multiple: mapping.multiple,
+    name: id,
+    required: mapping.field.elasticsuite?.required ?? mapping.field.required,
     suffix: mapping.field.elasticsuite?.input === 'percentage' ? '%' : '',
     type,
+    validation: mapping.field.elasticsuite?.validation,
   }
 }
 

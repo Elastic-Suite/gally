@@ -1,5 +1,4 @@
-import { IField } from './api'
-import { IOptions } from './option'
+import { IFieldConfig } from './field'
 
 export enum MassiveSelectionType {
   ALL = 'massiveselection.all',
@@ -21,19 +20,8 @@ export enum DataContentType {
   TAG = 'tag',
 }
 
-export interface ITableHeader {
-  boostInfos?: IBoost
-  editable?: boolean
-  field?: IField
-  input?: DataContentType
-  label: string
-  name: string
-  options?: IOptions<unknown> | null
-  required?: boolean
+export interface ITableHeader extends IFieldConfig {
   sticky?: boolean
-  suffix?: string
-  type?: DataContentType
-  validation?: Record<string, string | number>
 }
 
 export interface IBaseStyle {
