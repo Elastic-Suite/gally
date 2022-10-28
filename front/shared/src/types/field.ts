@@ -4,20 +4,25 @@ import { IField } from './api'
 import { DataContentType } from './customTables'
 import { IOptions } from './option'
 
-export interface IFieldGuesserProps {
-  diffValue?: unknown
+export interface IFieldConfig {
   editable?: boolean
   field?: IField
+  id: string
   input?: DataContentType
-  name: string
   label?: string
+  name: string
   multiple?: boolean
-  onChange?: (name: string, value: unknown, event?: SyntheticEvent) => void
   options?: IOptions<unknown> | null
   required?: boolean
   suffix?: string
   type?: DataContentType
-  useDropdownBoolean?: boolean
   validation?: Record<string, string | number>
+}
+
+export interface IFieldGuesserProps extends IFieldConfig {
+  diffValue?: unknown
+  onChange?: (name: string, value: unknown, event?: SyntheticEvent) => void
+  showError?: boolean
+  useDropdownBoolean?: boolean
   value: unknown
 }

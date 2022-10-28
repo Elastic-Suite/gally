@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 
 import Range from './Range'
+import RangeError from './RangeError'
 
 export default {
   title: 'Atoms/Form/Range',
@@ -49,6 +50,29 @@ Default.args = {
   margin: 'none',
   placeholder: [],
   required: false,
+  small: false,
+  suffix: '',
+  transparent: false,
+}
+
+const FormErrorTemplate: ComponentStory<typeof RangeError> = (args) => {
+  const [value, setValue] = useState(['', ''])
+  const handleChange = (value: string[]): void => setValue(value)
+  return <RangeError {...args} value={value} onChange={handleChange} />
+}
+
+export const WithError = FormErrorTemplate.bind({})
+WithError.args = {
+  color: 'primary',
+  disabled: false,
+  endAdornment: null,
+  id: 'input-text',
+  infoTooltip: '',
+  inputProps: {},
+  label: 'Label',
+  margin: 'none',
+  placeholder: [],
+  required: true,
   small: false,
   suffix: '',
   transparent: false,

@@ -3,13 +3,13 @@ import { useMemo } from 'react'
 
 import {
   IField,
+  IFieldConfig,
   IOptions,
   IResource,
-  ITableHeader,
   getFieldHeader,
 } from 'shared'
 
-export function useApiHeaders(resource: IResource): ITableHeader[] {
+export function useApiHeaders(resource: IResource): IFieldConfig[] {
   const { t } = useTranslation('api')
   return useMemo(() => {
     return resource.supportedProperty

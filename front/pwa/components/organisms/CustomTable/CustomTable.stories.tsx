@@ -44,6 +44,7 @@ const Template: ComponentStory<typeof CustomTableComponent> = (args) => {
 const selectedRows: string[] = []
 const tableHeaders = [
   {
+    id: 'field',
     name: 'field',
     label: 'Non editable boolean',
     type: 'boolean',
@@ -51,6 +52,7 @@ const tableHeaders = [
     sticky: false,
   },
   {
+    id: 'field2',
     name: 'field2',
     label: 'Editable boolean',
     type: 'boolean',
@@ -58,6 +60,7 @@ const tableHeaders = [
     sticky: false,
   },
   {
+    id: 'field3',
     name: 'field3',
     label: 'Non editable text',
     type: 'string',
@@ -65,6 +68,7 @@ const tableHeaders = [
     sticky: false,
   },
   {
+    id: 'field4',
     name: 'field4',
     label: 'Editable text',
     type: 'string',
@@ -72,6 +76,7 @@ const tableHeaders = [
     sticky: false,
   },
   {
+    id: 'field5',
     name: 'field5',
     label: 'Editable dropdown',
     type: 'dropdown',
@@ -85,6 +90,7 @@ const tableHeaders = [
     ],
   },
   {
+    id: 'field6',
     name: 'field6',
     label: 'Tag',
     type: 'tag',
@@ -92,6 +98,7 @@ const tableHeaders = [
     sticky: false,
   },
   {
+    id: 'field7',
     name: 'field7',
     label: 'Image',
     type: 'image',

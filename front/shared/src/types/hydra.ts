@@ -92,6 +92,7 @@ export interface IElasticSuiteProperty {
   input?: string
   options?: IDropdownStaticOptions | IDropdownApiOptions
   position?: number
+  required?: boolean
   type?: string
   validation?: Record<string, string | number>
   visible?: boolean

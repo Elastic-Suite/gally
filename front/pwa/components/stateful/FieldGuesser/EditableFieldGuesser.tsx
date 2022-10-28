@@ -4,7 +4,7 @@ import { DataContentType, IFieldGuesserProps } from 'shared'
 
 import DropDown from '~/components/atoms/form/DropDown'
 import InputTextError from '~/components/atoms/form/InputTextError'
-import Range from '~/components/atoms/form/Range'
+import RangeError from '~/components/atoms/form/RangeError'
 import Switch from '~/components/atoms/form/Switch'
 
 import ReadableFieldGuesser from './ReadableFieldGuesser'
@@ -22,6 +22,7 @@ function EditableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
     useDropdownBoolean,
     value,
     required,
+    showError,
     suffix,
     validation,
   } = props
@@ -56,6 +57,7 @@ function EditableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
           label={label}
           onChange={handleChange}
           required={required}
+          showError={showError}
           suffix={suffix}
           type={input === DataContentType.NUMBER ? 'number' : 'text'}
           value={String(value)}
@@ -65,7 +67,7 @@ function EditableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
 
     case DataContentType.RANGE: {
       return (
-        <Range
+        <RangeError
           dirty={dirty}
           helperText={
             Boolean(dirty) && t('form.defaultValue', { value: diffValue })
@@ -74,6 +76,7 @@ function EditableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
           label={label}
           onChange={handleChange}
           required={required}
+          showError={showError}
           suffix={suffix}
           value={value as (string | number)[]}
         />
