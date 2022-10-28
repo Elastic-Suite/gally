@@ -22,6 +22,12 @@
         <testsuite name="Elasticsuite Test Suite">
             <directory>src/Elasticsuite/**/src/**/Tests/</directory>
         </testsuite>
+        <testsuite name="Elasticsuite Test Suite API">
+            <directory>src/Elasticsuite/**/src/**/Tests/Api</directory>
+        </testsuite>
+        <testsuite name="Elasticsuite Test Suite Unit">
+            <directory>src/Elasticsuite/**/src/**/Tests/Unit</directory>
+        </testsuite>
         <testsuite name="Acme Test Suite">
             <directory>src/Acme/**/src/**/Tests/</directory>
         </testsuite>
