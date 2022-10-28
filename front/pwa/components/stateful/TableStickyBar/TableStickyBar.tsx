@@ -88,6 +88,7 @@ function TableStickyBar(props: IProps): JSX.Element {
         <FieldGuesser
           editable
           field={field}
+          id={field.title}
           name={field.title}
           onChange={onChangeValue}
           type={getFieldDataContentType(field)}

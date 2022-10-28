@@ -7,6 +7,7 @@ import CustomTable from './CustomTable'
 
 const tableHeadersWithoutSticky = [
   {
+    id: 'field',
     input: DataContentType.BOOLEAN,
     name: 'field',
     label: 'Test header switch',
@@ -15,6 +16,7 @@ const tableHeadersWithoutSticky = [
     sticky: false,
   },
   {
+    id: 'field2',
     input: DataContentType.BOOLEAN,
     name: 'field2',
     label: 'Test header switch',
@@ -25,6 +27,7 @@ const tableHeadersWithoutSticky = [
 ]
 const tableHeadersWithSticky = [
   {
+    id: 'field',
     input: DataContentType.BOOLEAN,
     name: 'field',
     label: 'Test header switch',
@@ -33,6 +36,7 @@ const tableHeadersWithSticky = [
     sticky: false,
   },
   {
+    id: 'field2',
     input: DataContentType.BOOLEAN,
     name: 'field2',
     label: 'Test header switch',
@@ -43,6 +47,7 @@ const tableHeadersWithSticky = [
 ]
 const tableHeadersEditable = [
   {
+    id: 'field',
     input: DataContentType.BOOLEAN,
     name: 'field',
     label: 'Test header switch',
@@ -51,6 +56,7 @@ const tableHeadersEditable = [
     sticky: false,
   },
   {
+    id: 'field2',
     input: DataContentType.SELECT,
     name: 'field2',
     label: 'Test header dropdown',
