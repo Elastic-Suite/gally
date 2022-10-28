@@ -1,63 +1,14 @@
-import {
-  ChangeEvent,
-  HTMLAttributes,
-  ReactNode,
-  Ref,
-  SyntheticEvent,
-} from 'react'
+import { ChangeEvent, ReactNode, Ref, SyntheticEvent } from 'react'
 import { FormHelperText, InputLabel } from '@mui/material'
 import { useTranslation } from 'next-i18next'
-import { styled } from '@mui/system'
+
+import { getFormValue } from '~/services'
 
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 
 import InfoTooltip from './InfoTooltip'
-import {
-  IUnstyledInputTextProps,
-  InputTextStyled,
-  Suffix,
-  Wrapper,
-} from './InputText.styled'
-
-interface IContainerProps extends HTMLAttributes<HTMLDivElement> {
-  margin: 'dense' | 'none' | 'normal'
-}
-
-function Container(props: IContainerProps): JSX.Element {
-  const { margin, ...divProps } = props
-  return <div {...divProps} />
-}
-
-export const ContainerStyled = styled(Container)(({ margin, theme }) => ({
-  position: 'relative',
-  ...(margin === 'dense' && {
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(0.5),
-  }),
-  ...(margin === 'normal' && {
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(1),
-  }),
-  '& label': {
-    position: 'absolute',
-    left: 0,
-    top: 0,
-  },
-  '& .MuiFormLabel-root': {
-    color: theme.palette.colors.neutral[900],
-  },
-  '& .MuiFormLabel-root.Mui-error': {
-    color: theme.palette.colors.neutral[900],
-  },
-}))
-
-export const InputRangeStyled = styled(InputTextStyled)({
-  margin: '0 0 0 0.5em',
-})
-
-export const Separator = styled('span')({
-  margin: '0 0.5em',
-})
+import { IUnstyledInputTextProps, Suffix, Wrapper } from './InputText.styled'
+import { ContainerStyled, FirstInput, SecondInput } from './Range.styled'
 
 export interface IRangeProps
   extends Omit<
@@ -72,7 +23,7 @@ export interface IRangeProps
   helperIcon?: string
   label?: string
   margin?: 'none' | 'dense' | 'normal'
-  placeholder: string[]
+  placeholder?: string[]
   onChange?: (value: (string | number)[], event: SyntheticEvent) => void
   suffix?: ReactNode
   value: (string | number)[]
@@ -97,7 +48,6 @@ function Range(props: IRangeProps): JSX.Element {
     value,
     ...InputProps
   } = props
-  const { type } = InputProps
   const [placeholderFrom, placeholderTo] = placeholder
   const [valueFrom, valueTo] = value
 
@@ -106,14 +56,7 @@ function Range(props: IRangeProps): JSX.Element {
   ): void {
     const { value } = event.target
     if (onChange) {
-      if (type === 'number') {
-        onChange(
-          [!required && value === '' ? value : Number(value), valueTo],
-          event
-        )
-      } else {
-        onChange([value, valueTo], event)
-      }
+      onChange([getFormValue(value, props), valueTo], event)
     }
   }
 
@@ -122,14 +65,7 @@ function Range(props: IRangeProps): JSX.Element {
   ): void {
     const { value } = event.target
     if (onChange) {
-      if (type === 'number') {
-        onChange(
-          [valueFrom, !required && value === '' ? value : Number(value)],
-          event
-        )
-      } else {
-        onChange([valueFrom, value], event)
-      }
+      onChange([valueFrom, getFormValue(value, props)], event)
     }
   }
 
@@ -143,31 +79,30 @@ function Range(props: IRangeProps): JSX.Element {
       )}
       <Wrapper className="InputText__Wrapper">
         {t('form.from')}
-        <InputRangeStyled
+        <FirstInput
           error={error}
           id={id}
           onChange={handleChangeFrom}
           required={required}
           {...InputProps}
-          inputProps={inputProps}
+          inputProps={{ ...inputProps, max: valueTo }}
           placeholder={placeholderFrom}
           value={String(valueFrom)}
         />
-        <Separator>-</Separator>
         {t('form.to')}
-        <InputRangeStyled
+        <SecondInput
           error={error}
           onChange={handleChangeTo}
           required={required}
           {...InputProps}
-          inputProps={inputProps}
+          inputProps={{ ...inputProps, min: valueFrom }}
           placeholder={placeholderTo}
           value={String(valueTo)}
         />
         {Boolean(suffix) && <Suffix>{suffix}</Suffix>}
       </Wrapper>
       {Boolean(helperText) && (
-        <FormHelperText>
+        <FormHelperText error={error}>
           {Boolean(helperIcon) && (
             <IonIcon
               name={helperIcon}

@@ -30,10 +30,10 @@ export const InputTextStyled = styled(
     width = '3em'
   }
   if (inputProps?.max) {
-    width = `${String(inputProps.max).length}em`
+    width = `${Math.max(String(inputProps.max).length, 3)}em`
   }
   if (inputProps?.maxLength) {
-    width = `${inputProps.maxLength}em`
+    width = `${Math.max(inputProps.maxLength, 3)}em`
   }
 
   return {
