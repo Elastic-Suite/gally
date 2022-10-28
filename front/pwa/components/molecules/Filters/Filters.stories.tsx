@@ -1,7 +1,7 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { useCallback, useEffect, useState } from 'react'
 
-import { DataContentType, IFilter } from 'shared'
+import { DataContentType, IFieldConfig } from 'shared'
 
 import Filters from './Filters'
 
@@ -32,7 +32,7 @@ const Template: ComponentStory<typeof Filters> = (args) => {
     setActiveValues(filterValues)
   }
 
-  function handleClear(filter: IFilter, value: unknown): void {
+  function handleClear(filter: IFieldConfig, value: unknown): void {
     setFilterValues((prevState) => ({
       ...prevState,
       [filter.id]: value,
@@ -49,7 +49,7 @@ const Template: ComponentStory<typeof Filters> = (args) => {
     setActiveValues({})
   }
 
-  function handleFilterChange(filter: IFilter, value: unknown): void {
+  function handleFilterChange(filter: IFieldConfig, value: unknown): void {
     setFilterValues((prevState) => ({
       ...prevState,
       [filter.id]: value,

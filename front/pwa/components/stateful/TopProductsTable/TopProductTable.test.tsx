@@ -9,6 +9,7 @@ describe('TopProductTable', () => {
   it('Should match snapschot', () => {
     const tableHeaders: ITableHeader[] = [
       {
+        id: 'code',
         input: DataContentType.STRING,
         name: 'code',
         label: 'Code',
@@ -17,6 +18,7 @@ describe('TopProductTable', () => {
         sticky: false,
       },
       {
+        id: 'image',
         input: DataContentType.IMAGE,
         name: 'image',
         label: 'Image',
@@ -25,6 +27,7 @@ describe('TopProductTable', () => {
         sticky: false,
       },
       {
+        id: 'name',
         input: DataContentType.STRING,
         name: 'name',
         label: 'Name',
@@ -33,6 +36,7 @@ describe('TopProductTable', () => {
         sticky: false,
       },
       {
+        id: 'score',
         input: DataContentType.SCORE,
         name: 'score',
         label: 'Score',
@@ -41,6 +45,7 @@ describe('TopProductTable', () => {
         sticky: false,
       },
       {
+        id: 'stock',
         input: DataContentType.STOCK,
         name: 'stock',
         label: 'In stock',
@@ -49,6 +54,7 @@ describe('TopProductTable', () => {
         sticky: false,
       },
       {
+        id: 'price',
         input: DataContentType.PRICE,
         name: 'price',
         label: 'Price',
@@ -57,6 +63,7 @@ describe('TopProductTable', () => {
         sticky: false,
       },
       {
+        id: 'visible',
         input: DataContentType.BOOLEAN,
         name: 'visible',
         label: 'Visible',

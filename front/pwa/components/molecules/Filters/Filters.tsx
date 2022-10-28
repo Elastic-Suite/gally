@@ -1,7 +1,7 @@
 import { FormEvent, ReactNode, useState } from 'react'
 import { useTranslation } from 'next-i18next'
 import { Collapse, InputAdornment, Stack } from '@mui/material'
-import { IFilter } from 'shared'
+import { IFieldConfig, rangeSeparator } from 'shared'
 
 import Button from '~/components/atoms/buttons/Button'
 import Chip from '~/components/atoms/Chip/Chip'
@@ -23,7 +23,7 @@ import {
 } from './Filters.styled'
 
 interface IActiveFilter {
-  filter: IFilter
+  filter: IFieldConfig
   label: string
   value: unknown
 }
@@ -31,18 +31,18 @@ interface IActiveFilter {
 interface IProps {
   activeValues: Record<string, unknown>
   children?: ReactNode
-  filters: IFilter[]
+  filters: IFieldConfig[]
   filterValues: Record<string, unknown>
   onApply: () => void
-  onClear: (filter: IFilter, value: unknown) => void
+  onClear: (filter: IFieldConfig, value: unknown) => void
   onClearAll: () => void
-  onFilterChange: (filter: IFilter, value: unknown) => void
+  onFilterChange: (filter: IFieldConfig, value: unknown) => void
   onSearch: (value: string) => void
   searchValue?: string
   showSearch?: boolean
 }
 
-function getActiveFilterLabel(filter: IFilter, value: unknown): string {
+function getActiveFilterLabel(filter: IFieldConfig, value: unknown): string {
   if (filter.id.endsWith('[between]')) {
     value = (value as (string | number)[]).join('-')
   }
@@ -55,9 +55,9 @@ function getActiveFilterLabel(filter: IFilter, value: unknown): string {
 }
 
 function getActiveFilter(
-  filter: IFilter,
+  filter: IFieldConfig,
   value: unknown
-): { filter: IFilter; label: string; value: unknown } {
+): { filter: IFieldConfig; label: string; value: unknown } {
   return { filter, label: getActiveFilterLabel(filter, value), value }
 }
 
@@ -78,7 +78,7 @@ function Filters(props: IProps): JSX.Element {
   const [open, setOpen] = useState(false)
   const { t } = useTranslation('common')
 
-  const filterMap = new Map<string, IFilter>(
+  const filterMap = new Map<string, IFieldConfig>(
     filters.map((filter) => [filter.id, filter])
   )
   const activeFilters = Object.entries(activeValues)
@@ -106,7 +106,7 @@ function Filters(props: IProps): JSX.Element {
     setOpen((prevState) => !prevState)
   }
 
-  function handleClear(filter: IFilter, value: unknown): void {
+  function handleClear(filter: IFieldConfig, value: unknown): void {
     const filterValue = filterValues[filter.id]
     if (filter.multiple) {
       onClear(
@@ -156,7 +156,7 @@ function Filters(props: IProps): JSX.Element {
           <FacetteBox>
             {activeFilters.map(({ filter, label, value }) => (
               <Chip
-                key={`${filter.id}-${value}`}
+                key={`${filter.id}${rangeSeparator}${value}`}
                 label={label}
                 onDelete={(): void => handleClear(filter, value)}
               />
@@ -173,12 +173,11 @@ function Filters(props: IProps): JSX.Element {
             {filters.map((filter) => (
               <FieldGuesser
                 key={filter.id}
-                editable
-                name={filter.id}
+                {...filter}
                 onChange={handleChange}
+                showError
                 useDropdownBoolean
                 value={filterValues[filter.id]}
-                {...filter}
               />
             ))}
           </FiltersBox>

@@ -3,7 +3,7 @@ import { ReactNode, useCallback, useState } from 'react'
 import { useApiFilters } from '~/hooks'
 import {
   DataContentType,
-  IFilter,
+  IFieldConfig,
   IHydraMember,
   IHydraResponse,
   IResource,
@@ -31,7 +31,7 @@ function FiltersGuesser<T extends IHydraMember>(props: IProps<T>): JSX.Element {
     resource,
     searchValue,
   } = props
-  const filters: IFilter[] = useApiFilters(apiData, resource)
+  const filters: IFieldConfig[] = useApiFilters(apiData, resource)
 
   const initValues = useCallback(
     (
@@ -56,7 +56,7 @@ function FiltersGuesser<T extends IHydraMember>(props: IProps<T>): JSX.Element {
     onFilterChange(filterValues)
   }
 
-  function handleClear(filter: IFilter, value: unknown): void {
+  function handleClear(filter: IFieldConfig, value: unknown): void {
     setFilterValues((prevState) => ({
       ...prevState,
       [filter.id]: value,
@@ -73,7 +73,7 @@ function FiltersGuesser<T extends IHydraMember>(props: IProps<T>): JSX.Element {
     onFilterChange({})
   }
 
-  function handleFilterChange(filter: IFilter, value: unknown): void {
+  function handleFilterChange(filter: IFieldConfig, value: unknown): void {
     setFilterValues((prevState) => ({
       ...prevState,
       [filter.id]: value,
