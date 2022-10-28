@@ -1,1 +1,1 @@
-export const urlRangeSeparator = '..'
+export const rangeSeparator = '-'

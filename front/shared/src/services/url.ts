@@ -2,8 +2,8 @@ import {
   currentPage,
   defaultPageSize,
   pageSize,
+  rangeSeparator,
   searchParameter,
-  urlRangeSeparator,
   usePagination,
 } from '../constants'
 import { ISearchParameters } from '../types'
@@ -20,7 +20,7 @@ export function getUrl(
     if (key.endsWith('[between]')) {
       value = value as (string | number)[]
       if (value[0] !== '' || value[1] !== '') {
-        url.searchParams.append(key, value.join(urlRangeSeparator))
+        url.searchParams.append(key, value.join(rangeSeparator))
       }
     } else if (value instanceof Array) {
       value.forEach((value) => url.searchParams.append(key, String(value)))
@@ -103,7 +103,7 @@ export function getParametersFromUrl(url: URL): ISearchParameters {
   return Object.fromEntries(
     [...url.searchParams.entries()].reduce((acc, [key, value]) => {
       if (key.endsWith('[between]')) {
-        acc.push([key, value.split(urlRangeSeparator)])
+        acc.push([key, value.split(rangeSeparator)])
       } else if (key.endsWith('[]')) {
         const existingValue = acc.find(([accKey]) => accKey === key)?.[1]
         if (existingValue) {

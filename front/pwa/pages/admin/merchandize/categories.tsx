@@ -1,11 +1,4 @@
-import {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react'
+import { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'next-i18next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
@@ -37,6 +30,7 @@ import {
   useResource,
   useResourceOperations,
 } from '~/hooks'
+import { findCategory } from '~/services'
 import { addMessage, selectMenu, useAppDispatch, useAppSelector } from '~/store'
 
 import TitleBlock from '~/components/molecules/layout/TitleBlock/TitleBlock'
@@ -93,24 +87,6 @@ function Categories(): JSX.Element {
     return filters
   }, [catalogId, localizedCatalogId])
   const [categories] = useFetchApi<ICategories>(`categoryTree`, filters)
-  const findCategory = useCallback(
-    (category: ICategory, categories: ICategory[]): ICategory => {
-      let foundCategory
-      function recursiveFind(element: ICategory): boolean {
-        if (element.id === category.id) {
-          foundCategory = element
-          return true
-        }
-        if (element.children && element.children.length > 0) {
-          return element.children.some(recursiveFind)
-        }
-        return false
-      }
-      categories.some(recursiveFind)
-      return foundCategory
-    },
-    []
-  )
   useEffect(() => {
     if (categories.status !== LoadStatus.SUCCEEDED) {
       return
@@ -125,7 +101,7 @@ function Categories(): JSX.Element {
       const cat = findCategory(prevState, categories.data.categories)
       return cat
     })
-  }, [categories, findCategory])
+  }, [categories])
 
   // Category configuration
   const catConfResource = useResource('CategoryConfiguration')
