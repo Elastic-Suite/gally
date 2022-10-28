@@ -1,5 +1,6 @@
-import { Box, Switch } from '@mui/material'
-
+import { Switch } from '@mui/material'
+import { styled } from '@mui/system'
+import { useTranslation } from 'next-i18next'
 import {
   DataContentType,
   IFieldGuesserProps,
@@ -13,8 +14,23 @@ import Score from '~/components/atoms/score/Score'
 import Stock from '~/components/atoms/stock/Stock'
 import Price from '~/components/atoms/price/Price'
 
+const Image = styled('img')({
+  height: 80,
+  width: 80,
+})
+
+const Box = styled('div')({
+  height: 40,
+  display: 'flex',
+  alignItems: 'center',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+})
+
 function ReadableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
   const { input, value } = props
+  const { t } = useTranslation('common')
 
   if (value === undefined || value === null) {
     return null
@@ -30,17 +46,7 @@ function ReadableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
     }
 
     case DataContentType.IMAGE: {
-      return (
-        <Box
-          component="img"
-          sx={{
-            height: 80,
-            width: 80,
-          }}
-          alt=""
-          src={value as string}
-        />
-      )
+      return <Image alt={t('field.productImage')} src={value as string} />
     }
 
     case DataContentType.SCORE: {
@@ -62,17 +68,7 @@ function ReadableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
     }
 
     default: {
-      return (
-        <Box
-          sx={{
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            whiteSpace: 'nowrap',
-          }}
-        >
-          {value as string}
-        </Box>
-      )
+      return <Box>{value as string}</Box>
     }
   }
 }

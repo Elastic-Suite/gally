@@ -8,6 +8,8 @@ import {
 } from 'react'
 import { FormHelperText, InputLabel } from '@mui/material'
 
+import { getFormValue } from '~/services'
+
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 
 import InfoTooltip from './InfoTooltip'
@@ -44,7 +46,6 @@ function InputText(
     helperIcon,
     id,
     infoTooltip,
-    inputProps,
     label,
     margin,
     onChange,
@@ -52,18 +53,13 @@ function InputText(
     suffix,
     ...InputProps
   } = props
-  const { type } = InputProps
 
   function handleChange(
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ): void {
     const { value } = event.target
     if (onChange) {
-      if (type === 'number') {
-        onChange(!required && value === '' ? value : Number(value), event)
-      } else {
-        onChange(value, event)
-      }
+      onChange(getFormValue(value, props), event)
     }
   }
 
@@ -87,7 +83,6 @@ function InputText(
           required={required}
           ref={ref}
           {...InputProps}
-          inputProps={inputProps}
         />
         {Boolean(suffix) && <Suffix>{suffix}</Suffix>}
       </Wrapper>
