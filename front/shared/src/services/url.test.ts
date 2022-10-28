@@ -15,25 +15,39 @@ import {
 describe('URL service', () => {
   describe('getUrl', () => {
     it('should return an URL object from an string', () => {
-      const url = getUrl('http://localhost/test')
-      expect(url.href).toEqual('http://localhost/test')
+      expect(getUrl('http://localhost/test').href).toEqual(
+        'http://localhost/test'
+      )
     })
 
     it('should return an URL object from an URL object', () => {
-      const url = getUrl(new URL('http://localhost/test'))
-      expect(url.href).toEqual('http://localhost/test')
+      expect(getUrl(new URL('http://localhost/test')).href).toEqual(
+        'http://localhost/test'
+      )
     })
 
     it('should return an URL object with parameters', () => {
-      const url = getUrl('http://localhost/test', { foo: 'bar' })
-      expect(url.href).toEqual('http://localhost/test?foo=bar')
+      expect(getUrl('http://localhost/test', { foo: 'bar' }).href).toEqual(
+        'http://localhost/test?foo=bar'
+      )
     })
 
     it('should return an URL object with array parameters', () => {
-      const url = getUrl('http://localhost/test', { 'foo[]': ['bar', 'baz'] })
-      expect(url.href).toEqual(
-        'http://localhost/test?foo%5B%5D=bar&foo%5B%5D=baz'
-      )
+      expect(
+        getUrl('http://localhost/test', { 'foo[]': ['bar', 'baz'] }).href
+      ).toEqual('http://localhost/test?foo%5B%5D=bar&foo%5B%5D=baz')
+    })
+
+    it('should return an URL object with between parameters', () => {
+      expect(
+        getUrl('http://localhost/test', { 'coverage[between]': [80, 90] }).href
+      ).toEqual('http://localhost/test?coverage%5Bbetween%5D=80-90')
+      expect(
+        getUrl('http://localhost/test', { 'coverage[between]': ['', 90] }).href
+      ).toEqual('http://localhost/test?coverage%5Bbetween%5D=-90')
+      expect(
+        getUrl('http://localhost/test', { 'coverage[between]': [80, ''] }).href
+      ).toEqual('http://localhost/test?coverage%5Bbetween%5D=80-')
     })
   })
 
@@ -140,6 +154,13 @@ describe('URL service', () => {
       const url = new URL('http://localhost/test?foo[]=bar&foo[]=baz')
       expect(getParametersFromUrl(url)).toEqual({
         'foo[]': ['bar', 'baz'],
+      })
+    })
+
+    it('should get the between parameters from an URL', () => {
+      const url = new URL('http://localhost/test?coverage[between]=80-90')
+      expect(getParametersFromUrl(url)).toEqual({
+        'coverage[between]': ['80', '90'],
       })
     })
   })
