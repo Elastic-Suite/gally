@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction, useMemo } from 'react'
 import { useGraphqlApi } from '~/hooks'
 import {
   IGraphqlSearchProducts,
+  IProductFieldFilterInput,
   ITableHeader,
   ITableRow,
   LoadStatus,
@@ -16,7 +17,7 @@ import TopProductsTable from '../TopProductsTable/TopProductsTable'
 interface IProps {
   catalogId: string
   onSelectedRows: Dispatch<SetStateAction<(string | number)[]>>
-  productGraphqlFilters: unknown
+  productGraphqlFilters: IProductFieldFilterInput
   selectedRows: (string | number)[]
 }
 

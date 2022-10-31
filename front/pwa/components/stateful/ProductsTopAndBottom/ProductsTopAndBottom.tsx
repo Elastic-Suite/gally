@@ -2,6 +2,8 @@ import { Paper } from '@mui/material'
 import { Box, styled } from '@mui/system'
 import { Dispatch, MutableRefObject, SetStateAction, forwardRef } from 'react'
 import { useTranslation } from 'react-i18next'
+import { IProductFieldFilterInput } from 'shared'
+
 import BottomTable from '~/components/stateful/TopAndBottomTable/BottomTable'
 import TopTable from '~/components/stateful/TopAndBottomTable/TopTable'
 
@@ -18,7 +20,7 @@ interface IProps {
   catalogId: string
   onBottomSelectedRows: Dispatch<SetStateAction<(string | number)[]>>
   onTopSelectedRows: Dispatch<SetStateAction<(string | number)[]>>
-  productGraphqlFilters: unknown
+  productGraphqlFilters: IProductFieldFilterInput
   topSelectedRows: (string | number)[]
 }
 
