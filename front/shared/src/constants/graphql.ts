@@ -1,6 +1,10 @@
 import { VariableType, jsonToGraphQLQuery } from 'json-to-graphql-query'
 
-export function getSearchProductsQuery(filter: unknown = null): string {
+import { IProductFieldFilterInput } from '../types'
+
+export function getSearchProductsQuery(
+  filter: IProductFieldFilterInput = null
+): string {
   return jsonToGraphQLQuery({
     query: {
       __name: 'getProducts',

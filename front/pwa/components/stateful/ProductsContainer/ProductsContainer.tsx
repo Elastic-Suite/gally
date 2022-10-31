@@ -8,6 +8,7 @@ import {
   ICategorySortingOption,
   IHydraResponse,
   IParsedCategoryConfiguration,
+  IProductFieldFilterInput,
   getCatalogForSearchProductApi,
 } from 'shared'
 
@@ -46,7 +47,7 @@ interface IProps {
   onSortChange: (val: string) => void
   onSave: () => void
   onVirtualChange: (val: boolean) => void
-  productGraphqlFilters: unknown
+  productGraphqlFilters: IProductFieldFilterInput
 }
 
 function ProductsContainer(props: IProps): JSX.Element {
