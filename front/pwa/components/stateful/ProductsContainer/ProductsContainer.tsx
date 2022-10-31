@@ -40,6 +40,7 @@ interface IProps {
   category: ICategory
   disableBtnSave: boolean
   error: Error
+  isSaving?: boolean
   localizedCatalog: number
   onNameChange: (val: boolean) => void
   onSortChange: (val: string) => void
@@ -56,6 +57,7 @@ function ProductsContainer(props: IProps): JSX.Element {
     category,
     disableBtnSave,
     error,
+    isSaving,
     localizedCatalog,
     onNameChange,
     onSave,
@@ -101,7 +103,7 @@ function ProductsContainer(props: IProps): JSX.Element {
         value: obj.code,
         ...obj,
       }))
-    : [{ label: 'Position', value: 'postion' }]
+    : [{ label: 'Position', value: 'position' }]
 
   const [searchValue, setSearchValue] = useState('')
   const onSearchChange = (value: string): void => setSearchValue(value)
@@ -117,7 +119,7 @@ function ProductsContainer(props: IProps): JSX.Element {
           title={category?.name ? category?.name : category?.catalogName}
           sx={{ marginBottom: '12px' }}
         >
-          <Button onClick={onSave} disabled={disableBtnSave}>
+          <Button disabled={disableBtnSave} onClick={onSave} loading={isSaving}>
             {t('buttonSave')}
           </Button>
         </PageTile>

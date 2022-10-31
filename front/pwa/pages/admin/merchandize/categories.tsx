@@ -47,6 +47,7 @@ function Categories(): JSX.Element {
   const fetchApi = useApiFetch()
   const dispatch = useAppDispatch()
   const { t } = useTranslation('categories')
+  const [isSaving, setIsSaving] = useState(false)
 
   // Breadcrumb
   const menu = useAppSelector(selectMenu)
@@ -165,6 +166,7 @@ function Categories(): JSX.Element {
   }
 
   async function onSave(): Promise<void> {
+    setIsSaving(true)
     const serializedCatConf = serializeCatConf(catConf, ruleOperators)
     if (!catConf.id) {
       delete serializedCatConf['@id']
@@ -188,6 +190,7 @@ function Categories(): JSX.Element {
         dispatch(addMessage({ message: t('alert.error'), severity: 'error' }))
       }
     }
+    setIsSaving(false)
   }
 
   const dirty = prevCatConf.current
@@ -248,6 +251,7 @@ function Categories(): JSX.Element {
             category={selectedCategoryItem}
             disableBtnSave={!dirty}
             error={error}
+            isSaving={isSaving}
             localizedCatalog={localizedCatalogId}
             onNameChange={handleUpdateCat('useNameInProductSearch')}
             onSave={onSave}
