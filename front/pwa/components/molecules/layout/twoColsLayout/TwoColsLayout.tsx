@@ -19,6 +19,9 @@ const CustomLeftSide = styled(CustomBorder)(({ theme }) => ({
   width: 402,
   boxSizing: 'border-box',
   backgroundColor: theme.palette.colors.white,
+  position: 'sticky',
+  top: '100px',
+  alignSelf: 'flex-start',
 }))
 
 const CustomRightSide = styled('div')({

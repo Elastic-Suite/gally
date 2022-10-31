@@ -6,7 +6,7 @@ exports[`TitleBlock match snapshot TwoColsLayout simple 1`] = `
     class="css-ksvmh9"
   >
     <div
-      class="css-blij1"
+      class="css-1lup9bf"
     >
       Hello World
     </div>
@@ -25,7 +25,7 @@ exports[`TitleBlock match snapshot TwoColsLayout with Array in left 1`] = `
     class="css-ksvmh9"
   >
     <div
-      class="css-blij1"
+      class="css-1lup9bf"
     >
       hello world One
       hello world Two

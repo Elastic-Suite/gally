@@ -14,7 +14,7 @@ import {
 
 import Button from '~/components/atoms/buttons/Button'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
-import PageTile from '~/components/atoms/PageTitle/PageTitle'
+import PageTitle from '~/components/atoms/PageTitle/PageTitle'
 import StickyBar from '~/components/molecules/CustomTable/StickyBar/StickyBar'
 import ProductsTopAndBottom from '~/components/stateful/ProductsTopAndBottom/ProductsTopAndBottom'
 import Merchandize from '../Merchandize/Merchandize'
@@ -116,14 +116,15 @@ function ProductsContainer(props: IProps): JSX.Element {
   return (
     <Box>
       <Layout>
-        <PageTile
-          title={category?.name ? category?.name : category?.catalogName}
+        <PageTitle
+          sticky
           sx={{ marginBottom: '12px' }}
+          title={category?.name ? category?.name : category?.catalogName}
         >
           <Button disabled={disableBtnSave} onClick={onSave} loading={isSaving}>
             {t('buttonSave')}
           </Button>
-        </PageTile>
+        </PageTitle>
         <Merchandize
           onVirtualChange={onVirtualChange}
           virtualCategoryValue={isVirtual}
