@@ -1,6 +1,11 @@
-import { MouseEvent, useState } from 'react'
+import { MouseEvent, useRef, useState } from 'react'
 import { styled } from '@mui/system'
-import { ButtonProps, MenuItem, Menu as MuiMenu } from '@mui/material'
+import {
+  ButtonProps,
+  CircularProgress,
+  MenuItem,
+  Menu as MuiMenu,
+} from '@mui/material'
 import { IOptions } from 'shared'
 
 import { PrimaryButton, SecondaryButton, TertiaryButton } from './Button.styled'
@@ -44,12 +49,25 @@ const Menu = styled(MuiMenu, {
 
 interface IProps extends ButtonProps {
   display: 'primary' | 'secondary' | 'tertiary'
+  loading?: boolean
   onSelect?: (value: unknown) => void
   options?: IOptions<unknown>
 }
 
 function Button(props: IProps): JSX.Element {
-  const { display, id, onClick, onSelect, options, ...buttonProps } = props
+  const {
+    children,
+    disabled,
+    display,
+    id,
+    loading,
+    onClick,
+    onSelect,
+    options,
+    style,
+    ...buttonProps
+  } = props
+  const buttonRef = useRef<HTMLButtonElement>(null)
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
 
@@ -58,6 +76,18 @@ function Button(props: IProps): JSX.Element {
     Component = SecondaryButton
   } else if (display === 'tertiary') {
     Component = TertiaryButton
+  }
+
+  let styles = style
+  if (loading && buttonRef.current) {
+    const { height, width } = buttonRef.current.getBoundingClientRect()
+    styles = {
+      ...style,
+      ...(loading && {
+        width,
+        height,
+      }),
+    }
   }
 
   function handleOpen(event: MouseEvent<HTMLButtonElement>): void {
@@ -80,7 +110,15 @@ function Button(props: IProps): JSX.Element {
 
   return (
     <>
-      <Component {...buttonProps} onClick={options ? handleOpen : onClick} />
+      <Component
+        {...buttonProps}
+        disabled={disabled || loading}
+        onClick={options ? handleOpen : onClick}
+        ref={buttonRef}
+        style={styles}
+      >
+        {loading ? <CircularProgress color="inherit" size="20px" /> : children}
+      </Component>
       {Boolean(options) && (
         <Menu
           anchorEl={anchorEl}
