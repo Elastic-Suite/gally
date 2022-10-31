@@ -10,6 +10,7 @@ import {
   ICategoryConfiguration,
   IHydraCatalog,
   IParsedCategoryConfiguration,
+  IProductFieldFilterInput,
   IRuleCombination,
   IRuleEngineGraphqlFilters,
   IRuleEngineOperators,
@@ -132,7 +133,8 @@ function Categories(): JSX.Element {
   ])
 
   // Rule engine graphql filters
-  const [productGraphqlFilters, setProductGraphqlFilters] = useState(null)
+  const [ruleEngineGraphqlFilters, setRuleEngineGraphqlFilters] =
+    useState<IProductFieldFilterInput>(null)
   const debouncedFetch = useMemo(
     () =>
       debounce(async (rule: string): Promise<void> => {
@@ -142,7 +144,7 @@ function Categories(): JSX.Element {
           { body: JSON.stringify({ rule }), method: 'POST' }
         )
         if (!isError(json)) {
-          setProductGraphqlFilters(json.graphQlFilters)
+          setRuleEngineGraphqlFilters(json.graphQlFilters)
         }
       }, debounceDelay),
     [fetchApi]
@@ -154,6 +156,14 @@ function Categories(): JSX.Element {
       )
     }
   }, [catConf?.virtualRule, debouncedFetch, ruleOperators])
+  const productGraphqlFilters: IProductFieldFilterInput = useMemo(() => {
+    if (catConf?.isVirtual && ruleEngineGraphqlFilters) {
+      return ruleEngineGraphqlFilters
+    } else if (!catConf?.isVirtual && selectedCategoryItem) {
+      return { category__id: { eq: selectedCategoryItem.id } }
+    }
+    return {}
+  }, [catConf, ruleEngineGraphqlFilters, selectedCategoryItem])
 
   function handleUpdateCat(name: string): (val: boolean | string) => void {
     return (val) => {

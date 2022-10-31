@@ -10,6 +10,7 @@ import {
 import { useGraphqlApi } from '~/hooks'
 import {
   IGraphqlSearchProducts,
+  IProductFieldFilterInput,
   ITableHeader,
   ITableRow,
   LoadStatus,
@@ -26,7 +27,7 @@ import FieldGuesser from '../FieldGuesser/FieldGuesser'
 interface IProps {
   catalogId: string
   onSelectedRows: Dispatch<SetStateAction<(string | number)[]>>
-  productGraphqlFilters: unknown
+  productGraphqlFilters: IProductFieldFilterInput
   selectedRows: (string | number)[]
 }
 
