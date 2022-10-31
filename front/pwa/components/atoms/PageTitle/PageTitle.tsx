@@ -6,6 +6,15 @@ const Root = styled('div')(() => ({
   display: 'flex',
 }))
 
+const StickyRoot = styled(Root)(({ theme }) => ({
+  position: 'sticky',
+  top: '84px',
+  backgroundColor: theme.palette.background.page,
+  zIndex: 2,
+  margin: '-10px 0',
+  padding: '10px 0',
+}))
+
 const CustomTypography = styled(Typography)(({ theme }) => ({
   position: 'relative',
   marginBottom: '48px',
@@ -27,18 +36,20 @@ const CustomTypography = styled(Typography)(({ theme }) => ({
 
 interface IProps extends TypographyProps {
   children?: ReactNode
+  sticky?: boolean
   title: string
 }
 
 function PageTitle(props: IProps): JSX.Element {
-  const { children, title, ...typographyProps } = props
+  const { children, sticky, title, ...typographyProps } = props
+  const RootComponent = sticky ? StickyRoot : Root
   return (
-    <Root>
+    <RootComponent>
       {title ? (
         <CustomTypography {...typographyProps}>{title}</CustomTypography>
       ) : null}
       {Boolean(children) && <div>{children}</div>}
-    </Root>
+    </RootComponent>
   )
 }
 
