@@ -32,8 +32,8 @@ function Category(): JSX.Element {
   const categories = useContext(categoryContext)
   const [page, setPage] = useState(0)
   const [pageSize, setPageSize] = useState(10)
+  const category = findCategory(categories, id)
 
-  // todo: add filter for categories : `filter: {category__id: { in: ["one"] }}`
   const variables = useMemo(
     () => ({
       catalogId: String(localizedCatalogId),
@@ -43,10 +43,9 @@ function Category(): JSX.Element {
     [localizedCatalogId, page, pageSize]
   )
   const [products, setProducts, load] = useGraphqlApi<IGraphqlSearchProducts>(
-    getSearchProductsQuery(),
+    getSearchProductsQuery({ category__id: { eq: id } }),
     variables
   )
-  const category = findCategory(categories, id)
 
   useEffect(() => {
     if (localizedCatalogId && category) {
@@ -57,7 +56,7 @@ function Category(): JSX.Element {
   }, [category, load, localizedCatalogId, setProducts])
 
   return (
-    <PageLayout title={`Category (${id})`}>
+    <PageLayout title={category.name}>
       <Products
         page={page}
         pageSize={pageSize}
