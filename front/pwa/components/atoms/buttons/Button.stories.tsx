@@ -67,6 +67,7 @@ Default.args = {
   display: 'primary',
   endIcon: '',
   icon: '',
+  loading: false,
   size: 'medium',
   startIcon: '',
 }
@@ -78,6 +79,7 @@ WithOptions.args = {
   display: 'primary',
   endIcon: '',
   icon: '',
+  loading: false,
   size: 'medium',
   startIcon: '',
   options: [
