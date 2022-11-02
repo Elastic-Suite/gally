@@ -40,7 +40,7 @@ interface IProps {
 
 function AppProvider(props: IProps): JSX.Element {
   const { children, store } = props
-  const { t } = useTranslation('api')
+  const { t } = useTranslation('datePicker')
 
   return (
     <Provider store={store}>
