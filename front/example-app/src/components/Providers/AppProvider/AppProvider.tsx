@@ -4,6 +4,7 @@ import CatalogProvider from '../CatalogProvider/CatalogProvider'
 import CategoryProvider from '../CategoryProvider/CategoryProvider'
 import RequestedPathProvider from '../RequestedPathProvider/RequestedPathProvider'
 import SchemaProvider from '../SchemaProvider/SchemaProvider'
+import SearchProvider from '../SearchProvider/SearchProvider'
 import UserProvider from '../UserProvider/UserProvider'
 
 interface IProps {
@@ -17,7 +18,9 @@ function AppProvider(props: IProps): JSX.Element {
       <SchemaProvider>
         <CatalogProvider>
           <RequestedPathProvider>
-            <CategoryProvider>{children}</CategoryProvider>
+            <CategoryProvider>
+              <SearchProvider>{children}</SearchProvider>
+            </CategoryProvider>
           </RequestedPathProvider>
         </CatalogProvider>
       </SchemaProvider>

@@ -1,5 +1,7 @@
+import PageLayout from '../../components/PageLayout/PageLayout'
+
 function Homepage(): JSX.Element {
-  return <div>Homepage</div>
+  return <PageLayout title="Homepage" />
 }
 
 export default Homepage

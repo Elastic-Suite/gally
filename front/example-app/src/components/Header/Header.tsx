@@ -4,46 +4,18 @@ import {
   IconButton,
   InputLabel,
   MenuItem,
-  FormControl as MuiFormControl,
   Select,
   SelectChangeEvent,
   Toolbar,
   Typography,
-  styled,
 } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import { Link } from 'react-router-dom'
 
 import { catalogContext } from '../../contexts'
 
-const FormControl = styled(MuiFormControl)(({ theme }) => ({
-  marginLeft: theme.spacing(1),
-  '& .MuiInputBase-root': {
-    color: theme.palette.common.white,
-    minWidth: 100,
-  },
-  '& .MuiFormLabel-root': {
-    color: theme.palette.common.white,
-  },
-  '& .MuiSvgIcon-root': {
-    color: theme.palette.common.white,
-  },
-  '& .MuiOutlinedInput-notchedOutline': {
-    borderColor: theme.palette.common.white,
-  },
-  '& .MuiOutlinedInput-notchedOutline legend': {
-    maxWidth: '100%',
-  },
-  '& .MuiInputBase-root:hover .MuiOutlinedInput-notchedOutline': {
-    borderColor: theme.palette.common.white,
-  },
-  '& .MuiFormLabel-root.Mui-focused': {
-    color: theme.palette.common.white,
-  },
-  '& .MuiInputBase-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-    borderColor: theme.palette.common.white,
-  },
-}))
+import HeaderFormControl from '../HeaderFormControl/HeaderFormControl'
+import SearchBar from '../SearchBar/SearchBar'
 
 interface IProps {
   onMenuToggle?: () => void
@@ -88,7 +60,12 @@ function Header(props: IProps): JSX.Element {
         <Typography component={Link} sx={{ flexGrow: 1 }} to="/" variant="h6">
           Example App
         </Typography>
-        <FormControl size="small" variant="outlined">
+        {Boolean(catalog && localizedCatalog) && (
+          <HeaderFormControl size="small">
+            <SearchBar shrink />
+          </HeaderFormControl>
+        )}
+        <HeaderFormControl size="small" variant="outlined">
           <InputLabel id={catalogLabelId} shrink>
             Catalog
           </InputLabel>
@@ -107,9 +84,9 @@ function Header(props: IProps): JSX.Element {
               </MenuItem>
             ))}
           </Select>
-        </FormControl>
+        </HeaderFormControl>
         {Boolean(catalog) && (
-          <FormControl size="small" variant="outlined">
+          <HeaderFormControl size="small" variant="outlined">
             <InputLabel id={localizedCatalogLabelId} shrink>
               Localized catalog
             </InputLabel>
@@ -126,7 +103,7 @@ function Header(props: IProps): JSX.Element {
                 </MenuItem>
               ))}
             </Select>
-          </FormControl>
+          </HeaderFormControl>
         )}
       </Toolbar>
     </AppBar>
