@@ -8,14 +8,23 @@ export default {
   component: DatePicker,
 } as ComponentMeta<typeof DatePicker>
 
-const Template: ComponentStory<typeof DatePicker> = () => {
+const Template: ComponentStory<typeof DatePicker> = (args) => {
   const [value, setValue] = useState<Dayjs | null>(null)
 
   function onChange(value: Dayjs | null): void {
     setValue(value)
   }
 
-  return <DatePicker date={value} onDate={onChange} />
+  return <DatePicker {...args} date={value} onDate={onChange} />
 }
 
 export const Radio = Template.bind({})
+
+Radio.args =  {
+    color: 'primary',
+    disabled: false,
+    id: 'input-text',
+    infoTooltip: 'infotool tip',
+    label: 'Label DatePicker',
+    transparent: false,
+  }
