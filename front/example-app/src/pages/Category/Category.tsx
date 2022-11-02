@@ -1,29 +1,16 @@
 import { useContext, useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { styled } from '@mui/material'
-import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import {
   ICategory,
   IGraphqlSearchProducts,
-  LoadStatus,
   getSearchProductsQuery,
 } from 'shared'
 
 import { catalogContext, categoryContext } from '../../contexts'
 import { useGraphqlApi } from '../../hooks'
 
-import Title from '../../components/Title/Title'
-
-const Root = styled('div')({
-  display: 'flex',
-  flex: 1,
-  flexDirection: 'column',
-})
-
-const Content = styled('div')(({ theme }) => ({
-  flex: 1,
-  paddingTop: theme.spacing(2),
-}))
+import PageLayout from '../../components/PageLayout/PageLayout'
+import Products from '../../components/Products/Products'
 
 function findCategory(categories: ICategory[], id: string): ICategory {
   let category: ICategory
@@ -38,13 +25,6 @@ function findCategory(categories: ICategory[], id: string): ICategory {
   }
   return category
 }
-
-const columns: GridColDef[] = [
-  { field: 'id', flex: 1, headerName: 'ID', sortable: false },
-  { field: 'name', flex: 2, headerName: 'Name', sortable: false },
-  { field: 'price', flex: 1, headerName: 'Price', sortable: false },
-  { field: 'sku', flex: 1, headerName: 'Sku', sortable: false },
-]
 
 function Category(): JSX.Element {
   const { id } = useParams()
@@ -76,50 +56,16 @@ function Category(): JSX.Element {
     }
   }, [category, load, localizedCatalogId, setProducts])
 
-  const rows = useMemo(
-    () =>
-      products.data?.searchProducts.collection.map((product) => {
-        try {
-          if (product.price) {
-            return {
-              ...product,
-              price: product.price[0].price,
-            }
-          }
-        } catch {
-          // no price
-        }
-        return product
-      }) ?? [],
-    [products]
-  )
-
   return (
-    <Root>
-      <Title title={`Category (${id})`} />
-      <Content>
-        <DataGrid
-          autoHeight
-          columns={columns}
-          disableColumnFilter
-          disableColumnSelector
-          disableColumnMenu
-          disableDensitySelector
-          disableSelectionOnClick
-          loading={products.status === LoadStatus.LOADING}
-          onPageChange={setPage}
-          onPageSizeChange={setPageSize}
-          page={page}
-          pageSize={pageSize}
-          paginationMode="server"
-          rowCount={
-            products.data?.searchProducts.paginationInfo.totalCount || 0
-          }
-          rowsPerPageOptions={[10, 20, 30]}
-          rows={rows}
-        />
-      </Content>
-    </Root>
+    <PageLayout title={`Category (${id})`}>
+      <Products
+        page={page}
+        pageSize={pageSize}
+        products={products}
+        setPage={setPage}
+        setPageSize={setPageSize}
+      />
+    </PageLayout>
   )
 }
 
