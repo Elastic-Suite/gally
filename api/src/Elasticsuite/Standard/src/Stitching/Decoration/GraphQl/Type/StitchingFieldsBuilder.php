@@ -45,6 +45,7 @@ class StitchingFieldsBuilder implements FieldsBuilderInterface
         SourceFieldType::TYPE_TEXT => 'Elasticsuite\Entity\Model\Attribute\Type\TextAttribute',
         SourceFieldType::TYPE_KEYWORD => 'Elasticsuite\Entity\Model\Attribute\Type\TextAttribute',
         SourceFieldType::TYPE_SELECT => 'Elasticsuite\Entity\Model\Attribute\Type\SelectAttribute',
+        SourceFieldType::TYPE_MULTISELECT => 'Elasticsuite\Entity\Model\Attribute\Type\MultiSelectAttribute',
         SourceFieldType::TYPE_INT => 'Elasticsuite\Entity\Model\Attribute\Type\IntAttribute',
         SourceFieldType::TYPE_BOOLEAN => 'Elasticsuite\Entity\Model\Attribute\Type\BooleanAttribute',
         SourceFieldType::TYPE_FLOAT => 'Elasticsuite\Entity\Model\Attribute\Type\FloatAttribute',

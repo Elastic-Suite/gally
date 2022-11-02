@@ -67,3 +67,7 @@ Elasticsuite\Metadata\Model\SourceField:
         metadata: '@product'
         code: 'brand'
         type: 'select'
+    product_colors:
+        metadata: '@product'
+        code: 'colors'
+        type: 'multiselect'

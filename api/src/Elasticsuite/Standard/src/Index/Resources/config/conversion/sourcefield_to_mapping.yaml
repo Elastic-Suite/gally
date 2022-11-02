@@ -6,7 +6,11 @@ services:
     Elasticsuite\Index\Converter\SourceField\ImageSourceFieldConverter:
         tags:
             - { name: elasticsuite.mapping.source_field_converter }
-        
+
+    Elasticsuite\Index\Converter\SourceField\MultiSelectSourceFieldConverter:
+        tags:
+            - { name: elasticsuite.mapping.source_field_converter }
+
     Elasticsuite\Index\Converter\SourceField\ObjectSourceFieldConverter:
         tags:
             - { name: elasticsuite.mapping.source_field_converter }

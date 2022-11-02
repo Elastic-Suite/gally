@@ -45,10 +45,15 @@ Elasticsuite\Metadata\Model\SourceField:
         code: 'brand'
         type: 'select'
         isFilterable: true
+    product_country_of_manufacture:
+        metadata: '@product'
+        code: 'country_of_manufacture'
+        type: 'select'
+        isFilterable: true
     product_color:
         metadata: '@product'
         code: 'color'
-        type: 'select'
+        type: 'multiselect'
         isFilterable: true
     product_length:
         metadata: '@product'

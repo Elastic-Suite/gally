@@ -165,6 +165,7 @@ class SearchProductsHydrationTest extends AbstractTest
             sku
             brand { label value }
             color { label value }
+            country_of_manufacture { label value }
             length
             weight
             size
@@ -196,6 +197,10 @@ class SearchProductsHydrationTest extends AbstractTest
                             'label' => 'Black',
                         ],
                     ],
+                    'country_of_manufacture' => [
+                        'value' => 'fr',
+                        'label' => 'France',
+                    ],
                     'stock' => null,
                     'stock_as_nested' => null,
                     'price_as_nested' => null,
@@ -218,6 +223,10 @@ class SearchProductsHydrationTest extends AbstractTest
                             'value' => 'black',
                             'label' => 'Black',
                         ],
+                    ],
+                    'country_of_manufacture' => [
+                        'value' => 'it',
+                        'label' => 'Italy',
                     ],
                     'stock' => null,
                     'stock_as_nested' => null,
@@ -245,6 +254,10 @@ class SearchProductsHydrationTest extends AbstractTest
                             'label' => 'Grey',
                         ],
                     ],
+                    'country_of_manufacture' => [
+                        'value' => 'es',
+                        'label' => 'Spain',
+                    ],
                     'stock' => null,
                     'stock_as_nested' => null,
                     'price_as_nested' => null,
@@ -267,6 +280,7 @@ class SearchProductsHydrationTest extends AbstractTest
                             'label' => 'Black',
                         ],
                     ],
+                    'country_of_manufacture' => null,
                     'stock' => null,
                     'stock_as_nested' => null,
                     'price_as_nested' => null,
@@ -289,6 +303,7 @@ class SearchProductsHydrationTest extends AbstractTest
                             'label' => 'Grey',
                         ],
                     ],
+                    'country_of_manufacture' => null,
                     'stock' => null,
                     'stock_as_nested' => null,
                     'price_as_nested' => null,
@@ -319,6 +334,7 @@ class SearchProductsHydrationTest extends AbstractTest
                             'label' => 'Red',
                         ],
                     ],
+                    'country_of_manufacture' => null,
                     'stock' => null,
                     'stock_as_nested' => null,
                     'price_as_nested' => null,
@@ -341,6 +357,7 @@ class SearchProductsHydrationTest extends AbstractTest
                             'label' => 'Black',
                         ],
                     ],
+                    'country_of_manufacture' => null,
                     'stock' => null,
                     'stock_as_nested' => null,
                     'price_as_nested' => null,
@@ -367,6 +384,7 @@ class SearchProductsHydrationTest extends AbstractTest
                             'label' => 'White',
                         ],
                     ],
+                    'country_of_manufacture' => null,
                     'stock' => null,
                     'stock_as_nested' => null,
                     'price_as_nested' => null,
@@ -393,6 +411,7 @@ class SearchProductsHydrationTest extends AbstractTest
                             'label' => 'White',
                         ],
                     ],
+                    'country_of_manufacture' => null,
                     'stock' => null,
                     'stock_as_nested' => null,
                     'price_as_nested' => null,
@@ -415,6 +434,7 @@ class SearchProductsHydrationTest extends AbstractTest
                             'label' => 'Pink',
                         ],
                     ],
+                    'country_of_manufacture' => null,
                     'stock' => null,
                     'stock_as_nested' => null,
                     'price_as_nested' => null,
@@ -448,6 +468,7 @@ class SearchProductsHydrationTest extends AbstractTest
                             'label' => 'Black',
                         ],
                     ],
+                    'country_of_manufacture' => null,
                     'stock' => null,
                     'stock_as_nested' => null,
                     'price_as_nested' => null,
@@ -474,6 +495,7 @@ class SearchProductsHydrationTest extends AbstractTest
                             'label' => 'Black',
                         ],
                     ],
+                    'country_of_manufacture' => null,
                     'stock' => null,
                     'stock_as_nested' => null,
                     'price_as_nested' => null,
@@ -496,6 +518,7 @@ class SearchProductsHydrationTest extends AbstractTest
                             'label' => 'Brown',
                         ],
                     ],
+                    'country_of_manufacture' => null,
                     'stock' => null,
                     'stock_as_nested' => null,
                     'price_as_nested' => null,
@@ -526,6 +549,7 @@ class SearchProductsHydrationTest extends AbstractTest
                             'label' => 'Black',
                         ],
                     ],
+                    'country_of_manufacture' => null,
                     'stock' => null,
                     'stock_as_nested' => null,
                     'price_as_nested' => null,
@@ -590,6 +614,10 @@ class SearchProductsHydrationTest extends AbstractTest
                             'value' => 'black',
                             'label' => 'Noir',
                         ],
+                    ],
+                    'country_of_manufacture' => [
+                        'value' => 'fr',
+                        'label' => 'France',
                     ],
                     'category_as_nested' => [
                         /* nested fields are always single value for the time being
@@ -678,6 +706,10 @@ class SearchProductsHydrationTest extends AbstractTest
                             'label' => 'Noir',
                         ],
                     ],
+                    'country_of_manufacture' => [
+                        'value' => 'it',
+                        'label' => 'Italie',
+                    ],
                     'category_as_nested' => [
                         /* nested fields are always single value for the time being
                         [
@@ -761,6 +793,10 @@ class SearchProductsHydrationTest extends AbstractTest
                             'label' => 'Gris',
                         ],
                     ],
+                    'country_of_manufacture' => [
+                        'value' => 'es',
+                        'label' => 'Espagne',
+                    ],
                     // 'created_at' => '2022-09-05',
                 ],
                 '4' => [
@@ -787,6 +823,7 @@ class SearchProductsHydrationTest extends AbstractTest
                             'label' => 'Noir',
                         ],
                     ],
+                    'country_of_manufacture' => null,
                     'price_as_nested' => null,
                     'price' => null,
                     // 'created_at' => '2022-09-05',
@@ -815,6 +852,7 @@ class SearchProductsHydrationTest extends AbstractTest
                             'label' => 'Gris',
                         ],
                     ],
+                    'country_of_manufacture' => null,
                     'price_as_nested' => null,
                     'price' => null,
                     // 'created_at' => '2022-09-06',
@@ -851,6 +889,7 @@ class SearchProductsHydrationTest extends AbstractTest
                             'label' => 'Rouge',
                         ],
                     ],
+                    'country_of_manufacture' => null,
                     'price_as_nested' => null,
                     'price' => null,
                     // 'created_at' => '2022-09-01',
@@ -879,6 +918,7 @@ class SearchProductsHydrationTest extends AbstractTest
                             'label' => 'Noir',
                         ],
                     ],
+                    'country_of_manufacture' => null,
                     'price_as_nested' => null,
                     'price' => null,
                     // 'created_at' => '2022-09-01',
@@ -911,6 +951,7 @@ class SearchProductsHydrationTest extends AbstractTest
                             'label' => 'Blanc',
                         ],
                     ],
+                    'country_of_manufacture' => null,
                     'price_as_nested' => null,
                     'price' => null,
                     // 'created_at' => '2022-09-01',
@@ -943,6 +984,7 @@ class SearchProductsHydrationTest extends AbstractTest
                             'label' => 'Blanc',
                         ],
                     ],
+                    'country_of_manufacture' => null,
                     'price_as_nested' => null,
                     'price' => null,
                 ],
@@ -970,6 +1012,7 @@ class SearchProductsHydrationTest extends AbstractTest
                             'label' => 'Rose',
                         ],
                     ],
+                    'country_of_manufacture' => null,
                     'price_as_nested' => null,
                     'price' => null,
                 ],
@@ -1009,6 +1052,7 @@ class SearchProductsHydrationTest extends AbstractTest
                             'label' => 'Noir',
                         ],
                     ],
+                    'country_of_manufacture' => null,
                     'price_as_nested' => null,
                     'price' => null,
                     // 'created_at' => '2022-09-01',
@@ -1041,6 +1085,7 @@ class SearchProductsHydrationTest extends AbstractTest
                             'label' => 'Noir',
                         ],
                     ],
+                    'country_of_manufacture' => null,
                     'price_as_nested' => null,
                     'price' => null,
                     // 'created_at' => '2022-09-01',

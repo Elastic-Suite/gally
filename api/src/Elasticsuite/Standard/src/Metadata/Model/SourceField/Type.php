@@ -21,6 +21,7 @@ class Type
     public const TYPE_TEXT = 'text';
     public const TYPE_KEYWORD = 'keyword';
     public const TYPE_SELECT = 'select';
+    public const TYPE_MULTISELECT = 'multiselect';
     public const TYPE_INT = 'int';
     public const TYPE_BOOLEAN = 'boolean';
     public const TYPE_FLOAT = 'float';
@@ -36,6 +37,7 @@ class Type
         self::TYPE_TEXT,
         self::TYPE_KEYWORD,
         self::TYPE_SELECT,
+        self::TYPE_MULTISELECT,
         self::TYPE_INT,
         self::TYPE_BOOLEAN,
         self::TYPE_FLOAT,

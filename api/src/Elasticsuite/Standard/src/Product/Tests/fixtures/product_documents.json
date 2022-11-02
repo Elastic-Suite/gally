@@ -16,6 +16,12 @@
             "label": "Black"
           }
         ],
+        "country_of_manufacture": [
+          {
+            "value": "fr",
+            "label": "France"
+          }
+        ],
         "is_eco_friendly": false,
         "created_at": "2022-09-01"
       },
@@ -31,6 +37,12 @@
           {
             "value": "black",
             "label": "Black"
+          }
+        ],
+        "country_of_manufacture": [
+          {
+            "value": "it",
+            "label": "Italy"
           }
         ],
         "is_eco_friendly": false,
@@ -51,6 +63,12 @@
           {
             "value": "grey",
             "label": "Grey"
+          }
+        ],
+        "country_of_manufacture": [
+          {
+            "value": "es",
+            "label": "Spain"
           }
         ],
         "is_eco_friendly": true,
@@ -279,6 +297,12 @@
             "label": "Noir"
           }
         ],
+        "country_of_manufacture": [
+          {
+            "value": "fr",
+            "label": "France"
+          }
+        ],
         "category_as_nested": [
           {
             "id": "one"
@@ -335,6 +359,12 @@
             "label": "Noir"
           }
         ],
+        "country_of_manufacture": [
+          {
+            "value": "it",
+            "label": "Italie"
+          }
+        ],
         "category_as_nested": [
           {
             "id": "one"
@@ -385,6 +415,12 @@
           {
             "value": "grey",
             "label": "Gris"
+          }
+        ],
+        "country_of_manufacture": [
+          {
+            "value": "es",
+            "label": "Espagne"
           }
         ],
         "is_eco_friendly": true,

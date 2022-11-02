@@ -102,6 +102,19 @@ class IndexManagerTest extends AbstractTest
                             'norms' => false,
                         ],
                         'brand' => [
+                            'type' => 'object',
+                            'properties' => [
+                                'value' => [
+                                    'type' => 'keyword',
+                                ],
+                                'label' => [
+                                    'type' => 'text',
+                                    'analyzer' => 'keyword',
+                                    'norms' => false,
+                                ],
+                            ],
+                        ],
+                        'colors' => [
                             'type' => 'nested',
                             'properties' => [
                                 'value' => [

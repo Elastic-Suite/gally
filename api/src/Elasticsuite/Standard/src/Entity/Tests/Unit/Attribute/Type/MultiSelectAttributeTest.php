@@ -17,15 +17,15 @@ declare(strict_types=1);
 namespace Elasticsuite\Entity\Tests\Unit\Attribute\Type;
 
 use ArgumentCountError;
-use Elasticsuite\Entity\Model\Attribute\Type\SelectAttribute;
+use Elasticsuite\Entity\Model\Attribute\Type\MultiSelectAttribute;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class SelectAttributeTest extends KernelTestCase
+class MultiSelectAttributeTest extends KernelTestCase
 {
     public function testInstantiateFailure(): void
     {
         $this->expectException(ArgumentCountError::class);
-        $selectAttribute = $this->getMockBuilder(SelectAttribute::class)
+        $muliSelectAttribute = $this->getMockBuilder(MultiSelectAttribute::class)
             ->getMock();
     }
 
@@ -38,11 +38,11 @@ class SelectAttributeTest extends KernelTestCase
      */
     public function testStructureCheck(string $attributeCode, mixed $value, mixed $expectedValue): void
     {
-        $reflector = new \ReflectionClass(SelectAttribute::class);
+        $reflector = new \ReflectionClass(MultiSelectAttribute::class);
         $attributeCodeProperty = $reflector->getProperty('attributeCode');
         $valueProperty = $reflector->getProperty('value');
 
-        $selectAttribute = new SelectAttribute($attributeCode, $value);
+        $selectAttribute = new MultiSelectAttribute($attributeCode, $value);
         $this->assertEquals($attributeCode, $attributeCodeProperty->getValue($selectAttribute));
         $this->assertEquals($expectedValue, $valueProperty->getValue($selectAttribute));
         $this->assertEquals($expectedValue, $selectAttribute->getValue());
@@ -57,26 +57,26 @@ class SelectAttributeTest extends KernelTestCase
             ['mySelect', 1, 1],
             ['mySelect', -3.5, -3.5],
             ['mySelect', 'myValue', 'myValue'],
-            // Select attributes are expected to output a single entry/value so an array of array is simplified (w/o structure check).
-            ['mySelect', ['myValue'], 'myValue'],
-            ['mySelect', [['myValue'], ['myOtherValue']], ['myValue']],
+            // Multiselect attributes are expected to output multiple values so an array stays an array (w/o structure check).
+            ['mySelect', ['myValue'], ['myValue']],
+            ['mySelect', [['myValue'], ['myOtherValue']], [['myValue'], ['myOtherValue']]],
             ['mySelect', [], []],
-            // Select attributes are expected to output a single entry/value so multiple entries are simplified.
+            // Multiselect attributes are expected to output multiple values so single entries are forced as array of entries.
             [
                 'mySelect',
                 ['label' => 'Red', 'value' => 'red'],
-                ['label' => 'Red', 'value' => 'red'],
+                [['label' => 'Red', 'value' => 'red']],
             ],
             [
                 'mySelect',
                 [['label' => 'Red', 'value' => 'red'], ['label' => 'Green', 'value' => 'green']],
-                ['label' => 'Red', 'value' => 'red'],
+                [['label' => 'Red', 'value' => 'red'], ['label' => 'Green', 'value' => 'green']],
             ],
-            // For the moment, no advanced select structure checks.
+            // For the moment, no advanced multiselect structure checks.
             [
                 'mySelect',
                 ['label' => 'Red', 'value' => 'red', 'metadata' => 'value'],
-                ['label' => 'Red', 'value' => 'red', 'metadata' => 'value'],
+                [['label' => 'Red', 'value' => 'red', 'metadata' => 'value']],
             ],
         ];
     }

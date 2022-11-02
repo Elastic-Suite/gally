@@ -221,7 +221,7 @@ Elasticsuite\Metadata\Model\SourceField:
     product_fashion_color:
         metadata: '@product'
         code: fashion_color
-        type: select
+        type: multiselect
         isSearchable: true
         weight: 1
         isSpellchecked: true
@@ -231,7 +231,7 @@ Elasticsuite\Metadata\Model\SourceField:
     product_fashion_material:
         metadata: '@product'
         code: fashion_material
-        type: select
+        type: multiselect
         isSearchable: true
         weight: 1
         isSpellchecked: true
@@ -241,7 +241,7 @@ Elasticsuite\Metadata\Model\SourceField:
     product_fashion_size:
         metadata: '@product'
         code: fashion_size
-        type: select
+        type: multiselect
         isSearchable: false
         weight: 1
         isSpellchecked: false
@@ -251,7 +251,7 @@ Elasticsuite\Metadata\Model\SourceField:
     product_fashion_style:
         metadata: '@product'
         code: fashion_style
-        type: select
+        type: multiselect
         isSearchable: true
         weight: 1
         isSpellchecked: true

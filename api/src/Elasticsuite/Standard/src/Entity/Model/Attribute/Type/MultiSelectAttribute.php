@@ -16,19 +16,11 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Entity\Model\Attribute\Type;
 
-/**
- * Used for normalization/de-normalization and graphql schema stitching of select source fields.
- */
-class SelectAttribute extends MultiSelectAttribute
-{
-    /**
-     * {@inheritDoc}
-     */
-    public static function isList(): bool
-    {
-        return false;
-    }
+use Elasticsuite\Entity\Model\Attribute\AttributeInterface;
+use Elasticsuite\Entity\Model\Attribute\StructuredAttributeInterface;
 
+class MultiSelectAttribute extends AbstractStructuredAttribute implements AttributeInterface, StructuredAttributeInterface
+{
     /**
      * {@inheritDoc}
      */

@@ -627,9 +627,9 @@ class SourceFieldConverterTest extends AbstractTest
                 $mappingField = $mappingFields[$expectedField['code']];
                 $this->assertInstanceOf(Mapping\FieldInterface::class, $mappingField);
 
-                $this->assertEquals($fieldNameProperty->getValue($mappingField), $expectedField['code']);
-                $this->assertEquals($fieldTypeProperty->getValue($mappingField), $expectedField['type']);
-                $this->assertEquals($fieldNestedPathProperty->getValue($mappingField), $expectedField['path']);
+                $this->assertEquals($expectedField['code'], $fieldNameProperty->getValue($mappingField));
+                $this->assertEquals($expectedField['type'], $fieldTypeProperty->getValue($mappingField));
+                $this->assertEquals($expectedField['path'], $fieldNestedPathProperty->getValue($mappingField));
 
                 $fieldConfig = $fieldConfigProperty->getValue($mappingField);
                 $this->assertArrayHasKey('config', $expectedField);
@@ -664,7 +664,7 @@ class SourceFieldConverterTest extends AbstractTest
                     [
                         'code' => 'selectField.value',
                         'type' => Mapping\FieldInterface::FIELD_TYPE_KEYWORD,
-                        'path' => 'selectField',
+                        'path' => null,
                         // No config, so field config will be the default one.
                         'config' => [
                             'is_searchable' => false,
@@ -677,7 +677,7 @@ class SourceFieldConverterTest extends AbstractTest
                     [
                         'code' => 'selectField.label',
                         'type' => Mapping\FieldInterface::FIELD_TYPE_TEXT,
-                        'path' => 'selectField',
+                        'path' => null,
                         // Means the field config will be based on the sourceField's one.
                         'config' => 'auto',
                     ],
@@ -690,7 +690,7 @@ class SourceFieldConverterTest extends AbstractTest
                     [
                         'code' => 'nested.selectField.value',
                         'type' => Mapping\FieldInterface::FIELD_TYPE_KEYWORD,
-                        'path' => 'nested.selectField',
+                        'path' => null,
                         // No config, so field config will be the default one.
                         'config' => [
                             'is_searchable' => false,
@@ -703,7 +703,7 @@ class SourceFieldConverterTest extends AbstractTest
                     [
                         'code' => 'nested.selectField.label',
                         'type' => Mapping\FieldInterface::FIELD_TYPE_TEXT,
-                        'path' => 'nested.selectField',
+                        'path' => null,
                         // Means the field config will be based on the sourceField's one.
                         'config' => 'auto',
                     ],

@@ -19,14 +19,14 @@ namespace Elasticsuite\Index\Converter\SourceField;
 use Elasticsuite\Index\Model\Index\Mapping;
 use Elasticsuite\Metadata\Model\SourceField;
 
-class SelectSourceFieldConverter implements SourceFieldConverterInterface
+class MultiSelectSourceFieldConverter implements SourceFieldConverterInterface
 {
     /**
      * {@inheritDoc}
      */
     public function supports(SourceField $sourceField): bool
     {
-        return SourceField\Type::TYPE_SELECT === $sourceField->getType();
+        return SourceField\Type::TYPE_MULTISELECT === $sourceField->getType();
     }
 
     /**
@@ -37,13 +37,12 @@ class SelectSourceFieldConverter implements SourceFieldConverterInterface
         $fields = [];
 
         $fieldCode = sprintf('%s.value', $sourceField->getCode());
+        $path = $sourceField->getCode();
         /*
-         * Select attribute are supposed to contain a single value,
-         * so it's supposed to avoid created a nested field and use instead an object.
-         * This means it's not possible to support nested select fields for the moment, ie super.brand
-         * to generate super.brand.value and super.brand.label
+         * Multiselect fields are created are nested fields, so it is not possible
+         * to support nested multiselect fields for the moment, ie super.color
+         * to generate super.color.value and super.color.label
          */
-        $path = null;
         $fields[$fieldCode] = new Mapping\Field($fieldCode, Mapping\FieldInterface::FIELD_TYPE_KEYWORD, $path);
 
         $fieldCode = sprintf('%s.label', $sourceField->getCode());
