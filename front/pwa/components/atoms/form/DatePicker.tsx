@@ -1,4 +1,3 @@
-import { TextField } from '@mui/material'
 import { DatePicker as DatePickerMu } from '@mui/x-date-pickers/DatePicker'
 
 import dayjs, { Dayjs } from 'dayjs'
@@ -10,6 +9,7 @@ import {
 import isBetweenPlugin from 'dayjs/plugin/isBetween'
 import { styled } from '@mui/system'
 import { ComponentType } from 'react'
+import InputText, { IInputTextProps } from './InputText'
 
 dayjs.extend(isBetweenPlugin)
 
@@ -19,20 +19,21 @@ const CustomPickersDay = styled(PickersDay, {
 })<PickersDayProps<Dayjs>>(({ theme }) => ({
   fontWeight: 500,
   [`&&.${pickersDayClasses.selected}`]: {
-    backgroundColor: theme.palette.colors.primary['500'],
+    backgroundColor: theme.palette.colors.primary['400'],
     color: 'white',
   },
   [`&&.${pickersDayClasses.selected}, &:hover, &:focus`]: {
-    backgroundColor: theme.palette.colors.primary['500'],
+    backgroundColor: theme.palette.colors.primary['400'],
+    color: 'white',
   },
 })) as ComponentType<PickersDayProps<Dayjs>>
 
-interface IDatePickerProps {
+interface IDatePickerProps extends IInputTextProps {
   date: Dayjs | null
   onDate: (value: Dayjs | null) => void
 }
 
-function DatePicker({ date, onDate }: IDatePickerProps): JSX.Element {
+function DatePicker({ date, onDate, ...args }: IDatePickerProps): JSX.Element {
   const renderWeekPickerDay = (
     _: Dayjs,
     __: Array<Dayjs | null>,
@@ -48,7 +49,7 @@ function DatePicker({ date, onDate }: IDatePickerProps): JSX.Element {
         onDate(newValue)
       }}
       renderDay={renderWeekPickerDay}
-      renderInput={(params): JSX.Element => <TextField {...params} />}
+      renderInput={(params): JSX.Element =>  <InputText  {...params} {...args} endAdornment={params.InputProps.endAdornment} /> }
     />
   )
 }
