@@ -5,8 +5,10 @@ import { ICategory, ProductRequestType } from 'shared'
 import { categoryContext } from '../../contexts'
 import { useProducts } from '../../hooks'
 
+import Facets from '../../components/Facets/Facets'
 import PageLayout from '../../components/PageLayout/PageLayout'
 import Products from '../../components/Products/Products'
+import TwoColsLayout from '../../components/TwoColsLayout/TwoColsLayout'
 
 function findCategory(categories: ICategory[], id: string): ICategory {
   let category: ICategory
@@ -46,18 +48,20 @@ function Category(): JSX.Element {
 
   return (
     <PageLayout title={category.name}>
-      <Products
-        page={page}
-        pageSize={pageSize}
-        products={products}
-        setPage={setPage}
-        setPageSize={setPageSize}
-        setSort={setSort}
-        setSortOrder={setSortOrder}
-        sort={sort}
-        sortOptions={sortOptions}
-        sortOrder={sortOrder}
-      />
+      <TwoColsLayout left={<Facets />}>
+        <Products
+          page={page}
+          pageSize={pageSize}
+          products={products}
+          setPage={setPage}
+          setPageSize={setPageSize}
+          setSort={setSort}
+          setSortOrder={setSortOrder}
+          sort={sort}
+          sortOptions={sortOptions}
+          sortOrder={sortOrder}
+        />
+      </TwoColsLayout>
     </PageLayout>
   )
 }
