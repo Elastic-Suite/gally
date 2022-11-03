@@ -8,7 +8,7 @@ import {
 } from 'shared'
 
 import { catalogContext, categoryContext } from '../../contexts'
-import { useGraphqlApi } from '../../hooks'
+import { useGraphqlApi, useProductSort } from '../../hooks'
 
 import PageLayout from '../../components/PageLayout/PageLayout'
 import Products from '../../components/Products/Products'
@@ -31,9 +31,11 @@ function Category(): JSX.Element {
   const { id } = useParams()
   const { localizedCatalogId } = useContext(catalogContext)
   const categories = useContext(categoryContext)
+  const category = findCategory(categories, id)
+
   const [page, setPage] = useState(0)
   const [pageSize, setPageSize] = useState(10)
-  const category = findCategory(categories, id)
+  const [sort, sortOrder, sortOptions, setSort, setSortOrder] = useProductSort()
 
   const variables = useMemo(
     () => ({
@@ -65,6 +67,11 @@ function Category(): JSX.Element {
         products={products}
         setPage={setPage}
         setPageSize={setPageSize}
+        setSort={setSort}
+        setSortOrder={setSortOrder}
+        sort={sort}
+        sortOptions={sortOptions}
+        sortOrder={sortOrder}
       />
     </PageLayout>
   )
