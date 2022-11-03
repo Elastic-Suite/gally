@@ -1,5 +1,6 @@
 export * from './useApi'
 export * from './useGraphql'
 export * from './useLog'
+export * from './useProductSort'
 export * from './useResource'
 export * from './useUser'

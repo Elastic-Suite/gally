@@ -25,3 +25,16 @@ export const getCategoryTreeQuery = `query getCategories($localizedCatalogId: In
     categories
   }
 }`
+
+export const getCategorySortingOptionsQuery = `query getCategorySortingOptions {
+  categorySortingOptions {
+    label
+    code
+  }
+}`
+
+export const getCategoryConfigurationQuery = `query getCategoryConfiguration($categoryId: String!, $catalogId: Int $localizedCatalogId: Int) {
+  getCategoryConfiguration(categoryId: $categoryId, catalogId: $catalogId, localizedCatalogId: $localizedCatalogId) {
+    defaultSorting
+  }
+}`

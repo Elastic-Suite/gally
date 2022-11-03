@@ -14,7 +14,7 @@ import {
 } from 'shared'
 
 import { catalogContext, searchContext } from '../../../contexts'
-import { useGraphqlApi } from '../../../hooks'
+import { useGraphqlApi, useProductSort } from '../../../hooks'
 
 interface IProps {
   children: ReactNode
@@ -27,6 +27,7 @@ function SearchProvider(props: IProps): JSX.Element {
   const [pageSize, setPageSize] = useState(10)
   const { localizedCatalogId } = useContext(catalogContext)
   const navigate = useNavigate()
+  const [sort, sortOrder, sortOptions, setSort, setSortOrder] = useProductSort()
 
   const onSearch = useCallback(
     (search: string) => {
@@ -43,8 +44,9 @@ function SearchProvider(props: IProps): JSX.Element {
       pageSize,
       requestType: ProductRequestType.SEARCH,
       search,
+      sort: sort ? { [sort]: 'asc' } : undefined,
     }),
-    [localizedCatalogId, page, pageSize, search]
+    [localizedCatalogId, page, pageSize, search, sort]
   )
   const [products, , load] = useGraphqlApi<IGraphqlSearchProducts>(
     getSearchProductsQuery(),
@@ -66,8 +68,24 @@ function SearchProvider(props: IProps): JSX.Element {
       search,
       setPage,
       setPageSize,
+      setSort,
+      setSortOrder,
+      sort,
+      sortOptions,
+      sortOrder,
     }),
-    [onSearch, page, pageSize, products, search]
+    [
+      onSearch,
+      page,
+      pageSize,
+      products,
+      search,
+      setSort,
+      setSortOrder,
+      sort,
+      sortOptions,
+      sortOrder,
+    ]
   )
 
   return (
