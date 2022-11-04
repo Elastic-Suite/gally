@@ -53,6 +53,7 @@ interface IProps {
   productGraphqlFilters: IProductFieldFilterInput
   savePositionsCategoryProductMerchandising: any
   setSavePositionsCategoryProductMerchandising: any
+  isLoading: boolean
 }
 
 function ProductsContainer(props: IProps): JSX.Element {
@@ -72,6 +73,7 @@ function ProductsContainer(props: IProps): JSX.Element {
     productGraphqlFilters,
     savePositionsCategoryProductMerchandising,
     setSavePositionsCategoryProductMerchandising,
+    isLoading,
   } = props
 
   const tableRef = useRef<HTMLDivElement>()
@@ -126,25 +128,25 @@ function ProductsContainer(props: IProps): JSX.Element {
       return topSelectedRows.indexOf(el.id) === -1
     })
 
-    const pinToUnPin = listproductsPinedHooks.filter((el: any) => {
-      return topSelectedRows.indexOf(el.id) !== -1
-    })
+    // const pinToUnPin = listproductsPinedHooks.filter((el: any) => {
+    //   return topSelectedRows.indexOf(el.id) !== -1
+    // })
 
     setListproductsPinedHooks(unPinToPin)
-    setListproductsUnPinedHooks(listproductsUnPinedHooks.concat(pinToUnPin))
+    // setListproductsUnPinedHooks(pinToUnPin.concat(listproductsUnPinedHooks))
     setTopSelectedRows([])
   }
 
   function unPinToPin(): void {
-    const pinToUnPin = listproductsUnPinedHooks.filter((el: any) => {
-      return bottomSelectedRows.indexOf(el.id) === -1
-    })
+    // const pinToUnPin = listproductsUnPinedHooks.filter((el: any) => {
+    //   return bottomSelectedRows.indexOf(el.id) === -1
+    // })
 
     const unPinToPin = listproductsUnPinedHooks.filter((el: any) => {
       return bottomSelectedRows.indexOf(el.id) !== -1
     })
 
-    setListproductsUnPinedHooks(pinToUnPin)
+    // setListproductsUnPinedHooks(pinToUnPin)
     setListproductsPinedHooks(
       listproductsPinedHooks.concat(
         unPinToPin.map((item, key) => {

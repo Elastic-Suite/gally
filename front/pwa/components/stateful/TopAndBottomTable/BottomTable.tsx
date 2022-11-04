@@ -8,7 +8,7 @@ import {
   useMemo,
 } from 'react'
 
-import { useGraphqlApi } from '~/hooks'
+import { useApiGraphql, useGraphqlApi } from '~/hooks'
 import {
   IGraphqlSearchProducts,
   IProductFieldFilterInput,
@@ -17,7 +17,9 @@ import {
   LoadStatus,
   defaultRowsPerPageOptions,
   getSearchProductsQuery,
+  isError,
   productTableheader,
+  savePositions,
   storageGet,
   tokenStorageKey,
 } from 'shared'
@@ -31,6 +33,7 @@ interface IProps {
   categoryId: string
   currentPage: number
   listProductsIdPined?: any
+  listproductsPinedHooks: any
   listproductsUnPinedHooks: any
   localizedCatalogId: string
   onSelectedRows: Dispatch<SetStateAction<(string | number)[]>>
@@ -51,6 +54,7 @@ function BottomTable(
     categoryId,
     currentPage,
     listProductsIdPined,
+    listproductsPinedHooks,
     listproductsUnPinedHooks,
     localizedCatalogId,
     onSelectedRows,
@@ -104,6 +108,49 @@ function BottomTable(
     setRowsPerPage(Number(event.target.value))
     setCurrentPage(1)
   }
+
+  const variablesUnPined = useMemo(
+    () => ({
+      listproductsIdPined: listproductsPinedHooks.map((item: any) =>
+        Number(item.id.split('/')[2])
+      ),
+      localizedCatalogId: localizedCatalogId.toString(),
+      categoryId,
+      currentPage,
+      pageSize: rowsPerPage,
+    }),
+    [listproductsPinedHooks, currentPage, categoryId, rowsPerPage]
+  )
+
+  const graphqlApi = useApiGraphql()
+  async function handleClick(): Promise<void> {
+    await graphqlApi(getSearchProductsQuery(productGraphqlFilters), variablesUnPined, options).then(
+      (json: any) => {
+        if (isError(json)) {
+          // setResponseSavePositions({
+          //   error: json.error,
+          //   status: LoadStatus.FAILED,
+          // })
+          console.log('errr')
+        } else {
+          // if (products.status === LoadStatus.SUCCEEDED) {
+          console.log(json)
+
+          setListproductsUnPinedHooks(json.searchProducts.collection)
+        }
+
+        console.log('good')
+        // }
+      }
+    )
+  }
+  // console.log(
+  //   listproductsPinedHooks.map((item: any) => parseInt(item.id.split('/')[2]))
+  // )
+
+  useEffect(() => {
+    handleClick()
+  }, [listproductsPinedHooks])
 
   return (
     <>
