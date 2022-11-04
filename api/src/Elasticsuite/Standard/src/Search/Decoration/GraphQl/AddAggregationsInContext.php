@@ -32,7 +32,7 @@ class AddAggregationsInContext implements SerializerContextBuilderInterface
     public function create(?string $resourceClass, string $operationName, array $resolverContext, bool $normalization): array
     {
         $context = $this->decorated->create($resourceClass, $operationName, $resolverContext, $normalization);
-        if (Document::class === $resourceClass) {
+        if (Document::class === $resourceClass || is_subclass_of($resourceClass, Document::class)) {
             $context['need_aggregations'] = $resolverContext['info']->getFieldSelection()['aggregations'] ?? false;
         }
 

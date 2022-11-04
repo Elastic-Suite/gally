@@ -1,0 +1,53 @@
+Elasticsuite\Metadata\Model\SourceFieldOption:
+    product_color_option_5:
+        code: '5'
+        source_field: '@product_color'
+        position: 0
+    product_color_option_22:
+        code: '22'
+        source_field: '@product_color'
+        position: 1
+    product_color_option_23:
+        code: '23'
+        source_field: '@product_color'
+        position: 2
+    product_color_option_6:
+        code: '6'
+        source_field: '@product_color'
+        position: 3
+    product_color_option_24:
+        code: '24'
+        source_field: '@product_color'
+        position: 4
+    product_color_option_25:
+        code: '25'
+        source_field: '@product_color'
+        position: 5
+    product_color_option_26:
+        code: '26'
+        source_field: '@product_color'
+        position: 6
+    product_color_option_27:
+        code: '27'
+        source_field: '@product_color'
+        position: 7
+    product_color_option_28:
+        code: '28'
+        source_field: '@product_color'
+        position: 8
+    product_color_option_29:
+        code: '29'
+        source_field: '@product_color'
+        position: 9
+    product_color_option_30:
+        code: '30'
+        source_field: '@product_color'
+        position: 10
+    product_color_option_31:
+        code: '31'
+        source_field: '@product_color'
+        position: 11
+    product_color_option_32:
+        code: '32'
+        source_field: '@product_color'
+        position: 12
