@@ -40,7 +40,7 @@ class AddAggregationsType implements TypeBuilderInterface
     public function getResourcePaginatedCollectionType(GraphQLType $resourceType, string $resourceClass, string $operationName): GraphQLType
     {
         $type = $this->decorated->getResourcePaginatedCollectionType($resourceType, $resourceClass, $operationName);
-        if (Document::class === $resourceClass) {
+        if (Document::class === $resourceClass || is_subclass_of($resourceClass, Document::class)) {
             $fields = $type->getFields(); // @phpstan-ignore-line
             $fields['aggregations'] = $this->getAggregationsType($resourceType);
             $configuration = [

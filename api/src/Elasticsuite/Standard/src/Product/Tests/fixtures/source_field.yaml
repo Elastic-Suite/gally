@@ -11,7 +11,7 @@ Elasticsuite\Metadata\Model\SourceField:
         code: 'sku'
         type: 'reference'
         isSystem: true
-        isFilterable: true
+        isUsedForRules: true
     product_stock:
         metadata: '@product'
         code: 'stock'
@@ -36,10 +36,10 @@ Elasticsuite\Metadata\Model\SourceField:
         type: 'text'
         weight: 10
         isSearchable: true
-        isFilterable: true
+        isFilterable: false
         isSortable: false
         isSpellchecked: true
-        isUsedForRules: false
+        isUsedForRules: true
     product_brand:
         metadata: '@product'
         code: 'brand'
@@ -125,7 +125,7 @@ Elasticsuite\Metadata\Model\SourceField:
         metadata: '@product'
         code: 'category_as_nested.id'
         type: 'keyword'
-        isFilterable: true
+        isUsedForRules: true
         isSystem: true
     category_id:
         metadata: '@category'

@@ -148,3 +148,9 @@ services:
             - '@Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider'
         tags:
             - { name: api_platform.graphql.type }
+
+    Elasticsuite\Product\Decoration\GraphQl\AddEntityTypeInContext:
+        decorates: api_platform.graphql.resolver.stage.serialize
+        decoration_priority: 1
+        arguments:
+            - '@.inner'
