@@ -228,6 +228,7 @@ services:
             
     Elasticsuite\Search\Decoration\GraphQl\AddAggregationsData:
         decorates: api_platform.graphql.resolver.stage.serialize
+        decoration_priority: 10
         arguments:
 #            - '@api_platform.graphql.types_container'
             - '@.inner'
