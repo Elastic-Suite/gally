@@ -10,6 +10,7 @@ import {
   ICategories,
   ICategory,
   ICategoryConfiguration,
+  IFetch,
   IHydraCatalog,
   ILocalizedCatalog,
   IParsedCategoryConfiguration,
@@ -19,6 +20,7 @@ import {
   IRuleEngineOperators,
   LoadStatus,
   findBreadcrumbLabel,
+  getProductPosition,
   isError,
   parseCatConf,
   savePositions,
@@ -32,6 +34,7 @@ import { breadcrumbContext } from '~/contexts'
 import { withAuth, withOptions } from '~/hocs'
 import {
   useApiFetch,
+  useApiGraphql,
   useApiList,
   useFetchApi,
   useGraphqlApi,
@@ -189,7 +192,9 @@ function Categories(): JSX.Element {
   const variables = useMemo(
     () => ({
       categoryId: selectedCategoryItem?.id,
-      savePositionsCategory: savePositionsCategoryProductMerchandising,
+      savePositionsCategory: JSON.stringify(
+        savePositionsCategoryProductMerchandising
+      ),
     }),
     [savePositionsCategoryProductMerchandising]
   )
@@ -201,14 +206,39 @@ function Categories(): JSX.Element {
     [storageGet(tokenStorageKey)]
   )
 
-  // const [listProductsIdPined] = useGraphqlApi<any>(
-  //   savePositions,
-  //   variables,
-  //   options
-  // )
+  // const [responseSavePositions, setResponseSavePositions] = useState<any>({
+  //   status: LoadStatus.IDLE,
+  // })
 
-  async function onSave(): Promise<void> {
-    setIsSaving(true)
+  const graphqlApi = useApiGraphql()
+  async function handleClick(): Promise<number> {
+    let status = null
+    await graphqlApi(savePositions, variables, options).then((json) => {
+      if (isError(json)) {
+        // setResponseSavePositions({
+        //   error: json.error,
+        //   status: LoadStatus.FAILED,
+        // })
+        status = 0
+      } else {
+        // setResponseSavePositions({
+        //   data: json,
+        //   status: LoadStatus.SUCCEEDED,
+        // })
+        setListProductsIdPined({
+          ...listProductsIdPined.data,
+          getPositionsCategoryProductMerchandising: {
+            result: JSON.stringify(savePositionsCategoryProductMerchandising),
+          },
+        })
+        status = 1
+      }
+    })
+    return status
+  }
+
+  async function handleVal(): Promise<number> {
+    let status = null
     const serializedCatConf = serializeCatConf(catConf, ruleOperators)
     if (!catConf.id) {
       delete serializedCatConf['@id']
@@ -217,15 +247,17 @@ function Categories(): JSX.Element {
         const parsedCatConf = parseCatConf(newCatConf, ruleOperators)
         prevCatConf.current = parsedCatConf
         setCatConf(parsedCatConf)
-        enqueueSnackbar(t('alert'), {
-          onShut: closeSnackbar,
-          variant: 'success',
-        })
+        // enqueueSnackbar(t('alert'), {
+        //   onShut: closeSnackbar,
+        //   variant: 'success',
+        // })
+        status = 1
       } else {
-        enqueueSnackbar(t('alert.error'), {
-          onShut: closeSnackbar,
-          variant: 'error',
-        })
+        // enqueueSnackbar(t('alert.error'), {
+        //   onShut: closeSnackbar,
+        //   variant: 'error',
+        // })
+        status = 0
       }
     } else {
       const newCatConf = await update(serializedCatConf.id, serializedCatConf)
@@ -233,29 +265,83 @@ function Categories(): JSX.Element {
         const parsedCatConf = parseCatConf(newCatConf, ruleOperators)
         prevCatConf.current = parsedCatConf
         setCatConf(parsedCatConf)
-        enqueueSnackbar(t('alert'), {
-          onShut: closeSnackbar,
-          variant: 'success',
-        })
+        // enqueueSnackbar(t('alert'), {
+        //   onShut: closeSnackbar,
+        //   variant: 'success',
+        // })
+        status = 1
       } else {
-        enqueueSnackbar(t('alert.error'), {
-          onShut: closeSnackbar,
-          variant: 'error',
-        })
+        // enqueueSnackbar(t('alert.error'), {
+        //   onShut: closeSnackbar,
+        //   variant: 'error',
+        // })
+        status = 0
       }
     }
-    setIsSaving(false)
+    return status
   }
 
-  const dirty = prevCatConf.current
-    ? Object.entries(catConf ?? {}).some(
-        ([key, val]: [key: keyof typeof catConf, val: string | boolean]) =>
-          !(
-            prevCatConf.current[key] === undefined ||
-            prevCatConf.current[key] === val
-          )
-      )
-    : false
+  const [isLoading, setIsLoading] = useState(false)
+
+  function onSave(): void {
+    setIsLoading(true)
+    const handleGraphQlSetPositions = handleClick()
+    const handleApiRestVal = handleVal()
+    // console.log('rrrrr', a)
+    Promise.all([handleGraphQlSetPositions, handleApiRestVal]).then(
+      (values) => {
+        values.includes(0)
+          ? enqueueSnackbar(t('alert.error'), {
+              onShut: closeSnackbar,
+              variant: 'error',
+            })
+          : enqueueSnackbar(t('alert'), {
+              onShut: closeSnackbar,
+              variant: 'success',
+            })
+        setIsLoading(false)
+      }
+    )
+  }
+
+  const variablesListProduct = useMemo(
+    () => ({
+      localizedCatalogId: 25,
+      categoryId: 'cat_2',
+    }),
+    [localizedCatalogId]
+  )
+
+  const optionsListProduct = useMemo(
+    () => ({
+      headers: { Authorization: `Bearer ${storageGet(tokenStorageKey)}` },
+    }),
+    [storageGet(tokenStorageKey)]
+  )
+
+  const [listProductsIdPined, setListProductsIdPined] = useGraphqlApi<any>(
+    getProductPosition,
+    variablesListProduct,
+    optionsListProduct
+  )
+
+  const dirty =
+    prevCatConf.current && listProductsIdPined.status === LoadStatus.SUCCEEDED
+      ? Boolean(
+          Object.entries(catConf ?? {}).some(
+            ([key, val]: [key: keyof typeof catConf, val: string | boolean]) =>
+              !(
+                prevCatConf.current[key] === undefined ||
+                prevCatConf.current[key] === val
+              )
+          ) ||
+            !(
+              listProductsIdPined.data.getPositionsCategoryProductMerchandising
+                .result ===
+              JSON.stringify(savePositionsCategoryProductMerchandising)
+            )
+        )
+      : false
 
   return (
     <>
@@ -318,6 +404,7 @@ function Categories(): JSX.Element {
             localizedCatalog={localizedCatalogId}
             onSave={onSave}
             productGraphqlFilters={productGraphqlFilters}
+            isLoading={isLoading}
           />
         ) : (
           <Box

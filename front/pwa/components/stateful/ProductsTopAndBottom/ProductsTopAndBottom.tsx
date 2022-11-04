@@ -15,7 +15,7 @@ import {
   IProductFieldFilterInput,
   LoadStatus,
   defaultPageSize,
-  getProductPostion,
+  getProductPosition,
   storageGet,
   tokenStorageKey,
 } from 'shared'
@@ -87,7 +87,7 @@ function ProductsTopAndBottom(
   )
 
   const [listProductsIdPined] = useGraphqlApi<any>(
-    getProductPostion,
+    getProductPosition,
     variables,
     options
   )
@@ -147,6 +147,7 @@ function ProductsTopAndBottom(
               listproductsUnPinedHooks={listproductsUnPinedHooks}
               setListproductsUnPinedHooks={setListproductsUnPinedHooks}
               productGraphqlFilters={productGraphqlFilters}
+              listproductsPinedHooks={listproductsPinedHooks}
             />
           </Box>
         </Box>

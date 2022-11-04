@@ -78,7 +78,7 @@ export const getProductPined = `query pined($localizedCatalogId : String!, $list
 }
 `
 
-export const getProductPostion = `query getPosition( $categoryId: String!,  $localizedCatalogId : Int! ) {
+export const getProductPosition = `query getPosition( $categoryId: String!,  $localizedCatalogId : Int! ) {
   getPositionsCategoryProductMerchandising(categoryId: $categoryId, localizedCatalogId : $localizedCatalogId ) {
     result
   }
