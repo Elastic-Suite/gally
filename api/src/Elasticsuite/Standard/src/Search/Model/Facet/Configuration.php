@@ -63,6 +63,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
     ],
     normalizationContext: ['groups' => ['facet_configuration:read']],
     denormalizationContext: ['groups' => ['facet_configuration:read']],
+    attributes: [
+        'elasticsuite' => [
+            // Allows to add cache tag "/source_fields" in the HTTP response to invalidate proxy cache when a source field is saved.
+            'cache_tag' => ['resource_classes' => [SourceField::class]],
+        ],
+    ],
 )]
 #[ApiFilter(SearchFilterWithDefault::class, properties: ['category' => 'exact', 'displayMode' => 'exact', 'sortOrder' => 'exact'], arguments: ['defaultValues' => self::DEFAULT_VALUES])]
 #[ApiFilter(RangeFilterWithDefault::class, properties: ['coverageRate', 'maxSize'], arguments: ['defaultValues' => self::DEFAULT_VALUES])]
