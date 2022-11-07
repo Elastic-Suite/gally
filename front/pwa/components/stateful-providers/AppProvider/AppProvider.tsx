@@ -18,7 +18,7 @@ import { MuiPickersAdapter } from '@mui/x-date-pickers/internals/models'
 import { useTranslation } from 'next-i18next'
 
 
-function CustomAdapter(options): MuiPickersAdapter<unknown> {
+function CustomAdapter(options): new () => MuiPickersAdapter<unknown> {
   const adapter = new AdapterDayjs(options);
   const constructDayObject = (day: string): {charAt: () => string} => ({ charAt: () => day });
 
@@ -40,7 +40,7 @@ interface IProps {
 
 function AppProvider(props: IProps): JSX.Element {
   const { children, store } = props
-  const { t } = useTranslation('datePicker')
+  const { i18n } = useTranslation()
 
   return (
     <Provider store={store}>
@@ -57,7 +57,7 @@ function AppProvider(props: IProps): JSX.Element {
             autoHideDuration={5000}
             maxSnack={3}
           >
-            <LocalizationProvider dateAdapter={CustomAdapter} adapterLocale={t('langue')}>
+            <LocalizationProvider dateAdapter={CustomAdapter} adapterLocale={i18n.language}>
               <BreadcrumbProvider>{children}</BreadcrumbProvider>
             </LocalizationProvider>
           </SnackbarProvider>
