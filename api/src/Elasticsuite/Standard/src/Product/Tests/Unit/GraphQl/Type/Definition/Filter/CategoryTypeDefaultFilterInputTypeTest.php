@@ -53,9 +53,7 @@ class CategoryTypeDefaultFilterInputTypeTest extends KernelTestCase
         $this->assertEquals(
             [
                 'fields' => [
-                    FilterOperator::EQ => Type::string(),
-                    FilterOperator::IN => Type::listOf(Type::string()),
-                    FilterOperator::EXIST => Type::boolean(),
+                    FilterOperator::EQ => Type::nonNull(Type::string()),
                 ],
             ],
             $categoryTypeDefaultFilterInputType->getConfig()
@@ -115,18 +113,6 @@ class CategoryTypeDefaultFilterInputTypeTest extends KernelTestCase
     {
         return [
             ['category__id', ['eq' => 'cat_1'], []],
-            ['category__id', ['in' => ['cat_1', 'cat_2']], []],
-            ['category__id', ['exist' => true], []],
-            [
-                'category__id',
-                ['eq' => ['cat_1'], 'in' => ['cat_1', 'cat_2']],
-                ["Filter argument category__id: Only 'eq', 'in' or 'exist' should be filled."],
-            ],
-            [
-                'category__id',
-                [],
-                ["Filter argument category__id: At least 'eq', 'in' or 'exist' should be filled."],
-            ],
         ];
     }
 }

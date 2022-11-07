@@ -31,14 +31,14 @@ class CategoryProductMerchandisingTest extends BaseCategoryProductMerchandisingT
         $entityManager->clear();
 
         self::loadFixture([
-            __DIR__ . '/../../fixtures/catalogs.yaml',
-            __DIR__ . '/../../fixtures/categories.yaml',
-            __DIR__ . '/../../fixtures/source_field.yaml',
-            __DIR__ . '/../../fixtures/metadata.yaml',
-            __DIR__ . '/../../fixtures/configurations.yaml',
+            __DIR__ . '/../../fixtures/virtualCategoryPosition/catalogs.yaml',
+            __DIR__ . '/../../fixtures/virtualCategoryPosition/categories.yaml',
+            __DIR__ . '/../../fixtures/virtualCategoryPosition/source_field.yaml',
+            __DIR__ . '/../../fixtures/virtualCategoryPosition/metadata.yaml',
+            __DIR__ . '/../../fixtures/virtualCategoryPosition/configurations.yaml',
         ]);
         self::createEntityElasticsearchIndices('product');
-        self::loadElasticsearchDocumentFixtures([__DIR__ . '/../../fixtures/product_documents.json']);
+        self::loadElasticsearchDocumentFixtures([__DIR__ . '/../../fixtures/virtualCategoryPosition/product_documents.json']);
     }
 
     public function modifyPositionsDataProvider(): array

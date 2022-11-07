@@ -51,7 +51,7 @@ class FilterManager
      *
      * @param array $graphQlFilters context
      */
-    public function transformToElasticsuiteFilters(array $graphQlFilters, ContainerConfigurationInterface $containerConfig): array
+    public function transformToElasticsuiteFilters(array $graphQlFilters, ContainerConfigurationInterface $containerConfig, array $filterContext = []): array
     {
         $esFilters = [];
         foreach ($graphQlFilters as $filters) {
@@ -65,6 +65,7 @@ class FilterManager
                 $esFilters[] = $this->fieldFilterInputType->transformToElasticsuiteFilter(
                     [$sourceFieldName => $condition],
                     $containerConfig,
+                    $filterContext
                 );
             }
         }

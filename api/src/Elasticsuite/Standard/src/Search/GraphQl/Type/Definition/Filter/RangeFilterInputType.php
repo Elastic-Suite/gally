@@ -95,7 +95,7 @@ class RangeFilterInputType extends InputObjectType implements TypeInterface, Fil
         return $errors;
     }
 
-    public function transformToElasticsuiteFilter(array $inputFilter, ContainerConfigurationInterface $containerConfig): QueryInterface
+    public function transformToElasticsuiteFilter(array $inputFilter, ContainerConfigurationInterface $containerConfig, array $filterContext = []): QueryInterface
     {
         $conditions = [];
         foreach ([FilterOperator::GT, FilterOperator::LT, FilterOperator::GTE, FilterOperator::LTE] as $condition) {

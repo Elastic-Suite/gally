@@ -72,7 +72,7 @@ class CategoryProductPositionIndexerRepository extends BaseCategoryProductPositi
 
         if (!empty($categoryIds)) {
             $categories = $this->categoryRepository->findBy(['id' => $categoryIds]);
-            $categoryConfigurations = $this->categoryConfigurationRepository->findMergedByContext($localizedCatalog->getCatalog(), $localizedCatalog, $categories);
+            $categoryConfigurations = $this->categoryConfigurationRepository->findMergedByContextAndCategories($localizedCatalog->getCatalog(), $localizedCatalog, $categories);
 
             foreach ($products as &$productCategories) {
                 foreach ($productCategories as $categoryId => &$productCategory) {

@@ -30,15 +30,15 @@ class SyncCategoryProductMerchandisingDataTest extends BaseSyncCategoryProductMe
         $entityManager->clear();
 
         self::loadFixture([
-            __DIR__ . '/../../fixtures/catalogs.yaml',
-            __DIR__ . '/../../fixtures/categories.yaml',
-            __DIR__ . '/../../fixtures/source_field.yaml',
-            __DIR__ . '/../../fixtures/metadata.yaml',
-            __DIR__ . '/../../fixtures/configurations.yaml',
-            __DIR__ . '/../../fixtures/product_merchandising_bulk.yaml',
+            __DIR__ . '/../../fixtures/virtualCategoryPosition/catalogs.yaml',
+            __DIR__ . '/../../fixtures/virtualCategoryPosition/categories.yaml',
+            __DIR__ . '/../../fixtures/virtualCategoryPosition/source_field.yaml',
+            __DIR__ . '/../../fixtures/virtualCategoryPosition/metadata.yaml',
+            __DIR__ . '/../../fixtures/virtualCategoryPosition/configurations.yaml',
+            __DIR__ . '/../../fixtures/virtualCategoryPosition/product_merchandising_bulk.yaml',
         ]);
         self::createEntityElasticsearchIndices('product');
-        self::loadElasticsearchDocumentFixtures([__DIR__ . '/../../fixtures/product_documents_bulk.json']);
+        self::loadElasticsearchDocumentFixtures([__DIR__ . '/../../fixtures/virtualCategoryPosition/product_documents_bulk.json']);
     }
 
     /**
@@ -50,12 +50,12 @@ class SyncCategoryProductMerchandisingDataTest extends BaseSyncCategoryProductMe
 
         // Reset fixtures data.
         self::loadFixture([
-            __DIR__ . '/../../fixtures/catalogs.yaml',
-            __DIR__ . '/../../fixtures/categories.yaml',
-            __DIR__ . '/../../fixtures/source_field.yaml',
-            __DIR__ . '/../../fixtures/metadata.yaml',
-            __DIR__ . '/../../fixtures/configurations.yaml',
-            __DIR__ . '/../../fixtures/product_merchandising_bulk.yaml',
+            __DIR__ . '/../../fixtures/virtualCategoryPosition/catalogs.yaml',
+            __DIR__ . '/../../fixtures/virtualCategoryPosition/categories.yaml',
+            __DIR__ . '/../../fixtures/virtualCategoryPosition/source_field.yaml',
+            __DIR__ . '/../../fixtures/virtualCategoryPosition/metadata.yaml',
+            __DIR__ . '/../../fixtures/virtualCategoryPosition/configurations.yaml',
+            __DIR__ . '/../../fixtures/virtualCategoryPosition/product_merchandising_bulk.yaml',
         ]);
         self::deleteElasticsearchFixtures();
         self::createEntityElasticsearchIndices('product');
@@ -67,8 +67,8 @@ class SyncCategoryProductMerchandisingDataTest extends BaseSyncCategoryProductMe
      */
     public function testBulkIndex(string $indexName, array $expectedPositions)
     {
-        $documentsFile = __DIR__ . '/../../fixtures/product_documents_bulk.json';
-        $indices = file_get_contents(__DIR__ . '/../../fixtures/product_documents_bulk.json');
+        $documentsFile = __DIR__ . '/../../fixtures/virtualCategoryPosition/product_documents_bulk.json';
+        $indices = file_get_contents(__DIR__ . '/../../fixtures/virtualCategoryPosition/product_documents_bulk.json');
         $indices = json_decode($indices, true);
         $this->validateBulkIndexData($indices, $documentsFile, $indexName, $expectedPositions);
     }
