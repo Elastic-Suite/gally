@@ -1,17 +1,14 @@
-import { DatePicker as DatePickerMu } from '@mui/x-date-pickers/DatePicker'
+import { DatePicker as MuiDatePicker } from '@mui/x-date-pickers/DatePicker'
 
-import dayjs, { Dayjs } from 'dayjs'
+import { Dayjs } from 'dayjs'
 import {
   PickersDay,
   PickersDayProps,
   pickersDayClasses,
 } from '@mui/x-date-pickers/PickersDay'
-import isBetweenPlugin from 'dayjs/plugin/isBetween'
 import { styled } from '@mui/system'
 import { ComponentType } from 'react'
 import InputText, { IInputTextProps } from './InputText'
-
-dayjs.extend(isBetweenPlugin)
 
 const CustomPickersDay = styled(PickersDay, {
   shouldForwardProp: (prop) =>
@@ -28,12 +25,13 @@ const CustomPickersDay = styled(PickersDay, {
   },
 })) as ComponentType<PickersDayProps<Dayjs>>
 
-interface IDatePickerProps extends IInputTextProps {
-  date: Dayjs | null
-  onDate: (value: Dayjs | null) => void
+interface IDatePickerProps {
+  value: Dayjs | null
+  onChange: (value: Dayjs | null) => void
+  args: IInputTextProps
 }
 
-function DatePicker({ date, onDate, ...args }: IDatePickerProps): JSX.Element {
+function DatePicker({ value, onChange, ...args }: IDatePickerProps): JSX.Element {
   const renderWeekPickerDay = (
     _: Dayjs,
     __: Array<Dayjs | null>,
@@ -43,10 +41,10 @@ function DatePicker({ date, onDate, ...args }: IDatePickerProps): JSX.Element {
   }
 
   return (
-    <DatePickerMu
-      value={date}
+    <MuiDatePicker
+      value={value}
       onChange={(newValue): void => {
-        onDate(newValue)
+        onChange(newValue)
       }}
       renderDay={renderWeekPickerDay}
       renderInput={(params): JSX.Element =>  <InputText  {...params} {...args} endAdornment={params.InputProps.endAdornment} /> }

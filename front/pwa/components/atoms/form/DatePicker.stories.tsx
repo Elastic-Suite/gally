@@ -15,7 +15,7 @@ const Template: ComponentStory<typeof DatePicker> = (args) => {
     setValue(value)
   }
 
-  return <DatePicker {...args} date={value} onDate={onChange} />
+  return <DatePicker {...args} value={value} onChange={onChange} />
 }
 
 export const Radio = Template.bind({})
