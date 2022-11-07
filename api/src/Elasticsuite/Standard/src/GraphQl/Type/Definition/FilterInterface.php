@@ -24,7 +24,7 @@ interface FilterInterface
     /**
      * Transform GraphQl input data to Elasticsuite filter.
      */
-    public function transformToElasticsuiteFilter(array $inputFilter, ContainerConfigurationInterface $containerConfig): QueryInterface;
+    public function transformToElasticsuiteFilter(array $inputFilter, ContainerConfigurationInterface $containerConfig, array $filterContext = []): QueryInterface;
 
     /**
      * Validate format of input data.

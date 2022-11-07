@@ -1,0 +1,41 @@
+{
+  "rule" : {
+    "type": "combination",
+    "operator": "all",
+    "value": "true",
+    "children": [
+      {
+        "type": "attribute",
+        "field": "stock",
+        "operator": "eq",
+        "attribute_type": "stock",
+        "value": true
+      },
+      {
+        "type": "attribute",
+        "field": "stock",
+        "operator": "eq",
+        "attribute_type": "stock",
+        "value": false
+      }
+    ]
+  },
+  "expectedFilters" : {
+    "boolFilter": {
+      "_must": [
+        {
+          "stock__status": {
+            "eq": true
+          }
+        },
+        {
+          "stock__status": {
+            "eq": false
+          }
+        }
+      ]
+    }
+  },
+  "responseCode" : 200
+}
+

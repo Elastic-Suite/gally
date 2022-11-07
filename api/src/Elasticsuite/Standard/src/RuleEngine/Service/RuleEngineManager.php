@@ -106,11 +106,12 @@ class RuleEngineManager
         return $this->getRuleTypes()[$rule['type']]->transformRuleNodeToGraphQlFilter($rule);
     }
 
-    public function transformRuleToElasticsuiteFilters(array $rule, ContainerConfigurationInterface $containerConfig): array
+    public function transformRuleToElasticsuiteFilters(array $rule, ContainerConfigurationInterface $containerConfig, array $filterContext = []): array
     {
         return $this->filterManager->transformToElasticsuiteFilters(
             [$this->transformRuleToGraphQlFilters($rule)],
-            $containerConfig
+            $containerConfig,
+            $filterContext
         );
     }
 }

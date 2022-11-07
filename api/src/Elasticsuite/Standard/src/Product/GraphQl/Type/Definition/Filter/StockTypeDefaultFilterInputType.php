@@ -80,4 +80,9 @@ class StockTypeDefaultFilterInputType extends TextTypeFilterInputType
 
         return $errors;
     }
+
+    public function validateValueType(string $field, string $operator, mixed $value): void
+    {
+        $this->validateValueTypeByType($field, $operator, $value, 'bool');
+    }
 }

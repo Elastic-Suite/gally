@@ -83,7 +83,7 @@ class FieldFilterInputType extends InputObjectType implements TypeInterface, Fil
         return $errors;
     }
 
-    public function transformToElasticsuiteFilter(array $inputFilter, ContainerConfigurationInterface $containerConfig): QueryInterface
+    public function transformToElasticsuiteFilter(array $inputFilter, ContainerConfigurationInterface $containerConfig, array $filterContext = []): QueryInterface
     {
         $filters = [];
         $config = $this->getConfig();
@@ -101,7 +101,7 @@ class FieldFilterInputType extends InputObjectType implements TypeInterface, Fil
             if (!\array_key_exists('field', $data)) {
                 $data['field'] = $filterType;
             }
-            $filters[] = $type->transformToElasticsuiteFilter($data, $containerConfig);
+            $filters[] = $type->transformToElasticsuiteFilter($data, $containerConfig, $filterContext);
         }
 
         return $this->filterQueryBuilder->create($containerConfig, $filters);

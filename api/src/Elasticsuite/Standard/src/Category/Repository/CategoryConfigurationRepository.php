@@ -103,27 +103,73 @@ class CategoryConfigurationRepository extends ServiceEntityRepository
      * Get category configurations for given context.
      * If a parameter is not defined in this context, we get the value from the parent context
      * (ex: if isVirtual is null for this localized catalog, we get the value for this category on the catalog).
-     *
-     * @param Category[]|null $categories
      */
-    public function findMergedByContext(Catalog $catalog, LocalizedCatalog $localizedCatalog, ?array $categories = null): array
+    public function findMergedByContext(Catalog $catalog, LocalizedCatalog $localizedCatalog): array
+    {
+        return $this->getFindMergedByContextQueryBuilder($catalog, $localizedCatalog)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Get category configurations for given context and categories.
+     * If a parameter is not defined in this context, we get the value from the parent context
+     * (ex: if isVirtual is null for this localized catalog, we get the value for this category on the catalog).
+     *
+     * @param Category[] $categories
+     */
+    public function findMergedByContextAndCategories(Catalog $catalog, LocalizedCatalog $localizedCatalog, array $categories): array
+    {
+        $queryBuilder = $this->getFindMergedByContextQueryBuilder($catalog, $localizedCatalog);
+
+        return $queryBuilder->andWhere('lc.category IN (:categories)')
+            ->setParameter('categories', $categories)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Get category configurations for given context and category path.
+     * If a parameter is not defined in this context, we get the value from the parent context
+     * (ex: if isVirtual is null for this localized catalog, we get the value for this category on the catalog).
+     */
+    public function findMergedByContextAndCategoryPath(Catalog $catalog, LocalizedCatalog $localizedCatalog, Category $rootCategory = null): array
+    {
+        $exprBuilder = $this->getEntityManager()->getExpressionBuilder();
+        $queryBuilder = $this->getFindMergedByContextQueryBuilder($catalog, $localizedCatalog);
+
+        $queryBuilder->leftJoin(
+            Category::class,
+            'category',
+            Join::WITH,
+            $exprBuilder->andX(
+                $exprBuilder->eq('category', 'lc.category'),
+            )
+        );
+
+        $queryBuilder->andWhere($exprBuilder->like('category.path', $exprBuilder->concat(':rootCategory', "'/%'")))
+            ->setParameter('rootCategory', $rootCategory->getPath());
+
+        return $queryBuilder->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Get category configurations for given context.
+     * If a parameter is not defined in this context, we get the value from the parent context
+     * (ex: if isVirtual is null for this localized catalog, we get the value for this category on the catalog).
+     */
+    protected function getFindMergedByContextQueryBuilder(Catalog $catalog, LocalizedCatalog $localizedCatalog, ?array $categories = null): QueryBuilder
     {
         $mergeExpr = 'case when lc.%1$s IS NOT NULL then lc.%1$s else ' .
             '(case when c.%1$s IS NOT NULL then c.%1$s else g.%1$s end) end';
-        $queryBuilder = $this->buildMergeQuery($mergeExpr)
+
+        return $this->buildMergeQuery($mergeExpr)
             ->addSelect('MAX(lc.name) as name')
             ->where('lc.localizedCatalog = :localizedCatalog')
             ->andWhere('lc.catalog = :catalog')
             ->setParameter('catalog', $catalog)
             ->setParameter('localizedCatalog', $localizedCatalog);
-
-        if (null !== $categories) {
-            $queryBuilder->andWhere('lc.category IN (:categories)')
-                ->setParameter('categories', $categories);
-        }
-
-        return $queryBuilder->getQuery()
-            ->getResult();
     }
 
     /**

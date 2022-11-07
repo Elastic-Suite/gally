@@ -83,7 +83,7 @@ class EqualTypeFilterInputType extends InputObjectType implements TypeInterface,
         return $errors;
     }
 
-    public function transformToElasticsuiteFilter(array $inputFilter, ContainerConfigurationInterface $containerConfig): QueryInterface
+    public function transformToElasticsuiteFilter(array $inputFilter, ContainerConfigurationInterface $containerConfig, array $filterContext = []): QueryInterface
     {
         $conditions = [];
         foreach ([FilterOperator::EQ, FilterOperator::IN] as $condition) {

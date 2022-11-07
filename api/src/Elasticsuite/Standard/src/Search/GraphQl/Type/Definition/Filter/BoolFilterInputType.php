@@ -79,14 +79,14 @@ class BoolFilterInputType extends InputObjectType implements TypeInterface, Filt
         return $errors;
     }
 
-    public function transformToElasticsuiteFilter(array $inputFilter, ContainerConfigurationInterface $containerConfig): QueryInterface
+    public function transformToElasticsuiteFilter(array $inputFilter, ContainerConfigurationInterface $containerConfig, array $filterContext = []): QueryInterface
     {
         $queryParams = [];
         foreach (array_keys($this->mappedBooleanConditions) as $param) {
             if (isset($inputFilter[$param])) {
                 $queries = [];
                 foreach ($inputFilter[$param] as $filter) {
-                    $queries[] = $this->fieldFilterInputType->transformToElasticsuiteFilter($filter, $containerConfig);
+                    $queries[] = $this->fieldFilterInputType->transformToElasticsuiteFilter($filter, $containerConfig, $filterContext);
                 }
                 $queryParams[$this->mappedBooleanConditions[$param]] = $queries;
             }
