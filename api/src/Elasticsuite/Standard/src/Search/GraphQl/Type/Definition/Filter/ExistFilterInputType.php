@@ -59,7 +59,7 @@ class ExistFilterInputType extends InputObjectType implements TypeInterface, Fil
         return $this->validateIsFilterable($inputData['field']);
     }
 
-    public function transformToElasticsuiteFilter(array $inputFilter, ContainerConfigurationInterface $containerConfig): QueryInterface
+    public function transformToElasticsuiteFilter(array $inputFilter, ContainerConfigurationInterface $containerConfig, array $filterContext = []): QueryInterface
     {
         return $this->queryFactory->create(QueryInterface::TYPE_EXISTS, $inputFilter);
     }

@@ -1,0 +1,127 @@
+{
+  "rule" : {
+    "type": "combination",
+    "operator": "all",
+    "value": "true",
+    "children": [
+      {
+        "type": "attribute",
+        "field": "price",
+        "operator": "eq",
+        "attribute_type": "price",
+        "value": 1.5
+      },
+      {
+        "type": "attribute",
+        "field": "price",
+        "operator": "!eq",
+        "attribute_type": "price",
+        "value": 1.5
+      },
+      {
+        "type": "attribute",
+        "field": "price",
+        "operator": "in",
+        "attribute_type": "price",
+        "value": [1.5, 2.65]
+      },
+      {
+        "type": "attribute",
+        "field": "price",
+        "operator": "!in",
+        "attribute_type": "price",
+        "value": [1.5, 2.65]
+      },
+      {
+        "type": "attribute",
+        "field": "price",
+        "operator": "gte",
+        "attribute_type": "price",
+        "value": 1.5
+      },
+      {
+        "type": "attribute",
+        "field": "price",
+        "operator": "gt",
+        "attribute_type": "price",
+        "value": 1.5
+      },
+      {
+        "type": "attribute",
+        "field": "price",
+        "operator": "lte",
+        "attribute_type": "price",
+        "value": 2.65
+      },
+      {
+        "type": "attribute",
+        "field": "price",
+        "operator": "lt",
+        "attribute_type": "price",
+        "value": 2.65
+      }
+    ]
+  },
+  "expectedFilters" : {
+    "boolFilter": {
+      "_must": [
+        {
+          "price__price": {
+            "eq": 1.5
+          }
+        },
+        {
+          "boolFilter": {
+            "_not": {
+              "price__price": {
+                "eq": 1.5
+              }
+            }
+          }
+        },
+        {
+          "price__price": {
+            "in": [
+              1.5,
+              2.65
+            ]
+          }
+        },
+        {
+          "boolFilter": {
+            "_not": {
+              "price__price": {
+                "in": [
+                  1.5,
+                  2.65
+                ]
+              }
+            }
+          }
+        },
+        {
+          "price__price": {
+            "gte": 1.5
+          }
+        },
+        {
+          "price__price": {
+            "gt": 1.5
+          }
+        },
+        {
+          "price__price": {
+            "lte": 2.65
+          }
+        },
+        {
+          "price__price": {
+            "lt": 2.65
+          }
+        }
+      ]
+    }
+  },
+  "responseCode" : 200
+}
+

@@ -38,9 +38,7 @@ class CategoryTypeDefaultFilterInputType extends TextTypeFilterInputType
     {
         return [
             'fields' => [
-                FilterOperator::EQ => Type::string(),
-                FilterOperator::IN => Type::listOf(Type::string()),
-                FilterOperator::EXIST => Type::boolean(),
+                FilterOperator::EQ => Type::nonNull(Type::string()),
             ],
         ];
     }
@@ -59,28 +57,7 @@ class CategoryTypeDefaultFilterInputType extends TextTypeFilterInputType
 
     public function validate(string $argName, mixed $inputData): array
     {
-        $errors = [];
-
-        if (\count($inputData) < 1) {
-            $errors[] = sprintf(
-                "Filter argument %s: At least '%s', '%s' or '%s' should be filled.",
-                $argName,
-                FilterOperator::EQ,
-                FilterOperator::IN,
-                FilterOperator::EXIST,
-            );
-        }
-
-        if (\count($inputData) > 1) {
-            $errors[] = sprintf(
-                "Filter argument %s: Only '%s', '%s' or '%s' should be filled.",
-                $argName,
-                FilterOperator::EQ,
-                FilterOperator::IN,
-                FilterOperator::EXIST,
-            );
-        }
-
-        return $errors;
+        // No need to validate because the field 'eq' is mandatory in GraphQl schema.
+        return [];
     }
 }

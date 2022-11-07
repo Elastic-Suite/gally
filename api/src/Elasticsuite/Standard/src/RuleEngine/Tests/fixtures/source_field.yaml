@@ -33,6 +33,30 @@ Elasticsuite\Metadata\Model\SourceField:
         type: 'boolean'
         isUsedForRules: true
         isSystem: true
+    product_brand:
+        metadata: '@product'
+        code: 'brand'
+        type: 'select'
+        isUsedForRules: true
+        isSystem: true
+    product_category:
+        metadata: '@product'
+        code: 'category'
+        type: 'category'
+        isUsedForRules: true
+        isSystem: true
+    product_price:
+        metadata: '@product'
+        code: 'price'
+        type: 'price'
+        isUsedForRules: true
+        isSystem: true
+    product_stock:
+        metadata: '@product'
+        code: 'stock'
+        type: 'stock'
+        isUsedForRules: true
+        isSystem: true
     product_created_at:
         metadata: '@product'
         code: 'created_at'

@@ -7,7 +7,7 @@ services:
             - '@Elasticsuite\Category\Repository\CategoryConfigurationRepository'
             - '@Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
             - '@Elasticsuite\Search\Elasticsearch\Request\QueryFactory'
-            - '@.inner'
+            - '@logger' 
             - '%api_platform.graphql.nesting_separator%'
         decoration_priority: 10
 
