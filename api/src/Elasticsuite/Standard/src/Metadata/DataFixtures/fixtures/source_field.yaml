@@ -1,3 +1,6 @@
+include:
+    - metadata.yaml
+
 Elasticsuite\Metadata\Model\SourceField:
     product_simple_category_id:
         metadata: '@product'

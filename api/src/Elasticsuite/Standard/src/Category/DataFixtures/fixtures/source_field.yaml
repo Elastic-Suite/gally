@@ -1,3 +1,6 @@
+include:
+    - metadata.yaml
+
 Elasticsuite\Metadata\Model\SourceField:
     category_id:
         metadata: '@category'
