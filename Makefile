@@ -86,12 +86,18 @@ prettier: ## Run prettier
 prettier: yarn
 	@$(DOCKER_COMP) exec pwa yarn prettier
 
+qa_back: ## Run code quality tools for back
+qa_back: phpcsfixer
+qa_back: phpstan
+
+qa_front: ## Run code quality tools for front
+qa_front: typescript
+qa_front: eslint
+qa_front: prettier
+
 qa: ## Run code quality tools
-qa: phpcsfixer
-qa: phpstan
-qa: typescript
-qa: eslint
-qa: prettier
+qa: qa_back
+qa: qa_front
 
 phpunit: ## Run php unit tests, pass the parameter "p=" to launch tests on a specific path
 	@$(eval p ?=)

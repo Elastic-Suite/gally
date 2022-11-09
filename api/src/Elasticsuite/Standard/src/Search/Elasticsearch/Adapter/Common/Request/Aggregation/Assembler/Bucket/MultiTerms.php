@@ -41,7 +41,10 @@ class MultiTerms implements AssemblerInterface
 
         $terms = [];
         foreach ($aggregation->getFields() as $field) {
-            $terms[] = ['field' => $field];
+            $terms[] = [
+                'field' => $field,
+                'missing' => 'None',
+            ];
         }
         $aggregationEs['multi_terms']['terms'] = $terms;
 

@@ -82,4 +82,17 @@ class SourceFieldRepository extends ServiceEntityRepository
 
         return $query->getResult();
     }
+
+    /**
+     * @return SourceField[]
+     */
+    public function getFilterableInAggregationFields(string $entityCode): array
+    {
+        return $this->findBy(
+            [
+                'metadata' => $this->metadataRepository->findBy(['entity' => $entityCode]),
+                'isFilterable' => true,
+            ]
+        );
+    }
 }

@@ -20,19 +20,21 @@ use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
 use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
 
 /**
- * Aggregation Resolver Interface for search containers.
+ * Aggregations Provider interface for search requests.
  */
-interface AggregationResolverInterface
+interface AggregationProviderInterface
 {
     /**
      * Returns aggregations configured in the search container, and according to currently applied query and filters.
      *
-     * @param QueryInterface[] $filters
-     * @param QueryInterface[] $queryFilters
+     * @param ContainerConfigurationInterface $containerConfig search container configuration
+     * @param string|QueryInterface|null      $query           search request query
+     * @param array                           $filters         search request filters
+     * @param QueryInterface[]                $queryFilters    search request filters prebuilt as QueryInterface
      */
-    public function getContainerAggregations(
+    public function getAggregations(
         ContainerConfigurationInterface $containerConfig,
-        string|QueryInterface $query = null,
+        QueryInterface|string|null $query = null,
         array $filters = [],
         array $queryFilters = []
     ): array;

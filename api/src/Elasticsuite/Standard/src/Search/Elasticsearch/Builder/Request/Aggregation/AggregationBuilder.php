@@ -76,6 +76,14 @@ class AggregationBuilder
         try {
             $field = $containerConfig->getMapping()->getField($fieldName);
             $aggregationParams['field'] = $field->getMappingProperty('untouched');
+
+            $additionalFields = [];
+            foreach ($aggregationParams['additionalFields'] ?? [] as $additionalFieldName) {
+                $additionalField = $containerConfig->getMapping()->getField($additionalFieldName);
+                $additionalFields[] = $additionalField->getMappingProperty('untouched');
+            }
+            $aggregationParams['additionalFields'] = $additionalFields;
+
             if ($field->isNested()
                 && (!isset($aggregationParams['unsetNestedPath'])
                     || false === filter_var($aggregationParams['unsetNestedPath'], \FILTER_VALIDATE_BOOLEAN)

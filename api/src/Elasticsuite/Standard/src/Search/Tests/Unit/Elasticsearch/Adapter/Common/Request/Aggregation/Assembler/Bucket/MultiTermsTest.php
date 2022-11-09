@@ -38,7 +38,10 @@ class MultiTermsTest extends KernelTestCase
         $this->assertArrayHasKey('multi_terms', $aggregation);
         $this->assertArrayHasKey('terms', $aggregation['multi_terms']);
         $this->assertIsArray($aggregation['multi_terms']['terms']);
-        $this->assertEquals([['field' => 'fieldName'], ['field' => 'otherFieldName']], $aggregation['multi_terms']['terms']);
+        $this->assertEquals(
+            [['field' => 'fieldName', 'missing' => 'None'], ['field' => 'otherFieldName', 'missing' => 'None']],
+            $aggregation['multi_terms']['terms']
+        );
         $this->assertEquals(BucketInterface::MAX_BUCKET_SIZE, $aggregation['multi_terms']['size']);
         $this->assertEquals([BucketInterface::SORT_ORDER_COUNT => SortOrderInterface::SORT_DESC], $aggregation['multi_terms']['order']);
     }
@@ -158,7 +161,10 @@ class MultiTermsTest extends KernelTestCase
         // $this->assertEquals('fieldName', $aggregation['terms']['field']);
         $this->assertArrayHasKey('terms', $aggregation['multi_terms']);
         $this->assertIsArray($aggregation['multi_terms']['terms']);
-        $this->assertEquals([['field' => 'fieldName'], ['field' => 'otherFieldName']], $aggregation['multi_terms']['terms']);
+        $this->assertEquals([
+            ['field' => 'fieldName', 'missing' => 'None'], ['field' => 'otherFieldName', 'missing' => 'None'], ],
+            $aggregation['multi_terms']['terms']
+        );
         $this->assertEquals([BucketInterface::SORT_ORDER_COUNT => SortOrderInterface::SORT_DESC], $aggregation['multi_terms']['order']);
     }
 

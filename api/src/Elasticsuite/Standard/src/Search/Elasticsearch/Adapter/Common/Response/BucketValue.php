@@ -18,6 +18,11 @@ namespace Elasticsuite\Search\Elasticsearch\Adapter\Common\Response;
 
 class BucketValue implements BucketValueInterface
 {
+    /**
+     * @param mixed                  $key
+     * @param int                    $count
+     * @param AggregationInterface[] $childAggregation
+     */
     public function __construct(
         private mixed $key,
         private int $count,
