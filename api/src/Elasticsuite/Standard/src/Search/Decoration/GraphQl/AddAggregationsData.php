@@ -37,7 +37,7 @@ class AddAggregationsData implements SerializeStageInterface
         private MetadataRepository $metadataRepository,
         private ContainerConfigurationProvider $containerConfigurationProvider,
         private SourceFieldRepository $sourceFieldRepository,
-        private LocalizedCatalogRepository $catalogRepository,
+        private LocalizedCatalogRepository $localizedCatalogRepository,
     ) {
     }
 
@@ -47,8 +47,8 @@ class AddAggregationsData implements SerializeStageInterface
 
         if (Document::class === $resourceClass) {
             $metadata = $this->metadataRepository->findByEntity($context['args']['entityType']);
-            $catalog = $this->catalogRepository->findByCodeOrId($context['args']['catalogId']);
-            $containerConfig = $this->containerConfigurationProvider->get($metadata, $catalog);
+            $localizedCatalog = $this->localizedCatalogRepository->findByCodeOrId($context['args']['catalogId']);
+            $containerConfig = $this->containerConfigurationProvider->get($metadata, $localizedCatalog, $context['args']['requestType'] ?? null);
 
             /** @var Paginator $itemOrCollection */
             $aggregations = $itemOrCollection->getAggregations();
@@ -74,7 +74,7 @@ class AddAggregationsData implements SerializeStageInterface
 
         $data = [
             'field' => $aggregation->getField(),
-            'label' => $sourceField ? $sourceField->getLabel($containerConfig->getCatalog()->getId()) : $aggregation->getField(),
+            'label' => $sourceField ? $sourceField->getLabel($containerConfig->getLocalizedCatalog()->getId()) : $aggregation->getField(),
             'count' => $aggregation->getCount(),
             'options' => null,
         ];

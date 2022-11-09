@@ -181,6 +181,7 @@ services:
             - '@Elasticsuite\Search\Elasticsearch\Builder\Request\SimpleRequestBuilder'
             - '@Elasticsuite\Search\Elasticsearch\Adapter'
             - '@Elasticsuite\Search\Elasticsearch\Request\QueryFactory'
+            - '@Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider'
 
     Elasticsuite\Category\OpenApi\CategoryDecorator:
         decorates: api_platform.openapi.factory

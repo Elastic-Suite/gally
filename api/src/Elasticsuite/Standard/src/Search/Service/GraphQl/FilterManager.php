@@ -43,7 +43,13 @@ class FilterManager
 
     public function getFiltersFromContext(array $context): array
     {
-        return $context[SerializerContextBuilder::GRAPHQL_ELASTICSUITE_FILTERS_KEY]['filter'] ?? [];
+        $filters = $context[SerializerContextBuilder::GRAPHQL_ELASTICSUITE_FILTERS_KEY]['filter'] ?? [];
+
+        if (isset($context['filters']['currentCategoryId'])) {
+            $filters[]['category__id'] = ['eq' => $context['filters']['currentCategoryId']];
+        }
+
+        return $filters;
     }
 
     /**

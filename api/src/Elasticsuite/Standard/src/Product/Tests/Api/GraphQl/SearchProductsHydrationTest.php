@@ -74,7 +74,7 @@ class SearchProductsHydrationTest extends AbstractTest
         $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
 
         $arguments = sprintf(
-            'catalogId: "%s"',
+            'requestType: product_catalog, catalogId: "%s"',
             $catalogId
         );
         if (null !== $pageSize) {

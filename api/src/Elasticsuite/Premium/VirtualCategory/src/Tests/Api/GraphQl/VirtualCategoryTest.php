@@ -62,7 +62,7 @@ class VirtualCategoryTest extends AbstractTest
     ): void {
         $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
         $arguments = sprintf(
-            'catalogId: "%s", pageSize: %d, currentPage: %d, filter: {%s}',
+            'requestType: product_catalog, catalogId: "%s", pageSize: %d, currentPage: %d, filter: {%s}',
             $catalogId,
             12,
             1,
