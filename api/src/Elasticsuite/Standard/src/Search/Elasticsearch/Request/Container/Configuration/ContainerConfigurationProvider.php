@@ -17,44 +17,66 @@ declare(strict_types=1);
 namespace Elasticsuite\Search\Elasticsearch\Request\Container\Configuration;
 
 use Elasticsuite\Catalog\Model\LocalizedCatalog;
-use Elasticsuite\Index\Api\IndexSettingsInterface;
-use Elasticsuite\Index\Service\MetadataManager;
 use Elasticsuite\Metadata\Model\Metadata;
 use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationFactoryInterface;
 use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
 
 class ContainerConfigurationProvider
 {
-    public function __construct(
-        private IndexSettingsInterface $indexSettings,
-        private MetadataManager $metadataManager,
-        private ContainerConfigurationFactoryInterface $containerConfigFactory,
-    ) {
+    /** @var ContainerConfigurationFactoryInterface[][] */
+    private array $containerConfigFactories;
+
+    public function __construct(private GenericContainerConfigurationFactory $genericConfigurationFactory)
+    {
+    }
+
+    /**
+     * Add factories via compiler pass.
+     *
+     * @see \Elasticsuite\Search\Compiler\GetContainerConfigurationFactory
+     */
+    public function addContainerConfigFactory(
+        string $requestType,
+        ContainerConfigurationFactoryInterface $configurationFactory,
+        string $entityCode = 'generic'
+    ): void {
+        $this->containerConfigFactories[$entityCode][$requestType] = $configurationFactory;
     }
 
     /**
      * Create a container configuration based on provided entity metadata and catalog ID.
      *
-     * @param Metadata         $metadata Search request target entity metadata
-     * @param LocalizedCatalog $catalog  Search request target catalog
+     * @param Metadata         $metadata         Search request target entity metadata
+     * @param LocalizedCatalog $localizedCatalog Search request target catalog
+     * @param string|null      $requestType      Search request type
      *
      * @throws \LogicException Thrown when the search container is not found into the configuration
      */
-    public function get(Metadata $metadata, LocalizedCatalog $catalog): ContainerConfigurationInterface
+    public function get(Metadata $metadata, LocalizedCatalog $localizedCatalog, ?string $requestType = null): ContainerConfigurationInterface
     {
-        $indexName = $this->indexSettings->getIndexAliasFromIdentifier(
-            $metadata->getEntity(),
-            $catalog->getId()
-        );
+        if (null === $requestType) {
+            $factory = $this->genericConfigurationFactory;
+        } else {
+            $entityCode = $metadata->getEntity();
+            $entityCode = \array_key_exists($entityCode, $this->containerConfigFactories) ? $entityCode : 'generic';
 
-        $mapping = $this->metadataManager->getMapping($metadata);
+            if (!\array_key_exists($requestType, $this->containerConfigFactories[$entityCode])) {
+                throw new \LogicException(sprintf('The request type %s is not defined.', $requestType));
+            }
 
-        return $this->containerConfigFactory->create([
-            'containerName' => 'raw',
-            'indexName' => $indexName,
-            'catalog' => $catalog,
-            'metadata' => $metadata,
-            'mapping' => $mapping,
-        ]);
+            $factory = $this->containerConfigFactories[$entityCode][$requestType];
+        }
+
+        return $factory->create($requestType ?? 'generic', $metadata, $localizedCatalog);
+    }
+
+    /**
+     * Get all available request type names.
+     *
+     * @return string[]
+     */
+    public function getAvailableRequestType(string $entityCode = 'generic'): array
+    {
+        return array_keys($this->containerConfigFactories[$entityCode]);
     }
 }

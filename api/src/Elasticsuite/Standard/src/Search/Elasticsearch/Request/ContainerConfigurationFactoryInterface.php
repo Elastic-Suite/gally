@@ -16,7 +16,14 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Search\Elasticsearch\Request;
 
+use Elasticsuite\Catalog\Model\LocalizedCatalog;
+use Elasticsuite\Metadata\Model\Metadata;
+
 interface ContainerConfigurationFactoryInterface
 {
-    public function create(array $data = []): ContainerConfigurationInterface;
+    public function create(
+        string $requestType,
+        Metadata $metadata,
+        LocalizedCatalog $localizedCatalog
+    ): ContainerConfigurationInterface;
 }

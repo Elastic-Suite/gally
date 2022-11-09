@@ -16,13 +16,9 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Search\Elasticsearch\Builder\Request;
 
-use Elasticsuite\Catalog\Model\LocalizedCatalog;
-use Elasticsuite\Metadata\Model\Metadata;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\Aggregation\AggregationBuilder;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\Query\QueryBuilder;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\SortOrder\SortOrderBuilder;
-use Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\AggregationResolverInterface;
-use Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider;
 use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
 use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
 use Elasticsuite\Search\Elasticsearch\RequestFactoryInterface;
@@ -35,22 +31,18 @@ class SimpleRequestBuilder
     /**
      * Constructor.
      *
-     * @param RequestFactoryInterface              $requestFactory                 Factory used to build the request
-     * @param ContainerConfigurationProvider       $containerConfigurationProvider Container configuration provider
-     * @param QueryBuilder                         $queryBuilder                   Builder for the query part of the request
-     * @param SortOrderBuilder                     $sortOrderBuilder               Builder for the sort order(s) part of the request
-     * @param AggregationBuilder                   $aggregationBuilder             Builder for the aggregation part of the request
-     * @param AggregationResolverInterface         $aggregationResolver            Aggregation Resolver
-     * @param Spellchecker\RequestFactoryInterface $spellcheckRequestFactory       Spellchecker request factory
-     * @param SpellcheckerInterface                $spellchecker                   Spellchecker Spellchecker
+     * @param RequestFactoryInterface              $requestFactory           Factory used to build the reques
+     * @param QueryBuilder                         $queryBuilder             Builder for the query part of the request
+     * @param SortOrderBuilder                     $sortOrderBuilder         Builder for the sort order(s) part of the request
+     * @param AggregationBuilder                   $aggregationBuilder       Builder for the aggregation part of the request
+     * @param Spellchecker\RequestFactoryInterface $spellcheckRequestFactory Spellchecker request factory
+     * @param SpellcheckerInterface                $spellchecker             Spellchecker Spellchecker
      */
     public function __construct(
         private RequestFactoryInterface $requestFactory,
-        private ContainerConfigurationProvider $containerConfigurationProvider,
         private QueryBuilder $queryBuilder,
         private SortOrderBuilder $sortOrderBuilder,
         private AggregationBuilder $aggregationBuilder,
-        private AggregationResolverInterface $aggregationResolver,
         private Spellchecker\RequestFactoryInterface $spellcheckRequestFactory,
         private SpellcheckerInterface $spellchecker,
     ) {
@@ -59,19 +51,17 @@ class SimpleRequestBuilder
     /**
      * Create a new search request.
      *
-     * @param Metadata                   $metadata     Search request target entity metadata
-     * @param LocalizedCatalog           $catalog      Search request target catalog
-     * @param int                        $from         Search request pagination from clause
-     * @param int                        $size         Search request pagination size
-     * @param string|QueryInterface|null $query        Search request query
-     * @param array                      $sortOrders   Search request sort orders
-     * @param array                      $filters      Search request filters
-     * @param QueryInterface[]           $queryFilters Search request filters prebuilt as QueryInterface
-     * @param ?array                     $facets       Search request facets
+     * @param ContainerConfigurationInterface $containerConfig Search request configuration
+     * @param int                             $from            Search request pagination from clause
+     * @param int                             $size            Search request pagination size
+     * @param string|QueryInterface|null      $query           Search request query
+     * @param array                           $sortOrders      Search request sort orders
+     * @param array                           $filters         Search request filters
+     * @param QueryInterface[]                $queryFilters    Search request filters prebuilt as QueryInterface
+     * @param ?array                          $facets          Search request facets
      */
     public function create(
-        Metadata $metadata,
-        LocalizedCatalog $catalog,
+        ContainerConfigurationInterface $containerConfig,
         int $from,
         int $size,
         string|QueryInterface|null $query = null,
@@ -80,10 +70,9 @@ class SimpleRequestBuilder
         array $queryFilters = [],
         ?array $facets = []
     ): RequestInterface {
-        $containerConfig = $this->containerConfigurationProvider->get($metadata, $catalog);
         $facetFilters = array_intersect_key($filters, $facets ?? []);
         $facets = \is_array($facets)
-            ? array_merge($facets, $this->aggregationResolver->getContainerAggregations($containerConfig, $query, $filters, $queryFilters))
+            ? array_merge($facets, $containerConfig->getAggregations($query, $filters, $queryFilters))
             : [];
 
         $queryFilters = array_merge($queryFilters, array_diff_key($filters, $facetFilters));

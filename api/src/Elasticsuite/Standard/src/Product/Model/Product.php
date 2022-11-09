@@ -21,6 +21,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Elasticsuite\Entity\Model\Attribute\AttributeInterface;
 use Elasticsuite\GraphQl\Decoration\Resolver\Stage\ReadStage;
 use Elasticsuite\Product\GraphQl\Type\Definition\FieldFilterInputType;
+use Elasticsuite\Product\GraphQl\Type\Definition\ProductRequestTypeEnumType;
 use Elasticsuite\Product\GraphQl\Type\Definition\SortInputType;
 use Elasticsuite\Search\Model\Document;
 use Elasticsuite\Search\Resolver\DummyDocumentResolver;
@@ -34,8 +35,10 @@ use Elasticsuite\Search\Resolver\DummyDocumentResolver;
                 'pagination_type' => 'page',
                 'args' => [
                     'catalogId' => ['type' => 'String!', 'description' => 'Catalog ID'],
+                    'requestType' => ['type' => ProductRequestTypeEnumType::NAME . '!', 'description' => 'Request Type'],
                     'currentPage' => ['type' => 'Int'],
                     'search' => ['type' => 'String', 'description' => 'Query Text'],
+                    'currentCategoryId' => ['type' => 'String', 'description' => 'Current category ID'],
                     'pageSize' => ['type' => 'Int'],
                     'sort' => ['type' => SortInputType::NAME],
                     'filter' => ['type' => '[' . FieldFilterInputType::NAME . ']', ReadStage::IS_GRAPHQL_ELASTICSUITE_ARG_KEY => true],

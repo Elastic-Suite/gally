@@ -16,13 +16,38 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Search\Elasticsearch\Request\Container\Configuration;
 
+use Elasticsuite\Catalog\Model\LocalizedCatalog;
+use Elasticsuite\Index\Api\IndexSettingsInterface;
+use Elasticsuite\Index\Service\MetadataManager;
+use Elasticsuite\Metadata\Model\Metadata;
+use Elasticsuite\Search\Elasticsearch\Request\Container\RelevanceConfigurationInterface;
 use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationFactoryInterface;
 use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
 
 class GenericContainerConfigurationFactory implements ContainerConfigurationFactoryInterface
 {
-    public function create(array $data = []): ContainerConfigurationInterface
+    public function __construct(
+        private IndexSettingsInterface $indexSettings,
+        private MetadataManager $metadataManager,
+        private RelevanceConfigurationInterface $relevanceConfiguration,
+    ) {
+    }
+
+    public function create(string $requestType, Metadata $metadata, LocalizedCatalog $localizedCatalog): ContainerConfigurationInterface
     {
-        return new GenericContainerConfiguration(...$data);
+        $indexName = $this->indexSettings->getIndexAliasFromIdentifier(
+            $metadata->getEntity(),
+            $localizedCatalog->getId()
+        );
+        $mapping = $this->metadataManager->getMapping($metadata);
+
+        return new GenericContainerConfiguration(
+            $requestType,
+            $localizedCatalog,
+            $metadata,
+            $indexName,
+            $mapping,
+            $this->relevanceConfiguration,
+        );
     }
 }

@@ -28,6 +28,7 @@ use Elasticsuite\Index\Model\Index;
 use Elasticsuite\Metadata\Repository\MetadataRepository;
 use Elasticsuite\Search\Elasticsearch\Adapter;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\SimpleRequestBuilder as RequestBuilder;
+use Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider;
 use Elasticsuite\Search\Elasticsearch\Request\QueryFactory;
 use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
 use Elasticsuite\Search\Model\Document;
@@ -47,6 +48,7 @@ class CategoryProductPositionManager
         private RequestBuilder $requestBuilder,
         private Adapter $adapter,
         private QueryFactory $queryFactory,
+        private ContainerConfigurationProvider $containerConfigurationProvider,
     ) {
     }
 
@@ -221,9 +223,9 @@ class CategoryProductPositionManager
             ]
         );
 
+        $containerConfig = $this->containerConfigurationProvider->get($metadata, $localizedCatalog);
         $request = $this->requestBuilder->create(
-            $metadata,
-            $localizedCatalog,
+            $containerConfig,
             0,
             self::MAX_POSITION_COUNT,
             null,

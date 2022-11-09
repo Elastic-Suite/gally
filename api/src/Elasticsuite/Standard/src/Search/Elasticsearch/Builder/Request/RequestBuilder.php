@@ -19,8 +19,6 @@ namespace Elasticsuite\Search\Elasticsearch\Builder\Request;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\Aggregation\AggregationBuilder;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\Query\QueryBuilder;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\SortOrder\SortOrderBuilder;
-use Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\AggregationResolverInterface;
-use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationFactoryInterface;
 use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
 use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
 use Elasticsuite\Search\Elasticsearch\RequestFactoryInterface;
@@ -36,22 +34,18 @@ class RequestBuilder
     /**
      * Constructor.
      *
-     * @param RequestFactoryInterface                $requestFactory           Factory used to build the request
-     * @param ContainerConfigurationFactoryInterface $containerConfigFactory   search requests configuration
-     * @param QueryBuilder                           $queryBuilder             Builder for the query part of the request
-     * @param SortOrderBuilder                       $sortOrderBuilder         Builder for the sort order(s) part of the request
-     * @param AggregationBuilder                     $aggregationBuilder       Builder for the aggregation part of the request
-     * @param AggregationResolverInterface           $aggregationResolver      Aggregation Resolver
-     * @param Spellchecker\RequestFactoryInterface   $spellcheckRequestFactory Spellchecker request factory
-     * @param SpellcheckerInterface                  $spellchecker             Spellchecker Spellchecker
+     * @param RequestFactoryInterface              $requestFactory           Factory used to build the request
+     * @param QueryBuilder                         $queryBuilder             Builder for the query part of the request
+     * @param SortOrderBuilder                     $sortOrderBuilder         Builder for the sort order(s) part of the request
+     * @param AggregationBuilder                   $aggregationBuilder       Builder for the aggregation part of the request
+     * @param Spellchecker\RequestFactoryInterface $spellcheckRequestFactory Spellchecker request factory
+     * @param SpellcheckerInterface                $spellchecker             Spellchecker Spellchecker
      */
     public function __construct(
         private RequestFactoryInterface $requestFactory,
-        private ContainerConfigurationFactoryInterface $containerConfigFactory,
         private QueryBuilder $queryBuilder,
         private SortOrderBuilder $sortOrderBuilder,
         private AggregationBuilder $aggregationBuilder,
-        private AggregationResolverInterface $aggregationResolver,
         private Spellchecker\RequestFactoryInterface $spellcheckRequestFactory,
         private SpellcheckerInterface $spellchecker,
     ) {
@@ -60,19 +54,17 @@ class RequestBuilder
     /**
      * Create a new search request.
      *
-     * @param int                        $catalogId     Search request catalog id
-     * @param string                     $containerName Search request name
-     * @param int                        $from          Search request pagination from clause
-     * @param int                        $size          Search request pagination size
-     * @param string|QueryInterface|null $query         Search request query
-     * @param array                      $sortOrders    Search request sort orders
-     * @param array                      $filters       Search request filters
-     * @param QueryInterface[]           $queryFilters  Search request filters prebuilt as QueryInterface
-     * @param array|null                 $facets        Search request facets
+     * @param ContainerConfigurationInterface $containerConfig search container configuration
+     * @param int                             $from            Search request pagination from clause
+     * @param int                             $size            Search request pagination size
+     * @param string|QueryInterface|null      $query           Search request query
+     * @param array                           $sortOrders      Search request sort orders
+     * @param array                           $filters         Search request filters
+     * @param QueryInterface[]                $queryFilters    Search request filters prebuilt as QueryInterface
+     * @param array|null                      $facets          Search request facets
      */
     public function create(
-        int $catalogId,
-        string $containerName,
+        ContainerConfigurationInterface $containerConfig,
         int $from,
         int $size,
         string|QueryInterface|null $query = null,
@@ -81,10 +73,9 @@ class RequestBuilder
         array $queryFilters = [],
         ?array $facets = []
     ): RequestInterface {
-        $containerConfig = $this->getRequestContainerConfiguration($catalogId, $containerName);
         $facetFilters = array_intersect_key($filters, $facets ?? []);
         $facets = \is_array($facets)
-            ? array_merge($facets, $this->aggregationResolver->getContainerAggregations($containerConfig, $query, $filters, $queryFilters))
+            ? array_merge($facets, $containerConfig->getAggregations($query, $filters, $queryFilters))
             : [];
 
         /*
@@ -98,7 +89,7 @@ class RequestBuilder
         }
 
         $requestParams = [
-            'name' => $containerName,
+            'name' => $containerConfig->getName(),
             'indexName' => $containerConfig->getIndexName(),
             'from' => $from,
             'size' => $size,
@@ -168,7 +159,7 @@ class RequestBuilder
         return $this->spellchecker->getSpellingType($spellcheckRequest);
     }
 
-    /**
+    /*
      * Load the search request configuration (index, type, mapping, ...) using the search request container name.
      *
      * @param int    $catalogId     Catalog id
@@ -176,24 +167,20 @@ class RequestBuilder
      *
      * @throws \LogicException Thrown when the search container is not found into the configuration
      */
-    private function getRequestContainerConfiguration(int $catalogId, string $containerName): ContainerConfigurationInterface
+    /*private function getRequestContainerConfiguration(int $catalogId, string $containerName): ContainerConfigurationInterface
     {
-        /*
         if (null === $containerName) {
             throw new \LogicException('Request name is not set');
         }
-        */
 
         return $this->containerConfigFactory->create(
             ['containerName' => $containerName, 'catalogId' => $catalogId]
         );
 
-        /*
         if (null === $config) {
             throw new \LogicException("No configuration exists for request {$containerName}");
         }
 
         return $config;
-        */
-    }
+    }*/
 }
