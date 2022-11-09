@@ -9,6 +9,7 @@ import {
 import { styled } from '@mui/system'
 import { ComponentType } from 'react'
 import InputText, { IInputTextProps } from './InputText'
+import IonIcon from '../IonIcon/IonIcon'
 
 const CustomPickersDay = styled(PickersDay, {
   shouldForwardProp: (prop) =>
@@ -28,7 +29,14 @@ const CustomPickersDay = styled(PickersDay, {
 interface IDatePickerProps {
   value: Dayjs | null
   onChange: (value: Dayjs | null) => void
-  args: IInputTextProps
+  args?: IInputTextProps
+}
+
+function EndIcon(): JSX.Element {
+  return <IonIcon name="calendar-outline" style={{ fontSize: 18, padding: '0px' }} />
+}
+function ShowIcon(): JSX.Element {
+  return <IonIcon name="chevron-down-outline" style={{ fontSize: 18, padding: '0px' }} />
 }
 
 function DatePicker({ value, onChange, ...args }: IDatePickerProps): JSX.Element {
@@ -47,7 +55,12 @@ function DatePicker({ value, onChange, ...args }: IDatePickerProps): JSX.Element
         onChange(newValue)
       }}
       renderDay={renderWeekPickerDay}
-      renderInput={(params): JSX.Element =>  <InputText  {...params} {...args} endAdornment={params.InputProps.endAdornment} /> }
+      components={{
+        OpenPickerIcon: EndIcon,
+        SwitchViewIcon: ShowIcon
+      }}
+      renderInput={(params): JSX.Element => { 
+        return <InputText  {...params} {...args} endAdornment={params.InputProps.endAdornment} />} }
     />
   )
 }
