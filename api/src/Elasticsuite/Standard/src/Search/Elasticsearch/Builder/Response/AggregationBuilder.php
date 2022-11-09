@@ -68,7 +68,7 @@ class AggregationBuilder
                 unset($value['key']);
             }
 
-            $values[(string) $key] = new BucketValue(
+            $values[(string) ($value['key_as_string'] ?? $key)] = new BucketValue(
                 $key,
                 (int) ($value['doc_count'] ?? 0),
                 $this->getSubAggregations($value)

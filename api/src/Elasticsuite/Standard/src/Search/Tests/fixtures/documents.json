@@ -14,6 +14,27 @@
             "value": "black",
             "label": "Black"
           }
+        ],
+        "category": [
+          {
+            "is_virtual": "false",
+            "category_uid": "Mg==",
+            "id": "cat_2"
+          },
+          {
+            "is_parent": true,
+            "is_virtual": "false",
+            "name": "Accessories",
+            "category_uid": "Mw==",
+            "id": "cat_3"
+          },
+          {
+            "is_parent": true,
+            "is_virtual": "false",
+            "name": "Jewelry",
+            "category_uid": "NQ==",
+            "id": "cat_5"
+          }
         ]
       },
       {
@@ -27,6 +48,26 @@
           {
             "value": "black",
             "label": "Black"
+          }
+        ],
+        "category": [
+          {
+            "is_virtual": "false",
+            "category_uid": "Mg==",
+            "id": "cat_2"
+          },
+          {
+            "is_virtual": "false",
+            "name": "Accessories",
+            "category_uid": "Mw==",
+            "id": "cat_3"
+          },
+          {
+            "is_parent": true,
+            "is_virtual": "false",
+            "name": "Belts",
+            "category_uid": "NA==",
+            "id": "cat_4"
           }
         ]
       },

@@ -18,6 +18,7 @@ namespace Elasticsuite\Search\Decoration\GraphQl;
 
 use ApiPlatform\Core\GraphQl\Resolver\Stage\SerializeStageInterface;
 use Elasticsuite\Catalog\Repository\LocalizedCatalogRepository;
+use Elasticsuite\Metadata\Model\SourceField\Type;
 use Elasticsuite\Metadata\Repository\MetadataRepository;
 use Elasticsuite\Metadata\Repository\SourceFieldRepository;
 use Elasticsuite\Search\DataProvider\Paginator;
@@ -32,6 +33,9 @@ use Elasticsuite\Search\Model\Document;
  */
 class AddAggregationsData implements SerializeStageInterface
 {
+    public const AGGREGATION_TYPE_CHECKBOX = 'checkbox';
+    public const AGGREGATION_TYPE_SLIDER = 'slider';
+
     public function __construct(
         private SerializeStageInterface $decorated,
         private MetadataRepository $metadataRepository,
@@ -73,8 +77,12 @@ class AddAggregationsData implements SerializeStageInterface
         );
 
         $data = [
-            'field' => $aggregation->getField(),
+            'field' => $sourceField ? $sourceField->getCode() : $aggregation->getField(),
             'label' => $sourceField ? $sourceField->getLabel($containerConfig->getLocalizedCatalog()->getId()) : $aggregation->getField(),
+            'type' => match ($sourceField?->getType()) {
+                Type::TYPE_PRICE, Type::TYPE_FLOAT, Type::TYPE_INT => self::AGGREGATION_TYPE_SLIDER,
+                default => self::AGGREGATION_TYPE_CHECKBOX,
+            },
             'count' => $aggregation->getCount(),
             'options' => null,
         ];
@@ -84,10 +92,20 @@ class AddAggregationsData implements SerializeStageInterface
         }
         foreach ($aggregation->getValues() as $value) {
             if ($value instanceof BucketValueInterface) {
+                $key = $value->getKey();
+
+                if (\is_array($key)) {
+                    $code = $key[0];
+                    $label = 'None' !== $key[1] ? $key[1] : $key[0];
+                } else {
+                    $code = $key;
+                    $label = $key;
+                }
+
                 $data['options'][] = [
                     'count' => $value->getCount(),
-                    'value' => $value->getKey(),
-                    'label' => $value->getKey(), // @Todo: Update when select attribut data modelization will be done
+                    'value' => $code,
+                    'label' => $label,
                 ];
             }
         }

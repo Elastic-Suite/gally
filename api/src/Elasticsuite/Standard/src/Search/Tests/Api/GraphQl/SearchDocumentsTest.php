@@ -32,6 +32,9 @@ class SearchDocumentsTest extends AbstractTest
         self::loadFixture([
             __DIR__ . '/../../fixtures/catalogs.yaml',
             __DIR__ . '/../../fixtures/source_field.yaml',
+            __DIR__ . '/../../fixtures/source_field_label.yaml',
+            __DIR__ . '/../../fixtures/source_field_option.yaml',
+            __DIR__ . '/../../fixtures/source_field_option_label.yaml',
             __DIR__ . '/../../fixtures/metadata.yaml',
         ]);
         self::createEntityElasticsearchIndices('product');
@@ -440,16 +443,18 @@ class SearchDocumentsTest extends AbstractTest
     /**
      * @dataProvider searchWithAggregationDataProvider
      *
-     * @param string $entityType  Entity Type
-     * @param string $catalogId   Catalog ID or code
-     * @param int    $pageSize    Pagination size
-     * @param int    $currentPage Current page
+     * @param string $entityType           Entity Type
+     * @param string $catalogId            Catalog ID or code
+     * @param int    $pageSize             Pagination size
+     * @param int    $currentPage          Current page
+     * @param array  $expectedAggregations expected aggregations sample
      */
     public function testSearchDocumentsWithAggregation(
         string $entityType,
         string $catalogId,
         int $pageSize,
         int $currentPage,
+        array $expectedAggregations,
     ): void {
         $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
 
@@ -475,6 +480,7 @@ class SearchDocumentsTest extends AbstractTest
                               field
                               count
                               label
+                              type
                               options {
                                 label
                                 value
@@ -488,12 +494,12 @@ class SearchDocumentsTest extends AbstractTest
             ),
             new ExpectedResponse(
                 200,
-                function (ResponseInterface $response) {
+                function (ResponseInterface $response) use ($expectedAggregations) {
                     // Extra test on response structure because all exceptions might not throw an HTTP error code.
                     $this->assertJsonContains([
                         'data' => [
                             'searchDocuments' => [
-                                'aggregations' => [],
+                                'aggregations' => $expectedAggregations,
                             ],
                         ],
                     ]);
@@ -518,12 +524,65 @@ class SearchDocumentsTest extends AbstractTest
                 'b2c_en',   // catalog ID.
                 10,     // page size.
                 1,      // current page.
+                [       // expected aggregations sample.
+                    ['field' => 'size', 'label' => 'Size', 'type' => 'slider'],
+                    [
+                        'field' => 'color',
+                        'label' => 'Color',
+                        'type' => 'checkbox',
+                        'options' => [
+                            [
+                                'label' => 'Black',
+                                'value' => 'black',
+                                'count' => 10,
+                            ],
+                        ],
+                    ],
+                    ['field' => 'length', 'label' => 'Length', 'type' => 'slider'],
+                    ['field' => 'weight', 'label' => 'Weight', 'type' => 'slider'],
+                    [
+                        'field' => 'category',
+                        'label' => 'Category',
+                        'type' => 'checkbox',
+                        'options' => [
+                            [
+                                'label' => 'cat_2',
+                                'value' => 'cat_2',
+                                'count' => 2,
+                            ],
+                            [
+                                'label' => 'Accessories',
+                                'value' => 'cat_3',
+                                'count' => 2,
+                            ],
+                        ],
+                    ],
+                ],
             ],
             [
                 'product',  // entity type.
                 'b2b_fr',   // catalog ID.
                 10,     // page size.
                 1,      // current page.
+                [       // expected aggregations sample.
+                    [
+                        'field' => 'size',
+                        'label' => 'Taille',
+                        'type' => 'slider',
+                    ],
+                    [
+                        'field' => 'color',
+                        'label' => 'Couleur',
+                        'type' => 'checkbox',
+                        'options' => [
+                            [
+                                'label' => 'Noir',
+                                'value' => 'black',
+                                'count' => 9,
+                            ],
+                        ],
+                    ],
+                ],
             ],
         ];
     }

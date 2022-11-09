@@ -29,6 +29,11 @@ Elasticsuite\Metadata\Model\SourceField:
         code: 'color'
         type: 'select'
         isFilterable: true
+    product_category:
+        metadata: '@product'
+        code: 'category'
+        type: 'category'
+        isFilterable: true
     product_length:
         metadata: '@product'
         code: 'length'

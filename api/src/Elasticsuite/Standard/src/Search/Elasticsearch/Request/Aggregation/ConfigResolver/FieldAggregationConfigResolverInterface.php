@@ -14,24 +14,13 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\Search\Elasticsearch\Adapter\Common\Response;
+namespace Elasticsuite\Search\Elasticsearch\Request\Aggregation\ConfigResolver;
 
-interface BucketValueInterface
+use Elasticsuite\Metadata\Model\SourceField;
+
+interface FieldAggregationConfigResolverInterface
 {
-    /**
-     * Get bucket value key.
-     */
-    public function getKey(): mixed;
+    public function supports(SourceField $sourceField): bool;
 
-    /**
-     * Get count of documents that match this bucket.
-     */
-    public function getCount(): int;
-
-    /**
-     * Get child aggregation of this bucket.
-     *
-     * @return AggregationInterface[]
-     */
-    public function getChildAggregation(): iterable;
+    public function getConfig(SourceField $sourceField): array;
 }

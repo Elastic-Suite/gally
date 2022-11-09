@@ -1,0 +1,105 @@
+Elasticsuite\Metadata\Model\SourceFieldOptionLabel:
+    product_color_option_5_catalog1_en:
+        source_field_option: '@product_color_option_5'
+        catalog: '@catalog1_en'
+        label: Gold
+    product_color_option_22_catalog1_en:
+        source_field_option: '@product_color_option_22'
+        catalog: '@catalog1_en'
+        label: Peach
+    product_color_option_23_catalog1_en:
+        source_field_option: '@product_color_option_23'
+        catalog: '@catalog1_en'
+        label: Khaki
+    product_color_option_6_catalog1_en:
+        source_field_option: '@product_color_option_6'
+        catalog: '@catalog1_en'
+        label: Silver
+    product_color_option_24_catalog1_en:
+        source_field_option: '@product_color_option_24'
+        catalog: '@catalog1_en'
+        label: Lilac
+    product_color_option_25_catalog1_en:
+        source_field_option: '@product_color_option_25'
+        catalog: '@catalog1_en'
+        label: Rain
+    product_color_option_26_catalog1_en:
+        source_field_option: '@product_color_option_26'
+        catalog: '@catalog1_en'
+        label: Mint
+    product_color_option_27_catalog1_en:
+        source_field_option: '@product_color_option_27'
+        catalog: '@catalog1_en'
+        label: Lily
+    product_color_option_28_catalog1_en:
+        source_field_option: '@product_color_option_28'
+        catalog: '@catalog1_en'
+        label: Latte
+    product_color_option_29_catalog1_en:
+        source_field_option: '@product_color_option_29'
+        catalog: '@catalog1_en'
+        label: Cocoa
+    product_color_option_30_catalog1_en:
+        source_field_option: '@product_color_option_30'
+        catalog: '@catalog1_en'
+        label: Black
+    product_color_option_31_catalog1_en:
+        source_field_option: '@product_color_option_31'
+        catalog: '@catalog1_en'
+        label: Gray
+    product_color_option_32_catalog1_en:
+        source_field_option: '@product_color_option_32'
+        catalog: '@catalog1_en'
+        label: Orange
+    product_color_option_5_catalog1_fr:
+        source_field_option: '@product_color_option_5'
+        catalog: '@catalog1_fr'
+        label: Doré
+    product_color_option_22_catalog1_fr:
+        source_field_option: '@product_color_option_22'
+        catalog: '@catalog1_fr'
+        label: Pêche
+    product_color_option_23_catalog1_fr:
+        source_field_option: '@product_color_option_23'
+        catalog: '@catalog1_fr'
+        label: Kaki
+    product_color_option_6_catalog1_fr:
+        source_field_option: '@product_color_option_6'
+        catalog: '@catalog1_fr'
+        label: Argent
+    product_color_option_24_catalog1_fr:
+        source_field_option: '@product_color_option_24'
+        catalog: '@catalog1_fr'
+        label: Lila
+    product_color_option_25_catalog1_fr:
+        source_field_option: '@product_color_option_25'
+        catalog: '@catalog1_fr'
+        label: Pluie
+    product_color_option_26_catalog1_fr:
+        source_field_option: '@product_color_option_26'
+        catalog: '@catalog1_fr'
+        label: Menthe
+    product_color_option_27_catalog1_fr:
+        source_field_option: '@product_color_option_27'
+        catalog: '@catalog1_fr'
+        label: Lily
+    product_color_option_28_catalog1_fr:
+        source_field_option: '@product_color_option_28'
+        catalog: '@catalog1_fr'
+        label: Latte
+    product_color_option_29_catalog1_fr:
+        source_field_option: '@product_color_option_29'
+        catalog: '@catalog1_fr'
+        label: Coco
+    product_color_option_30_catalog1_fr:
+        source_field_option: '@product_color_option_30'
+        catalog: '@catalog1_fr'
+        label: Noir
+    product_color_option_31_catalog1_fr:
+        source_field_option: '@product_color_option_31'
+        catalog: '@catalog1_fr'
+        label: Gris
+    product_color_option_32_catalog1_fr:
+        source_field_option: '@product_color_option_32'
+        catalog: '@catalog1_fr'
+        label: Orange
