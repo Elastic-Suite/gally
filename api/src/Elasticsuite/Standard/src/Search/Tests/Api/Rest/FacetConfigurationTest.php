@@ -56,7 +56,8 @@ class FacetConfigurationTest extends AbstractTest
                 [
                     ['sourceField' => 3, 'sourceFieldCode' => 'brand'],
                     ['sourceField' => 4, 'sourceFieldCode' => 'color'],
-                    ['sourceField' => 5, 'sourceFieldCode' => 'length'],
+                    ['sourceField' => 5, 'sourceFieldCode' => 'category'],
+                    ['sourceField' => 6, 'sourceFieldCode' => 'length'],
                 ],
             ],
             [
@@ -64,7 +65,8 @@ class FacetConfigurationTest extends AbstractTest
                 [
                     ['sourceField' => 3, 'category' => 'one', 'sourceFieldCode' => 'brand'],
                     ['sourceField' => 4, 'category' => 'one', 'sourceFieldCode' => 'color'],
-                    ['sourceField' => 5, 'category' => 'one', 'sourceFieldCode' => 'length'],
+                    ['sourceField' => 5, 'category' => 'one', 'sourceFieldCode' => 'category'],
+                    ['sourceField' => 6, 'category' => 'one', 'sourceFieldCode' => 'length'],
                 ],
             ],
             [
@@ -72,7 +74,8 @@ class FacetConfigurationTest extends AbstractTest
                 [
                     ['sourceField' => 3, 'category' => 'two', 'sourceFieldCode' => 'brand'],
                     ['sourceField' => 4, 'category' => 'two', 'sourceFieldCode' => 'color'],
-                    ['sourceField' => 5, 'category' => 'two', 'sourceFieldCode' => 'length'],
+                    ['sourceField' => 5, 'category' => 'two', 'sourceFieldCode' => 'category'],
+                    ['sourceField' => 6, 'category' => 'two', 'sourceFieldCode' => 'length'],
                 ],
             ],
         ];
@@ -121,7 +124,8 @@ class FacetConfigurationTest extends AbstractTest
                 [
                     ['sourceField' => 3, 'coverageRate' => 1, 'sourceFieldCode' => 'brand', 'maxSize' => 100], // product_brand.
                     ['sourceField' => 4, 'sourceFieldCode' => 'color'], // product_color.
-                    ['sourceField' => 5, 'sourceFieldCode' => 'length'], // product_length.
+                    ['sourceField' => 5, 'sourceFieldCode' => 'category'], // product_category.
+                    ['sourceField' => 6, 'sourceFieldCode' => 'length'], // product_length.
                 ],
             ],
             [
@@ -129,7 +133,8 @@ class FacetConfigurationTest extends AbstractTest
                 [
                     ['sourceField' => 3, 'category' => 'one', 'coverageRate' => 10, 'maxSize' => 100, 'defaultCoverageRate' => 1, 'defaultMaxSize' => 100, 'sourceFieldCode' => 'brand'],
                     ['sourceField' => 4, 'category' => 'one', 'coverageRate' => 10, 'sourceFieldCode' => 'color'],
-                    ['sourceField' => 5, 'category' => 'one', 'coverageRate' => 90, 'sourceFieldCode' => 'length'],
+                    ['sourceField' => 5, 'category' => 'one', 'coverageRate' => 90, 'sourceFieldCode' => 'category'],
+                    ['sourceField' => 6, 'category' => 'one', 'coverageRate' => 90, 'sourceFieldCode' => 'length'],
                 ],
             ],
             [
@@ -137,7 +142,8 @@ class FacetConfigurationTest extends AbstractTest
                 [
                     ['sourceField' => 3, 'category' => 'two', 'coverageRate' => 20, 'maxSize' => 100, 'defaultCoverageRate' => 1,  'defaultMaxSize' => 100, 'sourceFieldCode' => 'brand'],
                     ['sourceField' => 4, 'category' => 'two', 'coverageRate' => 90, 'sourceFieldCode' => 'color'],
-                    ['sourceField' => 5, 'category' => 'two', 'coverageRate' => 90, 'sourceFieldCode' => 'length'],
+                    ['sourceField' => 5, 'category' => 'two', 'coverageRate' => 90, 'sourceFieldCode' => 'category'],
+                    ['sourceField' => 6, 'category' => 'two', 'coverageRate' => 90, 'sourceFieldCode' => 'length'],
                 ],
             ],
         ];
@@ -156,7 +162,7 @@ class FacetConfigurationTest extends AbstractTest
                             '@context' => '/contexts/FacetConfiguration',
                             '@id' => '/facet_configurations',
                             '@type' => 'hydra:Collection',
-                            'hydra:totalItems' => 5,
+                            'hydra:totalItems' => 6,
                         ]
                     );
 

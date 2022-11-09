@@ -30,6 +30,7 @@ class GenericContainerConfigurationFactory implements ContainerConfigurationFact
         private IndexSettingsInterface $indexSettings,
         private MetadataManager $metadataManager,
         private RelevanceConfigurationInterface $relevanceConfiguration,
+        private AggregationProviderInterface $aggregationProvider,
     ) {
     }
 
@@ -48,6 +49,7 @@ class GenericContainerConfigurationFactory implements ContainerConfigurationFact
             $indexName,
             $mapping,
             $this->relevanceConfiguration,
+            $this->aggregationProvider,
         );
     }
 }

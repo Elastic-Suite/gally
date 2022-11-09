@@ -96,7 +96,7 @@ class FacetConfigurationTest extends RestFacetConfigurationTest
                             'data' => [
                                 'facetConfigurations' => [
                                     'pageInfo' => ['hasNextPage' => false],
-                                    'totalCount' => 5,
+                                    'totalCount' => 6,
                                 ],
                             ],
                         ]

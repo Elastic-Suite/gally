@@ -3,6 +3,7 @@ imports:
     - { resource: elasticsearch/aggregation_factory.yaml }
     - { resource: elasticsearch/query_assembler.yaml }
     - { resource: elasticsearch/aggregation_assembler.yaml }
+    - { resource: elasticsearch/aggregation_resolver.yaml }
 
 services:
     Elasticsuite\Search\Repository\Facet\ConfigurationRepository:
@@ -63,6 +64,12 @@ services:
             - 'Elasticsuite\Search\Elasticsearch\Request'
 
     Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationFactoryInterface: '@elasticsuite.search.container.configuration.factory'
+    
+    Elasticsuite\Search\Elasticsearch\Request\Aggregation\Provider\FilterableSourceFields:
+        arguments:
+            - '@Elasticsuite\Metadata\Repository\SourceFieldRepository'
+            - !tagged_iterator { tag: 'elasticsuite.search.aggregation.resolver' }
+            - !tagged_iterator { tag: 'elasticsuite.search.aggregation.modifier' }
 
     elasticsuite.search.request.factory:
         class: Elasticsuite\Search\Elasticsearch\RequestFactory
@@ -242,6 +249,7 @@ services:
             $indexSettings: '@Elasticsuite\Index\Service\IndexSettings'
             $metadataManager: '@Elasticsuite\Index\Service\MetadataManager'
             $relevanceConfiguration: '@Elasticsuite\Search\Elasticsearch\Request\Container\RelevanceConfiguration\GenericRelevanceConfiguration'
+            $aggregationProvider: '@Elasticsuite\Search\Elasticsearch\Request\Aggregation\Provider\FilterableSourceFields'
 
     Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider:
         arguments:
@@ -253,6 +261,3 @@ services:
     Elasticsuite\Search\Elasticsearch\Spellchecker\RequestFactoryInterface:
         public: true
         alias: elasticsuite.search.spellchecker.request.factory
-        
-    elasticsuite.request_type.default_documents:
-        class: '@Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\GenericContainerConfiguration'
