@@ -72,6 +72,7 @@ const CustomContent = styled('div')(({ theme }) => ({
   paddingLeft: theme.spacing(4),
   paddingRight: theme.spacing(4),
   backgroundColor: theme.palette.background.page,
+  position: 'relative',
 }))
 
 const CustomButtonCollapse = styled('button')(({ theme }) => ({
