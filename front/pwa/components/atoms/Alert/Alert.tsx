@@ -1,6 +1,7 @@
-import { useEffect } from 'react'
-import { AlertProps, IconButton, Alert as MuiAlert } from '@mui/material'
+import { ForwardedRef, forwardRef } from 'react'
+import { IconButton, Alert as MuiAlert } from '@mui/material'
 import { styled } from '@mui/system'
+import { CustomContentProps, SnackbarKey } from 'notistack'
 
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 
@@ -41,42 +42,48 @@ const StyledAlert = styled(MuiAlert)(({ severity, theme }) => ({
   },
 }))
 
-export interface IAlertProps extends AlertProps {
-  delay?: number
-  message: string
-  onClose?: () => void
+interface IProps extends Partial<CustomContentProps> {
+  onShut: (id: SnackbarKey) => void
 }
 
-export default function Alert(props: IAlertProps): JSX.Element {
-  const { delay, message, onClose, ...alertProps } = props
+function Alert(props: IProps, ref: ForwardedRef<HTMLDivElement>): JSX.Element {
+  const {
+    anchorOrigin,
+    autoHideDuration,
+    hideIconVariant,
+    iconVariant,
+    id,
+    message,
+    onShut,
+    persist,
+    variant = 'info',
+    ...alertProps
+  } = props
 
-  useEffect(() => {
-    if (delay) {
-      const timeout = setTimeout(onClose, delay)
-      return () => clearTimeout(timeout)
-    }
-  }, [delay, onClose])
+  function handleClick(): void {
+    onShut(id)
+  }
 
   return (
     <StyledAlert
       {...alertProps}
-      sx={{ mb: 0 }}
       action={
         <IconButton
           aria-label="close"
           color="inherit"
           size="small"
-          onClick={onClose}
+          onClick={handleClick}
         >
           <IonIcon name="close" style={{ fontSize: 18, padding: '0px' }} />
         </IconButton>
       }
+      ref={ref}
+      severity={variant as 'success' | 'info' | 'warning' | 'error'}
+      sx={{ mb: 0 }}
     >
       {message}
     </StyledAlert>
   )
 }
 
-Alert.defaultProps = {
-  severity: 'info',
-}
+export default forwardRef(Alert)
