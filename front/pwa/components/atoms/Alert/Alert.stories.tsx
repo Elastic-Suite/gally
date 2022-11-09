@@ -6,7 +6,7 @@ export default {
   title: 'Atoms/Alert',
   component: Alert,
   argTypes: {
-    severity: {
+    variant: {
       options: ['error', 'warning', 'info', 'success'],
       control: { type: 'select' },
     },
@@ -18,5 +18,5 @@ const Template: ComponentStory<typeof Alert> = (args) => <Alert {...args} />
 export const Default = Template.bind({})
 Default.args = {
   message: 'Hello World',
-  severity: 'info',
+  variant: 'info',
 }

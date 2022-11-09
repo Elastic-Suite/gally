@@ -127,7 +127,7 @@ function Facets(): JSX.Element {
         {Boolean(isVisibleAlertFacets) && (
           <Alert
             message={t('facet.alert')}
-            onClose={(): void => setIsVisibleAlertFacets(false)}
+            onShut={(): void => setIsVisibleAlertFacets(false)}
             style={{ marginBottom: '16px' }}
           />
         )}

@@ -40,7 +40,7 @@ function Attributes(): JSX.Element {
       {Boolean(isVisibleAlertAttributes) && (
         <Alert
           message={t('attributes.alert')}
-          onClose={(): void => setIsVisibleAlertAttributes(false)}
+          onShut={(): void => setIsVisibleAlertAttributes(false)}
           style={{ marginBottom: '16px' }}
         />
       )}

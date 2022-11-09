@@ -5,13 +5,11 @@ import {
 } from '@reduxjs/toolkit'
 import { i18nReducer } from './i18n'
 import { menuReducer } from './menu'
-import { messageReducer } from './message'
 import { userReducer } from './user'
 
 const rootReducer = combineReducers({
   i18n: i18nReducer,
   menu: menuReducer,
-  message: messageReducer,
   user: userReducer,
 })
 

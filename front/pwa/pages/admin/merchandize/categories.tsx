@@ -4,6 +4,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { Box } from '@mui/system'
 import debounce from 'lodash.debounce'
+import { closeSnackbar, enqueueSnackbar } from 'notistack'
 import {
   ICategories,
   ICategory,
@@ -32,7 +33,7 @@ import {
   useResourceOperations,
 } from '~/hooks'
 import { findCategory } from '~/services'
-import { addMessage, selectMenu, useAppDispatch, useAppSelector } from '~/store'
+import { selectMenu, useAppSelector } from '~/store'
 
 import TitleBlock from '~/components/molecules/layout/TitleBlock/TitleBlock'
 import TwoColsLayout from '~/components/molecules/layout/twoColsLayout/TwoColsLayout'
@@ -46,7 +47,6 @@ const debounceDelay = 200
 function Categories(): JSX.Element {
   const router = useRouter()
   const fetchApi = useApiFetch()
-  const dispatch = useAppDispatch()
   const { t } = useTranslation('categories')
   const [isSaving, setIsSaving] = useState(false)
 
@@ -185,9 +185,15 @@ function Categories(): JSX.Element {
         const parsedCatConf = parseCatConf(newCatConf, ruleOperators)
         prevCatConf.current = parsedCatConf
         setCatConf(parsedCatConf)
-        dispatch(addMessage({ message: t('alert'), severity: 'success' }))
+        enqueueSnackbar(t('alert'), {
+          onShut: closeSnackbar,
+          variant: 'success',
+        })
       } else {
-        dispatch(addMessage({ message: t('alert.error'), severity: 'error' }))
+        enqueueSnackbar(t('alert.error'), {
+          onShut: closeSnackbar,
+          variant: 'error',
+        })
       }
     } else {
       const newCatConf = await update(serializedCatConf.id, serializedCatConf)
@@ -195,9 +201,15 @@ function Categories(): JSX.Element {
         const parsedCatConf = parseCatConf(newCatConf, ruleOperators)
         prevCatConf.current = parsedCatConf
         setCatConf(parsedCatConf)
-        dispatch(addMessage({ message: t('alert'), severity: 'success' }))
+        enqueueSnackbar(t('alert'), {
+          onShut: closeSnackbar,
+          variant: 'success',
+        })
       } else {
-        dispatch(addMessage({ message: t('alert.error'), severity: 'error' }))
+        enqueueSnackbar(t('alert.error'), {
+          onShut: closeSnackbar,
+          variant: 'error',
+        })
       }
     }
     setIsSaving(false)
