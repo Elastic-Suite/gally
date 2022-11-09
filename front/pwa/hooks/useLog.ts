@@ -1,17 +1,15 @@
 import { useCallback } from 'react'
+import { closeSnackbar, enqueueSnackbar } from 'notistack'
 import { MessageSeverity, NetworkError, log } from 'shared'
-
-import { addMessage, useAppDispatch } from '~/store'
 
 export function useLog(
   severity: MessageSeverity = 'error'
 ): (error: NetworkError) => void {
-  const dispatch = useAppDispatch()
   return useCallback(
     (error: NetworkError) =>
       log(error, (message: string) =>
-        dispatch(addMessage({ message, severity }))
+        enqueueSnackbar(message, { onShut: closeSnackbar, variant: severity })
       ),
-    [dispatch, severity]
+    [severity]
   )
 }

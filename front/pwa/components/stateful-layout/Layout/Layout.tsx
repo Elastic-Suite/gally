@@ -21,7 +21,6 @@ import {
 import AppBar from '~/components/molecules/layout/appBar/AppBar'
 import Sidebar from '~/components/molecules/layout/Sidebar/Sidebar'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
-import Messages from '~/components/stateful/Messages/Messages'
 import { IMenu, LoadStatus, isError } from 'shared'
 
 /*
@@ -176,12 +175,8 @@ function Layout({ children }: IProps): JSX.Element {
             <IonIcon name="code-outline" style={{ width: 18, height: 18 }} />
           </Collapse>
           <AppBar slug={breadcrumb} menu={menu} />
-          <CustomContent>
-            <Messages />
-            {children}
-          </CustomContent>
+          <CustomContent>{children}</CustomContent>
         </CustomContentWithAppBar>
-        {/*<Notification /> TODO: Set here Notification component*/}
       </CustomAppFrame>
     </CustomRoot>
   )
