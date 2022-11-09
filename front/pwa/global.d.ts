@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { SnackbarKey } from 'notistack'
 
 declare module 'notistack' {
-  // eslint-disable-next-line @typescript-eslint/naming-convention
   interface VariantOverrides {
     error: {
       onShut: (id: SnackbarKey) => void
@@ -15,5 +15,10 @@ declare module 'notistack' {
     warning: {
       onShut: (id: SnackbarKey) => void
     }
+  }
+
+  interface OptionsObject {
+    onShut: (key?: SnackbarKey) => void
+    variant: MessageSeverity
   }
 }
