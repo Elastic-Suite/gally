@@ -73,7 +73,7 @@ class SearchProductsTest extends AbstractTest
         $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
 
         $arguments = sprintf(
-            'catalogId: "%s"',
+            'requestType: product_catalog, catalogId: "%s"',
             $catalogId
         );
         if (null !== $pageSize) {
@@ -261,7 +261,7 @@ class SearchProductsTest extends AbstractTest
         $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
 
         $arguments = sprintf(
-            'catalogId: "%s", pageSize: %d, currentPage: %d',
+            'requestType: product_catalog, catalogId: "%s", pageSize: %d, currentPage: %d',
             $catalogId,
             $pageSize,
             $currentPage
@@ -409,7 +409,7 @@ class SearchProductsTest extends AbstractTest
             new RequestGraphQlToTest(
                 <<<GQL
                     {
-                        searchProducts(catalogId: "b2c_fr", sort: { length: desc }) {
+                        searchProducts(requestType: product_catalog, catalogId: "b2c_fr", sort: { length: desc }) {
                             collection { id }
                         }
                     }
@@ -430,7 +430,7 @@ class SearchProductsTest extends AbstractTest
             new RequestGraphQlToTest(
                 <<<GQL
                     {
-                        searchProducts(catalogId: "b2c_fr", sort: { stock__qty: desc }) {
+                        searchProducts(requestType: product_catalog, catalogId: "b2c_fr", sort: { stock__qty: desc }) {
                             collection { id }
                         }
                     }
@@ -451,7 +451,7 @@ class SearchProductsTest extends AbstractTest
             new RequestGraphQlToTest(
                 <<<GQL
                     {
-                        searchProducts(catalogId: "b2c_fr", sort: { price__price: desc }) {
+                        searchProducts(requestType: product_catalog, catalogId: "b2c_fr", sort: { price__price: desc }) {
                             collection { id }
                         }
                     }
@@ -472,7 +472,7 @@ class SearchProductsTest extends AbstractTest
             new RequestGraphQlToTest(
                 <<<GQL
                     {
-                        searchProducts(catalogId: "b2c_fr", sort: { stock_as_nested__qty: desc }) {
+                        searchProducts(requestType: product_catalog, catalogId: "b2c_fr", sort: { stock_as_nested__qty: desc }) {
                             collection { id }
                         }
                     }
@@ -493,7 +493,7 @@ class SearchProductsTest extends AbstractTest
             new RequestGraphQlToTest(
                 <<<GQL
                     {
-                        searchProducts(catalogId: "b2c_fr", sort: { id: desc, size: asc }) {
+                        searchProducts(requestType: product_catalog, catalogId: "b2c_fr", sort: { id: desc, size: asc }) {
                             collection { id }
                         }
                     }
@@ -532,7 +532,7 @@ class SearchProductsTest extends AbstractTest
         $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
 
         $arguments = sprintf(
-            'catalogId: "%s", pageSize: %d, currentPage: %d, search: "%s"',
+            'requestType: product_catalog, catalogId: "%s", pageSize: %d, currentPage: %d, search: "%s"',
             $catalogId,
             $pageSize,
             $currentPage,
@@ -552,22 +552,8 @@ class SearchProductsTest extends AbstractTest
             ),
             new ExpectedResponse(
                 200,
-                function (ResponseInterface $response) use (
-                    $documentIdentifier,
-                    $expectedOrderedDocIds
-                ) {
-                    $responseData = $response->toArray();
-                    $this->assertIsArray($responseData['data']['searchProducts']['collection']);
-                    $this->assertCount(\count($expectedOrderedDocIds), $responseData['data']['searchProducts']['collection']);
-                    foreach ($responseData['data']['searchProducts']['collection'] as $index => $document) {
-                        $this->assertArrayHasKey('id', $document);
-                        $this->assertEquals("/products/{$expectedOrderedDocIds[$index]}", $document['id']);
-
-                        $this->assertArrayHasKey('source', $document);
-                        if (\array_key_exists($documentIdentifier, $document['source'])) {
-                            $this->assertEquals($expectedOrderedDocIds[$index], $document['source'][$documentIdentifier]);
-                        }
-                    }
+                function (ResponseInterface $response) use ($documentIdentifier, $expectedOrderedDocIds) {
+                    $this->validateExpectedResults($response, $documentIdentifier, $expectedOrderedDocIds);
                 }
             )
         );
@@ -656,7 +642,7 @@ class SearchProductsTest extends AbstractTest
         array $debugMessage
     ): void {
         $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
-        $arguments = sprintf('catalogId: "%s", filter: {%s}', $catalogId, $filter);
+        $arguments = sprintf('requestType: product_catalog, catalogId: "%s", filter: {%s}', $catalogId, $filter);
         $this->validateApiCall(
             new RequestGraphQlToTest(
                 <<<GQL
@@ -745,7 +731,7 @@ class SearchProductsTest extends AbstractTest
     ): void {
         $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
         $arguments = sprintf(
-            'catalogId: "%s", pageSize: %d, currentPage: %d, filter: {%s}',
+            'requestType: product_catalog, catalogId: "%s", pageSize: %d, currentPage: %d, filter: {%s}',
             $catalogId,
             10,
             1,
@@ -767,31 +753,8 @@ class SearchProductsTest extends AbstractTest
             ),
             new ExpectedResponse(
                 200,
-                function (ResponseInterface $response) use (
-                    $documentIdentifier,
-                    $expectedOrderedDocIds
-                ) {
-                    // Extra test on response structure because all exceptions might not throw an HTTP error code.
-                    $this->assertJsonContains([
-                        'data' => [
-                            'searchProducts' => [
-                                'collection' => [],
-                            ],
-                        ],
-                    ]);
-
-                    $responseData = $response->toArray();
-                    $this->assertIsArray($responseData['data']['searchProducts']['collection']);
-                    $this->assertCount(\count($expectedOrderedDocIds), $responseData['data']['searchProducts']['collection']);
-                    foreach ($responseData['data']['searchProducts']['collection'] as $index => $document) {
-                        $this->assertArrayHasKey('id', $document);
-                        $this->assertEquals("/products/{$expectedOrderedDocIds[$index]}", $document['id']);
-
-                        $this->assertArrayHasKey('source', $document);
-                        if (\array_key_exists($documentIdentifier, $document['source'])) {
-                            $this->assertEquals($expectedOrderedDocIds[$index], $document['source'][$documentIdentifier]);
-                        }
-                    }
+                function (ResponseInterface $response) use ($documentIdentifier, $expectedOrderedDocIds) {
+                    $this->validateExpectedResults($response, $documentIdentifier, $expectedOrderedDocIds);
                 }
             )
         );
@@ -974,6 +937,73 @@ class SearchProductsTest extends AbstractTest
         ];
     }
 
+    /**
+     * @dataProvider filteredWithCategorySearchDocumentsProvider
+     *
+     * @param string $catalogId             Catalog ID or code
+     * @param string $categoryId            Category id to search in
+     * @param array  $sortOrders            Sort order specifications
+     * @param string $documentIdentifier    Document identifier to check ordered results
+     * @param array  $expectedOrderedDocIds Expected ordered document identifiers
+     */
+    public function testFilteredWithCategorySearchProducts(
+        string $catalogId,
+        array $sortOrders,
+        string $categoryId,
+        string $documentIdentifier,
+        array $expectedOrderedDocIds
+    ): void {
+        $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
+        $arguments = sprintf(
+            'requestType: product_catalog, catalogId: "%s", pageSize: %d, currentPage: %d, currentCategoryId: "%s"',
+            $catalogId,
+            10,
+            1,
+            $categoryId
+        );
+
+        $this->addSortOrders($sortOrders, $arguments);
+
+        $this->validateApiCall(
+            new RequestGraphQlToTest(
+                <<<GQL
+                    {
+                        searchProducts({$arguments}) {
+                            collection { id source }
+                        }
+                    }
+                GQL,
+                $user
+            ),
+            new ExpectedResponse(
+                200,
+                function (ResponseInterface $response) use ($documentIdentifier, $expectedOrderedDocIds) {
+                    $this->validateExpectedResults($response, $documentIdentifier, $expectedOrderedDocIds);
+                }
+            )
+        );
+    }
+
+    public function filteredWithCategorySearchDocumentsProvider(): array
+    {
+        return [
+            [
+                'b2c_fr', // catalog ID.
+                [], // sort order specifications.
+                'one', // current category id.
+                'entity_id', // document data identifier.
+                [1, 2], // expected ordered document IDs
+            ],
+            [
+                'b2c_fr', // catalog ID.
+                [], // sort order specifications.
+                'two', // current category id.
+                'entity_id', // document data identifier.
+                [1], // expected ordered document IDs
+            ],
+        ];
+    }
+
     private function addSortOrders(array $sortOrders, string &$arguments): void
     {
         if (!empty($sortOrders)) {
@@ -982,6 +1012,38 @@ class SearchProductsTest extends AbstractTest
                 $sortArguments[] = sprintf('%s : %s', $field, $direction);
             }
             $arguments .= sprintf(', sort: {%s}', implode(', ', $sortArguments));
+        }
+    }
+
+    /**
+     * Validate result in search products response.
+     *
+     * @param ResponseInterface $response              Api response to validate
+     * @param string            $documentIdentifier    Document identifier to check ordered results
+     * @param array             $expectedOrderedDocIds Expected ordered document identifiers
+     */
+    private function validateExpectedResults(ResponseInterface $response, string $documentIdentifier, array $expectedOrderedDocIds): void
+    {
+        // Extra test on response structure because all exceptions might not throw an HTTP error code.
+        $this->assertJsonContains([
+            'data' => [
+                'searchProducts' => [
+                    'collection' => [],
+                ],
+            ],
+        ]);
+
+        $responseData = $response->toArray();
+        $this->assertIsArray($responseData['data']['searchProducts']['collection']);
+        $this->assertCount(\count($expectedOrderedDocIds), $responseData['data']['searchProducts']['collection']);
+        foreach ($responseData['data']['searchProducts']['collection'] as $index => $document) {
+            $this->assertArrayHasKey('id', $document);
+            $this->assertEquals("/products/{$expectedOrderedDocIds[$index]}", $document['id']);
+
+            $this->assertArrayHasKey('source', $document);
+            if (\array_key_exists($documentIdentifier, $document['source'])) {
+                $this->assertEquals($expectedOrderedDocIds[$index], $document['source'][$documentIdentifier]);
+            }
         }
     }
 }

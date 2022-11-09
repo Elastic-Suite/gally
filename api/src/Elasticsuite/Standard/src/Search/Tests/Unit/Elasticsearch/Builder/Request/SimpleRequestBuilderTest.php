@@ -29,8 +29,6 @@ use Elasticsuite\Search\Elasticsearch\Builder\Request\Query\QueryBuilder;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\SimpleRequestBuilder;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\SortOrder\SortOrderBuilder;
 use Elasticsuite\Search\Elasticsearch\Request\AggregationFactory;
-use Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\AggregationResolver;
-use Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\AggregationResolverInterface;
 use Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider;
 use Elasticsuite\Search\Elasticsearch\Request\Query\Exists;
 use Elasticsuite\Search\Elasticsearch\Request\Query\Filtered;
@@ -74,8 +72,6 @@ class SimpleRequestBuilderTest extends AbstractTest
 
     private static SimpleRequestBuilder $requestBuilder;
 
-    private static AggregationResolverInterface $aggregationResolver;
-
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
@@ -95,10 +91,6 @@ class SimpleRequestBuilderTest extends AbstractTest
         \assert(static::getContainer()->get(AggregationFactory::class) instanceof AggregationFactory);
         self::$aggregationFactory = static::getContainer()->get(AggregationFactory::class);
         self::$aggregationBuilder = new AggregationBuilder(self::$aggregationFactory, self::$filterQueryBuilder);
-        \assert(static::getContainer()->get(ContainerConfigurationProvider::class) instanceof ContainerConfigurationProvider);
-        self::$containerConfigProvider = static::getContainer()->get(ContainerConfigurationProvider::class);
-        \assert(static::getContainer()->get(AggregationResolver::class) instanceof AggregationResolver);
-        self::$aggregationResolver = static::getContainer()->get(AggregationResolver::class);
         \assert(static::getContainer()->get('elasticsuite.search.spellchecker.request.factory') instanceof Spellchecker\RequestFactory);
         self::$spellcheckRequestFactory = static::getContainer()->get('elasticsuite.search.spellchecker.request.factory');
         \assert(static::getContainer()->get(Spellchecker::class) instanceof Spellchecker);
@@ -106,13 +98,12 @@ class SimpleRequestBuilderTest extends AbstractTest
         \assert(static::getContainer()->get(IndexSettingsInterface::class) instanceof IndexSettingsInterface);
         self::$metadataRepository = static::getContainer()->get(MetadataRepository::class);
         self::$localizedCatalogRepository = static::getContainer()->get(LocalizedCatalogRepository::class);
+        self::$containerConfigProvider = static::getContainer()->get(ContainerConfigurationProvider::class);
         self::$requestBuilder = new SimpleRequestBuilder(
             self::$requestFactory,
-            self::$containerConfigProvider,
             self::$queryBuilder,
             self::$sortOrderBuilder,
             self::$aggregationBuilder,
-            self::$aggregationResolver,
             self::$spellcheckRequestFactory,
             self::$spellchecker,
         );
@@ -130,22 +121,18 @@ class SimpleRequestBuilderTest extends AbstractTest
         $queryBuilderProperty = $reflector->getProperty('queryBuilder');
         $sortOrderBuilderProperty = $reflector->getProperty('sortOrderBuilder');
         $requestFactoryProperty = $reflector->getProperty('requestFactory');
-        $containerConfigProviderProperty = $reflector->getProperty('containerConfigurationProvider');
 
         $simpleBuilder = new SimpleRequestBuilder(
             self::$requestFactory,
-            self::$containerConfigProvider,
             self::$queryBuilder,
             self::$sortOrderBuilder,
             self::$aggregationBuilder,
-            self::$aggregationResolver,
             self::$spellcheckRequestFactory,
             self::$spellchecker,
         );
         $this->assertEquals($requestFactoryProperty->getValue($simpleBuilder), self::$requestFactory);
         $this->assertEquals($queryBuilderProperty->getValue($simpleBuilder), self::$queryBuilder);
         $this->assertEquals($sortOrderBuilderProperty->getValue($simpleBuilder), self::$sortOrderBuilder);
-        $this->assertEquals($containerConfigProviderProperty->getValue($simpleBuilder), self::$containerConfigProvider);
     }
 
     /**
@@ -159,18 +146,19 @@ class SimpleRequestBuilderTest extends AbstractTest
     {
         $metadata = self::$metadataRepository->findOneBy(['entity' => $entityType]);
         $catalog = self::$localizedCatalogRepository->find($catalogId);
+        $containerConfig = self::$containerConfigProvider->get($metadata, $catalog);
+
         $this->assertNotNull($metadata);
         $this->assertInstanceOf(Metadata::class, $metadata);
         $this->assertNotNull($metadata->getEntity());
 
         $request = self::$requestBuilder->create(
-            $metadata,
-            $catalog,
+            $containerConfig,
             0,
             5
         );
 
-        $this->assertEquals('raw', $request->getName());
+        $this->assertEquals($request->getName(), 'generic');
         $this->assertEquals($expectedIndexName, $request->getIndex());
         $this->assertEquals(0, $request->getFrom());
         $this->assertEquals(5, $request->getSize());
@@ -197,19 +185,20 @@ class SimpleRequestBuilderTest extends AbstractTest
     {
         $metadata = self::$metadataRepository->findOneBy(['entity' => $entityType]);
         $catalog = self::$localizedCatalogRepository->find($catalogId);
+        $containerConfig = self::$containerConfigProvider->get($metadata, $catalog);
+
         $this->assertNotNull($metadata);
         $this->assertInstanceOf(Metadata::class, $metadata);
         $this->assertNotNull($metadata->getEntity());
 
         $request = self::$requestBuilder->create(
-            $metadata,
-            $catalog,
+            $containerConfig,
             0,
             5,
             self::$queryFactory->create(QueryInterface::TYPE_EXISTS, ['field' => 'my_field'])
         );
 
-        $this->assertEquals('raw', $request->getName());
+        $this->assertEquals($request->getName(), 'generic');
         $this->assertEquals($expectedIndexName, $request->getIndex());
         $this->assertEquals(0, $request->getFrom());
         $this->assertEquals(5, $request->getSize());

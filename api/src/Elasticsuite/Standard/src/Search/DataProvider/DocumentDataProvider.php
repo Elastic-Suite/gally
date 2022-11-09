@@ -74,8 +74,7 @@ class DocumentDataProvider implements ContextAwareCollectionDataProviderInterfac
         $offset = $this->pagination->getOffset($resourceClass, $operationName, $context);
 
         $request = $this->requestBuilder->create(
-            $metadata,
-            $catalog,
+            $containerConfig,
             $offset,
             $limit,
             $searchQuery,

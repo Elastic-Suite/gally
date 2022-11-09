@@ -92,7 +92,7 @@ class ProductDataProvider implements ContextAwareCollectionDataProviderInterface
             throw new InvalidArgumentException(sprintf('Missing catalog [%s]', $catalogId));
         }
 
-        $containerConfig = $this->containerConfigurationProvider->get($metadata, $catalog);
+        $containerConfig = $this->containerConfigurationProvider->get($metadata, $catalog, $context['filters']['requestType']);
 
         $this->sortInputType->validateSort($context);
 
@@ -101,8 +101,7 @@ class ProductDataProvider implements ContextAwareCollectionDataProviderInterface
         $offset = $this->pagination->getOffset($resourceClass, $operationName, $context);
 
         $request = $this->requestBuilder->create(
-            $metadata,
-            $catalog,
+            $containerConfig,
             $offset,
             $limit,
             $searchQuery,

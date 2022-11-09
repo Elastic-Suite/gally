@@ -52,9 +52,9 @@ interface ContainerConfigurationInterface
     public function getRelevanceConfig(): RelevanceConfigurationInterface;
 
     /**
-     * Current container store.
+     * Current container localized catalog.
      */
-    public function getCatalog(): LocalizedCatalog;
+    public function getLocalizedCatalog(): LocalizedCatalog;
 
     /**
      * Current metadata.

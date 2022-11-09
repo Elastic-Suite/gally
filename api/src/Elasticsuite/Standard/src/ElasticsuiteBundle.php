@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Elasticsuite;
 
 use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
+use Elasticsuite\Search\Compiler\GetContainerConfigurationFactory;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -47,5 +48,6 @@ class ElasticsuiteBundle extends Bundle
                 false
             )
         );
+        $container->addCompilerPass(new GetContainerConfigurationFactory());
     }
 }

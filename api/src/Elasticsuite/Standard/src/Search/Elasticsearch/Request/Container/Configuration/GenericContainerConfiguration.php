@@ -21,23 +21,20 @@ use Elasticsuite\Index\Model\Index\Mapping\FieldInterface;
 use Elasticsuite\Index\Model\Index\MappingInterface;
 use Elasticsuite\Metadata\Model\Metadata;
 use Elasticsuite\Search\Elasticsearch\Request;
-use Elasticsuite\Search\Elasticsearch\Request\Container\RelevanceConfiguration\GenericRelevanceConfiguration;
 use Elasticsuite\Search\Elasticsearch\Request\Container\RelevanceConfigurationInterface;
 use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
 use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
 
 class GenericContainerConfiguration implements ContainerConfigurationInterface
 {
-    private RelevanceConfigurationInterface $relevanceConfiguration;
-
     public function __construct(
-        private string $containerName,
-        private string $indexName,
-        private LocalizedCatalog $catalog,
+        private string $requestType,
+        private LocalizedCatalog $localizedCatalog,
         private Metadata $metadata,
-        private MappingInterface $mapping
+        private string $indexName,
+        private MappingInterface $mapping,
+        private RelevanceConfigurationInterface $relevanceConfiguration,
     ) {
-        $this->relevanceConfiguration = new GenericRelevanceConfiguration();
     }
 
     /**
@@ -45,7 +42,7 @@ class GenericContainerConfiguration implements ContainerConfigurationInterface
      */
     public function getName(): string
     {
-        return $this->containerName;
+        return $this->requestType;
     }
 
     /**
@@ -83,9 +80,9 @@ class GenericContainerConfiguration implements ContainerConfigurationInterface
     /**
      * {@inheritDoc}
      */
-    public function getCatalog(): LocalizedCatalog
+    public function getLocalizedCatalog(): LocalizedCatalog
     {
-        return $this->catalog;
+        return $this->localizedCatalog;
     }
 
     /**

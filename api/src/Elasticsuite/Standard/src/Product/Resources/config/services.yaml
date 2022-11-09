@@ -1,3 +1,6 @@
+imports:
+    - { resource: elasticsearch/request_type.yaml }
+
 services:
     Elasticsuite\Product\Service\GraphQl\FilterManager:
         class: Elasticsuite\Search\Service\GraphQl\FilterManager
@@ -137,5 +140,11 @@ services:
             - !tagged_iterator { tag: 'elasticsuite.product_api.filter' }
             - '@Elasticsuite\Product\GraphQl\Type\Definition\Filter\BoolFilterInputType'
             - '@Elasticsuite\Metadata\Repository\SourceFieldRepository'
+        tags:
+            - { name: api_platform.graphql.type }
+    
+    Elasticsuite\Product\GraphQl\Type\Definition\ProductRequestTypeEnumType:
+        arguments:
+            - '@Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider'
         tags:
             - { name: api_platform.graphql.type }

@@ -66,8 +66,8 @@ class CategoryTypeDefaultFilterInputType extends BaseCategoryTypeDefaultFilterIn
             if ($category instanceof Category) {
                 $categoryConfiguration = $this->categoryConfigurationRepository->findOneMergedByContext(
                     $category,
-                    $containerConfig->getCatalog()->getCatalog(),
-                    $containerConfig->getCatalog()
+                    $containerConfig->getLocalizedCatalog()->getCatalog(),
+                    $containerConfig->getLocalizedCatalog()
                 );
 
                 if ($categoryConfiguration instanceof Category\Configuration
@@ -108,7 +108,7 @@ class CategoryTypeDefaultFilterInputType extends BaseCategoryTypeDefaultFilterIn
         $this->addCategoryProcessed($category->getId(), $filterContext);
         //Will contains the rule of sub virtual categories whatever their level.
         $subVirtualCategoriesRules = [];
-        $localizedCatalog = $containerConfig->getCatalog();
+        $localizedCatalog = $containerConfig->getLocalizedCatalog();
         $categoryConfigurations = $this->categoryConfigurationRepository->findMergedByContextAndCategoryPath($localizedCatalog->getCatalog(), $localizedCatalog, $category);
 
         foreach ($categoryConfigurations as $categoryConfiguration) {
