@@ -50,13 +50,13 @@ class ConfigurationResolver implements QueryItemResolverInterface
             throw new NotFoundHttpException(sprintf('Category with id %s not found.', $categoryId));
         }
 
-        $catalogId = $context['args']['catalogId'];
+        $catalogId = $context['args']['catalogId'] ?? null;
         $catalog = $catalogId ? $this->catalogRepository->find($catalogId) : null;
         if ($catalogId && !$catalog) {
             throw new NotFoundHttpException(sprintf('Catalog with id %d not found.', $catalogId));
         }
 
-        $localizedCatalogId = $context['args']['localizedCatalogId'];
+        $localizedCatalogId = $context['args']['localizedCatalogId'] ?? null;
         $localizedCatalog = $localizedCatalogId ? $this->localizedCatalogRepository->find($localizedCatalogId) : null;
         if ($localizedCatalogId && !$localizedCatalog) {
             throw new NotFoundHttpException(sprintf('Localized catalog with id %d not found.', $localizedCatalogId));
