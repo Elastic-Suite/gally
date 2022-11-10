@@ -88,7 +88,7 @@ class SearchProductsHydrationTest extends AbstractTest
             new RequestGraphQlToTest(
                 <<<GQL
                     {
-                        searchProducts({$arguments}) {
+                        products({$arguments}) {
                             collection {
                               id
                               score
@@ -122,13 +122,13 @@ class SearchProductsHydrationTest extends AbstractTest
                         $this->assertJsonContains($expectedError);
                         $this->assertJsonContains([
                             'data' => [
-                                'searchProducts' => null,
+                                'products' => null,
                             ],
                         ]);
                     } else {
                         $this->assertJsonContains([
                             'data' => [
-                                'searchProducts' => [
+                                'products' => [
                                     'paginationInfo' => [
                                         'itemsPerPage' => $expectedItemsPerPage,
                                         'lastPage' => $expectedLastPage,
@@ -139,9 +139,9 @@ class SearchProductsHydrationTest extends AbstractTest
                         ]);
 
                         $responseData = $response->toArray();
-                        $this->assertIsArray($responseData['data']['searchProducts']['collection']);
-                        $this->assertCount($expectedItemsCount, $responseData['data']['searchProducts']['collection']);
-                        foreach ($responseData['data']['searchProducts']['collection'] as $document) {
+                        $this->assertIsArray($responseData['data']['products']['collection']);
+                        $this->assertCount($expectedItemsCount, $responseData['data']['products']['collection']);
+                        foreach ($responseData['data']['products']['collection'] as $document) {
                             $this->assertArrayHasKey('score', $document);
                             $this->assertEquals($expectedScore, $document['score']);
 

@@ -1,0 +1,5 @@
+elasticsuite:
+    graphql_query_renaming:
+        Elasticsuite\Search\Model\Document:
+            renamings:
+                searchDocuments: documents

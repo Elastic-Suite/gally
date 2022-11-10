@@ -75,7 +75,7 @@ class VirtualCategoryTest extends AbstractTest
             new RequestGraphQlToTest(
                 <<<GQL
                     {
-                        searchProducts({$arguments}) {
+                        products({$arguments}) {
                             collection { id source }
                         }
                     }
@@ -91,16 +91,16 @@ class VirtualCategoryTest extends AbstractTest
                     // Extra test on response structure because all exceptions might not throw an HTTP error code.
                     $this->assertJsonContains([
                         'data' => [
-                            'searchProducts' => [
+                            'products' => [
                                 'collection' => [],
                             ],
                         ],
                     ]);
 
                     $responseData = $response->toArray();
-                    $this->assertIsArray($responseData['data']['searchProducts']['collection']);
-                    $this->assertCount(\count($expectedOrderedDocIds), $responseData['data']['searchProducts']['collection']);
-                    foreach ($responseData['data']['searchProducts']['collection'] as $index => $document) {
+                    $this->assertIsArray($responseData['data']['products']['collection']);
+                    $this->assertCount(\count($expectedOrderedDocIds), $responseData['data']['products']['collection']);
+                    foreach ($responseData['data']['products']['collection'] as $index => $document) {
                         $this->assertArrayHasKey('id', $document);
                         $this->assertEquals("/products/{$expectedOrderedDocIds[$index]}", $document['id']);
 

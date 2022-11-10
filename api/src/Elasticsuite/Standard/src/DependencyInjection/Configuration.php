@@ -137,6 +137,16 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
+
+                // Menu config
+                ->arrayNode('graphql_query_renaming')
+                    ->useAttributeAsKey('ressource_class')
+                    ->arrayPrototype()
+                        ->children()
+                            ->variableNode('renamings')->end()
+                        ->end()
+                    ->end()
+                ->end()
             ->end();
 
         return $treeBuilder;
