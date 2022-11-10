@@ -24,7 +24,7 @@ use ApiPlatform\Core\Util\ArrayTrait;
  * Some elasticsuite args do not fit with the way where API Platform manage graphql args.
  * For example this kind of args is authorized by graphql but not by API Platform:
  * {
- *   searchDocuments(
+ *   documents(
  *     filter: {{firstFilter: value, secondFilter: value}}
  *   )
  *   {...}
