@@ -105,7 +105,11 @@ class Configuration
                     'input' => 'select',
                     // Todo: move the options values in the proper class and add validation constraint (will be done in the ticket ESPP-223)
                     'options' => [
-                        'values' => ['auto' => 'Auto', 'displayed' => 'Displayed', 'hidden' => 'Hidden'],
+                        'values' => [
+                            ['value' => 'auto', 'label' => 'Auto'],
+                            ['value' => 'displayed', 'label' => 'Displayed'],
+                            ['value' => 'hidden', 'label' => 'Hidden'],
+                        ],
                     ],
                 ],
             ],
@@ -169,7 +173,12 @@ class Configuration
                     'input' => 'select',
                     // Todo: move the options values in the proper class and add validation constraint (will be done in the ticket ESPP-226)
                     'options' => [
-                        'values' => ['result_count' => 'Result count', 'admin_sort' => 'Admin sort', 'name' => 'Name', 'relevance' => 'Relevance'],
+                        'values' => [
+                            ['value' => 'result_count', 'label' => 'Result count'],
+                            ['value' => 'admin_sort', 'label' => 'Admin sort'],
+                            ['value' => 'name', 'label' => 'Name'],
+                            ['value' => 'relevance', 'label' => 'Relevance'],
+                        ],
                     ],
                 ],
             ],
