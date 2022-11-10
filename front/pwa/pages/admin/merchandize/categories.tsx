@@ -112,7 +112,7 @@ function Categories(): JSX.Element {
   const { update, create } =
     useResourceOperations<ICategoryConfiguration>(catConfResource)
   useEffect(() => {
-    if (ruleOperators && selectedCategoryItem) {
+    if (ruleOperators && selectedCategoryItem?.id) {
       fetchApi<ICategoryConfiguration>(
         `${catConfResource.url}/category/${selectedCategoryItem.id}`,
         filters
@@ -128,7 +128,7 @@ function Categories(): JSX.Element {
     fetchApi,
     filters,
     ruleOperators,
-    selectedCategoryItem,
+    selectedCategoryItem?.id,
     catConfResource.url,
   ])
 
