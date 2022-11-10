@@ -5,7 +5,10 @@ export const fieldDropdown = {
   elasticsuite: {
     input: 'select',
     options: {
-      values: ['option_test1', 'option_test2'],
+      values: [
+        { value: 'test1', label: 'option_test1' },
+        { value: 'test2', label: 'option_test2' },
+      ],
     },
     editable: false,
     position: 10,
@@ -29,7 +32,10 @@ export const fieldDropdownWithContext = {
   elasticsuite: {
     input: 'select' as DataContentType,
     options: {
-      values: ['option_test1', 'option_test2'],
+      values: [
+        { value: 'test1', label: 'option_test1' },
+        { value: 'test2', label: 'option_test2' },
+      ],
     },
     editable: false,
     position: 10,

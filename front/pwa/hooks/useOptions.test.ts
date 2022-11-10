@@ -18,8 +18,8 @@ describe('useOptions', () => {
     expect(
       result.current.fieldOptions.get(fieldDropdown.property['@id'])
     ).toEqual([
-      { value: 'option_test1', label: 'option_test1' },
-      { value: 'option_test2', label: 'option_test2' },
+      { value: 'test1', label: 'option_test1' },
+      { value: 'test2', label: 'option_test2' },
     ])
   })
 
