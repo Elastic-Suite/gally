@@ -63,9 +63,11 @@ function TwoColsLayout({ left, children }: IProps): JSX.Element {
       }
     }
 
-    const observer = new window.IntersectionObserver(handler)
-    observer.observe(sentinelRef.current)
-    return () => observer.disconnect()
+    if (typeof window !== 'undefined' && window.IntersectionObserver) {
+      const observer = new window.IntersectionObserver(handler)
+      observer.observe(sentinelRef.current)
+      return () => observer.disconnect()
+    }
   }, [])
 
   return (

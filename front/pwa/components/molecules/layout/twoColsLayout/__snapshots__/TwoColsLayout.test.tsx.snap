@@ -3,12 +3,19 @@
 exports[`TitleBlock match snapshot TwoColsLayout simple 1`] = `
 <div>
   <div
-    class="css-ksvmh9"
+    class="css-1nbqifd"
+  />
+  <div
+    class="css-10a73ai"
   >
     <div
-      class="css-1lup9bf"
+      class="css-hx5t32"
     >
-      Hello World
+      <div
+        class="css-l8qmxc"
+      >
+        Hello World
+      </div>
     </div>
     <div
       class="css-w4yc1"
@@ -22,13 +29,20 @@ exports[`TitleBlock match snapshot TwoColsLayout simple 1`] = `
 exports[`TitleBlock match snapshot TwoColsLayout with Array in left 1`] = `
 <div>
   <div
-    class="css-ksvmh9"
+    class="css-1nbqifd"
+  />
+  <div
+    class="css-10a73ai"
   >
     <div
-      class="css-1lup9bf"
+      class="css-hx5t32"
     >
-      hello world One
-      hello world Two
+      <div
+        class="css-l8qmxc"
+      >
+        hello world One
+        hello world Two
+      </div>
     </div>
     <div
       class="css-w4yc1"
