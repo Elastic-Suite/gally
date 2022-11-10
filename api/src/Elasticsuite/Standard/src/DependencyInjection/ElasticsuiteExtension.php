@@ -154,6 +154,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
         $container->setParameter('elasticsuite.indices_settings', $config['indices_settings'] ?? []);
         $container->setParameter('elasticsuite.menu', $config['menu'] ?? []);
         $container->setParameter('elasticsuite.analysis', $config['analysis'] ?? []);
+        $container->setParameter('elasticsuite.graphql_query_renaming', $config['graphql_query_renaming'] ?? []);
 
         //@Todo : Use this feature https://symfony.com/doc/current/bundles/extension.html ?
 //        $this->addAnnotatedClassesToCompile([
@@ -173,6 +174,8 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
 
         $configFiles = [
             __DIR__ . '/../Index/Resources/config/elasticsuite.yaml',
+            __DIR__ . '/../Search/Resources/config/elasticsuite.yaml',
+            __DIR__ . '/../Product/Resources/config/elasticsuite.yaml',
             __DIR__ . '/../Analysis/Resources/config/elasticsuite_analysis.yaml',
         ];
 

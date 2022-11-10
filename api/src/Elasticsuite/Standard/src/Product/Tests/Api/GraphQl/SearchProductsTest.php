@@ -90,7 +90,7 @@ class SearchProductsTest extends AbstractTest
             new RequestGraphQlToTest(
                 <<<GQL
                     {
-                        searchProducts({$arguments}) {
+                        products({$arguments}) {
                             collection {
                               id
                               score
@@ -121,13 +121,13 @@ class SearchProductsTest extends AbstractTest
                         $this->assertJsonContains($expectedError);
                         $this->assertJsonContains([
                             'data' => [
-                                'searchProducts' => null,
+                                'products' => null,
                             ],
                         ]);
                     } else {
                         $this->assertJsonContains([
                             'data' => [
-                                'searchProducts' => [
+                                'products' => [
                                     'paginationInfo' => [
                                         'itemsPerPage' => $expectedItemsPerPage,
                                         'lastPage' => $expectedLastPage,
@@ -138,9 +138,9 @@ class SearchProductsTest extends AbstractTest
                         ]);
 
                         $responseData = $response->toArray();
-                        $this->assertIsArray($responseData['data']['searchProducts']['collection']);
-                        $this->assertCount($expectedItemsCount, $responseData['data']['searchProducts']['collection']);
-                        foreach ($responseData['data']['searchProducts']['collection'] as $document) {
+                        $this->assertIsArray($responseData['data']['products']['collection']);
+                        $this->assertCount($expectedItemsCount, $responseData['data']['products']['collection']);
+                        foreach ($responseData['data']['products']['collection'] as $document) {
                             $this->assertArrayHasKey('score', $document);
                             $this->assertEquals($expectedScore, $document['score']);
 
@@ -282,7 +282,7 @@ class SearchProductsTest extends AbstractTest
             new RequestGraphQlToTest(
                 <<<GQL
                     {
-                        searchProducts({$arguments}) {
+                        products({$arguments}) {
                             collection {
                               id
                               score
@@ -305,7 +305,7 @@ class SearchProductsTest extends AbstractTest
                 ) {
                     $this->assertJsonContains([
                         'data' => [
-                            'searchProducts' => [
+                            'products' => [
                                 'paginationInfo' => [
                                     'itemsPerPage' => $pageSize,
                                 ],
@@ -314,9 +314,9 @@ class SearchProductsTest extends AbstractTest
                     ]);
 
                     $responseData = $response->toArray();
-                    $this->assertIsArray($responseData['data']['searchProducts']['collection']);
-                    $this->assertCount(\count($expectedOrderedDocIds), $responseData['data']['searchProducts']['collection']);
-                    foreach ($responseData['data']['searchProducts']['collection'] as $index => $document) {
+                    $this->assertIsArray($responseData['data']['products']['collection']);
+                    $this->assertCount(\count($expectedOrderedDocIds), $responseData['data']['products']['collection']);
+                    foreach ($responseData['data']['products']['collection'] as $index => $document) {
                         /*
                         $this->assertArrayHasKey('score', $document);
                         $this->assertEquals($expectedScore, $document['score']);
@@ -412,7 +412,7 @@ class SearchProductsTest extends AbstractTest
             new RequestGraphQlToTest(
                 <<<GQL
                     {
-                        searchProducts(requestType: product_catalog, catalogId: "b2c_fr", sort: { length: desc }) {
+                        products(requestType: product_catalog, catalogId: "b2c_fr", sort: { length: desc }) {
                             collection { id }
                         }
                     }
@@ -433,7 +433,7 @@ class SearchProductsTest extends AbstractTest
             new RequestGraphQlToTest(
                 <<<GQL
                     {
-                        searchProducts(requestType: product_catalog, catalogId: "b2c_fr", sort: { stock__qty: desc }) {
+                        products(requestType: product_catalog, catalogId: "b2c_fr", sort: { stock__qty: desc }) {
                             collection { id }
                         }
                     }
@@ -454,7 +454,7 @@ class SearchProductsTest extends AbstractTest
             new RequestGraphQlToTest(
                 <<<GQL
                     {
-                        searchProducts(requestType: product_catalog, catalogId: "b2c_fr", sort: { price__price: desc }) {
+                        products(requestType: product_catalog, catalogId: "b2c_fr", sort: { price__price: desc }) {
                             collection { id }
                         }
                     }
@@ -475,7 +475,7 @@ class SearchProductsTest extends AbstractTest
             new RequestGraphQlToTest(
                 <<<GQL
                     {
-                        searchProducts(requestType: product_catalog, catalogId: "b2c_fr", sort: { stock_as_nested__qty: desc }) {
+                        products(requestType: product_catalog, catalogId: "b2c_fr", sort: { stock_as_nested__qty: desc }) {
                             collection { id }
                         }
                     }
@@ -496,7 +496,7 @@ class SearchProductsTest extends AbstractTest
             new RequestGraphQlToTest(
                 <<<GQL
                     {
-                        searchProducts(requestType: product_catalog, catalogId: "b2c_fr", sort: { id: desc, size: asc }) {
+                        products(requestType: product_catalog, catalogId: "b2c_fr", sort: { id: desc, size: asc }) {
                             collection { id }
                         }
                     }
@@ -546,7 +546,7 @@ class SearchProductsTest extends AbstractTest
             new RequestGraphQlToTest(
                 <<<GQL
                     {
-                        searchProducts({$arguments}) {
+                        products({$arguments}) {
                             collection { id score source }
                         }
                     }
@@ -650,7 +650,7 @@ class SearchProductsTest extends AbstractTest
             new RequestGraphQlToTest(
                 <<<GQL
                     {
-                        searchProducts({$arguments}) {
+                        products({$arguments}) {
                             collection { id }
                         }
                     }
@@ -747,7 +747,7 @@ class SearchProductsTest extends AbstractTest
             new RequestGraphQlToTest(
                 <<<GQL
                     {
-                        searchProducts({$arguments}) {
+                        products({$arguments}) {
                             collection { id source }
                         }
                     }
@@ -985,7 +985,7 @@ class SearchProductsTest extends AbstractTest
             new RequestGraphQlToTest(
                 <<<GQL
                     {
-                        searchProducts({$arguments}) {
+                        products({$arguments}) {
                             collection { id source }
                         }
                     }
@@ -1051,7 +1051,7 @@ class SearchProductsTest extends AbstractTest
             new RequestGraphQlToTest(
                 <<<GQL
                     {
-                        searchProducts({$arguments}) {
+                        products({$arguments}) {
                             collection {
                               id
                               score
@@ -1079,22 +1079,22 @@ class SearchProductsTest extends AbstractTest
                     // Extra test on response structure because all exceptions might not throw an HTTP error code.
                     $this->assertJsonContains([
                         'data' => [
-                            'searchProducts' => [
+                            'products' => [
                                 'aggregations' => $expectedAggregations,
                             ],
                         ],
                     ]);
                     $responseData = $response->toArray();
                     if (\is_array($expectedAggregations)) {
-                        $this->assertIsArray($responseData['data']['searchProducts']['aggregations']);
-                        foreach ($responseData['data']['searchProducts']['aggregations'] as $data) {
+                        $this->assertIsArray($responseData['data']['products']['aggregations']);
+                        foreach ($responseData['data']['products']['aggregations'] as $data) {
                             $this->assertArrayHasKey('field', $data);
                             $this->assertArrayHasKey('count', $data);
                             $this->assertArrayHasKey('label', $data);
                             $this->assertArrayHasKey('options', $data);
                         }
                     } else {
-                        $this->assertNull($responseData['data']['searchProducts']['aggregations']);
+                        $this->assertNull($responseData['data']['products']['aggregations']);
                     }
                 }
             )
@@ -1202,16 +1202,16 @@ class SearchProductsTest extends AbstractTest
         // Extra test on response structure because all exceptions might not throw an HTTP error code.
         $this->assertJsonContains([
             'data' => [
-                'searchProducts' => [
+                'products' => [
                     'collection' => [],
                 ],
             ],
         ]);
 
         $responseData = $response->toArray();
-        $this->assertIsArray($responseData['data']['searchProducts']['collection']);
-        $this->assertCount(\count($expectedOrderedDocIds), $responseData['data']['searchProducts']['collection']);
-        foreach ($responseData['data']['searchProducts']['collection'] as $index => $document) {
+        $this->assertIsArray($responseData['data']['products']['collection']);
+        $this->assertCount(\count($expectedOrderedDocIds), $responseData['data']['products']['collection']);
+        foreach ($responseData['data']['products']['collection'] as $index => $document) {
             $this->assertArrayHasKey('id', $document);
             $this->assertEquals("/products/{$expectedOrderedDocIds[$index]}", $document['id']);
 
