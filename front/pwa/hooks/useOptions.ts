@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next'
 import { useCallback, useContext, useMemo } from 'react'
 
 import {
@@ -14,6 +15,7 @@ import {
   hasFieldOptions,
   isDropdownStaticOptions,
   isError,
+  isOption,
   isReferenceField,
   schemaContext,
 } from 'shared'
@@ -23,6 +25,7 @@ export function useOptions(): IOptionsContext {
   const { fetch, map, statuses } =
     useSingletonLoader<IOptions<string | number>>()
   const api = useContext(schemaContext)
+  const { t } = useTranslation('options')
 
   const load = useCallback(
     (field: IField) => {
@@ -33,17 +36,22 @@ export function useOptions(): IOptionsContext {
           if (isDropdownStaticOptions(field.elasticsuite?.options)) {
             // static options
             if (field.elasticsuite.options.values instanceof Array) {
-              const options = field.elasticsuite.options.values.map(
-                (option) => ({
-                  label: String(option),
-                  value: option,
-                })
+              const options = field.elasticsuite.options.values.map((option) =>
+                isOption(option)
+                  ? {
+                      ...option,
+                      label: t(String(option.label)),
+                    }
+                  : {
+                      label: t(String(option)),
+                      value: option,
+                    }
               )
               return options
             }
             const options = Object.entries(
               field.elasticsuite.options.values
-            ).map(([value, label]) => ({ label, value }))
+            ).map(([value, label]) => ({ label: t(label), value }))
             return options
           }
           // options from api
@@ -68,7 +76,7 @@ export function useOptions(): IOptionsContext {
         }
       })
     },
-    [api, fetch]
+    [api, fetch, t]
   )
 
   return useMemo(
