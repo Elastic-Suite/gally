@@ -102,7 +102,7 @@ class SourceField
                     'position' => 30,
                     'input' => 'select',
                     'options' => [
-                        'values' => Type::AVAILABLE_TYPES,
+                        'values' => Type::AVAILABLE_TYPES_OPTIONS,
                     ],
                     'context' => [
                         'search_configuration_attributes' => [
@@ -211,7 +211,7 @@ class SourceField
                     'position' => 80,
                     'input' => 'select',
                     'options' => [
-                        'values' => Weight::WEIGHT_VALID_VALUES,
+                        'values' => Weight::WEIGHT_VALID_VALUES_OPTIONS,
                     ],
                     'context' => [
                         'search_configuration_attributes' => [

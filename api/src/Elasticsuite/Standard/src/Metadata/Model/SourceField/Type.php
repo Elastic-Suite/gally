@@ -48,6 +48,22 @@ class Type
         self::TYPE_DATE,
     ];
 
+    public const AVAILABLE_TYPES_OPTIONS = [
+        ['label' => 'Text', 'value' => self::TYPE_TEXT],
+        ['label' => 'Keyword', 'value' => self::TYPE_KEYWORD],
+        ['label' => 'Select', 'value' => self::TYPE_SELECT],
+        ['label' => 'Int', 'value' => self::TYPE_INT],
+        ['label' => 'Boolean', 'value' => self::TYPE_BOOLEAN],
+        ['label' => 'Float', 'value' => self::TYPE_FLOAT],
+        ['label' => 'Price', 'value' => self::TYPE_PRICE],
+        ['label' => 'Stock', 'value' => self::TYPE_STOCK],
+        ['label' => 'Category', 'value' => self::TYPE_CATEGORY],
+        ['label' => 'Reference', 'value' => self::TYPE_REFERENCE],
+        ['label' => 'Image', 'value' => self::TYPE_IMAGE],
+        ['label' => 'Object', 'value' => self::TYPE_OBJECT],
+        ['label' => 'Date', 'value' => self::TYPE_DATE],
+    ];
+
     public static function getAvailableTypes(): array
     {
         return self::AVAILABLE_TYPES;
