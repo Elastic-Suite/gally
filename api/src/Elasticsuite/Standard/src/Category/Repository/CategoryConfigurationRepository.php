@@ -68,8 +68,7 @@ class CategoryConfigurationRepository extends ServiceEntityRepository
                 ->andWhere('lc.localizedCatalog = :localizedCatalog')
                 ->andWhere('lc.catalog = :catalog')
                 ->setParameter('catalog', $catalog);
-            $localizedCatalog = $localizedCatalog ?: $catalog->getLocalizedCatalogs()->first();
-            $queryBuilder->setParameter('localizedCatalog', $localizedCatalog);
+            $queryBuilder->setParameter('localizedCatalog', $localizedCatalog ?: $catalog->getLocalizedCatalogs()->first());
         } else {
             $queryBuilder->addSelect('MAX(g.id) as id')
                 ->andWhere($exprBuilder->isNotNull('lc.localizedCatalog'))
