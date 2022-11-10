@@ -100,7 +100,7 @@ export interface IElasticSuiteProperty {
 }
 
 export interface IDropdownStaticOptions {
-  values: (string | number)[] | Record<string, string> | IOptions<string>
+  values: IOptions<string>
 }
 
 export interface IDropdownApiOptions {

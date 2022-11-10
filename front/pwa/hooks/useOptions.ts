@@ -15,7 +15,6 @@ import {
   hasFieldOptions,
   isDropdownStaticOptions,
   isError,
-  isOption,
   isReferenceField,
   schemaContext,
 } from 'shared'
@@ -35,23 +34,10 @@ export function useOptions(): IOptionsContext {
           // get options from the schema
           if (isDropdownStaticOptions(field.elasticsuite?.options)) {
             // static options
-            if (field.elasticsuite.options.values instanceof Array) {
-              const options = field.elasticsuite.options.values.map((option) =>
-                isOption(option)
-                  ? {
-                      ...option,
-                      label: t(String(option.label)),
-                    }
-                  : {
-                      label: t(String(option)),
-                      value: option,
-                    }
-              )
-              return options
-            }
-            const options = Object.entries(
-              field.elasticsuite.options.values
-            ).map(([value, label]) => ({ label: t(label), value }))
+            const options = field.elasticsuite.options.values.map((option) => ({
+              ...option,
+              label: t(String(option.label)),
+            }))
             return options
           }
           // options from api
