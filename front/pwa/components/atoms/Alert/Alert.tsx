@@ -43,7 +43,7 @@ const StyledAlert = styled(MuiAlert)(({ severity, theme }) => ({
 }))
 
 interface IProps extends Partial<CustomContentProps> {
-  onShut: (id: SnackbarKey) => void
+  onShut?: (id: SnackbarKey) => void
 }
 
 function Alert(props: IProps, ref: ForwardedRef<HTMLDivElement>): JSX.Element {
@@ -61,7 +61,7 @@ function Alert(props: IProps, ref: ForwardedRef<HTMLDivElement>): JSX.Element {
   } = props
 
   function handleClick(): void {
-    onShut(id)
+    onShut?.(id)
   }
 
   return (
