@@ -12,7 +12,7 @@ exports[`TitleBlock match snapshot TwoColsLayout simple 1`] = `
       class="css-hx5t32"
     >
       <div
-        class="css-l8qmxc"
+        class="css-1wwim77"
       >
         Hello World
       </div>
@@ -38,7 +38,7 @@ exports[`TitleBlock match snapshot TwoColsLayout with Array in left 1`] = `
       class="css-hx5t32"
     >
       <div
-        class="css-l8qmxc"
+        class="css-1wwim77"
       >
         hello world One
         hello world Two

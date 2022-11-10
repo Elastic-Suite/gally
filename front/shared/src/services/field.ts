@@ -3,7 +3,6 @@ import {
   IDropdownStaticOptions,
   IElasticSuiteProperty,
   IField,
-  IOption,
 } from '../types'
 
 function updateProperties(
@@ -71,10 +70,4 @@ export function isDropdownStaticOptions(
   options: IDropdownStaticOptions | IDropdownApiOptions
 ): options is IDropdownStaticOptions {
   return 'values' in options
-}
-
-export function isOption<T>(
-  option: T | IOption<string>
-): option is IOption<string> {
-  return 'value' in option && 'label' in option
 }
