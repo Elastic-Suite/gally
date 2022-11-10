@@ -93,7 +93,7 @@ export function getFilter(mapping: IMapping, t: TFunction): IFieldConfig {
       : t(...getFieldLabelTranslationArgs(mapping.property)),
     multiple: mapping.multiple,
     name: id,
-    required: mapping.field.elasticsuite?.required ?? mapping.field.required,
+    required: false, // Always false for filter
     suffix: mapping.field.elasticsuite?.input === 'percentage' ? '%' : '',
     type,
     validation: mapping.field.elasticsuite?.validation,
