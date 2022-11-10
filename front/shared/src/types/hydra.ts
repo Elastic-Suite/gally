@@ -9,6 +9,7 @@ import {
   IJsonldString,
   IJsonldType,
 } from './jsonld'
+import { IOptions } from './option'
 
 export enum HydraType {
   ARRAY = 'array',
@@ -99,7 +100,7 @@ export interface IElasticSuiteProperty {
 }
 
 export interface IDropdownStaticOptions {
-  values: (string | number)[] | Record<string, string>
+  values: (string | number)[] | Record<string, string> | IOptions<string>
 }
 
 export interface IDropdownApiOptions {

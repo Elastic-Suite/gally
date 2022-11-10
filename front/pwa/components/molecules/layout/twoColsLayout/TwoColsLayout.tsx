@@ -34,6 +34,8 @@ const Sticky = styled(CustomBorder)(({ theme }) => ({
   position: 'sticky',
   top: '100px',
   alignSelf: 'flex-start',
+  width: 402,
+  boxSizing: 'border-box',
   '&.fixed': {
     position: 'fixed',
   },
