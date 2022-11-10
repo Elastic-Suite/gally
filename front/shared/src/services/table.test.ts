@@ -125,7 +125,7 @@ describe('Table service', () => {
         label: 'Attribute code',
         multiple: false,
         name: 'code',
-        required: true,
+        required: false,
         suffix: '',
         type: DataContentType.STRING,
         validation: undefined,
