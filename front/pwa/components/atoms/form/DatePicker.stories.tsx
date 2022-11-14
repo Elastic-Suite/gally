@@ -20,11 +20,11 @@ const Template: ComponentStory<typeof DatePicker> = (args) => {
 
 export const Radio = Template.bind({})
 
-Radio.args =  {
-    color: 'primary',
-    disabled: false,
-    id: 'input-text',
-    infoTooltip: 'infotool tip',
-    label: 'Label DatePicker',
-    transparent: false,
-  }
+Radio.args = {
+  color: 'primary',
+  disabled: false,
+  id: 'input-text',
+  infoTooltip: 'infotool tip',
+  label: 'Label DatePicker',
+  transparent: false,
+}
