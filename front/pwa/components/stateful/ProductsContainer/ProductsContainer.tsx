@@ -1,5 +1,5 @@
 import { Box, styled } from '@mui/system'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -10,9 +10,6 @@ import {
   IParsedCategoryConfiguration,
   IProductFieldFilterInput,
   getCatalogForSearchProductApi,
-  savePositions,
-  storageGet,
-  tokenStorageKey,
 } from 'shared'
 
 import Button from '~/components/atoms/buttons/Button'
@@ -22,7 +19,7 @@ import StickyBar from '~/components/molecules/CustomTable/StickyBar/StickyBar'
 import ProductsTopAndBottom from '~/components/stateful/ProductsTopAndBottom/ProductsTopAndBottom'
 import Merchandize from '../Merchandize/Merchandize'
 
-import { useApiList, useGraphqlApi, useResource } from '~/hooks'
+import { useApiList, useResource } from '~/hooks'
 import SearchBar from '../Merchandize/SearchBar/SearchBar'
 
 const Layout = styled('div')(({ theme }) => ({
@@ -44,16 +41,14 @@ interface IProps {
   category: ICategory
   disableBtnSave: boolean
   error: Error
-  isSaving?: boolean
+  isLoading?: boolean
   localizedCatalog: number
   onNameChange: (val: boolean) => void
   onSortChange: (val: string) => void
   onSave: () => void
   onVirtualChange: (val: boolean) => void
   productGraphqlFilters: IProductFieldFilterInput
-  savePositionsCategoryProductMerchandising: any
   setSavePositionsCategoryProductMerchandising: any
-  isLoading: boolean
 }
 
 function ProductsContainer(props: IProps): JSX.Element {
@@ -64,16 +59,14 @@ function ProductsContainer(props: IProps): JSX.Element {
     category,
     disableBtnSave,
     error,
-    isSaving,
+    isLoading,
     localizedCatalog,
     onNameChange,
     onSave,
     onSortChange,
     onVirtualChange,
     productGraphqlFilters,
-    savePositionsCategoryProductMerchandising,
     setSavePositionsCategoryProductMerchandising,
-    isLoading,
   } = props
 
   const tableRef = useRef<HTMLDivElement>()
@@ -118,39 +111,39 @@ function ProductsContainer(props: IProps): JSX.Element {
   const [searchValue, setSearchValue] = useState('')
   const onSearchChange = (value: string): void => setSearchValue(value)
 
-  const [listproductsPinedHooks, setListproductsPinedHooks] = useState([])
-  const [listproductsUnPinedHooks, setListproductsUnPinedHooks] = useState([])
+  const [listProductsPinedHooks, setListProductsPinedHooks] = useState([])
+  const [listProductsUnPinedHooks, setListProductsUnPinedHooks] = useState([])
 
   function pinToUnPin(): void {
-    if (bottomSelectedRows.length + listproductsPinedHooks.length > 25) return
+    if (bottomSelectedRows.length + listProductsPinedHooks.length > 25) return
 
-    const unPinToPin = listproductsPinedHooks.filter((el: any) => {
+    const unPinToPin = listProductsPinedHooks.filter((el: any) => {
       return topSelectedRows.indexOf(el.id) === -1
     })
 
-    // const pinToUnPin = listproductsPinedHooks.filter((el: any) => {
+    // const pinToUnPin = listProductsPinedHooks.filter((el: any) => {
     //   return topSelectedRows.indexOf(el.id) !== -1
     // })
 
-    setListproductsPinedHooks(unPinToPin)
-    // setListproductsUnPinedHooks(pinToUnPin.concat(listproductsUnPinedHooks))
+    setListProductsPinedHooks(unPinToPin)
+    // setListProductsUnPinedHooks(pinToUnPin.concat(listProductsUnPinedHooks))
     setTopSelectedRows([])
   }
 
   function unPinToPin(): void {
-    // const pinToUnPin = listproductsUnPinedHooks.filter((el: any) => {
+    // const pinToUnPin = listProductsUnPinedHooks.filter((el: any) => {
     //   return bottomSelectedRows.indexOf(el.id) === -1
     // })
 
-    const unPinToPin = listproductsUnPinedHooks.filter((el: any) => {
+    const unPinToPin = listProductsUnPinedHooks.filter((el: any) => {
       return bottomSelectedRows.indexOf(el.id) !== -1
     })
 
-    // setListproductsUnPinedHooks(pinToUnPin)
-    setListproductsPinedHooks(
-      listproductsPinedHooks.concat(
+    // setListProductsUnPinedHooks(pinToUnPin)
+    setListProductsPinedHooks(
+      listProductsPinedHooks.concat(
         unPinToPin.map((item, key) => {
-          return { ...item, position: listproductsPinedHooks.length + 1 + key }
+          return { ...item, position: listProductsPinedHooks.length + 1 + key }
         })
       )
     )
@@ -158,14 +151,14 @@ function ProductsContainer(props: IProps): JSX.Element {
   }
 
   useEffect(() => {
-    const savePositionsCategory = listproductsPinedHooks.map((item, key) => {
+    const savePositionsCategory = listProductsPinedHooks.map((item, key) => {
       return {
         productId: Number(item.id.split('/')[2]),
         position: key + 1,
       }
     })
     return setSavePositionsCategoryProductMerchandising(savePositionsCategory)
-  }, [listproductsPinedHooks])
+  }, [listProductsPinedHooks])
 
   if (error || !catalogsData) {
     return null
@@ -179,7 +172,11 @@ function ProductsContainer(props: IProps): JSX.Element {
           sx={{ marginBottom: '12px' }}
           title={category?.name ? category?.name : category?.catalogName}
         >
-          <Button disabled={disableBtnSave} onClick={onSave} loading={isSaving}>
+          <Button
+            disabled={disableBtnSave}
+            onClick={onSave}
+            loading={isLoading}
+          >
             {t('buttonSave')}
           </Button>
         </PageTitle>
@@ -209,10 +206,10 @@ function ProductsContainer(props: IProps): JSX.Element {
           onBottomSelectedRows={setBottomSelectedRows}
           onTopSelectedRows={setTopSelectedRows}
           topSelectedRows={topSelectedRows}
-          setListproductsPinedHooks={setListproductsPinedHooks}
-          listproductsPinedHooks={listproductsPinedHooks}
-          listproductsUnPinedHooks={listproductsUnPinedHooks}
-          setListproductsUnPinedHooks={setListproductsUnPinedHooks}
+          setListProductsPinedHooks={setListProductsPinedHooks}
+          listProductsPinedHooks={listProductsPinedHooks}
+          listProductsUnPinedHooks={listProductsUnPinedHooks}
+          setListProductsUnPinedHooks={setListProductsUnPinedHooks}
         />
       </Layout>
       <StickyBar positionRef={tableRef} show={showStickyBar}>
@@ -227,7 +224,7 @@ function ProductsContainer(props: IProps): JSX.Element {
             sx={{ marginLeft: 1 }}
             disabled={
               bottomSelectedRows.length === 0 ||
-              bottomSelectedRows.length + listproductsPinedHooks.length > 25
+              bottomSelectedRows.length + listProductsPinedHooks.length > 25
             }
             onClick={unPinToPin}
           >

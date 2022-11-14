@@ -36,15 +36,15 @@ interface IProps {
   bottomSelectedRows: (string | number)[]
   catalogId: number
   category: ICategory
-  listproductsPinedHooks: any
-  listproductsUnPinedHooks: any
+  listProductsPinedHooks: any
+  listProductsUnPinedHooks: any
   localizedCatalogId: string
   onBottomSelectedRows: Dispatch<SetStateAction<(string | number)[]>>
   onTopSelectedRows: Dispatch<SetStateAction<(string | number)[]>>
   productGraphqlFilters: IProductFieldFilterInput
   topSelectedRows: (string | number)[]
-  setListproductsPinedHooks: any
-  setListproductsUnPinedHooks: any
+  setListProductsPinedHooks: any
+  setListProductsUnPinedHooks: any
 }
 
 function ProductsTopAndBottom(
@@ -55,15 +55,15 @@ function ProductsTopAndBottom(
     bottomSelectedRows,
     catalogId,
     category,
-    listproductsPinedHooks,
-    listproductsUnPinedHooks,
+    listProductsPinedHooks,
+    listProductsUnPinedHooks,
     localizedCatalogId,
     onBottomSelectedRows,
     onTopSelectedRows,
     productGraphqlFilters,
     topSelectedRows,
-    setListproductsPinedHooks,
-    setListproductsUnPinedHooks,
+    setListProductsPinedHooks,
+    setListProductsUnPinedHooks,
   } = props
 
   const [currentPage, setCurrentPage] = useState<number>(1)
@@ -79,11 +79,12 @@ function ProductsTopAndBottom(
     [localizedCatalogId, category]
   )
 
+  const token = storageGet(tokenStorageKey)
   const options = useMemo(
     () => ({
-      headers: { Authorization: `Bearer ${storageGet(tokenStorageKey)}` },
+      headers: { Authorization: `Bearer ${token}` },
     }),
-    [storageGet(tokenStorageKey)]
+    [token]
   )
 
   const [listProductsIdPined] = useGraphqlApi<any>(
@@ -122,14 +123,14 @@ function ProductsTopAndBottom(
             selectedRows={topSelectedRows}
             onSelectedRows={onTopSelectedRows}
             localizedCatalogId={localizedCatalogId}
-            listproductsIdPined={productsIdPined}
+            listProductsIdPined={productsIdPined}
             categoryId={category.id}
-            setListproductsPinedHooks={setListproductsPinedHooks}
-            listproductsPinedHooks={listproductsPinedHooks}
+            setListProductsPinedHooks={setListProductsPinedHooks}
+            listProductsPinedHooks={listProductsPinedHooks}
           />
           <Box
             sx={
-              listproductsPinedHooks.length !== 0 ? { marginTop: '24px' } : {}
+              listProductsPinedHooks.length !== 0 ? { marginTop: '24px' } : {}
             }
           >
             <BottomTable
@@ -138,16 +139,15 @@ function ProductsTopAndBottom(
               selectedRows={bottomSelectedRows}
               onSelectedRows={onBottomSelectedRows}
               localizedCatalogId={localizedCatalogId}
-              listProductsIdPined={productsIdPined}
               categoryId={category.id}
               currentPage={currentPage}
               setCurrentPage={setCurrentPage}
               rowsPerPage={rowsPerPage}
               setRowsPerPage={setRowsPerPage}
-              listproductsUnPinedHooks={listproductsUnPinedHooks}
-              setListproductsUnPinedHooks={setListproductsUnPinedHooks}
+              listProductsUnPinedHooks={listProductsUnPinedHooks}
+              setListProductsUnPinedHooks={setListProductsUnPinedHooks}
               productGraphqlFilters={productGraphqlFilters}
-              listproductsPinedHooks={listproductsPinedHooks}
+              listProductsPinedHooks={listProductsPinedHooks}
             />
           </Box>
         </Box>
