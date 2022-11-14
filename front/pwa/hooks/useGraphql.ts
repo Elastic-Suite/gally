@@ -18,7 +18,7 @@ import {
 
 import { useLog } from './useLog'
 
-export function useApiGraphql<T>(): IGraphqlApi<T> {
+export function useApiGraphql<T>(secure = true): IGraphqlApi<T> {
   const { i18n } = useTranslation('common')
   const log = useLog()
   return useCallback(
@@ -32,7 +32,8 @@ export function useApiGraphql<T>(): IGraphqlApi<T> {
           i18n.language,
           query,
           variables,
-          options
+          options,
+          secure
         )
         return json
       } catch (error) {
@@ -40,7 +41,7 @@ export function useApiGraphql<T>(): IGraphqlApi<T> {
         return { error }
       }
     },
-    [i18n.language, log]
+    [i18n.language, log, secure]
   )
 }
 

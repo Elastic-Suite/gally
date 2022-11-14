@@ -1,15 +1,16 @@
 import { Box, styled } from '@mui/system'
-import { useEffect, useRef, useState } from 'react'
+import { MutableRefObject, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
-  ICatalog,
   ICategory,
   ICategorySortingOption,
-  IHydraResponse,
+  IGraphqlProductPosition,
   IParsedCategoryConfiguration,
   IProductFieldFilterInput,
-  getCatalogForSearchProductApi,
+  IProductPositions,
+  LoadStatus,
+  getProductPosition,
 } from 'shared'
 
 import Button from '~/components/atoms/buttons/Button'
@@ -19,7 +20,7 @@ import StickyBar from '~/components/molecules/CustomTable/StickyBar/StickyBar'
 import ProductsTopAndBottom from '~/components/stateful/ProductsTopAndBottom/ProductsTopAndBottom'
 import Merchandize from '../Merchandize/Merchandize'
 
-import { useApiList, useResource } from '~/hooks'
+import { useApiList, useGraphqlApi, useResource } from '~/hooks'
 import SearchBar from '../Merchandize/SearchBar/SearchBar'
 
 const Layout = styled('div')(({ theme }) => ({
@@ -36,37 +37,31 @@ const ActionsButtonsContainer = styled(Box)({
 
 interface IProps {
   catConf: IParsedCategoryConfiguration
-  catalog: number
-  catalogsData: IHydraResponse<ICatalog>
   category: ICategory
-  disableBtnSave: boolean
-  error: Error
   isLoading?: boolean
-  localizedCatalog: number
+  localizedCatalogId: string
   onNameChange: (val: boolean) => void
   onSortChange: (val: string) => void
-  onSave: () => void
+  onSave: (result: string) => void
   onVirtualChange: (val: boolean) => void
+  prevCatConf: MutableRefObject<IParsedCategoryConfiguration>
+  prevProductPositions: MutableRefObject<string>
   productGraphqlFilters: IProductFieldFilterInput
-  setSavePositionsCategoryProductMerchandising: any
 }
 
 function ProductsContainer(props: IProps): JSX.Element {
   const {
     catConf,
-    catalog,
-    catalogsData,
     category,
-    disableBtnSave,
-    error,
     isLoading,
-    localizedCatalog,
+    localizedCatalogId,
     onNameChange,
     onSave,
     onSortChange,
     onVirtualChange,
+    prevCatConf,
+    prevProductPositions,
     productGraphqlFilters,
-    setSavePositionsCategoryProductMerchandising,
   } = props
 
   const tableRef = useRef<HTMLDivElement>()
@@ -76,6 +71,23 @@ function ProductsContainer(props: IProps): JSX.Element {
   const useNameInProductSearch = catConf?.useNameInProductSearch ?? false
   const isVirtual = catConf?.isVirtual ?? false
   const defaultSorting = catConf?.defaultSorting ?? ''
+
+  const variables = useMemo(
+    () => ({
+      localizedCatalogId: Number(localizedCatalogId),
+      categoryId: category?.id,
+    }),
+    [localizedCatalogId, category?.id]
+  )
+  const [productPositions, setProductPositions] =
+    useGraphqlApi<IGraphqlProductPosition>(getProductPosition, variables)
+  useEffect(() => {
+    if (productPositions.status === LoadStatus.SUCCEEDED) {
+      prevProductPositions.current =
+        productPositions.data.getPositionsCategoryProductMerchandising.result
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [productPositions.status])
 
   const { t } = useTranslation('categories')
 
@@ -87,15 +99,6 @@ function ProductsContainer(props: IProps): JSX.Element {
     setTopSelectedRows([])
     setBottomSelectedRows([])
   }
-
-  const localizedCatalogId =
-    catalogsData && catalogsData['hydra:totalItems'] > 0
-      ? getCatalogForSearchProductApi(
-          catalog,
-          localizedCatalog,
-          catalogsData['hydra:member']
-        )
-      : null
 
   const resourceName = 'CategorySortingOption'
   const resourceSortingOption = useResource(resourceName)
@@ -111,57 +114,58 @@ function ProductsContainer(props: IProps): JSX.Element {
   const [searchValue, setSearchValue] = useState('')
   const onSearchChange = (value: string): void => setSearchValue(value)
 
-  const [listProductsPinedHooks, setListProductsPinedHooks] = useState([])
-  const [listProductsUnPinedHooks, setListProductsUnPinedHooks] = useState([])
+  const topProducts = productPositions.data
+    ? (JSON.parse(
+        productPositions.data.getPositionsCategoryProductMerchandising.result
+      ) as IProductPositions)
+    : []
 
-  function pinToUnPin(): void {
-    if (bottomSelectedRows.length + listProductsPinedHooks.length > 25) return
+  const dirty =
+    prevCatConf.current && prevProductPositions.current
+      ? Object.entries(catConf ?? {}).some(
+          ([key, val]: [key: keyof typeof catConf, val: string | boolean]) =>
+            !(
+              prevCatConf.current[key] === undefined ||
+              prevCatConf.current[key] === val
+            )
+        ) ||
+        prevProductPositions.current !==
+          productPositions.data.getPositionsCategoryProductMerchandising.result
+      : false
 
-    const unPinToPin = listProductsPinedHooks.filter((el: any) => {
-      return topSelectedRows.indexOf(el.id) === -1
-    })
-
-    // const pinToUnPin = listProductsPinedHooks.filter((el: any) => {
-    //   return topSelectedRows.indexOf(el.id) !== -1
-    // })
-
-    setListProductsPinedHooks(unPinToPin)
-    // setListProductsUnPinedHooks(pinToUnPin.concat(listProductsUnPinedHooks))
-    setTopSelectedRows([])
-  }
-
-  function unPinToPin(): void {
-    // const pinToUnPin = listProductsUnPinedHooks.filter((el: any) => {
-    //   return bottomSelectedRows.indexOf(el.id) === -1
-    // })
-
-    const unPinToPin = listProductsUnPinedHooks.filter((el: any) => {
-      return bottomSelectedRows.indexOf(el.id) !== -1
-    })
-
-    // setListProductsUnPinedHooks(pinToUnPin)
-    setListProductsPinedHooks(
-      listProductsPinedHooks.concat(
-        unPinToPin.map((item, key) => {
-          return { ...item, position: listProductsPinedHooks.length + 1 + key }
-        })
-      )
+  function pinToTop(): void {
+    if (bottomSelectedRows.length + topProducts.length > 25) return
+    let maxPosition = Math.max(
+      ...topProducts.map((topProduct) => topProduct.position)
     )
-    setBottomSelectedRows([])
+    const newTopProducts = bottomSelectedRows.map((row) => ({
+      productId: Number(row.split('/')[2]),
+      position: ++maxPosition,
+    }))
+    setProductPositions({
+      getPositionsCategoryProductMerchandising: {
+        result: JSON.stringify(topProducts.concat(newTopProducts)),
+      },
+    })
   }
 
-  useEffect(() => {
-    const savePositionsCategory = listProductsPinedHooks.map((item, key) => {
-      return {
-        productId: Number(item.id.split('/')[2]),
-        position: key + 1,
-      }
+  function pinToBottom(): void {
+    setProductPositions({
+      getPositionsCategoryProductMerchandising: {
+        result: JSON.stringify(
+          topProducts.filter(
+            ({ productId }) =>
+              !topSelectedRows.includes(`/products/${productId}`)
+          )
+        ),
+      },
     })
-    return setSavePositionsCategoryProductMerchandising(savePositionsCategory)
-  }, [listProductsPinedHooks])
+  }
 
-  if (error || !catalogsData) {
-    return null
+  function handleSave(): void {
+    onSave(
+      productPositions.data.getPositionsCategoryProductMerchandising.result
+    )
   }
 
   return (
@@ -172,11 +176,7 @@ function ProductsContainer(props: IProps): JSX.Element {
           sx={{ marginBottom: '12px' }}
           title={category?.name ? category?.name : category?.catalogName}
         >
-          <Button
-            disabled={disableBtnSave}
-            onClick={onSave}
-            loading={isLoading}
-          >
+          <Button disabled={!dirty} onClick={handleSave} loading={isLoading}>
             {t('buttonSave')}
           </Button>
         </PageTitle>
@@ -199,17 +199,13 @@ function ProductsContainer(props: IProps): JSX.Element {
         <ProductsTopAndBottom
           ref={tableRef}
           bottomSelectedRows={bottomSelectedRows}
-          catalogId={catalog}
-          category={category}
           localizedCatalogId={localizedCatalogId}
           productGraphqlFilters={productGraphqlFilters}
           onBottomSelectedRows={setBottomSelectedRows}
           onTopSelectedRows={setTopSelectedRows}
+          setProductPositions={setProductPositions}
           topSelectedRows={topSelectedRows}
-          setListProductsPinedHooks={setListProductsPinedHooks}
-          listProductsPinedHooks={listProductsPinedHooks}
-          listProductsUnPinedHooks={listProductsUnPinedHooks}
-          setListProductsUnPinedHooks={setListProductsUnPinedHooks}
+          topProducts={topProducts}
         />
       </Layout>
       <StickyBar positionRef={tableRef} show={showStickyBar}>
@@ -224,9 +220,9 @@ function ProductsContainer(props: IProps): JSX.Element {
             sx={{ marginLeft: 1 }}
             disabled={
               bottomSelectedRows.length === 0 ||
-              bottomSelectedRows.length + listProductsPinedHooks.length > 25
+              bottomSelectedRows.length + topProducts.length > 25
             }
-            onClick={unPinToPin}
+            onClick={pinToTop}
           >
             {t('pinToTop')}
             <IonIcon name="arrow-up-outline" style={{ marginLeft: '13px' }} />
@@ -234,7 +230,7 @@ function ProductsContainer(props: IProps): JSX.Element {
           <Button
             sx={{ marginLeft: 1 }}
             disabled={topSelectedRows.length === 0}
-            onClick={pinToUnPin}
+            onClick={pinToBottom}
           >
             {t('pinToBottom')}
             <IonIcon name="arrow-down-outline" style={{ marginLeft: '13px' }} />
