@@ -34,7 +34,7 @@ const Template: ComponentStory<typeof CustomTableComponent> = (args) => {
   return (
     <CustomTableComponent
       {...props}
-      onReorder={setCurrentRows}
+      onReOrder={setCurrentRows}
       onRowUpdate={handleUpdate}
       tableRows={currentRows}
     />
