@@ -6,13 +6,10 @@ import { Box } from '@mui/system'
 import debounce from 'lodash.debounce'
 import { closeSnackbar, enqueueSnackbar } from 'notistack'
 import {
-  ICatalog,
   ICategories,
   ICategory,
   ICategoryConfiguration,
-  IFetch,
   IHydraCatalog,
-  ILocalizedCatalog,
   IParsedCategoryConfiguration,
   IProductFieldFilterInput,
   IRuleCombination,
@@ -57,7 +54,7 @@ function Categories(): JSX.Element {
   const router = useRouter()
   const fetchApi = useApiFetch()
   const { t } = useTranslation('categories')
-  const [isSaving, setIsSaving] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   // Breadcrumb
   const menu = useAppSelector(selectMenu)
@@ -199,11 +196,12 @@ function Categories(): JSX.Element {
     [savePositionsCategoryProductMerchandising]
   )
 
+  const token = storageGet(tokenStorageKey)
   const options = useMemo(
     () => ({
-      headers: { Authorization: `Bearer ${storageGet(tokenStorageKey)}` },
+      headers: { Authorization: `Bearer ${token}` },
     }),
-    [storageGet(tokenStorageKey)]
+    [token]
   )
 
   // const [responseSavePositions, setResponseSavePositions] = useState<any>({
@@ -247,16 +245,8 @@ function Categories(): JSX.Element {
         const parsedCatConf = parseCatConf(newCatConf, ruleOperators)
         prevCatConf.current = parsedCatConf
         setCatConf(parsedCatConf)
-        // enqueueSnackbar(t('alert'), {
-        //   onShut: closeSnackbar,
-        //   variant: 'success',
-        // })
         status = 1
       } else {
-        // enqueueSnackbar(t('alert.error'), {
-        //   onShut: closeSnackbar,
-        //   variant: 'error',
-        // })
         status = 0
       }
     } else {
@@ -265,23 +255,13 @@ function Categories(): JSX.Element {
         const parsedCatConf = parseCatConf(newCatConf, ruleOperators)
         prevCatConf.current = parsedCatConf
         setCatConf(parsedCatConf)
-        // enqueueSnackbar(t('alert'), {
-        //   onShut: closeSnackbar,
-        //   variant: 'success',
-        // })
         status = 1
       } else {
-        // enqueueSnackbar(t('alert.error'), {
-        //   onShut: closeSnackbar,
-        //   variant: 'error',
-        // })
         status = 0
       }
     }
     return status
   }
-
-  const [isLoading, setIsLoading] = useState(false)
 
   function onSave(): void {
     setIsLoading(true)
@@ -314,9 +294,9 @@ function Categories(): JSX.Element {
 
   const optionsListProduct = useMemo(
     () => ({
-      headers: { Authorization: `Bearer ${storageGet(tokenStorageKey)}` },
+      headers: { Authorization: `Bearer ${token}` },
     }),
-    [storageGet(tokenStorageKey)]
+    [token]
   )
 
   const [listProductsIdPined, setListProductsIdPined] = useGraphqlApi<any>(
@@ -386,9 +366,6 @@ function Categories(): JSX.Element {
         (!catConf?.virtualRule || productGraphqlFilters) ? (
           <ProductsContainer
             catConf={catConf}
-            savePositionsCategoryProductMerchandising={
-              savePositionsCategoryProductMerchandising
-            }
             setSavePositionsCategoryProductMerchandising={
               setSavePositionsCategoryProductMerchandising
             }
@@ -400,7 +377,6 @@ function Categories(): JSX.Element {
             catalogsData={data}
             disableBtnSave={!dirty}
             error={error}
-            isSaving={isSaving}
             localizedCatalog={localizedCatalogId}
             onSave={onSave}
             productGraphqlFilters={productGraphqlFilters}

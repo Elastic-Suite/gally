@@ -34,19 +34,17 @@ export interface ICustomTableProps {
   Field: FunctionComponent<IFieldGuesserProps>
   diffRows?: ITableRow[]
   draggable?: boolean
-  onReorder?: (rows: ITableRow[]) => void
   onRowUpdate?: (
     id: string | number,
     name: string,
     value: boolean | number | string,
     event: SyntheticEvent
   ) => void
+  onSelectedRows?: Dispatch<SetStateAction<(string | number)[]>>
+  setListProductsPinedHooks?: any
+  selectedRows?: (string | number)[]
   tableHeaders: ITableHeader[]
   tableRows: ITableRow[]
-  selectedRows?: (string | number)[]
-  onSelectedRows?: Dispatch<SetStateAction<(string | number)[]>>
-  setListproductsPinedHooks?: any
-  listproductsPinedHooks?: any
 }
 
 function CustomTable(
@@ -62,7 +60,7 @@ function CustomTable(
     tableRows,
     selectedRows,
     onSelectedRows,
-    setListproductsPinedHooks,
+    setListProductsPinedHooks,
   } = props
 
   const [scrollLength, setScrollLength] = useState<number>(0)
@@ -106,8 +104,7 @@ function CustomTable(
       const tempData = Array.from(tableRows)
       const [source_data] = tempData.splice(e.source.index, 1)
       tempData.splice(e.destination.index, 0, source_data)
-      // console.log(tempData)
-      setListproductsPinedHooks(tempData)
+      setListProductsPinedHooks(tempData)
     }
   }
 

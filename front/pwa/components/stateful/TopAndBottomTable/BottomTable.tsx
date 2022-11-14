@@ -3,7 +3,6 @@ import {
   MutableRefObject,
   SetStateAction,
   forwardRef,
-  useContext,
   useEffect,
   useMemo,
 } from 'react'
@@ -13,13 +12,11 @@ import {
   IGraphqlSearchProducts,
   IProductFieldFilterInput,
   ITableHeader,
-  ITableRow,
   LoadStatus,
   defaultRowsPerPageOptions,
   getSearchProductsQuery,
   isError,
   productTableheader,
-  savePositions,
   storageGet,
   tokenStorageKey,
 } from 'shared'
@@ -32,16 +29,15 @@ interface IProps {
   catalogId: number
   categoryId: string
   currentPage: number
-  listProductsIdPined?: any
-  listproductsPinedHooks: any
-  listproductsUnPinedHooks: any
+  listProductsPinedHooks: any
+  listProductsUnPinedHooks: any
   localizedCatalogId: string
   onSelectedRows: Dispatch<SetStateAction<(string | number)[]>>
   productGraphqlFilters: IProductFieldFilterInput
   rowsPerPage: number
   selectedRows: (string | number)[]
   setCurrentPage: any
-  setListproductsUnPinedHooks: any
+  setListProductsUnPinedHooks: any
   setRowsPerPage: any
 }
 
@@ -53,16 +49,15 @@ function BottomTable(
     catalogId,
     categoryId,
     currentPage,
-    listProductsIdPined,
-    listproductsPinedHooks,
-    listproductsUnPinedHooks,
+    listProductsPinedHooks,
+    listProductsUnPinedHooks,
     localizedCatalogId,
     onSelectedRows,
     productGraphqlFilters,
     rowsPerPage,
     selectedRows,
     setCurrentPage,
-    setListproductsUnPinedHooks,
+    setListProductsUnPinedHooks,
     setRowsPerPage,
   } = props
 
@@ -74,11 +69,12 @@ function BottomTable(
     () => ({ catalogId, currentPage, pageSize: rowsPerPage }),
     [catalogId, currentPage, rowsPerPage]
   )
+  const token = storageGet(tokenStorageKey)
   const options = useMemo(
     () => ({
-      headers: { Authorization: `Bearer ${storageGet(tokenStorageKey)}` },
+      headers: { Authorization: `Bearer ${token}` },
     }),
-    [storageGet(tokenStorageKey)]
+    [token]
   )
   const [products] = useGraphqlApi<IGraphqlSearchProducts>(
     getSearchProductsQuery(productGraphqlFilters),
@@ -88,7 +84,7 @@ function BottomTable(
 
   useEffect(() => {
     if (products.status === LoadStatus.SUCCEEDED) {
-      setListproductsUnPinedHooks(products?.data?.searchProducts?.collection)
+      setListProductsUnPinedHooks(products?.data?.searchProducts?.collection)
     }
   }, [products])
 
@@ -111,7 +107,7 @@ function BottomTable(
 
   const variablesUnPined = useMemo(
     () => ({
-      listproductsIdPined: listproductsPinedHooks.map((item: any) =>
+      listProductsIdPined: listProductsPinedHooks.map((item: any) =>
         Number(item.id.split('/')[2])
       ),
       localizedCatalogId: localizedCatalogId.toString(),
@@ -119,38 +115,40 @@ function BottomTable(
       currentPage,
       pageSize: rowsPerPage,
     }),
-    [listproductsPinedHooks, currentPage, categoryId, rowsPerPage]
+    [listProductsPinedHooks, currentPage, categoryId, rowsPerPage]
   )
 
   const graphqlApi = useApiGraphql()
   async function handleClick(): Promise<void> {
-    await graphqlApi(getSearchProductsQuery(productGraphqlFilters), variablesUnPined, options).then(
-      (json: any) => {
-        if (isError(json)) {
-          // setResponseSavePositions({
-          //   error: json.error,
-          //   status: LoadStatus.FAILED,
-          // })
-          console.log('errr')
-        } else {
-          // if (products.status === LoadStatus.SUCCEEDED) {
-          console.log(json)
+    await graphqlApi(
+      getSearchProductsQuery(productGraphqlFilters),
+      variablesUnPined,
+      options
+    ).then((json: any) => {
+      if (isError(json)) {
+        // setResponseSavePositions({
+        //   error: json.error,
+        //   status: LoadStatus.FAILED,
+        // })
+        console.log('errr')
+      } else {
+        // if (products.status === LoadStatus.SUCCEEDED) {
+        console.log(json)
 
-          setListproductsUnPinedHooks(json.searchProducts.collection)
-        }
-
-        console.log('good')
-        // }
+        setListProductsUnPinedHooks(json.searchProducts.collection)
       }
-    )
+
+      console.log('good')
+      // }
+    })
   }
   // console.log(
-  //   listproductsPinedHooks.map((item: any) => parseInt(item.id.split('/')[2]))
+  //   listProductsPinedHooks.map((item: any) => parseInt(item.id.split('/')[2]))
   // )
 
   useEffect(() => {
     handleClick()
-  }, [listproductsPinedHooks])
+  }, [listProductsPinedHooks])
 
   return (
     <>
@@ -167,7 +165,7 @@ function BottomTable(
             rowsPerPageOptions={rowsPerPageOptions ?? []}
             onRowsPerPageChange={onRowsPerPageChange}
             tableHeaders={tableHeaders}
-            tableRows={listproductsUnPinedHooks}
+            tableRows={listProductsUnPinedHooks}
             selectedRows={selectedRows}
             onSelectedRows={onSelectedRows}
             count={products.data.searchProducts.paginationInfo.totalCount}

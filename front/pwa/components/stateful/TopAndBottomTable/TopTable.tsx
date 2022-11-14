@@ -3,12 +3,9 @@ import { Dispatch, SetStateAction, useEffect, useMemo } from 'react'
 import { useGraphqlApi } from '~/hooks'
 import {
   IGraphqlSearchProducts,
-  IProductFieldFilterInput,
   ITableHeader,
-  ITableRow,
   LoadStatus,
   getProductPined,
-  getSearchProductsQuery,
   productTableheader,
   storageGet,
   tokenStorageKey,
@@ -20,11 +17,11 @@ import TopProductsTable from '../TopProductsTable/TopProductsTable'
 interface IProps {
   categoryId: string
   localizedCatalogId: string
-  listproductsIdPined: Array<number>
-  listproductsPinedHooks: any
+  listProductsIdPined: Array<number>
+  listProductsPinedHooks: any
   onSelectedRows: Dispatch<SetStateAction<(string | number)[]>>
   selectedRows: (string | number)[]
-  setListproductsPinedHooks: any
+  setListProductsPinedHooks: any
 }
 
 function TopTable(props: IProps): JSX.Element {
@@ -32,26 +29,27 @@ function TopTable(props: IProps): JSX.Element {
     selectedRows,
     onSelectedRows,
     localizedCatalogId,
-    listproductsIdPined,
+    listProductsIdPined,
     categoryId,
-    setListproductsPinedHooks,
-    listproductsPinedHooks,
+    setListProductsPinedHooks,
+    listProductsPinedHooks,
   } = props
 
   const variables = useMemo(
     () => ({
-      listproductsIdPined: listproductsIdPined.map((item: any) => item.id),
+      listProductsIdPined: listProductsIdPined.map((item: any) => item.id),
       localizedCatalogId: localizedCatalogId.toString(),
       categoryId,
     }),
-    [listproductsIdPined, categoryId, localizedCatalogId]
+    [listProductsIdPined, categoryId, localizedCatalogId]
   )
 
+  const token = storageGet(tokenStorageKey)
   const options = useMemo(
     () => ({
-      headers: { Authorization: `Bearer ${storageGet(tokenStorageKey)}` },
+      headers: { Authorization: `Bearer ${token}` },
     }),
-    [storageGet(tokenStorageKey)]
+    [token]
   )
 
   const [products] = useGraphqlApi<IGraphqlSearchProducts>(
@@ -61,8 +59,9 @@ function TopTable(props: IProps): JSX.Element {
   )
 
   function reOrder(listProduct: any): any[] {
-    const b = listproductsIdPined
+    const b = listProductsIdPined
       .sort((a: any, b: any) => a.position - b.position)
+      // eslint-disable-next-line array-callback-return
       .map((item: any) => {
         const a = listProduct.find(
           (element: any) => element.id === `/products/${item.id}`
@@ -77,7 +76,7 @@ function TopTable(props: IProps): JSX.Element {
   useEffect(() => {
     if (products.status === LoadStatus.SUCCEEDED) {
       if (products.data.searchProducts.collection.length > 0) {
-        setListproductsPinedHooks(
+        setListProductsPinedHooks(
           reOrder(products?.data?.searchProducts?.collection)
         )
       }
@@ -93,15 +92,15 @@ function TopTable(props: IProps): JSX.Element {
   return (
     <>
       {products.status === LoadStatus.SUCCEEDED &&
-        listproductsPinedHooks.length > 0 &&
+        listProductsPinedHooks.length > 0 &&
         Boolean(products?.data?.searchProducts) && (
           <TopProductsTable
             Field={FieldGuesser}
             selectedRows={selectedRows}
             onSelectedRows={onSelectedRows}
             tableHeaders={tableHeaders}
-            tableRows={listproductsPinedHooks}
-            setListproductsPinedHooks={setListproductsPinedHooks}
+            tableRows={listProductsPinedHooks}
+            setListProductsPinedHooks={setListProductsPinedHooks}
             draggable
           />
         )}
