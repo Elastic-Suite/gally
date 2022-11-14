@@ -41,7 +41,7 @@ export interface ICustomTableProps {
     event: SyntheticEvent
   ) => void
   onSelectedRows?: Dispatch<SetStateAction<(string | number)[]>>
-  setListProductsPinedHooks?: any
+  onReOrder?: (rows: ITableRow[]) => void
   selectedRows?: (string | number)[]
   tableHeaders: ITableHeader[]
   tableRows: ITableRow[]
@@ -59,8 +59,8 @@ function CustomTable(
     tableHeaders,
     tableRows,
     selectedRows,
+    onReOrder,
     onSelectedRows,
-    setListProductsPinedHooks,
   } = props
 
   const [scrollLength, setScrollLength] = useState<number>(0)
@@ -104,7 +104,7 @@ function CustomTable(
       const tempData = Array.from(tableRows)
       const [source_data] = tempData.splice(e.source.index, 1)
       tempData.splice(e.destination.index, 0, source_data)
-      setListProductsPinedHooks(tempData)
+      onReOrder?.(tempData)
     }
   }
 

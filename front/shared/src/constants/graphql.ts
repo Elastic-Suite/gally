@@ -49,35 +49,6 @@ export function getSearchProductsQuery(
   })
 }
 
-// TODO: check if pined product shold be filtered with categoryId or virtual product rules
-export const getProductPined = `query pined($localizedCatalogId : String!, $listProductsIdPined : [Int]!, $categoryId: String!) {
-  searchProducts(
-    catalogId: $localizedCatalogId
-  filter:[
-    {id:{in: $listProductsIdPined }}
-    {category__id:{eq:$categoryId}}
-  ]){
-    collection {
-      ... on Product {
-        id
-        sku
-        name
-        score
-        stock {
-          status
-        }
-        price
-      }
-    }
-    paginationInfo {
-      lastPage
-      itemsPerPage
-      totalCount
-    }
-  }
-}
-`
-
 export const getProductPosition = `query getPosition( $categoryId: String!,  $localizedCatalogId : Int! ) {
   getPositionsCategoryProductMerchandising(categoryId: $categoryId, localizedCatalogId : $localizedCatalogId ) {
     result

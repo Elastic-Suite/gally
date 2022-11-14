@@ -1,13 +1,16 @@
 import {
   authErrorCodes,
+  authHeader,
   contentTypeHeader,
   gqlUrl,
   languageHeader,
+  tokenStorageKey,
 } from '../constants'
 import { IGraphql, IGraphqlError } from '../types'
 
 import { fetchJson } from './fetch'
 import { AuthError } from './network'
+import { storageGet } from './storage'
 
 export class GraphqlError extends Error {
   errors: IGraphqlError[]
@@ -27,12 +30,17 @@ export function fetchGraphql<T>(
   language: string,
   query: string,
   variables?: Record<string, unknown>,
-  options: RequestInit = {}
+  options: RequestInit = {},
+  secure = true
 ): Promise<T> {
   const headers: Record<string, string> = {
     [languageHeader]: language,
     [contentTypeHeader]: 'application/json',
     ...(options.headers as Record<string, string>),
+  }
+  const token = storageGet(tokenStorageKey)
+  if (secure && token) {
+    headers[authHeader] = `Bearer ${token}`
   }
   return fetchJson<IGraphql<T>>(gqlUrl, {
     body: JSON.stringify({

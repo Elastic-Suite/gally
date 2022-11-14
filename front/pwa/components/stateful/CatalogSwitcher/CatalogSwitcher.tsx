@@ -17,7 +17,6 @@ interface IProps {
   localizedCatalog: number
   onLocalizedCatalog: (locCtl: number) => void
   catalogsData: IHydraResponse<ICatalog>
-  error: Error
 }
 
 function CatalogSwitcher(props: IProps): JSX.Element {
@@ -27,7 +26,6 @@ function CatalogSwitcher(props: IProps): JSX.Element {
     localizedCatalog,
     onLocalizedCatalog,
     catalogsData,
-    error,
   } = props
 
   const { t } = useTranslation('categories')
@@ -68,10 +66,6 @@ function CatalogSwitcher(props: IProps): JSX.Element {
 
   function onLocalizedCatalogChange(localizedCatalogId: number): void {
     onLocalizedCatalog(localizedCatalogId)
-  }
-
-  if (error || !catalogsData) {
-    return null
   }
 
   return (
