@@ -1,6 +1,7 @@
 import {
   ChangeEvent,
   ForwardedRef,
+  HTMLAttributes,
   ReactNode,
   Ref,
   SyntheticEvent,
@@ -22,12 +23,19 @@ import {
 } from './InputText.styled'
 
 export interface IInputTextProps
-  extends Omit<IUnstyledInputTextProps, 'margin' | 'onChange'> {
+  extends Omit<
+      IUnstyledInputTextProps,
+      'margin' | 'onChange' | 'onKeyUp' | 'onKeyDown' | 'onBlur' | 'onFocus'
+    >,
+    Pick<
+      HTMLAttributes<HTMLInputElement>,
+      'onKeyUp' | 'onKeyDown' | 'onBlur' | 'onFocus'
+    > {
   error?: boolean
   fullWidth?: boolean
   infoTooltip?: string
   inputRef?: Ref<HTMLInputElement>
-  label?: string
+  label?: ReactNode
   margin?: 'none' | 'dense' | 'normal'
   helperText?: ReactNode
   helperIcon?: string
