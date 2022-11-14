@@ -1,106 +1,86 @@
-import { Dispatch, SetStateAction, useEffect, useMemo } from 'react'
+import { Dispatch, SetStateAction, useMemo } from 'react'
 
 import { useGraphqlApi } from '~/hooks'
 import {
+  IGraphqlProductPosition,
   IGraphqlSearchProducts,
-  ITableHeader,
+  IProductFieldFilterInput,
+  IProductPositions,
+  ITableRow,
   LoadStatus,
-  getProductPined,
+  getSearchProductsQuery,
   productTableheader,
-  storageGet,
-  tokenStorageKey,
 } from 'shared'
 
 import FieldGuesser from '../FieldGuesser/FieldGuesser'
 import TopProductsTable from '../TopProductsTable/TopProductsTable'
 
 interface IProps {
-  categoryId: string
   localizedCatalogId: string
-  listProductsIdPined: Array<number>
-  listProductsPinedHooks: any
   onSelectedRows: Dispatch<SetStateAction<(string | number)[]>>
+  productGraphqlFilters: IProductFieldFilterInput
   selectedRows: (string | number)[]
-  setListProductsPinedHooks: any
+  setProductPositions: Dispatch<SetStateAction<IGraphqlProductPosition>>
+  topProducts: IProductPositions
+  topProductsIds: number[]
 }
 
 function TopTable(props: IProps): JSX.Element {
   const {
     selectedRows,
     onSelectedRows,
+    productGraphqlFilters,
     localizedCatalogId,
-    listProductsIdPined,
-    categoryId,
-    setListProductsPinedHooks,
-    listProductsPinedHooks,
+    setProductPositions,
+    topProducts,
+    topProductsIds,
   } = props
 
   const variables = useMemo(
-    () => ({
-      listProductsIdPined: listProductsIdPined.map((item: any) => item.id),
-      localizedCatalogId: localizedCatalogId.toString(),
-      categoryId,
-    }),
-    [listProductsIdPined, categoryId, localizedCatalogId]
+    () => ({ catalogId: localizedCatalogId }),
+    [localizedCatalogId]
   )
-
-  const token = storageGet(tokenStorageKey)
-  const options = useMemo(
-    () => ({
-      headers: { Authorization: `Bearer ${token}` },
-    }),
-    [token]
-  )
-
   const [products] = useGraphqlApi<IGraphqlSearchProducts>(
-    getProductPined,
-    variables,
-    options
+    getSearchProductsQuery({
+      boolFilter: {
+        _must: [productGraphqlFilters, { id: { in: topProductsIds } }],
+      },
+    }),
+    variables
   )
 
-  function reOrder(listProduct: any): any[] {
-    const b = listProductsIdPined
-      .sort((a: any, b: any) => a.position - b.position)
-      // eslint-disable-next-line array-callback-return
-      .map((item: any) => {
-        const a = listProduct.find(
-          (element: any) => element.id === `/products/${item.id}`
-        )
-        if (a) {
-          return { ...a, position: item.position }
-        }
-      })
-    return b
+  function handleReorder(rows: ITableRow[]): void {
+    let position = 0
+    const positions = rows.map((row) => ({
+      productId: Number(String(row.id).split('/')[2]),
+      position: ++position,
+    }))
+    setProductPositions({
+      getPositionsCategoryProductMerchandising: {
+        result: JSON.stringify(positions),
+      },
+    })
   }
 
-  useEffect(() => {
-    if (products.status === LoadStatus.SUCCEEDED) {
-      if (products.data.searchProducts.collection.length > 0) {
-        setListProductsPinedHooks(
-          reOrder(products?.data?.searchProducts?.collection)
-        )
-      }
-    }
-  }, [products])
-
-  // NE PAS SUPPRIMER
-  // const tableRows: ITableRow[] = products?.data?.searchProducts
-  //   ?.collection as unknown as ITableRow[]
-
-  const tableHeaders: ITableHeader[] = productTableheader
+  const topProductsMap = Object.fromEntries(
+    topProducts.map(({ position, productId }) => [productId, position])
+  )
+  const tableRows = products.data?.searchProducts?.collection.sort(
+    (a, b) =>
+      topProductsMap[a.id.split('/')[2]] - topProductsMap[b.id.split('/')[2]]
+  ) as unknown as ITableRow[]
 
   return (
     <>
       {products.status === LoadStatus.SUCCEEDED &&
-        listProductsPinedHooks.length > 0 &&
         Boolean(products?.data?.searchProducts) && (
           <TopProductsTable
             Field={FieldGuesser}
             selectedRows={selectedRows}
             onSelectedRows={onSelectedRows}
-            tableHeaders={tableHeaders}
-            tableRows={listProductsPinedHooks}
-            setListProductsPinedHooks={setListProductsPinedHooks}
+            onReOrder={handleReorder}
+            tableHeaders={productTableheader}
+            tableRows={tableRows}
             draggable
           />
         )}
