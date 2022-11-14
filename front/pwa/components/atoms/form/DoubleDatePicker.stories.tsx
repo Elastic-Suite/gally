@@ -9,22 +9,27 @@ export default {
 } as ComponentMeta<typeof DoubleDatePicker>
 
 const Template: ComponentStory<typeof DoubleDatePicker> = () => {
-    const [value, setValue] = useState<{from: Dayjs | null, to: Dayjs | null} | null>(null)
+  const [value, setValue] = useState<{
+    from: Dayjs | null
+    to: Dayjs | null
+  } | null>({ from: null, to: null })
 
-    function onChange(value: {from: Dayjs | null, to: Dayjs | null} | null): void {
-      setValue(value)
-    }
-  
-  return <DoubleDatePicker value={value} onChange={onChange}  />
+  function onChange(
+    value: { from: Dayjs | null; to: Dayjs | null } | null
+  ): void {
+    setValue(value)
+  }
+
+  return <DoubleDatePicker value={value} onChange={onChange} />
 }
 
 export const Radio = Template.bind({})
 
-Radio.args =  {
-    color: 'primary',
-    disabled: false,
-    id: 'input-text',
-    infoTooltip: 'infotool tip',
-    label: 'Label DatePicker',
-    transparent: false,
-  }
+Radio.args = {
+  color: 'primary',
+  disabled: false,
+  id: 'input-text',
+  infoTooltip: 'infotool tip',
+  label: 'Label DatePicker',
+  transparent: false,
+}

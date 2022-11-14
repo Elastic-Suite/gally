@@ -7,7 +7,7 @@ import {
   pickersDayClasses,
 } from '@mui/x-date-pickers/PickersDay'
 import { styled } from '@mui/system'
-import { ComponentType } from 'react'
+import { ChangeEvent, ComponentType, Ref, SyntheticEvent } from 'react'
 import InputText, { IInputTextProps } from './InputText'
 import IonIcon from '../IonIcon/IonIcon'
 
@@ -26,20 +26,31 @@ const CustomPickersDay = styled(PickersDay, {
   },
 })) as ComponentType<PickersDayProps<Dayjs>>
 
-interface IDatePickerProps {
+export interface IDatePickerProps
+  extends Omit<IInputTextProps, 'value' | 'onChange'> {
   value: Dayjs | null
   onChange: (value: Dayjs | null) => void
-  args?: IInputTextProps
 }
 
 function EndIcon(): JSX.Element {
-  return <IonIcon name="calendar-outline" style={{ fontSize: 18, padding: '0px' }} />
+  return (
+    <IonIcon name="calendar-outline" style={{ fontSize: 18, padding: '0px' }} />
+  )
 }
 function ShowIcon(): JSX.Element {
-  return <IonIcon name="chevron-down-outline" style={{ fontSize: 18, padding: '0px' }} />
+  return (
+    <IonIcon
+      name="chevron-down-outline"
+      style={{ fontSize: 18, padding: '0px' }}
+    />
+  )
 }
 
-function DatePicker({ value, onChange, ...args }: IDatePickerProps): JSX.Element {
+function DatePicker({
+  value,
+  onChange,
+  ...args
+}: IDatePickerProps): JSX.Element {
   const renderWeekPickerDay = (
     _: Dayjs,
     __: Array<Dayjs | null>,
@@ -51,16 +62,26 @@ function DatePicker({ value, onChange, ...args }: IDatePickerProps): JSX.Element
   return (
     <MuiDatePicker
       value={value}
-      onChange={(newValue): void => {
-        onChange(newValue)
-      }}
+      onChange={onChange}
       renderDay={renderWeekPickerDay}
       components={{
         OpenPickerIcon: EndIcon,
-        SwitchViewIcon: ShowIcon
+        SwitchViewIcon: ShowIcon,
       }}
-      renderInput={(params): JSX.Element => { 
-        return <InputText  {...params} {...args} endAdornment={params.InputProps.endAdornment} />} }
+      renderInput={(params): JSX.Element => {
+        return (
+          <InputText
+            {...params}
+            {...args}
+            endAdornment={params.InputProps.endAdornment}
+            onChange={(_: string | number, event: SyntheticEvent): void =>
+              params.onChange(event as ChangeEvent<HTMLInputElement>)
+            }
+            value={params.value as string}
+            ref={params.ref as Ref<HTMLDivElement>}
+          />
+        )
+      }}
     />
   )
 }

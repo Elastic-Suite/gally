@@ -6,32 +6,15 @@ import { SnackbarProvider } from 'notistack'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 
-import 'dayjs/locale/fr';
-import 'dayjs/locale/en';
+import 'dayjs/locale/fr'
+import 'dayjs/locale/en'
 
 import { theme } from 'shared'
 import { AppStore } from '~/store'
 
 import Alert from '~/components/atoms/Alert/Alert'
 import BreadcrumbProvider from '~/components/stateful-providers/BreadcrumbProvider/BreadcrumbProvider'
-import { MuiPickersAdapter } from '@mui/x-date-pickers/internals/models'
 import { useTranslation } from 'next-i18next'
-
-
-function CustomAdapter(options): new () => MuiPickersAdapter<unknown> {
-  const adapter = new AdapterDayjs(options);
-  const constructDayObject = (day: string): {charAt: () => string} => ({ charAt: () => day });
-
-  return {
-    ...adapter,
-
-    getWeekdays(): {charAt: () => string}[] {
-      const customWeekdays = adapter.getWeekdays();
-      return customWeekdays.map((day): {charAt: () => string} => constructDayObject(day));
-    }
-
-  };
-}
 
 interface IProps {
   children: ReactNode
@@ -57,7 +40,7 @@ function AppProvider(props: IProps): JSX.Element {
             autoHideDuration={5000}
             maxSnack={3}
           >
-            <LocalizationProvider dateAdapter={CustomAdapter} adapterLocale={i18n.language}>
+            <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={i18n.language}>
               <BreadcrumbProvider>{children}</BreadcrumbProvider>
             </LocalizationProvider>
           </SnackbarProvider>
