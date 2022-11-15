@@ -31,9 +31,10 @@ const Layout = styled('div')(({ theme }) => ({
   marginRight: '28px',
 }))
 
-const ActionsButtonsContainer = styled(Box)({
-  marginLeft: 'auto',
-})
+const CustomBarTextMaxProducts = styled('div')(({ theme }) => ({
+  color: theme.palette.colors.primary['500'],
+  margin: '0 auto',
+}))
 
 interface IProps {
   catConf: IParsedCategoryConfiguration
@@ -67,6 +68,7 @@ function ProductsContainer(props: IProps): JSX.Element {
   const tableRef = useRef<HTMLDivElement>()
   const [topSelectedRows, setTopSelectedRows] = useState<string[]>([])
   const [bottomSelectedRows, setBottomSelectedRows] = useState<string[]>([])
+  const [nbBottomRows, setNbBottomRows] = useState(0)
 
   const useNameInProductSearch = catConf?.useNameInProductSearch ?? false
   const isVirtual = catConf?.isVirtual ?? false
@@ -193,7 +195,8 @@ function ProductsContainer(props: IProps): JSX.Element {
         />
 
         <SearchBar
-          nbResults={10}
+          nbResults={nbBottomRows}
+          nbTopProducts={topProducts.length}
           value={searchValue}
           onChange={onSearchChange}
         />
@@ -208,36 +211,41 @@ function ProductsContainer(props: IProps): JSX.Element {
           setProductPositions={setProductPositions}
           topSelectedRows={topSelectedRows}
           topProducts={topProducts}
+          setNbBottomRows={setNbBottomRows}
         />
       </Layout>
       <StickyBar positionRef={tableRef} show={showStickyBar}>
         {t('rows.selected', {
           count: topSelectedRows.length + bottomSelectedRows.length,
         })}
-        <ActionsButtonsContainer>
-          <Button display="tertiary" onClick={(): void => unselectAllRows()}>
-            {t('button.cancelSelection')}
-          </Button>
-          <Button
-            sx={{ marginLeft: 1 }}
-            disabled={
-              bottomSelectedRows.length === 0 ||
-              bottomSelectedRows.length + topProducts.length > 25
-            }
-            onClick={pinToTop}
-          >
-            {t('pinToTop')}
-            <IonIcon name="arrow-up-outline" style={{ marginLeft: '13px' }} />
-          </Button>
-          <Button
-            sx={{ marginLeft: 1 }}
-            disabled={topSelectedRows.length === 0}
-            onClick={pinToBottom}
-          >
-            {t('pinToBottom')}
-            <IonIcon name="arrow-down-outline" style={{ marginLeft: '13px' }} />
-          </Button>
-        </ActionsButtonsContainer>
+
+        <CustomBarTextMaxProducts>
+          {topProducts.length === 25 &&
+            bottomSelectedRows.length !== 0 &&
+            t('bar.textMaxProducts')}
+        </CustomBarTextMaxProducts>
+        <Button display="tertiary" onClick={(): void => unselectAllRows()}>
+          {t('button.cancelSelection')}
+        </Button>
+        <Button
+          sx={{ marginLeft: 1 }}
+          disabled={
+            bottomSelectedRows.length === 0 ||
+            bottomSelectedRows.length + topProducts.length > 25
+          }
+          onClick={pinToTop}
+        >
+          {t('pinToTop')}
+          <IonIcon name="arrow-up-outline" style={{ marginLeft: '13px' }} />
+        </Button>
+        <Button
+          sx={{ marginLeft: 1 }}
+          disabled={topSelectedRows.length === 0}
+          onClick={pinToBottom}
+        >
+          {t('pinToBottom')}
+          <IonIcon name="arrow-down-outline" style={{ marginLeft: '13px' }} />
+        </Button>
       </StickyBar>
     </Box>
   )

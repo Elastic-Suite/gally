@@ -12,9 +12,9 @@
   "catalog.dropdown.label": "Choisir un catalogue",
   "localizedCatalog.dropdown.label": "Choisir une locale",
   "searchBar.title": "Produits dans la catégorie",
-  "searchBar.results_one": "résultat",
-  "searchBar.results_zero": "résultat",
-  "searchBar.results_other": "résultats",
+  "searchBar.results_one": "produit",
+  "searchBar.results_zero": "produit",
+  "searchBar.results_other": "produits",
   "searchBar.placeholder": "Recherche par nom...",
   "required": "* Champ requis",
   "name": "Utiliser le nom de la catégorie dans la recherche de produits",
@@ -28,5 +28,7 @@
   "default.sorting": "Tri par défaut",
   "buttonSave": "Sauvegarde",
   "alert": "Sauvegarde des données avec succès",
-  "alert.error": "Une erreur s'est produite"
+  "alert.error": "Une erreur s'est produite",
+  "bar.textMaxProducts": "Vous avez atteint le nombre maximum de produits épinglés (25).",
+  "labelForPinProduct": "Vous n'avez aucun produit épinglé dans cette catégorie. N'hésitez pas à épingler quelques produits de la liste ci-dessous."
 }
