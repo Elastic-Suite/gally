@@ -81,9 +81,10 @@ function BottomTable(
   }
 
   useEffect(() => {
-    Boolean(products?.data?.searchProducts) &&
-      setNbBottomRows(products.data.searchProducts.paginationInfo.totalCount)
-  })
+    setNbBottomRows(
+      products?.data?.searchProducts.paginationInfo.totalCount || 0
+    )
+  }, [products?.data?.searchProducts.paginationInfo.totalCount])
 
   return (
     <>
