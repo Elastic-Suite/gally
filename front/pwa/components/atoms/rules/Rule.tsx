@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useMemo } from 'react'
 import { useTranslation } from 'next-i18next'
 
 import { ruleOptionsContext } from '~/contexts'
@@ -6,8 +6,10 @@ import {
   IOptions,
   IRule,
   IRuleAttribute,
+  ITreeItem,
   RuleAttributeType,
   RuleType,
+  flatTree,
   isAttributeRule,
   isCombinationRule,
   ruleValueNumberTypes,
@@ -16,6 +18,7 @@ import {
 import IonIcon from '../IonIcon/IonIcon'
 import DropDown from '../form/DropDown'
 import InputText from '../form/InputText'
+import TreeSelector from '../form/TreeSelector'
 
 import { Close, CustomCombination, Root } from './Rule.styled'
 
@@ -36,6 +39,17 @@ function Rule(props: IProps): JSX.Element {
   } = useContext(ruleOptionsContext)
   const { t } = useTranslation('rules')
 
+  const categories = useMemo(
+    () =>
+      (options.get(`type-${RuleAttributeType.CATEGORY}`) ?? []) as ITreeItem[],
+    [options]
+  )
+  const flatCategories: ITreeItem[] = useMemo(() => {
+    const flat: ITreeItem[] = []
+    flatTree(categories, flat)
+    return flat
+  }, [categories])
+
   function getInputType(rule: IRuleAttribute): 'number' | 'text' {
     const valueType = operatorsValueType[rule.attribute_type]?.[rule.operator]
     if (ruleValueNumberTypes.includes(valueType)) {
@@ -46,6 +60,10 @@ function Rule(props: IProps): JSX.Element {
 
   function handleChange(property: string) {
     return (value: unknown): void => onChange({ ...rule, [property]: value })
+  }
+
+  function handleCategoryChange(value: ITreeItem[]): void {
+    onChange({ ...rule, value: value.map((category) => category.id as string) })
   }
 
   function handleFieldChange(value: string): void {
@@ -97,6 +115,19 @@ function Rule(props: IProps): JSX.Element {
           value={value}
         />
       )
+    } else if (attribute_type === RuleAttributeType.CATEGORY) {
+      const treeSelectorValue = flatCategories.filter((category) =>
+        (value as string[]).includes(category.id as string)
+      )
+      return (
+        <TreeSelector
+          data={categories}
+          required
+          small
+          onChange={handleCategoryChange}
+          value={treeSelectorValue}
+        />
+      )
     }
     return (
       <InputText
@@ -107,18 +138,6 @@ function Rule(props: IProps): JSX.Element {
         value={value as string}
       />
     )
-
-    // Category selector
-    // return (
-    //   <TreeSelector
-    //     data={
-    //       (options.get(`type-${RuleAttributeType.CATEGORY}`) ??
-    //         []) as ITreeItem[]
-    //     }
-    //     onChange={handleChange('value')}
-    //     value={value as string[]}
-    //   />
-    // )
   }
 
   let content

@@ -9,6 +9,7 @@ export function getCustomScrollBarStyles(
       position: 'sticky',
       bottom: '150px',
       height: '4px',
+      width: '4px',
     },
     '&::-webkit-scrollbar-track': {
       backgroundColor: `${theme.palette.colors.white}`,

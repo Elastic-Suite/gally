@@ -1,6 +1,7 @@
 export * from './api'
 export * from './breadcrumb'
 export * from './catalog'
+export * from './category'
 export * from './fetch'
 export * from './field'
 export * from './form'

@@ -6,11 +6,16 @@ import {
   useMemo,
   useState,
 } from 'react'
-import { IconButtonProps, Popper, useAutocomplete } from '@mui/material'
+import {
+  AutocompleteValue,
+  IconButtonProps,
+  useAutocomplete,
+} from '@mui/material'
 import { useTranslation } from 'next-i18next'
 import classNames from 'classnames'
+import { ModifierArguments, Options } from '@popperjs/core'
 
-import { ITreeItem } from 'shared'
+import { ITreeItem, flatTree } from 'shared'
 
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 
@@ -27,22 +32,14 @@ import {
   Input,
   Root,
   TreeContainer,
+  TreePopper,
 } from './TreeSelector.styled'
-
-function flatTree(tree: ITreeItem[], flat: ITreeItem[]): void {
-  tree.forEach((item) => {
-    flat.push(item)
-    if (item.children) {
-      flatTree(item.children, flat)
-    }
-  })
-}
 
 interface IProps extends Omit<IInputTextProps, 'onChange' | 'value' | 'ref'> {
   data: ITreeItem[]
   limitTags?: number
-  onChange?: (value: (string | number)[]) => void
-  value: (string | number)[]
+  onChange?: (value: ITreeItem[], event: SyntheticEvent) => void
+  value: ITreeItem[]
 }
 
 function TreeSelector(props: IProps): JSX.Element {
@@ -63,12 +60,19 @@ function TreeSelector(props: IProps): JSX.Element {
     flatTree(data, flat)
     return flat
   }, [data])
-  const getOptionLabel = useCallback((option: ITreeItem) => option.name, [])
+  const getOptionLabel = useCallback((option?: ITreeItem) => option?.name, [])
   const filterOptions = useCallback((options: ITreeItem[]) => options, [])
   const onInputChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => setSearch(event.target.value),
     []
   )
+
+  function handleChange(
+    event: SyntheticEvent,
+    value: AutocompleteValue<ITreeItem, true, false, false>
+  ): void {
+    onChangeProps(value, event)
+  }
 
   const { disabled, readOnly, small } = other
   const {
@@ -95,6 +99,7 @@ function TreeSelector(props: IProps): JSX.Element {
     filterOptions,
     getOptionLabel,
     multiple: true,
+    onChange: handleChange,
     onInputChange,
     options,
   })
@@ -120,6 +125,26 @@ function TreeSelector(props: IProps): JSX.Element {
       ...getTagProps(params),
     }),
     [disabled, getTagProps]
+  )
+  const modifiers: Options['modifiers'] = useMemo(
+    () => [
+      {
+        name: 'maxHeight',
+        enabled: true,
+        phase: 'read',
+        fn(args: ModifierArguments<Options>): void {
+          const popperEl = args.state.elements.popper
+          const transforms = popperEl.style.transform.split(',')
+          if (transforms.length > 1) {
+            const top = transforms[1].slice(0, -1)
+            ;(
+              popperEl.childNodes[0] as HTMLDivElement
+            ).style.maxHeight = `calc(100vh - ${top})`
+          }
+        },
+      },
+    ],
+    []
   )
 
   const hasClearIcon = !disabled && dirty && !readOnly
@@ -179,9 +204,10 @@ function TreeSelector(props: IProps): JSX.Element {
         startAdornment={startAdornment}
       />
       {Boolean(anchorEl) && (
-        <Popper
+        <TreePopper
           role="presentation"
           anchorEl={anchorEl}
+          modifiers={modifiers}
           open={popupOpen}
           placement="bottom-start"
         >
@@ -200,7 +226,7 @@ function TreeSelector(props: IProps): JSX.Element {
               />
             </TreeContainer>
           </Paper>
-        </Popper>
+        </TreePopper>
       )}
     </Root>
   )

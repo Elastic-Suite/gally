@@ -1,7 +1,6 @@
 import { styled } from '@mui/system'
 
 export const Root = styled('div')(({ theme }) => ({
-  height: '42px',
   boxSizing: 'border-box',
   background: theme.palette.colors.neutral['200'],
   padding: theme.spacing(1),
