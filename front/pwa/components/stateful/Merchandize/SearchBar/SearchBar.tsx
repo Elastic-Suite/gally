@@ -22,9 +22,14 @@ export default function SearchBar(props: IProps): JSX.Element {
   return (
     <Paper variant="outlined">
       <Grid container justifyContent="space-between" sx={{ padding: '16px' }}>
-        <Grid container direction="column" sx={{ width: '100%' }}>
+        <Grid container direction="column" sx={{ width: '100%', gap: '4px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <SearchTitle>{t('searchBar.title')}</SearchTitle>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <SearchTitle>{t('searchBar.title')}</SearchTitle>
+              <SearchResult>
+                {result} ({`${nbTopProducts} pinned`})
+              </SearchResult>
+            </div>
             <InputText
               id="input-text"
               required={false}
@@ -40,12 +45,9 @@ export default function SearchBar(props: IProps): JSX.Element {
               }
             />
           </div>
-          <SearchResult>
-            {result} ({`${nbTopProducts} pinned`})
-            {nbTopProducts === 0 && (
-              <CustomNoTopProduct>{t('labelForPinProduct')}</CustomNoTopProduct>
-            )}
-          </SearchResult>
+          {nbTopProducts === 0 && (
+            <CustomNoTopProduct>{t('labelForPinProduct')}</CustomNoTopProduct>
+          )}
         </Grid>
       </Grid>
     </Paper>
