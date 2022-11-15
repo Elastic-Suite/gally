@@ -14,6 +14,13 @@ Elasticsuite\Metadata\Model\SourceField:
         type: 'reference'
         isSystem: true
         isFilterable: true
+    product_category:
+        metadata: '@product'
+        code: 'category'
+        type: 'category'
+        isFilterable: true
+        isSortable: true
+        isSystem: true
     product_name:
         metadata: '@product'
         code: 'name'
@@ -42,10 +49,5 @@ Elasticsuite\Metadata\Model\SourceField:
         code: 'stock'
         type: 'stock'
         isFilterable: true
-        isSystem: true
-    product_category:
-        metadata: '@product'
-        code: 'category'
-        type: 'category'
-        isFilterable: true
+        isSortable: true
         isSystem: true

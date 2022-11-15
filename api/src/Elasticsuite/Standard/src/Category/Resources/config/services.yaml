@@ -62,6 +62,7 @@ services:
     Elasticsuite\Category\DataProvider\CategorySortingOptionDataProvider:
         arguments:
             - '@Elasticsuite\Metadata\Repository\SourceFieldRepository'
+            - !tagged_iterator { tag: 'elasticsuite.product_api.sort_order_provider', index_by: 'provider_name' }
         tags:
             - { name: api_platform.collection_data_provider }
         

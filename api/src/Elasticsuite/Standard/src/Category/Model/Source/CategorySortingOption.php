@@ -38,7 +38,7 @@ use Elasticsuite\Metadata\Model\SourceField;
 class CategorySortingOption
 {
     #[ApiProperty(identifier: true)]
-    public string $label;
-
     public string $code;
+
+    public string $label;
 }

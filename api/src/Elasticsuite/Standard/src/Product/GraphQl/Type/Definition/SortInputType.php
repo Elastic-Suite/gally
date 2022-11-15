@@ -17,8 +17,8 @@ declare(strict_types=1);
 namespace Elasticsuite\Product\GraphQl\Type\Definition;
 
 use ApiPlatform\Core\GraphQl\Type\TypesContainerInterface;
-use Elasticsuite\Metadata\Model\SourceField\Type;
 use Elasticsuite\Metadata\Repository\SourceFieldRepository;
+use Elasticsuite\Product\GraphQl\Type\Definition\SortOrder\SortOrderProviderInterface;
 use Elasticsuite\Search\GraphQl\Type\Definition\SortInputType as SearchSortInputType;
 
 class SortInputType extends SearchSortInputType
@@ -28,7 +28,8 @@ class SortInputType extends SearchSortInputType
     public function __construct(
         TypesContainerInterface $typesContainer,
         private SourceFieldRepository $sourceFieldRepository,
-        private string $nestingSeparator,
+        private iterable $sortOrderProviders,
+        private string $nestingSeparator
     ) {
         parent::__construct($typesContainer);
         $this->name = self::NAME;
@@ -38,23 +39,15 @@ class SortInputType extends SearchSortInputType
     {
         $fields = [];
         foreach ($this->sourceFieldRepository->getSortableFields('product') as $sortableField) {
-            if (
-                \in_array(
-                    $sortableField->getType(),
-                    [
-                        Type::TYPE_TEXT,
-                        Type::TYPE_KEYWORD,
-                        Type::TYPE_INT,
-                        Type::TYPE_BOOLEAN,
-                        Type::TYPE_FLOAT,
-                        Type::TYPE_REFERENCE,
-                        Type::TYPE_DATE,
-                    ], true
-                )
-            ) {
-                // GraphQl don't accept '.' in field name.
-                $fieldName = str_replace('.', $this->nestingSeparator, $sortableField->getCode());
-                $fields[$fieldName] = $this->getSortEnumType();
+            /** @var SortOrderProviderInterface $sortOrderProvider */
+            foreach ($this->sortOrderProviders as $sortOrderProvider) {
+                if ($sortOrderProvider->supports($sortableField)) {
+                    $fieldName = $sortOrderProvider->getSortOrderField($sortableField);
+                    $fields[$fieldName] = [
+                        'type' => $this->getSortEnumType(),
+                        'description' => $sortOrderProvider->getLabel($sortableField),
+                    ];
+                }
             }
         }
 

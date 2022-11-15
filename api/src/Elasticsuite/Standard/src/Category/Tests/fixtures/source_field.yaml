@@ -19,6 +19,22 @@ Elasticsuite\Metadata\Model\SourceField:
         code: 'category.position'
         type: 'int'
         isSystem: true
+        isSortable: true
+    product_real_category_position:
+        metadata: '@product'
+        code: 'real_category'
+        type: 'category'
+        isSortable: true
+    product_price:
+        metadata: '@product'
+        code: 'price'
+        type: 'price'
+        isSortable: true
+    product_stock:
+        metadata: '@product'
+        code: 'stock'
+        type: 'stock'
+        isSortable: true
     category_id:
         metadata: '@category'
         code: 'id'

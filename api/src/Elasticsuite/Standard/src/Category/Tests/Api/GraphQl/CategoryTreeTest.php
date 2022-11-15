@@ -14,7 +14,7 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\Index\Tests\Api\GraphQl;
+namespace Elasticsuite\Category\Tests\Api\GraphQl;
 
 use Elasticsuite\Catalog\Repository\CatalogRepository;
 use Elasticsuite\Catalog\Repository\LocalizedCatalogRepository;
