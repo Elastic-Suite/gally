@@ -3,6 +3,7 @@ import {
   MutableRefObject,
   SetStateAction,
   forwardRef,
+  useEffect,
   useMemo,
   useState,
 } from 'react'
@@ -28,6 +29,7 @@ interface IProps {
   productGraphqlFilters: IProductFieldFilterInput
   selectedRows: (string | number)[]
   topProductsIds: number[]
+  setNbBottomRows: (value: number) => void
 }
 
 function BottomTable(
@@ -40,6 +42,7 @@ function BottomTable(
     productGraphqlFilters,
     selectedRows,
     topProductsIds,
+    setNbBottomRows,
   } = props
 
   const [currentPage, setCurrentPage] = useState<number>(1)
@@ -76,6 +79,11 @@ function BottomTable(
     setRowsPerPage(Number(event.target.value))
     setCurrentPage(1)
   }
+
+  useEffect(() => {
+    Boolean(products?.data?.searchProducts) &&
+      setNbBottomRows(products.data.searchProducts.paginationInfo.totalCount)
+  })
 
   return (
     <>

@@ -28,6 +28,7 @@ interface IProps {
   setProductPositions: Dispatch<SetStateAction<IGraphqlProductPosition>>
   topSelectedRows: (string | number)[]
   topProducts: IProductPositions
+  setNbBottomRows: (value: number) => void
 }
 
 function ProductsTopAndBottom(
@@ -43,6 +44,7 @@ function ProductsTopAndBottom(
     setProductPositions,
     topSelectedRows,
     topProducts,
+    setNbBottomRows,
   } = props
   const { t } = useTranslation('categories')
 
@@ -54,15 +56,17 @@ function ProductsTopAndBottom(
     <Paper variant="outlined" sx={{ backgroundColor: 'colors.neutral.300' }}>
       <PreviewArea>{t('previewArea')}</PreviewArea>
       <Box sx={{ padding: '42px 16px 17px 16px' }}>
-        <TopTable
-          selectedRows={topSelectedRows}
-          onSelectedRows={onTopSelectedRows}
-          localizedCatalogId={localizedCatalogId}
-          productGraphqlFilters={productGraphqlFilters}
-          setProductPositions={setProductPositions}
-          topProducts={topProducts}
-          topProductsIds={topProductsIds}
-        />
+        {topProducts.length !== 0 && (
+          <TopTable
+            selectedRows={topSelectedRows}
+            onSelectedRows={onTopSelectedRows}
+            localizedCatalogId={localizedCatalogId}
+            productGraphqlFilters={productGraphqlFilters}
+            setProductPositions={setProductPositions}
+            topProducts={topProducts}
+            topProductsIds={topProductsIds}
+          />
+        )}
         <Box sx={topProducts.length !== 0 ? { marginTop: '24px' } : {}}>
           <BottomTable
             ref={ref}
@@ -71,6 +75,7 @@ function ProductsTopAndBottom(
             localizedCatalogId={localizedCatalogId}
             productGraphqlFilters={productGraphqlFilters}
             topProductsIds={topProductsIds}
+            setNbBottomRows={setNbBottomRows}
           />
         </Box>
       </Box>
