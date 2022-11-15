@@ -12,7 +12,6 @@ import {
   IGraphqlSearchProducts,
   IProductFieldFilterInput,
   ITableRow,
-  LoadStatus,
   defaultPageSize,
   defaultRowsPerPageOptions,
   getSearchProductsQuery,
@@ -80,27 +79,26 @@ function BottomTable(
 
   return (
     <>
-      {products.status === LoadStatus.SUCCEEDED &&
-        Boolean(products?.data?.searchProducts) && (
-          <PagerTable
-            Field={FieldGuesser}
-            currentPage={
-              (currentPage - 1 >= 0 ? currentPage - 1 : currentPage) ?? 0
-            }
-            onPageChange={onPageChange}
-            ref={ref}
-            rowsPerPage={rowsPerPage}
-            rowsPerPageOptions={defaultRowsPerPageOptions ?? []}
-            onRowsPerPageChange={onRowsPerPageChange}
-            tableHeaders={productTableheader}
-            tableRows={
-              products.data.searchProducts.collection as unknown as ITableRow[]
-            }
-            selectedRows={selectedRows}
-            onSelectedRows={onSelectedRows}
-            count={products.data.searchProducts.paginationInfo.totalCount}
-          />
-        )}
+      {Boolean(products?.data?.searchProducts) && (
+        <PagerTable
+          Field={FieldGuesser}
+          currentPage={
+            (currentPage - 1 >= 0 ? currentPage - 1 : currentPage) ?? 0
+          }
+          onPageChange={onPageChange}
+          ref={ref}
+          rowsPerPage={rowsPerPage}
+          rowsPerPageOptions={defaultRowsPerPageOptions ?? []}
+          onRowsPerPageChange={onRowsPerPageChange}
+          tableHeaders={productTableheader}
+          tableRows={
+            products.data.searchProducts.collection as unknown as ITableRow[]
+          }
+          selectedRows={selectedRows}
+          onSelectedRows={onSelectedRows}
+          count={products.data.searchProducts.paginationInfo.totalCount}
+        />
+      )}
     </>
   )
 }
