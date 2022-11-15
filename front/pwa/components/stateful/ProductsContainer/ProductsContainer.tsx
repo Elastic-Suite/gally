@@ -140,13 +140,14 @@ function ProductsContainer(props: IProps): JSX.Element {
     )
     const newTopProducts = bottomSelectedRows.map((row) => ({
       productId: Number(row.split('/')[2]),
-      position: ++maxPosition,
+      position: topProducts.length === 0 ? 1 : ++maxPosition,
     }))
     setProductPositions({
       getPositionsCategoryProductMerchandising: {
         result: JSON.stringify(topProducts.concat(newTopProducts)),
       },
     })
+    setBottomSelectedRows([])
   }
 
   function pinToBottom(): void {
@@ -160,6 +161,7 @@ function ProductsContainer(props: IProps): JSX.Element {
         ),
       },
     })
+    setTopSelectedRows([])
   }
 
   function handleSave(): void {
