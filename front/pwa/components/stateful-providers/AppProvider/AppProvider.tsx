@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import { SnackbarProvider } from 'notistack'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-
+import { useTranslation } from 'next-i18next'
 import 'dayjs/locale/fr'
 import 'dayjs/locale/en'
 
@@ -14,7 +14,6 @@ import { AppStore } from '~/store'
 
 import Alert from '~/components/atoms/Alert/Alert'
 import BreadcrumbProvider from '~/components/stateful-providers/BreadcrumbProvider/BreadcrumbProvider'
-import { useTranslation } from 'next-i18next'
 
 interface IProps {
   children: ReactNode
@@ -40,7 +39,10 @@ function AppProvider(props: IProps): JSX.Element {
             autoHideDuration={5000}
             maxSnack={3}
           >
-            <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={i18n.language}>
+            <LocalizationProvider
+              dateAdapter={AdapterDayjs}
+              adapterLocale={i18n.language}
+            >
               <BreadcrumbProvider>{children}</BreadcrumbProvider>
             </LocalizationProvider>
           </SnackbarProvider>

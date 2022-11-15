@@ -1,14 +1,15 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
-import { Dayjs } from 'dayjs'
 import { useState } from 'react'
-import DoubleDatePicker from './DoubleDatePicker'
+import { Dayjs } from 'dayjs'
+
+import DoubleDatePickerComponent from './DoubleDatePicker'
 
 export default {
   title: 'Atoms/form/DoubleDatePicker',
-  component: DoubleDatePicker,
-} as ComponentMeta<typeof DoubleDatePicker>
+  component: DoubleDatePickerComponent,
+} as ComponentMeta<typeof DoubleDatePickerComponent>
 
-const Template: ComponentStory<typeof DoubleDatePicker> = () => {
+const Template: ComponentStory<typeof DoubleDatePickerComponent> = () => {
   const [value, setValue] = useState<{
     from: Dayjs | null
     to: Dayjs | null
@@ -20,12 +21,12 @@ const Template: ComponentStory<typeof DoubleDatePicker> = () => {
     setValue(value)
   }
 
-  return <DoubleDatePicker value={value} onChange={onChange} />
+  return <DoubleDatePickerComponent value={value} onChange={onChange} />
 }
 
-export const Radio = Template.bind({})
+export const DoubleDatePicker = Template.bind({})
 
-Radio.args = {
+DoubleDatePicker.args = {
   color: 'primary',
   disabled: false,
   id: 'input-text',
