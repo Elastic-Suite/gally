@@ -2,8 +2,9 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'next-i18next'
-import { ICategories, ICategory, LoadStatus } from 'shared'
+import { ICategories, ICategory } from 'shared'
 import { styled } from '@mui/system'
+import classNames from 'classnames'
 
 import { breadcrumbContext } from '~/contexts'
 import { withAuth, withOptions } from '~/hocs'
@@ -27,7 +28,7 @@ const ButtonSetting = styled('div')(({ theme }) => ({
   justifyContent: 'center',
   cursor: 'pointer',
   gap: '5px',
-  '&:hover': {
+  '&.selected': {
     color: theme.palette.colors.secondary[600],
     textDecoration: 'underline',
   },
@@ -38,11 +39,16 @@ const IonIconStyle = styled(IonIcon)(() => ({
   fontSize: '20px',
 }))
 
-const FontSetting = styled('div')(() => ({
+const DefaultButton = styled('button')(() => ({
   fontWeight: 500,
   fontFamily: 'Inter',
   lineHeight: '18px',
   fontSize: '12px',
+  border: 'none',
+  background: 'none',
+  padding: 0,
+  cursor: 'pointer',
+  color: 'inherit',
 }))
 
 function Facets(): JSX.Element {
@@ -51,39 +57,27 @@ function Facets(): JSX.Element {
   const { t } = useTranslation('facet')
   const [selectedCategoryItem, setSelectedCategoryItem] = useState<ICategory>()
 
+  // Breadcrumb
   useEffect(() => {
     setBreadcrumb(pagesSlug)
   }, [router.query, setBreadcrumb])
-
   const title = pagesSlug.slice(-1).flat()
 
+  // Categories
   const [categories] = useFetchApi<ICategories>(`categoryTree`)
 
-  const hasFacets = selectedCategoryItem?.name
-    ? selectedCategoryItem?.name
-    : selectedCategoryItem?.catalogName
-  const [isVisibleAlertFacets, setIsVisibleAlertFacets] = useState(true)
-
-  useEffect(() => {
-    if (categories.status !== LoadStatus.SUCCEEDED) {
-      return
-    }
-    setSelectedCategoryItem((prevState) => {
-      if (!categories.data.categories[0]) {
-        return undefined
-      }
-      if (prevState === undefined) {
-        return categories.data.categories[0]
-      }
-    })
-  }, [categories])
-
+  // Facet configuration
   const resource = useResource('FacetConfiguration')
   const [activeFilters, setActiveFilters] = useFilters(resource)
   const filters = useMemo(
     () => ({ category: selectedCategoryItem?.id }),
     [selectedCategoryItem?.id]
   )
+
+  const [isVisibleAlertFacets, setIsVisibleAlertFacets] = useState(true)
+  const contentTitle = selectedCategoryItem?.name
+    ? selectedCategoryItem?.name
+    : selectedCategoryItem?.catalogName
 
   return (
     <>
@@ -100,10 +94,11 @@ function Facets(): JSX.Element {
             title={t('facet.configuration')}
           >
             <ButtonSetting
+              className={classNames({ selected: !selectedCategoryItem })}
               onClick={(): void => setSelectedCategoryItem(undefined)}
             >
               <IonIconStyle name="settings" />
-              <FontSetting>{t('facet.button.setting')}</FontSetting>
+              <DefaultButton>{t('facet.button.setting')}</DefaultButton>
             </ButtonSetting>
           </TitleBlock>,
           <TitleBlock
@@ -121,7 +116,7 @@ function Facets(): JSX.Element {
         ]}
       >
         <PageTitle
-          title={hasFacets ? hasFacets : t('facets')}
+          title={contentTitle ? contentTitle : t('facets')}
           sx={{ marginBottom: '32px' }}
         />
         {Boolean(isVisibleAlertFacets) && (

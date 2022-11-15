@@ -30,6 +30,9 @@ export const CustomTitle = styled('button')(({ theme }) => ({
   background: 'none',
   padding: 0,
   cursor: 'pointer',
+  fontFamily: 'Inter',
+  fontSize: '12px',
+  fontWeight: 500,
 }))
 
 export const CustomTitleBase = styled(CustomTitle)(({ theme }) => ({
