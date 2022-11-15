@@ -9,11 +9,23 @@ export const SearchTitle = styled(Grid)(() => ({
   color: '#151A47',
 }))
 
-export const SearchResult = styled(Grid)(() => ({
+export const SearchResult = styled(Grid)(({ theme }) => ({
   fontFamily: 'Inter',
   fontStyle: 'normal',
   fontWeight: '400',
   fontSize: '12px',
   lineHeight: '18px',
   color: '#424880',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: theme.spacing(1),
+}))
+
+export const CustomNoTopProduct = styled('div')(({ theme }) => ({
+  fontFamily: 'Inter',
+  fontStyle: 'normal',
+  fontWeight: '400',
+  fontSize: '14px',
+  lineHeight: '20px',
+  color: theme.palette.colors.primary['500'],
 }))
