@@ -9,44 +9,51 @@ exports[`SearchBar match snapshot SearchBar 1`] = `
       class="MuiGrid-root MuiGrid-container css-3az692-MuiGrid-root"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-9tc18q-MuiGrid-root"
+        class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-lx9shp-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root css-iwdcax-MuiGrid-root"
-        >
-          searchBar.title
-        </div>
-        <div
-          class="MuiGrid-root css-smiavp-MuiGrid-root"
-        >
-          searchBarResult
-        </div>
-      </div>
-      <div
-        class="MuiFormControl-root css-1pl6002-MuiFormControl-root"
-      >
-        <div
-          class="InputText__Wrapper css-newnfq"
+          style="display: flex; justify-content: space-between;"
         >
           <div
-            class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd css-w8c12a-MuiInputBase-root"
+            class="MuiGrid-root css-iwdcax-MuiGrid-root"
           >
-            <input
-              aria-invalid="false"
-              class="MuiInputBase-input MuiInputBase-inputAdornedEnd css-yz9k0d-MuiInputBase-input"
-              id="input-text"
-              placeholder="searchBar.placeholder"
-              type="text"
-              value=""
-            />
+            searchBar.title
+          </div>
+          <div
+            class="MuiFormControl-root css-1pl6002-MuiFormControl-root"
+          >
             <div
-              class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
+              class="InputText__Wrapper css-newnfq"
             >
-              <ion-icon
-                name="search"
-              />
+              <div
+                class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd css-w8c12a-MuiInputBase-root"
+              >
+                <input
+                  aria-invalid="false"
+                  class="MuiInputBase-input MuiInputBase-inputAdornedEnd css-yz9k0d-MuiInputBase-input"
+                  id="input-text"
+                  placeholder="searchBar.placeholder"
+                  type="text"
+                  value=""
+                />
+                <div
+                  class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
+                >
+                  <ion-icon
+                    name="search"
+                  />
+                </div>
+              </div>
             </div>
           </div>
+        </div>
+        <div
+          class="MuiGrid-root css-36pazz-MuiGrid-root"
+        >
+          searchBarResult
+           (
+          50 pinned
+          )
         </div>
       </div>
     </div>
