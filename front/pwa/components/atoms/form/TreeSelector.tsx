@@ -8,7 +8,7 @@ import {
 } from 'react'
 import { IconButtonProps, Popper, useAutocomplete } from '@mui/material'
 import { useTranslation } from 'next-i18next'
-import classnames from 'classnames'
+import classNames from 'classnames'
 
 import { ITreeItem } from 'shared'
 
@@ -149,7 +149,7 @@ function TreeSelector(props: IProps): JSX.Element {
     <Root {...getRootProps()} style={style}>
       <Input
         {...other}
-        className={classnames({ focused, hasClearIcon })}
+        className={classNames({ focused, hasClearIcon })}
         endAdornment={
           <EndAdornment position="end">
             {Boolean(hasClearIcon) && (
