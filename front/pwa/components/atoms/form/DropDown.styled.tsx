@@ -1,4 +1,5 @@
 import { styled } from '@mui/system'
+import { getCustomScrollBarStyles } from 'shared'
 
 export const StyledPaper = styled('div')(({ theme }) => ({
   minWidth: '180px',
@@ -6,6 +7,8 @@ export const StyledPaper = styled('div')(({ theme }) => ({
   border: `1px solid ${theme.palette.colors.neutral['300']}`,
   borderRadius: 8,
   margin: '4px 0',
+  overflow: 'auto',
+  ...getCustomScrollBarStyles(theme),
   '& .MuiAutocomplete-listbox': {
     padding: 0,
   },

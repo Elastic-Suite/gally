@@ -80,7 +80,7 @@ function Tree<Multiple extends boolean | undefined>(
     event.stopPropagation()
   }
 
-  function handletoggle(item: ITreeItem) {
+  function handleToggle(item: ITreeItem) {
     return (event: MouseEvent<HTMLButtonElement>): void => {
       event.stopPropagation()
       onToggle({
@@ -136,7 +136,7 @@ function Tree<Multiple extends boolean | undefined>(
               }}
             >
               {item.children ? (
-                <Button onClick={handletoggle(item)}>
+                <Button onClick={handleToggle(item)}>
                   <IonIcon
                     name={openItems[item.id] ? 'minus' : 'more'}
                     style={{ fontSize: small ? '15px' : '24px' }}
