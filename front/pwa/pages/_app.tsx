@@ -1,12 +1,11 @@
-import { useEffect } from 'react'
-import { appWithTranslation, useTranslation } from 'next-i18next'
+import { appWithTranslation } from 'next-i18next'
 import type { AppProps } from 'next/app'
 import dynamic from 'next/dynamic'
 import Script from 'next/script'
 import Head from 'next/head'
 
 import nextI18nConfig from '~/next-i18next.config'
-import { setLanguage, setupStore } from '~/store'
+import { setupStore } from '~/store'
 
 import AppProvider from '~/components/stateful-providers/AppProvider/AppProvider'
 import DataProvider from '~/components/stateful-providers/DataProvider/DataProvider'
@@ -29,15 +28,6 @@ const store = setupStore()
 function MyApp(props: AppProps): JSX.Element {
   const { Component, pageProps } = props
   const Cmp = Component
-
-  const { i18n } = useTranslation('common')
-
-  // Set language
-  useEffect(() => {
-    if (i18n.language) {
-      setLanguage(i18n.language)
-    }
-  }, [i18n.language])
 
   return (
     <>
