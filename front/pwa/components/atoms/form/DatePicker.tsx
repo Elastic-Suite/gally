@@ -1,15 +1,16 @@
+import { ChangeEvent, ComponentType, Ref, SyntheticEvent } from 'react'
 import { DatePicker as MuiDatePicker } from '@mui/x-date-pickers/DatePicker'
-
-import { Dayjs } from 'dayjs'
 import {
   PickersDay,
   PickersDayProps,
   pickersDayClasses,
 } from '@mui/x-date-pickers/PickersDay'
 import { styled } from '@mui/system'
-import { ChangeEvent, ComponentType, Ref, SyntheticEvent } from 'react'
-import InputText, { IInputTextProps } from './InputText'
+import { Dayjs } from 'dayjs'
+
 import IonIcon from '../IonIcon/IonIcon'
+
+import InputText, { IInputTextProps } from './InputText'
 
 const CustomPickersDay = styled(PickersDay, {
   shouldForwardProp: (prop) =>
