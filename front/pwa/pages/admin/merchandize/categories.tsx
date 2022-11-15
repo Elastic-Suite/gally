@@ -274,7 +274,7 @@ function Categories(): JSX.Element {
               />
             </>
           </TitleBlock>,
-          Boolean(catConf?.id && catConf?.isVirtual) && (
+          Boolean(catConf?.isVirtual) && (
             <TitleBlock key="virtualRule" title={t('virtualRule.title')}>
               <RulesManager
                 catalogId={catalogId}

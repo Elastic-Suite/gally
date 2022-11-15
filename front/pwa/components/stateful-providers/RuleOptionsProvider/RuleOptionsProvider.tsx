@@ -117,19 +117,22 @@ function RuleOptionsProvider(props: IProps): JSX.Element {
         return
       }
       if (field.type === RuleAttributeType.CATEGORY) {
-        return fetch(field.code, async (fetchApi: IFetchApi) => {
-          const response = await fetchApi<ICategories>(
-            `categoryTree?/&catalogId=${
-              catalogId !== -1 ? catalogId : null
-            }&localizedCatalogId=${
-              localizedCatalogId !== -1 ? localizedCatalogId : null
-            }`
-          )
-          if (!isError(response)) {
-            return response.categories
+        return fetch(
+          `type-${RuleAttributeType.CATEGORY}`,
+          async (fetchApi: IFetchApi) => {
+            const response = await fetchApi<ICategories>(
+              `categoryTree?/&catalogId=${
+                catalogId !== -1 ? catalogId : null
+              }&localizedCatalogId=${
+                localizedCatalogId !== -1 ? localizedCatalogId : null
+              }`
+            )
+            if (!isError(response)) {
+              return response.categories
+            }
+            throw new Error('error')
           }
-          throw new Error('error')
-        })
+        )
       }
       if (field.type === RuleAttributeType.SELECT) {
         return fetch(field.code, async (fetchApi: IFetchApi) => {
