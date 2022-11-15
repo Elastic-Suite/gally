@@ -1,12 +1,14 @@
 import { ReactNode } from 'react'
 import { Box, FormHelperText, Grid, InputLabel } from '@mui/material'
-import { Dayjs } from 'dayjs'
 import { useTranslation } from 'next-i18next'
 import { styled } from '@mui/system'
+import { Dayjs } from 'dayjs'
+
+import IonIcon from '../IonIcon/IonIcon'
+
+import DatePicker, { IDatePickerProps } from './DatePicker'
 import { StyledFormControl } from './InputText.styled'
 import InfoTooltip from './InfoTooltip'
-import IonIcon from '../IonIcon/IonIcon'
-import DatePicker, { IDatePickerProps } from './DatePicker'
 
 const CustomBox = styled(Box)(() => ({
   fontWeight: 400,
@@ -42,7 +44,7 @@ function DoubleDatePicker(props: IProps): JSX.Element {
     ...args
   } = props
 
-  const { t } = useTranslation('datePicker')
+  const { t } = useTranslation('common')
 
   function onChangeFrom(date: Dayjs | null): void {
     onChange({ ...value, from: date })
@@ -71,13 +73,13 @@ function DoubleDatePicker(props: IProps): JSX.Element {
         container
         sx={{ width: '900px', marginTop: label ? '30px' : '0px' }}
       >
-        <CustomBox sx={{ paddingRight: '20px' }}> {t('from')} </CustomBox>
+        <CustomBox sx={{ paddingRight: '20px' }}> {t('form.from')} </CustomBox>
         <Grid item sx={{ width: '190px' }}>
           <DatePicker {...args} value={value.from} onChange={onChangeFrom} />
         </Grid>
         <CustomBox sx={{ paddingRight: '20px', paddingLeft: '20px' }}>
           {' '}
-          {t('to')}{' '}
+          {t('form.to')}{' '}
         </CustomBox>
         <Grid item sx={{ width: '190px' }}>
           <DatePicker {...args} value={value.to} onChange={onChangeTo} />

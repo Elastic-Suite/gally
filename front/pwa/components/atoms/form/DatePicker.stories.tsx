@@ -1,26 +1,27 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
-import { Dayjs } from 'dayjs'
 import { useState } from 'react'
-import DatePicker from './DatePicker'
+import { Dayjs } from 'dayjs'
+
+import DatePickerComponent from './DatePicker'
 
 export default {
   title: 'Atoms/form/DatePicker',
-  component: DatePicker,
-} as ComponentMeta<typeof DatePicker>
+  component: DatePickerComponent,
+} as ComponentMeta<typeof DatePickerComponent>
 
-const Template: ComponentStory<typeof DatePicker> = (args) => {
+const Template: ComponentStory<typeof DatePickerComponent> = (args) => {
   const [value, setValue] = useState<Dayjs | null>(null)
 
   function onChange(value: Dayjs | null): void {
     setValue(value)
   }
 
-  return <DatePicker {...args} value={value} onChange={onChange} />
+  return <DatePickerComponent {...args} value={value} onChange={onChange} />
 }
 
-export const Radio = Template.bind({})
+export const DatePicker = Template.bind({})
 
-Radio.args = {
+DatePicker.args = {
   color: 'primary',
   disabled: false,
   id: 'input-text',
