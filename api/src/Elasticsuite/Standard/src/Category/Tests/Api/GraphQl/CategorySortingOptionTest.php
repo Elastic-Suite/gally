@@ -14,7 +14,7 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\Index\Tests\Api\GraphQl;
+namespace Elasticsuite\Category\Tests\Api\GraphQl;
 
 use Elasticsuite\Test\AbstractTest;
 use Elasticsuite\Test\ExpectedResponse;
@@ -53,8 +53,11 @@ class CategorySortingOptionTest extends AbstractTest
                     $responseData = $response->toArray();
                     $this->assertSame(
                         [
-                            ['code' => 'position', 'label' => 'Position'],
                             ['code' => 'name', 'label' => 'Name'],
+                            ['code' => 'category__position', 'label' => 'Category.position'],
+                            ['code' => 'real_category__position', 'label' => 'Position'],
+                            ['code' => 'price__price', 'label' => 'Final price'],
+                            ['code' => 'stock__status', 'label' => 'Stock status'],
                         ],
                         $responseData['data']['categorySortingOptions']
                     );

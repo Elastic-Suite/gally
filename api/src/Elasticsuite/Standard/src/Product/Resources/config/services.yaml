@@ -37,10 +37,35 @@ services:
         tags:
             - { name: doctrine.fixture.orm }
                 
+    Elasticsuite\Product\GraphQl\Type\Definition\SortOrder\CategoryDefaultSortOrderProvider:
+        arguments:
+            - '%api_platform.graphql.nesting_separator%'
+        tags:
+            - { name: elasticsuite.product_api.sort_order_provider, provider_name: 'category_default' }
+
+    Elasticsuite\Product\GraphQl\Type\Definition\SortOrder\PriceDefaultSortOrderProvider:
+        arguments:
+            - '%api_platform.graphql.nesting_separator%'
+        tags:
+            - { name: elasticsuite.product_api.sort_order_provider, provider_name: 'price_default' }
+
+    Elasticsuite\Product\GraphQl\Type\Definition\SortOrder\ScalarSortOrderProvider:
+        arguments:
+            - '%api_platform.graphql.nesting_separator%'
+        tags:
+            - { name: elasticsuite.product_api.sort_order_provider, provider_name: 'scalar' }
+
+    Elasticsuite\Product\GraphQl\Type\Definition\SortOrder\StockDefaultSortOrderProvider:
+        arguments:
+            - '%api_platform.graphql.nesting_separator%'
+        tags:
+            - { name: elasticsuite.product_api.sort_order_provider, provider_name: 'stock_default' }
+
     Elasticsuite\Product\GraphQl\Type\Definition\SortInputType:
         arguments:
             - '@api_platform.graphql.types_container'
             - '@Elasticsuite\Metadata\Repository\SourceFieldRepository'
+            - !tagged_iterator { tag: 'elasticsuite.product_api.sort_order_provider', index_by: 'provider_name' }
             - '%api_platform.graphql.nesting_separator%'
         tags:
             - { name: api_platform.graphql.type }

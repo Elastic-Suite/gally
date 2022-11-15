@@ -20,11 +20,14 @@ use ApiPlatform\Core\DataProvider\ContextAwareCollectionDataProviderInterface;
 use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
 use Elasticsuite\Category\Model\Source\CategorySortingOption;
 use Elasticsuite\Metadata\Repository\SourceFieldRepository;
+use Elasticsuite\Product\GraphQl\Type\Definition\SortOrder\SortOrderProviderInterface as ProductSortOrderProviderInterface;
 
 class CategorySortingOptionDataProvider implements ContextAwareCollectionDataProviderInterface, RestrictedDataProviderInterface
 {
-    public function __construct(private SourceFieldRepository $sourceFieldRepository)
-    {
+    public function __construct(
+        private SourceFieldRepository $sourceFieldRepository,
+        private iterable $sortOrderProviders
+    ) {
     }
 
     /**
@@ -40,16 +43,19 @@ class CategorySortingOptionDataProvider implements ContextAwareCollectionDataPro
      */
     public function getCollection(string $resourceClass, string $operationName = null, array $context = []): array
     {
-        $sortOptions = [
-            ['code' => 'position', 'label' => 'Position'],
-        ];
-        $sortableFields = $this->sourceFieldRepository->getSortableFields('product');
+        $sortOptions = [];
 
+        $sortableFields = $this->sourceFieldRepository->getSortableFields('product');
         foreach ($sortableFields as $sourceField) {
-            $sortOptions[] = [
-                'code' => $sourceField->getCode(),
-                'label' => $sourceField->getDefaultLabel(),
-            ];
+            /** @var ProductSortOrderProviderInterface $sortOrderProvider */
+            foreach ($this->sortOrderProviders as $sortOrderProvider) {
+                if ($sortOrderProvider->supports($sourceField)) {
+                    $sortOptions[] = [
+                        'code' => $sortOrderProvider->getSortOrderField($sourceField),
+                        'label' => $sortOrderProvider->getSimplifiedLabel($sourceField),
+                    ];
+                }
+            }
         }
 
         return $sortOptions;

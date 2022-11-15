@@ -14,7 +14,7 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\Index\Tests\Api\Rest;
+namespace Elasticsuite\Category\Tests\Api\Rest;
 
 use Elasticsuite\Catalog\Repository\CatalogRepository;
 use Elasticsuite\Catalog\Repository\LocalizedCatalogRepository;
@@ -23,7 +23,7 @@ use Elasticsuite\Test\RequestToTest;
 use Elasticsuite\User\Constant\Role;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
-class CategoryTreeTest extends \Elasticsuite\Index\Tests\Api\GraphQl\CategoryTreeTest
+class CategoryTreeTest extends CategoryTest
 {
     public function testInvalidCatalog(): void
     {
