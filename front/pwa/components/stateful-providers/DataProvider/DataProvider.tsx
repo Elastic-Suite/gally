@@ -9,7 +9,6 @@ interface IProps {
 
 function DataProvider(props: IProps): JSX.Element {
   const { children } = props
-
   return (
     <UserProvider>
       <SchemaProvider>{children}</SchemaProvider>
