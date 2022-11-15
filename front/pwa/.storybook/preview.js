@@ -8,6 +8,7 @@ import TestProvider from '~/utils/TestProvider'
 import AppProvider from '~/components/stateful-providers/AppProvider/AppProvider'
 
 import I18nProvider from './I18nProvider'
+import StoryProvider from './StoryProvider'
 
 import '~/assets/scss/style.scss'
 
@@ -30,11 +31,13 @@ export const decorators = [
     const store = setupStore()
     return (
       <Suspense fallback="">
-        <I18nProvider locale={context.globals.locale}>
+        <I18nProvider>
           <AppProvider store={store}>
-            <TestProvider api={api}>
-              <Story />
-            </TestProvider>
+            <StoryProvider locale={context.globals.locale}>
+              <TestProvider api={api}>
+                <Story />
+              </TestProvider>
+            </StoryProvider>
           </AppProvider>
         </I18nProvider>
       </Suspense>
