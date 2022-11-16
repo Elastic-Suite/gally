@@ -105,10 +105,9 @@ abstract class AbstractFilter extends InputObjectType implements TypeInterface, 
 
     public function validateValueTypeByType(string $field, string $operator, mixed $value, string $type = 'string')
     {
-        $typeFunction = "is_{$type}";
-        if ('float' === $type) {
-            // Specific behavior for float @see https://www.php.net/manual/fr/function.gettype
-            $typeFunction = 'is_double';
+        $typeFunction = $additionalTypeFunction = "is_{$type}";
+        if ('float' === $type || 'double' === $type) {
+            $additionalTypeFunction = 'is_integer';
         }
 
         if (FilterOperator::EXIST == $operator) {
@@ -120,12 +119,12 @@ abstract class AbstractFilter extends InputObjectType implements TypeInterface, 
                 throw new LogicException("Expected an array as 'value' for rule on field '{$field}' and operator '{$operator}', received '{$value}'.");
             }
             foreach ($value as $item) {
-                if (!$typeFunction($item)) {
+                if (!$typeFunction($item) && !$additionalTypeFunction($item)) {
                     throw new LogicException("Expected an array of '{$type}' for rule on field '{$field}' and operator '{$operator}', got: " . print_r($value, true));
                 }
             }
         } else {
-            if (!$typeFunction($value)) {
+            if (!$typeFunction($value) && !$additionalTypeFunction($value)) {
                 throw new LogicException("For the field '{$field}' the value '" . print_r($value, true) . "' is not of type '{$type}'.");
             }
         }
