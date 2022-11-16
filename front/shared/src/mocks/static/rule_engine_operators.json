@@ -23,7 +23,11 @@
     "int": ["eq", "!eq", "gt", "gte", "lt", "lte", "in", "!in"],
     "float": ["eq", "!eq", "gt", "gte", "lt", "lte", "in", "!in"],
     "boolean": ["eq"],
-    "date": ["eq", "!eq", "gt", "gte", "lt", "lte"]
+    "date": ["eq", "!eq", "gt", "gte", "lt", "lte"],
+    "select": ["eq", "!eq", "in", "!in"],
+    "category": ["eq", "!eq"],
+    "price": ["eq", "!eq", "gt", "gte", "lt", "lte", "in", "!in"],
+    "stock": ["eq"]
   },
   "operatorsValueType": {
     "text": {
@@ -78,6 +82,24 @@
       "gte": "String",
       "lt": "String",
       "lte": "String"
-    }
+    },
+    "select": {
+      "eq": "String",
+      "!eq": "String",
+      "in": "[String]",
+      "!in": "[String]"
+    },
+    "category": { "eq": "String!", "!eq": "String!" },
+    "price": {
+      "eq": "Float",
+      "!eq": "Float",
+      "gt": "Float",
+      "gte": "Float",
+      "lt": "Float",
+      "lte": "Float",
+      "in": "[Float]",
+      "!in": "[Float]"
+    },
+    "stock": { "eq": "Boolean" }
   }
 }

@@ -5,6 +5,7 @@ import {
 } from '../constants'
 import {
   ICategoryConfiguration,
+  IOperatorsValueType,
   IParsedCategoryConfiguration,
   IRule,
   IRuleAttribute,
@@ -22,6 +23,17 @@ export function isAttributeRule(rule: IRule): rule is IRuleAttribute {
   return rule.type === RuleType.ATTRIBUTE
 }
 
+export function getAttributeRuleValueType(
+  rule: IRuleAttribute,
+  operatorsValueType: IOperatorsValueType
+): string {
+  return operatorsValueType[rule.attribute_type]?.[rule.operator]
+}
+
+export function isAttributeRuleValueMultiple(valueType: string): boolean {
+  return valueType?.startsWith('[') && valueType?.endsWith(']')
+}
+
 function parseRule<R extends IRule>(
   rule: R,
   ruleOperators: IRuleEngineOperators
@@ -33,12 +45,13 @@ function parseRule<R extends IRule>(
       children: rule.children.map((rule) => parseRule(rule, ruleOperators)),
     }
   } else if (isAttributeRule(rule)) {
-    const valueType =
-      ruleOperators.operatorsValueType[rule.attribute_type]?.[rule.operator]
     let ruleValue = rule.value
+    const valueType = getAttributeRuleValueType(
+      rule,
+      ruleOperators.operatorsValueType
+    )
     if (
-      valueType?.startsWith('[') &&
-      valueType?.endsWith(']') &&
+      isAttributeRuleValueMultiple(valueType) &&
       rule.value instanceof Array
     ) {
       ruleValue = rule.value.join(ruleArrayValueSeparator)
@@ -74,14 +87,15 @@ export function serializeRule<R extends IRule>(
       children: rule.children.map((rule) => serializeRule(rule, ruleOperators)),
     }
   } else if (isAttributeRule(rule)) {
-    const valueType =
-      ruleOperators.operatorsValueType[rule.attribute_type]?.[rule.operator]
     let ruleValue: string | string[] | number | number[] | boolean = String(
       rule.value
     )
+    const valueType = getAttributeRuleValueType(
+      rule,
+      ruleOperators.operatorsValueType
+    )
     if (
-      valueType?.startsWith('[') &&
-      valueType?.endsWith(']') &&
+      isAttributeRuleValueMultiple(valueType) &&
       typeof rule.value === 'string'
     ) {
       ruleValue = rule.value.split(ruleArrayValueSeparator)
