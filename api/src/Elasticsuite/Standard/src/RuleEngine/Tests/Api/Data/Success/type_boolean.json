@@ -9,14 +9,14 @@
         "field": "is_new",
         "operator": "eq",
         "attribute_type": "boolean",
-        "value": "true"
+        "value": true
       },
       {
         "type": "attribute",
         "field": "is_new",
         "operator": "eq",
         "attribute_type": "boolean",
-        "value": "false"
+        "value": false
       }
     ]
   },
@@ -25,12 +25,12 @@
       "_must": [
         {
           "is_new": {
-            "eq": "true"
+            "eq": true
           }
         },
         {
           "is_new": {
-            "eq": "false"
+            "eq": false
           }
         }
       ]

@@ -50,6 +50,15 @@ services:
         tags:
             - { name: api_platform.graphql.type }
             - { name: elasticsuite.product_api.filter }
+            
+    Elasticsuite\Product\GraphQl\Type\Definition\Filter\BoolTypeFilterInputType:
+        arguments:
+            - '@Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
+            - '@Elasticsuite\Search\Elasticsearch\Request\QueryFactory'
+            - '%api_platform.graphql.nesting_separator%'
+        tags:
+            - { name: api_platform.graphql.type }
+            - { name: elasticsuite.product_api.filter }
                 
     Elasticsuite\Product\GraphQl\Type\Definition\Filter\IntegerTypeFilterInputType:
         arguments:
