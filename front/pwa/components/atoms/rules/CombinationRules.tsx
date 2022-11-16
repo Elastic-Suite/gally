@@ -48,6 +48,7 @@ const RootWithBorder = styled(BorderBox)(({ theme }) => ({
   gap: theme.spacing(2),
   paddingTop: theme.spacing(2),
   paddingBottom: theme.spacing(2),
+  alignItems: 'flex-start',
 }))
 
 const RootWithoutBorder = styled('div')(({ theme }) => ({

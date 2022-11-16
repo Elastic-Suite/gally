@@ -35,14 +35,20 @@ import {
   TreePopper,
 } from './TreeSelector.styled'
 
-interface IProps extends Omit<IInputTextProps, 'onChange' | 'value' | 'ref'> {
+interface IProps<Multiple extends boolean | undefined>
+  extends Omit<IInputTextProps, 'onChange' | 'value' | 'ref'> {
   data: ITreeItem[]
   limitTags?: number
-  onChange?: (value: ITreeItem[], event: SyntheticEvent) => void
-  value: ITreeItem[]
+  multiple?: Multiple
+  onChange?: Multiple extends true
+    ? (value: ITreeItem[], event: SyntheticEvent) => void
+    : (value: ITreeItem, event: SyntheticEvent) => void
+  value: Multiple extends true ? ITreeItem[] : ITreeItem
 }
 
-function TreeSelector(props: IProps): JSX.Element {
+function TreeSelector<Multiple extends boolean | undefined>(
+  props: IProps<Multiple>
+): JSX.Element {
   const {
     data,
     limitTags,
@@ -69,12 +75,24 @@ function TreeSelector(props: IProps): JSX.Element {
 
   function handleChange(
     event: SyntheticEvent,
-    value: AutocompleteValue<ITreeItem, true, false, false>
+    value: AutocompleteValue<ITreeItem, Multiple, false, false>
   ): void {
-    onChangeProps(value, event)
+    if (multiple) {
+      const onChange = onChangeProps as (
+        value: ITreeItem[],
+        event: SyntheticEvent
+      ) => void
+      onChange(value as ITreeItem[], event)
+    } else {
+      const onChange = onChangeProps as (
+        value: ITreeItem,
+        event: SyntheticEvent
+      ) => void
+      onChange(value as ITreeItem, event)
+    }
   }
 
-  const { disabled, readOnly, small } = other
+  const { disabled, multiple, readOnly, small } = other
   const {
     getClearProps,
     getInputProps,
@@ -90,15 +108,19 @@ function TreeSelector(props: IProps): JSX.Element {
     focused,
     anchorEl,
     setAnchorEl,
-  } = useAutocomplete({
+  } = useAutocomplete<ITreeItem, Multiple, false, false>({
     ...other,
     autoComplete: false,
     componentName: 'TreeSelector',
-    defaultValue: [],
+    defaultValue: (multiple ? [] : null) as AutocompleteValue<
+      ITreeItem,
+      Multiple,
+      false,
+      false
+    >,
     disableCloseOnSelect: true,
     filterOptions,
     getOptionLabel,
-    multiple: true,
     onChange: handleChange,
     onInputChange,
     options,
@@ -153,15 +175,20 @@ function TreeSelector(props: IProps): JSX.Element {
   const closeText = t('form.close')
   const openText = t('form.open')
 
-  let startAdornment = value.map((option: ITreeItem, index: number) => (
-    <Chip
-      // eslint-disable-next-line react/no-array-index-key
-      key={index}
-      label={getOptionLabel(option)}
-      size={small ? 'small' : 'medium'}
-      {...getCustomizedTagProps({ index })}
-    />
-  ))
+  let startAdornment
+  if (multiple) {
+    startAdornment = (value as ITreeItem[]).map(
+      (option: ITreeItem, index: number) => (
+        <Chip
+          // eslint-disable-next-line react/no-array-index-key
+          key={index}
+          label={getOptionLabel(option)}
+          size={small ? 'small' : 'medium'}
+          {...getCustomizedTagProps({ index })}
+        />
+      )
+    )
+  }
   if (limitTags > -1 && Array.isArray(startAdornment)) {
     const more = startAdornment.length - limitTags
     if (!focused && more > 0) {
@@ -217,12 +244,12 @@ function TreeSelector(props: IProps): JSX.Element {
                 data={data}
                 getItemProps={getItemProps}
                 getListboxProps={getListboxProps}
-                multiple
+                multiple={multiple}
                 onToggle={setOpenItems}
                 openItems={openItems}
                 search={search}
                 small={small}
-                value={value as ITreeItem[]}
+                value={value as Multiple extends true ? ITreeItem[] : ITreeItem}
               />
             </TreeContainer>
           </Paper>
