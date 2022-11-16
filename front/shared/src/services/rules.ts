@@ -11,8 +11,8 @@ import {
   IRuleAttribute,
   IRuleCombination,
   IRuleEngineOperators,
-  RuleAttributeType,
   RuleType,
+  RuleValueType,
 } from '../types'
 
 export function isCombinationRule(rule: IRule): rule is IRuleCombination {
@@ -26,11 +26,13 @@ export function isAttributeRule(rule: IRule): rule is IRuleAttribute {
 export function getAttributeRuleValueType(
   rule: IRuleAttribute,
   operatorsValueType: IOperatorsValueType
-): string {
+): RuleValueType {
   return operatorsValueType[rule.attribute_type]?.[rule.operator]
 }
 
-export function isAttributeRuleValueMultiple(valueType: string): boolean {
+export function isAttributeRuleValueMultiple(
+  valueType: RuleValueType
+): boolean {
   return valueType?.startsWith('[') && valueType?.endsWith(']')
 }
 
@@ -55,7 +57,7 @@ function parseRule<R extends IRule>(
       rule.value instanceof Array
     ) {
       ruleValue = rule.value.join(ruleArrayValueSeparator)
-    } else if (rule.attribute_type === RuleAttributeType.BOOLEAN) {
+    } else if (valueType === RuleValueType.BOOLEAN) {
       ruleValue = rule.value === 'true'
     }
     return { ...rule, value: ruleValue }
@@ -99,13 +101,17 @@ export function serializeRule<R extends IRule>(
       typeof rule.value === 'string'
     ) {
       ruleValue = rule.value.split(ruleArrayValueSeparator)
-      if (ruleValueNumberTypes.includes(valueType.slice(1, -1))) {
+      if (
+        ruleValueNumberTypes.includes(valueType.slice(1, -1) as RuleValueType)
+      ) {
         ruleValue = ruleValue.map(Number)
       } else {
         ruleValue = ruleValue.map(String)
       }
     } else if (ruleValueNumberTypes.includes(valueType)) {
       ruleValue = Number(rule.value)
+    } else if (valueType === RuleValueType.BOOLEAN) {
+      ruleValue = String(rule.value)
     }
     return { ...rule, value: ruleValue }
   }

@@ -1,9 +1,10 @@
 import { IHydraMember } from './hydra'
 import { IJsonldContext } from './jsonld'
+import { RuleValueType } from './rules'
 
 export type IOperatorsValueType<O extends string = string> = Record<
   string,
-  Record<O, string>
+  Record<O, RuleValueType>
 >
 
 export interface IRuleEngineOperators<O extends string = string>

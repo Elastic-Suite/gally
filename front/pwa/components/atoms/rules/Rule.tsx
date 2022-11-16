@@ -7,6 +7,7 @@ import {
   ITreeItem,
   RuleAttributeType,
   RuleType,
+  RuleValueType,
   flatTree,
   getAttributeRuleValueType,
   isAttributeRule,
@@ -107,12 +108,12 @@ function Rule(props: IProps): JSX.Element {
   function getAttributeValueComponent(rule: IRuleAttribute): JSX.Element {
     const { attribute_type, field, value } = rule
     const valueType = getAttributeRuleValueType(rule, operatorsValueType)
-    if (attribute_type === RuleAttributeType.BOOLEAN) {
+    if (valueType === RuleValueType.BOOLEAN) {
       return (
         <DropDown
           onChange={handleChange('value')}
           options={
-            (options.get(`type-${RuleAttributeType.BOOLEAN}`) ??
+            (options.get(`type-${RuleValueType.BOOLEAN}`) ??
               []) as IOptions<boolean>
           }
           required
@@ -178,7 +179,7 @@ function Rule(props: IProps): JSX.Element {
         <DropDown
           onChange={handleChange('value')}
           options={
-            (options.get(`type-${RuleAttributeType.BOOLEAN}`) ??
+            (options.get(`type-${RuleValueType.BOOLEAN}`) ??
               []) as IOptions<boolean>
           }
           required

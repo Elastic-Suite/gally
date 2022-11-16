@@ -14,6 +14,7 @@ import {
   RuleAttributeType,
   RuleCombinationOperator,
   RuleType,
+  RuleValueType,
   getListApiParameters,
   getOptionsFromEnum,
   getOptionsFromLabelResource,
@@ -50,7 +51,7 @@ function RuleOptionsProvider(props: IProps): JSX.Element {
       `${RuleType.COMBINATION}-operator`,
       getOptionsFromEnum(RuleCombinationOperator, t)
     )
-    map.set(`type-${RuleAttributeType.BOOLEAN}`, [
+    map.set(`type-${RuleValueType.BOOLEAN}`, [
       { value: true, label: t('true') },
       { value: false, label: t('false') },
     ])
