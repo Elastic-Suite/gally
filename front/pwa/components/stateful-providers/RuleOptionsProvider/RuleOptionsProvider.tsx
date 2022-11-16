@@ -5,11 +5,13 @@ import { ruleOptionsContext } from '~/contexts'
 import { useResource, useSingletonLoader } from '~/hooks'
 import {
   ICategories,
+  IError,
   IFetchApi,
-  IHydraLabelMember,
   IHydraResponse,
   IOptions,
   IRuleEngineOperators,
+  ISourceFieldOption,
+  ISourceFieldOptionLabel,
   ITreeItem,
   RuleAttributeType,
   RuleCombinationOperator,
@@ -17,7 +19,7 @@ import {
   RuleValueType,
   getListApiParameters,
   getOptionsFromEnum,
-  getOptionsFromLabelResource,
+  getOptionsFromOptionLabelResource,
   isError,
 } from 'shared'
 
@@ -31,33 +33,47 @@ export interface IField {
 interface IProps {
   catalogId: number
   children: ReactNode
+  defaultLocalizedCatalog: string
   fields: IField[]
   localizedCatalogId: number
   ruleOperators: IRuleEngineOperators
 }
 
 function RuleOptionsProvider(props: IProps): JSX.Element {
-  const { catalogId, children, fields, localizedCatalogId, ruleOperators } =
-    props
+  const {
+    catalogId,
+    children,
+    defaultLocalizedCatalog,
+    fields,
+    localizedCatalogId,
+    ruleOperators,
+  } = props
   const { operators, operatorsBySourceFieldType, operatorsValueType } =
     ruleOperators
+  const sourceFieldOptionResource = useResource('SourceFieldOption')
   const sourceFieldOptionLabelResource = useResource('SourceFieldOptionLabel')
   const { t } = useTranslation('rules')
   const { fetch, map, setMap } = useSingletonLoader<
     IOptions<unknown> | ITreeItem[]
-  >(() => {
-    const map = new Map()
-    map.set(
-      `${RuleType.COMBINATION}-operator`,
-      getOptionsFromEnum(RuleCombinationOperator, t)
-    )
-    map.set(`type-${RuleValueType.BOOLEAN}`, [
-      { value: true, label: t('true') },
-      { value: false, label: t('false') },
-    ])
-    return map
-  })
+  >()
 
+  // Add boolean options (we have to use useEffect for translation)
+  useEffect(() => {
+    setMap((options) => {
+      const clone = new Map(options)
+      clone.set(
+        `${RuleType.COMBINATION}-operator`,
+        getOptionsFromEnum(RuleCombinationOperator, t)
+      )
+      clone.set(`type-${RuleValueType.BOOLEAN}`, [
+        { value: true, label: t('true') },
+        { value: false, label: t('false') },
+      ])
+      return clone
+    })
+  }, [setMap, t])
+
+  // Add list of fields
   useEffect(() => {
     setMap((options) =>
       new Map(options).set(
@@ -114,15 +130,21 @@ function RuleOptionsProvider(props: IProps): JSX.Element {
         return
       }
       if (field.type === RuleAttributeType.CATEGORY) {
+        // Fetch categories for current catalog/localizedCatalog
         return fetch(
-          `type-${RuleAttributeType.CATEGORY}`,
+          `type-${RuleAttributeType.CATEGORY}-${catalogId}-${localizedCatalogId}`,
           async (fetchApi: IFetchApi) => {
+            const filters: { catalogId?: number; localizedCatalogId?: number } =
+              {}
+            if (catalogId !== -1) {
+              filters.catalogId = catalogId
+            }
+            if (localizedCatalogId !== -1) {
+              filters.localizedCatalogId = localizedCatalogId
+            }
             const response = await fetchApi<ICategories>(
-              `categoryTree?/&catalogId=${
-                catalogId !== -1 ? catalogId : null
-              }&localizedCatalogId=${
-                localizedCatalogId !== -1 ? localizedCatalogId : null
-              }`
+              'categoryTree',
+              filters
             )
             if (!isError(response)) {
               return response.categories
@@ -132,32 +154,103 @@ function RuleOptionsProvider(props: IProps): JSX.Element {
         )
       }
       if (field.type === RuleAttributeType.SELECT) {
-        return fetch(field.code, async (fetchApi: IFetchApi) => {
-          const response = await fetchApi<ICategories>(
-            sourceFieldOptionLabelResource,
-            getListApiParameters(false, undefined, {
-              catalog: `/localized_catalogs/${
-                localizedCatalogId !== -1 ? localizedCatalogId : null
-              }`,
-              'order[sourceFieldOption.position]': 'asc',
+        return fetch(
+          `${field.code}-${localizedCatalogId}`,
+          async (fetchApi: IFetchApi) => {
+            const optionFilters: {
+              catalog?: string
+              'order[position]': string
+              sourceField: string
+            } = {
+              'order[position]': 'asc',
+              sourceField: `/source_fields/${field.id}`,
+            }
+            const optionLabelFilters: {
+              catalog?: string
+              // 'order[sourceFieldOption.position]': string
+              'sourceFieldOption.sourceField': string
+            } = {
+              // 'order[sourceFieldOption.position]': 'asc',
               'sourceFieldOption.sourceField': `/source_fields/${field.id}`,
-            })
-          )
-          if (!isError(response)) {
-            return getOptionsFromLabelResource(
-              response as IHydraResponse<IHydraLabelMember>
-            )
+            }
+            let optionsResponse: IError | IHydraResponse<ISourceFieldOption>
+            let optionLabelsResponse:
+              | IError
+              | IHydraResponse<ISourceFieldOptionLabel>
+
+            // Fetch sourceFieldOptionLabels for current localizedCatalog
+            if (localizedCatalogId !== -1) {
+              optionFilters.catalog = `/localized_catalogs/${localizedCatalogId}`
+              optionLabelFilters.catalog = `/localized_catalogs/${localizedCatalogId}`
+              const optionPromise = fetchApi<
+                IHydraResponse<ISourceFieldOption>
+              >(
+                sourceFieldOptionResource,
+                getListApiParameters(false, undefined, optionFilters)
+              )
+              const labelPromise = fetchApi<
+                IHydraResponse<ISourceFieldOptionLabel>
+              >(
+                sourceFieldOptionLabelResource,
+                getListApiParameters(false, undefined, optionLabelFilters)
+              )
+              ;[optionsResponse, optionLabelsResponse] = await Promise.all([
+                optionPromise,
+                labelPromise,
+              ])
+            }
+
+            // Fetch sourceFieldOptionLabels for default catalog (if no labels were found)
+            if (
+              !optionLabelsResponse ||
+              isError(optionLabelsResponse) ||
+              optionLabelsResponse['hydra:totalItems'] === 0
+            ) {
+              optionFilters.catalog = `/localized_catalogs/${defaultLocalizedCatalog}`
+              optionLabelFilters.catalog = `/localized_catalogs/${defaultLocalizedCatalog}`
+              const optionPromise = fetchApi<
+                IHydraResponse<ISourceFieldOption>
+              >(
+                sourceFieldOptionResource,
+                getListApiParameters(false, undefined, optionFilters)
+              )
+              const labelPromise = fetchApi<
+                IHydraResponse<ISourceFieldOptionLabel>
+              >(
+                sourceFieldOptionLabelResource,
+                getListApiParameters(false, undefined, optionLabelFilters)
+              )
+              ;[optionsResponse, optionLabelsResponse] = await Promise.all([
+                optionPromise,
+                labelPromise,
+              ])
+            }
+
+            if (!isError(optionsResponse) && !isError(optionLabelsResponse)) {
+              console.log(
+                getOptionsFromOptionLabelResource(
+                  optionsResponse,
+                  optionLabelsResponse
+                )
+              )
+              return getOptionsFromOptionLabelResource(
+                optionsResponse,
+                optionLabelsResponse
+              )
+            }
+            throw new Error('error')
           }
-          throw new Error('error')
-        })
+        )
       }
     },
     [
       catalogId,
+      defaultLocalizedCatalog,
       fetch,
       fields,
       localizedCatalogId,
       sourceFieldOptionLabelResource,
+      sourceFieldOptionResource,
     ]
   )
 

@@ -1,6 +1,6 @@
 import { ICatalog } from '../types'
 
-export function findDefaultCatalog(catalogsData: ICatalog[]): ICatalog | null {
+export function getDefaultCatalog(catalogsData: ICatalog[]): ICatalog | null {
   const defaultCatalog = catalogsData
     ? catalogsData.filter((catalog) =>
         catalog.localizedCatalogs.find((localizedCtl) => localizedCtl.isDefault)
@@ -18,16 +18,18 @@ export function findDefaultCatalog(catalogsData: ICatalog[]): ICatalog | null {
   return null
 }
 
-export function getCatalogForSearchProductApi(
+export function getDefaultLocalizedCatalog(catalogsData: ICatalog[]): string {
+  const defaultCatalog = getDefaultCatalog(catalogsData)
+  return defaultCatalog ? defaultCatalog.localizedCatalogs[0].id.toString() : ''
+}
+
+export function getLocalizedCatalog(
   catalog: number,
   localizedCatalog: number,
   catalogsData: ICatalog[]
 ): string {
   if (catalog === -1) {
-    const defaultCatalog = findDefaultCatalog(catalogsData)
-    return defaultCatalog
-      ? defaultCatalog.localizedCatalogs[0].id.toString()
-      : ''
+    return getDefaultLocalizedCatalog(catalogsData)
   } else if (catalog !== -1 && localizedCatalog === -1) {
     return catalogsData
       .filter((ctl) => ctl.id === catalog)

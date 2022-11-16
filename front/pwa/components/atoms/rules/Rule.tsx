@@ -25,14 +25,23 @@ import TreeSelector from '../form/TreeSelector'
 
 import { Close, CustomCombination, Root } from './Rule.styled'
 
+function getInputType(valueType: RuleValueType): 'number' | 'text' {
+  if (ruleValueNumberTypes.includes(valueType)) {
+    return 'number'
+  }
+  return 'text'
+}
+
 interface IProps {
+  catalogId: number
+  localizedCatalogId: number
   onChange?: (rule: IRule) => void
   onDelete?: () => void
   rule: IRule
 }
 
 function Rule(props: IProps): JSX.Element {
-  const { onChange, onDelete, rule } = props
+  const { catalogId, localizedCatalogId, onChange, onDelete, rule } = props
   const {
     getAttributeOperatorOptions,
     getAttributeType,
@@ -50,22 +59,16 @@ function Rule(props: IProps): JSX.Element {
 
   const categories = useMemo(
     () =>
-      (options.get(`type-${RuleAttributeType.CATEGORY}`) ?? []) as ITreeItem[],
-    [options]
+      (options.get(
+        `type-${RuleAttributeType.CATEGORY}-${catalogId}-${localizedCatalogId}`
+      ) ?? []) as ITreeItem[],
+    [catalogId, localizedCatalogId, options]
   )
   const flatCategories: ITreeItem[] = useMemo(() => {
     const flat: ITreeItem[] = []
     flatTree(categories, flat)
     return flat
   }, [categories])
-
-  function getInputType(rule: IRuleAttribute): 'number' | 'text' {
-    const valueType = getAttributeRuleValueType(rule, operatorsValueType)
-    if (ruleValueNumberTypes.includes(valueType)) {
-      return 'number'
-    }
-    return 'text'
-  }
 
   function handleChange(property: string) {
     return (value: unknown): void => onChange({ ...rule, [property]: value })
@@ -97,8 +100,11 @@ function Rule(props: IProps): JSX.Element {
       ...attributeRule,
       operator,
     }
-    const prevType = getInputType(attributeRule)
-    const newType = getInputType(newRule)
+    const prevType = getAttributeRuleValueType(
+      attributeRule,
+      operatorsValueType
+    )
+    const newType = getAttributeRuleValueType(newRule, operatorsValueType)
     onChange({
       ...newRule,
       value: prevType === newType ? rule.value : '',
@@ -125,7 +131,10 @@ function Rule(props: IProps): JSX.Element {
       return (
         <DropDown
           onChange={handleChange('value')}
-          options={(options.get(field) ?? []) as IOptions<unknown>}
+          options={
+            (options.get(`${field}-${localizedCatalogId}`) ??
+              []) as IOptions<unknown>
+          }
           required
           small
           value={value}
@@ -154,7 +163,7 @@ function Rule(props: IProps): JSX.Element {
         onChange={handleChange('value')}
         required
         small
-        type={getInputType(rule)}
+        type={getInputType(valueType)}
         value={value as string}
       />
     )
