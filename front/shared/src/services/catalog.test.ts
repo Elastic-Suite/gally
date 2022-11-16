@@ -1,5 +1,6 @@
 import { IHydraCatalog } from '../types'
-import { findDefaultCatalog, getCatalogForSearchProductApi } from './catalog'
+
+import { getDefaultCatalog, getLocalizedCatalog } from './catalog'
 
 const defaultCatalog = {
   '@type': 'test',
@@ -119,9 +120,9 @@ const mockCatalogsWithTwoDefault: IHydraCatalog[] = [
 ]
 
 describe('Catalog service', () => {
-  describe('finddefaultca talog', () => {
+  describe('getDefaultCatalog', () => {
     it('should return default catalog', () => {
-      expect(findDefaultCatalog(mockCatalogs)).toEqual({
+      expect(getDefaultCatalog(mockCatalogs)).toEqual({
         '@type': 'test',
         '@id': 'test',
         id: 1,
@@ -131,7 +132,7 @@ describe('Catalog service', () => {
       })
     })
     it('should return first default catalogs in case of several default catalogs are present', () => {
-      expect(findDefaultCatalog(mockCatalogsWithTwoDefault)).toEqual({
+      expect(getDefaultCatalog(mockCatalogsWithTwoDefault)).toEqual({
         '@type': 'test',
         '@id': 'test',
         id: 1,
@@ -141,14 +142,15 @@ describe('Catalog service', () => {
       })
     })
   })
-  describe('getCatalogForSearchProductApi', () => {
+
+  describe('getLocalizedCatalog', () => {
     it('should find default catalog if All catalogs selected', () => {
-      expect(getCatalogForSearchProductApi(-1, -1, mockCatalogs)).toEqual(
+      expect(getLocalizedCatalog(-1, -1, mockCatalogs)).toEqual(
         defaultCatalog.id.toString()
       )
     })
     it('should find first localized catalog if no loacl selected', () => {
-      expect(getCatalogForSearchProductApi(2, -1, mockCatalogs)).toEqual('14')
+      expect(getLocalizedCatalog(2, -1, mockCatalogs)).toEqual('14')
     })
   })
 })
