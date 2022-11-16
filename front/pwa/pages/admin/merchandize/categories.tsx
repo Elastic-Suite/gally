@@ -17,7 +17,8 @@ import {
   IRuleEngineOperators,
   LoadStatus,
   findBreadcrumbLabel,
-  getCatalogForSearchProductApi,
+  getDefaultLocalizedCatalog,
+  getLocalizedCatalog,
   isError,
   parseCatConf,
   savePositions,
@@ -66,16 +67,20 @@ function Categories(): JSX.Element {
   const resource = useResource(resourceName)
   const [catalogsFields] = useApiList<IHydraCatalog>(resource, false)
   const { data, error } = catalogsFields
+  const catalogs = data?.['hydra:member']
   const [catalogId, setCatalogId] = useState<number>(-1)
   const [localizedCatalogId, setLocalizedCatalogId] = useState<number>(-1)
-  const localizedCatalogIdWithDefault =
-    data && data['hydra:totalItems'] > 0
-      ? getCatalogForSearchProductApi(
-          catalogId,
-          localizedCatalogId,
-          data['hydra:member']
-        )
-      : null
+  const defaultLocalizedCatalog = useMemo(
+    () => (catalogs ? getDefaultLocalizedCatalog(catalogs) : null),
+    [catalogs]
+  )
+  const localizedCatalogIdWithDefault = useMemo(
+    () =>
+      catalogs
+        ? getLocalizedCatalog(catalogId, localizedCatalogId, catalogs)
+        : null,
+    [catalogId, catalogs, localizedCatalogId]
+  )
 
   // Rule engine operators
   const [ruleOperators, setRuleOperators] = useState<IRuleEngineOperators>()
@@ -99,7 +104,7 @@ function Categories(): JSX.Element {
     }
     return filters
   }, [catalogId, localizedCatalogId])
-  const [categories] = useFetchApi<ICategories>(`categoryTree`, filters)
+  const [categories] = useFetchApi<ICategories>('categoryTree', filters)
   useEffect(() => {
     if (categories.status !== LoadStatus.SUCCEEDED) {
       return
@@ -278,6 +283,7 @@ function Categories(): JSX.Element {
             <TitleBlock key="virtualRule" title={t('virtualRule.title')}>
               <RulesManager
                 catalogId={catalogId}
+                defaultLocalizedCatalog={defaultLocalizedCatalog}
                 localizedCatalogId={localizedCatalogId}
                 onChange={handleUpdateRule}
                 rule={catConf.virtualRule}

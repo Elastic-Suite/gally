@@ -68,14 +68,17 @@ const RuleLinkPlaceholder = styled('div')(() => ({
 }))
 
 export interface ICombinationRulesProps {
+  catalogId: number
   first?: boolean
+  localizedCatalogId: number
   onChange?: (rule: IRuleCombination) => void
   onDelete?: () => void
   rule?: IRuleCombination
 }
 
 function CombinationRules(props: ICombinationRulesProps): JSX.Element {
-  const { first, onChange, onDelete, rule } = props
+  const { catalogId, first, localizedCatalogId, onChange, onDelete, rule } =
+    props
   const { t } = useTranslation('rules')
 
   if (!rule) {
@@ -126,7 +129,13 @@ function CombinationRules(props: ICombinationRulesProps): JSX.Element {
     <Root>
       <RuleAndLinkContainer>
         <RuleLink label="if" />
-        <Rule onChange={onChange} onDelete={onDelete} rule={rule} />
+        <Rule
+          catalogId={catalogId}
+          localizedCatalogId={localizedCatalogId}
+          onChange={onChange}
+          onDelete={onDelete}
+          rule={rule}
+        />
       </RuleAndLinkContainer>
       {Boolean(children) && (
         <Child>
@@ -146,12 +155,16 @@ function CombinationRules(props: ICombinationRulesProps): JSX.Element {
               )}
               {isCombinationRule(item) ? (
                 <CombinationRules
+                  catalogId={catalogId}
+                  localizedCatalogId={localizedCatalogId}
                   onChange={handleChildChange(key)}
                   onDelete={handleChildDelete(key)}
                   rule={item}
                 />
               ) : isAttributeRule(item) ? (
                 <Rule
+                  catalogId={catalogId}
+                  localizedCatalogId={localizedCatalogId}
                   onChange={handleChildChange(key)}
                   onDelete={handleChildDelete(key)}
                   rule={item}
