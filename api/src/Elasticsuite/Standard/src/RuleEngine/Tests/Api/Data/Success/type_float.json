@@ -21,6 +21,20 @@
       {
         "type": "attribute",
         "field": "weight",
+        "operator": "!eq",
+        "attribute_type": "float",
+        "value": 1
+      },
+      {
+        "type": "attribute",
+        "field": "weight",
+        "operator": "in",
+        "attribute_type": "float",
+        "value": [1, 2]
+      },
+      {
+        "type": "attribute",
+        "field": "weight",
         "operator": "in",
         "attribute_type": "float",
         "value": [1.5, 2.65]
@@ -77,6 +91,23 @@
                 "eq": 1.5
               }
             }
+          }
+        },
+        {
+          "boolFilter": {
+            "_not": {
+              "weight": {
+                "eq": 1
+              }
+            }
+          }
+        },
+        {
+          "weight": {
+            "in": [
+              1,
+              2
+            ]
           }
         },
         {
