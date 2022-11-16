@@ -53,8 +53,8 @@ function TreeSelector<Multiple extends boolean | undefined>(
     data,
     limitTags,
     onChange: onChangeProps,
-    value: valueProp,
     style,
+    value: valueProps,
     ...other
   } = props
   const { t } = useTranslation('common')
@@ -69,7 +69,8 @@ function TreeSelector<Multiple extends boolean | undefined>(
   const getOptionLabel = useCallback((option?: ITreeItem) => option?.name, [])
   const filterOptions = useCallback((options: ITreeItem[]) => options, [])
   const onInputChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => setSearch(event.target.value),
+    (event?: ChangeEvent<HTMLInputElement>) =>
+      event?.target && setSearch(event.target.value),
     []
   )
 
@@ -124,6 +125,7 @@ function TreeSelector<Multiple extends boolean | undefined>(
     onChange: handleChange,
     onInputChange,
     options,
+    value: valueProps as AutocompleteValue<ITreeItem, Multiple, false, false>,
   })
 
   const getItemProps = useCallback(
