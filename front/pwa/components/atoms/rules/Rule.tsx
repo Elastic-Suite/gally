@@ -13,6 +13,7 @@ import {
   isAttributeRule,
   isAttributeRuleValueMultiple,
   isCombinationRule,
+  ruleArrayValueSeparator,
   ruleValueNumberTypes,
 } from 'shared'
 
@@ -85,6 +86,16 @@ function Rule(props: IProps): JSX.Element {
     }
   }
 
+  function handleInputChange(multiple: boolean) {
+    return (value: string): void => {
+      if (multiple) {
+        onChange({ ...rule, value: value.split(ruleArrayValueSeparator) })
+      } else {
+        onChange({ ...rule, value })
+      }
+    }
+  }
+
   function handleFieldChange(value: string): void {
     onChange({
       ...rule,
@@ -107,13 +118,20 @@ function Rule(props: IProps): JSX.Element {
     const newType = getAttributeRuleValueType(newRule, operatorsValueType)
     onChange({
       ...newRule,
-      value: prevType === newType ? rule.value : '',
+      value:
+        prevType === newType
+          ? rule.value
+          : isAttributeRuleValueMultiple(newType)
+          ? []
+          : '',
     })
   }
 
   function getAttributeValueComponent(rule: IRuleAttribute): JSX.Element {
     const { attribute_type, field, value } = rule
     const valueType = getAttributeRuleValueType(rule, operatorsValueType)
+    const multiple = isAttributeRuleValueMultiple(valueType)
+
     if (valueType === RuleValueType.BOOLEAN) {
       return (
         <DropDown
@@ -130,6 +148,7 @@ function Rule(props: IProps): JSX.Element {
     } else if (attribute_type === RuleAttributeType.SELECT) {
       return (
         <DropDown
+          multiple={multiple}
           onChange={handleChange('value')}
           options={
             (options.get(`${field}-${localizedCatalogId}`) ??
@@ -150,7 +169,7 @@ function Rule(props: IProps): JSX.Element {
       return (
         <TreeSelector
           data={categories}
-          multiple={isAttributeRuleValueMultiple(valueType)}
+          multiple={multiple}
           onChange={handleCategoryChange}
           required
           small
@@ -158,13 +177,18 @@ function Rule(props: IProps): JSX.Element {
         />
       )
     }
+
     return (
       <InputText
-        onChange={handleChange('value')}
+        onChange={handleInputChange(multiple)}
         required
         small
         type={getInputType(valueType)}
-        value={value as string}
+        value={
+          multiple
+            ? (value as string[]).join(ruleArrayValueSeparator)
+            : (value as string)
+        }
       />
     )
   }

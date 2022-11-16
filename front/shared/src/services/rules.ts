@@ -1,8 +1,4 @@
-import {
-  emptyCombinationRule,
-  ruleArrayValueSeparator,
-  ruleValueNumberTypes,
-} from '../constants'
+import { emptyCombinationRule, ruleValueNumberTypes } from '../constants'
 import {
   ICategoryConfiguration,
   IOperatorsValueType,
@@ -52,12 +48,7 @@ function parseRule<R extends IRule>(
       rule,
       ruleOperators.operatorsValueType
     )
-    if (
-      isAttributeRuleValueMultiple(valueType) &&
-      rule.value instanceof Array
-    ) {
-      ruleValue = rule.value.join(ruleArrayValueSeparator)
-    } else if (valueType === RuleValueType.BOOLEAN) {
+    if (valueType === RuleValueType.BOOLEAN) {
       ruleValue = rule.value === 'true'
     }
     return { ...rule, value: ruleValue }
@@ -89,28 +80,28 @@ export function serializeRule<R extends IRule>(
       children: rule.children.map((rule) => serializeRule(rule, ruleOperators)),
     }
   } else if (isAttributeRule(rule)) {
-    let ruleValue: string | string[] | number | number[] | boolean = String(
-      rule.value
-    )
+    let ruleValue: string | string[] | number | number[] | boolean = rule.value
     const valueType = getAttributeRuleValueType(
       rule,
       ruleOperators.operatorsValueType
     )
     if (
       isAttributeRuleValueMultiple(valueType) &&
-      typeof rule.value === 'string'
+      rule.value instanceof Array
     ) {
-      ruleValue = rule.value.split(ruleArrayValueSeparator)
       if (
         ruleValueNumberTypes.includes(valueType.slice(1, -1) as RuleValueType)
       ) {
-        ruleValue = ruleValue.map(Number)
+        ruleValue = rule.value.map(Number)
       } else {
-        ruleValue = ruleValue.map(String)
+        ruleValue = rule.value.map(String)
       }
     } else if (ruleValueNumberTypes.includes(valueType)) {
       ruleValue = Number(rule.value)
-    } else if (valueType === RuleValueType.BOOLEAN) {
+    } else if (
+      valueType === RuleValueType.BOOLEAN ||
+      valueType === RuleValueType.STRING
+    ) {
       ruleValue = String(rule.value)
     }
     return { ...rule, value: ruleValue }
