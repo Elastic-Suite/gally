@@ -88,6 +88,17 @@ class SourceFieldOptionLabelTest extends AbstractEntityTest
         ];
     }
 
+    protected function getJsonCreationValidation(array $expectedData): array
+    {
+        $expectedData['sourceFieldOption'] = [
+            '@id' => $expectedData['sourceFieldOption'],
+            '@type' => 'SourceFieldOption',
+            'code' => '3',
+        ];
+
+        return $expectedData;
+    }
+
     /**
      * {@inheritDoc}
      */

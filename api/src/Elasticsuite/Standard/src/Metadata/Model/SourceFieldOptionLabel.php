@@ -22,6 +22,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Elasticsuite\Catalog\Model\LocalizedCatalog;
 use Elasticsuite\User\Constant\Role;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ApiResource(
     collectionOperations: [
@@ -41,14 +42,23 @@ use Elasticsuite\User\Constant\Role;
         'update' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
         'delete' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
     ],
+    normalizationContext: ['groups' => ['source_field_option_label:read']],
+    denormalizationContext: ['groups' => ['source_field_option_label:write']],
 )]
 #[ApiFilter(SearchFilter::class, properties: ['catalog' => 'exact', 'sourceFieldOption.sourceField' => 'exact'])]
 #[ApiFilter(OrderFilter::class, properties: ['sourceFieldOption.position'], arguments: ['orderParameterName' => 'order'])]
 class SourceFieldOptionLabel
 {
+    #[Groups(['source_field_option_label:read', 'source_field_option_label:write'])]
     private int $id;
+
+    #[Groups(['source_field_option_label:read', 'source_field_option_label:write'])]
     private SourceFieldOption $sourceFieldOption;
+
+    #[Groups(['source_field_option_label:read', 'source_field_option_label:write'])]
     private LocalizedCatalog $catalog;
+
+    #[Groups(['source_field_option_label:read', 'source_field_option_label:write'])]
     private string $label;
 
     public function getId(): int

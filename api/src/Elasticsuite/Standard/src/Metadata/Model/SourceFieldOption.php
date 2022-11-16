@@ -19,6 +19,7 @@ namespace Elasticsuite\Metadata\Model;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\Collection;
 use Elasticsuite\User\Constant\Role;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ApiResource(
     collectionOperations: [
@@ -42,6 +43,7 @@ use Elasticsuite\User\Constant\Role;
 class SourceFieldOption
 {
     private int $id;
+    #[Groups(['source_field_option_label:read'])]
     private string $code;
     private SourceField $sourceField;
     private ?int $position;
