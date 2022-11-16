@@ -94,14 +94,16 @@ function DropDown<T>(props: IDropDownProps<T>): JSX.Element {
     )
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     renderTags = (value: IOption<T>[], getTagProps: any): ReactNode[] =>
-      value.map((option: IOption<T>, index: number) => (
-        <Chip
-          key={option.id ?? String(option.value)}
-          label={option.label}
-          size={small ? 'small' : 'medium'}
-          {...getTagProps({ index })}
-        />
-      ))
+      value
+        .filter((option) => option)
+        .map((option: IOption<T>, index: number) => (
+          <Chip
+            key={option.id ?? String(option.value)}
+            label={option.label}
+            size={small ? 'small' : 'medium'}
+            {...getTagProps({ index })}
+          />
+        ))
   }
 
   return (

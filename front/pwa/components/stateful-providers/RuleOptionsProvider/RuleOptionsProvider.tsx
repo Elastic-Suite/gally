@@ -227,12 +227,6 @@ function RuleOptionsProvider(props: IProps): JSX.Element {
             }
 
             if (!isError(optionsResponse) && !isError(optionLabelsResponse)) {
-              console.log(
-                getOptionsFromOptionLabelResource(
-                  optionsResponse,
-                  optionLabelsResponse
-                )
-              )
               return getOptionsFromOptionLabelResource(
                 optionsResponse,
                 optionLabelsResponse
