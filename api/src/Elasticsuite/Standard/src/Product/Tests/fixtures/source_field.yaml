@@ -91,6 +91,7 @@ Elasticsuite\Metadata\Model\SourceField:
         metadata: '@product'
         code: 'is_eco_friendly'
         type: 'boolean'
+        isFilterable: true
     product_created_at:
         metadata: '@product'
         code: 'created_at'

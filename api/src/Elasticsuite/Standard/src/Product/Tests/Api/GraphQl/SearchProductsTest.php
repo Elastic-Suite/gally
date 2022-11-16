@@ -710,6 +710,20 @@ class SearchProductsTest extends AbstractTest
                     'debugMessage' => 'Filter argument created_at: Do not use \'gt\' and \'gte\' in the same filter.',
                 ],
             ],
+            [
+                'b2c_en', // catalog ID.
+                'is_eco_friendly: {}', // Filters.
+                [ // debug message
+                    'debugMessage' => 'Filter argument is_eco_friendly: At least \'eq\' or \'exist\' should be filled.',
+                ],
+            ],
+            [
+                'b2c_en', // catalog ID.
+                'is_eco_friendly: { exist: true, eq: true }', // Filters.
+                [ // debug message
+                    'debugMessage' => 'Filter argument is_eco_friendly: Only \'eq\' or \'exist\' should be filled.',
+                ],
+            ],
         ];
     }
 
