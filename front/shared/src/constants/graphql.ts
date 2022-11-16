@@ -3,7 +3,7 @@ import { VariableType, jsonToGraphQLQuery } from 'json-to-graphql-query'
 import { IProductFieldFilterInput } from '../types'
 
 export function getSearchProductsQuery(
-  filter: IProductFieldFilterInput = null
+  filter: IProductFieldFilterInput | IProductFieldFilterInput[] = null
 ): string {
   return jsonToGraphQLQuery({
     query: {

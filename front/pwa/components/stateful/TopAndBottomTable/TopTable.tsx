@@ -44,12 +44,12 @@ function TopTable(props: IProps): JSX.Element {
     }),
     [localizedCatalogId]
   )
+  const filters = [productGraphqlFilters]
+  if (topProductsIds.length > 0) {
+    filters.push({ id: { in: topProductsIds } })
+  }
   const [products] = useGraphqlApi<IGraphqlSearchProducts>(
-    getSearchProductsQuery({
-      boolFilter: {
-        _must: [productGraphqlFilters, { id: { in: topProductsIds } }],
-      },
-    }),
+    getSearchProductsQuery(filters),
     variables
   )
 

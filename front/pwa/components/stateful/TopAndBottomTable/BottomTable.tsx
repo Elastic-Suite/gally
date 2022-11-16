@@ -58,15 +58,12 @@ function BottomTable(
     }),
     [currentPage, localizedCatalogId, rowsPerPage]
   )
+  const filters = [productGraphqlFilters]
+  if (topProductsIds.length > 0) {
+    filters.push({ boolFilter: { _not: [{ id: { in: topProductsIds } }] } })
+  }
   const [products] = useGraphqlApi<IGraphqlSearchProducts>(
-    getSearchProductsQuery({
-      boolFilter: {
-        _must: [
-          productGraphqlFilters,
-          { boolFilter: { _not: [{ id: { in: topProductsIds } }] } },
-        ],
-      },
-    }),
+    getSearchProductsQuery(filters),
     variables
   )
 
