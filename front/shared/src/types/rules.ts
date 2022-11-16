@@ -17,6 +17,18 @@ export enum RuleAttributeType {
   TEXT = 'text',
 }
 
+export enum RuleValueType {
+  BOOLEAN = 'Boolean',
+  FLOAT = 'Float',
+  INT = 'Int',
+  STRING = 'String',
+  BOOLEAN_MULTIPLE = '[Boolean]',
+  FLOAT_MULTIPLE = '[Float]',
+  INT_MULTIPLE = '[Int]',
+  STRING_MULTIPLE = '[String]',
+  STRING_REQUIRED = 'String!',
+}
+
 export enum RuleCombinationOperator {
   ALL = 'all',
   ANY = 'any',

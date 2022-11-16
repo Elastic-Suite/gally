@@ -4,6 +4,7 @@ import {
   RuleAttributeType,
   RuleCombinationOperator,
   RuleType,
+  RuleValueType,
 } from '../types'
 
 export const emptyCombinationRule: IRuleCombination = {
@@ -21,5 +22,5 @@ export const emptyAttributeRule: IRuleAttribute = {
   value: '',
 }
 
-export const ruleValueNumberTypes = ['Int', 'Float']
+export const ruleValueNumberTypes = [RuleValueType.INT, RuleValueType.FLOAT]
 export const ruleArrayValueSeparator = ','
