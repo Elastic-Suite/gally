@@ -17,10 +17,8 @@ declare(strict_types=1);
 namespace Elasticsuite\Product\GraphQl\Type\Definition\Filter;
 
 use Elasticsuite\Metadata\Model\SourceField;
-use Elasticsuite\Search\Constant\FilterOperator;
-use GraphQL\Type\Definition\Type;
 
-class StockTypeDefaultFilterInputType extends TextTypeFilterInputType
+class StockTypeDefaultFilterInputType extends BoolTypeFilterInputType
 {
     public const SPECIFIC_NAME = 'StockTypeDefaultFilterInputType';
 
@@ -34,16 +32,6 @@ class StockTypeDefaultFilterInputType extends TextTypeFilterInputType
         return SourceField\Type::TYPE_STOCK === $sourceField->getType();
     }
 
-    public function getConfig(): array
-    {
-        return [
-            'fields' => [
-                FilterOperator::EQ => Type::boolean(),
-                FilterOperator::EXIST => Type::boolean(),
-            ],
-        ];
-    }
-
     /**
      * {@inheritDoc}
      */
@@ -54,35 +42,5 @@ class StockTypeDefaultFilterInputType extends TextTypeFilterInputType
          * getGraphQlFieldName(A) != getGraphQlFieldName(getMappingFieldName(getGraphQlFieldName(A))
          */
         return str_replace('.', $this->nestingSeparator, $sourceFieldCode . '.status');
-    }
-
-    public function validate(string $argName, mixed $inputData): array
-    {
-        $errors = [];
-
-        if (\count($inputData) < 1) {
-            $errors[] = sprintf(
-                "Filter argument %s: At least '%s' or '%s' should be filled.",
-                $argName,
-                FilterOperator::EQ,
-                FilterOperator::EXIST,
-            );
-        }
-
-        if (\count($inputData) > 1) {
-            $errors[] = sprintf(
-                "Filter argument %s: Only '%s' or '%s' should be filled.",
-                $argName,
-                FilterOperator::EQ,
-                FilterOperator::EXIST,
-            );
-        }
-
-        return $errors;
-    }
-
-    public function validateValueType(string $field, string $operator, mixed $value): void
-    {
-        $this->validateValueTypeByType($field, $operator, $value, 'bool');
     }
 }

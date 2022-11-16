@@ -36,7 +36,7 @@ class CategoryTypeDefaultFilterInputType extends BaseCategoryTypeDefaultFilterIn
     public const CATEGORY_PROCESSED_KEY = 'category_processed';
     public const VIRTUAL_CATEGORY_PROCESSED_KEY = 'virtual_category_processed';
 
-    protected array $categoryQuerries = [];
+    protected array $categoryQueries = [];
 
     public function __construct(
         private RuleEngineManager $ruleEngineManager,
@@ -57,8 +57,8 @@ class CategoryTypeDefaultFilterInputType extends BaseCategoryTypeDefaultFilterIn
     {
         if (isset($inputFilter['eq'])) {
             $categoryId = trim($inputFilter['eq']);
-            if (isset($this->categoryQuerries[$categoryId])) {
-                return $this->categoryQuerries[$categoryId];
+            if (isset($this->categoryQueries[$categoryId])) {
+                return $this->categoryQueries[$categoryId];
             }
 
             $category = $this->categoryRepository->find($categoryId);
@@ -73,17 +73,17 @@ class CategoryTypeDefaultFilterInputType extends BaseCategoryTypeDefaultFilterIn
                 if ($categoryConfiguration instanceof Category\Configuration
                     && $categoryConfiguration->getIsVirtual()
                 ) {
-                    $this->categoryQuerries[$categoryId] = $this->processVirtualCategories(
+                    $this->categoryQueries[$categoryId] = $this->processVirtualCategories(
                         $categoryConfiguration->getCategory()->getId(),
                         $categoryConfiguration->getVirtualRule(),
                         $containerConfig,
                         $filterContext
                     );
                 } else {
-                    $this->categoryQuerries[$categoryId] = $this->processPhysicalCategories($category, $inputFilter, $containerConfig, $filterContext);
+                    $this->categoryQueries[$categoryId] = $this->processPhysicalCategories($category, $inputFilter, $containerConfig, $filterContext);
                 }
 
-                return $this->categoryQuerries[$categoryId];
+                return $this->categoryQueries[$categoryId];
             }
         }
 

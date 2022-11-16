@@ -20,31 +20,22 @@ use Elasticsuite\Metadata\Model\SourceField;
 use Elasticsuite\Search\Constant\FilterOperator;
 use GraphQL\Type\Definition\Type;
 
-class TextTypeFilterInputType extends AbstractFilter
+class BoolTypeFilterInputType extends IntegerTypeFilterInputType
 {
-    public const NAME = 'ProductTextTypeFilterInput';
+    public const NAME = 'ProductBoolTypeFilterInput';
 
     public $name = self::NAME;
 
     public function supports(SourceField $sourceField): bool
     {
-        return \in_array(
-            $sourceField->getType(),
-            [
-                SourceField\Type::TYPE_TEXT,
-                SourceField\Type::TYPE_KEYWORD,
-                SourceField\Type::TYPE_REFERENCE,
-            ], true
-        );
+        return SourceField\Type::TYPE_BOOLEAN === $sourceField->getType();
     }
 
     public function getConfig(): array
     {
         return [
             'fields' => [
-                FilterOperator::EQ => Type::string(),
-                FilterOperator::IN => Type::listOf(Type::string()),
-                FilterOperator::MATCH => Type::string(),
+                FilterOperator::EQ => Type::boolean(),
                 FilterOperator::EXIST => Type::boolean(),
             ],
         ];
@@ -56,26 +47,27 @@ class TextTypeFilterInputType extends AbstractFilter
 
         if (\count($inputData) < 1) {
             $errors[] = sprintf(
-                "Filter argument %s: At least '%s', '%s', '%s' or '%s' should be filled.",
+                "Filter argument %s: At least '%s' or '%s' should be filled.",
                 $argName,
                 FilterOperator::EQ,
-                FilterOperator::IN,
-                FilterOperator::MATCH,
                 FilterOperator::EXIST,
             );
         }
 
         if (\count($inputData) > 1) {
             $errors[] = sprintf(
-                "Filter argument %s: Only '%s', '%s', '%s' or '%s' should be filled.",
+                "Filter argument %s: Only '%s' or '%s' should be filled.",
                 $argName,
                 FilterOperator::EQ,
-                FilterOperator::IN,
-                FilterOperator::MATCH,
                 FilterOperator::EXIST,
             );
         }
 
         return $errors;
+    }
+
+    public function validateValueType(string $field, string $operator, mixed $value): void
+    {
+        $this->validateValueTypeByType($field, $operator, $value, 'bool');
     }
 }
