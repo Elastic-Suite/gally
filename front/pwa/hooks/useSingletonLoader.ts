@@ -21,7 +21,9 @@ interface IUseLoader<T> {
   statuses: MutableRefObject<ILoadStatuses>
 }
 
-export function useSingletonLoader<T>(defaultState = new Map()): IUseLoader<T> {
+export function useSingletonLoader<T>(
+  defaultState: Map<string, T> | (() => Map<string, T>) = new Map()
+): IUseLoader<T> {
   const fetchApi = useApiFetch()
   const [map, setMap] = useState<Map<string, T>>(defaultState)
   const fieldOptionsStatuses = useRef<ILoadStatuses>(new Map())

@@ -44,22 +44,18 @@ function RuleOptionsProvider(props: IProps): JSX.Element {
   const { t } = useTranslation('rules')
   const { fetch, map, setMap } = useSingletonLoader<
     IOptions<unknown> | ITreeItem[]
-  >()
-
-  useEffect(() => {
-    setMap((options) => {
-      const clone = new Map(options)
-      clone.set(
-        `${RuleType.COMBINATION}-operator`,
-        getOptionsFromEnum(RuleCombinationOperator, t)
-      )
-      clone.set(`type-${RuleAttributeType.BOOLEAN}`, [
-        { value: true, label: t('true') },
-        { value: false, label: t('false') },
-      ])
-      return clone
-    })
-  }, [setMap, t])
+  >(() => {
+    const map = new Map()
+    map.set(
+      `${RuleType.COMBINATION}-operator`,
+      getOptionsFromEnum(RuleCombinationOperator, t)
+    )
+    map.set(`type-${RuleAttributeType.BOOLEAN}`, [
+      { value: true, label: t('true') },
+      { value: false, label: t('false') },
+    ])
+    return map
+  })
 
   useEffect(() => {
     setMap((options) =>

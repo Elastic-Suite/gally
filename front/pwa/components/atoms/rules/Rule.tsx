@@ -1,4 +1,4 @@
-import { useContext, useMemo } from 'react'
+import { useContext, useEffect, useMemo } from 'react'
 import { useTranslation } from 'next-i18next'
 import {
   IOptions,
@@ -41,6 +41,12 @@ function Rule(props: IProps): JSX.Element {
   } = useContext(ruleOptionsContext)
   const { t } = useTranslation('rules')
 
+  useEffect(() => {
+    if (isAttributeRule(rule)) {
+      loadAttributeValueOptions(rule.field)
+    }
+  }, [loadAttributeValueOptions, rule])
+
   const categories = useMemo(
     () =>
       (options.get(`type-${RuleAttributeType.CATEGORY}`) ?? []) as ITreeItem[],
@@ -76,7 +82,6 @@ function Rule(props: IProps): JSX.Element {
   }
 
   function handleFieldChange(value: string): void {
-    loadAttributeValueOptions(value)
     onChange({
       ...rule,
       attribute_type: getAttributeType(value) ?? '',
@@ -131,7 +136,7 @@ function Rule(props: IProps): JSX.Element {
           ? flatCategories.filter((category) =>
               (value as string[]).includes(category.id as string)
             )
-          : flatCategories.find((category) => value === category.id)
+          : flatCategories.find((category) => value === category.id) ?? null
       return (
         <TreeSelector
           data={categories}
