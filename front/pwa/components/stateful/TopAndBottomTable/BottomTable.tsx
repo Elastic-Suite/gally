@@ -53,6 +53,7 @@ function BottomTable(
       catalogId: localizedCatalogId,
       currentPage,
       pageSize: rowsPerPage,
+      requestType: 'product_catalog',
     }),
     [currentPage, localizedCatalogId, rowsPerPage]
   )
