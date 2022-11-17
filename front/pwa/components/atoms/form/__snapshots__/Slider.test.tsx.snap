@@ -1,0 +1,178 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Slider match snapshot Slider Full 1`] = `
+<div>
+  <div
+    class="MuiFormControl-root MuiFormControl-marginDense css-1m41rkg-MuiFormControl-root"
+  >
+    <label
+      class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-colorPrimary Mui-required css-ssr94h-MuiFormLabel-root-MuiInputLabel-root"
+      data-shrink="true"
+    >
+      Boost value (%)
+      <span
+        aria-label="boost value ..."
+        class=""
+        data-mui-internal-clone-element="true"
+        style="display: inline-block; padding-left: 10px; margin-bottom: -5px;"
+      >
+        <ion-icon
+          name="information-circle-outline"
+          style="color: rgb(129, 135, 185); width: 20px; height: 20px; display: flex;"
+        />
+      </span>
+      <span
+        aria-hidden="true"
+        class="MuiFormLabel-asterisk MuiInputLabel-asterisk css-1ufxisk-MuiFormLabel-asterisk"
+      >
+         
+        *
+      </span>
+    </label>
+    <div
+      class="MuiBox-root css-1yhzwwr"
+    >
+      <div
+        class="css-q0vrqn"
+      >
+        <div>
+          -99
+        </div>
+        <div>
+          0
+        </div>
+        <div>
+          100
+        </div>
+      </div>
+      <span
+        class="MuiSlider-root MuiSlider-colorPrimary MuiSlider-sizeMedium css-vts272-MuiSlider-root"
+      >
+        <span
+          class="MuiSlider-rail css-14pt78w-MuiSlider-rail"
+        />
+        <span
+          class="MuiSlider-track css-1gv0vcd-MuiSlider-track"
+          style="left: 0%; width: 54.2713567839196%;"
+        />
+        <span
+          class="MuiSlider-thumb MuiSlider-thumbColorPrimary MuiSlider-thumbSizeMedium css-1ugfhow-MuiSlider-thumb"
+          data-focusvisible="false"
+          data-index="0"
+          style="left: 54.2713567839196%;"
+        >
+          <input
+            aria-label="Default"
+            aria-orientation="horizontal"
+            aria-valuemax="100"
+            aria-valuemin="-99"
+            aria-valuenow="9"
+            data-index="0"
+            max="100"
+            min="-99"
+            step="1"
+            style="border: 0px; height: 100%; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 100%; direction: ltr;"
+            type="range"
+            value="9"
+          />
+          <span
+            aria-hidden="true"
+            class="MuiSlider-valueLabelOpen MuiSlider-valueLabel css-thdgn5-MuiSlider-valueLabel"
+          >
+            <span
+              class="MuiSlider-valueLabelCircle"
+            >
+              <span
+                class="MuiSlider-valueLabelLabel"
+              >
+                9
+              </span>
+            </span>
+          </span>
+        </span>
+      </span>
+    </div>
+    <p
+      class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-1riwtgr-MuiFormHelperText-root"
+    >
+      <ion-icon
+        name="close"
+        style="font-size: 18px; margin-right: 2px;"
+      />
+      helperText
+    </p>
+  </div>
+</div>
+`;
+
+exports[`Slider match snapshot Slider Min 1`] = `
+<div>
+  <div
+    class="MuiFormControl-root css-1pl6002-MuiFormControl-root"
+  >
+    <div
+      class="MuiBox-root css-1yhzwwr"
+    >
+      <div
+        class="css-q0vrqn"
+      >
+        <div>
+          -99
+        </div>
+        <div>
+          0
+        </div>
+        <div>
+          100
+        </div>
+      </div>
+      <span
+        class="MuiSlider-root MuiSlider-colorPrimary MuiSlider-sizeMedium css-vts272-MuiSlider-root"
+      >
+        <span
+          class="MuiSlider-rail css-14pt78w-MuiSlider-rail"
+        />
+        <span
+          class="MuiSlider-track css-1gv0vcd-MuiSlider-track"
+          style="left: 0%; width: 54.2713567839196%;"
+        />
+        <span
+          class="MuiSlider-thumb MuiSlider-thumbColorPrimary MuiSlider-thumbSizeMedium css-1ugfhow-MuiSlider-thumb"
+          data-focusvisible="false"
+          data-index="0"
+          style="left: 54.2713567839196%;"
+        >
+          <input
+            aria-label="Default"
+            aria-orientation="horizontal"
+            aria-valuemax="100"
+            aria-valuemin="-99"
+            aria-valuenow="9"
+            data-index="0"
+            max="100"
+            min="-99"
+            step="1"
+            style="border: 0px; height: 100%; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 100%; direction: ltr;"
+            type="range"
+            value="9"
+          />
+          <span
+            aria-hidden="true"
+            class="MuiSlider-valueLabelOpen MuiSlider-valueLabel css-thdgn5-MuiSlider-valueLabel"
+          >
+            <span
+              class="MuiSlider-valueLabelCircle"
+            >
+              <span
+                class="MuiSlider-valueLabelLabel"
+              >
+                9
+              </span>
+            </span>
+          </span>
+        </span>
+      </span>
+    </div>
+  </div>
+</div>
+`;
