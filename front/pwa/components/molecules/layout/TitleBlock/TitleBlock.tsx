@@ -1,25 +1,24 @@
 import { styled } from '@mui/system'
-import { CSSProperties, ReactNode } from 'react'
+import { ReactNode } from 'react'
 
 import { getCustomScrollBarStyles } from 'shared'
 
-const CustomTitleNoBorder = styled('div')(({ theme }) => ({
+const Title = styled('div')(({ theme }) => ({
   color: theme.palette.colors.neutral[900],
   fontWeight: 600,
   fontSize: '14px',
   lineHeight: '20px',
   fontFamily: 'Inter',
   padding: theme.spacing(2),
-  paddingBottom: 0,
-}))
-
-const CustomTitleBorder = styled(CustomTitleNoBorder)(({ theme }) => ({
   paddingBottom: theme.spacing(2),
-  borderBottom: '1px solid',
+  borderTop: '1px solid',
   borderColor: theme.palette.colors.neutral[300],
+  '&:first-of-type': {
+    borderTop: 0,
+  },
 }))
 
-const CustomSubTitleNoBorder = styled('div')(({ theme }) => ({
+const Subtitle = styled('div')(({ theme }) => ({
   color: theme.palette.colors.neutral[600],
   fontWeight: 400,
   fontSize: '12px',
@@ -29,50 +28,40 @@ const CustomSubTitleNoBorder = styled('div')(({ theme }) => ({
   paddingBottom: 0,
 }))
 
-const CustomSubTitleBorder = styled(CustomSubTitleNoBorder)(({ theme }) => ({
-  paddingBottom: theme.spacing(2),
-  borderBottom: '1px solid',
-  borderColor: theme.palette.colors.neutral[300],
-}))
-
 const Container = styled('div')(({ theme }) => ({
-  borderBottom: '1px solid',
+  borderTop: '1px solid',
   borderColor: theme.palette.colors.neutral[300],
-  '&:last-of-type': {
-    borderBottom: 'none',
-  },
   overflow: 'auto',
   ...getCustomScrollBarStyles(theme),
+  '&:not(:has(div > *))': {
+    height: 0,
+    borderTop: 0,
+  },
 }))
 
 const PaddingBox = styled('div')(({ theme }) => ({
   display: 'inline-block',
   padding: theme.spacing(2),
+  '&:empty': {
+    padding: 0,
+  },
 }))
 
 interface IProps {
-  title: string
+  title?: string
   children?: ReactNode
-  style?: CSSProperties
-  borderBottom?: boolean
-  hasSubTitle?: boolean
+  subtitle?: string
 }
 
 function TitleBlock(props: IProps): JSX.Element {
-  const { title, children, style, borderBottom = true, hasSubTitle } = props
-  const CustomTitle = borderBottom
-    ? hasSubTitle
-      ? CustomSubTitleBorder
-      : CustomTitleBorder
-    : hasSubTitle
-    ? CustomSubTitleNoBorder
-    : CustomTitleNoBorder
+  const { title, children, subtitle } = props
   return (
     <>
-      <CustomTitle style={style}>{title}</CustomTitle>
-      {Boolean(children) && (
+      {Boolean(title) && <Title>{title}</Title>}
+      {Boolean(children || subtitle) && (
         <Container>
-          <PaddingBox>{children}</PaddingBox>
+          {Boolean(subtitle) && <Subtitle>{subtitle}</Subtitle>}
+          {Boolean(children) && <PaddingBox>{children}</PaddingBox>}
         </Container>
       )}
     </>
