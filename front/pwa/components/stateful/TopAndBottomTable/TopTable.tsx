@@ -37,7 +37,7 @@ function TopTable(props: IProps): JSX.Element {
   } = props
 
   const variables = useMemo(
-    () => ({ catalogId: localizedCatalogId }),
+    () => ({ catalogId: localizedCatalogId, requestType: 'product_catalog' }),
     [localizedCatalogId]
   )
   const [products] = useGraphqlApi<IGraphqlSearchProducts>(
