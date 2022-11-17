@@ -832,6 +832,20 @@ class SearchProductsTest extends AbstractTest
             [
                 'b2c_fr', // catalog ID.
                 ['id' => SortOrderInterface::SORT_ASC], // sort order specifications.
+                'is_eco_friendly: { eq: true }', // filter.
+                'entity_id', // document data identifier.
+                [3, 4, 5, 6], // expected ordered document IDs
+            ],
+            [
+                'b2c_fr', // catalog ID.
+                ['id' => SortOrderInterface::SORT_ASC], // sort order specifications.
+                'is_eco_friendly: { eq: false }', // filter.
+                'entity_id', // document data identifier.
+                [2, 7, 8, 10], // expected ordered document IDs
+            ],
+            [
+                'b2c_fr', // catalog ID.
+                ['id' => SortOrderInterface::SORT_ASC], // sort order specifications.
                 <<<GQL
                   name: { match: "Sac" }
                   sku: { in: ["24-WB06", "24-WB03"] }
