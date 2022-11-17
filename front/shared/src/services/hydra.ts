@@ -10,7 +10,6 @@ import {
   IOptions,
   IResource,
   ISearchParameters,
-  ISourceFieldOption,
   ISourceFieldOptionLabel,
 } from '../types'
 
@@ -105,19 +104,12 @@ export function getOptionsFromLabelResource<T extends IHydraLabelMember>(
 }
 
 export function getOptionsFromOptionLabelResource(
-  optionsResponse: IHydraResponse<ISourceFieldOption>,
   optionLabelsResponse: IHydraResponse<ISourceFieldOptionLabel>
 ): IOptions<string | number> {
-  const optionLabelMap = Object.fromEntries(
-    optionLabelsResponse['hydra:member'].map((option) => [
-      option.sourceFieldOption.split('/')[2],
-      option.label,
-    ])
-  )
-  return [...optionsResponse['hydra:member']].map((option) => ({
-    id: option.code,
-    label: optionLabelMap[option.id],
-    value: option.code,
+  return optionLabelsResponse['hydra:member'].map((option) => ({
+    id: option.sourceFieldOption.code,
+    label: option.label,
+    value: option.sourceFieldOption.code,
   }))
 }
 
