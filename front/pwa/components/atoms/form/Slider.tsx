@@ -1,4 +1,4 @@
-import React, { ReactNode, forwardRef } from 'react'
+import { ReactNode } from 'react'
 import Box from '@mui/material/Box'
 import { CustomIndicatorsNumber, Slide } from './Slider.styled'
 import { FormHelperText, InputLabel } from '@mui/material'
@@ -22,6 +22,8 @@ export interface ISliderProps {
   required?: boolean
 }
 
+const indicatorNumber = [-99, 0, 100]
+
 function Slider(props: ISliderProps): JSX.Element {
   const {
     error,
@@ -32,18 +34,16 @@ function Slider(props: ISliderProps): JSX.Element {
     label,
     margin,
     onChange,
-    required = true,
-    value = 0,
-    width = 376,
+    required,
+    value,
+    width,
   } = props
 
-  function handleChange(event: any): void {
+  function handleChange(_: Event, value: number): void {
     if (onChange) {
-      onChange(event.target.value)
+      onChange(value)
     }
   }
-  const indicatorNumber = [-99, 0, 100]
-
   return (
     <StyledFormControl
       error={error}
@@ -57,7 +57,10 @@ function Slider(props: ISliderProps): JSX.Element {
           {infoTooltip ? <InfoTooltip title={infoTooltip} /> : null}
         </InputLabel>
       )}
-      <Box width={width} sx={{ marginTop: '36px' }}>
+      <Box
+        width={!fullWidth ? width : undefined}
+        sx={{ marginTop: label ? '24px' : 0 }}
+      >
         <CustomIndicatorsNumber>
           {indicatorNumber.map((item) => (
             <div key={item}>{item}</div>
@@ -65,7 +68,6 @@ function Slider(props: ISliderProps): JSX.Element {
         </CustomIndicatorsNumber>
         <Slide
           valueLabelDisplay="on"
-          aria-label="Default"
           max={100}
           value={value}
           min={-99}
@@ -95,4 +97,10 @@ function Slider(props: ISliderProps): JSX.Element {
   )
 }
 
-export default forwardRef<HTMLDivElement, ISliderProps>(Slider)
+Slider.defaultProps = {
+  required: true,
+  value: 0,
+  width: 376,
+}
+
+export default Slider

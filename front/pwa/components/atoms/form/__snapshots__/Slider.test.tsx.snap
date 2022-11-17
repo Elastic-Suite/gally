@@ -30,7 +30,7 @@ exports[`Slider match snapshot Slider Full 1`] = `
       </span>
     </label>
     <div
-      class="MuiBox-root css-1yhzwwr"
+      class="MuiBox-root css-15j7md6"
     >
       <div
         class="css-q0vrqn"
@@ -62,7 +62,6 @@ exports[`Slider match snapshot Slider Full 1`] = `
           style="left: 54.2713567839196%;"
         >
           <input
-            aria-label="Default"
             aria-orientation="horizontal"
             aria-valuemax="100"
             aria-valuemin="-99"
@@ -111,7 +110,7 @@ exports[`Slider match snapshot Slider Min 1`] = `
     class="MuiFormControl-root css-1pl6002-MuiFormControl-root"
   >
     <div
-      class="MuiBox-root css-1yhzwwr"
+      class="MuiBox-root css-plopzj"
     >
       <div
         class="css-q0vrqn"
@@ -143,7 +142,6 @@ exports[`Slider match snapshot Slider Min 1`] = `
           style="left: 54.2713567839196%;"
         >
           <input
-            aria-label="Default"
             aria-orientation="horizontal"
             aria-valuemax="100"
             aria-valuemin="-99"
