@@ -123,7 +123,7 @@ function ProductsContainer(props: IProps): JSX.Element {
     : []
 
   const dirty =
-    prevCatConf.current && prevProductPositions.current
+    prevCatConf.current && prevProductPositions.current && productPositions.data
       ? Object.entries(catConf ?? {}).some(
           ([key, val]: [key: keyof typeof catConf, val: string | boolean]) =>
             !(
