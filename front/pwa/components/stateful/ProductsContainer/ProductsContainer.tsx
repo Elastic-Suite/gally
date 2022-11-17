@@ -70,10 +70,6 @@ function ProductsContainer(props: IProps): JSX.Element {
   const [bottomSelectedRows, setBottomSelectedRows] = useState<string[]>([])
   const [nbBottomRows, setNbBottomRows] = useState(0)
 
-  const useNameInProductSearch = catConf?.useNameInProductSearch ?? false
-  const isVirtual = catConf?.isVirtual ?? false
-  const defaultSorting = catConf?.defaultSorting ?? ''
-
   const variables = useMemo(
     () => ({
       localizedCatalogId: Number(localizedCatalogId),
@@ -123,7 +119,10 @@ function ProductsContainer(props: IProps): JSX.Element {
     : []
 
   const dirty =
-    prevCatConf.current && prevProductPositions.current && productPositions.data
+    prevCatConf.current &&
+    catConf &&
+    prevProductPositions.current &&
+    productPositions.data
       ? Object.entries(catConf ?? {}).some(
           ([key, val]: [key: keyof typeof catConf, val: string | boolean]) =>
             !(
@@ -184,15 +183,17 @@ function ProductsContainer(props: IProps): JSX.Element {
             {t('buttonSave')}
           </Button>
         </PageTitle>
-        <Merchandize
-          onVirtualChange={onVirtualChange}
-          virtualCategoryValue={isVirtual}
-          onNameChange={onNameChange}
-          categoryNameValue={useNameInProductSearch}
-          onSortChange={onSortChange}
-          sortValue={defaultSorting}
-          sortOptions={sortOption}
-        />
+        {Boolean(catConf) && (
+          <Merchandize
+            onVirtualChange={onVirtualChange}
+            virtualCategoryValue={catConf?.isVirtual ?? false}
+            onNameChange={onNameChange}
+            categoryNameValue={catConf?.useNameInProductSearch ?? false}
+            onSortChange={onSortChange}
+            sortValue={catConf?.defaultSorting ?? ''}
+            sortOptions={sortOption}
+          />
+        )}
 
         <SearchBar
           nbResults={nbBottomRows}
@@ -201,18 +202,22 @@ function ProductsContainer(props: IProps): JSX.Element {
           onChange={onSearchChange}
         />
 
-        <ProductsTopAndBottom
-          ref={tableRef}
-          bottomSelectedRows={bottomSelectedRows}
-          localizedCatalogId={localizedCatalogId}
-          productGraphqlFilters={productGraphqlFilters}
-          onBottomSelectedRows={setBottomSelectedRows}
-          onTopSelectedRows={setTopSelectedRows}
-          setProductPositions={setProductPositions}
-          topSelectedRows={topSelectedRows}
-          topProducts={topProducts}
-          setNbBottomRows={setNbBottomRows}
-        />
+        {Boolean(
+          catConf && (!catConf.virtualRule || productGraphqlFilters)
+        ) && (
+          <ProductsTopAndBottom
+            ref={tableRef}
+            bottomSelectedRows={bottomSelectedRows}
+            localizedCatalogId={localizedCatalogId}
+            productGraphqlFilters={productGraphqlFilters}
+            onBottomSelectedRows={setBottomSelectedRows}
+            onTopSelectedRows={setTopSelectedRows}
+            setNbBottomRows={setNbBottomRows}
+            setProductPositions={setProductPositions}
+            topSelectedRows={topSelectedRows}
+            topProducts={topProducts}
+          />
+        )}
       </Layout>
       <StickyBar positionRef={tableRef} show={showStickyBar}>
         {t('rows.selected', {
