@@ -7,6 +7,27 @@ import DropDownError from './DropDownError'
 export default {
   title: 'Atoms/Form/Dropdown',
   component: DropDownComponent,
+  argTypes: {
+    color: {
+      options: ['none', 'success', 'error'],
+      mapping: {
+        none: null,
+        success: 'success',
+        error: 'error',
+      },
+      control: { type: 'select' },
+    },
+    helperIcon: {
+      options: ['', 'information-circle', 'checkmark', 'close'],
+      control: { type: 'select' },
+    },
+    helperText: {
+      control: 'text',
+    },
+    label: {
+      control: 'text',
+    },
+  },
 } as ComponentMeta<typeof DropDownComponent>
 
 export const Simple: ComponentStory<typeof DropDownComponent> = (args) => {
@@ -15,10 +36,16 @@ export const Simple: ComponentStory<typeof DropDownComponent> = (args) => {
   return <DropDownComponent {...args} onChange={handleChange} value={value} />
 }
 Simple.args = {
+  color: 'primary',
   dirty: false,
   disabled: false,
-  infoTooltip: 'Helpful info',
+  error: false,
+  fullWidth: false,
+  helperText: '',
+  helperIcon: '',
+  infoTooltip: '',
   label: 'Label',
+  margin: 'none',
   options: [
     { label: 'Ten', value: 10 },
     { label: 'Twenty', value: 20 },
@@ -46,11 +73,17 @@ export const Multiple: ComponentStory<typeof DropDownComponent> = (
   )
 }
 Multiple.args = {
+  color: 'primary',
   dirty: false,
   disabled: false,
+  error: false,
+  fullWidth: false,
+  helperText: '',
+  helperIcon: '',
   infoTooltip: '',
   label: 'Label',
   limitTags: 2,
+  margin: 'none',
   options: [
     { label: 'Ten', value: 10 },
     { label: 'Twenty', value: 20 },
@@ -69,9 +102,12 @@ export const WithError: ComponentStory<typeof DropDownComponent> = (args) => {
   return <DropDownError {...args} onChange={handleChange} value={value} />
 }
 WithError.args = {
+  color: 'primary',
   disabled: false,
-  infoTooltip: 'Helpful info',
+  fullWidth: false,
+  infoTooltip: '',
   label: 'Label',
+  margin: 'none',
   options: [
     { label: 'Ten', value: 10 },
     { label: 'Twenty', value: 20 },

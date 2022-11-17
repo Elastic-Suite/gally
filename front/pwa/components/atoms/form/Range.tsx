@@ -7,8 +7,13 @@ import { getFormValue } from '~/services'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 
 import InfoTooltip from './InfoTooltip'
-import { IUnstyledInputTextProps, Suffix, Wrapper } from './InputText.styled'
-import { ContainerStyled, FirstInput, SecondInput } from './Range.styled'
+import {
+  IUnstyledInputTextProps,
+  StyledFormControl,
+  Suffix,
+  Wrapper,
+} from './InputText.styled'
+import { FirstInput, SecondInput } from './Range.styled'
 
 export interface IRangeProps
   extends Omit<
@@ -70,7 +75,7 @@ function Range(props: IRangeProps): JSX.Element {
   }
 
   return (
-    <ContainerStyled margin={margin}>
+    <StyledFormControl fullWidth={fullWidth} margin={margin}>
       {Boolean(label || infoTooltip) && (
         <InputLabel shrink htmlFor={id} required={required}>
           {label}
@@ -112,7 +117,7 @@ function Range(props: IRangeProps): JSX.Element {
           {helperText}
         </FormHelperText>
       )}
-    </ContainerStyled>
+    </StyledFormControl>
   )
 }
 

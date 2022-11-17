@@ -36,6 +36,7 @@ export interface IDropDownProps<T>
 function DropDown<T>(props: IDropDownProps<T>): JSX.Element {
   const {
     disabled,
+    fullWidth,
     limitTags,
     multiple,
     onChange,
@@ -107,7 +108,7 @@ function DropDown<T>(props: IDropDownProps<T>): JSX.Element {
   }
 
   return (
-    <FormControl variant="standard">
+    <FormControl fullWidth={fullWidth} variant="standard">
       <Autocomplete
         PaperComponent={small ? SmallStyledPaper : StyledPaper}
         clearIcon={<IonIcon name="close" />}
@@ -131,6 +132,7 @@ function DropDown<T>(props: IDropDownProps<T>): JSX.Element {
               {...otherProps}
               {...inputProps}
               {...InputProps}
+              fullWidth={fullWidth}
               inputRef={inputRef}
             />
           )

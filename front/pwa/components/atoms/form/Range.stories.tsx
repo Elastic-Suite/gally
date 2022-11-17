@@ -21,12 +21,12 @@ export default {
       options: ['', 'information-circle', 'checkmark', 'close'],
       control: { type: 'select' },
     },
-    id: { table: { disable: true } },
-    margin: {
-      options: ['dense', 'none', 'normal'],
-      control: { type: 'select' },
+    helperText: {
+      control: 'text',
     },
-    ref: { table: { disable: true } },
+    label: {
+      control: 'text',
+    },
   },
 } as ComponentMeta<typeof Range>
 
@@ -41,11 +41,11 @@ Default.args = {
   color: 'primary',
   dirty: false,
   disabled: false,
+  error: false,
+  fullWidth: false,
   helperText: '',
   helperIcon: '',
-  id: 'input-text',
   infoTooltip: '',
-  inputProps: {},
   label: 'Label',
   margin: 'none',
   placeholder: [],
@@ -66,9 +66,8 @@ WithError.args = {
   color: 'primary',
   disabled: false,
   endAdornment: null,
-  id: 'input-text',
+  fullWidth: false,
   infoTooltip: '',
-  inputProps: {},
   label: 'Label',
   margin: 'none',
   placeholder: [],

@@ -26,10 +26,6 @@ export default {
       control: { type: 'select' },
     },
     id: { table: { disable: true } },
-    margin: {
-      options: ['dense', 'none', 'normal'],
-      control: { type: 'select' },
-    },
     ref: { table: { disable: true } },
     type: {
       options: ['text', 'number'],
@@ -58,6 +54,8 @@ Default.args = {
   dirty: false,
   disabled: false,
   endAdornment: null,
+  error: false,
+  fullWidth: false,
   helperText: '',
   helperIcon: '',
   id: 'input-text',
@@ -83,6 +81,8 @@ Search.args = {
       <IonIcon name="search" />
     </InputAdornment>
   ),
+  error: false,
+  fullWidth: false,
   helperText: '',
   helperIcon: '',
   id: 'input-text',
@@ -109,6 +109,7 @@ WithError.args = {
   color: 'primary',
   disabled: false,
   endAdornment: null,
+  fullWidth: false,
   id: 'input-text',
   infoTooltip: '',
   inputProps: {},

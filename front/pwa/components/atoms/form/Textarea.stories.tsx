@@ -19,12 +19,14 @@ const Template: ComponentStory<typeof TextareaComponent> = (args) => {
 
 export const Textarea = Template.bind({})
 Textarea.args = {
+  error: false,
+  disabled: false,
+  fullWidth: false,
   id: 'textarea',
   label: 'Label',
+  margin: 'none',
+  maxLength: 250,
   placeholder: 'Describe your issue',
   required: false,
-  disabled: false,
-  maxLength: 250,
-  error: false,
   resizable: false,
 }

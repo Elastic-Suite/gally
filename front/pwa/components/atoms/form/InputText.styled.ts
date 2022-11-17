@@ -9,14 +9,22 @@ export interface IUnstyledInputTextProps extends InputBaseProps {
   value?: string
 }
 
-export const StyledFormControl = styled(FormControl)(({ theme }) => ({
-  '& .MuiFormLabel-root': {
-    color: theme.palette.colors.neutral[900],
-  },
-  '& .MuiFormLabel-root.Mui-error': {
-    color: theme.palette.colors.neutral[900],
-  },
-}))
+export const StyledFormControl = styled(FormControl)(
+  ({ fullWidth, theme }) => ({
+    '& .MuiFormLabel-root': {
+      color: theme.palette.colors.neutral[900],
+    },
+    '& .MuiFormLabel-root.Mui-error': {
+      color: theme.palette.colors.neutral[900],
+    },
+    ...(fullWidth && {
+      '.MuiInputBase-root': {
+        width: '100%',
+        maxWidth: 'initial',
+      },
+    }),
+  })
+)
 
 const inputTextStyledProps = ['dirty', 'small', 'transparent']
 export const InputTextStyled = styled(
