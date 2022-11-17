@@ -1,30 +1,35 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { useState } from 'react'
 
-import Slider from './Slider'
+import SliderComponent from './Slider'
 
 export default {
   title: 'Atoms/Form/Slider',
-  component: Slider,
+  component: SliderComponent,
   argTypes: {
     margin: {
       options: ['dense', 'none', 'normal'],
       control: { type: 'select' },
     },
+    helperIcon: {
+      options: ['', 'information-circle', 'checkmark', 'close'],
+      control: { type: 'select' },
+    },
   },
-} as ComponentMeta<typeof Slider>
+} as ComponentMeta<typeof SliderComponent>
 
-const Template: ComponentStory<typeof Slider> = (args: any) => {
+const Template: ComponentStory<typeof SliderComponent> = (args: any) => {
   const [val, setVal] = useState(0)
-  return (
-    <Slider
-      {...args}
-      value={val}
-      onChange={setVal}
-      label="Boost value (%)"
-      infoTooltip="boost value ..."
-    />
-  )
+  return <SliderComponent {...args} value={val} onChange={setVal} />
 }
 
-export const Default = Template.bind({})
+export const Slider = Template.bind({})
+
+Slider.args = {
+  error: false,
+  helperText: '',
+  helperIcon: '',
+  infoTooltip: 'Boost value (%)',
+  label: 'Label boost value',
+  margin: 'none',
+}
