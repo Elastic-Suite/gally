@@ -220,7 +220,8 @@ function ProductsContainer(props: IProps): JSX.Element {
         })}
 
         <CustomBarTextMaxProducts>
-          {topProducts.length === 25 &&
+          {(topProducts.length === 25 ||
+            topProducts.length + bottomSelectedRows.length > 25) &&
             bottomSelectedRows.length !== 0 &&
             t('bar.textMaxProducts')}
         </CustomBarTextMaxProducts>
