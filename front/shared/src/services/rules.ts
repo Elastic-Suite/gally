@@ -42,16 +42,6 @@ function parseRule<R extends IRule>(
       value: rule.value === 'true',
       children: rule.children.map((rule) => parseRule(rule, ruleOperators)),
     }
-  } else if (isAttributeRule(rule)) {
-    let ruleValue = rule.value
-    const valueType = getAttributeRuleValueType(
-      rule,
-      ruleOperators.operatorsValueType
-    )
-    if (valueType === RuleValueType.BOOLEAN) {
-      ruleValue = rule.value === 'true'
-    }
-    return { ...rule, value: ruleValue }
   }
   return rule
 }
@@ -98,10 +88,7 @@ export function serializeRule<R extends IRule>(
       }
     } else if (ruleValueNumberTypes.includes(valueType)) {
       ruleValue = Number(rule.value)
-    } else if (
-      valueType === RuleValueType.BOOLEAN ||
-      valueType === RuleValueType.STRING
-    ) {
+    } else if (valueType === RuleValueType.STRING) {
       ruleValue = String(rule.value)
     }
     return { ...rule, value: ruleValue }

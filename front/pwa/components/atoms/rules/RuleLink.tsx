@@ -29,7 +29,7 @@ const LinkLabelSimple = styled(LinkLabel)(({ theme }) => ({
     borderRight: 'none',
     width: '22px',
     left: '50%',
-    height: '36px',
+    height: '42px',
     top: '100%',
   },
 }))
