@@ -40,7 +40,7 @@ class Terms implements QueryInterface
      * @param float             $boost  Query boost
      */
     public function __construct(
-        string|bool|array $values,
+        string|bool|array|int|float $values,
         string $field,
         ?string $name = null,
         float $boost = QueryInterface::DEFAULT_BOOST_VALUE
