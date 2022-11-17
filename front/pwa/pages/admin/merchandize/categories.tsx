@@ -178,8 +178,11 @@ function Categories(): JSX.Element {
     } else if (!catConf?.isVirtual && selectedCategoryItem) {
       return { category__id: { eq: selectedCategoryItem.id } }
     }
-    return {}
+    return null
   }, [catConf, ruleEngineGraphqlFilters, selectedCategoryItem])
+
+  // Product positions
+  const prevProductPositions = useRef<string>('')
 
   function handleUpdateCat(name: string): (val: boolean | string) => void {
     return (val) => {
@@ -191,7 +194,11 @@ function Categories(): JSX.Element {
     setCatConf((catConf) => ({ ...catConf, virtualRule: rule }))
   }
 
-  const prevProductPositions = useRef<string>('')
+  function handleSelectCategory(category: ICategory): void {
+    setSelectedCategoryItem(category)
+    setCatConf(null)
+    setRuleEngineGraphqlFilters(null)
+  }
 
   const graphqlApi = useApiGraphql()
   async function saveProductPositions(positions: string): Promise<void> {
@@ -275,7 +282,7 @@ function Categories(): JSX.Element {
               <CategoryTree
                 categories={categories.data}
                 selectedItem={selectedCategoryItem}
-                onSelect={setSelectedCategoryItem}
+                onSelect={handleSelectCategory}
               />
             </>
           </TitleBlock>,
