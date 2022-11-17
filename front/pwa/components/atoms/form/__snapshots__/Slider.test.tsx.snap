@@ -46,7 +46,7 @@ exports[`Slider match snapshot Slider Full 1`] = `
         </div>
       </div>
       <span
-        class="MuiSlider-root MuiSlider-colorPrimary MuiSlider-sizeMedium css-vts272-MuiSlider-root"
+        class="MuiSlider-root MuiSlider-colorPrimary MuiSlider-sizeMedium css-3cy87h-MuiSlider-root"
       >
         <span
           class="MuiSlider-rail css-14pt78w-MuiSlider-rail"
@@ -126,7 +126,7 @@ exports[`Slider match snapshot Slider Min 1`] = `
         </div>
       </div>
       <span
-        class="MuiSlider-root MuiSlider-colorPrimary MuiSlider-sizeMedium css-vts272-MuiSlider-root"
+        class="MuiSlider-root MuiSlider-colorPrimary MuiSlider-sizeMedium css-3cy87h-MuiSlider-root"
       >
         <span
           class="MuiSlider-rail css-14pt78w-MuiSlider-rail"
