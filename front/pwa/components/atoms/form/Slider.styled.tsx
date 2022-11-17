@@ -8,6 +8,7 @@ export const Slide = styled(SliderMui)(({ theme }) => ({
   '.MuiSlider-rail': {
     height: '7px',
     border: '1px solid',
+    boxSizing: 'border-box',
     borderColor: theme.palette.colors.neutral[400],
     backgroundColor: theme.palette.colors.neutral[300],
     '::after': {
