@@ -9,6 +9,7 @@ export function getSearchProductsQuery(
     query: {
       __name: 'getProducts',
       __variables: {
+        requestType: 'ProductRequestTypeEnum!',
         catalogId: 'String!',
         currentPage: 'Int',
         pageSize: 'Int',
@@ -17,6 +18,7 @@ export function getSearchProductsQuery(
       },
       searchProducts: {
         __args: {
+          requestType: new VariableType('requestType'),
           catalogId: new VariableType('catalogId'),
           currentPage: new VariableType('currentPage'),
           pageSize: new VariableType('pageSize'),
