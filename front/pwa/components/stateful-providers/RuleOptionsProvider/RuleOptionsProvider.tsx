@@ -10,7 +10,6 @@ import {
   IHydraResponse,
   IOptions,
   IRuleEngineOperators,
-  ISourceFieldOption,
   ISourceFieldOptionLabel,
   ITreeItem,
   RuleAttributeType,
@@ -50,7 +49,6 @@ function RuleOptionsProvider(props: IProps): JSX.Element {
   } = props
   const { operators, operatorsBySourceFieldType, operatorsValueType } =
     ruleOperators
-  const sourceFieldOptionResource = useResource('SourceFieldOption')
   const sourceFieldOptionLabelResource = useResource('SourceFieldOptionLabel')
   const { t } = useTranslation('rules')
   const { fetch, map, setMap } = useSingletonLoader<
@@ -157,47 +155,27 @@ function RuleOptionsProvider(props: IProps): JSX.Element {
         return fetch(
           `${field.code}-${localizedCatalogId}`,
           async (fetchApi: IFetchApi) => {
-            const optionFilters: {
-              catalog?: string
-              'order[position]': string
-              sourceField: string
-            } = {
-              'order[position]': 'asc',
-              sourceField: `/source_fields/${field.id}`,
-            }
             const optionLabelFilters: {
               catalog?: string
-              // 'order[sourceFieldOption.position]': string
+              'order[sourceFieldOption.position]': string
               'sourceFieldOption.sourceField': string
             } = {
-              // 'order[sourceFieldOption.position]': 'asc',
+              'order[sourceFieldOption.position]': 'asc',
               'sourceFieldOption.sourceField': `/source_fields/${field.id}`,
             }
-            let optionsResponse: IError | IHydraResponse<ISourceFieldOption>
             let optionLabelsResponse:
               | IError
               | IHydraResponse<ISourceFieldOptionLabel>
 
             // Fetch sourceFieldOptionLabels for current localizedCatalog
             if (localizedCatalogId !== -1) {
-              optionFilters.catalog = `/localized_catalogs/${localizedCatalogId}`
               optionLabelFilters.catalog = `/localized_catalogs/${localizedCatalogId}`
-              const optionPromise = fetchApi<
-                IHydraResponse<ISourceFieldOption>
-              >(
-                sourceFieldOptionResource,
-                getListApiParameters(false, undefined, optionFilters)
-              )
-              const labelPromise = fetchApi<
+              optionLabelsResponse = await fetchApi<
                 IHydraResponse<ISourceFieldOptionLabel>
               >(
                 sourceFieldOptionLabelResource,
                 getListApiParameters(false, undefined, optionLabelFilters)
               )
-              ;[optionsResponse, optionLabelsResponse] = await Promise.all([
-                optionPromise,
-                labelPromise,
-              ])
             }
 
             // Fetch sourceFieldOptionLabels for default catalog (if no labels were found)
@@ -206,31 +184,17 @@ function RuleOptionsProvider(props: IProps): JSX.Element {
               isError(optionLabelsResponse) ||
               optionLabelsResponse['hydra:totalItems'] === 0
             ) {
-              optionFilters.catalog = `/localized_catalogs/${defaultLocalizedCatalog}`
               optionLabelFilters.catalog = `/localized_catalogs/${defaultLocalizedCatalog}`
-              const optionPromise = fetchApi<
-                IHydraResponse<ISourceFieldOption>
-              >(
-                sourceFieldOptionResource,
-                getListApiParameters(false, undefined, optionFilters)
-              )
-              const labelPromise = fetchApi<
+              optionLabelsResponse = await fetchApi<
                 IHydraResponse<ISourceFieldOptionLabel>
               >(
                 sourceFieldOptionLabelResource,
                 getListApiParameters(false, undefined, optionLabelFilters)
               )
-              ;[optionsResponse, optionLabelsResponse] = await Promise.all([
-                optionPromise,
-                labelPromise,
-              ])
             }
 
-            if (!isError(optionsResponse) && !isError(optionLabelsResponse)) {
-              return getOptionsFromOptionLabelResource(
-                optionsResponse,
-                optionLabelsResponse
-              )
+            if (!isError(optionLabelsResponse)) {
+              return getOptionsFromOptionLabelResource(optionLabelsResponse)
             }
             throw new Error('error')
           }
@@ -244,7 +208,6 @@ function RuleOptionsProvider(props: IProps): JSX.Element {
       fields,
       localizedCatalogId,
       sourceFieldOptionLabelResource,
-      sourceFieldOptionResource,
     ]
   )
 
