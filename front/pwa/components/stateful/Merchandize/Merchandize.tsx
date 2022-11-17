@@ -45,7 +45,7 @@ function Merchandize({
         <Grid item xs={6}>
           <Switch
             label={t('name')}
-            labelInfo={t('name.tooltip')}
+            infoTooltip={t('name.tooltip')}
             onChange={handleChange}
             checked={categoryNameValue}
             name="name"
@@ -63,7 +63,7 @@ function Merchandize({
         <Grid item xs={6}>
           <Switch
             label={t('virtual')}
-            labelInfo={t('virtual.tooltip')}
+            infoTooltip={t('virtual.tooltip')}
             onChange={handleChange}
             checked={virtualCategoryValue}
             name="virtual"

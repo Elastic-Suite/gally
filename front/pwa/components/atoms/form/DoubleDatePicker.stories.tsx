@@ -7,9 +7,30 @@ import DoubleDatePickerComponent from './DoubleDatePicker'
 export default {
   title: 'Atoms/form/DoubleDatePicker',
   component: DoubleDatePickerComponent,
+  argTypes: {
+    color: {
+      options: ['none', 'success', 'error'],
+      mapping: {
+        none: null,
+        success: 'success',
+        error: 'error',
+      },
+      control: { type: 'select' },
+    },
+    helperIcon: {
+      options: ['', 'information-circle', 'checkmark', 'close'],
+      control: { type: 'select' },
+    },
+    helperText: {
+      control: 'text',
+    },
+    label: {
+      control: 'text',
+    },
+  },
 } as ComponentMeta<typeof DoubleDatePickerComponent>
 
-const Template: ComponentStory<typeof DoubleDatePickerComponent> = () => {
+const Template: ComponentStory<typeof DoubleDatePickerComponent> = (args) => {
   const [value, setValue] = useState<{
     from: Dayjs | null
     to: Dayjs | null
@@ -21,16 +42,23 @@ const Template: ComponentStory<typeof DoubleDatePickerComponent> = () => {
     setValue(value)
   }
 
-  return <DoubleDatePickerComponent value={value} onChange={onChange} />
+  return (
+    <DoubleDatePickerComponent {...args} value={value} onChange={onChange} />
+  )
 }
 
 export const DoubleDatePicker = Template.bind({})
-
 DoubleDatePicker.args = {
   color: 'primary',
   disabled: false,
-  id: 'input-text',
-  infoTooltip: 'infotool tip',
-  label: 'Label DatePicker',
+  error: false,
+  fullWidth: false,
+  helperText: '',
+  helperIcon: '',
+  infoTooltip: '',
+  label: 'Label',
+  margin: 'none',
+  required: false,
+  small: false,
   transparent: false,
 }

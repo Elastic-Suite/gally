@@ -7,6 +7,27 @@ import DatePickerComponent from './DatePicker'
 export default {
   title: 'Atoms/form/DatePicker',
   component: DatePickerComponent,
+  argTypes: {
+    color: {
+      options: ['none', 'success', 'error'],
+      mapping: {
+        none: null,
+        success: 'success',
+        error: 'error',
+      },
+      control: { type: 'select' },
+    },
+    helperIcon: {
+      options: ['', 'information-circle', 'checkmark', 'close'],
+      control: { type: 'select' },
+    },
+    helperText: {
+      control: 'text',
+    },
+    label: {
+      control: 'text',
+    },
+  },
 } as ComponentMeta<typeof DatePickerComponent>
 
 const Template: ComponentStory<typeof DatePickerComponent> = (args) => {
@@ -20,12 +41,17 @@ const Template: ComponentStory<typeof DatePickerComponent> = (args) => {
 }
 
 export const DatePicker = Template.bind({})
-
 DatePicker.args = {
   color: 'primary',
   disabled: false,
-  id: 'input-text',
-  infoTooltip: 'infotool tip',
-  label: 'Label DatePicker',
+  error: false,
+  fullWidth: false,
+  helperText: '',
+  helperIcon: '',
+  infoTooltip: '',
+  label: 'Label',
+  margin: 'none',
+  required: false,
+  small: false,
   transparent: false,
 }

@@ -9,7 +9,16 @@ export default {
   title: 'Atoms/Form/TreeSelector',
   component: TreeSelectorComponent,
   argTypes: {
-    id: { table: { disable: true } },
+    helperIcon: {
+      options: ['', 'information-circle', 'checkmark', 'close'],
+      control: { type: 'select' },
+    },
+    helperText: {
+      control: 'text',
+    },
+    label: {
+      control: 'text',
+    },
   },
 } as ComponentMeta<typeof TreeSelectorComponent>
 
@@ -48,9 +57,16 @@ export const Multiple: ComponentStory<typeof TreeSelectorComponent> = (
 }
 Multiple.args = {
   data: categories.categories,
-  label: 'Label',
-  required: false,
   disabled: false,
+  error: false,
+  fullWidth: false,
+  helperText: '',
+  helperIcon: '',
+  infoTooltip: '',
+  label: 'Label',
+  margin: 'none',
+  placeholder: '',
+  required: false,
   small: false,
   transparent: false,
 }

@@ -9,18 +9,30 @@ import { TextareaAutosizeProps } from '@mui/base/TextareaAutosize/TextareaAutosi
 
 //Example get here https://codesandbox.io/s/n4t82?file=/src/index.js:612-654
 interface IProps extends TextareaAutosizeProps {
-  label?: string
-  resizable?: boolean
   error?: boolean
+  fullWidth?: boolean
+  label?: string
+  margin?: 'none' | 'dense' | 'normal'
+  resizable?: boolean
 }
 
 function Textarea(props: IProps): JSX.Element {
-  const { label, id, required, maxLength, resizable, error, value, ...other } =
-    props
+  const {
+    error,
+    fullWidth,
+    id,
+    label,
+    margin,
+    maxLength,
+    required,
+    resizable,
+    value,
+    ...other
+  } = props
   const maxLengthValue = maxLength ?? 250
   const valueString = String(value ?? '')
   return (
-    <FormControl variant="standard">
+    <FormControl fullWidth={fullWidth} margin={margin} variant="standard">
       {label ? (
         <InputLabel shrink htmlFor={id} required={required}>
           {label}
@@ -33,7 +45,7 @@ function Textarea(props: IProps): JSX.Element {
         maxLength={maxLengthValue}
         style={{
           height: 150,
-          width: 320,
+          minWidth: 320,
           resize: resizable ? 'both' : 'none',
         }}
         className={classNames({

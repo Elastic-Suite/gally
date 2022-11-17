@@ -1,26 +1,38 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { ChangeEvent, useState } from 'react'
 
-import Switch from './Switch'
+import SwitchComponent from './Switch'
 
 export default {
   title: 'Atoms/Form/Switch',
-  component: Switch,
-} as ComponentMeta<typeof Switch>
+  component: SwitchComponent,
+  argTypes: {
+    helperIcon: {
+      options: ['', 'information-circle', 'checkmark', 'close'],
+      control: { type: 'select' },
+    },
+  },
+} as ComponentMeta<typeof SwitchComponent>
 
-const Template: ComponentStory<typeof Switch> = (args): JSX.Element => {
+const Template: ComponentStory<typeof SwitchComponent> = (
+  args
+): JSX.Element => {
   const [first, setFirst] = useState(true)
 
   const onChange = (event: ChangeEvent<HTMLInputElement>): void => {
     setFirst(event.target.checked)
   }
 
-  return <Switch {...args} onChange={onChange} checked={first} />
+  return <SwitchComponent {...args} onChange={onChange} checked={first} />
 }
 
-export const Default = Template.bind({})
-Default.args = {
+export const Switch = Template.bind({})
+Switch.args = {
+  disabled: false,
+  helperText: '',
+  helperIcon: '',
+  infoTooltip: '',
   label: 'label',
-  labelInfo: 'labelInfo',
+  margin: 'none',
   name: 'checkedA',
 }
