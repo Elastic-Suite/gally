@@ -19,12 +19,14 @@ const sourceFieldFixedFilters = {
 }
 
 interface IProps extends ICombinationRulesProps {
+  active?: boolean
   defaultLocalizedCatalog: string
   ruleOperators: IRuleEngineOperators
 }
 
 function RulesManager(props: IProps): JSX.Element {
   const {
+    active,
     catalogId,
     defaultLocalizedCatalog,
     localizedCatalogId,
@@ -93,11 +95,13 @@ function RulesManager(props: IProps): JSX.Element {
       fields={fields}
       ruleOperators={ruleOperators}
     >
-      <CombinationRules
-        catalogId={catalogId}
-        localizedCatalogId={localizedCatalogId}
-        {...ruleProps}
-      />
+      {Boolean(active) && (
+        <CombinationRules
+          catalogId={catalogId}
+          localizedCatalogId={localizedCatalogId}
+          {...ruleProps}
+        />
+      )}
     </RuleOptionsProvider>
   )
 }
