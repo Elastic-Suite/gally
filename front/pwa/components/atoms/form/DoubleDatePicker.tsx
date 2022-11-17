@@ -71,18 +71,30 @@ function DoubleDatePicker(props: IProps): JSX.Element {
         justifyContent="flex-start"
         alignItems="center"
         container
-        sx={{ width: '900px', marginTop: label ? '30px' : '0px' }}
+        sx={{ marginTop: label ? '24px' : '0px' }}
       >
         <CustomBox sx={{ paddingRight: '20px' }}> {t('form.from')} </CustomBox>
-        <Grid item sx={{ width: '190px' }}>
-          <DatePicker {...args} value={value.from} onChange={onChangeFrom} />
+        <Grid item xs>
+          <DatePicker
+            {...args}
+            error={error}
+            fullWidth={fullWidth}
+            value={value.from}
+            onChange={onChangeFrom}
+          />
         </Grid>
         <CustomBox sx={{ paddingRight: '20px', paddingLeft: '20px' }}>
           {' '}
           {t('form.to')}{' '}
         </CustomBox>
-        <Grid item sx={{ width: '190px' }}>
-          <DatePicker {...args} value={value.to} onChange={onChangeTo} />
+        <Grid item xs>
+          <DatePicker
+            {...args}
+            error={error}
+            fullWidth={fullWidth}
+            value={value.to}
+            onChange={onChangeTo}
+          />
         </Grid>
       </Grid>
       {Boolean(helperText) && (

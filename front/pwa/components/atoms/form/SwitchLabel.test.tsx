@@ -8,7 +8,7 @@ describe('SwitchLabel match snapshot', () => {
     const { container } = renderWithProviders(
       <Switch
         label="label"
-        labelInfo="labelInfo"
+        infoTooltip="labelInfo"
         checked={first}
         name="checkedA"
       />

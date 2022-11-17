@@ -12,25 +12,27 @@ import InfoTooltip from '~/components/atoms/form/InfoTooltip'
 interface IProps extends SwitchProps {
   helperIcon?: string
   helperText?: string
+  infoTooltip?: string
   label?: string
-  labelInfo?: string
+  margin?: 'none' | 'dense' | 'normal'
 }
 
 function Switch(props: IProps): JSX.Element {
-  const { helperIcon, helperText, label, labelInfo, ...switchProps } = props
+  const { helperIcon, helperText, infoTooltip, label, margin, ...switchProps } =
+    props
 
   return (
-    <StyleFormControl variant="standard" fullWidth>
-      {label || labelInfo ? (
+    <StyleFormControl fullWidth variant="standard" margin={margin}>
+      {label || infoTooltip ? (
         <InputLabel sx={{ maxWidth: '90%' }} shrink>
           {label ? label : null}
-          {labelInfo ? <InfoTooltip title={labelInfo} /> : null}
+          {infoTooltip ? <InfoTooltip title={infoTooltip} /> : null}
         </InputLabel>
       ) : undefined}
       <MuiSwitch
         {...switchProps}
         sx={
-          label || labelInfo ? { marginLeft: '-12px', marginTop: '20px' } : {}
+          label || infoTooltip ? { marginLeft: '-12px', marginTop: '20px' } : {}
         }
       />
       {Boolean(helperText) && (

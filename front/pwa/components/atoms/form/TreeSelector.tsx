@@ -51,6 +51,7 @@ function TreeSelector<Multiple extends boolean | undefined>(
 ): JSX.Element {
   const {
     data,
+    fullWidth,
     limitTags,
     onChange: onChangeProps,
     style,
@@ -200,7 +201,11 @@ function TreeSelector<Multiple extends boolean | undefined>(
   }
 
   return (
-    <Root {...getRootProps()} style={style}>
+    <Root
+      {...getRootProps()}
+      style={style}
+      sx={{ display: fullWidth ? 'block' : 'inline-block' }}
+    >
       <Input
         {...other}
         className={classNames({ focused, hasClearIcon })}
@@ -227,6 +232,7 @@ function TreeSelector<Multiple extends boolean | undefined>(
             </AutocompletePopupIndicator>
           </EndAdornment>
         }
+        fullWidth={fullWidth}
         id={id}
         inputProps={getInputProps()}
         ref={setAnchorEl}
