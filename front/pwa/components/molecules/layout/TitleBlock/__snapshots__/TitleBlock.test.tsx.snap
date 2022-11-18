@@ -3,15 +3,15 @@
 exports[`TitleBlock match snapshot PageTitle simple 1`] = `
 <div>
   <div
-    class="css-1smabgz"
+    class="css-1vv96bp"
   >
     Hello World
   </div>
   <div
-    class="css-6sa163"
+    class="css-u37yxj"
   >
     <div
-      class="css-l7et16"
+      class="css-3muqs4"
     >
       Hello
     </div>
@@ -22,15 +22,15 @@ exports[`TitleBlock match snapshot PageTitle simple 1`] = `
 exports[`TitleBlock match snapshot PageTitle with Composant on Children 1`] = `
 <div>
   <div
-    class="css-1smabgz"
+    class="css-1vv96bp"
   >
     Hello World
   </div>
   <div
-    class="css-6sa163"
+    class="css-u37yxj"
   >
     <div
-      class="css-l7et16"
+      class="css-3muqs4"
     >
       <button
         class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium css-13u4ebv-MuiButtonBase-root-MuiButton-root"

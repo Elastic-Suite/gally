@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import 'shared'
 import { SnackbarKey } from 'notistack'
 
 declare module 'notistack' {
