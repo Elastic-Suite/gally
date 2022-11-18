@@ -8,6 +8,7 @@ import {
   IProductPositions,
   ITableRow,
   LoadStatus,
+  ProductRequestType,
   getSearchProductsQuery,
   productTableheader,
 } from 'shared'
@@ -37,7 +38,10 @@ function TopTable(props: IProps): JSX.Element {
   } = props
 
   const variables = useMemo(
-    () => ({ catalogId: localizedCatalogId, requestType: 'product_catalog' }),
+    () => ({
+      catalogId: localizedCatalogId,
+      requestType: ProductRequestType.CATALOG,
+    }),
     [localizedCatalogId]
   )
   const [products] = useGraphqlApi<IGraphqlSearchProducts>(

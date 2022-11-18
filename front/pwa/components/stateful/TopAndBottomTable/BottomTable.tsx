@@ -13,6 +13,7 @@ import {
   IGraphqlSearchProducts,
   IProductFieldFilterInput,
   ITableRow,
+  ProductRequestType,
   defaultPageSize,
   defaultRowsPerPageOptions,
   getSearchProductsQuery,
@@ -53,7 +54,7 @@ function BottomTable(
       catalogId: localizedCatalogId,
       currentPage,
       pageSize: rowsPerPage,
-      requestType: 'product_catalog',
+      requestType: ProductRequestType.CATALOG,
     }),
     [currentPage, localizedCatalogId, rowsPerPage]
   )
