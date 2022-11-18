@@ -45,6 +45,7 @@ export interface ICustomTableProps {
   selectedRows?: (string | number)[]
   tableHeaders: ITableHeader[]
   tableRows: ITableRow[]
+  border?: boolean
 }
 
 function CustomTable(
@@ -61,6 +62,7 @@ function CustomTable(
     selectedRows,
     onReOrder,
     onSelectedRows,
+    border,
   } = props
 
   const [scrollLength, setScrollLength] = useState<number>(0)
@@ -144,6 +146,15 @@ function CustomTable(
     }
   }, [withSelection, stickyLength, draggable])
 
+  const styles = border
+    ? {
+        border: '2px solid #ED7465',
+        borderTop: 'none',
+        borderRadius: '0px 0px 8px 8px',
+        boxSizing: 'border-box',
+      }
+    : {}
+
   return (
     <>
       <DragDropContext onDragEnd={handleDragEnd}>
@@ -156,6 +167,7 @@ function CustomTable(
             '&::-webkit-scrollbar-thumb': {
               marginLeft: `${scrollLength}px`,
             },
+            ...styles,
           }}
         >
           <StyledTable>
