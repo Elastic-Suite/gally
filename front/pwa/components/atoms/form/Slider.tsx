@@ -1,14 +1,14 @@
 import { ReactNode } from 'react'
 import Box from '@mui/material/Box'
 import { CustomIndicatorsNumber, Slide } from './Slider.styled'
-import { FormHelperText, InputLabel } from '@mui/material'
+import { FormHelperText, InputLabel, SliderProps } from '@mui/material'
 
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 
 import InfoTooltip from './InfoTooltip'
 import { StyledFormControl } from './InputText.styled'
 
-export interface ISliderProps {
+export interface ISliderProps extends Omit<SliderProps, 'onChange'> {
   error?: boolean
   fullWidth?: boolean
   infoTooltip?: string
@@ -98,8 +98,6 @@ function Slider(props: ISliderProps): JSX.Element {
 }
 
 Slider.defaultProps = {
-  required: true,
-  value: 0,
   width: 376,
 }
 
