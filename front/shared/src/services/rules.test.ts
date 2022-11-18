@@ -22,7 +22,7 @@ describe('Rules service', () => {
     "children": [
       {"type":"attribute","field":"sku","operator":"in","attribute_type":"reference","value":["42","45"]},
       {"type":"attribute","field":"size","operator":"in","attribute_type":"int","value":[42,45]},
-      {"type":"attribute","field":"stock","operator":"eq","attribute_type":"boolean","value":"true"},
+      {"type":"attribute","field":"stock","operator":"eq","attribute_type":"stock","value":true},
       {"type":"attribute","field":"brand","operator":"eq","attribute_type":"text","value":"gally"},
       {"type":"attribute","field":"id","operator":"eq","attribute_type":"int","value":42}
     ]
@@ -54,22 +54,22 @@ describe('Rules service', () => {
         field: 'sku',
         operator: 'in',
         attribute_type: 'reference',
-        value: '42,45',
+        value: ['42', '45'],
       },
       {
         type: 'attribute',
         field: 'size',
         operator: 'in',
         attribute_type: 'int',
-        value: '42,45',
+        value: [42, 45],
       },
       {
         type: 'attribute',
         field: 'stock',
         operator: 'eq',
-        attribute_type: 'boolean',
+        attribute_type: 'stock',
         value: true,
-      } as IRuleAttribute,
+      },
       {
         type: 'attribute',
         field: 'brand',
@@ -84,7 +84,7 @@ describe('Rules service', () => {
         attribute_type: 'int',
         value: 42,
       },
-    ],
+    ] as IRuleAttribute[],
   } as IRuleCombination
 
   describe('isAttributeRule', () => {
@@ -161,8 +161,8 @@ describe('Rules service', () => {
             type: 'attribute',
             field: 'stock',
             operator: 'eq',
-            attribute_type: 'boolean',
-            value: 'true',
+            attribute_type: 'stock',
+            value: true,
           },
           {
             type: 'attribute',

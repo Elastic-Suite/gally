@@ -1,9 +1,11 @@
 import { fetchJson } from '../services/fetch'
+import { storageGet } from '../services/storage'
 
 import { GraphqlError, fetchGraphql, isGraphqlError } from './graphql'
 import { AuthError } from './network'
 
 jest.mock('../services/fetch')
+jest.mock('../services/storage')
 
 const testQuery = `query {
   catalogs {
@@ -29,6 +31,25 @@ describe('Graphql service', () => {
       await fetchGraphql('en', testQuery)
       expect(fetchJson).toHaveBeenCalledWith('http://localhost/graphql', {
         headers: {
+          'Content-Type': 'application/json',
+          'Elasticsuite-Language': 'en',
+        },
+        body: JSON.stringify({
+          query: testQuery,
+        }),
+        method: 'POST',
+      })
+    })
+
+    it('should add auth header if user is connected', async () => {
+      const mock = storageGet as jest.Mock
+      mock.mockClear()
+      ;(fetchJson as jest.Mock).mockClear()
+      mock.mockImplementationOnce(() => 'token')
+      await fetchGraphql('en', testQuery, undefined, undefined, true)
+      expect(fetchJson).toHaveBeenCalledWith('http://localhost/graphql', {
+        headers: {
+          Authorization: 'Bearer token',
           'Content-Type': 'application/json',
           'Elasticsuite-Language': 'en',
         },
