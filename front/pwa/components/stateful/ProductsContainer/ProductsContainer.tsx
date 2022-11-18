@@ -167,7 +167,9 @@ function ProductsContainer(props: IProps): JSX.Element {
 
   function handleSave(): void {
     onSave(
-      productPositions.data.getPositionsCategoryProductMerchandising.result
+      defaultSorting === 'position'
+        ? productPositions.data.getPositionsCategoryProductMerchandising.result
+        : '[]'
     )
   }
 
@@ -200,6 +202,7 @@ function ProductsContainer(props: IProps): JSX.Element {
           nbTopProducts={topProducts.length}
           value={searchValue}
           onChange={onSearchChange}
+          sortValue={defaultSorting}
         />
 
         {Boolean(
@@ -216,6 +219,7 @@ function ProductsContainer(props: IProps): JSX.Element {
             setProductPositions={setProductPositions}
             topSelectedRows={topSelectedRows}
             topProducts={topProducts}
+            sortValue={defaultSorting}
           />
         )}
       </Layout>
@@ -225,10 +229,12 @@ function ProductsContainer(props: IProps): JSX.Element {
         })}
 
         <CustomBarTextMaxProducts>
-          {(topProducts.length === 25 ||
-            topProducts.length + bottomSelectedRows.length > 25) &&
-            bottomSelectedRows.length !== 0 &&
-            t('bar.textMaxProducts')}
+          {defaultSorting === 'position'
+            ? (topProducts.length === 25 ||
+                topProducts.length + bottomSelectedRows.length > 25) &&
+              bottomSelectedRows.length !== 0 &&
+              t('bar.textMaxProducts')
+            : t('stickybar.noPositionProduct')}
         </CustomBarTextMaxProducts>
         <Button display="tertiary" onClick={(): void => unselectAllRows()}>
           {t('button.cancelSelection')}
@@ -236,6 +242,7 @@ function ProductsContainer(props: IProps): JSX.Element {
         <Button
           sx={{ marginLeft: 1 }}
           disabled={
+            defaultSorting !== 'position' ||
             bottomSelectedRows.length === 0 ||
             bottomSelectedRows.length + topProducts.length > 25
           }
@@ -246,7 +253,9 @@ function ProductsContainer(props: IProps): JSX.Element {
         </Button>
         <Button
           sx={{ marginLeft: 1 }}
-          disabled={topSelectedRows.length === 0}
+          disabled={
+            defaultSorting !== 'position' || topSelectedRows.length === 0
+          }
           onClick={pinToBottom}
         >
           {t('pinToBottom')}

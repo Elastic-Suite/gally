@@ -24,6 +24,7 @@ interface IProps {
   setProductPositions: Dispatch<SetStateAction<IGraphqlProductPosition>>
   topProducts: IProductPositions
   topProductsIds: number[]
+  sortValue: string
 }
 
 function TopTable(props: IProps): JSX.Element {
@@ -35,6 +36,7 @@ function TopTable(props: IProps): JSX.Element {
     setProductPositions,
     topProducts,
     topProductsIds,
+    sortValue,
   } = props
 
   const variables = useMemo(
@@ -77,16 +79,20 @@ function TopTable(props: IProps): JSX.Element {
   return (
     <>
       {products.status === LoadStatus.SUCCEEDED &&
-        Boolean(products?.data?.products) && (
-          <TopProductsTable
-            Field={FieldGuesser}
-            selectedRows={selectedRows}
-            onSelectedRows={onSelectedRows}
-            onReOrder={handleReorder}
-            tableHeaders={productTableheader}
-            tableRows={tableRows}
-            draggable
-          />
+        Boolean(products?.data?.searchProducts) &&
+        sortValue === 'position' && (
+          <div>
+            <TopProductsTable
+              Field={FieldGuesser}
+              selectedRows={selectedRows}
+              onSelectedRows={onSelectedRows}
+              onReOrder={handleReorder}
+              tableHeaders={productTableheader}
+              tableRows={tableRows}
+              draggable
+              border
+            />
+          </div>
         )}
     </>
   )

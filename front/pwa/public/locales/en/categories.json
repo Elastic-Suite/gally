@@ -25,10 +25,13 @@
   "select.tooltip": "What sorting will be used for the category",
   "searchBarResult": "{{value.value}} {{value.result}}",
   "placeholder": "No category available",
-  "default.sorting": "Default sorting",
   "buttonSave": "Save",
+  "stickybar.noPositionProduct": "Products can be pinned when sorting is not Position",
   "alert": "Save data with success",
   "alert.error": "An error has occurred",
   "bar.textMaxProducts": "You've reached the maximum number of pinned products (25).",
-  "labelForPinProduct": "You have no pinned products in this category. Do not hesitate to pin some products from the list below."
+  "labelForPinProduct": "You have no pinned products in this category. Do not hesitate to pin some products from the list below.",
+  "pinned.results_one": "pinned",
+  "pinned.results_zero": "pinned",
+  "pinned.results_other": "pinned"
 }
