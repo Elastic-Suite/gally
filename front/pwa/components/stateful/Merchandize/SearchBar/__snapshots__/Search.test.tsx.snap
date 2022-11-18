@@ -26,9 +26,7 @@ exports[`SearchBar match snapshot SearchBar 1`] = `
               class="MuiGrid-root css-36pazz-MuiGrid-root"
             >
               searchBarResult
-               (
-              50 pinned
-              )
+               
             </div>
           </div>
           <div
