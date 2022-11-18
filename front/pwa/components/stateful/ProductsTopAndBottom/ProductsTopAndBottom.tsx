@@ -29,6 +29,7 @@ interface IProps {
   topSelectedRows: (string | number)[]
   topProducts: IProductPositions
   setNbBottomRows: (value: number) => void
+  sortValue: string
 }
 
 function ProductsTopAndBottom(
@@ -45,9 +46,9 @@ function ProductsTopAndBottom(
     topSelectedRows,
     topProducts,
     setNbBottomRows,
+    sortValue,
   } = props
   const { t } = useTranslation('categories')
-
   const topProductsIds = topProducts
     .map((topProduct) => topProduct.productId)
     .sort()
@@ -65,9 +66,16 @@ function ProductsTopAndBottom(
             setProductPositions={setProductPositions}
             topProducts={topProducts}
             topProductsIds={topProductsIds}
+            sortValue={sortValue}
           />
         )}
-        <Box sx={topProducts.length !== 0 ? { marginTop: '24px' } : {}}>
+        <Box
+          sx={
+            topProducts.length !== 0 && sortValue === 'position'
+              ? { marginTop: '24px' }
+              : {}
+          }
+        >
           <BottomTable
             ref={ref}
             selectedRows={bottomSelectedRows}
@@ -76,6 +84,7 @@ function ProductsTopAndBottom(
             productGraphqlFilters={productGraphqlFilters}
             topProductsIds={topProductsIds}
             setNbBottomRows={setNbBottomRows}
+            sortValue={sortValue}
           />
         </Box>
       </Box>

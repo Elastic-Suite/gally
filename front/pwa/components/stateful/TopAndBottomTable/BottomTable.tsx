@@ -31,6 +31,7 @@ interface IProps {
   selectedRows: (string | number)[]
   topProductsIds: number[]
   setNbBottomRows: (value: number) => void
+  sortValue: string
 }
 
 function BottomTable(
@@ -44,6 +45,7 @@ function BottomTable(
     selectedRows,
     topProductsIds,
     setNbBottomRows,
+    sortValue,
   } = props
 
   const [currentPage, setCurrentPage] = useState<number>(1)
@@ -55,8 +57,9 @@ function BottomTable(
       currentPage,
       pageSize: rowsPerPage,
       requestType: ProductRequestType.CATALOG,
+      sort: sortValue && sortValue !== 'position' ? { [sortValue]: 'asc' } : {},
     }),
-    [currentPage, localizedCatalogId, rowsPerPage]
+    [currentPage, localizedCatalogId, rowsPerPage, sortValue]
   )
   const filters = [productGraphqlFilters]
   if (topProductsIds.length > 0) {

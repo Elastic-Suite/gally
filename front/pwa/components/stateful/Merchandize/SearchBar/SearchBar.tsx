@@ -7,18 +7,26 @@ import { CustomNoTopProduct, SearchResult, SearchTitle } from './Search.styled'
 interface IProps extends Omit<IInputTextProps, 'ref'> {
   nbResults: number
   nbTopProducts: number
+  sortValue: string
 }
 
 export default function SearchBar(props: IProps): JSX.Element {
-  const { nbResults, nbTopProducts, ...inputTextProps } = props
+  const { nbResults, nbTopProducts, sortValue, ...inputTextProps } = props
   const { t } = useTranslation('categories')
 
   const value = {
-    value: nbResults + nbTopProducts,
+    value: sortValue === 'position' ? nbResults + nbTopProducts : nbResults,
     result: t('searchBar.results', { count: nbResults }),
   }
 
   const result = t('searchBarResult', { value })
+
+  const valuePinned = {
+    value: nbTopProducts,
+    result: t('pinned.results', { count: nbTopProducts }),
+  }
+  const resultPinned = t('searchBarResult', { value: valuePinned })
+
   return (
     <Paper variant="outlined">
       <Grid container justifyContent="space-between" sx={{ padding: '16px' }}>
@@ -27,7 +35,7 @@ export default function SearchBar(props: IProps): JSX.Element {
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               <SearchTitle>{t('searchBar.title')}</SearchTitle>
               <SearchResult>
-                {result} ({`${nbTopProducts} pinned`})
+                {result} {sortValue === 'position' && `(${resultPinned})`}
               </SearchResult>
             </div>
             <InputText
@@ -45,7 +53,7 @@ export default function SearchBar(props: IProps): JSX.Element {
               }
             />
           </div>
-          {nbTopProducts === 0 && (
+          {nbTopProducts === 0 && sortValue === 'position' && (
             <CustomNoTopProduct>{t('labelForPinProduct')}</CustomNoTopProduct>
           )}
         </Grid>
