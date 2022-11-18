@@ -18,13 +18,13 @@ exports[`Textarea match snapshot TextareaAllFalse 1`] = `
       maxlength="250"
       placeholder="Describe your issue"
       rows="1"
-      style="height: 150px; width: 320px; resize: none; overflow: hidden;"
+      style="height: 150px; min-width: 320px; resize: none; overflow: hidden;"
     />
     <textarea
       aria-hidden="true"
       class=""
       readonly=""
-      style="visibility: hidden; position: absolute; overflow: hidden; height: 150px; top: 0px; left: 0px; transform: translateZ(0); width: 320px; resize: none; padding: 0px;"
+      style="visibility: hidden; position: absolute; overflow: hidden; height: 150px; top: 0px; left: 0px; transform: translateZ(0); min-width: 320px; resize: none; padding: 0px;"
       tabindex="-1"
     />
     <p
@@ -64,13 +64,13 @@ exports[`Textarea match snapshot TextareaAllTrue 1`] = `
       placeholder="Describe your issue"
       required=""
       rows="1"
-      style="height: 150px; width: 320px; resize: both; overflow: hidden;"
+      style="height: 150px; min-width: 320px; resize: both; overflow: hidden;"
     />
     <textarea
       aria-hidden="true"
       class="textarea--error"
       readonly=""
-      style="visibility: hidden; position: absolute; overflow: hidden; height: 150px; top: 0px; left: 0px; transform: translateZ(0); width: 320px; resize: both; padding: 0px;"
+      style="visibility: hidden; position: absolute; overflow: hidden; height: 150px; top: 0px; left: 0px; transform: translateZ(0); min-width: 320px; resize: both; padding: 0px;"
       tabindex="-1"
     />
     <p
