@@ -30,6 +30,9 @@ function Attributes(): JSX.Element {
 
   const resource = useResource('SourceField')
   const [activeFilters, setActiveFilters] = useFilters(resource)
+  const sourceFieldAttributesFilters = {
+    'metadata.entity': 'product',
+  }
 
   return (
     <>
@@ -50,6 +53,7 @@ function Attributes(): JSX.Element {
         resourceName="SourceField"
         active={false}
         urlParams={searchableAttributeUrl}
+        filters={sourceFieldAttributesFilters}
       />
     </>
   )
