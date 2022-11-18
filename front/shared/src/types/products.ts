@@ -1,6 +1,11 @@
 import { IPrice, IStock } from './customTables'
 import { ISearchParameters } from './fetch'
 
+export enum ProductRequestType {
+  CATALOG = 'product_catalog',
+  SEARCH = 'product_search',
+}
+
 export interface IGraphqlSearchProducts {
   searchProducts: IGraphqlSearchProduct
 }

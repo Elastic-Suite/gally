@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import {
   ICategory,
   IGraphqlSearchProducts,
+  ProductRequestType,
   getSearchProductsQuery,
 } from 'shared'
 
@@ -39,6 +40,7 @@ function Category(): JSX.Element {
       catalogId: String(localizedCatalogId),
       currentPage: page + 1,
       pageSize,
+      requestType: ProductRequestType.CATALOG,
     }),
     [localizedCatalogId, page, pageSize]
   )
