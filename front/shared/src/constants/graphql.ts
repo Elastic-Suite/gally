@@ -3,12 +3,13 @@ import { VariableType, jsonToGraphQLQuery } from 'json-to-graphql-query'
 import { IProductFieldFilterInput } from '../types'
 
 export function getSearchProductsQuery(
-  filter: IProductFieldFilterInput = null
+  filter: IProductFieldFilterInput | IProductFieldFilterInput[] = null
 ): string {
   return jsonToGraphQLQuery({
     query: {
       __name: 'getProducts',
       __variables: {
+        requestType: 'ProductRequestTypeEnum!',
         catalogId: 'String!',
         currentPage: 'Int',
         pageSize: 'Int',
@@ -17,6 +18,7 @@ export function getSearchProductsQuery(
       },
       searchProducts: {
         __args: {
+          requestType: new VariableType('requestType'),
           catalogId: new VariableType('catalogId'),
           currentPage: new VariableType('currentPage'),
           pageSize: new VariableType('pageSize'),

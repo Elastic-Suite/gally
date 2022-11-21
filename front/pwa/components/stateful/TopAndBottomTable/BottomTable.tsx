@@ -13,6 +13,7 @@ import {
   IGraphqlSearchProducts,
   IProductFieldFilterInput,
   ITableRow,
+  ProductRequestType,
   defaultPageSize,
   defaultRowsPerPageOptions,
   getSearchProductsQuery,
@@ -53,18 +54,16 @@ function BottomTable(
       catalogId: localizedCatalogId,
       currentPage,
       pageSize: rowsPerPage,
+      requestType: ProductRequestType.CATALOG,
     }),
     [currentPage, localizedCatalogId, rowsPerPage]
   )
+  const filters = [productGraphqlFilters]
+  if (topProductsIds.length > 0) {
+    filters.push({ boolFilter: { _not: [{ id: { in: topProductsIds } }] } })
+  }
   const [products] = useGraphqlApi<IGraphqlSearchProducts>(
-    getSearchProductsQuery({
-      boolFilter: {
-        _must: [
-          productGraphqlFilters,
-          { boolFilter: { _not: [{ id: { in: topProductsIds } }] } },
-        ],
-      },
-    }),
+    getSearchProductsQuery(filters),
     variables
   )
 

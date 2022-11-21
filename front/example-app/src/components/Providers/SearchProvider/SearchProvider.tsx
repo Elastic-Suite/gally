@@ -7,7 +7,11 @@ import {
   useState,
 } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { IGraphqlSearchProducts, getSearchProductsQuery } from 'shared'
+import {
+  IGraphqlSearchProducts,
+  ProductRequestType,
+  getSearchProductsQuery,
+} from 'shared'
 
 import { catalogContext, searchContext } from '../../../contexts'
 import { useGraphqlApi } from '../../../hooks'
@@ -37,6 +41,7 @@ function SearchProvider(props: IProps): JSX.Element {
       catalogId: String(localizedCatalogId),
       currentPage: page + 1,
       pageSize,
+      requestType: ProductRequestType.SEARCH,
       search,
     }),
     [localizedCatalogId, page, pageSize, search]

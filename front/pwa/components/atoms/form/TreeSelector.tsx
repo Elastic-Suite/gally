@@ -6,11 +6,16 @@ import {
   useMemo,
   useState,
 } from 'react'
-import { IconButtonProps, Popper, useAutocomplete } from '@mui/material'
+import {
+  AutocompleteValue,
+  IconButtonProps,
+  useAutocomplete,
+} from '@mui/material'
 import { useTranslation } from 'next-i18next'
 import classNames from 'classnames'
+import { ModifierArguments, Options } from '@popperjs/core'
 
-import { ITreeItem } from 'shared'
+import { ITreeItem, flatTree } from 'shared'
 
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 
@@ -27,31 +32,29 @@ import {
   Input,
   Root,
   TreeContainer,
+  TreePopper,
 } from './TreeSelector.styled'
 
-function flatTree(tree: ITreeItem[], flat: ITreeItem[]): void {
-  tree.forEach((item) => {
-    flat.push(item)
-    if (item.children) {
-      flatTree(item.children, flat)
-    }
-  })
-}
-
-interface IProps extends Omit<IInputTextProps, 'onChange' | 'value' | 'ref'> {
+interface IProps<Multiple extends boolean | undefined>
+  extends Omit<IInputTextProps, 'onChange' | 'value' | 'ref'> {
   data: ITreeItem[]
   limitTags?: number
-  onChange?: (value: (string | number)[]) => void
-  value: (string | number)[]
+  multiple?: Multiple
+  onChange?: Multiple extends true
+    ? (value: ITreeItem[], event: SyntheticEvent) => void
+    : (value: ITreeItem, event: SyntheticEvent) => void
+  value: Multiple extends true ? ITreeItem[] : ITreeItem
 }
 
-function TreeSelector(props: IProps): JSX.Element {
+function TreeSelector<Multiple extends boolean | undefined>(
+  props: IProps<Multiple>
+): JSX.Element {
   const {
     data,
     limitTags,
     onChange: onChangeProps,
-    value: valueProp,
     style,
+    value: valueProps,
     ...other
   } = props
   const { t } = useTranslation('common')
@@ -63,14 +66,34 @@ function TreeSelector(props: IProps): JSX.Element {
     flatTree(data, flat)
     return flat
   }, [data])
-  const getOptionLabel = useCallback((option: ITreeItem) => option.name, [])
+  const getOptionLabel = useCallback((option?: ITreeItem) => option?.name, [])
   const filterOptions = useCallback((options: ITreeItem[]) => options, [])
   const onInputChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => setSearch(event.target.value),
+    (event?: ChangeEvent<HTMLInputElement>) =>
+      event?.target && setSearch(event.target.value),
     []
   )
 
-  const { disabled, readOnly, small } = other
+  function handleChange(
+    event: SyntheticEvent,
+    value: AutocompleteValue<ITreeItem, Multiple, false, false>
+  ): void {
+    if (multiple) {
+      const onChange = onChangeProps as (
+        value: ITreeItem[],
+        event: SyntheticEvent
+      ) => void
+      onChange(value as ITreeItem[], event)
+    } else {
+      const onChange = onChangeProps as (
+        value: ITreeItem,
+        event: SyntheticEvent
+      ) => void
+      onChange(value as ITreeItem, event)
+    }
+  }
+
+  const { disabled, multiple, readOnly, small } = other
   const {
     getClearProps,
     getInputProps,
@@ -86,17 +109,23 @@ function TreeSelector(props: IProps): JSX.Element {
     focused,
     anchorEl,
     setAnchorEl,
-  } = useAutocomplete({
+  } = useAutocomplete<ITreeItem, Multiple, false, false>({
     ...other,
     autoComplete: false,
     componentName: 'TreeSelector',
-    defaultValue: [],
+    defaultValue: (multiple ? [] : null) as AutocompleteValue<
+      ITreeItem,
+      Multiple,
+      false,
+      false
+    >,
     disableCloseOnSelect: true,
     filterOptions,
     getOptionLabel,
-    multiple: true,
+    onChange: handleChange,
     onInputChange,
     options,
+    value: valueProps as AutocompleteValue<ITreeItem, Multiple, false, false>,
   })
 
   const getItemProps = useCallback(
@@ -121,6 +150,26 @@ function TreeSelector(props: IProps): JSX.Element {
     }),
     [disabled, getTagProps]
   )
+  const modifiers: Options['modifiers'] = useMemo(
+    () => [
+      {
+        name: 'maxHeight',
+        enabled: true,
+        phase: 'read',
+        fn(args: ModifierArguments<Options>): void {
+          const popperEl = args.state.elements.popper
+          const transforms = popperEl.style.transform.split(',')
+          if (transforms.length > 1) {
+            const top = transforms[1].slice(0, -1)
+            ;(
+              popperEl.childNodes[0] as HTMLDivElement
+            ).style.maxHeight = `calc(100vh - ${top})`
+          }
+        },
+      },
+    ],
+    []
+  )
 
   const hasClearIcon = !disabled && dirty && !readOnly
   const Paper = small ? SmallStyledPaper : StyledPaper
@@ -128,15 +177,20 @@ function TreeSelector(props: IProps): JSX.Element {
   const closeText = t('form.close')
   const openText = t('form.open')
 
-  let startAdornment = value.map((option: ITreeItem, index: number) => (
-    <Chip
-      // eslint-disable-next-line react/no-array-index-key
-      key={index}
-      label={getOptionLabel(option)}
-      size={small ? 'small' : 'medium'}
-      {...getCustomizedTagProps({ index })}
-    />
-  ))
+  let startAdornment
+  if (multiple) {
+    startAdornment = (value as ITreeItem[]).map(
+      (option: ITreeItem, index: number) => (
+        <Chip
+          // eslint-disable-next-line react/no-array-index-key
+          key={index}
+          label={getOptionLabel(option)}
+          size={small ? 'small' : 'medium'}
+          {...getCustomizedTagProps({ index })}
+        />
+      )
+    )
+  }
   if (limitTags > -1 && Array.isArray(startAdornment)) {
     const more = startAdornment.length - limitTags
     if (!focused && more > 0) {
@@ -179,9 +233,10 @@ function TreeSelector(props: IProps): JSX.Element {
         startAdornment={startAdornment}
       />
       {Boolean(anchorEl) && (
-        <Popper
+        <TreePopper
           role="presentation"
           anchorEl={anchorEl}
+          modifiers={modifiers}
           open={popupOpen}
           placement="bottom-start"
         >
@@ -191,16 +246,16 @@ function TreeSelector(props: IProps): JSX.Element {
                 data={data}
                 getItemProps={getItemProps}
                 getListboxProps={getListboxProps}
-                multiple
+                multiple={multiple}
                 onToggle={setOpenItems}
                 openItems={openItems}
                 search={search}
                 small={small}
-                value={value as ITreeItem[]}
+                value={value as Multiple extends true ? ITreeItem[] : ITreeItem}
               />
             </TreeContainer>
           </Paper>
-        </Popper>
+        </TreePopper>
       )}
     </Root>
   )

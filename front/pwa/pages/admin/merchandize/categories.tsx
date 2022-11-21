@@ -17,7 +17,8 @@ import {
   IRuleEngineOperators,
   LoadStatus,
   findBreadcrumbLabel,
-  getCatalogForSearchProductApi,
+  getDefaultLocalizedCatalog,
+  getLocalizedCatalog,
   isError,
   parseCatConf,
   savePositions,
@@ -66,16 +67,20 @@ function Categories(): JSX.Element {
   const resource = useResource(resourceName)
   const [catalogsFields] = useApiList<IHydraCatalog>(resource, false)
   const { data, error } = catalogsFields
+  const catalogs = data?.['hydra:member']
   const [catalogId, setCatalogId] = useState<number>(-1)
   const [localizedCatalogId, setLocalizedCatalogId] = useState<number>(-1)
-  const localizedCatalogIdWithDefault =
-    data && data['hydra:totalItems'] > 0
-      ? getCatalogForSearchProductApi(
-          catalogId,
-          localizedCatalogId,
-          data['hydra:member']
-        )
-      : null
+  const defaultLocalizedCatalog = useMemo(
+    () => (catalogs ? getDefaultLocalizedCatalog(catalogs) : null),
+    [catalogs]
+  )
+  const localizedCatalogIdWithDefault = useMemo(
+    () =>
+      catalogs
+        ? getLocalizedCatalog(catalogId, localizedCatalogId, catalogs)
+        : null,
+    [catalogId, catalogs, localizedCatalogId]
+  )
 
   // Rule engine operators
   const [ruleOperators, setRuleOperators] = useState<IRuleEngineOperators>()
@@ -99,7 +104,7 @@ function Categories(): JSX.Element {
     }
     return filters
   }, [catalogId, localizedCatalogId])
-  const [categories] = useFetchApi<ICategories>(`categoryTree`, filters)
+  const [categories] = useFetchApi<ICategories>('categoryTree', filters)
   useEffect(() => {
     if (categories.status !== LoadStatus.SUCCEEDED) {
       return
@@ -161,20 +166,23 @@ function Categories(): JSX.Element {
     [fetchApi]
   )
   useEffect(() => {
-    if (catConf?.virtualRule) {
+    if (catConf?.isVirtual && catConf?.virtualRule) {
       debouncedFetch(
         JSON.stringify(serializeRule(catConf.virtualRule, ruleOperators))
       )
     }
-  }, [catConf?.virtualRule, debouncedFetch, ruleOperators])
+  }, [catConf?.isVirtual, catConf?.virtualRule, debouncedFetch, ruleOperators])
   const productGraphqlFilters: IProductFieldFilterInput = useMemo(() => {
     if (catConf?.isVirtual && ruleEngineGraphqlFilters) {
       return ruleEngineGraphqlFilters
     } else if (!catConf?.isVirtual && selectedCategoryItem) {
       return { category__id: { eq: selectedCategoryItem.id } }
     }
-    return {}
+    return null
   }, [catConf, ruleEngineGraphqlFilters, selectedCategoryItem])
+
+  // Product positions
+  const prevProductPositions = useRef<string>('')
 
   function handleUpdateCat(name: string): (val: boolean | string) => void {
     return (val) => {
@@ -186,7 +194,11 @@ function Categories(): JSX.Element {
     setCatConf((catConf) => ({ ...catConf, virtualRule: rule }))
   }
 
-  const prevProductPositions = useRef<string>('')
+  function handleSelectCategory(category: ICategory): void {
+    setSelectedCategoryItem(category)
+    setCatConf(null)
+    setRuleEngineGraphqlFilters(null)
+  }
 
   const graphqlApi = useApiGraphql()
   async function saveProductPositions(positions: string): Promise<void> {
@@ -270,27 +282,29 @@ function Categories(): JSX.Element {
               <CategoryTree
                 categories={categories.data}
                 selectedItem={selectedCategoryItem}
-                onSelect={setSelectedCategoryItem}
+                onSelect={handleSelectCategory}
               />
             </>
           </TitleBlock>,
-          Boolean(catConf?.id && catConf?.isVirtual) && (
-            <TitleBlock key="virtualRule" title={t('virtualRule.title')}>
+          ruleOperators && (
+            <TitleBlock
+              key="virtualRule"
+              title={catConf?.isVirtual ? t('virtualRule.title') : ''}
+            >
               <RulesManager
+                active={catConf?.isVirtual}
                 catalogId={catalogId}
+                defaultLocalizedCatalog={defaultLocalizedCatalog}
                 localizedCatalogId={localizedCatalogId}
                 onChange={handleUpdateRule}
-                rule={catConf.virtualRule}
+                rule={catConf?.virtualRule}
                 ruleOperators={ruleOperators}
               />
             </TitleBlock>
           ),
         ]}
       >
-        {selectedCategoryItem?.id &&
-        catConf &&
-        (!catConf?.virtualRule || productGraphqlFilters) &&
-        localizedCatalogIdWithDefault ? (
+        {selectedCategoryItem?.id && localizedCatalogIdWithDefault ? (
           <ProductsContainer
             catConf={catConf}
             category={selectedCategoryItem}

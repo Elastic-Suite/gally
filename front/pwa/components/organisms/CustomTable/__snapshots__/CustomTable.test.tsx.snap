@@ -3,7 +3,7 @@
 exports[`CustomTable match snapshot with editable content 1`] = `
 <div>
   <div
-    class="MuiTableContainer-root css-1oeclo-MuiTableContainer-root"
+    class="MuiTableContainer-root css-1pm7ocy-MuiTableContainer-root"
   >
     <table
       class="MuiTable-root css-1pty5za-MuiTable-root"
@@ -212,7 +212,7 @@ exports[`CustomTable match snapshot with editable content 1`] = `
 exports[`CustomTable match snapshot with selection, with draggable, with sticky headers 1`] = `
 <div>
   <div
-    class="MuiTableContainer-root css-1oeclo-MuiTableContainer-root"
+    class="MuiTableContainer-root css-1pm7ocy-MuiTableContainer-root"
   >
     <table
       class="MuiTable-root css-1pty5za-MuiTable-root"
@@ -365,7 +365,7 @@ exports[`CustomTable match snapshot with selection, with draggable, with sticky 
 exports[`CustomTable match snapshot with selection, with draggable, without sticky headers 1`] = `
 <div>
   <div
-    class="MuiTableContainer-root css-1oeclo-MuiTableContainer-root"
+    class="MuiTableContainer-root css-1pm7ocy-MuiTableContainer-root"
   >
     <table
       class="MuiTable-root css-1pty5za-MuiTable-root"
@@ -518,7 +518,7 @@ exports[`CustomTable match snapshot with selection, with draggable, without stic
 exports[`CustomTable match snapshot with selection, without draggable, with sticky headers 1`] = `
 <div>
   <div
-    class="MuiTableContainer-root css-1oeclo-MuiTableContainer-root"
+    class="MuiTableContainer-root css-1pm7ocy-MuiTableContainer-root"
   >
     <table
       class="MuiTable-root css-1pty5za-MuiTable-root"
@@ -653,7 +653,7 @@ exports[`CustomTable match snapshot with selection, without draggable, with stic
 exports[`CustomTable match snapshot with selection, without draggable, without sticky headers 1`] = `
 <div>
   <div
-    class="MuiTableContainer-root css-1oeclo-MuiTableContainer-root"
+    class="MuiTableContainer-root css-1pm7ocy-MuiTableContainer-root"
   >
     <table
       class="MuiTable-root css-1pty5za-MuiTable-root"
@@ -788,7 +788,7 @@ exports[`CustomTable match snapshot with selection, without draggable, without s
 exports[`CustomTable match snapshot without selection, without draggable, with sticky headers 1`] = `
 <div>
   <div
-    class="MuiTableContainer-root css-o5pwnc-MuiTableContainer-root"
+    class="MuiTableContainer-root css-1i0gtxd-MuiTableContainer-root"
   >
     <table
       class="MuiTable-root css-1pty5za-MuiTable-root"
@@ -865,7 +865,7 @@ exports[`CustomTable match snapshot without selection, without draggable, with s
 exports[`CustomTable match snapshot without selection, without draggable, without sticky headers 1`] = `
 <div>
   <div
-    class="MuiTableContainer-root css-o5pwnc-MuiTableContainer-root"
+    class="MuiTableContainer-root css-1i0gtxd-MuiTableContainer-root"
   >
     <table
       class="MuiTable-root css-1pty5za-MuiTable-root"

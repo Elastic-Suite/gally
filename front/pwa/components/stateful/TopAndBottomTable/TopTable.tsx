@@ -8,6 +8,7 @@ import {
   IProductPositions,
   ITableRow,
   LoadStatus,
+  ProductRequestType,
   getSearchProductsQuery,
   productTableheader,
 } from 'shared'
@@ -37,15 +38,18 @@ function TopTable(props: IProps): JSX.Element {
   } = props
 
   const variables = useMemo(
-    () => ({ catalogId: localizedCatalogId }),
+    () => ({
+      catalogId: localizedCatalogId,
+      requestType: ProductRequestType.CATALOG,
+    }),
     [localizedCatalogId]
   )
+  const filters = [productGraphqlFilters]
+  if (topProductsIds.length > 0) {
+    filters.push({ id: { in: topProductsIds } })
+  }
   const [products] = useGraphqlApi<IGraphqlSearchProducts>(
-    getSearchProductsQuery({
-      boolFilter: {
-        _must: [productGraphqlFilters, { id: { in: topProductsIds } }],
-      },
-    }),
+    getSearchProductsQuery(filters),
     variables
   )
 

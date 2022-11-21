@@ -1,5 +1,10 @@
 import { FunctionComponent } from 'react'
-import { IconButton, IconButtonProps, InputAdornment } from '@mui/material'
+import {
+  IconButton,
+  IconButtonProps,
+  InputAdornment,
+  Popper,
+} from '@mui/material'
 import { styled } from '@mui/system'
 
 import InputText from './InputText'
@@ -81,3 +86,7 @@ export const AutocompletePopupIndicator = styled(
     transform: 'rotate(180deg)',
   }),
 }))
+
+export const TreePopper = styled(Popper)({
+  zIndex: 1,
+})

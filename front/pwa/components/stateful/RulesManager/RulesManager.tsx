@@ -19,13 +19,20 @@ const sourceFieldFixedFilters = {
 }
 
 interface IProps extends ICombinationRulesProps {
-  catalogId: number
-  localizedCatalogId: number
+  active?: boolean
+  defaultLocalizedCatalog: string
   ruleOperators: IRuleEngineOperators
 }
 
 function RulesManager(props: IProps): JSX.Element {
-  const { catalogId, localizedCatalogId, ruleOperators, ...ruleProps } = props
+  const {
+    active,
+    catalogId,
+    defaultLocalizedCatalog,
+    localizedCatalogId,
+    ruleOperators,
+    ...ruleProps
+  } = props
 
   // Source fields
   const sourceFieldResource = useResource('SourceField')
@@ -45,14 +52,13 @@ function RulesManager(props: IProps): JSX.Element {
 
   // Source field labels
   const sourceFieldLabelResource = useResource('SourceFieldLabel')
-  const sourceFieldLabelFilters = useMemo(
-    () => ({
-      catalog: `/localized_catalogs/${
-        localizedCatalogId !== -1 ? localizedCatalogId : null
-      }`,
-    }),
-    [localizedCatalogId]
-  )
+  const sourceFieldLabelFilters = useMemo(() => {
+    const filters: { catalog?: string } = {}
+    if (localizedCatalogId !== -1) {
+      filters.catalog = `/localized_catalogs/${localizedCatalogId}`
+    }
+    return filters
+  }, [localizedCatalogId])
   const [sourceFieldLabels] = useApiList<ISourceFieldLabel>(
     sourceFieldLabelResource,
     false,
@@ -84,11 +90,18 @@ function RulesManager(props: IProps): JSX.Element {
   return (
     <RuleOptionsProvider
       catalogId={catalogId}
+      defaultLocalizedCatalog={defaultLocalizedCatalog}
       localizedCatalogId={localizedCatalogId}
       fields={fields}
       ruleOperators={ruleOperators}
     >
-      <CombinationRules {...ruleProps} />
+      {Boolean(active) && (
+        <CombinationRules
+          catalogId={catalogId}
+          localizedCatalogId={localizedCatalogId}
+          {...ruleProps}
+        />
+      )}
     </RuleOptionsProvider>
   )
 }

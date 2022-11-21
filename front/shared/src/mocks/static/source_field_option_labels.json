@@ -4,41 +4,165 @@
   "@type": "hydra:Collection",
   "hydra:member": [
     {
-      "@id": "/source_field_option_labels/1",
+      "@id": "/source_field_option_labels/3000",
       "@type": "SourceFieldOptionLabel",
-      "id": 1,
-      "sourceFieldOption": "/source_field_options/1",
-      "catalog": "/localized_catalogs/1",
-      "label": "Marque 1"
+      "id": 3000,
+      "sourceFieldOption": {
+        "@id": "/source_field_options/2581",
+        "@type": "SourceFieldOption",
+        "code": "5"
+      },
+      "catalog": "/localized_catalogs/43",
+      "label": "Doré"
     },
     {
-      "@id": "/source_field_option_labels/2",
+      "@id": "/source_field_option_labels/3001",
       "@type": "SourceFieldOptionLabel",
-      "id": 2,
-      "sourceFieldOption": "/source_field_options/2",
-      "catalog": "/localized_catalogs/1",
-      "label": "Marque 2"
+      "id": 3001,
+      "sourceFieldOption": {
+        "@id": "/source_field_options/2582",
+        "@type": "SourceFieldOption",
+        "code": "22"
+      },
+      "catalog": "/localized_catalogs/43",
+      "label": "Pêche"
     },
     {
-      "@id": "/source_field_option_labels/3",
+      "@id": "/source_field_option_labels/3002",
       "@type": "SourceFieldOptionLabel",
-      "id": 3,
-      "sourceFieldOption": "/source_field_options/1",
-      "catalog": "/localized_catalogs/2",
-      "label": "Brand 1"
+      "id": 3002,
+      "sourceFieldOption": {
+        "@id": "/source_field_options/2583",
+        "@type": "SourceFieldOption",
+        "code": "23"
+      },
+      "catalog": "/localized_catalogs/43",
+      "label": "Kaki"
     },
     {
-      "@id": "/source_field_option_labels/4",
+      "@id": "/source_field_option_labels/3003",
       "@type": "SourceFieldOptionLabel",
-      "id": 4,
-      "sourceFieldOption": "/source_field_options/2",
-      "catalog": "/localized_catalogs/2",
-      "label": "Brand 2"
+      "id": 3003,
+      "sourceFieldOption": {
+        "@id": "/source_field_options/2584",
+        "@type": "SourceFieldOption",
+        "code": "6"
+      },
+      "catalog": "/localized_catalogs/43",
+      "label": "Argent"
+    },
+    {
+      "@id": "/source_field_option_labels/3004",
+      "@type": "SourceFieldOptionLabel",
+      "id": 3004,
+      "sourceFieldOption": {
+        "@id": "/source_field_options/2585",
+        "@type": "SourceFieldOption",
+        "code": "24"
+      },
+      "catalog": "/localized_catalogs/43",
+      "label": "Lila"
+    },
+    {
+      "@id": "/source_field_option_labels/3005",
+      "@type": "SourceFieldOptionLabel",
+      "id": 3005,
+      "sourceFieldOption": {
+        "@id": "/source_field_options/2586",
+        "@type": "SourceFieldOption",
+        "code": "25"
+      },
+      "catalog": "/localized_catalogs/43",
+      "label": "Pluie"
+    },
+    {
+      "@id": "/source_field_option_labels/3006",
+      "@type": "SourceFieldOptionLabel",
+      "id": 3006,
+      "sourceFieldOption": {
+        "@id": "/source_field_options/2587",
+        "@type": "SourceFieldOption",
+        "code": "26"
+      },
+      "catalog": "/localized_catalogs/43",
+      "label": "Menthe"
+    },
+    {
+      "@id": "/source_field_option_labels/3007",
+      "@type": "SourceFieldOptionLabel",
+      "id": 3007,
+      "sourceFieldOption": {
+        "@id": "/source_field_options/2588",
+        "@type": "SourceFieldOption",
+        "code": "27"
+      },
+      "catalog": "/localized_catalogs/43",
+      "label": "Lily"
+    },
+    {
+      "@id": "/source_field_option_labels/3008",
+      "@type": "SourceFieldOptionLabel",
+      "id": 3008,
+      "sourceFieldOption": {
+        "@id": "/source_field_options/2589",
+        "@type": "SourceFieldOption",
+        "code": "28"
+      },
+      "catalog": "/localized_catalogs/43",
+      "label": "Latte"
+    },
+    {
+      "@id": "/source_field_option_labels/3009",
+      "@type": "SourceFieldOptionLabel",
+      "id": 3009,
+      "sourceFieldOption": {
+        "@id": "/source_field_options/2590",
+        "@type": "SourceFieldOption",
+        "code": "29"
+      },
+      "catalog": "/localized_catalogs/43",
+      "label": "Coco"
+    },
+    {
+      "@id": "/source_field_option_labels/3010",
+      "@type": "SourceFieldOptionLabel",
+      "id": 3010,
+      "sourceFieldOption": {
+        "@id": "/source_field_options/2591",
+        "@type": "SourceFieldOption",
+        "code": "30"
+      },
+      "catalog": "/localized_catalogs/43",
+      "label": "Noir"
+    },
+    {
+      "@id": "/source_field_option_labels/3011",
+      "@type": "SourceFieldOptionLabel",
+      "id": 3011,
+      "sourceFieldOption": {
+        "@id": "/source_field_options/2592",
+        "@type": "SourceFieldOption",
+        "code": "31"
+      },
+      "catalog": "/localized_catalogs/43",
+      "label": "Gris"
+    },
+    {
+      "@id": "/source_field_option_labels/3012",
+      "@type": "SourceFieldOptionLabel",
+      "id": 3012,
+      "sourceFieldOption": {
+        "@id": "/source_field_options/2593",
+        "@type": "SourceFieldOption",
+        "code": "32"
+      },
+      "catalog": "/localized_catalogs/43",
+      "label": "Orange"
     }
   ],
-  "hydra:totalItems": 4,
+  "hydra:totalItems": 13,
   "hydra:view": {
-    "@id": "/source_field_option_labels?pageSize=30",
+    "@id": "/source_field_option_labels?order%5BsourceFieldOption.position%5D=asc\u0026sourceFieldOption.sourceField=%2Fsource_fields%2F713\u0026catalog=%2Flocalized_catalogs%2F43\u0026pagination=false",
     "@type": "hydra:PartialCollectionView"
   },
   "hydra:search": {

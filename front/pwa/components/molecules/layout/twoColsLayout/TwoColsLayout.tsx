@@ -35,6 +35,7 @@ const Sticky = styled(CustomBorder)(({ theme }) => ({
   top: '100px',
   alignSelf: 'flex-start',
   width: 402,
+  maxHeight: 'calc(100vh - 100px)',
   boxSizing: 'border-box',
   '&.fixed': {
     position: 'fixed',

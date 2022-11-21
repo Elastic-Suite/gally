@@ -10,6 +10,7 @@ import {
   IOptions,
   IResource,
   ISearchParameters,
+  ISourceFieldOptionLabel,
 } from '../types'
 
 export class HydraError extends Error {
@@ -99,6 +100,16 @@ export function getOptionsFromLabelResource<T extends IHydraLabelMember>(
     id: member.id,
     label: member.label,
     value: member.id,
+  }))
+}
+
+export function getOptionsFromOptionLabelResource(
+  optionLabelsResponse: IHydraResponse<ISourceFieldOptionLabel>
+): IOptions<string | number> {
+  return optionLabelsResponse['hydra:member'].map((option) => ({
+    id: option.sourceFieldOption.code,
+    label: option.label,
+    value: option.sourceFieldOption.code,
   }))
 }
 

@@ -86,12 +86,10 @@ function Facets(): JSX.Element {
       </Head>
       <TwoColsLayout
         left={[
-          <TitleBlock key="title" title={t('facet.title')} />,
           <TitleBlock
-            hasSubTitle
-            borderBottom={false}
             key="configuration"
-            title={t('facet.configuration')}
+            subtitle={t('facet.configuration')}
+            title={t('facet.title')}
           >
             <ButtonSetting
               className={classNames({ selected: !selectedCategoryItem })}
@@ -101,12 +99,7 @@ function Facets(): JSX.Element {
               <DefaultButton>{t('facet.button.setting')}</DefaultButton>
             </ButtonSetting>
           </TitleBlock>,
-          <TitleBlock
-            borderBottom={false}
-            hasSubTitle
-            key="categories"
-            title={t('facet.byCategory')}
-          >
+          <TitleBlock key="categories" subtitle={t('facet.byCategory')}>
             <CategoryTree
               categories={categories.data}
               selectedItem={selectedCategoryItem}

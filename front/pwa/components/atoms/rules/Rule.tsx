@@ -1,32 +1,48 @@
-import { useContext } from 'react'
+import { useContext, useEffect, useMemo } from 'react'
 import { useTranslation } from 'next-i18next'
-
-import { ruleOptionsContext } from '~/contexts'
 import {
   IOptions,
   IRule,
   IRuleAttribute,
+  ITreeItem,
   RuleAttributeType,
   RuleType,
+  RuleValueType,
+  flatTree,
+  getAttributeRuleValueType,
   isAttributeRule,
+  isAttributeRuleValueMultiple,
   isCombinationRule,
+  ruleArrayValueSeparator,
   ruleValueNumberTypes,
 } from 'shared'
+
+import { ruleOptionsContext } from '~/contexts'
 
 import IonIcon from '../IonIcon/IonIcon'
 import DropDown from '../form/DropDown'
 import InputText from '../form/InputText'
+import TreeSelector from '../form/TreeSelector'
 
 import { Close, CustomCombination, Root } from './Rule.styled'
 
+function getInputType(valueType: RuleValueType): 'number' | 'text' {
+  if (ruleValueNumberTypes.includes(valueType)) {
+    return 'number'
+  }
+  return 'text'
+}
+
 interface IProps {
+  catalogId: number
+  localizedCatalogId: number
   onChange?: (rule: IRule) => void
   onDelete?: () => void
   rule: IRule
 }
 
 function Rule(props: IProps): JSX.Element {
-  const { onChange, onDelete, rule } = props
+  const { catalogId, localizedCatalogId, onChange, onDelete, rule } = props
   const {
     getAttributeOperatorOptions,
     getAttributeType,
@@ -36,20 +52,51 @@ function Rule(props: IProps): JSX.Element {
   } = useContext(ruleOptionsContext)
   const { t } = useTranslation('rules')
 
-  function getInputType(rule: IRuleAttribute): 'number' | 'text' {
-    const valueType = operatorsValueType[rule.attribute_type]?.[rule.operator]
-    if (ruleValueNumberTypes.includes(valueType)) {
-      return 'number'
+  useEffect(() => {
+    if (isAttributeRule(rule)) {
+      loadAttributeValueOptions(rule.field)
     }
-    return 'text'
-  }
+  }, [loadAttributeValueOptions, rule])
+
+  const categories = useMemo(
+    () =>
+      (options.get(
+        `type-${RuleAttributeType.CATEGORY}-${catalogId}-${localizedCatalogId}`
+      ) ?? []) as ITreeItem[],
+    [catalogId, localizedCatalogId, options]
+  )
+  const flatCategories: ITreeItem[] = useMemo(() => {
+    const flat: ITreeItem[] = []
+    flatTree(categories, flat)
+    return flat
+  }, [categories])
 
   function handleChange(property: string) {
     return (value: unknown): void => onChange({ ...rule, [property]: value })
   }
 
+  function handleCategoryChange(value: ITreeItem | ITreeItem[]): void {
+    if (value instanceof Array) {
+      onChange({
+        ...rule,
+        value: value.map((category) => category.id as string),
+      })
+    } else {
+      onChange({ ...rule, value: value.id })
+    }
+  }
+
+  function handleInputChange(multiple: boolean) {
+    return (value: string): void => {
+      if (multiple) {
+        onChange({ ...rule, value: value.split(ruleArrayValueSeparator) })
+      } else {
+        onChange({ ...rule, value })
+      }
+    }
+  }
+
   function handleFieldChange(value: string): void {
-    loadAttributeValueOptions(value)
     onChange({
       ...rule,
       attribute_type: getAttributeType(value) ?? '',
@@ -64,22 +111,33 @@ function Rule(props: IProps): JSX.Element {
       ...attributeRule,
       operator,
     }
-    const prevType = getInputType(attributeRule)
-    const newType = getInputType(newRule)
+    const prevType = getAttributeRuleValueType(
+      attributeRule,
+      operatorsValueType
+    )
+    const newType = getAttributeRuleValueType(newRule, operatorsValueType)
     onChange({
       ...newRule,
-      value: prevType === newType ? rule.value : '',
+      value:
+        prevType === newType
+          ? rule.value
+          : isAttributeRuleValueMultiple(newType)
+          ? []
+          : '',
     })
   }
 
   function getAttributeValueComponent(rule: IRuleAttribute): JSX.Element {
     const { attribute_type, field, value } = rule
-    if (attribute_type === RuleAttributeType.BOOLEAN) {
+    const valueType = getAttributeRuleValueType(rule, operatorsValueType)
+    const multiple = isAttributeRuleValueMultiple(valueType)
+
+    if (valueType === RuleValueType.BOOLEAN) {
       return (
         <DropDown
           onChange={handleChange('value')}
           options={
-            (options.get(`type-${RuleAttributeType.BOOLEAN}`) ??
+            (options.get(`type-${RuleValueType.BOOLEAN}`) ??
               []) as IOptions<boolean>
           }
           required
@@ -90,35 +148,49 @@ function Rule(props: IProps): JSX.Element {
     } else if (attribute_type === RuleAttributeType.SELECT) {
       return (
         <DropDown
+          multiple={multiple}
           onChange={handleChange('value')}
-          options={(options.get(field) ?? []) as IOptions<unknown>}
+          options={
+            (options.get(`${field}-${localizedCatalogId}`) ??
+              []) as IOptions<unknown>
+          }
           required
           small
           value={value}
         />
       )
+    } else if (attribute_type === RuleAttributeType.CATEGORY) {
+      const treeSelectorValue =
+        value instanceof Array
+          ? flatCategories.filter((category) =>
+              (value as string[]).includes(category.id as string)
+            )
+          : flatCategories.find((category) => value === category.id) ?? null
+      return (
+        <TreeSelector
+          data={categories}
+          multiple={multiple}
+          onChange={handleCategoryChange}
+          required
+          small
+          value={treeSelectorValue}
+        />
+      )
     }
+
     return (
       <InputText
-        onChange={handleChange('value')}
+        onChange={handleInputChange(multiple)}
         required
         small
-        type={getInputType(rule)}
-        value={value as string}
+        type={getInputType(valueType)}
+        value={
+          multiple
+            ? (value as string[]).join(ruleArrayValueSeparator)
+            : (value as string)
+        }
       />
     )
-
-    // Category selector
-    // return (
-    //   <TreeSelector
-    //     data={
-    //       (options.get(`type-${RuleAttributeType.CATEGORY}`) ??
-    //         []) as ITreeItem[]
-    //     }
-    //     onChange={handleChange('value')}
-    //     value={value as string[]}
-    //   />
-    // )
   }
 
   let content
@@ -140,7 +212,7 @@ function Rule(props: IProps): JSX.Element {
         <DropDown
           onChange={handleChange('value')}
           options={
-            (options.get(`type-${RuleAttributeType.BOOLEAN}`) ??
+            (options.get(`type-${RuleValueType.BOOLEAN}`) ??
               []) as IOptions<boolean>
           }
           required

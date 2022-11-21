@@ -1,17 +1,14 @@
-import {
-  emptyCombinationRule,
-  ruleArrayValueSeparator,
-  ruleValueNumberTypes,
-} from '../constants'
+import { emptyCombinationRule, ruleValueNumberTypes } from '../constants'
 import {
   ICategoryConfiguration,
+  IOperatorsValueType,
   IParsedCategoryConfiguration,
   IRule,
   IRuleAttribute,
   IRuleCombination,
   IRuleEngineOperators,
-  RuleAttributeType,
   RuleType,
+  RuleValueType,
 } from '../types'
 
 export function isCombinationRule(rule: IRule): rule is IRuleCombination {
@@ -20,6 +17,19 @@ export function isCombinationRule(rule: IRule): rule is IRuleCombination {
 
 export function isAttributeRule(rule: IRule): rule is IRuleAttribute {
   return rule.type === RuleType.ATTRIBUTE
+}
+
+export function getAttributeRuleValueType(
+  rule: IRuleAttribute,
+  operatorsValueType: IOperatorsValueType
+): RuleValueType {
+  return operatorsValueType[rule.attribute_type]?.[rule.operator]
+}
+
+export function isAttributeRuleValueMultiple(
+  valueType: RuleValueType
+): boolean {
+  return valueType?.startsWith('[') && valueType?.endsWith(']')
 }
 
 function parseRule<R extends IRule>(
@@ -32,20 +42,6 @@ function parseRule<R extends IRule>(
       value: rule.value === 'true',
       children: rule.children.map((rule) => parseRule(rule, ruleOperators)),
     }
-  } else if (isAttributeRule(rule)) {
-    const valueType =
-      ruleOperators.operatorsValueType[rule.attribute_type]?.[rule.operator]
-    let ruleValue = rule.value
-    if (
-      valueType?.startsWith('[') &&
-      valueType?.endsWith(']') &&
-      rule.value instanceof Array
-    ) {
-      ruleValue = rule.value.join(ruleArrayValueSeparator)
-    } else if (rule.attribute_type === RuleAttributeType.BOOLEAN) {
-      ruleValue = rule.value === 'true'
-    }
-    return { ...rule, value: ruleValue }
   }
   return rule
 }
@@ -74,24 +70,26 @@ export function serializeRule<R extends IRule>(
       children: rule.children.map((rule) => serializeRule(rule, ruleOperators)),
     }
   } else if (isAttributeRule(rule)) {
-    const valueType =
-      ruleOperators.operatorsValueType[rule.attribute_type]?.[rule.operator]
-    let ruleValue: string | string[] | number | number[] | boolean = String(
-      rule.value
+    let ruleValue: string | string[] | number | number[] | boolean = rule.value
+    const valueType = getAttributeRuleValueType(
+      rule,
+      ruleOperators.operatorsValueType
     )
     if (
-      valueType?.startsWith('[') &&
-      valueType?.endsWith(']') &&
-      typeof rule.value === 'string'
+      isAttributeRuleValueMultiple(valueType) &&
+      rule.value instanceof Array
     ) {
-      ruleValue = rule.value.split(ruleArrayValueSeparator)
-      if (ruleValueNumberTypes.includes(valueType.slice(1, -1))) {
-        ruleValue = ruleValue.map(Number)
+      if (
+        ruleValueNumberTypes.includes(valueType.slice(1, -1) as RuleValueType)
+      ) {
+        ruleValue = rule.value.map(Number)
       } else {
-        ruleValue = ruleValue.map(String)
+        ruleValue = rule.value.map(String)
       }
     } else if (ruleValueNumberTypes.includes(valueType)) {
       ruleValue = Number(rule.value)
+    } else if (valueType === RuleValueType.STRING) {
+      ruleValue = String(rule.value)
     }
     return { ...rule, value: ruleValue }
   }

@@ -16,7 +16,10 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Metadata\Model;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Doctrine\Common\Collections\Collection;
 use Elasticsuite\User\Constant\Role;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -40,6 +43,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
         'delete' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
     ],
 )]
+#[ApiFilter(SearchFilter::class, properties: ['sourceField' => 'exact'])]
+#[ApiFilter(OrderFilter::class, properties: ['position'], arguments: ['orderParameterName' => 'order'])]
 class SourceFieldOption
 {
     private int $id;

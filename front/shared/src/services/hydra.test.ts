@@ -20,6 +20,7 @@ import {
   getFilterParameters,
   getOptionsFromApiSchema,
   getOptionsFromLabelResource,
+  getOptionsFromOptionLabelResource,
   getOptionsFromResource,
   getReferencedResource,
   getResource,
@@ -131,24 +132,143 @@ describe('Hydra service', () => {
         getOptionsFromLabelResource(sourceFieldOptionLabels as any)
       ).toEqual([
         {
-          id: 1,
-          label: 'Marque 1',
-          value: 1,
+          id: 3000,
+          label: 'Doré',
+          value: 3000,
         },
         {
-          id: 2,
-          label: 'Marque 2',
-          value: 2,
+          id: 3001,
+          label: 'Pêche',
+          value: 3001,
         },
         {
-          id: 3,
-          label: 'Brand 1',
-          value: 3,
+          id: 3002,
+          label: 'Kaki',
+          value: 3002,
         },
         {
-          id: 4,
-          label: 'Brand 2',
-          value: 4,
+          id: 3003,
+          label: 'Argent',
+          value: 3003,
+        },
+        {
+          id: 3004,
+          label: 'Lila',
+          value: 3004,
+        },
+        {
+          id: 3005,
+          label: 'Pluie',
+          value: 3005,
+        },
+        {
+          id: 3006,
+          label: 'Menthe',
+          value: 3006,
+        },
+        {
+          id: 3007,
+          label: 'Lily',
+          value: 3007,
+        },
+        {
+          id: 3008,
+          label: 'Latte',
+          value: 3008,
+        },
+        {
+          id: 3009,
+          label: 'Coco',
+          value: 3009,
+        },
+        {
+          id: 3010,
+          label: 'Noir',
+          value: 3010,
+        },
+        {
+          id: 3011,
+          label: 'Gris',
+          value: 3011,
+        },
+        {
+          id: 3012,
+          label: 'Orange',
+          value: 3012,
+        },
+      ])
+    })
+  })
+
+  describe('getOptionsFromOptionLabelResource', () => {
+    it('Should return the options', () => {
+      expect(
+        getOptionsFromOptionLabelResource(sourceFieldOptionLabels as any)
+      ).toEqual([
+        {
+          id: '5',
+          label: 'Doré',
+          value: '5',
+        },
+        {
+          id: '22',
+          label: 'Pêche',
+          value: '22',
+        },
+        {
+          id: '23',
+          label: 'Kaki',
+          value: '23',
+        },
+        {
+          id: '6',
+          label: 'Argent',
+          value: '6',
+        },
+        {
+          id: '24',
+          label: 'Lila',
+          value: '24',
+        },
+        {
+          id: '25',
+          label: 'Pluie',
+          value: '25',
+        },
+        {
+          id: '26',
+          label: 'Menthe',
+          value: '26',
+        },
+        {
+          id: '27',
+          label: 'Lily',
+          value: '27',
+        },
+        {
+          id: '28',
+          label: 'Latte',
+          value: '28',
+        },
+        {
+          id: '29',
+          label: 'Coco',
+          value: '29',
+        },
+        {
+          id: '30',
+          label: 'Noir',
+          value: '30',
+        },
+        {
+          id: '31',
+          label: 'Gris',
+          value: '31',
+        },
+        {
+          id: '32',
+          label: 'Orange',
+          value: '32',
         },
       ])
     })
