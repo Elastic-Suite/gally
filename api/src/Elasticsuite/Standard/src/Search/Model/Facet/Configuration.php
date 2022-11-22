@@ -194,7 +194,7 @@ class Configuration
                     'rdfs:label' => 'Facet recommenders',
                 ],
                 'elasticsuite' => [
-                    'visible' => true,
+                    'visible' => false,
                     'editable' => true,
                     'position' => 60,
                 ],
@@ -211,7 +211,7 @@ class Configuration
                     'rdfs:label' => 'Virtual attributes',
                 ],
                 'elasticsuite' => [
-                    'visible' => true,
+                    'visible' => false,
                     'editable' => true,
                     'position' => 70,
                 ],
