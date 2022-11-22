@@ -1,14 +1,14 @@
 services:
     Elasticsuite\RuleEngine\Service\RuleType\CombinationRule:
         arguments:
-            - '@Elasticsuite\Product\GraphQl\Type\Definition\Filter\BoolFilterInputType'
+            - '@Elasticsuite\Entity\GraphQl\Type\Definition\Filter\BoolFilterInputType'
             - '@Elasticsuite\RuleEngine\Service\RuleEngineManager'
         tags:
             - { name: elasticsuite.rule_engine.rule_type } 
 
     Elasticsuite\RuleEngine\Service\RuleType\AttributeRule:
         arguments:
-            - '@Elasticsuite\Product\GraphQl\Type\Definition\Filter\BoolFilterInputType'
+            - '@Elasticsuite\Entity\GraphQl\Type\Definition\Filter\BoolFilterInputType'
             - '@Elasticsuite\Metadata\Repository\SourceFieldRepository'
             - '@Elasticsuite\Metadata\Repository\MetadataRepository'
             - !tagged_iterator { tag: 'elasticsuite.product_api.filter' }

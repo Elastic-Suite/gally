@@ -16,15 +16,15 @@ declare(strict_types=1);
 
 namespace Elasticsuite\RuleEngine\Service\RuleType;
 
+use Elasticsuite\Entity\GraphQl\Type\Definition\Filter\AbstractFilter;
+use Elasticsuite\Entity\GraphQl\Type\Definition\Filter\BoolFilterInputType;
+use Elasticsuite\Entity\GraphQl\Type\Definition\Filter\EntityFilterInterface;
 use Elasticsuite\Exception\LogicException;
 use Elasticsuite\Metadata\Model\Metadata;
 use Elasticsuite\Metadata\Model\SourceField;
 use Elasticsuite\Metadata\Model\SourceField\Type;
 use Elasticsuite\Metadata\Repository\MetadataRepository;
 use Elasticsuite\Metadata\Repository\SourceFieldRepository;
-use Elasticsuite\Product\GraphQl\Type\Definition\Filter\AbstractFilter;
-use Elasticsuite\Product\GraphQl\Type\Definition\Filter\BoolFilterInputType;
-use Elasticsuite\Product\GraphQl\Type\Definition\Filter\ProductFilterInterface;
 use Elasticsuite\RuleEngine\GraphQl\Type\Definition\RuleFilterInterface;
 use Elasticsuite\Search\Constant\FilterOperator;
 
@@ -209,7 +209,7 @@ class AttributeRule extends AbstractRuleType implements RuleTypeInterface
 
     private function getFilterType(SourceField $sourceField): RuleFilterInterface
     {
-        /** @var ProductFilterInterface $filterType */
+        /** @var EntityFilterInterface $filterType */
         foreach ($this->filterTypes as $filterType) {
             if ($filterType->supports($sourceField) && $filterType instanceof RuleFilterInterface) {
                 return $filterType;

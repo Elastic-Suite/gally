@@ -14,13 +14,15 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\Product\GraphQl\Type\Definition\Filter;
+namespace Elasticsuite\Entity\GraphQl\Type\Definition\Filter;
 
 use Elasticsuite\Metadata\Model\SourceField;
+use Elasticsuite\Search\Constant\FilterOperator;
+use GraphQL\Type\Definition\Type;
 
-class StockTypeDefaultFilterInputType extends BoolTypeFilterInputType
+class CategoryTypeDefaultFilterInputType extends TextTypeFilterInputType
 {
-    public const SPECIFIC_NAME = 'StockTypeDefaultFilterInputType';
+    public const SPECIFIC_NAME = 'CategoryTypeDefaultFilterInputType';
 
     public $name = self::SPECIFIC_NAME;
 
@@ -29,7 +31,16 @@ class StockTypeDefaultFilterInputType extends BoolTypeFilterInputType
      */
     public function supports(SourceField $sourceField): bool
     {
-        return SourceField\Type::TYPE_STOCK === $sourceField->getType();
+        return SourceField\Type::TYPE_CATEGORY === $sourceField->getType();
+    }
+
+    public function getConfig(): array
+    {
+        return [
+            'fields' => [
+                FilterOperator::EQ => Type::nonNull(Type::string()),
+            ],
+        ];
     }
 
     /**
@@ -41,6 +52,12 @@ class StockTypeDefaultFilterInputType extends BoolTypeFilterInputType
          * No complementarity between getGraphQlFieldName and getMappingFieldName for complex types.
          * getGraphQlFieldName(A) != getGraphQlFieldName(getMappingFieldName(getGraphQlFieldName(A))
          */
-        return str_replace('.', $this->nestingSeparator, $sourceFieldCode . '.status');
+        return str_replace('.', $this->nestingSeparator, $sourceFieldCode . '.id');
+    }
+
+    public function validate(string $argName, mixed $inputData): array
+    {
+        // No need to validate because the field 'eq' is mandatory in GraphQl schema.
+        return [];
     }
 }

@@ -16,8 +16,8 @@ declare(strict_types=1);
 
 namespace Elasticsuite\RuleEngine\Service\RuleType;
 
+use Elasticsuite\Entity\GraphQl\Type\Definition\Filter\BoolFilterInputType;
 use Elasticsuite\Exception\LogicException;
-use Elasticsuite\Product\GraphQl\Type\Definition\Filter\BoolFilterInputType;
 use Elasticsuite\RuleEngine\Service\RuleEngineManager;
 
 class CombinationRule extends AbstractRuleType implements RuleTypeInterface

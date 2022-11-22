@@ -19,7 +19,7 @@ namespace Elasticsuite\VirtualCategory\Decoration\Product\GraphQl\Type\Definitio
 use Elasticsuite\Category\Model\Category;
 use Elasticsuite\Category\Repository\CategoryConfigurationRepository;
 use Elasticsuite\Category\Repository\CategoryRepository;
-use Elasticsuite\Product\GraphQl\Type\Definition\Filter\CategoryTypeDefaultFilterInputType as BaseCategoryTypeDefaultFilterInputType;
+use Elasticsuite\Entity\GraphQl\Type\Definition\Filter\CategoryTypeDefaultFilterInputType as BaseCategoryTypeDefaultFilterInputType;
 use Elasticsuite\RuleEngine\Service\RuleEngineManager;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder;
 use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;

@@ -16,9 +16,9 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Product\GraphQl\Type\Definition;
 
+use Elasticsuite\Entity\GraphQl\Type\Definition\Filter\BoolFilterInputType;
+use Elasticsuite\Entity\GraphQl\Type\Definition\Filter\EntityFilterInterface;
 use Elasticsuite\Metadata\Repository\SourceFieldRepository;
-use Elasticsuite\Product\GraphQl\Type\Definition\Filter\BoolFilterInputType;
-use Elasticsuite\Product\GraphQl\Type\Definition\Filter\ProductFilterInterface;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder;
 use Elasticsuite\Search\GraphQl\Type\Definition\FieldFilterInputType as BaseFieldFilterInputType;
 
@@ -27,7 +27,7 @@ class FieldFilterInputType extends BaseFieldFilterInputType
     public const NAME = 'ProductFieldFilterInput';
 
     /**
-     * @param ProductFilterInterface[] $availableTypes Filter type
+     * @param EntityFilterInterface[] $availableTypes Filter type
      */
     public function __construct(
         FilterQueryBuilder $filterQueryBuilder,
