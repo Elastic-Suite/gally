@@ -14,13 +14,13 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\Product\GraphQl\Type\Definition\Filter;
+namespace Elasticsuite\Entity\GraphQl\Type\Definition\Filter;
 
 use Elasticsuite\Metadata\Model\SourceField;
 
-class PriceTypeDefaultFilterInputType extends FloatTypeFilterInputType
+class StockTypeDefaultFilterInputType extends BoolTypeFilterInputType
 {
-    public const SPECIFIC_NAME = 'PriceTypeDefaultFilterInputType';
+    public const SPECIFIC_NAME = 'StockTypeDefaultFilterInputType';
 
     public $name = self::SPECIFIC_NAME;
 
@@ -29,7 +29,7 @@ class PriceTypeDefaultFilterInputType extends FloatTypeFilterInputType
      */
     public function supports(SourceField $sourceField): bool
     {
-        return SourceField\Type::TYPE_PRICE === $sourceField->getType();
+        return SourceField\Type::TYPE_STOCK === $sourceField->getType();
     }
 
     /**
@@ -41,6 +41,6 @@ class PriceTypeDefaultFilterInputType extends FloatTypeFilterInputType
          * No complementarity between getGraphQlFieldName and getMappingFieldName for complex types.
          * getGraphQlFieldName(A) != getGraphQlFieldName(getMappingFieldName(getGraphQlFieldName(A))
          */
-        return str_replace('.', $this->nestingSeparator, $sourceFieldCode . '.price');
+        return str_replace('.', $this->nestingSeparator, $sourceFieldCode . '.status');
     }
 }

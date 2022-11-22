@@ -14,13 +14,13 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\Product\GraphQl\Type\Definition\Filter;
+namespace Elasticsuite\Entity\GraphQl\Type\Definition\Filter;
 
 use Elasticsuite\Search\GraphQl\Type\Definition\Filter\BoolFilterInputType as BaseBoolFilterInputType;
 
 class BoolFilterInputType extends BaseBoolFilterInputType
 {
-    public const NAME = 'ProductBoolFilterInput';
+    public const NAME = 'EntityBoolFilterInput';
 
     public $name = self::NAME;
 

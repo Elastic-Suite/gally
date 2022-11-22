@@ -16,7 +16,7 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Product\Tests\Unit\GraphQl\Type\Definition\Filter;
 
-use Elasticsuite\Product\GraphQl\Type\Definition\Filter\SelectTypeDefaultFilterInputType;
+use Elasticsuite\Entity\GraphQl\Type\Definition\Filter\SelectTypeDefaultFilterInputType;
 use Elasticsuite\Search\Constant\FilterOperator;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder;
 use Elasticsuite\Search\Elasticsearch\Request\QueryFactory;

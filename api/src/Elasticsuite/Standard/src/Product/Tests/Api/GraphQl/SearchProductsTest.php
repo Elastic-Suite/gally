@@ -682,7 +682,7 @@ class SearchProductsTest extends AbstractTest
                 'b2c_en', // catalog ID.
                 'size: { match: "id" }', // Filters.
                 [ // debug message
-                    'message' => 'Field "match" is not defined by type ProductIntegerTypeFilterInput.',
+                    'message' => 'Field "match" is not defined by type EntityIntegerTypeFilterInput.',
                 ],
             ],
             [
