@@ -14,7 +14,7 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\Product\GraphQl\Type\Definition\Filter;
+namespace Elasticsuite\Entity\GraphQl\Type\Definition\Filter;
 
 use Elasticsuite\Metadata\Model\SourceField;
 use Elasticsuite\Search\Constant\FilterOperator;
@@ -22,7 +22,7 @@ use GraphQL\Type\Definition\Type;
 
 class IntegerTypeFilterInputType extends AbstractFilter
 {
-    public const NAME = 'ProductIntegerTypeFilterInput';
+    public const NAME = 'EntityIntegerTypeFilterInput';
 
     public $name = self::NAME;
 

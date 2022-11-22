@@ -14,12 +14,12 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\Product\GraphQl\Type\Definition\Filter;
+namespace Elasticsuite\Entity\GraphQl\Type\Definition\Filter;
 
 use Elasticsuite\GraphQl\Type\Definition\FilterInterface as SearchFilterInterface;
 use Elasticsuite\Metadata\Model\SourceField;
 
-interface ProductFilterInterface extends SearchFilterInterface
+interface EntityFilterInterface extends SearchFilterInterface
 {
     /**
      * Returns true if the filter input type supports the provided source field.

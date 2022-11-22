@@ -14,7 +14,7 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\Product\GraphQl\Type\Definition\Filter;
+namespace Elasticsuite\Entity\GraphQl\Type\Definition\Filter;
 
 use ApiPlatform\Core\GraphQl\Type\Definition\TypeInterface;
 use Elasticsuite\Exception\LogicException;
@@ -27,7 +27,7 @@ use Elasticsuite\Search\Elasticsearch\Request\QueryFactory;
 use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
 use GraphQL\Type\Definition\InputObjectType;
 
-abstract class AbstractFilter extends InputObjectType implements TypeInterface, ProductFilterInterface, RuleFilterInterface
+abstract class AbstractFilter extends InputObjectType implements TypeInterface, EntityFilterInterface, RuleFilterInterface
 {
     public function __construct(
         protected FilterQueryBuilder $filterQueryBuilder,

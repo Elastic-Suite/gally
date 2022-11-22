@@ -14,31 +14,47 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\Product\GraphQl\Type\Definition\Filter;
+namespace Elasticsuite\Entity\GraphQl\Type\Definition\Filter;
 
 use Elasticsuite\Metadata\Model\SourceField;
 use Elasticsuite\Search\Constant\FilterOperator;
 use GraphQL\Type\Definition\Type;
 
-class BoolTypeFilterInputType extends IntegerTypeFilterInputType
+class SelectTypeDefaultFilterInputType extends TextTypeFilterInputType
 {
-    public const NAME = 'ProductBoolTypeFilterInput';
+    public const SPECIFIC_NAME = 'SelectTypeDefaultFilterInputType';
 
-    public $name = self::NAME;
+    public $name = self::SPECIFIC_NAME;
 
+    /**
+     * {@inheritDoc}
+     */
     public function supports(SourceField $sourceField): bool
     {
-        return SourceField\Type::TYPE_BOOLEAN === $sourceField->getType();
+        return SourceField\Type::TYPE_SELECT === $sourceField->getType();
     }
 
     public function getConfig(): array
     {
         return [
             'fields' => [
-                FilterOperator::EQ => Type::boolean(),
+                FilterOperator::EQ => Type::string(),
+                FilterOperator::IN => Type::listOf(Type::string()),
                 FilterOperator::EXIST => Type::boolean(),
             ],
         ];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getGraphQlFieldName(string $sourceFieldCode): string
+    {
+        /*
+         * No complementarity between getGraphQlFieldName and getMappingFieldName for complex types.
+         * getGraphQlFieldName(A) != getGraphQlFieldName(getMappingFieldName(getGraphQlFieldName(A))
+         */
+        return str_replace('.', $this->nestingSeparator, $sourceFieldCode . '.value');
     }
 
     public function validate(string $argName, mixed $inputData): array
@@ -47,27 +63,24 @@ class BoolTypeFilterInputType extends IntegerTypeFilterInputType
 
         if (\count($inputData) < 1) {
             $errors[] = sprintf(
-                "Filter argument %s: At least '%s' or '%s' should be filled.",
+                "Filter argument %s: At least '%s', '%s' or '%s' should be filled.",
                 $argName,
                 FilterOperator::EQ,
+                FilterOperator::IN,
                 FilterOperator::EXIST,
             );
         }
 
         if (\count($inputData) > 1) {
             $errors[] = sprintf(
-                "Filter argument %s: Only '%s' or '%s' should be filled.",
+                "Filter argument %s: Only '%s', '%s' or '%s' should be filled.",
                 $argName,
                 FilterOperator::EQ,
+                FilterOperator::IN,
                 FilterOperator::EXIST,
             );
         }
 
         return $errors;
-    }
-
-    public function validateValueType(string $field, string $operator, mixed $value): void
-    {
-        $this->validateValueTypeByType($field, $operator, $value, 'bool');
     }
 }

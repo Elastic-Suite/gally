@@ -14,7 +14,7 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\Product\GraphQl\Type\Definition\Filter;
+namespace Elasticsuite\Entity\GraphQl\Type\Definition\Filter;
 
 use Elasticsuite\Metadata\Model\SourceField;
 use Elasticsuite\Search\Constant\FilterOperator;
@@ -22,7 +22,7 @@ use GraphQL\Type\Definition\Type;
 
 class FloatTypeFilterInputType extends IntegerTypeFilterInputType
 {
-    public const NAME = 'ProductFloatTypeFilterInput';
+    public const NAME = 'EntityFloatTypeFilterInput';
 
     public $name = self::NAME;
 
