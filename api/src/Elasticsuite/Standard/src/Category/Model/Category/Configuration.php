@@ -202,7 +202,7 @@ class Configuration
 
     public function getDefaultSorting(): string
     {
-        return $this->defaultSorting ?? 'position';
+        return $this->defaultSorting ?? 'category__position';
     }
 
     public function setDefaultSorting(?string $defaultSorting): void
