@@ -58,20 +58,24 @@ services:
             - '@Elasticsuite\Category\Service\CategorySynchronizer'
             - '@Elasticsuite\Category\Service\CategoryProductPositionManager'
         decoration_priority: 100
-        
-    Elasticsuite\Category\DataProvider\CategorySortingOptionDataProvider:
+
+    Elasticsuite\Category\Service\CategoryProductsSortingOptionsProvider:
         arguments:
             - '@Elasticsuite\Metadata\Repository\SourceFieldRepository'
             - !tagged_iterator { tag: 'elasticsuite.product_api.sort_order_provider', index_by: 'provider_name' }
+
+    Elasticsuite\Category\DataProvider\CategorySortingOptionDataProvider:
+        arguments:
+            - '@Elasticsuite\Category\Service\CategoryProductsSortingOptionsProvider'
         tags:
             - { name: api_platform.collection_data_provider }
-        
+
     Elasticsuite\Category\Validator\DefaultSortingFieldConstraintValidator:
         arguments:
             - '@Elasticsuite\Category\DataProvider\CategorySortingOptionDataProvider'
         tags:
             - { name: validator.constraint_validator } 
-    
+
     Elasticsuite\Category\Controller\CategoryConfigurationGet:
         arguments:
             - '@Elasticsuite\Category\Repository\CategoryConfigurationRepository'

@@ -19,14 +19,12 @@ namespace Elasticsuite\Category\DataProvider;
 use ApiPlatform\Core\DataProvider\ContextAwareCollectionDataProviderInterface;
 use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
 use Elasticsuite\Category\Model\Source\CategorySortingOption;
-use Elasticsuite\Metadata\Repository\SourceFieldRepository;
-use Elasticsuite\Product\GraphQl\Type\Definition\SortOrder\SortOrderProviderInterface as ProductSortOrderProviderInterface;
+use Elasticsuite\Category\Service\CategoryProductsSortingOptionsProvider;
 
 class CategorySortingOptionDataProvider implements ContextAwareCollectionDataProviderInterface, RestrictedDataProviderInterface
 {
     public function __construct(
-        private SourceFieldRepository $sourceFieldRepository,
-        private iterable $sortOrderProviders
+        private CategoryProductsSortingOptionsProvider $sortingOptionsProvider
     ) {
     }
 
@@ -43,21 +41,6 @@ class CategorySortingOptionDataProvider implements ContextAwareCollectionDataPro
      */
     public function getCollection(string $resourceClass, string $operationName = null, array $context = []): array
     {
-        $sortOptions = [];
-
-        $sortableFields = $this->sourceFieldRepository->getSortableFields('product');
-        foreach ($sortableFields as $sourceField) {
-            /** @var ProductSortOrderProviderInterface $sortOrderProvider */
-            foreach ($this->sortOrderProviders as $sortOrderProvider) {
-                if ($sortOrderProvider->supports($sourceField)) {
-                    $sortOptions[] = [
-                        'code' => $sortOrderProvider->getSortOrderField($sourceField),
-                        'label' => $sortOrderProvider->getSimplifiedLabel($sourceField),
-                    ];
-                }
-            }
-        }
-
-        return $sortOptions;
+        return $this->sortingOptionsProvider->getAllSortingOptions();
     }
 }
