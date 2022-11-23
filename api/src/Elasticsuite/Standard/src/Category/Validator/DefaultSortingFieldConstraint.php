@@ -24,5 +24,4 @@ use Symfony\Component\Validator\Constraint;
 class DefaultSortingFieldConstraint extends Constraint
 {
     public $message = 'The option "{{ sortOption }}" is not a valid option for sorting.';
-    public $sortOptions = [];
 }

@@ -3,6 +3,4 @@ Elasticsuite\Category\Model\Category\Configuration:
         virtualRule:
             - Json: ~
         defaultSorting:
-            - Elasticsuite\Category\Validator\DefaultSortingFieldConstraint:
-                  sortOptions:
-                      - "position"
+            - Elasticsuite\Category\Validator\DefaultSortingFieldConstraint: ~
