@@ -30,6 +30,7 @@ interface IProps {
   topProducts: IProductPositions
   setNbBottomRows: (value: number) => void
   sortValue: string
+  searchValue: string
 }
 
 function ProductsTopAndBottom(
@@ -47,6 +48,7 @@ function ProductsTopAndBottom(
     topProducts,
     setNbBottomRows,
     sortValue,
+    searchValue,
   } = props
   const { t } = useTranslation('categories')
   const topProductsIds = topProducts
@@ -57,7 +59,7 @@ function ProductsTopAndBottom(
     <Paper variant="outlined" sx={{ backgroundColor: 'colors.neutral.300' }}>
       <PreviewArea>{t('previewArea')}</PreviewArea>
       <Box sx={{ padding: '42px 16px 17px 16px' }}>
-        {topProducts.length !== 0 && (
+        {topProducts.length !== 0 && searchValue === '' && (
           <TopTable
             selectedRows={topSelectedRows}
             onSelectedRows={onTopSelectedRows}
@@ -71,7 +73,9 @@ function ProductsTopAndBottom(
         )}
         <Box
           sx={
-            topProducts.length !== 0 && sortValue === 'position'
+            topProducts.length !== 0 &&
+            sortValue === 'position' &&
+            searchValue === ''
               ? { marginTop: '24px' }
               : {}
           }
@@ -85,6 +89,7 @@ function ProductsTopAndBottom(
             topProductsIds={topProductsIds}
             setNbBottomRows={setNbBottomRows}
             sortValue={sortValue}
+            searchValue={searchValue}
           />
         </Box>
       </Box>
