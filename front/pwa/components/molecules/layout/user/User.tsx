@@ -1,9 +1,6 @@
 import Help from '~/components/atoms/help/Help'
 import UserMenu from '~/components/atoms/userMenu/UserMenu'
 import { styled } from '@mui/system'
-import { useContext } from 'react'
-import { userContext } from '~/contexts'
-import { isValidUser } from '~/../shared'
 
 const CustomRoot = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -12,11 +9,12 @@ const CustomRoot = styled('div')(({ theme }) => ({
   marginLeft: 'auto',
 }))
 
-function User(): JSX.Element | null {
-  const user = useContext(userContext)
-  const isConnected = isValidUser(user)
+interface IProps {
+  isConnectedWithValidJwt: boolean
+}
 
-  if (!isConnected) return
+function User({ isConnectedWithValidJwt }: IProps): JSX.Element | null {
+  if (!isConnectedWithValidJwt) return null
   return (
     <CustomRoot>
       <Help />
