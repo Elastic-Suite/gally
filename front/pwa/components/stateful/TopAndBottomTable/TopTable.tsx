@@ -76,24 +76,23 @@ function TopTable(props: IProps): JSX.Element {
       topProductsMap[a.id.split('/')[2]] - topProductsMap[b.id.split('/')[2]]
   ) as unknown as ITableRow[]
 
+  console.log(products)
   return (
     <>
-      {products.status === LoadStatus.SUCCEEDED &&
-        Boolean(products?.data?.searchProducts) &&
-        sortValue === 'position' && (
-          <div>
-            <TopProductsTable
-              Field={FieldGuesser}
-              selectedRows={selectedRows}
-              onSelectedRows={onSelectedRows}
-              onReOrder={handleReorder}
-              tableHeaders={productTableheader}
-              tableRows={tableRows}
-              draggable
-              border
-            />
-          </div>
-        )}
+      {products.status === LoadStatus.SUCCEEDED && sortValue === 'position' && (
+        <div>
+          <TopProductsTable
+            Field={FieldGuesser}
+            selectedRows={selectedRows}
+            onSelectedRows={onSelectedRows}
+            onReOrder={handleReorder}
+            tableHeaders={productTableheader}
+            tableRows={tableRows}
+            draggable
+            border
+          />
+        </div>
+      )}
     </>
   )
 }
