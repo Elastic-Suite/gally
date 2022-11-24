@@ -483,6 +483,7 @@ class SearchDocumentsTest extends AbstractTest
                               count
                               label
                               type
+                              hasMore
                               options {
                                 label
                                 value
@@ -527,11 +528,12 @@ class SearchDocumentsTest extends AbstractTest
                 10,     // page size.
                 1,      // current page.
                 [       // expected aggregations sample.
-                    ['field' => 'size', 'label' => 'Size', 'type' => 'slider'],
+                    ['field' => 'size', 'label' => 'Size', 'type' => 'slider', 'hasMore' => false],
                     [
                         'field' => 'color',
                         'label' => 'Color',
                         'type' => 'checkbox',
+                        'hasMore' => true,
                         'options' => [
                             [
                                 'label' => 'Black',
@@ -540,12 +542,13 @@ class SearchDocumentsTest extends AbstractTest
                             ],
                         ],
                     ],
-                    ['field' => 'weight', 'label' => 'Weight', 'type' => 'slider'],
-                    ['field' => 'is_eco_friendly', 'label' => 'Is_eco_friendly', 'type' => 'checkbox'],
+                    ['field' => 'weight', 'label' => 'Weight', 'type' => 'slider', 'hasMore' => false],
+                    ['field' => 'is_eco_friendly', 'label' => 'Is_eco_friendly', 'type' => 'checkbox', 'hasMore' => false],
                     [
                         'field' => 'category',
                         'label' => 'Category',
                         'type' => 'checkbox',
+                        'hasMore' => false,
                         'options' => [
                             [
                                 'label' => 'cat_1',
@@ -571,11 +574,13 @@ class SearchDocumentsTest extends AbstractTest
                         'field' => 'size',
                         'label' => 'Taille',
                         'type' => 'slider',
+                        'hasMore' => false,
                     ],
                     [
                         'field' => 'color',
                         'label' => 'Couleur',
                         'type' => 'checkbox',
+                        'hasMore' => true,
                         'options' => [
                             [
                                 'label' => 'Noir',

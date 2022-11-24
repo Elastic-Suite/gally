@@ -101,7 +101,7 @@ class AddAggregationsType implements TypeBuilderInterface
                         'label' => GraphQLType::string(),
                         'type' => GraphQLType::string(),
                         'options' => GraphQLType::listOf($aggregationOptionType),
-                        'has_more' => GraphQLType::boolean(),
+                        'hasMore' => GraphQLType::boolean(),
                     ],
                 ]
             );

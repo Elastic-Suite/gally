@@ -76,6 +76,7 @@ services:
             - !tagged_iterator { tag: 'elasticsuite.search.aggregation.resolver' }
             - {
                 coverageModifier: '@Elasticsuite\Search\Elasticsearch\Request\Aggregation\Modifier\Coverage',
+                viewMore: '@Elasticsuite\Search\Elasticsearch\Request\Aggregation\Modifier\ViewMore',
             }
 
     elasticsuite.search.request.factory:
@@ -230,7 +231,7 @@ services:
         tags:
             - { name: serializer.normalizer }
 
-    Elasticsuite\Search\Resolver\DummyDocumentResolver:
+    Elasticsuite\Search\Resolver\DummyResolver:
         tags:
             - { name: api_platform.graphql.query_resolver }
             
@@ -305,3 +306,29 @@ services:
             - '@Elasticsuite\Metadata\Repository\SourceFieldRepository'
             - '@Elasticsuite\Search\Elasticsearch\Request\QueryFactory'
             - '@Elasticsuite\Search\Service\SearchSettingsProvider'
+                
+    Elasticsuite\Search\Service\ViewMoreContext: ~
+
+    Elasticsuite\Search\Elasticsearch\Request\Aggregation\Modifier\ViewMore:
+        arguments:
+            - '@Elasticsuite\Search\Service\ViewMoreContext'
+                
+    Elasticsuite\Search\DataProvider\Facet\OptionDataProvider:
+        arguments:
+            - '@Elasticsuite\Metadata\Repository\MetadataRepository'
+            - '@Elasticsuite\Catalog\Repository\LocalizedCatalogRepository'
+            - '@Elasticsuite\Metadata\Repository\SourceFieldRepository'
+            - '@Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider'
+            - '@Elasticsuite\Search\Elasticsearch\Builder\Request\SimpleRequestBuilder'
+            - '@Elasticsuite\Search\Elasticsearch\Adapter'
+            - '@Elasticsuite\Search\Service\GraphQl\FilterManager'
+            - '@Elasticsuite\Search\Service\ViewMoreContext'
+        tags:
+            - { name: api_platform.collection_data_provider }
+
+    elasticsuite.container_configuration.coverage_rate.factory:
+        parent: 'Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\GenericContainerConfigurationFactory'
+        arguments:
+            $aggregationProvider: '@Elasticsuite\Search\Elasticsearch\Request\Aggregation\Provider\CoverageAggregationProvider'
+        tags:
+            - { name: elasticsuite.container_configuration.factory, requestType: coverage_rate }

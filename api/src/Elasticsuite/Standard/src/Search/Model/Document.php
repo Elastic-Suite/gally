@@ -22,14 +22,14 @@ use Elasticsuite\GraphQl\Decoration\Resolver\Stage\ReadStage;
 use Elasticsuite\Search\Elasticsearch\DocumentInterface;
 use Elasticsuite\Search\GraphQl\Type\Definition\FieldFilterInputType;
 use Elasticsuite\Search\GraphQl\Type\Definition\SortInputType;
-use Elasticsuite\Search\Resolver\DummyDocumentResolver;
+use Elasticsuite\Search\Resolver\DummyResolver;
 
 #[
     ApiResource(
         collectionOperations: [],
         graphql: [
             'search' => [
-                'collection_query' => DummyDocumentResolver::class,
+                'collection_query' => DummyResolver::class,
                 'pagination_type' => 'page',
                 'args' => [
                     'entityType' => ['type' => 'String!', 'description' => 'Entity Type'],
