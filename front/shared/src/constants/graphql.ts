@@ -16,7 +16,7 @@ export function getSearchProductsQuery(
         search: 'String',
         sort: 'ProductSortInput',
       },
-      searchProducts: {
+      products: {
         __args: {
           requestType: new VariableType('requestType'),
           catalogId: new VariableType('catalogId'),

@@ -80,14 +80,12 @@ function BottomTable(
   }
 
   useEffect(() => {
-    setNbBottomRows(
-      products?.data?.searchProducts.paginationInfo.totalCount || 0
-    )
-  }, [products?.data?.searchProducts.paginationInfo.totalCount])
+    setNbBottomRows(products?.data?.products.paginationInfo.totalCount || 0)
+  }, [products?.data?.products.paginationInfo.totalCount])
 
   return (
     <>
-      {Boolean(products?.data?.searchProducts) && (
+      {Boolean(products?.data?.products) && (
         <PagerTable
           Field={FieldGuesser}
           currentPage={
@@ -100,11 +98,11 @@ function BottomTable(
           onRowsPerPageChange={onRowsPerPageChange}
           tableHeaders={productTableheader}
           tableRows={
-            products.data.searchProducts.collection as unknown as ITableRow[]
+            products.data.products.collection as unknown as ITableRow[]
           }
           selectedRows={selectedRows}
           onSelectedRows={onSelectedRows}
-          count={products.data.searchProducts.paginationInfo.totalCount}
+          count={products.data.products.paginationInfo.totalCount}
         />
       )}
     </>
