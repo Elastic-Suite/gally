@@ -32,13 +32,14 @@ const CustomRoot = styled('div')(({ theme }) => ({
 interface IProps {
   slug?: string | string[]
   menu?: IMenu
+  isConnectedWithValidJwt: boolean
 }
 
-function AppBar({ slug, menu }: IProps): JSX.Element {
+function AppBar({ slug, menu, isConnectedWithValidJwt }: IProps): JSX.Element {
   return (
     <CustomRoot>
       <Breadcrumbs slug={slug} menu={menu} />
-      <User />
+      <User isConnectedWithValidJwt={isConnectedWithValidJwt} />
     </CustomRoot>
   )
 }

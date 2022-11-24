@@ -130,12 +130,12 @@ exports[`AppBar match snapshot AppBar simple 1`] = `
                       class="css-1772pc6"
                     />
                     <div
-                      class="css-12w2p0s"
+                      class="css-9vgysh"
                     >
                       Account
                     </div>
                     <div
-                      class="css-12w2p0s"
+                      class="css-9vgysh"
                     >
                       Log out
                     </div>
@@ -319,12 +319,12 @@ exports[`AppBar match snapshot AppBarThreeSlug 1`] = `
                       class="css-1772pc6"
                     />
                     <div
-                      class="css-12w2p0s"
+                      class="css-9vgysh"
                     >
                       Account
                     </div>
                     <div
-                      class="css-12w2p0s"
+                      class="css-9vgysh"
                     >
                       Log out
                     </div>
@@ -336,6 +336,75 @@ exports[`AppBar match snapshot AppBarThreeSlug 1`] = `
         </div>
       </div>
     </div>
+  </div>
+</div>
+`;
+
+exports[`AppBar match snapshot AppBarThreeSlug not connected 1`] = `
+<div>
+  <div
+    class="css-19ii7w2"
+  >
+    <nav
+      aria-label="breadcrumb"
+      class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1sglq17-MuiTypography-root-MuiBreadcrumbs-root"
+    >
+      <ol
+        class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
+      >
+        <li
+          class="MuiBreadcrumbs-li"
+        >
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-zhuy6w-MuiTypography-root"
+          >
+            <span
+              class="css-1epdhd3"
+            >
+              Recherche
+            </span>
+          </p>
+        </li>
+        <li
+          aria-hidden="true"
+          class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+        >
+          /
+        </li>
+        <li
+          class="MuiBreadcrumbs-li"
+        >
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-zhuy6w-MuiTypography-root"
+          >
+            <span
+              class="css-1epdhd3"
+            >
+              Configuration
+            </span>
+          </p>
+        </li>
+        <li
+          aria-hidden="true"
+          class="MuiBreadcrumbs-separator css-1wuw8dw-MuiBreadcrumbs-separator"
+        >
+          /
+        </li>
+        <li
+          class="MuiBreadcrumbs-li"
+        >
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-zhuy6w-MuiTypography-root"
+          >
+            <span
+              class="css-6nl1o3"
+            >
+              Autocomplétion
+            </span>
+          </p>
+        </li>
+      </ol>
+    </nav>
   </div>
 </div>
 `;
@@ -489,12 +558,12 @@ exports[`AppBar match snapshot AppBarTwoSlug 1`] = `
                       class="css-1772pc6"
                     />
                     <div
-                      class="css-12w2p0s"
+                      class="css-9vgysh"
                     >
                       Account
                     </div>
                     <div
-                      class="css-12w2p0s"
+                      class="css-9vgysh"
                     >
                       Log out
                     </div>
