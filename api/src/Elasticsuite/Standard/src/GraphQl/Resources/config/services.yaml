@@ -10,3 +10,9 @@ services:
         arguments:
             - '%api_platform.graphql.nesting_separator%'
             - '@.inner'
+
+    Elasticsuite\GraphQl\Decoration\Type\RenameGraphQlQuery:
+        decorates: api_platform.graphql.fields_builder
+        arguments:
+            - '%elasticsuite.graphql_query_renaming%'
+            - '@.inner'

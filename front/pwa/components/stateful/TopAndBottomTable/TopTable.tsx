@@ -69,7 +69,7 @@ function TopTable(props: IProps): JSX.Element {
   const topProductsMap = Object.fromEntries(
     topProducts.map(({ position, productId }) => [productId, position])
   )
-  const tableRows = products.data?.searchProducts?.collection.sort(
+  const tableRows = products.data?.products?.collection.sort(
     (a, b) =>
       topProductsMap[a.id.split('/')[2]] - topProductsMap[b.id.split('/')[2]]
   ) as unknown as ITableRow[]
@@ -77,7 +77,7 @@ function TopTable(props: IProps): JSX.Element {
   return (
     <>
       {products.status === LoadStatus.SUCCEEDED &&
-        Boolean(products?.data?.searchProducts) && (
+        Boolean(products?.data?.products) && (
           <TopProductsTable
             Field={FieldGuesser}
             selectedRows={selectedRows}

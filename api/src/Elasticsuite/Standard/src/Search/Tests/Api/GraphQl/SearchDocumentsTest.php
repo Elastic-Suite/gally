@@ -95,7 +95,7 @@ class SearchDocumentsTest extends AbstractTest
             new RequestGraphQlToTest(
                 <<<GQL
                     {
-                        searchDocuments({$arguments}) {
+                        documents({$arguments}) {
                             collection {
                               id
                               score
@@ -126,13 +126,13 @@ class SearchDocumentsTest extends AbstractTest
                         $this->assertJsonContains($expectedError);
                         $this->assertJsonContains([
                             'data' => [
-                                'searchDocuments' => null,
+                                'documents' => null,
                             ],
                         ]);
                     } else {
                         $this->assertJsonContains([
                             'data' => [
-                                'searchDocuments' => [
+                                'documents' => [
                                     'paginationInfo' => [
                                         'itemsPerPage' => $expectedItemsPerPage,
                                         'lastPage' => $expectedLastPage,
@@ -144,9 +144,9 @@ class SearchDocumentsTest extends AbstractTest
                         ]);
 
                         $responseData = $response->toArray();
-                        $this->assertIsArray($responseData['data']['searchDocuments']['collection']);
-                        $this->assertCount($expectedItemsCount, $responseData['data']['searchDocuments']['collection']);
-                        foreach ($responseData['data']['searchDocuments']['collection'] as $document) {
+                        $this->assertIsArray($responseData['data']['documents']['collection']);
+                        $this->assertCount($expectedItemsCount, $responseData['data']['documents']['collection']);
+                        foreach ($responseData['data']['documents']['collection'] as $document) {
                             $this->assertArrayHasKey('score', $document);
                             $this->assertEquals($expectedScore, $document['score']);
 
@@ -318,7 +318,7 @@ class SearchDocumentsTest extends AbstractTest
             new RequestGraphQlToTest(
                 <<<GQL
                     {
-                        searchDocuments({$arguments}) {
+                        documents({$arguments}) {
                             collection {
                               id
                               score
@@ -341,7 +341,7 @@ class SearchDocumentsTest extends AbstractTest
                 ) {
                     $this->assertJsonContains([
                         'data' => [
-                            'searchDocuments' => [
+                            'documents' => [
                                 'paginationInfo' => [
                                     'itemsPerPage' => $pageSize,
                                 ],
@@ -351,9 +351,9 @@ class SearchDocumentsTest extends AbstractTest
                     ]);
 
                     $responseData = $response->toArray();
-                    $this->assertIsArray($responseData['data']['searchDocuments']['collection']);
-                    $this->assertCount(\count($expectedOrderedDocIds), $responseData['data']['searchDocuments']['collection']);
-                    foreach ($responseData['data']['searchDocuments']['collection'] as $index => $document) {
+                    $this->assertIsArray($responseData['data']['documents']['collection']);
+                    $this->assertCount(\count($expectedOrderedDocIds), $responseData['data']['documents']['collection']);
+                    foreach ($responseData['data']['documents']['collection'] as $index => $document) {
                         /*
                         $this->assertArrayHasKey('score', $document);
                         $this->assertEquals($expectedScore, $document['score']);
@@ -470,7 +470,7 @@ class SearchDocumentsTest extends AbstractTest
             new RequestGraphQlToTest(
                 <<<GQL
                     {
-                        searchDocuments({$arguments}) {
+                        documents({$arguments}) {
                             collection {
                               id
                               score
@@ -498,14 +498,14 @@ class SearchDocumentsTest extends AbstractTest
                     // Extra test on response structure because all exceptions might not throw an HTTP error code.
                     $this->assertJsonContains([
                         'data' => [
-                            'searchDocuments' => [
+                            'documents' => [
                                 'aggregations' => $expectedAggregations,
                             ],
                         ],
                     ]);
                     $responseData = $response->toArray();
-                    $this->assertIsArray($responseData['data']['searchDocuments']['aggregations']);
-                    foreach ($responseData['data']['searchDocuments']['aggregations'] as $data) {
+                    $this->assertIsArray($responseData['data']['documents']['aggregations']);
+                    foreach ($responseData['data']['documents']['aggregations'] as $data) {
                         $this->assertArrayHasKey('field', $data);
                         $this->assertArrayHasKey('count', $data);
                         $this->assertArrayHasKey('label', $data);
@@ -614,7 +614,7 @@ class SearchDocumentsTest extends AbstractTest
             new RequestGraphQlToTest(
                 <<<GQL
                     {
-                        searchDocuments({$arguments}) {
+                        documents({$arguments}) {
                             collection {
                               id
                             }
@@ -733,7 +733,7 @@ class SearchDocumentsTest extends AbstractTest
             new RequestGraphQlToTest(
                 <<<GQL
                     {
-                        searchDocuments({$arguments}) {
+                        documents({$arguments}) {
                             collection {
                               id
                               source
@@ -752,16 +752,16 @@ class SearchDocumentsTest extends AbstractTest
                     // Extra test on response structure because all exceptions might not throw an HTTP error code.
                     $this->assertJsonContains([
                         'data' => [
-                            'searchDocuments' => [
+                            'documents' => [
                                 'collection' => [],
                             ],
                         ],
                     ]);
 
                     $responseData = $response->toArray();
-                    $this->assertIsArray($responseData['data']['searchDocuments']['collection']);
-                    $this->assertCount(\count($expectedOrderedDocIds), $responseData['data']['searchDocuments']['collection']);
-                    foreach ($responseData['data']['searchDocuments']['collection'] as $index => $document) {
+                    $this->assertIsArray($responseData['data']['documents']['collection']);
+                    $this->assertCount(\count($expectedOrderedDocIds), $responseData['data']['documents']['collection']);
+                    foreach ($responseData['data']['documents']['collection'] as $index => $document) {
                         $this->assertArrayHasKey('id', $document);
                         $this->assertEquals("/documents/{$expectedOrderedDocIds[$index]}", $document['id']);
 
@@ -1017,7 +1017,7 @@ class SearchDocumentsTest extends AbstractTest
             new RequestGraphQlToTest(
                 <<<GQL
                     {
-                        searchDocuments({$arguments}) {
+                        documents({$arguments}) {
                             collection {
                               id
                               score
@@ -1034,13 +1034,13 @@ class SearchDocumentsTest extends AbstractTest
                     // Extra test on response structure because all exceptions might not throw an HTTP error code.
                     $this->assertJsonContains([
                         'data' => [
-                            'searchDocuments' => [
+                            'documents' => [
                                 'collection' => [],
                             ],
                         ],
                     ]);
                     $responseData = $response->toArray();
-                    $results = $responseData['data']['searchDocuments']['collection'];
+                    $results = $responseData['data']['documents']['collection'];
                     $names = array_map(fn (array $item) => $item['source']['name'], $results);
                     $this->assertCount($expectedResultCount, $results);
                     $this->assertEquals($expectedResultNames, $names);

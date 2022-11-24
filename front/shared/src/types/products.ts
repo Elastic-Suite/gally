@@ -7,7 +7,7 @@ export enum ProductRequestType {
 }
 
 export interface IGraphqlSearchProducts {
-  searchProducts: IGraphqlSearchProduct
+  products: IGraphqlSearchProduct
 }
 
 export interface IGraphqlSearchProduct {

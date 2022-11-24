@@ -73,11 +73,6 @@ abstract class AbstractFilter extends InputObjectType implements TypeInterface, 
         $conditions = [];
         foreach ($this->getConditions() as $condition) {
             if (isset($inputFilter[$condition])) {
-                if (\is_array($inputFilter[$condition])) {
-                    $inputFilter[$condition] = array_map(fn ($item) => "$item", $inputFilter[$condition]);
-                } else {
-                    $inputFilter[$condition] = "$inputFilter[$condition]";
-                }
                 $conditions = array_merge($conditions, [$condition => $inputFilter[$condition]]);
             }
         }
