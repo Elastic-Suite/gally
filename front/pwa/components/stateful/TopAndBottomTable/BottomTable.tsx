@@ -65,8 +65,24 @@ function BottomTable(
   )
   const filters = [productGraphqlFilters]
   if (topProductsIds.length > 0 && sortValue === 'position') {
-    filters.push({ boolFilter: { _not: [{ id: { in: topProductsIds } }] } })
+    filters.push({
+      boolFilter: { _not: [{ id: { in: topProductsIds } }] },
+    })
   }
+
+  if (searchValue) {
+    filters.push({
+      boolFilter: {
+        _should: [
+          {
+            name: { match: searchValue },
+          },
+          { sku: { eq: searchValue } },
+        ],
+      },
+    })
+  }
+
   const [products] = useGraphqlApi<IGraphqlSearchProducts>(
     getSearchProductsQuery(filters),
     variables
