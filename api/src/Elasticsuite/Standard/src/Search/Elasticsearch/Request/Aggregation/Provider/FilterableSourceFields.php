@@ -103,6 +103,8 @@ class FilterableSourceFields implements AggregationProviderInterface
             }
         }
 
+        $config['size'] = $facetConfig->getMaxSize();
+
         return $config;
     }
 }

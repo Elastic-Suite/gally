@@ -24,6 +24,7 @@ use Elasticsuite\Metadata\Repository\SourceFieldRepository;
 use Elasticsuite\Search\DataProvider\Paginator;
 use Elasticsuite\Search\Elasticsearch\Adapter\Common\Response\AggregationInterface;
 use Elasticsuite\Search\Elasticsearch\Adapter\Common\Response\BucketValueInterface;
+use Elasticsuite\Search\Elasticsearch\Builder\Response\AggregationBuilder;
 use Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider;
 use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
 use Elasticsuite\Search\Model\Document;
@@ -88,11 +89,17 @@ class AddAggregationsData implements SerializeStageInterface
         ];
         if (!empty($aggregation->getValues())) {
             $data['options'] = [];
-            $data['count'] = 0;
+            $data['count'] = $aggregation->getCount();
+            $data['hasMore'] = false;
         }
         foreach ($aggregation->getValues() as $value) {
             if ($value instanceof BucketValueInterface) {
                 $key = $value->getKey();
+
+                if (AggregationBuilder::OTHER_DOCS_KEY === $key) {
+                    $data['hasMore'] = true;
+                    continue;
+                }
 
                 if (\is_array($key)) {
                     $code = $key[0];

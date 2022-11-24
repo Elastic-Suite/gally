@@ -101,3 +101,16 @@ services:
             $aggregationProvider: '@Elasticsuite\Search\Elasticsearch\Request\Aggregation\Provider\CoverageAggregationProvider'
         tags:
             - { name: elasticsuite.container_configuration.factory, requestType: coverage_rate }
+    
+    Elasticsuite\Product\DataProvider\Facet\OptionDataProvider:
+        arguments:
+            - '@Elasticsuite\Metadata\Repository\MetadataRepository'
+            - '@Elasticsuite\Catalog\Repository\LocalizedCatalogRepository'
+            - '@Elasticsuite\Metadata\Repository\SourceFieldRepository'
+            - '@Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider'
+            - '@Elasticsuite\Search\Elasticsearch\Builder\Request\SimpleRequestBuilder'
+            - '@Elasticsuite\Search\Elasticsearch\Adapter'
+            - '@Elasticsuite\Product\Service\GraphQl\FilterManager'
+            - '@Elasticsuite\Search\Service\ViewMoreContext'
+        tags:
+            - { name: api_platform.collection_data_provider }
