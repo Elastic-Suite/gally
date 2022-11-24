@@ -222,6 +222,7 @@ function ProductsContainer(props: IProps): JSX.Element {
             topSelectedRows={topSelectedRows}
             topProducts={topProducts}
             sortValue={defaultSorting}
+            searchValue={searchValue}
           />
         )}
       </Layout>

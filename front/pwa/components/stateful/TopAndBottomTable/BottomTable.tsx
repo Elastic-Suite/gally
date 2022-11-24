@@ -32,6 +32,7 @@ interface IProps {
   topProductsIds: number[]
   setNbBottomRows: (value: number) => void
   sortValue: string
+  searchValue: string
 }
 
 function BottomTable(
@@ -46,6 +47,7 @@ function BottomTable(
     topProductsIds,
     setNbBottomRows,
     sortValue,
+    searchValue,
   } = props
 
   const [currentPage, setCurrentPage] = useState<number>(1)
