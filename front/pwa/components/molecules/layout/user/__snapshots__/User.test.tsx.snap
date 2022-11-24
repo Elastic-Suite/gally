@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`User match snapshot 1`] = `
+exports[`User match snapshot connected 1`] = `
 <div>
   <div
     class="css-1gzl8uu"
@@ -105,12 +105,12 @@ exports[`User match snapshot 1`] = `
                     class="css-1772pc6"
                   />
                   <div
-                    class="css-12w2p0s"
+                    class="css-9vgysh"
                   >
                     Account
                   </div>
                   <div
-                    class="css-12w2p0s"
+                    class="css-9vgysh"
                   >
                     Log out
                   </div>
@@ -124,3 +124,5 @@ exports[`User match snapshot 1`] = `
   </div>
 </div>
 `;
+
+exports[`User match snapshot not connected 1`] = `<div />`;
