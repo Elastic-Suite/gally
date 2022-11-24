@@ -15,7 +15,10 @@ export default function SearchBar(props: IProps): JSX.Element {
   const { t } = useTranslation('categories')
 
   const value = {
-    value: sortValue === 'position' ? nbResults + nbTopProducts : nbResults,
+    value:
+      sortValue === 'position' && !inputTextProps.value
+        ? nbResults + nbTopProducts
+        : nbResults,
     result: t('searchBar.results', { count: nbResults }),
   }
 
@@ -35,7 +38,10 @@ export default function SearchBar(props: IProps): JSX.Element {
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               <SearchTitle>{t('searchBar.title')}</SearchTitle>
               <SearchResult>
-                {result} {sortValue === 'position' && `(${resultPinned})`}
+                {result}{' '}
+                {sortValue === 'position' &&
+                  !inputTextProps.value &&
+                  `(${resultPinned})`}
               </SearchResult>
             </div>
             <InputText
