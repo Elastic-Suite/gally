@@ -11,9 +11,7 @@ describe('User', () => {
   })
 
   it('match snapshot connected', () => {
-    const { container } = renderWithProviders(
-      <User isConnectedWithValidJwt />
-    )
+    const { container } = renderWithProviders(<User isConnectedWithValidJwt />)
     expect(container).toMatchSnapshot()
   })
 })
