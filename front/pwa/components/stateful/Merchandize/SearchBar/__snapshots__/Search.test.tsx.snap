@@ -27,6 +27,7 @@ exports[`SearchBar match snapshot SearchBar 1`] = `
             >
               searchBarResult
                
+              (searchBarResult)
             </div>
           </div>
           <div
