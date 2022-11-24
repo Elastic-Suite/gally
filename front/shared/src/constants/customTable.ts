@@ -13,6 +13,13 @@ export const productTableheader: ITableHeader[] = [
     type: DataContentType.STRING,
   },
   {
+    id: 'image',
+    input: DataContentType.IMAGE,
+    name: 'image',
+    label: 'Image',
+    type: DataContentType.IMAGE,
+  },
+  {
     id: 'name',
     input: DataContentType.STRING,
     name: 'name',
@@ -39,6 +46,13 @@ export const productTableheader: ITableHeader[] = [
     name: 'price',
     label: 'Price',
     type: DataContentType.PRICE,
+  },
+  {
+    id: 'displayed',
+    input: DataContentType.BOOLEAN,
+    name: 'displayed',
+    label: 'Displayed',
+    type: DataContentType.BOOLEAN,
   },
 ]
 
