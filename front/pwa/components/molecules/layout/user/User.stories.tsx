@@ -7,7 +7,9 @@ export default {
   component: User,
 } as ComponentMeta<typeof User>
 
-const Template: ComponentStory<typeof User> = () => <User />
+const Template: ComponentStory<typeof User> = (args) => <User {...args} />
 
 export const Default = Template.bind({})
-Default.args = {}
+Default.args = {
+  isConnectedWithValidJwt: true,
+}
