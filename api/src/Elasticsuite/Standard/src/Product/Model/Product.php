@@ -24,14 +24,14 @@ use Elasticsuite\Product\GraphQl\Type\Definition\FieldFilterInputType;
 use Elasticsuite\Product\GraphQl\Type\Definition\ProductRequestTypeEnumType;
 use Elasticsuite\Product\GraphQl\Type\Definition\SortInputType;
 use Elasticsuite\Search\Model\Document;
-use Elasticsuite\Search\Resolver\DummyDocumentResolver;
+use Elasticsuite\Search\Resolver\DummyResolver;
 
 #[
     ApiResource(
         collectionOperations: [],
         graphql: [
             'search' => [
-                'collection_query' => DummyDocumentResolver::class,
+                'collection_query' => DummyResolver::class,
                 'pagination_type' => 'page',
                 'args' => [
                     'catalogId' => ['type' => 'String!', 'description' => 'Catalog ID'],

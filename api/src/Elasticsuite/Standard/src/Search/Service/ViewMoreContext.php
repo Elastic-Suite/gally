@@ -14,14 +14,22 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\Search\Resolver;
+namespace Elasticsuite\Search\Service;
 
-use ApiPlatform\Core\GraphQl\Resolver\QueryCollectionResolverInterface;
-
-class DummyDocumentResolver implements QueryCollectionResolverInterface
+/**
+ * ViewMore context. Used as a singleton to pass filter name to the aggregation modifier.
+ */
+class ViewMoreContext
 {
-    public function __invoke(iterable $collection, array $context): iterable
+    private ?string $filterName = null;
+
+    public function setFilterName(string $filterName): void
     {
-        return $collection;
+        $this->filterName = $filterName;
+    }
+
+    public function getFilterName(): ?string
+    {
+        return $this->filterName;
     }
 }

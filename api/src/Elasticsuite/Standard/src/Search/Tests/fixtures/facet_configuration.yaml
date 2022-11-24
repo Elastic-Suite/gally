@@ -4,6 +4,12 @@ Elasticsuite\Search\Model\Facet\Configuration:
             sourceField: '@product_category'
             category: ~
         displayMode: 'displayed'
+        maxSize: 0
+    product_color_facet:
+        __construct:
+            sourceField: '@product_color'
+            category: ~
+        maxSize: 2
     product_weight_facet:
         __construct:
             sourceField: '@product_weight'
