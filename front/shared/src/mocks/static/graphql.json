@@ -1807,7 +1807,7 @@
             }
           },
           {
-            "name": "searchDocuments",
+            "name": "documents",
             "description": null,
             "type": {
               "name": "DocumentConnection",
@@ -1972,7 +1972,7 @@
             }
           },
           {
-            "name": "searchProducts",
+            "name": "products",
             "description": null,
             "type": {
               "name": "ProductConnection",

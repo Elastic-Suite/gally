@@ -22,7 +22,7 @@ function Products(props: IProps): JSX.Element {
 
   const rows = useMemo(
     () =>
-      products.data?.searchProducts.collection.map((product) => {
+      products.data?.products.collection.map((product) => {
         try {
           if (product.price) {
             return {
@@ -53,7 +53,7 @@ function Products(props: IProps): JSX.Element {
       page={page}
       pageSize={pageSize}
       paginationMode="server"
-      rowCount={products.data?.searchProducts.paginationInfo.totalCount || 0}
+      rowCount={products.data?.products.paginationInfo.totalCount || 0}
       rowsPerPageOptions={[10, 20, 30]}
       rows={rows}
     />
