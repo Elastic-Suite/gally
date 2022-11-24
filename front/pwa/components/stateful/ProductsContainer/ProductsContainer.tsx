@@ -70,6 +70,8 @@ function ProductsContainer(props: IProps): JSX.Element {
   const [bottomSelectedRows, setBottomSelectedRows] = useState<string[]>([])
   const [nbBottomRows, setNbBottomRows] = useState(0)
 
+  const defaultSorting = catConf?.defaultSorting ?? ''
+
   const variables = useMemo(
     () => ({
       localizedCatalogId: Number(localizedCatalogId),
