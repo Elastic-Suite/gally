@@ -1,4 +1,7 @@
 import { styled } from '@mui/system'
+import { storageRemove } from '~/../shared/'
+import { tokenStorageKey } from '~/../shared'
+import { useRouter } from 'next/router'
 
 const CustomTypoTexte = styled('div')(({ theme }) => ({
   fontStyle: 'normal',
@@ -24,6 +27,7 @@ const CustomTypoEmail = styled('div')(({ theme }) => ({
 const CustomTypoBasic = styled('div')(({ theme }) => ({
   fontWeight: '400',
   color: theme.palette.colors.neutral['800'],
+  cursor: 'pointer',
 }))
 
 const CustomHr = styled('div')(({ theme }) => ({
@@ -34,13 +38,19 @@ const CustomHr = styled('div')(({ theme }) => ({
 }))
 
 function UserMenuShow(): JSX.Element {
+  const router = useRouter()
+  function handleLogOut(): void {
+    storageRemove(tokenStorageKey)
+    router.push('/login')
+  }
+
   return (
     <CustomTypoTexte>
       <CustomTypoUsername>Admin name</CustomTypoUsername>
       <CustomTypoEmail>adminame@mail.com</CustomTypoEmail>
       <CustomHr />
       <CustomTypoBasic>Account</CustomTypoBasic>
-      <CustomTypoBasic>Log out</CustomTypoBasic>
+      <CustomTypoBasic onClick={handleLogOut}>Log out</CustomTypoBasic>
     </CustomTypoTexte>
   )
 }
