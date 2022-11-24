@@ -33,6 +33,8 @@ export function getSearchProductsQuery(
             sku: true,
             name: true,
             score: true,
+            image: true,
+
             stock: {
               status: true,
             },

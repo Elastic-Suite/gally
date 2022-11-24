@@ -76,7 +76,6 @@ function TopTable(props: IProps): JSX.Element {
       topProductsMap[a.id.split('/')[2]] - topProductsMap[b.id.split('/')[2]]
   ) as unknown as ITableRow[]
 
-  console.log(products)
   return (
     <>
       {products.status === LoadStatus.SUCCEEDED &&
