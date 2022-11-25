@@ -19,6 +19,7 @@ namespace Elasticsuite\Search\Elasticsearch\Request\Container\Configuration;
 use Elasticsuite\Catalog\Model\LocalizedCatalog;
 use Elasticsuite\Index\Model\Index\MappingInterface;
 use Elasticsuite\Metadata\Model\Metadata;
+use Elasticsuite\Search\Elasticsearch\Request\Aggregation\Provider\AggregationProviderInterface;
 use Elasticsuite\Search\Elasticsearch\Request\Container\RelevanceConfigurationInterface;
 use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
 use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;

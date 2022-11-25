@@ -3,6 +3,3 @@ elasticsuite:
         Elasticsuite\Product\Model\Product:
             renamings:
                 searchProducts: products
-    search_settings:
-        aggregations:
-            coverage_use_indexed_fields_property: false

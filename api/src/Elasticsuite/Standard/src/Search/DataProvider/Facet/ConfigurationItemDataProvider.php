@@ -21,6 +21,7 @@ use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Elasticsuite\Category\Model\Category;
+use Elasticsuite\Exception\LogicException;
 use Elasticsuite\Metadata\Model\SourceField;
 use Elasticsuite\Search\Model\Facet;
 use Elasticsuite\Search\Repository\Facet\ConfigurationRepository;
@@ -48,11 +49,17 @@ final class ConfigurationItemDataProvider implements RestrictedDataProviderInter
         $repository = $manager->getRepository($resourceClass);
 
         // Force loading sub-entity in order to avoid having proxies.
-        /** @var SourceField $sourceField */
         $sourceField = $this->itemDataProvider->getItem(SourceField::class, ['id' => $sourceFieldId]);
-        /** @var Category $category */
-        $category = $this->itemDataProvider->getItem(Category::class, ['id' => $categoryId]);
+        if (null === $sourceField) {
+            throw new LogicException("The source field with the id '{$sourceFieldId}' does not exist.");
+        }
 
+        $category = $this->itemDataProvider->getItem(Category::class, ['id' => $categoryId]);
+        if ('0' !== $categoryId && null === $category) {
+            throw new LogicException("The category with the id '{$categoryId}' does not exist.");
+        }
+
+        $repository->setMetadata($sourceField->getMetadata());
         $defaultFacetConfiguration = null;
         if ($categoryId
             && (
@@ -67,6 +74,7 @@ final class ConfigurationItemDataProvider implements RestrictedDataProviderInter
                 $operationName,
                 $context
             );
+            $defaultFacetConfiguration->setId(implode('-', [$sourceFieldId, 0]));
         }
 
         if (!$defaultFacetConfiguration) {
@@ -84,6 +92,7 @@ final class ConfigurationItemDataProvider implements RestrictedDataProviderInter
             $context
         );
         $facetConfiguration = $facetConfiguration ?: new Facet\Configuration($sourceField, $category);
+        $facetConfiguration->setId($id['id']);
 
         $facetConfiguration->initDefaultValue($defaultFacetConfiguration);
 

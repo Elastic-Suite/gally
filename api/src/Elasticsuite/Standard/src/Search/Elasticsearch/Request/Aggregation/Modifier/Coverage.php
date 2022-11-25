@@ -14,18 +14,14 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\Product\Elasticsearch\Request\Aggregation\Modifier;
+namespace Elasticsuite\Search\Elasticsearch\Request\Aggregation\Modifier;
 
-use Elasticsuite\Catalog\Model\LocalizedCatalog;
-use Elasticsuite\Metadata\Model\Metadata;
-use Elasticsuite\Product\Elasticsearch\Request\Aggregation\CoverageProvider;
-use Elasticsuite\Product\Service\CurrentCategoryProvider;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\SimpleRequestBuilder;
-use Elasticsuite\Search\Elasticsearch\Request\Aggregation\Modifier\ModifierInterface;
+use Elasticsuite\Search\Elasticsearch\Request\Aggregation\CoverageProvider;
 use Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider;
+use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
 use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
-use Elasticsuite\Search\Model\Facet\Configuration;
-use Elasticsuite\Search\Repository\Facet\ConfigurationRepository;
+use Elasticsuite\Search\Model\Facet\Configuration as FacetConfiguration;
 
 /**
  * Coverage Modifier for filterable product source field provider.
@@ -36,50 +32,43 @@ class Coverage implements ModifierInterface
         private SimpleRequestBuilder $coverageRequestBuilder,
         private CoverageProvider $coverageProvider,
         private ContainerConfigurationProvider $containerConfigurationProvider,
-        private ConfigurationRepository $facetConfigRepository,
-        private CurrentCategoryProvider $currentCategoryProvider,
     ) {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function modifySourceFields(
-        Metadata $metadata,
-        LocalizedCatalog $localizedCatalog,
-        array $sourceFields,
+    public function modifyFacetConfigs(
+        ContainerConfigurationInterface $containerConfig,
+        array $facetConfigs,
         QueryInterface|string|null $query,
         array $filters,
         array $queryFilters
     ): array {
-        $relevantAttributes = [];
-        $coverageRates = $this->getCoverageRates($metadata, $localizedCatalog, $query, $filters, $queryFilters);
-        $currentCategory = $this->currentCategoryProvider->getCurrentCategory();
-        $this->facetConfigRepository->setCategoryId($currentCategory?->getId());
-        $facetConfigs = $this->facetConfigRepository->getConfigurationForSourceFields($sourceFields);
+        $relevantFacets = [];
+        $coverageRates = $this->getCoverageRates($containerConfig, $query, $filters, $queryFilters);
 
         foreach ($facetConfigs as $facetConfig) {
             $sourceFieldCode = $facetConfig->getSourceField()->getCode();
             $minCoverageRate = $facetConfig->getCoverageRate();
 
             $isRelevant = isset($coverageRates[$sourceFieldCode]) && ($coverageRates[$sourceFieldCode] >= $minCoverageRate);
-            $forceDisplay = Configuration::DISPLAY_MODE_ALWAYS_DISPLAYED == $facetConfig->getDisplayMode();
-            $isHidden = Configuration::DISPLAY_MODE_ALWAYS_HIDDEN == $facetConfig->getDisplayMode();
+            $forceDisplay = FacetConfiguration::DISPLAY_MODE_ALWAYS_DISPLAYED == $facetConfig->getDisplayMode();
+            $isHidden = FacetConfiguration::DISPLAY_MODE_ALWAYS_HIDDEN == $facetConfig->getDisplayMode();
 
             if (!($isHidden || !($isRelevant || $forceDisplay))) {
-                $relevantAttributes[] = $facetConfig->getSourceField();
+                $relevantFacets[] = $facetConfig;
             }
         }
 
-        return $relevantAttributes;
+        return $relevantFacets;
     }
 
     /**
      * {@inheritdoc}
      */
     public function modifyAggregations(
-        Metadata $metadata,
-        LocalizedCatalog $localizedCatalog,
+        ContainerConfigurationInterface $containerConfig,
         array $aggregations,
         QueryInterface|string|null $query,
         array $filters,
@@ -91,27 +80,25 @@ class Coverage implements ModifierInterface
     /**
      * Get coverage rate of attributes for current search request.
      *
-     * @param Metadata                   $metadata         metadata
-     * @param LocalizedCatalog           $localizedCatalog the localized catalog
-     * @param QueryInterface|string|null $query            Current Query
-     * @param array                      $filters          search request filters
-     * @param QueryInterface[]           $queryFilters     search request filters prebuilt as QueryInterface
+     * @param ContainerConfigurationInterface $containerConfig search container configuration
+     * @param QueryInterface|string|null      $query           Current Query
+     * @param array                           $filters         search request filters
+     * @param QueryInterface[]                $queryFilters    search request filters prebuilt as QueryInterface
      */
     private function getCoverageRates(
-        Metadata $metadata,
-        LocalizedCatalog $localizedCatalog,
+        ContainerConfigurationInterface $containerConfig,
         QueryInterface|string|null $query = null,
         array $filters = [],
         array $queryFilters = []
     ): array {
-        $containerConfig = $this->containerConfigurationProvider->get(
-            $metadata,
-            $localizedCatalog,
-            'product_coverage_rate'
+        $coverageConfigProvider = $this->containerConfigurationProvider->get(
+            $containerConfig->getMetadata(),
+            $containerConfig->getLocalizedCatalog(),
+            'coverage_rate'
         );
 
         $coverageRequest = $this->coverageRequestBuilder->create(
-            $containerConfig,
+            $coverageConfigProvider,
             0,
             0,
             $query,

@@ -82,7 +82,6 @@ class AddAggregationsType implements TypeBuilderInterface
                     'fields' => [
                         'count' => GraphQLType::int(),
                         'label' => GraphQLType::string(),
-                        'type' => GraphQLType::string(),
                         'value' => GraphQLType::nonNull(GraphQLType::string()),
                     ],
                 ]

@@ -4,6 +4,7 @@ imports:
     - { resource: elasticsearch/query_assembler.yaml }
     - { resource: elasticsearch/aggregation_assembler.yaml }
     - { resource: elasticsearch/aggregation_resolver.yaml }
+    - { resource: elasticsearch/request_type.yaml }
 
 services:
     Elasticsuite\Search\Repository\Facet\ConfigurationRepository:
@@ -41,6 +42,7 @@ services:
         arguments:
             - '@doctrine'
             - '@elasticsuite.search.dataprovider.collection_data_provider.no_eager_loading'
+            - '@Elasticsuite\Metadata\Repository\MetadataRepository'
         tags:
             - { name: api_platform.collection_data_provider, priority: 2 }
         autoconfigure: false
@@ -65,11 +67,16 @@ services:
 
     Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationFactoryInterface: '@elasticsuite.search.container.configuration.factory'
     
+    Elasticsuite\Search\Elasticsearch\Request\Aggregation\Provider\GenericAggregationProvider: ~
+    
     Elasticsuite\Search\Elasticsearch\Request\Aggregation\Provider\FilterableSourceFields:
         arguments:
-            - '@Elasticsuite\Metadata\Repository\SourceFieldRepository'
+            - '@Elasticsuite\Search\Repository\Facet\ConfigurationRepository'
+            - '@Elasticsuite\Product\Service\CurrentCategoryProvider'
             - !tagged_iterator { tag: 'elasticsuite.search.aggregation.resolver' }
-            - {}
+            - {
+                coverageModifier: '@Elasticsuite\Search\Elasticsearch\Request\Aggregation\Modifier\Coverage',
+            }
 
     elasticsuite.search.request.factory:
         class: Elasticsuite\Search\Elasticsearch\RequestFactory
@@ -253,14 +260,6 @@ services:
         arguments:
             - '%elasticsuite.relevance%'
     
-    Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\GenericContainerConfigurationFactory:
-        public: false
-        arguments:
-            $indexSettings: '@Elasticsuite\Index\Service\IndexSettings'
-            $metadataManager: '@Elasticsuite\Index\Service\MetadataManager'
-            $relevanceConfiguration: '@Elasticsuite\Search\Elasticsearch\Request\Container\RelevanceConfiguration\GenericRelevanceConfiguration'
-            $aggregationProvider: '@Elasticsuite\Search\Elasticsearch\Request\Aggregation\Provider\FilterableSourceFields'
-
     Elasticsuite\Search\Decoration\GraphQl\AddSortInfoType:
         decorates: api_platform.graphql.type_builder
         arguments:
@@ -273,9 +272,8 @@ services:
         arguments:
             - '@.inner'
 
-    Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider:
-        arguments:
-            - '@Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\GenericContainerConfigurationFactory'
+    Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider: ~
+    
     
     elasticsuite.search.spellchecker.request.factory:
         class: Elasticsuite\Search\Elasticsearch\Spellchecker\RequestFactory
@@ -287,3 +285,23 @@ services:
     Elasticsuite\Search\EventSubscriber\GenerateFacetConfigurationId:
         tags:
             - { name: doctrine.event_subscriber }
+                
+    Elasticsuite\Search\Service\SearchSettingsProvider:
+        arguments:
+            - '%elasticsuite.search_settings%'
+
+    Elasticsuite\Search\Elasticsearch\Request\Aggregation\CoverageProvider:
+        arguments:
+            - '@Elasticsuite\Search\Elasticsearch\Adapter'
+
+    Elasticsuite\Search\Elasticsearch\Request\Aggregation\Modifier\Coverage:
+        arguments:
+            - '@Elasticsuite\Search\Elasticsearch\Builder\Request\SimpleRequestBuilder'
+            - '@Elasticsuite\Search\Elasticsearch\Request\Aggregation\CoverageProvider'
+            - '@Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider'
+
+    Elasticsuite\Search\Elasticsearch\Request\Aggregation\Provider\CoverageAggregationProvider:
+        arguments:
+            - '@Elasticsuite\Metadata\Repository\SourceFieldRepository'
+            - '@Elasticsuite\Search\Elasticsearch\Request\QueryFactory'
+            - '@Elasticsuite\Search\Service\SearchSettingsProvider'

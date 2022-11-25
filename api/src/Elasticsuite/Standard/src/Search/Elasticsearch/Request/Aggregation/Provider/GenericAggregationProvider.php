@@ -14,21 +14,20 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\Product\Tests\AggregationProvider;
+namespace Elasticsuite\Search\Elasticsearch\Request\Aggregation\Provider;
 
-use Elasticsuite\Search\Elasticsearch\Request\Aggregation\Provider\AggregationProviderInterface;
 use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
 
 /**
  * Default Aggregations Provider for Search Requests.
  */
-class DummyAggregationProvider implements AggregationProviderInterface
+class GenericAggregationProvider implements AggregationProviderInterface
 {
     /**
      * {@inheritdoc}
      */
     public function getAggregations(
-        ContainerConfigurationInterface $containerConfiguration,
+        ContainerConfigurationInterface $containerConfig,
         $query = null,
         $filters = [],
         $queryFilters = []

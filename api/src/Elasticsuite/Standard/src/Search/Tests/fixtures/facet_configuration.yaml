@@ -1,0 +1,21 @@
+Elasticsuite\Search\Model\Facet\Configuration:
+    product_category_facet:
+        __construct:
+            sourceField: '@product_category'
+            category: ~
+        displayMode: 'displayed'
+    product_weight_facet:
+        __construct:
+            sourceField: '@product_weight'
+            category: ~
+        displayMode: 'displayed'
+    product_is_eco_friendly_facet:
+        __construct:
+            sourceField: '@product_is_eco_friendly'
+            category: ~
+        coverageRate: 50
+    product_size_facet:
+        __construct:
+            sourceField: '@product_size'
+            category: '@categ1'
+        displayMode: 'hidden'

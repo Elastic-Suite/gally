@@ -30,11 +30,13 @@ class SearchDocumentsTest extends AbstractTest
     {
         parent::setUpBeforeClass();
         self::loadFixture([
-            __DIR__ . '/../../fixtures/catalogs.yaml',
-            __DIR__ . '/../../fixtures/source_field.yaml',
-            __DIR__ . '/../../fixtures/source_field_label.yaml',
-            __DIR__ . '/../../fixtures/source_field_option.yaml',
+            __DIR__ . '/../../fixtures/facet_configuration.yaml',
             __DIR__ . '/../../fixtures/source_field_option_label.yaml',
+            __DIR__ . '/../../fixtures/source_field_option.yaml',
+            __DIR__ . '/../../fixtures/source_field_label.yaml',
+            __DIR__ . '/../../fixtures/source_field.yaml',
+            __DIR__ . '/../../fixtures/categories.yaml',
+            __DIR__ . '/../../fixtures/catalogs.yaml',
             __DIR__ . '/../../fixtures/metadata.yaml',
         ]);
         self::createEntityElasticsearchIndices('product');
@@ -538,16 +540,16 @@ class SearchDocumentsTest extends AbstractTest
                             ],
                         ],
                     ],
-                    ['field' => 'length', 'label' => 'Length', 'type' => 'slider'],
                     ['field' => 'weight', 'label' => 'Weight', 'type' => 'slider'],
+                    ['field' => 'is_eco_friendly', 'label' => 'Is_eco_friendly', 'type' => 'checkbox'],
                     [
                         'field' => 'category',
                         'label' => 'Category',
                         'type' => 'checkbox',
                         'options' => [
                             [
-                                'label' => 'cat_2',
-                                'value' => 'cat_2',
+                                'label' => 'cat_1',
+                                'value' => 'cat_1',
                                 'count' => 2,
                             ],
                             [
