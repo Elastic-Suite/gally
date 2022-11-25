@@ -74,7 +74,7 @@ function ProductsTopAndBottom(
         <Box
           sx={
             topProducts.length !== 0 &&
-            sortValue === 'position' &&
+            sortValue === 'category__position' &&
             searchValue === ''
               ? { marginTop: '24px' }
               : {}

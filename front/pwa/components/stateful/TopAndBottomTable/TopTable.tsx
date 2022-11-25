@@ -79,20 +79,21 @@ function TopTable(props: IProps): JSX.Element {
   console.log(products)
   return (
     <>
-      {products.status === LoadStatus.SUCCEEDED && sortValue === 'position' && (
-        <div>
-          <TopProductsTable
-            Field={FieldGuesser}
-            selectedRows={selectedRows}
-            onSelectedRows={onSelectedRows}
-            onReOrder={handleReorder}
-            tableHeaders={productTableheader}
-            tableRows={tableRows}
-            draggable
-            border
-          />
-        </div>
-      )}
+      {products.status === LoadStatus.SUCCEEDED &&
+        sortValue === 'category__position' && (
+          <div>
+            <TopProductsTable
+              Field={FieldGuesser}
+              selectedRows={selectedRows}
+              onSelectedRows={onSelectedRows}
+              onReOrder={handleReorder}
+              tableHeaders={productTableheader}
+              tableRows={tableRows}
+              draggable
+              border
+            />
+          </div>
+        )}
     </>
   )
 }

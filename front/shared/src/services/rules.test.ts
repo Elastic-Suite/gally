@@ -35,7 +35,7 @@ describe('Rules service', () => {
     '@id': '/category_configurations/6',
     '@type': 'CategoryConfiguration',
     category: '/categories/one',
-    defaultSorting: 'position',
+    defaultSorting: 'category__position',
     id: 6,
     isActive: true,
     isVirtual: true,
