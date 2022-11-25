@@ -25,6 +25,8 @@ use Elasticsuite\Search\Elasticsearch\Adapter\Common\Response\BucketValue;
  */
 class AggregationBuilder
 {
+    public const OTHER_DOCS_KEY = '__other_docs';
+
     /**
      * Build an aggregation object from the search engine response.
      *
@@ -59,7 +61,7 @@ class AggregationBuilder
         $values = [];
 
         if (isset($rawAggregation['sum_other_doc_count']) && $rawAggregation['sum_other_doc_count'] > 0) {
-            $rawAggregation['buckets']['__other_docs']['doc_count'] = $rawAggregation['sum_other_doc_count'];
+            $rawAggregation['buckets'][self::OTHER_DOCS_KEY]['doc_count'] = $rawAggregation['sum_other_doc_count'];
         }
 
         foreach ($rawAggregation['buckets'] as $key => $value) {

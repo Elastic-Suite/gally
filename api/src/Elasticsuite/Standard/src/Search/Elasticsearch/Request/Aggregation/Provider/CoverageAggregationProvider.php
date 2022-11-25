@@ -14,16 +14,15 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\Product\Elasticsearch\Request\Aggregation\Provider;
+namespace Elasticsuite\Search\Elasticsearch\Request\Aggregation\Provider;
 
 use Elasticsuite\Metadata\Model\SourceField\Type;
 use Elasticsuite\Metadata\Repository\SourceFieldRepository;
-use Elasticsuite\Product\Service\SearchSettingsProvider;
 use Elasticsuite\Search\Elasticsearch\Request\BucketInterface;
-use Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\AggregationProviderInterface;
 use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
 use Elasticsuite\Search\Elasticsearch\Request\QueryFactory;
 use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
+use Elasticsuite\Search\Service\SearchSettingsProvider;
 
 /**
  * Coverage request aggregation resolver.

@@ -14,7 +14,7 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\Product\Service;
+namespace Elasticsuite\Search\Service;
 
 class SearchSettingsProvider
 {

@@ -59,18 +59,20 @@ class FacetConfigurationTest extends RestFacetConfigurationTest
         );
     }
 
-    protected function testGetCollection(?string $categoryId, array $items): void
+    protected function testGetCollection(?string $entityType, ?string $categoryId, array $items): void
     {
-        $query = $categoryId ? "(category: \"/categories/$categoryId\")" : '';
+        $query = $entityType ? ["sourceField__metadata__entity: \"$entityType\""] : [];
+
+        if ($categoryId) {
+            $query[] = "category: \"/categories/$categoryId\"";
+        }
+        $query = empty($query) ? '' : ('(' . implode(' ', $query) . ')');
         $this->validateApiCall(
             new RequestGraphQlToTest(
                 <<<GQL
                     {
                       facetConfigurations $query {
-                        pageInfo { hasNextPage }
-                        totalCount
-                        edges {
-                          node {
+                        collection {
                             id
                             displayMode
                             coverageRate
@@ -81,8 +83,8 @@ class FacetConfigurationTest extends RestFacetConfigurationTest
                             category { id }
                             sourceField { id }
                             sourceFieldCode
-                          }
                         }
+                        paginationInfo {totalCount}
                       }
                     }
                 GQL,
@@ -95,8 +97,7 @@ class FacetConfigurationTest extends RestFacetConfigurationTest
                         [
                             'data' => [
                                 'facetConfigurations' => [
-                                    'pageInfo' => ['hasNextPage' => false],
-                                    'totalCount' => 6,
+                                    'paginationInfo' => ['totalCount' => \count($items)],
                                 ],
                             ],
                         ]
@@ -108,7 +109,7 @@ class FacetConfigurationTest extends RestFacetConfigurationTest
                         $item = $this->completeContent($item);
                         $this->assertEquals(
                             $item,
-                            $this->getById($item['id'], $responseData['data']['facetConfigurations']['edges'])
+                            $this->getById($item['id'], $responseData['data']['facetConfigurations']['collection'])
                         );
                     }
                 }
@@ -150,8 +151,8 @@ class FacetConfigurationTest extends RestFacetConfigurationTest
     protected function getById(string $id, array $list): ?array
     {
         foreach ($list as $element) {
-            if ($id === $element['node']['id']) {
-                return $element['node'];
+            if ($id === $element['id']) {
+                return $element;
             }
         }
 

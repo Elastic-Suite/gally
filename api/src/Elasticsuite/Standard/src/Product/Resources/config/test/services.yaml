@@ -11,8 +11,3 @@ services:
             $aggregationProvider: '@Elasticsuite\Product\Tests\AggregationProvider\DummyAggregationProvider'
         tags:
             - { name: elasticsuite.container_configuration.factory, requestType: test_search_query, metadata: product }
-
-    Elasticsuite\Product\Service\SearchSettingsProvider:
-        class: Elasticsuite\Product\Tests\Service\SearchSettingsProvider
-        arguments:
-            - '%elasticsuite.search_settings%'

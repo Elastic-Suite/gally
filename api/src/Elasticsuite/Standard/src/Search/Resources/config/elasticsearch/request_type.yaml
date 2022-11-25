@@ -1,0 +1,17 @@
+services:
+    Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\GenericContainerConfigurationFactory:
+        public: false
+        arguments:
+            $indexSettings: '@Elasticsuite\Index\Service\IndexSettings'
+            $metadataManager: '@Elasticsuite\Index\Service\MetadataManager'
+            $relevanceConfiguration: '@Elasticsuite\Search\Elasticsearch\Request\Container\RelevanceConfiguration\GenericRelevanceConfiguration'
+            $aggregationProvider: '@Elasticsuite\Search\Elasticsearch\Request\Aggregation\Provider\FilterableSourceFields'
+        tags:
+            - { name: elasticsuite.container_configuration.factory, requestType: generic }
+
+    elasticsuite.container_configuration.coverage_rate.factory:
+        parent: 'Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\GenericContainerConfigurationFactory'
+        arguments:
+            $aggregationProvider: '@Elasticsuite\Search\Elasticsearch\Request\Aggregation\Provider\CoverageAggregationProvider'
+        tags:
+            - { name: elasticsuite.container_configuration.factory, requestType: coverage_rate }

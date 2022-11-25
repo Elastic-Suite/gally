@@ -14,15 +14,17 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\Product\Tests\Unit\Elasticsearch\Request\Aggregation;
+namespace Elasticsuite\Search\Tests\Unit\Elasticsearch\Request\Aggregation;
 
 use Elasticsuite\Catalog\Repository\LocalizedCatalogRepository;
-use Elasticsuite\Metadata\Model\SourceField;
 use Elasticsuite\Metadata\Repository\MetadataRepository;
-use Elasticsuite\Metadata\Repository\SourceFieldRepository;
-use Elasticsuite\Product\Elasticsearch\Request\Aggregation\Modifier\Coverage;
-use Elasticsuite\Product\Service\SearchSettingsProvider;
-use Elasticsuite\Product\Tests\Service\SearchSettingsProvider as TestSearchSettingsProvider;
+use Elasticsuite\Product\Service\CurrentCategoryProvider;
+use Elasticsuite\Search\Elasticsearch\Request\Aggregation\Modifier\Coverage;
+use Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider;
+use Elasticsuite\Search\Model\Facet\Configuration;
+use Elasticsuite\Search\Repository\Facet\ConfigurationRepository;
+use Elasticsuite\Search\Service\SearchSettingsProvider;
+use Elasticsuite\Search\Tests\Service\SearchSettingsProvider as TestSearchSettingsProvider;
 use Elasticsuite\Test\AbstractTest;
 
 /**
@@ -45,7 +47,7 @@ class CoverageTest extends AbstractTest
             __DIR__ . '/../../../../fixtures/metadata.yaml',
         ]);
         self::createEntityElasticsearchIndices('product');
-        self::loadElasticsearchDocumentFixtures([__DIR__ . '/../../../../fixtures/product_documents.json']);
+        self::loadElasticsearchDocumentFixtures([__DIR__ . '/../../../../fixtures/documents.json']);
     }
 
     public static function tearDownAfterClass(): void
@@ -63,12 +65,15 @@ class CoverageTest extends AbstractTest
         bool $coverageUseIndexFieldsProperty,
         array $expectedAggregations
     ): void {
-        \assert(static::getContainer()->get(MetadataRepository::class) instanceof MetadataRepository);
+        $containerConfigurationProvider = static::getContainer()->get(ContainerConfigurationProvider::class);
+        \assert(static::getContainer()->get(ContainerConfigurationProvider::class) instanceof ContainerConfigurationProvider);
         $metadataRepository = static::getContainer()->get(MetadataRepository::class);
         \assert(static::getContainer()->get(LocalizedCatalogRepository::class) instanceof LocalizedCatalogRepository);
         $localizedCatalogRepository = static::getContainer()->get(LocalizedCatalogRepository::class);
-        \assert(static::getContainer()->get(SourceFieldRepository::class) instanceof SourceFieldRepository);
-        $sourceFieldRepository = static::getContainer()->get(SourceFieldRepository::class);
+        \assert(static::getContainer()->get(ConfigurationRepository::class) instanceof ConfigurationRepository);
+        $facetConfigRepository = static::getContainer()->get(ConfigurationRepository::class);
+        \assert(static::getContainer()->get(CurrentCategoryProvider::class) instanceof CurrentCategoryProvider);
+        $currentCategoryProvider = static::getContainer()->get(CurrentCategoryProvider::class);
         \assert(static::getContainer()->get(Coverage::class) instanceof Coverage);
         $coverage = static::getContainer()->get(Coverage::class);
         \assert(static::getContainer()->get(SearchSettingsProvider::class) instanceof TestSearchSettingsProvider);
@@ -76,13 +81,18 @@ class CoverageTest extends AbstractTest
 
         $metadata = $metadataRepository->findByEntity('product');
         $localizedCatalog = $localizedCatalogRepository->findOneBy(['code' => 'b2c_en']);
-        $sourceFields = $sourceFieldRepository->getFilterableInAggregationFields('product');
+        $containerConfig = $containerConfigurationProvider->get($metadata, $localizedCatalog);
+
+        $currentCategory = $currentCategoryProvider->getCurrentCategory();
+        $facetConfigRepository->setCategoryId($currentCategory?->getId());
+        $facetConfigRepository->setMetadata($metadata);
+        $facetsConfigs = $facetConfigRepository->findAll();
 
         $searchSettings->set('aggregations', ['coverage_use_indexed_fields_property' => $coverageUseIndexFieldsProperty]);
-        $sourcesFields = $coverage->modifySourceFields($metadata, $localizedCatalog, $sourceFields, null, [], []);
+        $facetsConfigs = $coverage->modifyFacetConfigs($containerConfig, $facetsConfigs, null, [], []);
         $this->assertEquals(
             $expectedAggregations,
-            array_map(fn (SourceField $sourceField): string => $sourceField->getCode(), $sourcesFields)
+            array_map(fn (Configuration $facetsConfig): string => $facetsConfig->getSourceFieldCode(), $facetsConfigs)
         );
     }
 
@@ -91,11 +101,11 @@ class CoverageTest extends AbstractTest
         return [
             [
                 false, // coverage_use_indexed_fields_property conf value
-                ['color', 'size', 'weight', 'is_eco_friendly', 'category'], //expected aggregation
+                ['color', 'category', 'size', 'weight', 'is_eco_friendly'], //expected aggregation
             ],
             [
                 true, // coverage_use_indexed_fields_property conf value
-                ['color', 'weight', 'is_eco_friendly', 'category'], // Expected aggregations
+                ['color', 'category', 'weight', 'is_eco_friendly'], // Expected aggregations
             ],
         ];
     }

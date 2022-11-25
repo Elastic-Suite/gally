@@ -35,6 +35,7 @@ use Elasticsuite\Search\Model\Facet;
 class ConfigurationRepository extends ServiceEntityRepository
 {
     private ?string $categoryId = null;
+    private ?Metadata $metadata = null;
 
     public function __construct(
         ManagerRegistry $registry
@@ -52,19 +53,24 @@ class ConfigurationRepository extends ServiceEntityRepository
         $this->categoryId = $categoryId;
     }
 
+    public function getMetadata(): ?Metadata
+    {
+        return $this->metadata;
+    }
+
+    public function setMetadata(?Metadata $metadata): void
+    {
+        $this->metadata = $metadata;
+    }
+
     /**
-     * Get configuration for given source fields.
-     *
-     * @param SourceField[] $sourceFields
+     * Get all facet configuration.
      *
      * @return Facet\Configuration[]
      */
-    public function getConfigurationForSourceFields(array $sourceFields): array
+    public function findAll(): array
     {
-        $query = $this->createQueryBuilder('o')
-            ->andWhere('sf in (:sourceFields)') // sf is the alias of the sourceField table join in createQueryBuilder
-            ->setParameter('sourceFields', $sourceFields)
-            ->getQuery();
+        $query = $this->createQueryBuilder('o')->getQuery();
 
         return $query->getResult($query->getHydrationMode());
     }
@@ -85,8 +91,6 @@ class ConfigurationRepository extends ServiceEntityRepository
             ->from(SourceField::class, 'sf', $indexBy)
             ->leftJoin(Metadata::class, 'metadata', Join::WITH, 'sf.metadata = metadata.id')
             ->where('sf.isFilterable = true')
-            ->andWhere('metadata.entity = :entity')
-            ->setParameter('entity', 'product')
             ->setParameter('category', $category);
 
         if ($category) {
@@ -105,6 +109,11 @@ class ConfigurationRepository extends ServiceEntityRepository
                 Join::WITH,
                 "sf.id = {$alias}.sourceField and {$alias}.category is NULL"
             );
+        }
+
+        if ($this->getMetadata()) {
+            $queryBuilder->andWhere('metadata.entity = :entity')
+                ->setParameter('entity', $this->getMetadata()->getEntity());
         }
 
         $queryBuilder

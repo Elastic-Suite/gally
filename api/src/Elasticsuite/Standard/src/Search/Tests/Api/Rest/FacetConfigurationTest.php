@@ -43,9 +43,9 @@ class FacetConfigurationTest extends AbstractTest
     /**
      * @dataProvider getCollectionBeforeDataProvider
      */
-    public function testGetCollectionBefore(?string $categoryId, array $elements): void
+    public function testGetCollectionBefore(?string $entityType, ?string $categoryId, array $elements): void
     {
-        $this->testGetCollection($categoryId, $elements);
+        $this->testGetCollection($entityType, $categoryId, $elements);
     }
 
     protected function getCollectionBeforeDataProvider(): array
@@ -53,29 +53,64 @@ class FacetConfigurationTest extends AbstractTest
         return [
             [
                 null,
+                null,
+                [
+                    ['sourceField' => 2, 'sourceFieldCode' => 'name'],
+                    ['sourceField' => 3, 'sourceFieldCode' => 'brand'],
+                    ['sourceField' => 4, 'sourceFieldCode' => 'color'],
+                    ['sourceField' => 5, 'sourceFieldCode' => 'category'],
+                    ['sourceField' => 6, 'sourceFieldCode' => 'length'],
+                    ['sourceField' => 7, 'sourceFieldCode' => 'size'],
+                    ['sourceField' => 8, 'sourceFieldCode' => 'weight'],
+                    ['sourceField' => 15, 'sourceFieldCode' => 'is_eco_friendly'],
+                ],
+            ],
+            [
+                null,
+                'cat_1',
+                [
+                    ['sourceField' => 2, 'category' => 'cat_1', 'sourceFieldCode' => 'name'],
+                    ['sourceField' => 3, 'category' => 'cat_1', 'sourceFieldCode' => 'brand'],
+                    ['sourceField' => 4, 'category' => 'cat_1', 'sourceFieldCode' => 'color'],
+                    ['sourceField' => 5, 'category' => 'cat_1', 'sourceFieldCode' => 'category'],
+                    ['sourceField' => 6, 'category' => 'cat_1', 'sourceFieldCode' => 'length'],
+                    ['sourceField' => 7, 'category' => 'cat_1', 'sourceFieldCode' => 'size'],
+                    ['sourceField' => 8, 'category' => 'cat_1', 'sourceFieldCode' => 'weight'],
+                    ['sourceField' => 15, 'category' => 'cat_1', 'sourceFieldCode' => 'is_eco_friendly'],
+                ],
+            ],
+            [
+                null,
+                'cat_2',
+                [
+                    ['sourceField' => 2, 'category' => 'cat_2', 'sourceFieldCode' => 'name'],
+                    ['sourceField' => 3, 'category' => 'cat_2', 'sourceFieldCode' => 'brand'],
+                    ['sourceField' => 4, 'category' => 'cat_2', 'sourceFieldCode' => 'color'],
+                    ['sourceField' => 5, 'category' => 'cat_2', 'sourceFieldCode' => 'category'],
+                    ['sourceField' => 6, 'category' => 'cat_2', 'sourceFieldCode' => 'length'],
+                    ['sourceField' => 7, 'category' => 'cat_2', 'sourceFieldCode' => 'size'],
+                    ['sourceField' => 8, 'category' => 'cat_2', 'sourceFieldCode' => 'weight'],
+                    ['sourceField' => 15, 'category' => 'cat_2', 'sourceFieldCode' => 'is_eco_friendly'],
+                ],
+            ],
+            [
+                'product',
+                null,
                 [
                     ['sourceField' => 3, 'sourceFieldCode' => 'brand'],
                     ['sourceField' => 4, 'sourceFieldCode' => 'color'],
                     ['sourceField' => 5, 'sourceFieldCode' => 'category'],
                     ['sourceField' => 6, 'sourceFieldCode' => 'length'],
+                    ['sourceField' => 7, 'sourceFieldCode' => 'size'],
+                    ['sourceField' => 8, 'sourceFieldCode' => 'weight'],
+                    ['sourceField' => 15, 'sourceFieldCode' => 'is_eco_friendly'],
                 ],
             ],
             [
-                'one',
+                'category',
+                null,
                 [
-                    ['sourceField' => 3, 'category' => 'one', 'sourceFieldCode' => 'brand'],
-                    ['sourceField' => 4, 'category' => 'one', 'sourceFieldCode' => 'color'],
-                    ['sourceField' => 5, 'category' => 'one', 'sourceFieldCode' => 'category'],
-                    ['sourceField' => 6, 'category' => 'one', 'sourceFieldCode' => 'length'],
-                ],
-            ],
-            [
-                'two',
-                [
-                    ['sourceField' => 3, 'category' => 'two', 'sourceFieldCode' => 'brand'],
-                    ['sourceField' => 4, 'category' => 'two', 'sourceFieldCode' => 'color'],
-                    ['sourceField' => 5, 'category' => 'two', 'sourceFieldCode' => 'category'],
-                    ['sourceField' => 6, 'category' => 'two', 'sourceFieldCode' => 'length'],
+                    ['sourceField' => 2, 'sourceFieldCode' => 'name'],
                 ],
             ],
         ];
@@ -101,9 +136,9 @@ class FacetConfigurationTest extends AbstractTest
             [$this->getUser(Role::ROLE_CONTRIBUTOR), '3-0', ['coverageRate' => 0], 403],
             [$admin, '3-0', ['coverageRate' => 0], 200],
             [$admin, '3-0', ['coverageRate' => 1, 'maxSize' => 100], 200],
-            [$admin, '3-one', ['coverageRate' => 10], 200],
-            [$admin, '4-one', ['coverageRate' => 10], 200],
-            [$admin, '3-two', ['coverageRate' => 20], 200],
+            [$admin, '3-cat_1', ['coverageRate' => 10], 200],
+            [$admin, '4-cat_1', ['coverageRate' => 10], 200],
+            [$admin, '3-cat_2', ['coverageRate' => 20], 200],
         ];
     }
 
@@ -111,9 +146,9 @@ class FacetConfigurationTest extends AbstractTest
      * @dataProvider getCollectionAfterDataProvider
      * @depends testUpdateValue
      */
-    public function testGetCollectionAfter(?string $categoryId, array $items): void
+    public function testGetCollectionAfter(?string $entityType, ?string $categoryId, array $items): void
     {
-        $this->testGetCollection($categoryId, $items);
+        $this->testGetCollection($entityType, $categoryId, $items);
     }
 
     protected function getCollectionAfterDataProvider(): array
@@ -121,37 +156,77 @@ class FacetConfigurationTest extends AbstractTest
         return [
             [
                 null,
+                null,
+                [
+                    ['sourceField' => 2, 'sourceFieldCode' => 'name'],
+                    ['sourceField' => 3, 'coverageRate' => 1, 'sourceFieldCode' => 'brand', 'maxSize' => 100], // product_brand.
+                    ['sourceField' => 4, 'sourceFieldCode' => 'color'], // product_color.
+                    ['sourceField' => 5, 'sourceFieldCode' => 'category'], // product_category.
+                    ['sourceField' => 6, 'sourceFieldCode' => 'length'], // product_length.
+                    ['sourceField' => 7, 'sourceFieldCode' => 'size'], // size.
+                    ['sourceField' => 8, 'sourceFieldCode' => 'weight'], // weight.
+                    ['sourceField' => 15, 'sourceFieldCode' => 'is_eco_friendly'],
+                ],
+            ],
+            [
+                null,
+                'cat_1',
+                [
+                    ['sourceField' => 2, 'category' => 'cat_1', 'sourceFieldCode' => 'name'],
+                    ['sourceField' => 3, 'category' => 'cat_1', 'coverageRate' => 10, 'maxSize' => 100, 'defaultCoverageRate' => 1, 'defaultMaxSize' => 100, 'sourceFieldCode' => 'brand'],
+                    ['sourceField' => 4, 'category' => 'cat_1', 'coverageRate' => 10, 'sourceFieldCode' => 'color'],
+                    ['sourceField' => 5, 'category' => 'cat_1', 'coverageRate' => 90, 'sourceFieldCode' => 'category'],
+                    ['sourceField' => 6, 'category' => 'cat_1', 'coverageRate' => 90, 'sourceFieldCode' => 'length'],
+                    ['sourceField' => 7, 'category' => 'cat_1', 'coverageRate' => 90, 'sourceFieldCode' => 'size'],
+                    ['sourceField' => 8, 'category' => 'cat_1', 'coverageRate' => 90, 'sourceFieldCode' => 'weight'],
+                    ['sourceField' => 15, 'category' => 'cat_1', 'coverageRate' => 90, 'sourceFieldCode' => 'is_eco_friendly'],
+                ],
+            ],
+            [
+                null,
+                'cat_2',
+                [
+                    ['sourceField' => 2, 'category' => 'cat_2', 'sourceFieldCode' => 'name'],
+                    ['sourceField' => 3, 'category' => 'cat_2', 'coverageRate' => 20, 'maxSize' => 100, 'defaultCoverageRate' => 1,  'defaultMaxSize' => 100, 'sourceFieldCode' => 'brand'],
+                    ['sourceField' => 4, 'category' => 'cat_2', 'coverageRate' => 90, 'sourceFieldCode' => 'color'],
+                    ['sourceField' => 5, 'category' => 'cat_2', 'coverageRate' => 90, 'sourceFieldCode' => 'category'],
+                    ['sourceField' => 6, 'category' => 'cat_2', 'coverageRate' => 90, 'sourceFieldCode' => 'length'],
+                    ['sourceField' => 7, 'category' => 'cat_2', 'coverageRate' => 90, 'sourceFieldCode' => 'size'],
+                    ['sourceField' => 8, 'category' => 'cat_2', 'coverageRate' => 90, 'sourceFieldCode' => 'weight'],
+                    ['sourceField' => 15, 'category' => 'cat_2', 'coverageRate' => 90, 'sourceFieldCode' => 'is_eco_friendly'],
+                ],
+            ],
+            [
+                'product',
+                null,
                 [
                     ['sourceField' => 3, 'coverageRate' => 1, 'sourceFieldCode' => 'brand', 'maxSize' => 100], // product_brand.
                     ['sourceField' => 4, 'sourceFieldCode' => 'color'], // product_color.
                     ['sourceField' => 5, 'sourceFieldCode' => 'category'], // product_category.
                     ['sourceField' => 6, 'sourceFieldCode' => 'length'], // product_length.
+                    ['sourceField' => 7, 'sourceFieldCode' => 'size'], // size.
+                    ['sourceField' => 8, 'sourceFieldCode' => 'weight'], // weight.
+                    ['sourceField' => 15, 'sourceFieldCode' => 'is_eco_friendly'],
                 ],
             ],
             [
-                'one',
+                'category',
+                null,
                 [
-                    ['sourceField' => 3, 'category' => 'one', 'coverageRate' => 10, 'maxSize' => 100, 'defaultCoverageRate' => 1, 'defaultMaxSize' => 100, 'sourceFieldCode' => 'brand'],
-                    ['sourceField' => 4, 'category' => 'one', 'coverageRate' => 10, 'sourceFieldCode' => 'color'],
-                    ['sourceField' => 5, 'category' => 'one', 'coverageRate' => 90, 'sourceFieldCode' => 'category'],
-                    ['sourceField' => 6, 'category' => 'one', 'coverageRate' => 90, 'sourceFieldCode' => 'length'],
-                ],
-            ],
-            [
-                'two',
-                [
-                    ['sourceField' => 3, 'category' => 'two', 'coverageRate' => 20, 'maxSize' => 100, 'defaultCoverageRate' => 1,  'defaultMaxSize' => 100, 'sourceFieldCode' => 'brand'],
-                    ['sourceField' => 4, 'category' => 'two', 'coverageRate' => 90, 'sourceFieldCode' => 'color'],
-                    ['sourceField' => 5, 'category' => 'two', 'coverageRate' => 90, 'sourceFieldCode' => 'category'],
-                    ['sourceField' => 6, 'category' => 'two', 'coverageRate' => 90, 'sourceFieldCode' => 'length'],
+                    ['sourceField' => 2, 'sourceFieldCode' => 'name'],
                 ],
             ],
         ];
     }
 
-    protected function testGetCollection(?string $categoryId, array $items): void
+    protected function testGetCollection(?string $entityType, ?string $categoryId, array $items): void
     {
-        $query = $categoryId ? "category=$categoryId" : '';
+        $query = $entityType ? ["sourceField.metadata.entity=$entityType"] : [];
+        if ($categoryId) {
+            $query[] = "category=$categoryId";
+        }
+        $query = empty($query) ? '' : implode('&', $query);
+
         $this->validateApiCall(
             new RequestToTest('GET', $this->getApiPath() . '?' . $query . '&page=1', $this->getUser(Role::ROLE_CONTRIBUTOR)),
             new ExpectedResponse(
@@ -162,7 +237,7 @@ class FacetConfigurationTest extends AbstractTest
                             '@context' => '/contexts/FacetConfiguration',
                             '@id' => '/facet_configurations',
                             '@type' => 'hydra:Collection',
-                            'hydra:totalItems' => 6,
+                            'hydra:totalItems' => \count($items),
                         ]
                     );
 

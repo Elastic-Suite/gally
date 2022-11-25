@@ -14,7 +14,7 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\Product\Elasticsearch\Request\Aggregation;
+namespace Elasticsuite\Search\Elasticsearch\Request\Aggregation;
 
 use Elasticsuite\Search\Elasticsearch\Adapter;
 use Elasticsuite\Search\Elasticsearch\RequestInterface;

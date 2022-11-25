@@ -16,26 +16,28 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Search\Elasticsearch\Request\Aggregation\Provider;
 
-use Elasticsuite\Metadata\Model\SourceField;
-use Elasticsuite\Metadata\Repository\SourceFieldRepository;
+use Elasticsuite\Product\Service\CurrentCategoryProvider;
 use Elasticsuite\Search\Elasticsearch\Request\Aggregation\ConfigResolver\FieldAggregationConfigResolverInterface;
 use Elasticsuite\Search\Elasticsearch\Request\Aggregation\Modifier\ModifierInterface;
 use Elasticsuite\Search\Elasticsearch\Request\BucketInterface;
-use Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\AggregationProviderInterface;
 use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
+use Elasticsuite\Search\Model\Facet\Configuration;
+use Elasticsuite\Search\Repository\Facet\ConfigurationRepository;
 
 /**
- * Default Aggregations Provider for Search Requests.
+ * Aggregations Provider based on source fields.
  */
 class FilterableSourceFields implements AggregationProviderInterface
 {
     /**
-     * @param SourceFieldRepository                     $sourceFieldRepository source field repository
-     * @param FieldAggregationConfigResolverInterface[] $aggregationResolvers  attributes Aggregation Resolver Pool
-     * @param ModifierInterface[]                       $modifiersPool         product Attributes modifiers
+     * @param ConfigurationRepository                   $facetConfigRepository   facet configuration repository
+     * @param CurrentCategoryProvider                   $currentCategoryProvider current category provider
+     * @param FieldAggregationConfigResolverInterface[] $aggregationResolvers    attributes Aggregation Resolver Pool
+     * @param ModifierInterface[]                       $modifiersPool           product Attributes modifiers
      */
     public function __construct(
-        private SourceFieldRepository $sourceFieldRepository,
+        private ConfigurationRepository $facetConfigRepository,
+        private CurrentCategoryProvider $currentCategoryProvider,
         private iterable $aggregationResolvers,
         private iterable $modifiersPool = []
     ) {
@@ -45,37 +47,24 @@ class FilterableSourceFields implements AggregationProviderInterface
      * {@inheritdoc}
      */
     public function getAggregations(
-        ContainerConfigurationInterface $containerConfiguration,
+        ContainerConfigurationInterface $containerConfig,
         $query = null,
         $filters = [],
         $queryFilters = []
     ): array {
-        $filterableField = $this->sourceFieldRepository->getFilterableInAggregationFields(
-            $containerConfiguration->getMetadata()->getEntity()
-        );
+        $currentCategory = $this->currentCategoryProvider->getCurrentCategory();
+        $this->facetConfigRepository->setCategoryId($currentCategory?->getId());
+        $this->facetConfigRepository->setMetadata($containerConfig->getMetadata());
+        $facetConfigs = $this->facetConfigRepository->findAll();
 
         foreach ($this->modifiersPool as $modifier) {
-            $filterableField = $modifier->modifySourceFields(
-                $containerConfiguration->getMetadata(),
-                $containerConfiguration->getLocalizedCatalog(),
-                $filterableField,
-                $query,
-                $filters,
-                $queryFilters
-            );
+            $facetConfigs = $modifier->modifyFacetConfigs($containerConfig, $facetConfigs, $query, $filters, $queryFilters);
         }
 
-        $aggregations = $this->getAggregationsConfig($filterableField);
+        $aggregations = $this->getAggregationsConfig($facetConfigs);
 
         foreach ($this->modifiersPool as $modifier) {
-            $aggregations = $modifier->modifyAggregations(
-                $containerConfiguration->getMetadata(),
-                $containerConfiguration->getLocalizedCatalog(),
-                $aggregations,
-                $query,
-                $filters,
-                $queryFilters
-            );
+            $aggregations = $modifier->modifyAggregations($containerConfig, $aggregations, $query, $filters, $queryFilters);
         }
 
         return $aggregations;
@@ -84,14 +73,14 @@ class FilterableSourceFields implements AggregationProviderInterface
     /**
      * Get aggregations config.
      *
-     * @param SourceField[] $sourceFields the source fields
+     * @param Configuration[] $facetConfigs the source fields facet configuration
      */
-    private function getAggregationsConfig(array $sourceFields): array
+    private function getAggregationsConfig(array $facetConfigs): array
     {
         $aggregations = [];
 
-        foreach ($sourceFields as $sourceField) {
-            $aggregationConfig = $this->getAggregationConfig($sourceField);
+        foreach ($facetConfigs as $facetConfig) {
+            $aggregationConfig = $this->getAggregationConfig($facetConfig);
             if (!empty($aggregationConfig) && isset($aggregationConfig['name'])) {
                 $aggregations[$aggregationConfig['name']] = $aggregationConfig;
             }
@@ -100,17 +89,20 @@ class FilterableSourceFields implements AggregationProviderInterface
         return $aggregations;
     }
 
-    private function getAggregationConfig(SourceField $sourceField): array
+    private function getAggregationConfig(Configuration $facetConfig): array
     {
+        $config = [
+            'name' => $facetConfig->getSourceField()->getCode(),
+            'type' => BucketInterface::TYPE_TERMS,
+        ];
+
         foreach ($this->aggregationResolvers as $aggregationResolver) {
-            if ($aggregationResolver->supports($sourceField)) {
-                return $aggregationResolver->getConfig($sourceField);
+            if ($aggregationResolver->supports($facetConfig->getSourceField())) {
+                $config = $aggregationResolver->getConfig($facetConfig->getSourceField());
+                break;
             }
         }
 
-        return [
-            'name' => $sourceField->getCode(),
-            'type' => BucketInterface::TYPE_TERMS,
-        ];
+        return $config;
     }
 }

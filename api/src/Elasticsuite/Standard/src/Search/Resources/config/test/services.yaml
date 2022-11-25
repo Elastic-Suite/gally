@@ -1,0 +1,5 @@
+services:
+    Elasticsuite\Search\Service\SearchSettingsProvider:
+        class: Elasticsuite\Search\Tests\Service\SearchSettingsProvider
+        arguments:
+            - '%elasticsuite.search_settings%'
