@@ -109,7 +109,7 @@ function ProductsContainer(props: IProps): JSX.Element {
         value: obj.code,
         ...obj,
       }))
-    : [{ label: 'Position', value: 'position' }]
+    : [{ label: 'Position', value: 'category__position' }]
 
   const [searchValue, setSearchValue] = useState('')
   const onSearchChange = (value: string): void => setSearchValue(value)
@@ -169,7 +169,7 @@ function ProductsContainer(props: IProps): JSX.Element {
 
   function handleSave(): void {
     onSave(
-      defaultSorting === 'position'
+      defaultSorting === 'category__position'
         ? productPositions.data.getPositionsCategoryProductMerchandising.result
         : '[]'
     )
@@ -232,7 +232,7 @@ function ProductsContainer(props: IProps): JSX.Element {
         })}
 
         <CustomBarTextMaxProducts>
-          {defaultSorting === 'position'
+          {defaultSorting === 'category__position'
             ? (topProducts.length === 25 ||
                 topProducts.length + bottomSelectedRows.length > 25) &&
               bottomSelectedRows.length !== 0 &&
@@ -245,7 +245,7 @@ function ProductsContainer(props: IProps): JSX.Element {
         <Button
           sx={{ marginLeft: 1 }}
           disabled={
-            defaultSorting !== 'position' ||
+            defaultSorting !== 'category__position' ||
             bottomSelectedRows.length === 0 ||
             bottomSelectedRows.length + topProducts.length > 25
           }
@@ -257,7 +257,8 @@ function ProductsContainer(props: IProps): JSX.Element {
         <Button
           sx={{ marginLeft: 1 }}
           disabled={
-            defaultSorting !== 'position' || topSelectedRows.length === 0
+            defaultSorting !== 'category__position' ||
+            topSelectedRows.length === 0
           }
           onClick={pinToBottom}
         >

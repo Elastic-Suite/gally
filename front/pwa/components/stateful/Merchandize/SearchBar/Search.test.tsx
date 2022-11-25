@@ -10,7 +10,7 @@ describe('SearchBar match snapshot', () => {
         nbTopProducts={50}
         nbResults={1010}
         value={val}
-        sortValue="position"
+        sortValue="category__position"
       />
     )
     expect(container).toMatchSnapshot()

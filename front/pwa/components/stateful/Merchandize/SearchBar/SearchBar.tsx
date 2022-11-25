@@ -16,7 +16,7 @@ export default function SearchBar(props: IProps): JSX.Element {
 
   const value = {
     value:
-      sortValue === 'position' && !inputTextProps.value
+      sortValue === 'category__position' && !inputTextProps.value
         ? nbResults + nbTopProducts
         : nbResults,
     result: t('searchBar.results', { count: nbResults }),
@@ -39,7 +39,7 @@ export default function SearchBar(props: IProps): JSX.Element {
               <SearchTitle>{t('searchBar.title')}</SearchTitle>
               <SearchResult>
                 {result}{' '}
-                {sortValue === 'position' &&
+                {sortValue === 'category__position' &&
                   !inputTextProps.value &&
                   `(${resultPinned})`}
               </SearchResult>
@@ -59,7 +59,7 @@ export default function SearchBar(props: IProps): JSX.Element {
               }
             />
           </div>
-          {nbTopProducts === 0 && sortValue === 'position' && (
+          {nbTopProducts === 0 && sortValue === 'category__position' && (
             <CustomNoTopProduct>{t('labelForPinProduct')}</CustomNoTopProduct>
           )}
         </Grid>
