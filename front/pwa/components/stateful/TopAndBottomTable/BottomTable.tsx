@@ -59,12 +59,15 @@ function BottomTable(
       currentPage,
       pageSize: rowsPerPage,
       requestType: ProductRequestType.CATALOG,
-      sort: sortValue && sortValue !== 'position' ? { [sortValue]: 'asc' } : {},
+      sort:
+        sortValue && sortValue !== 'category__position'
+          ? { [sortValue]: 'asc' }
+          : {},
     }),
     [currentPage, localizedCatalogId, rowsPerPage, sortValue]
   )
   const filters = [productGraphqlFilters]
-  if (topProductsIds.length > 0 && sortValue === 'position') {
+  if (topProductsIds.length > 0 && sortValue === 'category__position') {
     filters.push({
       boolFilter: { _not: [{ id: { in: topProductsIds } }] },
     })
