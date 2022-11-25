@@ -16,7 +16,9 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Catalog\Model;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Elasticsuite\User\Constant\Role;
 use Symfony\Component\Intl\Locales;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -41,6 +43,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
     ],
     normalizationContext: ['groups' => 'localizedCatalog:read']
 )]
+
+#[ApiFilter(SearchFilter::class, properties: ['code' => 'exact'])]
 class LocalizedCatalog
 {
     #[Groups(['localizedCatalog:read', 'catalog:read'])]
