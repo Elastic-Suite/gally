@@ -16,7 +16,9 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Catalog\Model;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Elasticsuite\User\Constant\Role;
@@ -42,6 +44,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
     ],
     normalizationContext: ['groups' => 'catalog:read']
 )]
+
+#[ApiFilter(SearchFilter::class, properties: ['code' => 'exact'])]
 class Catalog
 {
     #[Groups('catalog:read')]
