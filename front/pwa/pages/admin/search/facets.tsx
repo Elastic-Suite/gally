@@ -70,7 +70,10 @@ function Facets(): JSX.Element {
   const resource = useResource('FacetConfiguration')
   const [activeFilters, setActiveFilters] = useFilters(resource)
   const filters = useMemo(
-    () => ({ category: selectedCategoryItem?.id }),
+    () => ({
+      category: selectedCategoryItem?.id,
+      'sourceField.metadata.entity': 'product',
+    }),
     [selectedCategoryItem?.id]
   )
 

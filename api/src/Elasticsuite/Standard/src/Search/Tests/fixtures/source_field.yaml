@@ -76,6 +76,17 @@ Elasticsuite\Metadata\Model\SourceField:
         metadata: '@product'
         code: 'price.is_discounted'
         type: 'boolean'
+    product_is_eco_friendly:
+        metadata: '@product'
+        code: 'is_eco_friendly'
+        type: 'boolean'
+        isFilterable: true
+    product_created_at:
+        metadata: '@product'
+        code: 'created_at'
+        type: 'date'
+        isUsedForRules: true
+        isSortable: true
     product_description:
         metadata: '@product'
         code: 'description'

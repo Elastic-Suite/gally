@@ -16,10 +16,9 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Search\Elasticsearch\Request\Aggregation\Modifier;
 
-use Elasticsuite\Catalog\Model\LocalizedCatalog;
-use Elasticsuite\Metadata\Model\Metadata;
-use Elasticsuite\Metadata\Model\SourceField;
+use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
 use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
+use Elasticsuite\Search\Model\Facet\Configuration as FacetConfiguration;
 
 /**
  * Modifier Interface for attributes aggregations provider.
@@ -27,35 +26,31 @@ use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
 interface ModifierInterface
 {
     /**
-     * @param Metadata                   $metadata         metadata
-     * @param LocalizedCatalog           $localizedCatalog the localized catalog
-     * @param SourceField[]              $sourceFields
-     * @param string|QueryInterface|null $query            search request query
-     * @param array                      $filters          search request filters
-     * @param QueryInterface[]           $queryFilters     search request filters prebuilt as QueryInterface
+     * @param ContainerConfigurationInterface $containerConfig search container configuration
+     * @param FacetConfiguration[]            $facetConfigs    facet configurations
+     * @param string|QueryInterface|null      $query           search request query
+     * @param array                           $filters         search request filters
+     * @param QueryInterface[]                $queryFilters    search request filters prebuilt as QueryInterface
      *
-     * @return SourceField[]
+     * @return FacetConfiguration[]
      */
-    public function modifySourceFields(
-        Metadata $metadata,
-        LocalizedCatalog $localizedCatalog,
-        array $sourceFields,
+    public function modifyFacetConfigs(
+        ContainerConfigurationInterface $containerConfig,
+        array $facetConfigs,
         QueryInterface|string|null $query,
         array $filters,
         array $queryFilters
     ): array;
 
     /**
-     * @param Metadata                   $metadata         metadata
-     * @param LocalizedCatalog           $localizedCatalog the localized catalog
-     * @param array                      $aggregations     the aggregations
-     * @param string|QueryInterface|null $query            search request query
-     * @param array                      $filters          search request filters
-     * @param QueryInterface[]           $queryFilters     search request filters prebuilt as QueryInterface
+     * @param ContainerConfigurationInterface $containerConfig search container configuration
+     * @param array                           $aggregations    the aggregations
+     * @param string|QueryInterface|null      $query           search request query
+     * @param array                           $filters         search request filters
+     * @param QueryInterface[]                $queryFilters    search request filters prebuilt as QueryInterface
      */
     public function modifyAggregations(
-        Metadata $metadata,
-        LocalizedCatalog $localizedCatalog,
+        ContainerConfigurationInterface $containerConfig,
         array $aggregations,
         QueryInterface|string|null $query,
         array $filters,

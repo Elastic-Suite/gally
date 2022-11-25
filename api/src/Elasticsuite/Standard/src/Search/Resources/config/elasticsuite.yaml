@@ -3,3 +3,6 @@ elasticsuite:
         Elasticsuite\Search\Model\Document:
             renamings:
                 searchDocuments: documents
+    search_settings:
+        aggregations:
+            coverage_use_indexed_fields_property: false

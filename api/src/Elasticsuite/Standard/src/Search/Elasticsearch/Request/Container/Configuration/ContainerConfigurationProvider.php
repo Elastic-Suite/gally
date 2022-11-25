@@ -26,10 +26,6 @@ class ContainerConfigurationProvider
     /** @var ContainerConfigurationFactoryInterface[][] */
     private array $containerConfigFactories;
 
-    public function __construct(private GenericContainerConfigurationFactory $genericConfigurationFactory)
-    {
-    }
-
     /**
      * Add factories via compiler pass.
      *
@@ -54,20 +50,24 @@ class ContainerConfigurationProvider
      */
     public function get(Metadata $metadata, LocalizedCatalog $localizedCatalog, ?string $requestType = null): ContainerConfigurationInterface
     {
-        if (null === $requestType) {
-            $factory = $this->genericConfigurationFactory;
-        } else {
-            $entityCode = $metadata->getEntity();
-            $entityCode = \array_key_exists($entityCode, $this->containerConfigFactories) ? $entityCode : 'generic';
+        $requestType = $requestType ?: 'generic';
+        $entityCode = $metadata->getEntity();
 
-            if (!\array_key_exists($requestType, $this->containerConfigFactories[$entityCode])) {
-                throw new \LogicException(sprintf('The request type %s is not defined.', $requestType));
-            }
-
-            $factory = $this->containerConfigFactories[$entityCode][$requestType];
+        if (!\array_key_exists($entityCode, $this->containerConfigFactories)) {
+            $entityCode = 'generic';
         }
 
-        return $factory->create($requestType ?? 'generic', $metadata, $localizedCatalog);
+        // Check if the requested requestType is defined for this entity code
+        if (\array_key_exists($requestType, $this->containerConfigFactories[$entityCode])) {
+            return $this->containerConfigFactories[$entityCode][$requestType]->create($requestType, $metadata, $localizedCatalog);
+        }
+
+        // If not, we check if the requested requestType is defined for the generic entityType to fallback on it if it exists.
+        if (\array_key_exists($requestType, $this->containerConfigFactories['generic'])) {
+            return $this->containerConfigFactories['generic'][$requestType]->create($requestType, $metadata, $localizedCatalog);
+        }
+
+        throw new \LogicException(sprintf('The request type %s is not defined.', $requestType));
     }
 
     /**

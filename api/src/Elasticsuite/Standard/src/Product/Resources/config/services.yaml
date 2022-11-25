@@ -94,35 +94,10 @@ services:
         decoration_priority: 1
         arguments:
             - '@.inner'
-            
-    Elasticsuite\Product\Service\SearchSettingsProvider:
-        arguments:
-            - '%elasticsuite.search_settings%'
-            
-    Elasticsuite\Product\Elasticsearch\Request\Aggregation\Provider\CoverageAggregationProvider:
-        arguments:
-            - '@Elasticsuite\Metadata\Repository\SourceFieldRepository'
-            - '@Elasticsuite\Search\Elasticsearch\Request\QueryFactory'
-            - '@Elasticsuite\Product\Service\SearchSettingsProvider'
-    
-    elasticsuite.search.coverage.request.builder:
-        parent: Elasticsuite\Search\Elasticsearch\Builder\Request\SimpleRequestBuilder
 
-    Elasticsuite\Product\Elasticsearch\Request\Aggregation\CoverageProvider:
+    elasticsuite.container_configuration.coverage_rate.factory:
+        parent: 'Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\GenericContainerConfigurationFactory'
         arguments:
-            - '@Elasticsuite\Search\Elasticsearch\Adapter'
-
-    Elasticsuite\Product\Elasticsearch\Request\Aggregation\Modifier\Coverage:
-        arguments:
-            - '@elasticsuite.search.coverage.request.builder'
-            - '@Elasticsuite\Product\Elasticsearch\Request\Aggregation\CoverageProvider'
-            - '@Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider'
-            - '@Elasticsuite\Search\Repository\Facet\ConfigurationRepository'
-            - '@Elasticsuite\Product\Service\CurrentCategoryProvider'
-    
-    elasticsuite.search.product.filterableSourceFields:
-        parent: Elasticsuite\Search\Elasticsearch\Request\Aggregation\Provider\FilterableSourceFields
-        arguments:
-            $modifiersPool: {
-                coverageModifier: '@Elasticsuite\Product\Elasticsearch\Request\Aggregation\Modifier\Coverage',
-            }
+            $aggregationProvider: '@Elasticsuite\Search\Elasticsearch\Request\Aggregation\Provider\CoverageAggregationProvider'
+        tags:
+            - { name: elasticsuite.container_configuration.factory, requestType: coverage_rate }

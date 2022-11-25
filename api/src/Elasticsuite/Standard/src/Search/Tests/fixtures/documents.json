@@ -9,17 +9,24 @@
         "description": "A super bag for winter.",
         "seller_reference": "dufflebag",
         "size" : 12,
+        "weight" : 1.200,
         "color": [
           {
             "value": "black",
             "label": "Black"
           }
         ],
+        "brand": [
+          {
+            "value": "brand_test",
+            "label": "Test brand"
+          }
+        ],
         "category": [
           {
             "is_virtual": "false",
             "category_uid": "Mg==",
-            "id": "cat_2"
+            "id": "cat_1"
           },
           {
             "is_parent": true,
@@ -35,6 +42,21 @@
             "category_uid": "NQ==",
             "id": "cat_5"
           }
+        ],
+        "is_eco_friendly": false,
+        "created_at": "2022-09-01",
+        "indexed_fields": [
+          "entity_id",
+          "sku",
+          "name",
+          "description",
+          "seller_reference",
+          "size",
+          "weight",
+          "color",
+          "category",
+          "is_eco_friendly",
+          "created_at"
         ]
       },
       {
@@ -44,6 +66,7 @@
         "description": "A super bag for spring.",
         "seller_reference": "striveshoulder",
         "size" : 5,
+        "weight" : 1.100,
         "color": [
           {
             "value": "black",
@@ -54,7 +77,7 @@
           {
             "is_virtual": "false",
             "category_uid": "Mg==",
-            "id": "cat_2"
+            "id": "cat_1"
           },
           {
             "is_virtual": "false",
@@ -69,6 +92,21 @@
             "category_uid": "NA==",
             "id": "cat_4"
           }
+        ],
+        "is_eco_friendly": false,
+        "created_at": "2022-09-05",
+        "indexed_fields": [
+          "entity_id",
+          "sku",
+          "name",
+          "description",
+          "seller_reference",
+          "size",
+          "weight",
+          "color",
+          "category",
+          "is_eco_friendly",
+          "created_at"
         ]
       },
       {
@@ -77,6 +115,7 @@
         "name": "Crown Summit Backpack",
         "description": "A super bag for summer and yoga.",
         "size" : 8,
+        "weight" : 0.750,
         "color": [
           {
             "value": "black",
@@ -86,6 +125,21 @@
             "value": "grey",
             "label": "Grey"
           }
+        ],
+        "is_eco_friendly": true,
+        "created_at": "2022-09-05",
+        "indexed_fields": [
+          "entity_id",
+          "sku",
+          "name",
+          "description",
+          "seller_reference",
+          "size",
+          "weight",
+          "color",
+          "category",
+          "is_eco_friendly",
+          "created_at"
         ]
       },
       {
@@ -99,6 +153,19 @@
             "value": "black",
             "label": "Black"
           }
+        ],
+        "is_eco_friendly": true,
+        "created_at": "2022-09-05",
+        "indexed_fields": [
+          "entity_id",
+          "sku",
+          "name",
+          "description",
+          "seller_reference",
+          "size",
+          "color",
+          "is_eco_friendly",
+          "created_at"
         ]
       },
       {
@@ -112,6 +179,19 @@
             "value": "grey",
             "label": "Grey"
           }
+        ],
+        "is_eco_friendly": true,
+        "created_at": "2022-09-06",
+        "indexed_fields": [
+          "entity_id",
+          "sku",
+          "name",
+          "description",
+          "seller_reference",
+          "size",
+          "color",
+          "is_eco_friendly",
+          "created_at"
         ]
       },
       {
@@ -132,6 +212,18 @@
             "value": "red",
             "label": "Red"
           }
+        ],
+        "is_eco_friendly": true,
+        "created_at": "2022-09-01",
+        "indexed_fields": [
+          "entity_id",
+          "sku",
+          "name",
+          "seller_reference",
+          "size",
+          "color",
+          "is_eco_friendly",
+          "created_at"
         ]
       },
       {
@@ -144,6 +236,18 @@
             "value": "black",
             "label": "Black"
           }
+        ],
+        "is_eco_friendly": false,
+        "created_at": "2022-09-01",
+        "indexed_fields": [
+          "entity_id",
+          "sku",
+          "name",
+          "size",
+          "color",
+          "category",
+          "is_eco_friendly",
+          "created_at"
         ]
       },
       {
@@ -160,6 +264,17 @@
             "value": "white",
             "label": "White"
           }
+        ],
+        "is_eco_friendly": false,
+        "created_at": "2022-09-01",
+        "indexed_fields": [
+          "entity_id",
+          "sku",
+          "name",
+          "size",
+          "color",
+          "is_eco_friendly",
+          "created_at"
         ]
       },
       {
@@ -176,6 +291,17 @@
             "value": "white",
             "label": "White"
           }
+        ],
+        "is_eco_friendly": false,
+        "created_at": "2022-09-01",
+        "indexed_fields": [
+          "entity_id",
+          "sku",
+          "name",
+          "size",
+          "color",
+          "is_eco_friendly",
+          "created_at"
         ]
       },
       {
@@ -188,6 +314,15 @@
             "value": "pink",
             "label": "Pink"
           }
+        ],
+        "is_eco_friendly": false,
+        "indexed_fields": [
+          "entity_id",
+          "sku",
+          "name",
+          "size",
+          "color",
+          "is_eco_friendly"
         ]
       },
       {
@@ -212,6 +347,15 @@
             "value": "black",
             "label": "Black"
           }
+        ],
+        "created_at": "2022-09-01",
+        "indexed_fields": [
+          "entity_id",
+          "sku",
+          "name",
+          "color",
+          "is_eco_friendly",
+          "created_at"
         ]
       },
       {
@@ -228,6 +372,15 @@
             "value": "black",
             "label": "Black"
           }
+        ],
+        "created_at": "2022-09-01",
+        "indexed_fields": [
+          "entity_id",
+          "sku",
+          "name",
+          "color",
+          "is_eco_friendly",
+          "created_at"
         ]
       },
       {
@@ -240,6 +393,15 @@
             "value": "brown",
             "label": "Brown"
           }
+        ],
+        "created_at": "2022-09-01",
+        "indexed_fields": [
+          "entity_id",
+          "sku",
+          "name",
+          "color",
+          "is_eco_friendly",
+          "created_at"
         ]
       },
       {
@@ -260,6 +422,12 @@
             "value": "black",
             "label": "Black"
           }
+        ],
+        "indexed_fields": [
+          "entity_id",
+          "sku",
+          "name",
+          "color"
         ]
       }
     ]
@@ -272,6 +440,7 @@
         "sku": "24-MB01",
         "name": "Sac de sport Jout",
         "size" : 12,
+        "weight" : 1.200,
         "price": [
           {"group_id": 0, "original_price": 11.99, "price": 10.99, "is_discounted": true},
           {"group_id": 1, "original_price": 11.99, "price": 10.99, "is_discounted": true}
@@ -285,7 +454,32 @@
             "value": "black",
             "label": "Noir"
           }
-        ]
+        ],
+        "category_as_nested": [
+          {
+            "id": "cat_1"
+          }
+        ],
+        "category": [
+          {
+            "id": "cat_1",
+            "uid": "one",
+            "name": "One",
+            "is_parent": true,
+            "is_virtual": false,
+            "is_blacklisted": false
+          },
+          {
+            "id": "cat_2",
+            "uid": "two",
+            "name": "Two",
+            "is_parent": false,
+            "is_virtual": false,
+            "is_blacklisted": false,
+            "position": 1
+          }
+        ],
+        "created_at": "2022-09-01"
       },
       {
         "id": "2",
@@ -293,6 +487,7 @@
         "sku": "24-MB04",
         "name": "Sac à bandoulière Strive",
         "size" : 5,
+        "weight" : 1.100,
         "price": [
           {"group_id": 0, "original_price": 17.99, "price": 8.99, "is_discounted": true},
           {"group_id": 1, "original_price": 17.99, "price": 17.99, "is_discounted": false}
@@ -306,7 +501,25 @@
             "value": "black",
             "label": "Noir"
           }
-        ]
+        ],
+        "category_as_nested": [
+          {
+            "id": "cat_1"
+          }
+        ],
+        "category": [
+          {
+            "id": "cat_1",
+            "uid": "one",
+            "name": "One",
+            "is_parent": true,
+            "is_virtual": false,
+            "is_blacklisted": false,
+            "position": 1
+          }
+        ],
+        "is_eco_friendly": false,
+        "created_at": "2022-09-05"
       },
       {
         "id": "3",
@@ -331,7 +544,9 @@
             "value": "grey",
             "label": "Gris"
           }
-        ]
+        ],
+        "is_eco_friendly": true,
+        "created_at": "2022-09-05"
       },
       {
         "id": "4",
@@ -348,7 +563,9 @@
             "value": "black",
             "label": "Noir"
           }
-        ]
+        ],
+        "is_eco_friendly": true,
+        "created_at": "2022-09-05"
       },
       {
         "id": "5",
@@ -365,7 +582,9 @@
             "value": "grey",
             "label": "Gris"
           }
-        ]
+        ],
+        "is_eco_friendly": true,
+        "created_at": "2022-09-06"
       },
       {
         "id": "6",
@@ -390,7 +609,9 @@
             "value": "red",
             "label": "Rouge"
           }
-        ]
+        ],
+        "is_eco_friendly": true,
+        "created_at": "2022-09-01"
       },
       {
         "id": "7",
@@ -407,7 +628,9 @@
             "value": "black",
             "label": "Noir"
           }
-        ]
+        ],
+        "is_eco_friendly": false,
+        "created_at": "2022-09-01"
       },
       {
         "id": "8",
@@ -428,7 +651,9 @@
             "value": "white",
             "label": "Blanc"
           }
-        ]
+        ],
+        "is_eco_friendly": false,
+        "created_at": "2022-09-01"
       },
       {
         "id": "9",
@@ -465,7 +690,8 @@
             "value": "pink",
             "label": "Rose"
           }
-        ]
+        ],
+        "is_eco_friendly": false
       },
       {
         "id": "11",
@@ -494,7 +720,8 @@
             "value": "black",
             "label": "Noir"
           }
-        ]
+        ],
+        "created_at": "2022-09-01"
       },
       {
         "id": "12",
@@ -515,7 +742,8 @@
             "value": "black",
             "label": "Noir"
           }
-        ]
+        ],
+        "created_at": "2022-09-01"
       }
     ]
   }

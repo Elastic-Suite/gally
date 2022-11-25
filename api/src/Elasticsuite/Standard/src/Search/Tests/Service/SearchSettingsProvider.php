@@ -14,16 +14,16 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\Product\Tests\Service;
+namespace Elasticsuite\Search\Tests\Service;
 
-class SearchSettingsProvider extends \Elasticsuite\Product\Service\SearchSettingsProvider
+class SearchSettingsProvider extends \Elasticsuite\Search\Service\SearchSettingsProvider
 {
     /**
      * This method allow unit test to override search settings dynamically.
      */
     public function set(string $key, mixed $value): void
     {
-        $class = new \ReflectionClass(\Elasticsuite\Product\Service\SearchSettingsProvider::class);
+        $class = new \ReflectionClass(\Elasticsuite\Search\Service\SearchSettingsProvider::class);
         $searchSettingsProp = $class->getProperty('searchSettings');
         $searchSettingsProp->setAccessible(true);
         $settings = $searchSettingsProp->getValue($this);

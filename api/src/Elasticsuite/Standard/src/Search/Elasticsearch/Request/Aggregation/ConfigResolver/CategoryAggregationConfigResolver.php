@@ -36,18 +36,5 @@ class CategoryAggregationConfigResolver implements FieldAggregationConfigResolve
                 $sourceField->getCode() . '.name',
             ],
         ];
-//        return [
-//            'name' => $sourceField->getCode(),
-//            'field' => $sourceField->getCode() . '.id',
-//            'type' => BucketInterface::TYPE_TERMS,
-//            'childAggregations' => [
-//                [
-//                    'name' => $sourceField->getCode() . '.label',
-//                    'field' => $sourceField->getCode() . '.name',
-//                    'type' => BucketInterface::TYPE_TERMS,
-//                    'unsetNestedPath' => true,
-//                ],
-//            ],
-//        ];
     }
 }

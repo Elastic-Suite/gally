@@ -53,6 +53,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
         'collection_query' => [
             'normalization_context' => ['groups' => ['facet_configuration:read', 'facet_configuration:graphql_read']],
             'denormalization_context' => ['groups' => ['facet_configuration:read', 'facet_configuration:graphql_read']],
+            'pagination_type' => 'page',
         ],
         'update' => [
             'security' => "is_granted('" . Role::ROLE_ADMIN . "')",
@@ -70,7 +71,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
         ],
     ],
 )]
-#[ApiFilter(SearchFilterWithDefault::class, properties: ['category' => 'exact', 'displayMode' => 'exact', 'sortOrder' => 'exact'], arguments: ['defaultValues' => self::DEFAULT_VALUES])]
+#[ApiFilter(SearchFilterWithDefault::class, properties: ['sourceField.metadata.entity' => 'exact', 'category' => 'exact', 'displayMode' => 'exact', 'sortOrder' => 'exact'], arguments: ['defaultValues' => self::DEFAULT_VALUES])]
 #[ApiFilter(RangeFilterWithDefault::class, properties: ['coverageRate', 'maxSize'], arguments: ['defaultValues' => self::DEFAULT_VALUES])]
 class Configuration
 {

@@ -20,6 +20,7 @@ use Elasticsuite\Catalog\Model\LocalizedCatalog;
 use Elasticsuite\Index\Api\IndexSettingsInterface;
 use Elasticsuite\Index\Service\MetadataManager;
 use Elasticsuite\Metadata\Model\Metadata;
+use Elasticsuite\Search\Elasticsearch\Request\Aggregation\Provider\AggregationProviderInterface;
 use Elasticsuite\Search\Elasticsearch\Request\Container\RelevanceConfigurationInterface;
 use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationFactoryInterface;
 use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;

@@ -20,6 +20,7 @@ use ApiPlatform\Core\DataProvider\ContextAwareCollectionDataProviderInterface;
 use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Elasticsuite\Metadata\Repository\MetadataRepository;
 use Elasticsuite\Search\Model\Facet;
 use Elasticsuite\Search\Repository\Facet\ConfigurationRepository;
 
@@ -27,8 +28,9 @@ final class ConfigurationCollectionDataProvider implements ContextAwareCollectio
 {
     public function __construct(
         private ManagerRegistry $managerRegistry,
-        private ContextAwareCollectionDataProviderInterface $collectionDataProvider)
-    {
+        private ContextAwareCollectionDataProviderInterface $collectionDataProvider,
+        private MetadataRepository $metadataRepository,
+    ) {
     }
 
     public function supports(string $resourceClass, string $operationName = null, array $context = []): bool
@@ -49,6 +51,14 @@ final class ConfigurationCollectionDataProvider implements ContextAwareCollectio
             $category = explode('/', $context['filters']['category']);
             $category = end($category);
             unset($context['filters']['category']);
+        }
+
+        // Manually manage entityType filter to load default value if no category is selected.
+        if (isset($context['filters']['sourceField.metadata.entity'])) {
+            $entityType = $context['filters']['sourceField.metadata.entity'];
+            unset($context['filters']['sourceField.metadata.entity']);
+            unset($context['filters']['sourceField__metadata__entity']);
+            $repository->setMetadata($this->metadataRepository->findByEntity($entityType));
         }
 
         $repository->setCategoryId($category);

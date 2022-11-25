@@ -14,7 +14,7 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\Search\Elasticsearch\Request\Container\Configuration;
+namespace Elasticsuite\Search\Elasticsearch\Request\Aggregation\Provider;
 
 use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
 use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
