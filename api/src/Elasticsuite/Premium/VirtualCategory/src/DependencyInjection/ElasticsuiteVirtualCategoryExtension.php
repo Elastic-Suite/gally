@@ -22,7 +22,7 @@ use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
-class ElasticVirtualCategoryExtension extends Extension implements PrependExtensionInterface
+class ElasticsuiteVirtualCategoryExtension extends Extension implements PrependExtensionInterface
 {
     /**
      * Allows to set config for others bundles.
