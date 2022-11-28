@@ -22,5 +22,5 @@ return [
     Hautelook\AliceBundle\HautelookAliceBundle::class => ['dev' => true, 'test' => true],
     Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle::class => ['all' => true],
 
-    Elasticsuite\VirtualCategory\ElasticVirtualCategoryBundle::class => ['all' => true],
+    Elasticsuite\VirtualCategory\ElasticsuiteVirtualCategoryBundle::class => ['all' => true],
 ];
