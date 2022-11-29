@@ -136,12 +136,19 @@ services:
             - '@logger'
 
     Elasticsuite\Search\GraphQl\Type\Definition\SortEnumType:
+        lazy: true
         tags:
             - { name: api_platform.graphql.type }
 
     Elasticsuite\Search\GraphQl\Type\Definition\SortInputType:
         arguments:
-            - '@api_platform.graphql.types_container'
+            - '@Elasticsuite\Search\GraphQl\Type\Definition\SortEnumType'
+        tags:
+            - { name: api_platform.graphql.type }
+
+    Elasticsuite\Search\GraphQl\Type\Definition\SortOptionType:
+        arguments:
+            - '@Elasticsuite\Search\GraphQl\Type\Definition\SortEnumType'
         tags:
             - { name: api_platform.graphql.type }
 
@@ -251,6 +258,18 @@ services:
             $metadataManager: '@Elasticsuite\Index\Service\MetadataManager'
             $relevanceConfiguration: '@Elasticsuite\Search\Elasticsearch\Request\Container\RelevanceConfiguration\GenericRelevanceConfiguration'
             $aggregationProvider: '@Elasticsuite\Search\Elasticsearch\Request\Aggregation\Provider\FilterableSourceFields'
+
+    Elasticsuite\Search\Decoration\GraphQl\AddSortInfoType:
+        decorates: api_platform.graphql.type_builder
+        arguments:
+            - '@api_platform.graphql.types_container'
+            - '@Elasticsuite\Search\GraphQl\Type\Definition\SortOptionType'
+            - '@.inner'
+
+    Elasticsuite\Search\Decoration\GraphQl\AddSortInfoData:
+        decorates: api_platform.graphql.resolver.stage.serialize
+        arguments:
+            - '@.inner'
 
     Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider:
         arguments:

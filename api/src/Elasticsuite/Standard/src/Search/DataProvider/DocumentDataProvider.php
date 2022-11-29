@@ -90,6 +90,7 @@ class DocumentDataProvider implements ContextAwareCollectionDataProviderInterfac
 
         return new Paginator(
             $this->denormalizer,
+            $request,
             $response,
             $resourceClass,
             $limit,
