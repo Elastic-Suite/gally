@@ -1,12 +1,18 @@
-import { Checkbox, FormControlLabel } from '@mui/material'
+import { Checkbox } from '@mui/material'
+import {
+  IGraphqlProductAggregation,
+  IGraphqlProductAggregationOption,
+} from 'shared'
 
-import { IFilter, IFilterChange, IFilterOption } from '../../types'
+import { IFilterChange } from '../../types'
+
+import { FormControlLabel } from './Facet.styled'
 
 interface IProps {
-  activeOptions: IFilterOption[]
-  filter: IFilter
+  activeOptions: string[]
+  filter: IGraphqlProductAggregation
   onChange: IFilterChange
-  option: IFilterOption
+  option: IGraphqlProductAggregationOption
 }
 
 function FacetChoice(props: IProps): JSX.Element {
@@ -16,12 +22,17 @@ function FacetChoice(props: IProps): JSX.Element {
       key={String(option.value)}
       control={
         <Checkbox
-          checked={activeOptions.includes(option) ?? false}
-          onChange={onChange(filter, option)}
+          checked={activeOptions.includes(option.value) ?? false}
+          onChange={onChange(filter, option.value)}
           name={String(option.value)}
         />
       }
-      label={option.label}
+      label={
+        <>
+          <span>{option.label}</span>
+          <span>({option.count})</span>
+        </>
+      }
     />
   )
 }

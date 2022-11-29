@@ -1,4 +1,4 @@
-export const catalogsQuery = `query getCalogs {
+export const catalogsQuery = `query catalogs {
   catalogs {
     edges {
       node {
@@ -20,7 +20,7 @@ export const catalogsQuery = `query getCalogs {
   }
 }`
 
-export const getCategoryTreeQuery = `query getCategories($localizedCatalogId: Int) {
+export const getCategoryTreeQuery = `query categories($localizedCatalogId: Int) {
   getCategoryTree (localizedCatalogId: $localizedCatalogId) {
     categories
   }
