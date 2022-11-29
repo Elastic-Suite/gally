@@ -19,6 +19,12 @@ export interface IGraphqlSearchProductsVariables {
   sort?: Record<string, SortOrder>
 }
 
+export enum AggregationType {
+  BOOLEAN = 'boolean',
+  CHECKBOX = 'checkbox',
+  SLIDER = 'slider',
+}
+
 export interface IGraphqlSearchProducts {
   products: IGraphqlSearchProduct
 }
@@ -27,6 +33,7 @@ export interface IGraphqlSearchProduct {
   collection: IGraphqlProduct[]
   paginationInfo: IGraphqlProductPaginationInfo
   sortInfo: IGraphqlProductSortInfo
+  aggregations?: IGraphqlProductAggregation[]
 }
 
 export interface IGraphqlProduct {
@@ -51,6 +58,21 @@ export interface IGraphqlProductSortInfo {
 export interface IGraphqlProductSortInfoCurrent {
   field: string
   direction: SortOrder
+}
+
+export interface IGraphqlProductAggregation {
+  count: number
+  field: string
+  label: string
+  type: AggregationType
+  options: IGraphqlProductAggregationOption[]
+  has_more: boolean | null
+}
+
+export interface IGraphqlProductAggregationOption {
+  count: number
+  label: string
+  value: string
 }
 
 export interface IFetchParams {

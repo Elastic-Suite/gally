@@ -3,9 +3,10 @@ import {
   SetStateAction,
   useCallback,
   useContext,
+  useMemo,
   useState,
 } from 'react'
-
+import debounce from 'lodash.debounce'
 import {
   IFetch,
   IGraphqlApi,
@@ -14,13 +15,17 @@ import {
   fetchGraphql,
   isError,
 } from 'shared'
-import { catalogContext } from 'src/contexts'
+
+import { catalogContext } from '../contexts'
 
 import { useLog } from './useLog'
+
+const debounceDelay = 500
 
 export function useApiGraphql<T>(): IGraphqlApi<T> {
   const { localizedCatalog } = useContext(catalogContext)
   const log = useLog()
+  const locale = localizedCatalog?.locale ?? 'en'
   return useCallback(
     async (
       query: string,
@@ -29,10 +34,11 @@ export function useApiGraphql<T>(): IGraphqlApi<T> {
     ) => {
       try {
         const json = await fetchGraphql<T>(
-          localizedCatalog?.locale ?? 'en',
+          locale,
           query,
           variables,
-          options
+          options,
+          false
         )
         return json
       } catch (error) {
@@ -40,7 +46,7 @@ export function useApiGraphql<T>(): IGraphqlApi<T> {
         return { error }
       }
     },
-    [localizedCatalog, log]
+    [locale, log]
   )
 }
 
@@ -48,7 +54,7 @@ export function useGraphqlApi<T>(
   query: string,
   variables?: Record<string, unknown>,
   options?: RequestInit
-): [IFetch<T>, Dispatch<SetStateAction<T>>, ILoadResource] {
+): [IFetch<T>, Dispatch<SetStateAction<T>>, ILoadResource, ILoadResource] {
   const graphqlApi = useApiGraphql<T>()
   const [response, setResponse] = useState<IFetch<T>>({
     status: LoadStatus.IDLE,
@@ -75,5 +81,7 @@ export function useGraphqlApi<T>(
     })
   }, [graphqlApi, options, query, variables])
 
-  return [response, updateResponse, load]
+  const debouncedLoad = useMemo(() => debounce(load, debounceDelay), [load])
+
+  return [response, updateResponse, load, debouncedLoad]
 }

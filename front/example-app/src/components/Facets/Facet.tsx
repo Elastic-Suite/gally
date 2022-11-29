@@ -2,16 +2,13 @@ import { useId, useState } from 'react'
 import { Collapse, IconButton, styled } from '@mui/material'
 import ExpandMore from '@mui/icons-material/ExpandMore'
 import classnames from 'classnames'
+import { AggregationType, IGraphqlProductAggregation } from 'shared'
 
-import {
-  IActiveFilters,
-  IFilter,
-  IFilterChange,
-  IFilterOption,
-} from '../../types'
+import { IActiveFilters, IFilterChange } from '../../types'
 
 import FacetChoices from './FacetChoices'
-import { FacetBoolean } from './FacetBoolean'
+import FacetBoolean from './FacetBoolean'
+import FacetSlider from './FacetSlider'
 
 const Title = styled('h3')({
   display: 'flex',
@@ -27,15 +24,25 @@ const ExpandMoreIcon = styled(ExpandMore)({
 })
 
 function getFacet(
-  filter: IFilter,
-  activeOptions: IFilterOption[],
+  filter: IGraphqlProductAggregation,
+  activeOptions: string[],
   id: string,
   onChange: IFilterChange
 ): JSX.Element {
   switch (filter.type) {
-    case 'boolean':
+    case AggregationType.BOOLEAN:
       return (
         <FacetBoolean
+          activeOptions={activeOptions}
+          filter={filter}
+          id={id}
+          onChange={onChange}
+        />
+      )
+
+    case AggregationType.SLIDER:
+      return (
+        <FacetSlider
           activeOptions={activeOptions}
           filter={filter}
           id={id}
@@ -57,7 +64,7 @@ function getFacet(
 
 interface IProps {
   activeFilters: IActiveFilters
-  filter: IFilter
+  filter: IGraphqlProductAggregation
   onChange: IFilterChange
 }
 
@@ -67,7 +74,7 @@ function Facet(props: IProps): JSX.Element {
   const id = useId()
   const activeOptions = activeFilters
     .filter((activeFilters) => activeFilters.filter === filter)
-    .map((activeFilters) => activeFilters.option)
+    .map((activeFilters) => activeFilters.value)
 
   function handleToggleOpen(): void {
     setOpen((prevState) => !prevState)

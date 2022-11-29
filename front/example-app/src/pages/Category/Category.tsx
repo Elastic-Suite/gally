@@ -27,10 +27,12 @@ function findCategory(categories: ICategory[], id: string): ICategory {
 function Category(): JSX.Element {
   const { id } = useParams()
   const {
+    activeFilters,
     loadProduts,
     page,
     pageSize,
     products,
+    setActiveFilters,
     setPage,
     setPageSize,
     setSort,
@@ -47,8 +49,16 @@ function Category(): JSX.Element {
   }, [category, loadProduts])
 
   return (
-    <PageLayout title={category.name}>
-      <TwoColsLayout left={<Facets />}>
+    <PageLayout title={category?.name}>
+      <TwoColsLayout
+        left={
+          <Facets
+            activeFilters={activeFilters}
+            filters={products.data?.products.aggregations}
+            onFilterChange={setActiveFilters}
+          />
+        }
+      >
         <Products
           page={page}
           pageSize={pageSize}

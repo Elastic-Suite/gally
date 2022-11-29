@@ -1,26 +1,13 @@
-export interface IFilterOption {
-  count?: number
-  label?: string
-  value: string
-}
-
-export interface IFilter {
-  field: string
-  count?: number
-  label?: string
-  options?: IFilterOption[]
-  has_more?: boolean
-  type?: string
-}
+import { IGraphqlProductAggregation } from 'shared'
 
 export interface IActiveFilter {
-  filter: IFilter
-  option: IFilterOption
+  filter: IGraphqlProductAggregation
+  value: string
 }
 
 export type IActiveFilters = IActiveFilter[]
 
 export type IFilterChange = (
-  filter: IFilter,
-  option: IFilterOption
+  filter: IGraphqlProductAggregation,
+  value: string
 ) => () => void

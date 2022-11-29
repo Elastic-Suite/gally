@@ -3,7 +3,8 @@ import { VariableType, jsonToGraphQLQuery } from 'json-to-graphql-query'
 import { IProductFieldFilterInput } from '../types'
 
 export function getSearchProductsQuery(
-  filter: IProductFieldFilterInput | IProductFieldFilterInput[] = null
+  filter: IProductFieldFilterInput | IProductFieldFilterInput[] = null,
+  withAggregations = false
 ): string {
   return jsonToGraphQLQuery({
     query: {
@@ -54,6 +55,19 @@ export function getSearchProductsQuery(
             direction: true,
           },
         },
+        ...(withAggregations && {
+          aggregations: {
+            field: true,
+            label: true,
+            type: true,
+            options: {
+              count: true,
+              label: true,
+              value: true,
+            },
+            has_more: true,
+          },
+        }),
       },
     },
   })
