@@ -1,15 +1,18 @@
-import { FormControlLabel, Radio, RadioGroup } from '@mui/material'
+import { Radio, RadioGroup } from '@mui/material'
+import { IGraphqlProductAggregation } from 'shared'
 
-import { IFilter, IFilterChange, IFilterOption } from '../../types'
+import { IFilterChange } from '../../types'
+
+import { FormControlLabel } from './Facet.styled'
 
 interface IProps {
-  activeOptions: IFilterOption[]
-  filter: IFilter
+  activeOptions: string[]
+  filter: IGraphqlProductAggregation
   id: string
   onChange: IFilterChange
 }
 
-export function FacetBoolean(props: IProps): JSX.Element {
+function FacetBoolean(props: IProps): JSX.Element {
   const { activeOptions, filter, id, onChange } = props
   return (
     <RadioGroup
@@ -22,10 +25,17 @@ export function FacetBoolean(props: IProps): JSX.Element {
           key={String(option.value)}
           control={<Radio />}
           label={option.label}
-          onChange={onChange(filter, option)}
-          value={option}
+          onChange={onChange(filter, option.value)}
+          value={
+            <>
+              <span>{option.label}</span>
+              <span>({option.count})</span>
+            </>
+          }
         />
       ))}
     </RadioGroup>
   )
 }
+
+export default FacetBoolean
