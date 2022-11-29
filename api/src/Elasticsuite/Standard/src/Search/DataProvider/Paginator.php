@@ -20,6 +20,8 @@ use ApiPlatform\Core\Bridge\Elasticsearch\Serializer\ItemNormalizer;
 use ApiPlatform\Core\DataProvider\PaginatorInterface;
 use Elasticsuite\Search\Elasticsearch\Adapter\Common\Response\AggregationInterface;
 use Elasticsuite\Search\Elasticsearch\DocumentInterface;
+use Elasticsuite\Search\Elasticsearch\Request\SortOrderInterface;
+use Elasticsuite\Search\Elasticsearch\RequestInterface;
 use Elasticsuite\Search\Elasticsearch\ResponseInterface;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -30,6 +32,7 @@ class Paginator implements \IteratorAggregate, PaginatorInterface
 
     public function __construct(
         private DenormalizerInterface $denormalizer,
+        private RequestInterface $request,
         private ResponseInterface $response,
         private string $resourceClass,
         private int $limit,
@@ -127,5 +130,15 @@ class Paginator implements \IteratorAggregate, PaginatorInterface
     public function getAggregations(): array
     {
         return $this->response->getAggregations();
+    }
+
+    /**
+     * Get applied sort orders.
+     *
+     * @return SortOrderInterface[]
+     */
+    public function getCurrentSortOrders(): array
+    {
+        return $this->request->getSortOrders();
     }
 }

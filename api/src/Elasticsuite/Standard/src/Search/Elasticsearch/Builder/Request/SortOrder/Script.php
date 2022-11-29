@@ -20,7 +20,7 @@ use Elasticsuite\Search\Elasticsearch\Request\SortOrderInterface;
 
 /**
  * Script sort order implementation.
- * TODO ribay@smile.fr extend from Standard.
+ * TODO extend from Standard ?
  */
 class Script implements SortOrderInterface
 {

@@ -17,12 +17,12 @@ declare(strict_types=1);
 namespace Elasticsuite\Search\GraphQl\Type\Definition;
 
 use ApiPlatform\Core\GraphQl\Type\Definition\TypeInterface;
-use GraphQL\Type\Definition\InputObjectType;
+use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type as GraphQLType;
 
-class SortInputType extends InputObjectType implements TypeInterface
+class SortOptionType extends ObjectType implements TypeInterface
 {
-    public const NAME = 'SortInput';
+    public const NAME = 'SortOption';
 
     public function __construct(
         private TypeInterface $sortEnumType
@@ -36,7 +36,7 @@ class SortInputType extends InputObjectType implements TypeInterface
     {
         return [
             'fields' => [
-                'field' => GraphQLType::nonNull(GraphQLType::string()),
+                'field' => GraphQLType::string(),
                 'direction' => $this->sortEnumType,
             ],
         ];
