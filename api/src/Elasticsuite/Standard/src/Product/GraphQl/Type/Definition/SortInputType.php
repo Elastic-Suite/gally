@@ -16,7 +16,7 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Product\GraphQl\Type\Definition;
 
-use ApiPlatform\Core\GraphQl\Type\TypesContainerInterface;
+use ApiPlatform\Core\GraphQl\Type\Definition\TypeInterface;
 use Elasticsuite\Metadata\Repository\SourceFieldRepository;
 use Elasticsuite\Product\GraphQl\Type\Definition\SortOrder\SortOrderProviderInterface;
 use Elasticsuite\Search\GraphQl\Type\Definition\SortInputType as SearchSortInputType;
@@ -26,12 +26,12 @@ class SortInputType extends SearchSortInputType
     public const NAME = 'ProductSortInput';
 
     public function __construct(
-        TypesContainerInterface $typesContainer,
+        private TypeInterface $sortEnumType,
         private SourceFieldRepository $sourceFieldRepository,
         private iterable $sortOrderProviders,
         private string $nestingSeparator
     ) {
-        parent::__construct($typesContainer);
+        parent::__construct($this->sortEnumType);
         $this->name = self::NAME;
     }
 
@@ -44,7 +44,7 @@ class SortInputType extends SearchSortInputType
                 if ($sortOrderProvider->supports($sortableField)) {
                     $fieldName = $sortOrderProvider->getSortOrderField($sortableField);
                     $fields[$fieldName] = [
-                        'type' => $this->getSortEnumType(),
+                        'type' => $this->sortEnumType,
                         'description' => $sortOrderProvider->getLabel($sortableField),
                     ];
                 }

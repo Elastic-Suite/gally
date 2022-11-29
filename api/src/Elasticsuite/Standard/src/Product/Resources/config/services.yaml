@@ -63,7 +63,7 @@ services:
 
     Elasticsuite\Product\GraphQl\Type\Definition\SortInputType:
         arguments:
-            - '@api_platform.graphql.types_container'
+            - '@Elasticsuite\Search\GraphQl\Type\Definition\SortEnumType'
             - '@Elasticsuite\Metadata\Repository\SourceFieldRepository'
             - !tagged_iterator { tag: 'elasticsuite.product_api.sort_order_provider', index_by: 'provider_name' }
             - '%api_platform.graphql.nesting_separator%'
