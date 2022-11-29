@@ -11,10 +11,12 @@ import TwoColsLayout from '../../components/TwoColsLayout/TwoColsLayout'
 
 function Search(): JSX.Element {
   const {
+    activeFilters,
     page,
     pageSize,
     products,
     search,
+    setActiveFilters,
     setPage,
     setPageSize,
     setSort,
@@ -26,7 +28,15 @@ function Search(): JSX.Element {
 
   return (
     <PageLayout title={`Search results for "${search}"`}>
-      <TwoColsLayout left={<Facets />}>
+      <TwoColsLayout
+        left={
+          <Facets
+            activeFilters={activeFilters}
+            filters={products.data?.products.aggregations}
+            onFilterChange={setActiveFilters}
+          />
+        }
+      >
         <FormControl margin="normal">
           <SearchBar />
         </FormControl>

@@ -8,9 +8,10 @@ import {
 } from 'shared'
 
 import { catalogContext } from '../contexts'
-import { IProductsHook } from '../types'
-import { useGraphqlApi } from './useGraphql'
+import { IActiveFilters, IProductsHook } from '../types'
+import { getProductFilters } from '../services'
 
+import { useGraphqlApi } from './useGraphql'
 import { useProductSort } from './useProductSort'
 
 export function useProducts(
@@ -22,6 +23,7 @@ export function useProducts(
   const [pageSize, setPageSize] = useState(10)
   const { localizedCatalogId } = useContext(catalogContext)
   const [sort, sortOrder, sortOptions, setSort, setSortOrder] = useProductSort()
+  const [activeFilters, setActiveFilters] = useState<IActiveFilters>([])
 
   const variables = useMemo(() => {
     const variables: IGraphqlSearchProductsVariables = {
@@ -38,8 +40,11 @@ export function useProducts(
     }
     return variables
   }, [localizedCatalogId, page, pageSize, requestType, search, sort, sortOrder])
-  const [products, setProducts, load] = useGraphqlApi<IGraphqlSearchProducts>(
-    getSearchProductsQuery(filters),
+  const [products, setProducts, , debouncedLoad] = useGraphqlApi<IGraphqlSearchProducts>(
+    getSearchProductsQuery({
+      ...getProductFilters(activeFilters),
+      ...filters
+    }, true),
     variables as unknown as Record<string, unknown>
   )
   const field = products.data?.products.sortInfo.current[0].field
@@ -63,21 +68,23 @@ export function useProducts(
   const loadProduts = useCallback(
     (condition: boolean) => {
       if (localizedCatalogId && condition) {
-        load()
+        debouncedLoad()
       } else {
         setProducts(null)
       }
     },
-    [localizedCatalogId, load, setProducts]
+    [debouncedLoad, localizedCatalogId, setProducts]
   )
 
   return useMemo(
     () => ({
+      activeFilters,
       loadProduts,
       page,
       pageSize,
       products,
       search,
+      setActiveFilters,
       setPage,
       setPageSize,
       setSearch,
@@ -88,6 +95,7 @@ export function useProducts(
       sortOrder,
     }),
     [
+      activeFilters,
       loadProduts,
       page,
       pageSize,

@@ -1,13 +1,14 @@
 import { useState } from 'react'
 import { Button, Collapse, FormGroup } from '@mui/material'
+import { IGraphqlProductAggregation } from 'shared'
 
-import { IFilter, IFilterChange, IFilterOption } from '../../types'
+import { IFilterChange } from '../../types'
 
 import FacetChoice from './FacetChoice'
 
 interface IProps {
-  activeOptions: IFilterOption[]
-  filter: IFilter
+  activeOptions: string[]
+  filter: IGraphqlProductAggregation
   id: string
   onChange: IFilterChange
 }
