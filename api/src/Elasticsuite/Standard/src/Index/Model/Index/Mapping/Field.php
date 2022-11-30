@@ -247,7 +247,7 @@ class Field implements FieldInterface
             $analyzers = [self::ANALYZER_KEYWORD];
         }
 
-        if ($this->isSearchable() || $this->isUsedForSortBy()) {
+        if ($this->isSearchable() || $this->isFilterable() || $this->isUsedForSortBy()) {
             // Default search analyzer.
             $analyzers[] = $this->getDefaultSearchAnalyzer();
         }
