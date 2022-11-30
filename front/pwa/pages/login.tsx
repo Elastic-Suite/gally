@@ -29,7 +29,7 @@ function Login(): JSX.Element {
   const [password, setPassword] = useState('')
 
   const redirectToRequestedPath = useCallback(
-    () => push(requestedPath ?? '/admin'),
+    () => push(requestedPath ?? '/admin/settings/scope/catalogs'),
     [push, requestedPath]
   )
 
