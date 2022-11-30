@@ -18,6 +18,7 @@ namespace Elasticsuite\Category\Service;
 
 use Elasticsuite\Metadata\Repository\SourceFieldRepository;
 use Elasticsuite\Product\GraphQl\Type\Definition\SortOrder\SortOrderProviderInterface as ProductSortOrderProviderInterface;
+use Elasticsuite\Search\Elasticsearch\Request\SortOrderInterface;
 
 class CategoryProductsSortingOptionsProvider
 {
@@ -50,6 +51,11 @@ class CategoryProductsSortingOptionsProvider
                     }
                 }
             }
+
+            $sortOptions[] = [
+                'code' => SortOrderInterface::DEFAULT_SORT_FIELD,
+                'label' => 'Relevance',
+            ];
 
             $this->sortingOptions = $sortOptions;
         }

@@ -19,6 +19,7 @@ namespace Elasticsuite\Product\GraphQl\Type\Definition;
 use ApiPlatform\Core\GraphQl\Type\Definition\TypeInterface;
 use Elasticsuite\Metadata\Repository\SourceFieldRepository;
 use Elasticsuite\Product\GraphQl\Type\Definition\SortOrder\SortOrderProviderInterface;
+use Elasticsuite\Search\Elasticsearch\Request\SortOrderInterface;
 use Elasticsuite\Search\GraphQl\Type\Definition\SortInputType as SearchSortInputType;
 
 class SortInputType extends SearchSortInputType
@@ -50,6 +51,11 @@ class SortInputType extends SearchSortInputType
                 }
             }
         }
+
+        $fields[SortOrderInterface::DEFAULT_SORT_FIELD] = [
+            'type' => $this->sortEnumType,
+            'description' => 'Product relevance according to context (_score)',
+        ];
 
         return ['fields' => $fields];
     }
