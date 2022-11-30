@@ -33,5 +33,6 @@
   "labelForPinProduct": "Vous n'avez aucun produit épinglé dans cette catégorie. N'hésitez pas à épingler quelques produits de la liste ci-dessous.",
   "pinned.results_one": "épinglé",
   "pinned.results_zero": "épinglé",
-  "pinned.results_other": "épinglés"
+  "pinned.results_other": "épinglés",
+  "noProductSearch": "Aucun produit n'a été trouvé"
 }

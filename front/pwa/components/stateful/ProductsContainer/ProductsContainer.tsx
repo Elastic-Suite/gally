@@ -205,7 +205,7 @@ function ProductsContainer(props: IProps): JSX.Element {
         <SearchBar
           nbResults={nbBottomRows}
           nbTopProducts={topProducts.length}
-          value={searchValue}
+          // value={searchValue}
           onChange={onSearchChange}
           sortValue={defaultSorting}
         />
