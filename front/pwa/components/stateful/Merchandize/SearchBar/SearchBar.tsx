@@ -9,7 +9,7 @@ interface IProps extends Omit<IInputTextProps, 'ref'> {
   nbResults: number
   nbTopProducts: number
   sortValue: string
-  onChange: (value: string) => void
+  onChange?: (value: string) => void
 }
 
 interface IPropsKey extends KeyboardEvent<HTMLInputElement> {
