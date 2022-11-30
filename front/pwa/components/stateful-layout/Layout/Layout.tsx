@@ -2,7 +2,6 @@ import { ReactNode, useCallback, useContext, useEffect } from 'react'
 import { styled } from '@mui/system'
 
 import { breadcrumbContext } from '~/contexts'
-import { isValidUser } from '~/../shared'
 
 import { useApiFetch, useUser } from '~/hooks'
 import {
@@ -24,7 +23,7 @@ import {
 import AppBar from '~/components/molecules/layout/appBar/AppBar'
 import Sidebar from '~/components/molecules/layout/Sidebar/Sidebar'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
-import { IMenu, LoadStatus, isError } from 'shared'
+import { IMenu, LoadStatus, isError, isValidUser } from 'shared'
 
 /*
  * TODO: THIBO: Update AppBar
@@ -157,8 +156,7 @@ function Layout({ children }: IProps): JSX.Element {
     [dispatch]
   )
 
-  // const user = useContext(userContext)
-  const isConnectedWithValidJwt = isValidUser(user)
+  const isConnected = isValidUser(user)
   const Collapse = !sidebarState ? CustomToClose : CustomToOpen
 
   return (
@@ -180,11 +178,7 @@ function Layout({ children }: IProps): JSX.Element {
           <Collapse onClick={collapseSidebar}>
             <IonIcon name="code-outline" style={{ width: 18, height: 18 }} />
           </Collapse>
-          <AppBar
-            slug={breadcrumb}
-            menu={menu}
-            isConnectedWithValidJwt={isConnectedWithValidJwt}
-          />
+          <AppBar slug={breadcrumb} menu={menu} isConnected={isConnected} />
           <CustomContent>{children}</CustomContent>
         </CustomContentWithAppBar>
       </CustomAppFrame>

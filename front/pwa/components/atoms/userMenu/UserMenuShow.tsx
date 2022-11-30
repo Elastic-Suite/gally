@@ -1,6 +1,5 @@
 import { styled } from '@mui/system'
-import { storageRemove } from '~/../shared/'
-import { tokenStorageKey } from '~/../shared'
+import { storageRemove, tokenStorageKey } from 'shared'
 import { useRouter } from 'next/router'
 
 const CustomTypoTexte = styled('div')(({ theme }) => ({
