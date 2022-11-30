@@ -10,11 +10,11 @@ const CustomRoot = styled('div')(({ theme }) => ({
 }))
 
 interface IProps {
-  isConnectedWithValidJwt: boolean
+  isConnected: boolean
 }
 
-function User({ isConnectedWithValidJwt }: IProps): JSX.Element | null {
-  if (!isConnectedWithValidJwt) return null
+function User({ isConnected }: IProps): JSX.Element | null {
+  if (!isConnected) return null
   return (
     <CustomRoot>
       <Help />
