@@ -33,5 +33,6 @@
   "labelForPinProduct": "You have no pinned products in this category. Do not hesitate to pin some products from the list below.",
   "pinned.results_one": "pinned",
   "pinned.results_zero": "pinned",
-  "pinned.results_other": "pinned"
+  "pinned.results_other": "pinned",
+  "noProductSearch": "No products were found"
 }

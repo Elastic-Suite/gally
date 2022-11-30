@@ -21,6 +21,8 @@ import {
 import PagerTable from '../../organisms/PagerTable/PagerTable'
 
 import FieldGuesser from '../FieldGuesser/FieldGuesser'
+import NoAttributes from '~/components/atoms/noAttributes/NoAttributes'
+import { useTranslation } from 'next-i18next'
 
 interface IProps {
   localizedCatalogId: string
@@ -47,7 +49,7 @@ function BottomTable(
     sortValue,
     searchValue,
   } = props
-
+  const { t } = useTranslation('categories')
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [rowsPerPage, setRowsPerPage] = useState<number>(defaultPageSize)
 
