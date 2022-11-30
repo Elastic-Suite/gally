@@ -27,8 +27,8 @@ const CustomTitle = styled('div')(({ theme }) => ({
 
 interface IProps {
   title: string
-  btnTitle: string
-  btnHref: string
+  btnTitle?: string
+  btnHref?: string
 }
 
 function NoAttributes({ title, btnTitle, btnHref }: IProps): JSX.Element {
@@ -39,11 +39,13 @@ function NoAttributes({ title, btnTitle, btnHref }: IProps): JSX.Element {
         style={{ color: '#8187B9', width: '40px', height: '40px' }}
       />
       <CustomTitle>{title}</CustomTitle>
-      <Button endIcon={null} startIcon={null} size="large">
-        <Link href={`/${btnHref}`}>
-          <a style={{ textDecoration: 'none' }}>{btnTitle}</a>
-        </Link>
-      </Button>
+      {btnTitle ? (
+        <Button endIcon={null} startIcon={null} size="large">
+          <Link href={`/${btnHref}`}>
+            <a style={{ textDecoration: 'none' }}>{btnTitle}</a>
+          </Link>
+        </Button>
+      ) : null}
     </CustomRoot>
   )
 }
