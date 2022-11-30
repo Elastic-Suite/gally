@@ -116,6 +116,9 @@ class FilterQueryBuilder
                     $queryType = QueryInterface::TYPE_MATCH;
                     $condition['minimumShouldMatch'] = '100%';
                 }
+            } elseif (isset($condition['queryText'])) {
+                $condition[$this->mappedConditions['eq']] = $condition['queryText'];
+                unset($condition['queryText']);
             }
         }
 
