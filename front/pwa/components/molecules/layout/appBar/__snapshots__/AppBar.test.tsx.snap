@@ -60,10 +60,14 @@ exports[`AppBar match snapshot AppBar simple 1`] = `
                   <div
                     class="css-ykyq1f"
                   >
-                    <div>
+                    <div
+                      class="css-10jr14j"
+                    >
                       Helpdesk
                     </div>
-                    <div>
+                    <div
+                      class="css-10jr14j"
+                    >
                       User guide
                     </div>
                   </div>
@@ -249,10 +253,14 @@ exports[`AppBar match snapshot AppBarThreeSlug 1`] = `
                   <div
                     class="css-ykyq1f"
                   >
-                    <div>
+                    <div
+                      class="css-10jr14j"
+                    >
                       Helpdesk
                     </div>
-                    <div>
+                    <div
+                      class="css-10jr14j"
+                    >
                       User guide
                     </div>
                   </div>
@@ -488,10 +496,14 @@ exports[`AppBar match snapshot AppBarTwoSlug 1`] = `
                   <div
                     class="css-ykyq1f"
                   >
-                    <div>
+                    <div
+                      class="css-10jr14j"
+                    >
                       Helpdesk
                     </div>
-                    <div>
+                    <div
+                      class="css-10jr14j"
+                    >
                       User guide
                     </div>
                   </div>

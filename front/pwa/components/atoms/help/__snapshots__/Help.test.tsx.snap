@@ -32,10 +32,14 @@ exports[`Help match snapshot Help simple 1`] = `
               <div
                 class="css-ykyq1f"
               >
-                <div>
+                <div
+                  class="css-10jr14j"
+                >
                   Helpdesk
                 </div>
-                <div>
+                <div
+                  class="css-10jr14j"
+                >
                   User guide
                 </div>
               </div>
