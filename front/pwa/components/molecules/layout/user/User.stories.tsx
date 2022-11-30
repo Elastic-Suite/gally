@@ -11,5 +11,5 @@ const Template: ComponentStory<typeof User> = (args) => <User {...args} />
 
 export const Default = Template.bind({})
 Default.args = {
-  isConnectedWithValidJwt: true,
+  isConnected: true,
 }

@@ -7,18 +7,14 @@ import AppBar from './AppBar'
 describe('AppBar match snapshot', () => {
   it('AppBar simple', () => {
     const { container } = renderWithProviders(
-      <AppBar slug={['search']} menu={menu} isConnectedWithValidJwt />
+      <AppBar slug={['search']} menu={menu} isConnected />
     )
     expect(container).toMatchSnapshot()
   })
 
   it('AppBarTwoSlug', () => {
     const { container } = renderWithProviders(
-      <AppBar
-        slug={['search', 'configuration']}
-        menu={menu}
-        isConnectedWithValidJwt
-      />
+      <AppBar slug={['search', 'configuration']} menu={menu} isConnected />
     )
     expect(container).toMatchSnapshot()
   })
@@ -28,7 +24,7 @@ describe('AppBar match snapshot', () => {
       <AppBar
         slug={['search', 'configuration', 'autocompletion']}
         menu={menu}
-        isConnectedWithValidJwt
+        isConnected
       />
     )
     expect(container).toMatchSnapshot()
@@ -39,7 +35,7 @@ describe('AppBar match snapshot', () => {
       <AppBar
         slug={['search', 'configuration', 'autocompletion']}
         menu={menu}
-        isConnectedWithValidJwt={false}
+        isConnected={false}
       />
     )
     expect(container).toMatchSnapshot()

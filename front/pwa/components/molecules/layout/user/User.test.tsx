@@ -4,14 +4,12 @@ import User from './User'
 
 describe('User', () => {
   it('match snapshot not connected', () => {
-    const { container } = renderWithProviders(
-      <User isConnectedWithValidJwt={false} />
-    )
+    const { container } = renderWithProviders(<User isConnected={false} />)
     expect(container).toMatchSnapshot()
   })
 
   it('match snapshot connected', () => {
-    const { container } = renderWithProviders(<User isConnectedWithValidJwt />)
+    const { container } = renderWithProviders(<User isConnected />)
     expect(container).toMatchSnapshot()
   })
 })
