@@ -2,9 +2,13 @@ import { useFormError } from '~/hooks'
 
 import Dropdown, { IDropDownProps } from './DropDown'
 
-function DropdownError<T>(props: IDropDownProps<T>): JSX.Element {
-  const { onChange, ...inputProps } = props
-  const formErrorProps = useFormError(onChange)
+interface IDropDownErrorProps<T> extends IDropDownProps<T> {
+  showError?: boolean
+}
+
+function DropdownError<T>(props: IDropDownErrorProps<T>): JSX.Element {
+  const { onChange, showError, ...inputProps } = props
+  const formErrorProps = useFormError(onChange, showError)
   return <Dropdown {...formErrorProps} {...inputProps} />
 }
 

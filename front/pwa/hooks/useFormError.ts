@@ -2,7 +2,11 @@ import { SyntheticEvent, useCallback, useState } from 'react'
 import { useTranslation } from 'next-i18next'
 import { getFormValidityError } from 'shared'
 
-export type IOnChange = (value: unknown, event: SyntheticEvent) => void
+export type IOnChange = (value: unknown, event?: SyntheticEvent) => void
+export type IValidator = (
+  value: unknown,
+  event?: SyntheticEvent
+) => string | null
 
 export interface IFormErrorProps {
   error: boolean
@@ -13,7 +17,8 @@ export interface IFormErrorProps {
 
 export function useFormError(
   onChange: IOnChange,
-  showError = false
+  showError = false,
+  validator?: IValidator
 ): IFormErrorProps {
   const [error, setError] = useState('')
   const { t } = useTranslation('common')
@@ -22,21 +27,30 @@ export function useFormError(
   const helperText = error ? t(`formError.${error}`) : undefined
 
   const validate = useCallback(
-    (event: SyntheticEvent): boolean => {
-      const { validity } = event.target as HTMLInputElement
-      if (!validity.valid && showError) {
-        setError(getFormValidityError(validity))
+    (value: unknown, event?: SyntheticEvent): boolean => {
+      let error = null
+      if (validator) {
+        error = validator(value, event)
+      }
+      if (error === null && event) {
+        const { validity } = event.target as HTMLInputElement
+        if (!validity.valid) {
+          error = getFormValidityError(validity)
+        }
+      }
+      if (error && showError) {
+        setError(error)
       } else {
         setError('')
       }
-      return validity.valid
+      return error === null
     },
-    [showError]
+    [showError, validator]
   )
 
   const handleChange = useCallback(
-    (value: unknown, event: SyntheticEvent): void => {
-      const isValid = validate(event)
+    (value: unknown, event?: SyntheticEvent): void => {
+      const isValid = validate(value, event)
       if (onChange && (isValid || showError)) {
         onChange(value, event)
       }

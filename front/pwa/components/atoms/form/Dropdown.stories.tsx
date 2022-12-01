@@ -96,7 +96,7 @@ Multiple.args = {
   transparent: false,
 }
 
-export const WithError: ComponentStory<typeof DropDownComponent> = (args) => {
+export const WithError: ComponentStory<typeof DropDownError> = (args) => {
   const [value, setValue] = useState('')
   const handleChange = (value: string): void => setValue(value)
   return <DropDownError {...args} onChange={handleChange} value={value} />
@@ -116,6 +116,7 @@ WithError.args = {
     { label: 'Fifty', value: 50 },
   ],
   required: true,
+  showError: false,
   small: false,
   transparent: false,
 }
