@@ -107,3 +107,12 @@ export function serializeCatConf(
     ),
   }
 }
+
+export function isRuleValid(rule: IRule): boolean {
+  if (isCombinationRule(rule)) {
+    return rule.children.every(isRuleValid)
+  } else if (isAttributeRule(rule)) {
+    return rule.field !== '' && rule.operator !== '' && rule.value !== ''
+  }
+  return true
+}

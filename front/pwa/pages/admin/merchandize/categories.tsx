@@ -20,6 +20,7 @@ import {
   getDefaultLocalizedCatalog,
   getLocalizedCatalog,
   isError,
+  isRuleValid,
   parseCatConf,
   savePositions,
   serializeCatConf,
@@ -147,6 +148,7 @@ function Categories(): JSX.Element {
     selectedCategoryItem?.id,
     catConfResource.url,
   ])
+  const isValid = !catConf?.isVirtual || isRuleValid(catConf?.virtualRule)
 
   // Rule engine graphql filters
   const [ruleEngineGraphqlFilters, setRuleEngineGraphqlFilters] =
@@ -166,12 +168,18 @@ function Categories(): JSX.Element {
     [fetchApi]
   )
   useEffect(() => {
-    if (catConf?.isVirtual && catConf?.virtualRule) {
+    if (catConf?.isVirtual && catConf?.virtualRule && isValid) {
       debouncedFetch(
         JSON.stringify(serializeRule(catConf.virtualRule, ruleOperators))
       )
     }
-  }, [catConf?.isVirtual, catConf?.virtualRule, debouncedFetch, ruleOperators])
+  }, [
+    catConf?.isVirtual,
+    catConf?.virtualRule,
+    debouncedFetch,
+    isValid,
+    ruleOperators,
+  ])
   const productGraphqlFilters: IProductFieldFilterInput = useMemo(() => {
     if (catConf?.isVirtual && ruleEngineGraphqlFilters) {
       return ruleEngineGraphqlFilters
@@ -308,6 +316,7 @@ function Categories(): JSX.Element {
           <ProductsContainer
             catConf={catConf}
             category={selectedCategoryItem}
+            isValid={isValid}
             onVirtualChange={handleUpdateCat('isVirtual')}
             onNameChange={handleUpdateCat('useNameInProductSearch')}
             onSortChange={handleUpdateCat('defaultSorting')}
