@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Search\Elasticsearch\Request\Container;
 
+use Elasticsuite\Catalog\Model\LocalizedCatalog;
 use Elasticsuite\Search\Elasticsearch\Request\Container\RelevanceConfiguration\FuzzinessConfigurationInterface;
 
 /**
@@ -24,6 +25,11 @@ use Elasticsuite\Search\Elasticsearch\Request\Container\RelevanceConfiguration\F
  */
 interface RelevanceConfigurationInterface
 {
+    /**
+     * Init config data.
+     */
+    public function initConfigData(?LocalizedCatalog $localizedCatalog, ?string $requestType): void;
+
     /**
      * Retrieve minimum should match.
      */
