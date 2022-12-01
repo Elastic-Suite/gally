@@ -249,7 +249,9 @@ services:
         arguments:
             - '@.inner'
     
-    Elasticsuite\Search\Elasticsearch\Request\Container\RelevanceConfiguration\GenericRelevanceConfiguration: ~
+    Elasticsuite\Search\Elasticsearch\Request\Container\RelevanceConfiguration\GenericRelevanceConfiguration:
+        arguments:
+            - '%elasticsuite.relevance%'
     
     Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\GenericContainerConfigurationFactory:
         public: false

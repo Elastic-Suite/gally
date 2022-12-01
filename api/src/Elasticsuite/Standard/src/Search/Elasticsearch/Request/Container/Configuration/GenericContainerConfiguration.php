@@ -34,6 +34,7 @@ class GenericContainerConfiguration implements ContainerConfigurationInterface
         private RelevanceConfigurationInterface $relevanceConfiguration,
         private AggregationProviderInterface $aggregationProvider,
     ) {
+        $this->relevanceConfiguration->initConfigData($this->localizedCatalog, $this->requestType);
     }
 
     /**
