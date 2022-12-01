@@ -117,6 +117,7 @@ WithError.args = {
   margin: 'none',
   placeholder: 'Name',
   required: true,
+  showError: false,
   small: false,
   suffix: '',
   transparent: false,

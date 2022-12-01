@@ -15,7 +15,8 @@ const CustomBox = styled(Box)(() => ({
   fontFamily: 'inter',
 }))
 
-interface IProps extends Omit<IDatePickerProps, 'value' | 'onChange'> {
+export interface IDoubleDatePickerProps
+  extends Omit<IDatePickerProps, 'value' | 'onChange'> {
   value?: { from: Dayjs | null; to: Dayjs | null } | null
   onChange?: (value: { from: Dayjs | null; to: Dayjs | null }) => void
   error?: boolean
@@ -27,7 +28,7 @@ interface IProps extends Omit<IDatePickerProps, 'value' | 'onChange'> {
   helperIcon?: string
 }
 
-function DoubleDatePicker(props: IProps): JSX.Element {
+function DoubleDatePicker(props: IDoubleDatePickerProps): JSX.Element {
   const {
     value,
     error,

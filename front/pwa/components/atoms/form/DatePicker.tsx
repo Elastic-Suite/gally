@@ -70,11 +70,12 @@ function DatePicker({
         SwitchViewIcon: ShowIcon,
       }}
       renderInput={(params): JSX.Element => {
+        const { InputProps, ...rest } = params
         return (
           <InputText
-            {...params}
+            {...InputProps}
+            {...rest}
             {...args}
-            endAdornment={params.InputProps.endAdornment}
             onChange={(_: string | number, event: SyntheticEvent): void =>
               params.onChange(event as ChangeEvent<HTMLInputElement>)
             }
