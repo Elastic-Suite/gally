@@ -40,6 +40,7 @@ interface IProps {
   catConf: IParsedCategoryConfiguration
   category: ICategory
   isLoading?: boolean
+  isValid?: boolean
   localizedCatalogId: string
   onNameChange: (val: boolean) => void
   onSortChange: (val: string) => void
@@ -55,6 +56,7 @@ function ProductsContainer(props: IProps): JSX.Element {
     catConf,
     category,
     isLoading,
+    isValid,
     localizedCatalogId,
     onNameChange,
     onSave,
@@ -135,6 +137,7 @@ function ProductsContainer(props: IProps): JSX.Element {
         prevProductPositions.current !==
           productPositions.data.getPositionsCategoryProductMerchandising.result
       : false
+  const disabled = !dirty || !isValid
 
   function pinToTop(): void {
     if (bottomSelectedRows.length + topProducts.length > 25) return
@@ -183,7 +186,7 @@ function ProductsContainer(props: IProps): JSX.Element {
           sx={{ marginBottom: '12px' }}
           title={category?.name ? category?.name : category?.catalogName}
         >
-          <Button disabled={!dirty} onClick={handleSave} loading={isLoading}>
+          <Button disabled={disabled} onClick={handleSave} loading={isLoading}>
             {t('buttonSave')}
           </Button>
         </PageTitle>
