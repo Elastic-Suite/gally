@@ -158,6 +158,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
         $container->setParameter('elasticsuite.analysis', $config['analysis'] ?? []);
         $container->setParameter('elasticsuite.graphql_query_renaming', $config['graphql_query_renaming'] ?? []);
         $container->setParameter('elasticsuite.search_settings', $config['search_settings'] ?? []);
+        $container->setParameter('elasticsuite.relevance', $config['relevance'] ?? []);
 
         //@Todo : Use this feature https://symfony.com/doc/current/bundles/extension.html ?
 //        $this->addAnnotatedClassesToCompile([
@@ -180,11 +181,13 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
             __DIR__ . '/../Search/Resources/config/elasticsuite.yaml',
             __DIR__ . '/../Product/Resources/config/elasticsuite.yaml',
             __DIR__ . '/../Analysis/Resources/config/elasticsuite_analysis.yaml',
+            __DIR__ . '/../Search/Resources/config/elasticsuite_relevance.yaml',
         ];
 
         if ($isTestMode) {
             array_unshift($configFiles, __DIR__ . '/../Index/Resources/config/test/elasticsuite.yaml');
             $configFiles[] = __DIR__ . '/../Menu/Resources/config/test/elasticsuite_menu.yaml';
+            $configFiles[] = __DIR__ . '/../Search/Resources/config/test/elasticsuite_relevance.yaml';
         } else {
             $configFiles = array_merge(
                 $configFiles,
@@ -192,6 +195,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
                     __DIR__ . '/../Catalog/Resources/config/elasticsuite_menu.yaml',
                     __DIR__ . '/../User/Resources/config/elasticsuite_menu.yaml',
                     __DIR__ . '/../Menu/Resources/config/elasticsuite_menu.yaml',
+                    __DIR__ . '/../Search/Resources/config/elasticsuite_relevance.yaml',
                 ]
             );
         }
@@ -199,7 +203,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
         foreach ($configFiles as $configFile) {
             $container->prependExtensionConfig(
                 'elasticsuite',
-                $yamlParser->parseFile($configFile)['elasticsuite'] ?? []
+                $yamlParser->parseFile($configFile, Yaml::PARSE_CONSTANT)['elasticsuite'] ?? []
             );
         }
     }

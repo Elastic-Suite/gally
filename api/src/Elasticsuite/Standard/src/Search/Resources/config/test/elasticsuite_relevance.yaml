@@ -1,0 +1,12 @@
+elasticsuite:
+    relevance:
+        b2c_fr_relevance:
+            request_types:
+                product_catalog:
+                    fulltext:
+                        minimumShouldMatch: '50%'
+                    phraseMatch:
+                        enabled: true
+                        boost: 25
+                    cutOffFrequency:
+                        value: 0.30
