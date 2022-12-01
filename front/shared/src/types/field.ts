@@ -1,10 +1,11 @@
 import { SyntheticEvent } from 'react'
 
 import { IField } from './api'
-import { DataContentType } from './customTables'
+import { DataContentType, ITableRow } from './customTables'
 import { IOptions } from './option'
 
 export interface IFieldConfig {
+  disabled?: boolean
   editable?: boolean
   field?: IField
   id: string
@@ -24,5 +25,6 @@ export interface IFieldGuesserProps extends IFieldConfig {
   onChange?: (name: string, value: unknown, event?: SyntheticEvent) => void
   showError?: boolean
   useDropdownBoolean?: boolean
+  row?: ITableRow
   value: unknown
 }

@@ -24,15 +24,15 @@ const CustomNoResult = styled('div')(({ theme }) => ({
 }))
 
 interface IProps extends ICustomTableProps {
+  count: number
   currentPage: number
+  noResult?: boolean
   onPageChange: (page: number) => void
   onRowsPerPageChange?: (
     event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => void
   rowsPerPage: number
   rowsPerPageOptions: number[]
-  count: number
-  noResult?: boolean
 }
 
 function PagerTable(

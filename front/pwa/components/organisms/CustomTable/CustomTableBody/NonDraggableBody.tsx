@@ -1,7 +1,12 @@
 import { FunctionComponent, SyntheticEvent } from 'react'
 import { TableBody } from '@mui/material'
 
-import { IFieldGuesserProps, ITableHeader, ITableRow } from 'shared'
+import {
+  IFieldGuesserProps,
+  ITableConfig,
+  ITableHeader,
+  ITableRow,
+} from 'shared'
 import NonDraggableRow from '../CustomTableRow/NonDraggableRow'
 
 interface IProps {
@@ -18,6 +23,7 @@ interface IProps {
   onSelectRows: (arr: (string | number)[]) => void
   selectedRows: (string | number)[]
   shadow: boolean
+  tableConfigs?: ITableConfig[]
   tableHeaders: ITableHeader[]
   tableRows: ITableRow[]
   withSelection: boolean
@@ -33,6 +39,7 @@ function NonDraggableBody(props: IProps): JSX.Element {
     onSelectRows,
     selectedRows,
     shadow,
+    tableConfigs,
     tableHeaders,
     tableRows,
     withSelection,
@@ -51,6 +58,7 @@ function NonDraggableBody(props: IProps): JSX.Element {
           onSelectRows={onSelectRows}
           selectedRows={selectedRows}
           shadow={shadow}
+          tableConfig={tableConfigs?.[index]}
           tableHeaders={tableHeaders}
           tableRow={tableRow}
           withSelection={withSelection}

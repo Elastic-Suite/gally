@@ -4,6 +4,7 @@ import { DraggableProvided } from 'react-beautiful-dnd'
 
 import {
   IFieldGuesserProps,
+  ITableConfig,
   ITableHeader,
   ITableHeaderSticky,
   ITableRow,
@@ -40,6 +41,7 @@ interface IProps {
   provider: DraggableProvided
   selectedRows: (string | number)[]
   shadow: boolean
+  tableConfig?: ITableConfig
   tableHeaders: ITableHeader[]
   tableRow: ITableRow
   withSelection: boolean
@@ -56,14 +58,20 @@ function DraggableRow(props: IProps): JSX.Element {
     provider,
     selectedRows,
     shadow,
+    tableConfig,
     tableHeaders,
     tableRow,
     withSelection,
   } = props
+  const { disabled } = tableConfig
 
   const stickyHeaders: ITableHeaderSticky[] = manageStickyHeaders(tableHeaders)
   const nonStickyHeaders = tableHeaders.filter((header) => !header.sticky)
   const isOnlyDraggable = !withSelection && stickyHeaders.length === 0
+
+  function handleSelectionChange(value: ChangeEvent<HTMLInputElement>): void {
+    handleSingleRow(value, tableRow.id, onSelectRows, selectedRows)
+  }
 
   function handleChange(
     name: string,
@@ -110,11 +118,10 @@ function DraggableRow(props: IProps): JSX.Element {
           )}
         >
           <Checkbox
-            data-testid="draggable-single-row-selection"
             checked={selectedRows ? selectedRows.includes(tableRow.id) : false}
-            onChange={(value: ChangeEvent<HTMLInputElement>): void =>
-              handleSingleRow(value, tableRow.id, onSelectRows, selectedRows)
-            }
+            data-testid="draggable-single-row-selection"
+            disabled={disabled}
+            onChange={handleSelectionChange}
           />
         </StickyTableCell>
       )}
@@ -132,8 +139,10 @@ function DraggableRow(props: IProps): JSX.Element {
           <Field
             {...stickyHeader}
             diffValue={diffRow?.[stickyHeader.name]}
+            disabled={disabled}
             label=""
             onChange={handleChange}
+            row={tableRow}
             value={tableRow[stickyHeader.name]}
           />
         </StickyTableCell>
@@ -144,14 +153,20 @@ function DraggableRow(props: IProps): JSX.Element {
           <Field
             {...header}
             diffValue={diffRow?.[header.name]}
+            disabled={disabled}
             label=""
             onChange={handleChange}
+            row={tableRow}
             value={tableRow[header.name]}
           />
         </BaseTableCell>
       ))}
     </TableRow>
   )
+}
+
+DraggableRow.defaultProps = {
+  tableConfig: {},
 }
 
 export default DraggableRow

@@ -1,11 +1,19 @@
-import { ChangeEvent, SyntheticEvent, useRef, useState } from 'react'
+import {
+  ChangeEvent,
+  FunctionComponent,
+  SyntheticEvent,
+  useRef,
+  useState,
+} from 'react'
 
 import { useApiEditableFieldOptions, useApiHeaders } from '~/hooks'
 import {
   IField,
+  IFieldGuesserProps,
   IHydraMember,
   IResource,
   IResourceEditableMassUpdate,
+  ITableConfig,
   ITableRow,
   defaultPageSize,
 } from 'shared'
@@ -17,6 +25,7 @@ import FieldGuesser from '../FieldGuesser/FieldGuesser'
 import TableStickyBar from '../TableStickyBar/TableStickyBar'
 
 interface IProps<T extends IHydraMember> {
+  Field?: FunctionComponent<IFieldGuesserProps>
   count?: number
   currentPage?: number
   diffRows?: ITableRow[]
@@ -35,11 +44,13 @@ interface IProps<T extends IHydraMember> {
     event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => void
   noResult?: boolean
+  tableConfigs?: ITableConfig[]
   tableRows: ITableRow[]
 }
 
 function TableGuesser<T extends IHydraMember>(props: IProps<T>): JSX.Element {
   const {
+    Field,
     count,
     currentPage,
     diffRows,
@@ -51,6 +62,7 @@ function TableGuesser<T extends IHydraMember>(props: IProps<T>): JSX.Element {
     rowsPerPageOptions,
     onRowsPerPageChange,
     noResult,
+    tableConfigs,
     tableRows,
   } = props
   const tableHeaders = useApiHeaders(resource)
@@ -60,6 +72,29 @@ function TableGuesser<T extends IHydraMember>(props: IProps<T>): JSX.Element {
   const [selectedField, setSelectedField] = useState<IField | ''>('')
   const [selectedValue, setSelectedValue] = useState<boolean | ''>('')
   const [selectedRows, setSelectedRows] = useState<(string | number)[]>([])
+
+  const withSelection = selectedRows?.length !== undefined
+  const activeRows = tableRows.filter(
+    (_, index) => !(tableConfigs?.[index]?.disabled ?? false)
+  )
+  const massiveSelectionState =
+    withSelection && selectedRows
+      ? selectedRows.length === activeRows.length
+      : false
+  const massiveSelectionIndeterminate =
+    withSelection && selectedRows.length > 0
+      ? selectedRows.length < activeRows.length
+      : false
+
+  function handleSelection(rowIds: (string | number)[] | boolean): void {
+    if (rowIds instanceof Array) {
+      setSelectedRows(rowIds)
+    } else if (rowIds) {
+      setSelectedRows(activeRows.map((row) => row.id))
+    } else {
+      setSelectedRows([])
+    }
+  }
 
   function handleChangeField(id: IField | ''): void {
     setSelectedField(id)
@@ -80,37 +115,47 @@ function TableGuesser<T extends IHydraMember>(props: IProps<T>): JSX.Element {
   return (
     <>
       <PagerTable
-        Field={FieldGuesser}
+        Field={Field}
         count={count}
         currentPage={currentPage ?? 0}
         diffRows={diffRows}
+        massiveSelectionState={massiveSelectionState}
+        massiveSelectionIndeterminate={massiveSelectionIndeterminate}
         onPageChange={onPageChange}
         onRowUpdate={onRowUpdate}
-        onSelectedRows={setSelectedRows}
+        onSelection={handleSelection}
         ref={tableRef}
         rowsPerPage={rowsPerPage ?? defaultPageSize}
         rowsPerPageOptions={rowsPerPageOptions ?? []}
         selectedRows={selectedRows}
+        tableConfigs={tableConfigs}
         tableHeaders={tableHeaders}
         tableRows={tableRows}
         onRowsPerPageChange={onRowsPerPageChange}
         noResult={noResult}
+        withSelection={withSelection}
       />
       <StickyBar positionRef={tableRef} show={selectedRows.length > 0}>
         <TableStickyBar
           field={selectedField}
           fieldOptions={fieldOptions}
           fieldValue={selectedValue}
+          massiveSelectionState={massiveSelectionState}
+          massiveSelectionIndeterminate={massiveSelectionIndeterminate}
           onApply={handleApply}
           onChangeField={handleChangeField}
           onChangeValue={handleChangeValue}
-          onSelectedRows={setSelectedRows}
+          onSelection={handleSelection}
           selectedRows={selectedRows}
-          tableRows={tableRows}
+          withSelection={withSelection}
         />
       </StickyBar>
     </>
   )
+}
+
+TableGuesser.defaultProps = {
+  Field: FieldGuesser,
 }
 
 export default TableGuesser
