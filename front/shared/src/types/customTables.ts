@@ -73,6 +73,10 @@ export interface ITableHeaderSticky extends ITableHeader {
   isLastSticky: boolean
 }
 
+export interface ITableConfig {
+  disabled?: boolean
+}
+
 export type BoostType = 'up' | 'down' | 'no boost'
 
 export interface IBoost {

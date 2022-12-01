@@ -2,7 +2,12 @@ import { FunctionComponent, SyntheticEvent } from 'react'
 import { TableBody } from '@mui/material'
 import { Draggable, Droppable } from 'react-beautiful-dnd'
 
-import { IFieldGuesserProps, ITableHeader, ITableRow } from 'shared'
+import {
+  IFieldGuesserProps,
+  ITableConfig,
+  ITableHeader,
+  ITableRow,
+} from 'shared'
 
 import DraggableRow from '../CustomTableRow/DraggableRow'
 
@@ -20,6 +25,7 @@ interface IProps {
   onSelectRows: (arr: (string | number)[]) => void
   selectedRows: (string | number)[]
   shadow: boolean
+  tableConfigs?: ITableConfig[]
   tableHeaders: ITableHeader[]
   tableRows: ITableRow[]
   withSelection: boolean
@@ -35,6 +41,7 @@ function DraggableBody(props: IProps): JSX.Element {
     onSelectRows,
     selectedRows,
     shadow,
+    tableConfigs,
     tableHeaders,
     tableRows,
     withSelection,
@@ -61,6 +68,7 @@ function DraggableBody(props: IProps): JSX.Element {
                   provider={provider}
                   selectedRows={selectedRows}
                   shadow={shadow}
+                  tableConfig={tableConfigs?.[index]}
                   tableHeaders={tableHeaders}
                   tableRow={tableRow}
                   withSelection={withSelection}

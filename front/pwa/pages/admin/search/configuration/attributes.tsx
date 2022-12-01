@@ -2,17 +2,18 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { useContext, useEffect, useState } from 'react'
+import { searchableAttributeUrl } from 'shared'
 
 import { breadcrumbContext } from '~/contexts'
 import { withAuth, withOptions } from '~/hocs'
-import { searchableAttributeUrl } from 'shared'
+import { useFilters, useResource } from '~/hooks'
 
 import Alert from '~/components/atoms/Alert/Alert'
 import PageTitle from '~/components/atoms/PageTitle/PageTitle'
 import ResourceTable from '~/components/stateful-pages/ResourceTable/ResourceTable'
-import { useFilters, useResource } from '~/hooks'
 
 const pagesSlug = ['search', 'configuration', 'attributes']
+const fixedFilters = { 'metadata.entity': 'product' }
 
 function Attributes(): JSX.Element {
   const [isVisibleAlertAttributes, setIsVisibleAlertAttributes] = useState(true)
@@ -30,9 +31,6 @@ function Attributes(): JSX.Element {
 
   const resource = useResource('SourceField')
   const [activeFilters, setActiveFilters] = useFilters(resource)
-  const sourceFieldAttributesFilters = {
-    'metadata.entity': 'product',
-  }
 
   return (
     <>
@@ -49,11 +47,10 @@ function Attributes(): JSX.Element {
       )}
       <ResourceTable
         activeFilters={activeFilters}
-        setActiveFilters={setActiveFilters}
+        filters={fixedFilters}
         resourceName="SourceField"
-        active={false}
+        setActiveFilters={setActiveFilters}
         urlParams={searchableAttributeUrl}
-        filters={sourceFieldAttributesFilters}
       />
     </>
   )

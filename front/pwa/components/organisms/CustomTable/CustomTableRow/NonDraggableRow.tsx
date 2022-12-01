@@ -3,6 +3,7 @@ import { Checkbox, TableRow } from '@mui/material'
 
 import {
   IFieldGuesserProps,
+  ITableConfig,
   ITableHeader,
   ITableHeaderSticky,
   ITableRow,
@@ -36,6 +37,7 @@ interface IProps {
   onSelectRows: (arr: (string | number)[]) => void
   selectedRows: (string | number)[]
   shadow: boolean
+  tableConfig?: ITableConfig
   tableHeaders: ITableHeader[]
   tableRow: ITableRow
   withSelection: boolean
@@ -51,14 +53,20 @@ function NonDraggableRow(props: IProps): JSX.Element {
     onSelectRows,
     selectedRows,
     shadow,
+    tableConfig,
     tableHeaders,
     tableRow,
     withSelection,
   } = props
+  const { disabled } = tableConfig
 
   const stickyHeaders: ITableHeaderSticky[] = manageStickyHeaders(tableHeaders)
   const nonStickyHeaders = tableHeaders.filter((header) => !header.sticky)
   const isOnlyDraggable = !withSelection && stickyHeaders.length === 0
+
+  function handleSelectionChange(value: ChangeEvent<HTMLInputElement>): void {
+    handleSingleRow(value, tableRow.id, onSelectRows, selectedRows)
+  }
 
   function handleChange(
     name: string,
@@ -96,11 +104,10 @@ function NonDraggableRow(props: IProps): JSX.Element {
           )}
         >
           <Checkbox
-            data-testid="non-draggable-single-row-selection"
             checked={selectedRows ? selectedRows.includes(tableRow.id) : false}
-            onChange={(value: ChangeEvent<HTMLInputElement>): void =>
-              handleSingleRow(value, tableRow.id, onSelectRows, selectedRows)
-            }
+            data-testid="non-draggable-single-row-selection"
+            disabled={disabled}
+            onChange={handleSelectionChange}
           />
         </StickyTableCell>
       )}
@@ -118,8 +125,10 @@ function NonDraggableRow(props: IProps): JSX.Element {
           <Field
             {...stickyHeader}
             diffValue={diffRow?.[stickyHeader.name]}
+            disabled={disabled}
             label=""
             onChange={handleChange}
+            row={tableRow}
             value={tableRow[stickyHeader.name]}
           />
         </StickyTableCell>
@@ -130,14 +139,20 @@ function NonDraggableRow(props: IProps): JSX.Element {
           <Field
             {...header}
             diffValue={diffRow?.[header.name]}
+            disabled={disabled}
             label=""
             onChange={handleChange}
+            row={tableRow}
             value={tableRow[header.name]}
           />
         </BaseTableCell>
       ))}
     </TableRow>
   )
+}
+
+NonDraggableRow.defaultProps = {
+  tableConfig: {},
 }
 
 export default NonDraggableRow
