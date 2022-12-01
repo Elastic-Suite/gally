@@ -1,4 +1,4 @@
-import { ITabContentProps } from 'shared'
+import { ITabContentProps, ITableConfig, ITableRow } from 'shared'
 import { useFilters, useResource } from '~/hooks'
 
 import ResourceTable from '../ResourceTable/ResourceTable'
@@ -11,13 +11,18 @@ function SettingsAttributes(props: ITabContentProps): JSX.Element {
   const resource = useResource('SourceField')
   const [activeFilters, setActiveFilters] = useFilters(resource)
 
+  function getTableConfigs(rows: ITableRow[]): ITableConfig[] {
+    return rows.map((row) => ({ disabled: Boolean(row.isSystem) }))
+  }
+
   return (
     <ResourceTable
-      activeFilters={activeFilters}
-      setActiveFilters={setActiveFilters}
-      resourceName="SourceField"
       active={active}
+      activeFilters={activeFilters}
       filters={fixedFilters}
+      getTableConfigs={getTableConfigs}
+      resourceName="SourceField"
+      setActiveFilters={setActiveFilters}
     />
   )
 }

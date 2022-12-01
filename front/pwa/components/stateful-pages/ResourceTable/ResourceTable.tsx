@@ -1,9 +1,17 @@
-import { Dispatch, SetStateAction, useMemo, useState } from 'react'
+import {
+  Dispatch,
+  FunctionComponent,
+  SetStateAction,
+  useMemo,
+  useState,
+} from 'react'
 import { useTranslation } from 'next-i18next'
 import { styled } from '@mui/system'
 import {
+  IFieldGuesserProps,
   ISearchParameters,
   ISourceField,
+  ITableConfig,
   ITableRow,
   LoadStatus,
   defaultPageSize,
@@ -20,6 +28,7 @@ import {
   useSearch,
 } from '~/hooks'
 
+import FieldGuesser from '~/components/stateful/FieldGuesser/FieldGuesser'
 import FiltersGuesser from '~/components/stateful/FiltersGuesser/FiltersGuesser'
 import TableGuesser from '~/components/stateful/TableGuesser/TableGuesser'
 
@@ -41,27 +50,31 @@ function isObjectNotEmpty(object: object): boolean {
   return Object.values(object).some((value) => value)
 }
 interface IProps {
+  Field?: FunctionComponent<IFieldGuesserProps>
   active?: boolean
-  diffDefaultValues?: boolean
-  filters?: ISearchParameters
-  urlParams?: string
-  resourceName: string
-  isFacets?: boolean
   activeFilters: ISearchParameters
+  diffDefaultValues?: boolean
+  getTableConfigs?: (rows: ITableRow[]) => ITableConfig[]
+  filters?: ISearchParameters
+  isFacets?: boolean
+  resourceName: string
   setActiveFilters: Dispatch<SetStateAction<ISearchParameters>>
+  urlParams?: string
 }
 
 function ResourceTable(props: IProps): JSX.Element {
   const { t } = useTranslation('resourceTable')
   const {
+    Field,
     active,
-    diffDefaultValues,
-    filters,
-    urlParams,
-    resourceName,
-    isFacets,
     activeFilters,
+    diffDefaultValues,
+    getTableConfigs,
+    filters,
+    isFacets,
+    resourceName,
     setActiveFilters,
+    urlParams,
   } = props
 
   const resource = useResource(resourceName)
@@ -210,25 +223,31 @@ function ResourceTable(props: IProps): JSX.Element {
         )}
       </FiltersGuesser>
       <TableGuesser
+        Field={Field}
         count={data['hydra:totalItems']}
         currentPage={page}
         diffRows={diffRows}
-        onMassupdate={massUpdate}
-        onPageChange={handlePageChange}
-        onRowUpdate={handleRowChange}
-        resource={resource}
-        rowsPerPageOptions={rowsPerPageOptions}
-        onRowsPerPageChange={onRowsPerPageChange}
-        rowsPerPage={rowsPerPage}
-        tableRows={tableRows}
         noResult={
           data['hydra:member'].length === 0 &&
           resourceData.status === LoadStatus.SUCCEEDED &&
           filterOrSearchAreUp
         }
+        onMassupdate={massUpdate}
+        onPageChange={handlePageChange}
+        onRowUpdate={handleRowChange}
+        onRowsPerPageChange={onRowsPerPageChange}
+        resource={resource}
+        rowsPerPage={rowsPerPage}
+        rowsPerPageOptions={rowsPerPageOptions}
+        tableConfigs={getTableConfigs?.(tableRows)}
+        tableRows={tableRows}
       />
     </>
   )
+}
+
+ResourceTable.defaultProps = {
+  Field: FieldGuesser,
 }
 
 export default ResourceTable

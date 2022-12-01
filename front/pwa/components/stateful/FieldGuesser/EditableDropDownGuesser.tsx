@@ -15,6 +15,7 @@ interface IProps extends Omit<IFieldGuesserProps, 'onChange'> {
 function EditableDropDownGuesser(props: IProps): JSX.Element {
   const {
     diffValue,
+    disabled,
     field,
     label,
     multiple,
@@ -48,6 +49,7 @@ function EditableDropDownGuesser(props: IProps): JSX.Element {
   return (
     <DropDown
       dirty={dirty}
+      disabled={disabled}
       helperText={
         Boolean(dirty) &&
         t('form.defaultValue', {

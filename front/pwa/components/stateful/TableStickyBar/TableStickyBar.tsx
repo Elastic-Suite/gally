@@ -1,9 +1,9 @@
-import { ChangeEvent, Dispatch, FormEvent, SetStateAction } from 'react'
+import { ChangeEvent, FormEvent } from 'react'
 import { useTranslation } from 'next-i18next'
 import { Box, Checkbox } from '@mui/material'
 import { styled } from '@mui/system'
 
-import { IField, IOptions, ITableRow, getFieldDataContentType } from 'shared'
+import { IField, IOptions, getFieldHeader } from 'shared'
 
 import Button from '~/components/atoms/buttons/Button'
 import Dropdown from '~/components/atoms/form/DropDown'
@@ -24,12 +24,14 @@ interface IProps {
   field: IField | ''
   fieldOptions: IOptions<IField>
   fieldValue: unknown
+  massiveSelectionState: boolean
+  massiveSelectionIndeterminate: boolean
   onApply?: () => void
   onChangeField?: (value: IField | '') => void
   onChangeValue?: (name: string, value: unknown) => void
-  onSelectedRows?: Dispatch<SetStateAction<(string | number)[]>>
+  onSelection?: (checked: boolean) => void
   selectedRows?: (string | number)[]
-  tableRows: ITableRow[]
+  withSelection?: boolean
 }
 
 function TableStickyBar(props: IProps): JSX.Element {
@@ -37,35 +39,30 @@ function TableStickyBar(props: IProps): JSX.Element {
     field,
     fieldOptions,
     fieldValue,
+    massiveSelectionState,
+    massiveSelectionIndeterminate,
     onApply,
     onChangeField,
     onChangeValue,
-    onSelectedRows,
+    onSelection,
     selectedRows,
-    tableRows,
+    withSelection,
   } = props
   const { t } = useTranslation('common')
-
-  const withSelection = selectedRows?.length !== undefined
-
-  let onSelection = null
-  let massiveSelectionState = false
-  let massiveSelectionIndeterminate = false
-  if (withSelection) {
-    massiveSelectionState = selectedRows.length === tableRows.length
-    massiveSelectionIndeterminate =
-      selectedRows.length > 0 ? selectedRows.length < tableRows.length : false
-
-    onSelection = (e: ChangeEvent<HTMLInputElement>): void => {
-      e.target.checked
-        ? onSelectedRows(tableRows.map((row) => row.id))
-        : onSelectedRows([])
-    }
-  }
+  const { t: tApi } = useTranslation('api')
+  const header = field ? getFieldHeader(field, tApi) : null
 
   function handleSubmit(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault()
     onApply()
+  }
+
+  function handleSelection(event: ChangeEvent<HTMLInputElement>): void {
+    onSelection(event.target.checked)
+  }
+
+  function handleCancelSelection(): void {
+    onSelection(false)
   }
 
   return (
@@ -74,7 +71,7 @@ function TableStickyBar(props: IProps): JSX.Element {
         <Checkbox
           indeterminate={massiveSelectionIndeterminate}
           checked={massiveSelectionState}
-          onChange={onSelection}
+          onChange={handleSelection}
         />
       )}
       {t('table.selected', { count: selectedRows.length })}
@@ -86,18 +83,15 @@ function TableStickyBar(props: IProps): JSX.Element {
       />
       {field !== '' && (
         <FieldGuesser
-          editable
-          field={field}
-          id={field.title}
-          name={field.title}
+          {...header}
+          label=""
           onChange={onChangeValue}
-          type={getFieldDataContentType(field)}
           useDropdownBoolean
           value={fieldValue}
         />
       )}
       <ActionsButtonsContainer>
-        <Button display="tertiary" onClick={(): void => onSelectedRows([])}>
+        <Button display="tertiary" onClick={handleCancelSelection}>
           {t('table.cancel')}
         </Button>
         <Button sx={{ marginLeft: 1 }} type="submit">

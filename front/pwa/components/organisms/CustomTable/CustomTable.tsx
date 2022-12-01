@@ -1,9 +1,7 @@
 import {
   ChangeEvent,
-  Dispatch,
   FunctionComponent,
   MutableRefObject,
-  SetStateAction,
   SyntheticEvent,
   forwardRef,
   useEffect,
@@ -15,6 +13,7 @@ import { DragDropContext, DropResult } from 'react-beautiful-dnd'
 import { useIsHorizontalOverflow } from '~/hooks'
 import {
   IFieldGuesserProps,
+  ITableConfig,
   ITableHeader,
   ITableRow,
   reorderingColumnWidth,
@@ -32,20 +31,24 @@ import CustomTableHeader from '~/components/organisms/CustomTable/CustomTableHea
 
 export interface ICustomTableProps {
   Field: FunctionComponent<IFieldGuesserProps>
+  border?: boolean
   diffRows?: ITableRow[]
   draggable?: boolean
+  massiveSelectionState: boolean
+  massiveSelectionIndeterminate: boolean
+  onReOrder?: (rows: ITableRow[]) => void
   onRowUpdate?: (
     id: string | number,
     name: string,
     value: boolean | number | string,
     event: SyntheticEvent
   ) => void
-  onSelectedRows?: Dispatch<SetStateAction<(string | number)[]>>
-  onReOrder?: (rows: ITableRow[]) => void
+  onSelection?: (rowIds: (string | number)[] | boolean) => void
   selectedRows?: (string | number)[]
+  tableConfigs?: ITableConfig[]
   tableHeaders: ITableHeader[]
   tableRows: ITableRow[]
-  border?: boolean
+  withSelection?: boolean
 }
 
 function CustomTable(
@@ -54,15 +57,19 @@ function CustomTable(
 ): JSX.Element {
   const {
     Field,
+    border,
     diffRows,
     draggable,
+    massiveSelectionState,
+    massiveSelectionIndeterminate,
+    onReOrder,
     onRowUpdate,
+    onSelection,
+    tableConfigs,
     tableHeaders,
     tableRows,
     selectedRows,
-    onReOrder,
-    onSelectedRows,
-    border,
+    withSelection,
   } = props
 
   const [scrollLength, setScrollLength] = useState<number>(0)
@@ -78,26 +85,6 @@ function CustomTable(
    */
   const stickyLength =
     tableHeaders.filter((header) => header.sticky).length * stickyColunWidth
-
-  const withSelection = selectedRows?.length !== undefined
-
-  let onSelection = null
-  let massiveSelectionState = null
-  let massiveSelectionIndeterminate = false
-  if (withSelection) {
-    massiveSelectionState = selectedRows
-      ? selectedRows.length === tableRows.length
-      : false
-
-    massiveSelectionIndeterminate =
-      selectedRows.length > 0 ? selectedRows.length < tableRows.length : false
-
-    onSelection = (e: ChangeEvent<HTMLInputElement>): void => {
-      e.target.checked
-        ? onSelectedRows(tableRows.map((row) => row.id))
-        : onSelectedRows([])
-    }
-  }
 
   let handleDragEnd = null
   if (draggable) {
@@ -155,6 +142,10 @@ function CustomTable(
       }
     : {}
 
+  function handleSelection(event: ChangeEvent<HTMLInputElement>): void {
+    onSelection(event.target.checked)
+  }
+
   return (
     <>
       <DragDropContext onDragEnd={handleDragEnd}>
@@ -172,14 +163,14 @@ function CustomTable(
         >
           <StyledTable>
             <CustomTableHeader
-              tableHeaders={tableHeaders}
-              withSelection={withSelection}
-              onSelection={onSelection}
-              massiveSelectionState={massiveSelectionState}
               cssLeftValues={cssLeftValues}
               isHorizontalOverflow={isOverflow}
-              shadow={shadow}
               massiveSelectionIndeterminate={massiveSelectionIndeterminate}
+              massiveSelectionState={massiveSelectionState}
+              onSelection={handleSelection}
+              shadow={shadow}
+              tableHeaders={tableHeaders}
+              withSelection={withSelection}
             />
             {Boolean(!draggable) && (
               <NonDraggableBody
@@ -188,9 +179,10 @@ function CustomTable(
                 diffRows={diffRows}
                 isHorizontalOverflow={isOverflow}
                 onRowUpdate={onRowUpdate}
-                onSelectRows={onSelectedRows}
+                onSelectRows={onSelection}
                 selectedRows={selectedRows}
                 shadow={shadow}
+                tableConfigs={tableConfigs}
                 tableHeaders={tableHeaders}
                 tableRows={tableRows}
                 withSelection={withSelection}
@@ -203,9 +195,10 @@ function CustomTable(
                 diffRows={diffRows}
                 isHorizontalOverflow={isOverflow}
                 onRowUpdate={onRowUpdate}
-                onSelectRows={onSelectedRows}
+                onSelectRows={onSelection}
                 selectedRows={selectedRows}
                 shadow={shadow}
+                tableConfigs={tableConfigs}
                 tableHeaders={tableHeaders}
                 tableRows={tableRows}
                 withSelection={withSelection}

@@ -14,6 +14,7 @@ function EditableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
   const {
     diffValue,
     input,
+    disabled,
     label,
     multiple,
     name,
@@ -24,6 +25,7 @@ function EditableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
     required,
     showError,
     suffix,
+    type,
     validation,
   } = props
   const { t } = useTranslation('common')
@@ -44,12 +46,13 @@ function EditableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
     }
   }
 
-  switch (input) {
+  switch (input ?? type) {
     case DataContentType.NUMBER:
     case DataContentType.STRING: {
       return (
         <InputTextError
           dirty={dirty}
+          disabled={disabled}
           helperText={
             Boolean(dirty) && t('form.defaultValue', { value: diffValue })
           }
@@ -69,6 +72,7 @@ function EditableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
       return (
         <RangeError
           dirty={dirty}
+          disabled={disabled}
           helperText={
             Boolean(dirty) && t('form.defaultValue', { value: diffValue })
           }
@@ -92,6 +96,7 @@ function EditableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
         return (
           <DropDown
             dirty={dirty}
+            disabled={disabled}
             helperText={
               Boolean(dirty) && t('form.defaultValue', { value: diffValue })
             }
@@ -112,6 +117,7 @@ function EditableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
       return (
         <Switch
           checked={Boolean(value)}
+          disabled={disabled}
           helperText={
             Boolean(dirty) &&
             t('form.defaultValue', { value: t(`switch.${diffValue}`) })
