@@ -8,15 +8,8 @@ interface IRangeErrorProps extends IRangeProps {
 
 function RangeError(props: IRangeErrorProps): JSX.Element {
   const { onChange, showError, ...inputProps } = props
-  const formErrorProps = useFormError(onChange, showError)
-  return (
-    <Range
-      {...inputProps}
-      {...formErrorProps}
-      helperIcon={formErrorProps.helperIcon ?? inputProps.helperIcon}
-      helperText={formErrorProps.helperText ?? inputProps.helperText}
-    />
-  )
+  const [formErrorProps] = useFormError(onChange, showError)
+  return <Range {...inputProps} {...formErrorProps} />
 }
 
 export default RangeError
