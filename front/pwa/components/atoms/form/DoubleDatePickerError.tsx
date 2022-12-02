@@ -1,37 +1,63 @@
-import { useCallback } from 'react'
 import { Dayjs } from 'dayjs'
 
 import { useFormError } from '~/hooks'
 
-import DoubleDatePicker, { IDoubleDatePickerProps } from './DoubleDatePicker'
+import { dateValidator } from './DatePickerError'
+import DoubleDatePicker, {
+  IDoubleDatePickerErrors,
+  IDoubleDatePickerProps,
+} from './DoubleDatePicker'
 
-interface IRangeErrorProps extends IDoubleDatePickerProps {
+export function doubleDateValidator(value: {
+  from: Dayjs | null
+  to: Dayjs | null
+}): string | null {
+  const fromError = dateValidator(value.from)
+  if (fromError) {
+    return fromError
+  }
+  const toError = dateValidator(value.to)
+  if (toError) {
+    return toError
+  }
+  if (!value.from || !value.to) {
+    return null
+  }
+  if (value.to.diff(value.from) >= 0) {
+    return null
+  }
+  return 'doubleDatePickerRange'
+}
+
+interface IDoubleDatePickerErrorProps extends IDoubleDatePickerProps {
   showError?: boolean
 }
 
-function RangeError(props: IRangeErrorProps): JSX.Element {
+function DoubleDatePickerError(
+  props: IDoubleDatePickerErrorProps
+): JSX.Element {
   const { onChange, showError, ...inputProps } = props
-  const validator = useCallback(
-    (value: { from: Dayjs | null; to: Dayjs | null }) => {
-      if (!value.from || !value.to) {
-        return null
-      }
-      if (value.to.diff(value.from) >= 0) {
-        return null
-      }
-      return 'doubleDatePickerRange'
-    },
-    []
+  const [formErrorProps, setError] = useFormError(
+    onChange,
+    showError,
+    doubleDateValidator
   )
-  const formErrorProps = useFormError(onChange, showError, validator)
+
+  function handleError(reason: IDoubleDatePickerErrors): void {
+    if (reason.from) {
+      setError(reason.from)
+    } else {
+      setError(reason.to)
+    }
+  }
+
   return (
     <DoubleDatePicker
       {...inputProps}
       {...formErrorProps}
-      helperIcon={formErrorProps.helperIcon ?? inputProps.helperIcon}
-      helperText={formErrorProps.helperText ?? inputProps.helperText}
+      onError={handleError}
     />
   )
 }
 
-export default RangeError
+export default DoubleDatePickerError
