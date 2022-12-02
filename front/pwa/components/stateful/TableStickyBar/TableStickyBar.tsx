@@ -24,8 +24,8 @@ interface IProps {
   field: IField | ''
   fieldOptions: IOptions<IField>
   fieldValue: unknown
-  massiveSelectionState: boolean
-  massiveSelectionIndeterminate: boolean
+  massiveSelectionState?: boolean
+  massiveSelectionIndeterminate?: boolean
   onApply?: () => void
   onChangeField?: (value: IField | '') => void
   onChangeValue?: (name: string, value: unknown) => void

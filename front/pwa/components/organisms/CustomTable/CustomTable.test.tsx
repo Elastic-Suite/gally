@@ -83,6 +83,8 @@ describe('CustomTable', () => {
     const { container } = renderWithProviders(
       <CustomTable
         Field={FieldGuesser}
+        massiveSelectionState={false}
+        massiveSelectionIndeterminate={false}
         tableHeaders={tableHeadersWithoutSticky}
         tableRows={tableRows}
       />
@@ -95,6 +97,8 @@ describe('CustomTable', () => {
     const { container } = renderWithProviders(
       <CustomTable
         Field={FieldGuesser}
+        massiveSelectionState={false}
+        massiveSelectionIndeterminate={false}
         tableHeaders={tableHeadersWithSticky}
         tableRows={tableRows}
       />
@@ -107,6 +111,8 @@ describe('CustomTable', () => {
     const { container } = renderWithProviders(
       <CustomTable
         Field={FieldGuesser}
+        massiveSelectionState={false}
+        massiveSelectionIndeterminate={false}
         tableHeaders={tableHeadersWithoutSticky}
         tableRows={tableRows}
         selectedRows={['fake_id']}
@@ -120,6 +126,8 @@ describe('CustomTable', () => {
     const { container } = renderWithProviders(
       <CustomTable
         Field={FieldGuesser}
+        massiveSelectionState={false}
+        massiveSelectionIndeterminate={false}
         tableHeaders={tableHeadersWithSticky}
         tableRows={tableRows}
         selectedRows={['fake_id']}
@@ -133,6 +141,8 @@ describe('CustomTable', () => {
     const { container } = renderWithProviders(
       <CustomTable
         Field={FieldGuesser}
+        massiveSelectionState={false}
+        massiveSelectionIndeterminate={false}
         tableHeaders={tableHeadersWithoutSticky}
         tableRows={tableRows}
         selectedRows={['fake_id']}
@@ -147,6 +157,8 @@ describe('CustomTable', () => {
     const { container } = renderWithProviders(
       <CustomTable
         Field={FieldGuesser}
+        massiveSelectionState={false}
+        massiveSelectionIndeterminate={false}
         tableHeaders={tableHeadersWithSticky}
         tableRows={tableRows}
         selectedRows={['fake_id']}
@@ -161,6 +173,8 @@ describe('CustomTable', () => {
     const { container } = renderWithProviders(
       <CustomTable
         Field={FieldGuesser}
+        massiveSelectionState={false}
+        massiveSelectionIndeterminate={false}
         tableHeaders={tableHeadersEditable}
         tableRows={tableRows}
         selectedRows={['fake_id']}

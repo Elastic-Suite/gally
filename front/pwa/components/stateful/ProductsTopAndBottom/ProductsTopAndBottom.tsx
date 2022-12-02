@@ -22,8 +22,8 @@ const PreviewArea = styled(Box)(({ theme }) => ({
 interface IProps {
   bottomSelectedRows: (string | number)[]
   localizedCatalogId: string
-  onBottomSelectedRows: Dispatch<SetStateAction<(string | number)[]>>
-  onTopSelectedRows: Dispatch<SetStateAction<(string | number)[]>>
+  onBottomSelectedRows: (rowIds: string[]) => void
+  onTopSelectedRows: (rowIds: string[]) => void
   productGraphqlFilters: IProductFieldFilterInput
   setProductPositions: Dispatch<SetStateAction<IGraphqlProductPosition>>
   topSelectedRows: (string | number)[]

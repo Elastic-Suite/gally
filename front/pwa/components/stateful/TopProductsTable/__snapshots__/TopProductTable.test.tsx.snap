@@ -18,7 +18,7 @@ exports[`TopProductTable Should match snapschot 1`] = `
       </div>
     </div>
     <div
-      class="MuiTableContainer-root css-1pm7ocy-MuiTableContainer-root"
+      class="MuiTableContainer-root css-1i0gtxd-MuiTableContainer-root"
     >
       <table
         class="MuiTable-root css-1pty5za-MuiTable-root"
@@ -30,38 +30,9 @@ exports[`TopProductTable Should match snapschot 1`] = `
             class="MuiTableRow-root MuiTableRow-head css-1u1grnd-MuiTableRow-root"
           >
             <th
-              class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1eryrry-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-8uqeip-MuiTableCell-root"
               scope="col"
             />
-            <th
-              class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-mdt0en-MuiTableCell-root"
-              scope="col"
-            >
-              <span
-                class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
-                data-testid="massive-selection"
-              >
-                <input
-                  class="PrivateSwitchBase-input css-1m9pwf3"
-                  data-indeterminate="false"
-                  type="checkbox"
-                />
-                <svg
-                  aria-hidden="true"
-                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                  data-testid="CheckBoxOutlineBlankIcon"
-                  focusable="false"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
-                  />
-                </svg>
-                <span
-                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                />
-              </span>
-            </th>
             <th
               class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1in94r8-MuiTableCell-root"
               scope="col"
@@ -118,7 +89,7 @@ exports[`TopProductTable Should match snapschot 1`] = `
           >
             <td
               aria-describedby="rbd-hidden-text-0-hidden-text-0"
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1jfm6hu-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1sm79u7-MuiTableCell-root"
               data-rbd-drag-handle-context-id="0"
               data-rbd-drag-handle-draggable-id="1"
               draggable="false"
@@ -132,34 +103,6 @@ exports[`TopProductTable Should match snapschot 1`] = `
                   name="reorder-two-outline"
                 />
               </div>
-            </td>
-            <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-aciead-MuiTableCell-root"
-            >
-              <span
-                class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
-                data-testid="draggable-single-row-selection"
-              >
-                <input
-                  class="PrivateSwitchBase-input css-1m9pwf3"
-                  data-indeterminate="false"
-                  type="checkbox"
-                />
-                <svg
-                  aria-hidden="true"
-                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                  data-testid="CheckBoxOutlineBlankIcon"
-                  focusable="false"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
-                  />
-                </svg>
-                <span
-                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                />
-              </span>
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1h3ont0-MuiTableCell-root"
@@ -258,7 +201,7 @@ exports[`TopProductTable Should match snapschot 1`] = `
           >
             <td
               aria-describedby="rbd-hidden-text-0-hidden-text-0"
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1jfm6hu-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1sm79u7-MuiTableCell-root"
               data-rbd-drag-handle-context-id="0"
               data-rbd-drag-handle-draggable-id="2"
               draggable="false"
@@ -272,34 +215,6 @@ exports[`TopProductTable Should match snapschot 1`] = `
                   name="reorder-two-outline"
                 />
               </div>
-            </td>
-            <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-aciead-MuiTableCell-root"
-            >
-              <span
-                class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary css-nnfn9j-MuiButtonBase-root-MuiCheckbox-root"
-                data-testid="draggable-single-row-selection"
-              >
-                <input
-                  class="PrivateSwitchBase-input css-1m9pwf3"
-                  data-indeterminate="false"
-                  type="checkbox"
-                />
-                <svg
-                  aria-hidden="true"
-                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                  data-testid="CheckBoxOutlineBlankIcon"
-                  focusable="false"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
-                  />
-                </svg>
-                <span
-                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                />
-              </span>
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1h3ont0-MuiTableCell-root"

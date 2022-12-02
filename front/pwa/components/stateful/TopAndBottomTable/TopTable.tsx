@@ -18,7 +18,7 @@ import TopProductsTable from '../TopProductsTable/TopProductsTable'
 
 interface IProps {
   localizedCatalogId: string
-  onSelectedRows: Dispatch<SetStateAction<(string | number)[]>>
+  onSelectedRows: (rowIds: string[]) => void
   productGraphqlFilters: IProductFieldFilterInput
   selectedRows: (string | number)[]
   setProductPositions: Dispatch<SetStateAction<IGraphqlProductPosition>>
@@ -71,10 +71,30 @@ function TopTable(props: IProps): JSX.Element {
   const topProductsMap = Object.fromEntries(
     topProducts.map(({ position, productId }) => [productId, position])
   )
-  const tableRows = products.data?.products?.collection.sort(
-    (a, b) =>
-      topProductsMap[a.id.split('/')[2]] - topProductsMap[b.id.split('/')[2]]
-  ) as unknown as ITableRow[]
+  const tableRows =
+    (products.data?.products?.collection.sort(
+      (a, b) =>
+        topProductsMap[a.id.split('/')[2]] - topProductsMap[b.id.split('/')[2]]
+    ) as unknown as ITableRow[]) ?? []
+  const withSelection = selectedRows?.length !== undefined
+  const massiveSelectionState =
+    withSelection && selectedRows
+      ? selectedRows.length === tableRows.length
+      : false
+  const massiveSelectionIndeterminate =
+    withSelection && selectedRows.length > 0
+      ? selectedRows.length < tableRows.length
+      : false
+
+  function handleSelection(rowIds: (string | number)[] | boolean): void {
+    if (rowIds instanceof Array) {
+      onSelectedRows(rowIds as string[])
+    } else if (rowIds) {
+      onSelectedRows(products.data.products.collection.map((row) => row.id))
+    } else {
+      onSelectedRows([])
+    }
+  }
 
   return (
     <>
@@ -82,14 +102,17 @@ function TopTable(props: IProps): JSX.Element {
         sortValue === 'category__position' && (
           <div>
             <TopProductsTable
+              border
+              draggable
               Field={FieldGuesser}
-              selectedRows={selectedRows}
-              onSelectedRows={onSelectedRows}
+              massiveSelectionIndeterminate={massiveSelectionIndeterminate}
+              massiveSelectionState={massiveSelectionState}
               onReOrder={handleReorder}
+              onSelection={handleSelection}
+              selectedRows={selectedRows}
               tableHeaders={productTableheader}
               tableRows={tableRows}
-              draggable
-              border
+              withSelection={withSelection}
             />
           </div>
         )}
