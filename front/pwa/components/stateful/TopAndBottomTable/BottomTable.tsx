@@ -1,7 +1,5 @@
 import {
-  Dispatch,
   MutableRefObject,
-  SetStateAction,
   forwardRef,
   useEffect,
   useMemo,
@@ -26,7 +24,7 @@ import FieldGuesser from '../FieldGuesser/FieldGuesser'
 
 interface IProps {
   localizedCatalogId: string
-  onSelectedRows: Dispatch<SetStateAction<(string | number)[]>>
+  onSelectedRows: (rowIds: string[]) => void
   productGraphqlFilters: IProductFieldFilterInput
   selectedRows: (string | number)[]
   topProductsIds: number[]
@@ -96,6 +94,17 @@ function BottomTable(
     onSelectedRows([])
   }
 
+  const tableRows = products?.data?.products.collection ?? []
+  const withSelection = selectedRows?.length !== undefined
+  const massiveSelectionState =
+    withSelection && selectedRows
+      ? selectedRows.length === tableRows.length
+      : false
+  const massiveSelectionIndeterminate =
+    withSelection && selectedRows.length > 0
+      ? selectedRows.length < tableRows.length
+      : false
+
   const onRowsPerPageChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ): void => {
@@ -105,28 +114,41 @@ function BottomTable(
 
   useEffect(() => {
     setNbBottomRows(products?.data?.products.paginationInfo.totalCount || 0)
-  }, [products?.data?.products.paginationInfo.totalCount])
+  }, [products?.data?.products.paginationInfo.totalCount, setNbBottomRows])
+
+  function handleSelection(rowIds: (string | number)[] | boolean): void {
+    if (rowIds instanceof Array) {
+      onSelectedRows(rowIds as string[])
+    } else if (rowIds) {
+      onSelectedRows(tableRows.map((row) => row.id))
+    } else {
+      onSelectedRows([])
+    }
+  }
 
   return (
     <>
       {Boolean(products?.data?.products) && (
         <PagerTable
           Field={FieldGuesser}
+          count={products.data.products.paginationInfo.totalCount}
           currentPage={
             (currentPage - 1 >= 0 ? currentPage - 1 : currentPage) ?? 0
           }
+          massiveSelectionIndeterminate={massiveSelectionIndeterminate}
+          massiveSelectionState={massiveSelectionState}
           onPageChange={onPageChange}
+          onRowsPerPageChange={onRowsPerPageChange}
+          onSelection={handleSelection}
           ref={ref}
           rowsPerPage={rowsPerPage}
           rowsPerPageOptions={defaultRowsPerPageOptions ?? []}
-          onRowsPerPageChange={onRowsPerPageChange}
+          selectedRows={selectedRows}
           tableHeaders={productTableheader}
           tableRows={
             products.data.products.collection as unknown as ITableRow[]
           }
-          selectedRows={selectedRows}
-          onSelectedRows={onSelectedRows}
-          count={products.data.products.paginationInfo.totalCount}
+          withSelection={withSelection}
         />
       )}
     </>
