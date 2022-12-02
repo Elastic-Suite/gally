@@ -44,8 +44,6 @@ function TestProvider(props: IProps): JSX.Element {
     []
   )
 
-  // const catalogContextValue = useMemo(() => )
-
   return (
     <userContext.Provider value={userContextValue}>
       <schemaContext.Provider value={api}>

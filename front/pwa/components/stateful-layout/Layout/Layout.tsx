@@ -2,13 +2,14 @@ import { ReactNode, useCallback, useContext, useEffect } from 'react'
 import { styled } from '@mui/system'
 
 import { breadcrumbContext } from '~/contexts'
-import { useApiFetch, useUser } from '~/hooks'
+import { useApiFetch } from '~/hooks'
 import {
   selectChildrenState,
   selectMenu,
   selectMenuItemActive,
   selectSidebarState,
   selectSidebarStateTimeout,
+  selectUser,
   setChildState,
   setMenu,
   setMenuItemActive,
@@ -114,7 +115,7 @@ function Layout({ children }: IProps): JSX.Element {
   const menu = useAppSelector(selectMenu)
   const [breadcrumb] = useContext(breadcrumbContext)
   const fetchApi = useApiFetch()
-  const user = useUser()
+  const user = useAppSelector(selectUser)
 
   // Load menu
   useEffect(() => {

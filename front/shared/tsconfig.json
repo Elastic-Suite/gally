@@ -3,5 +3,10 @@
   "compilerOptions": {
     "baseUrl": "."
   },
-  "include": ["global.d.ts", "src"]
+  "include": [
+    "global.d.ts",
+    "src",
+    "../pwa/hooks/useBundleLoader.ts",
+    "../pwa/hooks/useBundleLoader.ts"
+  ]
 }

@@ -1,0 +1,12 @@
+{
+  "@context": "/contexts/ExtraBundle",
+  "@id": "/extra_bundles",
+  "@type": "hydra:Collection",
+  "hydra:member": [
+    {
+      "id": "ElasticsuiteVirtualCategoryBundle",
+      "name": "ElasticsuiteVirtualCategoryBundle"
+    }
+  ],
+  "hydra:totalItems": 1
+}
