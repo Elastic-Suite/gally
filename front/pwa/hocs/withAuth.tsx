@@ -1,16 +1,20 @@
-import { FunctionComponent, useContext, useEffect } from 'react'
+import { FunctionComponent, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { getDisplayName, isValidUser } from 'shared'
 
-import { userContext } from '~/contexts'
-import { setRequestedPath, useAppDispatch } from '~/store'
+import {
+  selectUser,
+  setRequestedPath,
+  useAppDispatch,
+  useAppSelector,
+} from '~/store'
 
 export function withAuth<P extends Record<string, unknown>>(
   Cmp: FunctionComponent<P>
 ): FunctionComponent<P> {
   function WithAuth(props: P): JSX.Element {
     const { push, asPath } = useRouter()
-    const user = useContext(userContext)
+    const user = useAppSelector(selectUser)
     const dispatch = useAppDispatch()
 
     useEffect(() => {

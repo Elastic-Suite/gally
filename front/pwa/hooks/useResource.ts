@@ -1,4 +1,4 @@
-import { useCallback, useContext, useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import { useRouter } from 'next/router'
 
 import {
@@ -10,14 +10,15 @@ import {
   contentTypeHeader,
   getApiUrl,
   getResource,
-  schemaContext,
   updatePropertiesAccordingToPath,
 } from 'shared'
+
+import { selectApi, useAppSelector } from '~/store'
 
 import { useApiFetch } from './useApi'
 
 export function useResource(resourceName: string): IResource {
-  const api = useContext(schemaContext)
+  const api = useAppSelector(selectApi)
   const { pathname } = useRouter()
 
   return useMemo(() => {

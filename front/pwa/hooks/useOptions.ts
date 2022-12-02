@@ -1,5 +1,5 @@
 import { useTranslation } from 'next-i18next'
-import { useCallback, useContext, useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 
 import {
   IApiSchemaOptions,
@@ -16,14 +16,14 @@ import {
   isDropdownStaticOptions,
   isError,
   isReferenceField,
-  schemaContext,
 } from 'shared'
+import { selectApi, useAppSelector } from '~/store'
 import { useSingletonLoader } from './useSingletonLoader'
 
 export function useOptions(): IOptionsContext {
   const { fetch, map, statuses } =
     useSingletonLoader<IOptions<string | number>>()
-  const api = useContext(schemaContext)
+  const api = useAppSelector(selectApi)
   const { t } = useTranslation('options')
 
   const load = useCallback(

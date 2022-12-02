@@ -108,3 +108,6 @@ export const parseSchema = jest.fn(() => Promise.resolve(api))
 export const storageGet = jest.fn()
 export const storageSet = jest.fn()
 export const storageRemove = jest.fn()
+
+/* useSchemaLoader */
+export const useSchemaLoader = jest.fn(() => ({ data: 'api' }))
