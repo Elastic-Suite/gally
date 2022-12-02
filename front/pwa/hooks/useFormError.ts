@@ -1,4 +1,11 @@
-import { SyntheticEvent, useCallback, useState } from 'react'
+import {
+  Dispatch,
+  SetStateAction,
+  SyntheticEvent,
+  useCallback,
+  useMemo,
+  useState,
+} from 'react'
 import { useTranslation } from 'next-i18next'
 import { getFormValidityError } from 'shared'
 
@@ -19,12 +26,9 @@ export function useFormError(
   onChange: IOnChange,
   showError = false,
   validator?: IValidator
-): IFormErrorProps {
+): [IFormErrorProps, Dispatch<SetStateAction<string>>] {
   const [error, setError] = useState('')
   const { t } = useTranslation('common')
-
-  const helperIcon = error ? 'close' : undefined
-  const helperText = error ? t(`formError.${error}`) : undefined
 
   const validate = useCallback(
     (value: unknown, event?: SyntheticEvent): boolean => {
@@ -32,7 +36,7 @@ export function useFormError(
       if (validator) {
         error = validator(value, event)
       }
-      if (error === null && event) {
+      if (error === null && event?.target) {
         const { validity } = event.target as HTMLInputElement
         if (!validity.valid) {
           error = getFormValidityError(validity)
@@ -58,10 +62,15 @@ export function useFormError(
     [onChange, showError, validate]
   )
 
-  return {
-    error: Boolean(error),
-    helperIcon,
-    helperText,
-    onChange: handleChange,
-  }
+  return useMemo(() => {
+    const props: IFormErrorProps = {
+      error: Boolean(error),
+      onChange: handleChange,
+    }
+    if (error) {
+      props.helperIcon = 'close'
+      props.helperText = t(`formError.${error}`)
+    }
+    return [props, setError]
+  }, [error, handleChange, t])
 }

@@ -47,5 +47,11 @@
   "formError.typeMismatch": "La valeur n'est pas dans le bon format",
   "formError.valueMissing": "La valeur est requise",
   "formError.doubleDatePickerRange": "La date de fin doit être après la date de début",
+  "formError.invalidDate": "La date n'est pas valide",
+  "formError.shouldDisableDate": "La date n'est pas disponible",
+  "formError.disableFuture": "La date n'est pas disponible",
+  "formError.disablePast": "La date n'est pas disponible",
+  "formError.minDate": "La date n'est pas disponible",
+  "formError.maxDate": "La date n'est pas disponible",
   "field.productImage": "Image produit"
 }

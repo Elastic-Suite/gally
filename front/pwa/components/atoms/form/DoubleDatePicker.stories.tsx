@@ -28,6 +28,9 @@ export default {
     label: {
       control: 'text',
     },
+    value: {
+      control: 'hidden',
+    },
   },
 } as ComponentMeta<typeof DoubleDatePickerComponent>
 
@@ -36,17 +39,22 @@ const Template: ComponentStory<typeof DoubleDatePickerComponent> = (args) => {
     from: Dayjs | null
     to: Dayjs | null
   } | null>({ from: null, to: null })
+
   function onChange(
     value: { from: Dayjs | null; to: Dayjs | null } | null
   ): void {
     setValue(value)
   }
+
   return (
     <DoubleDatePickerComponent {...args} value={value} onChange={onChange} />
   )
 }
 
-export const Default = Template.bind({})
+// This intermediate component is necessary to avoid storybook to crash when typing a value...
+export const Default: ComponentStory<typeof DoubleDatePickerError> = (
+  args: Record<string, unknown>
+) => <Template {...args} />
 Default.args = {
   color: 'primary',
   disabled: false,
@@ -69,15 +77,20 @@ const FormErrorTemplate: ComponentStory<typeof DoubleDatePickerError> = (
     from: Dayjs | null
     to: Dayjs | null
   } | null>({ from: null, to: null })
+
   function onChange(
     value: { from: Dayjs | null; to: Dayjs | null } | null
   ): void {
     setValue(value)
   }
+
   return <DoubleDatePickerError {...args} value={value} onChange={onChange} />
 }
 
-export const WithError = FormErrorTemplate.bind({})
+// This intermediate component is necessary to avoid storybook to crash when typing a value...
+export const WithError: ComponentStory<typeof DoubleDatePickerError> = (
+  args: Record<string, unknown>
+) => <FormErrorTemplate {...args} />
 WithError.args = {
   color: 'primary',
   disabled: false,

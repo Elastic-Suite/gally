@@ -1,5 +1,6 @@
 import { ReactNode } from 'react'
 import { Box, FormHelperText, Grid, InputLabel } from '@mui/material'
+import { DateValidationError } from '@mui/x-date-pickers/internals/hooks/validation/useDateValidation'
 import { useTranslation } from 'next-i18next'
 import { styled } from '@mui/system'
 import { Dayjs } from 'dayjs'
@@ -15,11 +16,22 @@ const CustomBox = styled(Box)(() => ({
   fontFamily: 'inter',
 }))
 
+export interface IDoubleDatePickerValues {
+  from: Dayjs | null
+  to: Dayjs | null
+}
+export interface IDoubleDatePickerErrors {
+  from: DateValidationError
+  to: DateValidationError
+}
+
 export interface IDoubleDatePickerProps
-  extends Omit<IDatePickerProps, 'value' | 'onChange'> {
-  value?: { from: Dayjs | null; to: Dayjs | null } | null
-  onChange?: (value: { from: Dayjs | null; to: Dayjs | null }) => void
+  extends Omit<IDatePickerProps, 'value' | 'onChange' | 'onError'> {
+  value?: IDoubleDatePickerValues
+  onChange?: (values: IDoubleDatePickerValues) => void
+  onError?: (reasons: IDoubleDatePickerErrors) => void
   error?: boolean
+  errors?: IDoubleDatePickerErrors
   fullWidth?: boolean
   infoTooltip?: string
   label?: ReactNode
@@ -32,6 +44,7 @@ function DoubleDatePicker(props: IDoubleDatePickerProps): JSX.Element {
   const {
     value,
     error,
+    errors,
     fullWidth,
     helperText,
     helperIcon,
@@ -41,10 +54,10 @@ function DoubleDatePicker(props: IDoubleDatePickerProps): JSX.Element {
     label,
     margin,
     onChange,
+    onError,
     required,
     ...args
   } = props
-
   const { t } = useTranslation('common')
 
   function onChangeFrom(date: Dayjs | null): void {
@@ -53,6 +66,14 @@ function DoubleDatePicker(props: IDoubleDatePickerProps): JSX.Element {
 
   function onChangeTo(date: Dayjs | null): void {
     onChange({ ...value, to: date })
+  }
+
+  function onErrorFrom(reason: DateValidationError): void {
+    onError({ ...errors, from: reason })
+  }
+
+  function onErrorTo(reason: DateValidationError): void {
+    onError({ ...errors, to: reason })
   }
 
   return (
@@ -80,8 +101,9 @@ function DoubleDatePicker(props: IDoubleDatePickerProps): JSX.Element {
             {...args}
             error={error}
             fullWidth={fullWidth}
-            value={value.from}
+            value={value?.from}
             onChange={onChangeFrom}
+            onError={onErrorFrom}
           />
         </Grid>
         <CustomBox sx={{ paddingRight: '20px', paddingLeft: '20px' }}>
@@ -93,8 +115,9 @@ function DoubleDatePicker(props: IDoubleDatePickerProps): JSX.Element {
             {...args}
             error={error}
             fullWidth={fullWidth}
-            value={value.to}
+            value={value?.to}
             onChange={onChangeTo}
+            onError={onErrorTo}
           />
         </Grid>
       </Grid>

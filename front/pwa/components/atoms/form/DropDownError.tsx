@@ -8,8 +8,8 @@ interface IDropDownErrorProps<T> extends IDropDownProps<T> {
 
 function DropdownError<T>(props: IDropDownErrorProps<T>): JSX.Element {
   const { onChange, showError, ...inputProps } = props
-  const formErrorProps = useFormError(onChange, showError)
-  return <Dropdown {...formErrorProps} {...inputProps} />
+  const [formErrorProps] = useFormError(onChange, showError)
+  return <Dropdown {...inputProps} {...formErrorProps} />
 }
 
 export default DropdownError

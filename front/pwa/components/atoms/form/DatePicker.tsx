@@ -5,6 +5,7 @@ import {
   PickersDayProps,
   pickersDayClasses,
 } from '@mui/x-date-pickers/PickersDay'
+import { DateValidationError } from '@mui/x-date-pickers/internals/hooks/validation/useDateValidation'
 import { styled } from '@mui/system'
 import { Dayjs } from 'dayjs'
 
@@ -28,9 +29,10 @@ const CustomPickersDay = styled(PickersDay, {
 })) as ComponentType<PickersDayProps<Dayjs>>
 
 export interface IDatePickerProps
-  extends Omit<IInputTextProps, 'value' | 'onChange'> {
+  extends Omit<IInputTextProps, 'value' | 'onChange' | 'onError'> {
   value: Dayjs | null
   onChange: (value: Dayjs | null) => void
+  onError?: (reason: DateValidationError, value: Dayjs) => void
 }
 
 function EndIcon(): JSX.Element {
@@ -47,11 +49,8 @@ function ShowIcon(): JSX.Element {
   )
 }
 
-function DatePicker({
-  value,
-  onChange,
-  ...args
-}: IDatePickerProps): JSX.Element {
+function DatePicker(props: IDatePickerProps): JSX.Element {
+  const { value, onChange, onError, ...args } = props
   const renderWeekPickerDay = (
     _: Dayjs,
     __: Array<Dayjs | null>,
@@ -64,23 +63,28 @@ function DatePicker({
     <MuiDatePicker
       value={value}
       onChange={onChange}
+      onError={onError}
       renderDay={renderWeekPickerDay}
       components={{
         OpenPickerIcon: EndIcon,
         SwitchViewIcon: ShowIcon,
       }}
       renderInput={(params): JSX.Element => {
-        const { InputProps, ...rest } = params
+        const { InputProps, inputProps, ...rest } = params
+        const { onChange, placeholder, readOnly, type, value } = inputProps
         return (
           <InputText
             {...InputProps}
             {...rest}
             {...args}
             onChange={(_: string | number, event: SyntheticEvent): void =>
-              params.onChange(event as ChangeEvent<HTMLInputElement>)
+              onChange(event as ChangeEvent<HTMLInputElement>)
             }
-            value={params.value as string}
+            placeholder={placeholder}
+            readOnly={readOnly}
             ref={params.ref as Ref<HTMLDivElement>}
+            type={type}
+            value={value}
           />
         )
       }}
