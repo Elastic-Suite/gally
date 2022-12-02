@@ -34,8 +34,8 @@ export interface ICustomTableProps {
   border?: boolean
   diffRows?: ITableRow[]
   draggable?: boolean
-  massiveSelectionState: boolean
-  massiveSelectionIndeterminate: boolean
+  massiveSelectionState?: boolean
+  massiveSelectionIndeterminate?: boolean
   onReOrder?: (rows: ITableRow[]) => void
   onRowUpdate?: (
     id: string | number,

@@ -97,6 +97,8 @@ describe('TopProductTable', () => {
     const { container } = renderWithProviders(
       <TopProductsTable
         Field={FieldGuesser}
+        massiveSelectionState={false}
+        massiveSelectionIndeterminate={false}
         tableHeaders={tableHeaders}
         tableRows={tableRows}
         selectedRows={[]}
