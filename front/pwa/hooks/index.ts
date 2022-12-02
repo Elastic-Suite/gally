@@ -1,6 +1,7 @@
 export * from './useApi'
 export * from './useApiFilters'
 export * from './useApiTable'
+export * from './useDataLoader'
 export * from './useFilters'
 export * from './useFormError'
 export * from './useGraphql'

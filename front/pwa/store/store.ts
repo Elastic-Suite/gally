@@ -3,11 +3,14 @@ import {
   combineReducers,
   configureStore,
 } from '@reduxjs/toolkit'
+import thunk from 'redux-thunk'
+import { dataReducer } from './data'
 import { i18nReducer } from './i18n'
 import { menuReducer } from './menu'
 import { userReducer } from './user'
 
 const rootReducer = combineReducers({
+  data: dataReducer,
   i18n: i18nReducer,
   menu: menuReducer,
   user: userReducer,
@@ -17,12 +20,14 @@ const rootReducer = combineReducers({
 export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
   return configureStore({
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware({
-        serializableCheck: {
-          ignoredActionPaths: ['payload.error'],
-          ignoredPaths: ['menu.menu.error'],
-        },
-      }),
+      process.env.NODE_ENV === 'development'
+        ? getDefaultMiddleware({
+            serializableCheck: {
+              ignoredActionPaths: ['payload.error'],
+              ignoredPaths: ['menu.menu.error'],
+            },
+          })
+        : [thunk],
     preloadedState,
     reducer: rootReducer,
   })

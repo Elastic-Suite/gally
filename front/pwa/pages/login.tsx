@@ -4,8 +4,8 @@ import { useRouter } from 'next/router'
 import Head from 'next/head'
 import { Paper } from '@mui/material'
 
-import { useApiFetch, useUser } from '~/hooks'
-import { selectRequestedPath, useAppSelector } from '~/store'
+import { useApiFetch } from '~/hooks'
+import { selectRequestedPath, selectUser, useAppSelector } from '~/store'
 import {
   ILogin,
   isError,
@@ -21,7 +21,7 @@ import PageTitle from '~/components/atoms/PageTitle/PageTitle'
 function Login(): JSX.Element {
   const { t } = useTranslation('login')
   const { push } = useRouter()
-  const user = useUser()
+  const user = useAppSelector(selectUser)
   const requestedPath = useAppSelector(selectRequestedPath)
 
   const fetchApi = useApiFetch(false)
