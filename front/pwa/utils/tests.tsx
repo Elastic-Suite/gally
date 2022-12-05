@@ -1,9 +1,8 @@
 import { RenderOptions, render, renderHook } from '@testing-library/react'
 import { PreloadedState } from '@reduxjs/toolkit'
 import { ReactNode } from 'react'
-import { IUser, api } from 'shared'
+import { Bundle, IUser, api } from 'shared'
 
-import bundles from '~/public/mocks/extra_bundles.json'
 import { AppStore, RootState, setupStore } from '~/store'
 
 import AppProvider from '~/components/stateful-providers/AppProvider/AppProvider'
@@ -30,7 +29,7 @@ const user = {
 } as IUser
 
 const defaultState = {
-  data: { api, bundles },
+  data: { api, bundles: [Bundle.VIRTUAL_CATEGORY] },
   user: {
     requestedPath: '',
     token:

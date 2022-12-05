@@ -32,27 +32,23 @@ export function isAttributeRuleValueMultiple(
   return valueType?.startsWith('[') && valueType?.endsWith(']')
 }
 
-function parseRule<R extends IRule>(
-  rule: R,
-  ruleOperators: IRuleEngineOperators
-): R {
+function parseRule<R extends IRule>(rule: R): R {
   if (isCombinationRule(rule)) {
     return {
       ...rule,
       value: rule.value === 'true',
-      children: rule.children.map((rule) => parseRule(rule, ruleOperators)),
+      children: rule.children.map((rule) => parseRule(rule)),
     }
   }
   return rule
 }
 
 export function parseCatConf(
-  catConf: ICategoryConfiguration,
-  ruleOperators: IRuleEngineOperators
+  catConf: ICategoryConfiguration
 ): IParsedCategoryConfiguration {
   let virtualRule: IRuleCombination
   try {
-    virtualRule = parseRule(JSON.parse(catConf.virtualRule), ruleOperators)
+    virtualRule = parseRule(JSON.parse(catConf.virtualRule))
   } catch {
     virtualRule = emptyCombinationRule
   }
@@ -61,7 +57,7 @@ export function parseCatConf(
 
 export function serializeRule<R extends IRule>(
   rule: R,
-  ruleOperators: IRuleEngineOperators
+  ruleOperators?: IRuleEngineOperators
 ): R {
   if (isCombinationRule(rule)) {
     return {
@@ -98,8 +94,11 @@ export function serializeRule<R extends IRule>(
 
 export function serializeCatConf(
   catConf: IParsedCategoryConfiguration,
-  ruleOperators: IRuleEngineOperators
+  ruleOperators?: IRuleEngineOperators
 ): ICategoryConfiguration {
+  if (!catConf.virtualRule) {
+    return catConf as Omit<IParsedCategoryConfiguration, 'virtualRule'>
+  }
   return {
     ...catConf,
     virtualRule: JSON.stringify(

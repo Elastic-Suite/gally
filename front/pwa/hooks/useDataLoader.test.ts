@@ -1,5 +1,5 @@
 import { PreloadedState } from '@reduxjs/toolkit'
-import { LoadStatus, useSchemaLoader } from 'shared'
+import { Bundle, LoadStatus, useSchemaLoader } from 'shared'
 
 import { RootState } from '~/store'
 import { renderHookWithProviders } from '~/utils/tests'
@@ -9,7 +9,18 @@ import { useDataLoader } from './useDataLoader'
 
 jest.mock('./useApi', () => ({
   useApiFetch: jest.fn(),
-  useFetchApi: jest.fn((): unknown => [{ data: 'bundles' }]),
+  useFetchApi: jest.fn((): unknown => [
+    {
+      data: {
+        'hydra:member': [
+          {
+            id: 'ElasticsuiteVirtualCategoryBundle',
+            name: 'ElasticsuiteVirtualCategoryBundle',
+          },
+        ],
+      },
+    },
+  ]),
 }))
 
 const preloadedState: PreloadedState<RootState> = {
@@ -25,7 +36,10 @@ describe('useDataLoader', () => {
       preloadedState,
     })
     const state = store.getState()
-    expect(state.data).toEqual({ api: 'api', bundles: 'bundles' })
+    expect(state.data).toEqual({
+      api: 'api',
+      bundles: [Bundle.VIRTUAL_CATEGORY],
+    })
   })
 
   it("should not update the store if data won't load (api)", () => {
