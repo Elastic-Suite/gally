@@ -1,5 +1,6 @@
 export * from './api'
 export * from './breadcrumb'
+export * from './bundle'
 export * from './catalog'
 export * from './category'
 export * from './fetch'

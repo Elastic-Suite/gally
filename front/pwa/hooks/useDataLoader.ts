@@ -23,7 +23,12 @@ export function useDataLoader(): void {
     } else if (bundles.status === LoadStatus.FAILED) {
       log(bundles.error)
     } else if (api.data && bundles.data) {
-      dispatch(setData({ api: api.data, bundles: bundles.data }))
+      dispatch(
+        setData({
+          api: api.data,
+          bundles: bundles.data['hydra:member'].map((bundle) => bundle.name),
+        })
+      )
     }
   }, [api, bundles, dispatch, log])
 }

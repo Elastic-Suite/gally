@@ -1,0 +1,14 @@
+{
+  "@context": "/contexts/RuleEngineGraphQlFilters",
+  "@id": "/rule_engine_graph_ql_filters/rule_engine_graphql_filters",
+  "@type": "RuleEngineGraphQlFilters",
+  "id": "rule_engine_graphql_filters",
+  "graphQlFilters": {
+    "boolFilter": {
+      "_must": [
+        { "fashion_color__value": { "eq": "22" } },
+        { "price__price": { "gte": 10 } }
+      ]
+    }
+  }
+}
