@@ -8,10 +8,10 @@ export interface ICategoryConfiguration extends IHydraMember {
   defaultSorting: string
   name: string
   category: string
-  virtualRule: string
+  virtualRule?: string
 }
 
 export interface IParsedCategoryConfiguration
   extends Omit<ICategoryConfiguration, 'virtualRule'> {
-  virtualRule: IRuleCombination
+  virtualRule?: IRuleCombination
 }

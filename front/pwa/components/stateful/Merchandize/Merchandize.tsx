@@ -1,9 +1,12 @@
 import { ChangeEvent } from 'react'
 import { useTranslation } from 'next-i18next'
 import { Grid, Paper } from '@mui/material'
+import { IOptions, isVirtualCategoryEnabled } from 'shared'
+
+import { selectBundles, useAppSelector } from '~/store'
+
 import DropDown from '~/components/atoms/form/DropDown'
 import Switch from '~/components/atoms/form/Switch'
-import { IOptions } from 'shared'
 
 interface IProps {
   onNameChange?: (arg: boolean) => void | Promise<void>
@@ -25,6 +28,7 @@ function Merchandize({
   onSortChange,
 }: IProps): JSX.Element {
   const { t } = useTranslation('categories')
+  const bundles = useAppSelector(selectBundles)
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
     if (event.target.name === 'name') {
@@ -60,15 +64,17 @@ function Merchandize({
             infoTooltip={t('select.tooltip')}
           />
         </Grid>
-        <Grid item xs={6}>
-          <Switch
-            label={t('virtual')}
-            infoTooltip={t('virtual.tooltip')}
-            onChange={handleChange}
-            checked={virtualCategoryValue}
-            name="virtual"
-          />
-        </Grid>
+        {isVirtualCategoryEnabled(bundles) && (
+          <Grid item xs={6}>
+            <Switch
+              label={t('virtual')}
+              infoTooltip={t('virtual.tooltip')}
+              onChange={handleChange}
+              checked={virtualCategoryValue}
+              name="virtual"
+            />
+          </Grid>
+        )}
       </Grid>
     </Paper>
   )

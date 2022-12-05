@@ -1,11 +1,11 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { IApi, IExtraBundle, IHydraResponse } from 'shared'
+import { Bundle, IApi } from 'shared'
 
 import { RootState } from './store'
 
 export interface IDataState {
   api: IApi
-  bundles: IHydraResponse<IExtraBundle>
+  bundles: Bundle[]
 }
 
 const initialState: IDataState = {
@@ -28,5 +28,4 @@ export const { setData } = dataSlice.actions
 export const dataReducer = dataSlice.reducer
 
 export const selectApi = (state: RootState): IApi => state.data.api
-export const selectBundles = (state: RootState): IHydraResponse<IExtraBundle> =>
-  state.data.bundles
+export const selectBundles = (state: RootState): Bundle[] => state.data.bundles

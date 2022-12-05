@@ -3,7 +3,6 @@ import { useTranslation } from 'next-i18next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { Box } from '@mui/system'
-import debounce from 'lodash.debounce'
 import { closeSnackbar, enqueueSnackbar } from 'notistack'
 import {
   ICategories,
@@ -11,20 +10,17 @@ import {
   ICategoryConfiguration,
   IHydraCatalog,
   IParsedCategoryConfiguration,
-  IProductFieldFilterInput,
   IRuleCombination,
-  IRuleEngineGraphqlFilters,
-  IRuleEngineOperators,
   LoadStatus,
   findBreadcrumbLabel,
   getDefaultLocalizedCatalog,
   getLocalizedCatalog,
   isError,
   isRuleValid,
+  isVirtualCategoryEnabled,
   parseCatConf,
   savePositions,
   serializeCatConf,
-  serializeRule,
 } from 'shared'
 
 import { breadcrumbContext } from '~/contexts'
@@ -36,9 +32,11 @@ import {
   useFetchApi,
   useResource,
   useResourceOperations,
+  useRuleEngineGraphqlFilters,
+  useRuleOperators,
 } from '~/hooks'
 import { findCategory } from '~/services'
-import { selectMenu, useAppSelector } from '~/store'
+import { selectBundles, selectMenu, useAppSelector } from '~/store'
 
 import TitleBlock from '~/components/molecules/layout/TitleBlock/TitleBlock'
 import TwoColsLayout from '~/components/molecules/layout/twoColsLayout/TwoColsLayout'
@@ -47,13 +45,12 @@ import CategoryTree from '~/components/stateful/CategoryTree/CategoryTree'
 import ProductsContainer from '~/components/stateful/ProductsContainer/ProductsContainer'
 import RulesManager from '~/components/stateful/RulesManager/RulesManager'
 
-const debounceDelay = 200
-
 function Categories(): JSX.Element {
   const router = useRouter()
   const fetchApi = useApiFetch()
   const { t } = useTranslation('categories')
   const [isLoading, setIsLoading] = useState(false)
+  const bundles = useAppSelector(selectBundles)
 
   // Breadcrumb
   const menu = useAppSelector(selectMenu)
@@ -84,14 +81,7 @@ function Categories(): JSX.Element {
   )
 
   // Rule engine operators
-  const [ruleOperators, setRuleOperators] = useState<IRuleEngineOperators>()
-  useEffect(() => {
-    fetchApi<IRuleEngineOperators>('rule_engine_operators').then((json) => {
-      if (!isError(json)) {
-        setRuleOperators(json)
-      }
-    })
-  }, [fetchApi])
+  const ruleOperators = useRuleOperators()
 
   // Categories
   const [selectedCategoryItem, setSelectedCategoryItem] = useState<ICategory>()
@@ -129,65 +119,24 @@ function Categories(): JSX.Element {
   const { update, create } =
     useResourceOperations<ICategoryConfiguration>(catConfResource)
   useEffect(() => {
-    if (ruleOperators && selectedCategoryItem?.id) {
+    if (selectedCategoryItem?.id) {
       fetchApi<ICategoryConfiguration>(
         `${catConfResource.url}/category/${selectedCategoryItem.id}`,
         filters
       ).then((catConf) => {
         if (!isError(catConf)) {
-          const parsedCatConf = parseCatConf(catConf, ruleOperators)
+          const parsedCatConf = parseCatConf(catConf)
           prevCatConf.current = parsedCatConf
           setCatConf(parsedCatConf)
         }
       })
     }
-  }, [
-    fetchApi,
-    filters,
-    ruleOperators,
-    selectedCategoryItem?.id,
-    catConfResource.url,
-  ])
+  }, [fetchApi, filters, selectedCategoryItem?.id, catConfResource.url])
   const isValid = !catConf?.isVirtual || isRuleValid(catConf?.virtualRule)
 
   // Rule engine graphql filters
-  const [ruleEngineGraphqlFilters, setRuleEngineGraphqlFilters] =
-    useState<IProductFieldFilterInput>(null)
-  const debouncedFetch = useMemo(
-    () =>
-      debounce(async (rule: string): Promise<void> => {
-        const json = await fetchApi<IRuleEngineGraphqlFilters>(
-          'rule_engine_graphql_filters',
-          undefined,
-          { body: JSON.stringify({ rule }), method: 'POST' }
-        )
-        if (!isError(json)) {
-          setRuleEngineGraphqlFilters(json.graphQlFilters)
-        }
-      }, debounceDelay),
-    [fetchApi]
-  )
-  useEffect(() => {
-    if (catConf?.isVirtual && catConf?.virtualRule && isValid) {
-      debouncedFetch(
-        JSON.stringify(serializeRule(catConf.virtualRule, ruleOperators))
-      )
-    }
-  }, [
-    catConf?.isVirtual,
-    catConf?.virtualRule,
-    debouncedFetch,
-    isValid,
-    ruleOperators,
-  ])
-  const productGraphqlFilters: IProductFieldFilterInput = useMemo(() => {
-    if (catConf?.isVirtual && ruleEngineGraphqlFilters) {
-      return ruleEngineGraphqlFilters
-    } else if (!catConf?.isVirtual && selectedCategoryItem) {
-      return { category__id: { eq: selectedCategoryItem.id } }
-    }
-    return null
-  }, [catConf, ruleEngineGraphqlFilters, selectedCategoryItem])
+  const [productGraphqlFilters, setRuleEngineGraphqlFilters] =
+    useRuleEngineGraphqlFilters(catConf, ruleOperators, selectedCategoryItem)
 
   // Product positions
   const prevProductPositions = useRef<string>('')
@@ -228,7 +177,7 @@ function Categories(): JSX.Element {
       delete serializedCatConf['@id']
       const newCatConf = await create(serializedCatConf)
       if (!isError(newCatConf)) {
-        const parsedCatConf = parseCatConf(newCatConf, ruleOperators)
+        const parsedCatConf = parseCatConf(newCatConf)
         prevCatConf.current = parsedCatConf
         setCatConf(parsedCatConf)
       } else {
@@ -237,7 +186,7 @@ function Categories(): JSX.Element {
     } else {
       const newCatConf = await update(serializedCatConf.id, serializedCatConf)
       if (!isError(newCatConf)) {
-        const parsedCatConf = parseCatConf(newCatConf, ruleOperators)
+        const parsedCatConf = parseCatConf(newCatConf)
         prevCatConf.current = parsedCatConf
         setCatConf(parsedCatConf)
       } else {
@@ -294,7 +243,7 @@ function Categories(): JSX.Element {
               />
             </>
           </TitleBlock>,
-          ruleOperators && (
+          isVirtualCategoryEnabled(bundles) && ruleOperators && (
             <TitleBlock
               key="virtualRule"
               title={catConf?.isVirtual ? t('virtualRule.title') : ''}

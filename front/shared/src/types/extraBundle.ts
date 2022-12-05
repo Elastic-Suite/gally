@@ -1,4 +1,8 @@
+export enum Bundle {
+  VIRTUAL_CATEGORY = 'ElasticsuiteVirtualCategoryBundle',
+}
+
 export interface IExtraBundle {
-  id: string
-  name: string
+  id: Bundle
+  name: Bundle
 }

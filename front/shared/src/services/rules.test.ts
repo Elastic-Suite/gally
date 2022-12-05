@@ -103,9 +103,7 @@ describe('Rules service', () => {
 
   describe('parseCatConf', () => {
     it('should return a new empty rule', () => {
-      expect(
-        parseCatConf(catConf, ruleEngineOperators as IRuleEngineOperators)
-      ).toEqual(
+      expect(parseCatConf(catConf)).toEqual(
         expect.objectContaining({
           virtualRule: {
             type: 'combination',
@@ -118,12 +116,7 @@ describe('Rules service', () => {
     })
 
     it('should parse the category configuration', () => {
-      expect(
-        parseCatConf(
-          { ...catConf, virtualRule },
-          ruleEngineOperators as IRuleEngineOperators
-        )
-      ).toEqual(
+      expect(parseCatConf({ ...catConf, virtualRule })).toEqual(
         expect.objectContaining({
           virtualRule: parsedVirtualRule,
         })

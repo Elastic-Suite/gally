@@ -6,6 +6,8 @@ import entrypoint from 'shared/src/mocks/static/index.json'
 import graphql from 'shared/src/mocks/static/graphql.json'
 import metadata from 'shared/src/mocks/static/metadata.json'
 import sourceFieldOptionLabels from 'shared/src/mocks/static/source_field_option_labels.json'
+import ruleEngineGraphqlFilters from 'shared/src/mocks/static/rule_engine_graphql_filters.json'
+import ruleEngineOperators from 'shared/src/mocks/static/rule_engine_operators.json'
 
 export * from 'shared/src/constants'
 export * from 'shared/src/contexts'
@@ -50,6 +52,16 @@ export const fetchApi = jest.fn((_, resource) => {
       resource.endsWith('source_field_option_labels'))
   ) {
     data = { ...sourceFieldOptionLabels }
+  } else if (
+    typeof resource === 'string' &&
+    resource.endsWith('rule_engine_graphql_filters')
+  ) {
+    data = { ...ruleEngineGraphqlFilters }
+  } else if (
+    typeof resource === 'string' &&
+    resource.endsWith('rule_engine_operators')
+  ) {
+    data = { ...ruleEngineOperators }
   }
   return Promise.resolve(data)
 })
@@ -61,6 +73,10 @@ export const removeEmptyParameters = jest.fn(
 export const log = jest.fn((error, log) => log(error.message))
 
 export const getApiFilters = jest.fn((x) => x)
+
+/* bundle */
+
+export const isVirtualCategoryEnabled = jest.fn(() => true)
 
 /* fetch */
 export const isError = jest.fn((json) => 'error' in json)
