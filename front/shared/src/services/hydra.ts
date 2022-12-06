@@ -10,6 +10,7 @@ import {
   IOptions,
   IResource,
   ISearchParameters,
+  ISourceFieldOption,
   ISourceFieldOptionLabel,
 } from '../types'
 
@@ -101,6 +102,25 @@ export function getOptionsFromLabelResource<T extends IHydraLabelMember>(
     label: member.label,
     value: member.id,
   }))
+}
+
+export function getOptionsFromOptionResource(
+  optionLabelsResponse: IHydraResponse<ISourceFieldOption>,
+  localizedCatalogId = -1
+): IOptions<string | number> {
+  return optionLabelsResponse['hydra:member'].map((option) => {
+    let label = option.defaultLabel
+    if (localizedCatalogId !== -1) {
+      label =
+        option.labels.find((label) => label.catalog.id === localizedCatalogId)
+          ?.label ?? label
+    }
+    return {
+      id: option.code,
+      label,
+      value: option.code,
+    }
+  })
 }
 
 export function getOptionsFromOptionLabelResource(
