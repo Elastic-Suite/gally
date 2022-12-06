@@ -114,7 +114,14 @@ function ProductsContainer(props: IProps): JSX.Element {
     : [{ label: 'Position', value: 'category__position' }]
 
   const [searchValue, setSearchValue] = useState('')
-  const onSearchChange = (value: string): void => setSearchValue(value)
+  function valSearchChange(event: string): void {
+    setSearchValue(event)
+  }
+
+  const [onSearchValue, setOnSearchValue] = useState('')
+  function onValSearchChange(event: string): void {
+    setOnSearchValue(event)
+  }
 
   const topProducts = productPositions.data
     ? (JSON.parse(
@@ -154,6 +161,8 @@ function ProductsContainer(props: IProps): JSX.Element {
       },
     })
     setBottomSelectedRows([])
+    onValSearchChange('')
+    valSearchChange('')
   }
 
   function pinToBottom(): void {
@@ -168,6 +177,8 @@ function ProductsContainer(props: IProps): JSX.Element {
       },
     })
     setTopSelectedRows([])
+    onValSearchChange('')
+    valSearchChange('')
   }
 
   function handleSave(): void {
@@ -205,11 +216,11 @@ function ProductsContainer(props: IProps): JSX.Element {
         <SearchBar
           nbResults={nbBottomRows}
           nbTopProducts={topProducts.length}
-          // value={searchValue}
-          onChange={onSearchChange}
+          onChange={valSearchChange}
           sortValue={defaultSorting}
+          searchValue={onSearchValue}
+          onValSearchChange={onValSearchChange}
         />
-
         {Boolean(
           catConf && (!catConf.virtualRule || productGraphqlFilters)
         ) && (

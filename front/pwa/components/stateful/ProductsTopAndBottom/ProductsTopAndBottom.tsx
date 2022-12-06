@@ -1,6 +1,12 @@
 import { Paper } from '@mui/material'
 import { Box, styled } from '@mui/system'
-import { Dispatch, MutableRefObject, SetStateAction, forwardRef } from 'react'
+import {
+  Dispatch,
+  MutableRefObject,
+  SetStateAction,
+  forwardRef,
+  useEffect,
+} from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   IGraphqlProductPosition,
@@ -55,11 +61,18 @@ function ProductsTopAndBottom(
     .map((topProduct) => topProduct.productId)
     .sort()
 
+  const { current } = ref
+  useEffect(() => {
+    if (current && searchValue) {
+      current.scrollIntoView({ behavior: 'smooth' })
+    }
+  }, [ref, searchValue])
+
   return (
     <Paper variant="outlined" sx={{ backgroundColor: 'colors.neutral.300' }}>
       <PreviewArea>{t('previewArea')}</PreviewArea>
       <Box sx={{ padding: '42px 16px 17px 16px' }}>
-        {topProducts.length !== 0 && searchValue === '' && (
+        {topProducts.length !== 0 && (
           <TopTable
             selectedRows={topSelectedRows}
             onSelectedRows={onTopSelectedRows}
@@ -73,9 +86,7 @@ function ProductsTopAndBottom(
         )}
         <Box
           sx={
-            topProducts.length !== 0 &&
-            sortValue === 'category__position' &&
-            searchValue === ''
+            topProducts.length !== 0 && sortValue === 'category__position'
               ? { marginTop: '24px' }
               : {}
           }
