@@ -3,99 +3,124 @@ Elasticsuite\Metadata\Model\SourceFieldOption:
         source_field: '@categories_custom_apply_to_products'
         code: "1"
         position: 0
+        defaultLabel: 'Yes'
     categories_custom_apply_to_products_option_0:
         source_field: '@categories_custom_apply_to_products'
         code: "0"
         position: 1
+        defaultLabel: 'No'
     categories_custom_design_option_1:
         source_field: '@categories_custom_design'
         code: "1"
         position: 0
+        defaultLabel: 'Magento Blank'
     categories_custom_design_option_3:
         source_field: '@categories_custom_design'
         code: "3"
         position: 1
+        defaultLabel: 'Magento Luma'
     categories_custom_use_parent_settings_option_1:
         source_field: '@categories_custom_use_parent_settings'
         code: "1"
         position: 0
+        defaultLabel: 'Yes'
     categories_custom_use_parent_settings_option_0:
         source_field: '@categories_custom_use_parent_settings'
         code: "0"
         position: 1
+        defaultLabel: 'No'
     categories_display_mode_option_PRODUCTS:
         source_field: '@categories_display_mode'
         code: "products"
         position: 0
+        defaultLabel: 'Products only'
     categories_display_mode_option_PAGE:
         source_field: '@categories_display_mode'
         code: "page"
         position: 1
+        defaultLabel: 'Static block only'
     categories_display_mode_option_PRODUCTS_AND_PAGE:
         source_field: '@categories_display_mode'
         code: "products_and_page"
         position: 2
+        defaultLabel: 'Static block and products'
     categories_include_in_menu_option_1:
         source_field: '@categories_include_in_menu'
         code: "1"
         position: 0
+        defaultLabel: 'Yes'
     categories_include_in_menu_option_0:
         source_field: '@categories_include_in_menu'
         code: "0"
         position: 1
+        defaultLabel: 'No'
     categories_landing_page_option_:
         source_field: '@categories_landing_page'
         code: "landing"
         position: 0
+        defaultLabel: 'Please select a static block.'
     categories_page_layout_option_:
         source_field: '@categories_page_layout'
         code: "layout"
         position: 0
+        defaultLabel: 'No layout updates'
     categories_page_layout_option_empty:
         source_field: '@categories_page_layout'
         code: "empty"
         position: 1
+        defaultLabel: ""
     categories_page_layout_option_1column:
         source_field: '@categories_page_layout'
         code: "1column"
         position: 2
+        defaultLabel: Empty
     categories_page_layout_option_2columns-left:
         source_field: '@categories_page_layout'
         code: "2columns-left"
         position: 3
+        defaultLabel: '2 columns with left bar'
     categories_page_layout_option_2columns-right:
         source_field: '@categories_page_layout'
         code: "2columns-right"
         position: 4
+        defaultLabel: '2 columns with right bar'
     categories_page_layout_option_3columns:
         source_field: '@categories_page_layout'
         code: "3columns"
         position: 5
+        defaultLabel: '3 columns'
     categories_page_layout_option_cms-full-width:
         source_field: '@categories_page_layout'
         code: "cms-full-width"
         position: 6
+        defaultLabel: 'Page -- Full Width'
     categories_page_layout_option_category-full-width:
         source_field: '@categories_page_layout'
         code: "category-full-width"
         position: 7
+        defaultLabel: 'Category -- Full Width'
     categories_page_layout_option_product-full-width:
         source_field: '@categories_page_layout'
         code: "product-full-width"
         position: 8
+        defaultLabel: 'Product -- Full Width'
     categories_use_name_in_product_search_option_1:
         source_field: '@categories_use_name_in_product_search'
         code: "1"
         position: 0
+        defaultLabel: 'Yes'
     categories_use_name_in_product_search_option_0:
         source_field: '@categories_use_name_in_product_search'
         code: "0"
         position: 1
+        defaultLabel: 'No'
     categories_use_store_positions_option_1:
         source_field: '@categories_use_store_positions'
         code: "1"
         position: 0
+        defaultLabel: 'Yes'
     categories_use_store_positions_option_0:
         source_field: '@categories_use_store_positions'
         code: "0"
         position: 1
+        defaultLabel: 'No'
