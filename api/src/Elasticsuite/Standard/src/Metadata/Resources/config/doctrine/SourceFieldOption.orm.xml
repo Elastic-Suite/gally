@@ -11,6 +11,7 @@
         </id>
         <field name="code" type="string" nullable="false" />
         <field name="position" type="integer" nullable="true" />
+        <field name="defaultLabel" type="string" nullable="false"/>
 
         <many-to-one field="sourceField"
                      target-entity="Elasticsuite\Metadata\Model\SourceField"

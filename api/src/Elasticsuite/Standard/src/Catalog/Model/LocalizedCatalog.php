@@ -47,13 +47,13 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiFilter(SearchFilter::class, properties: ['code' => 'exact'])]
 class LocalizedCatalog
 {
-    #[Groups(['localizedCatalog:read', 'catalog:read'])]
+    #[Groups(['localizedCatalog:read', 'catalog:read', 'source_field_option:read'])]
     private int $id;
 
     #[Groups(['localizedCatalog:read', 'catalog:read'])]
     private string|null $name;
 
-    #[Groups(['localizedCatalog:read', 'catalog:read'])]
+    #[Groups(['localizedCatalog:read', 'catalog:read', 'source_field_option:read'])]
     private string $code;
 
     #[Groups(['localizedCatalog:read', 'catalog:read'])]

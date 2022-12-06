@@ -39,6 +39,8 @@ Elasticsuite\Metadata\Model\SourceFieldOption:
             - NotBlank: ~
         code:
             - NotBlank: ~
+        defaultLabel:
+            - NotBlank: ~
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
               fields: [ sourceField, code ]
