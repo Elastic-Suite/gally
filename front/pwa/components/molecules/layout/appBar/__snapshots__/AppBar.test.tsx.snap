@@ -60,16 +60,18 @@ exports[`AppBar match snapshot AppBar simple 1`] = `
                   <div
                     class="css-ykyq1f"
                   >
-                    <div
-                      class="css-10jr14j"
+                    <a
+                      class="css-ytumd6"
+                      href="https://elasticsuite.zendesk.com"
                     >
                       Helpdesk
-                    </div>
-                    <div
-                      class="css-10jr14j"
+                    </a>
+                    <a
+                      class="css-ytumd6"
+                      href="https://elastic-suite.github.io/documentation/"
                     >
                       User guide
-                    </div>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -253,16 +255,18 @@ exports[`AppBar match snapshot AppBarThreeSlug 1`] = `
                   <div
                     class="css-ykyq1f"
                   >
-                    <div
-                      class="css-10jr14j"
+                    <a
+                      class="css-ytumd6"
+                      href="https://elasticsuite.zendesk.com"
                     >
                       Helpdesk
-                    </div>
-                    <div
-                      class="css-10jr14j"
+                    </a>
+                    <a
+                      class="css-ytumd6"
+                      href="https://elastic-suite.github.io/documentation/"
                     >
                       User guide
-                    </div>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -496,16 +500,18 @@ exports[`AppBar match snapshot AppBarTwoSlug 1`] = `
                   <div
                     class="css-ykyq1f"
                   >
-                    <div
-                      class="css-10jr14j"
+                    <a
+                      class="css-ytumd6"
+                      href="https://elasticsuite.zendesk.com"
                     >
                       Helpdesk
-                    </div>
-                    <div
-                      class="css-10jr14j"
+                    </a>
+                    <a
+                      class="css-ytumd6"
+                      href="https://elastic-suite.github.io/documentation/"
                     >
                       User guide
-                    </div>
+                    </a>
                   </div>
                 </div>
               </div>

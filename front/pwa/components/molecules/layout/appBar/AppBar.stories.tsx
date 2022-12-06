@@ -19,4 +19,5 @@ export const Default = Template.bind({})
 Default.args = {
   slug: ['search', 'configuration', 'autocompletion'],
   menu,
+  isConnected: false,
 }
