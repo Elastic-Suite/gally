@@ -8,18 +8,31 @@ import { StyleFormControl } from './Switch.styled'
 
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import InfoTooltip from '~/components/atoms/form/InfoTooltip'
+import { ChangeEvent } from 'react'
 
-interface IProps extends SwitchProps {
+interface IProps extends Omit<SwitchProps, 'onChange'> {
   helperIcon?: string
   helperText?: string
   infoTooltip?: string
   label?: string
   margin?: 'none' | 'dense' | 'normal'
+  onChange?: (value: boolean, event: ChangeEvent<HTMLInputElement>) => void
 }
 
 function Switch(props: IProps): JSX.Element {
-  const { helperIcon, helperText, infoTooltip, label, margin, ...switchProps } =
-    props
+  const {
+    helperIcon,
+    helperText,
+    infoTooltip,
+    label,
+    margin,
+    onChange,
+    ...switchProps
+  } = props
+
+  function handleChange(event: ChangeEvent<HTMLInputElement>): void {
+    onChange(event.target.checked, event)
+  }
 
   return (
     <StyleFormControl fullWidth variant="standard" margin={margin}>
@@ -31,6 +44,7 @@ function Switch(props: IProps): JSX.Element {
       ) : undefined}
       <MuiSwitch
         {...switchProps}
+        onChange={handleChange}
         sx={
           label || infoTooltip ? { marginLeft: '-12px', marginTop: '20px' } : {}
         }

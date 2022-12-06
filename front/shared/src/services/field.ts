@@ -3,6 +3,8 @@ import {
   IDropdownStaticOptions,
   IElasticSuiteProperty,
   IField,
+  IFieldCondition,
+  IFieldState,
 } from '../types'
 
 function updateProperties(
@@ -70,4 +72,22 @@ export function isDropdownStaticOptions(
   options: IDropdownStaticOptions | IDropdownApiOptions
 ): options is IDropdownStaticOptions {
   return 'values' in options
+}
+
+export function getFieldState(
+  entity: Record<string, unknown>,
+  depends?: IFieldCondition,
+  state: IFieldState = {}
+): IFieldState {
+  if (!depends?.conditions) {
+    return state
+  }
+  const { conditions, ...conditionalState } = depends
+  const conditionActive = Object.entries(conditions).every(
+    ([field, value]) => entity[field] === value
+  )
+  return {
+    ...(conditionActive && conditionalState),
+    ...state,
+  }
 }

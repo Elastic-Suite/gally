@@ -101,6 +101,20 @@ class Configuration
 
     private ?string $virtualRule = null;
 
+    #[ApiProperty(
+        attributes: [
+            'hydra:supportedProperty' => [
+                'elasticsuite' => [
+                    'depends' => [
+                        'conditions' => [
+                            'isVirtual' => true,
+                        ],
+                        'disabled' => true,
+                    ],
+                ],
+            ],
+        ],
+    )]
     private ?bool $useNameInProductSearch = null;
 
     #[ApiProperty(

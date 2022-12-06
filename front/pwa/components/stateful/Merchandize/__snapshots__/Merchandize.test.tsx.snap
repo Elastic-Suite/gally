@@ -41,7 +41,7 @@ exports[`Merchandize match snapshot testSelect 1`] = `
               <input
                 checked=""
                 class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
-                name="name"
+                name="useNameInProductSearch"
                 type="checkbox"
               />
               <span
@@ -70,7 +70,7 @@ exports[`Merchandize match snapshot testSelect 1`] = `
               class="MuiFormControl-root css-1pl6002-MuiFormControl-root"
             >
               <label
-                class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-colorPrimary css-ssr94h-MuiFormLabel-root-MuiInputLabel-root"
+                class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-colorPrimary MuiFormLabel-filled Mui-required css-ssr94h-MuiFormLabel-root-MuiInputLabel-root"
                 data-shrink="true"
                 for=":r1:"
               >
@@ -86,12 +86,20 @@ exports[`Merchandize match snapshot testSelect 1`] = `
                     style="color: rgb(129, 135, 185); width: 20px; height: 20px; display: flex;"
                   />
                 </span>
+                <span
+                  aria-hidden="true"
+                  class="MuiFormLabel-asterisk MuiInputLabel-asterisk css-1ufxisk-MuiFormLabel-asterisk"
+                >
+                   
+                  *
+                </span>
               </label>
               <div
                 class="InputText__Wrapper css-newnfq"
               >
                 <div
                   class="MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-w8c12a-MuiInputBase-root"
+                  required=""
                 >
                   <input
                     aria-autocomplete="list"
@@ -101,10 +109,12 @@ exports[`Merchandize match snapshot testSelect 1`] = `
                     autocomplete="off"
                     class="MuiInputBase-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-yz9k0d-MuiInputBase-input"
                     id=":r1:"
+                    name="defaultSorting"
+                    required=""
                     role="combobox"
                     spellcheck="false"
                     type="text"
-                    value=""
+                    value="Position"
                   />
                   <div
                     class="MuiAutocomplete-endAdornment css-1q60rmi-MuiAutocomplete-endAdornment"
@@ -162,7 +172,7 @@ exports[`Merchandize match snapshot testSelect 1`] = `
               <input
                 checked=""
                 class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
-                name="virtual"
+                name="isVirtual"
                 type="checkbox"
               />
               <span

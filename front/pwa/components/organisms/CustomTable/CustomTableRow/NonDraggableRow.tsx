@@ -7,6 +7,7 @@ import {
   ITableHeader,
   ITableHeaderSticky,
   ITableRow,
+  getFieldState,
 } from 'shared'
 
 import {
@@ -25,7 +26,7 @@ import {
 
 interface IProps {
   Field: FunctionComponent<IFieldGuesserProps>
-  cssLeftValuesIterator: IterableIterator<[number, number]>
+  cssLeftValues: number[]
   diffRow?: ITableRow
   isHorizontalOverflow: boolean
   onRowUpdate?: (
@@ -46,7 +47,7 @@ interface IProps {
 function NonDraggableRow(props: IProps): JSX.Element {
   const {
     Field,
-    cssLeftValuesIterator,
+    cssLeftValues,
     diffRow,
     isHorizontalOverflow,
     onRowUpdate,
@@ -58,8 +59,6 @@ function NonDraggableRow(props: IProps): JSX.Element {
     tableRow,
     withSelection,
   } = props
-  const { disabled } = tableConfig
-
   const stickyHeaders: ITableHeaderSticky[] = manageStickyHeaders(tableHeaders)
   const nonStickyHeaders = tableHeaders.filter((header) => !header.sticky)
   const isOnlyDraggable = !withSelection && stickyHeaders.length === 0
@@ -87,7 +86,7 @@ function NonDraggableRow(props: IProps): JSX.Element {
           },
           ...draggableColumnStyle(
             isOnlyDraggable,
-            cssLeftValuesIterator.next().value[1],
+            cssLeftValues[0],
             isHorizontalOverflow,
             shadow
           ),
@@ -98,7 +97,7 @@ function NonDraggableRow(props: IProps): JSX.Element {
         <StickyTableCell
           sx={selectionStyle(
             isHorizontalOverflow,
-            cssLeftValuesIterator.next().value[1],
+            cssLeftValues[1],
             shadow,
             stickyHeaders.length
           )}
@@ -106,17 +105,17 @@ function NonDraggableRow(props: IProps): JSX.Element {
           <Checkbox
             checked={selectedRows ? selectedRows.includes(tableRow.id) : false}
             data-testid="non-draggable-single-row-selection"
-            disabled={disabled}
             onChange={handleSelectionChange}
+            {...tableConfig.selection}
           />
         </StickyTableCell>
       )}
 
-      {stickyHeaders.map((stickyHeader) => (
+      {stickyHeaders.map((stickyHeader, i) => (
         <StickyTableCell
           key={stickyHeader.name}
           sx={stickyStyle(
-            cssLeftValuesIterator.next().value[1],
+            cssLeftValues[i + 1 + Number(withSelection)],
             shadow,
             stickyHeader.isLastSticky,
             stickyHeader.type
@@ -125,11 +124,15 @@ function NonDraggableRow(props: IProps): JSX.Element {
           <Field
             {...stickyHeader}
             diffValue={diffRow?.[stickyHeader.name]}
-            disabled={disabled}
             label=""
             onChange={handleChange}
             row={tableRow}
             value={tableRow[stickyHeader.name]}
+            {...getFieldState(
+              tableRow,
+              stickyHeader.depends,
+              tableConfig[stickyHeader.name]
+            )}
           />
         </StickyTableCell>
       ))}
@@ -139,11 +142,15 @@ function NonDraggableRow(props: IProps): JSX.Element {
           <Field
             {...header}
             diffValue={diffRow?.[header.name]}
-            disabled={disabled}
             label=""
             onChange={handleChange}
             row={tableRow}
             value={tableRow[header.name]}
+            {...getFieldState(
+              tableRow,
+              header.depends,
+              tableConfig[header.name]
+            )}
           />
         </BaseTableCell>
       ))}

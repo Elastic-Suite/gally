@@ -49,22 +49,32 @@ export function getFieldInput(
   return fallback
 }
 
+export function getFieldConfig(
+  field: IField
+): Pick<IFieldConfig, 'depends' | 'field' | 'suffix' | 'validation'> {
+  return {
+    depends: field.elasticsuite?.depends,
+    field,
+    suffix: field.elasticsuite?.input === 'percentage' ? '%' : '',
+    validation: field.elasticsuite?.validation,
+  }
+}
+
 export function getFieldHeader(field: IField, t: TFunction): IFieldConfig {
+  const fieldConfig = getFieldConfig(field)
   const type = getFieldDataContentType(field)
   const id = field.title
   const input = getFieldInput(field, type)
   return {
+    ...fieldConfig,
     editable: field.elasticsuite?.editable && field.writeable,
-    field,
     id,
     input,
     label:
       field.property.label ?? t(...getFieldLabelTranslationArgs(field.title)),
     name: id,
     required: field.elasticsuite?.required ?? field.required,
-    suffix: field.elasticsuite?.input === 'percentage' ? '%' : '',
     type,
-    validation: field.elasticsuite?.validation,
   }
 }
 
@@ -77,12 +87,13 @@ export function getFilterType(mapping: IMapping): DataContentType {
 }
 
 export function getFilter(mapping: IMapping, t: TFunction): IFieldConfig {
+  const fieldConfig = getFieldConfig(mapping.field)
   const type = getFilterType(mapping)
   const id = mapping.variable
   const input = getFieldInput(mapping.field, type)
   return {
+    ...fieldConfig,
     editable: true,
-    field: mapping.field,
     id,
     input: mapping.variable.endsWith('[between]')
       ? DataContentType.RANGE
@@ -94,9 +105,7 @@ export function getFilter(mapping: IMapping, t: TFunction): IFieldConfig {
     multiple: mapping.multiple,
     name: id,
     required: false, // Always false for filter
-    suffix: mapping.field.elasticsuite?.input === 'percentage' ? '%' : '',
     type,
-    validation: mapping.field.elasticsuite?.validation,
   }
 }
 

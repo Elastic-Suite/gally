@@ -4,11 +4,13 @@ import {
   IRuleAttribute,
   IRuleCombination,
   IRuleEngineOperators,
+  RuleType,
 } from '../types'
 
 import {
   isAttributeRule,
   isCombinationRule,
+  isRuleValid,
   parseCatConf,
   serializeCatConf,
   serializeRule,
@@ -188,6 +190,28 @@ describe('Rules service', () => {
           virtualRule,
         })
       )
+    })
+  })
+
+  describe('isRuleValid', () => {
+    it('should validate a rule', () => {
+      expect(isRuleValid(parsedVirtualRule)).toEqual(true)
+      expect(
+        isRuleValid({
+          type: RuleType.COMBINATION,
+          operator: 'all',
+          value: true,
+          children: [
+            {
+              type: RuleType.ATTRIBUTE,
+              field: 'sku',
+              operator: 'in',
+              attribute_type: 'reference',
+              value: '',
+            },
+          ] as IRuleAttribute[],
+        } as IRuleCombination)
+      ).toEqual(false)
     })
   })
 })

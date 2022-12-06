@@ -50,7 +50,7 @@ function NonDraggableBody(props: IProps): JSX.Element {
       {tableRows.map((tableRow, index) => (
         <NonDraggableRow
           Field={Field}
-          cssLeftValuesIterator={cssLeftValues.entries()}
+          cssLeftValues={cssLeftValues}
           diffRow={diffRows?.[index]}
           isHorizontalOverflow={isHorizontalOverflow}
           key={tableRow.id}

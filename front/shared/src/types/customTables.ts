@@ -1,4 +1,4 @@
-import { IFieldConfig } from './field'
+import { IFieldConfig, IFieldState } from './field'
 
 export enum MassiveSelectionType {
   ALL = 'massiveselection.all',
@@ -73,9 +73,7 @@ export interface ITableHeaderSticky extends ITableHeader {
   isLastSticky: boolean
 }
 
-export interface ITableConfig {
-  disabled?: boolean
-}
+export type ITableConfig = Record<string, IFieldState>
 
 export type BoostType = 'up' | 'down' | 'no boost'
 

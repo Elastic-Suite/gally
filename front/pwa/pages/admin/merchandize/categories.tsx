@@ -136,10 +136,8 @@ function Categories(): JSX.Element {
   // Product positions
   const prevProductPositions = useRef<string>('')
 
-  function handleUpdateCat(name: string): (val: boolean | string) => void {
-    return (val) => {
-      setCatConf((catConf) => ({ ...catConf, [name]: val }))
-    }
+  function handleUpdateCat(name: string, val: boolean | string): void {
+    setCatConf((catConf) => ({ ...catConf, [name]: val }))
   }
 
   function handleUpdateRule(rule: IRuleCombination): void {
@@ -260,10 +258,8 @@ function Categories(): JSX.Element {
             catConf={catConf}
             category={selectedCategoryItem}
             isValid={isValid}
-            onVirtualChange={handleUpdateCat('isVirtual')}
-            onNameChange={handleUpdateCat('useNameInProductSearch')}
-            onSortChange={handleUpdateCat('defaultSorting')}
             localizedCatalogId={localizedCatalogIdWithDefault}
+            onChange={handleUpdateCat}
             onSave={onSave}
             prevCatConf={prevCatConf}
             prevProductPositions={prevProductPositions}
