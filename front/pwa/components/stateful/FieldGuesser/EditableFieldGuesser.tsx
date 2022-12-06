@@ -1,4 +1,4 @@
-import { ChangeEvent, SyntheticEvent } from 'react'
+import { SyntheticEvent } from 'react'
 import { useTranslation } from 'next-i18next'
 import { DataContentType, IFieldGuesserProps } from 'shared'
 
@@ -32,17 +32,11 @@ function EditableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
   const dirty = diffValue !== undefined && diffValue !== value
 
   function handleChange(
-    value: number | string | (number | string)[],
+    value: boolean | number | string | (boolean | number | string)[],
     event: SyntheticEvent
   ): void {
     if (onChange) {
       onChange(name, value, event)
-    }
-  }
-
-  function handleSwitchChange(event: ChangeEvent<HTMLInputElement>): void {
-    if (onChange) {
-      onChange(name, event.target.checked, event)
     }
   }
 
@@ -122,7 +116,7 @@ function EditableFieldGuesser(props: IFieldGuesserProps): JSX.Element {
             Boolean(dirty) &&
             t('form.defaultValue', { value: t(`switch.${diffValue}`) })
           }
-          onChange={handleSwitchChange}
+          onChange={handleChange}
           required={required}
         />
       )

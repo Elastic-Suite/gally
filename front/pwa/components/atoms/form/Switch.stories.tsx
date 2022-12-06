@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
-import { ChangeEvent, useState } from 'react'
+import { useState } from 'react'
 
 import SwitchComponent from './Switch'
 
@@ -17,13 +17,8 @@ export default {
 const Template: ComponentStory<typeof SwitchComponent> = (
   args
 ): JSX.Element => {
-  const [first, setFirst] = useState(true)
-
-  const onChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    setFirst(event.target.checked)
-  }
-
-  return <SwitchComponent {...args} onChange={onChange} checked={first} />
+  const [value, setValue] = useState(true)
+  return <SwitchComponent {...args} onChange={setValue} checked={value} />
 }
 
 export const Switch = Template.bind({})

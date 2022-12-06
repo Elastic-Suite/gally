@@ -4,8 +4,17 @@ import { IField } from './api'
 import { DataContentType, ITableRow } from './customTables'
 import { IOptions } from './option'
 
-export interface IFieldConfig {
+export interface IFieldCondition {
+  conditions: Record<string, unknown>
   disabled?: boolean
+}
+
+export interface IFieldState {
+  disabled?: boolean
+}
+
+export interface IFieldConfig extends IFieldState {
+  depends?: IFieldCondition
   editable?: boolean
   field?: IField
   id: string

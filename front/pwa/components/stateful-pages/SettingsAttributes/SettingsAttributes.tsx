@@ -22,7 +22,13 @@ function SettingsAttributes(props: ITabContentProps): JSX.Element {
   const [activeFilters, setActiveFilters] = useFilters(resource)
 
   function getTableConfigs(rows: ITableRow[]): ITableConfig[] {
-    return rows.map((row) => ({ disabled: Boolean(row.isSystem) }))
+    return rows.map((row) => ({
+      isFilterable: { disabled: Boolean(row.isSystem) },
+      isSearchable: { disabled: Boolean(row.isSystem) },
+      selection: { disabled: Boolean(row.isSystem) },
+      isSortable: { disabled: Boolean(row.isSystem) },
+      isUsedForRules: { disabled: Boolean(row.isSystem) },
+    }))
   }
 
   return (

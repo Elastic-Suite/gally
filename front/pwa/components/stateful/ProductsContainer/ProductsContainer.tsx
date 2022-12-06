@@ -42,10 +42,8 @@ interface IProps {
   isLoading?: boolean
   isValid?: boolean
   localizedCatalogId: string
-  onNameChange: (val: boolean) => void
-  onSortChange: (val: string) => void
+  onChange: (name: string, val: boolean | string) => void
   onSave: (result: string) => void
-  onVirtualChange: (val: boolean) => void
   prevCatConf: MutableRefObject<IParsedCategoryConfiguration>
   prevProductPositions: MutableRefObject<string>
   productGraphqlFilters: IProductFieldFilterInput
@@ -58,10 +56,8 @@ function ProductsContainer(props: IProps): JSX.Element {
     isLoading,
     isValid,
     localizedCatalogId,
-    onNameChange,
+    onChange,
     onSave,
-    onSortChange,
-    onVirtualChange,
     prevCatConf,
     prevProductPositions,
     productGraphqlFilters,
@@ -203,12 +199,8 @@ function ProductsContainer(props: IProps): JSX.Element {
         </PageTitle>
         {Boolean(catConf) && (
           <Merchandize
-            onVirtualChange={onVirtualChange}
-            virtualCategoryValue={catConf?.isVirtual ?? false}
-            onNameChange={onNameChange}
-            categoryNameValue={catConf?.useNameInProductSearch ?? false}
-            onSortChange={onSortChange}
-            sortValue={catConf?.defaultSorting ?? ''}
+            catConf={catConf}
+            onChange={onChange}
             sortOptions={sortOption}
           />
         )}

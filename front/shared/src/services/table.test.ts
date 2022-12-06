@@ -42,6 +42,7 @@ describe('Table service', () => {
   describe('getFieldHeader', () => {
     it('should return the field header', () => {
       expect(getFieldHeader(fieldString, (key: string) => key)).toEqual({
+        depends: undefined,
         id: 'code',
         field: fieldString,
         input: DataContentType.STRING,
@@ -54,6 +55,7 @@ describe('Table service', () => {
         validation: undefined,
       })
       expect(getFieldHeader(fieldDropdown, (key: string) => key)).toEqual({
+        depends: undefined,
         id: 'code',
         field: fieldDropdown,
         input: DataContentType.SELECT,

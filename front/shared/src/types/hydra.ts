@@ -11,6 +11,7 @@ import {
 } from './jsonld'
 import { IOptions } from './option'
 import { IHydraSimpleCatalog } from './catalog'
+import { IFieldCondition } from './field'
 
 export enum HydraType {
   ARRAY = 'array',
@@ -90,6 +91,7 @@ export interface IHydraProperty extends IJsonldBase {
 
 export interface IElasticSuiteProperty {
   context?: Record<string, IElasticSuiteProperty>
+  depends?: IFieldCondition
   editable?: boolean
   input?: string
   options?: IDropdownStaticOptions | IDropdownApiOptions

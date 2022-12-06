@@ -6,6 +6,7 @@ import {
 } from '../mocks'
 
 import {
+  getFieldState,
   hasFieldOptions,
   isDropdownStaticOptions,
   updatePropertiesAccordingToPath,
@@ -96,6 +97,34 @@ describe('Field service', () => {
           fieldDropdownWithApiOptions.elasticsuite.options
         )
       ).toEqual(false)
+    })
+  })
+
+  describe('getFieldState', () => {
+    it('get field state without conditions', () => {
+      expect(getFieldState({ foo: 'bar' })).toEqual({})
+    })
+
+    it('get field state with conditions', () => {
+      expect(
+        getFieldState(
+          { foo: 'bar', baz: true },
+          { conditions: { baz: true }, disabled: true }
+        )
+      ).toEqual({ disabled: true })
+    })
+
+    it('get field state with forced state', () => {
+      expect(
+        getFieldState({ foo: 'bar' }, undefined, { disabled: true })
+      ).toEqual({ disabled: true })
+      expect(
+        getFieldState(
+          { foo: 'bar', baz: true },
+          { conditions: { baz: true }, disabled: true },
+          { disabled: false }
+        )
+      ).toEqual({ disabled: false })
     })
   })
 })

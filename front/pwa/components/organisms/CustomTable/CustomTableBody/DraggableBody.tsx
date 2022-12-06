@@ -60,7 +60,7 @@ function DraggableBody(props: IProps): JSX.Element {
               {(provider): JSX.Element => (
                 <DraggableRow
                   Field={Field}
-                  cssLeftValuesIterator={cssLeftValues.entries()}
+                  cssLeftValues={cssLeftValues}
                   isHorizontalOverflow={isHorizontalOverflow}
                   onRowUpdate={onRowUpdate}
                   onSelectRows={onSelectRows}

@@ -20,7 +20,7 @@ describe('RowService', () => {
     it('Should not apply border-right if not only draggable', () => {
       const mockInput = {
         isOnlyDraggable: false,
-        leftValue: '10',
+        leftValue: 10,
         isHorizontalOverflow: true,
         shadow: true,
       }
@@ -37,7 +37,7 @@ describe('RowService', () => {
     it('Should use stickyBorderStyle', () => {
       const mockInput2 = {
         isOnlyDraggable: true,
-        leftValue: '10',
+        leftValue: 10,
         isHorizontalOverflow: true,
         shadow: false,
       }
@@ -55,7 +55,7 @@ describe('RowService', () => {
   describe('stickyStyle', () => {
     it('Should set sticky style if last sticky', () => {
       const mockInput = {
-        leftValue: '10',
+        leftValue: 10,
         shadow: false,
         isLastSticky: true,
         type: DataContentType.SELECT,
@@ -72,7 +72,7 @@ describe('RowService', () => {
 
     it('Should set sticky style if not last sticky', () => {
       const mockInput = {
-        leftValue: '10',
+        leftValue: 10,
         shadow: false,
         isLastSticky: true,
         type: DataContentType.LABEL,
@@ -93,7 +93,7 @@ describe('RowService', () => {
     it('Should set selection style with sticky border style', () => {
       const mockInput = {
         isHorizontalOverflow: true,
-        leftValue: '10',
+        leftValue: 10,
         shadow: true,
         stickyColumnCount: 0,
       }

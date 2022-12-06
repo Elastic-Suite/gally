@@ -9,25 +9,26 @@ export default {
 } as ComponentMeta<typeof Merchandize>
 
 const Template: ComponentStory<typeof Merchandize> = (args): JSX.Element => {
-  const [virtualCategoryValue, setVirtualCategoryValue] = useState(true)
-  const [categoryNameValue, setCategoryNameValue] = useState(false)
-  const [sortValue, setSortValue] = useState('10')
+  const [catConf, setCatConf] = useState({
+    '@id': '/category_configurations/6',
+    '@type': 'CategoryConfiguration',
+    id: 6,
+    category: 'cat',
+    defaultSorting: '10',
+    isActive: false,
+    isVirtual: false,
+    name: 'Category',
+    useNameInProductSearch: true,
+  })
 
-  const onSortChange = (val: string): void => {
-    setSortValue(val)
+  const handleChange = (name: string, value: boolean | string): void => {
+    setCatConf({
+      ...catConf,
+      [name]: value,
+    })
   }
 
-  return (
-    <Merchandize
-      onVirtualChange={setVirtualCategoryValue}
-      virtualCategoryValue={virtualCategoryValue}
-      onNameChange={setCategoryNameValue}
-      categoryNameValue={categoryNameValue}
-      onSortChange={onSortChange}
-      sortValue={sortValue}
-      {...args}
-    />
-  )
+  return <Merchandize catConf={catConf} onChange={handleChange} {...args} />
 }
 
 export const Default = Template.bind({})
