@@ -55,10 +55,10 @@ class SourceFieldOptionLabel
     #[Groups(['source_field_option_label:read', 'source_field_option_label:write'])]
     private SourceFieldOption $sourceFieldOption;
 
-    #[Groups(['source_field_option_label:read', 'source_field_option_label:write'])]
+    #[Groups(['source_field_option_label:read', 'source_field_option_label:write', 'source_field_option:read'])]
     private LocalizedCatalog $catalog;
 
-    #[Groups(['source_field_option_label:read', 'source_field_option_label:write'])]
+    #[Groups(['source_field_option_label:read', 'source_field_option_label:write', 'source_field_option:read'])]
     private string $label;
 
     public function getId(): int

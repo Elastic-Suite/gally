@@ -42,18 +42,30 @@ use Symfony\Component\Serializer\Annotation\Groups;
         'update' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
         'delete' => ['security' => "is_granted('" . Role::ROLE_ADMIN . "')"],
     ],
+    normalizationContext: ['groups' => ['source_field_option:read']],
+    denormalizationContext: ['groups' => ['source_field_option:write']],
 )]
 #[ApiFilter(SearchFilter::class, properties: ['sourceField' => 'exact'])]
 #[ApiFilter(OrderFilter::class, properties: ['position'], arguments: ['orderParameterName' => 'order'])]
 class SourceFieldOption
 {
+    #[Groups(['source_field_option:read', 'source_field_option:write'])]
     private int $id;
-    #[Groups(['source_field_option_label:read'])]
+
+    #[Groups(['source_field_option:read', 'source_field_option:write', 'source_field_option_label:read'])]
     private string $code;
+
+    #[Groups(['source_field_option:read', 'source_field_option:write'])]
     private SourceField $sourceField;
+
+    #[Groups(['source_field_option:read', 'source_field_option:write'])]
     private ?int $position;
 
+    #[Groups(['source_field_option:read', 'source_field_option:write'])]
+    private string $defaultLabel;
+
     /** @var Collection<SourceFieldOptionLabel> */
+    #[Groups(['source_field_option:read', 'source_field_option:write'])]
     private Collection $labels;
 
     public function getId(): int
@@ -93,6 +105,18 @@ class SourceFieldOption
     public function setPosition(?int $position): self
     {
         $this->position = $position;
+
+        return $this;
+    }
+
+    public function getDefaultLabel(): string
+    {
+        return $this->defaultLabel;
+    }
+
+    public function setDefaultLabel(string $defaultLabel): self
+    {
+        $this->defaultLabel = $defaultLabel;
 
         return $this;
     }
