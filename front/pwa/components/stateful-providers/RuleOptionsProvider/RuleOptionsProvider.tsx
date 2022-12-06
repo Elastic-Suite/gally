@@ -5,12 +5,11 @@ import { ruleOptionsContext } from '~/contexts'
 import { useResource, useSingletonLoader } from '~/hooks'
 import {
   ICategories,
-  IError,
   IFetchApi,
   IHydraResponse,
   IOptions,
   IRuleEngineOperators,
-  ISourceFieldOptionLabel,
+  ISourceFieldOption,
   ITreeItem,
   RuleAttributeType,
   RuleCombinationOperator,
@@ -18,7 +17,7 @@ import {
   RuleValueType,
   getListApiParameters,
   getOptionsFromEnum,
-  getOptionsFromOptionLabelResource,
+  getOptionsFromOptionResource,
   isError,
 } from 'shared'
 
@@ -32,24 +31,17 @@ export interface IField {
 interface IProps {
   catalogId: number
   children: ReactNode
-  defaultLocalizedCatalog: string
   fields: IField[]
   localizedCatalogId: number
   ruleOperators: IRuleEngineOperators
 }
 
 function RuleOptionsProvider(props: IProps): JSX.Element {
-  const {
-    catalogId,
-    children,
-    defaultLocalizedCatalog,
-    fields,
-    localizedCatalogId,
-    ruleOperators,
-  } = props
+  const { catalogId, children, fields, localizedCatalogId, ruleOperators } =
+    props
   const { operators, operatorsBySourceFieldType, operatorsValueType } =
     ruleOperators
-  const sourceFieldOptionLabelResource = useResource('SourceFieldOptionLabel')
+  const sourceFieldOptionResource = useResource('SourceFieldOption')
   const { t } = useTranslation('rules')
   const { fetch, map, setMap } = useSingletonLoader<
     IOptions<unknown> | ITreeItem[]
@@ -155,60 +147,31 @@ function RuleOptionsProvider(props: IProps): JSX.Element {
         return fetch(
           `${field.code}-${localizedCatalogId}`,
           async (fetchApi: IFetchApi) => {
-            const optionLabelFilters: {
-              catalog?: string
-              'order[sourceFieldOption.position]': string
-              'sourceFieldOption.sourceField': string
-            } = {
-              'order[sourceFieldOption.position]': 'asc',
-              'sourceFieldOption.sourceField': `/source_fields/${field.id}`,
+            const optionLabelFilters = {
+              'order[position]': 'asc',
+              sourceField: `/source_fields/${field.id}`,
             }
-            let optionLabelsResponse:
-              | IError
-              | IHydraResponse<ISourceFieldOptionLabel>
 
-            // Fetch sourceFieldOptionLabels for current localizedCatalog
-            if (localizedCatalogId !== -1) {
-              optionLabelFilters.catalog = `/localized_catalogs/${localizedCatalogId}`
-              optionLabelsResponse = await fetchApi<
-                IHydraResponse<ISourceFieldOptionLabel>
-              >(
-                sourceFieldOptionLabelResource,
-                getListApiParameters(false, undefined, optionLabelFilters)
+            // optionLabelFilters.catalog = `/localized_catalogs/${localizedCatalogId}`
+            const optionsResponse = await fetchApi<
+              IHydraResponse<ISourceFieldOption>
+            >(
+              sourceFieldOptionResource,
+              getListApiParameters(false, undefined, optionLabelFilters)
+            )
+
+            if (!isError(optionsResponse)) {
+              return getOptionsFromOptionResource(
+                optionsResponse,
+                localizedCatalogId
               )
-            }
-
-            // Fetch sourceFieldOptionLabels for default catalog (if no labels were found)
-            if (
-              !optionLabelsResponse ||
-              isError(optionLabelsResponse) ||
-              optionLabelsResponse['hydra:totalItems'] === 0
-            ) {
-              optionLabelFilters.catalog = `/localized_catalogs/${defaultLocalizedCatalog}`
-              optionLabelsResponse = await fetchApi<
-                IHydraResponse<ISourceFieldOptionLabel>
-              >(
-                sourceFieldOptionLabelResource,
-                getListApiParameters(false, undefined, optionLabelFilters)
-              )
-            }
-
-            if (!isError(optionLabelsResponse)) {
-              return getOptionsFromOptionLabelResource(optionLabelsResponse)
             }
             throw new Error('error')
           }
         )
       }
     },
-    [
-      catalogId,
-      defaultLocalizedCatalog,
-      fetch,
-      fields,
-      localizedCatalogId,
-      sourceFieldOptionLabelResource,
-    ]
+    [catalogId, fetch, fields, localizedCatalogId, sourceFieldOptionResource]
   )
 
   const context = useMemo(

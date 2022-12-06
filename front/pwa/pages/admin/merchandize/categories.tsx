@@ -13,7 +13,6 @@ import {
   IRuleCombination,
   LoadStatus,
   findBreadcrumbLabel,
-  getDefaultLocalizedCatalog,
   getLocalizedCatalog,
   isError,
   isRuleValid,
@@ -68,10 +67,6 @@ function Categories(): JSX.Element {
   const catalogs = data?.['hydra:member']
   const [catalogId, setCatalogId] = useState<number>(-1)
   const [localizedCatalogId, setLocalizedCatalogId] = useState<number>(-1)
-  const defaultLocalizedCatalog = useMemo(
-    () => (catalogs ? getDefaultLocalizedCatalog(catalogs) : null),
-    [catalogs]
-  )
   const localizedCatalogIdWithDefault = useMemo(
     () =>
       catalogs
@@ -251,7 +246,6 @@ function Categories(): JSX.Element {
               <RulesManager
                 active={catConf?.isVirtual}
                 catalogId={catalogId}
-                defaultLocalizedCatalog={defaultLocalizedCatalog}
                 localizedCatalogId={localizedCatalogId}
                 onChange={handleUpdateRule}
                 rule={catConf?.virtualRule}

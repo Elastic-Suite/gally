@@ -33,7 +33,6 @@ function RuleOptionsTestProvider(props: IProps): JSX.Element {
   return (
     <RuleOptionsProvider
       catalogId={-1}
-      defaultLocalizedCatalog="42"
       localizedCatalogId={-1}
       fields={fields}
       ruleOperators={ruleEngineOperator as IRuleEngineOperators}

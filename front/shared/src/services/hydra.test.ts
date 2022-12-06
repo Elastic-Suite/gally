@@ -1,5 +1,6 @@
 import categorySortingOptions from '../mocks/static/category_sorting_options.json'
 import metadata from '../mocks/static/metadata.json'
+import sourceFieldOptions from '../mocks/static/source_field_options.json'
 import sourceFieldOptionLabels from '../mocks/static/source_field_option_labels.json'
 
 import {
@@ -11,6 +12,11 @@ import {
   resource,
   resourceWithRef,
 } from '../mocks'
+import {
+  IHydraResponse,
+  ISourceFieldOption,
+  ISourceFieldOptionLabel,
+} from '../types'
 
 import {
   castFieldParameter,
@@ -21,6 +27,7 @@ import {
   getOptionsFromApiSchema,
   getOptionsFromLabelResource,
   getOptionsFromOptionLabelResource,
+  getOptionsFromOptionResource,
   getOptionsFromResource,
   getReferencedResource,
   getResource,
@@ -200,10 +207,163 @@ describe('Hydra service', () => {
     })
   })
 
+  describe('getOptionsFromOptionResource', () => {
+    it('should return the options using the default label', () => {
+      expect(
+        getOptionsFromOptionResource(
+          sourceFieldOptions as unknown as IHydraResponse<ISourceFieldOption>
+        )
+      ).toEqual([
+        {
+          id: '5',
+          label: 'Doré',
+          value: '5',
+        },
+        {
+          id: '22',
+          label: 'Pêche',
+          value: '22',
+        },
+        {
+          id: '23',
+          label: 'Kaki',
+          value: '23',
+        },
+        {
+          id: '6',
+          label: 'Argent',
+          value: '6',
+        },
+        {
+          id: '24',
+          label: 'Lila',
+          value: '24',
+        },
+        {
+          id: '25',
+          label: 'Pluie',
+          value: '25',
+        },
+        {
+          id: '26',
+          label: 'Menthe',
+          value: '26',
+        },
+        {
+          id: '27',
+          label: 'Lily',
+          value: '27',
+        },
+        {
+          id: '28',
+          label: 'Latte',
+          value: '28',
+        },
+        {
+          id: '29',
+          label: 'Coco',
+          value: '29',
+        },
+        {
+          id: '30',
+          label: 'Noir',
+          value: '30',
+        },
+        {
+          id: '31',
+          label: 'Gris',
+          value: '31',
+        },
+        {
+          id: '32',
+          label: 'Orange',
+          value: '32',
+        },
+      ])
+    })
+
+    it('should return the options using the localized catalog label', () => {
+      expect(
+        getOptionsFromOptionResource(
+          sourceFieldOptions as unknown as IHydraResponse<ISourceFieldOption>,
+          50
+        )
+      ).toEqual([
+        {
+          id: '5',
+          label: 'Gold',
+          value: '5',
+        },
+        {
+          id: '22',
+          label: 'Peach',
+          value: '22',
+        },
+        {
+          id: '23',
+          label: 'Khaki',
+          value: '23',
+        },
+        {
+          id: '6',
+          label: 'Silver',
+          value: '6',
+        },
+        {
+          id: '24',
+          label: 'Lilac',
+          value: '24',
+        },
+        {
+          id: '25',
+          label: 'Rain',
+          value: '25',
+        },
+        {
+          id: '26',
+          label: 'Mint',
+          value: '26',
+        },
+        {
+          id: '27',
+          label: 'Lily',
+          value: '27',
+        },
+        {
+          id: '28',
+          label: 'Latte',
+          value: '28',
+        },
+        {
+          id: '29',
+          label: 'Cocoa',
+          value: '29',
+        },
+        {
+          id: '30',
+          label: 'Black',
+          value: '30',
+        },
+        {
+          id: '31',
+          label: 'Gray',
+          value: '31',
+        },
+        {
+          id: '32',
+          label: 'Orange',
+          value: '32',
+        },
+      ])
+    })
+  })
+
   describe('getOptionsFromOptionLabelResource', () => {
     it('Should return the options', () => {
       expect(
-        getOptionsFromOptionLabelResource(sourceFieldOptionLabels as any)
+        getOptionsFromOptionLabelResource(
+          sourceFieldOptionLabels as unknown as IHydraResponse<ISourceFieldOptionLabel>
+        )
       ).toEqual([
         {
           id: '5',

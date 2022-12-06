@@ -24,6 +24,10 @@ export interface ICatalog {
 
 export interface IHydraCatalog extends ICatalog, IHydraMember {}
 
+export interface IHydraSimpleCatalog
+  extends Pick<ICatalog, 'code'>,
+    IHydraMember {}
+
 export interface IGraphqlCatalog extends Omit<ICatalog, 'localizedCatalogs'> {
   localizedCatalogs: IGraphqlEdges<Partial<ILocalizedCatalog>>
 }
