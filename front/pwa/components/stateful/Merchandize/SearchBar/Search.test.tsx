@@ -11,6 +11,7 @@ describe('SearchBar match snapshot', () => {
         nbResults={1010}
         value={val}
         sortValue="category__position"
+        searchValue="searchValue"
       />
     )
     expect(container).toMatchSnapshot()

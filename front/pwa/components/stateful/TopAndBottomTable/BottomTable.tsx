@@ -22,6 +22,7 @@ import PagerTable from '../../organisms/PagerTable/PagerTable'
 
 import FieldGuesser from '../FieldGuesser/FieldGuesser'
 import NoAttributes from '~/components/atoms/noAttributes/NoAttributes'
+
 import { useTranslation } from 'next-i18next'
 
 interface IProps {
@@ -49,10 +50,10 @@ function BottomTable(
     sortValue,
     searchValue,
   } = props
-  const { t } = useTranslation('categories')
+
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [rowsPerPage, setRowsPerPage] = useState<number>(defaultPageSize)
-
+  const { t } = useTranslation('categories')
   const variables = useMemo(
     () => ({
       catalogId: localizedCatalogId,
@@ -130,29 +131,32 @@ function BottomTable(
 
   return (
     <>
-      {Boolean(products?.data?.products) && (
-        <PagerTable
-          Field={FieldGuesser}
-          count={products.data.products.paginationInfo.totalCount}
-          currentPage={
-            (currentPage - 1 >= 0 ? currentPage - 1 : currentPage) ?? 0
-          }
-          massiveSelectionIndeterminate={massiveSelectionIndeterminate}
-          massiveSelectionState={massiveSelectionState}
-          onPageChange={onPageChange}
-          onRowsPerPageChange={onRowsPerPageChange}
-          onSelection={handleSelection}
-          ref={ref}
-          rowsPerPage={rowsPerPage}
-          rowsPerPageOptions={defaultRowsPerPageOptions ?? []}
-          selectedRows={selectedRows}
-          tableHeaders={productTableheader}
-          tableRows={
-            products.data.products.collection as unknown as ITableRow[]
-          }
-          withSelection={withSelection}
-        />
-      )}
+      {Boolean(products?.data?.products) &&
+        (products.data.products.collection.length === 0 ? (
+          <NoAttributes title={t('noProductSearch')} />
+        ) : (
+          <PagerTable
+            Field={FieldGuesser}
+            count={products.data.products.paginationInfo.totalCount}
+            currentPage={
+              (currentPage - 1 >= 0 ? currentPage - 1 : currentPage) ?? 0
+            }
+            massiveSelectionIndeterminate={massiveSelectionIndeterminate}
+            massiveSelectionState={massiveSelectionState}
+            onPageChange={onPageChange}
+            onRowsPerPageChange={onRowsPerPageChange}
+            onSelection={handleSelection}
+            ref={ref}
+            rowsPerPage={rowsPerPage}
+            rowsPerPageOptions={defaultRowsPerPageOptions ?? []}
+            selectedRows={selectedRows}
+            tableHeaders={productTableheader}
+            tableRows={
+              products.data.products.collection as unknown as ITableRow[]
+            }
+            withSelection={withSelection}
+          />
+        ))}
     </>
   )
 }
