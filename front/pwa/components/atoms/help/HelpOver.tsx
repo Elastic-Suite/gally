@@ -1,5 +1,5 @@
 import { styled } from '@mui/system'
-import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 const CustomRoot = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -17,29 +17,29 @@ const CustomRoot = styled('div')(({ theme }) => ({
   lineHeight: '18px',
 }))
 
-const CustomDiv = styled('div')({
-  ':hover': { cursor: 'pointer' },
+const CustomA = styled('a')({
+  textDecoration: 'none',
 })
 
 function HelpOver(): JSX.Element {
-  const router = useRouter()
-
-  function handleRouter(url: string): void {
-    router.push(url)
-  }
-
   return (
     <CustomRoot>
-      <CustomDiv onClick={(): void => handleRouter('/helpdesk')}>
-        Helpdesk
-      </CustomDiv>
-      <CustomDiv onClick={(): void => handleRouter('/userGuide')}>
-        User guide
-      </CustomDiv>
+      <Link
+        href="https://elasticsuite.zendesk.com"
+        passHref
+        style={{ textDecoration: 'none!important', color: 'red' }}
+      >
+        <CustomA>Helpdesk</CustomA>
+      </Link>
+
+      <Link href="https://elastic-suite.github.io/documentation/" passHref>
+        <CustomA>User guide</CustomA>
+      </Link>
+
       {process.env.NODE_ENV === 'development' && (
-        <CustomDiv onClick={(): void => handleRouter('/swagger/docs')}>
-          API documentation
-        </CustomDiv>
+        <Link href="/swagger/docs" passHref>
+          <CustomA>API documentation</CustomA>
+        </Link>
       )}
     </CustomRoot>
   )
