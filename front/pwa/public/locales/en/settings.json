@@ -1,5 +1,6 @@
 {
   "action.import": "Import",
   "tabs.scope": "Scope",
-  "tabs.attributes": "Searchable and filterable attributes"
+  "tabs.attributes": "Searchable and filterable attributes",
+  "settingsAttributes.alert": "All configurations done here must wait for reindexation to be effective in your front-office application"
 }
