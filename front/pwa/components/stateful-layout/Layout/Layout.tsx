@@ -3,7 +3,7 @@ import { styled } from '@mui/system'
 
 import { breadcrumbContext } from '~/contexts'
 
-import { useApiFetch, useUser } from '~/hooks'
+import { useApiFetch } from '~/hooks'
 import {
   selectChildrenState,
   selectMenu,
