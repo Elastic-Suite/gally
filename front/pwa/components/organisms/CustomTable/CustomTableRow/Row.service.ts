@@ -11,7 +11,7 @@ import { stickyBorderStyle } from '../CustomTable.service'
 
 export function draggableColumnStyle(
   isOnlyDraggable: boolean,
-  leftValue: string,
+  leftValue: number,
   isHorizontalOverflow: boolean,
   shadow: boolean
 ): IDraggableColumnStyle {
@@ -42,7 +42,7 @@ export const reorderIconStyle = {
 }
 
 export function stickyStyle(
-  leftValue: string,
+  leftValue: number,
   shadow: boolean,
   isLastSticky: boolean,
   type: DataContentType
@@ -60,7 +60,7 @@ export function stickyStyle(
 
 export function selectionStyle(
   isHorizontalOverflow: boolean,
-  leftValue: string,
+  leftValue: number,
   shadow: boolean,
   stickyColumnCount: number
 ): ISelectionStyle {

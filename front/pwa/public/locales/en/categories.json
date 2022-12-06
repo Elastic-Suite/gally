@@ -18,7 +18,7 @@
   "searchBar.placeholder": "Search by name...",
   "required": "* Required field",
   "name": "Use category name in product search",
-  "name.tooltip": "Use category name in product search",
+  "name.tooltip": "When enabled, ensures that searching for the category name will make the associated products appear. This does not work for virtual categories.",
   "virtual": "Virtual category",
   "virtual.tooltip": "Is the category is virtual or not ?",
   "select": "Select",

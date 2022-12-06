@@ -1,41 +1,39 @@
-import { ChangeEvent } from 'react'
+import { SyntheticEvent } from 'react'
 import { useTranslation } from 'next-i18next'
 import { Grid, Paper } from '@mui/material'
-import { IOptions, isVirtualCategoryEnabled } from 'shared'
+import {
+  IOptions,
+  IParsedCategoryConfiguration,
+  getFieldConfig,
+  getFieldState,
+  isVirtualCategoryEnabled,
+} from 'shared'
 
+import { useResource } from '~/hooks'
 import { selectBundles, useAppSelector } from '~/store'
 
 import DropDown from '~/components/atoms/form/DropDown'
 import Switch from '~/components/atoms/form/Switch'
 
 interface IProps {
-  onNameChange?: (arg: boolean) => void | Promise<void>
-  onVirtualChange?: (arg: boolean) => void | Promise<void>
-  categoryNameValue: boolean
-  virtualCategoryValue: boolean
+  catConf: IParsedCategoryConfiguration
+  onChange?: (name: string, value: boolean | string) => void | Promise<void>
   sortOptions: IOptions<string>
-  onSortChange?: (arg: string) => void | Promise<void>
-  sortValue?: number | string
 }
 
-function Merchandize({
-  onNameChange,
-  onVirtualChange,
-  categoryNameValue,
-  virtualCategoryValue,
-  sortOptions,
-  sortValue,
-  onSortChange,
-}: IProps): JSX.Element {
+function Merchandize({ catConf, onChange, sortOptions }: IProps): JSX.Element {
   const { t } = useTranslation('categories')
   const bundles = useAppSelector(selectBundles)
+  const catConfResource = useResource('CategoryConfiguration')
+  const fieldConfigMap = new Map(
+    catConfResource.supportedProperty.map((field) => [
+      field.title,
+      getFieldConfig(field),
+    ])
+  )
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    if (event.target.name === 'name') {
-      onNameChange(event.target.checked)
-    } else {
-      onVirtualChange(event.target.checked)
-    }
+  function handleChange(value: string | boolean, event: SyntheticEvent): void {
+    onChange((event.target as HTMLInputElement).name, value)
   }
 
   return (
@@ -48,30 +46,44 @@ function Merchandize({
       >
         <Grid item xs={6}>
           <Switch
-            label={t('name')}
+            checked={catConf?.useNameInProductSearch ?? false}
             infoTooltip={t('name.tooltip')}
+            label={t('name')}
+            name="useNameInProductSearch"
             onChange={handleChange}
-            checked={categoryNameValue}
-            name="name"
+            {...getFieldState(
+              catConf as unknown as Record<string, unknown>,
+              fieldConfigMap.get('useNameInProductSearch')?.depends
+            )}
           />
         </Grid>
         <Grid item xs={6}>
           <DropDown
-            options={sortOptions}
-            label="Default sorting"
-            value={sortValue}
-            onChange={onSortChange}
             infoTooltip={t('select.tooltip')}
+            label="Default sorting"
+            name="defaultSorting"
+            onChange={handleChange}
+            options={sortOptions}
+            value={catConf?.defaultSorting ?? ''}
+            required
+            {...getFieldState(
+              catConf as unknown as Record<string, unknown>,
+              fieldConfigMap.get('defaultSorting')?.depends
+            )}
           />
         </Grid>
         {isVirtualCategoryEnabled(bundles) && (
           <Grid item xs={6}>
             <Switch
-              label={t('virtual')}
+              checked={catConf?.isVirtual ?? false}
               infoTooltip={t('virtual.tooltip')}
+              label={t('virtual')}
+              name="isVirtual"
               onChange={handleChange}
-              checked={virtualCategoryValue}
-              name="virtual"
+              {...getFieldState(
+                catConf as unknown as Record<string, unknown>,
+                fieldConfigMap.get('isVirtual')?.depends
+              )}
             />
           </Grid>
         )}
