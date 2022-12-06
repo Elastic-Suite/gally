@@ -14,7 +14,10 @@ interface IProps {
 }
 
 function User({ isConnected }: IProps): JSX.Element | null {
-  if (!isConnected) return null
+  if (!isConnected) {
+    return null
+  }
+
   return (
     <CustomRoot>
       <Help />
