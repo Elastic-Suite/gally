@@ -10,6 +10,7 @@ import {
   IJsonldType,
 } from './jsonld'
 import { IOptions } from './option'
+import { IHydraSimpleCatalog } from './catalog'
 
 export enum HydraType {
   ARRAY = 'array',
@@ -134,7 +135,7 @@ export interface IHydraMember extends IJsonldBase {
 }
 
 export interface IHydraLabelMember extends IHydraMember {
-  catalog: string
+  catalog: IHydraSimpleCatalog
   label: string
 }
 
