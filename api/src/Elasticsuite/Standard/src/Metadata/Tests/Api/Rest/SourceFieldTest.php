@@ -17,13 +17,13 @@ declare(strict_types=1);
 namespace Elasticsuite\Metadata\Tests\Api\Rest;
 
 use Elasticsuite\Metadata\Model\SourceField;
-use Elasticsuite\Test\AbstractEntityTest;
+use Elasticsuite\Test\AbstractEntityTestWithUpdate;
 use Elasticsuite\Test\ExpectedResponse;
 use Elasticsuite\Test\RequestToTest;
 use Elasticsuite\User\Constant\Role;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
-class SourceFieldTest extends AbstractEntityTest
+class SourceFieldTest extends AbstractEntityTestWithUpdate
 {
     protected static function getFixtureFiles(): array
     {
@@ -138,6 +138,30 @@ class SourceFieldTest extends AbstractEntityTest
     {
         return [
             [$this->getUser(Role::ROLE_CONTRIBUTOR), 13, 200],
+        ];
+    }
+
+    public function updateDataProvider(): iterable
+    {
+        $adminUser = $this->getUser(Role::ROLE_ADMIN);
+
+        return [
+            [$this->getUser(Role::ROLE_CONTRIBUTOR), 5, ['weight' => 10, 'isSpellchecked' => true], 403],
+            [$adminUser, 5, ['weight' => 10, 'isSpellchecked' => true]],
+            [
+                $adminUser,
+                5,
+                ['isFilterable' => true],
+                400,
+                "The source field 'sku' cannot be updated because it is a system source field, only the value  of 'weight' and 'isSpellchecked' can be changed.",
+            ],
+            [
+                $adminUser,
+                5,
+                ['isSystem' => false],
+                400,
+                "The source field 'sku' cannot be updated because it is a system source field, only the value  of 'weight' and 'isSpellchecked' can be changed.",
+            ],
         ];
     }
 

@@ -45,6 +45,23 @@ class SourceFieldDataPersister implements DataPersisterInterface
      */
     public function persist($data)
     {
+        $sourceField = $data;
+
+        // Is it an update ?
+        if ($this->entityManager->getUnitOfWork()->isInIdentityMap($sourceField)) {
+            // Call function computeChangeSets to get the entity changes from the function getEntityChangeSet.
+            $this->entityManager->getUnitOfWork()->computeChangeSets();
+            $changeSet = $this->entityManager->getUnitOfWork()->getEntityChangeSet($sourceField);
+
+            unset($changeSet['isSpellchecked']);
+            unset($changeSet['weight']);
+
+            // Prevent user to update a system source field, only the value of 'weight' and 'isSpellchecked' can be changed.
+            if (\count($changeSet) > 0 && ($sourceField->getIsSystem() || ($changeSet['isSystem'][0] ?? false) === true)) {
+                throw new InvalidArgumentException(sprintf("The source field '%s' cannot be updated because it is a system source field, only the value  of 'weight' and 'isSpellchecked' can be changed.", $sourceField->getCode()));
+            }
+        }
+
         $this->entityManager->persist($data);
         $this->entityManager->flush();
 
