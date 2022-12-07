@@ -152,14 +152,14 @@ export function useApiEditableList<T extends IHydraMember>(
       debounce(
         async (id: string | number, updatedItem: Partial<T>): Promise<void> => {
           const updateResponse = await update(id, updatedItem)
-          if (isError(updateResponse)) {
-            // reload if error
+          if (isError(updateResponse) || searchParameters || searchValue) {
+            // reload if error or if any filter is applied
             load()
           }
         },
         debounceDelay
       ),
-    [load, update]
+    [load, searchParameters, searchValue, update]
   )
 
   const editableUpdate = useCallback(
@@ -187,12 +187,12 @@ export function useApiEditableList<T extends IHydraMember>(
       const promises = ids.map((id) => update(id, updatedItem))
       const responses = await Promise.all(promises)
       const hasError = responses.some((response) => isError(response))
-      if (hasError) {
-        // reload if error
+      if (hasError || searchParameters || searchValue) {
+        // reload if error or if any filter is applied
         load()
       }
     },
-    [load, update, updateList]
+    [load, searchParameters, searchValue, update, updateList]
   )
 
   const editableCreate = useCallback(
@@ -217,12 +217,12 @@ export function useApiEditableList<T extends IHydraMember>(
         )
       )
       const response = await replace(replacedItem)
-      if (isError(response)) {
-        // reload if error
+      if (isError(response) || searchParameters || searchValue) {
+        // reload if error or if any filter is applied
         load()
       }
     },
-    [load, replace, updateList]
+    [load, replace, searchParameters, searchValue, updateList]
   )
 
   const editableRemove = useCallback(
