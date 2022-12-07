@@ -62,10 +62,12 @@ function CustomTableHeader(props: IProps): JSX.Element {
             ...(isOnlyDraggable &&
               isHorizontalOverflow &&
               stickyBorderStyle(shadow)),
-            zIndex: '1',
             left: `${cssLeftValues[0]}px`,
+            zIndex: 3,
           }}
-        />
+        >
+          &nbsp;
+        </StickyTableCell>
 
         {Boolean(withSelection) && (
           <StickyTableCell
@@ -81,6 +83,7 @@ function CustomTableHeader(props: IProps): JSX.Element {
               ...(isHorizontalOverflow &&
                 stickyHeaders.length === 0 &&
                 stickyBorderStyle(shadow)),
+              zIndex: 3,
             }}
             key="header-massiveselection"
           >
