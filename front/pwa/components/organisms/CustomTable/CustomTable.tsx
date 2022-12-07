@@ -161,7 +161,7 @@ function CustomTable(
             ...styles,
           }}
         >
-          <StyledTable>
+          <StyledTable stickyHeader>
             <CustomTableHeader
               cssLeftValues={cssLeftValues}
               isHorizontalOverflow={isOverflow}

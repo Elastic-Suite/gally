@@ -4,7 +4,10 @@ import { styled } from '@mui/system'
 import { getCustomScrollBarStyles } from 'shared'
 
 export const TableContainerWithCustomScrollbar = styled(TableContainer)(
-  ({ theme }) => getCustomScrollBarStyles(theme)
+  ({ theme }) => ({
+    ...getCustomScrollBarStyles(theme),
+    maxHeight: '70vh',
+  })
 )
 
 export const StyledTable = styled(Table)({
