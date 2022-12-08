@@ -1,14 +1,9 @@
-import { useContext, useEffect, useMemo, useState } from 'react'
+import { useContext, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import {
-  ICategory,
-  IGraphqlSearchProducts,
-  ProductRequestType,
-  getSearchProductsQuery,
-} from 'shared'
+import { ICategory, ProductRequestType } from 'shared'
 
-import { catalogContext, categoryContext } from '../../contexts'
-import { useGraphqlApi, useProductSort } from '../../hooks'
+import { categoryContext } from '../../contexts'
+import { useProducts } from '../../hooks'
 
 import PageLayout from '../../components/PageLayout/PageLayout'
 import Products from '../../components/Products/Products'
@@ -29,35 +24,25 @@ function findCategory(categories: ICategory[], id: string): ICategory {
 
 function Category(): JSX.Element {
   const { id } = useParams()
-  const { localizedCatalogId } = useContext(catalogContext)
+  const {
+    loadProduts,
+    page,
+    pageSize,
+    products,
+    setPage,
+    setPageSize,
+    setSort,
+    setSortOrder,
+    sort,
+    sortOptions,
+    sortOrder,
+  } = useProducts(ProductRequestType.CATALOG, { category__id: { eq: id } })
   const categories = useContext(categoryContext)
   const category = findCategory(categories, id)
 
-  const [page, setPage] = useState(0)
-  const [pageSize, setPageSize] = useState(10)
-  const [sort, sortOrder, sortOptions, setSort, setSortOrder] = useProductSort()
-
-  const variables = useMemo(
-    () => ({
-      catalogId: String(localizedCatalogId),
-      currentPage: page + 1,
-      pageSize,
-      requestType: ProductRequestType.CATALOG,
-    }),
-    [localizedCatalogId, page, pageSize]
-  )
-  const [products, setProducts, load] = useGraphqlApi<IGraphqlSearchProducts>(
-    getSearchProductsQuery({ category__id: { eq: id } }),
-    variables
-  )
-
   useEffect(() => {
-    if (localizedCatalogId && category) {
-      load()
-    } else {
-      setProducts(null)
-    }
-  }, [category, load, localizedCatalogId, setProducts])
+    loadProduts(Boolean(category))
+  }, [category, loadProduts])
 
   return (
     <PageLayout title={category.name}>

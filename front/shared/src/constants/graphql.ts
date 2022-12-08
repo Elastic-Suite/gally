@@ -48,6 +48,12 @@ export function getSearchProductsQuery(
           itemsPerPage: true,
           totalCount: true,
         },
+        sortInfo: {
+          current: {
+            field: true,
+            direction: true,
+          },
+        },
       },
     },
   })

@@ -10,7 +10,6 @@ import { getCategorySortingOptionsQuery } from '../constants'
 
 import { useGraphqlApi } from './useGraphql'
 
-// export function useProductSort(categoryId?: string): [
 export function useProductSort(): [
   string,
   SortOrder,
@@ -20,16 +19,6 @@ export function useProductSort(): [
 ] {
   const [sort, setSort] = useState('')
   const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.ASC)
-  // const { catalogId, localizedCatalogId } = useContext(catalogContext)
-
-  // Todo: get default sorting
-  // const variables = useMemo(() => ({
-  //   catalogId,
-  //   categoryId,
-  //   localizedCatalogId
-  // }), [catalogId, categoryId, localizedCatalogId])
-  // const [categoryConfiguration, , loadCatConf] =
-  // useGraphqlApi<IGraphqlCategorySortingOption>(getCategoryConfigurationQuery, variables)
 
   const [categorySortingOptions, , loadSortOptions] =
     useGraphqlApi<IGraphqlCategorySortingOption>(getCategorySortingOptionsQuery)
@@ -43,12 +32,6 @@ export function useProductSort(): [
       ) ?? [],
     [categorySortingOptions]
   )
-
-  // useEffect(() => {
-  //   if (categoryId && catalogId && localizedCatalogId) {
-  //     loadCatConf()
-  //   }
-  // }, [categoryId, catalogId, localizedCatalogId, loadCatConf])
 
   useEffect(() => {
     loadSortOptions()

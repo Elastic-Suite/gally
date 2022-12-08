@@ -60,7 +60,7 @@ function Products(props: IProps): JSX.Element {
     sortOptions,
     sortOrder,
   } = props
-  const total = products.data?.searchProducts.paginationInfo.totalCount
+  const total = products.data?.products.paginationInfo.totalCount
   const sortLabelId = useId()
   const sortSelectId = useId()
   const sortOrderLabelId = useId()
