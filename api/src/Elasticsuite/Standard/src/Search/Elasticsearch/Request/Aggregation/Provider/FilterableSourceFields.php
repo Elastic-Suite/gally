@@ -103,7 +103,10 @@ class FilterableSourceFields implements AggregationProviderInterface
             }
         }
 
-        $config['size'] = $facetConfig->getMaxSize();
+        $config['sortOrder'] = $facetConfig->getSortOrder();
+        $config['size'] = BucketInterface::SORT_ORDER_MANUAL == $facetConfig->getSortOrder()
+            ? 0
+            : $facetConfig->getMaxSize();
 
         return $config;
     }

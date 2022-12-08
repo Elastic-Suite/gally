@@ -1290,13 +1290,13 @@ class SearchProductsTest extends AbstractTest
                         'type' => 'checkbox',
                         'options' => [
                             [
-                                'label' => 'cat_1',
-                                'value' => 'cat_1',
+                                'label' => 'Accessories',
+                                'value' => 'cat_3',
                                 'count' => 2,
                             ],
                             [
-                                'label' => 'Accessories',
-                                'value' => 'cat_3',
+                                'label' => 'cat_1',
+                                'value' => 'cat_1',
                                 'count' => 2,
                             ],
                         ],
@@ -1329,13 +1329,13 @@ class SearchProductsTest extends AbstractTest
                         'type' => 'checkbox',
                         'options' => [
                             [
-                                'label' => 'cat_1',
-                                'value' => 'cat_1',
+                                'label' => 'Accessories',
+                                'value' => 'cat_3',
                                 'count' => 2,
                             ],
                             [
-                                'label' => 'Accessories',
-                                'value' => 'cat_3',
+                                'label' => 'cat_1',
+                                'value' => 'cat_1',
                                 'count' => 2,
                             ],
                         ],
@@ -1369,13 +1369,13 @@ class SearchProductsTest extends AbstractTest
                         'type' => 'checkbox',
                         'options' => [
                             [
-                                'label' => 'cat_1',
-                                'value' => 'cat_1',
+                                'label' => 'Accessories',
+                                'value' => 'cat_3',
                                 'count' => 1,
                             ],
                             [
-                                'label' => 'Accessories',
-                                'value' => 'cat_3',
+                                'label' => 'Jewelry',
+                                'value' => 'cat_5',
                                 'count' => 1,
                             ],
                         ],

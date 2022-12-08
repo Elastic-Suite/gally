@@ -21,13 +21,16 @@ use Elasticsuite\Catalog\Repository\LocalizedCatalogRepository;
 use Elasticsuite\Metadata\Model\SourceField\Type;
 use Elasticsuite\Metadata\Repository\MetadataRepository;
 use Elasticsuite\Metadata\Repository\SourceFieldRepository;
+use Elasticsuite\Product\Service\CurrentCategoryProvider;
 use Elasticsuite\Search\DataProvider\Paginator;
 use Elasticsuite\Search\Elasticsearch\Adapter\Common\Response\AggregationInterface;
 use Elasticsuite\Search\Elasticsearch\Adapter\Common\Response\BucketValueInterface;
 use Elasticsuite\Search\Elasticsearch\Builder\Response\AggregationBuilder;
+use Elasticsuite\Search\Elasticsearch\Request\BucketInterface;
 use Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider;
 use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
 use Elasticsuite\Search\Model\Document;
+use Elasticsuite\Search\Repository\Facet\ConfigurationRepository;
 
 /**
  * Add aggregations data in graphql search document response.
@@ -43,6 +46,8 @@ class AddAggregationsData implements SerializeStageInterface
         private ContainerConfigurationProvider $containerConfigurationProvider,
         private SourceFieldRepository $sourceFieldRepository,
         private LocalizedCatalogRepository $localizedCatalogRepository,
+        private ConfigurationRepository $facetConfigRepository,
+        private CurrentCategoryProvider $currentCategoryProvider,
     ) {
     }
 
@@ -77,6 +82,11 @@ class AddAggregationsData implements SerializeStageInterface
             ]
         );
 
+        $currentCategory = $this->currentCategoryProvider->getCurrentCategory();
+        $this->facetConfigRepository->setCategoryId($currentCategory?->getId());
+        $this->facetConfigRepository->setMetadata($containerConfig->getMetadata());
+        $facetConfigs = $sourceField ? $this->facetConfigRepository->findOndBySourceField($sourceField) : null;
+
         $data = [
             'field' => $sourceField ? $sourceField->getCode() : $aggregation->getField(),
             'label' => $sourceField ? $sourceField->getLabel($containerConfig->getLocalizedCatalog()->getId()) : $aggregation->getField(),
@@ -92,6 +102,7 @@ class AddAggregationsData implements SerializeStageInterface
             $data['count'] = $aggregation->getCount();
             $data['hasMore'] = false;
         }
+
         foreach ($aggregation->getValues() as $value) {
             if ($value instanceof BucketValueInterface) {
                 $key = $value->getKey();
@@ -102,8 +113,8 @@ class AddAggregationsData implements SerializeStageInterface
                 }
 
                 if (\is_array($key)) {
-                    $code = $key[0];
-                    $label = 'None' !== $key[1] ? $key[1] : $key[0];
+                    $code = $key[1];
+                    $label = 'None' !== $key[0] ? $key[0] : $key[1];
                 } else {
                     $code = $key;
                     $label = $key;
@@ -114,6 +125,25 @@ class AddAggregationsData implements SerializeStageInterface
                     'value' => $code,
                     'label' => $label,
                 ];
+            }
+        }
+
+        // Sort options according to option position.
+        if (BucketInterface::SORT_ORDER_MANUAL == $facetConfigs?->getSortOrder()) {
+            $sourceFieldOptions = $sourceField->getOptions()->toArray();
+            $sourceFieldOptions = array_combine(
+                array_map(fn ($option) => $option->getCode(), $sourceFieldOptions),
+                $sourceFieldOptions
+            );
+            $options = $data['options'];
+            usort(
+                $options,
+                fn ($a, $b) => (isset($sourceFieldOptions[$a['value']]) ? $sourceFieldOptions[$a['value']]->getPosition() : 1) - (isset($sourceFieldOptions[$b['value']]) ? $sourceFieldOptions[$b['value']]->getPosition() : 1)
+            );
+
+            if (\count($options) > $facetConfigs->getMaxSize()) {
+                $data['options'] = \array_slice($options, 0, $facetConfigs->getMaxSize());
+                $data['hasMore'] = true;
             }
         }
 

@@ -691,9 +691,14 @@ class SearchDocumentsTest extends AbstractTest
                         'hasMore' => true,
                         'options' => [
                             [
-                                'label' => 'Black',
-                                'value' => 'black',
-                                'count' => 10,
+                                'label' => 'Red',
+                                'value' => 'red',
+                                'count' => 1,
+                            ],
+                            [
+                                'label' => 'Grey',
+                                'value' => 'grey',
+                                'count' => 6,
                             ],
                         ],
                     ],
@@ -706,13 +711,13 @@ class SearchDocumentsTest extends AbstractTest
                         'hasMore' => false,
                         'options' => [
                             [
-                                'label' => 'cat_1',
-                                'value' => 'cat_1',
+                                'label' => 'Accessories',
+                                'value' => 'cat_3',
                                 'count' => 2,
                             ],
                             [
-                                'label' => 'Accessories',
-                                'value' => 'cat_3',
+                                'label' => 'cat_1',
+                                'value' => 'cat_1',
                                 'count' => 2,
                             ],
                         ],
@@ -738,9 +743,14 @@ class SearchDocumentsTest extends AbstractTest
                         'hasMore' => true,
                         'options' => [
                             [
-                                'label' => 'Noir',
-                                'value' => 'black',
-                                'count' => 9,
+                                'label' => 'Rouge',
+                                'value' => 'red',
+                                'count' => 1,
+                            ],
+                            [
+                                'label' => 'Gris',
+                                'value' => 'grey',
+                                'count' => 5,
                             ],
                         ],
                     ],

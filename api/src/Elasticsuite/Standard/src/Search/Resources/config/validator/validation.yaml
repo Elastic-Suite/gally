@@ -14,7 +14,7 @@ Elasticsuite\Search\Model\Facet\Configuration:
         maxSize:
             - Positive: ~
         sortOrder:
-            - Choice: [result_count, admin_sort, name, relevance]
+            - Choice: { callback: [ Elasticsuite\Search\Model\Facet\Configuration, getAvailableSortOrder ] }
 
     constraints:   
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:

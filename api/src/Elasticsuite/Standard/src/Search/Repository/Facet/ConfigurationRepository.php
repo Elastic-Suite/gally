@@ -64,6 +64,19 @@ class ConfigurationRepository extends ServiceEntityRepository
     }
 
     /**
+     * Get facet configuration by source field.
+     */
+    public function findOndBySourceField(SourceField $sourceField): ?Facet\Configuration
+    {
+        $query = $this->createQueryBuilder('o')
+            ->andWhere('sf = :sourceField')
+            ->setParameter('sourceField', $sourceField)
+            ->getQuery();
+
+        return $query->getOneOrNullResult($query->getHydrationMode());
+    }
+
+    /**
      * Get all facet configuration.
      *
      * @return Facet\Configuration[]
