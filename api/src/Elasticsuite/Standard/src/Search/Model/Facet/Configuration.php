@@ -23,6 +23,7 @@ use Elasticsuite\Category\Model\Category;
 use Elasticsuite\Entity\Filter\RangeFilterWithDefault;
 use Elasticsuite\Entity\Filter\SearchFilterWithDefault;
 use Elasticsuite\Metadata\Model\SourceField;
+use Elasticsuite\Search\Elasticsearch\Request\BucketInterface;
 use Elasticsuite\User\Constant\Role;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -83,7 +84,7 @@ class Configuration
         'displayMode' => self::DISPLAY_MODE_AUTO,
         'coverageRate' => 90,
         'maxSize' => 10,
-        'sortOrder' => 'result_count',
+        'sortOrder' => BucketInterface::SORT_ORDER_COUNT,
         'isRecommendable' => false,
         'isVirtual' => false,
     ];
@@ -175,13 +176,12 @@ class Configuration
                     'editable' => true,
                     'position' => 50,
                     'input' => 'select',
-                    // Todo: move the options values in the proper class and add validation constraint (will be done in the ticket ESPP-226)
                     'options' => [
                         'values' => [
-                            ['value' => 'result_count', 'label' => 'Result count'],
-                            ['value' => 'admin_sort', 'label' => 'Admin sort'],
-                            ['value' => 'name', 'label' => 'Name'],
-                            ['value' => 'relevance', 'label' => 'Relevance'],
+                            ['value' => BucketInterface::SORT_ORDER_COUNT, 'label' => 'Result count'],
+                            ['value' => BucketInterface::SORT_ORDER_MANUAL, 'label' => 'Admin sort'],
+                            ['value' => BucketInterface::SORT_ORDER_TERM, 'label' => 'Name'],
+                            ['value' => BucketInterface::SORT_ORDER_RELEVANCE, 'label' => 'Relevance'],
                         ],
                     ],
                 ],
@@ -405,6 +405,16 @@ class Configuration
             self::DISPLAY_MODE_AUTO,
             self::DISPLAY_MODE_ALWAYS_DISPLAYED,
             self::DISPLAY_MODE_ALWAYS_HIDDEN,
+        ];
+    }
+
+    public static function getAvailableSortOrder(): array
+    {
+        return [
+            BucketInterface::SORT_ORDER_COUNT,
+            BucketInterface::SORT_ORDER_TERM,
+            BucketInterface::SORT_ORDER_RELEVANCE,
+            BucketInterface::SORT_ORDER_MANUAL,
         ];
     }
 }

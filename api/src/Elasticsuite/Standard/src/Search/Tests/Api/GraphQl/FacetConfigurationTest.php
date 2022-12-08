@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Search\Tests\Api\GraphQl;
 
+use Elasticsuite\Search\Elasticsearch\Request\BucketInterface;
 use Elasticsuite\Search\Tests\Api\Rest\FacetConfigurationTest as RestFacetConfigurationTest;
 use Elasticsuite\Test\ExpectedResponse;
 use Elasticsuite\Test\RequestGraphQlToTest;
@@ -29,16 +30,16 @@ class FacetConfigurationTest extends RestFacetConfigurationTest
      * @dataProvider updateDataProvider
      * @depends testGetCollectionBefore
      */
-    public function testUpdateValue(User $user, string $id, array $newData, int $expectedStatus)
+    public function testUpdateValue(User $user, string $id, array $newData, int $expectedStatus, ?string $expectedMessage)
     {
         $query = '';
         foreach ($newData as $key => $value) {
             $query .= "\n$key: " . (\is_string($value) ? "\"$value\"" : $value);
         }
 
-        $expectedResponse = 403 == $expectedStatus
-            ? new ExpectedResponse(200, function (ResponseInterface $response) {
-                $this->assertJsonContains(['errors' => [['debugMessage' => 'Access Denied.']]]);
+        $expectedResponse = 200 != $expectedStatus
+            ? new ExpectedResponse(200, function (ResponseInterface $response) use ($expectedMessage) {
+                $this->assertJsonContains(['errors' => [['debugMessage' => $expectedMessage]]]);
             })
             : new ExpectedResponse(200);
 
@@ -49,7 +50,7 @@ class FacetConfigurationTest extends RestFacetConfigurationTest
                       updateFacetConfiguration(input: {
                         id: "{$this->getApiPath()}/$id" $query
                       }) {
-                        facetConfiguration { id coverageRate }
+                        facetConfiguration { id coverageRate sortOrder }
                       }
                     }
                 GQL,
@@ -78,8 +79,10 @@ class FacetConfigurationTest extends RestFacetConfigurationTest
                             coverageRate
                             maxSize
                             isVirtual
+                            sortOrder
                             defaultCoverageRate
                             defaultMaxSize
+                            defaultSortOrder
                             category { id }
                             sourceField { id }
                             sourceFieldCode
@@ -135,8 +138,10 @@ class FacetConfigurationTest extends RestFacetConfigurationTest
             'coverageRate' => 90,
             'maxSize' => 10,
             'isVirtual' => false,
+            'sortOrder' => BucketInterface::SORT_ORDER_COUNT,
             'defaultCoverageRate' => 90,
             'defaultMaxSize' => 10,
+            'defaultSortOrder' => BucketInterface::SORT_ORDER_COUNT,
         ];
 
         if ($categoryId) {
