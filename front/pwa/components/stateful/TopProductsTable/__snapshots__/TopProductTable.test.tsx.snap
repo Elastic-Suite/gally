@@ -18,10 +18,10 @@ exports[`TopProductTable Should match snapschot 1`] = `
       </div>
     </div>
     <div
-      class="MuiTableContainer-root css-1i0gtxd-MuiTableContainer-root"
+      class="MuiTableContainer-root css-vj1no2-MuiTableContainer-root"
     >
       <table
-        class="MuiTable-root css-1pty5za-MuiTable-root"
+        class="MuiTable-root MuiTable-stickyHeader css-fd91mg-MuiTable-root"
       >
         <thead
           class="MuiTableHead-root css-15wwp11-MuiTableHead-root"
@@ -30,47 +30,49 @@ exports[`TopProductTable Should match snapschot 1`] = `
             class="MuiTableRow-root MuiTableRow-head css-1u1grnd-MuiTableRow-root"
           >
             <th
-              class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-8uqeip-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-sizeMedium css-1j36bwm-MuiTableCell-root"
               scope="col"
-            />
+            >
+               
+            </th>
             <th
-              class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1in94r8-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-sizeMedium css-cz1vlz-MuiTableCell-root"
               scope="col"
             >
               Code
             </th>
             <th
-              class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1g6gaq7-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-sizeMedium css-1gx1be0-MuiTableCell-root"
               scope="col"
             >
               Image
             </th>
             <th
-              class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1in94r8-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-sizeMedium css-cz1vlz-MuiTableCell-root"
               scope="col"
             >
               Name
             </th>
             <th
-              class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-ybhna4-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-sizeMedium css-1i3tbkm-MuiTableCell-root"
               scope="col"
             >
               Score
             </th>
             <th
-              class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1imodrk-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-sizeMedium css-1h7poxt-MuiTableCell-root"
               scope="col"
             >
               In stock
             </th>
             <th
-              class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-ybhna4-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-sizeMedium css-1i3tbkm-MuiTableCell-root"
               scope="col"
             >
               Price
             </th>
             <th
-              class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-1g6gaq7-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-sizeMedium css-1gx1be0-MuiTableCell-root"
               scope="col"
             >
               Visible
