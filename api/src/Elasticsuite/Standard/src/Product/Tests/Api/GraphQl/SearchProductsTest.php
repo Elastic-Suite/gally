@@ -409,6 +409,156 @@ class SearchProductsTest extends AbstractTest
         ];
     }
 
+    /**
+     * @dataProvider sortInfoSearchProductsProvider
+     *
+     * @param string $catalogId                  Catalog ID or code
+     * @param int    $pageSize                   Pagination size
+     * @param int    $currentPage                Current page
+     * @param array  $sortOrders                 Sort order specifications
+     * @param string $expectedSortOrderField     Expected sort order field
+     * @param string $expectedSortOrderDirection Expected sort order direction
+     */
+    public function testSortInfoSearchProducts(
+        string $catalogId,
+        int $pageSize,
+        int $currentPage,
+        array $sortOrders,
+        string $expectedSortOrderField,
+        string $expectedSortOrderDirection
+    ): void {
+        $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
+
+        $arguments = sprintf(
+            'requestType: product_catalog, catalogId: "%s", pageSize: %d, currentPage: %d',
+            $catalogId,
+            $pageSize,
+            $currentPage
+        );
+
+        if (!empty($sortOrders)) {
+            $sortArguments = [];
+            foreach ($sortOrders as $field => $direction) {
+                $sortArguments[] = sprintf('%s: %s', $field, $direction);
+            }
+            $arguments .= sprintf(', sort: {%s}', implode(', ', $sortArguments));
+        }
+
+        $this->validateApiCall(
+            new RequestGraphQlToTest(
+                <<<GQL
+                    {
+                        products({$arguments}) {
+                            collection {
+                              id
+                              score
+                              source
+                            }
+                            paginationInfo {
+                              itemsPerPage
+                            }
+                            sortInfo {
+                              current {
+                                field
+                                direction
+                              }
+                            }
+                        }
+                    }
+                GQL,
+                $user
+            ),
+            new ExpectedResponse(
+                200,
+                function (ResponseInterface $response) use (
+                    $pageSize,
+                    $expectedSortOrderField,
+                    $expectedSortOrderDirection
+                ) {
+                    $this->assertJsonContains([
+                        'data' => [
+                            'products' => [
+                                'paginationInfo' => [
+                                    'itemsPerPage' => $pageSize,
+                                ],
+                                'sortInfo' => [
+                                    'current' => [
+                                        [
+                                            'field' => $expectedSortOrderField,
+                                            'direction' => $expectedSortOrderDirection,
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ]);
+                }
+            )
+        );
+    }
+
+    public function sortInfoSearchProductsProvider(): array
+    {
+        return [
+            [
+                'b2c_en',   // catalog ID.
+                10,     // page size.
+                1,      // current page.
+                [],     // sort order specifications.
+                '_score', // expected sort order field.
+                SortOrderInterface::SORT_DESC, // expected sort order direction.
+            ],
+            [
+                'b2c_fr',   // catalog ID.
+                10,     // page size.
+                1,      // current page.
+                [],     // sort order specifications.
+                '_score', // expected sort order field.
+                SortOrderInterface::SORT_DESC, // expected sort order direction.
+            ],
+            [
+                'b2c_fr',   // catalog ID.
+                10,     // page size.
+                1,      // current page.
+                ['id' => SortOrderInterface::SORT_ASC], // sort order specifications.
+                'id', // expected sort order field.
+                SortOrderInterface::SORT_ASC, // expected sort order direction.
+            ],
+            [
+                'b2c_fr',   // catalog ID.
+                10,     // page size.
+                1,      // current page.
+                ['size' => SortOrderInterface::SORT_ASC], // sort order specifications.
+                'size', // expected sort order field.
+                SortOrderInterface::SORT_ASC, // expected sort order direction.
+            ],
+            [
+                'b2c_fr',   // catalog ID.
+                10,     // page size.
+                1,      // current page.
+                ['size' => SortOrderInterface::SORT_DESC], // sort order specifications.
+                'size', // expected sort order field.
+                SortOrderInterface::SORT_DESC, // expected sort order direction.
+            ],
+            [
+                'b2c_fr',   // catalog ID.
+                10,     // page size.
+                1,      // current page.
+                ['created_at' => SortOrderInterface::SORT_ASC], // sort order specifications.
+                'created_at', // expected sort order field.
+                SortOrderInterface::SORT_ASC, // expected sort order direction.
+            ],
+            [
+                'b2c_fr',   // catalog ID.
+                5,     // page size.
+                1,      // current page.
+                ['price_as_nested__price' => SortOrderInterface::SORT_ASC], // sort order specifications.
+                'price_as_nested__price', // expected sort order field.
+                SortOrderInterface::SORT_ASC, // expected sort order direction.
+            ],
+        ];
+    }
+
     public function testSortedSearchProductsInvalidField(): void
     {
         $this->validateApiCall(
