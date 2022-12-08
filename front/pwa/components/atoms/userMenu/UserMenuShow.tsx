@@ -1,6 +1,6 @@
 import { styled } from '@mui/system'
 import { storageRemove, tokenStorageKey } from 'shared'
-import { useRouter } from 'next/router'
+import { setUser, useAppDispatch } from '~/store'
 
 const CustomTypoTexte = styled('div')(({ theme }) => ({
   fontStyle: 'normal',
@@ -37,10 +37,11 @@ const CustomHr = styled('div')(({ theme }) => ({
 }))
 
 function UserMenuShow(): JSX.Element {
-  const router = useRouter()
+  const dispatch = useAppDispatch()
+
   function handleLogOut(): void {
     storageRemove(tokenStorageKey)
-    router.push('/login')
+    dispatch(setUser({ token: '', user: null }))
   }
 
   return (
