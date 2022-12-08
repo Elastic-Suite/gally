@@ -1,66 +1,56 @@
 Elasticsuite\Metadata\Model\SourceFieldOption:
-    product_color_option_5:
-        code: '5'
+    product_color_option_black:
+        code: 'black'
+        source_field: '@product_color'
+        position: 9
+        defaultLabel: Black
+    product_color_option_grey:
+        code: 'grey'
+        source_field: '@product_color'
+        position: 2
+        defaultLabel: Grey
+    product_color_option_red:
+        code: 'red'
+        source_field: '@product_color'
+        position: 1
+        defaultLabel: Red
+    product_color_option_white:
+        code: 'white'
+        source_field: '@product_color'
+        position: 3
+        defaultLabel: White
+    product_color_option_pink:
+        code: 'pink'
+        source_field: '@product_color'
+        position: 4
+        defaultLabel: Pink
+    product_color_option_fuchsia:
+        code: 'fuchsia'
+        source_field: '@product_color'
+        position: 5
+        defaultLabel: Fuchsia
+    product_color_option_brown:
+        code: 'brown'
+        source_field: '@product_color'
+        position: 6
+        defaultLabel: Brown
+    product_color_option_blue:
+        code: 'blue'
+        source_field: '@product_color'
+        position: 7
+        defaultLabel: Bleu
+    product_color_option_green:
+        code: 'green'
+        source_field: '@product_color'
+        position: 8
+        defaultLabel: Green
+    product_color_option_gold:
+        code: 'gold'
         source_field: '@product_color'
         position: 0
         defaultLabel: Gold
-    product_color_option_22:
-        code: '22'
-        source_field: '@product_color'
-        position: 1
-        defaultLabel: Peach
-    product_color_option_23:
-        code: '23'
-        source_field: '@product_color'
-        position: 2
-        defaultLabel: Khaki
-    product_color_option_6:
-        code: '6'
-        source_field: '@product_color'
-        position: 3
-        defaultLabel: Silver
-    product_color_option_24:
-        code: '24'
-        source_field: '@product_color'
-        position: 4
-        defaultLabel: Lilac
-    product_color_option_25:
-        code: '25'
-        source_field: '@product_color'
-        position: 5
-        defaultLabel: Rain
-    product_color_option_26:
-        code: '26'
-        source_field: '@product_color'
-        position: 6
-        defaultLabel: Mint
-    product_color_option_27:
-        code: '27'
-        source_field: '@product_color'
-        position: 7
-        defaultLabel: Lily
-    product_color_option_28:
-        code: '28'
-        source_field: '@product_color'
-        position: 8
-        defaultLabel: Latte
-    product_color_option_29:
-        code: '29'
-        source_field: '@product_color'
-        position: 9
-        defaultLabel: Cocoa
-    product_color_option_30:
-        code: '30'
-        source_field: '@product_color'
-        position: 10
-        defaultLabel: Black
-    product_color_option_31:
-        code: '31'
+    product_color_option_orange:
+        code: 'orange'
         source_field: '@product_color'
         position: 11
-        defaultLabel: Gray
-    product_color_option_32:
-        code: '32'
-        source_field: '@product_color'
-        position: 12
         defaultLabel: Orange

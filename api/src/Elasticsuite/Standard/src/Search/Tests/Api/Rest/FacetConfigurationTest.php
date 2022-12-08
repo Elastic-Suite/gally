@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Search\Tests\Api\Rest;
 
+use Elasticsuite\Search\Elasticsearch\Request\BucketInterface;
 use Elasticsuite\Test\AbstractTest;
 use Elasticsuite\Test\ExpectedResponse;
 use Elasticsuite\Test\RequestToTest;
@@ -120,11 +121,11 @@ class FacetConfigurationTest extends AbstractTest
      * @dataProvider updateDataProvider
      * @depends testGetCollectionBefore
      */
-    public function testUpdateValue(User $user, string $id, array $newData, int $expectedStatus)
+    public function testUpdateValue(User $user, string $id, array $newData, int $expectedStatus, ?string $expectedMessage)
     {
         $this->validateApiCall(
             new RequestToTest('PUT', "{$this->getApiPath()}/$id", $user, $newData),
-            new ExpectedResponse($expectedStatus)
+            new ExpectedResponse($expectedStatus, null, $expectedMessage)
         );
     }
 
@@ -133,11 +134,12 @@ class FacetConfigurationTest extends AbstractTest
         $admin = $this->getUser(Role::ROLE_ADMIN);
 
         return [
-            [$this->getUser(Role::ROLE_CONTRIBUTOR), '3-0', ['coverageRate' => 0], 403],
-            [$admin, '3-0', ['coverageRate' => 0], 200],
-            [$admin, '3-0', ['coverageRate' => 1, 'maxSize' => 100], 200],
-            [$admin, '3-cat_1', ['coverageRate' => 10], 200],
-            [$admin, '4-cat_1', ['coverageRate' => 10], 200],
+            [$this->getUser(Role::ROLE_CONTRIBUTOR), '3-0', ['coverageRate' => 0], 403, 'Access Denied.'],
+            [$admin, '3-0', ['coverageRate' => 0, 'sortOrder' => 'invalidSortOrder'], 422, 'sortOrder: The value you selected is not a valid choice.'],
+            [$admin, '3-0', ['coverageRate' => 0, 'sortOrder' => BucketInterface::SORT_ORDER_COUNT], 200],
+            [$admin, '3-0', ['coverageRate' => 1, 'maxSize' => 100, 'sortOrder' => BucketInterface::SORT_ORDER_TERM], 200],
+            [$admin, '3-cat_1', ['coverageRate' => 10, 'sortOrder' => BucketInterface::SORT_ORDER_RELEVANCE], 200],
+            [$admin, '4-cat_1', ['coverageRate' => 10, 'sortOrder' => BucketInterface::SORT_ORDER_MANUAL], 200],
             [$admin, '3-cat_2', ['coverageRate' => 20], 200],
         ];
     }
@@ -159,7 +161,7 @@ class FacetConfigurationTest extends AbstractTest
                 null,
                 [
                     ['sourceField' => 2, 'sourceFieldCode' => 'name'],
-                    ['sourceField' => 3, 'coverageRate' => 1, 'sourceFieldCode' => 'brand', 'maxSize' => 100], // product_brand.
+                    ['sourceField' => 3, 'coverageRate' => 1, 'sourceFieldCode' => 'brand', 'maxSize' => 100, 'sortOrder' => BucketInterface::SORT_ORDER_TERM], // product_brand.
                     ['sourceField' => 4, 'sourceFieldCode' => 'color'], // product_color.
                     ['sourceField' => 5, 'sourceFieldCode' => 'category'], // product_category.
                     ['sourceField' => 6, 'sourceFieldCode' => 'length'], // product_length.
@@ -173,8 +175,8 @@ class FacetConfigurationTest extends AbstractTest
                 'cat_1',
                 [
                     ['sourceField' => 2, 'category' => 'cat_1', 'sourceFieldCode' => 'name'],
-                    ['sourceField' => 3, 'category' => 'cat_1', 'coverageRate' => 10, 'maxSize' => 100, 'defaultCoverageRate' => 1, 'defaultMaxSize' => 100, 'sourceFieldCode' => 'brand'],
-                    ['sourceField' => 4, 'category' => 'cat_1', 'coverageRate' => 10, 'sourceFieldCode' => 'color'],
+                    ['sourceField' => 3, 'category' => 'cat_1', 'coverageRate' => 10, 'maxSize' => 100, 'defaultCoverageRate' => 1, 'defaultMaxSize' => 100, 'sourceFieldCode' => 'brand', 'sortOrder' => BucketInterface::SORT_ORDER_RELEVANCE, 'defaultSortOrder' => BucketInterface::SORT_ORDER_TERM],
+                    ['sourceField' => 4, 'category' => 'cat_1', 'coverageRate' => 10, 'sourceFieldCode' => 'color', 'sortOrder' => BucketInterface::SORT_ORDER_MANUAL],
                     ['sourceField' => 5, 'category' => 'cat_1', 'coverageRate' => 90, 'sourceFieldCode' => 'category'],
                     ['sourceField' => 6, 'category' => 'cat_1', 'coverageRate' => 90, 'sourceFieldCode' => 'length'],
                     ['sourceField' => 7, 'category' => 'cat_1', 'coverageRate' => 90, 'sourceFieldCode' => 'size'],
@@ -187,7 +189,7 @@ class FacetConfigurationTest extends AbstractTest
                 'cat_2',
                 [
                     ['sourceField' => 2, 'category' => 'cat_2', 'sourceFieldCode' => 'name'],
-                    ['sourceField' => 3, 'category' => 'cat_2', 'coverageRate' => 20, 'maxSize' => 100, 'defaultCoverageRate' => 1,  'defaultMaxSize' => 100, 'sourceFieldCode' => 'brand'],
+                    ['sourceField' => 3, 'category' => 'cat_2', 'coverageRate' => 20, 'maxSize' => 100, 'defaultCoverageRate' => 1,  'defaultMaxSize' => 100, 'sourceFieldCode' => 'brand', 'sortOrder' => BucketInterface::SORT_ORDER_TERM, 'defaultSortOrder' => BucketInterface::SORT_ORDER_TERM],
                     ['sourceField' => 4, 'category' => 'cat_2', 'coverageRate' => 90, 'sourceFieldCode' => 'color'],
                     ['sourceField' => 5, 'category' => 'cat_2', 'coverageRate' => 90, 'sourceFieldCode' => 'category'],
                     ['sourceField' => 6, 'category' => 'cat_2', 'coverageRate' => 90, 'sourceFieldCode' => 'length'],
@@ -200,7 +202,7 @@ class FacetConfigurationTest extends AbstractTest
                 'product',
                 null,
                 [
-                    ['sourceField' => 3, 'coverageRate' => 1, 'sourceFieldCode' => 'brand', 'maxSize' => 100], // product_brand.
+                    ['sourceField' => 3, 'coverageRate' => 1, 'sourceFieldCode' => 'brand', 'maxSize' => 100, 'sortOrder' => BucketInterface::SORT_ORDER_TERM], // product_brand.
                     ['sourceField' => 4, 'sourceFieldCode' => 'color'], // product_color.
                     ['sourceField' => 5, 'sourceFieldCode' => 'category'], // product_category.
                     ['sourceField' => 6, 'sourceFieldCode' => 'length'], // product_length.
@@ -269,13 +271,13 @@ class FacetConfigurationTest extends AbstractTest
             'displayMode' => 'auto',
             'coverageRate' => 90,
             'maxSize' => 10,
-            'sortOrder' => 'result_count',
+            'sortOrder' => BucketInterface::SORT_ORDER_COUNT,
             'isRecommendable' => false,
             'isVirtual' => false,
             'defaultDisplayMode' => 'auto',
             'defaultMaxSize' => 10,
             'defaultCoverageRate' => 90,
-            'defaultSortOrder' => 'result_count',
+            'defaultSortOrder' => BucketInterface::SORT_ORDER_COUNT,
             'defaultIsRecommendable' => false,
             'defaultIsVirtual' => false,
         ];

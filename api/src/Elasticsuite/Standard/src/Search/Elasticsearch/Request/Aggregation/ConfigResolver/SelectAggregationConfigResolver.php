@@ -31,9 +31,9 @@ class SelectAggregationConfigResolver implements FieldAggregationConfigResolverI
         return [
             'name' => $sourceField->getCode(),
             'type' => BucketInterface::TYPE_MULTI_TERMS,
-            'field' => $sourceField->getCode() . '.value',
+            'field' => $sourceField->getCode() . '.label',
             'additionalFields' => [
-                $sourceField->getCode() . '.label',
+                $sourceField->getCode() . '.value',
             ],
         ];
     }

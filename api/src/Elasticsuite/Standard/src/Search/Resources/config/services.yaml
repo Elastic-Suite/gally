@@ -251,6 +251,8 @@ services:
             - '@Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider'
             - '@Elasticsuite\Metadata\Repository\SourceFieldRepository'
             - '@Elasticsuite\Catalog\Repository\LocalizedCatalogRepository'
+            - '@Elasticsuite\Search\Repository\Facet\ConfigurationRepository'
+            - '@Elasticsuite\Product\Service\CurrentCategoryProvider'
             
     Elasticsuite\Search\Decoration\GraphQl\AddAggregationsInContext:
         decorates: api_platform.graphql.serializer.context_builder

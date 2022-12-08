@@ -31,9 +31,9 @@ class CategoryAggregationConfigResolver implements FieldAggregationConfigResolve
         return [
             'name' => $sourceField->getCode(),
             'type' => BucketInterface::TYPE_MULTI_TERMS,
-            'field' => $sourceField->getCode() . '.id',
+            'field' => $sourceField->getCode() . '.name',
             'additionalFields' => [
-                $sourceField->getCode() . '.name',
+                $sourceField->getCode() . '.id',
             ],
         ];
     }
