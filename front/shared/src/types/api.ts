@@ -1,4 +1,4 @@
-import { IElasticSuiteProperty, IHydraMember } from './hydra'
+import { IElasticSuiteProperty } from './hydra'
 import { IJsonldBase, IJsonldId, IJsonldType } from './jsonld'
 import { IError, Method } from './network'
 
@@ -41,7 +41,7 @@ export interface IResponseError {
   message: string
 }
 
-export interface IResourceOperations<T extends IHydraMember> {
+export interface IResourceOperations<T> {
   create?: (item: Omit<T, 'id' | '@id' | '@type'>) => Promise<T | IError>
   remove?: (id: string | number) => Promise<T | IError>
   replace?: (item: Omit<T, '@id' | '@type'>) => Promise<T | IError>
@@ -64,7 +64,7 @@ export type IResourceEditableUpdate<T> = (
   item: Partial<T>
 ) => void
 
-export interface IResourceEditableOperations<T extends IHydraMember> {
+export interface IResourceEditableOperations<T> {
   create?: IResourceEditableCreate<T>
   massUpdate?: IResourceEditableMassUpdate<T>
   remove?: IResourceEditableRemove
