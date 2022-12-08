@@ -10,8 +10,8 @@ interface IProps extends Omit<IInputTextProps, 'ref'> {
   nbTopProducts: number
   sortValue: string
   searchValue: string
-  onChange?: (value: string) => void
-  onValSearchChange?: (value: string) => void
+  onSearch?: (value: string) => void
+  onValSearchOnChange?: (value: string) => void
 }
 
 export default function SearchBar(props: IProps): JSX.Element {
@@ -19,9 +19,9 @@ export default function SearchBar(props: IProps): JSX.Element {
     nbResults,
     nbTopProducts,
     sortValue,
-    onChange,
+    onSearch,
     searchValue,
-    onValSearchChange,
+    onValSearchOnChange,
     ...inputTextProps
   } = props
 
@@ -29,7 +29,7 @@ export default function SearchBar(props: IProps): JSX.Element {
 
   function handleSubmit(event: FormEvent): void {
     event.preventDefault()
-    onChange(searchValue)
+    onSearch(searchValue)
   }
 
   const value = {
@@ -68,7 +68,7 @@ export default function SearchBar(props: IProps): JSX.Element {
                 required={false}
                 disabled={false}
                 value={searchValue}
-                onChange={onValSearchChange}
+                onChange={onValSearchOnChange}
                 {...inputTextProps}
                 placeholder={t('searchBar.placeholder')}
                 endAdornment={
