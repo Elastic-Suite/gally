@@ -19,6 +19,7 @@ namespace Elasticsuite\Product\Tests\Unit\GraphQl\Type\Definition\Filter;
 use Elasticsuite\Entity\GraphQl\Type\Definition\Filter\CategoryTypeDefaultFilterInputType;
 use Elasticsuite\Search\Constant\FilterOperator;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder;
+use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
 use Elasticsuite\Search\Elasticsearch\Request\QueryFactory;
 use GraphQL\Type\Definition\Type;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -86,7 +87,8 @@ class CategoryTypeDefaultFilterInputTypeTest extends KernelTestCase
             '##'
         );
 
-        $this->assertEquals('my_category##id', $categoryTypeDefaultFilterInputType->getGraphQlFieldName('my_category'));
+        $this->assertEquals('my_category.id', $categoryTypeDefaultFilterInputType->getFilterFieldName('my_category'));
+        $this->assertEquals('my_category##id', $categoryTypeDefaultFilterInputType->getGraphQlFieldName('my_category.id'));
         $this->assertEquals('my_category.id', $categoryTypeDefaultFilterInputType->getMappingFieldName('my_category##id'));
     }
 
@@ -105,7 +107,11 @@ class CategoryTypeDefaultFilterInputTypeTest extends KernelTestCase
             '__'
         );
 
-        $errors = $categoryTypeDefaultFilterInputType->validate($fieldName, $inputData);
+        $errors = $categoryTypeDefaultFilterInputType->validate(
+            $fieldName,
+            $inputData,
+            $this->getMockBuilder(ContainerConfigurationInterface::class)->getMock(),
+        );
         $this->assertEquals($expectedErrors, $errors);
     }
 

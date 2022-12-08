@@ -29,5 +29,5 @@ interface FilterInterface
     /**
      * Validate format of input data.
      */
-    public function validate(string $argName, mixed $inputData): array;
+    public function validate(string $argName, mixed $inputData, ContainerConfigurationInterface $containerConfig): array;
 }

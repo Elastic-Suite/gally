@@ -92,7 +92,8 @@ class PriceTypeDefaultFilterInputTypeTest extends KernelTestCase
             '##'
         );
 
-        $this->assertEquals('my_price##price', $priceTypeDefaultFilterInputType->getGraphQlFieldName('my_price'));
+        $this->assertEquals('my_price.price', $priceTypeDefaultFilterInputType->getFilterFieldName('my_price'));
+        $this->assertEquals('my_price##price', $priceTypeDefaultFilterInputType->getGraphQlFieldName('my_price.price'));
         $this->assertEquals('my_price.price', $priceTypeDefaultFilterInputType->getMappingFieldName('my_price##price'));
     }
 }

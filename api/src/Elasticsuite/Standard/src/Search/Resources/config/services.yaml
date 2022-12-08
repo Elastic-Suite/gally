@@ -184,7 +184,7 @@ services:
     Elasticsuite\Search\GraphQl\Type\Definition\Filter\ExistFilterInputType:
         lazy: true
         arguments:
-            - '@Elasticsuite\Metadata\Repository\SourceFieldRepository'
+            - '@Elasticsuite\Search\Service\ReverseSourceFieldProvider'
             - '@Elasticsuite\Search\Elasticsearch\Request\QueryFactory'
         tags:
             - { name: api_platform.graphql.type }
@@ -192,27 +192,28 @@ services:
     Elasticsuite\Search\GraphQl\Type\Definition\Filter\EqualTypeFilterInputType:
         arguments:
             - '@Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
-            - '@Elasticsuite\Metadata\Repository\SourceFieldRepository'
+            - '@Elasticsuite\Search\Service\ReverseSourceFieldProvider'
         tags:
             - { name: api_platform.graphql.type }
 
     Elasticsuite\Search\GraphQl\Type\Definition\Filter\MatchFilterInputType:
         arguments:
             - '@Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
-            - '@Elasticsuite\Metadata\Repository\SourceFieldRepository'
+            - '@Elasticsuite\Search\Service\ReverseSourceFieldProvider'
         tags:
             - { name: api_platform.graphql.type }
 
     Elasticsuite\Search\GraphQl\Type\Definition\Filter\RangeFilterInputType:
         arguments:
             - '@Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
-            - '@Elasticsuite\Metadata\Repository\SourceFieldRepository'
+            - '@Elasticsuite\Search\Service\ReverseSourceFieldProvider'
         tags:
             - { name: api_platform.graphql.type }
 
     Elasticsuite\Search\Service\GraphQl\FilterManager:
         arguments:
             - '@Elasticsuite\Search\GraphQl\Type\Definition\FieldFilterInputType'
+            - '%api_platform.graphql.nesting_separator%'
 
     Elasticsuite\Search\DataProvider\DocumentDataProvider:
         arguments:
@@ -249,10 +250,11 @@ services:
             - '@.inner'
             - '@Elasticsuite\Metadata\Repository\MetadataRepository'
             - '@Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider'
-            - '@Elasticsuite\Metadata\Repository\SourceFieldRepository'
             - '@Elasticsuite\Catalog\Repository\LocalizedCatalogRepository'
             - '@Elasticsuite\Search\Repository\Facet\ConfigurationRepository'
             - '@Elasticsuite\Product\Service\CurrentCategoryProvider'
+            - '@Elasticsuite\Search\Service\ReverseSourceFieldProvider'
+            - !tagged_iterator { tag: 'elasticsuite.entity_api.filter' }
             
     Elasticsuite\Search\Decoration\GraphQl\AddAggregationsInContext:
         decorates: api_platform.graphql.serializer.context_builder
@@ -293,6 +295,11 @@ services:
     Elasticsuite\Search\Service\SearchSettingsProvider:
         arguments:
             - '%elasticsuite.search_settings%'
+    
+    Elasticsuite\Search\Service\ReverseSourceFieldProvider:
+        arguments:
+            - '@Elasticsuite\Metadata\Repository\SourceFieldRepository'
+            - '%api_platform.graphql.nesting_separator%'
 
     Elasticsuite\Search\Elasticsearch\Request\Aggregation\CoverageProvider:
         arguments:
@@ -320,12 +327,13 @@ services:
         arguments:
             - '@Elasticsuite\Metadata\Repository\MetadataRepository'
             - '@Elasticsuite\Catalog\Repository\LocalizedCatalogRepository'
-            - '@Elasticsuite\Metadata\Repository\SourceFieldRepository'
             - '@Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider'
             - '@Elasticsuite\Search\Elasticsearch\Builder\Request\SimpleRequestBuilder'
             - '@Elasticsuite\Search\Elasticsearch\Adapter'
             - '@Elasticsuite\Search\Service\GraphQl\FilterManager'
             - '@Elasticsuite\Search\Service\ViewMoreContext'
+            - '@Elasticsuite\Search\Service\ReverseSourceFieldProvider'
+            - '%api_platform.graphql.nesting_separator%'
         tags:
             - { name: api_platform.collection_data_provider }
 

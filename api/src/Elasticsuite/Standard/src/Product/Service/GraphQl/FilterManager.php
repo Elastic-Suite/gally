@@ -22,10 +22,11 @@ use Elasticsuite\Search\GraphQl\Type\Definition\FieldFilterInputType;
 class FilterManager extends \Elasticsuite\Search\Service\GraphQl\FilterManager
 {
     public function __construct(
-        private FieldFilterInputType $fieldFilterInputType,
+        FieldFilterInputType $fieldFilterInputType,
+        protected string $nestingSeparator,
         private CurrentCategoryProvider $currentCategoryProvider,
     ) {
-        parent::__construct($this->fieldFilterInputType);
+        parent::__construct($fieldFilterInputType, $nestingSeparator);
     }
 
     public function getFiltersFromContext(array $context): array
@@ -38,5 +39,17 @@ class FilterManager extends \Elasticsuite\Search\Service\GraphQl\FilterManager
         }
 
         return $filters;
+    }
+
+    public function getQueryFilterFromContext(array $context): array
+    {
+        $queryFilters = parent::getQueryFilterFromContext($context);
+
+        if (isset($context['filters']['currentCategoryId'])) {
+            $queryFilters[]['category__id'] = ['eq' => $context['filters']['currentCategoryId']];
+            $this->currentCategoryProvider->setCurrentCategory($context['filters']['currentCategoryId']);
+        }
+
+        return $queryFilters;
     }
 }

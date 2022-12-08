@@ -29,11 +29,10 @@ class CategoryAggregationConfigResolver implements FieldAggregationConfigResolve
     public function getConfig(SourceField $sourceField): array
     {
         return [
-            'name' => $sourceField->getCode(),
+            'name' => $sourceField->getCode() . '.id',
             'type' => BucketInterface::TYPE_MULTI_TERMS,
-            'field' => $sourceField->getCode() . '.name',
             'additionalFields' => [
-                $sourceField->getCode() . '.id',
+                $sourceField->getCode() . '.name',
             ],
         ];
     }

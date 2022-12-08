@@ -16,12 +16,15 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Search\Service;
 
+use Elasticsuite\Metadata\Model\SourceField;
+
 /**
  * ViewMore context. Used as a singleton to pass filter name to the aggregation modifier.
  */
 class ViewMoreContext
 {
     private ?string $filterName = null;
+    private ?SourceField $sourceField = null;
 
     public function setFilterName(string $filterName): void
     {
@@ -31,5 +34,15 @@ class ViewMoreContext
     public function getFilterName(): ?string
     {
         return $this->filterName;
+    }
+
+    public function setSourceField(?SourceField $sourceField): void
+    {
+        $this->sourceField = $sourceField;
+    }
+
+    public function getSourceField(): ?SourceField
+    {
+        return $this->sourceField;
     }
 }

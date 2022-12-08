@@ -47,9 +47,17 @@ abstract class AbstractFilter extends InputObjectType implements TypeInterface, 
     /**
      * {@inheritDoc}
      */
-    public function getGraphQlFieldName(string $sourceFieldCode): string
+    public function getFilterFieldName(string $sourceFieldCode): string
     {
-        return str_replace('.', $this->nestingSeparator, $sourceFieldCode);
+        return $sourceFieldCode;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getGraphQlFieldName(string $mappingFilterName): string
+    {
+        return str_replace('.', $this->nestingSeparator, $mappingFilterName);
     }
 
     /**
@@ -89,7 +97,7 @@ abstract class AbstractFilter extends InputObjectType implements TypeInterface, 
     public function getGraphQlFilterAsArray(SourceField $sourceField, array $fields): array
     {
         return [
-            $this->getGraphQlFieldName($sourceField->getCode()) => $fields,
+            $this->getGraphQlFieldName($this->getFilterFieldName($sourceField->getCode())) => $fields,
         ];
     }
 

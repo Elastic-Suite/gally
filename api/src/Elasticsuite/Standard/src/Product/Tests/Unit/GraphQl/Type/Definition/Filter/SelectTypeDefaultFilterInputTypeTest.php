@@ -19,6 +19,7 @@ namespace Elasticsuite\Product\Tests\Unit\GraphQl\Type\Definition\Filter;
 use Elasticsuite\Entity\GraphQl\Type\Definition\Filter\SelectTypeDefaultFilterInputType;
 use Elasticsuite\Search\Constant\FilterOperator;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder;
+use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
 use Elasticsuite\Search\Elasticsearch\Request\QueryFactory;
 use GraphQL\Type\Definition\Type;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -88,7 +89,8 @@ class SelectTypeDefaultFilterInputTypeTest extends KernelTestCase
             '##'
         );
 
-        $this->assertEquals('my_select##value', $selectTypeDefaultFilterInputType->getGraphQlFieldName('my_select'));
+        $this->assertEquals('my_select.value', $selectTypeDefaultFilterInputType->getFilterFieldName('my_select'));
+        $this->assertEquals('my_select##value', $selectTypeDefaultFilterInputType->getGraphQlFieldName('my_select.value'));
         $this->assertEquals('my_select.value', $selectTypeDefaultFilterInputType->getMappingFieldName('my_select##value'));
     }
 
@@ -107,7 +109,11 @@ class SelectTypeDefaultFilterInputTypeTest extends KernelTestCase
             '__'
         );
 
-        $errors = $selectTypeDefaultFilterInputType->validate($fieldName, $inputData);
+        $errors = $selectTypeDefaultFilterInputType->validate(
+            $fieldName,
+            $inputData,
+            $this->getMockBuilder(ContainerConfigurationInterface::class)->getMock(),
+        );
         $this->assertEquals($expectedErrors, $errors);
     }
 

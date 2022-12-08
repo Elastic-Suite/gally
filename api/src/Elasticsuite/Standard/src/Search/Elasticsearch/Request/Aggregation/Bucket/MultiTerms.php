@@ -68,7 +68,8 @@ class MultiTerms extends Terms
             $minDocCount
         );
 
-        $this->fields = array_merge([$field], $additionalFields);
+        // We put the "value" field after the "label" field in order to keep sort by key working for multi-terms.
+        $this->fields = array_merge($additionalFields, [$field]);
     }
 
     /**
