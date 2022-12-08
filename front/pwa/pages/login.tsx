@@ -52,7 +52,7 @@ function Login(): JSX.Element {
       }
     })
   }
-
+  console.log('a', user)
   const title = t('title.login')
   return (
     <div>
