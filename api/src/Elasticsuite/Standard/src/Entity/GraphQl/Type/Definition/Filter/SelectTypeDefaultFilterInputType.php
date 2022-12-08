@@ -48,13 +48,9 @@ class SelectTypeDefaultFilterInputType extends TextTypeFilterInputType
     /**
      * {@inheritDoc}
      */
-    public function getGraphQlFieldName(string $sourceFieldCode): string
+    public function getFilterFieldName(string $sourceFieldCode): string
     {
-        /*
-         * No complementarity between getGraphQlFieldName and getMappingFieldName for complex types.
-         * getGraphQlFieldName(A) != getGraphQlFieldName(getMappingFieldName(getGraphQlFieldName(A))
-         */
-        return str_replace('.', $this->nestingSeparator, $sourceFieldCode . '.value');
+        return $sourceFieldCode . '.value';
     }
 
     public function validate(string $argName, mixed $inputData): array

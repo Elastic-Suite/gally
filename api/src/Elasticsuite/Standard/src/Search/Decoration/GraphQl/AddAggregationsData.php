@@ -18,6 +18,7 @@ namespace Elasticsuite\Search\Decoration\GraphQl;
 
 use ApiPlatform\Core\GraphQl\Resolver\Stage\SerializeStageInterface;
 use Elasticsuite\Catalog\Repository\LocalizedCatalogRepository;
+use Elasticsuite\Metadata\Model\SourceField;
 use Elasticsuite\Metadata\Model\SourceField\Type;
 use Elasticsuite\Metadata\Repository\MetadataRepository;
 use Elasticsuite\Metadata\Repository\SourceFieldRepository;
@@ -48,6 +49,8 @@ class AddAggregationsData implements SerializeStageInterface
         private LocalizedCatalogRepository $localizedCatalogRepository,
         private ConfigurationRepository $facetConfigRepository,
         private CurrentCategoryProvider $currentCategoryProvider,
+        private iterable $availableFilterTypes,
+        private string $nestingSeparator,
     ) {
     }
 
@@ -75,20 +78,23 @@ class AddAggregationsData implements SerializeStageInterface
 
     private function formatAggregation(AggregationInterface $aggregation, ContainerConfigurationInterface $containerConfig): array
     {
-        $sourceField = $this->sourceFieldRepository->findOneBy(
-            [
-                'code' => $aggregation->getField(),
-                'metadata' => $containerConfig->getMetadata(),
-            ]
-        );
-
+        $sourceField = $this->getSourceFieldFromAggregation($aggregation, $containerConfig);
         $currentCategory = $this->currentCategoryProvider->getCurrentCategory();
         $this->facetConfigRepository->setCategoryId($currentCategory?->getId());
         $this->facetConfigRepository->setMetadata($containerConfig->getMetadata());
-        $facetConfigs = $sourceField ? $this->facetConfigRepository->findOndBySourceField($sourceField) : null;
+
+        $fieldName = $aggregation->getField();
+        if ($sourceField) {
+            foreach ($this->availableFilterTypes as $type) {
+                if ($type->supports($sourceField)) {
+                    $fieldName = $type->getGraphQlFieldName($type->getFilterFieldName($sourceField->getCode()));
+                    break;
+                }
+            }
+        }
 
         $data = [
-            'field' => $sourceField ? $sourceField->getCode() : $aggregation->getField(),
+            'field' => $fieldName,
             'label' => $sourceField ? $sourceField->getLabel($containerConfig->getLocalizedCatalog()->getId()) : $aggregation->getField(),
             'type' => match ($sourceField?->getType()) {
                 Type::TYPE_PRICE, Type::TYPE_FLOAT, Type::TYPE_INT => self::AGGREGATION_TYPE_SLIDER,
@@ -97,11 +103,35 @@ class AddAggregationsData implements SerializeStageInterface
             'count' => $aggregation->getCount(),
             'options' => null,
         ];
+
+        $this->formatOptions($aggregation, $sourceField, $data);
+
+        return $data;
+    }
+
+    private function getSourceFieldFromAggregation(AggregationInterface $aggregation, ContainerConfigurationInterface $containerConfig): ?SourceField
+    {
+        $sourceField = $this->sourceFieldRepository->findOneBy(
+            ['code' => $aggregation->getField(), 'metadata' => $containerConfig->getMetadata()]
+        );
+
+        if (!$sourceField) {
+            $sourceField = $this->sourceFieldRepository->findOneBy(
+                ['code' => explode('.', $aggregation->getField())[0], 'metadata' => $containerConfig->getMetadata()]
+            );
+        }
+
+        return $sourceField;
+    }
+
+    private function formatOptions(AggregationInterface $aggregation, ?SourceField $sourceField, array &$data)
+    {
         if (!empty($aggregation->getValues())) {
             $data['options'] = [];
             $data['count'] = $aggregation->getCount();
             $data['hasMore'] = false;
         }
+        $facetConfigs = $sourceField ? $this->facetConfigRepository->findOndBySourceField($sourceField) : null;
 
         foreach ($aggregation->getValues() as $value) {
             if ($value instanceof BucketValueInterface) {
@@ -146,7 +176,5 @@ class AddAggregationsData implements SerializeStageInterface
                 $data['hasMore'] = true;
             }
         }
-
-        return $data;
     }
 }

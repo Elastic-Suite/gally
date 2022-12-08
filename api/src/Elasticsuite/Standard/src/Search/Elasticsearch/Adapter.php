@@ -46,6 +46,6 @@ class Adapter
             $this->logger->error($e->getMessage());
         }
 
-        return new Response\QueryResponse($searchResponse, $this->aggregationBuilder);
+        return new Response\QueryResponse($request, $searchResponse, $this->aggregationBuilder);
     }
 }

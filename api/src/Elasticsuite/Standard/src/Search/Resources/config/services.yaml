@@ -213,6 +213,7 @@ services:
     Elasticsuite\Search\Service\GraphQl\FilterManager:
         arguments:
             - '@Elasticsuite\Search\GraphQl\Type\Definition\FieldFilterInputType'
+            - '%api_platform.graphql.nesting_separator%'
 
     Elasticsuite\Search\DataProvider\DocumentDataProvider:
         arguments:
@@ -253,6 +254,8 @@ services:
             - '@Elasticsuite\Catalog\Repository\LocalizedCatalogRepository'
             - '@Elasticsuite\Search\Repository\Facet\ConfigurationRepository'
             - '@Elasticsuite\Product\Service\CurrentCategoryProvider'
+            - !tagged_iterator { tag: 'elasticsuite.entity_api.filter' }
+            - '%api_platform.graphql.nesting_separator%'
             
     Elasticsuite\Search\Decoration\GraphQl\AddAggregationsInContext:
         decorates: api_platform.graphql.serializer.context_builder
@@ -326,6 +329,7 @@ services:
             - '@Elasticsuite\Search\Elasticsearch\Adapter'
             - '@Elasticsuite\Search\Service\GraphQl\FilterManager'
             - '@Elasticsuite\Search\Service\ViewMoreContext'
+            - '%api_platform.graphql.nesting_separator%'
         tags:
             - { name: api_platform.collection_data_provider }
 

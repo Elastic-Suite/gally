@@ -685,7 +685,7 @@ class SearchDocumentsTest extends AbstractTest
                 [       // expected aggregations sample.
                     ['field' => 'size', 'label' => 'Size', 'type' => 'slider', 'hasMore' => false],
                     [
-                        'field' => 'color',
+                        'field' => 'color__value',
                         'label' => 'Color',
                         'type' => 'checkbox',
                         'hasMore' => true,
@@ -705,7 +705,7 @@ class SearchDocumentsTest extends AbstractTest
                     ['field' => 'weight', 'label' => 'Weight', 'type' => 'slider', 'hasMore' => false],
                     ['field' => 'is_eco_friendly', 'label' => 'Is_eco_friendly', 'type' => 'checkbox', 'hasMore' => false],
                     [
-                        'field' => 'category',
+                        'field' => 'category__id',
                         'label' => 'Category',
                         'type' => 'checkbox',
                         'hasMore' => false,
@@ -737,7 +737,7 @@ class SearchDocumentsTest extends AbstractTest
                         'hasMore' => false,
                     ],
                     [
-                        'field' => 'color',
+                        'field' => 'color__value',
                         'label' => 'Couleur',
                         'type' => 'checkbox',
                         'hasMore' => true,

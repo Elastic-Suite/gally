@@ -68,7 +68,7 @@ class MultiTerms extends Terms
             $minDocCount
         );
 
-        $this->fields = array_merge([$field], $additionalFields);
+        $this->fields = array_merge($additionalFields, [$field]);
     }
 
     /**

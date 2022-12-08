@@ -39,6 +39,7 @@ class OptionDataProvider implements ContextAwareCollectionDataProviderInterface,
         private Adapter $searchEngine,
         private FilterManager $filterManager,
         private ViewMoreContext $viewMoreContext,
+        private string $nestingSeparator,
     ) {
     }
 

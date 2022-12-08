@@ -24,6 +24,7 @@ class FilterManager
 {
     public function __construct(
         private FieldFilterInputType $fieldFilterInputType,
+        protected string $nestingSeparator,
     ) {
     }
 
@@ -46,6 +47,11 @@ class FilterManager
         return $context[SerializerContextBuilder::GRAPHQL_ELASTICSUITE_FILTERS_KEY]['filter'] ?? [];
     }
 
+    public function getQueryFilterFromContext(array $context): array
+    {
+        return [];
+    }
+
     /**
      * Transform GraphQL filters in understandable Elasticsuite filters.
      *
@@ -62,7 +68,7 @@ class FilterManager
                     // the filter twice, we have to skip the one with the '.'.
                     continue;
                 }
-                $esFilters[] = $this->fieldFilterInputType->transformToElasticsuiteFilter(
+                $esFilters[str_replace($this->nestingSeparator, '.', $sourceFieldName)] = $this->fieldFilterInputType->transformToElasticsuiteFilter(
                     [$sourceFieldName => $condition],
                     $containerConfig,
                     $filterContext

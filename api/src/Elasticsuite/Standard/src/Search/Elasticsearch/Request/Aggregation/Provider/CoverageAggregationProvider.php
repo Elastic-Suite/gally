@@ -73,7 +73,11 @@ class CoverageAggregationProvider implements AggregationProviderInterface
         }
 
         return [
-            ['name' => 'indexed_fields', 'type' => BucketInterface::TYPE_QUERY_GROUP, 'queries' => $queries],
+            'indexed_fields' => [
+                'name' => 'indexed_fields',
+                'type' => BucketInterface::TYPE_QUERY_GROUP,
+                'queries' => $queries,
+            ],
         ];
     }
 }

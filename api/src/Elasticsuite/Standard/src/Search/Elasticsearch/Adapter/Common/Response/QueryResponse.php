@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Elasticsuite\Search\Elasticsearch\Adapter\Common\Response;
 
 use Elasticsuite\Search\Elasticsearch\Builder\Response\AggregationBuilder;
+use Elasticsuite\Search\Elasticsearch\RequestInterface;
 use Elasticsuite\Search\Elasticsearch\ResponseInterface;
 use Elasticsuite\Search\Model\Document;
 
@@ -47,10 +48,12 @@ class QueryResponse implements ResponseInterface
     /**
      * Constructor.
      *
+     * @param RequestInterface   $request            The request
      * @param array              $searchResponse     Engine raw response
      * @param AggregationBuilder $aggregationBuilder aggregation builder
      */
     public function __construct(
+        private RequestInterface $request,
         array $searchResponse,
         AggregationBuilder $aggregationBuilder
     ) {
@@ -117,8 +120,9 @@ class QueryResponse implements ResponseInterface
     private function prepareAggregations(array $searchResponse, AggregationBuilder $aggregationBuilder): void
     {
         $this->aggregations = [];
+        $requestedAggregations = $this->request->getAggregations();
         foreach ($searchResponse['aggregations'] ?? [] as $field => $aggregationData) {
-            $aggregation = $aggregationBuilder->create($field, $aggregationData);
+            $aggregation = $aggregationBuilder->create($field, $aggregationData, );
             $this->aggregations[$aggregation->getName()] = $aggregation;
         }
     }
