@@ -29,11 +29,18 @@ interface EntityFilterInterface extends SearchFilterInterface
     public function supports(SourceField $sourceField): bool;
 
     /**
-     * Get the filter input graphql field name corresponding to the source field identified by its code.
+     * Get the Elasticsearch filter field name corresponding to the provided field code.
      *
      * @param string $sourceFieldCode Source field code
      */
-    public function getGraphQlFieldName(string $sourceFieldCode): string;
+    public function getFilterFieldName(string $sourceFieldCode): string;
+
+    /**
+     * Get the graphql field name corresponding to the provided mapping filter input field name.
+     *
+     * @param string $mappingFilterName Mapping filter name
+     */
+    public function getGraphQlFieldName(string $mappingFilterName): string;
 
     /**
      * Get the Elasticsearch mapping field name corresponding to the provided graphql filter input field name.

@@ -18,11 +18,11 @@ namespace Elasticsuite\Search\GraphQl\Type\Definition\Filter;
 
 use ApiPlatform\Core\GraphQl\Type\Definition\TypeInterface;
 use Elasticsuite\GraphQl\Type\Definition\FilterInterface;
-use Elasticsuite\Metadata\Repository\SourceFieldRepository;
 use Elasticsuite\Search\Constant\FilterOperator;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder;
 use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
 use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
+use Elasticsuite\Search\Service\ReverseSourceFieldProvider;
 use GraphQL\Type\Definition\InputObjectType;
 use GraphQL\Type\Definition\Type;
 
@@ -34,7 +34,7 @@ class RangeFilterInputType extends InputObjectType implements TypeInterface, Fil
 
     public function __construct(
         private FilterQueryBuilder $filterQueryBuilder,
-        private SourceFieldRepository $sourceFieldRepository,
+        private ReverseSourceFieldProvider $reverseSourceFieldProvider,
     ) {
         $this->name = self::NAME;
 
@@ -59,9 +59,9 @@ class RangeFilterInputType extends InputObjectType implements TypeInterface, Fil
         return $this->name;
     }
 
-    public function validate(string $argName, mixed $inputData): array
+    public function validate(string $argName, mixed $inputData, $containerConfig): array
     {
-        $errors = $this->validateIsFilterable($inputData['field']);
+        $errors = $this->validateIsFilterable($inputData['field'], $containerConfig);
 
         if (\count($inputData) < 2) {
             $errors[] = sprintf(

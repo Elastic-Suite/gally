@@ -60,20 +60,20 @@ class BoolFilterInputType extends InputObjectType implements TypeInterface, Filt
         return $this->name;
     }
 
-    public function validate(string $argName, mixed $inputData): array
+    public function validate(string $argName, mixed $inputData, ContainerConfigurationInterface $containerConfig): array
     {
         $errors = [];
 
         if (isset($inputData['_must'])) {
-            $errors = array_merge($errors, $this->fieldFilterInputType->validate($argName, $inputData['_must']));
+            $errors = array_merge($errors, $this->fieldFilterInputType->validate($argName, $inputData['_must'], $containerConfig));
         }
 
         if (isset($inputData['_should'])) {
-            $errors = array_merge($errors, $this->fieldFilterInputType->validate($argName, $inputData['_should']));
+            $errors = array_merge($errors, $this->fieldFilterInputType->validate($argName, $inputData['_should'], $containerConfig));
         }
 
         if (isset($inputData['_not'])) {
-            $errors = array_merge($errors, $this->fieldFilterInputType->validate($argName, $inputData['_not']));
+            $errors = array_merge($errors, $this->fieldFilterInputType->validate($argName, $inputData['_not'], $containerConfig));
         }
 
         return $errors;

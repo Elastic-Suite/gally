@@ -39,7 +39,7 @@ class MultiTermsTest extends KernelTestCase
         $this->assertArrayHasKey('terms', $aggregation['multi_terms']);
         $this->assertIsArray($aggregation['multi_terms']['terms']);
         $this->assertEquals(
-            [['field' => 'fieldName', 'missing' => 'None'], ['field' => 'otherFieldName', 'missing' => 'None']],
+            [['field' => 'otherFieldName', 'missing' => 'None'], ['field' => 'fieldName', 'missing' => 'None']],
             $aggregation['multi_terms']['terms']
         );
         $this->assertEquals(BucketInterface::MAX_BUCKET_SIZE, $aggregation['multi_terms']['size']);
@@ -162,7 +162,7 @@ class MultiTermsTest extends KernelTestCase
         $this->assertArrayHasKey('terms', $aggregation['multi_terms']);
         $this->assertIsArray($aggregation['multi_terms']['terms']);
         $this->assertEquals([
-            ['field' => 'fieldName', 'missing' => 'None'], ['field' => 'otherFieldName', 'missing' => 'None'], ],
+            ['field' => 'otherFieldName', 'missing' => 'None'], ['field' => 'fieldName', 'missing' => 'None'], ],
             $aggregation['multi_terms']['terms']
         );
         $this->assertEquals([BucketInterface::SORT_ORDER_COUNT => SortOrderInterface::SORT_DESC], $aggregation['multi_terms']['order']);

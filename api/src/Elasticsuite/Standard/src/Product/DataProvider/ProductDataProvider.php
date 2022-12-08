@@ -66,8 +66,6 @@ class ProductDataProvider implements ContextAwareCollectionDataProviderInterface
      */
     public function getCollection(string $resourceClass, string $operationName = null, array $context = []): iterable
     {
-        $this->filterManager->validateFilters($context);
-
         $resourceMetadata = $this->resourceMetadataFactory->create($resourceClass);
         $entityType = $this->resourceMetadataManager->getMetadataEntity($resourceMetadata);
         if (null === $entityType) {
@@ -94,6 +92,7 @@ class ProductDataProvider implements ContextAwareCollectionDataProviderInterface
 
         $containerConfig = $this->containerConfigurationProvider->get($metadata, $catalog, $context['filters']['requestType']);
 
+        $this->filterManager->validateFilters($context, $containerConfig);
         $this->sortInputType->validateSort($context);
 
         $searchQuery = $context['filters']['search'] ?? null;
@@ -110,7 +109,10 @@ class ProductDataProvider implements ContextAwareCollectionDataProviderInterface
                 $this->filterManager->getFiltersFromContext($context),
                 $containerConfig
             ),
-            [],
+            $this->filterManager->transformToElasticsuiteFilters(
+                $this->filterManager->getQueryFilterFromContext($context),
+                $containerConfig
+            ),
             ($context['need_aggregations'] ?? false) ? [] : null
         );
         $response = $this->adapter->search($request);

@@ -17,7 +17,8 @@ declare(strict_types=1);
 namespace Elasticsuite\Search\GraphQl\Type\Definition\Filter;
 
 use Elasticsuite\Metadata\Model\SourceField;
-use Elasticsuite\Metadata\Repository\SourceFieldRepository;
+use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
+use Elasticsuite\Search\Service\ReverseSourceFieldProvider;
 
 trait FilterableFieldTrait
 {
@@ -26,16 +27,16 @@ trait FilterableFieldTrait
      */
     private array $sourceFieldsValidated;
 
-    private SourceFieldRepository $sourceFieldRepository;
+    private ReverseSourceFieldProvider $reverseSourceFieldProvider;
 
-    public function validateIsFilterable($sourceFieldCode): array
+    public function validateIsFilterable(string $fieldName, ContainerConfigurationInterface $containerConfig): array
     {
-        if (isset($this->sourceFieldsValidated[$sourceFieldCode])) {
+        if (isset($this->sourceFieldsValidated[$fieldName])) {
             return [];
         }
 
         $errors = [];
-        $sourceField = $this->sourceFieldRepository->findOneBy(['code' => $sourceFieldCode]);
+        $sourceField = $this->reverseSourceFieldProvider->getSourceFieldFromFieldName($fieldName, $containerConfig->getMetadata());
 
         /*
          * For the MVP we check only if the source field exists.
@@ -43,10 +44,10 @@ trait FilterableFieldTrait
          * because the sku would not filterable via the API for example.
          */
         if (!$sourceField instanceof SourceField) {
-            $errors[] = "The source field '{$sourceFieldCode}' does not exist";
+            $errors[] = "The field '{$fieldName}' does not exist";
         }
 
-        $this->sourceFieldsValidated[$sourceFieldCode] = true;
+        $this->sourceFieldsValidated[$fieldName] = true;
 
         return $errors;
     }

@@ -35,8 +35,8 @@ class ViewMore implements ModifierInterface
         array $queryFilters
     ): array {
         $relevantSourceFields = $facetConfigs;
-        if ($this->getSourceFieldCode()) {
-            $sourceFieldCode = $this->getSourceFieldCode();
+        if ($this->viewMoreContext->getSourceField()) {
+            $sourceFieldCode = $this->viewMoreContext->getSourceField()->getCode();
             $relevantSourceFields = array_filter(
                 $relevantSourceFields,
                 fn ($facetConfig) => $facetConfig->getSourceFieldCode() === $sourceFieldCode
@@ -53,17 +53,12 @@ class ViewMore implements ModifierInterface
         array $filters,
         array $queryFilters
     ): array {
-        if ($this->getSourceFieldCode()) {
-            if (isset($aggregations[$this->getSourceFieldCode()])) {
-                $aggregations[$this->getSourceFieldCode()]['size'] = 0;
+        if ($this->viewMoreContext->getFilterName()) {
+            if (isset($aggregations[$this->viewMoreContext->getFilterName()])) {
+                $aggregations[$this->viewMoreContext->getFilterName()]['size'] = 0;
             }
         }
 
         return $aggregations;
-    }
-
-    private function getSourceFieldCode(): ?string
-    {
-        return $this->viewMoreContext->getFilterName();
     }
 }

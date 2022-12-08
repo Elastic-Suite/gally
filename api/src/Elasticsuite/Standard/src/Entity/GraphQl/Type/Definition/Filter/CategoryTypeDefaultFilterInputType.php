@@ -18,6 +18,7 @@ namespace Elasticsuite\Entity\GraphQl\Type\Definition\Filter;
 
 use Elasticsuite\Metadata\Model\SourceField;
 use Elasticsuite\Search\Constant\FilterOperator;
+use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
 use GraphQL\Type\Definition\Type;
 
 class CategoryTypeDefaultFilterInputType extends TextTypeFilterInputType
@@ -46,16 +47,12 @@ class CategoryTypeDefaultFilterInputType extends TextTypeFilterInputType
     /**
      * {@inheritDoc}
      */
-    public function getGraphQlFieldName(string $sourceFieldCode): string
+    public function getFilterFieldName(string $sourceFieldCode): string
     {
-        /*
-         * No complementarity between getGraphQlFieldName and getMappingFieldName for complex types.
-         * getGraphQlFieldName(A) != getGraphQlFieldName(getMappingFieldName(getGraphQlFieldName(A))
-         */
-        return str_replace('.', $this->nestingSeparator, $sourceFieldCode . '.id');
+        return $sourceFieldCode . '.id';
     }
 
-    public function validate(string $argName, mixed $inputData): array
+    public function validate(string $argName, mixed $inputData, ContainerConfigurationInterface $containerConfig): array
     {
         // No need to validate because the field 'eq' is mandatory in GraphQl schema.
         return [];

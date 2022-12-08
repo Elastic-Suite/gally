@@ -684,8 +684,9 @@ class SearchDocumentsTest extends AbstractTest
                 1,      // current page.
                 [       // expected aggregations sample.
                     ['field' => 'size', 'label' => 'Size', 'type' => 'slider', 'hasMore' => false],
+                    ['field' => 'weight', 'label' => 'Weight', 'type' => 'slider', 'hasMore' => false],
                     [
-                        'field' => 'color',
+                        'field' => 'color__value',
                         'label' => 'Color',
                         'type' => 'checkbox',
                         'hasMore' => true,
@@ -702,10 +703,9 @@ class SearchDocumentsTest extends AbstractTest
                             ],
                         ],
                     ],
-                    ['field' => 'weight', 'label' => 'Weight', 'type' => 'slider', 'hasMore' => false],
                     ['field' => 'is_eco_friendly', 'label' => 'Is_eco_friendly', 'type' => 'checkbox', 'hasMore' => false],
                     [
-                        'field' => 'category',
+                        'field' => 'category__id',
                         'label' => 'Category',
                         'type' => 'category',
                         'hasMore' => false,
@@ -736,8 +736,9 @@ class SearchDocumentsTest extends AbstractTest
                         'type' => 'slider',
                         'hasMore' => false,
                     ],
+                    ['field' => 'weight', 'label' => 'Weight', 'type' => 'slider'],
                     [
-                        'field' => 'color',
+                        'field' => 'color__value',
                         'label' => 'Couleur',
                         'type' => 'checkbox',
                         'hasMore' => true,
@@ -819,25 +820,25 @@ class SearchDocumentsTest extends AbstractTest
                 'product', // entity type.
                 'b2c_en', // catalog ID.
                 '{matchFilter: {field:"fake_source_field_match", match:"sacs"}}', // Filters.
-                "The source field 'fake_source_field_match' does not exist", // debug message
+                "The field 'fake_source_field_match' does not exist", // debug message
             ],
             [
                 'product', // entity type.
                 'b2c_en', // catalog ID.
                 '{equalFilter: {field:"fake_source_field_equal", eq: "24-MB03"}}', // Filters.
-                "The source field 'fake_source_field_equal' does not exist", // debug message
+                "The field 'fake_source_field_equal' does not exist", // debug message
             ],
             [
                 'product', // entity type.
                 'b2c_en', // catalog ID.
                 '{rangeFilter: {field:"fake_source_field_range", gt: "0"}}', // Filters.
-                "The source field 'fake_source_field_range' does not exist", // debug message
+                "The field 'fake_source_field_range' does not exist", // debug message
             ],
             [
                 'product', // entity type.
                 'b2c_en', // catalog ID.
                 '{matchFilter: {field:"fake_source_field", match:"sacs"}}', // Filters.
-                "The source field 'fake_source_field' does not exist", // debug message
+                "The field 'fake_source_field' does not exist", // debug message
             ],
             [
                 'product', // entity type.
@@ -1318,6 +1319,118 @@ class SearchDocumentsTest extends AbstractTest
                     'Driven Backpack',
                     'Endeavor Daytrip Backpack',
                     'Crown Summit Backpack',
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider searchWithAggregationAndFilterDataProvider
+     *
+     * @param string      $entityType           Entity Type
+     * @param string      $catalogId            Catalog ID or code
+     * @param int         $pageSize             Pagination size
+     * @param int         $currentPage          Current page
+     * @param string|null $filter               Filters to apply
+     * @param array       $expectedOptionsCount expected aggregation option count
+     */
+    public function testSearchDocumentsWithAggregationAndFilter(
+        string $entityType,
+        string $catalogId,
+        int $pageSize,
+        int $currentPage,
+        ?string $filter,
+        array $expectedOptionsCount,
+    ): void {
+        $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
+
+        $arguments = sprintf(
+            'entityType: "%s", catalogId: "%s", pageSize: %d, currentPage: %d',
+            $entityType,
+            $catalogId,
+            $pageSize,
+            $currentPage,
+        );
+        if ($filter) {
+            $arguments = sprintf(
+                'entityType: "%s", catalogId: "%s", pageSize: %d, currentPage: %d, filter: [%s]',
+                $entityType,
+                $catalogId,
+                $pageSize,
+                $currentPage,
+                $filter,
+            );
+        }
+
+        $this->validateApiCall(
+            new RequestGraphQlToTest(
+                <<<GQL
+                    {
+                        documents({$arguments}) {
+                            aggregations {
+                              field
+                              count
+                              options {
+                                value
+                              }
+                            }
+                        }
+                    }
+                GQL,
+                $user
+            ),
+            new ExpectedResponse(
+                200,
+                function (ResponseInterface $response) use ($expectedOptionsCount) {
+                    $responseData = $response->toArray();
+                    $this->assertIsArray($responseData['data']['documents']['aggregations']);
+                    foreach ($responseData['data']['documents']['aggregations'] as $data) {
+                        if (\array_key_exists($data['field'], $expectedOptionsCount)) {
+                            $this->assertCount($expectedOptionsCount[$data['field']], $data['options'] ?? []);
+                        }
+                    }
+                }
+            )
+        );
+    }
+
+    public function searchWithAggregationAndFilterDataProvider(): array
+    {
+        return [
+            [
+                'product',  // entity type.
+                'b2c_en',   // catalog ID.
+                10,     // page size.
+                1,      // current page.
+                null, // filter.
+                [ // expected option result
+                    'color__value' => 2,
+                    'category__id' => 4,
+                    'is_eco_friendly' => 2,
+                ],
+            ],
+            [
+                'product',  // entity type.
+                'b2c_en',   // catalog ID.
+                10,     // page size.
+                1,      // current page.
+                '{equalFilter: {field: "sku", eq: "24-WB05"}}', // filter.
+                [ // expected option result
+                    'color__value' => 1,
+                    'category__id' => 0,
+                    'is_eco_friendly' => 1,
+                ],
+            ],
+            [
+                'product',  // entity type.
+                'b2c_en',   // catalog ID.
+                10,     // page size.
+                1,      // current page.
+                '{equalFilter: {field: "color.value", in: ["pink"]}}', // filter.
+                [ // expected option result
+                    'color__value' => 2,
+                    'category__id' => 0,
+                    'is_eco_friendly' => 1,
                 ],
             ],
         ];

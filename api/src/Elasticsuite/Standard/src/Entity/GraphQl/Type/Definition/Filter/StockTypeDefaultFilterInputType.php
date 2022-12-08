@@ -35,12 +35,8 @@ class StockTypeDefaultFilterInputType extends BoolTypeFilterInputType
     /**
      * {@inheritDoc}
      */
-    public function getGraphQlFieldName(string $sourceFieldCode): string
+    public function getFilterFieldName(string $sourceFieldCode): string
     {
-        /*
-         * No complementarity between getGraphQlFieldName and getMappingFieldName for complex types.
-         * getGraphQlFieldName(A) != getGraphQlFieldName(getMappingFieldName(getGraphQlFieldName(A))
-         */
-        return str_replace('.', $this->nestingSeparator, $sourceFieldCode . '.status');
+        return $sourceFieldCode . '.status';
     }
 }

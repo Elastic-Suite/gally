@@ -18,9 +18,9 @@ namespace Elasticsuite\Search\Decoration\GraphQl;
 
 use ApiPlatform\Core\GraphQl\Resolver\Stage\SerializeStageInterface;
 use Elasticsuite\Catalog\Repository\LocalizedCatalogRepository;
+use Elasticsuite\Metadata\Model\SourceField;
 use Elasticsuite\Metadata\Model\SourceField\Type;
 use Elasticsuite\Metadata\Repository\MetadataRepository;
-use Elasticsuite\Metadata\Repository\SourceFieldRepository;
 use Elasticsuite\Product\Service\CurrentCategoryProvider;
 use Elasticsuite\Search\DataProvider\Paginator;
 use Elasticsuite\Search\Elasticsearch\Adapter\Common\Response\AggregationInterface;
@@ -31,6 +31,7 @@ use Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\ContainerC
 use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
 use Elasticsuite\Search\Model\Document;
 use Elasticsuite\Search\Repository\Facet\ConfigurationRepository;
+use Elasticsuite\Search\Service\ReverseSourceFieldProvider;
 
 /**
  * Add aggregations data in graphql search document response.
@@ -45,10 +46,11 @@ class AddAggregationsData implements SerializeStageInterface
         private SerializeStageInterface $decorated,
         private MetadataRepository $metadataRepository,
         private ContainerConfigurationProvider $containerConfigurationProvider,
-        private SourceFieldRepository $sourceFieldRepository,
         private LocalizedCatalogRepository $localizedCatalogRepository,
         private ConfigurationRepository $facetConfigRepository,
         private CurrentCategoryProvider $currentCategoryProvider,
+        private ReverseSourceFieldProvider $reverseSourceFieldProvider,
+        private iterable $availableFilterTypes,
     ) {
     }
 
@@ -76,20 +78,23 @@ class AddAggregationsData implements SerializeStageInterface
 
     private function formatAggregation(AggregationInterface $aggregation, ContainerConfigurationInterface $containerConfig): array
     {
-        $sourceField = $this->sourceFieldRepository->findOneBy(
-            [
-                'code' => $aggregation->getField(),
-                'metadata' => $containerConfig->getMetadata(),
-            ]
-        );
-
+        $sourceField = $this->reverseSourceFieldProvider->getSourceFieldFromFieldName($aggregation->getField(), $containerConfig->getMetadata());
         $currentCategory = $this->currentCategoryProvider->getCurrentCategory();
         $this->facetConfigRepository->setCategoryId($currentCategory?->getId());
         $this->facetConfigRepository->setMetadata($containerConfig->getMetadata());
-        $facetConfigs = $sourceField ? $this->facetConfigRepository->findOndBySourceField($sourceField) : null;
+
+        $fieldName = $aggregation->getField();
+        if ($sourceField) {
+            foreach ($this->availableFilterTypes as $type) {
+                if ($type->supports($sourceField)) {
+                    $fieldName = $type->getGraphQlFieldName($type->getFilterFieldName($sourceField->getCode()));
+                    break;
+                }
+            }
+        }
 
         $data = [
-            'field' => $sourceField ? $sourceField->getCode() : $aggregation->getField(),
+            'field' => $fieldName,
             'label' => $sourceField ? $sourceField->getLabel($containerConfig->getLocalizedCatalog()->getId()) : $aggregation->getField(),
             'type' => match ($sourceField?->getType()) {
                 Type::TYPE_PRICE, Type::TYPE_FLOAT, Type::TYPE_INT => self::AGGREGATION_TYPE_SLIDER,
@@ -99,11 +104,20 @@ class AddAggregationsData implements SerializeStageInterface
             'count' => $aggregation->getCount(),
             'options' => null,
         ];
+
+        $this->formatOptions($aggregation, $sourceField, $data);
+
+        return $data;
+    }
+
+    private function formatOptions(AggregationInterface $aggregation, ?SourceField $sourceField, array &$data)
+    {
         if (!empty($aggregation->getValues())) {
             $data['options'] = [];
             $data['count'] = $aggregation->getCount();
             $data['hasMore'] = false;
         }
+        $facetConfigs = $sourceField ? $this->facetConfigRepository->findOndBySourceField($sourceField) : null;
 
         foreach ($aggregation->getValues() as $value) {
             if ($value instanceof BucketValueInterface) {
@@ -148,7 +162,5 @@ class AddAggregationsData implements SerializeStageInterface
                 $data['hasMore'] = true;
             }
         }
-
-        return $data;
     }
 }

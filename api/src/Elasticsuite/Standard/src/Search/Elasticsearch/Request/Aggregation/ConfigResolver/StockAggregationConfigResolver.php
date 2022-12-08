@@ -29,8 +29,7 @@ class StockAggregationConfigResolver implements FieldAggregationConfigResolverIn
     public function getConfig(SourceField $sourceField): array
     {
         return [
-            'name' => $sourceField->getCode(),
-            'field' => $sourceField->getCode() . '.status',
+            'name' => $sourceField->getCode() . '.status',
             'type' => BucketInterface::TYPE_TERMS,
         ];
     }

@@ -134,7 +134,7 @@ class ViewMoreFacetTest extends AbstractTest
             ],
             [
                 'b2c_en', // catalog ID.
-                'category', // aggregation.
+                'category__id', // aggregation.
                 'cat_5', // current category id.
                 [], // expected error.
                 3, // expected items count.

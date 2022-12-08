@@ -56,11 +56,12 @@ class DocumentDataProvider implements ContextAwareCollectionDataProviderInterfac
      */
     public function getCollection(string $resourceClass, string $operationName = null, array $context = []): iterable
     {
-        $this->filterManager->validateFilters($context);
-
         $metadata = $this->metadataRepository->findByEntity($context['filters']['entityType']);
         $catalog = $this->catalogRepository->findByCodeOrId($context['filters']['catalogId']);
         $containerConfig = $this->containerConfigurationProvider->get($metadata, $catalog);
+
+        $this->filterManager->validateFilters($context, $containerConfig);
+
         $searchQuery = $context['filters']['search'] ?? null;
 
         $sortOrders = [];

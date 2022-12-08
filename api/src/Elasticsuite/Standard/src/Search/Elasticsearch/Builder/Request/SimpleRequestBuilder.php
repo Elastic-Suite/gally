@@ -70,11 +70,10 @@ class SimpleRequestBuilder
         array $queryFilters = [],
         ?array $facets = []
     ): RequestInterface {
-        $facetFilters = array_intersect_key($filters, $facets ?? []);
         $facets = \is_array($facets)
             ? array_merge($facets, $containerConfig->getAggregations($query, $filters, $queryFilters))
             : [];
-
+        $facetFilters = array_intersect_key($filters, $facets);
         $queryFilters = array_merge($queryFilters, array_diff_key($filters, $facetFilters));
 
         $spellingType = SpellcheckerInterface::SPELLING_TYPE_EXACT;
@@ -95,11 +94,9 @@ class SimpleRequestBuilder
             'trackTotalHits' => $containerConfig->getTrackTotalHits(),
         ];
 
-        /*
         if (!empty($facetFilters)) {
             $requestParams['filter'] = $this->queryBuilder->createFilterQuery($containerConfig, $facetFilters);
         }
-        */
 
         return $this->requestFactory->create($requestParams);
     }

@@ -5,6 +5,7 @@ services:
     Elasticsuite\Product\Service\GraphQl\FilterManager:
         arguments:
             - '@Elasticsuite\Product\GraphQl\Type\Definition\FieldFilterInputType'
+            - '%api_platform.graphql.nesting_separator%'
             - '@Elasticsuite\Product\Service\CurrentCategoryProvider'
 
     Elasticsuite\Product\DataProvider\ProductDataProvider:
@@ -73,7 +74,7 @@ services:
     Elasticsuite\Product\GraphQl\Type\Definition\FieldFilterInputType:
         arguments:
             - '@Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
-            - !tagged_iterator { tag: 'elasticsuite.product_api.filter' }
+            - !tagged_iterator { tag: 'elasticsuite.entity_api.filter' }
             - '@Elasticsuite\Entity\GraphQl\Type\Definition\Filter\BoolFilterInputType'
             - '@Elasticsuite\Metadata\Repository\SourceFieldRepository'
         tags:
@@ -103,14 +104,8 @@ services:
             - { name: elasticsuite.container_configuration.factory, requestType: coverage_rate }
     
     Elasticsuite\Product\DataProvider\Facet\OptionDataProvider:
+        parent: Elasticsuite\Search\DataProvider\Facet\OptionDataProvider
         arguments:
-            - '@Elasticsuite\Metadata\Repository\MetadataRepository'
-            - '@Elasticsuite\Catalog\Repository\LocalizedCatalogRepository'
-            - '@Elasticsuite\Metadata\Repository\SourceFieldRepository'
-            - '@Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider'
-            - '@Elasticsuite\Search\Elasticsearch\Builder\Request\SimpleRequestBuilder'
-            - '@Elasticsuite\Search\Elasticsearch\Adapter'
-            - '@Elasticsuite\Product\Service\GraphQl\FilterManager'
-            - '@Elasticsuite\Search\Service\ViewMoreContext'
+            $filterManager: '@Elasticsuite\Product\Service\GraphQl\FilterManager'
         tags:
             - { name: api_platform.collection_data_provider }

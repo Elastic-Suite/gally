@@ -18,6 +18,7 @@ namespace Elasticsuite\Entity\GraphQl\Type\Definition\Filter;
 
 use Elasticsuite\Metadata\Model\SourceField;
 use Elasticsuite\Search\Constant\FilterOperator;
+use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
 use GraphQL\Type\Definition\Type;
 
 class TextTypeFilterInputType extends AbstractFilter
@@ -50,7 +51,7 @@ class TextTypeFilterInputType extends AbstractFilter
         ];
     }
 
-    public function validate(string $argName, mixed $inputData): array
+    public function validate(string $argName, mixed $inputData, ContainerConfigurationInterface $containerConfig): array
     {
         $errors = [];
 
