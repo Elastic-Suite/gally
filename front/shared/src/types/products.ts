@@ -1,9 +1,22 @@
+import { SortOrder } from './categorySortingOption'
 import { IPrice, IStock } from './customTables'
 import { ISearchParameters } from './fetch'
 
 export enum ProductRequestType {
   CATALOG = 'product_catalog',
   SEARCH = 'product_search',
+  COVERAGE_RATE = 'product_coverage_rate',
+}
+
+export interface IGraphqlSearchProductsVariables {
+  catalogId: string
+  currentCategoryId?: string
+  currentPage?: number
+  filter?: IProductFieldFilterInput[] | IProductFieldFilterInput
+  pageSize?: number
+  requestType: ProductRequestType
+  search?: string
+  sort?: Record<string, SortOrder>
 }
 
 export interface IGraphqlSearchProducts {
@@ -13,6 +26,7 @@ export interface IGraphqlSearchProducts {
 export interface IGraphqlSearchProduct {
   collection: IGraphqlProduct[]
   paginationInfo: IGraphqlProductPaginationInfo
+  sortInfo: IGraphqlProductSortInfo
 }
 
 export interface IGraphqlProduct {
@@ -28,6 +42,15 @@ export interface IGraphqlProduct {
 export interface IGraphqlProductPaginationInfo {
   lastPage: number
   totalCount: number
+}
+
+export interface IGraphqlProductSortInfo {
+  current: IGraphqlProductSortInfoCurrent[]
+}
+
+export interface IGraphqlProductSortInfoCurrent {
+  field: string
+  direction: SortOrder
 }
 
 export interface IFetchParams {

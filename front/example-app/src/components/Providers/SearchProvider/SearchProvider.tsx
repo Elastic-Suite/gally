@@ -1,20 +1,9 @@
-import {
-  ReactNode,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react'
+import { ReactNode, useCallback, useEffect, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
-import {
-  IGraphqlSearchProducts,
-  ProductRequestType,
-  getSearchProductsQuery,
-} from 'shared'
+import { ProductRequestType } from 'shared'
 
-import { catalogContext, searchContext } from '../../../contexts'
-import { useGraphqlApi, useProductSort } from '../../../hooks'
+import { searchContext } from '../../../contexts'
+import { useProducts } from '../../../hooks'
 
 interface IProps {
   children: ReactNode
@@ -22,70 +11,25 @@ interface IProps {
 
 function SearchProvider(props: IProps): JSX.Element {
   const { children } = props
-  const [search, setSearch] = useState('')
-  const [page, setPage] = useState(0)
-  const [pageSize, setPageSize] = useState(10)
-  const { localizedCatalogId } = useContext(catalogContext)
+  const productsHook = useProducts(ProductRequestType.SEARCH)
   const navigate = useNavigate()
-  const [sort, sortOrder, sortOptions, setSort, setSortOrder] = useProductSort()
+  const { loadProduts, search, setSearch } = productsHook
+
+  useEffect(() => {
+    loadProduts(Boolean(search))
+  }, [loadProduts, search])
 
   const onSearch = useCallback(
     (search: string) => {
       setSearch(search)
       navigate('/search')
     },
-    [navigate]
+    [navigate, setSearch]
   )
-
-  const variables = useMemo(
-    () => ({
-      catalogId: String(localizedCatalogId),
-      currentPage: page + 1,
-      pageSize,
-      requestType: ProductRequestType.SEARCH,
-      search,
-      sort: sort ? { [sort]: 'asc' } : undefined,
-    }),
-    [localizedCatalogId, page, pageSize, search, sort]
-  )
-  const [products, , load] = useGraphqlApi<IGraphqlSearchProducts>(
-    getSearchProductsQuery(),
-    variables
-  )
-
-  useEffect(() => {
-    if (localizedCatalogId) {
-      load()
-    }
-  }, [load, localizedCatalogId])
 
   const context = useMemo(
-    () => ({
-      onSearch,
-      page,
-      pageSize,
-      products,
-      search,
-      setPage,
-      setPageSize,
-      setSort,
-      setSortOrder,
-      sort,
-      sortOptions,
-      sortOrder,
-    }),
-    [
-      onSearch,
-      page,
-      pageSize,
-      products,
-      search,
-      setSort,
-      setSortOrder,
-      sort,
-      sortOptions,
-      sortOrder,
-    ]
+    () => ({ onSearch, ...productsHook }),
+    [onSearch, productsHook]
   )
 
   return (
