@@ -113,14 +113,14 @@ function ProductsContainer(props: IProps): JSX.Element {
       }))
     : [{ label: 'Position', value: 'category__position' }]
 
-  const [searchValue, setSearchValue] = useState('')
-  function valSearchChange(event: string): void {
-    setSearchValue(event)
+  const [search, setSearch] = useState('')
+  function onSearch(value: string): void {
+    setSearch(value)
   }
 
-  const [onSearchValue, setOnSearchValue] = useState('')
-  function onValSearchChange(event: string): void {
-    setOnSearchValue(event)
+  const [valSearchOnChange, setValSearchOnChange] = useState('')
+  function onValSearchOnChange(value: string): void {
+    setValSearchOnChange(value)
   }
 
   const topProducts = productPositions.data
@@ -161,8 +161,8 @@ function ProductsContainer(props: IProps): JSX.Element {
       },
     })
     setBottomSelectedRows([])
-    onValSearchChange('')
-    valSearchChange('')
+    onSearch('')
+    onValSearchOnChange('')
   }
 
   function pinToBottom(): void {
@@ -177,8 +177,8 @@ function ProductsContainer(props: IProps): JSX.Element {
       },
     })
     setTopSelectedRows([])
-    onValSearchChange('')
-    valSearchChange('')
+    onSearch('')
+    onValSearchOnChange('')
   }
 
   function handleSave(): void {
@@ -216,10 +216,10 @@ function ProductsContainer(props: IProps): JSX.Element {
         <SearchBar
           nbResults={nbBottomRows}
           nbTopProducts={topProducts.length}
-          onChange={valSearchChange}
+          onSearch={onSearch}
           sortValue={defaultSorting}
-          searchValue={onSearchValue}
-          onValSearchChange={onValSearchChange}
+          searchValue={valSearchOnChange}
+          onValSearchOnChange={onValSearchOnChange}
         />
         {Boolean(
           catConf && (!catConf.virtualRule || productGraphqlFilters)
@@ -236,7 +236,7 @@ function ProductsContainer(props: IProps): JSX.Element {
             topSelectedRows={topSelectedRows}
             topProducts={topProducts}
             sortValue={defaultSorting}
-            searchValue={searchValue}
+            searchValue={search}
           />
         )}
       </Layout>
