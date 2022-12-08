@@ -95,7 +95,7 @@ export function useFetchApi<T>(
   return [response, updateResponse, load]
 }
 
-export function useApiList<T extends IHydraMember>(
+export function useApiList<T>(
   resource: IResource | string,
   page: number | false = 0,
   rowsPerPage: number = defaultPageSize,
