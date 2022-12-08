@@ -32,7 +32,7 @@ function MyApp(props: AppProps): JSX.Element {
   return (
     <>
       <Head>
-        <title>Blink Admin</title>
+        <title>Gally Admin</title>
       </Head>
       <AppProvider store={store}>
         <DataProvider>
