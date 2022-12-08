@@ -23,7 +23,8 @@ use Elasticsuite\Search\Model\Document;
 class AddSortInfoData implements SerializeStageInterface
 {
     public function __construct(
-        private SerializeStageInterface $decorated,
+        private string $nestingSeparator,
+        private SerializeStageInterface $decorated
     ) {
     }
 
@@ -39,7 +40,11 @@ class AddSortInfoData implements SerializeStageInterface
                 // TODO handle correctly or filter out \Elasticsuite\Search\Elasticsearch\Builder\Request\SortOrder\Script.
                 foreach ($sortOrders as $sortOrder) {
                     $data['sortInfo']['current'][] = [
-                        'field' => $sortOrder->getField(),
+                        'field' => str_replace(
+                            '.',
+                            $this->nestingSeparator,
+                            $sortOrder->getField()
+                        ),
                         'direction' => $sortOrder->getDirection(),
                     ];
                     break;
