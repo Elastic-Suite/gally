@@ -443,6 +443,161 @@ class SearchDocumentsTest extends AbstractTest
     }
 
     /**
+     * @dataProvider sortInfoSearchDocumentsProvider
+     *
+     * @param string $entityType                 Entity Type
+     * @param string $catalogId                  Catalog ID or code
+     * @param int    $pageSize                   Pagination size
+     * @param int    $currentPage                Current page
+     * @param array  $sortOrders                 Sort order specifications
+     * @param string $expectedSortOrderField     Expected sort order field
+     * @param string $expectedSortOrderDirection Expected sort order direction
+     */
+    public function testSortInfoSearchDocuments(
+        string $entityType,
+        string $catalogId,
+        int $pageSize,
+        int $currentPage,
+        array $sortOrders,
+        string $expectedSortOrderField,
+        string $expectedSortOrderDirection
+    ): void {
+        $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
+
+        $arguments = sprintf(
+            'entityType: "%s", catalogId: "%s", pageSize: %d, currentPage: %d',
+            $entityType,
+            $catalogId,
+            $pageSize,
+            $currentPage
+        );
+
+        $this->addSortOrders($sortOrders, $arguments);
+
+        $this->validateApiCall(
+            new RequestGraphQlToTest(
+                <<<GQL
+                    {
+                        documents({$arguments}) {
+                            collection {
+                              id
+                              score
+                              source
+                            }
+                            paginationInfo {
+                              itemsPerPage
+                            }
+                            sortInfo {
+                              current {
+                                field
+                                direction
+                              }
+                            }
+                        }
+                    }
+                GQL,
+                $user
+            ),
+            new ExpectedResponse(
+                200,
+                function (ResponseInterface $response) use (
+                    $pageSize,
+                    $expectedSortOrderField,
+                    $expectedSortOrderDirection
+                ) {
+                    $this->assertJsonContains([
+                        'data' => [
+                            'documents' => [
+                                'paginationInfo' => [
+                                    'itemsPerPage' => $pageSize,
+                                ],
+                                'sortInfo' => [
+                                    'current' => [
+                                        [
+                                            'field' => $expectedSortOrderField,
+                                            'direction' => $expectedSortOrderDirection,
+                                        ],
+                                    ],
+                                ],
+                                'collection' => [],
+                            ],
+                        ],
+                    ]);
+                }
+            )
+        );
+    }
+
+    public function sortInfoSearchDocumentsProvider(): array
+    {
+        return [
+            [
+                'product',  // entity type.
+                'b2c_en',   // catalog ID.
+                10,     // page size.
+                1,      // current page.
+                [],     // sort order specifications.
+                '_score', // expected sort order field.
+                SortOrderInterface::SORT_DESC, // expected sort order direction.
+            ],
+            [
+                'product',  // entity type.
+                'b2b_fr',   // catalog ID.
+                10,     // page size.
+                1,      // current page.
+                [],     // sort order specifications.
+                '_score', // expected sort order field.
+                SortOrderInterface::SORT_DESC, // expected sort order direction.
+            ],
+            [
+                'product',  // entity type.
+                'b2b_fr',   // catalog ID.
+                10,     // page size.
+                1,      // current page.
+                ['id' => SortOrderInterface::SORT_ASC], // sort order specifications.
+                'id', // expected sort order field.
+                SortOrderInterface::SORT_ASC, // expected sort order direction.
+            ],
+            [
+                'product',  // entity type.
+                'b2b_fr',   // catalog ID.
+                10,     // page size.
+                1,      // current page.
+                ['size' => SortOrderInterface::SORT_ASC], // sort order specifications.
+                'size', // expected sort order field.
+                SortOrderInterface::SORT_ASC, // expected sort order direction.
+            ],
+            [
+                'product',  // entity type.
+                'b2b_fr',   // catalog ID.
+                10,     // page size.
+                1,      // current page.
+                ['size' => SortOrderInterface::SORT_DESC], // sort order specifications.
+                'size', // expected sort order field.
+                SortOrderInterface::SORT_DESC, // expected sort order direction.
+            ],
+            [
+                'product',  // entity type.
+                'b2b_fr',   // catalog ID.
+                5,     // page size.
+                1,      // current page.
+                ['price.price' => SortOrderInterface::SORT_ASC], // sort order specifications.
+                'price__price', // expected sort order field.
+                SortOrderInterface::SORT_ASC, // expected sort order direction.
+            ],
+            [
+                'product',  // entity type.
+                'b2b_fr',   // catalog ID.
+                5,     // page size.
+                1,      // current page.
+                ['price__price' => SortOrderInterface::SORT_ASC], // sort order specifications.
+                'price__price', // expected sort order field.
+                SortOrderInterface::SORT_ASC, // expected sort order direction.
+            ],
+        ];
+    }
+
+    /**
      * @dataProvider searchWithAggregationDataProvider
      *
      * @param string $entityType           Entity Type
