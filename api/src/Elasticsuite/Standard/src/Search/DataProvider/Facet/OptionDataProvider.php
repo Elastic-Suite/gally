@@ -20,12 +20,12 @@ use ApiPlatform\Core\DataProvider\ContextAwareCollectionDataProviderInterface;
 use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
 use Elasticsuite\Catalog\Repository\LocalizedCatalogRepository;
 use Elasticsuite\Metadata\Repository\MetadataRepository;
-use Elasticsuite\Metadata\Repository\SourceFieldRepository;
 use Elasticsuite\Search\Elasticsearch\Adapter;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\SimpleRequestBuilder;
 use Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider;
 use Elasticsuite\Search\Model\Facet\Option;
 use Elasticsuite\Search\Service\GraphQl\FilterManager;
+use Elasticsuite\Search\Service\ReverseSourceFieldProvider;
 use Elasticsuite\Search\Service\ViewMoreContext;
 
 class OptionDataProvider implements ContextAwareCollectionDataProviderInterface, RestrictedDataProviderInterface
@@ -33,29 +33,32 @@ class OptionDataProvider implements ContextAwareCollectionDataProviderInterface,
     public function __construct(
         private MetadataRepository $metadataRepository,
         private LocalizedCatalogRepository $catalogRepository,
-        private SourceFieldRepository $sourceFieldRepository,
         private ContainerConfigurationProvider $containerConfigurationProvider,
         private SimpleRequestBuilder $requestBuilder,
         private Adapter $searchEngine,
         private FilterManager $filterManager,
         private ViewMoreContext $viewMoreContext,
+        private ReverseSourceFieldProvider $reverseSourceFieldProvider,
+        private string $nestingSeparator,
     ) {
     }
 
     public function getCollection(string $resourceClass, string $operationName = null, array $context = [])
     {
-        $this->filterManager->validateFilters($context);
-
         $metadata = $this->metadataRepository->findByEntity($context['filters']['entityType']);
         $catalog = $this->catalogRepository->findByCodeOrId($context['filters']['catalogId']);
-        $sourceField = $this->sourceFieldRepository->findOneBy(['code' => $context['filters']['aggregation']]);
+        $filterName = str_replace($this->nestingSeparator, '.', $context['filters']['aggregation']);
+        $sourceField = $this->reverseSourceFieldProvider->getSourceFieldFromFieldName($filterName, $metadata);
         if (null === $sourceField) {
-            throw new \InvalidArgumentException("The source field '{$context['filters']['aggregation']}' does not exist");
+            throw new \InvalidArgumentException("The source field '$filterName' does not exist");
         }
 
-        $this->viewMoreContext->setFilterName($sourceField->getCode());
+        $this->viewMoreContext->setFilterName($filterName);
+        $this->viewMoreContext->setSourceField($sourceField);
 
         $containerConfig = $this->containerConfigurationProvider->get($metadata, $catalog);
+
+        $this->filterManager->validateFilters($context, $containerConfig);
         $searchQuery = $context['filters']['search'] ?? null;
 
         $request = $this->requestBuilder->create(
@@ -68,16 +71,19 @@ class OptionDataProvider implements ContextAwareCollectionDataProviderInterface,
                 $this->filterManager->getFiltersFromContext($context),
                 $containerConfig
             ),
-            [],
+            $this->filterManager->transformToElasticsuiteFilters(
+                $this->filterManager->getQueryFilterFromContext($context),
+                $containerConfig
+            ),
             []
         );
         $response = $this->searchEngine->search($request);
 
         $options = [];
 
-        if (\array_key_exists($sourceField->getCode(), $response->getAggregations())) {
+        if (\array_key_exists($filterName, $response->getAggregations())) {
             /** @var Adapter\Common\Response\BucketValueInterface $option */
-            foreach ($response->getAggregations()[$sourceField->getCode()]->getValues() as $option) {
+            foreach ($response->getAggregations()[$filterName]->getValues() as $option) {
                 $options[] = \is_array($option->getKey())
                     ? new Option((string) $option->getKey()[0], (string) $option->getKey()[1], $option->getCount())
                     : new Option((string) $option->getKey(), (string) $option->getKey(), $option->getCount());

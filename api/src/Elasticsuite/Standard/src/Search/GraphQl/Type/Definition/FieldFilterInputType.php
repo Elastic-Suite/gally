@@ -55,7 +55,7 @@ class FieldFilterInputType extends InputObjectType implements TypeInterface, Fil
         return $this->name;
     }
 
-    public function validate(string $argName, mixed $inputData): array
+    public function validate(string $argName, mixed $inputData, ContainerConfigurationInterface $containerConfiguration): array
     {
         $errors = [];
         $config = $this->getConfig();
@@ -76,7 +76,7 @@ class FieldFilterInputType extends InputObjectType implements TypeInterface, Fil
 
                 /** @var FilterInterface $type */
                 $type = $config['fields'][$filterType]['type'];
-                $errors = array_merge($errors, $type->validate($filterType, $data));
+                $errors = array_merge($errors, $type->validate($filterType, $data, $containerConfiguration));
             }
         }
 

@@ -19,6 +19,7 @@ namespace Elasticsuite\Product\Tests\Unit\GraphQl\Type\Definition\Filter;
 use Elasticsuite\Entity\GraphQl\Type\Definition\Filter\StockTypeDefaultFilterInputType;
 use Elasticsuite\Search\Constant\FilterOperator;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder;
+use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
 use Elasticsuite\Search\Elasticsearch\Request\QueryFactory;
 use GraphQL\Type\Definition\Type;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -87,7 +88,8 @@ class StockTypeDefaultFilterInputTest extends KernelTestCase
             '##'
         );
 
-        $this->assertEquals('my_stock##status', $stockTypeDefaultFilterInputType->getGraphQlFieldName('my_stock'));
+        $this->assertEquals('my_stock.status', $stockTypeDefaultFilterInputType->getFilterFieldName('my_stock'));
+        $this->assertEquals('my_stock##status', $stockTypeDefaultFilterInputType->getGraphQlFieldName('my_stock.status'));
         $this->assertEquals('my_stock.status', $stockTypeDefaultFilterInputType->getMappingFieldName('my_stock##status'));
     }
 
@@ -106,7 +108,11 @@ class StockTypeDefaultFilterInputTest extends KernelTestCase
             '__'
         );
 
-        $errors = $stockTypeDefaultFilterInputType->validate($fieldName, $inputData);
+        $errors = $stockTypeDefaultFilterInputType->validate(
+            $fieldName,
+            $inputData,
+            $this->getMockBuilder(ContainerConfigurationInterface::class)->getMock(),
+        );
         $this->assertEquals($expectedErrors, $errors);
     }
 

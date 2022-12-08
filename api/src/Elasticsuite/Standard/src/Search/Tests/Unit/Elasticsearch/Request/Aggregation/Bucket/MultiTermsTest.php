@@ -154,6 +154,6 @@ class MultiTermsTest extends AbstractBucketTest
         $this->assertEquals($params['include'] ?? [], $bucket->getInclude());
         $this->assertEquals($params['exclude'] ?? [], $bucket->getExclude());
         $this->assertEquals($params['minDocCount'] ?? null, $bucket->getMinDocCount());
-        $this->assertEquals(array_merge([$params['field']], $params['additionalFields']), $bucket->getFields());
+        $this->assertEquals(array_merge($params['additionalFields'], [$params['field']]), $bucket->getFields());
     }
 }

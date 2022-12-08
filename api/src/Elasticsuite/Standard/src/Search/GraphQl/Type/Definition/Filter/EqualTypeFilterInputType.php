@@ -18,11 +18,11 @@ namespace Elasticsuite\Search\GraphQl\Type\Definition\Filter;
 
 use ApiPlatform\Core\GraphQl\Type\Definition\TypeInterface;
 use Elasticsuite\GraphQl\Type\Definition\FilterInterface;
-use Elasticsuite\Metadata\Repository\SourceFieldRepository;
 use Elasticsuite\Search\Constant\FilterOperator;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder;
 use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
 use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
+use Elasticsuite\Search\Service\ReverseSourceFieldProvider;
 use GraphQL\Type\Definition\InputObjectType;
 use GraphQL\Type\Definition\Type;
 
@@ -34,7 +34,7 @@ class EqualTypeFilterInputType extends InputObjectType implements TypeInterface,
 
     public function __construct(
       private FilterQueryBuilder $filterQueryBuilder,
-      private SourceFieldRepository $sourceFieldRepository,
+      private ReverseSourceFieldProvider $reverseSourceFieldProvider,
     ) {
         $this->name = self::NAME;
 
@@ -57,11 +57,11 @@ class EqualTypeFilterInputType extends InputObjectType implements TypeInterface,
         return $this->name;
     }
 
-    public function validate(string $argName, mixed $inputData): array
+    public function validate(string $argName, mixed $inputData, ContainerConfigurationInterface $containerConfig): array
     {
         $errors = [];
 
-        $errors = array_merge($errors, $this->validateIsFilterable($inputData['field']));
+        $errors = array_merge($errors, $this->validateIsFilterable($inputData['field'], $containerConfig));
         if (!isset($inputData[FilterOperator::EQ]) && !isset($inputData[FilterOperator::IN])) {
             $errors[] = sprintf(
                 "Filter argument %s: At least '%s' or '%s' should be filled.",

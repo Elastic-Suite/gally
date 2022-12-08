@@ -29,8 +29,7 @@ class PriceAggregationConfigResolver implements FieldAggregationConfigResolverIn
     public function getConfig(SourceField $sourceField): array
     {
         return [
-            'name' => $sourceField->getCode(),
-            'field' => $sourceField->getCode() . '.price',
+            'name' => $sourceField->getCode() . '.price',
             'type' => BucketInterface::TYPE_HISTOGRAM,
         ];
     }

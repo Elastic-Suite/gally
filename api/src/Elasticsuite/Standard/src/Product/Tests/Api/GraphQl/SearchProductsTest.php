@@ -1271,8 +1271,9 @@ class SearchProductsTest extends AbstractTest
                 1,      // current page.
                 [       // expected aggregations sample.
                     ['field' => 'size', 'label' => 'Size', 'type' => 'slider'],
+                    ['field' => 'weight', 'label' => 'Weight', 'type' => 'slider'],
                     [
-                        'field' => 'color',
+                        'field' => 'color__value',
                         'label' => 'Color',
                         'type' => 'checkbox',
                         'options' => [
@@ -1283,9 +1284,8 @@ class SearchProductsTest extends AbstractTest
                             ],
                         ],
                     ],
-                    ['field' => 'weight', 'label' => 'Weight', 'type' => 'slider'],
                     [
-                        'field' => 'category',
+                        'field' => 'category__id',
                         'label' => 'Category',
                         'type' => 'category',
                         'options' => [
@@ -1310,8 +1310,9 @@ class SearchProductsTest extends AbstractTest
                 10,     // page size.
                 1,      // current page.
                 [       // expected aggregations sample.
+                    ['field' => 'weight', 'label' => 'Weight', 'type' => 'slider'],
                     [
-                        'field' => 'color',
+                        'field' => 'color__value',
                         'label' => 'Color',
                         'type' => 'checkbox',
                         'options' => [
@@ -1322,9 +1323,8 @@ class SearchProductsTest extends AbstractTest
                             ],
                         ],
                     ],
-                    ['field' => 'weight', 'label' => 'Weight', 'type' => 'slider'],
                     [
-                        'field' => 'category',
+                        'field' => 'category__id',
                         'label' => 'Category',
                         'type' => 'category',
                         'options' => [
@@ -1349,9 +1349,11 @@ class SearchProductsTest extends AbstractTest
                 10,     // page size.
                 1,      // current page.
                 [       // expected aggregations sample.
+                    ['field' => 'brand__value', 'label' => 'Brand', 'type' => 'checkbox'],
                     ['field' => 'size', 'label' => 'Size', 'type' => 'slider'],
+                    ['field' => 'weight', 'label' => 'Weight', 'type' => 'slider'],
                     [
-                        'field' => 'color',
+                        'field' => 'color__value',
                         'label' => 'Color',
                         'type' => 'checkbox',
                         'options' => [
@@ -1362,9 +1364,8 @@ class SearchProductsTest extends AbstractTest
                             ],
                         ],
                     ],
-                    ['field' => 'weight', 'label' => 'Weight', 'type' => 'slider'],
                     [
-                        'field' => 'category',
+                        'field' => 'category__id',
                         'label' => 'Category',
                         'type' => 'category',
                         'options' => [
@@ -1381,7 +1382,6 @@ class SearchProductsTest extends AbstractTest
                         ],
                     ],
                     ['field' => 'is_eco_friendly', 'label' => 'Is_eco_friendly', 'type' => 'checkbox'],
-                    ['field' => 'brand', 'label' => 'Brand', 'type' => 'checkbox'],
                 ],
             ],
             [
@@ -1396,8 +1396,9 @@ class SearchProductsTest extends AbstractTest
                         'label' => 'Taille',
                         'type' => 'slider',
                     ],
+                    ['field' => 'weight', 'label' => 'Weight', 'type' => 'slider'],
                     [
-                        'field' => 'color',
+                        'field' => 'color__value',
                         'label' => 'Couleur',
                         'type' => 'checkbox',
                         'options' => [
@@ -1417,6 +1418,111 @@ class SearchProductsTest extends AbstractTest
                 10,     // page size.
                 1,      // current page.
                 null,   // expected aggregations sample.
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider searchWithAggregationAndFilterDataProvider
+     *
+     * @param string      $catalogId            Catalog ID or code
+     * @param int         $pageSize             Pagination size
+     * @param int         $currentPage          Current page
+     * @param string|null $filter               Filters to apply
+     * @param array       $expectedOptionsCount expected aggregation option count
+     */
+    public function testSearchProductsWithAggregationAndFilter(
+        string $catalogId,
+        int $pageSize,
+        int $currentPage,
+        ?string $filter,
+        array $expectedOptionsCount,
+    ): void {
+        $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
+
+        $arguments = sprintf(
+            'requestType: product_catalog, catalogId: "%s", pageSize: %d, currentPage: %d',
+            $catalogId,
+            $pageSize,
+            $currentPage,
+        );
+        if ($filter) {
+            $arguments = sprintf(
+                'requestType: product_catalog, catalogId: "%s", pageSize: %d, currentPage: %d, filter: [%s]',
+                $catalogId,
+                $pageSize,
+                $currentPage,
+                $filter,
+            );
+        }
+
+        $this->validateApiCall(
+            new RequestGraphQlToTest(
+                <<<GQL
+                    {
+                        products({$arguments}) {
+                            aggregations {
+                              field
+                              count
+                              options {
+                                value
+                              }
+                            }
+                        }
+                    }
+                GQL,
+                $user
+            ),
+            new ExpectedResponse(
+                200,
+                function (ResponseInterface $response) use ($expectedOptionsCount) {
+                    $responseData = $response->toArray();
+                    $this->assertIsArray($responseData['data']['products']['aggregations']);
+                    foreach ($responseData['data']['products']['aggregations'] as $data) {
+                        if (\array_key_exists($data['field'], $expectedOptionsCount)) {
+                            $this->assertCount($expectedOptionsCount[$data['field']], $data['options'] ?? []);
+                        }
+                    }
+                }
+            )
+        );
+    }
+
+    public function searchWithAggregationAndFilterDataProvider(): array
+    {
+        return [
+            [
+                'b2c_en',   // catalog ID.
+                10,     // page size.
+                1,      // current page.
+                null, // filter.
+                [ // expected option result
+                    'color__value' => 9,
+                    'category__id' => 4,
+                    'is_eco_friendly' => 2,
+                ],
+            ],
+            [
+                'b2c_en',   // catalog ID.
+                10,     // page size.
+                1,      // current page.
+                '{sku: {eq: "24-WB05"}}', // filter.
+                [ // expected option result
+                    'color__value' => 1,
+                    'category__id' => 0,
+                    'is_eco_friendly' => 1,
+                ],
+            ],
+            [
+                'b2c_en',   // catalog ID.
+                10,     // page size.
+                1,      // current page.
+                '{color__value: {in: ["pink"]}}', // filter.
+                [ // expected option result
+                    'color__value' => 9,
+                    'category__id' => 0,
+                    'is_eco_friendly' => 1,
+                ],
             ],
         ];
     }

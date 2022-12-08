@@ -24,10 +24,11 @@ class FilterManager
 {
     public function __construct(
         private FieldFilterInputType $fieldFilterInputType,
+        protected string $nestingSeparator,
     ) {
     }
 
-    public function validateFilters(array $context): void
+    public function validateFilters(array $context, ContainerConfigurationInterface $containerConfiguration): void
     {
         $errors = [];
         if (!isset($context[SerializerContextBuilder::GRAPHQL_ELASTICSUITE_FILTERS_KEY]['filter'])) {
@@ -35,7 +36,7 @@ class FilterManager
         }
 
         foreach ($context[SerializerContextBuilder::GRAPHQL_ELASTICSUITE_FILTERS_KEY]['filter'] as $argName => $filter) {
-            $errors = array_merge($errors, $this->fieldFilterInputType->validate('filter', [$argName => $filter]));
+            $errors = array_merge($errors, $this->fieldFilterInputType->validate('filter', [$argName => $filter], $containerConfiguration));
         }
 
         !\count($errors) ?: throw new \InvalidArgumentException(implode(', ', $errors));
@@ -44,6 +45,11 @@ class FilterManager
     public function getFiltersFromContext(array $context): array
     {
         return $context[SerializerContextBuilder::GRAPHQL_ELASTICSUITE_FILTERS_KEY]['filter'] ?? [];
+    }
+
+    public function getQueryFilterFromContext(array $context): array
+    {
+        return [];
     }
 
     /**
@@ -62,7 +68,7 @@ class FilterManager
                     // the filter twice, we have to skip the one with the '.'.
                     continue;
                 }
-                $esFilters[] = $this->fieldFilterInputType->transformToElasticsuiteFilter(
+                $esFilters[str_replace($this->nestingSeparator, '.', $sourceFieldName)] = $this->fieldFilterInputType->transformToElasticsuiteFilter(
                     [$sourceFieldName => $condition],
                     $containerConfig,
                     $filterContext
