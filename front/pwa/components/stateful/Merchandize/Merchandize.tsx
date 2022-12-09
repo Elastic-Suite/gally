@@ -2,6 +2,7 @@ import { SyntheticEvent } from 'react'
 import { useTranslation } from 'next-i18next'
 import { Grid, Paper } from '@mui/material'
 import {
+  ICategory,
   IOptions,
   IParsedCategoryConfiguration,
   getFieldConfig,
@@ -19,9 +20,15 @@ interface IProps {
   catConf: IParsedCategoryConfiguration
   onChange?: (name: string, value: boolean | string) => void | Promise<void>
   sortOptions: IOptions<string>
+  category: ICategory
 }
 
-function Merchandize({ catConf, onChange, sortOptions }: IProps): JSX.Element {
+function Merchandize({
+  catConf,
+  onChange,
+  sortOptions,
+  category,
+}: IProps): JSX.Element {
   const { t } = useTranslation('categories')
   const bundles = useAppSelector(selectBundles)
   const catConfResource = useResource('CategoryConfiguration')
@@ -35,6 +42,8 @@ function Merchandize({ catConf, onChange, sortOptions }: IProps): JSX.Element {
   function handleChange(value: string | boolean, event: SyntheticEvent): void {
     onChange((event.target as HTMLInputElement).name, value)
   }
+
+  const isRootCategory = category.level === 1
 
   return (
     <Paper variant="outlined" style={{ height: 'auto', padding: '22px' }}>
@@ -79,6 +88,7 @@ function Merchandize({ catConf, onChange, sortOptions }: IProps): JSX.Element {
               infoTooltip={t('virtual.tooltip')}
               label={t('virtual')}
               name="isVirtual"
+              disabled={isRootCategory}
               onChange={handleChange}
               {...getFieldState(
                 catConf as unknown as Record<string, unknown>,

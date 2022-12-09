@@ -12,7 +12,6 @@ import {
   IParsedCategoryConfiguration,
   IRuleCombination,
   LoadStatus,
-  findBreadcrumbLabel,
   getLocalizedCatalog,
   isError,
   isRuleValid,
@@ -35,7 +34,7 @@ import {
   useRuleOperators,
 } from '~/hooks'
 import { findCategory } from '~/services'
-import { selectBundles, selectMenu, useAppSelector } from '~/store'
+import { selectBundles, useAppSelector } from '~/store'
 
 import TitleBlock from '~/components/molecules/layout/TitleBlock/TitleBlock'
 import TwoColsLayout from '~/components/molecules/layout/twoColsLayout/TwoColsLayout'
@@ -43,6 +42,8 @@ import CatalogSwitcher from '~/components/stateful/CatalogSwitcher/CatalogSwitch
 import CategoryTree from '~/components/stateful/CategoryTree/CategoryTree'
 import ProductsContainer from '~/components/stateful/ProductsContainer/ProductsContainer'
 import RulesManager from '~/components/stateful/RulesManager/RulesManager'
+
+const pagesSlug = ['merchandize', 'categories']
 
 function Categories(): JSX.Element {
   const router = useRouter()
@@ -52,12 +53,11 @@ function Categories(): JSX.Element {
   const bundles = useAppSelector(selectBundles)
 
   // Breadcrumb
-  const menu = useAppSelector(selectMenu)
   const [, setBreadcrumb] = useContext(breadcrumbContext)
-  const title = findBreadcrumbLabel(0, ['merchandize'], menu.hierarchy)
   useEffect(() => {
-    setBreadcrumb(['merchandize', 'categories'])
+    setBreadcrumb(pagesSlug)
   }, [router.query, setBreadcrumb])
+  const title = pagesSlug.slice(-1).flat()
 
   // Catalogs
   const resourceName = 'Catalog'
