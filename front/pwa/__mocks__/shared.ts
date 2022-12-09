@@ -1,5 +1,6 @@
 import { api } from 'shared/src/mocks'
 
+import catalog from 'shared/src/mocks/static/catalog.json'
 import categorySortingOptions from 'shared/src/mocks/static/category_sorting_options.json'
 import docs from 'shared/src/mocks/static/docs.json'
 import entrypoint from 'shared/src/mocks/static/index.json'
@@ -20,6 +21,7 @@ export * from 'shared/src/services/format'
 export * from 'shared/src/services/hydra'
 export * from 'shared/src/services/local'
 export * from 'shared/src/services/options'
+export * from 'shared/src/services/network'
 export * from 'shared/src/services/rules'
 export * from 'shared/src/services/style'
 export * from 'shared/src/services/table'
@@ -32,7 +34,8 @@ const body = { hello: 'world' }
 /* api */
 export const getApiUrl = jest.fn((url) => url)
 
-export const fetchApi = jest.fn((_, resource) => {
+export const fetchApi = jest.fn()
+fetchApi.mockImplementation((_, resource) => {
   let data: unknown = { ...body }
   if (
     (typeof resource !== 'string' &&
@@ -53,6 +56,12 @@ export const fetchApi = jest.fn((_, resource) => {
   ) {
     data = { ...sourceFieldOptionLabels }
   } else if (
+    (typeof resource !== 'string' &&
+      resource.title.toLowerCase() === 'catalog') ||
+    (typeof resource === 'string' && resource.endsWith('catalog'))
+  ) {
+    data = { ...catalog }
+  } else if (
     typeof resource === 'string' &&
     resource.endsWith('rule_engine_graphql_filters')
   ) {
@@ -70,7 +79,7 @@ export const removeEmptyParameters = jest.fn(
   (searchParameters = {}) => searchParameters
 )
 
-export const log = jest.fn((error, log) => log(error.message))
+export const log = jest.fn((error, log) => log?.(error.message))
 
 export const getApiFilters = jest.fn((x) => x)
 

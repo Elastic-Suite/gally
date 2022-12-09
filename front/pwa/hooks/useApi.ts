@@ -10,6 +10,7 @@ import { useTranslation } from 'next-i18next'
 import debounce from 'lodash.debounce'
 
 import {
+  AuthError,
   IFetch,
   IFetchApi,
   IHydraMember,
@@ -25,6 +26,8 @@ import {
   isError,
 } from 'shared'
 
+import { setUser, useAppDispatch } from '~/store'
+
 import { useLog } from './useLog'
 import { useResourceOperations } from './useResource'
 
@@ -32,7 +35,9 @@ const debounceDelay = 200
 
 export function useApiFetch(secure = true): IFetchApi {
   const { i18n } = useTranslation('common')
+  const dispatch = useAppDispatch()
   const log = useLog()
+
   return useCallback<IFetchApi>(
     async <T>(
       resource: IResource | string,
@@ -50,10 +55,13 @@ export function useApiFetch(secure = true): IFetchApi {
         return json
       } catch (error) {
         log(error)
+        if (error instanceof AuthError) {
+          dispatch(setUser({ token: '', user: null }))
+        }
         return { error }
       }
     },
-    [i18n.language, log, secure]
+    [dispatch, i18n.language, log, secure]
   )
 }
 
