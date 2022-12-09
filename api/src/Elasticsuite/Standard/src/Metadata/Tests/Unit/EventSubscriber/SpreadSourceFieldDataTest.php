@@ -67,6 +67,7 @@ class SpreadSourceFieldDataTest extends AbstractTest
                 $this->assertArrayNotHasKey('fields', $mapping['mappings']['properties']['flag']);
                 $this->assertArrayNotHasKey('fields', $mapping['mappings']['properties']['children']['properties']['flag']);
                 $this->assertArrayNotHasKey('fields', $mapping['mappings']['properties']['category']['properties']['name']);
+                $this->assertArrayNotHasKey('fields', $mapping['mappings']['properties']['category']['properties']['_name']);
             }
         }
 
@@ -79,6 +80,7 @@ class SpreadSourceFieldDataTest extends AbstractTest
         $flagSourceField = $sourceFieldRepository->findOneBy(['code' => 'category']);
         $flagSourceField->setIsFilterable(true);
         $flagSourceField->setIsSortable(true);
+        $flagSourceField->setIsSearchable(true);
         $entityManager->persist($flagSourceField);
         $entityManager->flush();
 
@@ -97,7 +99,12 @@ class SpreadSourceFieldDataTest extends AbstractTest
 
                 $this->assertArrayHasKey('standard', $mapping['mappings']['properties']['category']['properties']['name']['fields']);
                 $this->assertArrayHasKey('untouched', $mapping['mappings']['properties']['category']['properties']['name']['fields']);
-                $this->assertArrayHasKey('sortable', $mapping['mappings']['properties']['category']['properties']['name']['fields']);
+                // isSortable is *not* white-listed for any inner text field.
+                $this->assertArrayNotHasKey('sortable', $mapping['mappings']['properties']['category']['properties']['name']['fields']);
+                $this->assertArrayNotHasKey('sortable', $mapping['mappings']['properties']['category']['properties']['_name']['fields']);
+                // isSearchable is only transferred to _name and not name.
+                $this->assertArrayNotHasKey('copy_to', $mapping['mappings']['properties']['category']['properties']['name']);
+                $this->assertArrayHasKey('copy_to', $mapping['mappings']['properties']['category']['properties']['_name']);
             }
         }
     }
