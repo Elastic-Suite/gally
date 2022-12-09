@@ -44,6 +44,7 @@ function Merchandize({
   }
 
   const isRootCategory = category.level === 1
+  console.log(category)
 
   return (
     <Paper variant="outlined" style={{ height: 'auto', padding: '22px' }}>
