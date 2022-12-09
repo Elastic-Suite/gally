@@ -57,12 +57,12 @@ export function fetchApi<T>(
     if (isApiError(json)) {
       if (authErrorCodes.includes(json.code)) {
         storageRemove(tokenStorageKey)
+        throw new AuthError('Unauthorized/Forbidden')
       }
       throw new ApiError(json.message)
     } else if (isJSonldType(json) && isHydraError(json)) {
       throw new HydraError(json)
     } else if (authErrorCodes.includes(response.status)) {
-      // fixme: should we redirect to login if 401/403 error ?
       storageRemove(tokenStorageKey)
       throw new AuthError('Unauthorized/Forbidden')
     }

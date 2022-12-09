@@ -7,6 +7,8 @@ import entrypoint from 'shared/src/mocks/static/index.json'
 import graphql from 'shared/src/mocks/static/graphql.json'
 import metadata from 'shared/src/mocks/static/metadata.json'
 import sourceFieldOptionLabels from 'shared/src/mocks/static/source_field_option_labels.json'
+import ruleEngineGraphqlFilters from 'shared/src/mocks/static/rule_engine_graphql_filters.json'
+import ruleEngineOperators from 'shared/src/mocks/static/rule_engine_operators.json'
 
 export * from 'shared/src/constants'
 export * from 'shared/src/contexts'
@@ -19,6 +21,7 @@ export * from 'shared/src/services/format'
 export * from 'shared/src/services/hydra'
 export * from 'shared/src/services/local'
 export * from 'shared/src/services/options'
+export * from 'shared/src/services/network'
 export * from 'shared/src/services/rules'
 export * from 'shared/src/services/style'
 export * from 'shared/src/services/table'
@@ -58,6 +61,16 @@ fetchApi.mockImplementation((_, resource) => {
     (typeof resource === 'string' && resource.endsWith('catalog'))
   ) {
     data = { ...catalog }
+  } else if (
+    typeof resource === 'string' &&
+    resource.endsWith('rule_engine_graphql_filters')
+  ) {
+    data = { ...ruleEngineGraphqlFilters }
+  } else if (
+    typeof resource === 'string' &&
+    resource.endsWith('rule_engine_operators')
+  ) {
+    data = { ...ruleEngineOperators }
   }
   return Promise.resolve(data)
 })
@@ -67,6 +80,12 @@ export const removeEmptyParameters = jest.fn(
 )
 
 export const log = jest.fn((error, log) => log?.(error.message))
+
+export const getApiFilters = jest.fn((x) => x)
+
+/* bundle */
+
+export const isVirtualCategoryEnabled = jest.fn(() => true)
 
 /* fetch */
 export const isError = jest.fn((json) => 'error' in json)
@@ -97,6 +116,10 @@ export const fetchJson = jest.fn((url) => {
   }
 })
 
+/* form */
+
+export const getFormValidityError = jest.fn(() => 'test')
+
 /* graphql */
 export const fetchGraphql = jest.fn(() => {
   const data: unknown = { ...body }
@@ -110,3 +133,6 @@ export const parseSchema = jest.fn(() => Promise.resolve(api))
 export const storageGet = jest.fn()
 export const storageSet = jest.fn()
 export const storageRemove = jest.fn()
+
+/* useSchemaLoader */
+export const useSchemaLoader = jest.fn(() => ({ data: 'api' }))

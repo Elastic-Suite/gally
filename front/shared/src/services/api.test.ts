@@ -98,7 +98,7 @@ describe('Api service', () => {
       mock.mockImplementationOnce(() =>
         Promise.resolve({ json: { code: 401, message: 'Unauthorized' } })
       )
-      await expect(fetchApi('en', '/restricted')).rejects.toThrow(ApiError)
+      await expect(fetchApi('en', '/restricted')).rejects.toThrow(AuthError)
       expect(fetchJson).toHaveBeenCalledWith('http://localhost/restricted', {
         headers: {
           'Content-Type': 'application/ld+json',
