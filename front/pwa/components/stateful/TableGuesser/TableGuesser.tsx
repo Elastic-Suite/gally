@@ -75,7 +75,7 @@ function TableGuesser<T extends IHydraMember>(props: IProps<T>): JSX.Element {
 
   const withSelection = selectedRows?.length !== undefined
   const activeRows = tableRows.filter(
-    (_, index) => !(tableConfigs?.[index]?.disabled ?? false)
+    (_, index) => !(tableConfigs?.[index]?.selection.disabled ?? false)
   )
   const massiveSelectionState =
     withSelection && selectedRows
