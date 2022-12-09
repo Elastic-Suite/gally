@@ -202,6 +202,7 @@ function ProductsContainer(props: IProps): JSX.Element {
             catConf={catConf}
             onChange={onChange}
             sortOptions={sortOption}
+            category={category}
           />
         )}
 
