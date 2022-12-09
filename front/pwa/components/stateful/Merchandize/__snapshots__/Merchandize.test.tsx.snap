@@ -167,19 +167,19 @@ exports[`Merchandize match snapshot testSelect 1`] = `
             class="MuiSwitch-root MuiSwitch-sizeMedium css-44y1r7-MuiSwitch-root"
           >
             <span
-              class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-checked PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-checked Mui-checked css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
+              aria-disabled="true"
+              class="MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-checked Mui-disabled Mui-disabled PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary Mui-checked Mui-disabled Mui-checked Mui-disabled css-1vk7jze-MuiButtonBase-root-MuiSwitch-switchBase"
+              tabindex="-1"
             >
               <input
                 checked=""
                 class="PrivateSwitchBase-input MuiSwitch-input css-1m9pwf3"
+                disabled=""
                 name="isVirtual"
                 type="checkbox"
               />
               <span
                 class="MuiSwitch-thumb css-epwt2k-MuiSwitch-thumb"
-              />
-              <span
-                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
               />
             </span>
             <span
