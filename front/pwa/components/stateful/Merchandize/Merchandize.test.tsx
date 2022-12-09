@@ -16,6 +16,13 @@ describe('Merchandize match snapshot', () => {
           name: 'Category',
           useNameInProductSearch: true,
         }}
+        category={{
+          id: 'cat_2',
+          name: 'Default Category',
+          level: 1,
+          path: 'cat_2',
+          isVirtual: false,
+        }}
         sortOptions={[
           { label: 'Position', value: '10' },
           { label: 'Product Name', value: '20' },
