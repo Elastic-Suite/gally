@@ -20,7 +20,7 @@
   "name": "Use category name in product search",
   "name.tooltip": "When enabled, ensures that searching for the category name will make the associated products appear. This does not work for virtual categories.",
   "virtual": "Virtual category",
-  "virtual.tooltip": "Is the category is virtual or not ?",
+  "virtual.tooltip": "Is the category is virtual or not ? A root category can't be virtual.",
   "select": "Select",
   "select.tooltip": "What sorting will be used for the category",
   "searchBarResult": "{{value.value}} {{value.result}}",

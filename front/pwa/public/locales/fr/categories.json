@@ -20,7 +20,7 @@
   "name": "Utiliser le nom de la catégorie dans la recherche de produits",
   "name.tooltip": "Si activé, garantit que la recherche du nom de la catégorie fera apparaître les produits associés. Cela ne fonctionne pas pour les catégories virtuelles.",
   "virtual": "La catégorie est-elle virtuelle ou non ?",
-  "virtual.tooltip": "Catégorie virtuelle",
+  "virtual.tooltip": "La catégorie est-elle virtuelle ou non ? Une catégorie racine ne peut pas être virtuelle.",
   "select": "Sélectionnez",
   "select.tooltip": "Quel tri sera utilisé pour la catégorie",
   "searchBarResult": "{{value.value}} {{value.result}}",
