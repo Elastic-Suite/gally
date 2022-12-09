@@ -53,8 +53,19 @@ class CategorySourceFieldConverter implements SourceFieldConverterInterface
             'is_used_for_sort_by' => $sourceField->getIsSortable(),
         ];
 
-        foreach ($innerFields as $fieldName => $fieldType) {
-            $fieldConfig = (Mapping\FieldInterface::FIELD_TYPE_TEXT === $fieldType) ? $textFieldConfig : [];
+        foreach ($innerFields as $fieldName => $innerFieldConfig) {
+            $fieldType = $innerFieldConfig['type'];
+            $fieldConfig = [];
+            if (Mapping\FieldInterface::FIELD_TYPE_TEXT === $fieldType) {
+                $inheritedConfig = $innerFieldConfig['inherit'] ?? [];
+                if (!empty($inheritedConfig)) {
+                    $fieldConfig = array_intersect_key($textFieldConfig, array_fill_keys($inheritedConfig, true));
+                }
+                $explicitConfig = $innerFieldConfig['explicit'] ?? [];
+                if (!empty($explicitConfig)) {
+                    $fieldConfig += $explicitConfig;
+                }
+            }
             $finalFieldName = sprintf('%s.%s', $path, $fieldName);
             $fields[$finalFieldName] = new Mapping\Field(
                 $finalFieldName,
@@ -69,15 +80,23 @@ class CategorySourceFieldConverter implements SourceFieldConverterInterface
 
     protected function getInnerFieldsConfig(SourceField $sourceField): array
     {
-        // Might depend from global configuration in the future.
+        // Might depend upon global configuration in the future.
         return [
-            'id' => Mapping\FieldInterface::FIELD_TYPE_KEYWORD,
-            'uid' => Mapping\FieldInterface::FIELD_TYPE_KEYWORD,
-            'name' => Mapping\FieldInterface::FIELD_TYPE_TEXT,
-            'is_parent' => Mapping\FieldInterface::FIELD_TYPE_BOOLEAN,
-            'is_virtual' => Mapping\FieldInterface::FIELD_TYPE_BOOLEAN,
-            'is_blacklisted' => Mapping\FieldInterface::FIELD_TYPE_BOOLEAN,
-            'position' => Mapping\FieldInterface::FIELD_TYPE_INTEGER,
+            'id' => ['type' => Mapping\FieldInterface::FIELD_TYPE_KEYWORD],
+            'uid' => ['type' => Mapping\FieldInterface::FIELD_TYPE_KEYWORD],
+            'name' => [
+                'type' => Mapping\FieldInterface::FIELD_TYPE_TEXT,
+                'inherit' => ['is_filterable'],
+            ],
+            '_name' => [
+                'type' => Mapping\FieldInterface::FIELD_TYPE_TEXT,
+                'inherit' => ['is_searchable', 'is_used_in_spellcheck', 'search_weight'],
+                'explicit' => ['is_filterable' => false],
+            ],
+            'is_parent' => ['type' => Mapping\FieldInterface::FIELD_TYPE_BOOLEAN],
+            'is_virtual' => ['type' => Mapping\FieldInterface::FIELD_TYPE_BOOLEAN],
+            'is_blacklisted' => ['type' => Mapping\FieldInterface::FIELD_TYPE_BOOLEAN],
+            'position' => ['type' => Mapping\FieldInterface::FIELD_TYPE_INTEGER],
         ];
     }
 }

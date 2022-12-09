@@ -20,6 +20,7 @@ Elasticsuite\Metadata\Model\SourceField:
         code: 'category'
         type: 'category'
         isSystem: true
+        isSearchable: true
         isFilterable: true
         isUsedForRules: true
         isSortable: true
