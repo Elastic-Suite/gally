@@ -6,8 +6,8 @@ import {
   useState,
 } from 'react'
 import { useTranslation } from 'next-i18next'
-
 import {
+  AuthError,
   IFetch,
   IGraphqlApi,
   ILoadResource,
@@ -16,11 +16,15 @@ import {
   isError,
 } from 'shared'
 
+import { setUser, useAppDispatch } from '~/store'
+
 import { useLog } from './useLog'
 
 export function useApiGraphql<T>(secure = true): IGraphqlApi<T> {
   const { i18n } = useTranslation('common')
+  const dispatch = useAppDispatch()
   const log = useLog()
+
   return useCallback(
     async (
       query: string,
@@ -38,10 +42,13 @@ export function useApiGraphql<T>(secure = true): IGraphqlApi<T> {
         return json
       } catch (error) {
         log(error)
+        if (error instanceof AuthError) {
+          dispatch(setUser({ token: '', user: null }))
+        }
         return { error }
       }
     },
-    [i18n.language, log, secure]
+    [dispatch, i18n.language, log, secure]
   )
 }
 

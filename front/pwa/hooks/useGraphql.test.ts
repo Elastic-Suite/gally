@@ -1,6 +1,7 @@
 import { act, waitFor } from '@testing-library/react'
+import { AuthError, IError, LoadStatus, fetchGraphql, log } from 'shared'
 
-import { IError, LoadStatus, fetchGraphql, log } from 'shared'
+import * as userStore from '~/store/user'
 import { renderHookWithProviders } from '~/utils/tests'
 
 import { useApiGraphql, useGraphqlApi } from './useGraphql'
@@ -45,6 +46,20 @@ describe('useGraphql', () => {
       const json = await result.current(testQuery)
       expect((json as IError).error.message).toEqual('error')
       expect(log).toHaveBeenCalled()
+    })
+
+    it('should logout the user if an auth error is thrown', async () => {
+      const mock = fetchGraphql as jest.Mock
+      mock.mockClear()
+      mock.mockImplementationOnce(() =>
+        Promise.reject(new AuthError('Unauthorized/Forbidden'))
+      )
+      jest.spyOn(userStore, 'setUser')
+      const { result } = renderHookWithProviders(() => useApiGraphql())
+      const json = await result.current('/test')
+      expect((json as IError).error.message).toEqual('Unauthorized/Forbidden')
+      expect(userStore.setUser).toHaveBeenCalledWith({ token: '', user: null })
+      ;(userStore.setUser as unknown as jest.Mock).mockRestore()
     })
   })
 
