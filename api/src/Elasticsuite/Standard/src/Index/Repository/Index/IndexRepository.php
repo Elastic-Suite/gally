@@ -1223,6 +1223,24 @@ class IndexRepository implements IndexRepositoryInterface
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public function reindex(string $sourceIndexName, string $destIndexName, bool $asynchronous): array
+    {
+        return $this->client->reindex([
+            'body' => [
+                'source' => [
+                    'index' => $sourceIndexName,
+                ],
+                'dest' => [
+                    'index' => $destIndexName,
+                ],
+            ],
+            'wait_for_completion' => !$asynchronous,
+        ]);
+    }
+
+    /**
      * Extract the aliases for a given index.
      *
      * @param array<mixed> $aliases   all index aliases

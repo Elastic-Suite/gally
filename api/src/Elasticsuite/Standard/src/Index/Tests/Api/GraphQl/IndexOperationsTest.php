@@ -34,9 +34,9 @@ class IndexOperationsTest extends AbstractTest
 
     private static IndexRepositoryInterface $indexRepository;
 
-    private IndexSettingsInterface $indexSettings;
+    private static IndexSettingsInterface $indexSettings;
 
-    private Client $client;
+    private static Client $client;
 
     public static function setUpBeforeClass(): void
     {
@@ -48,13 +48,8 @@ class IndexOperationsTest extends AbstractTest
             __DIR__ . '/../../fixtures/source_field.yaml',
             __DIR__ . '/../../fixtures/metadata.yaml',
         ]);
-    }
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->indexSettings = static::getContainer()->get(IndexSettingsInterface::class);
-        $this->client = static::getContainer()->get('api_platform.elasticsearch.client.test'); // @phpstan-ignore-line
+        self::$indexSettings = static::getContainer()->get(IndexSettingsInterface::class);
+        self::$client = static::getContainer()->get('api_platform.elasticsearch.client.test'); // @phpstan-ignore-line
     }
 
     public static function tearDownAfterClass(): void
@@ -148,7 +143,7 @@ class IndexOperationsTest extends AbstractTest
      */
     public function testInstallIndex(User $user, string $indexNamePrefix, array $expectedData): void
     {
-        $installIndexSettings = $this->indexSettings->getInstallIndexSettings();
+        $installIndexSettings = self::$indexSettings->getInstallIndexSettings();
         $index = self::$indexRepository->findByName("{$indexNamePrefix}*");
         $this->validateApiCall(
             new RequestGraphQlToTest(
@@ -180,7 +175,7 @@ class IndexOperationsTest extends AbstractTest
                         $this->assertContains($expectedData['alias'], $responseData['data']['installIndex']['index']['aliases']);
 
                         // Check that the index has the proper installed index settings.
-                        $settings = $this->client->indices()->getSettings(['index' => $index->getName()]);
+                        $settings = self::$client->indices()->getSettings(['index' => $index->getName()]);
                         $this->assertNotEmpty($settings[$index->getName()]['settings']['index']);
                         $this->assertArraySubset($installIndexSettings, $settings[$index->getName()]['settings']['index']);
                     }
@@ -267,7 +262,7 @@ class IndexOperationsTest extends AbstractTest
 
     protected function getRefreshCount(string $indexName): int
     {
-        $refreshMetrics = $this->client->indices()->stats(['index' => $indexName, 'metric' => 'refresh']);
+        $refreshMetrics = self::$client->indices()->stats(['index' => $indexName, 'metric' => 'refresh']);
         $this->assertNotEmpty($refreshMetrics);
         $this->assertArrayHasKey('_all', $refreshMetrics);
         $this->assertArrayHasKey('primaries', $refreshMetrics['_all']);
