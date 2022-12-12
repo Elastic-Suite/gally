@@ -26,7 +26,8 @@ class ExpectedResponse
     public function __construct(
         private int $responseCode,
         ?callable $validateResponseCallback = null,
-        private ?string $message = null
+        private ?string $message = null,
+        private bool $isValidateErrorResponse = false
     ) {
         $this->validateResponseCallback = $validateResponseCallback
             ? $validateResponseCallback(...)
@@ -46,5 +47,10 @@ class ExpectedResponse
     public function getMessage(): ?string
     {
         return $this->message;
+    }
+
+    public function isValidateErrorResponse(): bool
+    {
+        return $this->isValidateErrorResponse;
     }
 }

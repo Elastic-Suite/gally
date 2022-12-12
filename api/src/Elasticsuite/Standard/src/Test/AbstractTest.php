@@ -114,6 +114,10 @@ abstract class AbstractTest extends ApiTestCase
             } else {
                 $this->assertJsonContains(['@context' => "/contexts/$errorContext", '@type' => "$errorType"]);
             }
+
+            if ($expectedResponse->isValidateErrorResponse() && $expectedResponse->getValidateResponseCallback()) {
+                $expectedResponse->getValidateResponseCallback()($response);
+            }
         } elseif (204 != $expectedResponse->getResponseCode() && $expectedResponse->getValidateResponseCallback()) {
             $expectedResponse->getValidateResponseCallback()($response);
         } elseif (204 != $expectedResponse->getResponseCode()) {
