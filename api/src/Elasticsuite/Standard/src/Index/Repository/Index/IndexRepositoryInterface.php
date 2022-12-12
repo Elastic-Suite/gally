@@ -123,4 +123,13 @@ interface IndexRepositoryInterface
      * @param string[]|string $indexName One or several indices names
      */
     public function forceMerge(array|string $indexName): void;
+
+    /**
+     * Performs a local reindex between two indices.
+     *
+     * @param string $sourceIndexName Source index name
+     * @param string $destIndexName   Destination index name
+     * @param bool   $asynchronous    Should the reindex be made asynchronous
+     */
+    public function reindex(string $sourceIndexName, string $destIndexName, bool $asynchronous): array;
 }

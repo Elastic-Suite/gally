@@ -62,6 +62,14 @@ services:
             - '@Elasticsuite\Index\Api\IndexSettingsInterface'
             - '@Elasticsuite\Index\Service\MetadataManager'
 
+    Elasticsuite\Index\Service\SelfReindexOperation:
+        arguments:
+            - '@Elasticsuite\Metadata\Repository\MetadataRepository'
+            - '@Elasticsuite\Catalog\Repository\LocalizedCatalogRepository'
+            - '@Elasticsuite\Index\Service\IndexOperation'
+            - '@Elasticsuite\Index\Repository\Index\IndexRepositoryInterface'
+            - '@Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider'
+
     Elasticsuite\Index\MutationResolver\CreateIndexMutation:
         arguments:
             - '@Elasticsuite\Catalog\Repository\LocalizedCatalogRepository'
@@ -95,6 +103,12 @@ services:
         tags:
             - { name: api_platform.graphql.mutation_resolver }
 
+    Elasticsuite\Index\MutationResolver\SelfReindexMutation:
+        arguments:
+            - '@Elasticsuite\Index\Service\SelfReindexOperation'
+        tags:
+            - { name: api_platform.graphql.mutation_resolver }
+
     Elasticsuite\Index\DataTransformer\CreateIndexInputDataTransformer:
         arguments:
             - '@Elasticsuite\Catalog\Repository\LocalizedCatalogRepository'
@@ -112,6 +126,12 @@ services:
     Elasticsuite\Index\DataTransformer\RefreshIndexDataTransformer:
         arguments:
             - '@Elasticsuite\Index\Repository\Index\IndexRepositoryInterface'
+        tags:
+            - { name: api_platform.data_transformer }
+
+    Elasticsuite\Index\DataTransformer\SelfReIndexDataTransformer:
+        arguments:
+            - '@Elasticsuite\Index\Service\SelfReindexOperation'
         tags:
             - { name: api_platform.data_transformer }
 
