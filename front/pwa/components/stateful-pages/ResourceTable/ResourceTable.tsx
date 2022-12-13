@@ -60,6 +60,7 @@ interface IProps {
   resourceName: string
   setActiveFilters: Dispatch<SetStateAction<ISearchParameters>>
   urlParams?: string
+  showSearch?: boolean
 }
 
 function ResourceTable(props: IProps): JSX.Element {
@@ -75,6 +76,7 @@ function ResourceTable(props: IProps): JSX.Element {
     resourceName,
     setActiveFilters,
     urlParams,
+    showSearch,
   } = props
 
   const resource = useResource(resourceName)
@@ -201,6 +203,7 @@ function ResourceTable(props: IProps): JSX.Element {
         onSearch={handleSearchValue}
         resource={resource}
         searchValue={searchValue}
+        showSearch={showSearch}
       >
         {Boolean(diffDefaultValues) && (
           <FitlerContent>
