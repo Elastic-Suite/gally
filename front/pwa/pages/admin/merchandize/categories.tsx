@@ -220,7 +220,10 @@ function Categories(): JSX.Element {
 
       <TwoColsLayout
         left={[
-          <TitleBlock key="categories" title={t('categories.title')}>
+          <TitleBlock
+            key="categories"
+            title={t(pagesSlug.slice(-1).flat().pop())}
+          >
             <>
               <CatalogSwitcher
                 catalog={catalogId}

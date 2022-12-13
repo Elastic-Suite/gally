@@ -2,7 +2,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'next-i18next'
-import { ICategories, ICategory } from 'shared'
+import { ICategories, ICategory, finalTitlePage } from 'shared'
 import { styled } from '@mui/system'
 import classNames from 'classnames'
 
@@ -18,8 +18,6 @@ import ResourceTable from '~/components/stateful-pages/ResourceTable/ResourceTab
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import PageTitle from '~/components/atoms/PageTitle/PageTitle'
 import Alert from '~/components/atoms/Alert/Alert'
-
-const pagesSlug = ['search', 'facets']
 
 const ButtonSetting = styled('div')(({ theme }) => ({
   color: theme.palette.colors.neutral[900],
@@ -51,17 +49,20 @@ const DefaultButton = styled('button')(() => ({
   color: 'inherit',
 }))
 
+const pagesSlug = ['search', 'facets']
+
 function Facets(): JSX.Element {
   const router = useRouter()
   const [, setBreadcrumb] = useContext(breadcrumbContext)
   const { t } = useTranslation('facet')
   const [selectedCategoryItem, setSelectedCategoryItem] = useState<ICategory>()
 
+  const title = finalTitlePage(t(pagesSlug.slice(-1).flat().pop()))
+
   // Breadcrumb
   useEffect(() => {
     setBreadcrumb(pagesSlug)
   }, [router.query, setBreadcrumb])
-  const title = pagesSlug.slice(-1).flat()
 
   // Categories
   const [categories] = useFetchApi<ICategories>(`categoryTree`)

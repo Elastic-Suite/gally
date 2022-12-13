@@ -54,6 +54,7 @@ function Login(): JSX.Element {
   }
 
   const title = t('title.login')
+
   return (
     <div>
       <Head>

@@ -1,4 +1,5 @@
 import {
+  finalTitlePage,
   firstLetterLowercase,
   firstLetterUppercase,
   formatPrice,
@@ -29,6 +30,12 @@ describe('Format service', () => {
   describe('humanize', () => {
     it('Should humanize the label', () => {
       expect(humanize('defaultLabel')).toEqual('Default label')
+    })
+  })
+
+  describe('finalTitlePage', () => {
+    it('Should add Gally at the end of string finalTitlePage', () => {
+      expect(finalTitlePage('Catégories')).toEqual('Catégories - Gally')
     })
   })
 
