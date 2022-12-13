@@ -5,6 +5,7 @@ import UserMenuShow from './UserMenuShow'
 import { styled } from '@mui/system'
 import Collapse from '@mui/material/Collapse'
 import Box from '@mui/material/Box'
+import { selectUser, useAppSelector } from '~/store'
 
 const CustomUser = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -56,6 +57,7 @@ const CustomUserMenu = styled('div')(({ theme }) => ({
 
 function UserMenu(): JSX.Element {
   const [openUserMenu, setOpenUserMenu] = useState(false)
+  const user = useAppSelector(selectUser)
 
   return (
     <>
@@ -65,7 +67,7 @@ function UserMenu(): JSX.Element {
             name="person-outline"
             style={{ fontSize: '15px', color: '#8187B9' }}
           />
-          <CustomUserName>Admin Name</CustomUserName>
+          <CustomUserName>{user.username}</CustomUserName>
           <CustomArrow
             style={openUserMenu ? { transform: 'rotate(180deg)' } : {}}
           >
@@ -78,7 +80,7 @@ function UserMenu(): JSX.Element {
         <Box sx={{ position: 'relative' }}>
           <Collapse in={openUserMenu} sx={{ position: 'absolute', right: 0 }}>
             <CustomUserMenu>
-              <UserMenuShow />
+              <UserMenuShow user={user} />
             </CustomUserMenu>
           </Collapse>
         </Box>

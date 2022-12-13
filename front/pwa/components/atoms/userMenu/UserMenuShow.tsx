@@ -1,5 +1,5 @@
 import { styled } from '@mui/system'
-import { storageRemove, tokenStorageKey } from 'shared'
+import { IUser, storageRemove, tokenStorageKey } from 'shared'
 import { setUser, useAppDispatch } from '~/store'
 
 const CustomTypoTexte = styled('div')(({ theme }) => ({
@@ -36,7 +36,11 @@ const CustomHr = styled('div')(({ theme }) => ({
   borderColor: theme.palette.colors.neutral['300'],
 }))
 
-function UserMenuShow(): JSX.Element {
+interface IProps {
+  user: IUser
+}
+
+function UserMenuShow({ user }: IProps): JSX.Element {
   const dispatch = useAppDispatch()
 
   function handleLogOut(): void {
@@ -46,10 +50,10 @@ function UserMenuShow(): JSX.Element {
 
   return (
     <CustomTypoTexte>
-      <CustomTypoUsername>Admin name</CustomTypoUsername>
-      <CustomTypoEmail>adminame@mail.com</CustomTypoEmail>
+      <CustomTypoUsername>{user.username}</CustomTypoUsername>
+      <CustomTypoEmail>EMAIL</CustomTypoEmail>
+      {/*  TODO : make user.email */}
       <CustomHr />
-      <CustomTypoBasic>Account</CustomTypoBasic>
       <CustomTypoBasic onClick={handleLogOut}>Log out</CustomTypoBasic>
     </CustomTypoTexte>
   )
