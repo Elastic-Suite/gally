@@ -4,6 +4,7 @@ import {
   IHydraResponse,
   LoadStatus,
   useSchemaLoader,
+  IExtraConfiguration,
 } from 'shared'
 
 import { setData, useAppDispatch } from '~/store'
@@ -16,6 +17,8 @@ export function useDataLoader(): void {
   const log = useLog()
   const api = useSchemaLoader()
   const [bundles] = useFetchApi<IHydraResponse<IExtraBundle>>('extra_bundles')
+  const [configurations] =
+    useFetchApi<IHydraResponse<IExtraConfiguration>>('configurations')
 
   useEffect(() => {
     if (api.status === LoadStatus.FAILED) {
@@ -27,6 +30,9 @@ export function useDataLoader(): void {
         setData({
           api: api.data,
           bundles: bundles.data['hydra:member'].map((bundle) => bundle.name),
+          configurations: configurations.data['hydra:member'].map(
+            (configuration) => configuration.value
+          ),
         })
       )
     }

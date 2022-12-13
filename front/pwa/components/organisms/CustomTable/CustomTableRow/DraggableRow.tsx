@@ -26,6 +26,7 @@ import {
   selectionStyle,
   stickyStyle,
 } from './Row.service'
+import { selectConfiguration, useAppSelector } from '~/store'
 
 interface IProps {
   Field: FunctionComponent<IFieldGuesserProps>
@@ -79,6 +80,8 @@ function DraggableRow(props: IProps): JSX.Element {
   ): void {
     onRowUpdate(tableRow.id, name, value, event)
   }
+
+  const configuration = useAppSelector(selectConfiguration)
 
   return (
     <TableRow
@@ -151,23 +154,29 @@ function DraggableRow(props: IProps): JSX.Element {
         </StickyTableCell>
       ))}
 
-      {nonStickyHeaders.map((header) => (
-        <BaseTableCell sx={nonStickyStyle(header.type)} key={header.name}>
-          <Field
-            {...header}
-            diffValue={diffRow?.[header.name]}
-            label=""
-            onChange={handleChange}
-            row={tableRow}
-            value={tableRow[header.name]}
-            {...getFieldState(
-              tableRow,
-              header.depends,
-              tableConfig[header.name]
-            )}
-          />
-        </BaseTableCell>
-      ))}
+      {nonStickyHeaders.map((header) => {
+        const value =
+          tableRow[header.name] && header.name === 'image'
+            ? configuration[0] + tableRow[header.name]
+            : tableRow[header.name]
+        return (
+          <BaseTableCell sx={nonStickyStyle(header.type)} key={header.name}>
+            <Field
+              {...header}
+              diffValue={diffRow?.[header.name]}
+              label=""
+              onChange={handleChange}
+              row={tableRow}
+              value={value}
+              {...getFieldState(
+                tableRow,
+                header.depends,
+                tableConfig[header.name]
+              )}
+            />
+          </BaseTableCell>
+        )
+      })}
     </TableRow>
   )
 }

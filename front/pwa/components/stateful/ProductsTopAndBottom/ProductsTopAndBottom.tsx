@@ -57,6 +57,7 @@ function ProductsTopAndBottom(
     searchValue,
   } = props
   const { t } = useTranslation('categories')
+
   const topProductsIds = topProducts
     .map((topProduct) => topProduct.productId)
     .sort()

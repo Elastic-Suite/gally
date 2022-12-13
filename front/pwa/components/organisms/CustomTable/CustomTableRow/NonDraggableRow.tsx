@@ -23,6 +23,7 @@ import {
   selectionStyle,
   stickyStyle,
 } from './Row.service'
+import { selectConfiguration, useAppSelector } from '~/store'
 
 interface IProps {
   Field: FunctionComponent<IFieldGuesserProps>
@@ -75,6 +76,8 @@ function NonDraggableRow(props: IProps): JSX.Element {
     onRowUpdate(tableRow.id, name, value, event)
   }
 
+  const configuration = useAppSelector(selectConfiguration)
+
   return (
     <TableRow key={tableRow.id}>
       <StickyTableCell
@@ -111,49 +114,57 @@ function NonDraggableRow(props: IProps): JSX.Element {
         </StickyTableCell>
       )}
 
-      {stickyHeaders.map((stickyHeader, i) => (
-        <StickyTableCell
-          key={stickyHeader.name}
-          sx={stickyStyle(
-            cssLeftValues[i + 1 + Number(withSelection)],
-            shadow,
-            stickyHeader.isLastSticky,
-            stickyHeader.type
-          )}
-        >
-          <Field
-            {...stickyHeader}
-            diffValue={diffRow?.[stickyHeader.name]}
-            label=""
-            onChange={handleChange}
-            row={tableRow}
-            value={tableRow[stickyHeader.name]}
-            {...getFieldState(
-              tableRow,
-              stickyHeader.depends,
-              tableConfig[stickyHeader.name]
+      {stickyHeaders.map((stickyHeader, i) => {
+        return (
+          <StickyTableCell
+            key={stickyHeader.name}
+            sx={stickyStyle(
+              cssLeftValues[i + 1 + Number(withSelection)],
+              shadow,
+              stickyHeader.isLastSticky,
+              stickyHeader.type
             )}
-          />
-        </StickyTableCell>
-      ))}
+          >
+            <Field
+              {...stickyHeader}
+              diffValue={diffRow?.[stickyHeader.name]}
+              label=""
+              onChange={handleChange}
+              row={tableRow}
+              value={tableRow[stickyHeader.name]}
+              {...getFieldState(
+                tableRow,
+                stickyHeader.depends,
+                tableConfig[stickyHeader.name]
+              )}
+            />
+          </StickyTableCell>
+        )
+      })}
 
-      {nonStickyHeaders.map((header) => (
-        <BaseTableCell sx={nonStickyStyle(header.type)} key={header.name}>
-          <Field
-            {...header}
-            diffValue={diffRow?.[header.name]}
-            label=""
-            onChange={handleChange}
-            row={tableRow}
-            value={tableRow[header.name]}
-            {...getFieldState(
-              tableRow,
-              header.depends,
-              tableConfig[header.name]
-            )}
-          />
-        </BaseTableCell>
-      ))}
+      {nonStickyHeaders.map((header) => {
+        const value =
+          tableRow[header.name] && header.name === 'image'
+            ? configuration[0] + tableRow[header.name]
+            : tableRow[header.name]
+        return (
+          <BaseTableCell sx={nonStickyStyle(header.type)} key={header.name}>
+            <Field
+              {...header}
+              diffValue={diffRow?.[header.name]}
+              label=""
+              onChange={handleChange}
+              row={tableRow}
+              value={value}
+              {...getFieldState(
+                tableRow,
+                header.depends,
+                tableConfig[header.name]
+              )}
+            />
+          </BaseTableCell>
+        )
+      })}
     </TableRow>
   )
 }
