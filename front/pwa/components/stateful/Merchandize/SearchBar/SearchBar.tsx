@@ -12,6 +12,7 @@ interface IProps extends Omit<IInputTextProps, 'ref'> {
   searchValue: string
   onSearch?: (value: string) => void
   onValSearchOnChange?: (value: string) => void
+  isInputAdornmentClickable?: boolean
 }
 
 export default function SearchBar(props: IProps): JSX.Element {
@@ -22,6 +23,7 @@ export default function SearchBar(props: IProps): JSX.Element {
     onSearch,
     searchValue,
     onValSearchOnChange,
+    isInputAdornmentClickable,
     ...inputTextProps
   } = props
 
@@ -48,6 +50,10 @@ export default function SearchBar(props: IProps): JSX.Element {
   }
   const resultPinned = t('searchBarResult', { value: valuePinned })
 
+  function handleClick(): void {
+    onSearch(searchValue)
+  }
+
   return (
     <Paper variant="outlined">
       <Grid container justifyContent="space-between" sx={{ padding: '16px' }}>
@@ -72,7 +78,13 @@ export default function SearchBar(props: IProps): JSX.Element {
                 {...inputTextProps}
                 placeholder={t('searchBar.placeholder')}
                 endAdornment={
-                  <InputAdornment position="end">
+                  <InputAdornment
+                    position="end"
+                    onClick={isInputAdornmentClickable ? handleClick : null}
+                    sx={{
+                      cursor: isInputAdornmentClickable ? 'pointer' : '',
+                    }}
+                  >
                     <IonIcon name="search" />
                   </InputAdornment>
                 }
