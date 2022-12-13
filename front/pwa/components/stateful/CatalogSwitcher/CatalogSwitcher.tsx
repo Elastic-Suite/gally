@@ -71,7 +71,6 @@ function CatalogSwitcher(props: IProps): JSX.Element {
   return (
     <SwitchersContainer>
       <DropDown
-        required
         style={{ fontSize: '12px' }}
         onChange={onCatalogChange}
         value={catalog}
@@ -80,7 +79,6 @@ function CatalogSwitcher(props: IProps): JSX.Element {
       />
       {Boolean(catalog) && catalog !== -1 ? (
         <DropDown
-          required
           style={{ fontSize: '12px' }}
           onChange={onLocalizedCatalogChange}
           value={localizedCatalog}
