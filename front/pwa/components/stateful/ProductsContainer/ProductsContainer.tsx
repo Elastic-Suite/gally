@@ -213,6 +213,7 @@ function ProductsContainer(props: IProps): JSX.Element {
           sortValue={defaultSorting}
           searchValue={valSearchOnChange}
           onValSearchOnChange={onValSearchOnChange}
+          isInputAdornmentClickable
         />
         {Boolean(
           catConf && (!catConf.virtualRule || productGraphqlFilters)
