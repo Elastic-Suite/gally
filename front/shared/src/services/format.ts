@@ -16,6 +16,10 @@ export function humanize(label: string): string {
   return inflection.transform(label, ['underscore', 'humanize'])
 }
 
+export function finalTitlePage(title: string): string {
+  return `${title} - Gally`
+}
+
 export function getFieldLabelTranslationArgs(
   source: string,
   resource?: string

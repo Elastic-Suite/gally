@@ -7,7 +7,7 @@ import { breadcrumbContext } from '~/contexts'
 import { withAuth, withOptions } from '~/hocs'
 import { useTabs } from '~/hooks'
 import { selectMenu, useAppSelector } from '~/store'
-import { IRouterTab, findBreadcrumbLabel } from 'shared'
+import { IRouterTab, finalTitlePage, findBreadcrumbLabel } from 'shared'
 
 import PageTitle from '~/components/atoms/PageTitle/PageTitle'
 import CustomTabs from '~/components/molecules/layout/tabs/CustomTabs'
@@ -48,14 +48,18 @@ function Settings(): JSX.Element {
   )
   const [activeTab, handleTabChange] = useTabs(routerTabs)
   const { actions, id } = activeTab
-  const title = findBreadcrumbLabel(0, [pageSlug], menu.hierarchy)
+  const title = finalTitlePage(
+    findBreadcrumbLabel(0, [pageSlug], menu.hierarchy)
+  )
 
   return (
     <>
       <Head>
         <title>{title}</title>
       </Head>
-      <PageTitle title={title}>{actions}</PageTitle>
+      <PageTitle title={findBreadcrumbLabel(0, [pageSlug], menu.hierarchy)}>
+        {actions}
+      </PageTitle>
       <CustomTabs
         defaultActiveId={id}
         onChange={handleTabChange}
