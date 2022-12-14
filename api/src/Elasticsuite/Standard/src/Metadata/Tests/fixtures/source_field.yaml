@@ -53,3 +53,15 @@ Elasticsuite\Metadata\Model\SourceField:
         metadata: '@product'
         code: 'brand'
         type: 'select'
+    product_category:
+        metadata: '@product'
+        code: 'category'
+        type: 'category'
+        isFilterable: false
+        isSortable: false
+    product_flag:
+        metadata: '@product'
+        code: 'flag'
+        type: 'text'
+        isFilterable: false
+        isSortable: false

@@ -27,6 +27,7 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Index\Service;
 
+use Elasticsearch\Common\Exceptions\Missing404Exception;
 use Elasticsuite\Catalog\Model\LocalizedCatalog;
 use Elasticsuite\Exception\LogicException;
 use Elasticsuite\Index\Api\IndexSettingsInterface;
@@ -69,6 +70,44 @@ class IndexOperation
             $this->indexSettings->createIndexNameFromIdentifier($metadata->getEntity(), $catalog),
             $indexSettings
         );
+    }
+
+    /**
+     * Updated the mapping of an index according to current computed mapping
+     * This is use as a real-time update when changing field configurations.
+     *
+     * @param Metadata                    $metadata         Entity metadata
+     * @param int|string|LocalizedCatalog $localizedCatalog Localized catalog
+     * @param array                       $fields           The fields to update. Default to all.
+     */
+    public function updateMapping(Metadata $metadata, LocalizedCatalog|int|string $localizedCatalog, $fields = []): void
+    {
+        try {
+            // Mapping cannot be generated when the source list is empty, this is the case when the fixtures execution.
+            if (0 === \count($metadata->getSourceFields())) {
+                return;
+            }
+
+            $indexAlias = $this->indexSettings->getIndexAliasFromIdentifier($metadata->getEntity(), $localizedCatalog);
+            $mapping = $this->metadataManager->getMapping($metadata)->asArray();
+            if (!empty($fields)) {
+                $properties = $mapping['properties'] ?? [];
+                if (!empty($properties) && \is_array($properties)) {
+                    $properties = array_filter(
+                        $properties,
+                        function ($key) use ($fields) {
+                            return \in_array($key, $fields, true);
+                        },
+                        \ARRAY_FILTER_USE_KEY
+                    );
+
+                    $mapping['properties'] = $properties;
+                }
+            }
+            $this->indexRepository->putMapping($indexAlias, $mapping);
+        } catch (Missing404Exception $exception) {
+            // Do nothing, we cannot update mapping of a non existing indexAlias.
+        }
     }
 
     /**

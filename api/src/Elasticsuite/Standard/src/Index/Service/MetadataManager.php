@@ -18,7 +18,9 @@ namespace Elasticsuite\Index\Service;
 
 use Elasticsuite\Index\Converter\SourceField\SourceFieldConverterInterface;
 use Elasticsuite\Index\Model\Index\Mapping;
+use Elasticsuite\Index\Model\Index\Mapping\FieldInterface;
 use Elasticsuite\Metadata\Model\Metadata;
+use Elasticsuite\Metadata\Model\SourceField;
 
 class MetadataManager
 {
@@ -42,14 +44,25 @@ class MetadataManager
 
         // Dynamic fields
         foreach ($metadata->getSourceFields() as $sourceField) {
-            foreach ($this->sourceFieldConverters as $converter) {
-                if ($converter->supports($sourceField)) {
-                    $fields = $converter->getFields($sourceField) + $fields;
-                }
-            }
+            $fields = $this->getFields($sourceField) + $fields;
         }
 
         return new Mapping($fields);
+    }
+
+    /**
+     * @return FieldInterface[]
+     */
+    public function getFields(SourceField $sourceField): array
+    {
+        $fields = [];
+        foreach ($this->sourceFieldConverters as $converter) {
+            if ($converter->supports($sourceField)) {
+                $fields = $converter->getFields($sourceField) + $fields;
+            }
+        }
+
+        return $fields;
     }
 
     public function getMappingStatus(Metadata $metadata): Mapping\Status

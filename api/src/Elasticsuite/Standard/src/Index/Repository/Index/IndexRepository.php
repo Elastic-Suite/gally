@@ -1174,6 +1174,18 @@ class IndexRepository implements IndexRepositoryInterface
     /**
      * {@inheritDoc}
      */
+    public function putMapping(array|string $indexName, array $mapping): void
+    {
+        if (\is_array($indexName)) {
+            $indexName = implode(',', $indexName);
+        }
+
+        $this->client->indices()->putMapping(['index' => $indexName, 'body' => $mapping]);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getMapping(array|string $indexName): array
     {
         if (\is_array($indexName)) {
