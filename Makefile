@@ -1,5 +1,5 @@
 # Executables (local)
-DOCKER_COMP = docker-compose
+DOCKER_COMP := $(shell docker compose ls 1>&2 2>/dev/null && echo 'docker compose' || echo 'docker-compose')
 
 # Docker containers
 PHP_CONT = $(DOCKER_COMP) exec php
@@ -23,6 +23,7 @@ help: ## Outputs this help screen
 
 ## —— Docker 🐳 ————————————————————————————————————————————————————————————————
 build: ## Builds the Docker images
+	$(MAKE) .env
 	@$(DOCKER_COMP) build
 
 build_no_cache: ## Builds the Docker images (without cache)
