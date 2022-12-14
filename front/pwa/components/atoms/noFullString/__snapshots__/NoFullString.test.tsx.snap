@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NoFullString match snapshot no tooltip with uppercase and max 20 1`] = `
+<div>
+  No tooltip with uppe...
+</div>
+`;
+
+exports[`NoFullString match snapshot tooltip with no uppercase and max 20 1`] = `
+<div>
+  <span
+    aria-label="tooltip with no uppercase and max 20"
+    class=""
+    data-mui-internal-clone-element="true"
+    style="display: inline-block;"
+  >
+    tooltip with no uppe...
+  </span>
+</div>
+`;
+
+exports[`NoFullString match snapshot tooltip with uppercase and max default 1`] = `
+<div>
+  <span
+    aria-label="tooltip with uppercase and max default"
+    class=""
+    data-mui-internal-clone-element="true"
+    style="display: inline-block;"
+  >
+    Tooltip with uppercase and m...
+  </span>
+</div>
+`;
