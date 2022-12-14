@@ -6,6 +6,7 @@ import { styled } from '@mui/system'
 import Collapse from '@mui/material/Collapse'
 import Box from '@mui/material/Box'
 import { selectUser, useAppSelector } from '~/store'
+import NoFullString from '../noFullString/NoFullString'
 
 const CustomUser = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -67,7 +68,9 @@ function UserMenu(): JSX.Element {
             name="person-outline"
             style={{ fontSize: '15px', color: '#8187B9' }}
           />
-          <CustomUserName>{user.username}</CustomUserName>
+          <CustomUserName>
+            <NoFullString name={user.username} toolTip firstLetterUpp />
+          </CustomUserName>
           <CustomArrow
             style={openUserMenu ? { transform: 'rotate(180deg)' } : {}}
           >
