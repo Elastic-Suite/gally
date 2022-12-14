@@ -93,6 +93,14 @@ interface IndexRepositoryInterface
     public function updateAliases(array $aliasActions): void;
 
     /**
+     * Update index mapping.
+     *
+     * @param string[]|string $indexName One or several indices names
+     * @param array           $mapping   Mapping definition
+     */
+    public function putMapping(array|string $indexName, array $mapping): void;
+
+    /**
      * Retrieves the mapping of one or several indices.
      *
      * @param string[]|string $indexName One or several indices names

@@ -80,6 +80,11 @@ class Field implements FieldInterface
         return $this->type;
     }
 
+    public function getConfig(): array
+    {
+        return $this->config;
+    }
+
     public function isSearchable(): bool
     {
         return (bool) $this->config['is_searchable'];

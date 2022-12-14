@@ -109,8 +109,8 @@ class SourceFieldTest extends AbstractEntityTestWithUpdate
 
         return [
             [$user, 1, ['id' => 1, 'code' => 'name', 'weight' => 10], 200],
-            [$user, 10, ['id' => 10, 'code' => 'description', 'weight' => 1], 200],
-            [$user, 13, ['id' => 13, 'code' => 'length', 'weight' => 2], 200],
+            [$user, 12, ['id' => 12, 'code' => 'description', 'weight' => 1], 200],
+            [$user, 15, ['id' => 15, 'code' => 'length', 'weight' => 2], 200],
             [$user, 20, [], 404],
         ];
     }
@@ -137,7 +137,7 @@ class SourceFieldTest extends AbstractEntityTestWithUpdate
     public function getCollectionDataProvider(): iterable
     {
         return [
-            [$this->getUser(Role::ROLE_CONTRIBUTOR), 13, 200],
+            [$this->getUser(Role::ROLE_CONTRIBUTOR), 15, 200],
         ];
     }
 
