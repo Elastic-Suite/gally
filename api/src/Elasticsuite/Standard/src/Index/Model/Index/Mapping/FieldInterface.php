@@ -57,6 +57,8 @@ interface FieldInterface
 
     public function getType(): string;
 
+    public function getConfig(): array;
+
     public function isSearchable(): bool;
 
     public function isFilterable(): bool;

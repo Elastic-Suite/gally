@@ -41,3 +41,13 @@ services:
             - '@Elasticsuite\Metadata\Repository\SourceFieldRepository'
         tags:
             - { name: doctrine.event_subscriber }
+
+    Elasticsuite\Metadata\EventSubscriber\SpreadSourceFieldData:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@Elasticsuite\Index\Service\MetadataManager'
+            - '@Elasticsuite\Index\Service\IndexOperation'
+            - '@Elasticsuite\Catalog\Repository\LocalizedCatalogRepository'
+            - '@logger'
+        tags:
+            - { name: doctrine.event_subscriber }
