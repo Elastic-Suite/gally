@@ -4,6 +4,7 @@ import {
   IEntityIntegerTypeFilterInput,
   IProductFieldFilterInput,
   ISelectTypeDefaultFilterInputType,
+  IStockTypeDefaultFilterInputType,
 } from 'shared'
 
 import { IActiveFilters } from '../types'
@@ -20,6 +21,18 @@ export function getProductFilters(
       acc[activeFilter.filter.field as keyof IProductFieldFilterInput] = {
         eq: activeFilter.value,
       } as ICategoryTypeDefaultFilterInputType
+    } else if (
+      // todo: remove test using label
+      activeFilter.filter.label === 'Stock' ||
+      activeFilter.filter.type === AggregationType.STOCK
+    ) {
+      acc[activeFilter.filter.field as keyof IProductFieldFilterInput] = {
+        eq: true,
+      } as IStockTypeDefaultFilterInputType
+    } else if (activeFilter.filter.type === AggregationType.SLIDER) {
+      acc[activeFilter.filter.field as keyof IProductFieldFilterInput] = {
+        lte: Number(activeFilter.value),
+      } as IEntityIntegerTypeFilterInput
     } else if (activeFilter.filter.type === AggregationType.CHECKBOX) {
       if (!(activeFilter.filter.field in acc)) {
         acc[activeFilter.filter.field as keyof IProductFieldFilterInput] = {
@@ -31,14 +44,6 @@ export function getProductFilters(
           activeFilter.filter.field as keyof IProductFieldFilterInput
         ] as ISelectTypeDefaultFilterInputType
       ).in.push(activeFilter.value)
-    } else if (activeFilter.filter.type === AggregationType.SLIDER) {
-      acc[activeFilter.filter.field as keyof IProductFieldFilterInput] = {
-        lte: Number(activeFilter.value),
-      } as IEntityIntegerTypeFilterInput
-    } else {
-      acc[activeFilter.filter.field as keyof IProductFieldFilterInput] = {
-        eq: activeFilter.value,
-      } as ISelectTypeDefaultFilterInputType
     }
     return acc
   }, {})
