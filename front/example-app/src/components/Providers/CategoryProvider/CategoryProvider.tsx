@@ -16,18 +16,15 @@ function CategoryProvider(props: IProps): JSX.Element {
     () => ({ localizedCatalogId: Number(localizedCatalogId) }),
     [localizedCatalogId]
   )
-  const [categories, setCategories, load] = useGraphqlApi<IGraphqlCategories>(
-    getCategoryTreeQuery,
-    variables
-  )
+  const [categories, setCategories, load] = useGraphqlApi<IGraphqlCategories>()
 
   useEffect(() => {
     if (localizedCatalogId) {
-      load()
+      load(getCategoryTreeQuery, variables)
     } else {
       setCategories(null)
     }
-  }, [load, localizedCatalogId, setCategories])
+  }, [load, localizedCatalogId, setCategories, variables])
 
   const categoryList = useMemo(
     () => categories.data?.getCategoryTree.categories ?? [],
