@@ -39,6 +39,7 @@ class AddAggregationsData implements SerializeStageInterface
 {
     public const AGGREGATION_TYPE_CHECKBOX = 'checkbox';
     public const AGGREGATION_TYPE_SLIDER = 'slider';
+    public const AGGREGATION_TYPE_CATEGORY = 'category';
 
     public function __construct(
         private SerializeStageInterface $decorated,
@@ -92,6 +93,7 @@ class AddAggregationsData implements SerializeStageInterface
             'label' => $sourceField ? $sourceField->getLabel($containerConfig->getLocalizedCatalog()->getId()) : $aggregation->getField(),
             'type' => match ($sourceField?->getType()) {
                 Type::TYPE_PRICE, Type::TYPE_FLOAT, Type::TYPE_INT => self::AGGREGATION_TYPE_SLIDER,
+                Type::TYPE_CATEGORY => self::AGGREGATION_TYPE_CATEGORY,
                 default => self::AGGREGATION_TYPE_CHECKBOX,
             },
             'count' => $aggregation->getCount(),

@@ -707,7 +707,7 @@ class SearchDocumentsTest extends AbstractTest
                     [
                         'field' => 'category',
                         'label' => 'Category',
-                        'type' => 'checkbox',
+                        'type' => 'category',
                         'hasMore' => false,
                         'options' => [
                             [
