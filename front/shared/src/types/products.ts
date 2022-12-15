@@ -20,10 +20,10 @@ export interface IGraphqlSearchProductsVariables {
 }
 
 export enum AggregationType {
-  BOOLEAN = 'boolean',
   CATEGORY = 'category',
   CHECKBOX = 'checkbox',
   SLIDER = 'slider',
+  STOCK = 'stock',
 }
 
 export interface IGraphqlSearchProducts {
