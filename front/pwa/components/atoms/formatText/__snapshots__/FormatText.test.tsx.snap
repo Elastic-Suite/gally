@@ -1,12 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`NoFullString match snapshot no tooltip with uppercase and max 20 1`] = `
+exports[`FormatText match snapshot no tooltip with uppercase and max 20 1`] = `
 <div>
   No tooltip with uppe...
 </div>
 `;
 
-exports[`NoFullString match snapshot tooltip with no uppercase and max 20 1`] = `
+exports[`FormatText match snapshot tooltip with no uppercase and max 20 1`] = `
 <div>
   <span
     aria-label="tooltip with no uppercase and max 20"
@@ -19,7 +19,7 @@ exports[`NoFullString match snapshot tooltip with no uppercase and max 20 1`] = 
 </div>
 `;
 
-exports[`NoFullString match snapshot tooltip with uppercase and max default 1`] = `
+exports[`FormatText match snapshot tooltip with uppercase and max default 1`] = `
 <div>
   <span
     aria-label="tooltip with uppercase and max default"

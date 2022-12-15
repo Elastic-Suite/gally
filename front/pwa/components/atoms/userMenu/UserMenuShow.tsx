@@ -1,7 +1,7 @@
 import { styled } from '@mui/system'
 import { IUser, storageRemove, tokenStorageKey } from 'shared'
 import { setUser, useAppDispatch } from '~/store'
-import NoFullString from '../noFullString/NoFullString'
+import FormatText from '../formatText/FormatText'
 
 const CustomTypoTexte = styled('div')(({ theme }) => ({
   fontStyle: 'normal',
@@ -47,7 +47,7 @@ function UserMenuShow({ user }: IProps): JSX.Element {
   return (
     <CustomTypoTexte>
       <CustomTypoEmail>
-        <NoFullString name={user.username} toolTip firstLetterUpp />
+        <FormatText name={user.username} toolTip firstLetterUpp />
       </CustomTypoEmail>
       <CustomHr />
       <CustomTypoBasic onClick={handleLogOut}>Log out</CustomTypoBasic>
