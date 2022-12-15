@@ -37,7 +37,7 @@ function FacetChoices(props: IProps): JSX.Element {
       <Collapse in={more}>
         <FormGroup aria-labelledby={id}>Load more facets...</FormGroup>
       </Collapse>
-      {Boolean(filter.has_more) && (
+      {Boolean(filter.hasMore) && (
         <Button onClick={handleToggleMore}>
           {more ? 'Show less' : 'Show more'}
         </Button>

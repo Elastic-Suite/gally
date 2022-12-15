@@ -21,7 +21,7 @@ export function useProductSort(): [
   const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.ASC)
 
   const [categorySortingOptions, , loadSortOptions] =
-    useGraphqlApi<IGraphqlCategorySortingOption>(getCategorySortingOptionsQuery)
+    useGraphqlApi<IGraphqlCategorySortingOption>()
   const sortOptions: IOptions<string> = useMemo(
     () =>
       categorySortingOptions.data?.categorySortingOptions.map(
@@ -34,7 +34,7 @@ export function useProductSort(): [
   )
 
   useEffect(() => {
-    loadSortOptions()
+    loadSortOptions(getCategorySortingOptionsQuery)
   }, [loadSortOptions])
 
   return [sort, sortOrder, sortOptions, setSort, setSortOrder]

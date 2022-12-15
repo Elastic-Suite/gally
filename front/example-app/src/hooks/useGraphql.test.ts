@@ -50,11 +50,11 @@ describe('useGraphql', () => {
   describe('useGraphqlApi', () => {
     it('calls and return the api result', async () => {
       ;(fetchGraphql as jest.Mock).mockClear()
-      const { result } = renderHookWithProviders(() => useGraphqlApi(testQuery))
+      const { result } = renderHookWithProviders(() => useGraphqlApi())
       expect(result.current[0]).toEqual({
         status: LoadStatus.IDLE,
       })
-      await act(() => result.current[2]())
+      await act(() => result.current[2](testQuery))
       expect(result.current[0]).toEqual({
         status: LoadStatus.SUCCEEDED,
         data: { hello: 'world' },
@@ -69,7 +69,7 @@ describe('useGraphql', () => {
 
     it('should update the data in the response', () => {
       ;(fetchGraphql as jest.Mock).mockClear()
-      const { result } = renderHookWithProviders(() => useGraphqlApi(testQuery))
+      const { result } = renderHookWithProviders(() => useGraphqlApi())
       act(() => result.current[1]({ hello: 'foo' }))
       expect(result.current[0]).toEqual({
         status: LoadStatus.IDLE,
@@ -79,7 +79,7 @@ describe('useGraphql', () => {
 
     it('should update the data in the response (using an update function)', () => {
       ;(fetchGraphql as jest.Mock).mockClear()
-      const { result } = renderHookWithProviders(() => useGraphqlApi(testQuery))
+      const { result } = renderHookWithProviders(() => useGraphqlApi())
       act(() => result.current[1]({ hello: 'foo' }))
       act(() => result.current[1]((data: any) => ({ ...data, foo: 'bar' })))
       expect(result.current[0]).toEqual({

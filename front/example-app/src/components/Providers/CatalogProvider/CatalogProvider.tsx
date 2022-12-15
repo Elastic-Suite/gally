@@ -13,10 +13,10 @@ function CatalogProvider(props: IProps): JSX.Element {
   const { children } = props
   const [catalogId, setCatalogId] = useState<string>('')
   const [localizedCatalogId, setLocalizedCatalogId] = useState<string>('')
-  const [catalogs, , load] = useGraphqlApi<IGraphqlCatalogs>(catalogsQuery)
+  const [catalogs, , load] = useGraphqlApi<IGraphqlCatalogs>()
 
   useEffect(() => {
-    load()
+    load(catalogsQuery)
   }, [load])
 
   const context = useMemo(() => {
