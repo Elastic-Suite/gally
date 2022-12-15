@@ -66,7 +66,7 @@ export interface IGraphqlProductAggregation {
   label: string
   type: AggregationType
   options: IGraphqlProductAggregationOption[]
-  has_more: boolean | null
+  hasMore: boolean | null
 }
 
 export interface IGraphqlProductAggregationOption {
