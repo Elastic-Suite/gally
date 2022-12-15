@@ -19,12 +19,11 @@ function FacetChoice(props: IProps): JSX.Element {
   const { activeOptions, filter, onChange, option } = props
   return (
     <FormControlLabel
-      key={String(option.value)}
       control={
         <Checkbox
           checked={activeOptions.includes(option.value) ?? false}
-          onChange={onChange(filter, option.value)}
           name={String(option.value)}
+          onChange={onChange(filter, option.value)}
         />
       }
       label={
