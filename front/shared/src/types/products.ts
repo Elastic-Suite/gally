@@ -21,6 +21,7 @@ export interface IGraphqlSearchProductsVariables {
 
 export enum AggregationType {
   BOOLEAN = 'boolean',
+  CATEGORY = 'category',
   CHECKBOX = 'checkbox',
   SLIDER = 'slider',
 }
@@ -86,10 +87,12 @@ export interface IProductBoolFilterInput {
   _not?: IProductFieldFilterInput[]
 }
 
-export interface IProductTextTypeFilterInput {
-  eq?: string
-  in?: string[]
-  match?: string
+export interface ICategoryTypeDefaultFilterInputType {
+  eq: string
+}
+
+export interface IStockTypeDefaultFilterInputType {
+  eq?: boolean
   exist?: boolean
 }
 
@@ -99,7 +102,12 @@ export interface ISelectTypeDefaultFilterInputType {
   exist?: boolean
 }
 
-export interface IProductIntegerTypeFilterInput {
+export interface IEntityTextTypeFilterInput
+  extends ISelectTypeDefaultFilterInputType {
+  match?: string
+}
+
+export interface IEntityIntegerTypeFilterInput {
   eq?: number
   in?: number[]
   gte?: number
@@ -109,21 +117,15 @@ export interface IProductIntegerTypeFilterInput {
   exist?: boolean
 }
 
+export type ITypeFilterInput =
+  | IEntityIntegerTypeFilterInput
+  | IEntityTextTypeFilterInput
+  | ISelectTypeDefaultFilterInputType
+  | IStockTypeDefaultFilterInputType
+  | ICategoryTypeDefaultFilterInputType
+  | IProductBoolFilterInput
+
 export interface IProductFieldFilterInput {
   boolFilter?: IProductBoolFilterInput
-  category__id?: IProductTextTypeFilterInput
-  accessory_brand__value?: ISelectTypeDefaultFilterInputType
-  accessory_gemstone_addon__value?: ISelectTypeDefaultFilterInputType
-  accessory_recyclable_material__value?: ISelectTypeDefaultFilterInputType
-  color__value?: ISelectTypeDefaultFilterInputType
-  fashion_color__value?: ISelectTypeDefaultFilterInputType
-  fashion_material__value?: ISelectTypeDefaultFilterInputType
-  fashion_size__value?: ISelectTypeDefaultFilterInputType
-  fashion_style__value?: ISelectTypeDefaultFilterInputType
-  has_video__value?: ISelectTypeDefaultFilterInputType
-  manufacturer__value?: ISelectTypeDefaultFilterInputType
-  image?: IProductTextTypeFilterInput
-  sku?: IProductTextTypeFilterInput
-  name?: IProductTextTypeFilterInput
-  id?: IProductIntegerTypeFilterInput
+  [key: string]: ITypeFilterInput
 }

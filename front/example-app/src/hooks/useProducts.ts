@@ -67,8 +67,8 @@ export function useProducts(
         loadFunction(
           getSearchProductsQuery(
             {
-              ...getProductFilters(activeFilters),
               ...filters,
+              ...getProductFilters(activeFilters),
             },
             true
           ),
