@@ -20,7 +20,6 @@ describe('FormatText match snapshot', () => {
         name="tooltip with no uppercase and max 20"
         toolTip
         max={20}
-        firstLetterUpp={false}
       />
     )
     expect(container).toMatchSnapshot()
