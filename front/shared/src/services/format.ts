@@ -16,6 +16,22 @@ export function humanize(label: string): string {
   return inflection.transform(label, ['underscore', 'humanize'])
 }
 
+export function removeFirstOrLastCharOfString(
+  value: string,
+  removeChar: string,
+  position: string
+): string {
+  const strToArray = value.split('')
+  const charOfArray = position === 'last' ? strToArray.pop() : strToArray[0]
+  if (charOfArray === removeChar && position === 'last') {
+    return value.slice(0, -1)
+  }
+  if (charOfArray === removeChar && position === 'first') {
+    return value.slice(1)
+  }
+  return value
+}
+
 export function getFieldLabelTranslationArgs(
   source: string,
   resource?: string

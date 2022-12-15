@@ -6,7 +6,7 @@ import { RootState } from './store'
 export interface IDataState {
   api: IApi
   bundles: Bundle[]
-  configurations: any
+  configurations: string[]
 }
 
 const initialState: IDataState = {
@@ -32,5 +32,5 @@ export const dataReducer = dataSlice.reducer
 
 export const selectApi = (state: RootState): IApi => state.data.api
 export const selectBundles = (state: RootState): Bundle[] => state.data.bundles
-export const selectConfiguration = (state: RootState): any =>
+export const selectConfiguration = (state: RootState): string[] =>
   state.data.configurations

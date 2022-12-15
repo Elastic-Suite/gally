@@ -1,10 +1,10 @@
 import { useEffect } from 'react'
 import {
   IExtraBundle,
+  IExtraConfiguration,
   IHydraResponse,
   LoadStatus,
   useSchemaLoader,
-  IExtraConfiguration,
 } from 'shared'
 
 import { setData, useAppDispatch } from '~/store'

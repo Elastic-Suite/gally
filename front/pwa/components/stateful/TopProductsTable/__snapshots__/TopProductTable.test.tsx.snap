@@ -121,7 +121,7 @@ exports[`TopProductTable Should match snapschot 1`] = `
               <img
                 alt="field.productImage"
                 class="css-1qpslqa"
-                src="static/media/assets/img/scarf_elastic.png"
+                src="https://localhost/media/catalog/product/static/media/assets/img/scarf_elastic.png"
               />
             </td>
             <td
@@ -233,7 +233,7 @@ exports[`TopProductTable Should match snapschot 1`] = `
               <img
                 alt="field.productImage"
                 class="css-1qpslqa"
-                src="static/media/assets/img/scarf_elastic.png"
+                src="https://localhost/media/catalog/product/static/media/assets/img/scarf_elastic.png"
               />
             </td>
             <td

@@ -16,6 +16,7 @@ import {
 
 import BottomTable from '~/components/stateful/TopAndBottomTable/BottomTable'
 import TopTable from '~/components/stateful/TopAndBottomTable/TopTable'
+import { selectConfiguration, useAppSelector } from '~/store'
 
 const PreviewArea = styled(Box)(({ theme }) => ({
   fontSize: '12px',
@@ -67,7 +68,9 @@ function ProductsTopAndBottom(
     if (current && searchValue) {
       current.scrollIntoView({ behavior: 'smooth' })
     }
-  }, [ref, searchValue])
+  }, [current, searchValue])
+
+  const configuration = useAppSelector(selectConfiguration)
 
   return (
     <Paper variant="outlined" sx={{ backgroundColor: 'colors.neutral.300' }}>
@@ -83,6 +86,7 @@ function ProductsTopAndBottom(
             topProducts={topProducts}
             topProductsIds={topProductsIds}
             sortValue={sortValue}
+            configuration={configuration}
           />
         )}
         <Box
@@ -102,6 +106,7 @@ function ProductsTopAndBottom(
             setNbBottomRows={setNbBottomRows}
             sortValue={sortValue}
             searchValue={searchValue}
+            configuration={configuration}
           />
         </Box>
       </Box>
