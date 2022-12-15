@@ -1,9 +1,9 @@
 import {
-  finalTitlePage,
   firstLetterLowercase,
   firstLetterUppercase,
   formatPrice,
   getFieldLabelTranslationArgs,
+  getHeadTitle,
   getNameFromDefault,
   humanize,
 } from './format'
@@ -33,9 +33,9 @@ describe('Format service', () => {
     })
   })
 
-  describe('finalTitlePage', () => {
-    it('Should add Gally at the end of string finalTitlePage', () => {
-      expect(finalTitlePage('Catégories')).toEqual('Catégories - Gally')
+  describe('getHeadTitle', () => {
+    it('Should add Gally at the end of string getHeadTitle', () => {
+      expect(getHeadTitle('Catégories')).toEqual('Catégories - Gally')
     })
   })
 
