@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 import { ICategory, ProductRequestType } from 'shared'
 
@@ -26,6 +26,7 @@ function findCategory(categories: ICategory[], id: string): ICategory {
 
 function Category(): JSX.Element {
   const { id } = useParams()
+  const filters = useMemo(() => ({ category__id: { eq: id } }), [id])
   const {
     activeFilters,
     loadProduts,
@@ -40,7 +41,7 @@ function Category(): JSX.Element {
     sort,
     sortOptions,
     sortOrder,
-  } = useProducts(ProductRequestType.CATALOG, { category__id: { eq: id } })
+  } = useProducts(ProductRequestType.CATALOG, filters)
   const categories = useContext(categoryContext)
   const category = findCategory(categories, id)
 

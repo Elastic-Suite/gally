@@ -40,13 +40,8 @@ export function useProducts(
     }
     return variables
   }, [localizedCatalogId, page, pageSize, requestType, search, sort, sortOrder])
-  const [products, setProducts, , debouncedLoad] = useGraphqlApi<IGraphqlSearchProducts>(
-    getSearchProductsQuery({
-      ...getProductFilters(activeFilters),
-      ...filters
-    }, true),
-    variables as unknown as Record<string, unknown>
-  )
+  const [products, setProducts, load, debouncedLoad] =
+    useGraphqlApi<IGraphqlSearchProducts>()
   const field = products.data?.products.sortInfo.current[0].field
   const direction = products.data?.products.sortInfo.current[0].direction
 
@@ -68,12 +63,30 @@ export function useProducts(
   const loadProduts = useCallback(
     (condition: boolean) => {
       if (localizedCatalogId && condition) {
-        debouncedLoad()
+        const loadFunction = activeFilters.length === 0 ? load : debouncedLoad
+        loadFunction(
+          getSearchProductsQuery(
+            {
+              ...getProductFilters(activeFilters),
+              ...filters,
+            },
+            true
+          ),
+          variables as unknown as Record<string, unknown>
+        )
       } else {
         setProducts(null)
       }
     },
-    [debouncedLoad, localizedCatalogId, setProducts]
+    [
+      activeFilters,
+      debouncedLoad,
+      filters,
+      load,
+      localizedCatalogId,
+      setProducts,
+      variables,
+    ]
   )
 
   return useMemo(

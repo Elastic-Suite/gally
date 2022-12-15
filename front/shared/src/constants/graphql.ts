@@ -65,7 +65,7 @@ export function getSearchProductsQuery(
               label: true,
               value: true,
             },
-            has_more: true,
+            hasMore: true,
           },
         }),
       },
