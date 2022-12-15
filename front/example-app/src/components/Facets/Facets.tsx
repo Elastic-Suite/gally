@@ -36,26 +36,33 @@ function Facets(props: IProps): JSX.Element {
     return () =>
       onFilterChange((prevState) => {
         const clone = [...prevState]
-        const filterOptionIndex = prevState.findIndex(
-          (activeFilter) =>
-            activeFilter.filter === filter && activeFilter.value === value
-        )
+        // For the following types we only manage one value: replace the previous one with the new one
         if (
+          // todo: remove test using label
+          'Category' === filter.label ||
+          filter.type === AggregationType.CATEGORY ||
           filter.type === AggregationType.BOOLEAN ||
           filter.type === AggregationType.SLIDER
         ) {
           const filterIndex = prevState.findIndex(
-            (activeFilter) => activeFilter.filter === filter
+            (activeFilter) => activeFilter.filter.field === filter.field
           )
           if (filterIndex !== -1) {
             clone.splice(filterIndex, 1, { filter, value })
             return clone
           }
         }
+        // Remove existing value if there is one (it means we clicked on a checked checkbox)
+        const filterOptionIndex = prevState.findIndex(
+          (activeFilter) =>
+            activeFilter.filter.field === filter.field &&
+            activeFilter.value === value
+        )
         if (filterOptionIndex !== -1) {
           clone.splice(filterOptionIndex, 1)
           return clone
         }
+        // Add the value for multi-valued filters
         clone.push({ filter, value })
         return clone
       })
@@ -67,7 +74,8 @@ function Facets(props: IProps): JSX.Element {
         const clone = [...prevState]
         const filterOptionIndex = prevState.findIndex(
           (activeFilter) =>
-            activeFilter.filter === filter && activeFilter.value === value
+            activeFilter.filter.field === filter.field &&
+            activeFilter.value === value
         )
         if (filterOptionIndex !== -1) {
           clone.splice(filterOptionIndex, 1)

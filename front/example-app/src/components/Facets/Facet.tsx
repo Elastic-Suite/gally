@@ -6,8 +6,9 @@ import { AggregationType, IGraphqlProductAggregation } from 'shared'
 
 import { IActiveFilters, IFilterChange } from '../../types'
 
-import FacetChoices from './FacetChoices'
 import FacetBoolean from './FacetBoolean'
+import FacetCategories from './FacetCategories'
+import FacetChoices from './FacetChoices'
 import FacetSlider from './FacetSlider'
 
 const Title = styled('h3')({
@@ -29,10 +30,31 @@ function getFacet(
   id: string,
   onChange: IFilterChange
 ): JSX.Element {
+  // todo: remove test using label
+  if ('Category' === filter.label) {
+    return (
+      <FacetCategories
+        activeOptions={activeOptions}
+        filter={filter}
+        id={id}
+        onChange={onChange}
+      />
+    )
+  }
   switch (filter.type) {
     case AggregationType.BOOLEAN:
       return (
         <FacetBoolean
+          activeOptions={activeOptions}
+          filter={filter}
+          id={id}
+          onChange={onChange}
+        />
+      )
+
+    case AggregationType.CATEGORY:
+      return (
+        <FacetCategories
           activeOptions={activeOptions}
           filter={filter}
           id={id}
@@ -73,7 +95,7 @@ function Facet(props: IProps): JSX.Element {
   const [open, setOpen] = useState(false)
   const id = useId()
   const activeOptions = activeFilters
-    .filter((activeFilters) => activeFilters.filter === filter)
+    .filter((activeFilters) => activeFilters.filter.field === filter.field)
     .map((activeFilters) => activeFilters.value)
 
   function handleToggleOpen(): void {
