@@ -1,8 +1,7 @@
-import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'next-i18next'
-import { ICategories, ICategory, finalTitlePage } from 'shared'
+import { ICategories, ICategory } from 'shared'
 import { styled } from '@mui/system'
 import classNames from 'classnames'
 
@@ -57,8 +56,6 @@ function Facets(): JSX.Element {
   const { t } = useTranslation('facet')
   const [selectedCategoryItem, setSelectedCategoryItem] = useState<ICategory>()
 
-  const title = finalTitlePage(t(pagesSlug.slice(-1).flat().pop()))
-
   // Breadcrumb
   useEffect(() => {
     setBreadcrumb(pagesSlug)
@@ -85,9 +82,6 @@ function Facets(): JSX.Element {
 
   return (
     <>
-      <Head>
-        <title>{title}</title>
-      </Head>
       <TwoColsLayout
         left={[
           <TitleBlock

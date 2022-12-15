@@ -1,6 +1,8 @@
 import { Typography, TypographyProps } from '@mui/material'
 import { styled } from '@mui/system'
+import Head from 'next/head'
 import { ReactNode } from 'react'
+import { getHeadTitle } from '~/../shared'
 
 const Root = styled('div')(() => ({
   display: 'flex',
@@ -43,13 +45,19 @@ interface IProps extends TypographyProps {
 function PageTitle(props: IProps): JSX.Element {
   const { children, sticky, title, ...typographyProps } = props
   const RootComponent = sticky ? StickyRoot : Root
+
   return (
-    <RootComponent>
-      {title ? (
-        <CustomTypography {...typographyProps}>{title}</CustomTypography>
-      ) : null}
-      {Boolean(children) && <div>{children}</div>}
-    </RootComponent>
+    <>
+      <Head>
+        <title>{getHeadTitle(title)}</title>
+      </Head>
+      <RootComponent>
+        {title ? (
+          <CustomTypography {...typographyProps}>{title}</CustomTypography>
+        ) : null}
+        {Boolean(children) && <div>{children}</div>}
+      </RootComponent>
+    </>
   )
 }
 

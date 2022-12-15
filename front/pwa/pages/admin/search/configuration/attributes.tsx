@@ -1,8 +1,7 @@
-import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { useContext, useEffect, useState } from 'react'
-import { finalTitlePage, searchableAttributeUrl } from 'shared'
+import { searchableAttributeUrl } from 'shared'
 
 import { breadcrumbContext } from '~/contexts'
 import { withAuth, withOptions } from '~/hocs'
@@ -22,8 +21,6 @@ function Attributes(): JSX.Element {
   const [, setBreadcrumb] = useContext(breadcrumbContext)
   const { t } = useTranslation('attributes')
 
-  const title = finalTitlePage(t(pagesSlug.slice(-1).flat().pop()))
-
   useEffect(() => {
     setBreadcrumb(pagesSlug)
   }, [router.query, setBreadcrumb])
@@ -33,13 +30,7 @@ function Attributes(): JSX.Element {
 
   return (
     <>
-      <Head>
-        <title>{title}</title>
-      </Head>
-      <PageTitle
-        title={t(pagesSlug.slice(-1).flat().pop())}
-        sx={{ marginBottom: '32px' }}
-      />
+      <PageTitle title={t(pagesSlug.at(-1))} sx={{ marginBottom: '32px' }} />
       {Boolean(isVisibleAlertAttributes) && (
         <Alert
           message={t('attributes.alert')}
