@@ -41,7 +41,6 @@ function Facets(props: IProps): JSX.Element {
           // todo: remove test using label
           'Category' === filter.label ||
           filter.type === AggregationType.CATEGORY ||
-          filter.type === AggregationType.BOOLEAN ||
           filter.type === AggregationType.SLIDER
         ) {
           const filterIndex = prevState.findIndex(
