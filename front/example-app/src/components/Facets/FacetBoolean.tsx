@@ -1,4 +1,4 @@
-import { Radio, RadioGroup } from '@mui/material'
+import { FormGroup, Switch } from '@mui/material'
 import { IGraphqlProductAggregation } from 'shared'
 
 import { IFilterChange } from '../../types'
@@ -15,26 +15,22 @@ interface IProps {
 function FacetBoolean(props: IProps): JSX.Element {
   const { activeOptions, filter, id, onChange } = props
   return (
-    <RadioGroup
-      aria-labelledby={id}
-      name={filter.field}
-      value={activeOptions[0] ?? ''}
-    >
+    <FormGroup aria-labelledby={id}>
       {filter.options.map((option) => (
         <FormControlLabel
           key={String(option.value)}
-          control={<Radio />}
-          label={option.label}
-          onChange={onChange(filter, option.value)}
-          value={
-            <>
-              <span>{option.label}</span>
-              <span>({option.count})</span>
-            </>
+          control={
+            <Switch
+              checked={option.value === activeOptions[0]}
+              onChange={onChange(filter, option.value)}
+              name={String(option.value)}
+            />
           }
+          label={<span>({option.count})</span>}
+          value={option.value}
         />
       ))}
-    </RadioGroup>
+    </FormGroup>
   )
 }
 

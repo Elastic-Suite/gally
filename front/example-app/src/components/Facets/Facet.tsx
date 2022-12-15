@@ -41,8 +41,19 @@ function getFacet(
       />
     )
   }
+  // todo: remove test using label
+  if ('Stock' === filter.label) {
+    return (
+      <FacetBoolean
+        activeOptions={activeOptions}
+        filter={filter}
+        id={id}
+        onChange={onChange}
+      />
+    )
+  }
   switch (filter.type) {
-    case AggregationType.BOOLEAN:
+    case AggregationType.STOCK:
       return (
         <FacetBoolean
           activeOptions={activeOptions}
