@@ -1,6 +1,5 @@
 import { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'next-i18next'
-import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { Box } from '@mui/system'
 import { closeSnackbar, enqueueSnackbar } from 'notistack'
@@ -214,16 +213,9 @@ function Categories(): JSX.Element {
 
   return (
     <>
-      <Head>
-        <title>{title}</title>
-      </Head>
-
       <TwoColsLayout
         left={[
-          <TitleBlock
-            key="categories"
-            title={t(pagesSlug.slice(-1).flat().pop())}
-          >
+          <TitleBlock key="categories" title={t(pagesSlug.at(-1))}>
             <>
               <CatalogSwitcher
                 catalog={catalogId}
