@@ -15,3 +15,25 @@ export const FormControlLabel = styled(MuiFormControlLabel)({
     flex: 1,
   },
 })
+
+export const FacetLinks = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
+})
+
+export const FacetLink = styled('button')(({ theme }) => ({
+  ...theme.typography.body1,
+  display: 'flex',
+  justifyContent: 'space-between',
+  background: 'transparent',
+  border: 0,
+  padding: 0,
+  margin: 0,
+  flex: 1,
+  marginRight: '16px',
+  cursor: 'pointer',
+
+  '&.active': {
+    color: theme.palette.primary.main,
+  },
+}))
