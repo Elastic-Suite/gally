@@ -8,7 +8,7 @@ interface IProps {
   firstLetterUpp?: boolean
 }
 
-function NoFullString(props: IProps): JSX.Element {
+function FormatText(props: IProps): JSX.Element {
   const { name, max = 28, toolTip, firstLetterUpp } = props
   let newName = ''
   if (name.length > max) {
@@ -26,4 +26,4 @@ function NoFullString(props: IProps): JSX.Element {
   return <>{firstLetterUpp ? firstLetterUppercase(name) : name}</>
 }
 
-export default NoFullString
+export default FormatText

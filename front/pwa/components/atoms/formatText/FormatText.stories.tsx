@@ -1,14 +1,14 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 
-import NoFullString from './NoFullString'
+import FormatText from './FormatText'
 
 export default {
   title: 'Atoms/NoFullString',
-  component: NoFullString,
-} as ComponentMeta<typeof NoFullString>
+  component: FormatText,
+} as ComponentMeta<typeof FormatText>
 
-const Template: ComponentStory<typeof NoFullString> = (args) => (
-  <NoFullString {...args} />
+const Template: ComponentStory<typeof FormatText> = (args) => (
+  <FormatText {...args} />
 )
 
 export const Default = Template.bind({})

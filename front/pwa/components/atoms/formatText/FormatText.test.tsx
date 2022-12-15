@@ -1,10 +1,10 @@
 import { renderWithProviders } from '~/utils/tests'
-import NoFullString from './NoFullString'
+import FormatText from './FormatText'
 
-describe('NoFullString match snapshot', () => {
+describe('FormatText match snapshot', () => {
   it('no tooltip with uppercase and max 20', () => {
     const { container } = renderWithProviders(
-      <NoFullString
+      <FormatText
         name="no tooltip with uppercase and max 20"
         toolTip={false}
         max={20}
@@ -16,7 +16,7 @@ describe('NoFullString match snapshot', () => {
 
   it('tooltip with no uppercase and max 20', () => {
     const { container } = renderWithProviders(
-      <NoFullString
+      <FormatText
         name="tooltip with no uppercase and max 20"
         toolTip
         max={20}
@@ -28,7 +28,7 @@ describe('NoFullString match snapshot', () => {
 
   it('tooltip with uppercase and max default', () => {
     const { container } = renderWithProviders(
-      <NoFullString
+      <FormatText
         name="tooltip with uppercase and max default"
         toolTip
         firstLetterUpp
