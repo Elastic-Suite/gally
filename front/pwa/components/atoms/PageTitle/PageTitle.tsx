@@ -2,7 +2,7 @@ import { Typography, TypographyProps } from '@mui/material'
 import { styled } from '@mui/system'
 import Head from 'next/head'
 import { ReactNode } from 'react'
-import { getHeadTitle } from '~/../shared'
+import { getHeadTitle } from 'shared'
 
 const Root = styled('div')(() => ({
   display: 'flex',
