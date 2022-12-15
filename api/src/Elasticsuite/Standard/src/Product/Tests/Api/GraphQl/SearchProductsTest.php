@@ -1287,7 +1287,7 @@ class SearchProductsTest extends AbstractTest
                     [
                         'field' => 'category',
                         'label' => 'Category',
-                        'type' => 'checkbox',
+                        'type' => 'category',
                         'options' => [
                             [
                                 'label' => 'Accessories',
@@ -1326,7 +1326,7 @@ class SearchProductsTest extends AbstractTest
                     [
                         'field' => 'category',
                         'label' => 'Category',
-                        'type' => 'checkbox',
+                        'type' => 'category',
                         'options' => [
                             [
                                 'label' => 'Accessories',
@@ -1366,7 +1366,7 @@ class SearchProductsTest extends AbstractTest
                     [
                         'field' => 'category',
                         'label' => 'Category',
-                        'type' => 'checkbox',
+                        'type' => 'category',
                         'options' => [
                             [
                                 'label' => 'Accessories',
