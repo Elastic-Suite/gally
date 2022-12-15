@@ -67,7 +67,7 @@ exports[`User match snapshot connected 1`] = `
         <div
           class="css-1cn3y7o"
         >
-          Admin Name
+          Admin@example.com
         </div>
         <div
           class="css-1tg3i43"
@@ -98,23 +98,13 @@ exports[`User match snapshot connected 1`] = `
                   class="css-9inyfk"
                 >
                   <div
-                    class="css-1bt56fy"
-                  >
-                    Admin name
-                  </div>
-                  <div
                     class="css-3lsmy"
                   >
-                    adminame@mail.com
+                    Admin@example.com
                   </div>
                   <div
                     class="css-1772pc6"
                   />
-                  <div
-                    class="css-9vgysh"
-                  >
-                    Account
-                  </div>
                   <div
                     class="css-9vgysh"
                   >

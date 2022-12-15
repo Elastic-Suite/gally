@@ -3,7 +3,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 import FormatText from './FormatText'
 
 export default {
-  title: 'Atoms/NoFullString',
+  title: 'Atoms/FormatText',
   component: FormatText,
 } as ComponentMeta<typeof FormatText>
 
@@ -21,12 +21,4 @@ Default.args = {
 export const NoToolTip = Template.bind({})
 NoToolTip.args = {
   name: 'ma limite de charactères est de 28. Vous ne pourrez pas voir ce texte en entier',
-  firstLetterUpp: true,
-}
-
-export const NoFirstLetterUpp = Template.bind({})
-NoFirstLetterUpp.args = {
-  name: 'ma limite de charactères est de 28. Vous ne pourrez pas voir ce texte en entier',
-  toolTip: true,
-  firstLetterUpp: false,
 }
