@@ -47,7 +47,6 @@ function SettingsAttributes(props: ITabContentProps): JSX.Element {
         getTableConfigs={getTableConfigs}
         resourceName="SourceField"
         setActiveFilters={setActiveFilters}
-        showSearch
       />
     </>
   )
