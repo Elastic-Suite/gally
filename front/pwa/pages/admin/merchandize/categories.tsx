@@ -56,7 +56,6 @@ function Categories(): JSX.Element {
   useEffect(() => {
     setBreadcrumb(pagesSlug)
   }, [router.query, setBreadcrumb])
-  const title = pagesSlug.slice(-1).flat()
 
   // Catalogs
   const resourceName = 'Catalog'
