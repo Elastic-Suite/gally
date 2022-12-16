@@ -49,6 +49,7 @@ export interface ICustomTableProps {
   tableHeaders: ITableHeader[]
   tableRows: ITableRow[]
   withSelection?: boolean
+  configuration?: string[]
 }
 
 function CustomTable(
@@ -70,6 +71,7 @@ function CustomTable(
     tableRows,
     selectedRows,
     withSelection,
+    configuration,
   } = props
 
   const [scrollLength, setScrollLength] = useState<number>(0)
@@ -186,6 +188,7 @@ function CustomTable(
                 tableHeaders={tableHeaders}
                 tableRows={tableRows}
                 withSelection={withSelection}
+                configuration={configuration}
               />
             )}
             {Boolean(draggable) && (
@@ -202,6 +205,7 @@ function CustomTable(
                 tableHeaders={tableHeaders}
                 tableRows={tableRows}
                 withSelection={withSelection}
+                configuration={configuration}
               />
             )}
           </StyledTable>

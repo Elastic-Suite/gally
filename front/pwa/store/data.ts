@@ -6,11 +6,13 @@ import { RootState } from './store'
 export interface IDataState {
   api: IApi
   bundles: Bundle[]
+  configurations: string[]
 }
 
 const initialState: IDataState = {
   api: null,
   bundles: null,
+  configurations: null,
 }
 
 const dataSlice = createSlice({
@@ -20,6 +22,7 @@ const dataSlice = createSlice({
     setData(state, action: PayloadAction<IDataState>) {
       state.api = action.payload.api
       state.bundles = action.payload.bundles
+      state.configurations = action.payload.configurations
     },
   },
 })
@@ -29,3 +32,5 @@ export const dataReducer = dataSlice.reducer
 
 export const selectApi = (state: RootState): IApi => state.data.api
 export const selectBundles = (state: RootState): Bundle[] => state.data.bundles
+export const selectConfiguration = (state: RootState): string[] =>
+  state.data.configurations
