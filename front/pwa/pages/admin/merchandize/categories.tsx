@@ -87,7 +87,7 @@ function Categories(): JSX.Element {
       filters.localizedCatalogId = localizedCatalogId
     }
     return filters
-  }, [catalogId, localizedCatalogId])
+  }, [catalogId, localizedCatalogId, isLoading])
   const [categories] = useFetchApi<ICategories>('categoryTree', filters)
   useEffect(() => {
     if (categories.status !== LoadStatus.SUCCEEDED) {
