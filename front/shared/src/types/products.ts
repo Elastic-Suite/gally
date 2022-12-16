@@ -23,7 +23,7 @@ export enum AggregationType {
   CATEGORY = 'category',
   CHECKBOX = 'checkbox',
   SLIDER = 'slider',
-  STOCK = 'stock',
+  BOOLEAN = 'boolean',
 }
 
 export interface IGraphqlSearchProducts {
@@ -128,4 +128,23 @@ export type ITypeFilterInput =
 export interface IProductFieldFilterInput {
   boolFilter?: IProductBoolFilterInput
   [key: string]: ITypeFilterInput
+}
+
+export interface IGraphqlViewMoreFacetOption {
+  id: string
+  value: string
+  label: string
+  count: number
+}
+
+export interface IGraphqlViewMoreFacetOptionsVariables {
+  aggregation: string
+  catalogId: string
+  currentCategoryId?: string
+  filter?: IProductFieldFilterInput[] | IProductFieldFilterInput
+  search?: string
+}
+
+export interface IGraphqlViewMoreFacetOptions {
+  viewMoreProductFacetOptions: IGraphqlViewMoreFacetOption[]
 }

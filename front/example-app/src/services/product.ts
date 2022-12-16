@@ -13,19 +13,11 @@ export function getProductFilters(
   activeFilters: IActiveFilters
 ): IProductFieldFilterInput {
   return activeFilters.reduce<IProductFieldFilterInput>((acc, activeFilter) => {
-    if (
-      // todo: remove test using label
-      activeFilter.filter.label === 'Category' ||
-      activeFilter.filter.type === AggregationType.CATEGORY
-    ) {
+    if (activeFilter.filter.type === AggregationType.CATEGORY) {
       acc[activeFilter.filter.field as keyof IProductFieldFilterInput] = {
         eq: activeFilter.value,
       } as ICategoryTypeDefaultFilterInputType
-    } else if (
-      // todo: remove test using label
-      activeFilter.filter.label === 'Stock' ||
-      activeFilter.filter.type === AggregationType.STOCK
-    ) {
+    } else if (activeFilter.filter.type === AggregationType.BOOLEAN) {
       acc[activeFilter.filter.field as keyof IProductFieldFilterInput] = {
         eq: true,
       } as IStockTypeDefaultFilterInputType
