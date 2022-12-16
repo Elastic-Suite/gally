@@ -26,7 +26,7 @@
   "searchBarResult": "{{value.value}} {{value.result}}",
   "placeholder": "No category available",
   "buttonSave": "Save",
-  "stickybar.noPositionProduct": "Products can be pinned when sorting is not Position",
+  "stickybar.noPositionProduct": "Products can't be pinned when sorting is not Position",
   "alert": "Save data with success",
   "alert.error": "An error has occurred",
   "bar.textMaxProducts": "You've reached the maximum number of pinned products (25).",
