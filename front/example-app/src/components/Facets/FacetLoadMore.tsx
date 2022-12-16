@@ -2,24 +2,20 @@ import { Button, Collapse, FormGroup } from '@mui/material'
 import {
   IFetch,
   IGraphqlProductAggregation,
+  IGraphqlProductAggregationOption,
   IGraphqlViewMoreFacetOption,
 } from 'shared'
 
-import { IFilterChange } from '../../types'
-
-import FacetChoice from './FacetChoice'
-
 interface IProps {
-  activeOptions: string[]
   filter: IGraphqlProductAggregation
   id: string
   loadMore: (filter: IGraphqlProductAggregation) => void
   moreOptions?: IFetch<IGraphqlViewMoreFacetOption[]>
-  onChange: IFilterChange
+  renderOption: (option: IGraphqlProductAggregationOption) => JSX.Element
 }
 
-function FacetChoices(props: IProps): JSX.Element {
-  const { activeOptions, filter, id, loadMore, moreOptions, onChange } = props
+function FacetLoadMore(props: IProps): JSX.Element {
+  const { filter, id, loadMore, moreOptions, renderOption } = props
   const open = moreOptions?.data?.length > 0
 
   function handleToggleMore(): void {
@@ -29,27 +25,11 @@ function FacetChoices(props: IProps): JSX.Element {
   return (
     <>
       <FormGroup aria-labelledby={id}>
-        {filter.options.map((option) => (
-          <FacetChoice
-            key={String(option.value)}
-            activeOptions={activeOptions}
-            filter={filter}
-            onChange={onChange}
-            option={option}
-          />
-        ))}
+        {filter.options.map(renderOption)}
       </FormGroup>
       <Collapse in={open}>
         <FormGroup aria-labelledby={id}>
-          {moreOptions?.data?.map((option) => (
-            <FacetChoice
-              key={String(option.value)}
-              activeOptions={activeOptions}
-              filter={filter}
-              onChange={onChange}
-              option={option}
-            />
-          ))}
+          {moreOptions?.data?.map(renderOption)}
         </FormGroup>
       </Collapse>
       {Boolean(filter.hasMore) && !open && (
@@ -64,4 +44,4 @@ function FacetChoices(props: IProps): JSX.Element {
   )
 }
 
-export default FacetChoices
+export default FacetLoadMore

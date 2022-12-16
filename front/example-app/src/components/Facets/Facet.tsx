@@ -12,8 +12,9 @@ import {
 import { IActiveFilters, IFilterChange } from '../../types'
 
 import FacetBoolean from './FacetBoolean'
-import FacetCategories from './FacetCategories'
-import FacetChoices from './FacetChoices'
+import FacetCategory from './FacetCategory'
+import FacetChoice from './FacetChoice'
+import FacetLoadMore from './FacetLoadMore'
 import FacetSlider from './FacetSlider'
 
 const Title = styled('h3')({
@@ -53,11 +54,20 @@ function Facet(props: IProps): JSX.Element {
     // todo: remove test using label
     if ('Category' === filter.label) {
       return (
-        <FacetCategories
-          activeOptions={activeOptions}
+        <FacetLoadMore
           filter={filter}
           id={id}
-          onChange={onChange}
+          loadMore={loadMore}
+          moreOptions={moreOptions}
+          renderOption={(option): JSX.Element => (
+            <FacetCategory
+              key={String(option.value)}
+              activeOptions={activeOptions}
+              filter={filter}
+              onChange={onChange}
+              option={option}
+            />
+          )}
         />
       )
     }
@@ -85,11 +95,20 @@ function Facet(props: IProps): JSX.Element {
 
       case AggregationType.CATEGORY:
         return (
-          <FacetCategories
-            activeOptions={activeOptions}
+          <FacetLoadMore
             filter={filter}
             id={id}
-            onChange={onChange}
+            loadMore={loadMore}
+            moreOptions={moreOptions}
+            renderOption={(option): JSX.Element => (
+              <FacetCategory
+                key={String(option.value)}
+                activeOptions={activeOptions}
+                filter={filter}
+                onChange={onChange}
+                option={option}
+              />
+            )}
           />
         )
 
@@ -105,13 +124,20 @@ function Facet(props: IProps): JSX.Element {
 
       default:
         return (
-          <FacetChoices
-            activeOptions={activeOptions}
+          <FacetLoadMore
             filter={filter}
             id={id}
             loadMore={loadMore}
             moreOptions={moreOptions}
-            onChange={onChange}
+            renderOption={(option): JSX.Element => (
+              <FacetChoice
+                key={String(option.value)}
+                activeOptions={activeOptions}
+                filter={filter}
+                onChange={onChange}
+                option={option}
+              />
+            )}
           />
         )
     }
