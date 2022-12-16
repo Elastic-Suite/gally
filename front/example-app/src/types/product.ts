@@ -1,11 +1,19 @@
 import { Dispatch, SetStateAction } from 'react'
-import { IFetch, IGraphqlSearchProducts, IOptions, SortOrder } from 'shared'
+import {
+  IFetch,
+  IGraphqlProductAggregation,
+  IGraphqlSearchProducts,
+  IOptions,
+  SortOrder,
+} from 'shared'
 
-import { IActiveFilters } from './facet'
+import { IActiveFilters, IFilterMoreOptions } from './facet'
 
 export interface IProductsHook {
   activeFilters: IActiveFilters
-  loadProduts: (condition: boolean) => void
+  loadMore: (filter: IGraphqlProductAggregation) => void
+  loadProducts: (condition: boolean) => void
+  moreOptions: IFilterMoreOptions
   page: number
   pageSize: number
   products: IFetch<IGraphqlSearchProducts>

@@ -29,7 +29,9 @@ function Category(): JSX.Element {
   const filters = useMemo(() => ({ category__id: { eq: id } }), [id])
   const {
     activeFilters,
-    loadProduts,
+    loadMore,
+    loadProducts,
+    moreOptions,
     page,
     pageSize,
     products,
@@ -46,8 +48,8 @@ function Category(): JSX.Element {
   const category = findCategory(categories, id)
 
   useEffect(() => {
-    loadProduts(Boolean(category))
-  }, [category, loadProduts])
+    loadProducts(Boolean(category))
+  }, [category, loadProducts])
 
   return (
     <PageLayout title={category?.name}>
@@ -56,6 +58,8 @@ function Category(): JSX.Element {
           <Facets
             activeFilters={activeFilters}
             filters={products.data?.products.aggregations}
+            loadMore={loadMore}
+            moreOptions={moreOptions}
             onFilterChange={setActiveFilters}
           />
         }

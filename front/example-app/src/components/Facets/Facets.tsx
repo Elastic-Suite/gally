@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from 'react'
 import { Chip, styled } from '@mui/material'
 import { AggregationType, IGraphqlProductAggregation } from 'shared'
 
-import { IActiveFilters } from '../../types'
+import { IActiveFilters, IFilterMoreOptions } from '../../types'
 
 import Facet from './Facet'
 
@@ -26,11 +26,14 @@ function getOptionLabel(
 interface IProps {
   activeFilters: IActiveFilters
   filters: IGraphqlProductAggregation[]
+  loadMore: (filter: IGraphqlProductAggregation) => void
+  moreOptions: IFilterMoreOptions
   onFilterChange: Dispatch<SetStateAction<IActiveFilters>>
 }
 
 function Facets(props: IProps): JSX.Element {
-  const { activeFilters, filters, onFilterChange } = props
+  const { activeFilters, filters, loadMore, moreOptions, onFilterChange } =
+    props
 
   function handleChange(filter: IGraphqlProductAggregation, value: string) {
     return () =>
@@ -38,8 +41,6 @@ function Facets(props: IProps): JSX.Element {
         const clone = [...prevState]
         // For the following types we only manage one value: replace the previous one with the new one
         if (
-          // todo: remove test using label
-          'Category' === filter.label ||
           filter.type === AggregationType.CATEGORY ||
           filter.type === AggregationType.SLIDER
         ) {
@@ -95,20 +96,18 @@ function Facets(props: IProps): JSX.Element {
           />
         ))}
       </Filters>
-      {filters.map((filter) => (
+      {filters?.map((filter) => (
         <Facet
           activeFilters={activeFilters}
           key={filter.field}
           filter={filter}
+          loadMore={loadMore}
+          moreOptions={moreOptions.get(filter)}
           onChange={handleChange}
         />
       ))}
     </div>
   )
-}
-
-Facets.defaultProps = {
-  filters: [],
 }
 
 export default Facets
