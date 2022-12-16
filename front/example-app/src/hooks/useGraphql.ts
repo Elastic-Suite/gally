@@ -21,12 +21,12 @@ export type ILoadResource = (
 
 const debounceDelay = 500
 
-export function useApiGraphql<T>(): IGraphqlApi<T> {
+export function useApiGraphql(): IGraphqlApi {
   const { localizedCatalog } = useContext(catalogContext)
   const log = useLog()
   const locale = localizedCatalog?.locale ?? 'en'
   return useCallback(
-    async (
+    async <T>(
       query: string,
       variables?: Record<string, unknown>,
       options?: RequestInit
@@ -55,7 +55,7 @@ export function useGraphqlApi<T>(): [
   ILoadResource,
   ILoadResource
 ] {
-  const graphqlApi = useApiGraphql<T>()
+  const graphqlApi = useApiGraphql()
   const [response, setResponse] = useState<IFetch<T>>({
     status: LoadStatus.IDLE,
   })
@@ -77,7 +77,7 @@ export function useGraphqlApi<T>(): [
         data: prevState.data,
         status: LoadStatus.LOADING,
       }))
-      return graphqlApi(query, variables, options).then((json) => {
+      return graphqlApi<T>(query, variables, options).then((json) => {
         if (isError(json)) {
           setResponse({ error: json.error, status: LoadStatus.FAILED })
         } else {

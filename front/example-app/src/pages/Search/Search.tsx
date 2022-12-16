@@ -12,6 +12,8 @@ import TwoColsLayout from '../../components/TwoColsLayout/TwoColsLayout'
 function Search(): JSX.Element {
   const {
     activeFilters,
+    loadMore,
+    moreOptions,
     page,
     pageSize,
     products,
@@ -33,6 +35,8 @@ function Search(): JSX.Element {
           <Facets
             activeFilters={activeFilters}
             filters={products.data?.products.aggregations}
+            loadMore={loadMore}
+            moreOptions={moreOptions}
             onFilterChange={setActiveFilters}
           />
         }

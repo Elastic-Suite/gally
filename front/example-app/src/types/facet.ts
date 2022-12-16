@@ -1,4 +1,8 @@
-import { IGraphqlProductAggregation } from 'shared'
+import {
+  IFetch,
+  IGraphqlProductAggregation,
+  IGraphqlViewMoreFacetOption,
+} from 'shared'
 
 export interface IActiveFilter {
   filter: IGraphqlProductAggregation
@@ -11,3 +15,8 @@ export type IFilterChange = (
   filter: IGraphqlProductAggregation,
   value: string
 ) => () => void
+
+export type IFilterMoreOptions = Map<
+  IGraphqlProductAggregation,
+  IFetch<IGraphqlViewMoreFacetOption[]>
+>

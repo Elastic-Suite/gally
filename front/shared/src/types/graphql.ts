@@ -42,7 +42,7 @@ export interface IGraphql<D> {
   errors?: IGraphqlError[]
 }
 
-export type IGraphqlApi<T> = (
+export type IGraphqlApi = <T>(
   query: string,
   variables?: Record<string, unknown>,
   options?: RequestInit
