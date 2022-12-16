@@ -1,6 +1,6 @@
 {
   "action.import": "Importer",
-  "tabs.scope": "Etendue",
-  "tabs.attributes": "Attributs consultable et filtrable",
+  "tabs.scope": "Contextes",
+  "tabs.attributes": "Attributs recherchables et filtrables",
   "settingsAttributes.alert": "Toutes les configurations faites ici doivent attendre que la réindexation soit effective dans votre application front-office"
 }

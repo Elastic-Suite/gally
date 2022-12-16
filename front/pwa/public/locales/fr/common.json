@@ -22,7 +22,7 @@
   "catalog_other": "catalogues",
   "activeLocale_one": "langue activé",
   "activeLocale_other": "langues activé",
-  "scope": "Etendue",
+  "scope": "Contextes",
   "searchableAndFiltrableAttributes": "Attributs consultables et filtrables",
   "contentOfSearchableAndFiltrableAttributes": "Contenu des attributs consultables et filtrables",
   "searchResults.topProducts": "Top Produits",

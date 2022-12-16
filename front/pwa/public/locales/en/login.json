@@ -2,5 +2,6 @@
   "action.login": "Login",
   "label.email": "Email",
   "label.password": "Password",
-  "title.login": "Login"
+  "title.login": "Login",
+  "title.logout": "Log out"
 }
