@@ -176,6 +176,8 @@ function ResourceTable(props: IProps): JSX.Element {
     }, [])
   }
 
+  console.log(diffRows)
+
   const filterOrSearchAreUp =
     searchValue !== '' || isObjectNotEmpty(activeFilters)
 

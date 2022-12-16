@@ -111,6 +111,7 @@ function TableGuesser<T extends IHydraMember>(props: IProps<T>): JSX.Element {
       } as unknown as Partial<T>)
     }
   }
+  console.log(fieldOptions)
 
   return (
     <>
