@@ -27,6 +27,7 @@ const preloadedState: PreloadedState<RootState> = {
   data: {
     api: null,
     bundles: null,
+    configurations: null,
   },
 }
 
@@ -39,6 +40,7 @@ describe('useDataLoader', () => {
     expect(state.data).toEqual({
       api: 'api',
       bundles: [Bundle.VIRTUAL_CATEGORY],
+      configurations: [undefined],
     })
   })
 
@@ -53,7 +55,11 @@ describe('useDataLoader', () => {
       preloadedState,
     })
     const state = store.getState()
-    expect(state.data).toEqual({ api: null, bundles: null })
+    expect(state.data).toEqual({
+      api: null,
+      bundles: null,
+      configurations: null,
+    })
   })
 
   it("should not update the store if data won't load (bundles)", () => {
@@ -66,6 +72,10 @@ describe('useDataLoader', () => {
       preloadedState,
     })
     const state = store.getState()
-    expect(state.data).toEqual({ api: null, bundles: null })
+    expect(state.data).toEqual({
+      api: null,
+      bundles: null,
+      configurations: null,
+    })
   })
 })

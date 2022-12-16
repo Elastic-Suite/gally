@@ -5,6 +5,8 @@ import FieldGuesser from '../FieldGuesser/FieldGuesser'
 
 import TopProductsTable from './TopProductsTable'
 
+const configuration = ['https://localhost/media/catalog/product/']
+
 describe('TopProductTable', () => {
   it('Should match snapschot', () => {
     const tableHeaders: ITableHeader[] = [
@@ -103,6 +105,7 @@ describe('TopProductTable', () => {
         tableRows={tableRows}
         selectedRows={[]}
         draggable
+        configuration={configuration}
       />
     )
     expect(container).toMatchSnapshot()

@@ -1,5 +1,10 @@
 import { useDataLoader, useUser } from '~/hooks'
-import { selectApi, selectBundles, useAppSelector } from '~/store'
+import {
+  selectApi,
+  selectBundles,
+  selectConfiguration,
+  useAppSelector,
+} from '~/store'
 
 interface IProps {
   children: JSX.Element
@@ -9,6 +14,7 @@ function DataProvider(props: IProps): JSX.Element {
   const { children } = props
   const api = useAppSelector(selectApi)
   const bundles = useAppSelector(selectBundles)
+  const configurations = useAppSelector(selectConfiguration)
 
   // Load user in the store
   useUser()
@@ -16,7 +22,7 @@ function DataProvider(props: IProps): JSX.Element {
   // Load data in the store
   useDataLoader()
 
-  if (!api || !bundles) {
+  if (!api || !bundles || !configurations) {
     return null
   }
 

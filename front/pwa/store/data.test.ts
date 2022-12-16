@@ -10,6 +10,7 @@ import {
 const initialState: IDataState = {
   api: null,
   bundles: null,
+  configurations: null,
 }
 
 describe('dataReducer', () => {

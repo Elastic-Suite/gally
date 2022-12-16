@@ -17,6 +17,7 @@
         || {path}.startsWith("/sitemap")
         || {path}.startsWith("/locales")
         || {path}.startsWith("/images")
+        || {path}.startsWith("/media")
         || {path}.startsWith("/storybook-static")`
 
     @example expression `{env.EXAMPLE_UPSTREAM} != '' && ({path}.startsWith("/example") || {path}.startsWith("/ws"))`

@@ -40,7 +40,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
     public function prepend(ContainerBuilder $container)
     {
         $yamlParser ??= new YamlParser(); // @phpstan-ignore-line
-        $apiPlatformConfig = $yamlParser->parseFile(__DIR__ . '/../Config/Resources/config/api_platform.yaml', Yaml::PARSE_CONSTANT);
+        $apiPlatformConfig = $yamlParser->parseFile(__DIR__ . '/../Configuration/Resources/config/api_platform.yaml', Yaml::PARSE_CONSTANT);
 
         $container->prependExtensionConfig('api_platform', $apiPlatformConfig['api_platform']);
         $container->prependExtensionConfig(
@@ -58,6 +58,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
                         __DIR__ . '/../Product/Model/',
                         __DIR__ . '/../RuleEngine/Model/',
                         __DIR__ . '/../Bundle/Model/',
+                        __DIR__ . '/../Configuration/Model/',
                     ],
                 ],
             ]
@@ -153,6 +154,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
         $loader->load('RuleEngine/Resources/config/services.yaml');
         $loader->load('OpenApi/Resources/config/services.yaml');
         $loader->load('Bundle/Resources/config/services.yaml');
+        $loader->load('Configuration/Resources/config/services.yaml');
 
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
@@ -162,6 +164,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
         $container->setParameter('elasticsuite.graphql_query_renaming', $config['graphql_query_renaming'] ?? []);
         $container->setParameter('elasticsuite.search_settings', $config['search_settings'] ?? []);
         $container->setParameter('elasticsuite.relevance', $config['relevance'] ?? []);
+        $container->setParameter('elasticsuite.base_url', $config['base_url'] ?? []);
 
         //@Todo : Use this feature https://symfony.com/doc/current/bundles/extension.html ?
 //        $this->addAnnotatedClassesToCompile([
@@ -185,6 +188,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
             __DIR__ . '/../Product/Resources/config/elasticsuite.yaml',
             __DIR__ . '/../Analysis/Resources/config/elasticsuite_analysis.yaml',
             __DIR__ . '/../Search/Resources/config/elasticsuite_relevance.yaml',
+            __DIR__ . '/../Configuration/Resources/config/elasticsuite_configuration.yaml',
         ];
 
         if ($isTestMode) {

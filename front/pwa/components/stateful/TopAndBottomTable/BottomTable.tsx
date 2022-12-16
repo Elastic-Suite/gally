@@ -34,6 +34,7 @@ interface IProps {
   setNbBottomRows: (value: number) => void
   sortValue: string
   searchValue: string
+  configuration: string[]
 }
 
 function BottomTable(
@@ -49,6 +50,7 @@ function BottomTable(
     setNbBottomRows,
     sortValue,
     searchValue,
+    configuration,
   } = props
 
   const [currentPage, setCurrentPage] = useState<number>(1)
@@ -155,6 +157,7 @@ function BottomTable(
               products.data.products.collection as unknown as ITableRow[]
             }
             withSelection={withSelection}
+            configuration={configuration}
           />
         ))}
     </>
