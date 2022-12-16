@@ -25,6 +25,7 @@ interface IProps {
   topProducts: IProductPositions
   topProductsIds: number[]
   sortValue: string
+  configuration: string[]
 }
 
 function TopTable(props: IProps): JSX.Element {
@@ -37,6 +38,7 @@ function TopTable(props: IProps): JSX.Element {
     topProducts,
     topProductsIds,
     sortValue,
+    configuration,
   } = props
 
   const variables = useMemo(
@@ -113,6 +115,7 @@ function TopTable(props: IProps): JSX.Element {
               tableHeaders={productTableheader}
               tableRows={tableRows}
               withSelection={withSelection}
+              configuration={configuration}
             />
           </div>
         )}

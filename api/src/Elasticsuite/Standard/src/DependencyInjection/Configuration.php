@@ -228,6 +228,15 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
 
+                // Base urls config
+                ->arrayNode('base_url')
+                    ->children()
+                        ->scalarNode('media')
+                            ->defaultValue('https://localhost/media/catalog/product/')
+                        ->end()
+                    ->end()
+                ->end()
+
             ->end();
 
         return $treeBuilder;

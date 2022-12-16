@@ -18,7 +18,7 @@ export default {
   },
 } as ComponentMeta<typeof SliderComponent>
 
-const Template: ComponentStory<typeof SliderComponent> = (args: any) => {
+const Template: ComponentStory<typeof SliderComponent> = (args) => {
   const [val, setVal] = useState(0)
   return <SliderComponent {...args} value={val} onChange={setVal} />
 }

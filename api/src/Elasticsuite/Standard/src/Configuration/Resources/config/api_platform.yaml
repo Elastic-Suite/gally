@@ -1,5 +1,5 @@
 api_platform:
-    title: Elasticsuite API
+    title: Gally API
     version: 1.0.0
     patch_formats:
         json: ['application/merge-patch+json']

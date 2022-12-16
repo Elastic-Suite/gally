@@ -47,13 +47,6 @@ export const productTableheader: ITableHeader[] = [
     label: 'Price',
     type: DataContentType.PRICE,
   },
-  {
-    id: 'displayed',
-    input: DataContentType.BOOLEAN,
-    name: 'displayed',
-    label: 'Displayed',
-    type: DataContentType.BOOLEAN,
-  },
 ]
 
 export const defaultRowsPerPageOptions = [10, 25, 50]

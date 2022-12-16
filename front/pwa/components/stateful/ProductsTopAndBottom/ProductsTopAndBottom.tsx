@@ -16,6 +16,7 @@ import {
 
 import BottomTable from '~/components/stateful/TopAndBottomTable/BottomTable'
 import TopTable from '~/components/stateful/TopAndBottomTable/TopTable'
+import { selectConfiguration, useAppSelector } from '~/store'
 
 const PreviewArea = styled(Box)(({ theme }) => ({
   fontSize: '12px',
@@ -57,6 +58,7 @@ function ProductsTopAndBottom(
     searchValue,
   } = props
   const { t } = useTranslation('categories')
+
   const topProductsIds = topProducts
     .map((topProduct) => topProduct.productId)
     .sort()
@@ -66,45 +68,51 @@ function ProductsTopAndBottom(
     if (current && searchValue) {
       current.scrollIntoView({ behavior: 'smooth' })
     }
-  }, [ref, searchValue])
+  }, [current, searchValue])
+
+  const configuration = useAppSelector(selectConfiguration)
 
   return (
-    <Paper variant="outlined" sx={{ backgroundColor: 'colors.neutral.300' }}>
-      <PreviewArea>{t('previewArea')}</PreviewArea>
-      <Box sx={{ padding: '42px 16px 17px 16px' }}>
-        {topProducts.length !== 0 && (
-          <TopTable
-            selectedRows={topSelectedRows}
-            onSelectedRows={onTopSelectedRows}
-            localizedCatalogId={localizedCatalogId}
-            productGraphqlFilters={productGraphqlFilters}
-            setProductPositions={setProductPositions}
-            topProducts={topProducts}
-            topProductsIds={topProductsIds}
-            sortValue={sortValue}
-          />
-        )}
-        <Box
-          sx={
-            topProducts.length !== 0 && sortValue === 'category__position'
-              ? { marginTop: '24px' }
-              : {}
-          }
-        >
-          <BottomTable
-            ref={ref}
-            selectedRows={bottomSelectedRows}
-            onSelectedRows={onBottomSelectedRows}
-            localizedCatalogId={localizedCatalogId}
-            productGraphqlFilters={productGraphqlFilters}
-            topProductsIds={topProductsIds}
-            setNbBottomRows={setNbBottomRows}
-            sortValue={sortValue}
-            searchValue={searchValue}
-          />
+    configuration && (
+      <Paper variant="outlined" sx={{ backgroundColor: 'colors.neutral.300' }}>
+        <PreviewArea>{t('previewArea')}</PreviewArea>
+        <Box sx={{ padding: '42px 16px 17px 16px' }}>
+          {topProducts.length !== 0 && (
+            <TopTable
+              selectedRows={topSelectedRows}
+              onSelectedRows={onTopSelectedRows}
+              localizedCatalogId={localizedCatalogId}
+              productGraphqlFilters={productGraphqlFilters}
+              setProductPositions={setProductPositions}
+              topProducts={topProducts}
+              topProductsIds={topProductsIds}
+              sortValue={sortValue}
+              configuration={configuration}
+            />
+          )}
+          <Box
+            sx={
+              topProducts.length !== 0 && sortValue === 'category__position'
+                ? { marginTop: '24px' }
+                : {}
+            }
+          >
+            <BottomTable
+              ref={ref}
+              selectedRows={bottomSelectedRows}
+              onSelectedRows={onBottomSelectedRows}
+              localizedCatalogId={localizedCatalogId}
+              productGraphqlFilters={productGraphqlFilters}
+              topProductsIds={topProductsIds}
+              setNbBottomRows={setNbBottomRows}
+              sortValue={sortValue}
+              searchValue={searchValue}
+              configuration={configuration}
+            />
+          </Box>
         </Box>
-      </Box>
-    </Paper>
+      </Paper>
+    )
   )
 }
 
