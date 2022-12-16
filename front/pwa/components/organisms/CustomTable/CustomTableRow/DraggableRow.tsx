@@ -9,6 +9,7 @@ import {
   ITableHeaderSticky,
   ITableRow,
   getFieldState,
+  removeFirstOrLastCharOfString,
 } from 'shared'
 
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
@@ -46,6 +47,7 @@ interface IProps {
   tableHeaders: ITableHeader[]
   tableRow: ITableRow
   withSelection: boolean
+  configuration: string[]
 }
 
 function DraggableRow(props: IProps): JSX.Element {
@@ -63,6 +65,7 @@ function DraggableRow(props: IProps): JSX.Element {
     tableHeaders,
     tableRow,
     withSelection,
+    configuration,
   } = props
   const stickyHeaders: ITableHeaderSticky[] = manageStickyHeaders(tableHeaders)
   const nonStickyHeaders = tableHeaders.filter((header) => !header.sticky)
@@ -151,23 +154,40 @@ function DraggableRow(props: IProps): JSX.Element {
         </StickyTableCell>
       ))}
 
-      {nonStickyHeaders.map((header) => (
-        <BaseTableCell sx={nonStickyStyle(header.type)} key={header.name}>
-          <Field
-            {...header}
-            diffValue={diffRow?.[header.name]}
-            label=""
-            onChange={handleChange}
-            row={tableRow}
-            value={tableRow[header.name]}
-            {...getFieldState(
-              tableRow,
-              header.depends,
-              tableConfig[header.name]
-            )}
-          />
-        </BaseTableCell>
-      ))}
+      {nonStickyHeaders.map((header) => {
+        const newUrlConfiguration = removeFirstOrLastCharOfString(
+          configuration[0],
+          '/',
+          'last'
+        )
+
+        const value =
+          tableRow[header.name] && header.name === 'image'
+            ? `${newUrlConfiguration}/${removeFirstOrLastCharOfString(
+                tableRow[header.name] as string,
+                '/',
+                'first'
+              )}`
+            : tableRow[header.name]
+
+        return (
+          <BaseTableCell sx={nonStickyStyle(header.type)} key={header.name}>
+            <Field
+              {...header}
+              diffValue={diffRow?.[header.name]}
+              label=""
+              onChange={handleChange}
+              row={tableRow}
+              value={value}
+              {...getFieldState(
+                tableRow,
+                header.depends,
+                tableConfig[header.name]
+              )}
+            />
+          </BaseTableCell>
+        )
+      })}
     </TableRow>
   )
 }

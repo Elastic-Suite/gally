@@ -78,6 +78,8 @@ const tableRows = [
   },
 ]
 
+const configuration = ['https://localhost/media/catalog/product/']
+
 describe('CustomTable', () => {
   it('match snapshot without selection, without draggable, without sticky headers', () => {
     const { container } = renderWithProviders(
@@ -87,6 +89,7 @@ describe('CustomTable', () => {
         massiveSelectionIndeterminate={false}
         tableHeaders={tableHeadersWithoutSticky}
         tableRows={tableRows}
+        configuration={configuration}
       />
     )
 
@@ -101,6 +104,7 @@ describe('CustomTable', () => {
         massiveSelectionIndeterminate={false}
         tableHeaders={tableHeadersWithSticky}
         tableRows={tableRows}
+        configuration={configuration}
       />
     )
 
@@ -116,6 +120,7 @@ describe('CustomTable', () => {
         tableHeaders={tableHeadersWithoutSticky}
         tableRows={tableRows}
         selectedRows={['fake_id']}
+        configuration={configuration}
       />
     )
 
@@ -131,6 +136,7 @@ describe('CustomTable', () => {
         tableHeaders={tableHeadersWithSticky}
         tableRows={tableRows}
         selectedRows={['fake_id']}
+        configuration={configuration}
       />
     )
 
@@ -147,6 +153,7 @@ describe('CustomTable', () => {
         tableRows={tableRows}
         selectedRows={['fake_id']}
         draggable
+        configuration={configuration}
       />
     )
 
@@ -163,6 +170,7 @@ describe('CustomTable', () => {
         tableRows={tableRows}
         selectedRows={['fake_id']}
         draggable
+        configuration={configuration}
       />
     )
 
@@ -179,6 +187,7 @@ describe('CustomTable', () => {
         tableRows={tableRows}
         selectedRows={['fake_id']}
         draggable
+        configuration={configuration}
       />
     )
 

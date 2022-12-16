@@ -29,6 +29,7 @@ interface IProps {
   tableHeaders: ITableHeader[]
   tableRows: ITableRow[]
   withSelection: boolean
+  configuration: string[]
 }
 
 function DraggableBody(props: IProps): JSX.Element {
@@ -45,6 +46,7 @@ function DraggableBody(props: IProps): JSX.Element {
     tableHeaders,
     tableRows,
     withSelection,
+    configuration,
   } = props
 
   return (
@@ -72,6 +74,7 @@ function DraggableBody(props: IProps): JSX.Element {
                   tableHeaders={tableHeaders}
                   tableRow={tableRow}
                   withSelection={withSelection}
+                  configuration={configuration}
                 />
               )}
             </Draggable>

@@ -29,7 +29,11 @@ const user = {
 } as IUser
 
 const defaultState = {
-  data: { api, bundles: [Bundle.VIRTUAL_CATEGORY] },
+  data: {
+    api,
+    bundles: [Bundle.VIRTUAL_CATEGORY],
+    configurations: ['https://localhost/products'],
+  },
   user: {
     requestedPath: '',
     token:

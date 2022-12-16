@@ -27,6 +27,7 @@ interface IProps {
   tableHeaders: ITableHeader[]
   tableRows: ITableRow[]
   withSelection: boolean
+  configuration: string[]
 }
 
 function NonDraggableBody(props: IProps): JSX.Element {
@@ -43,6 +44,7 @@ function NonDraggableBody(props: IProps): JSX.Element {
     tableHeaders,
     tableRows,
     withSelection,
+    configuration,
   } = props
 
   return (
@@ -62,6 +64,7 @@ function NonDraggableBody(props: IProps): JSX.Element {
           tableHeaders={tableHeaders}
           tableRow={tableRow}
           withSelection={withSelection}
+          configuration={configuration}
         />
       ))}
     </TableBody>

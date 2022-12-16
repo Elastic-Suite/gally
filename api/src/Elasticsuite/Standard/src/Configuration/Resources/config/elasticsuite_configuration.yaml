@@ -1,0 +1,3 @@
+elasticsuite:
+    base_url: 
+        media: 'https://localhost/media/catalog/product/'
