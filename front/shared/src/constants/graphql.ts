@@ -73,6 +73,35 @@ export function getSearchProductsQuery(
   })
 }
 
+export function getMoreFacetOptionsQuery(
+  filter: IProductFieldFilterInput | IProductFieldFilterInput[] = null
+): string {
+  return jsonToGraphQLQuery({
+    query: {
+      __name: 'viewMoreProductFacetOptions',
+      __variables: {
+        catalogId: 'String!',
+        aggregation: 'String!',
+        currentCategoryId: 'String',
+        search: 'String',
+      },
+      viewMoreProductFacetOptions: {
+        __args: {
+          catalogId: new VariableType('catalogId'),
+          aggregation: new VariableType('aggregation'),
+          currentCategoryId: new VariableType('currentCategoryId'),
+          search: new VariableType('search'),
+          filter,
+        },
+        id: true,
+        value: true,
+        label: true,
+        count: true,
+      },
+    },
+  })
+}
+
 export const getProductPosition = `query getPosition( $categoryId: String!,  $localizedCatalogId : Int! ) {
   getPositionsCategoryProductMerchandising(categoryId: $categoryId, localizedCatalogId : $localizedCatalogId ) {
     result

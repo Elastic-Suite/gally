@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from 'react'
 import { Chip, styled } from '@mui/material'
 import { AggregationType, IGraphqlProductAggregation } from 'shared'
 
-import { IActiveFilters } from '../../types'
+import { IActiveFilters, IFilterMoreOptions } from '../../types'
 
 import Facet from './Facet'
 
@@ -26,11 +26,14 @@ function getOptionLabel(
 interface IProps {
   activeFilters: IActiveFilters
   filters: IGraphqlProductAggregation[]
+  loadMore: (filter: IGraphqlProductAggregation) => void
+  moreOptions: IFilterMoreOptions
   onFilterChange: Dispatch<SetStateAction<IActiveFilters>>
 }
 
 function Facets(props: IProps): JSX.Element {
-  const { activeFilters, filters, onFilterChange } = props
+  const { activeFilters, filters, loadMore, moreOptions, onFilterChange } =
+    props
 
   function handleChange(filter: IGraphqlProductAggregation, value: string) {
     return () =>
@@ -61,7 +64,7 @@ function Facets(props: IProps): JSX.Element {
           clone.splice(filterOptionIndex, 1)
           return clone
         }
-        // Add the value for multi-valued filters
+        // Add the value
         clone.push({ filter, value })
         return clone
       })
@@ -100,6 +103,8 @@ function Facets(props: IProps): JSX.Element {
           activeFilters={activeFilters}
           key={filter.field}
           filter={filter}
+          loadMore={loadMore}
+          moreOptions={moreOptions.get(filter)}
           onChange={handleChange}
         />
       ))}

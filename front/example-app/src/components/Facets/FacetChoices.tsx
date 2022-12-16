@@ -1,6 +1,9 @@
-import { useState } from 'react'
 import { Button, Collapse, FormGroup } from '@mui/material'
-import { IGraphqlProductAggregation } from 'shared'
+import {
+  IFetch,
+  IGraphqlProductAggregation,
+  IGraphqlViewMoreFacetOption,
+} from 'shared'
 
 import { IFilterChange } from '../../types'
 
@@ -10,15 +13,17 @@ interface IProps {
   activeOptions: string[]
   filter: IGraphqlProductAggregation
   id: string
+  loadMore: (filter: IGraphqlProductAggregation) => void
+  moreOptions?: IFetch<IGraphqlViewMoreFacetOption[]>
   onChange: IFilterChange
 }
 
 function FacetChoices(props: IProps): JSX.Element {
-  const { activeOptions, filter, id, onChange } = props
-  const [more, setMore] = useState(false)
+  const { activeOptions, filter, id, loadMore, moreOptions, onChange } = props
+  const open = moreOptions?.data?.length > 0
 
   function handleToggleMore(): void {
-    setMore((prevState) => !prevState)
+    loadMore(filter)
   }
 
   return (
@@ -34,12 +39,25 @@ function FacetChoices(props: IProps): JSX.Element {
           />
         ))}
       </FormGroup>
-      <Collapse in={more}>
-        <FormGroup aria-labelledby={id}>Load more facets...</FormGroup>
+      <Collapse in={open}>
+        <FormGroup aria-labelledby={id}>
+          {moreOptions?.data?.map((option) => (
+            <FacetChoice
+              key={String(option.value)}
+              activeOptions={activeOptions}
+              filter={filter}
+              onChange={onChange}
+              option={option}
+            />
+          ))}
+        </FormGroup>
       </Collapse>
-      {Boolean(filter.hasMore) && (
-        <Button onClick={handleToggleMore}>
-          {more ? 'Show less' : 'Show more'}
+      {Boolean(filter.hasMore) && !open && (
+        <Button
+          disabled={Boolean(moreOptions?.error)}
+          onClick={handleToggleMore}
+        >
+          {moreOptions?.error ? 'An error occured' : 'Show more'}
         </Button>
       )}
     </>

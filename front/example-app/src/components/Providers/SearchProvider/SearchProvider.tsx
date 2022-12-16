@@ -13,11 +13,11 @@ function SearchProvider(props: IProps): JSX.Element {
   const { children } = props
   const productsHook = useProducts(ProductRequestType.SEARCH)
   const navigate = useNavigate()
-  const { loadProduts, search, setSearch } = productsHook
+  const { loadProducts, search, setSearch } = productsHook
 
   useEffect(() => {
-    loadProduts(Boolean(search))
-  }, [loadProduts, search])
+    loadProducts(Boolean(search))
+  }, [loadProducts, search])
 
   const onSearch = useCallback(
     (search: string) => {
