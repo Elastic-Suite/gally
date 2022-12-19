@@ -41,6 +41,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 13.85,
       "indexed_attributes": [
         "price",
         "name",
@@ -147,6 +148,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 34,
       "indexed_attributes": [
         "price",
         "name",
@@ -260,6 +262,7 @@
           "is_discounted": true
         }
       ],
+      "cost": 23.31,
       "indexed_attributes": [
         "price",
         "name",
@@ -398,6 +401,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 27.12,
       "indexed_attributes": [
         "price",
         "name",
@@ -511,6 +515,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 12.75,
       "indexed_attributes": [
         "price",
         "name",
@@ -624,6 +629,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 12.75,
       "indexed_attributes": [
         "price",
         "name",
@@ -970,6 +976,7 @@
           "is_discounted": true
         }
       ],
+      "cost": 23.31,
       "indexed_attributes": [
         "price",
         "name",
@@ -1309,6 +1316,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 23.31,
       "indexed_attributes": [
         "price",
         "name",
@@ -1895,6 +1903,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 13.85,
       "indexed_attributes": [
         "price",
         "name",
@@ -2381,6 +2390,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 23.31,
       "indexed_attributes": [
         "price",
         "name",
@@ -2854,6 +2864,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 23.31,
       "indexed_attributes": [
         "price",
         "name",
@@ -4019,6 +4030,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 23.31,
       "indexed_attributes": [
         "price",
         "name",
@@ -4711,6 +4723,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 23.31,
       "indexed_attributes": [
         "price",
         "name",
@@ -5403,6 +5416,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 23.31,
       "indexed_attributes": [
         "price",
         "name",
@@ -6366,6 +6380,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 23.31,
       "indexed_attributes": [
         "price",
         "name",
@@ -6612,6 +6627,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 23.31,
       "indexed_attributes": [
         "price",
         "name",
@@ -7794,6 +7810,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 23.31,
       "indexed_attributes": [
         "price",
         "name",
@@ -8478,6 +8495,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 23.31,
       "indexed_attributes": [
         "price",
         "name",
@@ -9408,6 +9426,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 23.31,
       "indexed_attributes": [
         "price",
         "name",
@@ -10330,6 +10349,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 23.31,
       "indexed_attributes": [
         "price",
         "name",
@@ -10802,6 +10822,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 23.31,
       "indexed_attributes": [
         "price",
         "name",
@@ -11263,6 +11284,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 23.31,
       "indexed_attributes": [
         "price",
         "name",
@@ -11743,6 +11765,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 23.31,
       "indexed_attributes": [
         "price",
         "name",
@@ -12225,6 +12248,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 23.31,
       "indexed_attributes": [
         "price",
         "name",
@@ -13628,6 +13652,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 23.31,
       "indexed_attributes": [
         "price",
         "name",
@@ -15676,6 +15701,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 23.31,
       "indexed_attributes": [
         "price",
         "name",
@@ -15902,6 +15928,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 12.75,
       "indexed_attributes": [
         "price",
         "name",
@@ -16282,6 +16309,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 12.75,
       "indexed_attributes": [
         "price",
         "name",
@@ -16450,6 +16478,7 @@
           "is_discounted": true
         }
       ],
+      "cost": 12.75,
       "indexed_attributes": [
         "price",
         "name",
@@ -16631,6 +16660,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 13.85,
       "indexed_attributes": [
         "price",
         "name",
@@ -16855,6 +16885,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 13.85,
       "indexed_attributes": [
         "price",
         "name",
@@ -17074,6 +17105,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 12.75,
       "indexed_attributes": [
         "price",
         "name",
@@ -17293,6 +17325,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 12.75,
       "indexed_attributes": [
         "price",
         "name",
@@ -17512,6 +17545,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 12.75,
       "indexed_attributes": [
         "price",
         "name",
@@ -17731,6 +17765,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 12.75,
       "indexed_attributes": [
         "price",
         "name",
@@ -17955,6 +17990,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 13.85,
       "indexed_attributes": [
         "price",
         "name",
@@ -18174,6 +18210,7 @@
           "is_discounted": true
         }
       ],
+      "cost": 23.31,
       "indexed_attributes": [
         "price",
         "name",
@@ -18312,6 +18349,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 23.31,
       "indexed_attributes": [
         "price",
         "name",
@@ -18425,6 +18463,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 12.75,
       "indexed_attributes": [
         "price",
         "name",
@@ -18538,6 +18577,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 12.75,
       "indexed_attributes": [
         "price",
         "name",
@@ -18884,6 +18924,7 @@
           "is_discounted": true
         }
       ],
+      "cost": 23.31,
       "indexed_attributes": [
         "price",
         "name",
@@ -19223,6 +19264,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 23.31,
       "indexed_attributes": [
         "price",
         "name",
@@ -19809,6 +19851,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 13.85,
       "indexed_attributes": [
         "price",
         "name",
@@ -20295,6 +20338,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 23.31,
       "indexed_attributes": [
         "price",
         "name",
@@ -20768,6 +20812,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 23.31,
       "indexed_attributes": [
         "price",
         "name",
@@ -21933,6 +21978,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 23.31,
       "indexed_attributes": [
         "price",
         "name",
@@ -22625,6 +22671,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 23.31,
       "indexed_attributes": [
         "price",
         "name",
@@ -23317,6 +23364,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 23.31,
       "indexed_attributes": [
         "price",
         "name",
@@ -24280,6 +24328,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 23.31,
       "indexed_attributes": [
         "price",
         "name",
@@ -24526,6 +24575,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 23.31,
       "indexed_attributes": [
         "price",
         "name",
@@ -25708,6 +25758,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 23.31,
       "indexed_attributes": [
         "price",
         "name",
@@ -26392,6 +26443,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 23.31,
       "indexed_attributes": [
         "price",
         "name",
@@ -27322,6 +27374,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 23.31,
       "indexed_attributes": [
         "price",
         "name",
@@ -28244,6 +28297,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 23.31,
       "indexed_attributes": [
         "price",
         "name",
@@ -28716,6 +28770,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 23.31,
       "indexed_attributes": [
         "price",
         "name",
@@ -29177,6 +29232,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 23.31,
       "indexed_attributes": [
         "price",
         "name",
@@ -29657,6 +29713,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 23.31,
       "indexed_attributes": [
         "price",
         "name",
@@ -30139,6 +30196,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 23.31,
       "indexed_attributes": [
         "price",
         "name",
@@ -31542,6 +31600,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 23.31,
       "indexed_attributes": [
         "price",
         "name",
@@ -33590,6 +33649,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 23.31,
       "indexed_attributes": [
         "price",
         "name",
@@ -33816,6 +33876,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 12.75,
       "indexed_attributes": [
         "price",
         "name",
@@ -34196,6 +34257,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 12.75,
       "indexed_attributes": [
         "price",
         "name",
@@ -34364,6 +34426,7 @@
           "is_discounted": true
         }
       ],
+      "cost": 12.75,
       "indexed_attributes": [
         "price",
         "name",
@@ -34545,6 +34608,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 13.85,
       "indexed_attributes": [
         "price",
         "name",
@@ -34769,6 +34833,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 13.85,
       "indexed_attributes": [
         "price",
         "name",
@@ -34988,6 +35053,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 12.75,
       "indexed_attributes": [
         "price",
         "name",
@@ -35207,6 +35273,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 12.75,
       "indexed_attributes": [
         "price",
         "name",
@@ -35426,6 +35493,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 12.75,
       "indexed_attributes": [
         "price",
         "name",
@@ -35645,6 +35713,7 @@
           "is_discounted": false
         }
       ],
+      "cost": 12.75,
       "indexed_attributes": [
         "price",
         "name",
