@@ -101,7 +101,7 @@ Elasticsuite\Metadata\Model\SourceField:
         isSpellchecked: false
         isFilterable: false
         isSortable: false
-        isUsedForRules: false
+        isUsedForRules: true
     product_country_of_manufacture:
         metadata: '@product'
         code: country_of_manufacture
