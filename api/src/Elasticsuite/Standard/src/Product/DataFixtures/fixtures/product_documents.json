@@ -72,27 +72,6 @@
           "id": "cat_5"
         }
       ],
-      "simple_category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Accessories",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Jewelry",
-          "category_uid": "NQ==",
-          "id": "cat_5"
-        }
-      ],
       "name": [
         "Carmina Earrings"
       ],
@@ -125,10 +104,6 @@
       ],
       "id": 1,
       "stock": {
-        "qty": 100,
-        "status": true
-      },
-      "simple_stock": {
         "qty": 100,
         "status": true
       }
@@ -204,27 +179,6 @@
           "id": "cat_5"
         }
       ],
-      "simple_category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Accessories",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Jewelry",
-          "category_uid": "NQ==",
-          "id": "cat_5"
-        }
-      ],
       "name": [
         "Augusta Earrings"
       ],
@@ -263,10 +217,6 @@
       ],
       "id": 2,
       "stock": {
-        "qty": 100,
-        "status": true
-      },
-      "simple_stock": {
         "qty": 100,
         "status": true
       }
@@ -326,27 +276,6 @@
         "accessory_recyclable_material"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Accessories",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Jewelry",
-          "category_uid": "NQ==",
-          "id": "cat_5"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -428,10 +357,6 @@
       "stock": {
         "qty": 100,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 100,
-        "status": true
       }
     },
     {
@@ -505,27 +430,6 @@
           "id": "cat_5"
         }
       ],
-      "simple_category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Accessories",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Jewelry",
-          "category_uid": "NQ==",
-          "id": "cat_5"
-        }
-      ],
       "name": [
         "Augusta Necklace"
       ],
@@ -564,10 +468,6 @@
       ],
       "id": 4,
       "stock": {
-        "qty": 100,
-        "status": true
-      },
-      "simple_stock": {
         "qty": 100,
         "status": true
       }
@@ -643,27 +543,6 @@
           "id": "cat_5"
         }
       ],
-      "simple_category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Accessories",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Jewelry",
-          "category_uid": "NQ==",
-          "id": "cat_5"
-        }
-      ],
       "name": [
         "Silver Sol Earrings"
       ],
@@ -702,10 +581,6 @@
       ],
       "id": 5,
       "stock": {
-        "qty": 100,
-        "status": true
-      },
-      "simple_stock": {
         "qty": 100,
         "status": true
       }
@@ -781,27 +656,6 @@
           "id": "cat_5"
         }
       ],
-      "simple_category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Accessories",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Jewelry",
-          "category_uid": "NQ==",
-          "id": "cat_5"
-        }
-      ],
       "name": [
         "Gold Sol Earrings"
       ],
@@ -840,10 +694,6 @@
       ],
       "id": 6,
       "stock": {
-        "qty": 100,
-        "status": true
-      },
-      "simple_stock": {
         "qty": 100,
         "status": true
       }
@@ -920,27 +770,6 @@
           "id": "cat_5"
         }
       ],
-      "simple_category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Accessories",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Jewelry",
-          "category_uid": "NQ==",
-          "id": "cat_5"
-        }
-      ],
       "name": [
         "Silver Cirque Earrings"
       ],
@@ -985,10 +814,6 @@
       ],
       "id": 7,
       "stock": {
-        "qty": 100,
-        "status": true
-      },
-      "simple_stock": {
         "qty": 100,
         "status": true
       }
@@ -1064,27 +889,6 @@
           "id": "cat_5"
         }
       ],
-      "simple_category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Accessories",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Jewelry",
-          "category_uid": "NQ==",
-          "id": "cat_5"
-        }
-      ],
       "name": [
         "Gold Cirque Earrings"
       ],
@@ -1123,10 +927,6 @@
       ],
       "id": 8,
       "stock": {
-        "qty": 100,
-        "status": true
-      },
-      "simple_stock": {
         "qty": 100,
         "status": true
       }
@@ -1202,27 +1002,6 @@
           "id": "cat_5"
         }
       ],
-      "simple_category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Accessories",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Jewelry",
-          "category_uid": "NQ==",
-          "id": "cat_5"
-        }
-      ],
       "name": [
         "Gold Omni Bangle Set"
       ],
@@ -1261,10 +1040,6 @@
       ],
       "id": 9,
       "stock": {
-        "qty": 100,
-        "status": true
-      },
-      "simple_stock": {
         "qty": 100,
         "status": true
       }
@@ -1340,27 +1115,6 @@
           "id": "cat_5"
         }
       ],
-      "simple_category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Accessories",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Jewelry",
-          "category_uid": "NQ==",
-          "id": "cat_5"
-        }
-      ],
       "name": [
         "Semper Bangle Set"
       ],
@@ -1399,10 +1153,6 @@
       ],
       "id": 10,
       "stock": {
-        "qty": 100,
-        "status": true
-      },
-      "simple_stock": {
         "qty": 100,
         "status": true
       }
@@ -1478,27 +1228,6 @@
           "id": "cat_5"
         }
       ],
-      "simple_category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Accessories",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Jewelry",
-          "category_uid": "NQ==",
-          "id": "cat_5"
-        }
-      ],
       "name": [
         "Gold Veritas Cuff Set"
       ],
@@ -1537,10 +1266,6 @@
       ],
       "id": 11,
       "stock": {
-        "qty": 100,
-        "status": true
-      },
-      "simple_stock": {
         "qty": 100,
         "status": true
       }
@@ -1616,27 +1341,6 @@
           "id": "cat_5"
         }
       ],
-      "simple_category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Accessories",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Jewelry",
-          "category_uid": "NQ==",
-          "id": "cat_5"
-        }
-      ],
       "name": [
         "Silver Amor Bangle Set"
       ],
@@ -1675,10 +1379,6 @@
       ],
       "id": 12,
       "stock": {
-        "qty": 98,
-        "status": true
-      },
-      "simple_stock": {
         "qty": 98,
         "status": true
       }
@@ -1745,20 +1445,6 @@
           "id": "cat_7"
         }
       ],
-      "simple_category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "New Products",
-          "category_uid": "Nw==",
-          "id": "cat_7"
-        }
-      ],
       "name": [
         "Venia Stylist Consultation"
       ],
@@ -1785,10 +1471,6 @@
       ],
       "id": 13,
       "stock": {
-        "qty": 1000,
-        "status": true
-      },
-      "simple_stock": {
         "qty": 1000,
         "status": true
       }
@@ -1842,27 +1524,6 @@
         "tax_class_id"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Accessories",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Jewelry",
-          "category_uid": "NQ==",
-          "id": "cat_5"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -2038,10 +1699,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -2092,27 +1749,6 @@
         "status"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Accessories",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Jewelry",
-          "category_uid": "NQ==",
-          "id": "cat_5"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -2218,10 +1854,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -2277,26 +1909,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Tops",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Blouses & Shirts",
-          "category_uid": "OQ==",
-          "id": "cat_9"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -2478,10 +2090,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -2537,39 +2145,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Tops",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Blouses & Shirts",
-          "category_uid": "OQ==",
-          "id": "cat_9"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Shop The Look",
-          "category_uid": "MTU=",
-          "id": "cat_15"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Minimalist Sensibility",
-          "category_uid": "MTY=",
-          "id": "cat_16"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -2765,10 +2340,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -2824,39 +2395,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Tops",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Blouses & Shirts",
-          "category_uid": "OQ==",
-          "id": "cat_9"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Shop The Look",
-          "category_uid": "MTU=",
-          "id": "cat_15"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Outside the Lines",
-          "category_uid": "MTc=",
-          "id": "cat_17"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -3047,10 +2585,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -3106,26 +2640,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Tops",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Blouses & Shirts",
-          "category_uid": "OQ==",
-          "id": "cat_9"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -3299,10 +2813,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -3358,26 +2868,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Tops",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Blouses & Shirts",
-          "category_uid": "OQ==",
-          "id": "cat_9"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -3555,10 +3045,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -3614,26 +3100,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Tops",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Blouses & Shirts",
-          "category_uid": "OQ==",
-          "id": "cat_9"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -3811,10 +3277,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -3870,26 +3332,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Tops",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Blouses & Shirts",
-          "category_uid": "OQ==",
-          "id": "cat_9"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -4067,10 +3509,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -4126,26 +3564,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Tops",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Blouses & Shirts",
-          "category_uid": "OQ==",
-          "id": "cat_9"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -4323,10 +3741,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -4382,26 +3796,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Tops",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Blouses & Shirts",
-          "category_uid": "OQ==",
-          "id": "cat_9"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -4584,10 +3978,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -4643,26 +4033,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Tops",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Blouses & Shirts",
-          "category_uid": "OQ==",
-          "id": "cat_9"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -4840,10 +4210,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -4899,26 +4265,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Tops",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Blouses & Shirts",
-          "category_uid": "OQ==",
-          "id": "cat_9"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -5096,10 +4442,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -5155,26 +4497,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Tops",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Blouses & Shirts",
-          "category_uid": "OQ==",
-          "id": "cat_9"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -5348,10 +4670,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -5407,26 +4725,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Tops",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Sweaters",
-          "category_uid": "MTA=",
-          "id": "cat_10"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -5604,10 +4902,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -5663,26 +4957,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Tops",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Sweaters",
-          "category_uid": "MTA=",
-          "id": "cat_10"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -5856,10 +5130,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -5915,26 +5185,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Tops",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Sweaters",
-          "category_uid": "MTA=",
-          "id": "cat_10"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -6112,10 +5362,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -6171,39 +5417,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Tops",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Sweaters",
-          "category_uid": "MTA=",
-          "id": "cat_10"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Shop The Look",
-          "category_uid": "MTU=",
-          "id": "cat_15"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Carefree Days",
-          "category_uid": "MTg=",
-          "id": "cat_18"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -6394,10 +5607,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -6453,26 +5662,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Tops",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Sweaters",
-          "category_uid": "MTA=",
-          "id": "cat_10"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -6650,10 +5839,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -6709,26 +5894,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Tops",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Sweaters",
-          "category_uid": "MTA=",
-          "id": "cat_10"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -6919,10 +6084,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -6978,26 +6139,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Tops",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Sweaters",
-          "category_uid": "MTA=",
-          "id": "cat_10"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -7184,10 +6325,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -7243,39 +6380,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Tops",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Sweaters",
-          "category_uid": "MTA=",
-          "id": "cat_10"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Shop The Look",
-          "category_uid": "MTU=",
-          "id": "cat_15"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Perfectly Beachy",
-          "category_uid": "MTk=",
-          "id": "cat_19"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -7467,10 +6571,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -7526,26 +6626,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Tops",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Sweaters",
-          "category_uid": "MTA=",
-          "id": "cat_10"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -7723,10 +6803,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -7782,26 +6858,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Tops",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Sweaters",
-          "category_uid": "MTA=",
-          "id": "cat_10"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -7979,10 +7035,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -8038,26 +7090,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Tops",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Sweaters",
-          "category_uid": "MTA=",
-          "id": "cat_10"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -8231,10 +7263,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -8290,26 +7318,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Tops",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Sweaters",
-          "category_uid": "MTA=",
-          "id": "cat_10"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -8500,10 +7508,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -8559,26 +7563,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bottoms",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Skirts",
-          "category_uid": "MTM=",
-          "id": "cat_13"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -8769,10 +7753,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -8828,26 +7808,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bottoms",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Skirts",
-          "category_uid": "MTM=",
-          "id": "cat_13"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -9021,10 +7981,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -9080,26 +8036,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bottoms",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Skirts",
-          "category_uid": "MTM=",
-          "id": "cat_13"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -9273,10 +8209,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -9332,26 +8264,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bottoms",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Skirts",
-          "category_uid": "MTM=",
-          "id": "cat_13"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -9525,10 +8437,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -9584,39 +8492,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bottoms",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Skirts",
-          "category_uid": "MTM=",
-          "id": "cat_13"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Shop The Look",
-          "category_uid": "MTU=",
-          "id": "cat_15"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Carefree Days",
-          "category_uid": "MTg=",
-          "id": "cat_18"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -9803,10 +8678,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -9862,26 +8733,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bottoms",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Skirts",
-          "category_uid": "MTM=",
-          "id": "cat_13"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -10055,10 +8906,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -10114,26 +8961,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bottoms",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Skirts",
-          "category_uid": "MTM=",
-          "id": "cat_13"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -10312,10 +9139,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -10371,26 +9194,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bottoms",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Skirts",
-          "category_uid": "MTM=",
-          "id": "cat_13"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -10564,10 +9367,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -10623,26 +9422,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bottoms",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Skirts",
-          "category_uid": "MTM=",
-          "id": "cat_13"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -10821,10 +9600,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -10880,26 +9655,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bottoms",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Skirts",
-          "category_uid": "MTM=",
-          "id": "cat_13"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -11078,10 +9833,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -11137,26 +9888,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bottoms",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Skirts",
-          "category_uid": "MTM=",
-          "id": "cat_13"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -11330,10 +10061,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -11389,26 +10116,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bottoms",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Skirts",
-          "category_uid": "MTM=",
-          "id": "cat_13"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -11582,10 +10289,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -11641,26 +10344,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bottoms",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Pants & Shorts",
-          "category_uid": "MTI=",
-          "id": "cat_12"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -11850,10 +10533,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -11909,26 +10588,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bottoms",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Pants & Shorts",
-          "category_uid": "MTI=",
-          "id": "cat_12"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -12102,10 +10761,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -12161,26 +10816,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bottoms",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Pants & Shorts",
-          "category_uid": "MTI=",
-          "id": "cat_12"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -12359,10 +10994,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -12418,26 +11049,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bottoms",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Pants & Shorts",
-          "category_uid": "MTI=",
-          "id": "cat_12"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -12611,10 +11222,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -12670,26 +11277,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bottoms",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Pants & Shorts",
-          "category_uid": "MTI=",
-          "id": "cat_12"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -12879,10 +11466,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -12938,26 +11521,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bottoms",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Pants & Shorts",
-          "category_uid": "MTI=",
-          "id": "cat_12"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -13139,10 +11702,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -13198,26 +11757,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bottoms",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Pants & Shorts",
-          "category_uid": "MTI=",
-          "id": "cat_12"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -13395,10 +11934,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -13454,39 +11989,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bottoms",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Pants & Shorts",
-          "category_uid": "MTI=",
-          "id": "cat_12"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Shop The Look",
-          "category_uid": "MTU=",
-          "id": "cat_15"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Minimalist Sensibility",
-          "category_uid": "MTY=",
-          "id": "cat_16"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -13682,10 +12184,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -13741,39 +12239,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bottoms",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Pants & Shorts",
-          "category_uid": "MTI=",
-          "id": "cat_12"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Shop The Look",
-          "category_uid": "MTU=",
-          "id": "cat_15"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Perfectly Beachy",
-          "category_uid": "MTk=",
-          "id": "cat_19"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -13969,10 +12434,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -14028,26 +12489,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bottoms",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Pants & Shorts",
-          "category_uid": "MTI=",
-          "id": "cat_12"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -14230,10 +12671,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -14289,26 +12726,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bottoms",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Pants & Shorts",
-          "category_uid": "MTI=",
-          "id": "cat_12"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -14486,10 +12903,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -14545,26 +12958,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bottoms",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Pants & Shorts",
-          "category_uid": "MTI=",
-          "id": "cat_12"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -14742,10 +13135,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -14801,20 +13190,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Dresses",
-          "category_uid": "MTQ=",
-          "id": "cat_14"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -14986,10 +13361,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -15045,20 +13416,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Dresses",
-          "category_uid": "MTQ=",
-          "id": "cat_14"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -15230,10 +13587,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -15289,20 +13642,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Dresses",
-          "category_uid": "MTQ=",
-          "id": "cat_14"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -15470,10 +13809,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -15529,20 +13864,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Dresses",
-          "category_uid": "MTQ=",
-          "id": "cat_14"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -15714,10 +14035,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -15773,20 +14090,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Dresses",
-          "category_uid": "MTQ=",
-          "id": "cat_14"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -15958,10 +14261,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -16017,20 +14316,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Dresses",
-          "category_uid": "MTQ=",
-          "id": "cat_14"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -16202,10 +14487,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -16261,33 +14542,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Dresses",
-          "category_uid": "MTQ=",
-          "id": "cat_14"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Shop The Look",
-          "category_uid": "MTU=",
-          "id": "cat_15"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Retire your LBD",
-          "category_uid": "MjA=",
-          "id": "cat_20"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -16472,10 +14726,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -16531,20 +14781,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Dresses",
-          "category_uid": "MTQ=",
-          "id": "cat_14"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -16712,10 +14948,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -16771,33 +15003,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Dresses",
-          "category_uid": "MTQ=",
-          "id": "cat_14"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Shop The Look",
-          "category_uid": "MTU=",
-          "id": "cat_15"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Timeless Sophistication",
-          "category_uid": "MjE=",
-          "id": "cat_21"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -16982,10 +15187,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -17041,20 +15242,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Dresses",
-          "category_uid": "MTQ=",
-          "id": "cat_14"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -17226,10 +15413,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -17285,20 +15468,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Dresses",
-          "category_uid": "MTQ=",
-          "id": "cat_14"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -17466,10 +15635,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -17525,20 +15690,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Dresses",
-          "category_uid": "MTQ=",
-          "id": "cat_14"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -17710,10 +15861,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -17770,39 +15917,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Accessories",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Belts",
-          "category_uid": "NA==",
-          "id": "cat_4"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Shop The Look",
-          "category_uid": "MTU=",
-          "id": "cat_15"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Timeless Sophistication",
-          "category_uid": "MjE=",
-          "id": "cat_21"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -17959,10 +16073,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -18017,26 +16127,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Accessories",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Belts",
-          "category_uid": "NA==",
-          "id": "cat_4"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -18151,10 +16241,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -18209,26 +16295,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Accessories",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Belts",
-          "category_uid": "NA==",
-          "id": "cat_4"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -18343,10 +16409,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -18401,26 +16463,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Accessories",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Belts",
-          "category_uid": "NA==",
-          "id": "cat_4"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -18548,10 +16590,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -18606,26 +16644,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Accessories",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Scarves",
-          "category_uid": "Ng==",
-          "id": "cat_6"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -18796,10 +16814,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -18854,26 +16868,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Accessories",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Scarves",
-          "category_uid": "Ng==",
-          "id": "cat_6"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -19039,10 +17033,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -19097,26 +17087,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Accessories",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Scarves",
-          "category_uid": "Ng==",
-          "id": "cat_6"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -19282,10 +17252,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -19340,26 +17306,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Accessories",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Scarves",
-          "category_uid": "Ng==",
-          "id": "cat_6"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -19525,10 +17471,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -19583,26 +17525,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Accessories",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Scarves",
-          "category_uid": "Ng==",
-          "id": "cat_6"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -19768,10 +17690,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -19826,26 +17744,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Accessories",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Scarves",
-          "category_uid": "Ng==",
-          "id": "cat_6"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -20012,10 +17910,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     }
   ]
@@ -20092,27 +17986,6 @@
           "id": "cat_5"
         }
       ],
-      "simple_category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Accessoires",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Bijoux",
-          "category_uid": "NQ==",
-          "id": "cat_5"
-        }
-      ],
       "name": [
         "Carmina Earrings"
       ],
@@ -20145,10 +18018,6 @@
       ],
       "id": 1,
       "stock": {
-        "qty": 100,
-        "status": true
-      },
-      "simple_stock": {
         "qty": 100,
         "status": true
       }
@@ -20224,27 +18093,6 @@
           "id": "cat_5"
         }
       ],
-      "simple_category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Accessoires",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Bijoux",
-          "category_uid": "NQ==",
-          "id": "cat_5"
-        }
-      ],
       "name": [
         "Augusta Earrings"
       ],
@@ -20283,10 +18131,6 @@
       ],
       "id": 2,
       "stock": {
-        "qty": 100,
-        "status": true
-      },
-      "simple_stock": {
         "qty": 100,
         "status": true
       }
@@ -20346,27 +18190,6 @@
         "accessory_recyclable_material"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Accessoires",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Bijoux",
-          "category_uid": "NQ==",
-          "id": "cat_5"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -20448,10 +18271,6 @@
       "stock": {
         "qty": 100,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 100,
-        "status": true
       }
     },
     {
@@ -20525,27 +18344,6 @@
           "id": "cat_5"
         }
       ],
-      "simple_category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Accessoires",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Bijoux",
-          "category_uid": "NQ==",
-          "id": "cat_5"
-        }
-      ],
       "name": [
         "Augusta Necklace"
       ],
@@ -20584,10 +18382,6 @@
       ],
       "id": 4,
       "stock": {
-        "qty": 100,
-        "status": true
-      },
-      "simple_stock": {
         "qty": 100,
         "status": true
       }
@@ -20663,27 +18457,6 @@
           "id": "cat_5"
         }
       ],
-      "simple_category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Accessoires",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Bijoux",
-          "category_uid": "NQ==",
-          "id": "cat_5"
-        }
-      ],
       "name": [
         "Silver Sol Earrings"
       ],
@@ -20722,10 +18495,6 @@
       ],
       "id": 5,
       "stock": {
-        "qty": 100,
-        "status": true
-      },
-      "simple_stock": {
         "qty": 100,
         "status": true
       }
@@ -20801,27 +18570,6 @@
           "id": "cat_5"
         }
       ],
-      "simple_category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Accessoires",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Bijoux",
-          "category_uid": "NQ==",
-          "id": "cat_5"
-        }
-      ],
       "name": [
         "Gold Sol Earrings"
       ],
@@ -20860,10 +18608,6 @@
       ],
       "id": 6,
       "stock": {
-        "qty": 100,
-        "status": true
-      },
-      "simple_stock": {
         "qty": 100,
         "status": true
       }
@@ -20940,27 +18684,6 @@
           "id": "cat_5"
         }
       ],
-      "simple_category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Accessoires",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Bijoux",
-          "category_uid": "NQ==",
-          "id": "cat_5"
-        }
-      ],
       "name": [
         "Silver Cirque Earrings"
       ],
@@ -21005,10 +18728,6 @@
       ],
       "id": 7,
       "stock": {
-        "qty": 100,
-        "status": true
-      },
-      "simple_stock": {
         "qty": 100,
         "status": true
       }
@@ -21084,27 +18803,6 @@
           "id": "cat_5"
         }
       ],
-      "simple_category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Accessoires",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Bijoux",
-          "category_uid": "NQ==",
-          "id": "cat_5"
-        }
-      ],
       "name": [
         "Gold Cirque Earrings"
       ],
@@ -21143,10 +18841,6 @@
       ],
       "id": 8,
       "stock": {
-        "qty": 100,
-        "status": true
-      },
-      "simple_stock": {
         "qty": 100,
         "status": true
       }
@@ -21222,27 +18916,6 @@
           "id": "cat_5"
         }
       ],
-      "simple_category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Accessoires",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Bijoux",
-          "category_uid": "NQ==",
-          "id": "cat_5"
-        }
-      ],
       "name": [
         "Gold Omni Bangle Set"
       ],
@@ -21281,10 +18954,6 @@
       ],
       "id": 9,
       "stock": {
-        "qty": 100,
-        "status": true
-      },
-      "simple_stock": {
         "qty": 100,
         "status": true
       }
@@ -21360,27 +19029,6 @@
           "id": "cat_5"
         }
       ],
-      "simple_category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Accessoires",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Bijoux",
-          "category_uid": "NQ==",
-          "id": "cat_5"
-        }
-      ],
       "name": [
         "Semper Bangle Set"
       ],
@@ -21419,10 +19067,6 @@
       ],
       "id": 10,
       "stock": {
-        "qty": 100,
-        "status": true
-      },
-      "simple_stock": {
         "qty": 100,
         "status": true
       }
@@ -21498,27 +19142,6 @@
           "id": "cat_5"
         }
       ],
-      "simple_category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Accessoires",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Bijoux",
-          "category_uid": "NQ==",
-          "id": "cat_5"
-        }
-      ],
       "name": [
         "Gold Veritas Cuff Set"
       ],
@@ -21557,10 +19180,6 @@
       ],
       "id": 11,
       "stock": {
-        "qty": 100,
-        "status": true
-      },
-      "simple_stock": {
         "qty": 100,
         "status": true
       }
@@ -21636,27 +19255,6 @@
           "id": "cat_5"
         }
       ],
-      "simple_category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Accessoires",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Bijoux",
-          "category_uid": "NQ==",
-          "id": "cat_5"
-        }
-      ],
       "name": [
         "Silver Amor Bangle Set"
       ],
@@ -21695,10 +19293,6 @@
       ],
       "id": 12,
       "stock": {
-        "qty": 98,
-        "status": true
-      },
-      "simple_stock": {
         "qty": 98,
         "status": true
       }
@@ -21765,20 +19359,6 @@
           "id": "cat_7"
         }
       ],
-      "simple_category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "New Products",
-          "category_uid": "Nw==",
-          "id": "cat_7"
-        }
-      ],
       "name": [
         "Venia Stylist Consultation"
       ],
@@ -21805,10 +19385,6 @@
       ],
       "id": 13,
       "stock": {
-        "qty": 1000,
-        "status": true
-      },
-      "simple_stock": {
         "qty": 1000,
         "status": true
       }
@@ -21862,27 +19438,6 @@
         "tax_class_id"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Accessoires",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Bijoux",
-          "category_uid": "NQ==",
-          "id": "cat_5"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -22058,10 +19613,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -22112,27 +19663,6 @@
         "status"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Accessoires",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Bijoux",
-          "category_uid": "NQ==",
-          "id": "cat_5"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -22238,10 +19768,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -22297,26 +19823,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Hauts",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Chemisiers et T-shirts",
-          "category_uid": "OQ==",
-          "id": "cat_9"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -22498,10 +20004,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -22557,39 +20059,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Hauts",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Chemisiers et T-shirts",
-          "category_uid": "OQ==",
-          "id": "cat_9"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Shop The Look",
-          "category_uid": "MTU=",
-          "id": "cat_15"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Minimalist Sensibility",
-          "category_uid": "MTY=",
-          "id": "cat_16"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -22785,10 +20254,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -22844,39 +20309,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Hauts",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Chemisiers et T-shirts",
-          "category_uid": "OQ==",
-          "id": "cat_9"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Shop The Look",
-          "category_uid": "MTU=",
-          "id": "cat_15"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Outside the Lines",
-          "category_uid": "MTc=",
-          "id": "cat_17"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -23067,10 +20499,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -23126,26 +20554,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Hauts",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Chemisiers et T-shirts",
-          "category_uid": "OQ==",
-          "id": "cat_9"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -23319,10 +20727,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -23378,26 +20782,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Hauts",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Chemisiers et T-shirts",
-          "category_uid": "OQ==",
-          "id": "cat_9"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -23575,10 +20959,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -23634,26 +21014,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Hauts",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Chemisiers et T-shirts",
-          "category_uid": "OQ==",
-          "id": "cat_9"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -23831,10 +21191,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -23890,26 +21246,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Hauts",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Chemisiers et T-shirts",
-          "category_uid": "OQ==",
-          "id": "cat_9"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -24087,10 +21423,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -24146,26 +21478,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Hauts",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Chemisiers et T-shirts",
-          "category_uid": "OQ==",
-          "id": "cat_9"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -24343,10 +21655,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -24402,26 +21710,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Hauts",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Chemisiers et T-shirts",
-          "category_uid": "OQ==",
-          "id": "cat_9"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -24604,10 +21892,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -24663,26 +21947,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Hauts",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Chemisiers et T-shirts",
-          "category_uid": "OQ==",
-          "id": "cat_9"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -24860,10 +22124,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -24919,26 +22179,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Hauts",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Chemisiers et T-shirts",
-          "category_uid": "OQ==",
-          "id": "cat_9"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -25116,10 +22356,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -25175,26 +22411,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Hauts",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Chemisiers et T-shirts",
-          "category_uid": "OQ==",
-          "id": "cat_9"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -25368,10 +22584,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -25427,26 +22639,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Hauts",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Sweats",
-          "category_uid": "MTA=",
-          "id": "cat_10"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -25624,10 +22816,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -25683,26 +22871,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Hauts",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Sweats",
-          "category_uid": "MTA=",
-          "id": "cat_10"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -25876,10 +23044,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -25935,26 +23099,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Hauts",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Sweats",
-          "category_uid": "MTA=",
-          "id": "cat_10"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -26132,10 +23276,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -26191,39 +23331,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Hauts",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Sweats",
-          "category_uid": "MTA=",
-          "id": "cat_10"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Shop The Look",
-          "category_uid": "MTU=",
-          "id": "cat_15"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Carefree Days",
-          "category_uid": "MTg=",
-          "id": "cat_18"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -26414,10 +23521,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -26473,26 +23576,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Hauts",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Sweats",
-          "category_uid": "MTA=",
-          "id": "cat_10"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -26670,10 +23753,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -26729,26 +23808,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Hauts",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Sweats",
-          "category_uid": "MTA=",
-          "id": "cat_10"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -26939,10 +23998,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -26998,26 +24053,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Hauts",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Sweats",
-          "category_uid": "MTA=",
-          "id": "cat_10"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -27204,10 +24239,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -27263,39 +24294,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Hauts",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Sweats",
-          "category_uid": "MTA=",
-          "id": "cat_10"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Shop The Look",
-          "category_uid": "MTU=",
-          "id": "cat_15"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Perfectly Beachy",
-          "category_uid": "MTk=",
-          "id": "cat_19"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -27487,10 +24485,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -27546,26 +24540,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Hauts",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Sweats",
-          "category_uid": "MTA=",
-          "id": "cat_10"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -27743,10 +24717,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -27802,26 +24772,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Hauts",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Sweats",
-          "category_uid": "MTA=",
-          "id": "cat_10"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -27999,10 +24949,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -28058,26 +25004,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Hauts",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Sweats",
-          "category_uid": "MTA=",
-          "id": "cat_10"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -28251,10 +25177,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -28310,26 +25232,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Hauts",
-          "category_uid": "OA==",
-          "id": "cat_8"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Sweats",
-          "category_uid": "MTA=",
-          "id": "cat_10"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -28520,10 +25422,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -28579,26 +25477,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bas",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Jupes",
-          "category_uid": "MTM=",
-          "id": "cat_13"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -28789,10 +25667,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -28848,26 +25722,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bas",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Jupes",
-          "category_uid": "MTM=",
-          "id": "cat_13"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -29041,10 +25895,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -29100,26 +25950,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bas",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Jupes",
-          "category_uid": "MTM=",
-          "id": "cat_13"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -29293,10 +26123,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -29352,26 +26178,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bas",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Jupes",
-          "category_uid": "MTM=",
-          "id": "cat_13"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -29545,10 +26351,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -29604,39 +26406,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bas",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Jupes",
-          "category_uid": "MTM=",
-          "id": "cat_13"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Shop The Look",
-          "category_uid": "MTU=",
-          "id": "cat_15"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Carefree Days",
-          "category_uid": "MTg=",
-          "id": "cat_18"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -29823,10 +26592,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -29882,26 +26647,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bas",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Jupes",
-          "category_uid": "MTM=",
-          "id": "cat_13"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -30075,10 +26820,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -30134,26 +26875,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bas",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Jupes",
-          "category_uid": "MTM=",
-          "id": "cat_13"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -30332,10 +27053,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -30391,26 +27108,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bas",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Jupes",
-          "category_uid": "MTM=",
-          "id": "cat_13"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -30584,10 +27281,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -30643,26 +27336,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bas",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Jupes",
-          "category_uid": "MTM=",
-          "id": "cat_13"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -30841,10 +27514,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -30900,26 +27569,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bas",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Jupes",
-          "category_uid": "MTM=",
-          "id": "cat_13"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -31098,10 +27747,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -31157,26 +27802,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bas",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Jupes",
-          "category_uid": "MTM=",
-          "id": "cat_13"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -31350,10 +27975,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -31409,26 +28030,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bas",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Jupes",
-          "category_uid": "MTM=",
-          "id": "cat_13"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -31602,10 +28203,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -31661,26 +28258,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bas",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Pantalons & Shorts",
-          "category_uid": "MTI=",
-          "id": "cat_12"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -31870,10 +28447,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -31929,26 +28502,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bas",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Pantalons & Shorts",
-          "category_uid": "MTI=",
-          "id": "cat_12"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -32122,10 +28675,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -32181,26 +28730,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bas",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Pantalons & Shorts",
-          "category_uid": "MTI=",
-          "id": "cat_12"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -32379,10 +28908,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -32438,26 +28963,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bas",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Pantalons & Shorts",
-          "category_uid": "MTI=",
-          "id": "cat_12"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -32631,10 +29136,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -32690,26 +29191,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bas",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Pantalons & Shorts",
-          "category_uid": "MTI=",
-          "id": "cat_12"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -32899,10 +29380,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -32958,26 +29435,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bas",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Pantalons & Shorts",
-          "category_uid": "MTI=",
-          "id": "cat_12"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -33159,10 +29616,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -33218,26 +29671,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bas",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Pantalons & Shorts",
-          "category_uid": "MTI=",
-          "id": "cat_12"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -33415,10 +29848,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -33474,39 +29903,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bas",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Pantalons & Shorts",
-          "category_uid": "MTI=",
-          "id": "cat_12"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Shop The Look",
-          "category_uid": "MTU=",
-          "id": "cat_15"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Minimalist Sensibility",
-          "category_uid": "MTY=",
-          "id": "cat_16"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -33702,10 +30098,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -33761,39 +30153,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bas",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Pantalons & Shorts",
-          "category_uid": "MTI=",
-          "id": "cat_12"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Shop The Look",
-          "category_uid": "MTU=",
-          "id": "cat_15"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Perfectly Beachy",
-          "category_uid": "MTk=",
-          "id": "cat_19"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -33989,10 +30348,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -34048,26 +30403,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bas",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Pantalons & Shorts",
-          "category_uid": "MTI=",
-          "id": "cat_12"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -34250,10 +30585,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -34309,26 +30640,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bas",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Pantalons & Shorts",
-          "category_uid": "MTI=",
-          "id": "cat_12"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -34506,10 +30817,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -34565,26 +30872,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Bas",
-          "category_uid": "MTE=",
-          "id": "cat_11"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Pantalons & Shorts",
-          "category_uid": "MTI=",
-          "id": "cat_12"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -34762,10 +31049,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -34821,20 +31104,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Robes",
-          "category_uid": "MTQ=",
-          "id": "cat_14"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -35006,10 +31275,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -35065,20 +31330,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Robes",
-          "category_uid": "MTQ=",
-          "id": "cat_14"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -35250,10 +31501,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -35309,20 +31556,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Robes",
-          "category_uid": "MTQ=",
-          "id": "cat_14"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -35490,10 +31723,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -35549,20 +31778,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Robes",
-          "category_uid": "MTQ=",
-          "id": "cat_14"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -35734,10 +31949,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -35793,20 +32004,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Robes",
-          "category_uid": "MTQ=",
-          "id": "cat_14"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -35978,10 +32175,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -36037,20 +32230,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Robes",
-          "category_uid": "MTQ=",
-          "id": "cat_14"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -36222,10 +32401,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -36281,33 +32456,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Robes",
-          "category_uid": "MTQ=",
-          "id": "cat_14"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Shop The Look",
-          "category_uid": "MTU=",
-          "id": "cat_15"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Retire your LBD",
-          "category_uid": "MjA=",
-          "id": "cat_20"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -36492,10 +32640,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -36551,20 +32695,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Robes",
-          "category_uid": "MTQ=",
-          "id": "cat_14"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -36732,10 +32862,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -36791,33 +32917,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Robes",
-          "category_uid": "MTQ=",
-          "id": "cat_14"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Shop The Look",
-          "category_uid": "MTU=",
-          "id": "cat_15"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Timeless Sophistication",
-          "category_uid": "MjE=",
-          "id": "cat_21"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -37002,10 +33101,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -37061,20 +33156,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Robes",
-          "category_uid": "MTQ=",
-          "id": "cat_14"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -37246,10 +33327,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -37305,20 +33382,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Robes",
-          "category_uid": "MTQ=",
-          "id": "cat_14"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -37486,10 +33549,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -37545,20 +33604,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Robes",
-          "category_uid": "MTQ=",
-          "id": "cat_14"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -37730,10 +33775,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -37790,39 +33831,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Accessoires",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Ceintures",
-          "category_uid": "NA==",
-          "id": "cat_4"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Shop The Look",
-          "category_uid": "MTU=",
-          "id": "cat_15"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Timeless Sophistication",
-          "category_uid": "MjE=",
-          "id": "cat_21"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -37979,10 +33987,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -38037,26 +34041,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Accessoires",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Ceintures",
-          "category_uid": "NA==",
-          "id": "cat_4"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -38171,10 +34155,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -38229,26 +34209,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Accessoires",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Ceintures",
-          "category_uid": "NA==",
-          "id": "cat_4"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -38363,10 +34323,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -38421,26 +34377,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Accessoires",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "Ceintures",
-          "category_uid": "NA==",
-          "id": "cat_4"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -38568,10 +34504,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -38626,26 +34558,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Accessoires",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "\u00c9charpes",
-          "category_uid": "Ng==",
-          "id": "cat_6"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -38816,10 +34728,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -38874,26 +34782,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Accessoires",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "\u00c9charpes",
-          "category_uid": "Ng==",
-          "id": "cat_6"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -39059,10 +34947,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -39117,26 +35001,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Accessoires",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "\u00c9charpes",
-          "category_uid": "Ng==",
-          "id": "cat_6"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -39302,10 +35166,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -39360,26 +35220,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Accessoires",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "\u00c9charpes",
-          "category_uid": "Ng==",
-          "id": "cat_6"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -39545,10 +35385,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -39603,26 +35439,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Accessoires",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "\u00c9charpes",
-          "category_uid": "Ng==",
-          "id": "cat_6"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -39788,10 +35604,6 @@
       "stock": {
         "qty": 0,
         "status": true
-      },
-      "simple_stock": {
-        "qty": 0,
-        "status": true
       }
     },
     {
@@ -39846,26 +35658,6 @@
         "has_video"
       ],
       "category": [
-        {
-          "is_virtual": "false",
-          "category_uid": "Mg==",
-          "id": "cat_2"
-        },
-        {
-          "is_virtual": "false",
-          "name": "Accessoires",
-          "category_uid": "Mw==",
-          "id": "cat_3"
-        },
-        {
-          "is_parent": true,
-          "is_virtual": "false",
-          "name": "\u00c9charpes",
-          "category_uid": "Ng==",
-          "id": "cat_6"
-        }
-      ],
-      "simple_category": [
         {
           "is_virtual": "false",
           "category_uid": "Mg==",
@@ -40030,10 +35822,6 @@
       ],
       "id": 1165,
       "stock": {
-        "qty": 0,
-        "status": true
-      },
-      "simple_stock": {
         "qty": 0,
         "status": true
       }
