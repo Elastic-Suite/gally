@@ -37,6 +37,12 @@ class SpreadSourceFieldDataTest extends AbstractTest
         parent::setUpBeforeClass();
     }
 
+    public static function tearDownAfterClass(): void
+    {
+        parent::tearDownAfterClass();
+        self::deleteEntityElasticsearchIndices('product');
+    }
+
     /**
      * Test if the ES mapping is updated after the save of a source filed.
      */

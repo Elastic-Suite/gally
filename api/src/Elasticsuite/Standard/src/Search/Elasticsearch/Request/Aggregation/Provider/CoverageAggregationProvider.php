@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Search\Elasticsearch\Request\Aggregation\Provider;
 
+use Elasticsuite\Entity\Service\PriceGroupProvider;
 use Elasticsuite\Metadata\Model\SourceField\Type;
 use Elasticsuite\Metadata\Repository\SourceFieldRepository;
 use Elasticsuite\Search\Elasticsearch\Request\BucketInterface;
@@ -34,6 +35,7 @@ class CoverageAggregationProvider implements AggregationProviderInterface
         private SourceFieldRepository $sourceFieldRepository,
         private QueryFactory $queryFactory,
         private SearchSettingsProvider $searchSettings,
+        private PriceGroupProvider $priceGroupProvider,
     ) {
     }
 
@@ -56,10 +58,17 @@ class CoverageAggregationProvider implements AggregationProviderInterface
         $queries = [];
 
         foreach ($sourceFields as $sourceField) {
-            $query = $this->queryFactory->create(
-                QueryInterface::TYPE_EXISTS,
-                ['field' => $sourceField->getCode(), 'name' => $sourceField->getCode()]
-            );
+            if (Type::TYPE_PRICE === $sourceField->getType()) {
+                $query = $this->queryFactory->create(
+                    QueryInterface::TYPE_TERM,
+                    ['field' => $sourceField->getCode() . '.group_id', 'value' => $this->priceGroupProvider->getCurrentPriceGroupId()]
+                );
+            } else {
+                $query = $this->queryFactory->create(
+                    QueryInterface::TYPE_EXISTS,
+                    ['field' => $sourceField->getCode(), 'name' => $sourceField->getCode()]
+                );
+            }
 
             if ($sourceField->getNestedPath() || \in_array($sourceField->getType(), Type::COMPLEX_TYPES, true)) {
                 $query = $this->queryFactory->create(

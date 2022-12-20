@@ -38,7 +38,7 @@ class CategoryTypeDefaultFilterInputType extends BaseCategoryTypeDefaultFilterIn
         private CategoryRepository $categoryRepository,
         private CategoryQueryProvider $categoryQueryProvider,
         protected FilterQueryBuilder $filterQueryBuilder,
-        private QueryFactory $queryFactory,
+        protected QueryFactory $queryFactory,
         protected string $nestingSeparator,
     ) {
         parent::__construct($this->filterQueryBuilder, $this->queryFactory, $this->nestingSeparator);

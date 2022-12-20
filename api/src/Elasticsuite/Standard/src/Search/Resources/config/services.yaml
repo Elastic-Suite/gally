@@ -151,6 +151,8 @@ services:
     Elasticsuite\Search\GraphQl\Type\Definition\SortInputType:
         arguments:
             - '@Elasticsuite\Search\GraphQl\Type\Definition\SortEnumType'
+            - '@Elasticsuite\Entity\Service\PriceGroupProvider'
+            - '@Elasticsuite\Search\Service\ReverseSourceFieldProvider'
         tags:
             - { name: api_platform.graphql.type }
 
@@ -225,6 +227,7 @@ services:
             - '@Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider'
             - '@Elasticsuite\Search\Elasticsearch\Adapter'
             - '@Elasticsuite\Search\Service\GraphQl\FilterManager'
+            - '@Elasticsuite\Search\GraphQl\Type\Definition\SortInputType'
         tags:
             - { name: api_platform.collection_data_provider }
 
@@ -320,6 +323,7 @@ services:
             - '@Elasticsuite\Metadata\Repository\SourceFieldRepository'
             - '@Elasticsuite\Search\Elasticsearch\Request\QueryFactory'
             - '@Elasticsuite\Search\Service\SearchSettingsProvider'
+            - '@Elasticsuite\Entity\Service\PriceGroupProvider'
                 
     Elasticsuite\Search\Service\ViewMoreContext: ~
 

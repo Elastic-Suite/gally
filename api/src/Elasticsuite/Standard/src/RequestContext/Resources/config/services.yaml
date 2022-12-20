@@ -1,0 +1,12 @@
+services:
+    Elasticsuite\RequestContext\EventSubscriber\AddRequestContextHeadersInVary:
+        arguments:
+            - '@Elasticsuite\RequestContext\Service\RequestContextManager'
+        tags:
+            - { name: kernel.event_subscriber }
+
+                
+    Elasticsuite\RequestContext\Service\RequestContextManager:
+        arguments:
+            - '@request_stack'
+            - '%elasticsuite.request_context%'

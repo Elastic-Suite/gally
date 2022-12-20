@@ -18,6 +18,8 @@ namespace Elasticsuite\Product\Serializer;
 
 use Elasticsuite\Entity\Model\Attribute\StructuredAttributeInterface;
 use Elasticsuite\Entity\Model\Attribute\Type\NestedAttribute;
+use Elasticsuite\Entity\Model\Attribute\Type\PriceAttribute;
+use Elasticsuite\Entity\Service\PriceGroupProvider;
 use Elasticsuite\Product\Model\Product;
 use Elasticsuite\Search\Model\Document;
 use Elasticsuite\Stitching\Service\SerializerService;
@@ -32,7 +34,8 @@ class ProductDenormalizer implements ContextAwareDenormalizerInterface, Denormal
     private const ALREADY_CALLED_DENORMALIZER = 'ProductDenormalizerCalled';
 
     public function __construct(
-        private SerializerService $serializerService
+        private SerializerService $serializerService,
+        private PriceGroupProvider $priceGroupProvider,
     ) {
     }
 
@@ -83,10 +86,16 @@ class ProductDenormalizer implements ContextAwareDenormalizerInterface, Denormal
                                     new NestedAttribute($attributeCode, $attributeValue, $subStructureKeys)
                                 );
                             } elseif (is_subclass_of($attributeType, StructuredAttributeInterface::class)) {
-                                // Structured/Complex fields, value is transmitted as is.
-                                $product->addAttribute(
-                                    new $attributeType($attributeCode, $attributeValue) // @phpstan-ignore-line
-                                );
+                                if (is_a($attributeType, PriceAttribute::class, true)) {
+                                    $product->addAttribute(
+                                        new $attributeType($attributeCode, $attributeValue, $this->priceGroupProvider->getCurrentPriceGroupId())
+                                    );
+                                } else {
+                                    // Structured/Complex fields, value is transmitted as is.
+                                    $product->addAttribute(
+                                        new $attributeType($attributeCode, $attributeValue) // @phpstan-ignore-line
+                                    );
+                                }
                             } else {
                                 if (\is_array($attributeValue)) {
                                     $attributeValue = json_encode($attributeValue);

@@ -237,6 +237,20 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
 
+                // Request context config
+                ->arrayNode('request_context')
+                    ->children()
+                        ->arrayNode('headers')
+                            ->scalarPrototype()->end()
+                        ->end()
+                    ->end()
+                ->end()
+
+                // Default price group id config
+                ->scalarNode('default_price_group_id')
+                    ->defaultValue('0')
+                ->end()
+
             ->end();
 
         return $treeBuilder;
