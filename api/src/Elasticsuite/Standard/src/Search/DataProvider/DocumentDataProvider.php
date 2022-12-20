@@ -24,7 +24,7 @@ use Elasticsuite\Metadata\Repository\MetadataRepository;
 use Elasticsuite\Search\Elasticsearch\Adapter;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\SimpleRequestBuilder as RequestBuilder;
 use Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider;
-use Elasticsuite\Search\Elasticsearch\Request\SortOrderInterface;
+use Elasticsuite\Search\GraphQl\Type\Definition\SortInputType;
 use Elasticsuite\Search\Model\Document;
 use Elasticsuite\Search\Service\GraphQl\FilterManager;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -40,6 +40,7 @@ class DocumentDataProvider implements ContextAwareCollectionDataProviderInterfac
         private ContainerConfigurationProvider $containerConfigurationProvider,
         private Adapter $adapter,
         private FilterManager $filterManager,
+        private SortInputType $sortInputType,
     ) {
     }
 
@@ -64,13 +65,6 @@ class DocumentDataProvider implements ContextAwareCollectionDataProviderInterfac
 
         $searchQuery = $context['filters']['search'] ?? null;
 
-        $sortOrders = [];
-        if (\array_key_exists('sort', $context['filters'])) {
-            $field = $context['filters']['sort']['field'];
-            $direction = $context['filters']['sort']['direction'] ?? SortOrderInterface::DEFAULT_SORT_DIRECTION;
-            $sortOrders = [$field => ['direction' => $direction]];
-        }
-
         $limit = $this->pagination->getLimit($resourceClass, $operationName, $context);
         $offset = $this->pagination->getOffset($resourceClass, $operationName, $context);
 
@@ -79,7 +73,7 @@ class DocumentDataProvider implements ContextAwareCollectionDataProviderInterfac
             $offset,
             $limit,
             $searchQuery,
-            $sortOrders,
+            $this->sortInputType->formatSort($context, $metadata),
             $this->filterManager->transformToElasticsuiteFilters(
                 $this->filterManager->getFiltersFromContext($context),
                 $containerConfig

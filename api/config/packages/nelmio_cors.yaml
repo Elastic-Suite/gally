@@ -3,7 +3,13 @@ nelmio_cors:
         origin_regex: true
         allow_origin: ['%env(CORS_ALLOW_ORIGIN)%']
         allow_methods: ['GET', 'OPTIONS', 'POST', 'PUT', 'PATCH', 'DELETE']
-        allow_headers: ['Content-Type', 'Authorization', 'Preload', 'Fields', !php/const Elasticsuite\Locale\EventSubscriber\LocaleSubscriber::ELASTICSUITE_LANGUAGE_HEADER]
+        allow_headers: 
+            - 'Content-Type'
+            - 'Authorization'
+            - 'Preload'
+            - 'Fields'
+            - !php/const Elasticsuite\Locale\EventSubscriber\LocaleSubscriber::ELASTICSUITE_LANGUAGE_HEADER 
+            - !php/const Elasticsuite\Entity\Service\PriceGroupProvider::PRICE_GROUP_ID
         expose_headers: ['Link']
         max_age: 3600
     paths:

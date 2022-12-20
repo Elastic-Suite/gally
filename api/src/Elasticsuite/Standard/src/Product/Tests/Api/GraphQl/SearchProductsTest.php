@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Product\Tests\Api\GraphQl;
 
+use Elasticsuite\Entity\Service\PriceGroupProvider;
 use Elasticsuite\Fixture\Service\ElasticsearchFixturesInterface;
 use Elasticsuite\Search\Elasticsearch\Request\SortOrderInterface;
 use Elasticsuite\Test\AbstractTest;
@@ -255,6 +256,7 @@ class SearchProductsTest extends AbstractTest
      * @param array  $sortOrders            Sort order specifications
      * @param string $documentIdentifier    Document identifier to check ordered results
      * @param array  $expectedOrderedDocIds Expected ordered document identifiers
+     * @param string $priceGroupId          Price group id
      */
     public function testSortedSearchProducts(
         string $catalogId,
@@ -262,7 +264,8 @@ class SearchProductsTest extends AbstractTest
         int $currentPage,
         array $sortOrders,
         string $documentIdentifier,
-        array $expectedOrderedDocIds
+        array $expectedOrderedDocIds,
+        string $priceGroupId = '0'
     ): void {
         $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
 
@@ -297,7 +300,8 @@ class SearchProductsTest extends AbstractTest
                         }
                     }
                 GQL,
-                $user
+                $user,
+                [PriceGroupProvider::PRICE_GROUP_ID => $priceGroupId]
             ),
             new ExpectedResponse(
                 200,
@@ -423,6 +427,36 @@ class SearchProductsTest extends AbstractTest
                 'id', // document data identifier.
                 // price_as_nested.price ASC, then score DESC first, then id DESC (missing _first)
                 [1, 12, 11, 10, 9],   // expected ordered document IDs
+            ],
+            [
+                'b2c_fr',   // catalog ID.
+                5,     // page size.
+                1,      // current page.
+                ['my_price__price' => SortOrderInterface::SORT_ASC], // sort order specifications.
+                'id', // document data identifier.
+                // price_as_nested.price ASC, then score DESC first, then id DESC (missing _first)
+                [2, 1, 3, 12, 11],   // expected ordered document IDs
+                '0', // Price group id
+            ],
+            [
+                'b2c_fr',   // catalog ID.
+                5,     // page size.
+                1,      // current page.
+                ['my_price__price' => SortOrderInterface::SORT_ASC], // sort order specifications.
+                'id', // document data identifier.
+                // price_as_nested.price ASC, then score DESC first, then id DESC (missing _first)
+                [1, 2, 3, 12, 11],   // expected ordered document IDs
+                '1', // Price group id
+            ],
+            [
+                'b2c_fr',   // catalog ID.
+                5,     // page size.
+                1,      // current page.
+                ['my_price__price' => SortOrderInterface::SORT_ASC], // sort order specifications.
+                'id', // document data identifier.
+                // price_as_nested.price ASC, then score DESC first, then id DESC (missing _first)
+                [1, 12, 11, 10, 9],   // expected ordered document IDs
+                'fake_price_group_id', // Price group id
             ],
         ];
     }
@@ -652,7 +686,7 @@ class SearchProductsTest extends AbstractTest
                 200,
                 function (ResponseInterface $response) {
                     $this->assertJsonContains([
-                        'errors' => [['message' => 'Field "price__price" is not defined by type ProductSortInput.']],
+                        'errors' => [['message' => 'Field "price__price" is not defined by type ProductSortInput; Did you mean my_price__price?']],
                     ]);
                 }
             )
@@ -911,13 +945,15 @@ class SearchProductsTest extends AbstractTest
      * @param array  $sortOrders            Sort order specifications
      * @param string $documentIdentifier    Document identifier to check ordered results
      * @param array  $expectedOrderedDocIds Expected ordered document identifiers
+     * @param string $priceGroupId          Price group id
      */
     public function testFilteredSearchProducts(
         string $catalogId,
         array $sortOrders,
         string $filter,
         string $documentIdentifier,
-        array $expectedOrderedDocIds
+        array $expectedOrderedDocIds,
+        string $priceGroupId = '0'
     ): void {
         $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
         $arguments = sprintf(
@@ -939,7 +975,8 @@ class SearchProductsTest extends AbstractTest
                         }
                     }
                 GQL,
-                $user
+                $user,
+                [PriceGroupProvider::PRICE_GROUP_ID => $priceGroupId]
             ),
             new ExpectedResponse(
                 200,
@@ -1138,6 +1175,30 @@ class SearchProductsTest extends AbstractTest
                 'entity_id', // document data identifier.
                 [11, 12], // expected ordered document IDs
             ],
+            [
+                'b2c_fr', // catalog ID.
+                ['id' => SortOrderInterface::SORT_ASC], // sort order specifications.
+                'my_price__price: {gt: 10}', // filter.
+                'entity_id', // document data identifier.
+                [3, 1], // expected ordered document IDs
+                '0',
+            ],
+            [
+                'b2c_fr', // catalog ID.
+                ['id' => SortOrderInterface::SORT_ASC], // sort order specifications.
+                'my_price__price: {gt: 10}', // filter.
+                'entity_id', // document data identifier.
+                [2, 3, 1], // expected ordered document IDs
+                '1',
+            ],
+            [
+                'b2c_fr', // catalog ID.
+                ['id' => SortOrderInterface::SORT_ASC], // sort order specifications.
+                'my_price__price: {gt: 10}', // filter.
+                'entity_id', // document data identifier.
+                [], // expected ordered document IDs
+                'fake_price_group_id',
+            ],
         ];
     }
 
@@ -1216,7 +1277,8 @@ class SearchProductsTest extends AbstractTest
      * @param string|null $categoryId           Category id to search in
      * @param int         $pageSize             Pagination size
      * @param int         $currentPage          Current page
-     * @param array|null  $expectedAggregations expected aggregations sample
+     * @param array|null  $expectedAggregations Expected aggregations sample
+     * @param string      $priceGroupId         Price group id
      */
     public function testSearchProductsWithAggregation(
         string $requestType,
@@ -1225,6 +1287,7 @@ class SearchProductsTest extends AbstractTest
         int $pageSize,
         int $currentPage,
         ?array $expectedAggregations,
+        string $priceGroupId = '0'
     ): void {
         $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
 
@@ -1264,7 +1327,8 @@ class SearchProductsTest extends AbstractTest
                         }
                     }
                 GQL,
-                $user
+                $user,
+                [PriceGroupProvider::PRICE_GROUP_ID => $priceGroupId]
             ),
             new ExpectedResponse(
                 200,
@@ -1306,6 +1370,7 @@ class SearchProductsTest extends AbstractTest
                 [       // expected aggregations sample.
                     ['field' => 'is_eco_friendly', 'label' => 'Is_eco_friendly', 'type' => 'checkbox'],
                     ['field' => 'weight', 'label' => 'Weight', 'type' => 'slider'],
+                    ['field' => 'size', 'label' => 'Size', 'type' => 'slider'],
                     [
                         'field' => 'category__id',
                         'label' => 'Category',
@@ -1323,7 +1388,6 @@ class SearchProductsTest extends AbstractTest
                             ],
                         ],
                     ],
-                    ['field' => 'size', 'label' => 'Size', 'type' => 'slider'],
                     [
                         'field' => 'color__value',
                         'label' => 'Color',
@@ -1382,8 +1446,8 @@ class SearchProductsTest extends AbstractTest
                 [       // expected aggregations sample.
                     ['field' => 'is_eco_friendly', 'label' => 'Is_eco_friendly', 'type' => 'checkbox'],
                     ['field' => 'weight', 'label' => 'Weight', 'type' => 'slider'],
-                    ['field' => 'brand__value', 'label' => 'Brand', 'type' => 'checkbox'],
                     ['field' => 'size', 'label' => 'Size', 'type' => 'slider'],
+                    ['field' => 'brand__value', 'label' => 'Brand', 'type' => 'checkbox'],
                     [
                         'field' => 'color__value',
                         'label' => 'Color',
@@ -1408,6 +1472,11 @@ class SearchProductsTest extends AbstractTest
                     ['field' => 'is_eco_friendly', 'label' => 'Is_eco_friendly', 'type' => 'checkbox'],
                     ['field' => 'weight', 'label' => 'Weight', 'type' => 'slider'],
                     [
+                        'field' => 'size',
+                        'label' => 'Taille',
+                        'type' => 'slider',
+                    ],
+                    [
                         'field' => 'category__id',
                         'label' => 'Category',
                         'type' => 'category',
@@ -1423,11 +1492,6 @@ class SearchProductsTest extends AbstractTest
                                 'count' => 1,
                             ],
                         ],
-                    ],
-                    [
-                        'field' => 'size',
-                        'label' => 'Taille',
-                        'type' => 'slider',
                     ],
                     [
                         'field' => 'color__value',
@@ -1450,6 +1514,82 @@ class SearchProductsTest extends AbstractTest
                 10,     // page size.
                 1,      // current page.
                 null,   // expected aggregations sample.
+            ],
+            [
+                'product_catalog',
+                'b2c_fr',   // catalog ID.
+                'cat_1', // Current category id.
+                10,     // page size.
+                1,      // current page.
+                [       // expected aggregations sample.
+                    ['field' => 'is_eco_friendly', 'label' => 'Is_eco_friendly', 'type' => 'checkbox'],
+                    ['field' => 'weight', 'label' => 'Weight', 'type' => 'slider'],
+                    [
+                        'field' => 'my_price__price',
+                        'label' => 'My_price',
+                        'type' => 'slider',
+                        'options' => [
+                            [
+                                'label' => '8',
+                                'value' => '8',
+                                'count' => 1,
+                            ],
+                            [
+                                'label' => '10',
+                                'value' => '10',
+                                'count' => 1,
+                            ],
+                        ],
+                    ],
+                    ['field' => 'category__id', 'label' => 'Category', 'type' => 'category'],
+                    ['field' => 'color__value', 'label' => 'Couleur', 'type' => 'checkbox'],
+                ],
+                '0',
+            ],
+            [
+                'product_catalog',
+                'b2c_fr',   // catalog ID.
+                'cat_1', // Current category id.
+                10,     // page size.
+                1,      // current page.
+                [       // expected aggregations sample.
+                    ['field' => 'is_eco_friendly', 'label' => 'Is_eco_friendly', 'type' => 'checkbox'],
+                    ['field' => 'weight', 'label' => 'Weight', 'type' => 'slider'],
+                    [
+                        'field' => 'my_price__price',
+                        'label' => 'My_price',
+                        'type' => 'slider',
+                        'options' => [
+                            [
+                                'label' => '10',
+                                'value' => '10',
+                                'count' => 1,
+                            ],
+                            [
+                                'label' => '17',
+                                'value' => '17',
+                                'count' => 1,
+                            ],
+                        ],
+                    ],
+                    ['field' => 'category__id', 'label' => 'Category', 'type' => 'category'],
+                    ['field' => 'color__value', 'label' => 'Couleur', 'type' => 'checkbox'],
+                ],
+                '1',
+            ],
+            [
+                'product_catalog',
+                'b2c_fr',   // catalog ID.
+                'cat_1', // Current category id.
+                10,     // page size.
+                1,      // current page.
+                [       // expected aggregations sample.
+                    ['field' => 'is_eco_friendly', 'label' => 'Is_eco_friendly', 'type' => 'checkbox'],
+                    ['field' => 'weight', 'label' => 'Weight', 'type' => 'slider'],
+                    ['field' => 'category__id', 'label' => 'Category', 'type' => 'category'],
+                    ['field' => 'color__value', 'label' => 'Couleur', 'type' => 'checkbox'],
+                ],
+                'fake_price_group_id',
             ],
         ];
     }

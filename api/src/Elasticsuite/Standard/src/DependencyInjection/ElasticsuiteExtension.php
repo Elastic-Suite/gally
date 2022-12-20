@@ -109,6 +109,8 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
         $container->setParameter('elasticsuite.search_settings', $config['search_settings'] ?? []);
         $container->setParameter('elasticsuite.relevance', $config['relevance'] ?? []);
         $container->setParameter('elasticsuite.base_url', $config['base_url'] ?? []);
+        $container->setParameter('elasticsuite.request_context', $config['request_context'] ?? []);
+        $container->setParameter('elasticsuite.default_price_group_id', $config['default_price_group_id'] ?? null);
 
         //@Todo : Use this feature https://symfony.com/doc/current/bundles/extension.html ?
 //        $this->addAnnotatedClassesToCompile([

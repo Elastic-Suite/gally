@@ -21,6 +21,8 @@ services:
             - { name: 'elasticsuite.search.aggregation.resolver' }
 
     Elasticsuite\Search\Elasticsearch\Request\Aggregation\ConfigResolver\PriceAggregationConfigResolver:
+        arguments:
+            - '@Elasticsuite\Entity\Service\PriceGroupProvider'
         tags:
             - { name: 'elasticsuite.search.aggregation.resolver' }
 

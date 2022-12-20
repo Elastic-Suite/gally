@@ -102,7 +102,7 @@ class ProductDataProvider implements ContextAwareCollectionDataProviderInterface
             $offset,
             $limit,
             $searchQuery,
-            $this->sortInputType->formatSort($context),
+            $this->sortInputType->formatSort($context, $metadata),
             $this->filterManager->transformToElasticsuiteFilters(
                 $this->filterManager->getFiltersFromContext($context),
                 $containerConfig

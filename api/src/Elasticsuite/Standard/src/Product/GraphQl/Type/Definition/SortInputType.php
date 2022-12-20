@@ -17,10 +17,13 @@ declare(strict_types=1);
 namespace Elasticsuite\Product\GraphQl\Type\Definition;
 
 use ApiPlatform\Core\GraphQl\Type\Definition\TypeInterface;
+use Elasticsuite\Entity\Service\PriceGroupProvider;
+use Elasticsuite\Metadata\Model\Metadata;
 use Elasticsuite\Metadata\Repository\SourceFieldRepository;
 use Elasticsuite\Product\GraphQl\Type\Definition\SortOrder\SortOrderProviderInterface;
 use Elasticsuite\Search\Elasticsearch\Request\SortOrderInterface;
 use Elasticsuite\Search\GraphQl\Type\Definition\SortInputType as SearchSortInputType;
+use Elasticsuite\Search\Service\ReverseSourceFieldProvider;
 
 class SortInputType extends SearchSortInputType
 {
@@ -30,9 +33,11 @@ class SortInputType extends SearchSortInputType
         private TypeInterface $sortEnumType,
         private SourceFieldRepository $sourceFieldRepository,
         private iterable $sortOrderProviders,
-        private string $nestingSeparator
+        protected PriceGroupProvider $priceGroupProvider,
+        protected ReverseSourceFieldProvider $reverseSourceFieldProvider,
+        private string $nestingSeparator,
     ) {
-        parent::__construct($this->sortEnumType);
+        parent::__construct($this->sortEnumType, $this->priceGroupProvider, $this->reverseSourceFieldProvider);
         $this->name = self::NAME;
     }
 
@@ -77,15 +82,17 @@ class SortInputType extends SearchSortInputType
         }
     }
 
-    public function formatSort($context): ?array
+    public function formatSort(mixed $context, Metadata $metadata): ?array
     {
         if (!\array_key_exists('sort', $context['filters'])) {
             return [];
         }
 
-        return array_map(
+        $sortOrders = array_map(
             fn ($direction) => ['direction' => $direction],
             $context['filters']['sort']
         );
+
+        return $this->addNestedFieldData($sortOrders, $metadata);
     }
 }
