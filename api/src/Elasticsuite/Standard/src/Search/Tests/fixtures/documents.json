@@ -445,6 +445,10 @@
           {"group_id": 0, "original_price": 11.99, "price": 10.99, "is_discounted": true},
           {"group_id": 1, "original_price": 11.99, "price": 10.99, "is_discounted": true}
         ],
+        "my_price": [
+          {"group_id": 0, "original_price": 11.99, "price": 10.99, "is_discounted": true},
+          {"group_id": 1, "original_price": 11.99, "price": 10.99, "is_discounted": true}
+        ],
         "stock": {
           "status": 0,
           "qty": 0
@@ -492,6 +496,10 @@
           {"group_id": 0, "original_price": 17.99, "price": 8.99, "is_discounted": true},
           {"group_id": 1, "original_price": 17.99, "price": 17.99, "is_discounted": false}
         ],
+        "my_price": [
+          {"group_id": 0, "original_price": 17.99, "price": 8.99, "is_discounted": true},
+          {"group_id": 1, "original_price": 17.99, "price": 17.99, "is_discounted": false}
+        ],
         "stock": {
           "status": 1,
           "qty": 37
@@ -528,6 +536,10 @@
         "name": "Sac à dos Crown Summit",
         "size" : 8,
         "price": [
+          {"group_id": 0, "original_price": 25.99, "price": 25.99, "is_discounted": false},
+          {"group_id": 1, "original_price": 25.99, "price": 20.99, "is_discounted": true}
+        ],
+        "my_price": [
           {"group_id": 0, "original_price": 25.99, "price": 25.99, "is_discounted": false},
           {"group_id": 1, "original_price": 25.99, "price": 20.99, "is_discounted": true}
         ],

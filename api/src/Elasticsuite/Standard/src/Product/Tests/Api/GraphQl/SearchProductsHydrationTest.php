@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Product\Tests\Api\GraphQl;
 
+use Elasticsuite\Entity\Service\PriceGroupProvider;
 use Elasticsuite\Fixture\Service\ElasticsearchFixturesInterface;
 use Elasticsuite\Test\AbstractTest;
 use Elasticsuite\Test\ExpectedResponse;
@@ -56,6 +57,7 @@ class SearchProductsHydrationTest extends AbstractTest
      * @param ?int    $expectedLastPage     Expected number of the last page
      * @param ?string $expectedIndexAlias   Expected index alias
      * @param ?float  $expectedScore        Expected score
+     * @param string  $priceGroupId         Price group id
      */
     public function testBasicSearchProducts(
         string $catalogId,
@@ -69,7 +71,8 @@ class SearchProductsHydrationTest extends AbstractTest
         ?int $expectedLastPage,
         ?string $expectedIndexAlias,
         ?float $expectedScore,
-        ?array $expectedAttributes
+        ?array $expectedAttributes,
+        string $priceGroupId = '0',
     ): void {
         $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
 
@@ -94,6 +97,7 @@ class SearchProductsHydrationTest extends AbstractTest
                               score
                               index
                               _id
+                              data
                               {$attributes}
                             }
                             paginationInfo {
@@ -104,7 +108,8 @@ class SearchProductsHydrationTest extends AbstractTest
                         }
                     }
                 GQL,
-                $user
+                $user,
+                [PriceGroupProvider::PRICE_GROUP_ID => $priceGroupId]
             ),
             new ExpectedResponse(
                 200,
@@ -574,6 +579,496 @@ class SearchProductsHydrationTest extends AbstractTest
                             'price' => 10.99,
                             'is_discounted' => true,
                         ],
+                    ],
+                    'stock' => [
+                        'status' => false,
+                        'qty' => 0,
+                    ],
+                    'stock_as_nested' => [
+                        'status' => false,
+                        'qty' => 0,
+                    ],
+                    'brand' => null,
+                    'color' => [
+                        [
+                            'value' => 'black',
+                            'label' => 'Noir',
+                        ],
+                    ],
+                    'category_as_nested' => [
+                        /* nested fields are always single value for the time being
+                        [
+                            'id' => 'one',
+                        ],
+                        */
+                        'id' => 'cat_1',
+                    ],
+                    'category' => [
+                        [
+                            'id' => 'cat_1',
+                            'uid' => 'one',
+                            'name' => 'One',
+                            'is_parent' => true,
+                            'is_virtual' => false,
+                            'is_blacklisted' => false,
+                        ],
+                        [
+                            'id' => 'cat_2',
+                            'uid' => 'two',
+                            'name' => 'Two',
+                            'is_parent' => false,
+                            'is_virtual' => false,
+                            'is_blacklisted' => false,
+                            'position' => 1,
+                        ],
+                    ],
+                    // 'created_at' => '2022-09-01',
+                ],
+                '2' => [
+                    '_id' => '2',
+                    'sku' => '24-MB04',
+                    'name' => 'Sac à bandoulière Strive',
+                    'description' => null,
+                    'length' => null,
+                    'weight' => 1.100,
+                    'size' => 5,
+                    'is_eco_friendly' => false,
+                    'price_as_nested' => [
+                        /* nested fields are always single value for the time being
+                        [
+                            'group_id' => 0,
+                            'original_price' => 17.99,
+                            'price' => 8.99,
+                            'is_discounted' => true,
+                        ],
+                        [
+                            'group_id' => 1,
+                            'original_price' => 17.99,
+                            'price' => 17.99,
+                            'is_discounted' => false,
+                        ], */
+                        'group_id' => 0,
+                        'original_price' => 17.99,
+                        'price' => 8.99,
+                        'is_discounted' => true,
+                    ],
+                    'price' => [
+                        /* price source fields are always multiple values for the time being */
+                        [
+                            'group_id' => 0,
+                            'original_price' => 17.99,
+                            'price' => 8.99,
+                            'is_discounted' => true,
+                        ],
+                    ],
+                    'stock' => [
+                        'status' => true,
+                        'qty' => 37,
+                    ],
+                    'stock_as_nested' => [
+                        'status' => true,
+                        'qty' => 37,
+                    ],
+                    'brand' => null,
+                    'color' => [
+                        [
+                            'value' => 'black',
+                            'label' => 'Noir',
+                        ],
+                    ],
+                    'category_as_nested' => [
+                        /* nested fields are always single value for the time being
+                        [
+                            'id' => 'one',
+                        ],
+                        */
+                        'id' => 'cat_1',
+                    ],
+                    'category' => [
+                        [
+                            'id' => 'cat_1',
+                            'uid' => 'one',
+                            'name' => 'One',
+                            'is_parent' => true,
+                            'is_virtual' => false,
+                            'is_blacklisted' => false,
+                            'position' => 1,
+                        ],
+                    ],
+                    // 'created_at' => '2022-09-05',
+                ],
+                '3' => [
+                    '_id' => '3',
+                    'sku' => '24-MB03',
+                    'name' => 'Sac à dos Crown Summit',
+                    'description' => null,
+                    'length' => null,
+                    'weight' => 0.750,
+                    'size' => 8,
+                    'is_eco_friendly' => true,
+                    'price_as_nested' => [
+                        /* nested fields are always single value for the time being
+                        [
+                            'group_id' => 0,
+                            'original_price' => 25.99,
+                            'price' => 25.99,
+                            'is_discounted' => false,
+                        ],
+                        [
+                            'group_id' => 1,
+                            'original_price' => 25.99,
+                            'price' => 20.99,
+                            'is_discounted' => true,
+                        ], */
+                        'group_id' => 0,
+                        'original_price' => 25.99,
+                        'price' => 25.99,
+                        'is_discounted' => false,
+                    ],
+                    'price' => [
+                        /* price source fields are always multiple values for the time being */
+                        [
+                            'group_id' => 0,
+                            'original_price' => 25.99,
+                            'price' => 25.99,
+                            'is_discounted' => false,
+                        ],
+                    ],
+                    'stock' => [
+                        'status' => true,
+                        'qty' => 12,
+                    ],
+                    'stock_as_nested' => [
+                        'status' => true,
+                        'qty' => 12,
+                    ],
+                    'brand' => null,
+                    'color' => [
+                        [
+                            'value' => 'black',
+                            'label' => 'Noir',
+                        ],
+                        [
+                            'value' => 'grey',
+                            'label' => 'Gris',
+                        ],
+                    ],
+                    // 'created_at' => '2022-09-05',
+                ],
+                '4' => [
+                    '_id' => '4',
+                    'sku' => '24-MB05',
+                    'name' => 'Sac messager Wayfarer',
+                    'description' => null,
+                    'length' => null,
+                    'weight' => null,
+                    'size' => 7,
+                    'is_eco_friendly' => true,
+                    'stock' => [
+                        'status' => false,
+                        'qty' => 0,
+                    ],
+                    'stock_as_nested' => [
+                        'status' => false,
+                        'qty' => 0,
+                    ],
+                    'brand' => null,
+                    'color' => [
+                        [
+                            'value' => 'black',
+                            'label' => 'Noir',
+                        ],
+                    ],
+                    'price_as_nested' => null,
+                    'price' => null,
+                    // 'created_at' => '2022-09-05',
+                ],
+                '5' => [
+                    '_id' => '5',
+                    'sku' => '24-MB06',
+                    'name' => 'Messager de terrain rival',
+                    'description' => null,
+                    'length' => null,
+                    'weight' => null,
+                    'size' => 2,
+                    'is_eco_friendly' => true,
+                    'stock' => [
+                        'status' => true,
+                        'qty' => 3,
+                    ],
+                    'stock_as_nested' => [
+                        'status' => true,
+                        'qty' => 3,
+                    ],
+                    'brand' => null,
+                    'color' => [
+                        [
+                            'value' => 'grey',
+                            'label' => 'Gris',
+                        ],
+                    ],
+                    'price_as_nested' => null,
+                    'price' => null,
+                    // 'created_at' => '2022-09-06',
+                ],
+                '6' => [
+                    '_id' => '6',
+                    'sku' => '24-MB02',
+                    'name' => 'Sac à dos Fusion',
+                    'description' => null,
+                    'length' => null,
+                    'weight' => null,
+                    'size' => 9,
+                    'is_eco_friendly' => true,
+                    'stock' => [
+                        'status' => false,
+                        'qty' => 24,
+                    ],
+                    'stock_as_nested' => [
+                        'status' => false,
+                        'qty' => 24,
+                    ],
+                    'brand' => null,
+                    'color' => [
+                        [
+                            'value' => 'grey',
+                            'label' => 'Gris',
+                        ],
+                        [
+                            'value' => 'black',
+                            'label' => 'Noir',
+                        ],
+                        [
+                            'value' => 'red',
+                            'label' => 'Rouge',
+                        ],
+                    ],
+                    'price_as_nested' => null,
+                    'price' => null,
+                    // 'created_at' => '2022-09-01',
+                ],
+                '7' => [
+                    '_id' => '7',
+                    'sku' => '24-UB02',
+                    'name' => 'Sac de sport Impulse',
+                    'description' => null,
+                    'length' => null,
+                    'weight' => null,
+                    'size' => 11,
+                    'is_eco_friendly' => false,
+                    'stock' => [
+                        'status' => false,
+                        'qty' => 7,
+                    ],
+                    'stock_as_nested' => [
+                        'status' => false,
+                        'qty' => 7,
+                    ],
+                    'brand' => null,
+                    'color' => [
+                        [
+                            'value' => 'black',
+                            'label' => 'Noir',
+                        ],
+                    ],
+                    'price_as_nested' => null,
+                    'price' => null,
+                    // 'created_at' => '2022-09-01',
+                ],
+                '8' => [
+                    '_id' => '8',
+                    'sku' => '24-WB01',
+                    'name' => 'Sac de voyage Yoga',
+                    'description' => null,
+                    'length' => null,
+                    'weight' => null,
+                    'size' => null,
+                    'is_eco_friendly' => false,
+                    'stock' => [
+                        'status' => false,
+                        'qty' => -2,
+                    ],
+                    'stock_as_nested' => [
+                        'status' => false,
+                        'qty' => -2,
+                    ],
+                    'brand' => null,
+                    'color' => [
+                        [
+                            'value' => 'black',
+                            'label' => 'Noir',
+                        ],
+                        [
+                            'value' => 'white',
+                            'label' => 'Blanc',
+                        ],
+                    ],
+                    'price_as_nested' => null,
+                    'price' => null,
+                    // 'created_at' => '2022-09-01',
+                ],
+                '9' => [
+                    '_id' => '9',
+                    'sku' => '24-WB02',
+                    'name' => 'Fourre-tout Compete Track',
+                    'description' => null,
+                    'length' => null,
+                    'weight' => null,
+                    'size' => 11,
+                    'is_eco_friendly' => false,
+                    'stock' => [
+                        'status' => false,
+                        'qty' => 0,
+                    ],
+                    'stock_as_nested' => [
+                        'status' => false,
+                        'qty' => 0,
+                    ],
+                    'brand' => null,
+                    'color' => [
+                        [
+                            'value' => 'green',
+                            'label' => 'Vert',
+                        ],
+                        [
+                            'value' => 'white',
+                            'label' => 'Blanc',
+                        ],
+                    ],
+                    'price_as_nested' => null,
+                    'price' => null,
+                ],
+                '10' => [
+                    '_id' => '10',
+                    'sku' => '24-WB05',
+                    'name' => 'Fourre-tout à bandoulière avisé',
+                    'description' => null,
+                    'length' => null,
+                    'weight' => null,
+                    'size' => 2,
+                    'is_eco_friendly' => false,
+                    'stock' => [
+                        'status' => true,
+                        'qty' => 8,
+                    ],
+                    'stock_as_nested' => [
+                        'status' => true,
+                        'qty' => 8,
+                    ],
+                    'brand' => null,
+                    'color' => [
+                        [
+                            'value' => 'pink',
+                            'label' => 'Rose',
+                        ],
+                    ],
+                    'price_as_nested' => null,
+                    'price' => null,
+                ],
+                '11' => [
+                    '_id' => '11',
+                    'sku' => '24-WB06',
+                    'name' => "Sac à dos d'excursion d'une journée Endeavour",
+                    'description' => null,
+                    'length' => null,
+                    'weight' => null,
+                    'size' => 5,
+                    'is_eco_friendly' => null,
+                    'stock' => [
+                        'status' => true,
+                        'qty' => 13,
+                    ],
+                    'stock_as_nested' => [
+                        'status' => true,
+                        'qty' => 13,
+                    ],
+                    'brand' => null,
+                    'color' => [
+                        [
+                            'value' => 'pink',
+                            'label' => 'Rose',
+                        ],
+                        [
+                            'value' => 'fuchsia',
+                            'label' => 'Fuchsia',
+                        ],
+                        [
+                            'value' => 'grey',
+                            'label' => 'Gris',
+                        ],
+                        [
+                            'value' => 'black',
+                            'label' => 'Noir',
+                        ],
+                    ],
+                    'price_as_nested' => null,
+                    'price' => null,
+                    // 'created_at' => '2022-09-01',
+                ],
+                '12' => [
+                    '_id' => '12',
+                    'sku' => '24-WB03',
+                    'name' => 'Sac à dos piloté',
+                    'description' => null,
+                    'length' => null,
+                    'weight' => null,
+                    'size' => 12,
+                    'is_eco_friendly' => null,
+                    'stock' => [
+                        'status' => true,
+                        'qty' => 17,
+                    ],
+                    'stock_as_nested' => [
+                        'status' => true,
+                        'qty' => 17,
+                    ],
+                    'brand' => null,
+                    'color' => [
+                        [
+                            'value' => 'grey',
+                            'label' => 'Gris',
+                        ],
+                        [
+                            'value' => 'black',
+                            'label' => 'Noir',
+                        ],
+                    ],
+                    'price_as_nested' => null,
+                    'price' => null,
+                    // 'created_at' => '2022-09-01',
+                ],
+            ],
+            'b2c_fr_price_group_1' => [
+                '1' => [
+                    '_id' => '1',
+                    'sku' => '24-MB01',
+                    'name' => 'Sac de sport Jout',
+                    'description' => null,
+                    'length' => null,
+                    'weight' => 1.200,
+                    'size' => 12,
+                    'is_eco_friendly' => false,
+                    'price_as_nested' => [
+                        /* nested fields are always single value for the time being
+                        [
+                            'group_id' => 0,
+                            'original_price' => 11.99,
+                            'price' => 10.99,
+                            'is_discounted' => true,
+                        ],
+                        [
+                            'group_id' => 1,
+                            'original_price' => 11.99,
+                            'price' => 10.99,
+                            'is_discounted' => true,
+                        ], */
+                        'group_id' => 0,
+                        'original_price' => 11.99,
+                        'price' => 10.99,
+                        'is_discounted' => true,
+                    ],
+                    'price' => [
+                        /* price source fields are always multiple values for the time being */
                         [
                             'group_id' => 1,
                             'original_price' => 11.99,
@@ -656,12 +1151,6 @@ class SearchProductsHydrationTest extends AbstractTest
                     'price' => [
                         /* price source fields are always multiple values for the time being */
                         [
-                            'group_id' => 0,
-                            'original_price' => 17.99,
-                            'price' => 8.99,
-                            'is_discounted' => true,
-                        ],
-                        [
                             'group_id' => 1,
                             'original_price' => 17.99,
                             'price' => 17.99,
@@ -735,6 +1224,467 @@ class SearchProductsHydrationTest extends AbstractTest
                     'price' => [
                         /* price source fields are always multiple values for the time being */
                         [
+                            'group_id' => 1,
+                            'original_price' => 25.99,
+                            'price' => 20.99,
+                            'is_discounted' => true,
+                        ],
+                    ],
+                    'stock' => [
+                        'status' => true,
+                        'qty' => 12,
+                    ],
+                    'stock_as_nested' => [
+                        'status' => true,
+                        'qty' => 12,
+                    ],
+                    'brand' => null,
+                    'color' => [
+                        [
+                            'value' => 'black',
+                            'label' => 'Noir',
+                        ],
+                        [
+                            'value' => 'grey',
+                            'label' => 'Gris',
+                        ],
+                    ],
+                    // 'created_at' => '2022-09-05',
+                ],
+                '4' => [
+                    '_id' => '4',
+                    'sku' => '24-MB05',
+                    'name' => 'Sac messager Wayfarer',
+                    'description' => null,
+                    'length' => null,
+                    'weight' => null,
+                    'size' => 7,
+                    'is_eco_friendly' => true,
+                    'stock' => [
+                        'status' => false,
+                        'qty' => 0,
+                    ],
+                    'stock_as_nested' => [
+                        'status' => false,
+                        'qty' => 0,
+                    ],
+                    'brand' => null,
+                    'color' => [
+                        [
+                            'value' => 'black',
+                            'label' => 'Noir',
+                        ],
+                    ],
+                    'price_as_nested' => null,
+                    'price' => null,
+                    // 'created_at' => '2022-09-05',
+                ],
+                '5' => [
+                    '_id' => '5',
+                    'sku' => '24-MB06',
+                    'name' => 'Messager de terrain rival',
+                    'description' => null,
+                    'length' => null,
+                    'weight' => null,
+                    'size' => 2,
+                    'is_eco_friendly' => true,
+                    'stock' => [
+                        'status' => true,
+                        'qty' => 3,
+                    ],
+                    'stock_as_nested' => [
+                        'status' => true,
+                        'qty' => 3,
+                    ],
+                    'brand' => null,
+                    'color' => [
+                        [
+                            'value' => 'grey',
+                            'label' => 'Gris',
+                        ],
+                    ],
+                    'price_as_nested' => null,
+                    'price' => null,
+                    // 'created_at' => '2022-09-06',
+                ],
+                '6' => [
+                    '_id' => '6',
+                    'sku' => '24-MB02',
+                    'name' => 'Sac à dos Fusion',
+                    'description' => null,
+                    'length' => null,
+                    'weight' => null,
+                    'size' => 9,
+                    'is_eco_friendly' => true,
+                    'stock' => [
+                        'status' => false,
+                        'qty' => 24,
+                    ],
+                    'stock_as_nested' => [
+                        'status' => false,
+                        'qty' => 24,
+                    ],
+                    'brand' => null,
+                    'color' => [
+                        [
+                            'value' => 'grey',
+                            'label' => 'Gris',
+                        ],
+                        [
+                            'value' => 'black',
+                            'label' => 'Noir',
+                        ],
+                        [
+                            'value' => 'red',
+                            'label' => 'Rouge',
+                        ],
+                    ],
+                    'price_as_nested' => null,
+                    'price' => null,
+                    // 'created_at' => '2022-09-01',
+                ],
+                '7' => [
+                    '_id' => '7',
+                    'sku' => '24-UB02',
+                    'name' => 'Sac de sport Impulse',
+                    'description' => null,
+                    'length' => null,
+                    'weight' => null,
+                    'size' => 11,
+                    'is_eco_friendly' => false,
+                    'stock' => [
+                        'status' => false,
+                        'qty' => 7,
+                    ],
+                    'stock_as_nested' => [
+                        'status' => false,
+                        'qty' => 7,
+                    ],
+                    'brand' => null,
+                    'color' => [
+                        [
+                            'value' => 'black',
+                            'label' => 'Noir',
+                        ],
+                    ],
+                    'price_as_nested' => null,
+                    'price' => null,
+                    // 'created_at' => '2022-09-01',
+                ],
+                '8' => [
+                    '_id' => '8',
+                    'sku' => '24-WB01',
+                    'name' => 'Sac de voyage Yoga',
+                    'description' => null,
+                    'length' => null,
+                    'weight' => null,
+                    'size' => null,
+                    'is_eco_friendly' => false,
+                    'stock' => [
+                        'status' => false,
+                        'qty' => -2,
+                    ],
+                    'stock_as_nested' => [
+                        'status' => false,
+                        'qty' => -2,
+                    ],
+                    'brand' => null,
+                    'color' => [
+                        [
+                            'value' => 'black',
+                            'label' => 'Noir',
+                        ],
+                        [
+                            'value' => 'white',
+                            'label' => 'Blanc',
+                        ],
+                    ],
+                    'price_as_nested' => null,
+                    'price' => null,
+                    // 'created_at' => '2022-09-01',
+                ],
+                '9' => [
+                    '_id' => '9',
+                    'sku' => '24-WB02',
+                    'name' => 'Fourre-tout Compete Track',
+                    'description' => null,
+                    'length' => null,
+                    'weight' => null,
+                    'size' => 11,
+                    'is_eco_friendly' => false,
+                    'stock' => [
+                        'status' => false,
+                        'qty' => 0,
+                    ],
+                    'stock_as_nested' => [
+                        'status' => false,
+                        'qty' => 0,
+                    ],
+                    'brand' => null,
+                    'color' => [
+                        [
+                            'value' => 'green',
+                            'label' => 'Vert',
+                        ],
+                        [
+                            'value' => 'white',
+                            'label' => 'Blanc',
+                        ],
+                    ],
+                    'price_as_nested' => null,
+                    'price' => null,
+                ],
+                '10' => [
+                    '_id' => '10',
+                    'sku' => '24-WB05',
+                    'name' => 'Fourre-tout à bandoulière avisé',
+                    'description' => null,
+                    'length' => null,
+                    'weight' => null,
+                    'size' => 2,
+                    'is_eco_friendly' => false,
+                    'stock' => [
+                        'status' => true,
+                        'qty' => 8,
+                    ],
+                    'stock_as_nested' => [
+                        'status' => true,
+                        'qty' => 8,
+                    ],
+                    'brand' => null,
+                    'color' => [
+                        [
+                            'value' => 'pink',
+                            'label' => 'Rose',
+                        ],
+                    ],
+                    'price_as_nested' => null,
+                    'price' => null,
+                ],
+                '11' => [
+                    '_id' => '11',
+                    'sku' => '24-WB06',
+                    'name' => "Sac à dos d'excursion d'une journée Endeavour",
+                    'description' => null,
+                    'length' => null,
+                    'weight' => null,
+                    'size' => 5,
+                    'is_eco_friendly' => null,
+                    'stock' => [
+                        'status' => true,
+                        'qty' => 13,
+                    ],
+                    'stock_as_nested' => [
+                        'status' => true,
+                        'qty' => 13,
+                    ],
+                    'brand' => null,
+                    'color' => [
+                        [
+                            'value' => 'pink',
+                            'label' => 'Rose',
+                        ],
+                        [
+                            'value' => 'fuchsia',
+                            'label' => 'Fuchsia',
+                        ],
+                        [
+                            'value' => 'grey',
+                            'label' => 'Gris',
+                        ],
+                        [
+                            'value' => 'black',
+                            'label' => 'Noir',
+                        ],
+                    ],
+                    'price_as_nested' => null,
+                    'price' => null,
+                    // 'created_at' => '2022-09-01',
+                ],
+                '12' => [
+                    '_id' => '12',
+                    'sku' => '24-WB03',
+                    'name' => 'Sac à dos piloté',
+                    'description' => null,
+                    'length' => null,
+                    'weight' => null,
+                    'size' => 12,
+                    'is_eco_friendly' => null,
+                    'stock' => [
+                        'status' => true,
+                        'qty' => 17,
+                    ],
+                    'stock_as_nested' => [
+                        'status' => true,
+                        'qty' => 17,
+                    ],
+                    'brand' => null,
+                    'color' => [
+                        [
+                            'value' => 'grey',
+                            'label' => 'Gris',
+                        ],
+                        [
+                            'value' => 'black',
+                            'label' => 'Noir',
+                        ],
+                    ],
+                    'price_as_nested' => null,
+                    'price' => null,
+                    // 'created_at' => '2022-09-01',
+                ],
+            ],
+            'b2c_fr_fake_price_group_id' => [
+                '1' => [
+                    '_id' => '1',
+                    'sku' => '24-MB01',
+                    'name' => 'Sac de sport Jout',
+                    'description' => null,
+                    'length' => null,
+                    'weight' => 1.200,
+                    'size' => 12,
+                    'is_eco_friendly' => false,
+                    'price_as_nested' => [
+                        /* nested fields are always single value for the time being
+                        [
+                            'group_id' => 0,
+                            'original_price' => 11.99,
+                            'price' => 10.99,
+                            'is_discounted' => true,
+                        ],
+                        [
+                            'group_id' => 1,
+                            'original_price' => 11.99,
+                            'price' => 10.99,
+                            'is_discounted' => true,
+                        ], */
+                        'group_id' => 0,
+                        'original_price' => 11.99,
+                        'price' => 10.99,
+                        'is_discounted' => true,
+                    ],
+                    'price' => [],
+                    'stock' => [
+                        'status' => false,
+                        'qty' => 0,
+                    ],
+                    'stock_as_nested' => [
+                        'status' => false,
+                        'qty' => 0,
+                    ],
+                    'brand' => null,
+                    'color' => [
+                        [
+                            'value' => 'black',
+                            'label' => 'Noir',
+                        ],
+                    ],
+                    'category_as_nested' => [
+                        /* nested fields are always single value for the time being
+                        [
+                            'id' => 'one',
+                        ],
+                        */
+                        'id' => 'cat_1',
+                    ],
+                    'category' => [
+                        [
+                            'id' => 'cat_1',
+                            'uid' => 'one',
+                            'name' => 'One',
+                            'is_parent' => true,
+                            'is_virtual' => false,
+                            'is_blacklisted' => false,
+                        ],
+                        [
+                            'id' => 'cat_2',
+                            'uid' => 'two',
+                            'name' => 'Two',
+                            'is_parent' => false,
+                            'is_virtual' => false,
+                            'is_blacklisted' => false,
+                            'position' => 1,
+                        ],
+                    ],
+                    // 'created_at' => '2022-09-01',
+                ],
+                '2' => [
+                    '_id' => '2',
+                    'sku' => '24-MB04',
+                    'name' => 'Sac à bandoulière Strive',
+                    'description' => null,
+                    'length' => null,
+                    'weight' => 1.100,
+                    'size' => 5,
+                    'is_eco_friendly' => false,
+                    'price_as_nested' => [
+                        /* nested fields are always single value for the time being
+                        [
+                            'group_id' => 0,
+                            'original_price' => 17.99,
+                            'price' => 8.99,
+                            'is_discounted' => true,
+                        ],
+                        [
+                            'group_id' => 1,
+                            'original_price' => 17.99,
+                            'price' => 17.99,
+                            'is_discounted' => false,
+                        ], */
+                        'group_id' => 0,
+                        'original_price' => 17.99,
+                        'price' => 8.99,
+                        'is_discounted' => true,
+                    ],
+                    'price' => [],
+                    'stock' => [
+                        'status' => true,
+                        'qty' => 37,
+                    ],
+                    'stock_as_nested' => [
+                        'status' => true,
+                        'qty' => 37,
+                    ],
+                    'brand' => null,
+                    'color' => [
+                        [
+                            'value' => 'black',
+                            'label' => 'Noir',
+                        ],
+                    ],
+                    'category_as_nested' => [
+                        /* nested fields are always single value for the time being
+                        [
+                            'id' => 'one',
+                        ],
+                        */
+                        'id' => 'cat_1',
+                    ],
+                    'category' => [
+                        [
+                            'id' => 'cat_1',
+                            'uid' => 'one',
+                            'name' => 'One',
+                            'is_parent' => true,
+                            'is_virtual' => false,
+                            'is_blacklisted' => false,
+                            'position' => 1,
+                        ],
+                    ],
+                    // 'created_at' => '2022-09-05',
+                ],
+                '3' => [
+                    '_id' => '3',
+                    'sku' => '24-MB03',
+                    'name' => 'Sac à dos Crown Summit',
+                    'description' => null,
+                    'length' => null,
+                    'weight' => 0.750,
+                    'size' => 8,
+                    'is_eco_friendly' => true,
+                    'price_as_nested' => [
+                        /* nested fields are always single value for the time being
+                        [
                             'group_id' => 0,
                             'original_price' => 25.99,
                             'price' => 25.99,
@@ -745,8 +1695,13 @@ class SearchProductsHydrationTest extends AbstractTest
                             'original_price' => 25.99,
                             'price' => 20.99,
                             'is_discounted' => true,
-                        ],
+                        ], */
+                        'group_id' => 0,
+                        'original_price' => 25.99,
+                        'price' => 25.99,
+                        'is_discounted' => false,
                     ],
+                    'price' => [],
                     'stock' => [
                         'status' => true,
                         'qty' => 12,
@@ -1137,6 +2092,51 @@ class SearchProductsHydrationTest extends AbstractTest
                 ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_b2c_fr_product', // expected index alias.
                 1.0,    // expected score.
                 $productData['b2c_fr'], // expected product data.
+            ],
+            [
+                'b2c_fr',   // catalog ID.
+                $attributes,
+                5,      // page size.
+                1,      // current page.
+                [],     // expected error.
+                5,      // expected items count.
+                12,     // expected total count.
+                5,      // expected items per page.
+                3,      // expected last page.
+                ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_b2c_fr_product', // expected index alias.
+                1.0,    // expected score.
+                $productData['b2c_fr'], // expected product data.
+                '0', // price group id
+            ],
+            [
+                'b2c_fr',   // catalog ID.
+                $attributes,
+                5,      // page size.
+                1,      // current page.
+                [],     // expected error.
+                5,      // expected items count.
+                12,     // expected total count.
+                5,      // expected items per page.
+                3,      // expected last page.
+                ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_b2c_fr_product', // expected index alias.
+                1.0,    // expected score.
+                $productData['b2c_fr_price_group_1'], // expected product data.
+                '1', // price group id
+            ],
+            [
+                'b2c_fr',   // catalog ID.
+                $attributes,
+                5,      // page size.
+                1,      // current page.
+                [],     // expected error.
+                5,      // expected items count.
+                12,     // expected total count.
+                5,      // expected items per page.
+                3,      // expected last page.
+                ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'elasticsuite_b2c_fr_product', // expected index alias.
+                1.0,    // expected score.
+                $productData['b2c_fr_fake_price_group_id'], // expected product data.
+                'fake_price_group_id', // price group id
             ],
             [
                 'b2c_fr',   // catalog ID.

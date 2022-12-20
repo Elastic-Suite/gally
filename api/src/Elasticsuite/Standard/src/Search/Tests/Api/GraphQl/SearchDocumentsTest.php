@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Search\Tests\Api\GraphQl;
 
+use Elasticsuite\Entity\Service\PriceGroupProvider;
 use Elasticsuite\Fixture\Service\ElasticsearchFixturesInterface;
 use Elasticsuite\Search\Elasticsearch\Request\SortOrderInterface;
 use Elasticsuite\Test\AbstractTest;
@@ -30,10 +31,12 @@ class SearchDocumentsTest extends AbstractTest
     {
         parent::setUpBeforeClass();
         self::loadFixture([
+            __DIR__ . '/../../fixtures/facet_configuration_search_documents.yaml',
             __DIR__ . '/../../fixtures/facet_configuration.yaml',
             __DIR__ . '/../../fixtures/source_field_option_label.yaml',
             __DIR__ . '/../../fixtures/source_field_option.yaml',
             __DIR__ . '/../../fixtures/source_field_label.yaml',
+            __DIR__ . '/../../fixtures/source_field_search_documents.yaml',
             __DIR__ . '/../../fixtures/source_field.yaml',
             __DIR__ . '/../../fixtures/category_configurations.yaml',
             __DIR__ . '/../../fixtures/categories.yaml',
@@ -295,6 +298,7 @@ class SearchDocumentsTest extends AbstractTest
      * @param array  $sortOrders            Sort order specifications
      * @param string $documentIdentifier    Document identifier to check ordered results
      * @param array  $expectedOrderedDocIds Expected ordered document identifiers
+     * @param string $priceGroupId          Price group id
      */
     public function testSortedSearchDocuments(
         string $entityType,
@@ -303,7 +307,8 @@ class SearchDocumentsTest extends AbstractTest
         int $currentPage,
         array $sortOrders,
         string $documentIdentifier,
-        array $expectedOrderedDocIds
+        array $expectedOrderedDocIds,
+        string $priceGroupId = '0',
     ): void {
         $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
 
@@ -333,7 +338,8 @@ class SearchDocumentsTest extends AbstractTest
                         }
                     }
                 GQL,
-                $user
+                $user,
+                [PriceGroupProvider::PRICE_GROUP_ID => $priceGroupId]
             ),
             new ExpectedResponse(
                 200,
@@ -439,6 +445,39 @@ class SearchDocumentsTest extends AbstractTest
                 'id', // document data identifier.
                 // price.price ASC, then score DESC first, then id DESC (missing _first)
                 [2, 1, 3, 12, 11],   // expected ordered document IDs
+            ],
+            [
+                'product',  // entity type.
+                'b2b_fr',   // catalog ID.
+                5,     // page size.
+                1,      // current page.
+                ['my_price.price' => SortOrderInterface::SORT_ASC], // sort order specifications.
+                'id', // document data identifier.
+                // price.price ASC, then score DESC first, then id DESC (missing _first)
+                [2, 1, 3, 12, 11],   // expected ordered document IDs
+                '0',
+            ],
+            [
+                'product',  // entity type.
+                'b2b_fr',   // catalog ID.
+                5,     // page size.
+                1,      // current page.
+                ['my_price.price' => SortOrderInterface::SORT_ASC], // sort order specifications.
+                'id', // document data identifier.
+                // price.price ASC, then score DESC first, then id DESC (missing _first)
+                [1, 2, 3, 12, 11],   // expected ordered document IDs
+                '1',
+            ],
+            [
+                'product',  // entity type.
+                'b2b_fr',   // catalog ID.
+                5,     // page size.
+                1,      // current page.
+                ['my_price.price' => SortOrderInterface::SORT_DESC], // sort order specifications.
+                'id', // document data identifier.
+                // price.price ASC, then score DESC first, then id DESC (missing _first)
+                [2, 3, 4, 5, 6],   // expected ordered document IDs
+                'fake_price_group_id',
             ],
         ];
     }
@@ -606,6 +645,7 @@ class SearchDocumentsTest extends AbstractTest
      * @param int    $pageSize             Pagination size
      * @param int    $currentPage          Current page
      * @param array  $expectedAggregations expected aggregations sample
+     * @param string $priceGroupId         Price group id
      */
     public function testSearchDocumentsWithAggregation(
         string $entityType,
@@ -613,6 +653,7 @@ class SearchDocumentsTest extends AbstractTest
         int $pageSize,
         int $currentPage,
         array $expectedAggregations,
+        string $priceGroupId = '0',
     ): void {
         $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
 
@@ -649,7 +690,8 @@ class SearchDocumentsTest extends AbstractTest
                         }
                     }
                 GQL,
-                $user
+                $user,
+                [PriceGroupProvider::PRICE_GROUP_ID => $priceGroupId]
             ),
             new ExpectedResponse(
                 200,
@@ -758,6 +800,23 @@ class SearchDocumentsTest extends AbstractTest
                         'hasMore' => false,
                     ],
                     [
+                        'field' => 'my_price__price',
+                        'label' => 'My_price',
+                        'type' => 'slider',
+                        'options' => [
+                            [
+                                'label' => '8',
+                                'value' => '8',
+                                'count' => 1,
+                            ],
+                            [
+                                'label' => '10',
+                                'value' => '10',
+                                'count' => 1,
+                            ],
+                        ],
+                    ],
+                    [
                         'field' => 'color__value',
                         'label' => 'Couleur',
                         'type' => 'checkbox',
@@ -776,6 +835,130 @@ class SearchDocumentsTest extends AbstractTest
                         ],
                     ],
                 ],
+                '0',
+            ],
+            [
+                'product',  // entity type.
+                'b2b_fr',   // catalog ID.
+                10,     // page size.
+                1,      // current page.
+                [       // expected aggregations sample.
+                    ['field' => 'is_eco_friendly', 'label' => 'Is_eco_friendly', 'type' => 'checkbox', 'hasMore' => false],
+                    ['field' => 'weight', 'label' => 'Weight', 'type' => 'slider'],
+                    [
+                        'field' => 'category__id',
+                        'label' => 'Category',
+                        'type' => 'category',
+                        'hasMore' => false,
+                        'options' => [
+                            [
+                                'label' => 'Un',
+                                'value' => 'cat_1',
+                                'count' => 2,
+                            ],
+                            [
+                                'label' => 'Deux',
+                                'value' => 'cat_2',
+                                'count' => 1,
+                            ],
+                        ],
+                    ],
+                    [
+                        'field' => 'size',
+                        'label' => 'Taille',
+                        'type' => 'slider',
+                        'hasMore' => false,
+                    ],
+                    [
+                        'field' => 'my_price__price',
+                        'label' => 'My_price',
+                        'type' => 'slider',
+                        'options' => [
+                            [
+                                'label' => '10',
+                                'value' => '10',
+                                'count' => 1,
+                            ],
+                            [
+                                'label' => '17',
+                                'value' => '17',
+                                'count' => 1,
+                            ],
+                        ],
+                    ],
+                    [
+                        'field' => 'color__value',
+                        'label' => 'Couleur',
+                        'type' => 'checkbox',
+                        'hasMore' => true,
+                        'options' => [
+                            [
+                                'label' => 'Rouge',
+                                'value' => 'red',
+                                'count' => 1,
+                            ],
+                            [
+                                'label' => 'Gris',
+                                'value' => 'grey',
+                                'count' => 5,
+                            ],
+                        ],
+                    ],
+                ],
+                '1',
+            ],
+            [
+                'product',  // entity type.
+                'b2b_fr',   // catalog ID.
+                10,     // page size.
+                1,      // current page.
+                [       // expected aggregations sample.
+                    ['field' => 'is_eco_friendly', 'label' => 'Is_eco_friendly', 'type' => 'checkbox', 'hasMore' => false],
+                    ['field' => 'weight', 'label' => 'Weight', 'type' => 'slider'],
+                    [
+                        'field' => 'category__id',
+                        'label' => 'Category',
+                        'type' => 'category',
+                        'hasMore' => false,
+                        'options' => [
+                            [
+                                'label' => 'Un',
+                                'value' => 'cat_1',
+                                'count' => 2,
+                            ],
+                            [
+                                'label' => 'Deux',
+                                'value' => 'cat_2',
+                                'count' => 1,
+                            ],
+                        ],
+                    ],
+                    [
+                        'field' => 'size',
+                        'label' => 'Taille',
+                        'type' => 'slider',
+                        'hasMore' => false,
+                    ],
+                    [
+                        'field' => 'color__value',
+                        'label' => 'Couleur',
+                        'type' => 'checkbox',
+                        'hasMore' => true,
+                        'options' => [
+                            [
+                                'label' => 'Rouge',
+                                'value' => 'red',
+                                'count' => 1,
+                            ],
+                            [
+                                'label' => 'Gris',
+                                'value' => 'grey',
+                                'count' => 5,
+                            ],
+                        ],
+                    ],
+                ],
+                'fake_price_group_id',
             ],
         ];
     }

@@ -65,6 +65,8 @@ services:
         arguments:
             - '@Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
             - '@Elasticsuite\Search\Elasticsearch\Request\QueryFactory'
+            - '@Elasticsuite\Entity\Service\PriceGroupProvider'
+            - '@Elasticsuite\Search\Service\ReverseSourceFieldProvider'
             - '%api_platform.graphql.nesting_separator%'
         tags:
             - { name: api_platform.graphql.type }
@@ -95,3 +97,8 @@ services:
             - '@Elasticsuite\Search\Elasticsearch\Request\QueryFactory'
         tags:
             - { name: api_platform.graphql.type }
+
+    Elasticsuite\Entity\Service\PriceGroupProvider:
+        arguments:
+            - '@Elasticsuite\RequestContext\Service\RequestContextManager'
+            - '%elasticsuite.default_price_group_id%'

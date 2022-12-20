@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Search\Elasticsearch\Request\Aggregation\ConfigResolver;
 
+use Elasticsuite\Entity\Service\PriceGroupProvider;
 use Elasticsuite\Metadata\Model\SourceField;
 use Elasticsuite\Search\Elasticsearch\Request\BucketInterface;
 use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
@@ -23,6 +24,11 @@ use Elasticsuite\Search\Model\Facet\Configuration;
 
 class PriceAggregationConfigResolver implements FieldAggregationConfigResolverInterface
 {
+    public function __construct(
+        private PriceGroupProvider $priceGroupProvider
+    ) {
+    }
+
     public function supports(Configuration $facetConfig): bool
     {
         return SourceField\Type::TYPE_PRICE === $facetConfig->getSourceField()->getType();
@@ -33,6 +39,8 @@ class PriceAggregationConfigResolver implements FieldAggregationConfigResolverIn
         return [
             'name' => $facetConfig->getSourceField()->getCode() . '.price',
             'type' => BucketInterface::TYPE_HISTOGRAM,
+            'nestedFilter' => [$facetConfig->getSourceField()->getCode() . '.group_id' => $this->priceGroupProvider->getCurrentPriceGroupId()],
+            'minDocCount' => 1,
         ];
     }
 }

@@ -36,13 +36,13 @@ class PriceAttributeTest extends KernelTestCase
      * @param mixed  $value         Attribute hydration value
      * @param mixed  $expectedValue Expected value with basic structure check
      */
-    public function testStructureCheck(string $attributeCode, mixed $value, mixed $expectedValue): void
+    public function testStructureCheck(string $attributeCode, mixed $value, mixed $expectedValue, string $priceGroupId = '0'): void
     {
         $reflector = new \ReflectionClass(PriceAttribute::class);
         $attributeCodeProperty = $reflector->getProperty('attributeCode');
         $valueProperty = $reflector->getProperty('value');
 
-        $priceAttribute = new PriceAttribute($attributeCode, $value);
+        $priceAttribute = new PriceAttribute($attributeCode, $value, $priceGroupId);
         $this->assertEquals($attributeCode, $attributeCodeProperty->getValue($priceAttribute));
         $this->assertEquals($expectedValue, $valueProperty->getValue($priceAttribute));
         $this->assertEquals($expectedValue, $priceAttribute->getValue());
@@ -51,20 +51,22 @@ class PriceAttributeTest extends KernelTestCase
     public function structureCheckDataProvider(): array
     {
         return [
-            ['myPrice', null, null],
-            ['myPrice', true, true],
-            ['myPrice', false, false],
-            ['myPrice', 1, 1],
-            ['myPrice', -3.5, -3.5],
-            ['myPrice', 'myValue', 'myValue'],
-            // For the moment, price attributes output multiple values so an array stays an array (w/o structure check).
-            ['myPrice', ['myValue'], ['myValue']],
-            ['myPrice', [['myValue'], ['myOtherValue']], [['myValue'], ['myOtherValue']]],
+            /*
+             * The price attribute value should be an array of prices (['price' => 13.50, 'group_id' => 0, ...], ['price' => 16, 'group_id' => 1, ...]], ...) and each price should have a group_id,
+             * if these rules are not respected the price output will be an empty array.
+             */
+            ['myPrice', null, []],
+            ['myPrice', true, []],
+            ['myPrice', false, []],
+            ['myPrice', 1, []],
+            ['myPrice', -3.5, []],
+            ['myPrice', 'myValue', []],
+            ['myPrice', ['myValue'], []],
+            ['myPrice', [['myValue'], ['myOtherValue']], []],
             ['myPrice', [], []],
-            // For the moment, price attributes output multiple values so single entries are forced as array of entries.
             [
                 'myPrice',
-                ['original_price' => 13.50, 'price' => 13.50, 'is_discounted' => false, 'group_id' => 0],
+                [['original_price' => 13.50, 'price' => 13.50, 'is_discounted' => false, 'group_id' => 0]],
                 [['original_price' => 13.50, 'price' => 13.50, 'is_discounted' => false, 'group_id' => 0]],
             ],
             [
@@ -75,14 +77,37 @@ class PriceAttributeTest extends KernelTestCase
                 ],
                 [
                     ['original_price' => 13.50, 'price' => 13.50, 'is_discounted' => false, 'group_id' => 0],
-                    ['original_price' => 13.50, 'price' => 10.50, 'is_discounted' => true, 'group_id' => 1],
                 ],
             ],
-            // For the moment, no advanced price structure checks.
+            [
+                'myPrice',
+                [
+                    ['original_price' => 13.50, 'price' => 13.50, 'is_discounted' => false, 'group_id' => 0],
+                    ['original_price' => 13.50, 'price' => 10.50, 'is_discounted' => true, 'group_id' => 1],
+                ],
+                [
+                    ['original_price' => 13.50, 'price' => 10.50, 'is_discounted' => true, 'group_id' => 1],
+                ],
+                '1',
+            ],
+            [
+                'myPrice',
+                [
+                    ['original_price' => 13.50, 'price' => 13.50, 'is_discounted' => false, 'group_id' => 0],
+                    ['original_price' => 13.50, 'price' => 10.50, 'is_discounted' => true, 'group_id' => 1],
+                ],
+                [],
+                'fake_group_id',
+            ],
             [
                 'myPrice',
                 ['original_price' => 13.50, 'price' => 13.50, 'another' => 'field'],
-                [['original_price' => 13.50, 'price' => 13.50, 'another' => 'field']],
+                [],
+            ],
+            [
+                'myPrice',
+                ['original_price' => 13.50, 'price' => 13.50, 'another' => 'field', 'group_id' => 0],
+                [],
             ],
         ];
     }

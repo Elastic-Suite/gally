@@ -71,6 +71,12 @@ Elasticsuite\Metadata\Model\SourceField:
         metadata: '@product'
         code: 'price'
         type: 'price'
+    product_my_price:
+        metadata: '@product'
+        code: 'my_price'
+        type: 'price'
+        isSortable: true
+        isFilterable: true
     product_price_as_nested_group_id:
         metadata: '@product'
         code: 'price_as_nested.group_id'

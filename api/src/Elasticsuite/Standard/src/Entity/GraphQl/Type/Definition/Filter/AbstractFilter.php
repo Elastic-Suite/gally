@@ -31,7 +31,7 @@ abstract class AbstractFilter extends InputObjectType implements TypeInterface, 
 {
     public function __construct(
         protected FilterQueryBuilder $filterQueryBuilder,
-        private QueryFactory $queryFactory,
+        protected QueryFactory $queryFactory,
         protected string $nestingSeparator
     ) {
         parent::__construct($this->getConfig());
@@ -78,15 +78,19 @@ abstract class AbstractFilter extends InputObjectType implements TypeInterface, 
                 : $this->queryFactory->create(QueryInterface::TYPE_BOOL, ['mustNot' => [$existQuery]]);
         }
 
+        return $this->filterQueryBuilder->create($containerConfig, $this->getFilterData($inputFilter));
+    }
+
+    protected function getFilterData(array $inputFilter): array
+    {
         $conditions = [];
         foreach ($this->getConditions() as $condition) {
             if (isset($inputFilter[$condition])) {
                 $conditions = array_merge($conditions, [$condition => $inputFilter[$condition]]);
             }
         }
-        $filterData = [$this->getMappingFieldName($inputFilter['field']) => $conditions];
 
-        return $this->filterQueryBuilder->create($containerConfig, $filterData);
+        return [$this->getMappingFieldName($inputFilter['field']) => $conditions];
     }
 
     protected function getConditions(): array
