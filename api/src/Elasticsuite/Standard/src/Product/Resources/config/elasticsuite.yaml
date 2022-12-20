@@ -3,3 +3,9 @@ elasticsuite:
         Elasticsuite\Product\Model\Product:
             renamings:
                 searchProducts: products
+
+    request_context:
+        headers:
+            - !php/const Elasticsuite\Entity\Service\PriceGroupProvider::PRICE_GROUP_ID
+
+    default_price_group_id: 0

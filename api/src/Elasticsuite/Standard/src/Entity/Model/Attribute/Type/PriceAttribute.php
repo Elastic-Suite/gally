@@ -24,6 +24,41 @@ use Elasticsuite\Entity\Model\Attribute\StructuredAttributeInterface;
  */
 class PriceAttribute extends AbstractStructuredAttribute implements AttributeInterface, StructuredAttributeInterface
 {
+    public function __construct(
+        string $attributeCode,
+        mixed $value,
+        protected ?string $priceGroupId = null
+    ) {
+        parent::__construct($attributeCode, $value);
+    }
+
+    public function getSanitizedData(mixed $value): mixed
+    {
+        $value = $this->getPriceForCurrentGroup($value);
+
+        return parent::getSanitizedData($value);
+    }
+
+    protected function getPriceForCurrentGroup(mixed $value): mixed
+    {
+        $priceFound = false;
+        if (\is_array($value) && null !== $this->priceGroupId) {
+            foreach ($value as $priceData) {
+                if (($priceData['group_id'] ?? null) == $this->priceGroupId) {
+                    $value = [$priceData];
+                    $priceFound = true;
+                    break;
+                }
+            }
+        }
+
+        if (!\is_array($value) || null === $this->priceGroupId || !$priceFound) {
+            $value = [];
+        }
+
+        return $value;
+    }
+
     /**
      * {@inheritDoc}
      */

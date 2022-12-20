@@ -17,9 +17,11 @@ declare(strict_types=1);
 namespace Elasticsuite\Product\Tests\Unit\GraphQl\Type\Definition\Filter;
 
 use Elasticsuite\Entity\GraphQl\Type\Definition\Filter\PriceTypeDefaultFilterInputType;
+use Elasticsuite\Entity\Service\PriceGroupProvider;
 use Elasticsuite\Search\Constant\FilterOperator;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder;
 use Elasticsuite\Search\Elasticsearch\Request\QueryFactory;
+use Elasticsuite\Search\Service\ReverseSourceFieldProvider;
 use GraphQL\Type\Definition\Type;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
@@ -29,11 +31,17 @@ class PriceTypeDefaultFilterInputTypeTest extends KernelTestCase
 
     private static QueryFactory $queryFactory;
 
+    private static PriceGroupProvider $priceGroupProvider;
+
+    private static ReverseSourceFieldProvider $reverseSourceFieldProvider;
+
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
         self::$filterQueryBuilder = static::getContainer()->get(FilterQueryBuilder::class);
         self::$queryFactory = static::getContainer()->get(QueryFactory::class);
+        self::$priceGroupProvider = static::getContainer()->get(PriceGroupProvider::class);
+        self::$reverseSourceFieldProvider = static::getContainer()->get(ReverseSourceFieldProvider::class);
     }
 
     public function testInstantiate(): void
@@ -47,6 +55,8 @@ class PriceTypeDefaultFilterInputTypeTest extends KernelTestCase
         $priceTypeDefaultFilterInputType = new PriceTypeDefaultFilterInputType(
             self::$filterQueryBuilder,
             self::$queryFactory,
+            self::$priceGroupProvider,
+            self::$reverseSourceFieldProvider,
             '##'
         );
 
@@ -59,7 +69,6 @@ class PriceTypeDefaultFilterInputTypeTest extends KernelTestCase
                     FilterOperator::GT => Type::float(),
                     FilterOperator::LT => Type::float(),
                     FilterOperator::LTE => Type::float(),
-                    FilterOperator::EXIST => Type::boolean(),
                 ],
             ],
             $priceTypeDefaultFilterInputType->getConfig()
@@ -89,6 +98,8 @@ class PriceTypeDefaultFilterInputTypeTest extends KernelTestCase
         $priceTypeDefaultFilterInputType = new PriceTypeDefaultFilterInputType(
             self::$filterQueryBuilder,
             self::$queryFactory,
+            self::$priceGroupProvider,
+            self::$reverseSourceFieldProvider,
             '##'
         );
 
