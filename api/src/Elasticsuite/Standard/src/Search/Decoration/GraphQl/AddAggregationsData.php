@@ -18,10 +18,11 @@ namespace Elasticsuite\Search\Decoration\GraphQl;
 
 use ApiPlatform\Core\GraphQl\Resolver\Stage\SerializeStageInterface;
 use Elasticsuite\Catalog\Repository\LocalizedCatalogRepository;
+use Elasticsuite\Category\Repository\CategoryConfigurationRepository;
+use Elasticsuite\Category\Service\CurrentCategoryProvider;
 use Elasticsuite\Metadata\Model\SourceField;
 use Elasticsuite\Metadata\Model\SourceField\Type;
 use Elasticsuite\Metadata\Repository\MetadataRepository;
-use Elasticsuite\Product\Service\CurrentCategoryProvider;
 use Elasticsuite\Search\DataProvider\Paginator;
 use Elasticsuite\Search\Elasticsearch\Adapter\Common\Response\AggregationInterface;
 use Elasticsuite\Search\Elasticsearch\Adapter\Common\Response\BucketValueInterface;
@@ -51,6 +52,7 @@ class AddAggregationsData implements SerializeStageInterface
         private ConfigurationRepository $facetConfigRepository,
         private CurrentCategoryProvider $currentCategoryProvider,
         private ReverseSourceFieldProvider $reverseSourceFieldProvider,
+        private CategoryConfigurationRepository $categoryConfigurationRepository,
         private iterable $availableFilterTypes,
     ) {
     }
@@ -63,6 +65,9 @@ class AddAggregationsData implements SerializeStageInterface
             $metadata = $this->metadataRepository->findByEntity($context['args']['entityType']);
             $localizedCatalog = $this->localizedCatalogRepository->findByCodeOrId($context['args']['catalogId']);
             $containerConfig = $this->containerConfigurationProvider->get($metadata, $localizedCatalog, $context['args']['requestType'] ?? null);
+            $currentCategory = $this->currentCategoryProvider->getCurrentCategory();
+            $this->facetConfigRepository->setCategoryId($currentCategory?->getId());
+            $this->facetConfigRepository->setMetadata($containerConfig->getMetadata());
 
             /** @var Paginator $itemOrCollection */
             $aggregations = $itemOrCollection->getAggregations();
@@ -80,9 +85,6 @@ class AddAggregationsData implements SerializeStageInterface
     private function formatAggregation(AggregationInterface $aggregation, ContainerConfigurationInterface $containerConfig): array
     {
         $sourceField = $this->reverseSourceFieldProvider->getSourceFieldFromFieldName($aggregation->getField(), $containerConfig->getMetadata());
-        $currentCategory = $this->currentCategoryProvider->getCurrentCategory();
-        $this->facetConfigRepository->setCategoryId($currentCategory?->getId());
-        $this->facetConfigRepository->setMetadata($containerConfig->getMetadata());
 
         $fieldName = $aggregation->getField();
         if ($sourceField) {
@@ -107,12 +109,12 @@ class AddAggregationsData implements SerializeStageInterface
             'options' => null,
         ];
 
-        $this->formatOptions($aggregation, $sourceField, $data);
+        $this->formatOptions($aggregation, $sourceField, $containerConfig, $data);
 
         return $data;
     }
 
-    private function formatOptions(AggregationInterface $aggregation, ?SourceField $sourceField, array &$data)
+    private function formatOptions(AggregationInterface $aggregation, ?SourceField $sourceField, ContainerConfigurationInterface $containerConfig, array &$data)
     {
         if (!empty($aggregation->getValues())) {
             $data['options'] = [];
@@ -120,6 +122,25 @@ class AddAggregationsData implements SerializeStageInterface
             $data['hasMore'] = false;
         }
         $facetConfigs = $sourceField ? $this->facetConfigRepository->findOndBySourceField($sourceField) : null;
+        $labels = [];
+
+        if (Type::TYPE_CATEGORY === $sourceField->getType()) {
+            // Extract categories ids from aggregations options (with result) to hydrate labels from DB
+            $categoryIds = array_map(
+                fn ($item) => $item->getKey(),
+                array_filter($aggregation->getValues(), fn ($item) => $item->getCount())
+            );
+            $categories = $this->categoryConfigurationRepository->findBy(
+                ['category' => $categoryIds, 'localizedCatalog' => $containerConfig->getLocalizedCatalog()]
+            );
+            // Get the name of all categories in aggregation result
+            array_walk(
+                $categories,
+                function ($categoryConfig) use (&$labels) {
+                    $labels[$categoryConfig->getCategory()->getId()] = $categoryConfig->getName();
+                }
+            );
+        }
 
         foreach ($aggregation->getValues() as $value) {
             if ($value instanceof BucketValueInterface) {
@@ -130,19 +151,19 @@ class AddAggregationsData implements SerializeStageInterface
                     continue;
                 }
 
+                if (0 === $value->getCount()) {
+                    continue;
+                }
+
                 if (\is_array($key)) {
                     $code = $key[1];
                     $label = 'None' !== $key[0] ? $key[0] : $key[1];
                 } else {
                     $code = $key;
-                    $label = $key;
+                    $label = $labels[$key] ?? $key;
                 }
 
-                $data['options'][] = [
-                    'count' => $value->getCount(),
-                    'value' => $code,
-                    'label' => $label,
-                ];
+                $data['options'][] = ['count' => $value->getCount(), 'value' => $code, 'label' => $label];
             }
         }
 

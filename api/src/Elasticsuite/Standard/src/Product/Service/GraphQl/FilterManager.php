@@ -16,7 +16,7 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Product\Service\GraphQl;
 
-use Elasticsuite\Product\Service\CurrentCategoryProvider;
+use Elasticsuite\Category\Service\CurrentCategoryProvider;
 use Elasticsuite\Search\GraphQl\Type\Definition\FieldFilterInputType;
 
 class FilterManager extends \Elasticsuite\Search\Service\GraphQl\FilterManager
@@ -27,18 +27,6 @@ class FilterManager extends \Elasticsuite\Search\Service\GraphQl\FilterManager
         private CurrentCategoryProvider $currentCategoryProvider,
     ) {
         parent::__construct($fieldFilterInputType, $nestingSeparator);
-    }
-
-    public function getFiltersFromContext(array $context): array
-    {
-        $filters = parent::getFiltersFromContext($context);
-
-        if (isset($context['filters']['currentCategoryId'])) {
-            $filters[]['category__id'] = ['eq' => $context['filters']['currentCategoryId']];
-            $this->currentCategoryProvider->setCurrentCategory($context['filters']['currentCategoryId']);
-        }
-
-        return $filters;
     }
 
     public function getQueryFilterFromContext(array $context): array

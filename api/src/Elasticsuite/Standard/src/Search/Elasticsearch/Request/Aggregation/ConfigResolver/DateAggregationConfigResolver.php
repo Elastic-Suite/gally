@@ -18,18 +18,20 @@ namespace Elasticsuite\Search\Elasticsearch\Request\Aggregation\ConfigResolver;
 
 use Elasticsuite\Metadata\Model\SourceField;
 use Elasticsuite\Search\Elasticsearch\Request\BucketInterface;
+use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
+use Elasticsuite\Search\Model\Facet\Configuration;
 
 class DateAggregationConfigResolver implements FieldAggregationConfigResolverInterface
 {
-    public function supports(SourceField $sourceField): bool
+    public function supports(Configuration $facetConfig): bool
     {
-        return SourceField\Type::TYPE_DATE === $sourceField->getType();
+        return SourceField\Type::TYPE_DATE === $facetConfig->getSourceField()->getType();
     }
 
-    public function getConfig(SourceField $sourceField): array
+    public function getConfig(ContainerConfigurationInterface $containerConfig, Configuration $facetConfig): array
     {
         return [
-            'name' => $sourceField->getCode(),
+            'name' => $facetConfig->getSourceField()->getCode(),
             'type' => BucketInterface::TYPE_DATE_HISTOGRAM,
             'minDocCount' => 1,
         ];

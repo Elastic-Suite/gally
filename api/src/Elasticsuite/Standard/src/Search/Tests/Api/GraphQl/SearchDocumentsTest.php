@@ -35,6 +35,7 @@ class SearchDocumentsTest extends AbstractTest
             __DIR__ . '/../../fixtures/source_field_option.yaml',
             __DIR__ . '/../../fixtures/source_field_label.yaml',
             __DIR__ . '/../../fixtures/source_field.yaml',
+            __DIR__ . '/../../fixtures/category_configurations.yaml',
             __DIR__ . '/../../fixtures/categories.yaml',
             __DIR__ . '/../../fixtures/catalogs.yaml',
             __DIR__ . '/../../fixtures/metadata.yaml',
@@ -692,14 +693,14 @@ class SearchDocumentsTest extends AbstractTest
                         'hasMore' => false,
                         'options' => [
                             [
-                                'label' => 'Accessories',
-                                'value' => 'cat_3',
+                                'label' => 'One',
+                                'value' => 'cat_1',
                                 'count' => 2,
                             ],
                             [
-                                'label' => 'cat_1',
-                                'value' => 'cat_1',
-                                'count' => 2,
+                                'label' => 'Five',
+                                'value' => 'cat_5',
+                                'count' => 1,
                             ],
                         ],
                     ],
@@ -739,12 +740,12 @@ class SearchDocumentsTest extends AbstractTest
                         'hasMore' => false,
                         'options' => [
                             [
-                                'label' => 'One',
+                                'label' => 'Un',
                                 'value' => 'cat_1',
                                 'count' => 2,
                             ],
                             [
-                                'label' => 'Two',
+                                'label' => 'Deux',
                                 'value' => 'cat_2',
                                 'count' => 1,
                             ],
@@ -1424,7 +1425,7 @@ class SearchDocumentsTest extends AbstractTest
                 null, // filter.
                 [ // expected option result
                     'color__value' => 2,
-                    'category__id' => 4,
+                    'category__id' => 2,
                     'is_eco_friendly' => 2,
                 ],
             ],

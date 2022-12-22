@@ -14,25 +14,21 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\VirtualCategory\Decoration\Product\GraphQl\Type\Definition\Filter;
+namespace Elasticsuite\VirtualCategory\Service;
 
 use Elasticsuite\Category\Model\Category;
 use Elasticsuite\Category\Repository\CategoryConfigurationRepository;
-use Elasticsuite\Category\Repository\CategoryRepository;
-use Elasticsuite\Entity\GraphQl\Type\Definition\Filter\CategoryTypeDefaultFilterInputType as BaseCategoryTypeDefaultFilterInputType;
 use Elasticsuite\RuleEngine\Service\RuleEngineManager;
-use Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder;
 use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
 use Elasticsuite\Search\Elasticsearch\Request\QueryFactory;
 use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
 use Psr\Log\LoggerInterface;
 
 /**
- * Allows to convert a category filter in Es query filters.
+ * Get category elasticsearch query.
  */
-class CategoryTypeDefaultFilterInputType extends BaseCategoryTypeDefaultFilterInputType
+class CategoryQueryProvider
 {
-    public $name = BaseCategoryTypeDefaultFilterInputType::SPECIFIC_NAME;
     public const CATEGORY_PROCESSED_KEY = 'category_processed';
     public const VIRTUAL_CATEGORY_PROCESSED_KEY = 'virtual_category_processed';
 
@@ -40,54 +36,41 @@ class CategoryTypeDefaultFilterInputType extends BaseCategoryTypeDefaultFilterIn
 
     public function __construct(
         private RuleEngineManager $ruleEngineManager,
-        private CategoryRepository $categoryRepository,
         private CategoryConfigurationRepository $categoryConfigurationRepository,
-        protected FilterQueryBuilder $filterQueryBuilder,
         private QueryFactory $queryFactory,
         private LoggerInterface $logger,
-        protected string $nestingSeparator,
     ) {
-        parent::__construct($this->filterQueryBuilder, $this->queryFactory, $this->nestingSeparator);
     }
 
     /**
      * Allows to transform category_id filter to ES filters for virtual categories.
      */
-    public function transformToElasticsuiteFilter(array $inputFilter, ContainerConfigurationInterface $containerConfig, array $filterContext = []): QueryInterface
-    {
-        if (isset($inputFilter['eq'])) {
-            $categoryId = trim($inputFilter['eq']);
-            if (isset($this->categoryQueries[$categoryId])) {
-                return $this->categoryQueries[$categoryId];
-            }
+    public function getQuery(
+        string $field,
+        Category $category,
+        ContainerConfigurationInterface $containerConfig,
+        array $filterContext = []
+    ): QueryInterface {
+        $categoryConfiguration = $this->categoryConfigurationRepository->findOneMergedByContext(
+            $category,
+            $containerConfig->getLocalizedCatalog()->getCatalog(),
+            $containerConfig->getLocalizedCatalog()
+        );
 
-            $category = $this->categoryRepository->find($categoryId);
-
-            if ($category instanceof Category) {
-                $categoryConfiguration = $this->categoryConfigurationRepository->findOneMergedByContext(
-                    $category,
-                    $containerConfig->getLocalizedCatalog()->getCatalog(),
-                    $containerConfig->getLocalizedCatalog()
-                );
-
-                if ($categoryConfiguration instanceof Category\Configuration
-                    && $categoryConfiguration->getIsVirtual()
-                ) {
-                    $this->categoryQueries[$categoryId] = $this->processVirtualCategories(
-                        $categoryConfiguration->getCategory()->getId(),
-                        $categoryConfiguration->getVirtualRule(),
-                        $containerConfig,
-                        $filterContext
-                    );
-                } else {
-                    $this->categoryQueries[$categoryId] = $this->processPhysicalCategories($category, $inputFilter, $containerConfig, $filterContext);
-                }
-
-                return $this->categoryQueries[$categoryId];
-            }
+        if ($categoryConfiguration instanceof Category\Configuration
+            && $categoryConfiguration->getIsVirtual()
+        ) {
+            $this->categoryQueries[$category->getId()] = $this->processVirtualCategories(
+                $categoryConfiguration->getCategory()->getId(),
+                $categoryConfiguration->getVirtualRule(),
+                $containerConfig,
+                $filterContext
+            );
+        } else {
+            $this->categoryQueries[$category->getId()] = $this->processPhysicalCategories($category, $field, $containerConfig, $filterContext);
         }
 
-        return parent::transformToElasticsuiteFilter($inputFilter, $containerConfig, $filterContext);
+        return $this->categoryQueries[$category->getId()];
     }
 
     /**
@@ -103,7 +86,7 @@ class CategoryTypeDefaultFilterInputType extends BaseCategoryTypeDefaultFilterIn
      * If we filter on Cat_A (category__id: Cat_A) :
      * products = Cat_A (implicitly Cat_B + Cat_C + Cat_C.1.2) + Cat_C.1  + Cat_C.1.1
      */
-    protected function processPhysicalCategories(Category $category, array $inputFilter, ContainerConfigurationInterface $containerConfig, array $filterContext): QueryInterface
+    protected function processPhysicalCategories(Category $category, string $field, ContainerConfigurationInterface $containerConfig, array $filterContext): QueryInterface
     {
         $this->addCategoryProcessed($category->getId(), $filterContext);
         //Will contains the rule of sub virtual categories whatever their level.
@@ -126,7 +109,16 @@ class CategoryTypeDefaultFilterInputType extends BaseCategoryTypeDefaultFilterIn
             QueryInterface::TYPE_BOOL,
             [
                 'should' => array_merge(
-                    [parent::transformToElasticsuiteFilter($inputFilter, $containerConfig, $filterContext)],
+                    [$this->queryFactory->create(
+                        QueryInterface::TYPE_NESTED,
+                        [
+                            'path' => explode('.', $field)[0],
+                            'query' => $this->queryFactory->create(
+                                QueryInterface::TYPE_TERM,
+                                ['field' => $field, 'value' => $category->getId()]
+                            ),
+                        ]
+                    )],
                     $subVirtualCategoriesRules
                 ),
             ]
@@ -147,7 +139,7 @@ class CategoryTypeDefaultFilterInputType extends BaseCategoryTypeDefaultFilterIn
      * If we filter on Cat_C.1 (category__id: Cat_C.1) :
      * products = Cat_C.1 (we will not get products of Cat_C.1.1 and Cat_C.1.2)
      */
-    protected function processVirtualCategories(string $categoryId, ?string $virtualRule, ContainerConfigurationInterface $containerConfig, array $filterContext): QueryInterface
+    protected function processVirtualCategories(string $categoryId, ?string $virtualRule, ContainerConfigurationInterface $containerConfig, array &$filterContext): QueryInterface
     {
         $this->addCategoryProcessed($categoryId, $filterContext);
         $filterContext[self::VIRTUAL_CATEGORY_PROCESSED_KEY] = $filterContext[self::VIRTUAL_CATEGORY_PROCESSED_KEY] ?? [];
@@ -169,7 +161,7 @@ class CategoryTypeDefaultFilterInputType extends BaseCategoryTypeDefaultFilterIn
             $esFilters = $this->ruleEngineManager->transformRuleToElasticsuiteFilters(
                 json_decode($virtualRule, true),
                 $containerConfig,
-                $filterContext
+                $filterContext,
             );
 
             if (!empty($esFilters)) {

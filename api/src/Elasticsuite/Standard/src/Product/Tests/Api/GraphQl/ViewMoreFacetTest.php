@@ -134,10 +134,10 @@ class ViewMoreFacetTest extends AbstractTest
             ],
             [
                 'b2c_en', // catalog ID.
-                'category__id', // aggregation.
-                'cat_5', // current category id.
+                'size', // aggregation.
+                'cat_3', // current category id.
                 [], // expected error.
-                3, // expected items count.
+                2, // expected items count.
                 '', // filter.
             ],
             [
@@ -147,6 +147,14 @@ class ViewMoreFacetTest extends AbstractTest
                 [], // expected error.
                 1, // expected items count.
                 'sku: { eq: "24-MB01" }', // filter.
+            ],
+            [
+                'b2c_en', // catalog ID.
+                'category__id', // aggregation.
+                'cat_3', // current category id.
+                [], // expected error.
+                1, // expected items count.
+                '', // filter.
             ],
         ];
     }

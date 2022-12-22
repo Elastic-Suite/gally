@@ -1,13 +1,14 @@
+imports:
+    - { resource: elasticsearch/aggregation_resolver.yaml }
+
 services:
-    Elasticsuite\VirtualCategory\Decoration\Product\GraphQl\Type\Definition\Filter\CategoryTypeDefaultFilterInputType:
+    Elasticsuite\VirtualCategory\Decoration\Entity\GraphQl\Type\Definition\Filter\CategoryTypeDefaultFilterInputType:
         decorates: Elasticsuite\Entity\GraphQl\Type\Definition\Filter\CategoryTypeDefaultFilterInputType
         arguments:
-            - '@Elasticsuite\RuleEngine\Service\RuleEngineManager'
             - '@Elasticsuite\Category\Repository\CategoryRepository'
-            - '@Elasticsuite\Category\Repository\CategoryConfigurationRepository'
+            - '@Elasticsuite\VirtualCategory\Service\CategoryQueryProvider'
             - '@Elasticsuite\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
             - '@Elasticsuite\Search\Elasticsearch\Request\QueryFactory'
-            - '@logger' 
             - '%api_platform.graphql.nesting_separator%'
         decoration_priority: 10
 
@@ -21,4 +22,12 @@ services:
             - '@logger'
             - '@Elasticsuite\Category\Repository\CategoryConfigurationRepository'
             - '@Elasticsuite\Category\Repository\CategoryRepository'
+        decoration_priority: 10
+        
+    Elasticsuite\VirtualCategory\Service\CategoryQueryProvider:
+        arguments:
+            - '@Elasticsuite\RuleEngine\Service\RuleEngineManager'
+            - '@Elasticsuite\Category\Repository\CategoryConfigurationRepository'
+            - '@Elasticsuite\Search\Elasticsearch\Request\QueryFactory'
+            - '@logger'
         decoration_priority: 10

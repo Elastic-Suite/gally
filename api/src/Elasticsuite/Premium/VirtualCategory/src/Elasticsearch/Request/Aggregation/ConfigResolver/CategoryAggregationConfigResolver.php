@@ -14,35 +14,25 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\Search\Elasticsearch\Request\Aggregation\ConfigResolver;
+namespace Elasticsuite\VirtualCategory\Elasticsearch\Request\Aggregation\ConfigResolver;
 
 use Elasticsuite\Category\Repository\CategoryRepository;
 use Elasticsuite\Category\Service\CurrentCategoryProvider;
-use Elasticsuite\Metadata\Model\SourceField;
+use Elasticsuite\Search\Elasticsearch\Request\Aggregation\ConfigResolver\CategoryAggregationConfigResolver as BaseCategoryAggregationConfigResolver;
 use Elasticsuite\Search\Elasticsearch\Request\BucketInterface;
 use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
-use Elasticsuite\Search\Elasticsearch\Request\QueryFactory;
-use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
 use Elasticsuite\Search\Model\Facet\Configuration;
+use Elasticsuite\VirtualCategory\Service\CategoryQueryProvider;
 
-class CategoryAggregationConfigResolver implements FieldAggregationConfigResolverInterface
+class CategoryAggregationConfigResolver extends BaseCategoryAggregationConfigResolver
 {
     public function __construct(
         private CurrentCategoryProvider $currentCategoryProvider,
         private CategoryRepository $categoryRepository,
-        private QueryFactory $queryFactory,
+        private CategoryQueryProvider $categoryQueryProvider,
     ) {
     }
 
-    public function supports(Configuration $facetConfig): bool
-    {
-        return SourceField\Type::TYPE_CATEGORY === $facetConfig->getSourceField()->getType();
-    }
-
-    /**
-     * The category aggregation should return only the categories that are direct child of the current category.
-     * If no category are provided in context, the aggregation should return only first level categories.
-     */
     public function getConfig(ContainerConfigurationInterface $containerConfig, Configuration $facetConfig): array
     {
         $config = [];
@@ -50,11 +40,13 @@ class CategoryAggregationConfigResolver implements FieldAggregationConfigResolve
         $currentCategory = $this->currentCategoryProvider->getCurrentCategory();
         $children = $this->categoryRepository->findBy(['parentId' => $currentCategory]);
         $queries = [];
-
+        $filterContext = []; // Declare the filter context here in order to share it between children queries calculation.
         foreach ($children as $child) {
-            $queries[$child->getId()] = $this->queryFactory->create(
-                QueryInterface::TYPE_TERM,
-                ['field' => $facetConfig->getSourceField()->getCode() . '.id', 'value' => $child->getId()]
+            $queries[$child->getId()] = $this->categoryQueryProvider->getQuery(
+                $facetConfig->getSourceField()->getCode() . '.id',
+                $child,
+                $containerConfig,
+                $filterContext
             );
         }
 
@@ -63,6 +55,7 @@ class CategoryAggregationConfigResolver implements FieldAggregationConfigResolve
                 'name' => $facetConfig->getSourceField()->getCode() . '.id',
                 'type' => BucketInterface::TYPE_QUERY_GROUP,
                 'queries' => $queries,
+                'unsetNestedPath' => true,
             ];
         }
 
