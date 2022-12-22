@@ -207,7 +207,7 @@ class VirtualCategoryTest extends AbstractTest
                 ['id' => SortOrderInterface::SORT_ASC], // sort order specifications.
                 'category__id: {eq: "cat_1"}', // filter.
                 'id', // document data identifier.
-                [7, 8, 9, 10, 11, 12, 13, 14], // expected ordered document IDs
+                [7, 8, 9, 10, 11, 13, 14], // expected ordered document IDs
             ],
             [
                 'b2c_fr', // catalog ID.
@@ -266,6 +266,107 @@ class VirtualCategoryTest extends AbstractTest
                 'category__id: {eq: "cat_D"}', // filter.
                 'id', // document data identifier.
                 [], // expected ordered document IDs
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider searchProductsWithAggregationsDataProvider
+     *
+     * @param string      $catalogId       Catalog ID or code
+     * @param string|null $currentCategory Current category filter
+     */
+    public function testSearchProductsWithAggregations(
+        string $catalogId,
+        ?string $currentCategory,
+        array $expectedCategoryIds,
+    ): void {
+        $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
+        $arguments = sprintf(
+            'requestType: product_catalog, catalogId: "%s", pageSize: %d, currentPage: %d',
+            $catalogId,
+            12,
+            1,
+        );
+
+        if ($currentCategory) {
+            $arguments .= ', currentCategoryId: "' . $currentCategory . '"';
+        }
+
+        $this->validateApiCall(
+            new RequestGraphQlToTest(
+                <<<GQL
+                    {
+                        products({$arguments}) {
+                            aggregations {
+                              field count  type label
+                              options {label value count}
+                            }
+                        }
+                    }
+                GQL,
+                $user
+            ),
+            new ExpectedResponse(
+                200,
+                function (ResponseInterface $response) use ($expectedCategoryIds) {
+                    // Extra test on response structure because all exceptions might not throw an HTTP error code.
+                    $this->assertJsonContains(['data' => ['products' => ['aggregations' => []]]]);
+                    $responseData = $response->toArray();
+                    $this->assertIsArray($responseData['data']['products']['aggregations']);
+                    foreach ($responseData['data']['products']['aggregations'] as $aggregation) {
+                        if ('category__id' === $aggregation['field']) {
+                            $this->assertEquals(
+                                $expectedCategoryIds,
+                                array_map(fn ($item) => $item['value'], $aggregation['options'])
+                            );
+                        }
+                    }
+                }
+            )
+        );
+    }
+
+    public function searchProductsWithAggregationsDataProvider(): array
+    {
+        return [
+            [
+                'b2c_fr',   // catalog ID.
+                null,       // Current category ID.
+                [           // Expected category ids in aggregation
+                    'cat_1',
+                    'cat_A',
+                ],
+            ],
+            [
+                'b2c_fr',   // catalog ID.
+                'cat_1',    // Current category ID.
+                [           // Expected category ids in aggregation
+                    'cat_2',
+                    'cat_3',
+                    'cat_4',
+                ],
+            ],
+            [
+                'b2c_fr',   // catalog ID.
+                'cat_A',    // Current category ID.
+                [           // Expected category ids in aggregation
+                    'cat_B',
+                    'cat_C',
+                ],
+            ],
+            [
+                'b2c_fr',   // catalog ID.
+                'cat_B',    // Current category ID.
+                [// Expected category ids in aggregation
+                ],
+            ],
+            [
+                'b2c_fr',   // catalog ID.
+                'cat_C',    // Current category ID.
+                [           // Expected category ids in aggregation
+                    'cat_C.1',
+                ],
             ],
         ];
     }

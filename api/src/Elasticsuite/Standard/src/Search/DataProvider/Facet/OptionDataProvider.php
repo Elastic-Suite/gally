@@ -19,6 +19,8 @@ namespace Elasticsuite\Search\DataProvider\Facet;
 use ApiPlatform\Core\DataProvider\ContextAwareCollectionDataProviderInterface;
 use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
 use Elasticsuite\Catalog\Repository\LocalizedCatalogRepository;
+use Elasticsuite\Category\Repository\CategoryConfigurationRepository;
+use Elasticsuite\Metadata\Model\SourceField\Type;
 use Elasticsuite\Metadata\Repository\MetadataRepository;
 use Elasticsuite\Search\Elasticsearch\Adapter;
 use Elasticsuite\Search\Elasticsearch\Builder\Request\SimpleRequestBuilder;
@@ -39,6 +41,7 @@ class OptionDataProvider implements ContextAwareCollectionDataProviderInterface,
         private FilterManager $filterManager,
         private ViewMoreContext $viewMoreContext,
         private ReverseSourceFieldProvider $reverseSourceFieldProvider,
+        private CategoryConfigurationRepository $categoryConfigurationRepository,
         private string $nestingSeparator,
     ) {
     }
@@ -82,11 +85,34 @@ class OptionDataProvider implements ContextAwareCollectionDataProviderInterface,
         $options = [];
 
         if (\array_key_exists($filterName, $response->getAggregations())) {
+            $labels = [];
+            if (Type::TYPE_CATEGORY === $sourceField->getType()) {
+                // Extract categories ids from aggregations options (with result) to hydrate labels from DB
+                $categoryIds = array_map(
+                    fn ($item) => $item->getKey(),
+                    array_filter($response->getAggregations()[$filterName]->getValues(), fn ($item) => $item->getCount())
+                );
+                $categories = $this->categoryConfigurationRepository->findBy(
+                    ['category' => $categoryIds, 'localizedCatalog' => $containerConfig->getLocalizedCatalog()]
+                );
+                // Get the name of all categories in aggregation result
+                array_walk(
+                    $categories,
+                    function ($categoryConfig) use (&$labels) {
+                        $labels[$categoryConfig->getCategory()->getId()] = $categoryConfig->getName();
+                    }
+                );
+            }
+
             /** @var Adapter\Common\Response\BucketValueInterface $option */
             foreach ($response->getAggregations()[$filterName]->getValues() as $option) {
+                if (0 === $option->getCount()) {
+                    continue;
+                }
+
                 $options[] = \is_array($option->getKey())
                     ? new Option((string) $option->getKey()[1], (string) $option->getKey()[0], $option->getCount())
-                    : new Option((string) $option->getKey(), (string) $option->getKey(), $option->getCount());
+                    : new Option((string) $option->getKey(), $labels[$option->getKey()] ?? (string) $option->getKey(), $option->getCount());
             }
         }
 

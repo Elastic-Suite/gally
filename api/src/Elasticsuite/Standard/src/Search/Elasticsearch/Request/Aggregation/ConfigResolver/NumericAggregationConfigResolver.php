@@ -18,13 +18,15 @@ namespace Elasticsuite\Search\Elasticsearch\Request\Aggregation\ConfigResolver;
 
 use Elasticsuite\Metadata\Model\SourceField;
 use Elasticsuite\Search\Elasticsearch\Request\BucketInterface;
+use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
+use Elasticsuite\Search\Model\Facet\Configuration;
 
 class NumericAggregationConfigResolver implements FieldAggregationConfigResolverInterface
 {
-    public function supports(SourceField $sourceField): bool
+    public function supports(Configuration $facetConfig): bool
     {
         return \in_array(
-            $sourceField->getType(),
+            $facetConfig->getSourceField()->getType(),
             [
                 SourceField\Type::TYPE_INT,
                 SourceField\Type::TYPE_FLOAT,
@@ -32,10 +34,10 @@ class NumericAggregationConfigResolver implements FieldAggregationConfigResolver
         );
     }
 
-    public function getConfig(SourceField $sourceField): array
+    public function getConfig(ContainerConfigurationInterface $containerConfig, Configuration $facetConfig): array
     {
         return [
-            'name' => $sourceField->getCode(),
+            'name' => $facetConfig->getSourceField()->getCode(),
             'type' => BucketInterface::TYPE_HISTOGRAM,
             'minDocCount' => 1,
         ];

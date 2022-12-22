@@ -17,8 +17,8 @@ declare(strict_types=1);
 namespace Elasticsuite\Search\Tests\Unit\Elasticsearch\Request\Aggregation;
 
 use Elasticsuite\Catalog\Repository\LocalizedCatalogRepository;
+use Elasticsuite\Category\Service\CurrentCategoryProvider;
 use Elasticsuite\Metadata\Repository\MetadataRepository;
-use Elasticsuite\Product\Service\CurrentCategoryProvider;
 use Elasticsuite\Search\Elasticsearch\Request\Aggregation\Modifier\Coverage;
 use Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider;
 use Elasticsuite\Search\Model\Facet\Configuration;

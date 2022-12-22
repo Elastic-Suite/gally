@@ -13,6 +13,10 @@ services:
             - { name: 'elasticsuite.search.aggregation.resolver' }
 
     Elasticsuite\Search\Elasticsearch\Request\Aggregation\ConfigResolver\CategoryAggregationConfigResolver:
+        arguments:
+            - '@Elasticsuite\Category\Service\CurrentCategoryProvider'
+            - '@Elasticsuite\Category\Repository\CategoryRepository'
+            - '@Elasticsuite\Search\Elasticsearch\Request\QueryFactory'
         tags:
             - { name: 'elasticsuite.search.aggregation.resolver' }
 

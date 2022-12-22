@@ -7,58 +7,70 @@ Elasticsuite\Category\Model\Category:
         id: cat_B
         level: 2
         path: cat_A/cat_B
+        parentId: cat_A
     cat_C:
         id: cat_C
         level: 2
         path: cat_A/cat_C
+        parentId: cat_A
     cat_C.1:
         id: cat_C.1
         level: 3
         path: cat_A/cat_C/cat_C.1
+        parentId: cat_C
     cat_C.1.1:
         id: cat_C.1.1
         level: 4
         path: cat_A/cat_C/cat_C.1/cat_C.1.1
+        parentId: cat_C.1
     cat_C.1.2:
         id: cat_C.1.2
         level: 4
         path: cat_A/cat_C/cat_C.1/cat_C.1.2
+        parentId: cat_C.1
     cat_D:
         id: cat_D
         level: 2
         path: cat_A/cat_D
+        parentId: cat_A
     cat_1:
         id: cat_1
         level: 1
-        path: cat_1
     cat_2:
         id: cat_2
         level: 2
         path: cat_1/cat_2
+        parentId: cat_1
     cat_2.1:
         id: cat_2.1
         level: 3
         path: cat_1/cat_2/cat_2.1
+        parentId: cat_2
     cat_3:
         id: cat_3
         level: 2
         path: cat_1/cat_3
+        parentId: cat_1
     cat_3.1:
         id: cat_3.1
         level: 3
         path: cat_1/cat_3/cat_3.1
+        parentId: cat_3
     cat_3.2:
         id: cat_3.2
         level: 3
         path: cat_1/cat_3/cat_3.2
+        parentId: cat_3
     cat_4:
         id: cat_4
         level: 2
         path: cat_1/cat_4
+        parentId: cat_1
     cat_5:
         id: cat_5
         level: 2
         path: cat_1/cat_5
+        parentId: cat_1
 Elasticsuite\Category\Model\Category\Configuration:
     config_cat_A_catalog1_fr:
         category: '@cat_A'

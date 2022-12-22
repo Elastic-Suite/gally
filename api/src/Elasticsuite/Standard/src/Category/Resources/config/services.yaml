@@ -193,3 +193,7 @@ services:
         arguments:
             - '@Elasticsuite\OpenApi\Helper\Documentation'
             - '@.inner'
+    
+    Elasticsuite\Category\Service\CurrentCategoryProvider:
+        arguments:
+            - '@Elasticsuite\Category\Repository\CategoryRepository'
