@@ -18,21 +18,23 @@ namespace Elasticsuite\Search\Elasticsearch\Request\Aggregation\ConfigResolver;
 
 use Elasticsuite\Metadata\Model\SourceField;
 use Elasticsuite\Search\Elasticsearch\Request\BucketInterface;
+use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
+use Elasticsuite\Search\Model\Facet\Configuration;
 
 class SelectAggregationConfigResolver implements FieldAggregationConfigResolverInterface
 {
-    public function supports(SourceField $sourceField): bool
+    public function supports(Configuration $facetConfig): bool
     {
-        return SourceField\Type::TYPE_SELECT === $sourceField->getType();
+        return SourceField\Type::TYPE_SELECT === $facetConfig->getSourceField()->getType();
     }
 
-    public function getConfig(SourceField $sourceField): array
+    public function getConfig(ContainerConfigurationInterface $containerConfig, Configuration $facetConfig): array
     {
         return [
-            'name' => $sourceField->getCode() . '.value',
+            'name' => $facetConfig->getSourceField()->getCode() . '.value',
             'type' => BucketInterface::TYPE_MULTI_TERMS,
             'additionalFields' => [
-                $sourceField->getCode() . '.label',
+                $facetConfig->getSourceField()->getCode() . '.label',
             ],
         ];
     }

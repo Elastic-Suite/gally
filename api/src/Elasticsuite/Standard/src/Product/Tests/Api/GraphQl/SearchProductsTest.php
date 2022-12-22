@@ -1312,14 +1312,14 @@ class SearchProductsTest extends AbstractTest
                         'type' => 'category',
                         'options' => [
                             [
-                                'label' => 'Accessories',
-                                'value' => 'cat_3',
+                                'label' => 'One',
+                                'value' => 'cat_1',
                                 'count' => 2,
                             ],
                             [
-                                'label' => 'cat_1',
-                                'value' => 'cat_1',
-                                'count' => 2,
+                                'label' => 'Five',
+                                'value' => 'cat_5',
+                                'count' => 1,
                             ],
                         ],
                     ],
@@ -1353,13 +1353,8 @@ class SearchProductsTest extends AbstractTest
                         'type' => 'category',
                         'options' => [
                             [
-                                'label' => 'Accessories',
+                                'label' => 'Three',
                                 'value' => 'cat_3',
-                                'count' => 2,
-                            ],
-                            [
-                                'label' => 'cat_1',
-                                'value' => 'cat_1',
                                 'count' => 2,
                             ],
                         ],
@@ -1388,23 +1383,6 @@ class SearchProductsTest extends AbstractTest
                     ['field' => 'is_eco_friendly', 'label' => 'Is_eco_friendly', 'type' => 'checkbox'],
                     ['field' => 'weight', 'label' => 'Weight', 'type' => 'slider'],
                     ['field' => 'brand__value', 'label' => 'Brand', 'type' => 'checkbox'],
-                    [
-                        'field' => 'category__id',
-                        'label' => 'Category',
-                        'type' => 'category',
-                        'options' => [
-                            [
-                                'label' => 'Accessories',
-                                'value' => 'cat_3',
-                                'count' => 1,
-                            ],
-                            [
-                                'label' => 'Jewelry',
-                                'value' => 'cat_5',
-                                'count' => 1,
-                            ],
-                        ],
-                    ],
                     ['field' => 'size', 'label' => 'Size', 'type' => 'slider'],
                     [
                         'field' => 'color__value',
@@ -1435,12 +1413,12 @@ class SearchProductsTest extends AbstractTest
                         'type' => 'category',
                         'options' => [
                             [
-                                'label' => 'One',
+                                'label' => 'Un',
                                 'value' => 'cat_1',
                                 'count' => 2,
                             ],
                             [
-                                'label' => 'Two',
+                                'label' => 'Deux',
                                 'value' => 'cat_2',
                                 'count' => 1,
                             ],
@@ -1552,7 +1530,7 @@ class SearchProductsTest extends AbstractTest
                 null, // filter.
                 [ // expected option result
                     'color__value' => 9,
-                    'category__id' => 4,
+                    'category__id' => 2,
                     'is_eco_friendly' => 2,
                 ],
             ],

@@ -16,11 +16,12 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Search\Elasticsearch\Request\Aggregation\ConfigResolver;
 
-use Elasticsuite\Metadata\Model\SourceField;
+use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
+use Elasticsuite\Search\Model\Facet\Configuration;
 
 interface FieldAggregationConfigResolverInterface
 {
-    public function supports(SourceField $sourceField): bool;
+    public function supports(Configuration $facetConfig): bool;
 
-    public function getConfig(SourceField $sourceField): array;
+    public function getConfig(ContainerConfigurationInterface $containerConfig, Configuration $facetConfig): array;
 }

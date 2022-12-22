@@ -48,6 +48,13 @@ class Type
         self::TYPE_DATE,
     ];
 
+    public const COMPLEX_TYPES = [
+        self::TYPE_SELECT,
+        self::TYPE_PRICE,
+        self::TYPE_STOCK,
+        self::TYPE_CATEGORY,
+    ];
+
     public const AVAILABLE_TYPES_OPTIONS = [
         ['label' => 'Text', 'value' => self::TYPE_TEXT],
         ['label' => 'Keyword', 'value' => self::TYPE_KEYWORD],
