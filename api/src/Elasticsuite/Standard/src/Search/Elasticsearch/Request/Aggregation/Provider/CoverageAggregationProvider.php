@@ -53,7 +53,6 @@ class CoverageAggregationProvider implements AggregationProviderInterface
         }
 
         $sourceFields = $this->sourceFieldRepository->getFilterableInAggregationFields('product');
-        $nestedFieldType = [Type::TYPE_SELECT, Type::TYPE_CATEGORY, Type::TYPE_PRICE, Type::TYPE_STOCK];
         $queries = [];
 
         foreach ($sourceFields as $sourceField) {
@@ -62,7 +61,7 @@ class CoverageAggregationProvider implements AggregationProviderInterface
                 ['field' => $sourceField->getCode(), 'name' => $sourceField->getCode()]
             );
 
-            if ($sourceField->getNestedPath() || \in_array($sourceField->getType(), $nestedFieldType, true)) {
+            if ($sourceField->getNestedPath() || \in_array($sourceField->getType(), Type::COMPLEX_TYPES, true)) {
                 $query = $this->queryFactory->create(
                     QueryInterface::TYPE_NESTED,
                     ['path' => $sourceField->getNestedPath() ?: $sourceField->getCode(), 'query' => $query]

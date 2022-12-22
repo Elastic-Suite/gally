@@ -72,7 +72,7 @@ services:
     Elasticsuite\Search\Elasticsearch\Request\Aggregation\Provider\FilterableSourceFields:
         arguments:
             - '@Elasticsuite\Search\Repository\Facet\ConfigurationRepository'
-            - '@Elasticsuite\Product\Service\CurrentCategoryProvider'
+            - '@Elasticsuite\Category\Service\CurrentCategoryProvider'
             - !tagged_iterator { tag: 'elasticsuite.search.aggregation.resolver' }
             - {
                 coverageModifier: '@Elasticsuite\Search\Elasticsearch\Request\Aggregation\Modifier\Coverage',
@@ -252,8 +252,9 @@ services:
             - '@Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider'
             - '@Elasticsuite\Catalog\Repository\LocalizedCatalogRepository'
             - '@Elasticsuite\Search\Repository\Facet\ConfigurationRepository'
-            - '@Elasticsuite\Product\Service\CurrentCategoryProvider'
+            - '@Elasticsuite\Category\Service\CurrentCategoryProvider'
             - '@Elasticsuite\Search\Service\ReverseSourceFieldProvider'
+            - '@Elasticsuite\Category\Repository\CategoryConfigurationRepository'
             - !tagged_iterator { tag: 'elasticsuite.entity_api.filter' }
             
     Elasticsuite\Search\Decoration\GraphQl\AddAggregationsInContext:
@@ -336,6 +337,7 @@ services:
             - '@Elasticsuite\Search\Service\GraphQl\FilterManager'
             - '@Elasticsuite\Search\Service\ViewMoreContext'
             - '@Elasticsuite\Search\Service\ReverseSourceFieldProvider'
+            - '@Elasticsuite\Category\Repository\CategoryConfigurationRepository'
             - '%api_platform.graphql.nesting_separator%'
         tags:
             - { name: api_platform.collection_data_provider }
