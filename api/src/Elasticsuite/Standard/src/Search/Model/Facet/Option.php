@@ -41,7 +41,7 @@ use Elasticsuite\Search\Resolver\DummyResolver;
                 'deserialize' => false,
                 'args' => [
                     'entityType' => ['type' => 'String!', 'description' => 'Entity Type'],
-                    'catalogId' => ['type' => 'String!', 'description' => 'Catalog ID'],
+                    'localizedCatalog' => ['type' => 'String!', 'description' => 'Localized Catalog'],
                     'aggregation' => ['type' => 'String!', 'description' => 'Source field to get complete aggregation'],
                     'search' => ['type' => 'String', 'description' => 'Query Text'],
                     'filter' => ['type' => '[' . FieldFilterInputType::NAME . ']', ReadStage::IS_GRAPHQL_ELASTICSUITE_ARG_KEY => true],

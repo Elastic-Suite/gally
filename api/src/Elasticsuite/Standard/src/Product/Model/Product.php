@@ -34,7 +34,7 @@ use Elasticsuite\Search\Resolver\DummyResolver;
                 'collection_query' => DummyResolver::class,
                 'pagination_type' => 'page',
                 'args' => [
-                    'catalogId' => ['type' => 'String!', 'description' => 'Catalog ID'],
+                    'localizedCatalog' => ['type' => 'String!', 'description' => 'Localized Catalog'],
                     'requestType' => ['type' => ProductRequestTypeEnumType::NAME . '!', 'description' => 'Request Type'],
                     'currentPage' => ['type' => 'Int'],
                     'search' => ['type' => 'String', 'description' => 'Query Text'],

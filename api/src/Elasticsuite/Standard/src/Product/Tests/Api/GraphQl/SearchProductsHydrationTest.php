@@ -74,7 +74,7 @@ class SearchProductsHydrationTest extends AbstractTest
         $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
 
         $arguments = sprintf(
-            'requestType: product_catalog, catalogId: "%s"',
+            'requestType: product_catalog, localizedCatalog: "%s"',
             $catalogId
         );
         if (null !== $pageSize) {
@@ -1059,7 +1059,7 @@ class SearchProductsHydrationTest extends AbstractTest
                 $attributes,
                 null,   // page size.
                 null,   // current page.
-                ['errors' => [['message' => 'Internal server error', 'debugMessage' => 'Missing catalog [b2c_uk]']]], // expected error.
+                ['errors' => [['message' => 'Internal server error', 'debugMessage' => 'Missing localized catalog [b2c_uk]']]], // expected error.
                 null,   // expected items count.
                 null,   // expected total count.
                 null,   // expected items per page.

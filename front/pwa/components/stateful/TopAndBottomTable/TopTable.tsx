@@ -44,7 +44,7 @@ function TopTable(props: IProps): JSX.Element {
 
   const variables = useMemo(
     () => ({
-      catalogId: localizedCatalogId,
+      localizedCatalog: localizedCatalogId,
       requestType: ProductRequestType.CATALOG,
     }),
     [localizedCatalogId]

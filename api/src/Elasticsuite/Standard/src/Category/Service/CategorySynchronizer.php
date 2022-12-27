@@ -62,7 +62,7 @@ class CategorySynchronizer
         // In order to avoid memory limit error on batch action, the sql logger has been disabled.
         $this->entityManager->getConnection()->getConfiguration()->setSQLLogger();
 
-        $localizedCatalog = $index->getCatalog();
+        $localizedCatalog = $index->getLocalizedCatalog();
         $elasticCategories = $this->getCategoriesInElastic($index);
         $sqlCategories = $this->categoryRepository->findAllIndexedById();
         $sqlCategoryConfigurations = $this->getCategoryConfigurationsInSql($index);
@@ -136,7 +136,7 @@ class CategorySynchronizer
     private function getCategoryConfigurationsInSql(Index $index): array
     {
         $result = [];
-        $configurations = $this->categoryConfigurationRepository->findBy(['localizedCatalog' => $index->getCatalog()]);
+        $configurations = $this->categoryConfigurationRepository->findBy(['localizedCatalog' => $index->getLocalizedCatalog()]);
         array_walk(
             $configurations,
             function (Category\Configuration $categoryConfig) use (&$result) {
@@ -158,7 +158,7 @@ class CategorySynchronizer
 
         $containerConfig = $this->containerConfigurationProvider->get(
             $this->metadataRepository->findOneBy(['entity' => $index->getEntityType()]),
-            $index->getCatalog()
+            $index->getLocalizedCatalog()
         );
         do {
             $request = $this->requestFactory->create([

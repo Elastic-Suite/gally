@@ -112,7 +112,7 @@ class CategoryProductPositionManager
     public function reindexPositionsByIndex(Index $index, array $products = []): void
     {
         $products = $this->categoryProductMerchandisingRepository->findProductsWithDataPositionToReindex(
-            $index->getCatalog(),
+            $index->getLocalizedCatalog(),
             $products
         );
 
@@ -123,7 +123,7 @@ class CategoryProductPositionManager
             ];
         }
         if (!empty($productsToReindex)) {
-            $this->categoryProductPositionIndexerRepository->reindexByProducts($productsToReindex, $index->getCatalog());
+            $this->categoryProductPositionIndexerRepository->reindexByProducts($productsToReindex, $index->getLocalizedCatalog());
         }
     }
 
