@@ -63,7 +63,7 @@ class AddAggregationsData implements SerializeStageInterface
 
         if (Document::class === $resourceClass || is_subclass_of($resourceClass, Document::class)) {
             $metadata = $this->metadataRepository->findByEntity($context['args']['entityType']);
-            $localizedCatalog = $this->localizedCatalogRepository->findByCodeOrId($context['args']['catalogId']);
+            $localizedCatalog = $this->localizedCatalogRepository->findByCodeOrId($context['args']['localizedCatalog']);
             $containerConfig = $this->containerConfigurationProvider->get($metadata, $localizedCatalog, $context['args']['requestType'] ?? null);
             $currentCategory = $this->currentCategoryProvider->getCurrentCategory();
             $this->facetConfigRepository->setCategoryId($currentCategory?->getId());

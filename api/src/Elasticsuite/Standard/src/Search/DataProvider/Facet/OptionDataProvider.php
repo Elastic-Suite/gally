@@ -49,7 +49,7 @@ class OptionDataProvider implements ContextAwareCollectionDataProviderInterface,
     public function getCollection(string $resourceClass, string $operationName = null, array $context = [])
     {
         $metadata = $this->metadataRepository->findByEntity($context['filters']['entityType']);
-        $catalog = $this->catalogRepository->findByCodeOrId($context['filters']['catalogId']);
+        $localizedCatalog = $this->catalogRepository->findByCodeOrId($context['filters']['localizedCatalog']);
         $filterName = str_replace($this->nestingSeparator, '.', $context['filters']['aggregation']);
         $sourceField = $this->reverseSourceFieldProvider->getSourceFieldFromFieldName($filterName, $metadata);
         if (null === $sourceField) {
@@ -59,7 +59,7 @@ class OptionDataProvider implements ContextAwareCollectionDataProviderInterface,
         $this->viewMoreContext->setFilterName($filterName);
         $this->viewMoreContext->setSourceField($sourceField);
 
-        $containerConfig = $this->containerConfigurationProvider->get($metadata, $catalog);
+        $containerConfig = $this->containerConfigurationProvider->get($metadata, $localizedCatalog);
 
         $this->filterManager->validateFilters($context, $containerConfig);
         $searchQuery = $context['filters']['search'] ?? null;

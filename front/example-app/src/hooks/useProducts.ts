@@ -66,7 +66,7 @@ export function useProducts(
       setMoreOptions(new Map())
       if (localizedCatalogId && condition) {
         const variables: IGraphqlSearchProductsVariables = {
-          catalogId: String(localizedCatalogId),
+          localizedCatalog: String(localizedCatalogId),
           requestType,
           currentPage: page + 1,
           pageSize,

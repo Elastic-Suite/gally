@@ -79,7 +79,7 @@ class SearchProductsTest extends AbstractTest
         $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
 
         $arguments = sprintf(
-            'requestType: product_catalog, catalogId: "%s"',
+            'requestType: product_catalog, localizedCatalog: "%s"',
             $catalogId
         );
         if (null !== $pageSize) {
@@ -163,7 +163,7 @@ class SearchProductsTest extends AbstractTest
                 'b2c_uk',   // catalog ID.
                 null,   // page size.
                 null,   // current page.
-                ['errors' => [['message' => 'Internal server error', 'debugMessage' => 'Missing catalog [b2c_uk]']]], // expected error.
+                ['errors' => [['message' => 'Internal server error', 'debugMessage' => 'Missing localized catalog [b2c_uk]']]], // expected error.
                 null,   // expected items count.
                 null,   // expected total count.
                 null,   // expected items per page.
@@ -267,7 +267,7 @@ class SearchProductsTest extends AbstractTest
         $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
 
         $arguments = sprintf(
-            'requestType: product_catalog, catalogId: "%s", pageSize: %d, currentPage: %d',
+            'requestType: product_catalog, localizedCatalog: "%s", pageSize: %d, currentPage: %d',
             $catalogId,
             $pageSize,
             $currentPage
@@ -448,7 +448,7 @@ class SearchProductsTest extends AbstractTest
         $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
 
         $arguments = sprintf(
-            'requestType: product_catalog, catalogId: "%s", pageSize: %d, currentPage: %d',
+            'requestType: product_catalog, localizedCatalog: "%s", pageSize: %d, currentPage: %d',
             $catalogId,
             $pageSize,
             $currentPage
@@ -599,7 +599,7 @@ class SearchProductsTest extends AbstractTest
             new RequestGraphQlToTest(
                 <<<GQL
                     {
-                        products(requestType: product_catalog, catalogId: "b2c_fr", sort: { length: desc }) {
+                        products(requestType: product_catalog, localizedCatalog: "b2c_fr", sort: { length: desc }) {
                             collection { id }
                         }
                     }
@@ -620,7 +620,7 @@ class SearchProductsTest extends AbstractTest
             new RequestGraphQlToTest(
                 <<<GQL
                     {
-                        products(requestType: product_catalog, catalogId: "b2c_fr", sort: { stock__qty: desc }) {
+                        products(requestType: product_catalog, localizedCatalog: "b2c_fr", sort: { stock__qty: desc }) {
                             collection { id }
                         }
                     }
@@ -641,7 +641,7 @@ class SearchProductsTest extends AbstractTest
             new RequestGraphQlToTest(
                 <<<GQL
                     {
-                        products(requestType: product_catalog, catalogId: "b2c_fr", sort: { price__price: desc }) {
+                        products(requestType: product_catalog, localizedCatalog: "b2c_fr", sort: { price__price: desc }) {
                             collection { id }
                         }
                     }
@@ -662,7 +662,7 @@ class SearchProductsTest extends AbstractTest
             new RequestGraphQlToTest(
                 <<<GQL
                     {
-                        products(requestType: product_catalog, catalogId: "b2c_fr", sort: { stock_as_nested__qty: desc }) {
+                        products(requestType: product_catalog, localizedCatalog: "b2c_fr", sort: { stock_as_nested__qty: desc }) {
                             collection { id }
                         }
                     }
@@ -683,7 +683,7 @@ class SearchProductsTest extends AbstractTest
             new RequestGraphQlToTest(
                 <<<GQL
                     {
-                        products(requestType: product_catalog, catalogId: "b2c_fr", sort: { id: desc, size: asc }) {
+                        products(requestType: product_catalog, localizedCatalog: "b2c_fr", sort: { id: desc, size: asc }) {
                             collection { id }
                         }
                     }
@@ -722,7 +722,7 @@ class SearchProductsTest extends AbstractTest
         $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
 
         $arguments = sprintf(
-            'requestType: product_catalog, catalogId: "%s", pageSize: %d, currentPage: %d, search: "%s"',
+            'requestType: product_catalog, localizedCatalog: "%s", pageSize: %d, currentPage: %d, search: "%s"',
             $catalogId,
             $pageSize,
             $currentPage,
@@ -832,7 +832,7 @@ class SearchProductsTest extends AbstractTest
         array $debugMessage
     ): void {
         $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
-        $arguments = sprintf('requestType: product_catalog, catalogId: "%s", filter: {%s}', $catalogId, $filter);
+        $arguments = sprintf('requestType: product_catalog, localizedCatalog: "%s", filter: {%s}', $catalogId, $filter);
         $this->validateApiCall(
             new RequestGraphQlToTest(
                 <<<GQL
@@ -921,7 +921,7 @@ class SearchProductsTest extends AbstractTest
     ): void {
         $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
         $arguments = sprintf(
-            'requestType: product_catalog, catalogId: "%s", pageSize: %d, currentPage: %d, filter: {%s}',
+            'requestType: product_catalog, localizedCatalog: "%s", pageSize: %d, currentPage: %d, filter: {%s}',
             $catalogId,
             10,
             1,
@@ -1159,7 +1159,7 @@ class SearchProductsTest extends AbstractTest
     ): void {
         $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
         $arguments = sprintf(
-            'requestType: product_catalog, catalogId: "%s", pageSize: %d, currentPage: %d, currentCategoryId: "%s"',
+            'requestType: product_catalog, localizedCatalog: "%s", pageSize: %d, currentPage: %d, currentCategoryId: "%s"',
             $catalogId,
             10,
             1,
@@ -1229,7 +1229,7 @@ class SearchProductsTest extends AbstractTest
         $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
 
         $arguments = sprintf(
-            'requestType: %s, catalogId: "%s", pageSize: %d, currentPage: %d',
+            'requestType: %s, localizedCatalog: "%s", pageSize: %d, currentPage: %d',
             $requestType,
             $catalogId,
             $pageSize,
@@ -1473,14 +1473,14 @@ class SearchProductsTest extends AbstractTest
         $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
 
         $arguments = sprintf(
-            'requestType: product_catalog, catalogId: "%s", pageSize: %d, currentPage: %d',
+            'requestType: product_catalog, localizedCatalog: "%s", pageSize: %d, currentPage: %d',
             $catalogId,
             $pageSize,
             $currentPage,
         );
         if ($filter) {
             $arguments = sprintf(
-                'requestType: product_catalog, catalogId: "%s", pageSize: %d, currentPage: %d, filter: [%s]',
+                'requestType: product_catalog, localizedCatalog: "%s", pageSize: %d, currentPage: %d, filter: [%s]',
                 $catalogId,
                 $pageSize,
                 $currentPage,

@@ -61,7 +61,7 @@ class SyncCategoryDataAfterBulkDelete implements MutationResolverInterface
                 // Todo: For the moment we remove only values in the scope localized catalog, the others scopes will be managed in ticket ESPP-437.
                 $this->categoryProductMerchandisingRepository->removeByProductIdAndLocalizedCatalog(
                     $context['args']['input']['ids'],
-                    $index->getCatalog()
+                    $index->getLocalizedCatalog()
                 );
             }
         }

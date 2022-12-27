@@ -29,9 +29,9 @@ final class CreateIndexInput
     public string $entityType;
 
     /**
-     * @var int
+     * @var string
      */
     #[Assert\NotBlank]
     #[Groups(['create'])]
-    public int $catalog;
+    public string $localizedCatalog;
 }

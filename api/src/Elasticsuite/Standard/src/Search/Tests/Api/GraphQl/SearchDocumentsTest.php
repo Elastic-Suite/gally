@@ -83,7 +83,7 @@ class SearchDocumentsTest extends AbstractTest
         $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
 
         $arguments = sprintf(
-            'entityType: "%s", catalogId: "%s"',
+            'entityType: "%s", localizedCatalog: "%s"',
             $entityType,
             $catalogId
         );
@@ -183,7 +183,7 @@ class SearchDocumentsTest extends AbstractTest
                 'b2c_uk',   // catalog ID.
                 null,   // page size.
                 null,   // current page.
-                ['errors' => [['message' => 'Internal server error', 'debugMessage' => 'Missing catalog [b2c_uk]']]], // expected error.
+                ['errors' => [['message' => 'Internal server error', 'debugMessage' => 'Missing localized catalog [b2c_uk]']]], // expected error.
                 null,   // expected items count.
                 null,   // expected total count.
                 null,   // expected items per page.
@@ -308,7 +308,7 @@ class SearchDocumentsTest extends AbstractTest
         $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
 
         $arguments = sprintf(
-            'entityType: "%s", catalogId: "%s", pageSize: %d, currentPage: %d',
+            'entityType: "%s", localizedCatalog: "%s", pageSize: %d, currentPage: %d',
             $entityType,
             $catalogId,
             $pageSize,
@@ -466,7 +466,7 @@ class SearchDocumentsTest extends AbstractTest
         $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
 
         $arguments = sprintf(
-            'entityType: "%s", catalogId: "%s", pageSize: %d, currentPage: %d',
+            'entityType: "%s", localizedCatalog: "%s", pageSize: %d, currentPage: %d',
             $entityType,
             $catalogId,
             $pageSize,
@@ -617,7 +617,7 @@ class SearchDocumentsTest extends AbstractTest
         $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
 
         $arguments = sprintf(
-            'entityType: "%s", catalogId: "%s", pageSize: %d, currentPage: %d',
+            'entityType: "%s", localizedCatalog: "%s", pageSize: %d, currentPage: %d',
             $entityType,
             $catalogId,
             $pageSize,
@@ -797,7 +797,7 @@ class SearchDocumentsTest extends AbstractTest
         $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
 
         $arguments = sprintf(
-            'entityType: "%s", catalogId: "%s", filter: [%s]',
+            'entityType: "%s", localizedCatalog: "%s", filter: [%s]',
             $entityType,
             $catalogId,
             $filter
@@ -912,7 +912,7 @@ class SearchDocumentsTest extends AbstractTest
         $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
 
         $arguments = sprintf(
-            'entityType: "%s", catalogId: "%s", pageSize: %d, currentPage: %d, filter: [%s]',
+            'entityType: "%s", localizedCatalog: "%s", pageSize: %d, currentPage: %d, filter: [%s]',
             $entityType,
             $catalogId,
             $pageSize,
@@ -1198,7 +1198,7 @@ class SearchDocumentsTest extends AbstractTest
         $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
 
         $arguments = sprintf(
-            'entityType: "%s", catalogId: "%s", pageSize: %d, currentPage: %d, search: "%s"',
+            'entityType: "%s", localizedCatalog: "%s", pageSize: %d, currentPage: %d, search: "%s"',
             $entityType,
             $catalogId,
             10,
@@ -1365,7 +1365,7 @@ class SearchDocumentsTest extends AbstractTest
         $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
 
         $arguments = sprintf(
-            'entityType: "%s", catalogId: "%s", pageSize: %d, currentPage: %d',
+            'entityType: "%s", localizedCatalog: "%s", pageSize: %d, currentPage: %d',
             $entityType,
             $catalogId,
             $pageSize,
@@ -1373,7 +1373,7 @@ class SearchDocumentsTest extends AbstractTest
         );
         if ($filter) {
             $arguments = sprintf(
-                'entityType: "%s", catalogId: "%s", pageSize: %d, currentPage: %d, filter: [%s]',
+                'entityType: "%s", localizedCatalog: "%s", pageSize: %d, currentPage: %d, filter: [%s]',
                 $entityType,
                 $catalogId,
                 $pageSize,

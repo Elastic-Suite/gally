@@ -26,7 +26,7 @@ use Elasticsuite\Metadata\Repository\MetadataRepository;
 class CreateIndexMutation implements MutationResolverInterface
 {
     public function __construct(
-        private LocalizedCatalogRepository $catalogRepository,
+        private LocalizedCatalogRepository $localizedCatalogRepository,
         private MetadataRepository $metadataRepository,
         private IndexOperation $indexOperation,
     ) {
@@ -45,7 +45,7 @@ class CreateIndexMutation implements MutationResolverInterface
     public function __invoke($item, array $context)
     {
         $entityType = $context['args']['input']['entityType'];
-        $catalogId = $context['args']['input']['catalog'];
+        $localizedCatalogCode = $context['args']['input']['localizedCatalog'];
 
         $metadata = $this->metadataRepository->findOneBy(['entity' => $entityType]);
         if (!$metadata) {
@@ -55,9 +55,9 @@ class CreateIndexMutation implements MutationResolverInterface
             throw new LogicException(sprintf('Entity type [%s] is not defined', $entityType));
         }
 
-        $catalog = $this->catalogRepository->find($catalogId);
+        $catalog = $this->localizedCatalogRepository->findByCodeOrId($localizedCatalogCode);
         if (!$catalog) {
-            throw new InvalidArgumentException(sprintf('Catalog of ID [%s] does not exist', $catalogId));
+            throw new InvalidArgumentException(sprintf('Localized catalog of ID or code [%s] does not exist', $localizedCatalogCode));
         }
 
         try {

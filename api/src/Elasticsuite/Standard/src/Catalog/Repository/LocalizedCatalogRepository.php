@@ -50,14 +50,14 @@ class LocalizedCatalogRepository extends ServiceEntityRepository
     {
         if (!isset($this->cache[$identifier])) {
             if (is_numeric($identifier)) {
-                $catalog = $this->find($identifier);
+                $localizedCatalog = $this->find($identifier);
             } else {
-                $catalog = $this->findOneBy(['code' => $identifier]);
+                $localizedCatalog = $this->findOneBy(['code' => $identifier]);
             }
-            if (null === $catalog) {
-                throw new InvalidArgumentException(sprintf('Missing catalog [%s]', $identifier));
+            if (null === $localizedCatalog) {
+                throw new InvalidArgumentException(sprintf('Missing localized catalog [%s]', $identifier));
             }
-            $this->cache[$identifier] = $catalog;
+            $this->cache[$identifier] = $localizedCatalog;
         }
 
         return $this->cache[$identifier];
