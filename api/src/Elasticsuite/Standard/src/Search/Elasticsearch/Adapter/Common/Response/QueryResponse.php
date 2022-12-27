@@ -47,15 +47,17 @@ class QueryResponse implements ResponseInterface
     /**
      * Constructor.
      *
+     * @param array              $searchRequest      Elasticsearch request
      * @param array              $searchResponse     Engine raw response
      * @param AggregationBuilder $aggregationBuilder aggregation builder
      */
     public function __construct(
+        array $searchRequest,
         array $searchResponse,
         AggregationBuilder $aggregationBuilder
     ) {
         $this->prepareDocuments($searchResponse);
-        $this->prepareAggregations($searchResponse, $aggregationBuilder);
+        $this->prepareAggregations($searchRequest, $searchResponse, $aggregationBuilder);
     }
 
     /**
@@ -111,13 +113,18 @@ class QueryResponse implements ResponseInterface
     /**
      * Build aggregations from the engine raw search response.
      *
+     * @param array              $searchRequest      Elasticsearch request
      * @param array              $searchResponse     Engine raw search response
      * @param AggregationBuilder $aggregationBuilder aggregation builder
      */
-    private function prepareAggregations(array $searchResponse, AggregationBuilder $aggregationBuilder): void
+    private function prepareAggregations(array $searchRequest, array $searchResponse, AggregationBuilder $aggregationBuilder): void
     {
         $this->aggregations = [];
-        foreach ($searchResponse['aggregations'] ?? [] as $field => $aggregationData) {
+        foreach (array_keys($searchRequest['body']['aggregations'] ?? []) as $field) {
+            if (!\array_key_exists($field, $searchResponse['aggregations'] ?? [])) {
+                continue;
+            }
+            $aggregationData = $searchResponse['aggregations'][$field];
             $aggregation = $aggregationBuilder->create($field, $aggregationData);
             $this->aggregations[$aggregation->getName()] = $aggregation;
         }

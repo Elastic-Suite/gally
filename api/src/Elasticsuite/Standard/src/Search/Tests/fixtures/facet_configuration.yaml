@@ -17,11 +17,13 @@ Elasticsuite\Search\Model\Facet\Configuration:
             sourceField: '@product_weight'
             category: ~
         displayMode: 'displayed'
+        position: 2
     product_is_eco_friendly_facet:
         __construct:
             sourceField: '@product_is_eco_friendly'
             category: ~
         coverageRate: 50
+        position: 1
     product_size_facet:
         __construct:
             sourceField: '@product_size'
