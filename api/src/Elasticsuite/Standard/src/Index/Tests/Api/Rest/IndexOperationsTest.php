@@ -76,39 +76,39 @@ class IndexOperationsTest extends AbstractEntityTest
     public function createDataProvider(): iterable
     {
         $adminUser = $this->getUser(Role::ROLE_ADMIN);
-        $catalogs = [
+        $localizedCatalogs = [
             1 => 'b2c_fr',
             2 => 'b2c_en',
             3 => 'b2b_en',
         ];
         $data = [
-            [$this->getUser(Role::ROLE_CONTRIBUTOR), ['entityType' => 'product', 'catalog' => 1], 403],
-            [$this->getUser(Role::ROLE_CONTRIBUTOR), ['entityType' => 'category', 'catalog' => 1], 403],
+            [$this->getUser(Role::ROLE_CONTRIBUTOR), ['entityType' => 'product', 'localizedCatalog' => '1'], 403],
+            [$this->getUser(Role::ROLE_CONTRIBUTOR), ['entityType' => 'category', 'localizedCatalog' => '1'], 403],
         ];
 
-        foreach ($catalogs as $catalogId => $catalogCode) {
+        foreach ($localizedCatalogs as $localizedCatalogId => $localizedCatalogCode) {
             $data[] = [
                 $adminUser,
-                ['entityType' => 'product', 'catalog' => $catalogId],
+                ['entityType' => 'product', 'localizedCatalog' => "$localizedCatalogId"],
                 201,
                 null,
-                "#^{$this->getApiPath()}/elasticsuite_test__elasticsuite_{$catalogCode}_product_[0-9]{8}_[0-9]{6}$#",
+                "#^{$this->getApiPath()}/elasticsuite_test__elasticsuite_{$localizedCatalogCode}_product_[0-9]{8}_[0-9]{6}$#",
             ];
             $data[] = [
                 $adminUser,
-                ['entityType' => 'category', 'catalog' => $catalogId],
+                ['entityType' => 'category', 'localizedCatalog' => "$localizedCatalogId"],
                 201,
                 null,
-                "#^{$this->getApiPath()}/elasticsuite_test__elasticsuite_{$catalogCode}_category_[0-9]{8}_[0-9]{6}$#",
+                "#^{$this->getApiPath()}/elasticsuite_test__elasticsuite_{$localizedCatalogCode}_category_[0-9]{8}_[0-9]{6}$#",
             ];
         }
 
         return array_merge(
             $data,
             [
-                [$adminUser, ['entityType' => 'string', 'catalog' => 0], 400, 'Entity type [string] does not exist'],
-                [$adminUser, ['entityType' => 'product', 'catalog' => 0], 400, 'Catalog of ID [0] does not exist'],
-                [$adminUser, ['entityType' => 'category', 'catalog' => 0], 400, 'Catalog of ID [0] does not exist'],
+                [$adminUser, ['entityType' => 'string', 'localizedCatalog' => '0'], 400, 'Entity type [string] does not exist'],
+                [$adminUser, ['entityType' => 'product', 'localizedCatalog' => '0'], 400, 'Missing localized catalog [0]'],
+                [$adminUser, ['entityType' => 'category', 'localizedCatalog' => '0'], 400, 'Missing localized catalog [0]'],
             ]
         );
     }
@@ -117,7 +117,7 @@ class IndexOperationsTest extends AbstractEntityTest
     {
         return [
             'aliases' => [
-                '.catalog_' . $expectedData['catalog'],
+                '.catalog_' . $expectedData['localizedCatalog'],
                 '.entity_' . $expectedData['entityType'],
             ],
         ];
@@ -141,7 +141,7 @@ class IndexOperationsTest extends AbstractEntityTest
                     'aliases' => [],
                     'docsCount' => 2,
                     'entityType' => 'product',
-                    'catalog' => '/localized_catalogs/4',
+                    'localizedCatalog' => '/localized_catalogs/4',
                     'status' => 'indexing',
                     'mapping' => [
                         'properties' => [
@@ -196,7 +196,7 @@ class IndexOperationsTest extends AbstractEntityTest
                     'aliases' => [],
                     'docsCount' => 0,
                     'entityType' => 'category',
-                    'catalog' => '/localized_catalogs/4',
+                    'localizedCatalog' => '/localized_catalogs/4',
                     'status' => 'live',
                     'mapping' => [
                         'properties' => [
@@ -233,7 +233,7 @@ class IndexOperationsTest extends AbstractEntityTest
                     'aliases' => [],
                     'docsCount' => 0,
                     'entityType' => 'category',
-                    'catalog' => '/localized_catalogs/4',
+                    'localizedCatalog' => '/localized_catalogs/4',
                     'status' => 'ghost',
                     'mapping' => [
                         'properties' => [
@@ -270,7 +270,7 @@ class IndexOperationsTest extends AbstractEntityTest
                     'aliases' => [],
                     'docsCount' => 0,
                     'entityType' => 'category',
-                    'catalog' => null,
+                    'localizedCatalog' => null,
                     'status' => 'invalid',
                     'mapping' => [
                         'properties' => [
@@ -307,7 +307,7 @@ class IndexOperationsTest extends AbstractEntityTest
                     'aliases' => [],
                     'docsCount' => 0,
                     'entityType' => null,
-                    'catalog' => null,
+                    'localizedCatalog' => null,
                     'status' => 'external',
                     'mapping' => [
                         'properties' => [

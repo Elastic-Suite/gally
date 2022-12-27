@@ -59,7 +59,7 @@ function BottomTable(
   const { t } = useTranslation('categories')
   const variables = useMemo(
     () => ({
-      catalogId: localizedCatalogId,
+      localizedCatalog: localizedCatalogId,
       currentPage,
       pageSize: rowsPerPage,
       requestType: ProductRequestType.CATALOG,

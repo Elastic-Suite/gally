@@ -62,7 +62,7 @@ class VirtualCategoryTest extends AbstractTest
     ): void {
         $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
         $arguments = sprintf(
-            'requestType: product_catalog, catalogId: "%s", pageSize: %d, currentPage: %d, filter: {%s}',
+            'requestType: product_catalog, localizedCatalog: "%s", pageSize: %d, currentPage: %d, filter: {%s}',
             $catalogId,
             12,
             1,
@@ -283,7 +283,7 @@ class VirtualCategoryTest extends AbstractTest
     ): void {
         $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
         $arguments = sprintf(
-            'requestType: product_catalog, catalogId: "%s", pageSize: %d, currentPage: %d',
+            'requestType: product_catalog, localizedCatalog: "%s", pageSize: %d, currentPage: %d',
             $catalogId,
             12,
             1,
@@ -299,7 +299,7 @@ class VirtualCategoryTest extends AbstractTest
                     {
                         products({$arguments}) {
                             aggregations {
-                              field count  type label
+                              field count type label
                               options {label value count}
                             }
                         }

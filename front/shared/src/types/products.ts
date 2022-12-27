@@ -9,7 +9,7 @@ export enum ProductRequestType {
 }
 
 export interface IGraphqlSearchProductsVariables {
-  catalogId: string
+  localizedCatalog: string
   currentCategoryId?: string
   currentPage?: number
   filter?: IProductFieldFilterInput[] | IProductFieldFilterInput

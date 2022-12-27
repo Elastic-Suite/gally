@@ -35,37 +35,37 @@ interface IndexSettingsInterface
     /**
      * Returns the index alias for an identifier (eg. product) by catalog.
      *
-     * @param string                      $indexIdentifier Index identifier
-     * @param int|string|LocalizedCatalog $catalog         The catalog
+     * @param string                      $indexIdentifier  Index identifier
+     * @param int|string|LocalizedCatalog $localizedCatalog Localized catalog
      */
-    public function getIndexAliasFromIdentifier(string $indexIdentifier, LocalizedCatalog|int|string $catalog): string;
+    public function getIndexAliasFromIdentifier(string $indexIdentifier, LocalizedCatalog|int|string $localizedCatalog): string;
 
     /**
      * Create a new index for an identifier (eg. product) by catalog including current date.
      *
-     * @param string                      $indexIdentifier Index identifier
-     * @param int|string|LocalizedCatalog $catalog         The catalog
+     * @param string                      $indexIdentifier  Index identifier
+     * @param int|string|LocalizedCatalog $localizedCatalog Localized catalog
      */
-    public function createIndexNameFromIdentifier(string $indexIdentifier, LocalizedCatalog|int|string $catalog): string;
+    public function createIndexNameFromIdentifier(string $indexIdentifier, LocalizedCatalog|int|string $localizedCatalog): string;
 
     /**
      * Return the index aliases to set to a newly created index for an identifier (eg. product) by catalog.
      *
-     * @param string                      $indexIdentifier An index identifier
-     * @param LocalizedCatalog|int|string $catalog         Catalog
+     * @param string                      $indexIdentifier  An index identifier
+     * @param LocalizedCatalog|int|string $localizedCatalog Localized catalog
      *
      * @return string[]
      */
-    public function getNewIndexMetadataAliases(string $indexIdentifier, LocalizedCatalog|int|string $catalog): array;
+    public function getNewIndexMetadataAliases(string $indexIdentifier, LocalizedCatalog|int|string $localizedCatalog): array;
 
     /**
      * Load analysis settings by catalog.
      *
-     * @param int|string|LocalizedCatalog $catalog The catalog
+     * @param int|string|LocalizedCatalog $localizedCatalog Localized catalog
      *
      * @return array<mixed>
      */
-    public function getAnalysisSettings(LocalizedCatalog|int|string $catalog): array;
+    public function getAnalysisSettings(LocalizedCatalog|int|string $localizedCatalog): array;
 
     /**
      * Returns settings used during index creation.
@@ -105,11 +105,11 @@ interface IndexSettingsInterface
     /**
      * Get dynamic index settings per catalog (language).
      *
-     * @param int|string|LocalizedCatalog $catalog Catalog
+     * @param int|string|LocalizedCatalog $localizedCatalog Localized catalog
      *
      * @return array<mixed>
      */
-    public function getDynamicIndexSettings(LocalizedCatalog|int|string $catalog): array;
+    public function getDynamicIndexSettings(LocalizedCatalog|int|string $localizedCatalog): array;
 
     /**
      * Extract original entity from index metadata aliases.

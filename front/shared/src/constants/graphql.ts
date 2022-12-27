@@ -11,7 +11,7 @@ export function getSearchProductsQuery(
       __name: 'getProducts',
       __variables: {
         requestType: 'ProductRequestTypeEnum!',
-        catalogId: 'String!',
+        localizedCatalog: 'String!',
         currentPage: 'Int',
         pageSize: 'Int',
         search: 'String',
@@ -20,7 +20,7 @@ export function getSearchProductsQuery(
       products: {
         __args: {
           requestType: new VariableType('requestType'),
-          catalogId: new VariableType('catalogId'),
+          localizedCatalog: new VariableType('localizedCatalog'),
           currentPage: new VariableType('currentPage'),
           pageSize: new VariableType('pageSize'),
           search: new VariableType('search'),
