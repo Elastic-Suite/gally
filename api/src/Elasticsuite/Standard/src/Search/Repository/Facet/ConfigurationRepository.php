@@ -105,16 +105,17 @@ class ConfigurationRepository extends ServiceEntityRepository
 
         // Use custom query builder in order to be able to override hydratation mode.
         $queryBuilder = new QueryBuilder($this->getEntityManager());
-
         $queryBuilder
             ->select([
                 "{$alias}",
                 'sf.id AS source_field_id',
                 "CONCAT(sf.id, '-', :category) AS id",
+                "(case when {$alias}.position IS NOT NULL then {$alias}.position else default.position end) AS position",
             ])
             ->from(SourceField::class, 'sf', $indexBy)
             ->leftJoin(Metadata::class, 'metadata', Join::WITH, 'sf.metadata = metadata.id')
             ->where('sf.isFilterable = true')
+            ->orderBy('position', 'ASC')
             ->setParameter('category', $category);
 
         if ($category) {

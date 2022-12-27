@@ -40,12 +40,19 @@ class Adapter
                 'index' => $request->getIndex(),
                 'body' => $this->requestMapper->assembleSearchRequest($request),
             ];
-            $searchResponse = $this->client->search($searchRequest);
+
+            try {
+                $searchResponse = $this->client->search($searchRequest);
+            } catch (Exception $e) {
+                $searchResponse = [];
+                $this->logger->error($e->getMessage());
+            }
         } catch (Exception $e) {
+            $searchRequest = [];
             $searchResponse = [];
             $this->logger->error($e->getMessage());
         }
 
-        return new Response\QueryResponse($searchResponse, $this->aggregationBuilder);
+        return new Response\QueryResponse($searchRequest, $searchResponse, $this->aggregationBuilder);
     }
 }

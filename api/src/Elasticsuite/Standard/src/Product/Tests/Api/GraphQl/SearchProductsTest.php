@@ -1304,8 +1304,26 @@ class SearchProductsTest extends AbstractTest
                 10,     // page size.
                 1,      // current page.
                 [       // expected aggregations sample.
-                    ['field' => 'size', 'label' => 'Size', 'type' => 'slider'],
+                    ['field' => 'is_eco_friendly', 'label' => 'Is_eco_friendly', 'type' => 'checkbox'],
                     ['field' => 'weight', 'label' => 'Weight', 'type' => 'slider'],
+                    [
+                        'field' => 'category__id',
+                        'label' => 'Category',
+                        'type' => 'category',
+                        'options' => [
+                            [
+                                'label' => 'Accessories',
+                                'value' => 'cat_3',
+                                'count' => 2,
+                            ],
+                            [
+                                'label' => 'cat_1',
+                                'value' => 'cat_1',
+                                'count' => 2,
+                            ],
+                        ],
+                    ],
+                    ['field' => 'size', 'label' => 'Size', 'type' => 'slider'],
                     [
                         'field' => 'color__value',
                         'label' => 'Color',
@@ -1318,23 +1336,6 @@ class SearchProductsTest extends AbstractTest
                             ],
                         ],
                     ],
-                    [
-                        'field' => 'category__id',
-                        'label' => 'Category',
-                        'type' => 'category',
-                        'options' => [
-                            [
-                                'label' => 'Accessories',
-                                'value' => 'cat_3',
-                                'count' => 2,
-                            ],
-                            [
-                                'label' => 'cat_1',
-                                'value' => 'cat_1',
-                                'count' => 2,
-                            ],
-                        ],
-                    ],
                 ],
             ],
             [
@@ -1344,19 +1345,8 @@ class SearchProductsTest extends AbstractTest
                 10,     // page size.
                 1,      // current page.
                 [       // expected aggregations sample.
+                    ['field' => 'is_eco_friendly', 'label' => 'Is_eco_friendly', 'type' => 'checkbox'],
                     ['field' => 'weight', 'label' => 'Weight', 'type' => 'slider'],
-                    [
-                        'field' => 'color__value',
-                        'label' => 'Color',
-                        'type' => 'checkbox',
-                        'options' => [
-                            [
-                                'label' => 'Black',
-                                'value' => 'black',
-                                'count' => 2,
-                            ],
-                        ],
-                    ],
                     [
                         'field' => 'category__id',
                         'label' => 'Category',
@@ -1370,6 +1360,18 @@ class SearchProductsTest extends AbstractTest
                             [
                                 'label' => 'cat_1',
                                 'value' => 'cat_1',
+                                'count' => 2,
+                            ],
+                        ],
+                    ],
+                    [
+                        'field' => 'color__value',
+                        'label' => 'Color',
+                        'type' => 'checkbox',
+                        'options' => [
+                            [
+                                'label' => 'Black',
+                                'value' => 'black',
                                 'count' => 2,
                             ],
                         ],
@@ -1383,21 +1385,9 @@ class SearchProductsTest extends AbstractTest
                 10,     // page size.
                 1,      // current page.
                 [       // expected aggregations sample.
-                    ['field' => 'brand__value', 'label' => 'Brand', 'type' => 'checkbox'],
-                    ['field' => 'size', 'label' => 'Size', 'type' => 'slider'],
+                    ['field' => 'is_eco_friendly', 'label' => 'Is_eco_friendly', 'type' => 'checkbox'],
                     ['field' => 'weight', 'label' => 'Weight', 'type' => 'slider'],
-                    [
-                        'field' => 'color__value',
-                        'label' => 'Color',
-                        'type' => 'checkbox',
-                        'options' => [
-                            [
-                                'label' => 'Black',
-                                'value' => 'black',
-                                'count' => 1,
-                            ],
-                        ],
-                    ],
+                    ['field' => 'brand__value', 'label' => 'Brand', 'type' => 'checkbox'],
                     [
                         'field' => 'category__id',
                         'label' => 'Category',
@@ -1415,7 +1405,19 @@ class SearchProductsTest extends AbstractTest
                             ],
                         ],
                     ],
-                    ['field' => 'is_eco_friendly', 'label' => 'Is_eco_friendly', 'type' => 'checkbox'],
+                    ['field' => 'size', 'label' => 'Size', 'type' => 'slider'],
+                    [
+                        'field' => 'color__value',
+                        'label' => 'Color',
+                        'type' => 'checkbox',
+                        'options' => [
+                            [
+                                'label' => 'Black',
+                                'value' => 'black',
+                                'count' => 1,
+                            ],
+                        ],
+                    ],
                 ],
             ],
             [
@@ -1425,12 +1427,30 @@ class SearchProductsTest extends AbstractTest
                 10,     // page size.
                 1,      // current page.
                 [       // expected aggregations sample.
+                    ['field' => 'is_eco_friendly', 'label' => 'Is_eco_friendly', 'type' => 'checkbox'],
+                    ['field' => 'weight', 'label' => 'Weight', 'type' => 'slider'],
+                    [
+                        'field' => 'category__id',
+                        'label' => 'Category',
+                        'type' => 'category',
+                        'options' => [
+                            [
+                                'label' => 'One',
+                                'value' => 'cat_1',
+                                'count' => 2,
+                            ],
+                            [
+                                'label' => 'Two',
+                                'value' => 'cat_2',
+                                'count' => 1,
+                            ],
+                        ],
+                    ],
                     [
                         'field' => 'size',
                         'label' => 'Taille',
                         'type' => 'slider',
                     ],
-                    ['field' => 'weight', 'label' => 'Weight', 'type' => 'slider'],
                     [
                         'field' => 'color__value',
                         'label' => 'Couleur',
