@@ -683,27 +683,8 @@ class SearchDocumentsTest extends AbstractTest
                 10,     // page size.
                 1,      // current page.
                 [       // expected aggregations sample.
-                    ['field' => 'size', 'label' => 'Size', 'type' => 'slider', 'hasMore' => false],
-                    ['field' => 'weight', 'label' => 'Weight', 'type' => 'slider', 'hasMore' => false],
-                    [
-                        'field' => 'color__value',
-                        'label' => 'Color',
-                        'type' => 'checkbox',
-                        'hasMore' => true,
-                        'options' => [
-                            [
-                                'label' => 'Red',
-                                'value' => 'red',
-                                'count' => 1,
-                            ],
-                            [
-                                'label' => 'Grey',
-                                'value' => 'grey',
-                                'count' => 6,
-                            ],
-                        ],
-                    ],
                     ['field' => 'is_eco_friendly', 'label' => 'Is_eco_friendly', 'type' => 'checkbox', 'hasMore' => false],
+                    ['field' => 'weight', 'label' => 'Weight', 'type' => 'slider', 'hasMore' => false],
                     [
                         'field' => 'category__id',
                         'label' => 'Category',
@@ -722,6 +703,25 @@ class SearchDocumentsTest extends AbstractTest
                             ],
                         ],
                     ],
+                    ['field' => 'size', 'label' => 'Size', 'type' => 'slider', 'hasMore' => false],
+                    [
+                        'field' => 'color__value',
+                        'label' => 'Color',
+                        'type' => 'checkbox',
+                        'hasMore' => true,
+                        'options' => [
+                            [
+                                'label' => 'Red',
+                                'value' => 'red',
+                                'count' => 1,
+                            ],
+                            [
+                                'label' => 'Grey',
+                                'value' => 'grey',
+                                'count' => 6,
+                            ],
+                        ],
+                    ],
                 ],
             ],
             [
@@ -730,13 +730,32 @@ class SearchDocumentsTest extends AbstractTest
                 10,     // page size.
                 1,      // current page.
                 [       // expected aggregations sample.
+                    ['field' => 'is_eco_friendly', 'label' => 'Is_eco_friendly', 'type' => 'checkbox', 'hasMore' => false],
+                    ['field' => 'weight', 'label' => 'Weight', 'type' => 'slider'],
+                    [
+                        'field' => 'category__id',
+                        'label' => 'Category',
+                        'type' => 'category',
+                        'hasMore' => false,
+                        'options' => [
+                            [
+                                'label' => 'One',
+                                'value' => 'cat_1',
+                                'count' => 2,
+                            ],
+                            [
+                                'label' => 'Two',
+                                'value' => 'cat_2',
+                                'count' => 1,
+                            ],
+                        ],
+                    ],
                     [
                         'field' => 'size',
                         'label' => 'Taille',
                         'type' => 'slider',
                         'hasMore' => false,
                     ],
-                    ['field' => 'weight', 'label' => 'Weight', 'type' => 'slider'],
                     [
                         'field' => 'color__value',
                         'label' => 'Couleur',

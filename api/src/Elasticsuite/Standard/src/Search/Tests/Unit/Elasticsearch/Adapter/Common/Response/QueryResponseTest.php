@@ -34,7 +34,7 @@ class QueryResponseTest extends KernelTestCase
      */
     public function testTraversableCountable(array $searchResponse, int $expectedDocsCount): void
     {
-        $queryResponse = new Response\QueryResponse($searchResponse, new AggregationBuilder());
+        $queryResponse = new Response\QueryResponse([], $searchResponse, new AggregationBuilder());
         $this->assertCount($expectedDocsCount, $queryResponse);
         $this->assertContainsOnlyInstancesOf(DocumentInterface::class, $queryResponse);
     }
@@ -102,6 +102,7 @@ class QueryResponseTest extends KernelTestCase
     /**
      * @dataProvider queryResponseDocumentsDataAndAggregationsDataProvider
      *
+     * @param array                           $searchRequest        Raw search request from Elasticsearch
      * @param array                           $searchResponse       Raw search response from Elasticsearch
      * @param int                             $expectedDocsCount    Expected documents count in the query response
      * @param Document[]                      $expectedDocuments    Expected documents in the query response
@@ -111,13 +112,14 @@ class QueryResponseTest extends KernelTestCase
      * @throws \Exception
      */
     public function testDocumentsAndAggregationsExtraction(
+        array $searchRequest,
         array $searchResponse,
         int $expectedDocsCount,
         array $expectedDocuments,
         array $expectedAggregations,
         int $expectedTotalItems
     ): void {
-        $response = new Response\QueryResponse($searchResponse, new AggregationBuilder());
+        $response = new Response\QueryResponse($searchRequest, $searchResponse, new AggregationBuilder());
         $this->assertContainsOnlyInstancesOf(DocumentInterface::class, $response);
         $this->assertCount($expectedDocsCount, $response);
         $this->assertEquals($expectedDocsCount, $response->count());
@@ -150,6 +152,7 @@ class QueryResponseTest extends KernelTestCase
 
         return [
             [
+                [],
                 [
                     'hits' => [
                         'hits' => [
@@ -170,6 +173,7 @@ class QueryResponseTest extends KernelTestCase
                 1,
             ],
             [
+                [],
                 [
                     'hits' => [
                         'hits' => [
@@ -197,6 +201,13 @@ class QueryResponseTest extends KernelTestCase
                 2,
             ],
             [
+                [
+                    'body' => [
+                        'aggregations' => [
+                            'brand' => ['term'],
+                        ],
+                    ],
+                ],
                 [
                     'hits' => [
                         'hits' => [
@@ -233,6 +244,7 @@ class QueryResponseTest extends KernelTestCase
                 2,
             ],
             [
+                [],
                 [
                     'hits' => [
                         'hits' => [],
@@ -245,6 +257,7 @@ class QueryResponseTest extends KernelTestCase
                 0,
             ],
             [
+                [],
                 [],
                 0,
                 [],
