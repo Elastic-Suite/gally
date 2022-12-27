@@ -57,8 +57,8 @@ class DocumentDataProvider implements ContextAwareCollectionDataProviderInterfac
     public function getCollection(string $resourceClass, string $operationName = null, array $context = []): iterable
     {
         $metadata = $this->metadataRepository->findByEntity($context['filters']['entityType']);
-        $catalog = $this->catalogRepository->findByCodeOrId($context['filters']['catalogId']);
-        $containerConfig = $this->containerConfigurationProvider->get($metadata, $catalog);
+        $localizedCatalog = $this->catalogRepository->findByCodeOrId($context['filters']['localizedCatalog']);
+        $containerConfig = $this->containerConfigurationProvider->get($metadata, $localizedCatalog);
 
         $this->filterManager->validateFilters($context, $containerConfig);
 

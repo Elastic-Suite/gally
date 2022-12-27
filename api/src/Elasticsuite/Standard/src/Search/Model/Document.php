@@ -33,7 +33,7 @@ use Elasticsuite\Search\Resolver\DummyResolver;
                 'pagination_type' => 'page',
                 'args' => [
                     'entityType' => ['type' => 'String!', 'description' => 'Entity Type'],
-                    'catalogId' => ['type' => 'String!', 'description' => 'Catalog ID'],
+                    'localizedCatalog' => ['type' => 'String!', 'description' => 'Localized Catalog'],
                     'search' => ['type' => 'String', 'description' => 'Query Text'],
                     'currentPage' => ['type' => 'Int'],
                     'pageSize' => ['type' => 'Int'],

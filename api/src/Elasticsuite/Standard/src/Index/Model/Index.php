@@ -55,7 +55,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
                 'mutation' => CreateIndexMutation::class,
                 'args' => [
                     'entityType' => ['type' => 'String!', 'description' => 'Entity type for which to create an index'],
-                    'catalog' => ['type' => 'ID!', 'description' => 'Catalog scope for which to create an index'],
+                    'localizedCatalog' => ['type' => 'String!', 'description' => 'Catalog scope for which to create an index'],
                 ],
                 'read' => false,
                 'deserialize' => false,
@@ -182,7 +182,7 @@ class Index
     private ?string $entityType;
 
     #[Groups(['list', 'details'])]
-    private ?LocalizedCatalog $catalog;
+    private ?LocalizedCatalog $localizedCatalog;
 
     #[Groups(['list', 'details'])]
     private string $status;
@@ -210,7 +210,7 @@ class Index
         $this->docsCount = $docsCount;
         $this->size = $size;
         $this->entityType = null;
-        $this->catalog = null;
+        $this->localizedCatalog = null;
         $this->status = self::STATUS_EXTERNAL;
     }
 
@@ -260,14 +260,14 @@ class Index
         $this->status = $status;
     }
 
-    public function getCatalog(): ?LocalizedCatalog
+    public function getLocalizedCatalog(): ?LocalizedCatalog
     {
-        return $this->catalog;
+        return $this->localizedCatalog;
     }
 
-    public function setCatalog(?LocalizedCatalog $localizedCatalog): void
+    public function setLocalizedCatalog(?LocalizedCatalog $localizedCatalog): void
     {
-        $this->catalog = $localizedCatalog;
+        $this->localizedCatalog = $localizedCatalog;
     }
 
     public function getEntityType(): ?string

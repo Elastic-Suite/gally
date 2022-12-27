@@ -42,7 +42,7 @@ class ProductDataProvider implements ContextAwareCollectionDataProviderInterface
         private ResourceMetadataFactoryInterface $resourceMetadataFactory,
         private ResourceMetadataManager $resourceMetadataManager,
         private MetadataRepository $metadataRepository,
-        private LocalizedCatalogRepository $catalogRepository,
+        private LocalizedCatalogRepository $localizedCatalogRepository,
         private RequestBuilder $requestBuilder,
         private ContainerConfigurationProvider $containerConfigurationProvider,
         private Adapter $adapter,
@@ -73,7 +73,7 @@ class ProductDataProvider implements ContextAwareCollectionDataProviderInterface
         }
 
         // TODO Supposed to be pulled from header.
-        $catalogId = $context['filters']['catalogId'];
+        $localizedCatalogCode = $context['filters']['localizedCatalog'];
         $metadata = $this->metadataRepository->findOneBy(['entity' => $entityType]);
         if (!$metadata) {
             throw new InvalidArgumentException(sprintf('Entity type [%s] does not exist', $entityType));
@@ -81,16 +81,14 @@ class ProductDataProvider implements ContextAwareCollectionDataProviderInterface
         if (null === $metadata->getEntity()) {
             throw new InvalidArgumentException(sprintf('Entity type [%s] is not defined', $entityType));
         }
-        if (is_numeric($catalogId)) {
-            $catalog = $this->catalogRepository->find($catalogId);
-        } else {
-            $catalog = $this->catalogRepository->findOneBy(['code' => $catalogId]);
-        }
-        if (null === $catalog) {
-            throw new InvalidArgumentException(sprintf('Missing catalog [%s]', $catalogId));
-        }
 
-        $containerConfig = $this->containerConfigurationProvider->get($metadata, $catalog, $context['filters']['requestType']);
+        $localizedCatalog = $this->localizedCatalogRepository->findByCodeOrId($localizedCatalogCode);
+
+        $containerConfig = $this->containerConfigurationProvider->get(
+            $metadata,
+            $localizedCatalog,
+            $context['filters']['requestType']
+        );
 
         $this->filterManager->validateFilters($context, $containerConfig);
         $this->sortInputType->validateSort($context);

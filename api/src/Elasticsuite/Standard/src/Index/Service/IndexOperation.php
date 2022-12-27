@@ -178,9 +178,9 @@ class IndexOperation
 
         $index = $this->indexRepository->findByName($indexName);
         $entityType = $index->getEntityType();
-        $catalog = $index->getCatalog();
-        if (!empty($entityType) && !empty($catalog)) {
-            $installIndexAlias = $this->indexSettings->getIndexAliasFromIdentifier($entityType, $catalog);
+        $localizedCatalog = $index->getLocalizedCatalog();
+        if (!empty($entityType) && !empty($localizedCatalog)) {
+            $installIndexAlias = $this->indexSettings->getIndexAliasFromIdentifier($entityType, $localizedCatalog);
         }
 
         return $installIndexAlias;

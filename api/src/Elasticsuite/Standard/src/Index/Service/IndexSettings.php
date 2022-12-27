@@ -38,33 +38,33 @@ class IndexSettings implements IndexSettingsInterface
     /**
      * {@inheritDoc}
      */
-    public function getIndexAliasFromIdentifier(string $indexIdentifier, LocalizedCatalog|int|string $catalog): string
+    public function getIndexAliasFromIdentifier(string $indexIdentifier, LocalizedCatalog|int|string $localizedCatalog): string
     {
-        return $this->indexSettingsHelper->getIndexAliasFromIdentifier($indexIdentifier, $catalog);
+        return $this->indexSettingsHelper->getIndexAliasFromIdentifier($indexIdentifier, $localizedCatalog);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function createIndexNameFromIdentifier(string $indexIdentifier, LocalizedCatalog|int|string $catalog): string
+    public function createIndexNameFromIdentifier(string $indexIdentifier, LocalizedCatalog|int|string $localizedCatalog): string
     {
-        return $this->indexSettingsHelper->createIndexNameFromIdentifier($indexIdentifier, $catalog);
+        return $this->indexSettingsHelper->createIndexNameFromIdentifier($indexIdentifier, $localizedCatalog);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getNewIndexMetadataAliases(string $indexIdentifier, LocalizedCatalog|int|string $catalog): array
+    public function getNewIndexMetadataAliases(string $indexIdentifier, LocalizedCatalog|int|string $localizedCatalog): array
     {
-        return $this->indexSettingsHelper->getNewIndexMetadataAliases($indexIdentifier, $catalog);
+        return $this->indexSettingsHelper->getNewIndexMetadataAliases($indexIdentifier, $localizedCatalog);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getAnalysisSettings(LocalizedCatalog|int|string $catalog): array
+    public function getAnalysisSettings(LocalizedCatalog|int|string $localizedCatalog): array
     {
-        $language = explode('_', $catalog->getLocale())[0];
+        $language = explode('_', $localizedCatalog->getLocale())[0];
 
         return $this->analysisConfig->get($language);
     }
@@ -114,10 +114,10 @@ class IndexSettings implements IndexSettingsInterface
     /**
      * {@inheritDoc}
      */
-    public function getDynamicIndexSettings(LocalizedCatalog|int|string $catalog): array
+    public function getDynamicIndexSettings(LocalizedCatalog|int|string $localizedCatalog): array
     {
         $settings = [];
-        $analysisSettings = $this->getAnalysisSettings($catalog);
+        $analysisSettings = $this->getAnalysisSettings($localizedCatalog);
 
         $shingleDiff = $this->indexSettingsHelper->getMaxShingleDiff($analysisSettings);
         $ngramDiff = $this->indexSettingsHelper->getMaxNgramDiff($analysisSettings);

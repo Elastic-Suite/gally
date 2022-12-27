@@ -69,7 +69,7 @@ class ViewMoreFacetTest extends AbstractTest
         $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
 
         $arguments = sprintf(
-            'catalogId: "%s", aggregation: "%s", filter: {%s}',
+            'localizedCatalog: "%s", aggregation: "%s", filter: {%s}',
             $catalogId,
             $aggregation,
             $filter

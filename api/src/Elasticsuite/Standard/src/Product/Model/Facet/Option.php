@@ -40,7 +40,7 @@ use Elasticsuite\Search\Resolver\DummyResolver;
                 'read' => true,
                 'deserialize' => false,
                 'args' => [
-                    'catalogId' => ['type' => 'String!', 'description' => 'Catalog ID'],
+                    'localizedCatalog' => ['type' => 'String!', 'description' => 'Localized Catalog'],
                     'aggregation' => ['type' => 'String!', 'description' => 'Source field to get complete aggregation'],
                     'search' => ['type' => 'String', 'description' => 'Query Text'],
                     'currentCategoryId' => ['type' => 'String', 'description' => 'Current category ID'],

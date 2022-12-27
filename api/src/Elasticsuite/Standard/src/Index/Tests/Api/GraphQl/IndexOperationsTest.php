@@ -69,7 +69,7 @@ class IndexOperationsTest extends AbstractTest
                     mutation {
                       createIndex(input: {
                         entityType: "{$entityType}",
-                        catalog: {$catalogId}
+                        localizedCatalog: "{$catalogId}"
                       }) {
                         index {
                           id

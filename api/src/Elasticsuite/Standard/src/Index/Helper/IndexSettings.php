@@ -97,11 +97,11 @@ class IndexSettings
     /**
      * IndexSettings constructor.
      *
-     * @param LocalizedCatalogRepository $catalogRepository    Catalog repository
-     * @param array<mixed>               $indicesConfiguration Indices configuration
+     * @param LocalizedCatalogRepository $localizedCatalogRepository Catalog repository
+     * @param array<mixed>               $indicesConfiguration       Indices configuration
      */
     public function __construct(
-        private LocalizedCatalogRepository $catalogRepository,
+        private LocalizedCatalogRepository $localizedCatalogRepository,
         private array $indicesConfiguration
     ) {
     }
@@ -122,12 +122,12 @@ class IndexSettings
     /**
      * Returns the index alias for an identifier (eg. product) by catalog.
      *
-     * @param string                      $indexIdentifier An index identifier
-     * @param int|string|LocalizedCatalog $catalog         The catalog
+     * @param string                      $indexIdentifier  An index identifier
+     * @param int|string|LocalizedCatalog $localizedCatalog The localized catalog
      */
-    public function getIndexAliasFromIdentifier(string $indexIdentifier, int|string|LocalizedCatalog $catalog): string
+    public function getIndexAliasFromIdentifier(string $indexIdentifier, int|string|LocalizedCatalog $localizedCatalog): string
     {
-        $catalogCode = strtolower((string) $this->getCatalogCode($catalog));
+        $catalogCode = strtolower((string) $this->getCatalogCode($localizedCatalog));
 
         return sprintf('%s_%s_%s', $this->getIndexNamePrefix(), $catalogCode, $indexIdentifier);
     }
@@ -135,14 +135,14 @@ class IndexSettings
     /**
      * Return the index aliases to set to a newly created index for an identifier (eg. product) by catalog.
      *
-     * @param string                      $indexIdentifier An index identifier
-     * @param LocalizedCatalog|int|string $catalog         Catalog
+     * @param string                      $indexIdentifier  An index identifier
+     * @param LocalizedCatalog|int|string $localizedCatalog Localized catalog
      *
      * @return string[]
      */
-    public function getNewIndexMetadataAliases(string $indexIdentifier, LocalizedCatalog|int|string $catalog): array
+    public function getNewIndexMetadataAliases(string $indexIdentifier, LocalizedCatalog|int|string $localizedCatalog): array
     {
-        $catalog = $this->getCatalog($catalog);
+        $catalog = $this->getLocalizedCatalog($localizedCatalog);
 
         return [
             sprintf('.entity_%s', $indexIdentifier),
@@ -281,13 +281,13 @@ class IndexSettings
      */
     public function extractCatalogFromAliases(Index $index): LocalizedCatalog|null
     {
-        $catalogId = preg_filter('#^\.catalog_(.+)$#', '$1', $index->getAliases(), 1);
-        if (!empty($catalogId)) {
-            if (\is_array($catalogId)) {
-                $catalogId = current($catalogId);
+        $localizedCatalogId = preg_filter('#^\.catalog_(.+)$#', '$1', $index->getAliases(), 1);
+        if (!empty($localizedCatalogId)) {
+            if (\is_array($localizedCatalogId)) {
+                $localizedCatalogId = current($localizedCatalogId);
             }
-            $catalogId = (int) $catalogId;
-            $catalog = $this->getCatalog($catalogId);
+            $localizedCatalogId = (int) $localizedCatalogId;
+            $catalog = $this->getLocalizedCatalog($localizedCatalogId);
         } else {
             $catalog = null;
         }
@@ -308,7 +308,7 @@ class IndexSettings
      */
     public function isInstalled(Index $index): bool
     {
-        $installedAlias = $this->getIndexAliasFromIdentifier($index->getEntityType(), $index->getCatalog());
+        $installedAlias = $this->getIndexAliasFromIdentifier($index->getEntityType(), $index->getLocalizedCatalog());
 
         return \in_array($installedAlias, $index->getAliases(), true);
     }
@@ -377,36 +377,28 @@ class IndexSettings
     /**
      * Retrieve the catalog code from object or catalog id.
      *
-     * @param int|string|LocalizedCatalog $catalog The catalog or its id or its code
+     * @param int|string|LocalizedCatalog $localizedCatalog The localized catalog or its id or its code
      *
      * @throws Exception
      */
-    private function getCatalogCode(int|string|LocalizedCatalog $catalog): ?string
+    private function getCatalogCode(int|string|LocalizedCatalog $localizedCatalog): ?string
     {
-        return $this->getCatalog($catalog)->getCode();
+        return $this->getLocalizedCatalog($localizedCatalog)->getCode();
     }
 
     /**
      * Ensure catalog is an object or load it from its id / identifier.
      *
-     * @param int|string|LocalizedCatalog $catalog The catalog or its id or its code
+     * @param int|string|LocalizedCatalog $localizedCatalog The catalog or its id or its code
      *
      * @throws Exception
      */
-    private function getCatalog(LocalizedCatalog|int|string $catalog): LocalizedCatalog
+    private function getLocalizedCatalog(LocalizedCatalog|int|string $localizedCatalog): LocalizedCatalog
     {
-        if (!\is_object($catalog)) {
-            if (is_numeric($catalog)) {
-                $catalog = $this->catalogRepository->find($catalog);
-            } else {
-                $catalog = $this->catalogRepository->findOneBy(['code' => $catalog]);
-            }
+        if (!\is_object($localizedCatalog)) {
+            $localizedCatalog = $this->localizedCatalogRepository->findByCodeOrId($localizedCatalog);
         }
 
-        if (null === $catalog) {
-            throw new Exception('Missing catalog.');
-        }
-
-        return $catalog;
+        return $localizedCatalog;
     }
 }

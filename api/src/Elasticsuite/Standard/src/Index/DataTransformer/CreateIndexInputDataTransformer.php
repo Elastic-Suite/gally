@@ -27,7 +27,7 @@ use Elasticsuite\Metadata\Repository\MetadataRepository;
 class CreateIndexInputDataTransformer implements DataTransformerInterface
 {
     public function __construct(
-        private LocalizedCatalogRepository $catalogRepository,
+        private LocalizedCatalogRepository $localizedCatalogRepository,
         private MetadataRepository $metadataRepository,
         private IndexOperation $indexOperation,
     ) {
@@ -61,7 +61,7 @@ class CreateIndexInputDataTransformer implements DataTransformerInterface
     public function transform($object, string $to, array $context = [])
     {
         $entityType = $object->entityType;
-        $catalogId = $object->catalog;
+        $localizedCatalogCode = $object->localizedCatalog;
 
         $metadata = $this->metadataRepository->findOneBy(['entity' => $entityType]);
         if (!$metadata) {
@@ -71,9 +71,9 @@ class CreateIndexInputDataTransformer implements DataTransformerInterface
             throw new InvalidArgumentException(sprintf('Entity type [%s] is not defined', $entityType));
         }
 
-        $catalog = $this->catalogRepository->find($catalogId);
+        $catalog = $this->localizedCatalogRepository->findByCodeOrId($localizedCatalogCode);
         if (null === $catalog) {
-            throw new InvalidArgumentException(sprintf('Catalog of ID [%s] does not exist', $catalogId));
+            throw new InvalidArgumentException(sprintf('Localized catalog of ID or code [%s] does not exist', $localizedCatalogCode));
         }
 
         try {
