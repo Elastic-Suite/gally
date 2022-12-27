@@ -39,6 +39,7 @@ use Elasticsuite\Search\Service\ReverseSourceFieldProvider;
 class AddAggregationsData implements SerializeStageInterface
 {
     public const AGGREGATION_TYPE_CHECKBOX = 'checkbox';
+    public const AGGREGATION_TYPE_BOOLEAN = 'boolean';
     public const AGGREGATION_TYPE_SLIDER = 'slider';
     public const AGGREGATION_TYPE_CATEGORY = 'category';
 
@@ -99,6 +100,7 @@ class AddAggregationsData implements SerializeStageInterface
             'type' => match ($sourceField?->getType()) {
                 Type::TYPE_PRICE, Type::TYPE_FLOAT, Type::TYPE_INT => self::AGGREGATION_TYPE_SLIDER,
                 Type::TYPE_CATEGORY => self::AGGREGATION_TYPE_CATEGORY,
+                Type::TYPE_STOCK => self::AGGREGATION_TYPE_BOOLEAN,
                 default => self::AGGREGATION_TYPE_CHECKBOX,
             },
             'count' => $aggregation->getCount(),
