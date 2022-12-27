@@ -47,34 +47,13 @@ class CategoryConfigurationRepository extends ServiceEntityRepository
         ?Catalog $catalog,
         ?LocalizedCatalog $localizedCatalog
     ): ?Category\Configuration {
-        $exprBuilder = $this->getEntityManager()->getExpressionBuilder();
-
-        if ($localizedCatalog) {
-            $mergeExpr = 'case when lc.%1$s IS NOT NULL then lc.%1$s else ' .
-                '(case when c.%1$s IS NOT NULL then c.%1$s else g.%1$s end) end';
-        } elseif ($catalog) {
-            $mergeExpr = 'case when c.%1$s IS NOT NULL then c.%1$s else g.%1$s end';
-        } else {
-            $mergeExpr = 'g.%1$s';
-        }
+        $mergeExpr = $this->getMergeExpr($catalog, $localizedCatalog);
 
         $queryBuilder = $this->buildMergeQuery($mergeExpr)
             ->addSelect('MAX(lc.name) as name')
             ->where('lc.category = :category')
             ->setParameter('category', $category);
-
-        if ($catalog) {
-            $queryBuilder->addSelect('MAX(' . ($localizedCatalog ? 'lc.id' : 'c.id') . ') as id')
-                ->andWhere('lc.localizedCatalog = :localizedCatalog')
-                ->andWhere('lc.catalog = :catalog')
-                ->setParameter('catalog', $catalog);
-            $queryBuilder->setParameter('localizedCatalog', $localizedCatalog ?: $catalog->getLocalizedCatalogs()->first());
-        } else {
-            $queryBuilder->addSelect('MAX(g.id) as id')
-                ->andWhere($exprBuilder->isNotNull('lc.localizedCatalog'))
-                ->andWhere($exprBuilder->isNotNull('lc.catalog'));
-        }
-
+        $this->addContextFilter($queryBuilder, $catalog, $localizedCatalog);
         $results = $queryBuilder->getQuery()->getResult();
 
         $result = reset($results);
@@ -104,7 +83,7 @@ class CategoryConfigurationRepository extends ServiceEntityRepository
      * If a parameter is not defined in this context, we get the value from the parent context
      * (ex: if isVirtual is null for this localized catalog, we get the value for this category on the catalog).
      */
-    public function findMergedByContext(Catalog $catalog, LocalizedCatalog $localizedCatalog): array
+    public function findMergedByContext(?Catalog $catalog, ?LocalizedCatalog $localizedCatalog): array
     {
         return $this->getFindMergedByContextQueryBuilder($catalog, $localizedCatalog)
             ->getQuery()
@@ -159,17 +138,13 @@ class CategoryConfigurationRepository extends ServiceEntityRepository
      * If a parameter is not defined in this context, we get the value from the parent context
      * (ex: if isVirtual is null for this localized catalog, we get the value for this category on the catalog).
      */
-    protected function getFindMergedByContextQueryBuilder(Catalog $catalog, LocalizedCatalog $localizedCatalog, ?array $categories = null): QueryBuilder
+    protected function getFindMergedByContextQueryBuilder(?Catalog $catalog, ?LocalizedCatalog $localizedCatalog): QueryBuilder
     {
-        $mergeExpr = 'case when lc.%1$s IS NOT NULL then lc.%1$s else ' .
-            '(case when c.%1$s IS NOT NULL then c.%1$s else g.%1$s end) end';
+        $mergeExpr = $this->getMergeExpr($catalog, $localizedCatalog);
+        $queryBuilder = $this->buildMergeQuery($mergeExpr)->addSelect('MAX(lc.name) as name');
+        $this->addContextFilter($queryBuilder, $catalog, $localizedCatalog);
 
-        return $this->buildMergeQuery($mergeExpr)
-            ->addSelect('MAX(lc.name) as name')
-            ->where('lc.localizedCatalog = :localizedCatalog')
-            ->andWhere('lc.catalog = :catalog')
-            ->setParameter('catalog', $catalog)
-            ->setParameter('localizedCatalog', $localizedCatalog);
+        return $queryBuilder;
     }
 
     /**
@@ -179,10 +154,8 @@ class CategoryConfigurationRepository extends ServiceEntityRepository
     public function findAllMerged(LocalizedCatalog $localizedCatalog): array
     {
         $exprBuilder = $this->getEntityManager()->getExpressionBuilder();
-        $mergeExpr = 'case when lc.%1$s IS NOT NULL then lc.%1$s else ' .
-            '(case when c.%1$s IS NOT NULL then c.%1$s else g.%1$s end) end';
 
-        return $this->buildMergeQuery($mergeExpr)
+        return $this->buildMergeQuery('g.%1$s')
             ->leftJoin(
                 $this->getClassName(),
                 'defaultName',
@@ -266,6 +239,19 @@ class CategoryConfigurationRepository extends ServiceEntityRepository
         return $unusedConfiguration->getQuery()->getResult();
     }
 
+    private function getMergeExpr(?Catalog $catalog, ?LocalizedCatalog $localizedCatalog): string
+    {
+        if ($localizedCatalog) {
+            return 'case when lc.%1$s IS NOT NULL then lc.%1$s else ' .
+                '(case when c.%1$s IS NOT NULL then c.%1$s else g.%1$s end) end';
+        }
+        if ($catalog) {
+            return 'case when c.%1$s IS NOT NULL then c.%1$s else g.%1$s end';
+        }
+
+        return 'g.%1$s';
+    }
+
     private function buildMergeQuery(string $mergeExpr): QueryBuilder
     {
         $exprBuilder = $this->getEntityManager()->getExpressionBuilder();
@@ -307,5 +293,22 @@ class CategoryConfigurationRepository extends ServiceEntityRepository
             )
             ->groupBy('lc.category')
             ->orderBy('lc.category');
+    }
+
+    private function addContextFilter(QueryBuilder $queryBuilder, ?Catalog $catalog, ?LocalizedCatalog $localizedCatalog)
+    {
+        $exprBuilder = $this->getEntityManager()->getExpressionBuilder();
+
+        if ($catalog) {
+            $queryBuilder->addSelect('MAX(' . ($localizedCatalog ? 'lc.id' : 'c.id') . ') as id')
+                ->andWhere('lc.localizedCatalog = :localizedCatalog')
+                ->andWhere('lc.catalog = :catalog')
+                ->setParameter('catalog', $catalog);
+            $queryBuilder->setParameter('localizedCatalog', $localizedCatalog ?: $catalog->getLocalizedCatalogs()->first());
+        } else {
+            $queryBuilder->addSelect('MAX(g.id) as id')
+                ->andWhere($exprBuilder->isNotNull('lc.localizedCatalog'))
+                ->andWhere($exprBuilder->isNotNull('lc.catalog'));
+        }
     }
 }
