@@ -24,6 +24,7 @@
         <field name="sortOrder" type="string" length="255" nullable="true" />
         <field name="isRecommendable" type="boolean" nullable="true" />
         <field name="isVirtual" type="boolean" nullable="true" />
+        <field name="position" type="integer" nullable="true" />
 
         <unique-constraints>
             <unique-constraint columns="source_field_id" name="unique_source_field">

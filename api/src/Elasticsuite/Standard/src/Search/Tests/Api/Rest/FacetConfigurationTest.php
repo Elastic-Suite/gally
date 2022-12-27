@@ -274,12 +274,14 @@ class FacetConfigurationTest extends AbstractTest
             'sortOrder' => BucketInterface::SORT_ORDER_COUNT,
             'isRecommendable' => false,
             'isVirtual' => false,
+            'position' => 0,
             'defaultDisplayMode' => 'auto',
             'defaultMaxSize' => 10,
             'defaultCoverageRate' => 90,
             'defaultSortOrder' => BucketInterface::SORT_ORDER_COUNT,
             'defaultIsRecommendable' => false,
             'defaultIsVirtual' => false,
+            'defaultPosition' => 0,
         ];
 
         if ($categoryId) {

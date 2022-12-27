@@ -89,6 +89,7 @@ class Configuration
         'sortOrder' => BucketInterface::SORT_ORDER_COUNT,
         'isRecommendable' => false,
         'isVirtual' => false,
+        'position' => 0,
     ];
 
     #[Groups(['facet_configuration:read'])]
@@ -227,6 +228,24 @@ class Configuration
     #[Groups(['facet_configuration:read', 'facet_configuration:write'])]
     private ?bool $isVirtual = null;
 
+    #[ApiProperty(
+        attributes: [
+            'hydra:supportedProperty' => [
+                'hydra:property' => [
+                    'rdfs:label' => 'Position',
+                ],
+                'elasticsuite' => [
+                    'visible' => true,
+                    'editable' => true,
+                    'position' => 80,
+                    'input' => 'text',
+                ],
+            ],
+        ],
+    )]
+    #[Groups(['facet_configuration:read', 'facet_configuration:write'])]
+    private ?int $position = null;
+
     #[Groups(['facet_configuration:read'])]
     private ?string $defaultDisplayMode = null;
 
@@ -244,6 +263,9 @@ class Configuration
 
     #[Groups(['facet_configuration:read'])]
     private ?bool $defaultIsVirtual = null;
+
+    #[Groups(['facet_configuration:read'])]
+    private ?int $defaultPosition = null;
 
     public function __construct(SourceField $sourceField, ?Category $category)
     {
@@ -341,6 +363,16 @@ class Configuration
         $this->isVirtual = $isVirtual;
     }
 
+    public function getPosition(): ?int
+    {
+        return $this->position ?? $this->getDefaultPosition();
+    }
+
+    public function setPosition(?int $position): void
+    {
+        $this->position = $position;
+    }
+
     public function getDefaultDisplayMode(): ?string
     {
         return $this->defaultDisplayMode;
@@ -371,6 +403,11 @@ class Configuration
         return $this->defaultIsVirtual;
     }
 
+    public function getDefaultPosition(): ?int
+    {
+        return $this->defaultPosition;
+    }
+
     #[ApiProperty(
         attributes: [
             'hydra:supportedProperty' => [
@@ -399,6 +436,7 @@ class Configuration
         $this->defaultSortOrder = $defaultConfiguration->getSortOrder() ?? self::DEFAULT_VALUES['sortOrder'];
         $this->defaultIsRecommendable = $defaultConfiguration->getIsRecommendable() ?? self::DEFAULT_VALUES['isRecommendable'];
         $this->defaultIsVirtual = $defaultConfiguration->getIsVirtual() ?? self::DEFAULT_VALUES['isVirtual'];
+        $this->defaultPosition = $defaultConfiguration->getPosition() ?? self::DEFAULT_VALUES['position'];
     }
 
     public static function getAvailableDisplayModes(): array
