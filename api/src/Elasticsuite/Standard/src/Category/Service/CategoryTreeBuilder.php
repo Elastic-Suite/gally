@@ -64,8 +64,6 @@ class CategoryTreeBuilder
         if (!$localizedCatalog) {
             if (!$catalog) {
                 $localizedCatalog = $this->defaultCatalogProvider->getDefaultLocalizedCatalog();
-            } else {
-                $localizedCatalog = $catalog->getLocalizedCatalogs()->first();
             }
         }
 
