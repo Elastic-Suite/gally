@@ -85,7 +85,7 @@ class OptionDataProvider implements ContextAwareCollectionDataProviderInterface,
             /** @var Adapter\Common\Response\BucketValueInterface $option */
             foreach ($response->getAggregations()[$filterName]->getValues() as $option) {
                 $options[] = \is_array($option->getKey())
-                    ? new Option((string) $option->getKey()[0], (string) $option->getKey()[1], $option->getCount())
+                    ? new Option((string) $option->getKey()[1], (string) $option->getKey()[0], $option->getCount())
                     : new Option((string) $option->getKey(), (string) $option->getKey(), $option->getCount());
             }
         }
