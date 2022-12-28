@@ -108,7 +108,7 @@ exports[`User match snapshot connected 1`] = `
                   <div
                     class="css-9vgysh"
                   >
-                    Log out
+                    title.logout
                   </div>
                 </div>
               </div>
