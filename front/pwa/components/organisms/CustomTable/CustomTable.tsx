@@ -50,7 +50,7 @@ export interface ICustomTableProps {
   tableHeaders: ITableHeader[]
   tableRows: ITableRow[]
   withSelection?: boolean
-  configuration?: IConfigurations[]
+  configuration?: IConfigurations
 }
 
 function CustomTable(

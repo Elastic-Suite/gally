@@ -40,12 +40,9 @@ describe('useDataLoader', () => {
     expect(state.data).toEqual({
       api: 'api',
       bundles: [Bundle.VIRTUAL_CATEGORY],
-      configurations: [
-        {
-          id: 'ElasticsuiteVirtualCategoryBundle',
-          value: undefined,
-        },
-      ],
+      configurations: {
+        ElasticsuiteVirtualCategoryBundle: undefined,
+      },
     })
   })
 
