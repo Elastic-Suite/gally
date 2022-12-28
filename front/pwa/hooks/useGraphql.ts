@@ -20,13 +20,13 @@ import { setUser, useAppDispatch } from '~/store'
 
 import { useLog } from './useLog'
 
-export function useApiGraphql<T>(secure = true): IGraphqlApi<T> {
+export function useApiGraphql(secure = true): IGraphqlApi {
   const { i18n } = useTranslation('common')
   const dispatch = useAppDispatch()
   const log = useLog()
 
   return useCallback(
-    async (
+    async <T>(
       query: string,
       variables?: Record<string, unknown>,
       options?: RequestInit
@@ -57,7 +57,7 @@ export function useGraphqlApi<T>(
   variables?: Record<string, unknown>,
   options?: RequestInit
 ): [IFetch<T>, Dispatch<SetStateAction<T>>, ILoadResource] {
-  const graphqlApi = useApiGraphql<T>()
+  const graphqlApi = useApiGraphql()
   const [response, setResponse] = useState<IFetch<T>>({
     status: LoadStatus.IDLE,
   })
@@ -74,7 +74,7 @@ export function useGraphqlApi<T>(
       data: prevState.data,
       status: LoadStatus.LOADING,
     }))
-    graphqlApi(query, variables, options).then((json) => {
+    graphqlApi<T>(query, variables, options).then((json) => {
       if (isError(json)) {
         setResponse({ error: json.error, status: LoadStatus.FAILED })
       } else {

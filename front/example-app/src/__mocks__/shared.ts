@@ -121,7 +121,26 @@ export const fetchJson = jest.fn((url) => {
 export const getFormValidityError = jest.fn(() => 'test')
 
 /* graphql */
-export const fetchGraphql = jest.fn(() => {
+export const fetchGraphql = jest.fn((_, query) => {
+  if (query.includes('getCategorySortingOptions')) {
+    return Promise.resolve({
+      categorySortingOptions: [
+        { label: 'Position', code: 'category__position' },
+        { label: 'Name', code: 'name' },
+        { label: 'Final price', code: 'price__price' },
+        { label: 'Stock status', code: 'stock__status' },
+        { label: 'Relevance', code: '_score' },
+      ],
+    })
+  } else if (query.includes('getProducts')) {
+    return Promise.resolve({
+      products: {
+        collection: [],
+        paginationInfo: { lastPage: 9, itemsPerPage: 10, totalCount: 85 },
+        sortInfo: { current: [{ field: '_score', direction: 'desc' }] },
+      },
+    })
+  }
   const data: unknown = { ...body }
   return Promise.resolve(data)
 })
