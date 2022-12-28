@@ -18,6 +18,7 @@ namespace Elasticsuite\Entity\Filter;
 
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Util\QueryNameGeneratorInterface;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 
 /**
@@ -55,8 +56,22 @@ class SearchColumnsFilter extends SearchFilter
         $wrapCase = $this->createWrapCase(false);
         $where = [];
         foreach ($propertiesToFilter as $propertyToFilter) {
-            $parameterName = $queryNameGenerator->generateParameterName($propertyToFilter);
-            $aliasedField = sprintf('%s.%s', $alias, $propertyToFilter);
+            if ($this->isPropertyNested($propertyToFilter, $resourceClass)) {
+                [$associationAlias, $field] = $this->addJoinsForNestedProperty(
+                    $propertyToFilter,
+                    $alias,
+                    $queryBuilder,
+                    $queryNameGenerator,
+                    $resourceClass,
+                    Join::LEFT_JOIN
+                );
+                $parameterName = $queryNameGenerator->generateParameterName($propertyToFilter);
+                $aliasedField = sprintf('%s.%s', $associationAlias, $field);
+            } else {
+                $parameterName = $queryNameGenerator->generateParameterName($propertyToFilter);
+                $aliasedField = sprintf('%s.%s', $alias, $propertyToFilter);
+            }
+
             $where[] = $queryBuilder->expr()->like(
                 $wrapCase($aliasedField),
                 $wrapCase((string) $queryBuilder->expr()->concat("'%'", ':' . $parameterName, "'%'"))

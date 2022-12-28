@@ -52,7 +52,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 )]
 
 #[ApiFilter(SearchFilter::class, properties: ['code' => 'ipartial', 'type' => 'exact', 'metadata.entity' => 'exact', 'weight' => 'exact'])]
-#[ApiFilter(SearchColumnsFilter::class, properties: ['defaultLabel' => ['code']])]
+#[ApiFilter(SearchColumnsFilter::class, properties: ['defaultLabel' => ['code', 'labels.label']])]
 #[ApiFilter(BooleanFilter::class, properties: ['isSearchable', 'isFilterable', 'isSortable', 'isSpellchecked', 'isUsedForRules'], arguments: ['treatNullAsFalse' => true])]
 class SourceField
 {
@@ -290,6 +290,12 @@ class SourceField
     #[Groups(['source_field:api', 'facet_configuration:graphql_read'])]
     public function getDefaultLabel(): string
     {
+        foreach ($this->getLabels() as $label) {
+            if ($label->getCatalog()->getIsDefault()) {
+                return $label->getLabel();
+            }
+        }
+
         return $this->defaultLabel ?: ucfirst($this->getCode());
     }
 
