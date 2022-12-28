@@ -642,3 +642,8 @@ Elasticsuite\Metadata\Model\SourceField:
         isFilterable: false
         isSortable: false
         isUsedForRules: false
+    product_has_options:
+        metadata: '@product'
+        code: has_options
+        type: boolean
+        isUsedForRules: true
