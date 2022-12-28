@@ -10,7 +10,7 @@ import { IGraphql, IGraphqlError } from '../types'
 
 import { fetchJson } from './fetch'
 import { AuthError } from './network'
-import { storageGet } from './storage'
+import { storageGet, storageRemove } from './storage'
 
 export class GraphqlError extends Error {
   errors: IGraphqlError[]
@@ -54,6 +54,7 @@ export function fetchGraphql<T>(
     if (isGraphqlError(json)) {
       throw new GraphqlError(json.errors)
     } else if (authErrorCodes.includes(response.status)) {
+      storageRemove(tokenStorageKey)
       throw new AuthError('Unauthorized/Forbidden')
     }
     return json.data

@@ -68,9 +68,10 @@ export function useApiFetch(secure = true): IFetchApi {
 export function useFetchApi<T>(
   resource: IResource | string,
   searchParameters?: ISearchParameters,
-  options?: RequestInit
+  options?: RequestInit,
+  secure = true
 ): [IFetch<T>, Dispatch<SetStateAction<T>>, ILoadResource] {
-  const fetchApi = useApiFetch()
+  const fetchApi = useApiFetch(secure)
   const [response, setResponse] = useState<IFetch<T>>({
     status: LoadStatus.IDLE,
   })
