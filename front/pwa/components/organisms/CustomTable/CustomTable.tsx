@@ -12,6 +12,7 @@ import { DragDropContext, DropResult } from 'react-beautiful-dnd'
 
 import { useIsHorizontalOverflow } from '~/hooks'
 import {
+  IConfigurations,
   IFieldGuesserProps,
   ITableConfig,
   ITableHeader,
@@ -49,7 +50,7 @@ export interface ICustomTableProps {
   tableHeaders: ITableHeader[]
   tableRows: ITableRow[]
   withSelection?: boolean
-  configuration?: string[]
+  configuration?: IConfigurations[]
 }
 
 function CustomTable(

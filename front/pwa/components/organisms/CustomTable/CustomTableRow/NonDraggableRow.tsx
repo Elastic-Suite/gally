@@ -2,6 +2,7 @@ import { ChangeEvent, FunctionComponent, SyntheticEvent } from 'react'
 import { Checkbox, TableRow } from '@mui/material'
 
 import {
+  IConfigurations,
   IFieldGuesserProps,
   ITableConfig,
   ITableHeader,
@@ -43,7 +44,7 @@ interface IProps {
   tableHeaders: ITableHeader[]
   tableRow: ITableRow
   withSelection: boolean
-  configuration: string[]
+  configuration: IConfigurations[]
 }
 
 function NonDraggableRow(props: IProps): JSX.Element {
@@ -145,8 +146,13 @@ function NonDraggableRow(props: IProps): JSX.Element {
       {nonStickyHeaders.map((header) => {
         const newUrlConfiguration =
           configuration &&
-          removeFirstOrLastCharOfString(configuration[0], '/', 'last')
-
+          removeFirstOrLastCharOfString(
+            configuration.find(
+              (item: IConfigurations) => item.id === 'base_url/media'
+            ).value,
+            '/',
+            'last'
+          )
         const value =
           tableRow[header.name] && header.name === 'image'
             ? `${newUrlConfiguration}/${removeFirstOrLastCharOfString(

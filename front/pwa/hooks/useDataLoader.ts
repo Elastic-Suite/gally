@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import {
+  IConfigurations,
   IExtraBundle,
-  IExtraConfiguration,
   IHydraResponse,
   LoadStatus,
   useSchemaLoader,
@@ -23,7 +23,7 @@ export function useDataLoader(): void {
     undefined,
     false
   )
-  const [configurations] = useFetchApi<IHydraResponse<IExtraConfiguration>>(
+  const [configurations] = useFetchApi<IHydraResponse<IConfigurations>>(
     'configurations',
     undefined,
     undefined,
@@ -46,7 +46,9 @@ export function useDataLoader(): void {
           api: api.data,
           bundles: bundles.data['hydra:member'].map((bundle) => bundle.name),
           configurations: configurations.data['hydra:member'].map(
-            (configuration) => configuration.value
+            (configuration) => {
+              return { id: configuration.id, value: configuration.value }
+            }
           ),
         })
       )
