@@ -10,7 +10,7 @@ import {
   ITableHeaderSticky,
   ITableRow,
   getFieldState,
-  removeFirstOrLastCharOfString,
+  joinUrlPath,
 } from 'shared'
 
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
@@ -156,22 +156,13 @@ function DraggableRow(props: IProps): JSX.Element {
       ))}
 
       {nonStickyHeaders.map((header) => {
-        const newUrlConfiguration =
-          configuration &&
-          removeFirstOrLastCharOfString(
-            configuration.find(
-              (item: IConfigurations) => item.id === 'base_url/media'
-            ).value,
-            '/',
-            'last'
-          )
-
         const value =
           tableRow[header.name] && header.name === 'image'
-            ? `${newUrlConfiguration}/${removeFirstOrLastCharOfString(
-                tableRow[header.name] as string,
-                '/',
-                'first'
+            ? `${joinUrlPath(
+                configuration.find(
+                  (item: IConfigurations) => item.id === 'base_url/media'
+                ).value,
+                tableRow[header.name] as string
               )}`
             : tableRow[header.name]
 
