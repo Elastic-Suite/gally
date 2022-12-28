@@ -1,4 +1,1 @@
-export interface IConfigurations {
-  id: string
-  value: string
-}
+export type IConfigurations = Record<string, string>

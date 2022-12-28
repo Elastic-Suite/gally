@@ -5,9 +5,9 @@ import FieldGuesser from '../FieldGuesser/FieldGuesser'
 
 import TopProductsTable from './TopProductsTable'
 
-const configuration = [
-  { id: 'base_url/media', value: 'https://localhost/media/catalog/product/' },
-]
+const configuration = {
+  'base_url/media': 'https://localhost/media/catalog/product/',
+}
 
 describe('TopProductTable', () => {
   it('Should match snapschot', () => {

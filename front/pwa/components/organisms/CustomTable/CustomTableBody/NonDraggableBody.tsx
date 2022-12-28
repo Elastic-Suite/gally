@@ -28,7 +28,7 @@ interface IProps {
   tableHeaders: ITableHeader[]
   tableRows: ITableRow[]
   withSelection: boolean
-  configuration: IConfigurations[]
+  configuration: IConfigurations
 }
 
 function NonDraggableBody(props: IProps): JSX.Element {
