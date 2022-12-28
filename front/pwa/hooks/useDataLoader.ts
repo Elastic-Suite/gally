@@ -45,10 +45,11 @@ export function useDataLoader(): void {
         setData({
           api: api.data,
           bundles: bundles.data['hydra:member'].map((bundle) => bundle.name),
-          configurations: configurations.data['hydra:member'].map(
-            (configuration) => {
-              return { id: configuration.id, value: configuration.value }
-            }
+          configurations: Object.fromEntries(
+            configurations.data['hydra:member'].map((configuration) => [
+              configuration.id,
+              configuration.value,
+            ])
           ),
         })
       )

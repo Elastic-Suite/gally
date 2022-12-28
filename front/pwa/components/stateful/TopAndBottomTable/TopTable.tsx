@@ -26,7 +26,7 @@ interface IProps {
   topProducts: IProductPositions
   topProductsIds: number[]
   sortValue: string
-  configuration: IConfigurations[]
+  configuration: IConfigurations
 }
 
 function TopTable(props: IProps): JSX.Element {

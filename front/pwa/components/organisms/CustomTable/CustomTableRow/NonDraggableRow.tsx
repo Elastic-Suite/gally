@@ -44,7 +44,7 @@ interface IProps {
   tableHeaders: ITableHeader[]
   tableRow: ITableRow
   withSelection: boolean
-  configuration: IConfigurations[]
+  configuration: IConfigurations
 }
 
 function NonDraggableRow(props: IProps): JSX.Element {
@@ -147,9 +147,7 @@ function NonDraggableRow(props: IProps): JSX.Element {
         const value =
           tableRow[header.name] && header.name === 'image'
             ? `${joinUrlPath(
-                configuration.find(
-                  (item: IConfigurations) => item.id === 'base_url/media'
-                ).value,
+                configuration['base_url/media'],
                 tableRow[header.name] as string
               )}`
             : tableRow[header.name]
