@@ -56,7 +56,7 @@ exports[`UserMenu match snapshot UserMenu 1`] = `
                 <div
                   class="css-9vgysh"
                 >
-                  Log out
+                  title.logout
                 </div>
               </div>
             </div>

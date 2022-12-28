@@ -67,7 +67,6 @@ function TableStickyBar(props: IProps): JSX.Element {
 
   return (
     <Form onSubmit={handleSubmit}>
-      AAA
       {Boolean(withSelection) && (
         <Checkbox
           indeterminate={massiveSelectionIndeterminate}
