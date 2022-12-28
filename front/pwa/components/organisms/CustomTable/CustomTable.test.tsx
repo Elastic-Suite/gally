@@ -78,7 +78,9 @@ const tableRows = [
   },
 ]
 
-const configuration = ['https://localhost/media/catalog/product/']
+const configuration = [
+  { id: 'base_url/media', value: 'https://localhost/media/catalog/product/' },
+]
 
 describe('CustomTable', () => {
   it('match snapshot without selection, without draggable, without sticky headers', () => {

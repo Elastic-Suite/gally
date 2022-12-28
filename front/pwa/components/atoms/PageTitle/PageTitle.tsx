@@ -12,7 +12,7 @@ const StickyRoot = styled(Root)(({ theme }) => ({
   position: 'sticky',
   top: '84px',
   backgroundColor: theme.palette.background.page,
-  zIndex: 2,
+  zIndex: 5,
   margin: '-10px 0',
   padding: '10px 0',
 }))

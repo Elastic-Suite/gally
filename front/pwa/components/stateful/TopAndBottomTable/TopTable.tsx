@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction, useMemo } from 'react'
 
 import { useGraphqlApi } from '~/hooks'
 import {
+  IConfigurations,
   IGraphqlProductPosition,
   IGraphqlSearchProducts,
   IProductFieldFilterInput,
@@ -25,7 +26,7 @@ interface IProps {
   topProducts: IProductPositions
   topProductsIds: number[]
   sortValue: string
-  configuration: string[]
+  configuration: IConfigurations[]
 }
 
 function TopTable(props: IProps): JSX.Element {

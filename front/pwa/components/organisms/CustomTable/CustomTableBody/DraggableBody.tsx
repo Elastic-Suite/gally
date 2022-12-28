@@ -3,6 +3,7 @@ import { TableBody } from '@mui/material'
 import { Draggable, Droppable } from 'react-beautiful-dnd'
 
 import {
+  IConfigurations,
   IFieldGuesserProps,
   ITableConfig,
   ITableHeader,
@@ -29,7 +30,7 @@ interface IProps {
   tableHeaders: ITableHeader[]
   tableRows: ITableRow[]
   withSelection: boolean
-  configuration: string[]
+  configuration: IConfigurations[]
 }
 
 function DraggableBody(props: IProps): JSX.Element {

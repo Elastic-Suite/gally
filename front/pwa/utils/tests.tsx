@@ -32,7 +32,9 @@ const defaultState = {
   data: {
     api,
     bundles: [Bundle.VIRTUAL_CATEGORY],
-    configurations: ['https://localhost/products'],
+    configurations: [
+      { id: 'base_url/media', value: 'https://localhost/products' },
+    ],
   },
   user: {
     requestedPath: '',
