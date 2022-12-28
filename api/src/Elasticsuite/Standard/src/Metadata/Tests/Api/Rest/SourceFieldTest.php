@@ -28,7 +28,9 @@ class SourceFieldTest extends AbstractEntityTestWithUpdate
     protected static function getFixtureFiles(): array
     {
         return [
+            __DIR__ . '/../../fixtures/catalogs.yaml',
             __DIR__ . '/../../fixtures/source_field.yaml',
+            __DIR__ . '/../../fixtures/source_field_label.yaml',
             __DIR__ . '/../../fixtures/metadata.yaml',
         ];
     }
@@ -165,10 +167,15 @@ class SourceFieldTest extends AbstractEntityTestWithUpdate
         ];
     }
 
-    public function testSearchColumnsFilter(): void
+    /**
+     * @dataProvider searchColumnsFilterDataProvider
+     */
+    public function testSearchColumnsFilter(string $search, int $expectedItemNumber): void
     {
-        $expectedItemNumber = 1;
-        $request = new RequestToTest('GET', $this->getApiPath() . '?defaultLabel=sku', $this->getUser(Role::ROLE_CONTRIBUTOR));
+        $request = new RequestToTest(
+            'GET', $this->getApiPath() . '?defaultLabel=' . $search,
+            $this->getUser(Role::ROLE_CONTRIBUTOR)
+        );
         $expectedResponse = new ExpectedResponse(
             200,
             function (ResponseInterface $response) use ($expectedItemNumber) {
@@ -185,5 +192,12 @@ class SourceFieldTest extends AbstractEntityTestWithUpdate
         );
 
         $this->validateApiCall($request, $expectedResponse);
+    }
+
+    private function searchColumnsFilterDataProvider(): iterable
+    {
+        yield ['sku', 1];
+        yield ['Name', 2];
+        yield ['Nom', 1];
     }
 }
