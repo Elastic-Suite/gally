@@ -31,7 +31,8 @@ describe('useGraphql', () => {
         'en',
         testQuery,
         undefined,
-        undefined
+        undefined,
+        false
       )
     })
 
@@ -63,7 +64,8 @@ describe('useGraphql', () => {
         'en',
         testQuery,
         undefined,
-        undefined
+        undefined,
+        false
       )
     })
 
