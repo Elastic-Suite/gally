@@ -68,11 +68,16 @@ class FilterManager
                     // the filter twice, we have to skip the one with the '.'.
                     continue;
                 }
-                $esFilters[str_replace($this->nestingSeparator, '.', $sourceFieldName)] = $this->fieldFilterInputType->transformToElasticsuiteFilter(
+                $esFilterData = $this->fieldFilterInputType->transformToElasticsuiteFilter(
                     [$sourceFieldName => $condition],
                     $containerConfig,
                     $filterContext
                 );
+                if ('boolFilter' == $sourceFieldName) {
+                    $esFilters[] = $esFilterData;
+                } else {
+                    $esFilters[str_replace($this->nestingSeparator, '.', $sourceFieldName)] = $esFilterData;
+                }
             }
         }
 

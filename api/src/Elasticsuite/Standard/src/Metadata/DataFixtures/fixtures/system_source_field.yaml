@@ -7,6 +7,7 @@ Elasticsuite\Metadata\Model\SourceField:
         code: 'id'
         type: 'int'
         isSystem: true
+        isUsedForRules: true
     product_sku:
         metadata: '@product'
         code: 'sku'
