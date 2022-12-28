@@ -20,20 +20,15 @@ export function getHeadTitle(title: string): string {
   return `${title} - Gally`
 }
 
-export function removeFirstOrLastCharOfString(
-  value: string,
-  removeChar: string,
-  position: string
-): string {
-  const strToArray = value.split('')
-  const charOfArray = position === 'last' ? strToArray.pop() : strToArray[0]
-  if (charOfArray === removeChar && position === 'last') {
-    return value.slice(0, -1)
-  }
-  if (charOfArray === removeChar && position === 'first') {
-    return value.slice(1)
-  }
-  return value
+export function joinUrlPath(...parts: string[]): string {
+  return parts
+    .map((part) =>
+      part.slice(
+        Number(part.at(0) === '/'),
+        part.at(-1) === '/' ? -1 : undefined
+      )
+    )
+    .join('/')
 }
 
 export function getFieldLabelTranslationArgs(
