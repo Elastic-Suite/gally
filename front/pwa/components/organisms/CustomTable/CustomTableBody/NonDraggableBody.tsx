@@ -2,6 +2,7 @@ import { FunctionComponent, SyntheticEvent } from 'react'
 import { TableBody } from '@mui/material'
 
 import {
+  IConfigurations,
   IFieldGuesserProps,
   ITableConfig,
   ITableHeader,
@@ -27,7 +28,7 @@ interface IProps {
   tableHeaders: ITableHeader[]
   tableRows: ITableRow[]
   withSelection: boolean
-  configuration: string[]
+  configuration: IConfigurations[]
 }
 
 function NonDraggableBody(props: IProps): JSX.Element {

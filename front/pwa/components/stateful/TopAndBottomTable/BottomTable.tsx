@@ -8,6 +8,7 @@ import {
 
 import { useGraphqlApi } from '~/hooks'
 import {
+  IConfigurations,
   IGraphqlSearchProducts,
   IProductFieldFilterInput,
   ITableRow,
@@ -34,7 +35,7 @@ interface IProps {
   setNbBottomRows: (value: number) => void
   sortValue: string
   searchValue: string
-  configuration: string[]
+  configuration: IConfigurations[]
 }
 
 function BottomTable(
