@@ -133,7 +133,7 @@ exports[`AppBar match snapshot AppBar simple 1`] = `
                     <div
                       class="css-9vgysh"
                     >
-                      Log out
+                      title.logout
                     </div>
                   </div>
                 </div>
@@ -318,7 +318,7 @@ exports[`AppBar match snapshot AppBarThreeSlug 1`] = `
                     <div
                       class="css-9vgysh"
                     >
-                      Log out
+                      title.logout
                     </div>
                   </div>
                 </div>
@@ -553,7 +553,7 @@ exports[`AppBar match snapshot AppBarTwoSlug 1`] = `
                     <div
                       class="css-9vgysh"
                     >
-                      Log out
+                      title.logout
                     </div>
                   </div>
                 </div>
