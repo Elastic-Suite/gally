@@ -18,6 +18,7 @@ namespace Elasticsuite\Stitching\Serializer\GraphQl;
 
 use ApiPlatform\Core\GraphQl\Serializer\ItemNormalizer;
 use ApiPlatform\Core\Metadata\Resource\Factory\ResourceMetadataFactoryInterface;
+use Doctrine\Common\Util\ClassUtils;
 use Elasticsuite\Metadata\Repository\MetadataRepository;
 use Elasticsuite\ResourceMetadata\Service\ResourceMetadataManager;
 use Elasticsuite\Stitching\Service\SerializerService;
@@ -55,7 +56,9 @@ class StitchingNormalizer implements ContextAwareNormalizerInterface, Normalizer
 
         $stitchingProperty = null;
         if (\is_object($data)) {
-            $resourceMetadata = $this->resourceMetadataFactory->create($data::class);
+            // Get object glass with doctrine classUtils in order to avoid error with proxy classes
+            $class = ClassUtils::getRealClass($data::class);
+            $resourceMetadata = $this->resourceMetadataFactory->create($class);
             $stitchingProperty = $this->resourceMetadataManager->getStitchingProperty($resourceMetadata);
         }
 
