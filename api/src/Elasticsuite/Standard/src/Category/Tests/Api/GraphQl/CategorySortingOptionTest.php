@@ -56,7 +56,7 @@ class CategorySortingOptionTest extends AbstractTest
                             ['code' => 'name', 'label' => 'Name'],
                             ['code' => 'category__position', 'label' => 'Category.position'],
                             ['code' => 'real_category__position', 'label' => 'Position'],
-                            ['code' => 'price__price', 'label' => 'Final price'],
+                            ['code' => 'price__price', 'label' => 'Price'],
                             ['code' => 'stock__status', 'label' => 'Stock status'],
                             ['code' => '_score', 'label' => 'Relevance'],
                         ],

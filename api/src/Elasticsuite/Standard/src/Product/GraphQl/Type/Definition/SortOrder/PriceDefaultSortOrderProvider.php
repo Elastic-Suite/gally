@@ -62,6 +62,6 @@ class PriceDefaultSortOrderProvider implements SortOrderProviderInterface
      */
     public function getSimplifiedLabel(SourceField $sourceField): string
     {
-        return 'Final price';
+        return 'Price';
     }
 }
