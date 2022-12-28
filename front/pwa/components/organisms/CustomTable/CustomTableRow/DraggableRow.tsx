@@ -3,6 +3,7 @@ import { Box, Checkbox, TableRow } from '@mui/material'
 import { DraggableProvided } from 'react-beautiful-dnd'
 
 import {
+  IConfigurations,
   IFieldGuesserProps,
   ITableConfig,
   ITableHeader,
@@ -47,7 +48,7 @@ interface IProps {
   tableHeaders: ITableHeader[]
   tableRow: ITableRow
   withSelection: boolean
-  configuration: string[]
+  configuration: IConfigurations[]
 }
 
 function DraggableRow(props: IProps): JSX.Element {
@@ -155,11 +156,15 @@ function DraggableRow(props: IProps): JSX.Element {
       ))}
 
       {nonStickyHeaders.map((header) => {
-        const newUrlConfiguration = removeFirstOrLastCharOfString(
-          configuration[0],
-          '/',
-          'last'
-        )
+        const newUrlConfiguration =
+          configuration &&
+          removeFirstOrLastCharOfString(
+            configuration.find(
+              (item: IConfigurations) => item.id === 'base_url/media'
+            ).value,
+            '/',
+            'last'
+          )
 
         const value =
           tableRow[header.name] && header.name === 'image'
