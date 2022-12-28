@@ -17,18 +17,30 @@ export function useDataLoader(): void {
   const log = useLog()
 
   const api = useSchemaLoader()
-  const [bundles] = useFetchApi<IHydraResponse<IExtraBundle>>('extra_bundles')
-  const [configurations] =
-    useFetchApi<IHydraResponse<IExtraConfiguration>>('configurations')
+  const [bundles] = useFetchApi<IHydraResponse<IExtraBundle>>(
+    'extra_bundles',
+    undefined,
+    undefined,
+    false
+  )
+  const [configurations] = useFetchApi<IHydraResponse<IExtraConfiguration>>(
+    'configurations',
+    undefined,
+    undefined,
+    false
+  )
 
   useEffect(() => {
     if (api.status === LoadStatus.FAILED) {
       log(api.error)
-    } else if (bundles.status === LoadStatus.FAILED) {
+    }
+    if (bundles.status === LoadStatus.FAILED) {
       log(bundles.error)
-    } else if (configurations.status === LoadStatus.FAILED) {
+    }
+    if (configurations.status === LoadStatus.FAILED) {
       log(configurations.error)
-    } else if (api.data && bundles.data && configurations.data) {
+    }
+    if (api.data && bundles.data && configurations.data) {
       dispatch(
         setData({
           api: api.data,
@@ -39,5 +51,5 @@ export function useDataLoader(): void {
         })
       )
     }
-  }, [api, bundles, dispatch, log])
+  }, [api, bundles, configurations, dispatch, log])
 }
