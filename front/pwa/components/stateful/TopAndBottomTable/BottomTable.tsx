@@ -35,7 +35,7 @@ interface IProps {
   setNbBottomRows: (value: number) => void
   sortValue: string
   searchValue: string
-  configuration: IConfigurations[]
+  configuration: IConfigurations
 }
 
 function BottomTable(
