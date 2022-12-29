@@ -12,7 +12,7 @@ import {
   ProductRequestType,
   getSearchProductsQuery,
   productTableheader,
-} from 'shared'
+} from 'gally-admin-shared'
 
 import FieldGuesser from '../FieldGuesser/FieldGuesser'
 import TopProductsTable from '../TopProductsTable/TopProductsTable'

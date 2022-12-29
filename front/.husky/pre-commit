@@ -5,10 +5,6 @@
 
 cd front
 
-cd shared
-yarn lint-staged
-cd ..
-
 cd pwa
 yarn lint-staged
 cd ..

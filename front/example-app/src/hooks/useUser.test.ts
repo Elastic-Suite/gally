@@ -1,5 +1,5 @@
 import { act } from '@testing-library/react'
-import { storageGet } from 'shared'
+import { storageGet } from 'gally-admin-shared'
 
 import { renderHookWithProviders } from '../utils/tests'
 

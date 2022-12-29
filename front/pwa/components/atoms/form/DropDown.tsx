@@ -13,7 +13,7 @@ import {
 } from '@mui/material'
 import { useTranslation } from 'next-i18next'
 
-import { IOption, IOptions } from 'shared'
+import { IOption, IOptions } from 'gally-admin-shared'
 
 import Checkbox from './Checkbox'
 import { SmallStyledPaper, StyledPaper } from './DropDown.styled'

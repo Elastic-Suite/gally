@@ -8,7 +8,7 @@ import {
   ITableConfig,
   ITableHeader,
   ITableRow,
-} from 'shared'
+} from 'gally-admin-shared'
 
 import DraggableRow from '../CustomTableRow/DraggableRow'
 

@@ -1,7 +1,7 @@
 import { Suspense } from 'react'
 import { RouterContext } from 'next/dist/shared/lib/router-context'
 
-import { api } from 'shared'
+import { api } from 'gally-admin-shared'
 import { setupStore } from '~/store'
 import TestProvider from '~/utils/TestProvider'
 

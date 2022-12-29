@@ -1,5 +1,5 @@
 import { FunctionComponent } from 'react'
-import { getDisplayName } from 'shared'
+import { getDisplayName } from 'gally-admin-shared'
 
 import OptionsProvider from '~/components/stateful-providers/OptionsProvider/OptionsProvider'
 

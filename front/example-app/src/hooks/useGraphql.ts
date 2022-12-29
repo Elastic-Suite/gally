@@ -7,7 +7,7 @@ import {
   useState,
 } from 'react'
 import debounce from 'lodash.debounce'
-import { IFetch, IGraphqlApi, LoadStatus, fetchGraphql, isError } from 'shared'
+import { IFetch, IGraphqlApi, LoadStatus, fetchGraphql, isError } from 'gally-admin-shared'
 
 import { catalogContext } from '../contexts'
 

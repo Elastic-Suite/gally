@@ -5,7 +5,7 @@ import {
   IProductFieldFilterInput,
   ISelectTypeDefaultFilterInputType,
   IStockTypeDefaultFilterInputType,
-} from 'shared'
+} from 'gally-admin-shared'
 
 import { IActiveFilters } from '../types'
 

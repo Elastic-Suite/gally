@@ -8,7 +8,7 @@ import {
   IResource,
   getFilter,
   getMappings,
-} from 'shared'
+} from 'gally-admin-shared'
 
 export function useApiFilters<A extends IHydraMember>(
   apiData: IHydraResponse<A>,

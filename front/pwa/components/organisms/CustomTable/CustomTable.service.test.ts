@@ -1,4 +1,4 @@
-import { DataContentType, ITableHeader, ITableHeaderSticky } from 'shared'
+import { DataContentType, ITableHeader, ITableHeaderSticky } from 'gally-admin-shared'
 import { manageStickyHeaders, stickyBorderStyle } from './CustomTable.service'
 
 describe('CustomTableService', () => {

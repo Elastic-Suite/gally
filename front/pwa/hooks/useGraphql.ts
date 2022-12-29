@@ -14,7 +14,7 @@ import {
   LoadStatus,
   fetchGraphql,
   isError,
-} from 'shared'
+} from 'gally-admin-shared'
 
 import { setUser, useAppDispatch } from '~/store'
 

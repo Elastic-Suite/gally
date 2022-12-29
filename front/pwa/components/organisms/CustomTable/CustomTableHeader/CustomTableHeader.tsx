@@ -11,7 +11,7 @@ import {
   reorderingColumnWidth,
   selectionColumnWidth,
   stickyColunWidth,
-} from 'shared'
+} from 'gally-admin-shared'
 import { manageStickyHeaders, stickyBorderStyle } from '../CustomTable.service'
 import { useTranslation } from 'next-i18next'
 

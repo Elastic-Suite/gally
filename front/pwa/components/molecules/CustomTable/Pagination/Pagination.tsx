@@ -8,7 +8,7 @@ import {
 } from '@mui/material'
 import { styled } from '@mui/system'
 import { useTranslation } from 'next-i18next'
-import { theme } from 'shared'
+import { theme } from 'gally-admin-shared'
 
 interface IPaginationStyle {
   color: string

@@ -1,5 +1,5 @@
 import { styled } from '@mui/system'
-import { IMenu } from 'shared'
+import { IMenu } from 'gally-admin-shared'
 
 import Breadcrumbs from '~/components/atoms/breadcrumb/Breadcrumbs'
 import User from '~/components/molecules/layout/user/User'

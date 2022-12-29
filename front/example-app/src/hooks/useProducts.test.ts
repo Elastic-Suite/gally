@@ -1,5 +1,5 @@
 import { act, waitFor } from '@testing-library/react'
-import { LoadStatus, ProductRequestType } from 'shared'
+import { LoadStatus, ProductRequestType } from 'gally-admin-shared'
 
 import { renderHookWithProviders } from '../utils/tests'
 

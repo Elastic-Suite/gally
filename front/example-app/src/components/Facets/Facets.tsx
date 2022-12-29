@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from 'react'
 import { Chip, styled } from '@mui/material'
-import { AggregationType, IGraphqlProductAggregation } from 'shared'
+import { AggregationType, IGraphqlProductAggregation } from 'gally-admin-shared'
 
 import { IActiveFilters, IFilterMoreOptions } from '../../types'
 

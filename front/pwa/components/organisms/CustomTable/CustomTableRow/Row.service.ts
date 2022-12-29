@@ -6,7 +6,7 @@ import {
   IStickyStyle,
   reorderingColumnWidth,
   stickyColunWidth,
-} from 'shared'
+} from 'gally-admin-shared'
 import { stickyBorderStyle } from '../CustomTable.service'
 
 export function draggableColumnStyle(

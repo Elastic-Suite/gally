@@ -2,7 +2,7 @@ import { Collapse } from '@mui/material'
 import { styled } from '@mui/system'
 import Link from 'next/link'
 import Image from 'next/image'
-import { IMenu } from 'shared'
+import { IMenu } from 'gally-admin-shared'
 
 import Menu from '~/components/molecules/layout/Menu/Menu'
 

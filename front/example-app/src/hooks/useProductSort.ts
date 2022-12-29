@@ -4,7 +4,7 @@ import {
   IGraphqlCategorySortingOption,
   IOptions,
   SortOrder,
-} from 'shared'
+} from 'gally-admin-shared'
 
 import { getCategorySortingOptionsQuery } from '../constants'
 

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ITabContentProps, ITableConfig, ITableRow } from 'shared'
+import { ITabContentProps, ITableConfig, ITableRow } from 'gally-admin-shared'
 import Alert from '~/components/atoms/Alert/Alert'
 import { useFilters, useResource } from '~/hooks'
 

@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 import { useRouter } from 'next/router'
 
-import { IRouterTab, getRouterPath } from 'shared'
+import { IRouterTab, getRouterPath } from 'gally-admin-shared'
 
 export function useTabs(
   tabs: IRouterTab[]

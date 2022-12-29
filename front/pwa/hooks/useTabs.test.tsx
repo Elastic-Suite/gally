@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 
-import { IRouterTab } from 'shared'
+import { IRouterTab } from 'gally-admin-shared'
 import { renderHookWithProviders } from '~/utils/tests'
 
 import { useTabs } from './useTabs'
