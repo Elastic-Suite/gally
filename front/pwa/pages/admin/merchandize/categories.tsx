@@ -18,7 +18,7 @@ import {
   parseCatConf,
   savePositions,
   serializeCatConf,
-} from 'shared'
+} from 'gally-admin-shared'
 
 import { breadcrumbContext } from '~/contexts'
 import { withAuth, withOptions } from '~/hocs'

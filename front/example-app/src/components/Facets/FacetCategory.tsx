@@ -1,7 +1,7 @@
 import {
   IGraphqlProductAggregation,
   IGraphqlProductAggregationOption,
-} from 'shared'
+} from 'gally-admin-shared'
 import classNames from 'classnames'
 
 import { IFilterChange } from '../../types'

@@ -11,7 +11,7 @@ import {
   getApiUrl,
   getResource,
   updatePropertiesAccordingToPath,
-} from 'shared'
+} from 'gally-admin-shared'
 
 import { selectApi, useAppSelector } from '~/store'
 

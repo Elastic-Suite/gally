@@ -1,5 +1,5 @@
 import { ReactNode, useMemo } from 'react'
-import { IApi, IUser, schemaContext } from 'shared'
+import { IApi, IUser, schemaContext } from 'gally-admin-shared'
 
 import {
   ICatalogContext,

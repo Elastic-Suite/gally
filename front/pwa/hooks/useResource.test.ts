@@ -1,4 +1,4 @@
-import { IHydraMember, fetchApi, resource, resourceWithRef } from 'shared'
+import { IHydraMember, fetchApi, resource, resourceWithRef } from 'gally-admin-shared'
 import { renderHookWithProviders } from '~/utils/tests'
 
 import { useResource, useResourceOperations } from './useResource'

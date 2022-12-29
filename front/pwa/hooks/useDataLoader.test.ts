@@ -1,5 +1,5 @@
 import { PreloadedState } from '@reduxjs/toolkit'
-import { Bundle, LoadStatus, useSchemaLoader } from 'shared'
+import { Bundle, LoadStatus, useSchemaLoader } from 'gally-admin-shared'
 
 import { RootState } from '~/store'
 import { renderHookWithProviders } from '~/utils/tests'

@@ -1,6 +1,6 @@
 import { useContext, useEffect, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
-import { ICategory, ProductRequestType } from 'shared'
+import { ICategory, ProductRequestType } from 'gally-admin-shared'
 
 import { categoryContext } from '../../contexts'
 import { useProducts } from '../../hooks'

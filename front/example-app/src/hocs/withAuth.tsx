@@ -1,6 +1,6 @@
 import { FunctionComponent, useContext, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { isValidUser } from 'shared'
+import { isValidUser } from 'gally-admin-shared'
 
 import { requestedPathContext, userContext } from '../contexts'
 

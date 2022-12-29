@@ -15,7 +15,7 @@ import { useTranslation } from 'next-i18next'
 import classNames from 'classnames'
 import { ModifierArguments, Options } from '@popperjs/core'
 
-import { ITreeItem, flatTree } from 'shared'
+import { ITreeItem, flatTree } from 'gally-admin-shared'
 
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 

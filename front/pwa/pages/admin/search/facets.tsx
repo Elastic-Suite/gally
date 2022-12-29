@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'next-i18next'
-import { ICategories, ICategory } from 'shared'
+import { ICategories, ICategory } from 'gally-admin-shared'
 import { styled } from '@mui/system'
 import classNames from 'classnames'
 

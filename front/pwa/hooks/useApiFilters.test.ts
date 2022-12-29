@@ -1,4 +1,4 @@
-import { resourceWithRef } from 'shared'
+import { resourceWithRef } from 'gally-admin-shared'
 import sourceFields from '~/public/mocks/source_fields.json'
 import { renderHookWithProviders } from '~/utils/tests'
 

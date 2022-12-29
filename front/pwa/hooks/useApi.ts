@@ -24,7 +24,7 @@ import {
   fetchApi,
   getListApiParameters,
   isError,
-} from 'shared'
+} from 'gally-admin-shared'
 
 import { setUser, useAppDispatch } from '~/store'
 

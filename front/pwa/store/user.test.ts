@@ -1,4 +1,4 @@
-import { Role } from 'shared'
+import { Role } from 'gally-admin-shared'
 
 import { RootState } from './store'
 import {

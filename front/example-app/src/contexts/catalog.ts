@@ -1,5 +1,5 @@
 import { createContext } from 'react'
-import { IGraphqlCatalog, ILocalizedCatalog } from 'shared'
+import { IGraphqlCatalog, ILocalizedCatalog } from 'gally-admin-shared'
 
 export interface ICatalogContext {
   catalog: Partial<IGraphqlCatalog>

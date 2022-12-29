@@ -17,11 +17,10 @@ WORKDIR /usr/src/front
 ENV NEXT_TELEMETRY_DISABLED 1
 
 # prevent the reinstallation of node modules at every changes in the source code
-RUN mkdir -p ./example-app/coverage ./pwa/coverage ./shared/coverage
+RUN mkdir -p ./example-app/coverage ./pwa/coverage
 COPY package.json yarn.lock ./
 COPY example-app/package.json ./example-app
 COPY pwa/package.json ./pwa
-COPY shared/package.json ./shared
 
 RUN set -xe; \
 	yarn install --frozen-lockfile;
@@ -30,16 +29,7 @@ COPY . ./
 
 
 
-FROM api_platform_pwa_common AS api_platform_shared_build
-
-RUN set -eux; \
-	yarn build:shared
-
-
-
 FROM api_platform_pwa_common AS api_platform_pwa_ci
-
-COPY --from=api_platform_shared_build /usr/src/front/shared/dist /usr/src/front/shared/dist
 
 CMD ["yarn", "dev"]
 
@@ -47,15 +37,11 @@ CMD ["yarn", "dev"]
 
 FROM api_platform_pwa_common AS api_platform_example_ci
 
-COPY --from=api_platform_shared_build /usr/src/front/shared/dist /usr/src/front/shared/dist
-
 CMD ["yarn", "start:example"]
 
 
 
 FROM api_platform_pwa_ci AS api_platform_pwa_dev
-
-COPY --from=api_platform_shared_build /usr/src/front/shared/dist /usr/src/front/shared/dist
 
 # env variable needed for chokidar-cli
 ENV SHELL /bin/sh
@@ -96,8 +82,6 @@ CMD ["yarn", "start:example"]
 # depends on the "common" stage above
 FROM api_platform_pwa_ci AS api_platform_pwa_int
 
-COPY --from=api_platform_shared_build /usr/src/front/shared/dist /usr/src/front/shared/dist
-
 ENV NODE_ENV production
 ARG NEXT_PUBLIC_ENTRYPOINT
 ARG public_url
@@ -117,8 +101,6 @@ CMD ["yarn", "start"]
 # "build" stage
 # depends on the "common" stage above
 FROM api_platform_pwa_ci AS api_platform_pwa_prod
-
-COPY --from=api_platform_shared_build /usr/src/front/shared/dist /usr/src/front/shared/dist
 
 ENV NODE_ENV production
 ARG NEXT_PUBLIC_ENTRYPOINT

@@ -6,7 +6,7 @@ import {
   IGraphqlSearchProducts,
   IOptions,
   SortOrder,
-} from 'shared'
+} from 'gally-admin-shared'
 
 import { IActiveFilters, IFilterMoreOptions } from './facet'
 

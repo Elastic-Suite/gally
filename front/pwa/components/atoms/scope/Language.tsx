@@ -1,6 +1,6 @@
 import { styled } from '@mui/system'
 
-import { ICatalog, firstLetterUppercase } from 'shared'
+import { ICatalog, firstLetterUppercase } from 'gally-admin-shared'
 
 import PopInCatalogs from './PopInCatalogs'
 

@@ -4,7 +4,7 @@ import {
   IStickyStyle,
   reorderingColumnWidth,
   stickyColunWidth,
-} from 'shared'
+} from 'gally-admin-shared'
 import {
   draggableColumnStyle,
   nonStickyStyle,

@@ -4,7 +4,7 @@ import {
   combinationRule,
   fetchApi,
   isVirtualCategoryEnabled,
-} from 'shared'
+} from 'gally-admin-shared'
 
 import ruleEngineOperators from '~/public/mocks/rule_engine_operators.json'
 import { renderHookWithProviders } from '~/utils/tests'

@@ -1,5 +1,5 @@
 import { List } from '@mui/material'
-import { ICategory } from 'shared'
+import { ICategory } from 'gally-admin-shared'
 
 import MenuItem from './MenuItem'
 

@@ -6,7 +6,7 @@ import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import TitleScope from '~/components/atoms/scope/TitleScope'
 import NbActiveLocales from '~/components/atoms/scope/NbActiveLocales'
 import Language from '~/components/atoms/scope/Language'
-import { ICatalog, getUniqueLocalName } from 'shared'
+import { ICatalog, getUniqueLocalName } from 'gally-admin-shared'
 
 const CustomClose = styled('div')(({ theme }) => ({
   position: 'absolute',

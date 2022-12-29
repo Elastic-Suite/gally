@@ -1,5 +1,5 @@
 import { createContext } from 'react'
-import { IUser } from 'shared'
+import { IUser } from 'gally-admin-shared'
 
 export interface IUserContext {
   user: IUser

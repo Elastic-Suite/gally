@@ -23,7 +23,7 @@ import {
 import AppBar from '~/components/molecules/layout/appBar/AppBar'
 import Sidebar from '~/components/molecules/layout/Sidebar/Sidebar'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
-import { IMenu, LoadStatus, isError, isValidUser } from 'shared'
+import { IMenu, LoadStatus, isError, isValidUser } from 'gally-admin-shared'
 
 /*
  * TODO: THIBO: Update AppBar

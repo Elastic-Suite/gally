@@ -20,7 +20,7 @@ import {
   reorderingColumnWidth,
   selectionColumnWidth,
   stickyColunWidth,
-} from 'shared'
+} from 'gally-admin-shared'
 
 import {
   StyledTable,
