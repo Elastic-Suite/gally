@@ -62,6 +62,12 @@ services:
         tags:
             - { name: elasticsuite.product_api.sort_order_provider, provider_name: 'stock_default' }
 
+    Elasticsuite\Product\GraphQl\Type\Definition\SortOrder\SelectDefaultSortOrderProvider:
+        arguments:
+            - '%api_platform.graphql.nesting_separator%'
+        tags:
+            - { name: elasticsuite.product_api.sort_order_provider, provider_name: 'select' }
+
     Elasticsuite\Product\GraphQl\Type\Definition\SortInputType:
         arguments:
             - '@Elasticsuite\Search\GraphQl\Type\Definition\SortEnumType'

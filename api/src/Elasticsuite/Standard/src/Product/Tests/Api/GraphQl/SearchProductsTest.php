@@ -406,6 +406,24 @@ class SearchProductsTest extends AbstractTest
                 // price_as_nested.price ASC, then score DESC first, then id DESC (missing _first)
                 [2, 1, 3, 12, 11],   // expected ordered document IDs
             ],
+            [
+                'b2c_fr',   // catalog ID.
+                5,     // page size.
+                1,      // current page.
+                ['name' => SortOrderInterface::SORT_ASC], // sort order specifications.
+                'id', // document data identifier.
+                // price_as_nested.price ASC, then score DESC first, then id DESC (missing _first)
+                [10, 9, 5, 2, 3],   // expected ordered document IDs
+            ],
+            [
+                'b2c_fr',   // catalog ID.
+                5,     // page size.
+                1,      // current page.
+                ['brand__label' => SortOrderInterface::SORT_ASC], // sort order specifications.
+                'id', // document data identifier.
+                // price_as_nested.price ASC, then score DESC first, then id DESC (missing _first)
+                [1, 12, 11, 10, 9],   // expected ordered document IDs
+            ],
         ];
     }
 
@@ -554,6 +572,22 @@ class SearchProductsTest extends AbstractTest
                 1,      // current page.
                 ['price_as_nested__price' => SortOrderInterface::SORT_ASC], // sort order specifications.
                 'price_as_nested__price', // expected sort order field.
+                SortOrderInterface::SORT_ASC, // expected sort order direction.
+            ],
+            [
+                'b2c_fr',   // catalog ID.
+                10,     // page size.
+                1,      // current page.
+                ['name' => SortOrderInterface::SORT_ASC], // sort order specifications.
+                'name', // expected sort order field.
+                SortOrderInterface::SORT_ASC, // expected sort order direction.
+            ],
+            [
+                'b2c_fr',   // catalog ID.
+                10,     // page size.
+                1,      // current page.
+                ['brand__label' => SortOrderInterface::SORT_ASC], // sort order specifications.
+                'brand__label', // expected sort order field.
                 SortOrderInterface::SORT_ASC, // expected sort order direction.
             ],
         ];
