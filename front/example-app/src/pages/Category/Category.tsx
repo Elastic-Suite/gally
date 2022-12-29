@@ -52,7 +52,7 @@ function Category(): JSX.Element {
   }, [category, loadProducts])
 
   return (
-    <PageLayout title={category?.name}>
+    <PageLayout title={category?.name} selectCategoryId={category?.id}>
       <TwoColsLayout
         left={
           <Facets

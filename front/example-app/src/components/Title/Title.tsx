@@ -14,7 +14,11 @@ function Title(props: IProps): JSX.Element {
     }
   }, [title])
 
-  return <Typography variant="h1">{title}</Typography>
+  return (
+    <Typography style={{ textAlign: 'center', margin: '16px 0' }} variant="h4">
+      {title}
+    </Typography>
+  )
 }
 
 export default Title

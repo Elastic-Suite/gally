@@ -1,7 +1,6 @@
 import { useContext, useId } from 'react'
 import {
   AppBar,
-  IconButton,
   InputLabel,
   MenuItem,
   Select,
@@ -9,20 +8,15 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material'
-import MenuIcon from '@mui/icons-material/Menu'
 import { Link } from 'react-router-dom'
 
 import { catalogContext } from '../../contexts'
 
 import HeaderFormControl from '../HeaderFormControl/HeaderFormControl'
 import SearchBar from '../SearchBar/SearchBar'
+import Logo from './logo.svg'
 
-interface IProps {
-  onMenuToggle?: () => void
-}
-
-function Header(props: IProps): JSX.Element {
-  const { onMenuToggle } = props
+function Header(): JSX.Element {
   const catalogLabelId = useId()
   const catalogSelectId = useId()
   const localizedCatalogLabelId = useId()
@@ -49,16 +43,17 @@ function Header(props: IProps): JSX.Element {
   return (
     <AppBar component="nav">
       <Toolbar>
-        <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          edge="start"
-          onClick={onMenuToggle}
+        <Typography
+          style={{ display: 'flex', alignItems: 'center', gap: '12px' }}
+          component={Link}
+          sx={{ flexGrow: 1 }}
+          to="/"
+          variant="h6"
         >
-          <MenuIcon />
-        </IconButton>
-        <Typography component={Link} sx={{ flexGrow: 1 }} to="/" variant="h6">
-          Example App
+          <div>
+            <img src={Logo} alt="Logo" />
+          </div>
+          <div>Gally - Example App</div>
         </Typography>
         {Boolean(catalog && localizedCatalog) && (
           <HeaderFormControl size="small">
