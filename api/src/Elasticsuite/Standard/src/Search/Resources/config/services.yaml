@@ -274,8 +274,11 @@ services:
 
     Elasticsuite\Search\Decoration\GraphQl\AddSortInfoData:
         decorates: api_platform.graphql.resolver.stage.serialize
+        decoration_priority: 2
         arguments:
-            - '%api_platform.graphql.nesting_separator%'
+            - !tagged_iterator { tag: 'elasticsuite.product_api.sort_order_provider', index_by: 'provider_name' }
+            - '@Elasticsuite\Search\Service\ReverseSourceFieldProvider'
+            - '@Elasticsuite\Metadata\Repository\MetadataRepository'
             - '@.inner'
 
     Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider: ~

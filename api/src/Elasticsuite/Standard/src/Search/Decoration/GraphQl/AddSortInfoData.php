@@ -17,13 +17,17 @@ declare(strict_types=1);
 namespace Elasticsuite\Search\Decoration\GraphQl;
 
 use ApiPlatform\Core\GraphQl\Resolver\Stage\SerializeStageInterface;
+use Elasticsuite\Metadata\Repository\MetadataRepository;
 use Elasticsuite\Search\DataProvider\Paginator;
 use Elasticsuite\Search\Model\Document;
+use Elasticsuite\Search\Service\ReverseSourceFieldProvider;
 
 class AddSortInfoData implements SerializeStageInterface
 {
     public function __construct(
-        private string $nestingSeparator,
+        private iterable $sortOrderProviders,
+        private ReverseSourceFieldProvider $reverseSourceFieldProvider,
+        private MetadataRepository $metadataRepository,
         private SerializeStageInterface $decorated
     ) {
     }
@@ -33,20 +37,26 @@ class AddSortInfoData implements SerializeStageInterface
         $data = $this->decorated->__invoke($itemOrCollection, $resourceClass, $operationName, $context);
 
         if (Document::class === $resourceClass || is_subclass_of($resourceClass, Document::class)) {
+            $metadata = $this->metadataRepository->findByEntity($context['args']['entityType']);
             /** @var Paginator $itemOrCollection */
             $sortOrders = $itemOrCollection->getCurrentSortOrders();
             if (!empty($sortOrders)) {
                 $data['sortInfo'] = ['current' => []];
                 // TODO handle correctly or filter out \Elasticsuite\Search\Elasticsearch\Builder\Request\SortOrder\Script.
                 foreach ($sortOrders as $sortOrder) {
-                    $data['sortInfo']['current'][] = [
-                        'field' => str_replace(
-                            '.',
-                            $this->nestingSeparator,
-                            $sortOrder->getField()
-                        ),
-                        'direction' => $sortOrder->getDirection(),
-                    ];
+                    $sourceField = $this->reverseSourceFieldProvider->getSourceFieldFromFieldName($sortOrder->getField(), $metadata);
+                    if ($sourceField) {
+                        $fieldName = $sourceField->getCode();
+                        foreach ($this->sortOrderProviders as $sortOrderProvider) {
+                            if ($sortOrderProvider->supports($sourceField)) {
+                                $fieldName = $sortOrderProvider->getSortOrderField($sourceField);
+                            }
+                        }
+                    } else {
+                        $fieldName = $sortOrder->getField();
+                    }
+
+                    $data['sortInfo']['current'][] = ['field' => $fieldName, 'direction' => $sortOrder->getDirection()];
                     break;
                 }
             }

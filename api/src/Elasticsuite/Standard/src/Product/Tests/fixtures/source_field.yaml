@@ -37,7 +37,7 @@ Elasticsuite\Metadata\Model\SourceField:
         weight: 10
         isSearchable: true
         isFilterable: false
-        isSortable: false
+        isSortable: true
         isSpellchecked: true
         isUsedForRules: true
     product_brand:
@@ -45,6 +45,7 @@ Elasticsuite\Metadata\Model\SourceField:
         code: 'brand'
         type: 'select'
         isFilterable: true
+        isSortable: true
     product_color:
         metadata: '@product'
         code: 'color'
