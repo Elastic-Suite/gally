@@ -9,7 +9,7 @@ import {
 import { Link } from 'react-router-dom'
 import ExpandLess from '@mui/icons-material/ExpandLess'
 import ExpandMore from '@mui/icons-material/ExpandMore'
-import { ICategory } from 'shared'
+import { ICategory } from 'gally-admin-shared'
 
 import MenuList from './MenuList'
 

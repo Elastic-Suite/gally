@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 
-import { ITreeItem } from 'shared'
+import { ITreeItem } from 'gally-admin-shared'
 import categories from '~/public/mocks/categories.json'
 
 import Tree from './Tree'

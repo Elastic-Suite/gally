@@ -1,7 +1,7 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { useCallback, useEffect, useState } from 'react'
 
-import { DataContentType, IFieldConfig } from 'shared'
+import { DataContentType, IFieldConfig } from 'gally-admin-shared'
 
 import Filters from './Filters'
 

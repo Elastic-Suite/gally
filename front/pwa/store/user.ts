@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { IUser } from 'shared'
+import { IUser } from 'gally-admin-shared'
 
 import { RootState } from './store'
 

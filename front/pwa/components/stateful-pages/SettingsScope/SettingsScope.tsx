@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import { useTranslation } from 'next-i18next'
 
 import { useApiList, useResource, useTabs } from '~/hooks'
-import { IHydraCatalog, IRouterTab } from 'shared'
+import { IHydraCatalog, IRouterTab } from 'gally-admin-shared'
 
 import SubTabs from '~/components/atoms/subTabs/SubTabs'
 import Catalogs from '~/components/molecules/layout/scope/Catalogs'

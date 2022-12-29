@@ -16,7 +16,7 @@ import {
   ITableConfig,
   ITableRow,
   defaultPageSize,
-} from 'shared'
+} from 'gally-admin-shared'
 
 import StickyBar from '~/components/molecules/CustomTable/StickyBar/StickyBar'
 import PagerTable from '~/components/organisms/PagerTable/PagerTable'

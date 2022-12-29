@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 
-import { resourceWithRef } from 'shared'
+import { resourceWithRef } from 'gally-admin-shared'
 import { renderHookWithProviders } from '~/utils/tests'
 
 import {

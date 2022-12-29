@@ -1,4 +1,4 @@
-import { Role, storageGet } from 'shared'
+import { Role, storageGet } from 'gally-admin-shared'
 
 import { renderHookWithProviders } from '~/utils/tests'
 

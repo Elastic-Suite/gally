@@ -17,7 +17,7 @@ import {
   defaultPageSize,
   defaultRowsPerPageOptions,
   getNameFromDefault,
-} from 'shared'
+} from 'gally-admin-shared'
 
 import {
   useApiEditableList,

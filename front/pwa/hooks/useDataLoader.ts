@@ -5,7 +5,7 @@ import {
   IHydraResponse,
   LoadStatus,
   useSchemaLoader,
-} from 'shared'
+} from 'gally-admin-shared'
 
 import { setData, useAppDispatch } from '~/store'
 

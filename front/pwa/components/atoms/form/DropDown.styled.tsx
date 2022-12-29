@@ -1,5 +1,5 @@
 import { styled } from '@mui/system'
-import { getCustomScrollBarStyles } from 'shared'
+import { getCustomScrollBarStyles } from 'gally-admin-shared'
 
 export const StyledPaper = styled('div')(({ theme }) => ({
   minWidth: '180px',

@@ -1,4 +1,4 @@
-import { DataContentType } from 'shared'
+import { DataContentType } from 'gally-admin-shared'
 import { renderWithProviders } from '~/utils/tests'
 
 import FieldGuesser from '~/components/stateful/FieldGuesser/FieldGuesser'

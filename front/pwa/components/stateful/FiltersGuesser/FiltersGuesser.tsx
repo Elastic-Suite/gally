@@ -7,7 +7,7 @@ import {
   IHydraMember,
   IHydraResponse,
   IResource,
-} from 'shared'
+} from 'gally-admin-shared'
 
 import Filters from '~/components/molecules/Filters/Filters'
 

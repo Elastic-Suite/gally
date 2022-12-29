@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useMemo, useState } from 'react'
-import { IGraphqlCatalogs } from 'shared'
+import { IGraphqlCatalogs } from 'gally-admin-shared'
 
 import { catalogsQuery } from '../../../constants'
 import { catalogContext } from '../../../contexts'

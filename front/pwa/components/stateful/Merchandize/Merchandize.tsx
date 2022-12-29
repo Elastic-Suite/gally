@@ -8,7 +8,7 @@ import {
   getFieldConfig,
   getFieldState,
   isVirtualCategoryEnabled,
-} from 'shared'
+} from 'gally-admin-shared'
 
 import { useResource } from '~/hooks'
 import { selectBundles, useAppSelector } from '~/store'

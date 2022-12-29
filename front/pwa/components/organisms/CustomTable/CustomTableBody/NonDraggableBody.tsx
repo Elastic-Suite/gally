@@ -7,7 +7,7 @@ import {
   ITableConfig,
   ITableHeader,
   ITableRow,
-} from 'shared'
+} from 'gally-admin-shared'
 import NonDraggableRow from '../CustomTableRow/NonDraggableRow'
 
 interface IProps {

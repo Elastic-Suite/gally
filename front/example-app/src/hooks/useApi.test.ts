@@ -1,5 +1,5 @@
 import { act, waitFor } from '@testing-library/react'
-import { IHydraMember, LoadStatus, fetchApi } from 'shared'
+import { IHydraMember, LoadStatus, fetchApi } from 'gally-admin-shared'
 
 import { renderHookWithProviders } from '../utils/tests'
 

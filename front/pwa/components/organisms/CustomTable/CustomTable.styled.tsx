@@ -1,7 +1,7 @@
 import { Table, TableCell, TableContainer } from '@mui/material'
 import { styled } from '@mui/system'
 
-import { getCustomScrollBarStyles } from 'shared'
+import { getCustomScrollBarStyles } from 'gally-admin-shared'
 
 export const TableContainerWithCustomScrollbar = styled(TableContainer)(
   ({ theme }) => ({

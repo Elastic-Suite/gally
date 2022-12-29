@@ -4,7 +4,7 @@ import {
   IGraphqlProductAggregation,
   IGraphqlProductAggregationOption,
   IGraphqlViewMoreFacetOption,
-} from 'shared'
+} from 'gally-admin-shared'
 
 interface IProps {
   filter: IGraphqlProductAggregation

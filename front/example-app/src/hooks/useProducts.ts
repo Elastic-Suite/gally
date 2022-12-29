@@ -12,7 +12,7 @@ import {
   getMoreFacetOptionsQuery,
   getSearchProductsQuery,
   isError,
-} from 'shared'
+} from 'gally-admin-shared'
 
 import { catalogContext } from '../contexts'
 import { IActiveFilters, IFilterMoreOptions, IProductsHook } from '../types'

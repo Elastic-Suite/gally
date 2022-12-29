@@ -12,7 +12,7 @@ import {
   isValidUser,
   storageSet,
   tokenStorageKey,
-} from 'shared'
+} from 'gally-admin-shared'
 
 import Button from '~/components/atoms/buttons/Button'
 import InputText from '~/components/atoms/form/InputText'

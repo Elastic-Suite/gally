@@ -1,4 +1,4 @@
-import { ICategory } from 'shared'
+import { ICategory } from 'gally-admin-shared'
 
 import { findCategory } from './category'
 

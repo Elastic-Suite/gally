@@ -19,7 +19,7 @@ import {
   getOptionsFromEnum,
   getOptionsFromOptionResource,
   isError,
-} from 'shared'
+} from 'gally-admin-shared'
 
 export interface IField {
   id: number | string

@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 import { closeSnackbar, enqueueSnackbar } from 'notistack'
-import { MessageSeverity, NetworkError, log } from 'shared'
+import { MessageSeverity, NetworkError, log } from 'gally-admin-shared'
 
 export function useLog(
   severity: MessageSeverity = 'error'

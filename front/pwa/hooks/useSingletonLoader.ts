@@ -6,7 +6,7 @@ import {
   useRef,
   useState,
 } from 'react'
-import { IFetchApi, ILoadStatuses, LoadStatus } from 'shared'
+import { IFetchApi, ILoadStatuses, LoadStatus } from 'gally-admin-shared'
 
 import { useApiFetch } from '~/hooks'
 
