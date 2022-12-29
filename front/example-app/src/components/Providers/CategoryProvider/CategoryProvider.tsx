@@ -1,5 +1,5 @@
 import { ReactNode, useContext, useEffect, useMemo } from 'react'
-import { IGraphqlCategories } from 'shared'
+import { IGraphqlCategories } from 'gally-admin-shared'
 
 import { getCategoryTreeQuery } from '../../../constants'
 import { catalogContext, categoryContext } from '../../../contexts'

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 
-import { attributeRule, combinationRule } from 'shared'
+import { attributeRule, combinationRule } from 'gally-admin-shared'
 import RuleOptionsTestProvider from '~/utils/RuleOptionsTestProvider'
 
 import Rule from './Rule'

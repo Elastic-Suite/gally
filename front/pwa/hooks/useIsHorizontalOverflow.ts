@@ -1,5 +1,5 @@
 import { useLayoutEffect, useState } from 'react'
-import { IHorizontalOverflow } from 'shared'
+import { IHorizontalOverflow } from 'gally-admin-shared'
 
 export const useIsHorizontalOverflow = (
   current: HTMLDivElement

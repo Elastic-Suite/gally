@@ -1,4 +1,4 @@
-import { firstLetterUppercase } from 'shared'
+import { firstLetterUppercase } from 'gally-admin-shared'
 import InfoTooltip from '../form/InfoTooltip'
 
 interface IProps {

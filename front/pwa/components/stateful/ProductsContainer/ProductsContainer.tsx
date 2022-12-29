@@ -11,7 +11,7 @@ import {
   IProductPositions,
   LoadStatus,
   getProductPosition,
-} from 'shared'
+} from 'gally-admin-shared'
 
 import Button from '~/components/atoms/buttons/Button'
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'

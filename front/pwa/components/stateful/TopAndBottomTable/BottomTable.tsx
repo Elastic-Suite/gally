@@ -17,7 +17,7 @@ import {
   defaultRowsPerPageOptions,
   getSearchProductsQuery,
   productTableheader,
-} from 'shared'
+} from 'gally-admin-shared'
 
 import PagerTable from '../../organisms/PagerTable/PagerTable'
 

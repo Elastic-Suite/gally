@@ -1,4 +1,4 @@
-import { log } from 'shared'
+import { log } from 'gally-admin-shared'
 
 import { renderHookWithProviders } from '../utils/tests'
 

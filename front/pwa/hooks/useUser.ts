@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { getUser, storageGet, tokenStorageKey } from 'shared'
+import { getUser, storageGet, tokenStorageKey } from 'gally-admin-shared'
 
 import { selectToken, setUser, useAppDispatch, useAppSelector } from '~/store'
 

@@ -1,7 +1,7 @@
 import { styled } from '@mui/system'
 
 import { useTranslation } from 'next-i18next'
-import { ICatalog, IHydraResponse, IOptions } from 'shared'
+import { ICatalog, IHydraResponse, IOptions } from 'gally-admin-shared'
 
 import DropDown from '~/components/atoms/form/DropDown'
 

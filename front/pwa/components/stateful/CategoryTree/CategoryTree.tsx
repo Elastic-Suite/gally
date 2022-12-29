@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ICategories, ICategory } from 'shared'
+import { ICategories, ICategory } from 'gally-admin-shared'
 
 import Tree from '~/components/atoms/tree/Tree'
 

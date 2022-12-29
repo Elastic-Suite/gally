@@ -1,5 +1,5 @@
 import { Slider } from '@mui/material'
-import { IGraphqlProductAggregation } from 'shared'
+import { IGraphqlProductAggregation } from 'gally-admin-shared'
 
 import { IFilterChange } from '../../types'
 

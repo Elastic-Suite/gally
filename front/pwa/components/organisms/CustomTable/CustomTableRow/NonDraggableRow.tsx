@@ -10,7 +10,7 @@ import {
   ITableRow,
   getFieldState,
   joinUrlPath,
-} from 'shared'
+} from 'gally-admin-shared'
 
 import {
   BaseTableCell,

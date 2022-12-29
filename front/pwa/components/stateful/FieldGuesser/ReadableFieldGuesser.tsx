@@ -7,7 +7,7 @@ import {
   IPrice,
   IScore,
   IStock,
-} from 'shared'
+} from 'gally-admin-shared'
 
 import Chip from '~/components/atoms/Chip/Chip'
 import Score from '~/components/atoms/score/Score'

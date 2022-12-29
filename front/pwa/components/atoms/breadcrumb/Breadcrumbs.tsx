@@ -1,6 +1,6 @@
 import { Breadcrumbs as MuiBreadcrumbs } from '@mui/material'
 
-import { IMenu, findBreadcrumbLabel, getSlugArray } from 'shared'
+import { IMenu, findBreadcrumbLabel, getSlugArray } from 'gally-admin-shared'
 
 import Breadcrumb from './Breadcrumb'
 

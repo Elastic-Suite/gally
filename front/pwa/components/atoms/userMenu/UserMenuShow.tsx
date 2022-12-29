@@ -1,6 +1,6 @@
 import { styled } from '@mui/system'
 import { useTranslation } from 'next-i18next'
-import { IUser, storageRemove, tokenStorageKey } from 'shared'
+import { IUser, storageRemove, tokenStorageKey } from 'gally-admin-shared'
 import { setUser, useAppDispatch } from '~/store'
 import FormatText from '../formatText/FormatText'
 

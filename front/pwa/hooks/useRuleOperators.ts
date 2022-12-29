@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { IRuleEngineOperators, isError, isVirtualCategoryEnabled } from 'shared'
+import { IRuleEngineOperators, isError, isVirtualCategoryEnabled } from 'gally-admin-shared'
 
 import { selectBundles, useAppSelector } from '~/store'
 

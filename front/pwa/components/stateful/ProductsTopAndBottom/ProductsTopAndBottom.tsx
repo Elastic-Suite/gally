@@ -12,7 +12,7 @@ import {
   IGraphqlProductPosition,
   IProductFieldFilterInput,
   IProductPositions,
-} from 'shared'
+} from 'gally-admin-shared'
 
 import BottomTable from '~/components/stateful/TopAndBottomTable/BottomTable'
 import TopTable from '~/components/stateful/TopAndBottomTable/TopTable'
