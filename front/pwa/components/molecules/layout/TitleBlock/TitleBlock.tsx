@@ -1,7 +1,7 @@
 import { styled } from '@mui/system'
 import { ReactNode } from 'react'
 
-import { getCustomScrollBarStyles } from 'shared'
+import { getCustomScrollBarStyles } from 'gally-admin-shared'
 
 const Title = styled('div')(({ theme }) => ({
   color: theme.palette.colors.neutral[900],

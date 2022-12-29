@@ -1,6 +1,6 @@
 import { styled } from '@mui/system'
 
-import { ICatalog, IHydraResponse, ITabContentProps } from 'shared'
+import { ICatalog, IHydraResponse, ITabContentProps } from 'gally-admin-shared'
 
 import TitleScope from '~/components/atoms/scope/TitleScope'
 import NbActiveLocales from '~/components/atoms/scope/NbActiveLocales'

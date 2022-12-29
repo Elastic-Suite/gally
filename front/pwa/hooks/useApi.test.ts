@@ -8,7 +8,7 @@ import {
   fetchApi,
   log,
   resource,
-} from 'shared'
+} from 'gally-admin-shared'
 
 import * as userStore from '~/store/user'
 import { renderHookWithProviders } from '~/utils/tests'

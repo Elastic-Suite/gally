@@ -15,7 +15,7 @@ import {
   isCombinationRule,
   ruleArrayValueSeparator,
   ruleValueNumberTypes,
-} from 'shared'
+} from 'gally-admin-shared'
 
 import { ruleOptionsContext } from '~/contexts'
 

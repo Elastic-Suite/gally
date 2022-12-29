@@ -1,5 +1,5 @@
 import { styled } from '@mui/system'
-import { IMenu, IMenuChild } from 'shared'
+import { IMenu, IMenuChild } from 'gally-admin-shared'
 
 import MenuItemIcon from '~/components/atoms/menu/MenuItemIcon'
 import MenuItem from '~/components/atoms/menu/MenuItem'

@@ -1,5 +1,5 @@
 import { renderWithProviders } from '~/utils/tests'
-import { DataContentType, ITableHeader, ITableRow } from 'shared'
+import { DataContentType, ITableHeader, ITableRow } from 'gally-admin-shared'
 
 import FieldGuesser from '../FieldGuesser/FieldGuesser'
 

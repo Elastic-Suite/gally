@@ -4,7 +4,7 @@ import { StyledEngineProvider } from '@mui/styled-engine'
 import { Provider } from 'react-redux'
 import { SnackbarProvider } from 'notistack'
 
-import { theme } from 'shared'
+import { theme } from 'gally-admin-shared'
 import { AppStore } from '~/store'
 
 import Alert from '~/components/atoms/Alert/Alert'

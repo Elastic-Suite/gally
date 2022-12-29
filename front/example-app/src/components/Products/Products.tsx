@@ -9,17 +9,18 @@ import {
   TablePagination,
   styled,
 } from '@mui/material'
-
 import {
   IFetch,
   IGraphqlSearchProducts,
   IOptions,
   // LoadStatus,
   SortOrder,
-} from 'shared'
-import ProductCard from './ProductCard'
-import { IProduct } from '../../types/'
+} from 'gally-admin-shared'
 import { Box } from '@mui/system'
+
+import { IProduct } from '../../types/'
+
+import ProductCard from './ProductCard'
 
 const Container = styled('div')({
   display: 'flex',

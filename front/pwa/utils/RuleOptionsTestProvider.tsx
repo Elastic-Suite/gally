@@ -3,7 +3,7 @@ import { ReactNode } from 'react'
 import ruleEngineOperator from '~/public/mocks/rule_engine_operators.json'
 import sourceFields from '~/public/mocks/source_fields.json'
 import sourceFieldLabels from '~/public/mocks/source_field_labels.json'
-import { IRuleEngineOperators, RuleAttributeType } from 'shared'
+import { IRuleEngineOperators, RuleAttributeType } from 'gally-admin-shared'
 
 import RuleOptionsProvider from '~/components/stateful-providers/RuleOptionsProvider/RuleOptionsProvider'
 

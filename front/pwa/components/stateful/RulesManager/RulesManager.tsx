@@ -6,7 +6,7 @@ import {
   ISourceField,
   ISourceFieldLabel,
   RuleAttributeType,
-} from 'shared'
+} from 'gally-admin-shared'
 
 import CombinationRules, {
   ICombinationRulesProps,

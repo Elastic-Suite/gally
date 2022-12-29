@@ -1,4 +1,4 @@
-import { IFetch, IMenu, LoadStatus } from 'shared'
+import { IFetch, IMenu, LoadStatus } from 'gally-admin-shared'
 import {
   IMenuState,
   RootState,

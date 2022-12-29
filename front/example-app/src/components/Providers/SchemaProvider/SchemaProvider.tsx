@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import { schemaContext, useSchemaLoader } from 'shared'
+import { schemaContext, useSchemaLoader } from 'gally-admin-shared'
 
 interface IProps {
   children: ReactNode

@@ -11,7 +11,7 @@ import {
   emptyCombinationRule,
   isAttributeRule,
   isCombinationRule,
-} from 'shared'
+} from 'gally-admin-shared'
 
 import Button from '../buttons/Button'
 import IonIcon from '../IonIcon/IonIcon'

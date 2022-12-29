@@ -11,7 +11,7 @@ import {
   ITableRow,
   getFieldState,
   joinUrlPath,
-} from 'shared'
+} from 'gally-admin-shared'
 
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 import {

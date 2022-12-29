@@ -16,7 +16,7 @@ import {
   isDropdownStaticOptions,
   isError,
   isReferenceField,
-} from 'shared'
+} from 'gally-admin-shared'
 import { selectApi, useAppSelector } from '~/store'
 import { useSingletonLoader } from './useSingletonLoader'
 

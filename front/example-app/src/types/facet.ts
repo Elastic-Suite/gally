@@ -2,7 +2,7 @@ import {
   IFetch,
   IGraphqlProductAggregation,
   IGraphqlViewMoreFacetOption,
-} from 'shared'
+} from 'gally-admin-shared'
 
 export interface IActiveFilter {
   filter: IGraphqlProductAggregation

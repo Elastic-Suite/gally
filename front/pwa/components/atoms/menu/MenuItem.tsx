@@ -1,7 +1,7 @@
 import { Collapse } from '@mui/material'
 import Link from 'next/link'
 import { keyframes, styled } from '@mui/system'
-import { IMenuChild } from 'shared'
+import { IMenuChild } from 'gally-admin-shared'
 
 import IonIcon from '~/components/atoms/IonIcon/IonIcon'
 

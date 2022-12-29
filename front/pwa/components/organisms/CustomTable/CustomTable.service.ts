@@ -1,5 +1,5 @@
 import { ChangeEvent } from 'react'
-import { IStickyBorderStyle, ITableHeader, ITableHeaderSticky } from 'shared'
+import { IStickyBorderStyle, ITableHeader, ITableHeaderSticky } from 'gally-admin-shared'
 
 export function manageStickyHeaders(
   tableHeaders: ITableHeader[]
