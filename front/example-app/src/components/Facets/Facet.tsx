@@ -17,10 +17,18 @@ import FacetChoice from './FacetChoice'
 import FacetLoadMore from './FacetLoadMore'
 import FacetSlider from './FacetSlider'
 
-const Title = styled('h3')({
+const Title = styled('div')({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
+  margin: '8px 0',
+  cursor: 'pointer',
+})
+
+const CustomSeparator = styled('div')({
+  width: '100%',
+  height: '2px',
+  background: '#d7d7d7',
 })
 
 const ExpandMoreIcon = styled(ExpandMore)({
@@ -114,13 +122,14 @@ function Facet(props: IProps): JSX.Element {
 
   return (
     <>
-      <Title id={id}>
+      <Title id={id} onClick={handleToggleOpen}>
         {filter.label}
-        <IconButton onClick={handleToggleOpen} type="button">
+        <IconButton type="button">
           <ExpandMoreIcon className={classnames({ 'is-open': open })} />
         </IconButton>
       </Title>
       <Collapse in={open}>{getFacet()}</Collapse>
+      <CustomSeparator />
     </>
   )
 }
