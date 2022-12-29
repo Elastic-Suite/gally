@@ -85,8 +85,8 @@ function Facets(props: IProps): JSX.Element {
   }
 
   return (
-    <div>
-      <h2>Filters</h2>
+    <div style={{ marginRight: '16px' }}>
+      <h2 style={{ color: '#151A47' }}>Filters</h2>
       <Filters>
         {activeFilters.map(({ filter, value }) => (
           <Chip
