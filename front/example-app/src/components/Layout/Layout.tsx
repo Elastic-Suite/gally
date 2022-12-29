@@ -14,7 +14,8 @@ const Main = styled('div')(({ theme }) => ({
   display: 'flex',
   flex: 1,
   flexDirection: 'column',
-  padding: theme.spacing(3),
+  alignItems: 'center',
+  marginTop: theme.spacing(2),
 }))
 
 interface IProps {
@@ -31,10 +32,20 @@ function Layout(props: IProps): JSX.Element {
 
   return (
     <Page>
-      <Header onMenuToggle={handleMenuToggle} />
+      <Header />
       <Menu menuOpen={menuOpen} onMenuToggle={handleMenuToggle} />
       <Toolbar />
-      <Main>{children}</Main>
+      <Main>
+        <div
+          style={{
+            width: '75%',
+            maxWidth: '1400px',
+            marginBottom: '36px',
+          }}
+        >
+          {children}
+        </div>
+      </Main>
     </Page>
   )
 }

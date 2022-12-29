@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction } from 'react'
 import {
   IFetch,
+  IGraphqlProduct,
   IGraphqlProductAggregation,
   IGraphqlSearchProducts,
   IOptions,
@@ -27,4 +28,9 @@ export interface IProductsHook {
   sort: string
   sortOptions: IOptions<string>
   sortOrder: SortOrder
+}
+
+export interface IProduct extends Omit<IGraphqlProduct, 'price'> {
+  price?: number
+  image?: string
 }
