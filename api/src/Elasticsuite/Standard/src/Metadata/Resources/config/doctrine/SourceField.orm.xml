@@ -30,6 +30,9 @@
             </options>
         </field>
 
+        <!-- Field with value computed dynamically in oder to aggregate sourceField data and search on it. -->
+        <field name="search" type="string" nullable="true" />
+
         <many-to-one field="metadata" target-entity="Elasticsuite\Metadata\Model\Metadata" inversed-by="sourceFields">
             <join-column name="metadata_id" referenced-column-name="id" nullable="false" on-delete="CASCADE" on-update="CASCADE"/>
         </many-to-one>
