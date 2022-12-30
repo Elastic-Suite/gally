@@ -51,3 +51,9 @@ services:
             - '@logger'
         tags:
             - { name: doctrine.event_subscriber }
+
+    Elasticsuite\Metadata\EventSubscriber\GenerateSourceFieldSearch:
+        arguments:
+            - '@Elasticsuite\Metadata\Repository\SourceFieldRepository'
+        tags:
+            - { name: doctrine.event_subscriber }
