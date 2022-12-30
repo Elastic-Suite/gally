@@ -36,6 +36,7 @@ class ConfigurationRepository extends ServiceEntityRepository
 {
     private ?string $categoryId = null;
     private ?Metadata $metadata = null;
+    private ?string $search = null;
 
     public function __construct(
         ManagerRegistry $registry
@@ -61,6 +62,16 @@ class ConfigurationRepository extends ServiceEntityRepository
     public function setMetadata(?Metadata $metadata): void
     {
         $this->metadata = $metadata;
+    }
+
+    public function getSearch(): ?string
+    {
+        return $this->search;
+    }
+
+    public function setSearch(?string $search): void
+    {
+        $this->search = $search;
     }
 
     /**
@@ -127,6 +138,11 @@ class ConfigurationRepository extends ServiceEntityRepository
         if ($this->getMetadata()) {
             $queryBuilder->andWhere('metadata.entity = :entity')
                 ->setParameter('entity', $this->getMetadata()->getEntity());
+        }
+
+        if ($this->getSearch()) {
+            $queryBuilder->andWhere('LOWER(sf.search) LIKE LOWER(:search)')
+                ->setParameter('search', "%{$this->getSearch()}%");
         }
 
         $queryBuilder

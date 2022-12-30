@@ -22,6 +22,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Elasticsuite\Category\Model\Category;
 use Elasticsuite\Entity\Filter\RangeFilterWithDefault;
 use Elasticsuite\Entity\Filter\SearchFilterWithDefault;
+use Elasticsuite\Entity\Filter\VirtualSearchFilter;
 use Elasticsuite\Metadata\Model\SourceField;
 use Elasticsuite\Search\Elasticsearch\Request\BucketInterface;
 use Elasticsuite\User\Constant\Role;
@@ -72,6 +73,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
         ],
     ],
 )]
+#[ApiFilter(VirtualSearchFilter::class, properties: ['search' => ['type' => 'string', 'strategy' => 'ipartial']])]
 #[ApiFilter(SearchFilterWithDefault::class, properties: ['sourceField.metadata.entity' => 'exact', 'category' => 'exact', 'displayMode' => 'exact', 'sortOrder' => 'exact'], arguments: ['defaultValues' => self::DEFAULT_VALUES])]
 #[ApiFilter(RangeFilterWithDefault::class, properties: ['coverageRate', 'maxSize'], arguments: ['defaultValues' => self::DEFAULT_VALUES])]
 class Configuration
