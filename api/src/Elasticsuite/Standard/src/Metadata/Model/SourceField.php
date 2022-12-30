@@ -51,7 +51,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
     denormalizationContext: ['groups' => ['source_field:api']],
 )]
 
-#[ApiFilter(SearchFilter::class, properties: ['code' => 'ipartial', 'type' => 'exact', 'metadata.entity' => 'exact', 'weight' => 'exact'])]
+#[ApiFilter(SearchFilter::class, properties: ['code' => 'ipartial', 'type' => 'exact', 'metadata.entity' => 'exact', 'weight' => 'exact', 'search' => 'ipartial'])]
 #[ApiFilter(SearchColumnsFilter::class, properties: ['defaultLabel' => ['code', 'labels.label']])]
 #[ApiFilter(BooleanFilter::class, properties: ['isSearchable', 'isFilterable', 'isSortable', 'isSpellchecked', 'isUsedForRules'], arguments: ['treatNullAsFalse' => true])]
 class SourceField
@@ -255,6 +255,8 @@ class SourceField
 
     private ?string $nestedCode = null;
 
+    private ?string $search = null;
+
     /** @var Collection<SourceFieldLabel> */
     private Collection $labels;
 
@@ -414,6 +416,18 @@ class SourceField
     public function setIsSystem(bool $isSystem): self
     {
         $this->isSystem = $isSystem;
+
+        return $this;
+    }
+
+    public function getSearch(): ?string
+    {
+        return $this->search;
+    }
+
+    public function setSearch(?string $search): self
+    {
+        $this->search = $search;
 
         return $this;
     }

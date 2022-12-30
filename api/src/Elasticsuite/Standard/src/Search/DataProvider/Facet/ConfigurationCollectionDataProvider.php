@@ -52,13 +52,18 @@ final class ConfigurationCollectionDataProvider implements ContextAwareCollectio
             $category = end($category);
             unset($context['filters']['category']);
         }
-
-        // Manually manage entityType filter to load default value if no category is selected.
+        // Manually manage entityType in order to manage sub entity link.
         if (isset($context['filters']['sourceField.metadata.entity'])) {
             $entityType = $context['filters']['sourceField.metadata.entity'];
             unset($context['filters']['sourceField.metadata.entity']);
             unset($context['filters']['sourceField__metadata__entity']);
             $repository->setMetadata($this->metadataRepository->findByEntity($entityType));
+        }
+        // Manually manage search filter in order to manage sub entity link.
+        if (isset($context['filters']['search'])) {
+            $search = $context['filters']['search'];
+            unset($context['filters']['search']);
+            $repository->setSearch($search);
         }
 
         $repository->setCategoryId($category);
