@@ -43,8 +43,8 @@ export function useProducts(
 
   const [products, setProducts, load, debouncedLoad] =
     useGraphqlApi<IGraphqlSearchProducts>()
-  const field = products.data?.products.sortInfo.current[0].field
-  const direction = products.data?.products.sortInfo.current[0].direction
+  const field = products.data?.products?.sortInfo.current[0].field
+  const direction = products.data?.products?.sortInfo.current[0].direction
 
   useEffect(() => {
     setSort((prevState) => {
@@ -78,13 +78,12 @@ export function useProducts(
           variables.sort = { [sort]: sortOrder }
         }
         const loadFunction = activeFilters.length === 0 ? load : debouncedLoad
-        loadFunction(
+        return loadFunction(
           getSearchProductsQuery(queryFilters, true),
           variables as unknown as Record<string, unknown>
         )
-      } else {
-        setProducts(null)
       }
+      setProducts(null)
     },
     [
       activeFilters,

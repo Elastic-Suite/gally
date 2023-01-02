@@ -111,7 +111,7 @@ describe('useApi', () => {
   })
 
   describe('useApiList', () => {
-    it('calls and return the list result with pagination disabled', async () => {
+    it('calls and return the list result', async () => {
       ;(fetchApi as jest.Mock).mockClear()
       const { result } = renderHookWithProviders(() =>
         useApiList('/list', false)
@@ -125,51 +125,7 @@ describe('useApi', () => {
       expect(fetchApi).toHaveBeenCalledWith(
         'en',
         '/list',
-        { pagination: false },
         undefined,
-        true
-      )
-    })
-
-    it('calls and return the list result with pagination enabled', async () => {
-      ;(fetchApi as jest.Mock).mockClear()
-      const { result } = renderHookWithProviders(() => useApiList('/list'))
-      await waitFor(() =>
-        expect(result.current[0]).toEqual({
-          status: LoadStatus.SUCCEEDED,
-          data: { hello: 'world' },
-        })
-      )
-      expect(fetchApi).toHaveBeenCalledWith(
-        'en',
-        '/list',
-        { pagination: true, pageSize: 50, currentPage: 1 },
-        undefined,
-        true
-      )
-    })
-
-    it('calls and return the list result with page and filters', async () => {
-      ;(fetchApi as jest.Mock).mockClear()
-      const params = { foo: 'bar' }
-      const { result } = renderHookWithProviders(() =>
-        useApiList('/list', 2, undefined, params)
-      )
-      await waitFor(() =>
-        expect(result.current[0]).toEqual({
-          status: LoadStatus.SUCCEEDED,
-          data: { hello: 'world' },
-        })
-      )
-      expect(fetchApi).toHaveBeenCalledWith(
-        'en',
-        '/list',
-        {
-          pagination: true,
-          pageSize: 50,
-          currentPage: 3,
-          foo: 'bar',
-        },
         undefined,
         true
       )

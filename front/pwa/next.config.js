@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { i18n } = require('./next-i18next.config')
+// const { i18n } = require('./next-i18next.config')
+const { nextI18nConfig } = require('gally-admin-components')
 
 module.exports = {
   headers() {
@@ -23,7 +24,7 @@ module.exports = {
     }
     return []
   },
-  i18n,
+  i18n: nextI18nConfig.i18n,
   redirects() {
     return [
       {

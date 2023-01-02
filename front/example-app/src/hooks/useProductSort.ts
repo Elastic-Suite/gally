@@ -24,7 +24,7 @@ export function useProductSort(): [
     useGraphqlApi<IGraphqlCategorySortingOption>()
   const sortOptions: IOptions<string> = useMemo(
     () =>
-      categorySortingOptions.data?.categorySortingOptions.map(
+      categorySortingOptions.data?.categorySortingOptions?.map(
         (obj: ICategorySortingOption) => ({
           value: obj.code,
           label: obj.label,
