@@ -47,19 +47,7 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
             'api_platform',
             [
                 'mapping' => [
-                    'paths' => [
-                        __DIR__ . '/../Index/Model/',
-                        __DIR__ . '/../Metadata/Model/',
-                        __DIR__ . '/../Catalog/Model/',
-                        __DIR__ . '/../Security/Model/',
-                        __DIR__ . '/../Menu/Model/',
-                        __DIR__ . '/../Search/Model/',
-                        __DIR__ . '/../Category/Model/',
-                        __DIR__ . '/../Product/Model/',
-                        __DIR__ . '/../RuleEngine/Model/',
-                        __DIR__ . '/../Bundle/Model/',
-                        __DIR__ . '/../Configuration/Model/',
-                    ],
+                    'paths' => $this->getPaths(__DIR__ . '/../*/Model/'),
                 ],
             ]
         );
@@ -68,39 +56,25 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
             'framework',
             [
                 'translator' => [
-                    'paths' => [
-                        __DIR__ . '/../Example/Resources/translations',
-                        __DIR__ . '/../Menu/Resources/translations',
-                        __DIR__ . '/../Catalog/Resources/translations',
-                        __DIR__ . '/../User/Resources/translations',
-                    ],
+                    'paths' => $this->getPaths(__DIR__ . '/../*/Resources/translations'),
                 ],
                 'validation' => [
                     'enabled' => true,
                     'mapping' => [
-                        'paths' => [
-                            __DIR__ . '/../Catalog/Resources/config/validator',
-                            __DIR__ . '/../Category/Resources/config/validator',
-                            __DIR__ . '/../Metadata/Resources/config/validator',
-                            __DIR__ . '/../Search/Resources/config/validator',
-                        ],
+                        'paths' => $this->getPaths(__DIR__ . '/../*/Resources/config/validator'),
                     ],
                 ],
             ]
         );
 
-        $container->prependExtensionConfig(
-            'hautelook_alice',
-            [
-                'fixtures_path' => [
-                    'src/User/DataFixtures/fixtures',
-                    'src/Catalog/DataFixtures/fixtures',
-                    'src/Metadata/DataFixtures/fixtures',
-                    'src/Category/DataFixtures/fixtures',
-                    'src/Search/DataFixtures/fixtures',
-                ],
-            ]
-        );
+        $fixturePaths = $this->getPaths(__DIR__ . '/../*/DataFixtures/fixtures', __DIR__ . '/../../');
+        if ('dev' === $container->getParameter('kernel.environment')) {
+            $fixturePaths = array_merge(
+                $fixturePaths,
+                $this->getPaths(__DIR__ . '/../*/DataFixtures/sample_data', __DIR__ . '/../../')
+            );
+        }
+        $container->prependExtensionConfig('hautelook_alice', ['fixtures_path' => $fixturePaths]);
 
         $this->loadElasticsuiteConfig($container);
     }
@@ -112,49 +86,19 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        $loader = new YamlFileLoader(
-            $container,
-            new FileLocator(__DIR__ . '/../')
-        );
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../'));
 
-        $loader->load('Example/Resources/config/services.yaml');
-        $loader->load('Index/Resources/config/services.yaml');
-        $loader->load('Metadata/Resources/config/services.yaml');
-        if ('test' === $container->getParameter('kernel.environment')) {
-            $loader->load('Index/Resources/config/test/services.yaml');
+        $paths = $this->getPaths(__DIR__ . '/../*/Resources/config/services.yaml', __DIR__ . '/../');
+        foreach ($paths as $path) {
+            $loader->load($path);
         }
-        $loader->load('Fixture/Resources/config/services.yaml');
-        $loader->load('Catalog/Resources/config/services.yaml');
+
         if ('test' === $container->getParameter('kernel.environment')) {
-            $loader->load('Catalog/Resources/config/test/services.yaml');
+            $paths = $this->getPaths(__DIR__ . '/../*/Resources/config/test/services.yaml', __DIR__ . '/../');
+            foreach ($paths as $path) {
+                $loader->load($path);
+            }
         }
-        $loader->load('User/Resources/config/services.yaml');
-        $loader->load('Security/Resources/config/services.yaml');
-        $loader->load('Cache/Resources/config/services.yaml');
-        $loader->load('Menu/Resources/config/services.yaml');
-        $loader->load('ResourceMetadata/Resources/config/services.yaml');
-        $loader->load('Stitching/Resources/config/services.yaml');
-        $loader->load('Entity/Resources/config/services.yaml');
-        $loader->load('Search/Resources/config/services.yaml');
-        if ('test' === $container->getParameter('kernel.environment')) {
-            $loader->load('Search/Resources/config/test/services.yaml');
-        }
-        $loader->load('Category/Resources/config/services.yaml');
-        if ('test' === $container->getParameter('kernel.environment')) {
-            $loader->load('Category/Resources/config/test/services.yaml');
-        }
-        $loader->load('Product/Resources/config/services.yaml');
-        if ('test' === $container->getParameter('kernel.environment')) {
-            $loader->load('Product/Resources/config/test/services.yaml');
-        }
-        $loader->load('Analysis/Resources/config/services.yaml');
-        $loader->load('Hydra/Resources/config/services.yaml');
-        $loader->load('Locale/Resources/config/services.yaml');
-        $loader->load('GraphQl/Resources/config/services.yaml');
-        $loader->load('RuleEngine/Resources/config/services.yaml');
-        $loader->load('OpenApi/Resources/config/services.yaml');
-        $loader->load('Bundle/Resources/config/services.yaml');
-        $loader->load('Configuration/Resources/config/services.yaml');
 
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
@@ -182,28 +126,22 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
         $yamlParser ??= new YamlParser(); // @phpstan-ignore-line
         $isTestMode = 'test' === $container->getParameter('kernel.environment');
 
-        $configFiles = [
-            __DIR__ . '/../Index/Resources/config/elasticsuite.yaml',
-            __DIR__ . '/../Search/Resources/config/elasticsuite.yaml',
-            __DIR__ . '/../Product/Resources/config/elasticsuite.yaml',
-            __DIR__ . '/../Analysis/Resources/config/elasticsuite_analysis.yaml',
-            __DIR__ . '/../Search/Resources/config/elasticsuite_relevance.yaml',
-            __DIR__ . '/../Configuration/Resources/config/elasticsuite_configuration.yaml',
-        ];
+        $configFiles = array_merge(
+            $this->getPaths(__DIR__ . '/../*/Resources/config/elasticsuite.yaml'),
+            $this->getPaths(__DIR__ . '/../*/Resources/config/elasticsuite_analysis.yaml'),
+            $this->getPaths(__DIR__ . '/../*/Resources/config/elasticsuite_relevance.yaml'),
+            $this->getPaths(__DIR__ . '/../*/Resources/config/elasticsuite_configuration.yaml'),
+        );
 
         if ($isTestMode) {
-            array_unshift($configFiles, __DIR__ . '/../Index/Resources/config/test/elasticsuite.yaml');
-            $configFiles[] = __DIR__ . '/../Menu/Resources/config/test/elasticsuite_menu.yaml';
-            $configFiles[] = __DIR__ . '/../Search/Resources/config/test/elasticsuite_relevance.yaml';
+            $configFiles = array_merge(
+                $this->getPaths(__DIR__ . '/../*/Resources/config/test/elasticsuite*.yaml'),
+                $configFiles,
+            );
         } else {
             $configFiles = array_merge(
                 $configFiles,
-                [
-                    __DIR__ . '/../Catalog/Resources/config/elasticsuite_menu.yaml',
-                    __DIR__ . '/../User/Resources/config/elasticsuite_menu.yaml',
-                    __DIR__ . '/../Menu/Resources/config/elasticsuite_menu.yaml',
-                    __DIR__ . '/../Search/Resources/config/elasticsuite_relevance.yaml',
-                ]
+                $this->getPaths(__DIR__ . '/../*/Resources/config/elasticsuite_menu.yaml'),
             );
         }
 
@@ -213,5 +151,15 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
                 $yamlParser->parseFile($configFile, Yaml::PARSE_CONSTANT)['elasticsuite'] ?? []
             );
         }
+    }
+
+    private function getPaths(string $pattern, ?string $relativeTo = null): array
+    {
+        $relativeTo = $relativeTo ? realpath($relativeTo) . '/' : '';
+
+        return array_map(
+            fn ($path) => str_replace($relativeTo, '', realpath($path)),
+            glob($pattern)
+        );
     }
 }

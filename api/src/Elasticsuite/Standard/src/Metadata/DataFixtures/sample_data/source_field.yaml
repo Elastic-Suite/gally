@@ -1,5 +1,5 @@
 include:
-    - metadata.yaml
+    - ../fixtures/metadata.yaml
 
 Elasticsuite\Metadata\Model\SourceField:
     product_accessory_announcement_date:
