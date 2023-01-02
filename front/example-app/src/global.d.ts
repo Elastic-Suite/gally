@@ -1,1 +1,1 @@
-// import 'shared'
+// import 'gally-admin-shared'

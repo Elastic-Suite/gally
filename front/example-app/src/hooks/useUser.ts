@@ -1,5 +1,11 @@
 import { useCallback, useMemo, useState } from 'react'
-import { IUser, getUser, storageGet, storageSet, tokenStorageKey } from 'gally-admin-shared'
+import {
+  IUser,
+  getUser,
+  storageGet,
+  storageSet,
+  tokenStorageKey,
+} from 'gally-admin-shared'
 
 import { useLog } from './useLog'
 
