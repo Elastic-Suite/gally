@@ -1799,3 +1799,1154 @@ Elasticsuite\Metadata\Model\SourceFieldOption:
         source_field: '@product_visibility'
         position: 3
         defaultLabel: 'Catalog, Search'
+    product_activity_option_13:
+        code: '0'
+        source_field: '@product_activity'
+        position: 0
+        defaultLabel: Hike
+    product_activity_option_14:
+        code: '1'
+        source_field: '@product_activity'
+        position: 1
+        defaultLabel: Outdoor
+    product_activity_option_15:
+        code: '2'
+        source_field: '@product_activity'
+        position: 2
+        defaultLabel: Running
+    product_activity_option_16:
+        code: '3'
+        source_field: '@product_activity'
+        position: 3
+        defaultLabel: Warmup
+    product_activity_option_17:
+        code: '4'
+        source_field: '@product_activity'
+        position: 4
+        defaultLabel: Yoga
+    product_activity_option_18:
+        code: '5'
+        source_field: '@product_activity'
+        position: 5
+        defaultLabel: Recreation
+    product_activity_option_19:
+        code: '6'
+        source_field: '@product_activity'
+        position: 6
+        defaultLabel: Lounge
+    product_activity_option_20:
+        code: '7'
+        source_field: '@product_activity'
+        position: 7
+        defaultLabel: Gym
+    product_activity_option_21:
+        code: '8'
+        source_field: '@product_activity'
+        position: 8
+        defaultLabel: Climbing
+    product_activity_option_22:
+        code: '9'
+        source_field: '@product_activity'
+        position: 9
+        defaultLabel: Crosstraining
+    product_activity_option_23:
+        code: '10'
+        source_field: '@product_activity'
+        position: 10
+        defaultLabel: Post-workout
+    product_activity_option_24:
+        code: '11'
+        source_field: '@product_activity'
+        position: 11
+        defaultLabel: Cycling
+    product_activity_option_25:
+        code: '12'
+        source_field: '@product_activity'
+        position: 12
+        defaultLabel: Athletic
+    product_activity_option_26:
+        code: '13'
+        source_field: '@product_activity'
+        position: 13
+        defaultLabel: Sports
+    product_activity_option_27:
+        code: '14'
+        source_field: '@product_activity'
+        position: 14
+        defaultLabel: Hiking
+    product_activity_option_28:
+        code: '15'
+        source_field: '@product_activity'
+        position: 15
+        defaultLabel: Overnight
+    product_activity_option_29:
+        code: '16'
+        source_field: '@product_activity'
+        position: 16
+        defaultLabel: School
+    product_activity_option_30:
+        code: '17'
+        source_field: '@product_activity'
+        position: 17
+        defaultLabel: Trail
+    product_activity_option_31:
+        code: '18'
+        source_field: '@product_activity'
+        position: 18
+        defaultLabel: Travel
+    product_activity_option_32:
+        code: '19'
+        source_field: '@product_activity'
+        position: 19
+        defaultLabel: Urban
+    product_allow_open_amount_option_0:
+        code: '0'
+        source_field: '@product_allow_open_amount'
+        position: 0
+        defaultLabel: '0'
+    product_allow_open_amount_option_1:
+        code: '1'
+        source_field: '@product_allow_open_amount'
+        position: 1
+        defaultLabel: '1'
+    product_category_gear_option_94:
+        code: '0'
+        source_field: '@product_category_gear'
+        position: 0
+        defaultLabel: Cardio
+    product_category_gear_option_95:
+        code: '1'
+        source_field: '@product_category_gear'
+        position: 1
+        defaultLabel: Electronic
+    product_category_gear_option_96:
+        code: '2'
+        source_field: '@product_category_gear'
+        position: 2
+        defaultLabel: Exercise
+    product_category_gear_option_97:
+        code: '3'
+        source_field: '@product_category_gear'
+        position: 3
+        defaultLabel: Fashion
+    product_category_gear_option_98:
+        code: '4'
+        source_field: '@product_category_gear'
+        position: 4
+        defaultLabel: Hydration
+    product_category_gear_option_99:
+        code: '5'
+        source_field: '@product_category_gear'
+        position: 5
+        defaultLabel: Timepiece
+    product_climate_option_210:
+        code: '0'
+        source_field: '@product_climate'
+        position: 0
+        defaultLabel: All-Weather
+    product_climate_option_211:
+        code: '1'
+        source_field: '@product_climate'
+        position: 1
+        defaultLabel: Cold
+    product_climate_option_212:
+        code: '2'
+        source_field: '@product_climate'
+        position: 2
+        defaultLabel: Cool
+    product_climate_option_213:
+        code: '3'
+        source_field: '@product_climate'
+        position: 3
+        defaultLabel: Indoor
+    product_climate_option_214:
+        code: '4'
+        source_field: '@product_climate'
+        position: 4
+        defaultLabel: Mild
+    product_climate_option_215:
+        code: '5'
+        source_field: '@product_climate'
+        position: 5
+        defaultLabel: Rainy
+    product_climate_option_216:
+        code: '6'
+        source_field: '@product_climate'
+        position: 6
+        defaultLabel: Spring
+    product_climate_option_217:
+        code: '7'
+        source_field: '@product_climate'
+        position: 7
+        defaultLabel: Warm
+    product_climate_option_218:
+        code: '8'
+        source_field: '@product_climate'
+        position: 8
+        defaultLabel: Windy
+    product_climate_option_219:
+        code: '9'
+        source_field: '@product_climate'
+        position: 9
+        defaultLabel: Wintry
+    product_climate_option_220:
+        code: '10'
+        source_field: '@product_climate'
+        position: 10
+        defaultLabel: Hot
+    product_collar_option_189:
+        code: '0'
+        source_field: '@product_collar'
+        position: 0
+        defaultLabel: N/A
+    product_collar_option_190:
+        code: '1'
+        source_field: '@product_collar'
+        position: 1
+        defaultLabel: '? zip'
+    product_collar_option_191:
+        code: '2'
+        source_field: '@product_collar'
+        position: 2
+        defaultLabel: 'Boat Neck'
+    product_collar_option_192:
+        code: '3'
+        source_field: '@product_collar'
+        position: 3
+        defaultLabel: Crew
+    product_collar_option_193:
+        code: '4'
+        source_field: '@product_collar'
+        position: 4
+        defaultLabel: 'Full zip'
+    product_collar_option_194:
+        code: '5'
+        source_field: '@product_collar'
+        position: 5
+        defaultLabel: V-neck
+    product_collar_option_195:
+        code: '6'
+        source_field: '@product_collar'
+        position: 6
+        defaultLabel: Ballet
+    product_collar_option_196:
+        code: '7'
+        source_field: '@product_collar'
+        position: 7
+        defaultLabel: Scoop
+    product_collar_option_197:
+        code: '8'
+        source_field: '@product_collar'
+        position: 8
+        defaultLabel: 'High Collar'
+    product_collar_option_198:
+        code: '9'
+        source_field: '@product_collar'
+        position: 9
+        defaultLabel: 'Stand Collar'
+    product_collar_option_199:
+        code: '10'
+        source_field: '@product_collar'
+        position: 10
+        defaultLabel: 'Roll Neck'
+    product_collar_option_200:
+        code: '11'
+        source_field: '@product_collar'
+        position: 11
+        defaultLabel: 'Square Neck'
+    product_color_option_58:
+        code: '0'
+        source_field: '@product_color'
+        position: 0
+        defaultLabel: Black
+    product_color_option_59:
+        code: '1'
+        source_field: '@product_color'
+        position: 1
+        defaultLabel: Blue
+    product_color_option_60:
+        code: '2'
+        source_field: '@product_color'
+        position: 2
+        defaultLabel: Brown
+    product_color_option_61:
+        code: '3'
+        source_field: '@product_color'
+        position: 3
+        defaultLabel: Gray
+    product_color_option_62:
+        code: '4'
+        source_field: '@product_color'
+        position: 4
+        defaultLabel: Green
+    product_color_option_63:
+        code: '5'
+        source_field: '@product_color'
+        position: 5
+        defaultLabel: Lavender
+    product_color_option_64:
+        code: '6'
+        source_field: '@product_color'
+        position: 6
+        defaultLabel: Multi  
+    product_color_option_65:
+        code: '7'
+        source_field: '@product_color'
+        position: 7
+        defaultLabel: Orange
+    product_color_option_66:
+        code: '8'
+        source_field: '@product_color'
+        position: 8
+        defaultLabel: Purple
+    product_color_option_67:
+        code: '9'
+        source_field: '@product_color'
+        position: 9
+        defaultLabel: Red
+    product_color_option_68:
+        code: '10'
+        source_field: '@product_color'
+        position: 10
+        defaultLabel: White
+    product_color_option_69:
+        code: '11'
+        source_field: '@product_color'
+        position: 11
+        defaultLabel: Yellow
+    product_eco_collection_option_1:
+        code: '0'
+        source_field: '@product_eco_collection'
+        position: 0
+        defaultLabel: '0'
+    product_eco_collection_option_0:
+        code: '1'
+        source_field: '@product_eco_collection'
+        position: 1
+        defaultLabel: '1'
+    product_erin_recommends_option_1:
+        code: '0'
+        source_field: '@product_erin_recommends'
+        position: 0
+        defaultLabel: '0'
+    product_erin_recommends_option_0:
+        code: '1'
+        source_field: '@product_erin_recommends'
+        position: 1
+        defaultLabel: '1'
+    product_es_is_discounted_option_1:
+        code: '0'
+        source_field: '@product_es_is_discounted'
+        position: 0
+        defaultLabel: '0'
+    product_es_is_discounted_option_0:
+        code: '1'
+        source_field: '@product_es_is_discounted'
+        position: 1
+        defaultLabel: '1'
+    product_es_is_in_stock_option_1:
+        code: '0'
+        source_field: '@product_es_is_in_stock'
+        position: 0
+        defaultLabel: '0'
+    product_es_is_in_stock_option_0:
+        code: '1'
+        source_field: '@product_es_is_in_stock'
+        position: 1
+        defaultLabel: '0'
+    product_features_bags_option_78:
+        code: '0'
+        source_field: '@product_features_bags'
+        position: 0
+        defaultLabel: 'Audio Pocket'
+    product_features_bags_option_79:
+        code: '1'
+        source_field: '@product_features_bags'
+        position: 1
+        defaultLabel: Wheeled
+    product_features_bags_option_80:
+        code: '2'
+        source_field: '@product_features_bags'
+        position: 2
+        defaultLabel: 'Hydration Pocket'
+    product_features_bags_option_81:
+        code: '3'
+        source_field: '@product_features_bags'
+        position: 3
+        defaultLabel: 'Audio Pocket'
+    product_features_bags_option_82:
+        code: '4'
+        source_field: '@product_features_bags'
+        position: 4
+        defaultLabel: Flapover
+    product_features_bags_option_83:
+        code: '5'
+        source_field: '@product_features_bags'
+        position: 5
+        defaultLabel: Waterproof
+    product_features_bags_option_84:
+        code: '6'
+        source_field: '@product_features_bags'
+        position: 6
+        defaultLabel: Lightweight
+    product_features_bags_option_85:
+        code: '7'
+        source_field: '@product_features_bags'
+        position: 7
+        defaultLabel: 'TSA Approved'
+    product_features_bags_option_86:
+        code: '8'
+        source_field: '@product_features_bags'
+        position: 8
+        defaultLabel: Reflective
+    product_features_bags_option_87:
+        code: '9'
+        source_field: '@product_features_bags'
+        position: 9
+        defaultLabel: 'Laptop Sleeve'
+    product_features_bags_option_88:
+        code: '10'
+        source_field: '@product_features_bags'
+        position: 10
+        defaultLabel: Lockable
+    product_format_option_111:
+        code: '0'
+        source_field: '@product_format'
+        position: 0
+        defaultLabel: Download
+    product_format_option_112:
+        code: '1'
+        source_field: '@product_format'
+        position: 1
+        defaultLabel: DVD
+    product_gender_option_89:
+        code: '0'
+        source_field: '@product_gender'
+        position: 0
+        defaultLabel: Men
+    product_gender_option_90:
+        code: '1'
+        source_field: '@product_gender'
+        position: 1
+        defaultLabel: Women
+    product_gender_option_91:
+        code: '2'
+        source_field: '@product_gender'
+        position: 2
+        defaultLabel: Boys
+    product_gender_option_92:
+        code: '3'
+        source_field: '@product_gender'
+        position: 3
+        defaultLabel: Girls
+    product_gender_option_93:
+        code: '4'
+        source_field: '@product_gender'
+        position: 4
+        defaultLabel: Unisex
+    product_giftcard_type_option_0:
+        code: '0'
+        source_field: '@product_giftcard_type'
+        position: 0
+        defaultLabel: '0'
+    product_giftcard_type_option_1:
+        code: '1'
+        source_field: '@product_giftcard_type'
+        position: 1
+        defaultLabel: '1'
+    product_giftcard_type_option_2:
+        code: '2'
+        source_field: '@product_giftcard_type'
+        position: 2
+        defaultLabel: '2'
+    product_gift_wrapping_available_option_1:
+        code: '0'
+        source_field: '@product_gift_wrapping_available'
+        position: 0
+        defaultLabel: '0'
+    product_gift_wrapping_available_option_0:
+        code: '1'
+        source_field: '@product_gift_wrapping_available'
+        position: 1
+        defaultLabel: '1'
+    product_gift_wrapping_available_option_2:
+        code: '2'
+        source_field: '@product_gift_wrapping_available'
+        position: 2
+        defaultLabel: '2'
+    product_is_returnable_option_1:
+        code: '0'
+        source_field: '@product_is_returnable'
+        position: 0
+        defaultLabel: '0'
+    product_is_returnable_option_0:
+        code: '1'
+        source_field: '@product_is_returnable'
+        position: 1
+        defaultLabel: '1'
+    product_material_option_40:
+        code: '10'
+        source_field: '@product_material'
+        position: 0
+        defaultLabel: Burlap
+    product_material_option_151:
+        code: '151'
+        source_field: '@product_material'
+        position: 0
+        defaultLabel: 'Cocona® performance fabric'
+    product_material_option_41:
+        code: '41'
+        source_field: '@product_material'
+        position: 1
+        defaultLabel: Canvas
+    product_material_option_152:
+        code: '152'
+        source_field: '@product_material'
+        position: 1
+        defaultLabel: Wool
+    product_material_option_42:
+        code: '42'
+        source_field: '@product_material'
+        position: 2
+        defaultLabel: Cotton
+    product_material_option_153:
+        code: '153'
+        source_field: '@product_material'
+        position: 2
+        defaultLabel: Fleece
+    product_material_option_43:
+        code: '43'
+        source_field: '@product_material'
+        position: 3
+        defaultLabel: 'Faux Leather'
+    product_material_option_154:
+        code: '154'
+        source_field: '@product_material'
+        position: 3
+        defaultLabel: Hemp
+    product_material_option_155:
+        code: '155'
+        source_field: '@product_material'
+        position: 4
+        defaultLabel: Jersey
+    product_material_option_44:
+        code: '44'
+        source_field: '@product_material'
+        position: 4
+        defaultLabel: Leather
+    product_material_option_156:
+        code: '156'
+        source_field: '@product_material'
+        position: 5
+        defaultLabel: 'LumaTech&trade;'
+    product_material_option_45:
+        code: '45'
+        source_field: '@product_material'
+        position: 5
+        defaultLabel: Mesh
+    product_material_option_157:
+        code: '157'
+        source_field: '@product_material'
+        position: 6
+        defaultLabel: 'Lycra&reg;'
+    product_material_option_46:
+        code: '46'
+        source_field: '@product_material'
+        position: 6
+        defaultLabel: Nylon
+    product_material_option_158:
+        code: '158'
+        source_field: '@product_material'
+        position: 7
+        defaultLabel: Microfiber
+    product_material_option_47:
+        code: '47'
+        source_field: '@product_material'
+        position: 7
+        defaultLabel: Polyester
+    product_material_option_48:
+        code: '48'
+        source_field: '@product_material'
+        position: 8
+        defaultLabel: Rayon
+    product_material_option_159:
+        code: '159'
+        source_field: '@product_material'
+        position: 8
+        defaultLabel: Spandex
+    product_material_option_160:
+        code: '160'
+        source_field: '@product_material'
+        position: 9
+        defaultLabel: 'HeatTec&reg;'
+    product_material_option_49:
+        code: '49'
+        source_field: '@product_material'
+        position: 9
+        defaultLabel: Ripstop
+    product_material_option_161:
+        code: '161'
+        source_field: '@product_material'
+        position: 10
+        defaultLabel: 'EverCool&trade;'
+    product_material_option_50:
+        code: '50'
+        source_field: '@product_material'
+        position: 10
+        defaultLabel: Suede
+    product_material_option_51:
+        code: '61'
+        source_field: '@product_material'
+        position: 11
+        defaultLabel: Foam
+    product_material_option_162:
+        code: '162'
+        source_field: '@product_material'
+        position: 11
+        defaultLabel: 'Organic Cotton'
+    product_material_option_52:
+        code: '52'
+        source_field: '@product_material'
+        position: 12
+        defaultLabel: Metal
+    product_material_option_163:
+        code: '163'
+        source_field: '@product_material'
+        position: 12
+        defaultLabel: TENCEL
+    product_material_option_164:
+        code: '164'
+        source_field: '@product_material'
+        position: 13
+        defaultLabel: 'CoolTech&trade;'
+    product_material_option_53:
+        code: '53'
+        source_field: '@product_material'
+        position: 13
+        defaultLabel: Plastic
+    product_material_option_165:
+        code: '165'
+        source_field: '@product_material'
+        position: 14
+        defaultLabel: Khaki
+    product_material_option_54:
+        code: '54'
+        source_field: '@product_material'
+        position: 14
+        defaultLabel: Rubber
+    product_material_option_166:
+        code: '166'
+        source_field: '@product_material'
+        position: 15
+        defaultLabel: Linen
+    product_material_option_55:
+        code: '55'
+        source_field: '@product_material'
+        position: 15
+        defaultLabel: Synthetic
+    product_material_option_56:
+        code: '56'
+        source_field: '@product_material'
+        position: 16
+        defaultLabel: 'Stainless Steel'
+    product_material_option_167:
+        code: '167'
+        source_field: '@product_material'
+        position: 16
+        defaultLabel: Wool
+    product_material_option_57:
+        code: '57'
+        source_field: '@product_material'
+        position: 17
+        defaultLabel: Silicone
+    product_material_option_168:
+        code: '168'
+        source_field: '@product_material'
+        position: 17
+        defaultLabel: Terry
+    product_new_option_1:
+        code: '0'
+        source_field: '@product_new'
+        position: 0
+        defaultLabel: '0'
+    product_new_option_0:
+        code: '1'
+        source_field: '@product_new'
+        position: 1
+        defaultLabel: '1'
+    product_pattern_option_201:
+        code: '0'
+        source_field: '@product_pattern'
+        position: 0
+        defaultLabel: Color-Blocked
+    product_pattern_option_202:
+        code: '1'
+        source_field: '@product_pattern'
+        position: 1
+        defaultLabel: Checked
+    product_pattern_option_203:
+        code: '2'
+        source_field: '@product_pattern'
+        position: 2
+        defaultLabel: Color-Blocked
+    product_pattern_option_204:
+        code: '3'
+        source_field: '@product_pattern'
+        position: 3
+        defaultLabel: 'Graphic Print'
+    product_pattern_option_205:
+        code: '4'
+        source_field: '@product_pattern'
+        position: 4
+        defaultLabel: Solid
+    product_pattern_option_206:
+        code: '5'
+        source_field: '@product_pattern'
+        position: 5
+        defaultLabel: Solid-Highlight
+    product_pattern_option_207:
+        code: '6'
+        source_field: '@product_pattern'
+        position: 6
+        defaultLabel: Striped
+    product_pattern_option_208:
+        code: '7'
+        source_field: '@product_pattern'
+        position: 7
+        defaultLabel: Camo
+    product_pattern_option_209:
+        code: '8'
+        source_field: '@product_pattern'
+        position: 8
+        defaultLabel: Geometric
+    product_performance_fabric_option_1:
+        code: '0'
+        source_field: '@product_performance_fabric'
+        position: 0
+        defaultLabel: '0'
+    product_performance_fabric_option_0:
+        code: '1'
+        source_field: '@product_performance_fabric'
+        position: 1
+        defaultLabel: '1'
+    product_purpose_option_221:
+        code: '0'
+        source_field: '@product_purpose'
+        position: 0
+        defaultLabel: Products
+    product_purpose_option_222:
+        code: '1'
+        source_field: '@product_purpose'
+        position: 1
+        defaultLabel: 'Video Streaming'
+    product_purpose_option_223:
+        code: '2'
+        source_field: '@product_purpose'
+        position: 2
+        defaultLabel: All-Purpose
+    product_sale_option_1:
+        code: '0'
+        source_field: '@product_sale'
+        position: 0
+        defaultLabel: '0'
+    product_sale_option_0:
+        code: '1'
+        source_field: '@product_sale'
+        position: 1
+        defaultLabel: '1'
+    product_size_option_100:
+        code: '0'
+        source_field: '@product_size'
+        position: 0
+        defaultLabel: '55 cm'
+    product_size_option_175:
+        code: '1'
+        source_field: '@product_size'
+        position: 1
+        defaultLabel: XS
+    product_size_option_101:
+        code: '2'
+        source_field: '@product_size'
+        position: 2
+        defaultLabel: '65 cm'
+    product_size_option_176:
+        code: '3'
+        source_field: '@product_size'
+        position: 3
+        defaultLabel: S
+    product_size_option_102:
+        code: '4'
+        source_field: '@product_size'
+        position: 4
+        defaultLabel: '75 cm'
+    product_size_option_177:
+        code: '5'
+        source_field: '@product_size'
+        position: 5
+        defaultLabel: M
+    product_size_option_103:
+        code: '6'
+        source_field: '@product_size'
+        position: 6
+        defaultLabel: '6 foot'
+    product_size_option_178:
+        code: '7'
+        source_field: '@product_size'
+        position: 7
+        defaultLabel: L
+    product_size_option_104:
+        code: '8'
+        source_field: '@product_size'
+        position: 8
+        defaultLabel: '8 foot'
+    product_size_option_179:
+        code: '9'
+        source_field: '@product_size'
+        position: 9
+        defaultLabel: XL
+    product_size_option_105:
+        code: '10'
+        source_field: '@product_size'
+        position: 10
+        defaultLabel: '10 foot'
+    product_size_option_180:
+        code: '11'
+        source_field: '@product_size'
+        position: 11
+        defaultLabel: '28'
+    product_size_option_181:
+        code: '12'
+        source_field: '@product_size'
+        position: 12
+        defaultLabel: '29'
+    product_size_option_182:
+        code: '13'
+        source_field: '@product_size'
+        position: 13
+        defaultLabel: '30'
+    product_size_option_183:
+        code: '14'
+        source_field: '@product_size'
+        position: 14
+        defaultLabel: '31'
+    product_size_option_184:
+        code: '15'
+        source_field: '@product_size'
+        position: 15
+        defaultLabel: '32'
+    product_size_option_185:
+        code: '16'
+        source_field: '@product_size'
+        position: 16
+        defaultLabel: '33'
+    product_size_option_186:
+        code: '17'
+        source_field: '@product_size'
+        position: 17
+        defaultLabel: '34'
+    product_size_option_187:
+        code: '18'
+        source_field: '@product_size'
+        position: 18
+        defaultLabel: '36'
+    product_size_option_188:
+        code: '19'
+        source_field: '@product_size'
+        position: 19
+        defaultLabel: '38'
+    product_sleeve_option_169:
+        code: '0'
+        source_field: '@product_sleeve'
+        position: 0
+        defaultLabel: Sleeve
+    product_sleeve_option_170:
+        code: '1'
+        source_field: '@product_sleeve'
+        position: 1
+        defaultLabel: Long-Sleeve
+    product_sleeve_option_171:
+        code: '2'
+        source_field: '@product_sleeve'
+        position: 2
+        defaultLabel: Short-Sleeve
+    product_sleeve_option_172:
+        code: '3'
+        source_field: '@product_sleeve'
+        position: 3
+        defaultLabel: Sleeveless
+    product_sleeve_option_173:
+        code: '4'
+        source_field: '@product_sleeve'
+        position: 4
+        defaultLabel: Tank
+    product_sleeve_option_174:
+        code: '5'
+        source_field: '@product_sleeve'
+        position: 5
+        defaultLabel: Strap
+    product_strap_bags_option_70:
+        code: '0'
+        source_field: '@product_strap_bags'
+        position: 0
+        defaultLabel: Adjustable
+
+    product_strap_bags_option_71:
+        code: '1'
+        source_field: '@product_strap_bags'
+        position: 1
+        defaultLabel: 'Cross Body'
+    product_strap_bags_option_72:
+        code: '2'
+        source_field: '@product_strap_bags'
+        position: 2
+        defaultLabel: Detachable
+    product_strap_bags_option_73:
+        code: '3'
+        source_field: '@product_strap_bags'
+        position: 3
+        defaultLabel: Double
+    product_strap_bags_option_74:
+        code: '4'
+        source_field: '@product_strap_bags'
+        position: 4
+        defaultLabel: Padded
+    product_strap_bags_option_75:
+        code: '5'
+        source_field: '@product_strap_bags'
+        position: 5
+        defaultLabel: Shoulder
+    product_strap_bags_option_76:
+        code: '6'
+        source_field: '@product_strap_bags'
+        position: 6
+        defaultLabel: Single
+    product_strap_bags_option_77:
+        code: '7'
+        source_field: '@product_strap_bags'
+        position: 7
+        defaultLabel: Telescoping
+    product_style_bags_option_33:
+        code: '0'
+        source_field: '@product_style_bags'
+        position: 0
+        defaultLabel: Backpack
+    product_style_bags_option_34:
+        code: '1'
+        source_field: '@product_style_bags'
+        position: 1
+        defaultLabel: Luggage
+    product_style_bags_option_35:
+        code: '2'
+        source_field: '@product_style_bags'
+        position: 2
+        defaultLabel: Duffel
+    product_style_bags_option_36:
+        code: '3'
+        source_field: '@product_style_bags'
+        position: 3
+        defaultLabel: Messenger
+    product_style_bags_option_37:
+        code: '4'
+        source_field: '@product_style_bags'
+        position: 4
+        defaultLabel: Laptop
+    product_style_bags_option_38:
+        code: '5'
+        source_field: '@product_style_bags'
+        position: 5
+        defaultLabel: Exercise
+    product_style_bags_option_39:
+        code: '6'
+        source_field: '@product_style_bags'
+        position: 6
+        defaultLabel: Tote
+    product_style_bottom_option_113:
+        code: '0'
+        source_field: '@product_style_bottom'
+        position: 0
+        defaultLabel: 'Base Layer'
+    product_style_bottom_option_114:
+        code: '1'
+        source_field: '@product_style_bottom'
+        position: 1
+        defaultLabel: Basic
+    product_style_bottom_option_115:
+        code: '2'
+        source_field: '@product_style_bottom'
+        position: 2
+        defaultLabel: Capri
+    product_style_bottom_option_116:
+        code: '3'
+        source_field: '@product_style_bottom'
+        position: 3
+        defaultLabel: Compression
+    product_style_bottom_option_117:
+        code: '4'
+        source_field: '@product_style_bottom'
+        position: 4
+        defaultLabel: Leggings
+    product_style_bottom_option_118:
+        code: '5'
+        source_field: '@product_style_bottom'
+        position: 5
+        defaultLabel: Parachute
+    product_style_bottom_option_119:
+        code: '6'
+        source_field: '@product_style_bottom'
+        position: 6
+        defaultLabel: Skort
+    product_style_bottom_option_120:
+        code: '7'
+        source_field: '@product_style_bottom'
+        position: 7
+        defaultLabel: Snug
+    product_style_bottom_option_121:
+        code: '8'
+        source_field: '@product_style_bottom'
+        position: 8
+        defaultLabel: Sweatpants
+    product_style_bottom_option_122:
+        code: '9'
+        source_field: '@product_style_bottom'
+        position: 9
+        defaultLabel: Tights
+    product_style_bottom_option_123:
+        code: '10'
+        source_field: '@product_style_bottom'
+        position: 10
+        defaultLabel: 'Track Pants'
+    product_style_bottom_option_124:
+        code: '11'
+        source_field: '@product_style_bottom'
+        position: 11
+        defaultLabel: 'Workout Pants'
+    product_style_general_option_125:
+        code: '0'
+        source_field: '@product_style_general'
+        position: 0
+        defaultLabel: Insulated
+    product_style_general_option_126:
+        code: '1'
+        source_field: '@product_style_general'
+        position: 1
+        defaultLabel: Jacket
+    product_style_general_option_127:
+        code: '2'
+        source_field: '@product_style_general'
+        position: 2
+        defaultLabel: Vest
+    product_style_general_option_128:
+        code: '3'
+        source_field: '@product_style_general'
+        position: 3
+        defaultLabel: Lightweight
+    product_style_general_option_129:
+        code: '4'
+        source_field: '@product_style_general'
+        position: 4
+        defaultLabel: Hooded
+    product_style_general_option_130:
+        code: '5'
+        source_field: '@product_style_general'
+        position: 5
+        defaultLabel: 'Heavy Duty'
+    product_style_general_option_131:
+        code: '6'
+        source_field: '@product_style_general'
+        position: 6
+        defaultLabel: 'Rain Coat'
+    product_style_general_option_132:
+        code: '7'
+        source_field: '@product_style_general'
+        position: 7
+        defaultLabel: 'Hard Shell'
+    product_style_general_option_133:
+        code: '8'
+        source_field: '@product_style_general'
+        position: 8
+        defaultLabel: 'Soft Shell'
+    product_style_general_option_134:
+        code: '9'
+        source_field: '@product_style_general'
+        position: 9
+        defaultLabel: Windbreaker
+    product_style_general_option_135:
+        code: '10'
+        source_field: '@product_style_general'
+        position: 10
+        defaultLabel: '&frac12; zip'
+    product_style_general_option_136:
+        code: '11'
+        source_field: '@product_style_general'
+        position: 11
+        defaultLabel: '&frac14; zip'
+    product_style_general_option_137:
+        code: '12'
+        source_field: '@product_style_general'
+        position: 12
+        defaultLabel: 'Full Zip'
+    product_style_general_option_138:
+        code: '13'
+        source_field: '@product_style_general'
+        position: 13
+        defaultLabel: Reversible
+    product_style_general_option_139:
+        code: '14'
+        source_field: '@product_style_general'
+        position: 14
+        defaultLabel: Bra
+    product_style_general_option_140:
+        code: '15'
+        source_field: '@product_style_general'
+        position: 15
+        defaultLabel: Hoodie
+    product_style_general_option_141:
+        code: '16'
+        source_field: '@product_style_general'
+        position: 16
+        defaultLabel: Sweatshirt
+    product_style_general_option_142:
+        code: '17'
+        source_field: '@product_style_general'
+        position: 17
+        defaultLabel: Polo
+    product_style_general_option_143:
+        code: '18'
+        source_field: '@product_style_general'
+        position: 18
+        defaultLabel: Tank
+    product_style_general_option_144:
+        code: '19'
+        source_field: '@product_style_general'
+        position: 19
+        defaultLabel: Tee
+    product_style_general_option_145:
+        code: '20'
+        source_field: '@product_style_general'
+        position: 20
+        defaultLabel: Pullover
+    product_style_general_option_146:
+        code: '21'
+        source_field: '@product_style_general'
+        position: 21
+        defaultLabel: Hoodie
+    product_style_general_option_147:
+        code: '22'
+        source_field: '@product_style_general'
+        position: 22
+        defaultLabel: Cardigan
+    product_style_general_option_148:
+        code: '23'
+        source_field: '@product_style_general'
+        position: 23
+        defaultLabel: Henley
+    product_style_general_option_149:
+        code: '24'
+        source_field: '@product_style_general'
+        position: 24
+        defaultLabel: Tunic
+    product_style_general_option_150:
+        code: '25'
+        source_field: '@product_style_general'
+        position: 25
+        defaultLabel: Camisole

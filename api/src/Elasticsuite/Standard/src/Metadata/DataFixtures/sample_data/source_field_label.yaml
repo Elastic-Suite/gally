@@ -14,7 +14,7 @@ Elasticsuite\Metadata\Model\SourceFieldLabel:
     product_accessory_brand_com_fr:
         source_field: '@product_accessory_brand'
         catalog: '@com_fr'
-        label: Brand
+        label: Marque
     product_accessory_custom_engraving_text_com_en:
         source_field: '@product_accessory_custom_engraving_text'
         catalog: '@com_en'
@@ -495,3 +495,176 @@ Elasticsuite\Metadata\Model\SourceFieldLabel:
         source_field: '@product_weight_type'
         catalog: '@com_fr'
         label: 'Dynamic Weight'
+        
+        
+        
+        
+    product_activity_com_fr:
+        source_field: '@product_activity'
+        catalog: '@com_fr'
+        label: Activity
+    product_allow_message_com_fr:
+        source_field: '@product_allow_message'
+        catalog: '@com_fr'
+        label: 'Allow Message'
+    product_allow_open_amount_com_fr:
+        source_field: '@product_allow_open_amount'
+        catalog: '@com_fr'
+        label: 'Open Amount'
+    product_category_gear_com_fr:
+        source_field: '@product_category_gear'
+        catalog: '@com_fr'
+        label: Category
+    product_climate_com_fr:
+        source_field: '@product_climate'
+        catalog: '@com_fr'
+        label: Climate
+    product_collar_com_fr:
+        source_field: '@product_collar'
+        catalog: '@com_fr'
+        label: Collar
+    product_eco_collection_com_fr:
+        source_field: '@product_eco_collection'
+        catalog: '@com_fr'
+        label: 'Eco Collection'
+    product_email_template_com_fr:
+        source_field: '@product_email_template'
+        catalog: '@com_fr'
+        label: 'Email Template'
+    product_erin_recommends_com_fr:
+        source_field: '@product_erin_recommends'
+        catalog: '@com_fr'
+        label: 'Erin Recommends'
+    product_es_is_discounted_com_fr:
+        source_field: '@product_es_is_discounted'
+        catalog: '@com_fr'
+        label: Discounted
+    product_es_is_in_stock_com_fr:
+        source_field: '@product_es_is_in_stock'
+        catalog: '@com_fr'
+        label: 'In stock'
+    product_features_bags_com_fr:
+        source_field: '@product_features_bags'
+        catalog: '@com_fr'
+        label: Features
+    product_format_com_fr:
+        source_field: '@product_format'
+        catalog: '@com_fr'
+        label: Format
+    product_gender_com_fr:
+        source_field: '@product_gender'
+        catalog: '@com_fr'
+        label: Gender
+    product_giftcard_amounts_com_fr:
+        source_field: '@product_giftcard_amounts'
+        catalog: '@com_fr'
+        label: Amount
+    product_giftcard_type_com_fr:
+        source_field: '@product_giftcard_type'
+        catalog: '@com_fr'
+        label: 'Card Type'
+    product_gift_wrapping_available_com_fr:
+        source_field: '@product_gift_wrapping_available'
+        catalog: '@com_fr'
+        label: 'Allow Gift Wrapping'
+    product_gift_wrapping_price_com_fr:
+        source_field: '@product_gift_wrapping_price'
+        catalog: '@com_fr'
+        label: 'Price for Gift Wrapping'
+    product_is_redeemable_com_fr:
+        source_field: '@product_is_redeemable'
+        catalog: '@com_fr'
+        label: 'Is Redeemable'
+    product_is_returnable_com_fr:
+        source_field: '@product_is_returnable'
+        catalog: '@com_fr'
+        label: 'Enable RMA'
+    product_lifetime_com_fr:
+        source_field: '@product_lifetime'
+        catalog: '@com_fr'
+        label: Lifetime
+    product_links_exist_com_fr:
+        source_field: '@product_links_exist'
+        catalog: '@com_fr'
+        label: 'Product links exist'
+    product_material_com_fr:
+        source_field: '@product_material'
+        catalog: '@com_fr'
+        label: Material
+    product_new_com_fr:
+        source_field: '@product_new'
+        catalog: '@com_fr'
+        label: New
+    product_old_id_com_fr:
+        source_field: '@product_old_id'
+        catalog: '@com_fr'
+        label: 'Product old id'
+    product_open_amount_max_com_fr:
+        source_field: '@product_open_amount_max'
+        catalog: '@com_fr'
+        label: 'Open Amount To'
+    product_open_amount_min_com_fr:
+        source_field: '@product_open_amount_min'
+        catalog: '@com_fr'
+        label: 'Open Amount From'
+    product_pattern_com_fr:
+        source_field: '@product_pattern'
+        catalog: '@com_fr'
+        label: Pattern
+    product_performance_fabric_com_fr:
+        source_field: '@product_performance_fabric'
+        catalog: '@com_fr'
+        label: 'Performance Fabric'
+    product_purpose_com_fr:
+        source_field: '@product_purpose'
+        catalog: '@com_fr'
+        label: Purpose
+    product_sale_com_fr:
+        source_field: '@product_sale'
+        catalog: '@com_fr'
+        label: Sale
+    product_size_com_fr:
+        source_field: '@product_size'
+        catalog: '@com_fr'
+        label: Size
+    product_sleeve_com_fr:
+        source_field: '@product_sleeve'
+        catalog: '@com_fr'
+        label: Sleeve
+    product_strap_bags_com_fr:
+        source_field: '@product_strap_bags'
+        catalog: '@com_fr'
+        label: Strap/Handle
+    product_style_bags_com_fr:
+        source_field: '@product_style_bags'
+        catalog: '@com_fr'
+        label: Style
+    product_style_bottom_com_fr:
+        source_field: '@product_style_bottom'
+        catalog: '@com_fr'
+        label: Style
+    product_style_general_com_fr:
+        source_field: '@product_style_general'
+        catalog: '@com_fr'
+        label: Style
+    product_url_path_com_fr:
+        source_field: '@product_url_path'
+        catalog: '@com_fr'
+        label: 'Product url path'
+    product_use_config_allow_message_com_fr:
+        source_field: '@product_use_config_allow_message'
+        catalog: '@com_fr'
+        label: 'Use Config Allow Message'
+    product_use_config_email_template_com_fr:
+        source_field: '@product_use_config_email_template'
+        catalog: '@com_fr'
+        label: 'Use Config Email Template'
+    product_use_config_is_redeemable_com_fr:
+        source_field: '@product_use_config_is_redeemable'
+        catalog: '@com_fr'
+        label: 'Use Config Is Redeemable'
+    product_use_config_lifetime_com_fr:
+        source_field: '@product_use_config_lifetime'
+        catalog: '@com_fr'
+        label: 'Use Config Lifetime'
+
