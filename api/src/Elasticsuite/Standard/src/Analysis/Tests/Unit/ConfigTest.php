@@ -37,7 +37,7 @@ class ConfigTest extends AbstractTest
     public static function setUpBeforeClass(): void
     {
         $yamlParser = new YamlParser();
-        $configData = $yamlParser->parseFile(__DIR__ . '/../../Resources/config/test/elasticsuite_analysis.yaml');
+        $configData = $yamlParser->parseFile(__DIR__ . '/../config/elasticsuite_analysis.yaml');
         $processor = new Processor();
         $configurationFormat = new Configuration();
         self::$config = new Config(
