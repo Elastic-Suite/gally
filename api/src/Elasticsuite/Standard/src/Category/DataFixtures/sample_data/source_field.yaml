@@ -12,6 +12,16 @@ Elasticsuite\Metadata\Model\SourceField:
         isFilterable: false
         isSortable: false
         isUsedForRules: false
+    categories_automatic_sorting:
+        metadata: '@category'
+        code: automatic_sorting
+        type: text
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
     categories_custom_apply_to_products:
         metadata: '@category'
         code: custom_apply_to_products

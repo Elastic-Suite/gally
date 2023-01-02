@@ -647,3 +647,393 @@ Elasticsuite\Metadata\Model\SourceField:
         code: has_options
         type: boolean
         isUsedForRules: true
+    product_activity:
+        metadata: '@product'
+        code: activity
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_allow_message:
+        metadata: '@product'
+        code: allow_message
+        type: int
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_allow_open_amount:
+        metadata: '@product'
+        code: allow_open_amount
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_category_gear:
+        metadata: '@product'
+        code: category_gear
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_climate:
+        metadata: '@product'
+        code: climate
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_collar:
+        metadata: '@product'
+        code: collar
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_eco_collection:
+        metadata: '@product'
+        code: eco_collection
+        type: boolean
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_email_template:
+        metadata: '@product'
+        code: email_template
+        type: text
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_erin_recommends:
+        metadata: '@product'
+        code: erin_recommends
+        type: boolean
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_es_is_discounted:
+        metadata: '@product'
+        code: es_is_discounted
+        type: boolean
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_es_is_in_stock:
+        metadata: '@product'
+        code: es_is_in_stock
+        type: boolean
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_features_bags:
+        metadata: '@product'
+        code: features_bags
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_format:
+        metadata: '@product'
+        code: format
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_gender:
+        metadata: '@product'
+        code: gender
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_giftcard_amounts:
+        metadata: '@product'
+        code: giftcard_amounts
+        type: float
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_giftcard_type:
+        metadata: '@product'
+        code: giftcard_type
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_gift_wrapping_available:
+        metadata: '@product'
+        code: gift_wrapping_available
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_gift_wrapping_price:
+        metadata: '@product'
+        code: gift_wrapping_price
+        type: float
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_is_redeemable:
+        metadata: '@product'
+        code: is_redeemable
+        type: int
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_is_returnable:
+        metadata: '@product'
+        code: is_returnable
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_lifetime:
+        metadata: '@product'
+        code: lifetime
+        type: int
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_material:
+        metadata: '@product'
+        code: material
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_new:
+        metadata: '@product'
+        code: new
+        type: boolean
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_open_amount_max:
+        metadata: '@product'
+        code: open_amount_max
+        type: float
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_open_amount_min:
+        metadata: '@product'
+        code: open_amount_min
+        type: float
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_pattern:
+        metadata: '@product'
+        code: pattern
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_performance_fabric:
+        metadata: '@product'
+        code: performance_fabric
+        type: boolean
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_purpose:
+        metadata: '@product'
+        code: purpose
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_sale:
+        metadata: '@product'
+        code: sale
+        type: boolean
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_size:
+        metadata: '@product'
+        code: size
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_sleeve:
+        metadata: '@product'
+        code: sleeve
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_strap_bags:
+        metadata: '@product'
+        code: strap_bags
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_style_bags:
+        metadata: '@product'
+        code: style_bags
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_style_bottom:
+        metadata: '@product'
+        code: style_bottom
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_style_general:
+        metadata: '@product'
+        code: style_general
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_use_config_allow_message:
+        metadata: '@product'
+        code: use_config_allow_message
+        type: int
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_use_config_email_template:
+        metadata: '@product'
+        code: use_config_email_template
+        type: int
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_use_config_is_redeemable:
+        metadata: '@product'
+        code: use_config_is_redeemable
+        type: int
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_use_config_lifetime:
+        metadata: '@product'
+        code: use_config_lifetime
+        type: int
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false

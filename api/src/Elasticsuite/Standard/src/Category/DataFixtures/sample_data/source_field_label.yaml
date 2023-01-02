@@ -7,6 +7,14 @@ Elasticsuite\Metadata\Model\SourceFieldLabel:
         source_field: '@category_name'
         catalog: '@com_fr'
         label: Nom
+    categories_automatic_sorting_default_com_en:
+        source_field: '@categories_automatic_sorting'
+        catalog: '@com_en'
+        label: 'Automatic Sorting'
+    categories_automatic_sorting_default_com_fr:
+        source_field: '@categories_automatic_sorting'
+        catalog: '@com_fr'
+        label: 'Automatic Sorting'
     categories_custom_apply_to_products_com_en:
         source_field: '@categories_custom_apply_to_products'
         catalog: '@com_en'
