@@ -7,7 +7,13 @@ import {
   useState,
 } from 'react'
 import debounce from 'lodash.debounce'
-import { IFetch, IGraphqlApi, LoadStatus, fetchGraphql, isError } from 'gally-admin-shared'
+import {
+  IFetch,
+  IGraphqlApi,
+  LoadStatus,
+  fetchGraphql,
+  isError,
+} from 'gally-admin-shared'
 
 import { catalogContext } from '../contexts'
 
@@ -26,7 +32,7 @@ export function useApiGraphql(): IGraphqlApi {
   const log = useLog()
   const locale = localizedCatalog?.locale ?? 'en'
   return useCallback(
-    async <T>(
+    async <T extends object>(
       query: string,
       variables?: Record<string, unknown>,
       options?: RequestInit
@@ -49,7 +55,7 @@ export function useApiGraphql(): IGraphqlApi {
   )
 }
 
-export function useGraphqlApi<T>(): [
+export function useGraphqlApi<T extends object>(): [
   IFetch<T>,
   Dispatch<SetStateAction<T>>,
   ILoadResource,
