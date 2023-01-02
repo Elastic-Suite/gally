@@ -1,46 +1,26 @@
+import React from 'react'
+import { Inter } from '@next/font/google'
 import { appWithTranslation } from 'next-i18next'
 import type { AppProps } from 'next/app'
-import dynamic from 'next/dynamic'
 import Script from 'next/script'
 import Head from 'next/head'
+import { GallyApp, nextI18nConfig } from 'gally-admin-components'
 
-import nextI18nConfig from '~/next-i18next.config'
-import { setupStore } from '~/store'
+// eslint-disable-next-line new-cap
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--gally-font',
+})
 
-import AppProvider from '~/components/stateful-providers/AppProvider/AppProvider'
-import DataProvider from '~/components/stateful-providers/DataProvider/DataProvider'
-
-import 'assets/scss/style.scss'
-
-/*
- * Resolve for "Prop className did not match" between Server side and Client side
- * see solution here : https://github.com/vercel/next.js/issues/7322#issuecomment-1003545233
- */
-const Layout = dynamic(
-  () => import('~/components/stateful-layout/Layout/Layout'),
-  {
-    ssr: false,
-  }
-)
-
-const store = setupStore()
-
-function MyApp(props: AppProps): JSX.Element {
-  const { Component, pageProps } = props
-  const Cmp = Component
-
+function App(props: AppProps): JSX.Element {
   return (
     <>
       <Head>
         <title>Gally Admin</title>
       </Head>
-      <AppProvider store={store}>
-        <DataProvider>
-          <Layout>
-            <Cmp {...pageProps} />
-          </Layout>
-        </DataProvider>
-      </AppProvider>
+      <main className={inter.variable}>
+        <GallyApp {...props} />
+      </main>
       <Script
         type="module"
         src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js"
@@ -65,4 +45,4 @@ function MyApp(props: AppProps): JSX.Element {
 //   return { ...appProps }
 // }
 
-export default appWithTranslation(MyApp, nextI18nConfig)
+export default appWithTranslation(App, nextI18nConfig)

@@ -49,6 +49,15 @@ const rules = {
   'no-unneeded-ternary': 'error',
   'no-unreachable-loop': 'error',
   'no-unused-private-class-members': 'error',
+  'no-unused-vars': [
+    'error',
+    {
+      argsIgnorePattern: '^_',
+      caughtErrorsIgnorePattern: '^_',
+      ignoreRestSiblings: true,
+      varsIgnorePattern: '^(React|_)',
+    },
+  ],
   'no-useless-call': 'error',
   'no-useless-computed-key': 'error',
   'no-useless-concat': 'error',
@@ -213,6 +222,15 @@ module.exports = {
         // '@typescript-eslint/no-unnecessary-condition': 'error',
         'no-unused-expressions': 'off',
         '@typescript-eslint/no-unused-expressions': 'error',
+        '@typescript-eslint/no-unused-vars': [
+          'error',
+          {
+            argsIgnorePattern: '^_',
+            caughtErrorsIgnorePattern: '^_',
+            ignoreRestSiblings: true,
+            varsIgnorePattern: '(React|_)',
+          },
+        ],
         'no-use-before-define': 'off',
         '@typescript-eslint/no-use-before-define': 'error',
         'no-useless-constructor': 'off',
