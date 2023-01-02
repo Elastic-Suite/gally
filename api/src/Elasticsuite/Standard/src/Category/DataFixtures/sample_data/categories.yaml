@@ -98,6 +98,196 @@ Elasticsuite\Category\Model\Category:
         parentId: cat_15
         level: 3
         path: cat_2/cat_15/cat_21
+    cat_l_2:
+        id: cat_l_2
+        level: 1
+        path: cat_l_2
+    cat_l_3:
+        id: cat_l_3
+        parentId: cat_l_2
+        level: 2
+        path: cat_l_2/cat_l_3
+    cat_l_4:
+        id: cat_l_4
+        parentId: cat_l_3
+        level: 3
+        path: cat_l_2/cat_l_3/cat_l_4
+    cat_l_5:
+        id: cat_l_5
+        parentId: cat_l_3
+        level: 3
+        path: cat_l_2/cat_l_3/cat_l_5
+    cat_l_6:
+        id: cat_l_6
+        parentId: cat_l_3
+        level: 3
+        path: cat_l_2/cat_l_3/cat_l_6
+    cat_l_8:
+        id: cat_l_8
+        parentId: cat_l_7
+        level: 3
+        path: cat_l_2/cat_l_7/cat_l_8
+    cat_l_9:
+        id: cat_l_9
+        parentId: cat_l_2
+        level: 2
+        path: cat_l_2/cat_l_9
+    cat_l_10:
+        id: cat_l_10
+        parentId: cat_l_9
+        level: 3
+        path: cat_l_2/cat_l_9/cat_l_10
+    cat_l_11:
+        id: cat_l_11
+        parentId: cat_l_2
+        level: 2
+        path: cat_l_2/cat_l_11
+    cat_l_12:
+        id: cat_l_12
+        parentId: cat_l_11
+        level: 3
+        path: cat_l_2/cat_l_11/cat_l_12
+    cat_l_13:
+        id: cat_l_13
+        parentId: cat_l_11
+        level: 3
+        path: cat_l_2/cat_l_11/cat_l_13
+    cat_l_14:
+        id: cat_l_14
+        parentId: cat_l_12
+        level: 4
+        path: cat_l_2/cat_l_11/cat_l_12/cat_l_14
+    cat_l_15:
+        id: cat_l_15
+        parentId: cat_l_12
+        level: 4
+        path: cat_l_2/cat_l_11/cat_l_12/cat_l_15
+    cat_l_16:
+        id: cat_l_16
+        parentId: cat_l_12
+        level: 4
+        path: cat_l_2/cat_l_11/cat_l_12/cat_l_16
+    cat_l_17:
+        id: cat_l_17
+        parentId: cat_l_12
+        level: 4
+        path: cat_l_2/cat_l_11/cat_l_12/cat_l_17
+    cat_l_18:
+        id: cat_l_18
+        parentId: cat_l_13
+        level: 4
+        path: cat_l_2/cat_l_11/cat_l_13/cat_l_18
+    cat_l_19:
+        id: cat_l_19
+        parentId: cat_l_13
+        level: 4
+        path: cat_l_2/cat_l_11/cat_l_13/cat_l_19
+    cat_l_20:
+        id: cat_l_20
+        parentId: cat_l_2
+        level: 2
+        path: cat_l_2/cat_l_20
+    cat_l_21:
+        id: cat_l_21
+        parentId: cat_l_20
+        level: 3
+        path: cat_l_2/cat_l_20/cat_l_21
+    cat_l_22:
+        id: cat_l_22
+        parentId: cat_l_20
+        level: 3
+        path: cat_l_2/cat_l_20/cat_l_22
+    cat_l_23:
+        id: cat_l_23
+        parentId: cat_l_21
+        level: 4
+        path: cat_l_2/cat_l_20/cat_l_21/cat_l_23
+    cat_l_24:
+        id: cat_l_24
+        parentId: cat_l_21
+        level: 4
+        path: cat_l_2/cat_l_20/cat_l_21/cat_l_24
+    cat_l_25:
+        id: cat_l_25
+        parentId: cat_l_21
+        level: 4
+        path: cat_l_2/cat_l_20/cat_l_21/cat_l_25
+    cat_l_26:
+        id: cat_l_26
+        parentId: cat_l_21
+        level: 4
+        path: cat_l_2/cat_l_20/cat_l_21/cat_l_26
+    cat_l_27:
+        id: cat_l_27
+        parentId: cat_l_22
+        level: 4
+        path: cat_l_2/cat_l_20/cat_l_22/cat_l_27
+    cat_l_28:
+        id: cat_l_28
+        parentId: cat_l_22
+        level: 4
+        path: cat_l_2/cat_l_20/cat_l_22/cat_l_28
+    cat_l_30:
+        id: cat_l_30
+        parentId: cat_l_29
+        level: 3
+        path: cat_l_2/cat_l_29/cat_l_30
+    cat_l_31:
+        id: cat_l_31
+        parentId: cat_l_29
+        level: 3
+        path: cat_l_2/cat_l_29/cat_l_31
+    cat_l_32:
+        id: cat_l_32
+        parentId: cat_l_29
+        level: 3
+        path: cat_l_2/cat_l_29/cat_l_32
+    cat_l_33:
+        id: cat_l_33
+        parentId: cat_l_29
+        level: 3
+        path: cat_l_2/cat_l_29/cat_l_33
+    cat_l_34:
+        id: cat_l_34
+        parentId: cat_l_7
+        level: 3
+        path: cat_l_2/cat_l_7/cat_l_34
+    cat_l_35:
+        id: cat_l_35
+        parentId: cat_l_7
+        level: 3
+        path: cat_l_2/cat_l_7/cat_l_35
+    cat_l_36:
+        id: cat_l_36
+        parentId: cat_l_7
+        level: 3
+        path: cat_l_2/cat_l_7/cat_l_36
+    cat_l_37:
+        id: cat_l_37
+        parentId: cat_l_2
+        level: 2
+        path: cat_l_2/cat_l_37
+    cat_l_38:
+        id: cat_l_38
+        parentId: cat_l_2
+        level: 2
+        path: cat_l_2/cat_l_38
+    cat_l_39:
+        id: cat_l_39
+        parentId: cat_l_7
+        level: 3
+        path: cat_l_2/cat_l_7/cat_l_39
+    cat_l_40:
+        id: cat_l_40
+        parentId: cat_l_7
+        level: 3
+        path: cat_l_2/cat_l_7/cat_l_40
+    cat_l_41:
+        id: cat_l_41
+        parentId: cat_l_2
+        level: 2
+        path: cat_l_2/cat_l_41
+
 Elasticsuite\Category\Model\Category\Configuration:
     config_cat_2_com_en:
         category: '@cat_2'
@@ -299,6 +489,386 @@ Elasticsuite\Category\Model\Category\Configuration:
         catalog: '@com'
         localizedCatalog: '@com_fr'
         name: 'Timeless Sophistication'
+    config_cat_l_2_fr_en:
+        category: '@cat_l_2'
+        catalog: '@fr'
+        localizedCatalog: '@fr_en'
+        name: 'Luma'
+    config_cat_l_3_fr_en:
+        category: '@cat_l_3'
+        catalog: '@fr'
+        localizedCatalog: '@fr_en'
+        name: Gear
+    config_cat_l_4_fr_en:
+        category: '@cat_l_4'
+        catalog: '@fr'
+        localizedCatalog: '@fr_en'
+        name: Bags
+    config_cat_l_5_fr_en:
+        category: '@cat_l_5'
+        catalog: '@fr'
+        localizedCatalog: '@fr_en'
+        name: 'Fitness Equipment'
+    config_cat_l_6_fr_en:
+        category: '@cat_l_6'
+        catalog: '@fr'
+        localizedCatalog: '@fr_en'
+        name: Watches
+    config_cat_l_8_fr_en:
+        category: '@cat_l_8'
+        catalog: '@fr'
+        localizedCatalog: '@fr_en'
+        name: 'New Luma Yoga Collection'
+    config_cat_l_9_fr_en:
+        category: '@cat_l_9'
+        catalog: '@fr'
+        localizedCatalog: '@fr_en'
+        name: Training
+    config_cat_l_10_fr_en:
+        category: '@cat_l_10'
+        catalog: '@fr'
+        localizedCatalog: '@fr_en'
+        name: 'Video Download'
+    config_cat_l_11_fr_en:
+        category: '@cat_l_11'
+        catalog: '@fr'
+        localizedCatalog: '@fr_en'
+        name: Men
+    config_cat_l_12_fr_en:
+        category: '@cat_l_12'
+        catalog: '@fr'
+        localizedCatalog: '@fr_en'
+        name: Tops
+    config_cat_l_13_fr_en:
+        category: '@cat_l_13'
+        catalog: '@fr'
+        localizedCatalog: '@fr_en'
+        name: Bottoms
+    config_cat_l_14_fr_en:
+        category: '@cat_l_14'
+        catalog: '@fr'
+        localizedCatalog: '@fr_en'
+        name: Jackets
+    config_cat_l_15_fr_en:
+        category: '@cat_l_15'
+        catalog: '@fr'
+        localizedCatalog: '@fr_en'
+        name: 'Hoodies & Sweatshirts'
+    config_cat_l_16_fr_en:
+        category: '@cat_l_16'
+        catalog: '@fr'
+        localizedCatalog: '@fr_en'
+        name: Tees
+    config_cat_l_17_fr_en:
+        category: '@cat_l_17'
+        catalog: '@fr'
+        localizedCatalog: '@fr_en'
+        name: Tanks
+    config_cat_l_18_fr_en:
+        category: '@cat_l_18'
+        catalog: '@fr'
+        localizedCatalog: '@fr_en'
+        name: Pants
+    config_cat_l_19_fr_en:
+        category: '@cat_l_19'
+        catalog: '@fr'
+        localizedCatalog: '@fr_en'
+        name: Shorts
+    config_cat_l_20_fr_en:
+        category: '@cat_l_20'
+        catalog: '@fr'
+        localizedCatalog: '@fr_en'
+        name: Women
+    config_cat_l_21_fr_en:
+        category: '@cat_l_21'
+        catalog: '@fr'
+        localizedCatalog: '@fr_en'
+        name: Tops
+    config_cat_l_22_fr_en:
+        category: '@cat_l_22'
+        catalog: '@fr'
+        localizedCatalog: '@fr_en'
+        name: Bottoms
+    config_cat_l_23_fr_en:
+        category: '@cat_l_23'
+        catalog: '@fr'
+        localizedCatalog: '@fr_en'
+        name: Jackets
+    config_cat_l_24_fr_en:
+        category: '@cat_l_24'
+        catalog: '@fr'
+        localizedCatalog: '@fr_en'
+        name: 'Hoodies & Sweatshirts'
+    config_cat_l_25_fr_en:
+        category: '@cat_l_25'
+        catalog: '@fr'
+        localizedCatalog: '@fr_en'
+        name: Tees
+    config_cat_l_26_fr_en:
+        category: '@cat_l_26'
+        catalog: '@fr'
+        localizedCatalog: '@fr_en'
+        name: 'Bras & Tanks'
+    config_cat_l_27_fr_en:
+        category: '@cat_l_27'
+        catalog: '@fr'
+        localizedCatalog: '@fr_en'
+        name: Pants
+    config_cat_l_28_fr_en:
+        category: '@cat_l_28'
+        catalog: '@fr'
+        localizedCatalog: '@fr_en'
+        name: Shorts
+    config_cat_l_30_fr_en:
+        category: '@cat_l_30'
+        catalog: '@fr'
+        localizedCatalog: '@fr_en'
+        name: 'Women Sale'
+    config_cat_l_31_fr_en:
+        category: '@cat_l_31'
+        catalog: '@fr'
+        localizedCatalog: '@fr_en'
+        name: 'Men Sale'
+    config_cat_l_32_fr_en:
+        category: '@cat_l_32'
+        catalog: '@fr'
+        localizedCatalog: '@fr_en'
+        name: Pants
+    config_cat_l_33_fr_en:
+        category: '@cat_l_33'
+        catalog: '@fr'
+        localizedCatalog: '@fr_en'
+        name: Tees
+    config_cat_l_34_fr_en:
+        category: '@cat_l_34'
+        catalog: '@fr'
+        localizedCatalog: '@fr_en'
+        name: 'Erin Recommends'
+    config_cat_l_35_fr_en:
+        category: '@cat_l_35'
+        catalog: '@fr'
+        localizedCatalog: '@fr_en'
+        name: 'Performance Fabrics'
+    config_cat_l_36_fr_en:
+        category: '@cat_l_36'
+        catalog: '@fr'
+        localizedCatalog: '@fr_en'
+        name: 'Eco Friendly'
+    config_cat_l_37_fr_en:
+        category: '@cat_l_37'
+        catalog: '@fr'
+        localizedCatalog: '@fr_en'
+        name: Sale
+    config_cat_l_38_fr_en:
+        category: '@cat_l_38'
+        catalog: '@fr'
+        localizedCatalog: '@fr_en'
+        name: 'What''s New'
+    config_cat_l_39_fr_en:
+        category: '@cat_l_39'
+        catalog: '@fr'
+        localizedCatalog: '@fr_en'
+        name: 'Performance Sportswear New'
+    config_cat_l_40_fr_en:
+        category: '@cat_l_40'
+        catalog: '@fr'
+        localizedCatalog: '@fr_en'
+        name: 'Eco Collection New'
+    config_cat_l_41_fr_en:
+        category: '@cat_l_41'
+        catalog: '@fr'
+        localizedCatalog: '@fr_en'
+        name: 'Gift Cards'
+    config_cat_l_2_fr_fr:
+        category: '@cat_l_2'
+        catalog: '@fr'
+        localizedCatalog: '@fr_fr'
+        name: 'Luma'
+    config_cat_l_3_fr_fr:
+        category: '@cat_l_3'
+        catalog: '@fr'
+        localizedCatalog: '@fr_fr'
+        name: Accessoires
+    config_cat_l_4_fr_fr:
+        category: '@cat_l_4'
+        catalog: '@fr'
+        localizedCatalog: '@fr_fr'
+        name: Sacs
+    config_cat_l_5_fr_fr:
+        category: '@cat_l_5'
+        catalog: '@fr'
+        localizedCatalog: '@fr_fr'
+        name: 'Fitness Equipment'
+    config_cat_l_6_fr_fr:
+        category: '@cat_l_6'
+        catalog: '@fr'
+        localizedCatalog: '@fr_fr'
+        name: Montres
+    config_cat_l_8_fr_fr:
+        category: '@cat_l_8'
+        catalog: '@fr'
+        localizedCatalog: '@fr_fr'
+        name: 'Nouvelle Collection Luma Yoga'
+    config_cat_l_9_fr_fr:
+        category: '@cat_l_9'
+        catalog: '@fr'
+        localizedCatalog: '@fr_fr'
+        name: Entraînement
+    config_cat_l_10_fr_fr:
+        category: '@cat_l_10'
+        catalog: '@fr'
+        localizedCatalog: '@fr_fr'
+        name: 'Téléchargement Video'
+    config_cat_l_11_fr_fr:
+        category: '@cat_l_11'
+        catalog: '@fr'
+        localizedCatalog: '@fr_fr'
+        name: Hommes
+    config_cat_l_12_fr_fr:
+        category: '@cat_l_12'
+        catalog: '@fr'
+        localizedCatalog: '@fr_fr'
+        name: Hauts
+    config_cat_l_13_fr_fr:
+        category: '@cat_l_13'
+        catalog: '@fr'
+        localizedCatalog: '@fr_fr'
+        name: Bas
+    config_cat_l_14_fr_fr:
+        category: '@cat_l_14'
+        catalog: '@fr'
+        localizedCatalog: '@fr_fr'
+        name: Vestes
+    config_cat_l_15_fr_fr:
+        category: '@cat_l_15'
+        catalog: '@fr'
+        localizedCatalog: '@fr_fr'
+        name: 'Pull'
+    config_cat_l_16_fr_fr:
+        category: '@cat_l_16'
+        catalog: '@fr'
+        localizedCatalog: '@fr_fr'
+        name: T-shirts
+    config_cat_l_17_fr_fr:
+        category: '@cat_l_17'
+        catalog: '@fr'
+        localizedCatalog: '@fr_fr'
+        name: Débardeur
+    config_cat_l_18_fr_fr:
+        category: '@cat_l_18'
+        catalog: '@fr'
+        localizedCatalog: '@fr_fr'
+        name: Pantalons
+    config_cat_l_19_fr_fr:
+        category: '@cat_l_19'
+        catalog: '@fr'
+        localizedCatalog: '@fr_fr'
+        name: Shorts
+    config_cat_l_20_fr_fr:
+        category: '@cat_l_20'
+        catalog: '@fr'
+        localizedCatalog: '@fr_fr'
+        name: Femmes
+    config_cat_l_21_fr_fr:
+        category: '@cat_l_21'
+        catalog: '@fr'
+        localizedCatalog: '@fr_fr'
+        name: Hauts
+    config_cat_l_22_fr_fr:
+        category: '@cat_l_22'
+        catalog: '@fr'
+        localizedCatalog: '@fr_fr'
+        name: Bas
+    config_cat_l_23_fr_fr:
+        category: '@cat_l_23'
+        catalog: '@fr'
+        localizedCatalog: '@fr_fr'
+        name: Vestes
+    config_cat_l_24_fr_fr:
+        category: '@cat_l_24'
+        catalog: '@fr'
+        localizedCatalog: '@fr_fr'
+        name: 'Pull'
+    config_cat_l_25_fr_fr:
+        category: '@cat_l_25'
+        catalog: '@fr'
+        localizedCatalog: '@fr_fr'
+        name: T-shirts
+    config_cat_l_26_fr_fr:
+        category: '@cat_l_26'
+        catalog: '@fr'
+        localizedCatalog: '@fr_fr'
+        name: 'Débardeur et soutien gorge'
+    config_cat_l_27_fr_fr:
+        category: '@cat_l_27'
+        catalog: '@fr'
+        localizedCatalog: '@fr_fr'
+        name: Pantalons
+    config_cat_l_28_fr_fr:
+        category: '@cat_l_28'
+        catalog: '@fr'
+        localizedCatalog: '@fr_fr'
+        name: Shorts
+    config_cat_l_30_fr_fr:
+        category: '@cat_l_30'
+        catalog: '@fr'
+        localizedCatalog: '@fr_fr'
+        name: 'Promo Femmes'
+    config_cat_l_31_fr_fr:
+        category: '@cat_l_31'
+        catalog: '@fr'
+        localizedCatalog: '@fr_fr'
+        name: 'Promo Hommes'
+    config_cat_l_32_fr_fr:
+        category: '@cat_l_32'
+        catalog: '@fr'
+        localizedCatalog: '@fr_fr'
+        name: Pantalons
+    config_cat_l_33_fr_fr:
+        category: '@cat_l_33'
+        catalog: '@fr'
+        localizedCatalog: '@fr_fr'
+        name: T-shirts
+    config_cat_l_34_fr_fr:
+        category: '@cat_l_34'
+        catalog: '@fr'
+        localizedCatalog: '@fr_fr'
+        name: 'Erin Recommande'
+    config_cat_l_35_fr_fr:
+        category: '@cat_l_35'
+        catalog: '@fr'
+        localizedCatalog: '@fr_fr'
+        name: 'Performance Fabrics'
+    config_cat_l_36_fr_fr:
+        category: '@cat_l_36'
+        catalog: '@fr'
+        localizedCatalog: '@fr_fr'
+        name: 'Eco Friendly'
+    config_cat_l_37_fr_fr:
+        category: '@cat_l_37'
+        catalog: '@fr'
+        localizedCatalog: '@fr_fr'
+        name: Promo
+    config_cat_l_38_fr_fr:
+        category: '@cat_l_38'
+        catalog: '@fr'
+        localizedCatalog: '@fr_fr'
+        name: 'Nouveautés'
+    config_cat_l_39_fr_fr:
+        category: '@cat_l_39'
+        catalog: '@fr'
+        localizedCatalog: '@fr_fr'
+        name: 'Nouveauté Vêtements de sport performance'
+    config_cat_l_40_fr_fr:
+        category: '@cat_l_40'
+        catalog: '@fr'
+        localizedCatalog: '@fr_fr'
+        name: 'Nouvelle Collection Eco'
+    config_cat_l_41_fr_fr:
+        category: '@cat_l_41'
+        catalog: '@fr'
+        localizedCatalog: '@fr_fr'
+        name: 'Cartes cadeaux'
         
 Elasticsuite\Category\Model\Category\ProductMerchandising:
     position1:
