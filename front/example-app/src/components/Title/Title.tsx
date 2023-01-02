@@ -10,7 +10,7 @@ function Title(props: IProps): JSX.Element {
 
   useEffect(() => {
     if (typeof document !== 'undefined') {
-      document.title = title
+      document.title = `${title} - Gally`
     }
   }, [title])
 

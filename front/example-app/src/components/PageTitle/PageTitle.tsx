@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { styled } from '@mui/system'
 
 const CustomTitle = styled('div')({
@@ -29,6 +29,12 @@ interface IProps {
 
 function PageTitle(props: IProps): JSX.Element {
   const { title } = props
+
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      document.title = `${title} - Gally`
+    }
+  }, [title])
 
   return <CustomTitle>{title}</CustomTitle>
 }
