@@ -1707,3 +1707,923 @@ Elasticsuite\Metadata\Model\SourceFieldOptionLabel:
         source_field_option: '@product_visibility_option_4'
         catalog: '@com_fr'
         label: 'Catalog, Search'
+    product_activity_option_13_com_fr:
+        source_field_option: '@product_activity_option_13'
+        catalog: '@com_fr'
+        label: Hike
+    product_activity_option_14_com_fr:
+        source_field_option: '@product_activity_option_14'
+        catalog: '@com_fr'
+        label: Outdoor
+    product_activity_option_15_com_fr:
+        source_field_option: '@product_activity_option_15'
+        catalog: '@com_fr'
+        label: Running
+    product_activity_option_16_com_fr:
+        source_field_option: '@product_activity_option_16'
+        catalog: '@com_fr'
+        label: Warmup
+    product_activity_option_17_com_fr:
+        source_field_option: '@product_activity_option_17'
+        catalog: '@com_fr'
+        label: Yoga
+    product_activity_option_18_com_fr:
+        source_field_option: '@product_activity_option_18'
+        catalog: '@com_fr'
+        label: Recreation
+    product_activity_option_19_com_fr:
+        source_field_option: '@product_activity_option_19'
+        catalog: '@com_fr'
+        label: Lounge
+    product_activity_option_20_com_fr:
+        source_field_option: '@product_activity_option_20'
+        catalog: '@com_fr'
+        label: Gym
+    product_activity_option_21_com_fr:
+        source_field_option: '@product_activity_option_21'
+        catalog: '@com_fr'
+        label: Climbing
+    product_activity_option_22_com_fr:
+        source_field_option: '@product_activity_option_22'
+        catalog: '@com_fr'
+        label: Crosstraining
+    product_activity_option_23_com_fr:
+        source_field_option: '@product_activity_option_23'
+        catalog: '@com_fr'
+        label: Post-workout
+    product_activity_option_24_com_fr:
+        source_field_option: '@product_activity_option_24'
+        catalog: '@com_fr'
+        label: Cycling
+    product_activity_option_25_com_fr:
+        source_field_option: '@product_activity_option_25'
+        catalog: '@com_fr'
+        label: Athletic
+    product_activity_option_26_com_fr:
+        source_field_option: '@product_activity_option_26'
+        catalog: '@com_fr'
+        label: Sports
+    product_activity_option_27_com_fr:
+        source_field_option: '@product_activity_option_27'
+        catalog: '@com_fr'
+        label: Hiking
+    product_activity_option_28_com_fr:
+        source_field_option: '@product_activity_option_28'
+        catalog: '@com_fr'
+        label: Overnight
+    product_activity_option_29_com_fr:
+        source_field_option: '@product_activity_option_29'
+        catalog: '@com_fr'
+        label: School
+    product_activity_option_30_com_fr:
+        source_field_option: '@product_activity_option_30'
+        catalog: '@com_fr'
+        label: Trail
+    product_activity_option_31_com_fr:
+        source_field_option: '@product_activity_option_31'
+        catalog: '@com_fr'
+        label: Travel
+    product_activity_option_32_com_fr:
+        source_field_option: '@product_activity_option_32'
+        catalog: '@com_fr'
+        label: Urban
+    product_allow_open_amount_option_0_com_fr:
+        source_field_option: '@product_allow_open_amount_option_0'
+        catalog: '@com_fr'
+        label: 'No'
+    product_allow_open_amount_option_1_com_fr:
+        source_field_option: '@product_allow_open_amount_option_1'
+        catalog: '@com_fr'
+        label: 'Yes'
+    product_category_gear_option_94_com_fr:
+        source_field_option: '@product_category_gear_option_94'
+        catalog: '@com_fr'
+        label: Cardio
+    product_category_gear_option_95_com_fr:
+        source_field_option: '@product_category_gear_option_95'
+        catalog: '@com_fr'
+        label: Electronic
+    product_category_gear_option_96_com_fr:
+        source_field_option: '@product_category_gear_option_96'
+        catalog: '@com_fr'
+        label: Exercise
+    product_category_gear_option_97_com_fr:
+        source_field_option: '@product_category_gear_option_97'
+        catalog: '@com_fr'
+        label: Fashion
+    product_category_gear_option_98_com_fr:
+        source_field_option: '@product_category_gear_option_98'
+        catalog: '@com_fr'
+        label: Hydration
+    product_category_gear_option_99_com_fr:
+        source_field_option: '@product_category_gear_option_99'
+        catalog: '@com_fr'
+        label: Timepiece
+    product_climate_option_210_com_fr:
+        source_field_option: '@product_climate_option_210'
+        catalog: '@com_fr'
+        label: All-Weather
+    product_climate_option_211_com_fr:
+        source_field_option: '@product_climate_option_211'
+        catalog: '@com_fr'
+        label: Cold
+    product_climate_option_212_com_fr:
+        source_field_option: '@product_climate_option_212'
+        catalog: '@com_fr'
+        label: Cool
+    product_climate_option_213_com_fr:
+        source_field_option: '@product_climate_option_213'
+        catalog: '@com_fr'
+        label: Indoor
+    product_climate_option_214_com_fr:
+        source_field_option: '@product_climate_option_214'
+        catalog: '@com_fr'
+        label: Mild
+    product_climate_option_215_com_fr:
+        source_field_option: '@product_climate_option_215'
+        catalog: '@com_fr'
+        label: Rainy
+    product_climate_option_216_com_fr:
+        source_field_option: '@product_climate_option_216'
+        catalog: '@com_fr'
+        label: Spring
+    product_climate_option_217_com_fr:
+        source_field_option: '@product_climate_option_217'
+        catalog: '@com_fr'
+        label: Warm
+    product_climate_option_218_com_fr:
+        source_field_option: '@product_climate_option_218'
+        catalog: '@com_fr'
+        label: Windy
+    product_climate_option_219_com_fr:
+        source_field_option: '@product_climate_option_219'
+        catalog: '@com_fr'
+        label: Wintry
+    product_climate_option_220_com_fr:
+        source_field_option: '@product_climate_option_220'
+        catalog: '@com_fr'
+        label: Hot
+    product_collar_option_189_com_fr:
+        source_field_option: '@product_collar_option_189'
+        catalog: '@com_fr'
+        label: N/A
+    product_collar_option_190_com_fr:
+        source_field_option: '@product_collar_option_190'
+        catalog: '@com_fr'
+        label: '? zip'
+    product_collar_option_191_com_fr:
+        source_field_option: '@product_collar_option_191'
+        catalog: '@com_fr'
+        label: 'Boat Neck'
+    product_collar_option_192_com_fr:
+        source_field_option: '@product_collar_option_192'
+        catalog: '@com_fr'
+        label: Crew
+    product_collar_option_193_com_fr:
+        source_field_option: '@product_collar_option_193'
+        catalog: '@com_fr'
+        label: 'Full zip'
+    product_collar_option_194_com_fr:
+        source_field_option: '@product_collar_option_194'
+        catalog: '@com_fr'
+        label: V-neck
+    product_collar_option_195_com_fr:
+        source_field_option: '@product_collar_option_195'
+        catalog: '@com_fr'
+        label: Ballet
+    product_collar_option_196_com_fr:
+        source_field_option: '@product_collar_option_196'
+        catalog: '@com_fr'
+        label: Scoop
+    product_collar_option_197_com_fr:
+        source_field_option: '@product_collar_option_197'
+        catalog: '@com_fr'
+        label: 'High Collar'
+    product_collar_option_198_com_fr:
+        source_field_option: '@product_collar_option_198'
+        catalog: '@com_fr'
+        label: 'Stand Collar'
+    product_collar_option_199_com_fr:
+        source_field_option: '@product_collar_option_199'
+        catalog: '@com_fr'
+        label: 'Roll Neck'
+    product_collar_option_200_com_fr:
+        source_field_option: '@product_collar_option_200'
+        catalog: '@com_fr'
+        label: 'Square Neck'
+    product_color_option_58_com_fr:
+        source_field_option: '@product_color_option_58'
+        catalog: '@com_fr'
+        label: Black
+    product_color_option_59_com_fr:
+        source_field_option: '@product_color_option_59'
+        catalog: '@com_fr'
+        label: Blue
+    product_color_option_60_com_fr:
+        source_field_option: '@product_color_option_60'
+        catalog: '@com_fr'
+        label: Brown
+    product_color_option_61_com_fr:
+        source_field_option: '@product_color_option_61'
+        catalog: '@com_fr'
+        label: Gray
+    product_color_option_62_com_fr:
+        source_field_option: '@product_color_option_62'
+        catalog: '@com_fr'
+        label: Green
+    product_color_option_63_com_fr:
+        source_field_option: '@product_color_option_63'
+        catalog: '@com_fr'
+        label: Lavender
+    product_color_option_64_com_fr:
+        source_field_option: '@product_color_option_64'
+        catalog: '@com_fr'
+        label: Multi
+    product_color_option_65_com_fr:
+        source_field_option: '@product_color_option_65'
+        catalog: '@com_fr'
+        label: Orange
+    product_color_option_66_com_fr:
+        source_field_option: '@product_color_option_66'
+        catalog: '@com_fr'
+        label: Purple
+    product_color_option_67_com_fr:
+        source_field_option: '@product_color_option_67'
+        catalog: '@com_fr'
+        label: Red
+    product_color_option_68_com_fr:
+        source_field_option: '@product_color_option_68'
+        catalog: '@com_fr'
+        label: White
+    product_color_option_69_com_fr:
+        source_field_option: '@product_color_option_69'
+        catalog: '@com_fr'
+        label: Yellow
+    product_eco_collection_option_1_com_fr:
+        source_field_option: '@product_eco_collection_option_1'
+        catalog: '@com_fr'
+        label: 'Yes'
+    product_eco_collection_option_0_com_fr:
+        source_field_option: '@product_eco_collection_option_0'
+        catalog: '@com_fr'
+        label: 'No'
+    product_erin_recommends_option_1_com_fr:
+        source_field_option: '@product_erin_recommends_option_1'
+        catalog: '@com_fr'
+        label: 'Yes'
+    product_erin_recommends_option_0_com_fr:
+        source_field_option: '@product_erin_recommends_option_0'
+        catalog: '@com_fr'
+        label: 'No'
+    product_es_is_discounted_option_1_com_fr:
+        source_field_option: '@product_es_is_discounted_option_1'
+        catalog: '@com_fr'
+        label: 'Yes'
+    product_es_is_discounted_option_0_com_fr:
+        source_field_option: '@product_es_is_discounted_option_0'
+        catalog: '@com_fr'
+        label: 'No'
+    product_es_is_in_stock_option_1_com_fr:
+        source_field_option: '@product_es_is_in_stock_option_1'
+        catalog: '@com_fr'
+        label: 'Yes'
+    product_es_is_in_stock_option_0_com_fr:
+        source_field_option: '@product_es_is_in_stock_option_0'
+        catalog: '@com_fr'
+        label: 'No'
+    product_features_bags_option_78_com_fr:
+        source_field_option: '@product_features_bags_option_78'
+        catalog: '@com_fr'
+        label: 'Audio Pocket'
+    product_features_bags_option_79_com_fr:
+        source_field_option: '@product_features_bags_option_79'
+        catalog: '@com_fr'
+        label: Wheeled
+    product_features_bags_option_80_com_fr:
+        source_field_option: '@product_features_bags_option_80'
+        catalog: '@com_fr'
+        label: 'Hydration Pocket'
+    product_features_bags_option_81_com_fr:
+        source_field_option: '@product_features_bags_option_81'
+        catalog: '@com_fr'
+        label: 'Audio Pocket'
+    product_features_bags_option_82_com_fr:
+        source_field_option: '@product_features_bags_option_82'
+        catalog: '@com_fr'
+        label: Flapover
+    product_features_bags_option_83_com_fr:
+        source_field_option: '@product_features_bags_option_83'
+        catalog: '@com_fr'
+        label: Waterproof
+    product_features_bags_option_84_com_fr:
+        source_field_option: '@product_features_bags_option_84'
+        catalog: '@com_fr'
+        label: Lightweight
+    product_features_bags_option_85_com_fr:
+        source_field_option: '@product_features_bags_option_85'
+        catalog: '@com_fr'
+        label: 'TSA Approved'
+    product_features_bags_option_86_com_fr:
+        source_field_option: '@product_features_bags_option_86'
+        catalog: '@com_fr'
+        label: Reflective
+    product_features_bags_option_87_com_fr:
+        source_field_option: '@product_features_bags_option_87'
+        catalog: '@com_fr'
+        label: 'Laptop Sleeve'
+    product_features_bags_option_88_com_fr:
+        source_field_option: '@product_features_bags_option_88'
+        catalog: '@com_fr'
+        label: Lockable
+    product_format_option_111_com_fr:
+        source_field_option: '@product_format_option_111'
+        catalog: '@com_fr'
+        label: Download
+    product_format_option_112_com_fr:
+        source_field_option: '@product_format_option_112'
+        catalog: '@com_fr'
+        label: DVD
+    product_gender_option_89_com_fr:
+        source_field_option: '@product_gender_option_89'
+        catalog: '@com_fr'
+        label: Men
+    product_gender_option_90_com_fr:
+        source_field_option: '@product_gender_option_90'
+        catalog: '@com_fr'
+        label: Women
+    product_gender_option_91_com_fr:
+        source_field_option: '@product_gender_option_91'
+        catalog: '@com_fr'
+        label: Boys
+    product_gender_option_92_com_fr:
+        source_field_option: '@product_gender_option_92'
+        catalog: '@com_fr'
+        label: Girls
+    product_gender_option_93_com_fr:
+        source_field_option: '@product_gender_option_93'
+        catalog: '@com_fr'
+        label: Unisex
+    product_giftcard_type_option_0_com_fr:
+        source_field_option: '@product_giftcard_type_option_0'
+        catalog: '@com_fr'
+        label: Virtual
+    product_giftcard_type_option_1_com_fr:
+        source_field_option: '@product_giftcard_type_option_1'
+        catalog: '@com_fr'
+        label: Physical
+    product_giftcard_type_option_2_com_fr:
+        source_field_option: '@product_giftcard_type_option_2'
+        catalog: '@com_fr'
+        label: Combined
+    product_gift_wrapping_available_option_1_com_fr:
+        source_field_option: '@product_gift_wrapping_available_option_1'
+        catalog: '@com_fr'
+        label: 'Yes'
+    product_gift_wrapping_available_option_0_com_fr:
+        source_field_option: '@product_gift_wrapping_available_option_0'
+        catalog: '@com_fr'
+        label: 'No'
+    product_gift_wrapping_available_option_2_com_fr:
+        source_field_option: '@product_gift_wrapping_available_option_2'
+        catalog: '@com_fr'
+        label: 'Use config'
+    product_is_returnable_option_1_com_fr:
+        source_field_option: '@product_is_returnable_option_1'
+        catalog: '@com_fr'
+        label: 'Yes'
+    product_is_returnable_option_0_com_fr:
+        source_field_option: '@product_is_returnable_option_0'
+        catalog: '@com_fr'
+        label: 'No'
+    product_material_option_40_com_fr:
+        source_field_option: '@product_material_option_40'
+        catalog: '@com_fr'
+        label: Burlap
+    product_material_option_151_com_fr:
+        source_field_option: '@product_material_option_151'
+        catalog: '@com_fr'
+        label: 'Cocona&reg; performance fabric'
+    product_material_option_41_com_fr:
+        source_field_option: '@product_material_option_41'
+        catalog: '@com_fr'
+        label: Canvas
+    product_material_option_152_com_fr:
+        source_field_option: '@product_material_option_152'
+        catalog: '@com_fr'
+        label: Wool
+    product_material_option_42_com_fr:
+        source_field_option: '@product_material_option_42'
+        catalog: '@com_fr'
+        label: Cotton
+    product_material_option_153_com_fr:
+        source_field_option: '@product_material_option_153'
+        catalog: '@com_fr'
+        label: Fleece
+    product_material_option_43_com_fr:
+        source_field_option: '@product_material_option_43'
+        catalog: '@com_fr'
+        label: 'Faux Leather'
+    product_material_option_154_com_fr:
+        source_field_option: '@product_material_option_154'
+        catalog: '@com_fr'
+        label: Hemp
+    product_material_option_155_com_fr:
+        source_field_option: '@product_material_option_155'
+        catalog: '@com_fr'
+        label: Jersey
+    product_material_option_44_com_fr:
+        source_field_option: '@product_material_option_44'
+        catalog: '@com_fr'
+        label: Leather
+    product_material_option_156_com_fr:
+        source_field_option: '@product_material_option_156'
+        catalog: '@com_fr'
+        label: 'LumaTech&trade;'
+    product_material_option_45_com_fr:
+        source_field_option: '@product_material_option_45'
+        catalog: '@com_fr'
+        label: Mesh
+    product_material_option_157_com_fr:
+        source_field_option: '@product_material_option_157'
+        catalog: '@com_fr'
+        label: 'Lycra&reg;'
+    product_material_option_46_com_fr:
+        source_field_option: '@product_material_option_46'
+        catalog: '@com_fr'
+        label: Nylon
+    product_material_option_158_com_fr:
+        source_field_option: '@product_material_option_158'
+        catalog: '@com_fr'
+        label: Microfiber
+    product_material_option_47_com_fr:
+        source_field_option: '@product_material_option_47'
+        catalog: '@com_fr'
+        label: Polyester
+    product_material_option_48_com_fr:
+        source_field_option: '@product_material_option_48'
+        catalog: '@com_fr'
+        label: Rayon
+    product_material_option_159_com_fr:
+        source_field_option: '@product_material_option_159'
+        catalog: '@com_fr'
+        label: Spandex
+    product_material_option_160_com_fr:
+        source_field_option: '@product_material_option_160'
+        catalog: '@com_fr'
+        label: 'HeatTec&reg;'
+    product_material_option_49_com_fr:
+        source_field_option: '@product_material_option_49'
+        catalog: '@com_fr'
+        label: Ripstop
+    product_material_option_161_com_fr:
+        source_field_option: '@product_material_option_161'
+        catalog: '@com_fr'
+        label: 'EverCool&trade;'
+    product_material_option_50_com_fr:
+        source_field_option: '@product_material_option_50'
+        catalog: '@com_fr'
+        label: Suede
+    product_material_option_51_com_fr:
+        source_field_option: '@product_material_option_51'
+        catalog: '@com_fr'
+        label: Foam
+    product_material_option_162_com_fr:
+        source_field_option: '@product_material_option_162'
+        catalog: '@com_fr'
+        label: 'Organic Cotton'
+    product_material_option_52_com_fr:
+        source_field_option: '@product_material_option_52'
+        catalog: '@com_fr'
+        label: Metal
+    product_material_option_163_com_fr:
+        source_field_option: '@product_material_option_163'
+        catalog: '@com_fr'
+        label: TENCEL
+    product_material_option_164_com_fr:
+        source_field_option: '@product_material_option_164'
+        catalog: '@com_fr'
+        label: 'CoolTech&trade;'
+    product_material_option_53_com_fr:
+        source_field_option: '@product_material_option_53'
+        catalog: '@com_fr'
+        label: Plastic
+    product_material_option_165_com_fr:
+        source_field_option: '@product_material_option_165'
+        catalog: '@com_fr'
+        label: Khaki
+    product_material_option_54_com_fr:
+        source_field_option: '@product_material_option_54'
+        catalog: '@com_fr'
+        label: Rubber
+    product_material_option_166_com_fr:
+        source_field_option: '@product_material_option_166'
+        catalog: '@com_fr'
+        label: Linen
+    product_material_option_55_com_fr:
+        source_field_option: '@product_material_option_55'
+        catalog: '@com_fr'
+        label: Synthetic
+    product_material_option_56_com_fr:
+        source_field_option: '@product_material_option_56'
+        catalog: '@com_fr'
+        label: 'Stainless Steel'
+    product_material_option_167_com_fr:
+        source_field_option: '@product_material_option_167'
+        catalog: '@com_fr'
+        label: Wool
+    product_material_option_57_com_fr:
+        source_field_option: '@product_material_option_57'
+        catalog: '@com_fr'
+        label: Silicone
+    product_material_option_168_com_fr:
+        source_field_option: '@product_material_option_168'
+        catalog: '@com_fr'
+        label: Terry
+    product_new_option_1_com_fr:
+        source_field_option: '@product_new_option_1'
+        catalog: '@com_fr'
+        label: 'Yes'
+    product_new_option_0_com_fr:
+        source_field_option: '@product_new_option_0'
+        catalog: '@com_fr'
+        label: 'No'
+    product_pattern_option_201_com_fr:
+        source_field_option: '@product_pattern_option_201'
+        catalog: '@com_fr'
+        label: Color-Blocked
+    product_pattern_option_202_com_fr:
+        source_field_option: '@product_pattern_option_202'
+        catalog: '@com_fr'
+        label: Checked
+    product_pattern_option_203_com_fr:
+        source_field_option: '@product_pattern_option_203'
+        catalog: '@com_fr'
+        label: Color-Blocked
+    product_pattern_option_204_com_fr:
+        source_field_option: '@product_pattern_option_204'
+        catalog: '@com_fr'
+        label: 'Graphic Print'
+    product_pattern_option_205_com_fr:
+        source_field_option: '@product_pattern_option_205'
+        catalog: '@com_fr'
+        label: Solid
+    product_pattern_option_206_com_fr:
+        source_field_option: '@product_pattern_option_206'
+        catalog: '@com_fr'
+        label: Solid-Highlight
+    product_pattern_option_207_com_fr:
+        source_field_option: '@product_pattern_option_207'
+        catalog: '@com_fr'
+        label: Striped
+    product_pattern_option_208_com_fr:
+        source_field_option: '@product_pattern_option_208'
+        catalog: '@com_fr'
+        label: Camo
+    product_pattern_option_209_com_fr:
+        source_field_option: '@product_pattern_option_209'
+        catalog: '@com_fr'
+        label: Geometric
+    product_performance_fabric_option_1_com_fr:
+        source_field_option: '@product_performance_fabric_option_1'
+        catalog: '@com_fr'
+        label: 'Yes'
+    product_performance_fabric_option_0_com_fr:
+        source_field_option: '@product_performance_fabric_option_0'
+        catalog: '@com_fr'
+        label: 'No'
+    product_purpose_option_221_com_fr:
+        source_field_option: '@product_purpose_option_221'
+        catalog: '@com_fr'
+        label: Products
+    product_purpose_option_222_com_fr:
+        source_field_option: '@product_purpose_option_222'
+        catalog: '@com_fr'
+        label: 'Video Streaming'
+    product_purpose_option_223_com_fr:
+        source_field_option: '@product_purpose_option_223'
+        catalog: '@com_fr'
+        label: All-Purpose
+    product_sale_option_1_com_fr:
+        source_field_option: '@product_sale_option_1'
+        catalog: '@com_fr'
+        label: 'Yes'
+    product_sale_option_0_com_fr:
+        source_field_option: '@product_sale_option_0'
+        catalog: '@com_fr'
+        label: 'No'
+    product_size_option_100_com_fr:
+        source_field_option: '@product_size_option_100'
+        catalog: '@com_fr'
+        label: '55 cm'
+    product_size_option_175_com_fr:
+        source_field_option: '@product_size_option_175'
+        catalog: '@com_fr'
+        label: XS
+    product_size_option_101_com_fr:
+        source_field_option: '@product_size_option_101'
+        catalog: '@com_fr'
+        label: '65 cm'
+    product_size_option_176_com_fr:
+        source_field_option: '@product_size_option_176'
+        catalog: '@com_fr'
+        label: S
+    product_size_option_102_com_fr:
+        source_field_option: '@product_size_option_102'
+        catalog: '@com_fr'
+        label: '75 cm'
+    product_size_option_177_com_fr:
+        source_field_option: '@product_size_option_177'
+        catalog: '@com_fr'
+        label: M
+    product_size_option_103_com_fr:
+        source_field_option: '@product_size_option_103'
+        catalog: '@com_fr'
+        label: '6 foot'
+    product_size_option_178_com_fr:
+        source_field_option: '@product_size_option_178'
+        catalog: '@com_fr'
+        label: L
+    product_size_option_104_com_fr:
+        source_field_option: '@product_size_option_104'
+        catalog: '@com_fr'
+        label: '8 foot'
+    product_size_option_179_com_fr:
+        source_field_option: '@product_size_option_179'
+        catalog: '@com_fr'
+        label: XL
+    product_size_option_105_com_fr:
+        source_field_option: '@product_size_option_105'
+        catalog: '@com_fr'
+        label: '10 foot'
+    product_size_option_180_com_fr:
+        source_field_option: '@product_size_option_180'
+        catalog: '@com_fr'
+        label: '28'
+    product_size_option_181_com_fr:
+        source_field_option: '@product_size_option_181'
+        catalog: '@com_fr'
+        label: '29'
+    product_size_option_182_com_fr:
+        source_field_option: '@product_size_option_182'
+        catalog: '@com_fr'
+        label: '30'
+    product_size_option_183_com_fr:
+        source_field_option: '@product_size_option_183'
+        catalog: '@com_fr'
+        label: '31'
+    product_size_option_184_com_fr:
+        source_field_option: '@product_size_option_184'
+        catalog: '@com_fr'
+        label: '32'
+    product_size_option_185_com_fr:
+        source_field_option: '@product_size_option_185'
+        catalog: '@com_fr'
+        label: '33'
+    product_size_option_186_com_fr:
+        source_field_option: '@product_size_option_186'
+        catalog: '@com_fr'
+        label: '34'
+    product_size_option_187_com_fr:
+        source_field_option: '@product_size_option_187'
+        catalog: '@com_fr'
+        label: '36'
+    product_size_option_188_com_fr:
+        source_field_option: '@product_size_option_188'
+        catalog: '@com_fr'
+        label: '38'
+    product_sleeve_option_169_com_fr:
+        source_field_option: '@product_sleeve_option_169'
+        catalog: '@com_fr'
+        label: Sleeve
+    product_sleeve_option_170_com_fr:
+        source_field_option: '@product_sleeve_option_170'
+        catalog: '@com_fr'
+        label: Long-Sleeve
+    product_sleeve_option_171_com_fr:
+        source_field_option: '@product_sleeve_option_171'
+        catalog: '@com_fr'
+        label: Short-Sleeve
+    product_sleeve_option_172_com_fr:
+        source_field_option: '@product_sleeve_option_172'
+        catalog: '@com_fr'
+        label: Sleeveless
+    product_sleeve_option_173_com_fr:
+        source_field_option: '@product_sleeve_option_173'
+        catalog: '@com_fr'
+        label: Tank
+    product_sleeve_option_174_com_fr:
+        source_field_option: '@product_sleeve_option_174'
+        catalog: '@com_fr'
+        label: Strap
+    product_strap_bags_option_70_com_fr:
+        source_field_option: '@product_strap_bags_option_70'
+        catalog: '@com_fr'
+        label: Adjustable
+    product_strap_bags_option_71_com_fr:
+        source_field_option: '@product_strap_bags_option_71'
+        catalog: '@com_fr'
+        label: 'Cross Body'
+    product_strap_bags_option_72_com_fr:
+        source_field_option: '@product_strap_bags_option_72'
+        catalog: '@com_fr'
+        label: Detachable
+    product_strap_bags_option_73_com_fr:
+        source_field_option: '@product_strap_bags_option_73'
+        catalog: '@com_fr'
+        label: Double
+    product_strap_bags_option_74_com_fr:
+        source_field_option: '@product_strap_bags_option_74'
+        catalog: '@com_fr'
+        label: Padded
+    product_strap_bags_option_75_com_fr:
+        source_field_option: '@product_strap_bags_option_75'
+        catalog: '@com_fr'
+        label: Shoulder
+    product_strap_bags_option_76_com_fr:
+        source_field_option: '@product_strap_bags_option_76'
+        catalog: '@com_fr'
+        label: Single
+    product_strap_bags_option_77_com_fr:
+        source_field_option: '@product_strap_bags_option_77'
+        catalog: '@com_fr'
+        label: Telescoping
+    product_style_bags_option_33_com_fr:
+        source_field_option: '@product_style_bags_option_33'
+        catalog: '@com_fr'
+        label: Backpack
+    product_style_bags_option_34_com_fr:
+        source_field_option: '@product_style_bags_option_34'
+        catalog: '@com_fr'
+        label: Luggage
+    product_style_bags_option_35_com_fr:
+        source_field_option: '@product_style_bags_option_35'
+        catalog: '@com_fr'
+        label: Duffel
+    product_style_bags_option_36_com_fr:
+        source_field_option: '@product_style_bags_option_36'
+        catalog: '@com_fr'
+        label: Messenger
+    product_style_bags_option_37_com_fr:
+        source_field_option: '@product_style_bags_option_37'
+        catalog: '@com_fr'
+        label: Laptop
+    product_style_bags_option_38_com_fr:
+        source_field_option: '@product_style_bags_option_38'
+        catalog: '@com_fr'
+        label: Exercise
+    product_style_bags_option_39_com_fr:
+        source_field_option: '@product_style_bags_option_39'
+        catalog: '@com_fr'
+        label: Tote
+    product_style_bottom_option_113_com_fr:
+        source_field_option: '@product_style_bottom_option_113'
+        catalog: '@com_fr'
+        label: 'Base Layer'
+    product_style_bottom_option_114_com_fr:
+        source_field_option: '@product_style_bottom_option_114'
+        catalog: '@com_fr'
+        label: Basic
+    product_style_bottom_option_115_com_fr:
+        source_field_option: '@product_style_bottom_option_115'
+        catalog: '@com_fr'
+        label: Capri
+    product_style_bottom_option_116_com_fr:
+        source_field_option: '@product_style_bottom_option_116'
+        catalog: '@com_fr'
+        label: Compression
+    product_style_bottom_option_117_com_fr:
+        source_field_option: '@product_style_bottom_option_117'
+        catalog: '@com_fr'
+        label: Leggings
+    product_style_bottom_option_118_com_fr:
+        source_field_option: '@product_style_bottom_option_118'
+        catalog: '@com_fr'
+        label: Parachute
+    product_style_bottom_option_119_com_fr:
+        source_field_option: '@product_style_bottom_option_119'
+        catalog: '@com_fr'
+        label: Skort
+    product_style_bottom_option_120_com_fr:
+        source_field_option: '@product_style_bottom_option_120'
+        catalog: '@com_fr'
+        label: Snug
+    product_style_bottom_option_121_com_fr:
+        source_field_option: '@product_style_bottom_option_121'
+        catalog: '@com_fr'
+        label: Sweatpants
+    product_style_bottom_option_122_com_fr:
+        source_field_option: '@product_style_bottom_option_122'
+        catalog: '@com_fr'
+        label: Tights
+    product_style_bottom_option_123_com_fr:
+        source_field_option: '@product_style_bottom_option_123'
+        catalog: '@com_fr'
+        label: 'Track Pants'
+    product_style_bottom_option_124_com_fr:
+        source_field_option: '@product_style_bottom_option_124'
+        catalog: '@com_fr'
+        label: 'Workout Pants'
+    product_style_general_option_125_com_fr:
+        source_field_option: '@product_style_general_option_125'
+        catalog: '@com_fr'
+        label: Insulated
+    product_style_general_option_126_com_fr:
+        source_field_option: '@product_style_general_option_126'
+        catalog: '@com_fr'
+        label: Jacket
+    product_style_general_option_127_com_fr:
+        source_field_option: '@product_style_general_option_127'
+        catalog: '@com_fr'
+        label: Vest
+    product_style_general_option_128_com_fr:
+        source_field_option: '@product_style_general_option_128'
+        catalog: '@com_fr'
+        label: Lightweight
+    product_style_general_option_129_com_fr:
+        source_field_option: '@product_style_general_option_129'
+        catalog: '@com_fr'
+        label: Hooded
+    product_style_general_option_130_com_fr:
+        source_field_option: '@product_style_general_option_130'
+        catalog: '@com_fr'
+        label: 'Heavy Duty'
+    product_style_general_option_131_com_fr:
+        source_field_option: '@product_style_general_option_131'
+        catalog: '@com_fr'
+        label: 'Rain Coat'
+    product_style_general_option_132_com_fr:
+        source_field_option: '@product_style_general_option_132'
+        catalog: '@com_fr'
+        label: 'Hard Shell'
+    product_style_general_option_133_com_fr:
+        source_field_option: '@product_style_general_option_133'
+        catalog: '@com_fr'
+        label: 'Soft Shell'
+    product_style_general_option_134_com_fr:
+        source_field_option: '@product_style_general_option_134'
+        catalog: '@com_fr'
+        label: Windbreaker
+    product_style_general_option_135_com_fr:
+        source_field_option: '@product_style_general_option_135'
+        catalog: '@com_fr'
+        label: '&frac12; zip'
+    product_style_general_option_136_com_fr:
+        source_field_option: '@product_style_general_option_136'
+        catalog: '@com_fr'
+        label: '&frac14; zip'
+    product_style_general_option_137_com_fr:
+        source_field_option: '@product_style_general_option_137'
+        catalog: '@com_fr'
+        label: 'Full Zip'
+    product_style_general_option_138_com_fr:
+        source_field_option: '@product_style_general_option_138'
+        catalog: '@com_fr'
+        label: Reversible
+    product_style_general_option_139_com_fr:
+        source_field_option: '@product_style_general_option_139'
+        catalog: '@com_fr'
+        label: Bra
+    product_style_general_option_140_com_fr:
+        source_field_option: '@product_style_general_option_140'
+        catalog: '@com_fr'
+        label: Hoodie
+    product_style_general_option_141_com_fr:
+        source_field_option: '@product_style_general_option_141'
+        catalog: '@com_fr'
+        label: Sweatshirt
+    product_style_general_option_142_com_fr:
+        source_field_option: '@product_style_general_option_142'
+        catalog: '@com_fr'
+        label: Polo
+    product_style_general_option_143_com_fr:
+        source_field_option: '@product_style_general_option_143'
+        catalog: '@com_fr'
+        label: Tank
+    product_style_general_option_144_com_fr:
+        source_field_option: '@product_style_general_option_144'
+        catalog: '@com_fr'
+        label: Tee
+    product_style_general_option_145_com_fr:
+        source_field_option: '@product_style_general_option_145'
+        catalog: '@com_fr'
+        label: Pullover
+    product_style_general_option_146_com_fr:
+        source_field_option: '@product_style_general_option_146'
+        catalog: '@com_fr'
+        label: Hoodie
+    product_style_general_option_147_com_fr:
+        source_field_option: '@product_style_general_option_147'
+        catalog: '@com_fr'
+        label: Cardigan
+    product_style_general_option_148_com_fr:
+        source_field_option: '@product_style_general_option_148'
+        catalog: '@com_fr'
+        label: Henley
+    product_style_general_option_149_com_fr:
+        source_field_option: '@product_style_general_option_149'
+        catalog: '@com_fr'
+        label: Tunic
+    product_style_general_option_150_com_fr:
+        source_field_option: '@product_style_general_option_150'
+        catalog: '@com_fr'
+        label: Camisole
