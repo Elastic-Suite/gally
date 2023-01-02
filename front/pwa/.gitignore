@@ -30,5 +30,6 @@ yarn-error.log*
 *.tsbuildinfo
 tsconfig.*.json
 
-# storybook
-!.storybook
+# custom
+/public/images
+/public/locales

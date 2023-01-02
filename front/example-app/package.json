@@ -9,6 +9,7 @@
     "@mui/material": "5.10.6",
     "@mui/x-data-grid": "5.17.4",
     "classnames": "2.3.2",
+    "gally-admin-shared": "0.1.11",
     "lodash.debounce": "4.0.8",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -51,6 +52,7 @@
     "@babel/core": "7.19.1",
     "@babel/plugin-syntax-flow": "7.18.6",
     "@babel/plugin-transform-react-jsx": "7.19.0",
+    "@inrupt/jest-jsdom-polyfills": "1.5.3",
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "13.4.0",
     "@types/jest": "29.0.3",
@@ -86,6 +88,10 @@
       "cobertura"
     ],
     "resetMocks": false,
-    "restoreMocks": false
+    "restoreMocks": false,
+    "transformIgnorePatterns": [
+      "/node_modules/(?!(gally-admin-shared)/)",
+      "\\.pnp\\.[^\\/]+$"
+    ]
   }
 }

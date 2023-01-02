@@ -24,7 +24,7 @@ import {
 
 export function useApiFetch(secure = true): IFetchApi {
   return useCallback<IFetchApi>(
-    async <T>(
+    async <T extends object>(
       resource: IResource | string,
       searchParameters?: ISearchParameters,
       options?: RequestInit
@@ -46,7 +46,7 @@ export function useApiFetch(secure = true): IFetchApi {
   )
 }
 
-export function useFetchApi<T>(
+export function useFetchApi<T extends object>(
   resource: IResource | string,
   searchParameters?: ISearchParameters,
   options?: RequestInit
