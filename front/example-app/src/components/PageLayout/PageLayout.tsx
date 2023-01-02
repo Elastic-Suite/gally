@@ -125,7 +125,7 @@ function PageLayout(props: IProps): JSX.Element {
                       background:
                         isBackground ||
                         selectCategoryId === item.id ||
-                        sousMenu?.id === item.id
+                        (sousMenu?.id === item.id && isSousMenuVisible)
                           ? '#c6eaff'
                           : 'initial',
                     }}
