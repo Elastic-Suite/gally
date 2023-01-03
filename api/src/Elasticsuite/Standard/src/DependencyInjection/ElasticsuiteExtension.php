@@ -139,9 +139,14 @@ class ElasticsuiteExtension extends Extension implements PrependExtensionInterfa
                 $configFiles,
             );
         } else {
+            // Don't use getPath for menu conf, the order is important
             $configFiles = array_merge(
                 $configFiles,
-                $this->getPaths(__DIR__ . '/../*/Resources/config/elasticsuite_menu.yaml'),
+                [
+                    __DIR__ . '/../Catalog/Resources/config/elasticsuite_menu.yaml',
+                    __DIR__ . '/../User/Resources/config/elasticsuite_menu.yaml',
+                    __DIR__ . '/../Menu/Resources/config/elasticsuite_menu.yaml',
+                ]
             );
         }
 
