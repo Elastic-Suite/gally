@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Elasticsuite\Entity\Tests\Unit\Attribute\Type;
 
 use ArgumentCountError;
+use Elasticsuite\Entity\Model\Attribute\AttributeFactory;
 use Elasticsuite\Entity\Model\Attribute\Type\SelectAttribute;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
@@ -42,7 +43,11 @@ class SelectAttributeTest extends KernelTestCase
         $attributeCodeProperty = $reflector->getProperty('attributeCode');
         $valueProperty = $reflector->getProperty('value');
 
-        $selectAttribute = new SelectAttribute($attributeCode, $value);
+        $attributeFactory = static::getContainer()->get(AttributeFactory::class);
+        $selectAttribute = $attributeFactory->create(
+            SelectAttribute::ATTRIBUTE_TYPE,
+            ['attributeCode' => $attributeCode, 'value' => $value]
+        );
         $this->assertEquals($attributeCode, $attributeCodeProperty->getValue($selectAttribute));
         $this->assertEquals($expectedValue, $valueProperty->getValue($selectAttribute));
         $this->assertEquals($expectedValue, $selectAttribute->getValue());

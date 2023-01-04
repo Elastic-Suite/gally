@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace Elasticsuite\Product\Serializer;
 
+use Elasticsuite\Entity\Model\Attribute\AttributeFactory;
 use Elasticsuite\Entity\Model\Attribute\StructuredAttributeInterface;
 use Elasticsuite\Entity\Model\Attribute\Type\NestedAttribute;
 use Elasticsuite\Entity\Model\Attribute\Type\PriceAttribute;
@@ -36,6 +37,7 @@ class ProductDenormalizer implements ContextAwareDenormalizerInterface, Denormal
     public function __construct(
         private SerializerService $serializerService,
         private PriceGroupProvider $priceGroupProvider,
+        private AttributeFactory $attributeFactory,
     ) {
     }
 
@@ -83,17 +85,17 @@ class ProductDenormalizer implements ContextAwareDenormalizerInterface, Denormal
                                 // Individual nested fields.
                                 $subStructureKeys = array_keys($subStructure);
                                 $product->addAttribute(
-                                    new NestedAttribute($attributeCode, $attributeValue, $subStructureKeys)
+                                    $this->attributeFactory->create(NestedAttribute::ATTRIBUTE_TYPE, ['attributeCode' => $attributeCode, 'value' => $attributeValue, 'fields' => $subStructureKeys])
                                 );
                             } elseif (is_subclass_of($attributeType, StructuredAttributeInterface::class)) {
                                 if (is_a($attributeType, PriceAttribute::class, true)) {
                                     $product->addAttribute(
-                                        new $attributeType($attributeCode, $attributeValue, $this->priceGroupProvider->getCurrentPriceGroupId())
+                                        $this->attributeFactory->create($attributeType::ATTRIBUTE_TYPE, ['attributeCode' => $attributeCode, 'value' => $attributeValue, 'priceGroupProvider' => $this->priceGroupProvider])
                                     );
                                 } else {
                                     // Structured/Complex fields, value is transmitted as is.
                                     $product->addAttribute(
-                                        new $attributeType($attributeCode, $attributeValue) // @phpstan-ignore-line
+                                        $this->attributeFactory->create($attributeType::ATTRIBUTE_TYPE, ['attributeCode' => $attributeCode, 'value' => $attributeValue]) // @phpstan-ignore-line
                                     );
                                 }
                             } else {
@@ -101,12 +103,12 @@ class ProductDenormalizer implements ContextAwareDenormalizerInterface, Denormal
                                     $attributeValue = json_encode($attributeValue);
                                 }
                                 $product->addAttribute(
-                                    new $attributeType($attributeCode, $attributeValue)
+                                    $this->attributeFactory->create($attributeType::ATTRIBUTE_TYPE, ['attributeCode' => $attributeCode, 'value' => $attributeValue])
                                 );
                             }
                         } else {
                             $product->addAttribute(
-                                new $attributeType($attributeCode, $attributeValue)
+                                $this->attributeFactory->create($attributeType::ATTRIBUTE_TYPE, ['attributeCode' => $attributeCode, 'value' => $attributeValue])
                             );
                         }
                     }

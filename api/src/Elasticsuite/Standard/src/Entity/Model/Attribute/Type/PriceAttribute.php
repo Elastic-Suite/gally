@@ -18,16 +18,19 @@ namespace Elasticsuite\Entity\Model\Attribute\Type;
 
 use Elasticsuite\Entity\Model\Attribute\AttributeInterface;
 use Elasticsuite\Entity\Model\Attribute\StructuredAttributeInterface;
+use Elasticsuite\Entity\Service\PriceGroupProvider;
 
 /**
  * Used for normalization/de-normalization and graphql schema stitching of price source fields.
  */
 class PriceAttribute extends AbstractStructuredAttribute implements AttributeInterface, StructuredAttributeInterface
 {
+    public const ATTRIBUTE_TYPE = 'price';
+
     public function __construct(
         string $attributeCode,
         mixed $value,
-        protected ?string $priceGroupId = null
+        protected PriceGroupProvider $priceGroupProvider
     ) {
         parent::__construct($attributeCode, $value);
     }
@@ -42,9 +45,10 @@ class PriceAttribute extends AbstractStructuredAttribute implements AttributeInt
     protected function getPriceForCurrentGroup(mixed $value): mixed
     {
         $priceFound = false;
-        if (\is_array($value) && null !== $this->priceGroupId) {
+        $priceGroupId = $this->priceGroupProvider->getCurrentPriceGroupId();
+        if (\is_array($value) && null !== $priceGroupId) {
             foreach ($value as $priceData) {
-                if (($priceData['group_id'] ?? null) == $this->priceGroupId) {
+                if (($priceData['group_id'] ?? null) == $priceGroupId) {
                     $value = [$priceData];
                     $priceFound = true;
                     break;
@@ -52,7 +56,7 @@ class PriceAttribute extends AbstractStructuredAttribute implements AttributeInt
             }
         }
 
-        if (!\is_array($value) || null === $this->priceGroupId || !$priceFound) {
+        if (!\is_array($value) || null === $priceGroupId || !$priceFound) {
             $value = [];
         }
 

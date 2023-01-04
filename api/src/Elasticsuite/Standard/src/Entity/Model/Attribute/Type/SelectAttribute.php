@@ -24,6 +24,8 @@ use Elasticsuite\Entity\Model\Attribute\StructuredAttributeInterface;
  */
 class SelectAttribute extends AbstractStructuredAttribute implements AttributeInterface, StructuredAttributeInterface
 {
+    public const ATTRIBUTE_TYPE = 'select';
+
     /**
      * {@inheritDoc}
      */

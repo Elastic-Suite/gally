@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Elasticsuite\Entity\Tests\Unit\Attribute\Type;
 
 use ArgumentCountError;
+use Elasticsuite\Entity\Model\Attribute\AttributeFactory;
 use Elasticsuite\Entity\Model\Attribute\Type\FloatAttribute;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
@@ -43,7 +44,11 @@ class FloatAttributeTest extends KernelTestCase
         $attributeCodeProperty = $reflector->getProperty('attributeCode');
         $valueProperty = $reflector->getProperty('value');
 
-        $floatAttribute = new FloatAttribute($attributeCode, $value);
+        $attributeFactory = static::getContainer()->get(AttributeFactory::class);
+        $floatAttribute = $attributeFactory->create(
+            FloatAttribute::ATTRIBUTE_TYPE,
+            ['attributeCode' => $attributeCode, 'value' => $value]
+        );
         $this->assertEquals($floatAttribute->getValue(), $valueProperty->getValue($floatAttribute));
         $this->assertIsNotArray($valueProperty->getValue($floatAttribute));
         $this->assertIsNotArray($floatAttribute->getValue());

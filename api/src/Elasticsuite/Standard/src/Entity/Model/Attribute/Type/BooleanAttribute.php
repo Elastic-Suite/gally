@@ -25,6 +25,8 @@ use GraphQL\Type\Definition\Type as GraphQLType;
  */
 class BooleanAttribute extends AbstractAttribute implements GraphQlAttributeInterface
 {
+    public const ATTRIBUTE_TYPE = 'boolean';
+
     private bool $extraSanitization = false;
 
     /**
