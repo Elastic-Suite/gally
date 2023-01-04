@@ -3,6 +3,8 @@ import { HTMLAttributes, MouseEvent } from 'react'
 import parse from 'autosuggest-highlight/parse'
 import match from 'autosuggest-highlight/match'
 
+import { useTranslation } from 'next-i18next'
+
 import { ITreeItem } from 'shared'
 
 import Checkbox from '../form/Checkbox'
@@ -71,6 +73,8 @@ function Tree<Multiple extends boolean | undefined>(
     small,
     value,
   } = props
+
+  const { t } = useTranslation('categories')
 
   const Title = base ? CustomTitleBase : CustomTitle
   const Container = small ? SmallCustomContainer : CustomContainer
@@ -159,7 +163,9 @@ function Tree<Multiple extends boolean | undefined>(
                 ) : (
                   title
                 )}
-                {item.isVirtual ? <CustomVirtual>virtual</CustomVirtual> : null}
+                {item.isVirtual ? (
+                  <CustomVirtual>{t('tree.virtual')}</CustomVirtual>
+                ) : null}
               </CustomTitleContainer>
             </Container>
             {Boolean(openItems[item.id] && item.children) && (

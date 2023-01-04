@@ -23,6 +23,7 @@
   "virtual.tooltip": "Is the category is virtual or not ? A root category can't be virtual.",
   "select": "Select",
   "select.tooltip": "What sorting will be used for the category",
+  "select.label": "Default sorting",
   "searchBarResult": "{{value.value}} {{value.result}}",
   "placeholder": "No category available",
   "buttonSave": "Save",
@@ -34,5 +35,6 @@
   "pinned.results_one": "pinned",
   "pinned.results_zero": "pinned",
   "pinned.results_other": "pinned",
-  "noProductSearch": "No products were found"
+  "noProductSearch": "No products were found",
+  "tree.virtual": "virtual"
 }

@@ -69,7 +69,7 @@ function Merchandize({
         <Grid item xs={6}>
           <DropDown
             infoTooltip={t('select.tooltip')}
-            label="Default sorting"
+            label={t('select.label')}
             name="defaultSorting"
             onChange={handleChange}
             options={sortOptions}

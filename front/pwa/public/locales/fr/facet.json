@@ -1,8 +1,8 @@
 {
   "facet.title": "Catégories",
-  "facet.configuration": "General configuration",
-  "facet.button.setting": "Set Default values",
-  "facet.byCategory": "By category",
+  "facet.configuration": "Configuration générale",
+  "facet.button.setting": "Mettre les valeurs par défaut",
+  "facet.byCategory": "Par catégorie",
   "facet.alert": "Les attributs affichés ici ont été définis comme filtrables",
   "facets": "Facettes"
 }
