@@ -1,4 +1,4 @@
-import { useContext, useId } from 'react'
+import { useContext, useEffect, useId } from 'react'
 import {
   AppBar,
   InputLabel,
@@ -39,6 +39,20 @@ function Header(): JSX.Element {
   ): void {
     onLocalizedCatalogIdChange(event.target.value)
   }
+
+  useEffect(() => {
+    if (catalogs.length !== 0 && !catalog) {
+      onCatalogIdChange(catalogs[0].id as string)
+    }
+
+    if (catalog) {
+      if (catalog?.localizedCatalogs) {
+        onLocalizedCatalogIdChange(
+          catalog.localizedCatalogs.edges[0].node.id as string
+        )
+      }
+    }
+  }, [catalogs])
 
   return (
     <AppBar component="nav">
