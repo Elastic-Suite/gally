@@ -397,6 +397,16 @@ class SearchDocumentsTest extends AbstractTest
             ],
             [
                 'product',  // entity type.
+                'b2c_en',   // catalog ID.
+                10,     // page size.
+                1,      // current page.
+                ['_score' => SortOrderInterface::SORT_DESC], // sort order specifications.
+                'entity_id', // document data identifier.
+                // Explicite _score sort definition
+                [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],    // expected ordered document IDs
+            ],
+            [
+                'product',  // entity type.
                 'b2b_fr',   // catalog ID.
                 10,     // page size.
                 1,      // current page.
