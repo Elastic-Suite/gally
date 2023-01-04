@@ -25,6 +25,8 @@ use GraphQL\Type\Definition\Type as GraphQLType;
  */
 class IntAttribute extends AbstractAttribute implements GraphQlAttributeInterface
 {
+    public const ATTRIBUTE_TYPE = 'int';
+
     private bool $extraSanitization = false;
 
     /**

@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Elasticsuite\Entity\Tests\Unit\Attribute\Type;
 
 use ArgumentCountError;
+use Elasticsuite\Entity\Model\Attribute\AttributeFactory;
 use Elasticsuite\Entity\Model\Attribute\Type\NestedAttribute;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
@@ -44,7 +45,11 @@ class NestedAttributeTest extends KernelTestCase
         $valueProperty = $reflector->getProperty('value');
         $fieldsProperty = $reflector->getProperty('fields');
 
-        $nestedAttribute = new NestedAttribute($attributeCode, $value, $fields);
+        $attributeFactory = static::getContainer()->get(AttributeFactory::class);
+        $nestedAttribute = $attributeFactory->create(
+            NestedAttribute::ATTRIBUTE_TYPE,
+            ['attributeCode' => $attributeCode, 'value' => $value, 'fields' => $fields]
+        );
         $this->assertEquals($attributeCode, $attributeCodeProperty->getValue($nestedAttribute));
         $this->assertEquals($fields, $fieldsProperty->getValue($nestedAttribute));
 

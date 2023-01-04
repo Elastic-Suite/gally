@@ -17,7 +17,9 @@ declare(strict_types=1);
 namespace Elasticsuite\Entity\Tests\Unit\Attribute\Type;
 
 use ArgumentCountError;
+use Elasticsuite\Entity\Model\Attribute\AttributeFactory;
 use Elasticsuite\Entity\Model\Attribute\Type\PriceAttribute;
+use Elasticsuite\Entity\Service\PriceGroupProvider;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class PriceAttributeTest extends KernelTestCase
@@ -38,11 +40,18 @@ class PriceAttributeTest extends KernelTestCase
      */
     public function testStructureCheck(string $attributeCode, mixed $value, mixed $expectedValue, string $priceGroupId = '0'): void
     {
+        $priceGroupProvider = $this->getMockBuilder(PriceGroupProvider::class)->disableOriginalConstructor()->getMock();
+        $priceGroupProvider->method('getCurrentPriceGroupId')->willReturn($priceGroupId);
+
         $reflector = new \ReflectionClass(PriceAttribute::class);
         $attributeCodeProperty = $reflector->getProperty('attributeCode');
         $valueProperty = $reflector->getProperty('value');
 
-        $priceAttribute = new PriceAttribute($attributeCode, $value, $priceGroupId);
+        $attributeFactory = static::getContainer()->get(AttributeFactory::class);
+        $priceAttribute = $attributeFactory->create(
+            PriceAttribute::ATTRIBUTE_TYPE,
+            ['attributeCode' => $attributeCode, 'value' => $value, 'priceGroupProvider' => $priceGroupProvider]
+        );
         $this->assertEquals($attributeCode, $attributeCodeProperty->getValue($priceAttribute));
         $this->assertEquals($expectedValue, $valueProperty->getValue($priceAttribute));
         $this->assertEquals($expectedValue, $priceAttribute->getValue());

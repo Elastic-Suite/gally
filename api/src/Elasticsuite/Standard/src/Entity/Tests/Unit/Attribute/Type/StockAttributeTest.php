@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Elasticsuite\Entity\Tests\Unit\Attribute\Type;
 
 use ArgumentCountError;
+use Elasticsuite\Entity\Model\Attribute\AttributeFactory;
 use Elasticsuite\Entity\Model\Attribute\Type\StockAttribute;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
@@ -42,7 +43,11 @@ class StockAttributeTest extends KernelTestCase
         $attributeCodeProperty = $reflector->getProperty('attributeCode');
         $valueProperty = $reflector->getProperty('value');
 
-        $stockAttribute = new StockAttribute($attributeCode, $value);
+        $attributeFactory = static::getContainer()->get(AttributeFactory::class);
+        $stockAttribute = $attributeFactory->create(
+            StockAttribute::ATTRIBUTE_TYPE,
+            ['attributeCode' => $attributeCode, 'value' => $value]
+        );
         $this->assertEquals($attributeCode, $attributeCodeProperty->getValue($stockAttribute));
         $this->assertEquals($expectedValue, $valueProperty->getValue($stockAttribute));
         $this->assertEquals($expectedValue, $stockAttribute->getValue());

@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Elasticsuite\Entity\Tests\Unit\Attribute\Type;
 
 use ArgumentCountError;
+use Elasticsuite\Entity\Model\Attribute\AttributeFactory;
 use Elasticsuite\Entity\Model\Attribute\Type\IntAttribute;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
@@ -43,7 +44,11 @@ class IntAttributeTest extends KernelTestCase
         $attributeCodeProperty = $reflector->getProperty('attributeCode');
         $valueProperty = $reflector->getProperty('value');
 
-        $integerAttribute = new IntAttribute($attributeCode, $value);
+        $attributeFactory = static::getContainer()->get(AttributeFactory::class);
+        $integerAttribute = $attributeFactory->create(
+            IntAttribute::ATTRIBUTE_TYPE,
+            ['attributeCode' => $attributeCode, 'value' => $value]
+        );
         $this->assertEquals($attributeCode, $attributeCodeProperty->getValue($integerAttribute));
         $this->assertEquals($integerAttribute->getValue(), $valueProperty->getValue($integerAttribute));
         $this->assertIsNotArray($valueProperty->getValue($integerAttribute));

@@ -21,6 +21,8 @@ namespace Elasticsuite\Entity\Model\Attribute\Type;
  */
 class NestedAttribute extends AbstractAttribute
 {
+    public const ATTRIBUTE_TYPE = 'nested';
+
     /** @var string[] */
     protected array $fields;
 

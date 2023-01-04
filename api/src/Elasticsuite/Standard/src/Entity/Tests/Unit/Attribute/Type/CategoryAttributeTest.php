@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Elasticsuite\Entity\Tests\Unit\Attribute\Type;
 
 use ArgumentCountError;
+use Elasticsuite\Entity\Model\Attribute\AttributeFactory;
 use Elasticsuite\Entity\Model\Attribute\Type\CategoryAttribute;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
@@ -42,7 +43,11 @@ class CategoryAttributeTest extends KernelTestCase
         $attributeCodeProperty = $reflector->getProperty('attributeCode');
         $valueProperty = $reflector->getProperty('value');
 
-        $categoryAttribute = new CategoryAttribute($attributeCode, $value);
+        $attributeFactory = static::getContainer()->get(AttributeFactory::class);
+        $categoryAttribute = $attributeFactory->create(
+            CategoryAttribute::ATTRIBUTE_TYPE,
+            ['attributeCode' => $attributeCode, 'value' => $value]
+        );
         $this->assertEquals($attributeCode, $attributeCodeProperty->getValue($categoryAttribute));
         $this->assertEquals($expectedValue, $valueProperty->getValue($categoryAttribute));
         $this->assertEquals($expectedValue, $categoryAttribute->getValue());
