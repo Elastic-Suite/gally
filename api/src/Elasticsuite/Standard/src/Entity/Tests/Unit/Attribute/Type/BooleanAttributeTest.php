@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Elasticsuite\Entity\Tests\Unit\Attribute\Type;
 
 use ArgumentCountError;
+use Elasticsuite\Entity\Model\Attribute\AttributeFactory;
 use Elasticsuite\Entity\Model\Attribute\Type\BooleanAttribute;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
@@ -43,7 +44,11 @@ class BooleanAttributeTest extends KernelTestCase
         $attributeCodeProperty = $reflector->getProperty('attributeCode');
         $valueProperty = $reflector->getProperty('value');
 
-        $booleanAttribute = new BooleanAttribute($attributeCode, $value);
+        $attributeFactory = static::getContainer()->get(AttributeFactory::class);
+        $booleanAttribute = $attributeFactory->create(
+            BooleanAttribute::ATTRIBUTE_TYPE,
+            ['attributeCode' => $attributeCode, 'value' => $value]
+        );
         $this->assertEquals($attributeCode, $attributeCodeProperty->getValue($booleanAttribute));
         $this->assertEquals($booleanAttribute->getValue(), $valueProperty->getValue($booleanAttribute));
         $this->assertIsNotArray($valueProperty->getValue($booleanAttribute));
