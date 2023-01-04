@@ -1,3 +1,5 @@
+imports:
+    - { resource: attribute_factory.yaml }
 services:
     Elasticsuite\Entity\Filter\SearchColumnsFilter:
         arguments: [ '@doctrine', ~, '@?logger' ]

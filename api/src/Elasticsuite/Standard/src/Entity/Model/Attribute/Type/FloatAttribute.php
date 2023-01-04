@@ -25,6 +25,8 @@ use GraphQL\Type\Definition\Type as GraphQLType;
  */
 class FloatAttribute extends AbstractAttribute implements GraphQlAttributeInterface
 {
+    public const ATTRIBUTE_TYPE = 'float';
+
     private bool $extraSanitization = false;
 
     /**

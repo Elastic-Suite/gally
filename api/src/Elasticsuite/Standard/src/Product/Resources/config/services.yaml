@@ -28,6 +28,7 @@ services:
         arguments:
             - '@Elasticsuite\Stitching\Service\SerializerService'
             - '@Elasticsuite\Entity\Service\PriceGroupProvider'
+            - '@Elasticsuite\Entity\Model\Attribute\AttributeFactory'
         tags:
             - { name: serializer.normalizer }
 

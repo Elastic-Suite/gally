@@ -21,6 +21,8 @@ use Elasticsuite\Entity\Model\Attribute\StructuredAttributeInterface;
 
 class StockAttribute extends AbstractStructuredAttribute implements AttributeInterface, StructuredAttributeInterface
 {
+    public const ATTRIBUTE_TYPE = 'stock';
+
     /**
      * {@inheritDoc}
      */
