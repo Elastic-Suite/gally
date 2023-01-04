@@ -73,11 +73,8 @@ class SortInputType extends InputObjectType implements TypeInterface
     {
         foreach ($sortOrders as $sortField => &$sortParams) {
             $sourceField = $this->reverseSourceFieldProvider->getSourceFieldFromFieldName($sortField, $metadata);
-            if (null === $sourceField) {
-                throw new \InvalidArgumentException("The source field for the sort field '{$sourceField}' does not exist");
-            }
 
-            if (Type::TYPE_PRICE == $sourceField->getType()) {
+            if (Type::TYPE_PRICE == $sourceField?->getType()) {
                 $sortParams['nestedPath'] = $sourceField->getCode();
                 $sortParams['nestedFilter'] = [$sourceField->getCode() . '.group_id' => $this->priceGroupProvider->getCurrentPriceGroupId()];
             }
