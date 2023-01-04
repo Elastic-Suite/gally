@@ -54,6 +54,8 @@ export default function SearchBar(props: IProps): JSX.Element {
     onSearch(searchValue)
   }
 
+  const hasProduct = Boolean(nbTopProducts + nbResults)
+
   return (
     <Paper variant="outlined">
       <Grid container justifyContent="space-between" sx={{ padding: '16px' }}>
@@ -62,10 +64,18 @@ export default function SearchBar(props: IProps): JSX.Element {
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               <SearchTitle>{t('searchBar.title')}</SearchTitle>
               <SearchResult>
-                {result}{' '}
-                {sortValue === 'category__position' &&
-                  !inputTextProps.value &&
-                  `(${resultPinned})`}
+                {!hasProduct ? (
+                  <CustomNoTopProduct>
+                    {t('noProductSearch')}
+                  </CustomNoTopProduct>
+                ) : (
+                  <>
+                    {result}{' '}
+                    {sortValue === 'category__position' &&
+                      !inputTextProps.value &&
+                      `(${resultPinned})`}
+                  </>
+                )}
               </SearchResult>
             </div>
             <form onSubmit={handleSubmit}>
@@ -91,9 +101,11 @@ export default function SearchBar(props: IProps): JSX.Element {
               />
             </form>
           </div>
-          {nbTopProducts === 0 && sortValue === 'category__position' && (
+          {hasProduct &&
+          nbTopProducts === 0 &&
+          sortValue === 'category__position' ? (
             <CustomNoTopProduct>{t('labelForPinProduct')}</CustomNoTopProduct>
-          )}
+          ) : null}
         </Grid>
       </Grid>
     </Paper>

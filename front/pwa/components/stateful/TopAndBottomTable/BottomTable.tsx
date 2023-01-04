@@ -25,6 +25,7 @@ import FieldGuesser from '../FieldGuesser/FieldGuesser'
 import NoAttributes from '~/components/atoms/noAttributes/NoAttributes'
 
 import { useTranslation } from 'next-i18next'
+import { Box } from '@mui/material'
 
 interface IProps {
   localizedCatalogId: string
@@ -36,6 +37,7 @@ interface IProps {
   sortValue: string
   searchValue: string
   configuration: IConfigurations
+  nbTopProducts: number
 }
 
 function BottomTable(
@@ -52,6 +54,7 @@ function BottomTable(
     sortValue,
     searchValue,
     configuration,
+    nbTopProducts,
   } = props
 
   const [currentPage, setCurrentPage] = useState<number>(1)
@@ -132,34 +135,46 @@ function BottomTable(
     }
   }
 
+  const hasProduct = Boolean(nbTopProducts + tableRows.length)
+
   return (
     <>
       {Boolean(products?.data?.products) &&
-        (products.data.products.collection.length === 0 ? (
+        (!hasProduct ? (
           <NoAttributes title={t('noProductSearch')} />
         ) : (
-          <PagerTable
-            Field={FieldGuesser}
-            count={products.data.products.paginationInfo.totalCount}
-            currentPage={
-              (currentPage - 1 >= 0 ? currentPage - 1 : currentPage) ?? 0
-            }
-            massiveSelectionIndeterminate={massiveSelectionIndeterminate}
-            massiveSelectionState={massiveSelectionState}
-            onPageChange={onPageChange}
-            onRowsPerPageChange={onRowsPerPageChange}
-            onSelection={handleSelection}
-            ref={ref}
-            rowsPerPage={rowsPerPage}
-            rowsPerPageOptions={defaultRowsPerPageOptions ?? []}
-            selectedRows={selectedRows}
-            tableHeaders={productTableheader}
-            tableRows={
-              products.data.products.collection as unknown as ITableRow[]
-            }
-            withSelection={withSelection}
-            configuration={configuration}
-          />
+          products.data.products.collection.length !== 0 && (
+            <Box
+              sx={
+                nbTopProducts !== 0 && sortValue === 'category__position'
+                  ? { marginTop: '24px' }
+                  : {}
+              }
+            >
+              <PagerTable
+                Field={FieldGuesser}
+                count={products.data.products.paginationInfo.totalCount}
+                currentPage={
+                  (currentPage - 1 >= 0 ? currentPage - 1 : currentPage) ?? 0
+                }
+                massiveSelectionIndeterminate={massiveSelectionIndeterminate}
+                massiveSelectionState={massiveSelectionState}
+                onPageChange={onPageChange}
+                onRowsPerPageChange={onRowsPerPageChange}
+                onSelection={handleSelection}
+                ref={ref}
+                rowsPerPage={rowsPerPage}
+                rowsPerPageOptions={defaultRowsPerPageOptions ?? []}
+                selectedRows={selectedRows}
+                tableHeaders={productTableheader}
+                tableRows={
+                  products.data.products.collection as unknown as ITableRow[]
+                }
+                withSelection={withSelection}
+                configuration={configuration}
+              />
+            </Box>
+          )
         ))}
     </>
   )
