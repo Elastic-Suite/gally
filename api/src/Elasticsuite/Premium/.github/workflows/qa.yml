@@ -21,6 +21,6 @@ jobs:
         with: 
           php_version: "8.1"
       - name: PHP-CS-Fixer
-        run: ./vendor/bin/php-cs-fixer fix --path-mode=intersection --diff --dry-run src
+        run: ./vendor/bin/php-cs-fixer fix --path-mode=intersection --diff --dry-run
       - name: PHPStan
-        run: ./vendor/bin/phpstan analyse src
+        run: ./vendor/bin/phpstan analyse
