@@ -21,14 +21,14 @@ jobs:
         
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
             # Checkout gally "template" from the same branch. This is the dev environment with docker files.
             repository: 'Elastic-Suite/standalone'
             ref: ${{ github.base_ref }}
-            token: ${{ secrets.READ_ONLY_TOKEN }} # needed only until the gally "template" becomes public.
+            token: ${{ secrets.GH_TOKEN }} # needed only until the gally "template" becomes public.
             path: gally-dev-${{ github.run_id }}-${{ github.run_number }}
 
       - name: Move Gally dev environment to a defined location
