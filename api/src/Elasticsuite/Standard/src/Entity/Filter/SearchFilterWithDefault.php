@@ -65,26 +65,20 @@ class SearchFilterWithDefault extends BaseSearchFilter
         $aliasedField = "(CASE WHEN $alias.$field IS NULL THEN " .
             "(CASE WHEN $this->defaultAlias.$field IS NOT NULL THEN $this->defaultAlias.$field ELSE '$defaultValue' END) " .
             "ELSE $alias.$field END)";
-        // Rewrite end
 
         if (!$strategy || self::STRATEGY_EXACT === $strategy) {
-            if (1 === \count($values)) {
-                $queryBuilder
-                    ->andWhere(
-                        $queryBuilder->expr()->eq($wrapCase($aliasedField), $wrapCase($valueParameter)),
-                    )
-
-                    ->setParameter($valueParameter, $values[0]);
-
-                return;
+            $where = [];
+            foreach ($values as $value) {
+                $parameterName = $queryNameGenerator->generateParameterName($valueParameter);
+                $where[] = $queryBuilder->expr()->eq($wrapCase($aliasedField), $wrapCase($parameterName));
+                $queryBuilder->setParameter($parameterName, $value);
             }
 
-            $queryBuilder
-                ->andWhere($queryBuilder->expr()->in($wrapCase($aliasedField), $valueParameter))
-                ->setParameter($valueParameter, $caseSensitive ? $values : array_map('strtolower', $values));
+            $queryBuilder->andWhere($queryBuilder->expr()->orX(...$where));
 
             return;
         }
+        // Rewrite end
 
         $ors = [];
         $parameters = [];
