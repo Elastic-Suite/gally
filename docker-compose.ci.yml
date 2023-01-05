@@ -38,7 +38,6 @@ services:
     volumes:
       - ./front/example-app/coverage:/usr/src/front/example-app/coverage:rw,cached
       - ./front/pwa/coverage:/usr/src/front/pwa/coverage:rw,cached
-      - ./front/shared/coverage:/usr/src/front/shared/coverage:rw,cached
 
   example:
     build:
