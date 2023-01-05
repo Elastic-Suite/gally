@@ -181,9 +181,10 @@ class AddAggregationsData implements SerializeStageInterface
             );
 
             if (\count($options) > $facetConfigs->getMaxSize()) {
-                $data['options'] = \array_slice($options, 0, $facetConfigs->getMaxSize());
+                $options = \array_slice($options, 0, $facetConfigs->getMaxSize());
                 $data['hasMore'] = true;
             }
+            $data['options'] = $options;
         }
     }
 }
