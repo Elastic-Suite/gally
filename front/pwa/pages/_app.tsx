@@ -1,10 +1,11 @@
 import React from 'react'
 import { Inter } from '@next/font/google'
-import { appWithTranslation } from 'next-i18next'
 import type { AppProps } from 'next/app'
 import Script from 'next/script'
 import Head from 'next/head'
-import { GallyApp, nextI18nConfig } from 'gally-admin-components'
+import { GallyApp } from 'gally-admin-components'
+
+import 'gally-admin-components/dist/style.css'
 
 // eslint-disable-next-line new-cap
 const inter = Inter({
@@ -45,4 +46,4 @@ function App(props: AppProps): JSX.Element {
 //   return { ...appProps }
 // }
 
-export default appWithTranslation(App, nextI18nConfig)
+export default App
