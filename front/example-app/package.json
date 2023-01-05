@@ -9,7 +9,7 @@
     "@mui/material": "5.10.6",
     "@mui/x-data-grid": "5.17.4",
     "classnames": "2.3.2",
-    "gally-admin-shared": "0.1.11",
+    "gally-admin-shared": "0.1.12",
     "lodash.debounce": "4.0.8",
     "react": "18.2.0",
     "react-dom": "18.2.0",
