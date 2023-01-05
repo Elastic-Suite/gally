@@ -25,10 +25,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-            # Checkout gally "template" from the same branch
+            # Checkout gally "template" from the same branch. This is the dev environment with docker files.
             repository: 'Elastic-Suite/standalone'
             ref: ${{ github.base_ref }}
-            path: ${{ env.gally-directory }}
+            path: gally-dev-${{ github.run_id }}-${{ github.run_number }}
+
+      - name: Move Gally dev environment to a defined location
+        shell: bash
+        run: |
+            mv mojee-dev-${{ github.run_id }}-${{ github.run_number }} ${{ env.gally-directory }}
+            cd ${{ env.gally-directory }}
+            ls -ail
 
       - name: Pull images
         working-directory: ${{ env.gally-directory }}
@@ -61,6 +68,7 @@ jobs:
       - name: "[Init] Add current build of Gally"
         working-directory: ${{ env.gally-directory }}
         run: |
+          cd api  
           composer config discard-changes true
           composer require --dev "gally/gally-standard:${GITHUB_BASE_REF:-${GITHUB_REF##*/}}-dev" --ignore-platform-reqs
           composer config discard-changes false
