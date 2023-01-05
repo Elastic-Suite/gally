@@ -140,7 +140,7 @@ class FacetConfigurationTest extends AbstractTest
             [$admin, '3-0', ['coverageRate' => 1, 'maxSize' => 100, 'sortOrder' => BucketInterface::SORT_ORDER_TERM], 200],
             [$admin, '3-cat_1', ['coverageRate' => 10, 'sortOrder' => BucketInterface::SORT_ORDER_RELEVANCE], 200],
             [$admin, '4-cat_1', ['coverageRate' => 10, 'sortOrder' => BucketInterface::SORT_ORDER_MANUAL], 200],
-            [$admin, '3-cat_2', ['coverageRate' => 20], 200],
+            [$admin, '3-cat_2', ['coverageRate' => 90], 200], // Put the default value back on a sub level
         ];
     }
 
@@ -189,7 +189,7 @@ class FacetConfigurationTest extends AbstractTest
                 'cat_2',
                 [
                     ['sourceField' => 2, 'category' => 'cat_2', 'sourceFieldCode' => 'name'],
-                    ['sourceField' => 3, 'category' => 'cat_2', 'coverageRate' => 20, 'maxSize' => 100, 'defaultCoverageRate' => 1,  'defaultMaxSize' => 100, 'sourceFieldCode' => 'brand', 'sortOrder' => BucketInterface::SORT_ORDER_TERM, 'defaultSortOrder' => BucketInterface::SORT_ORDER_TERM],
+                    ['sourceField' => 3, 'category' => 'cat_2', 'coverageRate' => 90, 'maxSize' => 100, 'defaultCoverageRate' => 1,  'defaultMaxSize' => 100, 'sourceFieldCode' => 'brand', 'sortOrder' => BucketInterface::SORT_ORDER_TERM, 'defaultSortOrder' => BucketInterface::SORT_ORDER_TERM],
                     ['sourceField' => 4, 'category' => 'cat_2', 'coverageRate' => 90, 'sourceFieldCode' => 'color'],
                     ['sourceField' => 5, 'category' => 'cat_2', 'coverageRate' => 90, 'sourceFieldCode' => 'category'],
                     ['sourceField' => 6, 'category' => 'cat_2', 'coverageRate' => 90, 'sourceFieldCode' => 'length'],

@@ -49,6 +49,7 @@ final class ConfigurationItemDataProvider implements RestrictedDataProviderInter
         $repository = $manager->getRepository($resourceClass);
 
         // Force loading sub-entity in order to avoid having proxies.
+        /** @var ?SourceField $sourceField */
         $sourceField = $this->itemDataProvider->getItem(SourceField::class, ['id' => $sourceFieldId]);
         if (null === $sourceField) {
             throw new LogicException("The source field with the id '{$sourceFieldId}' does not exist.");
@@ -64,7 +65,10 @@ final class ConfigurationItemDataProvider implements RestrictedDataProviderInter
         if ($categoryId
             && (
                 ('get' === ($context['item_operation_name'] ?? null))
+                || ('patch' === ($context['item_operation_name'] ?? null))
+                || ('put' === ($context['item_operation_name'] ?? null))
                 || ('item_query' === ($context['graphql_operation_name'] ?? null))
+                || ('update' === ($context['graphql_operation_name'] ?? null))
             )
         ) {
             $repository->setCategoryId(null);
@@ -74,16 +78,15 @@ final class ConfigurationItemDataProvider implements RestrictedDataProviderInter
                 $operationName,
                 $context
             );
-            $defaultFacetConfiguration->setId(implode('-', [$sourceFieldId, 0]));
         }
 
         if (!$defaultFacetConfiguration) {
             $defaultFacetConfiguration = new Facet\Configuration($sourceField, null);
+        } else {
+            $defaultFacetConfiguration->setId(implode('-', [$sourceFieldId, 0]));
         }
 
         $repository->setCategoryId($categoryId);
-        $defaultFacetConfiguration->setSourceField($sourceField);
-        $defaultFacetConfiguration->setCategory($category);
 
         $facetConfiguration = $this->itemDataProviderNoEagerLoading->getItem(
             Facet\Configuration::class,
