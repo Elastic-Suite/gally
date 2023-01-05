@@ -17,12 +17,15 @@ jobs:
     runs-on: ubuntu-latest
     
     env:
-        gally-directory: /var/www/gally
+        gally-directory: ${{ github.workspace }}/gally
         
     steps:
-      - name: Checkout
+      - name: Checkout PHP package
         uses: actions/checkout@v3
-      - name: Checkout
+        with: 
+            path: gally-standard
+        
+      - name: Checkout Gally template
         uses: actions/checkout@v3
         with:
             # Checkout gally "template" from the same branch. This is the dev environment with docker files.
@@ -30,12 +33,23 @@ jobs:
             ref: ${{ github.base_ref }}
             token: ${{ secrets.GH_TOKEN }} # needed only until the gally "template" becomes public.
             path: gally-dev-${{ github.run_id }}-${{ github.run_number }}
-
+            
+      - name: Debug, check file structure
+        shell: bash
+        run: |
+            ls -ail $GITHUB_WORKSPACE
+            ls -ail ${{ github.workspace }}
+            ls -ail
+            
       - name: Move Gally dev environment to a defined location
         shell: bash
         run: |
+            pwd
+            ls -ail
             mv gally-dev-${{ github.run_id }}-${{ github.run_number }} ${{ env.gally-directory }}
             cd ${{ env.gally-directory }}
+            ls -ail
+            cd ${{ github.workspace }}
             ls -ail
 
       - name: Pull images
