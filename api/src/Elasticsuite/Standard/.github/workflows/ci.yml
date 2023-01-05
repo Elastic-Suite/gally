@@ -28,12 +28,13 @@ jobs:
             # Checkout gally "template" from the same branch. This is the dev environment with docker files.
             repository: 'Elastic-Suite/standalone'
             ref: ${{ github.base_ref }}
+            token: ${{ secrets.READ_ONLY_TOKEN }} # needed only until the gally "template" becomes public.
             path: gally-dev-${{ github.run_id }}-${{ github.run_number }}
 
       - name: Move Gally dev environment to a defined location
         shell: bash
         run: |
-            mv mojee-dev-${{ github.run_id }}-${{ github.run_number }} ${{ env.gally-directory }}
+            mv gally-dev-${{ github.run_id }}-${{ github.run_number }} ${{ env.gally-directory }}
             cd ${{ env.gally-directory }}
             ls -ail
 
