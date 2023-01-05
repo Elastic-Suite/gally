@@ -9,7 +9,7 @@
     "@mui/material": "5.10.6",
     "@mui/x-data-grid": "5.17.4",
     "classnames": "2.3.2",
-    "gally-admin-shared": "0.1.12",
+    "gally-admin-shared": "0.1.13",
     "lodash.debounce": "4.0.8",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -73,7 +73,7 @@
   },
   "lint-staged": {
     "*": "prettier --write --ignore-unknown --ignore-path .gitignore",
-    "*.{ts,tsx}": "tsc-files --noEmit src/global.d.ts",
+    "*.{ts,tsx}": "tsc-files --noEmit",
     "*.{js,jsx,ts,tsx}": "eslint --fix --ignore-path .gitignore"
   },
   "jest": {
