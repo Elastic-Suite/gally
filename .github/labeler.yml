@@ -17,7 +17,3 @@ example-app:
 # Add 'pwa` label to any change to files under /front/pwa except docker related files.
 pwa:
     - any: ['front/pwa/**/*']    
-    
-# Add 'shared` label to any change to files under /front/shared except docker related files.
-shared:
-    - any: ['front/shared/**/*']        
