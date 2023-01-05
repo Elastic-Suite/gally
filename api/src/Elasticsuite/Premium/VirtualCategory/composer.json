@@ -1,0 +1,63 @@
+{
+    "name": "gally/bundle-virtual-category",
+    "description": "Virtual Category module for Gally",
+    "type": "symfony-bundle",
+    "keywords": ["REST", "GraphQL", "API", "JSON-LD", "Elasticsearch", "JSONAPI", "OpenAPI", "HAL", "Swagger", "E-commerce"],
+    "homepage": "https://elasticsuite.io",
+    "license": "Proprietary",
+    "authors": [
+        {
+            "name": "The Elasticsuite Team",
+            "email": "elasticsuite@smile.fr"
+        }
+    ],
+    "require": {
+        "gally/gally-standard" : "*",
+    },
+    "require-dev": {
+        "api-platform/schema-generator": "^4.0",
+        "doctrine/doctrine-fixtures-bundle": "^3.4",
+        "friendsofphp/php-cs-fixer": "^3.0",
+        "hautelook/alice-bundle": "^2.10",
+        "justinrainbow/json-schema": "^5.2",
+        "liip/test-fixtures-bundle": "^2.0.0",
+        "phpstan/extension-installer": "^1.1",
+        "phpstan/phpstan": "^1.4",
+        "phpstan/phpstan-doctrine": "^1.2",
+        "phpstan/phpstan-phpunit": "^1.0",
+        "phpstan/phpstan-symfony": "^1.1",
+        "phpunit/phpunit": "^9.5",
+        "symfony/browser-kit": "6.0.*",
+        "symfony/css-selector": "6.0.*",
+        "symfony/debug-bundle": "6.0.*",
+        "symfony/http-client": "6.0.*",
+        "symfony/maker-bundle": "^1.21",
+        "symfony/phpunit-bridge": "6.0.*",
+        "symfony/stopwatch": "6.0.*",
+        "symfony/var-dumper": "6.0.*",
+        "symfony/web-profiler-bundle": "6.0.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "": "src/"
+        },
+        "psr-4": {
+            "Elasticsuite\\VirtualCategory\\": "src/"
+        }
+    },
+    "config": {
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true,
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true,
+            "phpstan/extension-installer": true
+        }
+    },
+    "extra": {
+        "symfony": {
+            "require": "^6.1"
+        }
+    }
+}
