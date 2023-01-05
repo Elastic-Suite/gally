@@ -40,9 +40,6 @@ jobs:
       - name: Yarn Install dependencies
         working-directory: front
         run: yarn --frozen-lockfile
-      - name: Build shared
-        working-directory: front
-        run: yarn build:shared
       - name: Typescript
         working-directory: front
         run: yarn typescript:ci
