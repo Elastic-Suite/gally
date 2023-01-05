@@ -73,12 +73,14 @@ jobs:
             esac
           done
           exit 1
+            
       # To remove : api/src/ actually contains also the Elasticsuite sources.            
       - name: "[Init] Add current build of Gally"
         working-directory: ${{ env.gally-directory }}
         run: |
             rm -rf api/src/Elasticsuite/Standard/**
             rm -rf api/src/Elasticsuite/Premium/**
+            
       # Untested : adding the current build of Gally inside php app.      
       - name: "[Init] Add current build of Gally"
         working-directory: ${{ env.gally-directory }}
@@ -87,8 +89,11 @@ jobs:
           composer config discard-changes true
           composer require --dev "gally/gally-standard:${GITHUB_BASE_REF:-${GITHUB_REF##*/}}-dev" --ignore-platform-reqs
           composer config discard-changes false
-          rm -rf api/vendor/gally/gally-standard/**  
-          cp -R $GITHUB_WORKSPACE/* api/vendor/gally/gally-standard/
+          pwd
+          ls -ail
+          ls -ail vendor  
+          rm -rf vendor/gally/gally-standard/**  
+          cp -R $GITHUB_WORKSPACE/* vendor/gally/gally-standard/
             
       - name: Check HTTP reachability
         id: http_reachability
