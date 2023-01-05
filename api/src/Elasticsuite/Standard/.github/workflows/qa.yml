@@ -1,0 +1,54 @@
+name: QA
+
+on:
+  push:
+    branches:
+      - master
+  pull_request: ~
+
+jobs:
+  qa:
+    name: Code-Quality-Checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cache Composer dependencies
+        uses: actions/cache@v2
+        with:
+          path: /tmp/composer-cache
+          key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
+      - uses: php-actions/composer@v6
+        with: 
+          php_version: "8.1"
+          args: --working-dir api
+      - name: PHP-CS-Fixer
+        working-directory: api
+        run: ./vendor/bin/php-cs-fixer fix --path-mode=intersection --diff --dry-run src/Elasticsuite
+      - name: PHPStan
+        working-directory: api
+        run: ./vendor/bin/phpstan analyse src/Elasticsuite
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Cache Yarn dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: Yarn Install dependencies
+        working-directory: front
+        run: yarn --frozen-lockfile
+      - name: Build shared
+        working-directory: front
+        run: yarn build:shared
+      - name: Typescript
+        working-directory: front
+        run: yarn typescript:ci
+      - name: EsLint
+        working-directory: front
+        run: yarn eslint:ci
+      - name: Prettier
+        working-directory: front
+        run: yarn prettier:ci
