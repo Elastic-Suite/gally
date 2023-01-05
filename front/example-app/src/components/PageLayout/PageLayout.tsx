@@ -3,7 +3,7 @@ import { styled } from '@mui/material'
 
 import PageTitle from '../../components/PageTitle/PageTitle'
 
-import { ICategory } from 'shared'
+import { ICategory } from 'gally-admin-shared'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import { Link, useLocation } from 'react-router-dom'
 import { categoryContext } from 'src/contexts'
