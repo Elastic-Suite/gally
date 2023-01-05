@@ -232,7 +232,7 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('base_url')
                     ->children()
                         ->scalarNode('media')
-                            ->defaultValue('https://localhost/media/catalog/product/')
+                            ->defaultValue('https://%env(SERVER_NAME)%/media/catalog/product/')
                         ->end()
                     ->end()
                 ->end()
