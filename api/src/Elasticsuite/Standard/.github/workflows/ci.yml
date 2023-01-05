@@ -118,7 +118,6 @@ jobs:
         if: ${{ github.event_name == 'pull_request' && steps.base_coverage_report.outcome == 'success' }}
         uses: lucassabreu/comment-coverage-clover@main
         continue-on-error: true
-        working-directory: ${{ env.gally-directory }}
         with:
           with-chart: false
           file: api/coverage/coverage.xml
@@ -131,7 +130,6 @@ jobs:
 
       - name: Backend Coverage Report as Comment (Clean)
         uses: lucassabreu/comment-coverage-clover@v0.3.0
-        working-directory: ${{ env.gally-directory }}
         if: ${{ (github.event_name == 'pull_request' && steps.base_coverage_report.outcome != 'success') || github.event_name == 'push'}}
         with:
           with-chart: false
