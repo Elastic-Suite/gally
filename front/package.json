@@ -1,9 +1,11 @@
 {
   "private": true,
-  "workspaces": ["example-app", "pwa"],
+  "workspaces": ["example-app", "pwa", "gally-admin/packages/components", "gally-admin/packages/shared"],
   "scripts": {
-    "dev": "yarn dev:pwa",
+    "dev": "concurrently \"npm:dev:pwa\" \"npm:dev:components\" \"npm:dev:shared\"",
     "dev:pwa": "yarn --cwd ./pwa dev",
+    "dev:components": "yarn --cwd ./gally-admin/packages/components start",
+    "dev:shared": "yarn --cwd ./gally-admin/packages/shared start",
     "build": "yarn --cwd ./pwa build",
     "build:pwa": "yarn --cwd ./pwa build",
     "build:example": "yarn --cwd ./example-app build",
