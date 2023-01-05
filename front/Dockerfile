@@ -61,6 +61,9 @@ RUN USER=docker && \
 	mkdir -p /etc/fixuid && \
 	printf "user: $USER\ngroup: $GROUP\npaths:\n  - /usr/src/front" > /etc/fixuid/config.yml
 
+RUN set -xe; \
+  apk add --no-cache git;
+
 USER 1042
 CMD ["yarn", "dev"]
 
@@ -89,8 +92,6 @@ ENV PUBLIC_URL $public_url
 
 RUN set -eux; \
 	yarn build; \
-	yarn build-storybook; \
-	mv pwa/storybook-static pwa/public/; \
 	yarn build:example; \
 	mv example-app/build pwa/public/example
 

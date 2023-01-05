@@ -49,4 +49,8 @@ module.exports = {
       process.env.NEXT_PUBLIC_ENTRYPOINT || 'https://localhost',
   },
   swcMinify: true,
+  webpack: (config) => {
+    config.experiments.topLevelAwait = true
+    return config
+  },
 }
