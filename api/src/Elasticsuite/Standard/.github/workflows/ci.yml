@@ -136,7 +136,6 @@ jobs:
           signature: "Backend Coverage of this branch"
 
       - uses: actions/upload-artifact@v2
-        working-directory: ${{ env.gally-directory }}
         with:
           name: coverage-report
           path: api/coverage/coverage.xml
