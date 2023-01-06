@@ -57,6 +57,11 @@ vendor: c=install --prefer-dist --no-dev --no-progress --no-scripts --no-interac
 vendor: composer
 
 ## —— Services 🔧 ———————————————————————————————————————————————————————————————
+exec: ## Execute a command on a given container
+	@$(eval s ?=)
+	@$(evel c ?=)
+	@$(DOCKER_COMP) exec $(s) $(c)
+
 db: ## Connect to the DB
 	@$(PHP_DATABASE) sh -c 'psql $$POSTGRES_DB $$POSTGRES_USER'
 
