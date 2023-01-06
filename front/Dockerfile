@@ -21,6 +21,7 @@ RUN mkdir -p ./example-app/coverage ./pwa/coverage
 COPY package.json yarn.lock ./
 COPY example-app/package.json ./example-app
 COPY pwa/package.json ./pwa
+COPY pwa/public ./pwa/public
 
 RUN set -xe; \
 	yarn install --frozen-lockfile;

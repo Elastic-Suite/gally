@@ -17,7 +17,7 @@
     "prettier:ci": "prettier --check --ignore-unknown --ignore-path .gitignore .",
     "typescript": "tsc --noEmit",
     "typescript:ci": "tsc --noEmit",
-    "prepare": "cd public && ln -s ../../node_modules/gally-admin-components/public/locales/ && ln -s ../../node_modules/gally-admin-components/public/images/"
+    "prepare": "cd public && ln -fs ../../node_modules/gally-admin-components/public/locales/ && ln -fs ../../node_modules/gally-admin-components/public/images/"
   },
   "dependencies": {
     "@emotion/react": "11.10.4",
