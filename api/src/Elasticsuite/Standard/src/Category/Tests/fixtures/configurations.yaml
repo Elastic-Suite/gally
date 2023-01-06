@@ -3,12 +3,14 @@ Elasticsuite\Category\Model\Category\Configuration:
         category: '@categ1'
         catalog: '@catalog1'
         localizedCatalog: '@catalog1_fr'
+        defaultSorting: 'invalid__sorting_option'
         name: 'Un'
         isVirtual: true
     conf2:
         category: '@categ1'
         catalog: '@catalog1'
         localizedCatalog: '@catalog1_en'
+        defaultSorting: 'price__price'
         name: 'One'
     conf3:
         category: '@categ1'
