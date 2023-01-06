@@ -421,6 +421,17 @@ class SearchDocumentsTest extends AbstractTest
                 'b2b_fr',   // catalog ID.
                 10,     // page size.
                 1,      // current page.
+                ['_score' => SortOrderInterface::SORT_DESC], // sort order specifications.
+                'id', // document data identifier.
+                // score DESC first, then id DESC which exists in 'b2b_fr'
+                // but id DESC w/missing _first, so doc w/entity_id="1" is first
+                [1, 12, 11, 10, 9, 8, 7, 6, 5, 4],    // expected ordered document IDs
+            ],
+            [
+                'product',  // entity type.
+                'b2b_fr',   // catalog ID.
+                10,     // page size.
+                1,      // current page.
                 ['id' => SortOrderInterface::SORT_ASC], // sort order specifications.
                 'id', // document data identifier.
                 // id ASC (missing _last), then score DESC (but not for first doc w/ entity_id="1")
