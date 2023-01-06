@@ -33,6 +33,8 @@ class CategoryConfigurationTest extends AbstractTest
             __DIR__ . '/../../fixtures/catalogs.yaml',
             __DIR__ . '/../../fixtures/categories.yaml',
             __DIR__ . '/../../fixtures/configurations.yaml',
+            __DIR__ . '/../../fixtures/source_field.yaml',
+            __DIR__ . '/../../fixtures/metadata.yaml',
         ]);
     }
 
@@ -66,6 +68,7 @@ class CategoryConfigurationTest extends AbstractTest
                         ) {
                           name
                           isVirtual
+                          defaultSorting
                         }
                   }
                 GQL,
@@ -109,6 +112,7 @@ class CategoryConfigurationTest extends AbstractTest
                     'getCategoryConfiguration' => [
                         'name' => 'Un',
                         'isVirtual' => true,
+                        'defaultSorting' => 'category__position',
                     ],
                 ],
             ],
@@ -122,6 +126,35 @@ class CategoryConfigurationTest extends AbstractTest
                     'getCategoryConfiguration' => [
                         'name' => 'One',
                         'isVirtual' => false,
+                        'defaultSorting' => 'price__price',
+                    ],
+                ],
+            ],
+        ];
+        yield [
+            'three',
+            'b2c',
+            'b2c_fr',
+            [
+                'data' => [
+                    'getCategoryConfiguration' => [
+                        'name' => 'Trois',
+                        'isVirtual' => false,
+                        'defaultSorting' => 'category__position',
+                    ],
+                ],
+            ],
+        ];
+        yield [
+            'one',
+            'b2c',
+            'b2c_en',
+            [
+                'data' => [
+                    'getCategoryConfiguration' => [
+                        'name' => 'One',
+                        'isVirtual' => false,
+                        'defaultSorting' => 'price__price',
                     ],
                 ],
             ],
@@ -135,6 +168,7 @@ class CategoryConfigurationTest extends AbstractTest
                     'getCategoryConfiguration' => [
                         'name' => 'Un',
                         'isVirtual' => false,
+                        'defaultSorting' => 'category__position',
                     ],
                 ],
             ],
@@ -148,6 +182,7 @@ class CategoryConfigurationTest extends AbstractTest
                     'getCategoryConfiguration' => [
                         'name' => 'One',
                         'isVirtual' => true,
+                        'defaultSorting' => 'category__position',
                     ],
                 ],
             ],
@@ -161,6 +196,7 @@ class CategoryConfigurationTest extends AbstractTest
                     'getCategoryConfiguration' => [
                         'name' => 'Un',
                         'isVirtual' => true,
+                        'defaultSorting' => 'category__position',
                     ],
                 ],
             ],
@@ -174,6 +210,7 @@ class CategoryConfigurationTest extends AbstractTest
                     'getCategoryConfiguration' => [
                         'name' => 'Five',
                         'isVirtual' => false,
+                        'defaultSorting' => 'category__position',
                     ],
                 ],
             ],
