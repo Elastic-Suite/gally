@@ -1,6 +1,8 @@
 services:
     elasticsuite.container_configuration.product_catalog.factory:
         parent: 'Elasticsuite\Search\Elasticsearch\Request\Container\Configuration\GenericContainerConfigurationFactory'
+        arguments:
+            $defaultSortingOptionProvider: '@Elasticsuite\Product\Service\ProductDefaultSortingOptionProvider'
         tags:
             - { name: elasticsuite.container_configuration.factory, requestType: product_catalog, metadata: product }
 

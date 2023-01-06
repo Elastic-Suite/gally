@@ -20,6 +20,7 @@ use Elasticsuite\Catalog\Model\LocalizedCatalog;
 use Elasticsuite\Index\Model\Index\MappingInterface;
 use Elasticsuite\Metadata\Model\Metadata;
 use Elasticsuite\Search\Elasticsearch\Request\Aggregation\Provider\AggregationProviderInterface;
+use Elasticsuite\Search\Elasticsearch\Request\Container\DefaultSortingOptionProviderInterface;
 use Elasticsuite\Search\Elasticsearch\Request\Container\RelevanceConfigurationInterface;
 use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
 use Elasticsuite\Search\Elasticsearch\Request\QueryInterface;
@@ -34,6 +35,7 @@ class GenericContainerConfiguration implements ContainerConfigurationInterface
         private MappingInterface $mapping,
         private RelevanceConfigurationInterface $relevanceConfiguration,
         private AggregationProviderInterface $aggregationProvider,
+        private ?DefaultSortingOptionProviderInterface $defaultSortingOptionProvider,
     ) {
         $this->relevanceConfiguration->initConfigData($this->localizedCatalog, $this->requestType);
     }
@@ -116,5 +118,13 @@ class GenericContainerConfiguration implements ContainerConfigurationInterface
     public function getTrackTotalHits(): int|bool
     {
         return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getDefaultSortingOption(): array
+    {
+        return $this->defaultSortingOptionProvider?->getSortingOption($this) ?: [];
     }
 }

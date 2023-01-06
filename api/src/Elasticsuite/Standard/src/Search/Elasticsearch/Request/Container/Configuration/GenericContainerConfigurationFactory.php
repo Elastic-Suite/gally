@@ -21,6 +21,7 @@ use Elasticsuite\Index\Api\IndexSettingsInterface;
 use Elasticsuite\Index\Service\MetadataManager;
 use Elasticsuite\Metadata\Model\Metadata;
 use Elasticsuite\Search\Elasticsearch\Request\Aggregation\Provider\AggregationProviderInterface;
+use Elasticsuite\Search\Elasticsearch\Request\Container\DefaultSortingOptionProviderInterface;
 use Elasticsuite\Search\Elasticsearch\Request\Container\RelevanceConfigurationInterface;
 use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationFactoryInterface;
 use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
@@ -32,6 +33,7 @@ class GenericContainerConfigurationFactory implements ContainerConfigurationFact
         private MetadataManager $metadataManager,
         private RelevanceConfigurationInterface $relevanceConfiguration,
         private AggregationProviderInterface $aggregationProvider,
+        private ?DefaultSortingOptionProviderInterface $defaultSortingOptionProvider,
     ) {
     }
 
@@ -51,6 +53,7 @@ class GenericContainerConfigurationFactory implements ContainerConfigurationFact
             $mapping,
             $this->relevanceConfiguration,
             $this->aggregationProvider,
+            $this->defaultSortingOptionProvider,
         );
     }
 }

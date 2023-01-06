@@ -159,6 +159,13 @@ class Configuration implements ConfigurationInterface
                                 ->end()
                             ->end()
                         ->end()
+                        ->arrayNode('sort')
+                            ->children()
+                                ->arrayNode('default_asc_sort_field')
+                                    ->scalarPrototype()->end()
+                                ->end()
+                            ->end()
+                        ->end()
                     ->end()
                 ->end()
 

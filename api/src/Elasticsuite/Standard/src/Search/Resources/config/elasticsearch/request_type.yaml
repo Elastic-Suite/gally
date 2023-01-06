@@ -6,6 +6,7 @@ services:
             $metadataManager: '@Elasticsuite\Index\Service\MetadataManager'
             $relevanceConfiguration: '@Elasticsuite\Search\Elasticsearch\Request\Container\RelevanceConfiguration\GenericRelevanceConfiguration'
             $aggregationProvider: '@Elasticsuite\Search\Elasticsearch\Request\Aggregation\Provider\FilterableSourceFields'
+            $defaultSortingOptionProvider: ~
         tags:
             - { name: elasticsuite.container_configuration.factory, requestType: generic }
 

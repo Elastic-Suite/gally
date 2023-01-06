@@ -81,4 +81,9 @@ interface ContainerConfigurationInterface
      * Get the value of the track_total_hits parameter, if any.
      */
     public function getTrackTotalHits(): int|bool;
+
+    /**
+     * Get default sorting option for context.
+     */
+    public function getDefaultSortingOption(): array;
 }

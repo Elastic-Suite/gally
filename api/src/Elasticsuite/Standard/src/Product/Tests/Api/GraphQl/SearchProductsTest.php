@@ -265,7 +265,8 @@ class SearchProductsTest extends AbstractTest
         array $sortOrders,
         string $documentIdentifier,
         array $expectedOrderedDocIds,
-        string $priceGroupId = '0'
+        string $priceGroupId = '0',
+        ?string $currentCategoryId = null,
     ): void {
         $user = $this->getUser(Role::ROLE_CONTRIBUTOR);
 
@@ -275,6 +276,10 @@ class SearchProductsTest extends AbstractTest
             $pageSize,
             $currentPage
         );
+
+        if ($currentCategoryId) {
+            $arguments .= ", currentCategoryId: \"$currentCategoryId\"";
+        }
 
         if (!empty($sortOrders)) {
             $sortArguments = [];
@@ -457,6 +462,17 @@ class SearchProductsTest extends AbstractTest
                 // price_as_nested.price ASC, then score DESC first, then id DESC (missing _first)
                 [1, 12, 11, 10, 9],   // expected ordered document IDs
                 'fake_price_group_id', // Price group id
+            ],
+            [
+                'b2c_fr',   // catalog ID.
+                10,     // page size.
+                1,      // current page.
+                [],     // sort order specifications.
+                'entity_id', // document data identifier.
+                // test product are sorted by price because category "cat_1" has price as default sorting option.
+                [2, 1],    // expected ordered document IDs
+                '0',
+                'cat_1',
             ],
         ];
     }
@@ -1257,7 +1273,7 @@ class SearchProductsTest extends AbstractTest
                 [], // sort order specifications.
                 'cat_1', // current category id.
                 'entity_id', // document data identifier.
-                [1, 2], // expected ordered document IDs
+                [2, 1], // expected ordered document IDs
             ],
             [
                 'b2c_fr', // catalog ID.
