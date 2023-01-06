@@ -15,7 +15,7 @@
         "php": ">=8.1",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "api-platform/core": "^2.6",
+        "api-platform/core": "~2.6.0",
         "composer/package-versions-deprecated": "^1.11",
         "cweagans/composer-patches": "^1.7",
         "doctrine/annotations": "^1.0",
@@ -50,7 +50,7 @@
     },
     "require-dev": {
         "api-platform/schema-generator": "^4.0",
-        "friendsofphp/php-cs-fixer": "^3.0",
+        "friendsofphp/php-cs-fixer": "~3.4.0",
         "hautelook/alice-bundle": "^2.10",
         "justinrainbow/json-schema": "^5.2",
         "liip/test-fixtures-bundle": "^2.0.0",
