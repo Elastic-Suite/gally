@@ -14,7 +14,7 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\User\Test;
+namespace Elasticsuite\User\Tests;
 
 use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\Client;
 use Elasticsuite\User\Constant\Role;

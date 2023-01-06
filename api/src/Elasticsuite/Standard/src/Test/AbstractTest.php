@@ -19,7 +19,7 @@ namespace Elasticsuite\Test;
 use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
 use Elasticsuite\Fixture\Service\ElasticsearchFixtures;
 use Elasticsuite\Fixture\Service\EntityIndicesFixturesInterface;
-use Elasticsuite\User\Test\LoginTrait;
+use Elasticsuite\User\Tests\LoginTrait;
 use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
