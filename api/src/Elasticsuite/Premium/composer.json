@@ -39,7 +39,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Elasticsuite\\VirtualCategory\\": "VirtualCategory/src/",
+            "Elasticsuite\\VirtualCategory\\": "VirtualCategory/src/"
         }
     },
     "config": {
