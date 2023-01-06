@@ -8,6 +8,7 @@ services:
     Elasticsuite\Category\Repository\CategoryConfigurationRepository:
         arguments:
             - '@Doctrine\Persistence\ManagerRegistry'
+            - '@Elasticsuite\Category\Service\CategoryProductsSortingOptionsProvider'
         tags:
             - { name: doctrine.repository_service }
 

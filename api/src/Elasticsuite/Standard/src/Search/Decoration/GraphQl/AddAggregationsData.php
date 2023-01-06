@@ -74,6 +74,9 @@ class AddAggregationsData implements SerializeStageInterface
             if (!empty($aggregations)) {
                 $data['aggregations'] = [];
                 foreach ($aggregations as $aggregation) {
+                    if (empty($aggregation->getValues())) {
+                        continue;
+                    }
                     $data['aggregations'][] = $this->formatAggregation($aggregation, $containerConfig);
                 }
             }
