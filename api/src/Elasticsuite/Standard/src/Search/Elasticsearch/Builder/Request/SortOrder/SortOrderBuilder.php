@@ -107,8 +107,8 @@ class SortOrderBuilder
         ];
 
         if (\count($orders) > 0) {
-            $firstOrder = current($orders);
-            if (SortOrderInterface::SORT_DESC === $firstOrder['direction']) {
+            $firstOrder = array_key_first($orders);
+            if (SortOrderInterface::DEFAULT_SORT_FIELD !== $firstOrder && SortOrderInterface::SORT_DESC === $orders[$firstOrder]['direction']) {
                 $defaultOrders[SortOrderInterface::DEFAULT_SORT_FIELD] = SortOrderInterface::SORT_ASC;
                 $defaultOrders[$mapping->getIdField()->getName()] = SortOrderInterface::SORT_ASC;
             }
