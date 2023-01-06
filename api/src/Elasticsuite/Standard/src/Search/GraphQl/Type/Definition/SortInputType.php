@@ -20,6 +20,7 @@ use ApiPlatform\Core\GraphQl\Type\Definition\TypeInterface;
 use Elasticsuite\Entity\Service\PriceGroupProvider;
 use Elasticsuite\Metadata\Model\Metadata;
 use Elasticsuite\Metadata\Model\SourceField\Type;
+use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
 use Elasticsuite\Search\Elasticsearch\Request\SortOrderInterface;
 use Elasticsuite\Search\Service\ReverseSourceFieldProvider;
 use GraphQL\Type\Definition\InputObjectType;
@@ -57,10 +58,10 @@ class SortInputType extends InputObjectType implements TypeInterface
         return $this->name;
     }
 
-    public function formatSort(mixed $context, Metadata $metadata): ?array
+    public function formatSort(ContainerConfigurationInterface $containerConfig, mixed $context, Metadata $metadata): ?array
     {
         if (!\array_key_exists('sort', $context['filters'])) {
-            return [];
+            return $containerConfig->getDefaultSortingOption();
         }
 
         $field = $context['filters']['sort']['field'];

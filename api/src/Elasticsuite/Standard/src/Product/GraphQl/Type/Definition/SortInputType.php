@@ -17,10 +17,12 @@ declare(strict_types=1);
 namespace Elasticsuite\Product\GraphQl\Type\Definition;
 
 use ApiPlatform\Core\GraphQl\Type\Definition\TypeInterface;
+use Elasticsuite\Category\Service\CurrentCategoryProvider;
 use Elasticsuite\Entity\Service\PriceGroupProvider;
 use Elasticsuite\Metadata\Model\Metadata;
 use Elasticsuite\Metadata\Repository\SourceFieldRepository;
 use Elasticsuite\Product\GraphQl\Type\Definition\SortOrder\SortOrderProviderInterface;
+use Elasticsuite\Search\Elasticsearch\Request\ContainerConfigurationInterface;
 use Elasticsuite\Search\Elasticsearch\Request\SortOrderInterface;
 use Elasticsuite\Search\GraphQl\Type\Definition\SortInputType as SearchSortInputType;
 use Elasticsuite\Search\Service\ReverseSourceFieldProvider;
@@ -35,6 +37,7 @@ class SortInputType extends SearchSortInputType
         private iterable $sortOrderProviders,
         protected PriceGroupProvider $priceGroupProvider,
         protected ReverseSourceFieldProvider $reverseSourceFieldProvider,
+        protected CurrentCategoryProvider $currentCategoryProvider,
         private string $nestingSeparator,
     ) {
         parent::__construct($this->sortEnumType, $this->priceGroupProvider, $this->reverseSourceFieldProvider);
@@ -82,16 +85,16 @@ class SortInputType extends SearchSortInputType
         }
     }
 
-    public function formatSort(mixed $context, Metadata $metadata): ?array
+    public function formatSort(ContainerConfigurationInterface $containerConfig, mixed $context, Metadata $metadata): ?array
     {
         if (!\array_key_exists('sort', $context['filters'])) {
-            return [];
+            $sortOrders = $containerConfig->getDefaultSortingOption();
+        } else {
+            $sortOrders = array_map(
+                fn ($direction) => ['direction' => $direction],
+                $context['filters']['sort']
+            );
         }
-
-        $sortOrders = array_map(
-            fn ($direction) => ['direction' => $direction],
-            $context['filters']['sort']
-        );
 
         return $this->addNestedFieldData($sortOrders, $metadata);
     }

@@ -73,7 +73,7 @@ class DocumentDataProvider implements ContextAwareCollectionDataProviderInterfac
             $offset,
             $limit,
             $searchQuery,
-            $this->sortInputType->formatSort($context, $metadata),
+            $this->sortInputType->formatSort($containerConfig, $context, $metadata),
             $this->filterManager->transformToElasticsuiteFilters(
                 $this->filterManager->getFiltersFromContext($context),
                 $containerConfig

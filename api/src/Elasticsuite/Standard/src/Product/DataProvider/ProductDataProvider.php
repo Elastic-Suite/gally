@@ -97,20 +97,23 @@ class ProductDataProvider implements ContextAwareCollectionDataProviderInterface
         $limit = $this->pagination->getLimit($resourceClass, $operationName, $context);
         $offset = $this->pagination->getOffset($resourceClass, $operationName, $context);
 
+        // Get query filter and set current category.
+        $queryFilter = $this->filterManager->transformToElasticsuiteFilters(
+            $this->filterManager->getQueryFilterFromContext($context),
+            $containerConfig
+        );
+
         $request = $this->requestBuilder->create(
             $containerConfig,
             $offset,
             $limit,
             $searchQuery,
-            $this->sortInputType->formatSort($context, $metadata),
+            $this->sortInputType->formatSort($containerConfig, $context, $metadata),
             $this->filterManager->transformToElasticsuiteFilters(
                 $this->filterManager->getFiltersFromContext($context),
                 $containerConfig
             ),
-            $this->filterManager->transformToElasticsuiteFilters(
-                $this->filterManager->getQueryFilterFromContext($context),
-                $containerConfig
-            ),
+            $queryFilter,
             ($context['need_aggregations'] ?? false) ? [] : null
         );
         $response = $this->adapter->search($request);

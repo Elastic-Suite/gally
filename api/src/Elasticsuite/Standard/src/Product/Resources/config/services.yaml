@@ -77,6 +77,7 @@ services:
             - !tagged_iterator { tag: 'elasticsuite.product_api.sort_order_provider', index_by: 'provider_name' }
             - '@Elasticsuite\Entity\Service\PriceGroupProvider'
             - '@Elasticsuite\Search\Service\ReverseSourceFieldProvider'
+            - '@Elasticsuite\Category\Service\CurrentCategoryProvider'
             - '%api_platform.graphql.nesting_separator%'
         tags:
             - { name: api_platform.graphql.type }
@@ -124,3 +125,10 @@ services:
             $filterManager: '@Elasticsuite\Product\Service\GraphQl\FilterManager'
         tags:
             - { name: api_platform.collection_data_provider }
+
+    Elasticsuite\Product\Service\ProductDefaultSortingOptionProvider:
+        arguments:
+            - '@Elasticsuite\Category\Service\CurrentCategoryProvider'
+            - '@Elasticsuite\Category\Repository\CategoryConfigurationRepository'
+            - '@Elasticsuite\Search\Service\SearchSettingsProvider'
+            - '%api_platform.graphql.nesting_separator%'
