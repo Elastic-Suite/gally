@@ -51,6 +51,12 @@ jobs:
             ls -ail
             cd ${{ github.workspace }}
             ls -ail
+            
+      - name: Make .env
+        working-directory: ${{ env.gally-directory }}
+        run: |
+          make .env
+          cat .env
 
       - name: Pull images
         working-directory: ${{ env.gally-directory }}
@@ -85,6 +91,8 @@ jobs:
       - name: "[Init] Add current build of Gally"
         working-directory: ${{ env.gally-directory }}
         run: |
+            make exec s=php c="pwd"
+            make exec s=php c="ls -ail"
             make exec s=php c="ls -ail vendor/gally/gally-standard"
             make composer c="config discard-changes true"
             make composer c="require --dev "gally/gally-standard:${GITHUB_BASE_REF:-${GITHUB_REF##*/}}-dev" --ignore-platform-reqs"
