@@ -41,6 +41,7 @@
             <directory suffix=".php">src/**/**/src/**/Tests</directory>
             <directory suffix=".php">src/**/**/src/**/DataFixtures</directory>
             <directory suffix=".php">src/Acme</directory>
+            <directory suffix=".php">src/Elasticsuite/Standard/tests</directory>
         </exclude>
     </coverage>
 
