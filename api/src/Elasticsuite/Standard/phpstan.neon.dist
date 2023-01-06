@@ -7,9 +7,3 @@ parameters:
         - src/Acme
         - src/Elasticsuite/**/Legacy
     inferPrivatePropertyTypeFromConstructor: true
-    symfony:
-        container_xml_path: var/cache/dev/KernelDevDebugContainer.xml
-    doctrine:
-        objectManagerLoader: tests/object-manager.php
-    scanDirectories:
-        - var/cache/dev/Symfony/Config
