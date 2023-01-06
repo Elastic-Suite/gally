@@ -23,6 +23,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Elasticsuite\Catalog\Model\Catalog;
 use Elasticsuite\Catalog\Model\LocalizedCatalog;
 use Elasticsuite\Category\Model\Category;
+use Elasticsuite\Category\Service\CategoryProductsSortingOptionsProvider;
 
 /**
  * @method Category\Configuration|null find($id, $lockMode = null, $lockVersion = null)
@@ -32,8 +33,10 @@ use Elasticsuite\Category\Model\Category;
  */
 class CategoryConfigurationRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
-    {
+    public function __construct(
+        ManagerRegistry $registry,
+        private CategoryProductsSortingOptionsProvider $sortingOptionsProvider,
+    ) {
         parent::__construct($registry, Category\Configuration::class);
     }
 
@@ -71,7 +74,7 @@ class CategoryConfigurationRepository extends ServiceEntityRepository
         $categoryConfiguration->setName($result['name']);
         $categoryConfiguration->setIsVirtual((bool) $result['isVirtual']);
         $categoryConfiguration->setVirtualRule($result['virtualRule']);
-        $categoryConfiguration->setDefaultSorting($result['defaultSorting']);
+        $categoryConfiguration->setDefaultSorting($this->validateDefaultSorting($result['defaultSorting']) ? $result['defaultSorting'] : null);
         $categoryConfiguration->setUseNameInProductSearch((bool) $result['useNameInProductSearch']);
         $categoryConfiguration->setIsActive((bool) $result['isActive']);
 
@@ -310,5 +313,23 @@ class CategoryConfigurationRepository extends ServiceEntityRepository
                 ->andWhere($exprBuilder->isNotNull('lc.localizedCatalog'))
                 ->andWhere($exprBuilder->isNotNull('lc.catalog'));
         }
+    }
+
+    /**
+     * Check if defaultSorting option is valid to avoid error if the sourceField is not sortable anymore.
+     */
+    private function validateDefaultSorting(?string $sortingOption): bool
+    {
+        if (!$sortingOption) {
+            return true;
+        }
+
+        foreach ($this->sortingOptionsProvider->getAllSortingOptions() as $sortingData) {
+            if ($sortingData['code'] === $sortingOption) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
