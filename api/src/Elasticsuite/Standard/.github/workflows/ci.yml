@@ -63,7 +63,7 @@ jobs:
         working-directory: ${{ env.gally-directory }}
         run : |
             cd api
-            sed -i '/\"psr-4\"/,/}/ d; /^$/d' composer.json
+            sed -i '/Elasticsuite/d' composer.json
             sed -i '/Elasticsuite/d' config/bundles.php
             sed -i '/Elasticsuite/d' config/packages/nelmio_cors.yaml
             sed -i '/elasticsuite/d' config/routes.yaml
