@@ -22,7 +22,7 @@
     "prettier:ci": "yarn --cwd pwa prettier:ci && yarn --cwd example-app prettier:ci",
     "typescript": "yarn --cwd pwa typescript && yarn --cwd example-app typescript",
     "typescript:ci": "yarn --cwd pwa typescript:ci && yarn --cwd example-app typescript:ci",
-    "prepare": "cd .. && husky install front/.husky"
+    "prepare": "yarn --cwd pwa prepare && cd .. && husky install front/.husky"
   },
   "devDependencies": {
     "concurrently": "7.4.0",
