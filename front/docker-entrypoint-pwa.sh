@@ -10,8 +10,14 @@ then
   yarn install --frozen-lockfile;
   yarn build
   cd ../pwa/node_modules
-  ln -s ../../gally-admin/packages/components gally-admin-components
-  ln -s ../../gally-admin/packages/shared gally-admin-shared
+  if [ ! -f gally-admin-components ]
+  then
+  	ln -s ../../gally-admin/packages/components gally-admin-components
+  fi
+  if [ ! -f gally-admin-shared ]
+  then
+  	ln -s ../../gally-admin/packages/shared gally-admin-shared
+  fi
   cd ../..
 fi
 

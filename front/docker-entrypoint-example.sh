@@ -10,8 +10,14 @@ echo 'pwa is up'
 if [ -d gally-admin ]
 then
   cd example-app/node_modules
-  ln -s ../../gally-admin/packages/components gally-admin-components
-  ln -s ../../gally-admin/packages/shared gally-admin-shared
+  if [ ! -f gally-admin-components ]
+  then
+  	ln -s ../../gally-admin/packages/components gally-admin-components
+  fi
+  if [ ! -f gally-admin-shared ]
+  then
+  	ln -s ../../gally-admin/packages/shared gally-admin-shared
+  fi
   cd ../..
 fi
 
