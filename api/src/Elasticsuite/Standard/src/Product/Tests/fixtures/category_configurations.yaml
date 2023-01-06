@@ -29,6 +29,7 @@ Elasticsuite\Category\Model\Category\Configuration:
         catalog: '@catalog1'
         localizedCatalog: '@catalog1_fr'
         name: 'Un'
+        defaultSorting: 'name'
     conf7:
         category: '@categ2'
         catalog: '@catalog1'

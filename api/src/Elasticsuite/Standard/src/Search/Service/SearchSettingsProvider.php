@@ -31,4 +31,12 @@ class SearchSettingsProvider
     {
         return $this->searchSettings['aggregations']['coverage_use_indexed_fields_property'];
     }
+
+    /**
+     * Get sort field that need to be sort ascending by default.
+     */
+    public function getDefaultAscSortField(): array
+    {
+        return $this->searchSettings['sort']['default_asc_sort_field'];
+    }
 }

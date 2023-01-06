@@ -6,3 +6,7 @@ elasticsuite:
     search_settings:
         aggregations:
             coverage_use_indexed_fields_property: false
+        sort:
+            default_asc_sort_field:
+                - '_count'
+                - '_score'
