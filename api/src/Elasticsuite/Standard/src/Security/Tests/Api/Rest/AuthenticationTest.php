@@ -18,7 +18,7 @@ namespace Elasticsuite\Security\Tests\Api\Rest;
 
 use Elasticsuite\Test\AbstractTest;
 use Elasticsuite\User\Constant\Role;
-use Elasticsuite\User\Test\LoginTrait;
+use Elasticsuite\User\Tests\LoginTrait;
 
 class AuthenticationTest extends AbstractTest
 {
