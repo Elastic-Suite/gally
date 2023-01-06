@@ -18,7 +18,7 @@ namespace Acme\Example\Example\Tests\Api\Rest;
 
 use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
 use Elasticsuite\User\Constant\Role;
-use Elasticsuite\User\Test\LoginTrait;
+use Elasticsuite\User\Tests\LoginTrait;
 use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
 use Liip\TestFixturesBundle\Services\DatabaseTools\AbstractDatabaseTool;
 

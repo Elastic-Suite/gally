@@ -10,3 +10,35 @@ services:
             - '@Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface'
         tags: 
           - { name: nelmio_alice.faker.provider }
+    Elasticsuite\User\Service\UserManager:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@Elasticsuite\User\Repository\UserRepository'
+            - '@Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface'
+
+    Elasticsuite\User\Service\Command\QuestionBuilder: ~
+
+    Elasticsuite\User\Service\Command\Validation: 
+        arguments:
+            - '@Elasticsuite\User\Service\UserManager'
+            - '@Symfony\Component\Validator\Validator\ValidatorInterface'
+
+    Elasticsuite\User\Service\Command\Validator:
+        arguments:
+            - '@Elasticsuite\User\Service\Command\Validation'
+
+    Elasticsuite\User\Command\CreateCommand:
+        arguments:
+            - '@Elasticsuite\User\Service\UserManager'
+            - '@Elasticsuite\User\Service\Command\Validator'
+            - '@Elasticsuite\User\Service\Command\QuestionBuilder'
+        tags:
+            - { name: console.command }
+            
+    Elasticsuite\User\Command\UpdateCommand:
+        arguments:
+            - '@Elasticsuite\User\Service\UserManager'
+            - '@Elasticsuite\User\Service\Command\Validator'
+            - '@Elasticsuite\User\Service\Command\QuestionBuilder'
+        tags:
+            - { name: console.command }
