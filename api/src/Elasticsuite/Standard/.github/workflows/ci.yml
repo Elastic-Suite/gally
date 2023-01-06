@@ -58,6 +58,24 @@ jobs:
           make .env
           cat .env
 
+      # To remove : api/src/ actually contains also the Elasticsuite sources. Bundle is also enabled.         
+      - name: Clean autoload
+        working-directory: ${{ env.gally-directory }}
+        run : |
+            cd api
+            sed -i '/\"psr-4\"/,/}/ d; /^$/d' composer.json
+            sed -i '/Elasticsuite/d' config/bundles.php
+            sed -i '/Elasticsuite/d' config/packages/nelmio_cors.yaml
+            sed -i '/elasticsuite/d' config/routes.yaml
+            sed -i '/Elasticsuite/d' config/routes.yaml
+        
+      # To remove : api/src/ actually contains also the Elasticsuite sources.            
+      - name: "Cleanup existing namespaces"
+        working-directory: ${{ env.gally-directory }}
+        run: |
+            rm -rf api/src/Elasticsuite/Standard/**
+            rm -rf api/src/Elasticsuite/Premium/**
+            
       - name: Pull images
         working-directory: ${{ env.gally-directory }}
         run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml pull --ignore-pull-failures || true
@@ -79,13 +97,6 @@ jobs:
             esac
           done
           exit 1
-            
-      # To remove : api/src/ actually contains also the Elasticsuite sources.            
-      - name: "[Init] Add current build of Gally"
-        working-directory: ${{ env.gally-directory }}
-        run: |
-            rm -rf api/src/Elasticsuite/Standard/**
-            rm -rf api/src/Elasticsuite/Premium/**
             
       # Untested : adding the current build of Gally inside php app.      
       - name: "[Init] Add current build of Gally"
