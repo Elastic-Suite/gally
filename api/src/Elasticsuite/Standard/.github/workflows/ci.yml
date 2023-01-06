@@ -85,15 +85,13 @@ jobs:
       - name: "[Init] Add current build of Gally"
         working-directory: ${{ env.gally-directory }}
         run: |
-          cd api  
-          composer config discard-changes true
-          composer require --dev "gally/gally-standard:${GITHUB_BASE_REF:-${GITHUB_REF##*/}}-dev" --ignore-platform-reqs
-          composer config discard-changes false
-          pwd
-          ls -ail
-          ls -ail vendor  
-          rm -rf vendor/gally/gally-standard/**  
-          cp -R $GITHUB_WORKSPACE/* vendor/gally/gally-standard/
+            make exec s=php c="ls -ail vendor/gally/gally-standard"
+            make composer c="config discard-changes true"
+            make composer c="require --dev "gally/gally-standard:${GITHUB_BASE_REF:-${GITHUB_REF##*/}}-dev" --ignore-platform-reqs"
+            make composer c="config discard-changes false"
+            ls -ail $GITHUB_WORKSPACE
+            docker compose cp $GITHUB_WORKSPACE/gally-standard php:/srv/api/vendor/gally/
+            make exec s=php c="ls -ail vendor/gally/gally-standard"
             
       - name: Check HTTP reachability
         id: http_reachability
