@@ -29,6 +29,8 @@ $finder = PhpCsFixer\Finder::create()
     ->notPath('src/Annotation/ApiProperty.php') // temporary
     ->notPath('src/Annotation/ApiResource.php') // temporary
     ->notPath('src/Annotation/ApiSubresource.php') // temporary
+    ->notPath('src/Kernel.php') // temporary
+    ->notPath('src/DataFixtures/AppFixtures.php') // file added by doctrine fixtures bundle
     ->notPath('tests/Fixtures/TestBundle/Entity/DummyPhp8.php'); // temporary
     // ->append([
     //    'tests/Fixtures/app/console',

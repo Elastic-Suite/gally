@@ -50,6 +50,7 @@
     },
     "require-dev": {
         "api-platform/schema-generator": "^4.0",
+        "doctrine/doctrine-fixtures-bundle": "^3.4",
         "friendsofphp/php-cs-fixer": "~3.4.0",
         "hautelook/alice-bundle": "^2.10",
         "justinrainbow/json-schema": "^5.2",
