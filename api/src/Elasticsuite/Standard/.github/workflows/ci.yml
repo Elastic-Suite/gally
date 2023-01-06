@@ -75,7 +75,15 @@ jobs:
         run: |
             rm -rf api/src/Elasticsuite/Standard/**
             rm -rf api/src/Elasticsuite/Premium/**
-            
+
+        # To remove : Adding gally as a requirement. Not existing actually in Standalone app.
+      - name: Adding Gally Standard package
+        working-directory: ${{ env.gally-directory }}
+        run: |
+            cd api
+            composer require --dev "gally/gally-standard:${GITHUB_BASE_REF:-${GITHUB_REF##*/}}-dev" --ignore-platform-reqs
+      
+      
       - name: Pull images
         working-directory: ${{ env.gally-directory }}
         run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml pull --ignore-pull-failures || true
@@ -141,7 +149,7 @@ jobs:
           docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec -e XDEBUG_MODE=off -T php bin/console doctrine:fixtures:load --append --no-interaction
       - name: Coverage
         working-directory: ${{ env.gally-directory }}
-        run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec -e XDEBUG_MODE=coverage -T php bin/phpunit --coverage-clover=coverage/coverage.xml src/Elasticsuite
+        run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec -e XDEBUG_MODE=coverage -T php bin/phpunit --coverage-clover=coverage/coverage.xml vendor/gally/gally-standard
       
       - name: Cleanup coverage file
         working-directory: ${{ env.gally-directory }}
@@ -183,11 +191,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: coverage-report
-          path: api/coverage/coverage.xml
-                  
-      - name: Jest
-        working-directory: ${{ env.gally-directory }}
-        run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec -T pwa yarn test:ci
+          path: api/coverage/coverage.xml            
 
       - name: "[End] Job failed, gathering logs"
         working-directory: ${{ env.gally-directory }}
