@@ -14,16 +14,18 @@
 
 declare(strict_types=1);
 
-namespace Elasticsuite\User\Constant;
+namespace Elasticsuite\User\Service\Command;
 
-final class Role
+use Symfony\Component\Console\Question\Question as BaseQuestion;
+
+class QuestionBuilder
 {
-    public const ROLE_ADMIN = 'ROLE_ADMIN';
+    public function getQuestion(string $label, bool $trimmable = true, int $attempts = 3): BaseQuestion
+    {
+        $question = new BaseQuestion($label);
+        $question->setTrimmable($trimmable);
+        $question->setMaxAttempts($attempts);
 
-    public const ROLE_CONTRIBUTOR = 'ROLE_CONTRIBUTOR';
-
-    public const ROLES = [
-        self::ROLE_CONTRIBUTOR,
-        self::ROLE_ADMIN,
-    ];
+        return $question;
+    }
 }

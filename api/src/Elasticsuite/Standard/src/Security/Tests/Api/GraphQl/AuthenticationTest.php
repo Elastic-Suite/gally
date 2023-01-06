@@ -19,7 +19,7 @@ namespace Elasticsuite\Security\Tests\Api\GraphQl;
 use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
 use Elasticsuite\User\Constant\Role;
 use Elasticsuite\User\Model\User;
-use Elasticsuite\User\Test\LoginTrait;
+use Elasticsuite\User\Tests\LoginTrait;
 
 class AuthenticationTest extends ApiTestCase
 {
