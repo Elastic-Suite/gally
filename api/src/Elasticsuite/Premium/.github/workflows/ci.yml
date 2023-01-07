@@ -175,7 +175,7 @@ jobs:
             
       - name: Coverage
         working-directory: ${{ env.gally-directory }}
-        run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec -e XDEBUG_MODE=coverage -T php bin/phpunit --coverage-clover=coverage/coverage.xml vendor/gally/gally-standard
+        run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec -e XDEBUG_MODE=coverage -T php bin/phpunit --coverage-clover=coverage/coverage.xml vendor/gally/${{ env.package-name }}
       
       - name: Cleanup coverage file
         working-directory: ${{ env.gally-directory }}
