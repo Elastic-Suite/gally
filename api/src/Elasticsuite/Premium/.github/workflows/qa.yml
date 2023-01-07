@@ -56,7 +56,6 @@ jobs:
                   key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
 
             - name: Prepare Gally Premium Repository
-              working-directory: ${{ env.magento-directory }}
               run: |
                   composer config --global --no-interaction --ansi repositories.gally-premium git "$GITHUB_WORKSPACE/gally-repository"
                   composer config --global repositories
