@@ -105,7 +105,7 @@ jobs:
             
       # Untested : adding the current build of Gally inside php app.     
       # $GITHUB_WORKSPACE/gally-standard is where it has been checkouted at the beginning.
-      - name: "[Init] Add current build of Gally"
+      - name: Add current build of Gally
         working-directory: ${{ env.gally-directory }}
         run: |
             make exec s=php c="pwd"
