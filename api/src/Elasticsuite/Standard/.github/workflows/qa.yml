@@ -31,15 +31,8 @@ jobs:
                   token: ${{ secrets.GH_TOKEN }} # needed only until the gally "template" becomes public.
                   path: gally-dev-${{ github.run_id }}-${{ github.run_number }}
 
-            - name: Debug, check file structure
-              shell: bash
-              run: |
-                  ls -ail $GITHUB_WORKSPACE
-                  ls -ail ${{ github.workspace }}
-                  ls -ail
-
             # in $GITHUB_WORKSPACE we will have this after this step : 
-            # - gally-src : contains only the sources
+            # - gally-src : contains only the sources from current branch or PR.
             # - gally : a full development environment which is needed for PHPstan
             - name: Move Gally dev environment to a defined location
               shell: bash
@@ -47,16 +40,8 @@ jobs:
                   pwd
                   ls -ail
                   mv gally-dev-${{ github.run_id }}-${{ github.run_number }} ${{ env.gally-directory }}
-                  cd ${{ env.gally-directory }}
-                  ls -ail
                   cd ${{ github.workspace }}
-                  ls -ail
-                  cd ${{ env.gally-directory }}
-                  pwd
-                  ls -ail
-                  cd ${{ env.src-directory }}
-                  pwd
-                  ls -ail            
+                  ls -ail       
 
             - name: Cache Composer dependencies
               uses: actions/cache@v2
@@ -64,7 +49,7 @@ jobs:
                   path: /tmp/composer-cache
                   key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
 
-            - name: Adding Gally Standard package
+            - name: Adding Gally Standard package from current branch or PR
               working-directory: ${{ env.gally-directory }}
               run: |
                   cd api
@@ -73,13 +58,13 @@ jobs:
             - uses: php-actions/composer@v6
               with:
                   php_version: "8.1"
-                  # working-dir is relative, cannot use env var.
+                  # working-dir is relative, it's always launched from $GITHUB_WORKSPACE, cannot use env var.
                   args: --working-dir gally/api
 
             - uses: php-actions/composer@v6
               with:
                   php_version: "8.1"
-                  # working-dir is relative, cannot use env var.
+                  # working-dir is relative, it's always launched from $GITHUB_WORKSPACE, cannot use env var.
                   args: --working-dir gally-src
 
             - name: PHP-CS-Fixer
@@ -90,8 +75,6 @@ jobs:
               working-directory: ${{ env.gally-directory }}
               run: |
                   cd api
-                  ls -ail   
-                  ls -ail ${{ github.workspace }}
-                  cp -rf ${{ env.src-directory }}/phpstan.neon.dist phpstan.neon.dist 
-                  # do PHPstan with current phpstan.neon.dist file from current package
+                  # do PHPstan with current phpstan.neon.dist file from current branch or PR
+                  cp -rf ${{ env.src-directory }}/phpstan.neon.dist phpstan.neon.dist                   
                   ./vendor/bin/phpstan analyse
