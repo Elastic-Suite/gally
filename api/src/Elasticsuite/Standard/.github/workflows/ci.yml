@@ -60,29 +60,29 @@ jobs:
           cat .env
 
       # To remove : api/src/ actually contains also the Elasticsuite sources. Bundle is also enabled.         
-      - name: Clean autoload
-        working-directory: ${{ env.gally-directory }}
-        run : |
-            cd api
-            sed -i '/Elasticsuite/d' composer.json
-            sed -i '/Elasticsuite/d' config/bundles.php
-            sed -i '/Elasticsuite/d' config/packages/nelmio_cors.yaml
-            sed -i '/elasticsuite/d' config/routes.yaml
-            sed -i '/Elasticsuite/d' config/routes.yaml
+      #- name: Clean autoload
+      #  working-directory: ${{ env.gally-directory }}
+      #  run : |
+      #      cd api
+      #      sed -i '/Elasticsuite/d' composer.json
+      #      sed -i '/Elasticsuite/d' config/bundles.php
+      #      sed -i '/Elasticsuite/d' config/packages/nelmio_cors.yaml
+      #      sed -i '/elasticsuite/d' config/routes.yaml
+      #      sed -i '/Elasticsuite/d' config/routes.yaml
         
       # To remove : api/src/ actually contains also the Elasticsuite sources.            
-      - name: "Cleanup existing namespaces"
-        working-directory: ${{ env.gally-directory }}
-        run: |
-            rm -rf api/src/Elasticsuite/Standard/**
-            rm -rf api/src/Elasticsuite/Premium/**
+      #- name: "Cleanup existing namespaces"
+      #  working-directory: ${{ env.gally-directory }}
+      #  run: |
+      #      rm -rf api/src/Elasticsuite/Standard/**
+      #      rm -rf api/src/Elasticsuite/Premium/**
 
-        # To remove : Adding gally as a requirement. Not existing actually in Standalone app.
-      - name: Adding Gally Standard package
-        working-directory: ${{ env.gally-directory }}
-        run: |
-            cd api
-            composer require --dev "gally/gally-standard:${GITHUB_BASE_REF:-${GITHUB_REF##*/}}-dev" --ignore-platform-reqs
+      # To remove : Adding gally as a requirement. Not existing actually in Standalone app.
+      #- name: Adding Gally Standard package
+      #  working-directory: ${{ env.gally-directory }}
+      #  run: |
+      #      cd api
+      #      composer require --dev "gally/gally-standard:${GITHUB_BASE_REF:-${GITHUB_REF##*/}}-dev" --ignore-platform-reqs
       
       
       - name: Pull images
