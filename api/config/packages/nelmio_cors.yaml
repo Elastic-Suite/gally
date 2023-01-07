@@ -8,6 +8,7 @@ nelmio_cors:
             - 'Authorization'
             - 'Preload'
             - 'Fields'
+            # TODO Move this into Gally Bundle ?
             - !php/const Gally\Locale\EventSubscriber\LocaleSubscriber::GALLY_LANGUAGE_HEADER
             - !php/const Gally\Entity\Service\PriceGroupProvider::PRICE_GROUP_ID
         expose_headers: ['Link']

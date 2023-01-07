@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "461381e419b53aeed4957669fdb74304",
+    "content-hash": "b9a331dcdccab78d3b925ecec00f8851",
     "packages": [
         {
             "name": "api-platform/core",
@@ -1968,6 +1968,103 @@
                 }
             ],
             "time": "2021-05-22T16:11:15+00:00"
+        },
+        {
+            "name": "gally/gally-standard",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Elastic-Suite/gally-standard.git",
+                "reference": "f5509ab5b28593b8a9a4c07177e6047fe4d5aba0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Elastic-Suite/gally-standard/zipball/f5509ab5b28593b8a9a4c07177e6047fe4d5aba0",
+                "reference": "f5509ab5b28593b8a9a4c07177e6047fe4d5aba0",
+                "shasum": ""
+            },
+            "require": {
+                "api-platform/core": "~2.6.0",
+                "composer/package-versions-deprecated": "^1.11",
+                "cweagans/composer-patches": "^1.7",
+                "elasticsearch/elasticsearch": "^7.0",
+                "guzzlehttp/guzzle": "^7.0",
+                "lexik/jwt-authentication-bundle": "^2.14",
+                "nelmio/cors-bundle": "^2.1",
+                "php": ">=8.1",
+                "symfony/intl": "6.0.*",
+                "symfony/proxy-manager-bridge": "6.0.*",
+                "symfony/translation": "6.0.*",
+                "symfony/uid": "6.0.*",
+                "webonyx/graphql-php": "^14.11"
+            },
+            "require-dev": {
+                "api-platform/schema-generator": "^4.0",
+                "doctrine/doctrine-fixtures-bundle": "^3.4",
+                "friendsofphp/php-cs-fixer": "~3.4.0",
+                "hautelook/alice-bundle": "^2.10",
+                "justinrainbow/json-schema": "^5.2",
+                "liip/test-fixtures-bundle": "^2.0.0",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan": "^1.4",
+                "phpstan/phpstan-doctrine": "^1.2",
+                "phpstan/phpstan-phpunit": "^1.0",
+                "phpstan/phpstan-symfony": "^1.1",
+                "phpunit/phpunit": "^9.5",
+                "symfony/browser-kit": "6.0.*",
+                "symfony/css-selector": "6.0.*",
+                "symfony/debug-bundle": "6.0.*",
+                "symfony/http-client": "6.0.*",
+                "symfony/maker-bundle": "^1.21",
+                "symfony/phpunit-bridge": "6.0.*",
+                "symfony/stopwatch": "6.0.*",
+                "symfony/var-dumper": "6.0.*",
+                "symfony/web-profiler-bundle": "6.0.*"
+            },
+            "default-branch": true,
+            "type": "symfony-bundle",
+            "extra": {
+                "symfony": {
+                    "require": "^6.1"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "": "src/"
+                },
+                "psr-4": {
+                    "Gally\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "OSL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "The Elasticsuite Team",
+                    "email": "elasticsuite@smile.fr"
+                }
+            ],
+            "description": "The Open Source E-Commerce Searchandising Suite",
+            "homepage": "https://elasticsuite.io",
+            "keywords": [
+                "JSON-LD",
+                "api",
+                "e-commerce",
+                "elasticsearch",
+                "graphql",
+                "hal",
+                "jsonapi",
+                "openapi",
+                "rest",
+                "swagger"
+            ],
+            "support": {
+                "issues": "https://github.com/Elastic-Suite/gally-standard/issues",
+                "source": "https://github.com/Elastic-Suite/gally-standard/tree/master"
+            },
+            "time": "2023-01-11T15:37:55+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -7672,16 +7769,16 @@
         },
         {
             "name": "symfony/web-link",
-            "version": "v6.0.1",
+            "version": "v6.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/web-link.git",
-                "reference": "bc5ac011d2670331b8d5fab89253c774568f6877"
+                "reference": "52d6af6c4476c8ebdef968cb39030826253eb5e4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/web-link/zipball/bc5ac011d2670331b8d5fab89253c774568f6877",
-                "reference": "bc5ac011d2670331b8d5fab89253c774568f6877",
+                "url": "https://api.github.com/repos/symfony/web-link/zipball/52d6af6c4476c8ebdef968cb39030826253eb5e4",
+                "reference": "52d6af6c4476c8ebdef968cb39030826253eb5e4",
                 "shasum": ""
             },
             "require": {
@@ -7738,7 +7835,7 @@
                 "push"
             ],
             "support": {
-                "source": "https://github.com/symfony/web-link/tree/v6.0.1"
+                "source": "https://github.com/symfony/web-link/tree/v6.0.3"
             },
             "funding": [
                 {
@@ -7754,7 +7851,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-12-08T15:13:44+00:00"
+            "time": "2022-01-02T09:55:41+00:00"
         },
         {
             "name": "symfony/yaml",
@@ -8032,16 +8129,16 @@
         },
         {
             "name": "willdurand/negotiation",
-            "version": "3.0.0",
+            "version": "3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/willdurand/Negotiation.git",
-                "reference": "04e14f38d4edfcc974114a07d2777d90c98f3d9c"
+                "reference": "68e9ea0553ef6e2ee8db5c1d98829f111e623ec2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/willdurand/Negotiation/zipball/04e14f38d4edfcc974114a07d2777d90c98f3d9c",
-                "reference": "04e14f38d4edfcc974114a07d2777d90c98f3d9c",
+                "url": "https://api.github.com/repos/willdurand/Negotiation/zipball/68e9ea0553ef6e2ee8db5c1d98829f111e623ec2",
+                "reference": "68e9ea0553ef6e2ee8db5c1d98829f111e623ec2",
                 "shasum": ""
             },
             "require": {
@@ -8082,9 +8179,9 @@
             ],
             "support": {
                 "issues": "https://github.com/willdurand/Negotiation/issues",
-                "source": "https://github.com/willdurand/Negotiation/tree/3.0.0"
+                "source": "https://github.com/willdurand/Negotiation/tree/3.1.0"
             },
-            "time": "2020-09-25T08:01:41+00:00"
+            "time": "2022-01-30T20:08:53+00:00"
         }
     ],
     "packages-dev": [
@@ -12359,7 +12456,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "gally/gally-standard": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

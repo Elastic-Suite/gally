@@ -3,6 +3,7 @@ security:
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+        # TODO Move this into Gally Bundle ?
         Gally\User\Model\User:
             algorithm: auto
 
@@ -19,6 +20,7 @@ security:
             security: false
         main:
             stateless: true
+            # TODO Move this into Gally Bundle ?
             provider: elasctisuite_user_provider
             json_login:
                 check_path: /authentication_token

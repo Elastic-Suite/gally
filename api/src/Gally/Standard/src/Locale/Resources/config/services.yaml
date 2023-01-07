@@ -1,9 +1,0 @@
-services:
-    Gally\Locale\EventSubscriber\LocaleSubscriber:
-        arguments:
-            - '%kernel.enabled_locales%'
-        tags:
-            - { name: kernel.event_subscriber }
-    Gally\Locale\EventSubscriber\ResponseSubscriber:
-        tags:
-            - { name: kernel.event_subscriber }

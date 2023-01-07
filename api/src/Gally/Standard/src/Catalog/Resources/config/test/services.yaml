@@ -1,4 +1,0 @@
-services:
-    Gally\Catalog\Service\DefaultCatalogProviderTest:
-        alias: Gally\Catalog\Service\DefaultCatalogProvider
-        public: true
