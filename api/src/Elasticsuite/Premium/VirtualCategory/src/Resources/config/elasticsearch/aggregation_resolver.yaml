@@ -1,9 +1,0 @@
-services:
-    Elasticsuite\Search\Elasticsearch\Request\Aggregation\ConfigResolver\CategoryAggregationConfigResolver:
-        class: Elasticsuite\VirtualCategory\Elasticsearch\Request\Aggregation\ConfigResolver\CategoryAggregationConfigResolver
-        arguments:
-            - '@Elasticsuite\Category\Service\CurrentCategoryProvider'
-            - '@Elasticsuite\Category\Repository\CategoryRepository'
-            - '@Elasticsuite\VirtualCategory\Service\CategoryQueryProvider'
-        tags:
-            - { name: 'elasticsuite.search.aggregation.resolver' }

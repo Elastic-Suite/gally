@@ -165,6 +165,9 @@
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.5"
     },
+    "gally/gally-standard": {
+        "version": "dev-master"
+    },
     "guzzlehttp/guzzle": {
         "version": "7.4.1"
     },

@@ -23,7 +23,8 @@ framework:
 
         # system: default adapters are apcu and phpfiles and are chained together
         # in \Symfony\Bundle\FrameworkBundle\DependencyInjection\FrameworkExtension::registerCacheConfiguration:L.2124 
-
+          
+        # TODO Move this into Elasticsuite Bundle ?
         # pools:
             # elasticsuite.example.simple.cache:
             #     adapter: cache.app

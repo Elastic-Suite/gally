@@ -1,9 +1,0 @@
-Elasticsuite\User\Model\User:
-    admin:
-        email: admin@test.com
-        password: <hashPassword('apassword')>
-        roles: [ 'ROLE_ADMIN' ]
-    contributor:
-        email: contributor@test.com
-        password: <hashPassword('apassword')>
-        roles: [ 'ROLE_CONTRIBUTOR' ]

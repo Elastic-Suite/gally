@@ -1,4 +1,0 @@
-elasticsuite:
-    indices_settings:
-        prefix: elasticsuite_test__elasticsuite
-        time_before_ghost: 31557600 # one year

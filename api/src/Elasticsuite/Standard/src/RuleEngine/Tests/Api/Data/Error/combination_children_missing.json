@@ -1,9 +1,0 @@
-{
-  "rule" : {
-    "type": "combination",
-    "operator": "all",
-    "value": "true"
-  },
-  "expectedError" : "The children node is missing on a combination rule.",
-  "responseCode" : 500
-}

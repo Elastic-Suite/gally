@@ -8,6 +8,7 @@ nelmio_cors:
             - 'Authorization'
             - 'Preload'
             - 'Fields'
+            # TODO Move this into Elasticsuite Bundle ?
             - !php/const Elasticsuite\Locale\EventSubscriber\LocaleSubscriber::ELASTICSUITE_LANGUAGE_HEADER 
             - !php/const Elasticsuite\Entity\Service\PriceGroupProvider::PRICE_GROUP_ID
         expose_headers: ['Link']

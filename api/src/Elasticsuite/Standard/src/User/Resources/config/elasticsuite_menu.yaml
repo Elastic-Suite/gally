@@ -1,5 +1,0 @@
-elasticsuite:
-    menu:
-        users:
-            order: 110
-            parent: settings
