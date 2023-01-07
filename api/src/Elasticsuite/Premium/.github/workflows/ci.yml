@@ -124,20 +124,20 @@ jobs:
             
       # Untested : adding the current build of Gally inside php app.     
       # $GITHUB_WORKSPACE/gally-standard is where it has been checkouted at the beginning.
-      - name: Add current build of Gally
-        working-directory: ${{ env.gally-directory }}
-        run: |
-        #    docker compose cp $GITHUB_WORKSPACE/gally-repository php:/tmp/gally-repository
-        #    make composer c="config --global --no-interaction --ansi repositories.${{ env.package-name }} git "/tmp/gally-repository""
-            make exec s=php c="pwd"
-            make exec s=php c="ls -ail"
-            make exec s=php c="ls -ail vendor/gally/${{ env.package-name }}"
-            make composer c="config discard-changes true"
-            make composer c="require --dev "gally/${{ env.package-name }}:${GITHUB_BASE_REF:-${GITHUB_REF##*/}}-dev" --ignore-platform-reqs"
-            make composer c="config discard-changes false"
-            ls -ail $GITHUB_WORKSPACE
-            docker compose cp $GITHUB_WORKSPACE/${{ env.package-name }} php:/srv/api/vendor/gally/
-            make exec s=php c="ls -ail vendor/gally/${{ env.package-name }}"
+      #- name: Add current build of Gally
+      #  working-directory: ${{ env.gally-directory }}
+      #  run: |
+      #  #    docker compose cp $GITHUB_WORKSPACE/gally-repository php:/tmp/gally-repository
+      #  #    make composer c="config --global --no-interaction --ansi repositories.${{ env.package-name }} git "/tmp/gally-repository""
+      #      make exec s=php c="pwd"
+      #      make exec s=php c="ls -ail"
+      #      make exec s=php c="ls -ail vendor/gally/${{ env.package-name }}"
+      #      make composer c="config discard-changes true"
+      #      make composer c="require --dev "gally/${{ env.package-name }}:${GITHUB_BASE_REF:-${GITHUB_REF##*/}}-dev" --ignore-platform-reqs"
+      #      make composer c="config discard-changes false"
+      #      ls -ail $GITHUB_WORKSPACE
+      #      docker compose cp $GITHUB_WORKSPACE/${{ env.package-name }} php:/srv/api/vendor/gally/
+      #      make exec s=php c="ls -ail vendor/gally/${{ env.package-name }}"
             
       - name: Check HTTP reachability
         id: http_reachability
