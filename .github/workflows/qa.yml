@@ -21,12 +21,14 @@ jobs:
         with: 
           php_version: "8.1"
           args: --working-dir api
-      - name: PHP-CS-Fixer
-        working-directory: api
-        run: ./vendor/bin/php-cs-fixer fix --path-mode=intersection --diff --dry-run src/Gally
-      - name: PHPStan
-        working-directory: api
-        run: ./vendor/bin/phpstan analyse src/Gally
+      # PHP-CS-Fixer cannot run locally since src/Gally has been moved elsewhere
+      #- name: PHP-CS-Fixer
+      #  working-directory: api
+      #  run: ./vendor/bin/php-cs-fixer fix --path-mode=intersection --diff --dry-run src/Gally
+      # PHPStan cannot run locally since src/Gally has been moved elsewhere
+      #- name: PHPStan
+      #  working-directory: api
+      #  run: ./vendor/bin/phpstan analyse src/Gally
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
