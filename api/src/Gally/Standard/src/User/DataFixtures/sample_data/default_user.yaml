@@ -1,9 +1,0 @@
-Gally\User\Model\User:
-    admin:
-        email: admin@example.com
-        password: <hashPassword('apassword')>
-        roles: [ 'ROLE_ADMIN' ]
-    contributor:
-        email: contributor@example.com
-        password: <hashPassword('apassword')>
-        roles: [ 'ROLE_CONTRIBUTOR' ]

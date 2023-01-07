@@ -1,6 +1,0 @@
-Gally\Search\Model\Facet\Configuration:
-    product_my_price_facet:
-        __construct:
-            sourceField: '@product_my_price'
-            category: ~
-        coverageRate: 20

@@ -1,5 +1,0 @@
-services:
-    Gally\Search\Service\SearchSettingsProvider:
-        class: Gally\Search\Tests\Service\SearchSettingsProvider
-        arguments:
-            - '%gally.search_settings%'

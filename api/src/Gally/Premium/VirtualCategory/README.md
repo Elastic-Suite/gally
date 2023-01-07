@@ -1,3 +1,0 @@
-
-Gally Virtual Category Bundle
-============

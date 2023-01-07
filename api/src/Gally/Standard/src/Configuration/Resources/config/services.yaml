@@ -1,6 +1,0 @@
-services:
-    Gally\Configuration\DataProvider\ConfigurationDataProvider:
-        arguments:
-            - '%gally.base_url%'
-        tags:
-            - { name: api_platform.collection_data_provider }

@@ -1,9 +1,0 @@
-services:
-    Gally\Search\Elasticsearch\Request\Aggregation\ConfigResolver\CategoryAggregationConfigResolver:
-        class: Gally\VirtualCategory\Elasticsearch\Request\Aggregation\ConfigResolver\CategoryAggregationConfigResolver
-        arguments:
-            - '@Gally\Category\Service\CurrentCategoryProvider'
-            - '@Gally\Category\Repository\CategoryRepository'
-            - '@Gally\VirtualCategory\Service\CategoryQueryProvider'
-        tags:
-            - { name: 'gally.search.aggregation.resolver' }

@@ -1,4 +1,0 @@
-gally:
-    indices_settings:
-        prefix: gally_test__gally
-        time_before_ghost: 31557600 # one year
