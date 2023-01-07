@@ -6,5 +6,6 @@ kernel:
     resource: ../src/Kernel.php
     type: annotation
 
+# TODO : Move this into Gally bundle ?
 gally_security:
     resource: '@GallyBundle/src/Security/Resources/config/routing.yml'
