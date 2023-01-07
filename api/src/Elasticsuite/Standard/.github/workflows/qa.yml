@@ -12,14 +12,22 @@ jobs:
         runs-on: ubuntu-latest
         
         env:
+            # PHP package name is equal to the repository name.
+            package-name: ${{ github.event.repository.name }}
             gally-directory: ${{ github.workspace }}/gally
-            src-directory: ${{ github.workspace }}/gally-src
+            src-directory: ${{ github.workspace }}/${{ github.event.repository.name }}
         
         steps:
             - name: Checkout PHP package
               uses: actions/checkout@v3
               with:
-                  path: gally-src
+                  path: ${{ github.event.repository.name }}
+
+            - name: Checkout full repository to be used as a composer repository
+              uses: actions/checkout@v3
+              with:
+                  fetch-depth: 0
+                  path: gally-repository
 
             - name: Checkout Gally template
               uses: actions/checkout@v3
@@ -32,7 +40,7 @@ jobs:
                   path: gally-dev-${{ github.run_id }}-${{ github.run_number }}
 
             # in $GITHUB_WORKSPACE we will have this after this step : 
-            # - gally-src : contains only the sources from current branch or PR.
+            # - gally-<package-name> : contains only the sources from current branch or PR.
             # - gally : a full development environment which is needed for PHPstan
             - name: Move Gally dev environment to a defined location
               shell: bash
@@ -49,24 +57,29 @@ jobs:
                   path: /tmp/composer-cache
                   key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
 
-            - name: Adding Gally Standard package from current branch or PR
+            - name: Prepare local Repository
+              run: |
+                  composer config --global --no-interaction --ansi repositories.${{ env.package-name }} git "$GITHUB_WORKSPACE/gally-repository"
+                  composer config --global repositories
+
+            - name: Adding local package from current branch or PR
               working-directory: ${{ env.gally-directory }}
               run: |
                   cd api
-                  composer require --dev "gally/gally-standard:${GITHUB_BASE_REF:-${GITHUB_REF##*/}}-dev" --ignore-platform-reqs
+                  composer require --dev "gally/${{ env.package-name }}:${GITHUB_BASE_REF:-${GITHUB_REF##*/}}-dev" --ignore-platform-reqs
 
             - uses: php-actions/composer@v6
               with:
                   php_version: "8.1"
-                  # working-dir is relative, it's always launched from $GITHUB_WORKSPACE, cannot use env var.
+                  # working-dir is relative, it's always launched from $GITHUB_WORKSPACE, cannot use gally-directory env var.
                   args: --working-dir gally/api
 
             - uses: php-actions/composer@v6
               with:
                   php_version: "8.1"
-                  # working-dir is relative, it's always launched from $GITHUB_WORKSPACE, cannot use env var.
-                  args: --working-dir gally-src
-
+                  # working-dir is relative, it's always launched from $GITHUB_WORKSPACE, cannot use src-directory env var.
+                  args: --working-dir ${{ env.package-name }}
+            
             - name: PHP-CS-Fixer
               working-directory: ${{ env.src-directory }}
               run: ./vendor/bin/php-cs-fixer fix --path-mode=intersection --diff --dry-run src
