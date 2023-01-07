@@ -36,7 +36,7 @@ jobs:
             path: gally-dev-${{ github.run_id }}-${{ github.run_number }}
             
         # in $GITHUB_WORKSPACE we will have this after this step : 
-        # - gally-src : contains only the sources from current branch or PR.
+        # - gally-standard : contains only the sources from current branch or PR.
         # - gally : a full development environment which is needed for PHPstan            
       - name: Move Gally dev environment to a defined location
         shell: bash
