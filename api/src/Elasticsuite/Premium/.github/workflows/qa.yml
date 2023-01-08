@@ -85,7 +85,7 @@ jobs:
 
             - name: PHP-CS-Fixer
               working-directory: ${{ env.src-directory }}
-              run: ./vendor/bin/php-cs-fixer fix --path-mode=intersection --diff --dry-run src
+              run: ./vendor/bin/php-cs-fixer fix --path-mode=intersection --diff --dry-run .
 
             - name: PHPStan
               working-directory: ${{ env.gally-directory }}
