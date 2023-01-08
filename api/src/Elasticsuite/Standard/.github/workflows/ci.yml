@@ -4,7 +4,7 @@ on:
     push:
         branches:
             - master
-    pull_request:
+    pull_request_target:
         branches:
             - master
         types: [review_requested, ready_for_review, synchronize]
@@ -26,7 +26,8 @@ jobs:
               uses: actions/checkout@v3
               with:
                   path: ${{ env.package-name }}
-
+                  ref: ${{ github.event.pull_request.head.sha }}
+            
             - name: Checkout full repository to be used as a composer repository
               uses: actions/checkout@v3
               with:
