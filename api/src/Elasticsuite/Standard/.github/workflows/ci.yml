@@ -12,7 +12,8 @@ on:
 
 jobs:
     tests:
-        if: github.event.pull_request.draft == false
+        # Protect public workflows.
+        if: (github.event.pull_request.draft == false && (github.event_name != 'pull_request') || contains(github.event.pull_request.labels.*.name, 'safe to test'))
         name: Tests
         runs-on: ubuntu-latest
         
