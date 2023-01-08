@@ -21,12 +21,11 @@ use Elasticsuite\Category\Exception\SyncCategoryException;
 use Elasticsuite\Category\Service\CategoryProductPositionManager;
 use Elasticsuite\Category\Service\CategorySynchronizer;
 use Elasticsuite\Index\Model\Index;
-use Elasticsuite\Index\MutationResolver\InstallIndexMutation;
 
 class SyncCategoryDataAfterInstall implements MutationResolverInterface
 {
     public function __construct(
-        private InstallIndexMutation $decorated,
+        private MutationResolverInterface $decorated,
         private CategorySynchronizer $synchronizer,
         private CategoryProductPositionManager $categoryProductPositionManager,
     ) {
