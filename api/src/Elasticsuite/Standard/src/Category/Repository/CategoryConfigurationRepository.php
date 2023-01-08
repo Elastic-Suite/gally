@@ -269,7 +269,7 @@ class CategoryConfigurationRepository extends ServiceEntityRepository
                     'MAX(IDENTITY(lc.category)) as category_id',
                     'MAX(CASE WHEN ' . sprintf($mergeExpr, 'isVirtual') . ' = TRUE THEN 1 ELSE 0 END) as isVirtual',
                     'MAX(' . sprintf($mergeExpr, 'virtualRule') . ') as virtualRule',
-                    'MAX(CASE WHEN ' . sprintf($mergeExpr, 'useNameInProductSearch') . ' = TRUE THEN 1 ELSE 0 END) as useNameInProductSearch',
+                    'MAX(CASE WHEN ' . sprintf($mergeExpr, 'useNameInProductSearch') . ' = FALSE THEN 0 ELSE 1 END) as useNameInProductSearch',
                     'MAX(' . sprintf($mergeExpr, 'defaultSorting') . ') as defaultSorting',
                     'MAX(CASE WHEN lc.isActive = TRUE THEN 1 ELSE 0 END) as isActive',
                 ]
