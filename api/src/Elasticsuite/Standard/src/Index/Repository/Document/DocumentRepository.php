@@ -34,7 +34,7 @@ class DocumentRepository implements DocumentRepositoryInterface
             $params['body'][] = [
                 'index' => [
                     '_index' => $indexName,
-                    '_id' => $document['entity_id'] ?? $document['id'],
+                    '_id' => $document['entity_id'] ?? $document['id'] ?? null,
                 ],
             ];
 
