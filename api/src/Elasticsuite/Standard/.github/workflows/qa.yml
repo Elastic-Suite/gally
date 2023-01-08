@@ -10,6 +10,8 @@ on:
 
 jobs:
     qa:
+        # Protect public workflows.
+        if: (github.event_name != 'pull_request') || contains(github.event.pull_request.labels.*.name, 'safe to test')
         name: Code-Quality-Checks
         runs-on: ubuntu-latest
         
