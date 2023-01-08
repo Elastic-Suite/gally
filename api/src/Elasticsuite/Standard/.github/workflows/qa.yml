@@ -10,7 +10,7 @@ on:
 
 jobs:
     qa:
-        # Protect public workflows.
+        # Protect public workflows. To be removed when switching from pull_request_target to pull_request.
         if: (github.event_name != 'pull_request') || contains(github.event.pull_request.labels.*.name, 'safe to test')
         name: Code-Quality-Checks
         runs-on: ubuntu-latest
