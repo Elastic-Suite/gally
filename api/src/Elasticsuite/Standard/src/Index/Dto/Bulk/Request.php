@@ -47,7 +47,7 @@ class Request
     /**
      * Add a single document to the index.
      */
-    public function addDocument(Index $index, string|int $docId, array $data): self
+    public function addDocument(Index $index, string|int|null $docId, array $data): self
     {
         $this->bulkData[] = ['index' => ['_index' => $index->getName(), '_type' => '_doc', '_id' => $docId]];
         $this->bulkData[] = $data;
@@ -57,13 +57,13 @@ class Request
 
     /**
      * Add a several documents to the index.
-     * $data format have to be an array of all documents with document id as key.
      */
     public function addDocuments(Index $index, array $data): self
     {
         array_walk(
             $data,
-            function ($documentData, $identifier) use ($index) {
+            function ($documentData) use ($index) {
+                $identifier = $documentData['entity_id'] ?? $documentData['id'] ?? null;
                 $this->addDocument($index, $identifier, $documentData);
             }
         );
