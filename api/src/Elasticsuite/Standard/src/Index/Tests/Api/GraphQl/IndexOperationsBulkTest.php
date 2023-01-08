@@ -73,16 +73,16 @@ class IndexOperationsBulkTest extends AbstractTest
         $admin = $this->getUser(Role::ROLE_ADMIN);
         $indexName = ElasticsearchFixturesInterface::PREFIX_TEST_INDEX . 'index_product';
         $documents = [
-            'id1' => ['name' => 'Test doc 1', 'size' => 12],
-            'id2' => ['name' => 'Test doc 2', 'size' => 8],
-            'id3' => ['name' => 'Test doc 3', 'size' => 5],
+            'id1' => ['id' => 'id1', 'name' => 'Test doc 1', 'size' => 12],
+            'id2' => ['id' => 'id2', 'name' => 'Test doc 2', 'size' => 8],
+            'id3' => ['id' => 'id3', 'name' => 'Test doc 3', 'size' => 5],
         ];
 
         yield [$indexName, $documents, $this->getUser(Role::ROLE_CONTRIBUTOR), ['errors' => [['debugMessage' => 'Access Denied.']]]];
         yield [$indexName, $documents, $admin, ['data' => ['bulkIndex' => ['index' => ['name' => $indexName]]]]];
         yield ['wrongName', $documents, $admin, ['errors' => [['debugMessage' => 'Index with name [wrongName] does not exist']]]];
 
-        $documents['id2'] = ['name' => 'Test doc 2', 'size' => 'wrongSize'];
+        $documents['id2'] = ['id' => 'id2', 'name' => 'Test doc 2', 'size' => 'wrongSize'];
         $message = sprintf(
             'Bulk index operation failed %d times in index %s. ' .
             'Error (mapper_parsing_exception) : failed to parse field [size] of type [integer] in document with id \'id2\'. ' .
