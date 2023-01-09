@@ -11,6 +11,7 @@
         <field name="name" type="string" length="255" nullable="true" unique="false" />
         <field name="code" type="string" length="255" nullable="false" unique="true" />
         <field name="locale" type="string" length="5" nullable="false" unique="false" />
+        <field name="currency" type="string" length="3" nullable="false" unique="false" />
         <field name="isDefault" type="boolean" nullable="false">
             <options>
                 <option name="default">0</option>

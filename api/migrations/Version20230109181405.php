@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20230103103028 extends AbstractMigration
+final class Version20230109181405 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -56,7 +56,7 @@ final class Version20230103103028 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_108F591B12469DE2 ON facet_configuration (category_id)');
         $this->addSql('CREATE UNIQUE INDEX unique_source_field ON facet_configuration (source_field_id) WHERE (category_id IS NULL)');
         $this->addSql('CREATE UNIQUE INDEX unique_source_field_category ON facet_configuration (source_field_id, category_id) WHERE (category_id IS NOT NULL)');
-        $this->addSql('CREATE TABLE localized_catalog (id INT NOT NULL, catalog_id INT NOT NULL, name VARCHAR(255) DEFAULT NULL, code VARCHAR(255) NOT NULL, locale VARCHAR(5) NOT NULL, is_default BOOLEAN DEFAULT \'false\' NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE localized_catalog (id INT NOT NULL, catalog_id INT NOT NULL, name VARCHAR(255) DEFAULT NULL, code VARCHAR(255) NOT NULL, locale VARCHAR(5) NOT NULL, currency VARCHAR(3) NOT NULL, is_default BOOLEAN DEFAULT \'false\' NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_DB10491E77153098 ON localized_catalog (code)');
         $this->addSql('CREATE INDEX IDX_DB10491ECC3C66FC ON localized_catalog (catalog_id)');
         $this->addSql('CREATE UNIQUE INDEX unique_code_locale ON localized_catalog (code, locale)');
