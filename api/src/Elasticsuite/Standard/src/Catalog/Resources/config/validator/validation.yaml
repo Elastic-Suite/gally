@@ -16,6 +16,9 @@ Elasticsuite\Catalog\Model\LocalizedCatalog:
                   min: 5
                   max: 5
             - Locale: ~
+        currency:
+            - NotBlank: ~
+            - Currency: ~
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
               fields: [code, locale]
