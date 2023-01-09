@@ -74,7 +74,7 @@ services:
 
   varnish:
     # image: varnish:fresh-alpine
-    image: varnish:fresh
+    image: varnish:7.2.1
     depends_on:
       - caddy
     restart: unless-stopped
