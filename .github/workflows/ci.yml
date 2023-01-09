@@ -61,10 +61,10 @@ jobs:
           docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec -e XDEBUG_MODE=off -T php bin/console doctrine:fixtures:load --append --no-interaction
       - name: Coverage
         run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec -e XDEBUG_MODE=coverage -T php bin/phpunit --coverage-clover=coverage/coverage.xml src/Elasticsuite
-      
+
       - name: Cleanup coverage file
         run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec -T php sed -i 's:<file name="/srv/:<file name="/:' coverage/coverage.xml
-        
+
       - if: ${{ github.event_name == 'pull_request' }}
         name: Download artifact
         uses: dawidd6/action-download-artifact@v2.14.1
@@ -102,7 +102,7 @@ jobs:
         with:
           name: coverage-report
           path: api/coverage/coverage.xml
-                  
+
       - name: Jest
         run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec -T pwa yarn test:ci
 
@@ -129,14 +129,13 @@ jobs:
       - name: "[End] Job failed, gathering logs"
         if: ${{ failure() }}
         run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml logs
-                   
+
   Deploy:
     needs: tests
     if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     
-    steps:
-      - uses: actions/checkout@v2 
+    steps:      
       - name: Deploy in EC2
         env:
             PRIVATE_KEY: ${{ secrets.AWS_DEPLOY_KEY }}
@@ -144,7 +143,6 @@ jobs:
             USER_NAME : ${{ secrets.AWS_USER }}
             APP_SECRET: ${{ secrets.APP_SECRET }}
             POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-            
         run: |
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} "
@@ -152,10 +150,12 @@ jobs:
             docker system prune -af &&
             docker volume rm $(docker volume ls -q | awk '!/_/' | tr '\n' ' ') || true &&
             docker-compose down &&
-            git checkout master &&
             git fetch --all &&
             git reset --hard origin/master &&
-            git pull origin master &&
             make .env &&
+            cd front/gally-admin 
+            git fetch --all &&
+            git reset --hard origin/main &&
+            cd /home/ubuntu/standalone &&
             SERVER_NAME=$HOSTNAME APP_SECRET=$APP_SECRET POSTGRES_PASSWORD=$POSTGRES_PASSWORD docker-compose -f docker-compose.yml -f docker-compose.int.yml up -d --build 
           "
