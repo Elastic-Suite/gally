@@ -60,6 +60,9 @@ class LocalizedCatalog
     private string $locale;
 
     #[Groups(['localizedCatalog:read', 'catalog:read'])]
+    private string $currency;
+
+    #[Groups(['localizedCatalog:read', 'catalog:read'])]
     private bool $isDefault = false;
 
     #[Groups('localizedCatalog:read')]
@@ -104,6 +107,16 @@ class LocalizedCatalog
         $this->locale = $locale;
 
         return $this;
+    }
+
+    public function getCurrency(): string
+    {
+        return $this->currency;
+    }
+
+    public function setCurrency(string $currency): void
+    {
+        $this->currency = $currency;
     }
 
     /**

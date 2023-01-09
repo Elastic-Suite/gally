@@ -14,30 +14,36 @@ Elasticsuite\Catalog\Model\LocalizedCatalog:
         catalog: '@com'
         code: com_fr
         locale: fr_FR
+        currency: EUR
         name: COM French Catalog
         isDefault: true
     com_en:
         catalog: '@com'
         code: com_en
         locale: en_US
+        currency: EUR
         name: COM English Catalog        
     fr_fr:
         catalog: '@fr'
         code: fr_fr
         locale: fr_FR
+        currency: EUR
         name: FR French Catalog
     fr_en:
         catalog: '@fr'
         code: fr_en
         locale: en_US
+        currency: EUR
         name: FR English Catalog        
     en_fr:
         catalog: '@uk'
         code: en_fr
         locale: fr_FR
+        currency: GBP
         name: EN French Catalog
     en_en:
         catalog: '@uk'
         code: en_en
         locale: en_US
+        currency: GBP
         name: EN English Catalog        
