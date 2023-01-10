@@ -25,9 +25,9 @@ framework:
         # in \Symfony\Bundle\FrameworkBundle\DependencyInjection\FrameworkExtension::registerCacheConfiguration:L.2124 
 
         # pools:
-            # elasticsuite.example.simple.cache:
+            # gally.example.simple.cache:
             #     adapter: cache.app
 
-            # elasticsuite.example.tags.cache:
+            # gally.example.tags.cache:
             #    adapter: cache.adapter.redis
             #    tags: true

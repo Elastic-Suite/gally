@@ -1,0 +1,2952 @@
+Gally\Metadata\Model\SourceFieldOption:
+    product_accessory_brand_option_13:
+        code: '13'
+        source_field: '@product_accessory_brand'
+        position: 0
+        defaultLabel: Venia
+    product_accessory_brand_option_14:
+        code: '14'
+        source_field: '@product_accessory_brand'
+        position: 1
+        defaultLabel: Luma
+    product_accessory_gemstone_addon_option_15:
+        code: '15'
+        source_field: '@product_accessory_gemstone_addon'
+        position: 0
+        defaultLabel: Ruby
+    product_accessory_gemstone_addon_option_16:
+        code: '16'
+        source_field: '@product_accessory_gemstone_addon'
+        position: 1
+        defaultLabel: Sapphire
+    product_accessory_recyclable_material_option_1:
+        code: '0'
+        source_field: '@product_accessory_recyclable_material'
+        position: 0
+        defaultLabel: 'Yes'
+    product_accessory_recyclable_material_option_0:
+        code: '1'
+        source_field: '@product_accessory_recyclable_material'
+        position: 1
+        defaultLabel: 'No'
+    product_country_of_manufacture_option_:
+        code: default
+        source_field: '@product_country_of_manufacture'
+        position: 0
+        defaultLabel: ' '
+    product_country_of_manufacture_option_AF:
+        code: AF
+        source_field: '@product_country_of_manufacture'
+        position: 1
+        defaultLabel: Afghanistan
+    product_country_of_manufacture_option_AL:
+        code: AL
+        source_field: '@product_country_of_manufacture'
+        position: 2
+        defaultLabel: Albania
+    product_country_of_manufacture_option_DZ:
+        code: DZ
+        source_field: '@product_country_of_manufacture'
+        position: 3
+        defaultLabel: Algeria
+    product_country_of_manufacture_option_AS:
+        code: AS
+        source_field: '@product_country_of_manufacture'
+        position: 4
+        defaultLabel: 'American Samoa'
+    product_country_of_manufacture_option_AD:
+        code: AD
+        source_field: '@product_country_of_manufacture'
+        position: 5
+        defaultLabel: Andorra
+    product_country_of_manufacture_option_AO:
+        code: AO
+        source_field: '@product_country_of_manufacture'
+        position: 6
+        defaultLabel: Angola
+    product_country_of_manufacture_option_AI:
+        code: AI
+        source_field: '@product_country_of_manufacture'
+        position: 7
+        defaultLabel: Anguilla
+    product_country_of_manufacture_option_AQ:
+        code: AQ
+        source_field: '@product_country_of_manufacture'
+        position: 8
+        defaultLabel: Antarctica
+    product_country_of_manufacture_option_AG:
+        code: AG
+        source_field: '@product_country_of_manufacture'
+        position: 9
+        defaultLabel: 'Antigua & Barbuda'
+    product_country_of_manufacture_option_AR:
+        code: AR
+        source_field: '@product_country_of_manufacture'
+        position: 10
+        defaultLabel: Argentina
+    product_country_of_manufacture_option_AM:
+        code: AM
+        source_field: '@product_country_of_manufacture'
+        position: 11
+        defaultLabel: Armenia
+    product_country_of_manufacture_option_AW:
+        code: AW
+        source_field: '@product_country_of_manufacture'
+        position: 12
+        defaultLabel: Aruba
+    product_country_of_manufacture_option_AU:
+        code: AU
+        source_field: '@product_country_of_manufacture'
+        position: 13
+        defaultLabel: Australia
+    product_country_of_manufacture_option_AT:
+        code: AT
+        source_field: '@product_country_of_manufacture'
+        position: 14
+        defaultLabel: Austria
+    product_country_of_manufacture_option_AZ:
+        code: AZ
+        source_field: '@product_country_of_manufacture'
+        position: 15
+        defaultLabel: Azerbaijan
+    product_country_of_manufacture_option_BS:
+        code: BS
+        source_field: '@product_country_of_manufacture'
+        position: 16
+        defaultLabel: Bahamas
+    product_country_of_manufacture_option_BH:
+        code: BH
+        source_field: '@product_country_of_manufacture'
+        position: 17
+        defaultLabel: Bahrain
+    product_country_of_manufacture_option_BD:
+        code: BD
+        source_field: '@product_country_of_manufacture'
+        position: 18
+        defaultLabel: Bangladesh
+    product_country_of_manufacture_option_BB:
+        code: BB
+        source_field: '@product_country_of_manufacture'
+        position: 19
+        defaultLabel: Barbados
+    product_country_of_manufacture_option_BY:
+        code: BY
+        source_field: '@product_country_of_manufacture'
+        position: 20
+        defaultLabel: Belarus
+    product_country_of_manufacture_option_BE:
+        code: BE
+        source_field: '@product_country_of_manufacture'
+        position: 21
+        defaultLabel: Belgium
+    product_country_of_manufacture_option_BZ:
+        code: BZ
+        source_field: '@product_country_of_manufacture'
+        position: 22
+        defaultLabel: Belize
+    product_country_of_manufacture_option_BJ:
+        code: BJ
+        source_field: '@product_country_of_manufacture'
+        position: 23
+        defaultLabel: Benin
+    product_country_of_manufacture_option_BM:
+        code: BM
+        source_field: '@product_country_of_manufacture'
+        position: 24
+        defaultLabel: Bermuda
+    product_country_of_manufacture_option_BT:
+        code: BT
+        source_field: '@product_country_of_manufacture'
+        position: 25
+        defaultLabel: Bhutan
+    product_country_of_manufacture_option_BO:
+        code: BO
+        source_field: '@product_country_of_manufacture'
+        position: 26
+        defaultLabel: Bolivia
+    product_country_of_manufacture_option_BA:
+        code: BA
+        source_field: '@product_country_of_manufacture'
+        position: 27
+        defaultLabel: 'Bosnia & Herzegovina'
+    product_country_of_manufacture_option_BW:
+        code: BW
+        source_field: '@product_country_of_manufacture'
+        position: 28
+        defaultLabel: Botswana
+    product_country_of_manufacture_option_BV:
+        code: BV
+        source_field: '@product_country_of_manufacture'
+        position: 29
+        defaultLabel: 'Bouvet Island'
+    product_country_of_manufacture_option_BR:
+        code: BR
+        source_field: '@product_country_of_manufacture'
+        position: 30
+        defaultLabel: Brazil
+    product_country_of_manufacture_option_IO:
+        code: IO
+        source_field: '@product_country_of_manufacture'
+        position: 31
+        defaultLabel: 'British Indian Ocean Territory'
+    product_country_of_manufacture_option_VG:
+        code: VG
+        source_field: '@product_country_of_manufacture'
+        position: 32
+        defaultLabel: 'British Virgin Islands'
+    product_country_of_manufacture_option_BN:
+        code: BN
+        source_field: '@product_country_of_manufacture'
+        position: 33
+        defaultLabel: Brunei
+    product_country_of_manufacture_option_BG:
+        code: BG
+        source_field: '@product_country_of_manufacture'
+        position: 34
+        defaultLabel: Bulgaria
+    product_country_of_manufacture_option_BF:
+        code: BF
+        source_field: '@product_country_of_manufacture'
+        position: 35
+        defaultLabel: 'Burkina Faso'
+    product_country_of_manufacture_option_BI:
+        code: BI
+        source_field: '@product_country_of_manufacture'
+        position: 36
+        defaultLabel: Burundi
+    product_country_of_manufacture_option_KH:
+        code: KH
+        source_field: '@product_country_of_manufacture'
+        position: 37
+        defaultLabel: Cambodia
+    product_country_of_manufacture_option_CM:
+        code: CM
+        source_field: '@product_country_of_manufacture'
+        position: 38
+        defaultLabel: Cameroon
+    product_country_of_manufacture_option_CA:
+        code: CA
+        source_field: '@product_country_of_manufacture'
+        position: 39
+        defaultLabel: Canada
+    product_country_of_manufacture_option_CV:
+        code: CV
+        source_field: '@product_country_of_manufacture'
+        position: 40
+        defaultLabel: 'Cape Verde'
+    product_country_of_manufacture_option_BQ:
+        code: BQ
+        source_field: '@product_country_of_manufacture'
+        position: 41
+        defaultLabel: 'Caribbean Netherlands'
+    product_country_of_manufacture_option_KY:
+        code: KY
+        source_field: '@product_country_of_manufacture'
+        position: 42
+        defaultLabel: 'Cayman Islands'
+    product_country_of_manufacture_option_CF:
+        code: CF
+        source_field: '@product_country_of_manufacture'
+        position: 43
+        defaultLabel: 'Central African Republic'
+    product_country_of_manufacture_option_TD:
+        code: TD
+        source_field: '@product_country_of_manufacture'
+        position: 44
+        defaultLabel: Chad
+    product_country_of_manufacture_option_CL:
+        code: CL
+        source_field: '@product_country_of_manufacture'
+        position: 45
+        defaultLabel: Chile
+    product_country_of_manufacture_option_CN:
+        code: CN
+        source_field: '@product_country_of_manufacture'
+        position: 46
+        defaultLabel: China
+    product_country_of_manufacture_option_CX:
+        code: CX
+        source_field: '@product_country_of_manufacture'
+        position: 47
+        defaultLabel: 'Christmas Island'
+    product_country_of_manufacture_option_CC:
+        code: CC
+        source_field: '@product_country_of_manufacture'
+        position: 48
+        defaultLabel: 'Cocos (Keeling) Islands'
+    product_country_of_manufacture_option_CO:
+        code: CO
+        source_field: '@product_country_of_manufacture'
+        position: 49
+        defaultLabel: Colombia
+    product_country_of_manufacture_option_KM:
+        code: KM
+        source_field: '@product_country_of_manufacture'
+        position: 50
+        defaultLabel: Comoros
+    product_country_of_manufacture_option_CG:
+        code: CG
+        source_field: '@product_country_of_manufacture'
+        position: 51
+        defaultLabel: 'Congo - Brazzaville'
+    product_country_of_manufacture_option_CD:
+        code: CD
+        source_field: '@product_country_of_manufacture'
+        position: 52
+        defaultLabel: 'Congo - Kinshasa'
+    product_country_of_manufacture_option_CK:
+        code: CK
+        source_field: '@product_country_of_manufacture'
+        position: 53
+        defaultLabel: 'Cook Islands'
+    product_country_of_manufacture_option_CR:
+        code: CR
+        source_field: '@product_country_of_manufacture'
+        position: 54
+        defaultLabel: 'Costa Rica'
+    product_country_of_manufacture_option_HR:
+        code: HR
+        source_field: '@product_country_of_manufacture'
+        position: 55
+        defaultLabel: Croatia
+    product_country_of_manufacture_option_CU:
+        code: CU
+        source_field: '@product_country_of_manufacture'
+        position: 56
+        defaultLabel: Cuba
+    product_country_of_manufacture_option_CW:
+        code: CW
+        source_field: '@product_country_of_manufacture'
+        position: 57
+        defaultLabel: Curaçao
+    product_country_of_manufacture_option_CY:
+        code: CY
+        source_field: '@product_country_of_manufacture'
+        position: 58
+        defaultLabel: Cyprus
+    product_country_of_manufacture_option_CZ:
+        code: CZ
+        source_field: '@product_country_of_manufacture'
+        position: 59
+        defaultLabel: Czechia
+    product_country_of_manufacture_option_CI:
+        code: CI
+        source_field: '@product_country_of_manufacture'
+        position: 60
+        defaultLabel: 'Côte d’Ivoire'
+    product_country_of_manufacture_option_DK:
+        code: DK
+        source_field: '@product_country_of_manufacture'
+        position: 61
+        defaultLabel: Denmark
+    product_country_of_manufacture_option_DJ:
+        code: DJ
+        source_field: '@product_country_of_manufacture'
+        position: 62
+        defaultLabel: Djibouti
+    product_country_of_manufacture_option_DM:
+        code: DM
+        source_field: '@product_country_of_manufacture'
+        position: 63
+        defaultLabel: Dominica
+    product_country_of_manufacture_option_DO:
+        code: DO
+        source_field: '@product_country_of_manufacture'
+        position: 64
+        defaultLabel: 'Dominican Republic'
+    product_country_of_manufacture_option_EC:
+        code: EC
+        source_field: '@product_country_of_manufacture'
+        position: 65
+        defaultLabel: Ecuador
+    product_country_of_manufacture_option_EG:
+        code: EG
+        source_field: '@product_country_of_manufacture'
+        position: 66
+        defaultLabel: Egypt
+    product_country_of_manufacture_option_SV:
+        code: SV
+        source_field: '@product_country_of_manufacture'
+        position: 67
+        defaultLabel: 'El Salvador'
+    product_country_of_manufacture_option_GQ:
+        code: GQ
+        source_field: '@product_country_of_manufacture'
+        position: 68
+        defaultLabel: 'Equatorial Guinea'
+    product_country_of_manufacture_option_ER:
+        code: ER
+        source_field: '@product_country_of_manufacture'
+        position: 69
+        defaultLabel: Eritrea
+    product_country_of_manufacture_option_EE:
+        code: EE
+        source_field: '@product_country_of_manufacture'
+        position: 70
+        defaultLabel: Estonia
+    product_country_of_manufacture_option_SZ:
+        code: SZ
+        source_field: '@product_country_of_manufacture'
+        position: 71
+        defaultLabel: Eswatini
+    product_country_of_manufacture_option_ET:
+        code: ET
+        source_field: '@product_country_of_manufacture'
+        position: 72
+        defaultLabel: Ethiopia
+    product_country_of_manufacture_option_FK:
+        code: FK
+        source_field: '@product_country_of_manufacture'
+        position: 73
+        defaultLabel: 'Falkland Islands'
+    product_country_of_manufacture_option_FO:
+        code: FO
+        source_field: '@product_country_of_manufacture'
+        position: 74
+        defaultLabel: 'Faroe Islands'
+    product_country_of_manufacture_option_FJ:
+        code: FJ
+        source_field: '@product_country_of_manufacture'
+        position: 75
+        defaultLabel: Fiji
+    product_country_of_manufacture_option_FI:
+        code: FI
+        source_field: '@product_country_of_manufacture'
+        position: 76
+        defaultLabel: Finland
+    product_country_of_manufacture_option_FR:
+        code: FR
+        source_field: '@product_country_of_manufacture'
+        position: 77
+        defaultLabel: France
+    product_country_of_manufacture_option_GF:
+        code: GF
+        source_field: '@product_country_of_manufacture'
+        position: 78
+        defaultLabel: 'French Guiana'
+    product_country_of_manufacture_option_PF:
+        code: PF
+        source_field: '@product_country_of_manufacture'
+        position: 79
+        defaultLabel: 'French Polynesia'
+    product_country_of_manufacture_option_TF:
+        code: TF
+        source_field: '@product_country_of_manufacture'
+        position: 80
+        defaultLabel: 'French Southern Territories'
+    product_country_of_manufacture_option_GA:
+        code: GA
+        source_field: '@product_country_of_manufacture'
+        position: 81
+        defaultLabel: Gabon
+    product_country_of_manufacture_option_GM:
+        code: GM
+        source_field: '@product_country_of_manufacture'
+        position: 82
+        defaultLabel: Gambia
+    product_country_of_manufacture_option_GE:
+        code: GE
+        source_field: '@product_country_of_manufacture'
+        position: 83
+        defaultLabel: Georgia
+    product_country_of_manufacture_option_DE:
+        code: DE
+        source_field: '@product_country_of_manufacture'
+        position: 84
+        defaultLabel: Germany
+    product_country_of_manufacture_option_GH:
+        code: GH
+        source_field: '@product_country_of_manufacture'
+        position: 85
+        defaultLabel: Ghana
+    product_country_of_manufacture_option_GI:
+        code: GI
+        source_field: '@product_country_of_manufacture'
+        position: 86
+        defaultLabel: Gibraltar
+    product_country_of_manufacture_option_GR:
+        code: GR
+        source_field: '@product_country_of_manufacture'
+        position: 87
+        defaultLabel: Greece
+    product_country_of_manufacture_option_GL:
+        code: GL
+        source_field: '@product_country_of_manufacture'
+        position: 88
+        defaultLabel: Greenland
+    product_country_of_manufacture_option_GD:
+        code: GD
+        source_field: '@product_country_of_manufacture'
+        position: 89
+        defaultLabel: Grenada
+    product_country_of_manufacture_option_GP:
+        code: GP
+        source_field: '@product_country_of_manufacture'
+        position: 90
+        defaultLabel: Guadeloupe
+    product_country_of_manufacture_option_GU:
+        code: GU
+        source_field: '@product_country_of_manufacture'
+        position: 91
+        defaultLabel: Guam
+    product_country_of_manufacture_option_GT:
+        code: GT
+        source_field: '@product_country_of_manufacture'
+        position: 92
+        defaultLabel: Guatemala
+    product_country_of_manufacture_option_GG:
+        code: GG
+        source_field: '@product_country_of_manufacture'
+        position: 93
+        defaultLabel: Guernsey
+    product_country_of_manufacture_option_GN:
+        code: GN
+        source_field: '@product_country_of_manufacture'
+        position: 94
+        defaultLabel: Guinea
+    product_country_of_manufacture_option_GW:
+        code: GW
+        source_field: '@product_country_of_manufacture'
+        position: 95
+        defaultLabel: Guinea-Bissau
+    product_country_of_manufacture_option_GY:
+        code: GY
+        source_field: '@product_country_of_manufacture'
+        position: 96
+        defaultLabel: Guyana
+    product_country_of_manufacture_option_HT:
+        code: HT
+        source_field: '@product_country_of_manufacture'
+        position: 97
+        defaultLabel: Haiti
+    product_country_of_manufacture_option_HM:
+        code: HM
+        source_field: '@product_country_of_manufacture'
+        position: 98
+        defaultLabel: 'Heard & McDonald Islands'
+    product_country_of_manufacture_option_HN:
+        code: HN
+        source_field: '@product_country_of_manufacture'
+        position: 99
+        defaultLabel: Honduras
+    product_country_of_manufacture_option_HK:
+        code: HK
+        source_field: '@product_country_of_manufacture'
+        position: 100
+        defaultLabel: 'Hong Kong SAR China'
+    product_country_of_manufacture_option_HU:
+        code: HU
+        source_field: '@product_country_of_manufacture'
+        position: 101
+        defaultLabel: Hungary
+    product_country_of_manufacture_option_IS:
+        code: IS
+        source_field: '@product_country_of_manufacture'
+        position: 102
+        defaultLabel: Iceland
+    product_country_of_manufacture_option_IN:
+        code: IN
+        source_field: '@product_country_of_manufacture'
+        position: 103
+        defaultLabel: India
+    product_country_of_manufacture_option_ID:
+        code: ID
+        source_field: '@product_country_of_manufacture'
+        position: 104
+        defaultLabel: Indonesia
+    product_country_of_manufacture_option_IR:
+        code: IR
+        source_field: '@product_country_of_manufacture'
+        position: 105
+        defaultLabel: Iran
+    product_country_of_manufacture_option_IQ:
+        code: IQ
+        source_field: '@product_country_of_manufacture'
+        position: 106
+        defaultLabel: Iraq
+    product_country_of_manufacture_option_IE:
+        code: IE
+        source_field: '@product_country_of_manufacture'
+        position: 107
+        defaultLabel: Ireland
+    product_country_of_manufacture_option_IM:
+        code: IM
+        source_field: '@product_country_of_manufacture'
+        position: 108
+        defaultLabel: 'Isle of Man'
+    product_country_of_manufacture_option_IL:
+        code: IL
+        source_field: '@product_country_of_manufacture'
+        position: 109
+        defaultLabel: Israel
+    product_country_of_manufacture_option_IT:
+        code: IT
+        source_field: '@product_country_of_manufacture'
+        position: 110
+        defaultLabel: Italy
+    product_country_of_manufacture_option_JM:
+        code: JM
+        source_field: '@product_country_of_manufacture'
+        position: 111
+        defaultLabel: Jamaica
+    product_country_of_manufacture_option_JP:
+        code: JP
+        source_field: '@product_country_of_manufacture'
+        position: 112
+        defaultLabel: Japan
+    product_country_of_manufacture_option_JE:
+        code: JE
+        source_field: '@product_country_of_manufacture'
+        position: 113
+        defaultLabel: Jersey
+    product_country_of_manufacture_option_JO:
+        code: JO
+        source_field: '@product_country_of_manufacture'
+        position: 114
+        defaultLabel: Jordan
+    product_country_of_manufacture_option_KZ:
+        code: KZ
+        source_field: '@product_country_of_manufacture'
+        position: 115
+        defaultLabel: Kazakhstan
+    product_country_of_manufacture_option_KE:
+        code: KE
+        source_field: '@product_country_of_manufacture'
+        position: 116
+        defaultLabel: Kenya
+    product_country_of_manufacture_option_KI:
+        code: KI
+        source_field: '@product_country_of_manufacture'
+        position: 117
+        defaultLabel: Kiribati
+    product_country_of_manufacture_option_XK:
+        code: XK
+        source_field: '@product_country_of_manufacture'
+        position: 118
+        defaultLabel: Kosovo
+    product_country_of_manufacture_option_KW:
+        code: KW
+        source_field: '@product_country_of_manufacture'
+        position: 119
+        defaultLabel: Kuwait
+    product_country_of_manufacture_option_KG:
+        code: KG
+        source_field: '@product_country_of_manufacture'
+        position: 120
+        defaultLabel: Kyrgyzstan
+    product_country_of_manufacture_option_LA:
+        code: LA
+        source_field: '@product_country_of_manufacture'
+        position: 121
+        defaultLabel: Laos
+    product_country_of_manufacture_option_LV:
+        code: LV
+        source_field: '@product_country_of_manufacture'
+        position: 122
+        defaultLabel: Latvia
+    product_country_of_manufacture_option_LB:
+        code: LB
+        source_field: '@product_country_of_manufacture'
+        position: 123
+        defaultLabel: Lebanon
+    product_country_of_manufacture_option_LS:
+        code: LS
+        source_field: '@product_country_of_manufacture'
+        position: 124
+        defaultLabel: Lesotho
+    product_country_of_manufacture_option_LR:
+        code: LR
+        source_field: '@product_country_of_manufacture'
+        position: 125
+        defaultLabel: Liberia
+    product_country_of_manufacture_option_LY:
+        code: LY
+        source_field: '@product_country_of_manufacture'
+        position: 126
+        defaultLabel: Libya
+    product_country_of_manufacture_option_LI:
+        code: LI
+        source_field: '@product_country_of_manufacture'
+        position: 127
+        defaultLabel: Liechtenstein
+    product_country_of_manufacture_option_LT:
+        code: LT
+        source_field: '@product_country_of_manufacture'
+        position: 128
+        defaultLabel: Lithuania
+    product_country_of_manufacture_option_LU:
+        code: LU
+        source_field: '@product_country_of_manufacture'
+        position: 129
+        defaultLabel: Luxembourg
+    product_country_of_manufacture_option_MO:
+        code: MO
+        source_field: '@product_country_of_manufacture'
+        position: 130
+        defaultLabel: 'Macao SAR China'
+    product_country_of_manufacture_option_MG:
+        code: MG
+        source_field: '@product_country_of_manufacture'
+        position: 131
+        defaultLabel: Madagascar
+    product_country_of_manufacture_option_MW:
+        code: MW
+        source_field: '@product_country_of_manufacture'
+        position: 132
+        defaultLabel: Malawi
+    product_country_of_manufacture_option_MY:
+        code: MY
+        source_field: '@product_country_of_manufacture'
+        position: 133
+        defaultLabel: Malaysia
+    product_country_of_manufacture_option_MV:
+        code: MV
+        source_field: '@product_country_of_manufacture'
+        position: 134
+        defaultLabel: Maldives
+    product_country_of_manufacture_option_ML:
+        code: ML
+        source_field: '@product_country_of_manufacture'
+        position: 135
+        defaultLabel: Mali
+    product_country_of_manufacture_option_MT:
+        code: MT
+        source_field: '@product_country_of_manufacture'
+        position: 136
+        defaultLabel: Malta
+    product_country_of_manufacture_option_MH:
+        code: MH
+        source_field: '@product_country_of_manufacture'
+        position: 137
+        defaultLabel: 'Marshall Islands'
+    product_country_of_manufacture_option_MQ:
+        code: MQ
+        source_field: '@product_country_of_manufacture'
+        position: 138
+        defaultLabel: Martinique
+    product_country_of_manufacture_option_MR:
+        code: MR
+        source_field: '@product_country_of_manufacture'
+        position: 139
+        defaultLabel: Mauritania
+    product_country_of_manufacture_option_MU:
+        code: MU
+        source_field: '@product_country_of_manufacture'
+        position: 140
+        defaultLabel: Mauritius
+    product_country_of_manufacture_option_YT:
+        code: YT
+        source_field: '@product_country_of_manufacture'
+        position: 141
+        defaultLabel: Mayotte
+    product_country_of_manufacture_option_MX:
+        code: MX
+        source_field: '@product_country_of_manufacture'
+        position: 142
+        defaultLabel: Mexico
+    product_country_of_manufacture_option_FM:
+        code: FM
+        source_field: '@product_country_of_manufacture'
+        position: 143
+        defaultLabel: Micronesia
+    product_country_of_manufacture_option_MD:
+        code: MD
+        source_field: '@product_country_of_manufacture'
+        position: 144
+        defaultLabel: Moldova
+    product_country_of_manufacture_option_MC:
+        code: MC
+        source_field: '@product_country_of_manufacture'
+        position: 145
+        defaultLabel: Monaco
+    product_country_of_manufacture_option_MN:
+        code: MN
+        source_field: '@product_country_of_manufacture'
+        position: 146
+        defaultLabel: Mongolia
+    product_country_of_manufacture_option_ME:
+        code: ME
+        source_field: '@product_country_of_manufacture'
+        position: 147
+        defaultLabel: Montenegro
+    product_country_of_manufacture_option_MS:
+        code: MS
+        source_field: '@product_country_of_manufacture'
+        position: 148
+        defaultLabel: Montserrat
+    product_country_of_manufacture_option_MA:
+        code: MA
+        source_field: '@product_country_of_manufacture'
+        position: 149
+        defaultLabel: Morocco
+    product_country_of_manufacture_option_MZ:
+        code: MZ
+        source_field: '@product_country_of_manufacture'
+        position: 150
+        defaultLabel: Mozambique
+    product_country_of_manufacture_option_MM:
+        code: MM
+        source_field: '@product_country_of_manufacture'
+        position: 151
+        defaultLabel: 'Myanmar (Burma)'
+    product_country_of_manufacture_option_NA:
+        code: NA
+        source_field: '@product_country_of_manufacture'
+        position: 152
+        defaultLabel: Namibia
+    product_country_of_manufacture_option_NR:
+        code: NR
+        source_field: '@product_country_of_manufacture'
+        position: 153
+        defaultLabel: Nauru
+    product_country_of_manufacture_option_NP:
+        code: NP
+        source_field: '@product_country_of_manufacture'
+        position: 154
+        defaultLabel: Nepal
+    product_country_of_manufacture_option_NL:
+        code: NL
+        source_field: '@product_country_of_manufacture'
+        position: 155
+        defaultLabel: Netherlands
+    product_country_of_manufacture_option_NC:
+        code: NC
+        source_field: '@product_country_of_manufacture'
+        position: 156
+        defaultLabel: 'New Caledonia'
+    product_country_of_manufacture_option_NZ:
+        code: NZ
+        source_field: '@product_country_of_manufacture'
+        position: 157
+        defaultLabel: 'New Zealand'
+    product_country_of_manufacture_option_NI:
+        code: NI
+        source_field: '@product_country_of_manufacture'
+        position: 158
+        defaultLabel: Nicaragua
+    product_country_of_manufacture_option_NE:
+        code: NE
+        source_field: '@product_country_of_manufacture'
+        position: 159
+        defaultLabel: Niger
+    product_country_of_manufacture_option_NG:
+        code: NG
+        source_field: '@product_country_of_manufacture'
+        position: 160
+        defaultLabel: Nigeria
+    product_country_of_manufacture_option_NU:
+        code: NU
+        source_field: '@product_country_of_manufacture'
+        position: 161
+        defaultLabel: Niue
+    product_country_of_manufacture_option_NF:
+        code: NF
+        source_field: '@product_country_of_manufacture'
+        position: 162
+        defaultLabel: 'Norfolk Island'
+    product_country_of_manufacture_option_KP:
+        code: KP
+        source_field: '@product_country_of_manufacture'
+        position: 163
+        defaultLabel: 'North Korea'
+    product_country_of_manufacture_option_MK:
+        code: MK
+        source_field: '@product_country_of_manufacture'
+        position: 164
+        defaultLabel: 'North Macedonia'
+    product_country_of_manufacture_option_MP:
+        code: MP
+        source_field: '@product_country_of_manufacture'
+        position: 165
+        defaultLabel: 'Northern Mariana Islands'
+    product_country_of_manufacture_option_NO:
+        code: 'NO'
+        source_field: '@product_country_of_manufacture'
+        position: 166
+        defaultLabel: Norway
+    product_country_of_manufacture_option_OM:
+        code: OM
+        source_field: '@product_country_of_manufacture'
+        position: 167
+        defaultLabel: Oman
+    product_country_of_manufacture_option_PK:
+        code: PK
+        source_field: '@product_country_of_manufacture'
+        position: 168
+        defaultLabel: Pakistan
+    product_country_of_manufacture_option_PW:
+        code: PW
+        source_field: '@product_country_of_manufacture'
+        position: 169
+        defaultLabel: Palau
+    product_country_of_manufacture_option_PS:
+        code: PS
+        source_field: '@product_country_of_manufacture'
+        position: 170
+        defaultLabel: 'Palestinian Territories'
+    product_country_of_manufacture_option_PA:
+        code: PA
+        source_field: '@product_country_of_manufacture'
+        position: 171
+        defaultLabel: Panama
+    product_country_of_manufacture_option_PG:
+        code: PG
+        source_field: '@product_country_of_manufacture'
+        position: 172
+        defaultLabel: 'Papua New Guinea'
+    product_country_of_manufacture_option_PY:
+        code: PY
+        source_field: '@product_country_of_manufacture'
+        position: 173
+        defaultLabel: Paraguay
+    product_country_of_manufacture_option_PE:
+        code: PE
+        source_field: '@product_country_of_manufacture'
+        position: 174
+        defaultLabel: Peru
+    product_country_of_manufacture_option_PH:
+        code: PH
+        source_field: '@product_country_of_manufacture'
+        position: 175
+        defaultLabel: Philippines
+    product_country_of_manufacture_option_PN:
+        code: PN
+        source_field: '@product_country_of_manufacture'
+        position: 176
+        defaultLabel: 'Pitcairn Islands'
+    product_country_of_manufacture_option_PL:
+        code: PL
+        source_field: '@product_country_of_manufacture'
+        position: 177
+        defaultLabel: Poland
+    product_country_of_manufacture_option_PT:
+        code: PT
+        source_field: '@product_country_of_manufacture'
+        position: 178
+        defaultLabel: Portugal
+    product_country_of_manufacture_option_QA:
+        code: QA
+        source_field: '@product_country_of_manufacture'
+        position: 179
+        defaultLabel: Qatar
+    product_country_of_manufacture_option_RO:
+        code: RO
+        source_field: '@product_country_of_manufacture'
+        position: 180
+        defaultLabel: Romania
+    product_country_of_manufacture_option_RU:
+        code: RU
+        source_field: '@product_country_of_manufacture'
+        position: 181
+        defaultLabel: Russia
+    product_country_of_manufacture_option_RW:
+        code: RW
+        source_field: '@product_country_of_manufacture'
+        position: 182
+        defaultLabel: Rwanda
+    product_country_of_manufacture_option_RE:
+        code: RE
+        source_field: '@product_country_of_manufacture'
+        position: 183
+        defaultLabel: Réunion
+    product_country_of_manufacture_option_WS:
+        code: WS
+        source_field: '@product_country_of_manufacture'
+        position: 184
+        defaultLabel: Samoa
+    product_country_of_manufacture_option_SM:
+        code: SM
+        source_field: '@product_country_of_manufacture'
+        position: 185
+        defaultLabel: 'San Marino'
+    product_country_of_manufacture_option_SA:
+        code: SA
+        source_field: '@product_country_of_manufacture'
+        position: 186
+        defaultLabel: 'Saudi Arabia'
+    product_country_of_manufacture_option_SN:
+        code: SN
+        source_field: '@product_country_of_manufacture'
+        position: 187
+        defaultLabel: Senegal
+    product_country_of_manufacture_option_RS:
+        code: RS
+        source_field: '@product_country_of_manufacture'
+        position: 188
+        defaultLabel: Serbia
+    product_country_of_manufacture_option_SC:
+        code: SC
+        source_field: '@product_country_of_manufacture'
+        position: 189
+        defaultLabel: Seychelles
+    product_country_of_manufacture_option_SL:
+        code: SL
+        source_field: '@product_country_of_manufacture'
+        position: 190
+        defaultLabel: 'Sierra Leone'
+    product_country_of_manufacture_option_SG:
+        code: SG
+        source_field: '@product_country_of_manufacture'
+        position: 191
+        defaultLabel: Singapore
+    product_country_of_manufacture_option_SX:
+        code: SX
+        source_field: '@product_country_of_manufacture'
+        position: 192
+        defaultLabel: 'Sint Maarten'
+    product_country_of_manufacture_option_SK:
+        code: SK
+        source_field: '@product_country_of_manufacture'
+        position: 193
+        defaultLabel: Slovakia
+    product_country_of_manufacture_option_SI:
+        code: SI
+        source_field: '@product_country_of_manufacture'
+        position: 194
+        defaultLabel: Slovenia
+    product_country_of_manufacture_option_SB:
+        code: SB
+        source_field: '@product_country_of_manufacture'
+        position: 195
+        defaultLabel: 'Solomon Islands'
+    product_country_of_manufacture_option_SO:
+        code: SO
+        source_field: '@product_country_of_manufacture'
+        position: 196
+        defaultLabel: Somalia
+    product_country_of_manufacture_option_ZA:
+        code: ZA
+        source_field: '@product_country_of_manufacture'
+        position: 197
+        defaultLabel: 'South Africa'
+    product_country_of_manufacture_option_GS:
+        code: GS
+        source_field: '@product_country_of_manufacture'
+        position: 198
+        defaultLabel: 'South Georgia & South Sandwich Islands'
+    product_country_of_manufacture_option_KR:
+        code: KR
+        source_field: '@product_country_of_manufacture'
+        position: 199
+        defaultLabel: 'South Korea'
+    product_country_of_manufacture_option_ES:
+        code: ES
+        source_field: '@product_country_of_manufacture'
+        position: 200
+        defaultLabel: Spain
+    product_country_of_manufacture_option_LK:
+        code: LK
+        source_field: '@product_country_of_manufacture'
+        position: 201
+        defaultLabel: 'Sri Lanka'
+    product_country_of_manufacture_option_BL:
+        code: BL
+        source_field: '@product_country_of_manufacture'
+        position: 202
+        defaultLabel: 'St. Barthélemy'
+    product_country_of_manufacture_option_SH:
+        code: SH
+        source_field: '@product_country_of_manufacture'
+        position: 203
+        defaultLabel: 'St. Helena'
+    product_country_of_manufacture_option_KN:
+        code: KN
+        source_field: '@product_country_of_manufacture'
+        position: 204
+        defaultLabel: 'St. Kitts & Nevis'
+    product_country_of_manufacture_option_LC:
+        code: LC
+        source_field: '@product_country_of_manufacture'
+        position: 205
+        defaultLabel: 'St. Lucia'
+    product_country_of_manufacture_option_MF:
+        code: MF
+        source_field: '@product_country_of_manufacture'
+        position: 206
+        defaultLabel: 'St. Martin'
+    product_country_of_manufacture_option_PM:
+        code: PM
+        source_field: '@product_country_of_manufacture'
+        position: 207
+        defaultLabel: 'St. Pierre & Miquelon'
+    product_country_of_manufacture_option_VC:
+        code: VC
+        source_field: '@product_country_of_manufacture'
+        position: 208
+        defaultLabel: 'St. Vincent & Grenadines'
+    product_country_of_manufacture_option_SD:
+        code: SD
+        source_field: '@product_country_of_manufacture'
+        position: 209
+        defaultLabel: Sudan
+    product_country_of_manufacture_option_SR:
+        code: SR
+        source_field: '@product_country_of_manufacture'
+        position: 210
+        defaultLabel: Suriname
+    product_country_of_manufacture_option_SJ:
+        code: SJ
+        source_field: '@product_country_of_manufacture'
+        position: 211
+        defaultLabel: 'Svalbard & Jan Mayen'
+    product_country_of_manufacture_option_SE:
+        code: SE
+        source_field: '@product_country_of_manufacture'
+        position: 212
+        defaultLabel: Sweden
+    product_country_of_manufacture_option_CH:
+        code: CH
+        source_field: '@product_country_of_manufacture'
+        position: 213
+        defaultLabel: Switzerland
+    product_country_of_manufacture_option_SY:
+        code: SY
+        source_field: '@product_country_of_manufacture'
+        position: 214
+        defaultLabel: Syria
+    product_country_of_manufacture_option_ST:
+        code: ST
+        source_field: '@product_country_of_manufacture'
+        position: 215
+        defaultLabel: 'São Tomé & Príncipe'
+    product_country_of_manufacture_option_TW:
+        code: TW
+        source_field: '@product_country_of_manufacture'
+        position: 216
+        defaultLabel: Taiwan
+    product_country_of_manufacture_option_TJ:
+        code: TJ
+        source_field: '@product_country_of_manufacture'
+        position: 217
+        defaultLabel: Tajikistan
+    product_country_of_manufacture_option_TZ:
+        code: TZ
+        source_field: '@product_country_of_manufacture'
+        position: 218
+        defaultLabel: Tanzania
+    product_country_of_manufacture_option_TH:
+        code: TH
+        source_field: '@product_country_of_manufacture'
+        position: 219
+        defaultLabel: Thailand
+    product_country_of_manufacture_option_TL:
+        code: TL
+        source_field: '@product_country_of_manufacture'
+        position: 220
+        defaultLabel: Timor-Leste
+    product_country_of_manufacture_option_TG:
+        code: TG
+        source_field: '@product_country_of_manufacture'
+        position: 221
+        defaultLabel: Togo
+    product_country_of_manufacture_option_TK:
+        code: TK
+        source_field: '@product_country_of_manufacture'
+        position: 222
+        defaultLabel: Tokelau
+    product_country_of_manufacture_option_TO:
+        code: TO
+        source_field: '@product_country_of_manufacture'
+        position: 223
+        defaultLabel: Tonga
+    product_country_of_manufacture_option_TT:
+        code: TT
+        source_field: '@product_country_of_manufacture'
+        position: 224
+        defaultLabel: 'Trinidad & Tobago'
+    product_country_of_manufacture_option_TN:
+        code: TN
+        source_field: '@product_country_of_manufacture'
+        position: 225
+        defaultLabel: Tunisia
+    product_country_of_manufacture_option_TR:
+        code: TR
+        source_field: '@product_country_of_manufacture'
+        position: 226
+        defaultLabel: Turkey
+    product_country_of_manufacture_option_TM:
+        code: TM
+        source_field: '@product_country_of_manufacture'
+        position: 227
+        defaultLabel: Turkmenistan
+    product_country_of_manufacture_option_TC:
+        code: TC
+        source_field: '@product_country_of_manufacture'
+        position: 228
+        defaultLabel: 'Turks & Caicos Islands'
+    product_country_of_manufacture_option_TV:
+        code: TV
+        source_field: '@product_country_of_manufacture'
+        position: 229
+        defaultLabel: Tuvalu
+    product_country_of_manufacture_option_UM:
+        code: UM
+        source_field: '@product_country_of_manufacture'
+        position: 230
+        defaultLabel: 'U.S. Outlying Islands'
+    product_country_of_manufacture_option_VI:
+        code: VI
+        source_field: '@product_country_of_manufacture'
+        position: 231
+        defaultLabel: 'U.S. Virgin Islands'
+    product_country_of_manufacture_option_UG:
+        code: UG
+        source_field: '@product_country_of_manufacture'
+        position: 232
+        defaultLabel: Uganda
+    product_country_of_manufacture_option_UA:
+        code: UA
+        source_field: '@product_country_of_manufacture'
+        position: 233
+        defaultLabel: Ukraine
+    product_country_of_manufacture_option_AE:
+        code: AE
+        source_field: '@product_country_of_manufacture'
+        position: 234
+        defaultLabel: 'United Arab Emirates'
+    product_country_of_manufacture_option_GB:
+        code: GB
+        source_field: '@product_country_of_manufacture'
+        position: 235
+        defaultLabel: 'United Kingdom'
+    product_country_of_manufacture_option_US:
+        code: US
+        source_field: '@product_country_of_manufacture'
+        position: 236
+        defaultLabel: 'United States'
+    product_country_of_manufacture_option_UY:
+        code: UY
+        source_field: '@product_country_of_manufacture'
+        position: 237
+        defaultLabel: Uruguay
+    product_country_of_manufacture_option_UZ:
+        code: UZ
+        source_field: '@product_country_of_manufacture'
+        position: 238
+        defaultLabel: Uzbekistan
+    product_country_of_manufacture_option_VU:
+        code: VU
+        source_field: '@product_country_of_manufacture'
+        position: 239
+        defaultLabel: Vanuatu
+    product_country_of_manufacture_option_VA:
+        code: VA
+        source_field: '@product_country_of_manufacture'
+        position: 240
+        defaultLabel: 'Vatican City'
+    product_country_of_manufacture_option_VE:
+        code: VE
+        source_field: '@product_country_of_manufacture'
+        position: 241
+        defaultLabel: Venezuela
+    product_country_of_manufacture_option_VN:
+        code: VN
+        source_field: '@product_country_of_manufacture'
+        position: 242
+        defaultLabel: Vietnam
+    product_country_of_manufacture_option_WF:
+        code: WF
+        source_field: '@product_country_of_manufacture'
+        position: 243
+        defaultLabel: 'Wallis & Futuna'
+    product_country_of_manufacture_option_EH:
+        code: EH
+        source_field: '@product_country_of_manufacture'
+        position: 244
+        defaultLabel: 'Western Sahara'
+    product_country_of_manufacture_option_YE:
+        code: YE
+        source_field: '@product_country_of_manufacture'
+        position: 245
+        defaultLabel: Yemen
+    product_country_of_manufacture_option_ZM:
+        code: ZM
+        source_field: '@product_country_of_manufacture'
+        position: 246
+        defaultLabel: Zambia
+    product_country_of_manufacture_option_ZW:
+        code: ZW
+        source_field: '@product_country_of_manufacture'
+        position: 247
+        defaultLabel: Zimbabwe
+    product_country_of_manufacture_option_AX:
+        code: AX
+        source_field: '@product_country_of_manufacture'
+        position: 248
+        defaultLabel: 'Åland Islands'
+    product_custom_design_option_1:
+        code: '1'
+        source_field: '@product_custom_design'
+        position: 0
+        defaultLabel: 'Magento Blank'
+    product_custom_design_option_3:
+        code: '3'
+        source_field: '@product_custom_design'
+        position: 1
+        defaultLabel: 'Magento Luma'
+    product_custom_layout_option_:
+        code: default
+        source_field: '@product_custom_layout'
+        position: 0
+        defaultLabel: 'No layout updates'
+    product_custom_layout_option_empty:
+        code: empty
+        source_field: '@product_custom_layout'
+        position: 1
+        defaultLabel: Empty
+    product_custom_layout_option_1column:
+        code: 1column
+        source_field: '@product_custom_layout'
+        position: 2
+        defaultLabel: '1 column'
+    product_custom_layout_option_2columns-left:
+        code: 2columns-left
+        source_field: '@product_custom_layout'
+        position: 3
+        defaultLabel: '2 columns with left bar'
+    product_custom_layout_option_2columns-right:
+        code: 2columns-right
+        source_field: '@product_custom_layout'
+        position: 4
+        defaultLabel: '2 columns with right bar'
+    product_custom_layout_option_3columns:
+        code: 3columns
+        source_field: '@product_custom_layout'
+        position: 5
+        defaultLabel: '3 columns'
+    product_custom_layout_option_cms-full-width:
+        code: cms-full-width
+        source_field: '@product_custom_layout'
+        position: 6
+        defaultLabel: 'Page -- Full Width'
+    product_custom_layout_option_category-full-width:
+        code: category-full-width
+        source_field: '@product_custom_layout'
+        position: 7
+        defaultLabel: 'Category -- Full Width'
+    product_custom_layout_option_product-full-width:
+        code: product-full-width
+        source_field: '@product_custom_layout'
+        position: 8
+        defaultLabel: 'Product -- Full Width'
+    product_fashion_color_option_5:
+        code: '5'
+        source_field: '@product_fashion_color'
+        position: 0
+        defaultLabel: Doré
+    product_fashion_color_option_22:
+        code: '22'
+        source_field: '@product_fashion_color'
+        position: 1
+        defaultLabel: Pêche
+    product_fashion_color_option_23:
+        code: '23'
+        source_field: '@product_fashion_color'
+        position: 2
+        defaultLabel: Kaki
+    product_fashion_color_option_6:
+        code: '6'
+        source_field: '@product_fashion_color'
+        position: 3
+        defaultLabel: Argent
+    product_fashion_color_option_24:
+        code: '24'
+        source_field: '@product_fashion_color'
+        position: 4
+        defaultLabel: Lila
+    product_fashion_color_option_25:
+        code: '25'
+        source_field: '@product_fashion_color'
+        position: 5
+        defaultLabel: Pluie
+    product_fashion_color_option_26:
+        code: '26'
+        source_field: '@product_fashion_color'
+        position: 6
+        defaultLabel: Menthe
+    product_fashion_color_option_27:
+        code: '27'
+        source_field: '@product_fashion_color'
+        position: 7
+        defaultLabel: Lily
+    product_fashion_color_option_28:
+        code: '28'
+        source_field: '@product_fashion_color'
+        position: 8
+        defaultLabel: Latte
+    product_fashion_color_option_29:
+        code: '29'
+        source_field: '@product_fashion_color'
+        position: 9
+        defaultLabel: Coco
+    product_fashion_color_option_30:
+        code: '30'
+        source_field: '@product_fashion_color'
+        position: 10
+        defaultLabel: Noir
+    product_fashion_color_option_31:
+        code: '31'
+        source_field: '@product_fashion_color'
+        position: 11
+        defaultLabel: Gris
+    product_fashion_color_option_32:
+        code: '32'
+        source_field: '@product_fashion_color'
+        position: 12
+        defaultLabel: Orange
+    product_fashion_material_option_7:
+        code: '7'
+        source_field: '@product_fashion_material'
+        position: 0
+        defaultLabel: '14K Gold'
+    product_fashion_material_option_45:
+        code: '45'
+        source_field: '@product_fashion_material'
+        position: 0
+        defaultLabel: Acrylique
+    product_fashion_material_option_46:
+        code: '46'
+        source_field: '@product_fashion_material'
+        position: 1
+        defaultLabel: Cashmere
+    product_fashion_material_option_8:
+        code: '8'
+        source_field: '@product_fashion_material'
+        position: 1
+        defaultLabel: 'Sterling Silver'
+    product_fashion_material_option_47:
+        code: '47'
+        source_field: '@product_fashion_material'
+        position: 2
+        defaultLabel: Coton
+    product_fashion_material_option_48:
+        code: '48'
+        source_field: '@product_fashion_material'
+        position: 3
+        defaultLabel: Lin
+    product_fashion_material_option_49:
+        code: '49'
+        source_field: '@product_fashion_material'
+        position: 4
+        defaultLabel: Cuir
+    product_fashion_material_option_50:
+        code: '50'
+        source_field: '@product_fashion_material'
+        position: 5
+        defaultLabel: Nylon
+    product_fashion_material_option_51:
+        code: '51'
+        source_field: '@product_fashion_material'
+        position: 6
+        defaultLabel: 'Coton bio'
+    product_fashion_material_option_52:
+        code: '52'
+        source_field: '@product_fashion_material'
+        position: 7
+        defaultLabel: Polyester
+    product_fashion_material_option_53:
+        code: '53'
+        source_field: '@product_fashion_material'
+        position: 8
+        defaultLabel: Rayon
+    product_fashion_material_option_54:
+        code: '54'
+        source_field: '@product_fashion_material'
+        position: 9
+        defaultLabel: Soie
+    product_fashion_material_option_55:
+        code: '55'
+        source_field: '@product_fashion_material'
+        position: 10
+        defaultLabel: Spandex
+    product_fashion_material_option_56:
+        code: '56'
+        source_field: '@product_fashion_material'
+        position: 11
+        defaultLabel: Viscose
+    product_fashion_material_option_57:
+        code: '57'
+        source_field: '@product_fashion_material'
+        position: 12
+        defaultLabel: Laine
+    product_fashion_size_option_33:
+        code: '33'
+        source_field: '@product_fashion_size'
+        position: 0
+        defaultLabel: XL
+    product_fashion_size_option_34:
+        code: '34'
+        source_field: '@product_fashion_size'
+        position: 1
+        defaultLabel: L
+    product_fashion_size_option_35:
+        code: '35'
+        source_field: '@product_fashion_size'
+        position: 2
+        defaultLabel: M
+    product_fashion_size_option_36:
+        code: '36'
+        source_field: '@product_fashion_size'
+        position: 3
+        defaultLabel: S
+    product_fashion_size_option_37:
+        code: '37'
+        source_field: '@product_fashion_size'
+        position: 4
+        defaultLabel: XS
+    product_fashion_size_option_38:
+        code: '38'
+        source_field: '@product_fashion_size'
+        position: 5
+        defaultLabel: '2'
+    product_fashion_size_option_39:
+        code: '39'
+        source_field: '@product_fashion_size'
+        position: 6
+        defaultLabel: '4'
+    product_fashion_size_option_40:
+        code: '40'
+        source_field: '@product_fashion_size'
+        position: 7
+        defaultLabel: '6'
+    product_fashion_size_option_41:
+        code: '41'
+        source_field: '@product_fashion_size'
+        position: 8
+        defaultLabel: '8'
+    product_fashion_size_option_42:
+        code: '42'
+        source_field: '@product_fashion_size'
+        position: 9
+        defaultLabel: '10'
+    product_fashion_size_option_43:
+        code: '43'
+        source_field: '@product_fashion_size'
+        position: 10
+        defaultLabel: '12'
+    product_fashion_style_option_58:
+        code: '58'
+        source_field: '@product_fashion_style'
+        position: 0
+        defaultLabel: 'Au dessus du genou'
+    product_fashion_style_option_59:
+        code: '59'
+        source_field: '@product_fashion_style'
+        position: 1
+        defaultLabel: 'En dessous du genou'
+    product_fashion_style_option_60:
+        code: '60'
+        source_field: '@product_fashion_style'
+        position: 2
+        defaultLabel: 'Coude long'
+    product_fashion_style_option_61:
+        code: '61'
+        source_field: '@product_fashion_style'
+        position: 3
+        defaultLabel: Brassière
+    product_fashion_style_option_62:
+        code: '62'
+        source_field: '@product_fashion_style'
+        position: 4
+        defaultLabel: 'Manche courte'
+    product_fashion_style_option_63:
+        code: '63'
+        source_field: '@product_fashion_style'
+        position: 5
+        defaultLabel: 'Sans manche'
+    product_fashion_style_option_64:
+        code: '64'
+        source_field: '@product_fashion_style'
+        position: 6
+        defaultLabel: 'Manche longue'
+    product_fashion_style_option_65:
+        code: '65'
+        source_field: '@product_fashion_style'
+        position: 7
+        defaultLabel: '3/4 de manche'
+    product_fashion_style_option_66:
+        code: '66'
+        source_field: '@product_fashion_style'
+        position: 8
+        defaultLabel: 'Slim fit'
+    product_fashion_style_option_67:
+        code: '67'
+        source_field: '@product_fashion_style'
+        position: 9
+        defaultLabel: 'Patte d''eph'
+    product_fashion_style_option_68:
+        code: '68'
+        source_field: '@product_fashion_style'
+        position: 10
+        defaultLabel: Capri
+    product_fashion_style_option_69:
+        code: '69'
+        source_field: '@product_fashion_style'
+        position: 11
+        defaultLabel: 'Grande longueur'
+    product_fashion_style_option_70:
+        code: '70'
+        source_field: '@product_fashion_style'
+        position: 12
+        defaultLabel: 'Coupe droite'
+    product_fashion_style_option_71:
+        code: '71'
+        source_field: '@product_fashion_style'
+        position: 13
+        defaultLabel: 'Devant ouvert'
+    product_fashion_style_option_72:
+        code: '72'
+        source_field: '@product_fashion_style'
+        position: 14
+        defaultLabel: Crew
+    product_fashion_style_option_73:
+        code: '73'
+        source_field: '@product_fashion_style'
+        position: 15
+        defaultLabel: 'À capuche'
+    product_fashion_style_option_74:
+        code: '74'
+        source_field: '@product_fashion_style'
+        position: 16
+        defaultLabel: 'Encolure dégagée'
+    product_fashion_style_option_75:
+        code: '75'
+        source_field: '@product_fashion_style'
+        position: 17
+        defaultLabel: 'Col en V'
+    product_fashion_style_option_76:
+        code: '76'
+        source_field: '@product_fashion_style'
+        position: 18
+        defaultLabel: 'Bouton bas'
+    product_fashion_style_option_77:
+        code: '77'
+        source_field: '@product_fashion_style'
+        position: 19
+        defaultLabel: Rectangle
+    product_fashion_style_option_78:
+        code: '78'
+        source_field: '@product_fashion_style'
+        position: 20
+        defaultLabel: Infini
+    product_fashion_style_option_79:
+        code: '79'
+        source_field: '@product_fashion_style'
+        position: 21
+        defaultLabel: Tressé
+    product_fashion_style_option_80:
+        code: '80'
+        source_field: '@product_fashion_style'
+        position: 22
+        defaultLabel: Lasercut
+    product_fashion_style_option_81:
+        code: '81'
+        source_field: '@product_fashion_style'
+        position: 23
+        defaultLabel: Tissé
+    product_gift_message_available_option_1:
+        code: '1'
+        source_field: '@product_gift_message_available'
+        position: 0
+        defaultLabel: 'Yes'
+    product_gift_message_available_option_0:
+        code: '0'
+        source_field: '@product_gift_message_available'
+        position: 1
+        defaultLabel: 'No'
+    product_gift_message_available_option_2:
+        code: '2'
+        source_field: '@product_gift_message_available'
+        position: 2
+        defaultLabel: 'Use config'
+    product_has_video_option_1:
+        code: '1'
+        source_field: '@product_has_video'
+        position: 0
+        defaultLabel: 'Yes'
+    product_has_video_option_0:
+        code: '0'
+        source_field: '@product_has_video'
+        position: 1
+        defaultLabel: 'No'
+    product_msrp_display_actual_price_type_option_0:
+        code: '0'
+        source_field: '@product_msrp_display_actual_price_type'
+        position: 0
+        defaultLabel: 'Use config'
+    product_msrp_display_actual_price_type_option_1:
+        code: '1'
+        source_field: '@product_msrp_display_actual_price_type'
+        position: 1
+        defaultLabel: 'On Gesture'
+    product_msrp_display_actual_price_type_option_2:
+        code: '2'
+        source_field: '@product_msrp_display_actual_price_type'
+        position: 2
+        defaultLabel: 'In Cart'
+    product_msrp_display_actual_price_type_option_3:
+        code: '3'
+        source_field: '@product_msrp_display_actual_price_type'
+        position: 3
+        defaultLabel: 'Before Order Confirmation'
+    product_options_container_option_container1:
+        code: container1
+        source_field: '@product_options_container'
+        position: 0
+        defaultLabel: 'Product Info Column'
+    product_options_container_option_container2:
+        code: container2
+        source_field: '@product_options_container'
+        position: 1
+        defaultLabel: 'Block after Info Column'
+    product_page_layout_option_:
+        code: default
+        source_field: '@product_page_layout'
+        position: 0
+        defaultLabel: 'No layout updates'
+    product_page_layout_option_empty:
+        code: empty
+        source_field: '@product_page_layout'
+        position: 1
+        defaultLabel: Empty
+    product_page_layout_option_1column:
+        code: 1column
+        source_field: '@product_page_layout'
+        position: 2
+        defaultLabel: '1 column'
+    product_page_layout_option_2columns-left:
+        code: 2columns-left
+        source_field: '@product_page_layout'
+        position: 3
+        defaultLabel: '2 columns with left bar'
+    product_page_layout_option_2columns-right:
+        code: 2columns-right
+        source_field: '@product_page_layout'
+        position: 4
+        defaultLabel: '2 columns with right bar'
+    product_page_layout_option_3columns:
+        code: 3columns
+        source_field: '@product_page_layout'
+        position: 5
+        defaultLabel: '3 columns'
+    product_page_layout_option_cms-full-width:
+        code: cms-full-width
+        source_field: '@product_page_layout'
+        position: 6
+        defaultLabel: 'Page -- Full Width'
+    product_page_layout_option_category-full-width:
+        code: category-full-width
+        source_field: '@product_page_layout'
+        position: 7
+        defaultLabel: 'Category -- Full Width'
+    product_page_layout_option_product-full-width:
+        code: product-full-width
+        source_field: '@product_page_layout'
+        position: 8
+        defaultLabel: 'Product -- Full Width'
+    product_price_view_option_0:
+        code: '0'
+        source_field: '@product_price_view'
+        position: 0
+        defaultLabel: 'Price Range'
+    product_price_view_option_1:
+        code: '1'
+        source_field: '@product_price_view'
+        position: 1
+        defaultLabel: 'As Low as'
+    product_shipment_type_option_0:
+        code: '0'
+        source_field: '@product_shipment_type'
+        position: 0
+        defaultLabel: Together
+    product_shipment_type_option_1:
+        code: '1'
+        source_field: '@product_shipment_type'
+        position: 1
+        defaultLabel: Separately
+    product_status_option_1:
+        code: '1'
+        source_field: '@product_status'
+        position: 0
+        defaultLabel: Enabled
+    product_status_option_2:
+        code: '2'
+        source_field: '@product_status'
+        position: 1
+        defaultLabel: Disabled
+    product_tax_class_id_option_2:
+        code: '2'
+        source_field: '@product_tax_class_id'
+        position: 0
+        defaultLabel: 'Taxable Goods'
+    product_visibility_option_1:
+        code: '1'
+        source_field: '@product_visibility'
+        position: 0
+        defaultLabel: 'Not Visible Individually'
+    product_visibility_option_2:
+        code: '2'
+        source_field: '@product_visibility'
+        position: 1
+        defaultLabel: Catalog
+    product_visibility_option_3:
+        code: '3'
+        source_field: '@product_visibility'
+        position: 2
+        defaultLabel: Search
+    product_visibility_option_4:
+        code: '4'
+        source_field: '@product_visibility'
+        position: 3
+        defaultLabel: 'Catalog, Search'
+    product_activity_option_13:
+        code: '0'
+        source_field: '@product_activity'
+        position: 0
+        defaultLabel: Hike
+    product_activity_option_14:
+        code: '1'
+        source_field: '@product_activity'
+        position: 1
+        defaultLabel: Outdoor
+    product_activity_option_15:
+        code: '2'
+        source_field: '@product_activity'
+        position: 2
+        defaultLabel: Running
+    product_activity_option_16:
+        code: '3'
+        source_field: '@product_activity'
+        position: 3
+        defaultLabel: Warmup
+    product_activity_option_17:
+        code: '4'
+        source_field: '@product_activity'
+        position: 4
+        defaultLabel: Yoga
+    product_activity_option_18:
+        code: '5'
+        source_field: '@product_activity'
+        position: 5
+        defaultLabel: Recreation
+    product_activity_option_19:
+        code: '6'
+        source_field: '@product_activity'
+        position: 6
+        defaultLabel: Lounge
+    product_activity_option_20:
+        code: '7'
+        source_field: '@product_activity'
+        position: 7
+        defaultLabel: Gym
+    product_activity_option_21:
+        code: '8'
+        source_field: '@product_activity'
+        position: 8
+        defaultLabel: Climbing
+    product_activity_option_22:
+        code: '9'
+        source_field: '@product_activity'
+        position: 9
+        defaultLabel: Crosstraining
+    product_activity_option_23:
+        code: '10'
+        source_field: '@product_activity'
+        position: 10
+        defaultLabel: Post-workout
+    product_activity_option_24:
+        code: '11'
+        source_field: '@product_activity'
+        position: 11
+        defaultLabel: Cycling
+    product_activity_option_25:
+        code: '12'
+        source_field: '@product_activity'
+        position: 12
+        defaultLabel: Athletic
+    product_activity_option_26:
+        code: '13'
+        source_field: '@product_activity'
+        position: 13
+        defaultLabel: Sports
+    product_activity_option_27:
+        code: '14'
+        source_field: '@product_activity'
+        position: 14
+        defaultLabel: Hiking
+    product_activity_option_28:
+        code: '15'
+        source_field: '@product_activity'
+        position: 15
+        defaultLabel: Overnight
+    product_activity_option_29:
+        code: '16'
+        source_field: '@product_activity'
+        position: 16
+        defaultLabel: School
+    product_activity_option_30:
+        code: '17'
+        source_field: '@product_activity'
+        position: 17
+        defaultLabel: Trail
+    product_activity_option_31:
+        code: '18'
+        source_field: '@product_activity'
+        position: 18
+        defaultLabel: Travel
+    product_activity_option_32:
+        code: '19'
+        source_field: '@product_activity'
+        position: 19
+        defaultLabel: Urban
+    product_allow_open_amount_option_0:
+        code: '0'
+        source_field: '@product_allow_open_amount'
+        position: 0
+        defaultLabel: '0'
+    product_allow_open_amount_option_1:
+        code: '1'
+        source_field: '@product_allow_open_amount'
+        position: 1
+        defaultLabel: '1'
+    product_category_gear_option_94:
+        code: '0'
+        source_field: '@product_category_gear'
+        position: 0
+        defaultLabel: Cardio
+    product_category_gear_option_95:
+        code: '1'
+        source_field: '@product_category_gear'
+        position: 1
+        defaultLabel: Electronic
+    product_category_gear_option_96:
+        code: '2'
+        source_field: '@product_category_gear'
+        position: 2
+        defaultLabel: Exercise
+    product_category_gear_option_97:
+        code: '3'
+        source_field: '@product_category_gear'
+        position: 3
+        defaultLabel: Fashion
+    product_category_gear_option_98:
+        code: '4'
+        source_field: '@product_category_gear'
+        position: 4
+        defaultLabel: Hydration
+    product_category_gear_option_99:
+        code: '5'
+        source_field: '@product_category_gear'
+        position: 5
+        defaultLabel: Timepiece
+    product_climate_option_210:
+        code: '0'
+        source_field: '@product_climate'
+        position: 0
+        defaultLabel: All-Weather
+    product_climate_option_211:
+        code: '1'
+        source_field: '@product_climate'
+        position: 1
+        defaultLabel: Cold
+    product_climate_option_212:
+        code: '2'
+        source_field: '@product_climate'
+        position: 2
+        defaultLabel: Cool
+    product_climate_option_213:
+        code: '3'
+        source_field: '@product_climate'
+        position: 3
+        defaultLabel: Indoor
+    product_climate_option_214:
+        code: '4'
+        source_field: '@product_climate'
+        position: 4
+        defaultLabel: Mild
+    product_climate_option_215:
+        code: '5'
+        source_field: '@product_climate'
+        position: 5
+        defaultLabel: Rainy
+    product_climate_option_216:
+        code: '6'
+        source_field: '@product_climate'
+        position: 6
+        defaultLabel: Spring
+    product_climate_option_217:
+        code: '7'
+        source_field: '@product_climate'
+        position: 7
+        defaultLabel: Warm
+    product_climate_option_218:
+        code: '8'
+        source_field: '@product_climate'
+        position: 8
+        defaultLabel: Windy
+    product_climate_option_219:
+        code: '9'
+        source_field: '@product_climate'
+        position: 9
+        defaultLabel: Wintry
+    product_climate_option_220:
+        code: '10'
+        source_field: '@product_climate'
+        position: 10
+        defaultLabel: Hot
+    product_collar_option_189:
+        code: '0'
+        source_field: '@product_collar'
+        position: 0
+        defaultLabel: N/A
+    product_collar_option_190:
+        code: '1'
+        source_field: '@product_collar'
+        position: 1
+        defaultLabel: '? zip'
+    product_collar_option_191:
+        code: '2'
+        source_field: '@product_collar'
+        position: 2
+        defaultLabel: 'Boat Neck'
+    product_collar_option_192:
+        code: '3'
+        source_field: '@product_collar'
+        position: 3
+        defaultLabel: Crew
+    product_collar_option_193:
+        code: '4'
+        source_field: '@product_collar'
+        position: 4
+        defaultLabel: 'Full zip'
+    product_collar_option_194:
+        code: '5'
+        source_field: '@product_collar'
+        position: 5
+        defaultLabel: V-neck
+    product_collar_option_195:
+        code: '6'
+        source_field: '@product_collar'
+        position: 6
+        defaultLabel: Ballet
+    product_collar_option_196:
+        code: '7'
+        source_field: '@product_collar'
+        position: 7
+        defaultLabel: Scoop
+    product_collar_option_197:
+        code: '8'
+        source_field: '@product_collar'
+        position: 8
+        defaultLabel: 'High Collar'
+    product_collar_option_198:
+        code: '9'
+        source_field: '@product_collar'
+        position: 9
+        defaultLabel: 'Stand Collar'
+    product_collar_option_199:
+        code: '10'
+        source_field: '@product_collar'
+        position: 10
+        defaultLabel: 'Roll Neck'
+    product_collar_option_200:
+        code: '11'
+        source_field: '@product_collar'
+        position: 11
+        defaultLabel: 'Square Neck'
+    product_color_option_58:
+        code: '0'
+        source_field: '@product_color'
+        position: 0
+        defaultLabel: Black
+    product_color_option_59:
+        code: '1'
+        source_field: '@product_color'
+        position: 1
+        defaultLabel: Blue
+    product_color_option_60:
+        code: '2'
+        source_field: '@product_color'
+        position: 2
+        defaultLabel: Brown
+    product_color_option_61:
+        code: '3'
+        source_field: '@product_color'
+        position: 3
+        defaultLabel: Gray
+    product_color_option_62:
+        code: '4'
+        source_field: '@product_color'
+        position: 4
+        defaultLabel: Green
+    product_color_option_63:
+        code: '5'
+        source_field: '@product_color'
+        position: 5
+        defaultLabel: Lavender
+    product_color_option_64:
+        code: '6'
+        source_field: '@product_color'
+        position: 6
+        defaultLabel: Multi  
+    product_color_option_65:
+        code: '7'
+        source_field: '@product_color'
+        position: 7
+        defaultLabel: Orange
+    product_color_option_66:
+        code: '8'
+        source_field: '@product_color'
+        position: 8
+        defaultLabel: Purple
+    product_color_option_67:
+        code: '9'
+        source_field: '@product_color'
+        position: 9
+        defaultLabel: Red
+    product_color_option_68:
+        code: '10'
+        source_field: '@product_color'
+        position: 10
+        defaultLabel: White
+    product_color_option_69:
+        code: '11'
+        source_field: '@product_color'
+        position: 11
+        defaultLabel: Yellow
+    product_eco_collection_option_1:
+        code: '0'
+        source_field: '@product_eco_collection'
+        position: 0
+        defaultLabel: '0'
+    product_eco_collection_option_0:
+        code: '1'
+        source_field: '@product_eco_collection'
+        position: 1
+        defaultLabel: '1'
+    product_erin_recommends_option_1:
+        code: '0'
+        source_field: '@product_erin_recommends'
+        position: 0
+        defaultLabel: '0'
+    product_erin_recommends_option_0:
+        code: '1'
+        source_field: '@product_erin_recommends'
+        position: 1
+        defaultLabel: '1'
+    product_es_is_discounted_option_1:
+        code: '0'
+        source_field: '@product_es_is_discounted'
+        position: 0
+        defaultLabel: '0'
+    product_es_is_discounted_option_0:
+        code: '1'
+        source_field: '@product_es_is_discounted'
+        position: 1
+        defaultLabel: '1'
+    product_es_is_in_stock_option_1:
+        code: '0'
+        source_field: '@product_es_is_in_stock'
+        position: 0
+        defaultLabel: '0'
+    product_es_is_in_stock_option_0:
+        code: '1'
+        source_field: '@product_es_is_in_stock'
+        position: 1
+        defaultLabel: '0'
+    product_features_bags_option_78:
+        code: '0'
+        source_field: '@product_features_bags'
+        position: 0
+        defaultLabel: 'Audio Pocket'
+    product_features_bags_option_79:
+        code: '1'
+        source_field: '@product_features_bags'
+        position: 1
+        defaultLabel: Wheeled
+    product_features_bags_option_80:
+        code: '2'
+        source_field: '@product_features_bags'
+        position: 2
+        defaultLabel: 'Hydration Pocket'
+    product_features_bags_option_81:
+        code: '3'
+        source_field: '@product_features_bags'
+        position: 3
+        defaultLabel: 'Audio Pocket'
+    product_features_bags_option_82:
+        code: '4'
+        source_field: '@product_features_bags'
+        position: 4
+        defaultLabel: Flapover
+    product_features_bags_option_83:
+        code: '5'
+        source_field: '@product_features_bags'
+        position: 5
+        defaultLabel: Waterproof
+    product_features_bags_option_84:
+        code: '6'
+        source_field: '@product_features_bags'
+        position: 6
+        defaultLabel: Lightweight
+    product_features_bags_option_85:
+        code: '7'
+        source_field: '@product_features_bags'
+        position: 7
+        defaultLabel: 'TSA Approved'
+    product_features_bags_option_86:
+        code: '8'
+        source_field: '@product_features_bags'
+        position: 8
+        defaultLabel: Reflective
+    product_features_bags_option_87:
+        code: '9'
+        source_field: '@product_features_bags'
+        position: 9
+        defaultLabel: 'Laptop Sleeve'
+    product_features_bags_option_88:
+        code: '10'
+        source_field: '@product_features_bags'
+        position: 10
+        defaultLabel: Lockable
+    product_format_option_111:
+        code: '0'
+        source_field: '@product_format'
+        position: 0
+        defaultLabel: Download
+    product_format_option_112:
+        code: '1'
+        source_field: '@product_format'
+        position: 1
+        defaultLabel: DVD
+    product_gender_option_89:
+        code: '0'
+        source_field: '@product_gender'
+        position: 0
+        defaultLabel: Men
+    product_gender_option_90:
+        code: '1'
+        source_field: '@product_gender'
+        position: 1
+        defaultLabel: Women
+    product_gender_option_91:
+        code: '2'
+        source_field: '@product_gender'
+        position: 2
+        defaultLabel: Boys
+    product_gender_option_92:
+        code: '3'
+        source_field: '@product_gender'
+        position: 3
+        defaultLabel: Girls
+    product_gender_option_93:
+        code: '4'
+        source_field: '@product_gender'
+        position: 4
+        defaultLabel: Unisex
+    product_giftcard_type_option_0:
+        code: '0'
+        source_field: '@product_giftcard_type'
+        position: 0
+        defaultLabel: '0'
+    product_giftcard_type_option_1:
+        code: '1'
+        source_field: '@product_giftcard_type'
+        position: 1
+        defaultLabel: '1'
+    product_giftcard_type_option_2:
+        code: '2'
+        source_field: '@product_giftcard_type'
+        position: 2
+        defaultLabel: '2'
+    product_gift_wrapping_available_option_1:
+        code: '0'
+        source_field: '@product_gift_wrapping_available'
+        position: 0
+        defaultLabel: '0'
+    product_gift_wrapping_available_option_0:
+        code: '1'
+        source_field: '@product_gift_wrapping_available'
+        position: 1
+        defaultLabel: '1'
+    product_gift_wrapping_available_option_2:
+        code: '2'
+        source_field: '@product_gift_wrapping_available'
+        position: 2
+        defaultLabel: '2'
+    product_is_returnable_option_1:
+        code: '0'
+        source_field: '@product_is_returnable'
+        position: 0
+        defaultLabel: '0'
+    product_is_returnable_option_0:
+        code: '1'
+        source_field: '@product_is_returnable'
+        position: 1
+        defaultLabel: '1'
+    product_material_option_40:
+        code: '10'
+        source_field: '@product_material'
+        position: 0
+        defaultLabel: Burlap
+    product_material_option_151:
+        code: '151'
+        source_field: '@product_material'
+        position: 0
+        defaultLabel: 'Cocona® performance fabric'
+    product_material_option_41:
+        code: '41'
+        source_field: '@product_material'
+        position: 1
+        defaultLabel: Canvas
+    product_material_option_152:
+        code: '152'
+        source_field: '@product_material'
+        position: 1
+        defaultLabel: Wool
+    product_material_option_42:
+        code: '42'
+        source_field: '@product_material'
+        position: 2
+        defaultLabel: Cotton
+    product_material_option_153:
+        code: '153'
+        source_field: '@product_material'
+        position: 2
+        defaultLabel: Fleece
+    product_material_option_43:
+        code: '43'
+        source_field: '@product_material'
+        position: 3
+        defaultLabel: 'Faux Leather'
+    product_material_option_154:
+        code: '154'
+        source_field: '@product_material'
+        position: 3
+        defaultLabel: Hemp
+    product_material_option_155:
+        code: '155'
+        source_field: '@product_material'
+        position: 4
+        defaultLabel: Jersey
+    product_material_option_44:
+        code: '44'
+        source_field: '@product_material'
+        position: 4
+        defaultLabel: Leather
+    product_material_option_156:
+        code: '156'
+        source_field: '@product_material'
+        position: 5
+        defaultLabel: 'LumaTech&trade;'
+    product_material_option_45:
+        code: '45'
+        source_field: '@product_material'
+        position: 5
+        defaultLabel: Mesh
+    product_material_option_157:
+        code: '157'
+        source_field: '@product_material'
+        position: 6
+        defaultLabel: 'Lycra&reg;'
+    product_material_option_46:
+        code: '46'
+        source_field: '@product_material'
+        position: 6
+        defaultLabel: Nylon
+    product_material_option_158:
+        code: '158'
+        source_field: '@product_material'
+        position: 7
+        defaultLabel: Microfiber
+    product_material_option_47:
+        code: '47'
+        source_field: '@product_material'
+        position: 7
+        defaultLabel: Polyester
+    product_material_option_48:
+        code: '48'
+        source_field: '@product_material'
+        position: 8
+        defaultLabel: Rayon
+    product_material_option_159:
+        code: '159'
+        source_field: '@product_material'
+        position: 8
+        defaultLabel: Spandex
+    product_material_option_160:
+        code: '160'
+        source_field: '@product_material'
+        position: 9
+        defaultLabel: 'HeatTec&reg;'
+    product_material_option_49:
+        code: '49'
+        source_field: '@product_material'
+        position: 9
+        defaultLabel: Ripstop
+    product_material_option_161:
+        code: '161'
+        source_field: '@product_material'
+        position: 10
+        defaultLabel: 'EverCool&trade;'
+    product_material_option_50:
+        code: '50'
+        source_field: '@product_material'
+        position: 10
+        defaultLabel: Suede
+    product_material_option_51:
+        code: '61'
+        source_field: '@product_material'
+        position: 11
+        defaultLabel: Foam
+    product_material_option_162:
+        code: '162'
+        source_field: '@product_material'
+        position: 11
+        defaultLabel: 'Organic Cotton'
+    product_material_option_52:
+        code: '52'
+        source_field: '@product_material'
+        position: 12
+        defaultLabel: Metal
+    product_material_option_163:
+        code: '163'
+        source_field: '@product_material'
+        position: 12
+        defaultLabel: TENCEL
+    product_material_option_164:
+        code: '164'
+        source_field: '@product_material'
+        position: 13
+        defaultLabel: 'CoolTech&trade;'
+    product_material_option_53:
+        code: '53'
+        source_field: '@product_material'
+        position: 13
+        defaultLabel: Plastic
+    product_material_option_165:
+        code: '165'
+        source_field: '@product_material'
+        position: 14
+        defaultLabel: Khaki
+    product_material_option_54:
+        code: '54'
+        source_field: '@product_material'
+        position: 14
+        defaultLabel: Rubber
+    product_material_option_166:
+        code: '166'
+        source_field: '@product_material'
+        position: 15
+        defaultLabel: Linen
+    product_material_option_55:
+        code: '55'
+        source_field: '@product_material'
+        position: 15
+        defaultLabel: Synthetic
+    product_material_option_56:
+        code: '56'
+        source_field: '@product_material'
+        position: 16
+        defaultLabel: 'Stainless Steel'
+    product_material_option_167:
+        code: '167'
+        source_field: '@product_material'
+        position: 16
+        defaultLabel: Wool
+    product_material_option_57:
+        code: '57'
+        source_field: '@product_material'
+        position: 17
+        defaultLabel: Silicone
+    product_material_option_168:
+        code: '168'
+        source_field: '@product_material'
+        position: 17
+        defaultLabel: Terry
+    product_new_option_1:
+        code: '0'
+        source_field: '@product_new'
+        position: 0
+        defaultLabel: '0'
+    product_new_option_0:
+        code: '1'
+        source_field: '@product_new'
+        position: 1
+        defaultLabel: '1'
+    product_pattern_option_201:
+        code: '0'
+        source_field: '@product_pattern'
+        position: 0
+        defaultLabel: Color-Blocked
+    product_pattern_option_202:
+        code: '1'
+        source_field: '@product_pattern'
+        position: 1
+        defaultLabel: Checked
+    product_pattern_option_203:
+        code: '2'
+        source_field: '@product_pattern'
+        position: 2
+        defaultLabel: Color-Blocked
+    product_pattern_option_204:
+        code: '3'
+        source_field: '@product_pattern'
+        position: 3
+        defaultLabel: 'Graphic Print'
+    product_pattern_option_205:
+        code: '4'
+        source_field: '@product_pattern'
+        position: 4
+        defaultLabel: Solid
+    product_pattern_option_206:
+        code: '5'
+        source_field: '@product_pattern'
+        position: 5
+        defaultLabel: Solid-Highlight
+    product_pattern_option_207:
+        code: '6'
+        source_field: '@product_pattern'
+        position: 6
+        defaultLabel: Striped
+    product_pattern_option_208:
+        code: '7'
+        source_field: '@product_pattern'
+        position: 7
+        defaultLabel: Camo
+    product_pattern_option_209:
+        code: '8'
+        source_field: '@product_pattern'
+        position: 8
+        defaultLabel: Geometric
+    product_performance_fabric_option_1:
+        code: '0'
+        source_field: '@product_performance_fabric'
+        position: 0
+        defaultLabel: '0'
+    product_performance_fabric_option_0:
+        code: '1'
+        source_field: '@product_performance_fabric'
+        position: 1
+        defaultLabel: '1'
+    product_purpose_option_221:
+        code: '0'
+        source_field: '@product_purpose'
+        position: 0
+        defaultLabel: Products
+    product_purpose_option_222:
+        code: '1'
+        source_field: '@product_purpose'
+        position: 1
+        defaultLabel: 'Video Streaming'
+    product_purpose_option_223:
+        code: '2'
+        source_field: '@product_purpose'
+        position: 2
+        defaultLabel: All-Purpose
+    product_sale_option_1:
+        code: '0'
+        source_field: '@product_sale'
+        position: 0
+        defaultLabel: '0'
+    product_sale_option_0:
+        code: '1'
+        source_field: '@product_sale'
+        position: 1
+        defaultLabel: '1'
+    product_size_option_100:
+        code: '0'
+        source_field: '@product_size'
+        position: 0
+        defaultLabel: '55 cm'
+    product_size_option_175:
+        code: '1'
+        source_field: '@product_size'
+        position: 1
+        defaultLabel: XS
+    product_size_option_101:
+        code: '2'
+        source_field: '@product_size'
+        position: 2
+        defaultLabel: '65 cm'
+    product_size_option_176:
+        code: '3'
+        source_field: '@product_size'
+        position: 3
+        defaultLabel: S
+    product_size_option_102:
+        code: '4'
+        source_field: '@product_size'
+        position: 4
+        defaultLabel: '75 cm'
+    product_size_option_177:
+        code: '5'
+        source_field: '@product_size'
+        position: 5
+        defaultLabel: M
+    product_size_option_103:
+        code: '6'
+        source_field: '@product_size'
+        position: 6
+        defaultLabel: '6 foot'
+    product_size_option_178:
+        code: '7'
+        source_field: '@product_size'
+        position: 7
+        defaultLabel: L
+    product_size_option_104:
+        code: '8'
+        source_field: '@product_size'
+        position: 8
+        defaultLabel: '8 foot'
+    product_size_option_179:
+        code: '9'
+        source_field: '@product_size'
+        position: 9
+        defaultLabel: XL
+    product_size_option_105:
+        code: '10'
+        source_field: '@product_size'
+        position: 10
+        defaultLabel: '10 foot'
+    product_size_option_180:
+        code: '11'
+        source_field: '@product_size'
+        position: 11
+        defaultLabel: '28'
+    product_size_option_181:
+        code: '12'
+        source_field: '@product_size'
+        position: 12
+        defaultLabel: '29'
+    product_size_option_182:
+        code: '13'
+        source_field: '@product_size'
+        position: 13
+        defaultLabel: '30'
+    product_size_option_183:
+        code: '14'
+        source_field: '@product_size'
+        position: 14
+        defaultLabel: '31'
+    product_size_option_184:
+        code: '15'
+        source_field: '@product_size'
+        position: 15
+        defaultLabel: '32'
+    product_size_option_185:
+        code: '16'
+        source_field: '@product_size'
+        position: 16
+        defaultLabel: '33'
+    product_size_option_186:
+        code: '17'
+        source_field: '@product_size'
+        position: 17
+        defaultLabel: '34'
+    product_size_option_187:
+        code: '18'
+        source_field: '@product_size'
+        position: 18
+        defaultLabel: '36'
+    product_size_option_188:
+        code: '19'
+        source_field: '@product_size'
+        position: 19
+        defaultLabel: '38'
+    product_sleeve_option_169:
+        code: '0'
+        source_field: '@product_sleeve'
+        position: 0
+        defaultLabel: Sleeve
+    product_sleeve_option_170:
+        code: '1'
+        source_field: '@product_sleeve'
+        position: 1
+        defaultLabel: Long-Sleeve
+    product_sleeve_option_171:
+        code: '2'
+        source_field: '@product_sleeve'
+        position: 2
+        defaultLabel: Short-Sleeve
+    product_sleeve_option_172:
+        code: '3'
+        source_field: '@product_sleeve'
+        position: 3
+        defaultLabel: Sleeveless
+    product_sleeve_option_173:
+        code: '4'
+        source_field: '@product_sleeve'
+        position: 4
+        defaultLabel: Tank
+    product_sleeve_option_174:
+        code: '5'
+        source_field: '@product_sleeve'
+        position: 5
+        defaultLabel: Strap
+    product_strap_bags_option_70:
+        code: '0'
+        source_field: '@product_strap_bags'
+        position: 0
+        defaultLabel: Adjustable
+
+    product_strap_bags_option_71:
+        code: '1'
+        source_field: '@product_strap_bags'
+        position: 1
+        defaultLabel: 'Cross Body'
+    product_strap_bags_option_72:
+        code: '2'
+        source_field: '@product_strap_bags'
+        position: 2
+        defaultLabel: Detachable
+    product_strap_bags_option_73:
+        code: '3'
+        source_field: '@product_strap_bags'
+        position: 3
+        defaultLabel: Double
+    product_strap_bags_option_74:
+        code: '4'
+        source_field: '@product_strap_bags'
+        position: 4
+        defaultLabel: Padded
+    product_strap_bags_option_75:
+        code: '5'
+        source_field: '@product_strap_bags'
+        position: 5
+        defaultLabel: Shoulder
+    product_strap_bags_option_76:
+        code: '6'
+        source_field: '@product_strap_bags'
+        position: 6
+        defaultLabel: Single
+    product_strap_bags_option_77:
+        code: '7'
+        source_field: '@product_strap_bags'
+        position: 7
+        defaultLabel: Telescoping
+    product_style_bags_option_33:
+        code: '0'
+        source_field: '@product_style_bags'
+        position: 0
+        defaultLabel: Backpack
+    product_style_bags_option_34:
+        code: '1'
+        source_field: '@product_style_bags'
+        position: 1
+        defaultLabel: Luggage
+    product_style_bags_option_35:
+        code: '2'
+        source_field: '@product_style_bags'
+        position: 2
+        defaultLabel: Duffel
+    product_style_bags_option_36:
+        code: '3'
+        source_field: '@product_style_bags'
+        position: 3
+        defaultLabel: Messenger
+    product_style_bags_option_37:
+        code: '4'
+        source_field: '@product_style_bags'
+        position: 4
+        defaultLabel: Laptop
+    product_style_bags_option_38:
+        code: '5'
+        source_field: '@product_style_bags'
+        position: 5
+        defaultLabel: Exercise
+    product_style_bags_option_39:
+        code: '6'
+        source_field: '@product_style_bags'
+        position: 6
+        defaultLabel: Tote
+    product_style_bottom_option_113:
+        code: '0'
+        source_field: '@product_style_bottom'
+        position: 0
+        defaultLabel: 'Base Layer'
+    product_style_bottom_option_114:
+        code: '1'
+        source_field: '@product_style_bottom'
+        position: 1
+        defaultLabel: Basic
+    product_style_bottom_option_115:
+        code: '2'
+        source_field: '@product_style_bottom'
+        position: 2
+        defaultLabel: Capri
+    product_style_bottom_option_116:
+        code: '3'
+        source_field: '@product_style_bottom'
+        position: 3
+        defaultLabel: Compression
+    product_style_bottom_option_117:
+        code: '4'
+        source_field: '@product_style_bottom'
+        position: 4
+        defaultLabel: Leggings
+    product_style_bottom_option_118:
+        code: '5'
+        source_field: '@product_style_bottom'
+        position: 5
+        defaultLabel: Parachute
+    product_style_bottom_option_119:
+        code: '6'
+        source_field: '@product_style_bottom'
+        position: 6
+        defaultLabel: Skort
+    product_style_bottom_option_120:
+        code: '7'
+        source_field: '@product_style_bottom'
+        position: 7
+        defaultLabel: Snug
+    product_style_bottom_option_121:
+        code: '8'
+        source_field: '@product_style_bottom'
+        position: 8
+        defaultLabel: Sweatpants
+    product_style_bottom_option_122:
+        code: '9'
+        source_field: '@product_style_bottom'
+        position: 9
+        defaultLabel: Tights
+    product_style_bottom_option_123:
+        code: '10'
+        source_field: '@product_style_bottom'
+        position: 10
+        defaultLabel: 'Track Pants'
+    product_style_bottom_option_124:
+        code: '11'
+        source_field: '@product_style_bottom'
+        position: 11
+        defaultLabel: 'Workout Pants'
+    product_style_general_option_125:
+        code: '0'
+        source_field: '@product_style_general'
+        position: 0
+        defaultLabel: Insulated
+    product_style_general_option_126:
+        code: '1'
+        source_field: '@product_style_general'
+        position: 1
+        defaultLabel: Jacket
+    product_style_general_option_127:
+        code: '2'
+        source_field: '@product_style_general'
+        position: 2
+        defaultLabel: Vest
+    product_style_general_option_128:
+        code: '3'
+        source_field: '@product_style_general'
+        position: 3
+        defaultLabel: Lightweight
+    product_style_general_option_129:
+        code: '4'
+        source_field: '@product_style_general'
+        position: 4
+        defaultLabel: Hooded
+    product_style_general_option_130:
+        code: '5'
+        source_field: '@product_style_general'
+        position: 5
+        defaultLabel: 'Heavy Duty'
+    product_style_general_option_131:
+        code: '6'
+        source_field: '@product_style_general'
+        position: 6
+        defaultLabel: 'Rain Coat'
+    product_style_general_option_132:
+        code: '7'
+        source_field: '@product_style_general'
+        position: 7
+        defaultLabel: 'Hard Shell'
+    product_style_general_option_133:
+        code: '8'
+        source_field: '@product_style_general'
+        position: 8
+        defaultLabel: 'Soft Shell'
+    product_style_general_option_134:
+        code: '9'
+        source_field: '@product_style_general'
+        position: 9
+        defaultLabel: Windbreaker
+    product_style_general_option_135:
+        code: '10'
+        source_field: '@product_style_general'
+        position: 10
+        defaultLabel: '&frac12; zip'
+    product_style_general_option_136:
+        code: '11'
+        source_field: '@product_style_general'
+        position: 11
+        defaultLabel: '&frac14; zip'
+    product_style_general_option_137:
+        code: '12'
+        source_field: '@product_style_general'
+        position: 12
+        defaultLabel: 'Full Zip'
+    product_style_general_option_138:
+        code: '13'
+        source_field: '@product_style_general'
+        position: 13
+        defaultLabel: Reversible
+    product_style_general_option_139:
+        code: '14'
+        source_field: '@product_style_general'
+        position: 14
+        defaultLabel: Bra
+    product_style_general_option_140:
+        code: '15'
+        source_field: '@product_style_general'
+        position: 15
+        defaultLabel: Hoodie
+    product_style_general_option_141:
+        code: '16'
+        source_field: '@product_style_general'
+        position: 16
+        defaultLabel: Sweatshirt
+    product_style_general_option_142:
+        code: '17'
+        source_field: '@product_style_general'
+        position: 17
+        defaultLabel: Polo
+    product_style_general_option_143:
+        code: '18'
+        source_field: '@product_style_general'
+        position: 18
+        defaultLabel: Tank
+    product_style_general_option_144:
+        code: '19'
+        source_field: '@product_style_general'
+        position: 19
+        defaultLabel: Tee
+    product_style_general_option_145:
+        code: '20'
+        source_field: '@product_style_general'
+        position: 20
+        defaultLabel: Pullover
+    product_style_general_option_146:
+        code: '21'
+        source_field: '@product_style_general'
+        position: 21
+        defaultLabel: Hoodie
+    product_style_general_option_147:
+        code: '22'
+        source_field: '@product_style_general'
+        position: 22
+        defaultLabel: Cardigan
+    product_style_general_option_148:
+        code: '23'
+        source_field: '@product_style_general'
+        position: 23
+        defaultLabel: Henley
+    product_style_general_option_149:
+        code: '24'
+        source_field: '@product_style_general'
+        position: 24
+        defaultLabel: Tunic
+    product_style_general_option_150:
+        code: '25'
+        source_field: '@product_style_general'
+        position: 25
+        defaultLabel: Camisole

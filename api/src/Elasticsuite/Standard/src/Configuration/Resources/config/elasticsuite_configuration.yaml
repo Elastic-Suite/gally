@@ -1,3 +1,0 @@
-elasticsuite:
-    base_url: 
-        media: 'https://%env(SERVER_NAME)%/media/catalog/product/'

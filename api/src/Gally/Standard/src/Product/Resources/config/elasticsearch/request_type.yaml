@@ -1,0 +1,12 @@
+services:
+    gally.container_configuration.product_catalog.factory:
+        parent: 'Gally\Search\Elasticsearch\Request\Container\Configuration\GenericContainerConfigurationFactory'
+        arguments:
+            $defaultSortingOptionProvider: '@Gally\Product\Service\ProductDefaultSortingOptionProvider'
+        tags:
+            - { name: gally.container_configuration.factory, requestType: product_catalog, metadata: product }
+
+    gally.container_configuration.product_search.factory:
+        parent: 'Gally\Search\Elasticsearch\Request\Container\Configuration\GenericContainerConfigurationFactory'
+        tags:
+            - { name: gally.container_configuration.factory, requestType: product_search, metadata: product }

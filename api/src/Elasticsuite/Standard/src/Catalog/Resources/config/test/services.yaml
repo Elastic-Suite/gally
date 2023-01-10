@@ -1,4 +1,0 @@
-services:
-    Elasticsuite\Catalog\Service\DefaultCatalogProviderTest:
-        alias: Elasticsuite\Catalog\Service\DefaultCatalogProvider
-        public: true

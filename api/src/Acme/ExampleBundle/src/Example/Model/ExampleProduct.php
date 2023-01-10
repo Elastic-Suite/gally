@@ -2,11 +2,10 @@
 /**
  * DISCLAIMER
  *
- * Do not edit or add to this file if you wish to upgrade Smile ElasticSuite to newer
- * versions in the future.
+ * Do not edit or add to this file if you wish to upgrade Gally to newer versions in the future.
  *
  * @package   Acme\Example
- * @author    ElasticSuite Team <elasticsuite@smile.fr>
+ * @author    Gally Team <elasticsuite@smile.fr>
  * @copyright 2022-present Smile
  * @license   Open Software License v. 3.0 (OSL-3.0)
  */
@@ -19,8 +18,8 @@ use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Elasticsearch\DataProvider\Filter\TermFilter;
-use Elasticsuite\User\Constant\Role;
-use Elasticsuite\Entity\Model\Attribute\AttributeInterface;
+use Gally\User\Constant\Role;
+use Gally\Entity\Model\Attribute\AttributeInterface;
 
 #[
     ApiResource(
@@ -31,7 +30,7 @@ use Elasticsuite\Entity\Model\Attribute\AttributeInterface;
         ],
         itemOperations: ['get'],
         attributes: [
-            'elasticsuite' => [
+            'gally' => [
                 'index' => 'catalog_product',
                 'stitching' => ['property' => 'attributes'],
                 'metadata' => ['entity' => 'product'],

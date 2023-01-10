@@ -1,0 +1,33 @@
+imports:
+    - { resource: elasticsearch/aggregation_resolver.yaml }
+
+services:
+    Gally\VirtualCategory\Decoration\Entity\GraphQl\Type\Definition\Filter\CategoryTypeDefaultFilterInputType:
+        decorates: Gally\Entity\GraphQl\Type\Definition\Filter\CategoryTypeDefaultFilterInputType
+        arguments:
+            - '@Gally\Category\Repository\CategoryRepository'
+            - '@Gally\VirtualCategory\Service\CategoryQueryProvider'
+            - '@Gally\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
+            - '@Gally\Search\Elasticsearch\Request\QueryFactory'
+            - '%api_platform.graphql.nesting_separator%'
+        decoration_priority: 10
+
+    Gally\VirtualCategory\Decoration\Repository\CategoryProductPositionIndexer\CategoryProductPositionIndexerRepository:
+        decorates: Gally\Category\Repository\CategoryProductPositionIndexer\CategoryProductPositionIndexerRepository
+        arguments:
+            - '@api_platform.elasticsearch.client'
+            - '@Gally\Metadata\Repository\MetadataRepository'
+            - '@Gally\Index\Service\IndexSettings'
+            - '@Gally\Index\Repository\Index\IndexRepositoryInterface'
+            - '@logger'
+            - '@Gally\Category\Repository\CategoryConfigurationRepository'
+            - '@Gally\Category\Repository\CategoryRepository'
+        decoration_priority: 10
+        
+    Gally\VirtualCategory\Service\CategoryQueryProvider:
+        arguments:
+            - '@Gally\RuleEngine\Service\RuleEngineManager'
+            - '@Gally\Category\Repository\CategoryConfigurationRepository'
+            - '@Gally\Search\Elasticsearch\Request\QueryFactory'
+            - '@logger'
+        decoration_priority: 10

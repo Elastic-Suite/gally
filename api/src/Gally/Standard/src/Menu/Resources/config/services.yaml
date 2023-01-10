@@ -1,0 +1,20 @@
+services:
+    Gally\Menu\Service\MenuBuilder:
+        arguments:
+            - '%gally.menu%'
+            - '@Symfony\Contracts\Translation\TranslatorInterface'
+            - '@request_stack'
+            
+    Gally\Menu\Resolver\MenuResolver:
+        arguments:
+            - '@Gally\Menu\Service\MenuBuilder'
+        tags:
+            - { name: api_platform.graphql.query_resolver } 
+    
+    Gally\Menu\Controller\MenuController:
+        arguments:
+            - '@Gally\Menu\Service\MenuBuilder'
+        calls:
+            - [ setContainer, [ '@service_container' ]]
+        tags: 
+            - { name: controller.service_arguments }

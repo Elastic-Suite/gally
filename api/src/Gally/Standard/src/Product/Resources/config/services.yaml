@@ -1,0 +1,147 @@
+imports:
+    - { resource: elasticsearch/request_type.yaml }
+
+services:
+    Gally\Product\Service\GraphQl\FilterManager:
+        arguments:
+            - '@Gally\Product\GraphQl\Type\Definition\FieldFilterInputType'
+            - '%api_platform.graphql.nesting_separator%'
+            - '@Gally\Category\Service\CurrentCategoryProvider'
+
+    Gally\Product\DataProvider\ProductDataProvider:
+        arguments:
+            - '@serializer'
+            - '@api_platform.pagination'
+            - '@api_platform.metadata.resource.metadata_factory.cached'
+            - '@Gally\ResourceMetadata\Service\ResourceMetadataManager'
+            - '@Gally\Metadata\Repository\MetadataRepository'
+            - '@Gally\Catalog\Repository\LocalizedCatalogRepository'
+            - '@Gally\Search\Elasticsearch\Builder\Request\SimpleRequestBuilder'
+            - '@Gally\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider'
+            - '@Gally\Search\Elasticsearch\Adapter'
+            - '@Gally\Product\GraphQl\Type\Definition\SortInputType'
+            - '@Gally\Product\Service\GraphQl\FilterManager'
+        tags:
+            - { name: api_platform.collection_data_provider }
+
+    Gally\Product\Serializer\ProductDenormalizer:
+        arguments:
+            - '@Gally\Stitching\Service\SerializerService'
+            - '@Gally\Entity\Service\PriceGroupProvider'
+            - '@Gally\Entity\Model\Attribute\AttributeFactory'
+        tags:
+            - { name: serializer.normalizer }
+
+    # Declare DataFixtures
+    Gally\Product\DataFixtures\ElasticsearchProductFixtures:
+        arguments:
+            - '@Gally\Fixture\Service\ElasticsearchFixtures'
+            - '@Gally\Fixture\Service\EntityIndicesFixturesInterface'
+        tags:
+            - { name: doctrine.fixture.orm }
+
+    Gally\Product\Decoration\CategoryData\SyncCategoryNameAfterBulk:
+        decorates: Gally\Index\MutationResolver\BulkIndexMutation
+        arguments:
+            - '@.inner'
+            - '@Gally\Product\Service\CategoryNameUpdater'
+        decoration_priority: 200
+
+    Gally\Product\Service\CategoryNameUpdater:
+        arguments:
+            - '@Gally\Category\Repository\CategoryConfigurationRepository'
+            - '@api_platform.elasticsearch.client'
+            - '@logger'
+
+    Gally\Product\GraphQl\Type\Definition\SortOrder\CategoryDefaultSortOrderProvider:
+        arguments:
+            - '%api_platform.graphql.nesting_separator%'
+        tags:
+            - { name: gally.product_api.sort_order_provider, provider_name: 'category_default' }
+
+    Gally\Product\GraphQl\Type\Definition\SortOrder\PriceDefaultSortOrderProvider:
+        arguments:
+            - '%api_platform.graphql.nesting_separator%'
+        tags:
+            - { name: gally.product_api.sort_order_provider, provider_name: 'price_default' }
+
+    Gally\Product\GraphQl\Type\Definition\SortOrder\ScalarSortOrderProvider:
+        arguments:
+            - '%api_platform.graphql.nesting_separator%'
+        tags:
+            - { name: gally.product_api.sort_order_provider, provider_name: 'scalar' }
+
+    Gally\Product\GraphQl\Type\Definition\SortOrder\StockDefaultSortOrderProvider:
+        arguments:
+            - '%api_platform.graphql.nesting_separator%'
+        tags:
+            - { name: gally.product_api.sort_order_provider, provider_name: 'stock_default' }
+
+    Gally\Product\GraphQl\Type\Definition\SortOrder\SelectDefaultSortOrderProvider:
+        arguments:
+            - '%api_platform.graphql.nesting_separator%'
+        tags:
+            - { name: gally.product_api.sort_order_provider, provider_name: 'select' }
+
+    Gally\Product\GraphQl\Type\Definition\SortInputType:
+        arguments:
+            - '@Gally\Search\GraphQl\Type\Definition\SortEnumType'
+            - '@Gally\Metadata\Repository\SourceFieldRepository'
+            - !tagged_iterator { tag: 'gally.product_api.sort_order_provider', index_by: 'provider_name' }
+            - '@Gally\Entity\Service\PriceGroupProvider'
+            - '@Gally\Search\Service\ReverseSourceFieldProvider'
+            - '@Gally\Category\Service\CurrentCategoryProvider'
+            - '%api_platform.graphql.nesting_separator%'
+        tags:
+            - { name: api_platform.graphql.type }
+
+    Gally\Product\GraphQl\Type\Definition\FieldFilterInputType:
+        arguments:
+            - '@Gally\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
+            - !tagged_iterator { tag: 'gally.entity_api.filter' }
+            - '@Gally\Entity\GraphQl\Type\Definition\Filter\BoolFilterInputType'
+            - '@Gally\Metadata\Repository\SourceFieldRepository'
+        tags:
+            - { name: api_platform.graphql.type }
+    
+    Gally\Product\GraphQl\Type\Definition\ProductRequestTypeEnumType:
+        arguments:
+            - '@Gally\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider'
+        tags:
+            - { name: api_platform.graphql.type }
+    
+    Gally\Product\Service\CurrentCategoryProvider:
+        arguments:
+            - '@Gally\Category\Repository\CategoryRepository'
+
+    Gally\Product\Service\PriceGroupProvider:
+        arguments:
+            - '@Gally\RequestContext\Service\RequestContextManager'
+            - '%gally.default_price_group_id%'
+
+    Gally\Product\Decoration\GraphQl\AddEntityTypeInContext:
+        decorates: api_platform.graphql.resolver.stage.serialize
+        decoration_priority: 1
+        arguments:
+            - '@.inner'
+
+    gally.container_configuration.coverage_rate.factory:
+        parent: 'Gally\Search\Elasticsearch\Request\Container\Configuration\GenericContainerConfigurationFactory'
+        arguments:
+            $aggregationProvider: '@Gally\Search\Elasticsearch\Request\Aggregation\Provider\CoverageAggregationProvider'
+        tags:
+            - { name: gally.container_configuration.factory, requestType: coverage_rate }
+    
+    Gally\Product\DataProvider\Facet\OptionDataProvider:
+        parent: Gally\Search\DataProvider\Facet\OptionDataProvider
+        arguments:
+            $filterManager: '@Gally\Product\Service\GraphQl\FilterManager'
+        tags:
+            - { name: api_platform.collection_data_provider }
+
+    Gally\Product\Service\ProductDefaultSortingOptionProvider:
+        arguments:
+            - '@Gally\Category\Service\CurrentCategoryProvider'
+            - '@Gally\Category\Repository\CategoryConfigurationRepository'
+            - '@Gally\Search\Service\SearchSettingsProvider'
+            - '%api_platform.graphql.nesting_separator%'
