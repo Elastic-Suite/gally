@@ -19,6 +19,9 @@ namespace Elasticsuite\VirtualCategory;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
+/**
+ * @codeCoverageIgnore
+ */
 class ElasticsuiteVirtualCategoryBundle extends Bundle
 {
     public function getPath(): string

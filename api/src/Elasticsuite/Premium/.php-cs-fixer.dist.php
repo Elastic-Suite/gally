@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+// @codeCoverageIgnoreStart
 $header = <<<'HEADER'
 DISCLAIMER
 
@@ -131,3 +132,4 @@ return (new PhpCsFixer\Config())
         'void_return' => false, // BC breaks; to be done in API Platform 3.0
     ])
     ->setFinder($finder);
+// @codeCoverageIgnoreEnd
