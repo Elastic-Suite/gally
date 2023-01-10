@@ -1,0 +1,68 @@
+<?php
+/**
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Gally to newer versions in the future.
+ *
+ * @package   Gally
+ * @author    Gally Team <elasticsuite@smile.fr>
+ * @copyright 2022-present Smile
+ * @license   Open Software License v. 3.0 (OSL-3.0)
+ */
+
+declare(strict_types=1);
+
+namespace Gally\Category\Decoration;
+
+use ApiPlatform\Core\GraphQl\Resolver\MutationResolverInterface;
+use Gally\Category\Exception\SyncCategoryException;
+use Gally\Category\Service\CategoryProductPositionManager;
+use Gally\Category\Service\CategorySynchronizer;
+use Gally\Index\Api\IndexSettingsInterface;
+use Gally\Index\Model\Index;
+use Gally\Index\Repository\Index\IndexRepositoryInterface;
+
+class SyncCategoryDataAfterBulk implements MutationResolverInterface
+{
+    public function __construct(
+        private MutationResolverInterface $decorated,
+        private CategorySynchronizer $synchronizer,
+        private IndexSettingsInterface $indexSettings,
+        private IndexRepositoryInterface $indexRepository,
+        private CategoryProductPositionManager $categoryProductPositionManager,
+    ) {
+    }
+
+    /**
+     * @param Index|null $item
+     *
+     * @return Index
+     */
+    public function __invoke($item, array $context)
+    {
+        /** @var Index $index */
+        $index = $this->decorated->__invoke($item, $context);
+
+        if (null !== $index->getEntityType() && $this->indexSettings->isInstalled($index)) { // Don't synchronize if index is not installed
+            if ('category' === $index->getEntityType()) { // Synchronize sql data for category entity
+                $this->indexRepository->refresh($index->getName()); // Force refresh to avoid missing data
+                try {
+                    $this->synchronizer->synchronize($index, json_decode($context['args']['input']['data'], true));
+                } catch (SyncCategoryException) {
+                    // If sync failed, retry sync once, then log the error.
+                    $this->synchronizer->synchronize($index, json_decode($context['args']['input']['data'], true));
+                }
+            }
+
+            if ('product' === $index->getEntityType()) {
+                $this->indexRepository->refresh($index->getName()); // Force refresh to avoid missing data
+                $this->categoryProductPositionManager->reindexPositionsByIndex(
+                    $index,
+                    array_column(json_decode($context['args']['input']['data'], true), 'id')
+                );
+            }
+        }
+
+        return $index;
+    }
+}

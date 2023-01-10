@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0"
+       srcLang="en-US" trgLang="fr-FR">
+    <file id="gally_example.fr">
+        <unit id="example_command_cache_get_label">
+            <segment>
+                <source>example.command.cache.get.label</source>
+                <target>Exemple de Caching get</target>
+            </segment>
+        </unit>
+        <unit id="example_command_cache_get_miss">
+            <segment>
+                <source>example.command.cache.get.miss</source>
+                <target>Cache miss pour %cachekey, calcul d'une nouvelle valeur</target>
+            </segment>
+        </unit>
+        <unit id="example_command_cache_get_value">
+            <segment>
+                <source>example.command.cache.get.value</source>
+                <target>Valeur pour %cachekey: %cachevalue</target>
+            </segment>
+        </unit>
+        <unit id="example_command_cache_hit_recompute">
+            <segment>
+                <source>example.command.cache.hit.recompute</source>
+                <target>Cache hit mais recalcul de valeur avant expiration</target>
+            </segment>
+        </unit>
+        <unit id="example_commmand_cache_miss_create">
+            <segment>
+                <source>example.commmand.cache.miss.create</source>
+                <target>Cache miss, création de valeur</target>
+            </segment>
+        </unit>
+        <unit id="example_commmand_cache_custom_description">
+            <segment>
+                <source>example.commmand.cache.custom.description</source>
+                <target>Obtenir un objet de cache de clef "common.key" depuis un domaine de cache supportant les tags, pur Symfony.</target>
+            </segment>
+        </unit>
+        <unit id="example_commmand_cache_other_description">
+            <segment>
+                <source>example.commmand.cache.other.description</source>
+                <target>Obtenir un objet de cache de "common.key" depuis un autre domaine de cache supportant les tags, pur Symfony.</target>
+            </segment>
+        </unit>
+        <unit id="example_command_cache_custom_value">
+            <segment>
+                <source>example.command.cache.custom.value</source>
+                <target>Simple valeur de cache expirant après %ttl secondes</target>
+            </segment>
+        </unit>
+        <unit id="example_command_cache_other_value">
+            <segment>
+                <source>example.command.cache.other.value</source>
+                <target>Autre valeur de cache expirant après %ttl secondes</target>
+            </segment>
+        </unit>
+        <unit id="example_command_cache_item_metadata">
+            <segment>
+                <source>example.command.cache.item.metadata</source>
+                <target>Metadata:</target>
+            </segment>
+        </unit>
+        <unit id="example_command_cache_item_key">
+            <segment>
+                <source>example.command.cache.item.key</source>
+                <target>Clef: %key</target>
+            </segment>
+        </unit>
+        <unit id="example_command_cache_object_value">
+            <segment>
+                <source>example.command.cache.object.value</source>
+                <target>Valeur de l'objet en cache: %cacheObject</target>
+            </segment>
+        </unit>
+    </file>
+</xliff>

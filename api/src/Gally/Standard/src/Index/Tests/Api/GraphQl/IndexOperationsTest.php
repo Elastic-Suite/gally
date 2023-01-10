@@ -1,0 +1,272 @@
+<?php
+/**
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Gally to newer versions in the future.
+ *
+ * @package   Gally
+ * @author    Gally Team <elasticsuite@smile.fr>
+ * @copyright 2022-present Smile
+ * @license   Open Software License v. 3.0 (OSL-3.0)
+ */
+
+declare(strict_types=1);
+
+namespace Gally\Index\Tests\Api\GraphQl;
+
+use Elasticsearch\Client;
+use Gally\Catalog\Repository\LocalizedCatalogRepository;
+use Gally\Index\Api\IndexSettingsInterface;
+use Gally\Index\Model\Index;
+use Gally\Index\Repository\Index\IndexRepositoryInterface;
+use Gally\Test\AbstractTest;
+use Gally\Test\ExpectedResponse;
+use Gally\Test\RequestGraphQlToTest;
+use Gally\User\Constant\Role;
+use Gally\User\Model\User;
+use Symfony\Contracts\HttpClient\ResponseInterface;
+
+class IndexOperationsTest extends AbstractTest
+{
+    private LocalizedCatalogRepository $catalogRepository;
+
+    private static IndexRepositoryInterface $indexRepository;
+
+    private static IndexSettingsInterface $indexSettings;
+
+    private static Client $client;
+
+    public static function setUpBeforeClass(): void
+    {
+        parent::setUpBeforeClass();
+        \assert(static::getContainer()->get(IndexRepositoryInterface::class) instanceof IndexRepositoryInterface);
+        self::$indexRepository = static::getContainer()->get(IndexRepositoryInterface::class);
+        self::loadFixture([
+            __DIR__ . '/../../fixtures/catalogs.yaml',
+            __DIR__ . '/../../fixtures/source_field.yaml',
+            __DIR__ . '/../../fixtures/metadata.yaml',
+        ]);
+        self::$indexSettings = static::getContainer()->get(IndexSettingsInterface::class);
+        self::$client = static::getContainer()->get('api_platform.elasticsearch.client.test'); // @phpstan-ignore-line
+    }
+
+    public static function tearDownAfterClass(): void
+    {
+        parent::tearDownAfterClass();
+        self::$indexRepository->delete('gally_test__gally_*');
+    }
+
+    /**
+     * @dataProvider createIndexDataProvider
+     */
+    public function testCreateIndex(User $user, string $entityType, int $catalogId, array $expectedData): void
+    {
+        $this->validateApiCall(
+            new RequestGraphQlToTest(
+                <<<GQL
+                    mutation {
+                      createIndex(input: {
+                        entityType: "{$entityType}",
+                        localizedCatalog: "{$catalogId}"
+                      }) {
+                        index {
+                          id
+                          name
+                          aliases
+                        }
+                      }
+                    }
+                GQL,
+                $user,
+            ),
+            new ExpectedResponse(
+                200,
+                function (ResponseInterface $response) use ($expectedData) {
+                    if (isset($expectedData['errors'])) {
+                        $this->assertJsonContains($expectedData);
+                    } else {
+                        $this->assertStringContainsString('"id":"\/indices\/' . $expectedData['name'], $response->getContent());
+                        $this->assertStringContainsString('"name":"' . $expectedData['name'], $response->getContent());
+                        $this->assertStringContainsString('"aliases":[', $response->getContent());
+                        foreach ($expectedData['aliases'] as $expectedAlias) {
+                            $this->assertStringContainsString('"' . $expectedAlias . '"', $response->getContent());
+                        }
+                    }
+                }
+            )
+        );
+    }
+
+    public function createIndexDataProvider(): iterable
+    {
+        self::loadFixture([
+            __DIR__ . '/../../fixtures/metadata.yaml',
+            __DIR__ . '/../../fixtures/catalogs.yaml',
+        ]);
+        $this->catalogRepository = static::getContainer()->get(LocalizedCatalogRepository::class);
+        $admin = $this->getUser(Role::ROLE_ADMIN);
+
+        yield [
+            $this->getUser(Role::ROLE_CONTRIBUTOR),
+            'product',
+            1,
+            ['errors' => [['debugMessage' => 'Access Denied.']]],
+        ];
+
+        foreach ($this->catalogRepository->findAll() as $catalog) {
+            yield [
+                $admin,
+                'product',
+                (int) $catalog->getId(),
+                [
+                    'name' => "gally_test__gally_{$catalog->getCode()}_product",
+                    'aliases' => ['.entity_product', ".catalog_{$catalog->getId()}"],
+                ],
+            ];
+            yield [
+                $admin,
+                'category',
+                (int) $catalog->getId(),
+                [
+                    'name' => "gally_test__gally_{$catalog->getCode()}_category",
+                    'aliases' => ['.entity_category', ".catalog_{$catalog->getId()}"],
+                ],
+            ];
+        }
+    }
+
+    /**
+     * @depends testCreateIndex
+     * @dataProvider installIndexDataProvider
+     */
+    public function testInstallIndex(User $user, string $indexNamePrefix, array $expectedData): void
+    {
+        $installIndexSettings = self::$indexSettings->getInstallIndexSettings();
+        $index = self::$indexRepository->findByName("{$indexNamePrefix}*");
+        $this->validateApiCall(
+            new RequestGraphQlToTest(
+                <<<GQL
+                    mutation {
+                      installIndex(input: {
+                        name: "{$index->getName()}"
+                      }) {
+                        index {
+                          id
+                          name
+                          aliases
+                        }
+                      }
+                    }
+                GQL,
+                $user,
+            ),
+            new ExpectedResponse(
+                200,
+                function (ResponseInterface $response) use ($index, $expectedData, $installIndexSettings) {
+                    if (isset($expectedData['errors'])) {
+                        $this->assertJsonContains($expectedData);
+                    } else {
+                        $responseData = $response->toArray();
+
+                        // Check that the index has the install index.
+                        $this->assertNotEmpty($responseData['data']['installIndex']['index']['aliases']);
+                        $this->assertContains($expectedData['alias'], $responseData['data']['installIndex']['index']['aliases']);
+
+                        // Check that the index has the proper installed index settings.
+                        $settings = self::$client->indices()->getSettings(['index' => $index->getName()]);
+                        $this->assertNotEmpty($settings[$index->getName()]['settings']['index']);
+                        $this->assertArraySubset($installIndexSettings, $settings[$index->getName()]['settings']['index']);
+                    }
+                }
+            )
+        );
+    }
+
+    public function installIndexDataProvider(): iterable
+    {
+        self::loadFixture([
+            __DIR__ . '/../../fixtures/metadata.yaml',
+            __DIR__ . '/../../fixtures/catalogs.yaml',
+        ]);
+        $this->catalogRepository = static::getContainer()->get(LocalizedCatalogRepository::class);
+        $admin = $this->getUser(Role::ROLE_ADMIN);
+
+        yield [
+            $this->getUser(Role::ROLE_CONTRIBUTOR),
+            'gally_test__gally_b2c_fr_product',
+            ['errors' => [['debugMessage' => 'Access Denied.']]],
+        ];
+
+        foreach ($this->catalogRepository->findAll() as $catalog) {
+            yield [
+                $admin,
+                "gally_test__gally_{$catalog->getCode()}_product",
+                ['alias' => "gally_test__gally_{$catalog->getCode()}_product"],
+            ];
+            yield [
+                $admin,
+                "gally_test__gally_{$catalog->getCode()}_category",
+                ['alias' => "gally_test__gally_{$catalog->getCode()}_category"],
+            ];
+        }
+    }
+
+    /**
+     * @depends testInstallIndex
+     * @dataProvider installIndexDataProvider
+     */
+    public function testRefreshIndex(User $user, string $indexNamePrefix, array $expectedData): void
+    {
+        $index = self::$indexRepository->findByName("{$indexNamePrefix}*");
+        $initialRefreshCount = $this->getRefreshCount($index->getName());
+
+        $this->assertNotNull($index);
+        $this->assertInstanceOf(Index::class, $index);
+        $this->validateApiCall(
+            new RequestGraphQlToTest(
+                <<<GQL
+                    mutation {
+                      refreshIndex(input: {
+                        name: "{$index->getName()}"
+                      }) {
+                        index {
+                          id
+                          name
+                          aliases
+                        }
+                      }
+                    }
+                GQL,
+                $user,
+            ),
+            new ExpectedResponse(
+                200,
+                function (ResponseInterface $response) use ($index, $expectedData, $initialRefreshCount) {
+                    if (isset($expectedData['errors'])) {
+                        $this->assertJsonContains($expectedData);
+                    } else {
+                        // Check that the index still has the install index.
+                        // TODO re-instate tests on aliases when the read stage is correctly performed based on name.
+                        // $this->assertNotEmpty($responseData['data']['refreshIndex']['index']['aliases']);
+                        // $this->assertContains($expectedInstalledIndexAlias, $responseData['data']['refreshIndex']['index']['aliases']);
+
+                        $refreshCount = $this->getRefreshCount($index->getName());
+                        $this->assertGreaterThan($initialRefreshCount, $refreshCount);
+                    }
+                }
+            )
+        );
+    }
+
+    protected function getRefreshCount(string $indexName): int
+    {
+        $refreshMetrics = self::$client->indices()->stats(['index' => $indexName, 'metric' => 'refresh']);
+        $this->assertNotEmpty($refreshMetrics);
+        $this->assertArrayHasKey('_all', $refreshMetrics);
+        $this->assertArrayHasKey('primaries', $refreshMetrics['_all']);
+        $this->assertArrayHasKey('refresh', $refreshMetrics['_all']['primaries']);
+        $this->assertArrayHasKey('external_total', $refreshMetrics['_all']['primaries']['refresh']);
+
+        return $refreshMetrics['_all']['primaries']['refresh']['external_total'];
+    }
+}

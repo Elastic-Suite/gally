@@ -67,7 +67,7 @@ db: ## Connect to the DB
 
 phpcsfixer: ## Run php cs fixer, pass the parameter "o=" to ass options, make phpcsfixer o="--dry-run"
 	@$(eval o ?=)
-	@$(PHP_CS_FIXER) fix --path-mode=intersection src/Elasticsuite --diff $(o)
+	@$(PHP_CS_FIXER) fix --path-mode=intersection src/Gally --diff $(o)
 
 phpcsfixer_dryrun: ## Run php cs fixer wuth dry run optoin
 phpcsfixer_dryrun: o="--dry-run"
@@ -132,7 +132,7 @@ generate_migration: c=doctrine:migrations:diff
 generate_migration: sf
 
 fixtures_load: ## Load fixtures (Delete DB and Elasticsearch data)
-	@$(SYMFONY) elasticsuite:index:clear
+	@$(SYMFONY) gally:index:clear
 	@$(SYMFONY) hautelook:fixtures:load
 	@$(SYMFONY) doctrine:fixtures:load --append #Append argument used because the database is already reset by the previous command
 

@@ -17,9 +17,9 @@ cache_url: "/cache/gitsplit"
 
 # List of splits.
 splits:
-  - prefix: "api/src/Elasticsuite/Standard"
+  - prefix: "api/src/Gally/Standard"
     target: "https://${GH_TOKEN}@github.com/Elastic-Suite/gally-standard.git"
-  - prefix: "api/src/Elasticsuite/Premium"
+  - prefix: "api/src/Gally/Premium"
     target: "https://${GH_TOKEN}@github.com/Elastic-Suite/gally-premium.git"    
 
 # List of references to split (defined as regexp)

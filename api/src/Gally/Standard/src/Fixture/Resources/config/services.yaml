@@ -1,0 +1,20 @@
+services:
+    Gally\Fixture\Service\ElasticsearchFixturesInterface: '@Gally\Fixture\Service\ElasticsearchFixtures'
+    Gally\Fixture\Service\ElasticsearchFixtures:
+        arguments:
+            - '@Symfony\Component\Validator\Validator\ValidatorInterface'
+            - '@Gally\Index\Repository\Index\IndexRepositoryInterface'
+            - '@Gally\Index\Repository\Document\DocumentRepositoryInterface'
+            - '%kernel.environment%'
+            - false
+        public: true
+
+    Gally\Fixture\Service\EntityIndicesFixturesInterface: '@Gally\Fixture\Service\EntityIndicesFixtures'
+    Gally\Fixture\Service\EntityIndicesFixtures:
+        arguments:
+            - '@Gally\Metadata\Repository\MetadataRepository'
+            - '@Gally\Catalog\Repository\LocalizedCatalogRepository'
+            - '@Gally\Index\Service\IndexOperation'
+            - '@Gally\Index\Repository\Index\IndexRepositoryInterface'
+            - '@Gally\Index\Api\IndexSettingsInterface'
+        public: true

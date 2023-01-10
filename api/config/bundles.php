@@ -14,7 +14,7 @@ return [
     Symfony\Bundle\DebugBundle\DebugBundle::class => ['dev' => true, 'test' => true],
     Acme\DeclarativeGreetingsBundle\AcmeDeclarativeGreetingsBundle::class => ['all' => true],
     Acme\Example\AcmeExampleBundle::class => ['dev' => true, 'test' => true],
-    Elasticsuite\ElasticsuiteBundle::class => ['all' => true],
+    Gally\GallyBundle::class => ['all' => true],
     Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class => ['dev' => true, 'test' => true],
     Liip\TestFixturesBundle\LiipTestFixturesBundle::class => ['dev' => true, 'test' => true],
     Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle::class => ['dev' => true, 'test' => true],
@@ -22,5 +22,5 @@ return [
     Hautelook\AliceBundle\HautelookAliceBundle::class => ['dev' => true, 'test' => true],
     Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle::class => ['all' => true],
 
-    Elasticsuite\VirtualCategory\ElasticsuiteVirtualCategoryBundle::class => ['all' => true],
+    Gally\VirtualCategory\GallyVirtualCategoryBundle::class => ['all' => true],
 ];

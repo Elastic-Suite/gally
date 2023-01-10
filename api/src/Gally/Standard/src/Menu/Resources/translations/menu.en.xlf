@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en-US" trgLang="en-US">
+    <file id="menu.en">
+        <unit id="gally.menu.dashboard.label">
+            <segment>
+                <source>gally.menu.dashboard.label</source>
+                <target>Dashboard</target>
+            </segment>
+        </unit>
+        <unit id="gally.menu.analyze.label">
+            <segment>
+                <source>gally.menu.analyze.label</source>
+                <target>Analyze</target>
+            </segment>
+        </unit>
+        <unit id="gally.menu.analyze_catalog_structure.label">
+            <segment>
+                <source>gally.menu.analyze_catalog_structure.label</source>
+                <target>Catalog structure</target>
+            </segment>
+        </unit>
+        <unit id="gally.menu.analyze_search_usage.label">
+            <segment>
+                <source>gally.menu.analyze_search_usage.label</source>
+                <target>Search usage</target>
+            </segment>
+        </unit>
+        <unit id="gally.menu.analyze_ab_testing.label">
+            <segment>
+                <source>gally.menu.analyze_ab_testing.label</source>
+                <target>A/B testing</target>
+            </segment>
+        </unit>
+        <unit id="gally.menu.merchandize.label">
+            <segment>
+                <source>gally.menu.merchandize.label</source>
+                <target>Merchandize</target>
+            </segment>
+        </unit>
+        <unit id="gally.menu.merchandize_categories.label">
+            <segment>
+                <source>gally.menu.merchandize_categories.label</source>
+                <target>Categories</target>
+            </segment>
+        </unit>
+        <unit id="gally.menu.merchandize_search_results.label">
+            <segment>
+                <source>gally.menu.merchandize_search_results.label</source>
+                <target>Search results</target>
+            </segment>
+        </unit>
+        <unit id="gally.menu.merchandize_recommender.label">
+            <segment>
+                <source>gally.menu.merchandize_recommender.label</source>
+                <target>Recommenders</target>
+            </segment>
+        </unit>
+        <unit id="gally.menu.merchandize_recommender_configuration.label">
+            <segment>
+                <source>gally.menu.merchandize_recommender_configuration.label</source>
+                <target>General configuration</target>
+            </segment>
+        </unit>
+        <unit id="gally.menu.merchandize_recommender_manual_recommenders.label">
+            <segment>
+                <source>gally.menu.merchandize_recommender_manual_recommenders.label</source>
+                <target>Manual recommenders</target>
+            </segment>
+        </unit>
+        <unit id="gally.menu.merchandize_recommender_auto_recommenders.label">
+            <segment>
+                <source>gally.menu.merchandize_recommender_auto_recommenders.label</source>
+                <target>Auto recommenders</target>
+            </segment>
+        </unit>
+        <unit id="gally.menu.merchandize_recommender_behavioral_recommenders.label">
+            <segment>
+                <source>gally.menu.merchandize_recommender_behavioral_recommenders.label</source>
+                <target>Behavioral recommenders</target>
+            </segment>
+        </unit>
+        <unit id="gally.menu.merchandize_recommender_boosts.label">
+            <segment>
+                <source>gally.menu.merchandize_recommender_boosts.label</source>
+                <target>Boosts</target>
+            </segment>
+        </unit>
+        <unit id="gally.menu.search.label">
+            <segment>
+                <source>gally.menu.search.label</source>
+                <target>Search</target>
+            </segment>
+        </unit>
+        <unit id="gally.menu.search_configuration.label">
+            <segment>
+                <source>gally.menu.search_configuration.label</source>
+                <target>Configuration</target>
+            </segment>
+        </unit>
+        <unit id="gally.menu.search_configuration_relevance.label">
+            <segment>
+                <source>gally.menu.search_configuration_relevance.label</source>
+                <target>Relevance</target>
+            </segment>
+        </unit>
+        <unit id="gally.menu.search_configuration_autocompletion.label">
+            <segment>
+                <source>gally.menu.search_configuration_autocompletion.label</source>
+                <target>Autocompletion</target>
+            </segment>
+        </unit>
+        <unit id="gally.menu.search_configuration_attributes.label">
+            <segment>
+                <source>gally.menu.search_configuration_attributes.label</source>
+                <target>Attributes</target>
+            </segment>
+        </unit>
+        <unit id="gally.menu.search_facets.label">
+            <segment>
+                <source>gally.menu.search_facets.label</source>
+                <target>Facets</target>
+            </segment>
+        </unit>
+        <unit id="gally.menu.search_thesasurus.label">
+            <segment>
+                <source>gally.menu.search_thesasurus.label</source>
+                <target>Thesaurus</target>
+            </segment>
+        </unit>
+        <unit id="gally.menu.monitoring.label">
+            <segment>
+                <source>gally.menu.monitoring.label</source>
+                <target>Monitoring</target>
+            </segment>
+        </unit>
+        <unit id="gally.menu.monitoring_index.label">
+            <segment>
+                <source>gally.menu.monitoring_index.label</source>
+                <target>Index</target>
+            </segment>
+        </unit>
+        <unit id="gally.menu.monitoring_imports.label">
+            <segment>
+                <source>gally.menu.monitoring_imports.label</source>
+                <target>Imports</target>
+            </segment>
+        </unit>
+        <unit id="gally.menu.settings.label">
+            <segment>
+                <source>gally.menu.settings.label</source>
+                <target>Settings</target>
+            </segment>
+        </unit>
+        <unit id="gally.menu.settings_global_configuration.label">
+            <segment>
+                <source>gally.menu.settings_global_configuration.label</source>
+                <target>Global configuration</target>
+            </segment>
+        </unit>
+        <unit id="gally.menu.settings_data_collection.label">
+            <segment>
+                <source>gally.menu.settings_data_collection.label</source>
+                <target>Data collection</target>
+            </segment>
+        </unit>
+        <unit id="gally.menu.settings_data_collection_behavioral_data_configuration.label">
+            <segment>
+                <source>gally.menu.settings_data_collection_behavioral_data_configuration.label</source>
+                <target>Behavioral data configuration</target>
+            </segment>
+        </unit>
+        <unit id="gally.menu.settings_data_collection_tracking.label">
+            <segment>
+                <source>gally.menu.settings_data_collection_tracking.label</source>
+                <target>Tracking</target>
+            </segment>
+        </unit>
+        <unit id="gally.menu.settings_data_collection_telemetry_beacon.label">
+            <segment>
+                <source>gally.menu.settings_data_collection_telemetry_beacon.label</source>
+                <target>Telemetry and Beacon</target>
+            </segment>
+        </unit>
+        <unit id="gally.menu.settings_interfaces.label">
+            <segment>
+                <source>gally.menu.settings_interfaces.label</source>
+                <target>Interfaces</target>
+            </segment>
+        </unit>
+        <unit id="gally.menu.thesaurus.label">
+            <segment>
+                <source>gally.menu.thesaurus.label</source>
+                <target>Thesaurus</target>
+            </segment>
+        </unit>
+        <unit id="gally.menu.optimizer.label">
+            <segment>
+                <source>gally.menu.optimizer.label</source>
+                <target>Optimizer</target>
+            </segment>
+        </unit>
+    </file>
+</xliff>

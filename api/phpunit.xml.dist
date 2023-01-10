@@ -19,14 +19,14 @@
     </php>
 
     <testsuites>
-        <testsuite name="Elasticsuite Test Suite">
-            <directory>src/Elasticsuite/**/**/**/Tests/</directory>
+        <testsuite name="Gally Test Suite">
+            <directory>src/Gally/**/**/**/Tests/</directory>
         </testsuite>
-        <testsuite name="Elasticsuite Test Suite API">
-            <directory>src/Elasticsuite/**/**/**/Tests/Api</directory>
+        <testsuite name="Gally Test Suite API">
+            <directory>src/Gally/**/**/**/Tests/Api</directory>
         </testsuite>
-        <testsuite name="Elasticsuite Test Suite Unit">
-            <directory>src/Elasticsuite/**/**/**/Tests/Unit</directory>
+        <testsuite name="Gally Test Suite Unit">
+            <directory>src/Gally/**/**/**/Tests/Unit</directory>
         </testsuite>
         <testsuite name="Acme Test Suite">
             <directory>src/Acme/**/src/**/Tests/</directory>
@@ -38,10 +38,10 @@
             <directory suffix=".php">src</directory>
         </include>
         <exclude>
-            <directory suffix=".php">src/Elasticsuite/**/**/**/Tests</directory>
-            <directory suffix=".php">src/Elasticsuite/**/**/**/DataFixtures</directory>
+            <directory suffix=".php">src/Gally/**/**/**/Tests</directory>
+            <directory suffix=".php">src/Gally/**/**/**/DataFixtures</directory>
             <directory suffix=".php">src/Acme</directory>
-            <directory suffix=".php">src/Elasticsuite/Standard/tests</directory>
+            <directory suffix=".php">src/Gally/Standard/tests</directory>
         </exclude>
     </coverage>
 

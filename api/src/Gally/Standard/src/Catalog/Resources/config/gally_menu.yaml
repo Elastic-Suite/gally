@@ -1,0 +1,11 @@
+gally:
+    menu:
+        catalog:
+            order: 15
+            parent: settings
+        catalog_catalogs_and_locales:
+            parent: catalog
+            order: 10
+        catalog_attributes_configuration:
+            parent: catalog
+            order: 20

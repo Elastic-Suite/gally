@@ -1,0 +1,43 @@
+[
+  {
+    "index_name": "index_product",
+    "documents": [
+      {
+        "entity_id": "test_1",
+        "sku": "24-MB01",
+        "name": "Joust Duffle Bag",
+        "size" : 12
+      },
+      {
+        "entity_id": "test_2",
+        "sku": "25-MB01",
+        "name": "Joust Duffle Bag 2 ",
+        "size" : 5
+      },
+      {
+        "entity_id": "test_3",
+        "sku": "26-MB01",
+        "name": "Joust Duffle Bag 3 ",
+        "size" : 8
+      }
+    ]
+  },
+  {
+    "index_name": "gally_test_fr_product_20220429_153000",
+    "documents": [
+      {
+        "entity_id": "test_1",
+        "sku": "24-MB01",
+        "name": "Joust Duffle Bag",
+        "size" : 12
+      },
+      {
+        "entity_id": "test_2",
+        "sku": "25-MB01",
+        "name": "Joust Duffle Bag 2 ",
+        "size" : 5
+      }
+    ]
+  }
+]
+

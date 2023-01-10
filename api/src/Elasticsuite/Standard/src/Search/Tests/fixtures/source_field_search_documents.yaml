@@ -1,7 +1,0 @@
-Elasticsuite\Metadata\Model\SourceField:
-    product_my_price:
-        metadata: '@product'
-        code: 'my_price'
-        type: 'price'
-        isFilterable: true
-        isSortable: true
