@@ -11,9 +11,8 @@ versions in the future.
 
 @package   Elasticsuite
 @author    ElasticSuite Team <elasticsuite@smile.fr>
-@copyright 2022 Smile
-@license   Licensed to Smile-SA. All rights reserved. No warranty, explicit or implicit, provided.
-           Unauthorized copying of this file, via any medium, is strictly prohibited.
+@copyright 2022-present Smile
+@license   Open Software License v. 3.0 (OSL-3.0)
 HEADER;
 
 $finder = PhpCsFixer\Finder::create()
