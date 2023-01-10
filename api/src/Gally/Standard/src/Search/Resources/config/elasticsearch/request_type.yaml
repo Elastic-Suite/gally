@@ -1,0 +1,18 @@
+services:
+    Gally\Search\Elasticsearch\Request\Container\Configuration\GenericContainerConfigurationFactory:
+        public: false
+        arguments:
+            $indexSettings: '@Gally\Index\Service\IndexSettings'
+            $metadataManager: '@Gally\Index\Service\MetadataManager'
+            $relevanceConfiguration: '@Gally\Search\Elasticsearch\Request\Container\RelevanceConfiguration\GenericRelevanceConfiguration'
+            $aggregationProvider: '@Gally\Search\Elasticsearch\Request\Aggregation\Provider\FilterableSourceFields'
+            $defaultSortingOptionProvider: ~
+        tags:
+            - { name: gally.container_configuration.factory, requestType: generic }
+
+    gally.container_configuration.coverage_rate.factory:
+        parent: 'Gally\Search\Elasticsearch\Request\Container\Configuration\GenericContainerConfigurationFactory'
+        arguments:
+            $aggregationProvider: '@Gally\Search\Elasticsearch\Request\Aggregation\Provider\CoverageAggregationProvider'
+        tags:
+            - { name: gally.container_configuration.factory, requestType: coverage_rate }

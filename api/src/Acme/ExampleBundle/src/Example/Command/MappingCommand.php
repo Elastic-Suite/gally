@@ -2,11 +2,10 @@
 /**
  * DISCLAIMER
  *
- * Do not edit or add to this file if you wish to upgrade Smile ElasticSuite to newer
- * versions in the future.
+ * Do not edit or add to this file if you wish to upgrade Gally to newer versions in the future.
  *
  * @package   Acme\Example
- * @author    ElasticSuite Team <elasticsuite@smile.fr>
+ * @author    Gally Team <elasticsuite@smile.fr>
  * @copyright 2022-present Smile
  * @license   Open Software License v. 3.0 (OSL-3.0)
  */
@@ -27,7 +26,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class MappingCommand extends Command
 {
     // the name of the command (the part after "bin/console")
-    protected static $defaultName = 'elasticsuite:example:mapping-get';
+    protected static $defaultName = 'gally:example:mapping-get';
 
     public function __construct(
         private DummyInterface $dummyService,
@@ -52,7 +51,7 @@ class MappingCommand extends Command
     {
         // Translation documentation: https://symfony.com/doc/current/translation.html.
         $output->writeln(
-            $this->translator->trans('example.command.mapping.label', [], 'elasticsuite_example', 'fr_FR') . ': '
+            $this->translator->trans('example.command.mapping.label', [], 'gally_example', 'fr_FR') . ': '
         );
         $output->writeln(json_encode($this->dummyService->getMapping()));
 

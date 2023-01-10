@@ -1,0 +1,2 @@
+services:
+    Gally\ResourceMetadata\Service\ResourceMetadataManager: ~

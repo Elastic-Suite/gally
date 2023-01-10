@@ -1,0 +1,106 @@
+imports:
+    - { resource: attribute_factory.yaml }
+services:
+    Gally\Entity\Filter\SearchColumnsFilter:
+        arguments: [ '@doctrine', ~, '@?logger' ]
+        tags: [ 'api_platform.filter' ]
+
+    Gally\Entity\Filter\BooleanFilter:
+        arguments: [ '@doctrine', ~, '@?logger' ]
+        tags: [ 'api_platform.filter' ]
+
+    Gally\Entity\GraphQl\Type\Definition\Filter\TextTypeFilterInputType:
+        arguments:
+            - '@Gally\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
+            - '@Gally\Search\Elasticsearch\Request\QueryFactory'
+            - '%api_platform.graphql.nesting_separator%'
+        tags:
+            - { name: api_platform.graphql.type }
+            - { name: gally.entity_api.filter }
+    
+    Gally\Entity\GraphQl\Type\Definition\Filter\BoolTypeFilterInputType:
+        arguments:
+            - '@Gally\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
+            - '@Gally\Search\Elasticsearch\Request\QueryFactory'
+            - '%api_platform.graphql.nesting_separator%'
+        tags:
+            - { name: api_platform.graphql.type }
+            - { name: gally.entity_api.filter }
+    
+    Gally\Entity\GraphQl\Type\Definition\Filter\IntegerTypeFilterInputType:
+        arguments:
+            - '@Gally\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
+            - '@Gally\Search\Elasticsearch\Request\QueryFactory'
+            - '%api_platform.graphql.nesting_separator%'
+        tags:
+            - { name: api_platform.graphql.type }
+            - { name: gally.entity_api.filter }
+    
+    Gally\Entity\GraphQl\Type\Definition\Filter\FloatTypeFilterInputType:
+        arguments:
+            - '@Gally\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
+            - '@Gally\Search\Elasticsearch\Request\QueryFactory'
+            - '%api_platform.graphql.nesting_separator%'
+        tags:
+            - { name: api_platform.graphql.type }
+            - { name: gally.entity_api.filter }
+    
+    Gally\Entity\GraphQl\Type\Definition\Filter\DateTypeFilterInputType:
+        arguments:
+            - '@Gally\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
+            - '@Gally\Search\Elasticsearch\Request\QueryFactory'
+            - '%api_platform.graphql.nesting_separator%'
+        tags:
+            - { name: api_platform.graphql.type }
+            - { name: gally.entity_api.filter }
+
+    Gally\Entity\GraphQl\Type\Definition\Filter\CategoryTypeDefaultFilterInputType:
+        arguments:
+            - '@Gally\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
+            - '@Gally\Search\Elasticsearch\Request\QueryFactory'
+            - '%api_platform.graphql.nesting_separator%'
+        tags:
+            - { name: api_platform.graphql.type }
+            - { name: gally.entity_api.filter }
+
+    Gally\Entity\GraphQl\Type\Definition\Filter\PriceTypeDefaultFilterInputType:
+        arguments:
+            - '@Gally\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
+            - '@Gally\Search\Elasticsearch\Request\QueryFactory'
+            - '@Gally\Entity\Service\PriceGroupProvider'
+            - '@Gally\Search\Service\ReverseSourceFieldProvider'
+            - '%api_platform.graphql.nesting_separator%'
+        tags:
+            - { name: api_platform.graphql.type }
+            - { name: gally.entity_api.filter }
+
+    Gally\Entity\GraphQl\Type\Definition\Filter\SelectTypeDefaultFilterInputType:
+        arguments:
+            - '@Gally\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
+            - '@Gally\Search\Elasticsearch\Request\QueryFactory'
+            - '%api_platform.graphql.nesting_separator%'
+        tags:
+            - { name: api_platform.graphql.type }
+            - { name: gally.entity_api.filter }
+
+    Gally\Entity\GraphQl\Type\Definition\Filter\StockTypeDefaultFilterInputType:
+        arguments:
+            - '@Gally\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
+            - '@Gally\Search\Elasticsearch\Request\QueryFactory'
+            - '%api_platform.graphql.nesting_separator%'
+        tags:
+            - { name: api_platform.graphql.type }
+            - { name: gally.entity_api.filter }
+
+    Gally\Entity\GraphQl\Type\Definition\Filter\BoolFilterInputType:
+        lazy: true
+        arguments:
+            - '@Gally\Product\GraphQl\Type\Definition\FieldFilterInputType'
+            - '@Gally\Search\Elasticsearch\Request\QueryFactory'
+        tags:
+            - { name: api_platform.graphql.type }
+
+    Gally\Entity\Service\PriceGroupProvider:
+        arguments:
+            - '@Gally\RequestContext\Service\RequestContextManager'
+            - '%gally.default_price_group_id%'

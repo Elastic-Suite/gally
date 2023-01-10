@@ -1,0 +1,23 @@
+Gally\Category\Model\Category:
+    categ1:
+        id: one
+        level: 1
+        path: one
+    categ2:
+        id: two
+        level: 1
+        path: two
+    categ3:
+        id: three
+        parentId: one
+        level: 2
+        path: one/three
+    categ4:
+        id: four
+        parentId: three
+        level: 3
+        path: one/three/four
+    categ5:
+        id: five
+        level: 1
+        path: five

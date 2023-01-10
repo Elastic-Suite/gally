@@ -5,11 +5,10 @@ declare(strict_types=1);
 $header = <<<'HEADER'
 DISCLAIMER
 
-Do not edit or add to this file if you wish to upgrade Smile ElasticSuite to newer
-versions in the future.
+Do not edit or add to this file if you wish to upgrade Gally to newer versions in the future.
 
-@package   Elasticsuite
-@author    ElasticSuite Team <elasticsuite@smile.fr>
+@package   Gally
+@author    Gally Team <elasticsuite@smile.fr>
 @copyright 2022-present Smile
 @license   Open Software License v. 3.0 (OSL-3.0)
 HEADER;
@@ -18,12 +17,12 @@ $finder = PhpCsFixer\Finder::create()
     ->in(__DIR__)
     ->exclude([
         'src/Acme',
-        'src/Elasticsuite/Standard/src/Search/Legacy',
-        'src/Elasticsuite/Premium',
+        'src/Gally/Standard/src/Search/Legacy',
+        'src/Gally/Premium',
         'src/Core/Bridge/Symfony/Maker/Resources/skeleton',
         'tests/Fixtures/app/var',
     ])
-    ->notPath('#src\/Elasticsuite\/.*\/Legacy#')
+    ->notPath('#src\/Gally\/.*\/Legacy#')
     ->notPath('src/Symfony/Bundle/DependencyInjection/Configuration.php')
     ->notPath('src/Annotation/ApiFilter.php') // temporary
     ->notPath('src/Annotation/ApiProperty.php') // temporary

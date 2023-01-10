@@ -1,0 +1,6 @@
+Gally\Category\Model\Category\Configuration:
+    properties:
+        virtualRule:
+            - Json: ~
+        defaultSorting:
+            - Gally\Category\Validator\DefaultSortingFieldConstraint: ~

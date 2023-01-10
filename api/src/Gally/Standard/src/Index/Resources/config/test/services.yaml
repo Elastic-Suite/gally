@@ -1,0 +1,8 @@
+services:
+    Gally\Index\Service\IndexSettingsTest:
+        alias: Gally\Index\Service\IndexSettings
+        public: true
+
+    api_platform.elasticsearch.client.test:
+        alias: 'api_platform.elasticsearch.client'
+        public: true

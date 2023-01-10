@@ -3,7 +3,7 @@ services:
     Acme\Example\Example\Service\DummyInterface: '@Acme\Example\Example\Service\Dummy'
     Acme\Example\Example\Service\Dummy: ~
 
-    # Declare command elasticsuite:example:mapping-get
+    # Declare command gally:example:mapping-get
     Acme\Example\Example\Command\MappingCommand:
         arguments:
             - '@Acme\Example\Example\Service\DummyInterface'
@@ -15,7 +15,7 @@ services:
     # Declare DataFixtures
     Acme\Example\Example\DataFixtures\ExampleFixtures:
         arguments:
-            - '@Elasticsuite\Fixture\Service\ElasticsearchFixtures'
+            - '@Gally\Fixture\Service\ElasticsearchFixtures'
         tags:
             - { name: doctrine.fixture.orm }
 

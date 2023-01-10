@@ -1,0 +1,23 @@
+Gally\Search\Model\Facet\Configuration:
+    properties:
+        sourceField:
+            - NotNull: ~
+            - Gally\Search\Validator\ProductFieldConstraint: ~
+            - Gally\Search\Validator\FilterableFieldConstraint: ~
+        displayMode:
+            - Choice: { callback: [ Gally\Search\Model\Facet\Configuration, getAvailableDisplayModes ] }
+        coverageRate:
+            - Range:
+                min: 0
+                max: 100
+                notInRangeMessage: You must set a value between {{ min }}% and {{ max }}%.
+        maxSize:
+            - Positive: ~
+        sortOrder:
+            - Choice: { callback: [ Gally\Search\Model\Facet\Configuration, getAvailableSortOrder ] }
+
+    constraints:   
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+              fields: [ sourceField, category ]
+              message: 'A facet configuration already exist for this field and category.'
+              ignoreNull: false

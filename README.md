@@ -1,1 +1,1 @@
-Elasticsuite standalone
+Gally standalone

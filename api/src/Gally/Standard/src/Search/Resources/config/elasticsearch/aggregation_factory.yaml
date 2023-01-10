@@ -1,0 +1,137 @@
+services:
+    gally.search.request.aggregation.bucket.date_histogram.factory:
+        parent: Gally\DependencyInjection\GenericFactory
+        arguments:
+            - 'Gally\Search\Elasticsearch\Request\Aggregation\Bucket\DateHistogram'
+        tags:
+            - { name: 'gally.search.request.aggregation.factory', aggregationType: 'dateHistogramBucket' }
+            
+    gally.search.request.aggregation.bucket.histogram.factory:
+        parent: Gally\DependencyInjection\GenericFactory
+        arguments:
+            - 'Gally\Search\Elasticsearch\Request\Aggregation\Bucket\Histogram'
+        tags:
+            - { name: 'gally.search.request.aggregation.factory', aggregationType: 'histogramBucket' }
+            
+    gally.search.request.aggregation.bucket.query_group.factory:
+        parent: Gally\DependencyInjection\GenericFactory
+        arguments:
+            - 'Gally\Search\Elasticsearch\Request\Aggregation\Bucket\QueryGroup'
+        tags:
+            - { name: 'gally.search.request.aggregation.factory', aggregationType: 'queryGroupBucket' }
+            
+    gally.search.request.aggregation.bucket.reverse_nested.factory:
+        parent: Gally\DependencyInjection\GenericFactory
+        arguments:
+            - 'Gally\Search\Elasticsearch\Request\Aggregation\Bucket\ReverseNested'
+        tags:
+            - { name: 'gally.search.request.aggregation.factory', aggregationType: 'reverseNestedBucket' }
+            
+    gally.search.request.aggregation.bucket.significant_terms.factory:
+        parent: Gally\DependencyInjection\GenericFactory
+        arguments:
+            - 'Gally\Search\Elasticsearch\Request\Aggregation\Bucket\SignificantTerms'
+        tags:
+            - { name: 'gally.search.request.aggregation.factory', aggregationType: 'significantTermsBucket' }
+            
+    gally.search.request.aggregation.bucket.terms.factory:
+        parent: Gally\DependencyInjection\GenericFactory
+        arguments:
+            - 'Gally\Search\Elasticsearch\Request\Aggregation\Bucket\Terms'
+        tags:
+            - { name: 'gally.search.request.aggregation.factory', aggregationType: 'termsBucket' }
+
+    gally.search.request.aggregation.bucket.multiterms.factory:
+        parent: Gally\DependencyInjection\GenericFactory
+        arguments:
+            - 'Gally\Search\Elasticsearch\Request\Aggregation\Bucket\MultiTerms'
+        tags:
+            - { name: 'gally.search.request.aggregation.factory', aggregationType: 'multiTermsBucket' }
+
+    gally.search.request.aggregation.metric.avg.factory:
+        parent: Gally\DependencyInjection\GenericFactory
+        arguments:
+            - 'Gally\Search\Elasticsearch\Request\Aggregation\Metric'
+        tags:
+            - { name: 'gally.search.request.aggregation.factory', aggregationType: 'avgMetric' }
+
+    gally.search.request.aggregation.metric.min.factory:
+        parent: Gally\DependencyInjection\GenericFactory
+        arguments:
+            - 'Gally\Search\Elasticsearch\Request\Aggregation\Metric'
+        tags:
+            - { name: 'gally.search.request.aggregation.factory', aggregationType: 'minMetric' }
+
+    gally.search.request.aggregation.metric.max.factory:
+        parent: Gally\DependencyInjection\GenericFactory
+        arguments:
+            - 'Gally\Search\Elasticsearch\Request\Aggregation\Metric'
+        tags:
+            - { name: 'gally.search.request.aggregation.factory', aggregationType: 'maxMetric' }
+
+    gally.search.request.aggregation.metric.sum.factory:
+        parent: Gally\DependencyInjection\GenericFactory
+        arguments:
+            - 'Gally\Search\Elasticsearch\Request\Aggregation\Metric'
+        tags:
+            - { name: 'gally.search.request.aggregation.factory', aggregationType: 'sumMetric' }
+
+    gally.search.request.aggregation.metric.stats.factory:
+        parent: Gally\DependencyInjection\GenericFactory
+        arguments:
+            - 'Gally\Search\Elasticsearch\Request\Aggregation\Metric'
+        tags:
+            - { name: 'gally.search.request.aggregation.factory', aggregationType: 'statsMetric' }
+
+    gally.search.request.aggregation.metric.extended_stats.factory:
+        parent: Gally\DependencyInjection\GenericFactory
+        arguments:
+            - 'Gally\Search\Elasticsearch\Request\Aggregation\Metric'
+        tags:
+            - { name: 'gally.search.request.aggregation.factory', aggregationType: 'extendedStatsMetric' }
+
+    gally.search.request.aggregation.metric.cardinality.factory:
+        parent: Gally\DependencyInjection\GenericFactory
+        arguments:
+            - 'Gally\Search\Elasticsearch\Request\Aggregation\Metric'
+        tags:
+            - { name: 'gally.search.request.aggregation.factory', aggregationType: 'cardinalityMetric' }
+
+    gally.search.request.aggregation.metric.percentiles.factory:
+        parent: Gally\DependencyInjection\GenericFactory
+        arguments:
+            - 'Gally\Search\Elasticsearch\Request\Aggregation\Metric'
+        tags:
+            - { name: 'gally.search.request.aggregation.factory', aggregationType: 'percentilesMetric' }
+
+    gally.search.request.aggregation.metric.top_hits.factory:
+        parent: Gally\DependencyInjection\GenericFactory
+        arguments:
+            - 'Gally\Search\Elasticsearch\Request\Aggregation\Metric'
+        tags:
+            - { name: 'gally.search.request.aggregation.factory', aggregationType: 'topHitsMetric' }
+    
+    gally.search.request.aggregation.pipeline.bucket_selector.factory:
+        parent: Gally\DependencyInjection\GenericFactory
+        arguments:
+            - 'Gally\Search\Elasticsearch\Request\Aggregation\Pipeline\BucketSelector'
+        tags:
+            - { name: 'gally.search.request.aggregation.factory', aggregationType: 'bucketSelectorPipeline' }
+    
+    gally.search.request.aggregation.pipeline.max_bucket.factory:
+        parent: Gally\DependencyInjection\GenericFactory
+        arguments:
+            - 'Gally\Search\Elasticsearch\Request\Aggregation\Pipeline\MaxBucket'
+        tags:
+            - { name: 'gally.search.request.aggregation.factory', aggregationType: 'maxBucketPipeline' }
+    
+    gally.search.request.aggregation.pipeline.moving_function.factory:
+        parent: Gally\DependencyInjection\GenericFactory
+        arguments:
+            - 'Gally\Search\Elasticsearch\Request\Aggregation\Pipeline\MovingFunction'
+        tags:
+            - { name: 'gally.search.request.aggregation.factory', aggregationType: 'movingFunctionPipeline' }
+
+    Gally\Search\Elasticsearch\Request\AggregationFactory:
+        public: true
+        arguments: [ !tagged_iterator { tag: 'gally.search.request.aggregation.factory', index_by: 'aggregationType' } ]

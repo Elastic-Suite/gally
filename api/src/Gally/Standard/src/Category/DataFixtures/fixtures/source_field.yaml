@@ -1,0 +1,35 @@
+include:
+    - metadata.yaml
+
+Gally\Metadata\Model\SourceField:
+    category_id:
+        metadata: '@category'
+        code: 'id'
+        type: 'text'
+        isSystem: true
+    category_parent_id:
+        metadata: '@category'
+        code: 'parentId'
+        type: 'text'
+        isSystem: true
+    category_path:
+        metadata: '@category'
+        code: 'path'
+        type: 'text'
+        isSystem: true
+    category_level:
+        metadata: '@category'
+        code: 'level'
+        type: 'int'
+        isSystem: true
+    category_name:
+        metadata: '@category'
+        code: 'name'
+        type: 'text'
+        weight: 10
+        isSearchable: true
+        isFilterable: false
+        isSortable: false
+        isSpellchecked: false
+        isUsedForRules: false
+        isSystem: true

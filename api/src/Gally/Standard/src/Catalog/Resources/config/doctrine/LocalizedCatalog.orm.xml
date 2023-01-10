@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="https://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="https://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="Gally\Catalog\Model\LocalizedCatalog" table="localized_catalog" repository-class="Gally\Catalog\Repository\LocalizedCatalogRepository">
+        <id name="id" type="integer">
+            <generator strategy="AUTO"/>
+        </id>
+        <field name="name" type="string" length="255" nullable="true" unique="false" />
+        <field name="code" type="string" length="255" nullable="false" unique="true" />
+        <field name="locale" type="string" length="5" nullable="false" unique="false" />
+        <field name="currency" type="string" length="3" nullable="false" unique="false" />
+        <field name="isDefault" type="boolean" nullable="false">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>
+
+        <unique-constraints>
+            <unique-constraint columns="code,locale" name="unique_code_locale" />
+        </unique-constraints>
+
+        <many-to-one field="catalog" target-entity="Gally\Catalog\Model\Catalog" inversed-by="localizedCatalogs" fetch="EAGER">
+            <join-column name="catalog_id" referenced-column-name="id" nullable="false" on-delete="CASCADE" on-update="CASCADE"/>
+        </many-to-one>
+    </entity>
+
+</doctrine-mapping>

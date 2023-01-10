@@ -80,12 +80,12 @@
             "": "src/"
         },
         "psr-4": {
-            "Elasticsuite\\": "src/Elasticsuite/Standard/src/",
-            "Elasticsuite\\VirtualCategory\\": "src/Elasticsuite/Premium/VirtualCategory/src/",
+            "Gally\\": "src/Gally/Standard/src/",
+            "Gally\\VirtualCategory\\": "src/Gally/Premium/VirtualCategory/src/",
             "Acme\\Example\\": "src/Acme/ExampleBundle/src/"
         },
         "exclude-from-classmap": [
-            "src/Elasticsuite/**/src/**/Tests/",
+            "src/Gally/**/src/**/Tests/",
             "src/Acme/**/src/**/Tests/"
         ]
     },

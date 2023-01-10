@@ -1,0 +1,12 @@
+services:
+    Gally\Category\Service\CategorySynchronizer:
+        public: true
+        arguments:
+            - '@Gally\Category\Repository\CategoryRepository'
+            - '@Gally\Category\Repository\CategoryConfigurationRepository'
+            - '@Gally\Search\Elasticsearch\RequestFactoryInterface'
+            - '@Gally\Search\Elasticsearch\Builder\Request\Query\QueryBuilder'
+            - '@Gally\Search\Elasticsearch\Adapter'
+            - '@Gally\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider'
+            - '@Gally\Metadata\Repository\MetadataRepository'
+            - '@doctrine.orm.entity_manager'
