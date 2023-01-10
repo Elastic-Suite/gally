@@ -289,9 +289,6 @@
     "phpdocumentor/type-resolver": {
         "version": "1.6.0"
     },
-    "phpspec/prophecy": {
-        "version": "v1.15.0"
-    },
     "phpstan/extension-installer": {
         "version": "1.1.0"
     },
@@ -335,6 +332,9 @@
     },
     "psr/cache": {
         "version": "3.0.0"
+    },
+    "psr/clock": {
+        "version": "1.0.0"
     },
     "psr/container": {
         "version": "2.0.2"
