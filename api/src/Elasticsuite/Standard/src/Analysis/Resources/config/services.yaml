@@ -1,6 +1,0 @@
-services:
-    Elasticsuite\Analysis\Service\Config:
-        public: true
-        arguments:
-            - '@Elasticsuite\Cache\Service\CacheManagerInterface'
-            - '%elasticsuite.analysis%'

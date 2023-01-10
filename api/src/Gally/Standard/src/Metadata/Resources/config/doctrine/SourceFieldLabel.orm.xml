@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="https://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="https://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="Gally\Metadata\Model\SourceFieldLabel"
+            table="source_field_label"
+            repository-class="Gally\Metadata\Repository\SourceFieldLabelRepository">
+        <id name="id" type="integer">
+            <generator strategy="AUTO"/>
+        </id>
+
+        <field name="label" type="string" nullable="false" />
+
+        <many-to-one field="catalog" target-entity="Gally\Catalog\Model\LocalizedCatalog">
+            <join-column name="catalog_id" referenced-column-name="id" nullable="false" on-delete="CASCADE" on-update="CASCADE"/>
+        </many-to-one>
+
+        <many-to-one field="sourceField" target-entity="Gally\Metadata\Model\SourceField" inversed-by="labels">
+            <join-column name="source_field_id" referenced-column-name="id" nullable="false" on-delete="CASCADE" on-update="CASCADE"/>
+        </many-to-one>
+
+        <unique-constraints>
+            <unique-constraint columns="catalog_id,source_field_id" name="unique_catalog_source_field" />
+        </unique-constraints>
+    </entity>
+
+</doctrine-mapping>

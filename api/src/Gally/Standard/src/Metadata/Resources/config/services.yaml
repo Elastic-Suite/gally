@@ -1,0 +1,59 @@
+services:
+    Gally\Metadata\Repository\MetadataRepository:
+        arguments:
+            - '@Doctrine\Persistence\ManagerRegistry'
+        tags:
+            - { name: doctrine.repository_service }
+
+    Gally\Metadata\Repository\SourceFieldRepository:
+        arguments:
+            - '@Doctrine\Persistence\ManagerRegistry'
+            - '@Gally\Metadata\Repository\MetadataRepository'
+        tags:
+            - { name: doctrine.repository_service }
+
+    Gally\Metadata\Repository\SourceFieldLabelRepository:
+        arguments:
+            - '@Doctrine\Persistence\ManagerRegistry'
+        tags:
+            - { name: doctrine.repository_service }
+
+    Gally\Metadata\Repository\SourceFieldOptionRepository:
+        arguments:
+            - '@Doctrine\Persistence\ManagerRegistry'
+        tags:
+            - { name: doctrine.repository_service }
+
+    Gally\Metadata\Repository\SourceFieldOptionLabelRepository:
+        arguments:
+            - '@Doctrine\Persistence\ManagerRegistry'
+        tags:
+            - { name: doctrine.repository_service }
+
+    Gally\Metadata\DataPersister\SourceFieldDataPersister:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: api_platform.data_persister }
+
+    Gally\Metadata\EventSubscriber\ValidateSourceFieldCode:
+        arguments:
+            - '@Gally\Metadata\Repository\SourceFieldRepository'
+        tags:
+            - { name: doctrine.event_subscriber }
+
+    Gally\Metadata\EventSubscriber\SpreadSourceFieldData:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@Gally\Index\Service\MetadataManager'
+            - '@Gally\Index\Service\IndexOperation'
+            - '@Gally\Catalog\Repository\LocalizedCatalogRepository'
+            - '@logger'
+        tags:
+            - { name: doctrine.event_subscriber }
+
+    Gally\Metadata\EventSubscriber\GenerateSourceFieldSearch:
+        arguments:
+            - '@Gally\Metadata\Repository\SourceFieldRepository'
+        tags:
+            - { name: doctrine.event_subscriber }

@@ -1,0 +1,105 @@
+services:
+    Gally\Search\Elasticsearch\Adapter\Common\Request\Query\Assembler\Boolean:
+        abstract: false
+        lazy: true
+        arguments:
+            - '@Gally\Search\Elasticsearch\Adapter\Common\Request\Query\Assembler'
+        tags:
+            - { name: 'gally.search.request.query.assembler', queryType: 'boolQuery' }
+
+    Gally\Search\Elasticsearch\Adapter\Common\Request\Query\Assembler\Filtered:
+        abstract: false
+        lazy: true
+        arguments:
+            - '@Gally\Search\Elasticsearch\Adapter\Common\Request\Query\Assembler'
+        tags:
+            - { name: 'gally.search.request.query.assembler', queryType: 'filteredQuery' }
+
+    Gally\Search\Elasticsearch\Adapter\Common\Request\Query\Assembler\Nested:
+        abstract: false
+        lazy: true
+        arguments:
+            - '@Gally\Search\Elasticsearch\Adapter\Common\Request\Query\Assembler'
+        tags:
+            - { name: 'gally.search.request.query.assembler', queryType: 'nestedQuery' }
+
+    Gally\Search\Elasticsearch\Adapter\Common\Request\Query\Assembler\Not:
+        abstract: false
+        lazy: true
+        arguments:
+            - '@Gally\Search\Elasticsearch\Adapter\Common\Request\Query\Assembler'
+        tags:
+            - { name: 'gally.search.request.query.assembler', queryType: 'notQuery' }
+
+    Gally\Search\Elasticsearch\Adapter\Common\Request\Query\Assembler\Missing:
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'gally.search.request.query.assembler', queryType: 'missingQuery' }
+
+    Gally\Search\Elasticsearch\Adapter\Common\Request\Query\Assembler\Exists:
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'gally.search.request.query.assembler', queryType: 'existsQuery' }
+
+    Gally\Search\Elasticsearch\Adapter\Common\Request\Query\Assembler\Term:
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'gally.search.request.query.assembler', queryType: 'termQuery' }
+
+    Gally\Search\Elasticsearch\Adapter\Common\Request\Query\Assembler\Terms:
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'gally.search.request.query.assembler', queryType: 'termsQuery' }
+
+    Gally\Search\Elasticsearch\Adapter\Common\Request\Query\Assembler\Range:
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'gally.search.request.query.assembler', queryType: 'rangeQuery' }
+
+    Gally\Search\Elasticsearch\Adapter\Common\Request\Query\Assembler\MatchQuery:
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'gally.search.request.query.assembler', queryType: 'matchQuery' }
+
+    Gally\Search\Elasticsearch\Adapter\Common\Request\Query\Assembler\Common:
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'gally.search.request.query.assembler', queryType: 'commonQuery' }
+
+    Gally\Search\Elasticsearch\Adapter\Common\Request\Query\Assembler\MultiMatch:
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'gally.search.request.query.assembler', queryType: 'multiMatchQuery' }
+
+    Gally\Search\Elasticsearch\Adapter\Common\Request\Query\Assembler\FunctionScore:
+        abstract: false
+        lazy: true
+        arguments:
+            - '@Gally\Search\Elasticsearch\Adapter\Common\Request\Query\Assembler'
+        tags:
+            - { name: 'gally.search.request.query.assembler', queryType: 'functionScore' }
+
+    Gally\Search\Elasticsearch\Adapter\Common\Request\Query\Assembler\MoreLikeThis:
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'gally.search.request.query.assembler', queryType: 'moreLikeThisQuery' }
+
+    Gally\Search\Elasticsearch\Adapter\Common\Request\Query\Assembler\MatchPhrasePrefix:
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'gally.search.request.query.assembler', queryType: 'matchPhrasePrefixQuery' }
+
+    Gally\Search\Elasticsearch\Adapter\Common\Request\Query\Assembler:
+        public: true
+        lazy: true
+        arguments: [!tagged_iterator { tag: 'gally.search.request.query.assembler', index_by: 'queryType' }]

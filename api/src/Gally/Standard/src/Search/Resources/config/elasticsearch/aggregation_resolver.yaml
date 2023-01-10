@@ -1,0 +1,31 @@
+services:
+
+    Gally\Search\Elasticsearch\Request\Aggregation\ConfigResolver\NumericAggregationConfigResolver:
+        tags:
+            - { name: 'gally.search.aggregation.resolver' }
+
+    Gally\Search\Elasticsearch\Request\Aggregation\ConfigResolver\DateAggregationConfigResolver:
+        tags:
+            - { name: 'gally.search.aggregation.resolver' }
+
+    Gally\Search\Elasticsearch\Request\Aggregation\ConfigResolver\SelectAggregationConfigResolver:
+        tags:
+            - { name: 'gally.search.aggregation.resolver' }
+
+    Gally\Search\Elasticsearch\Request\Aggregation\ConfigResolver\CategoryAggregationConfigResolver:
+        arguments:
+            - '@Gally\Category\Service\CurrentCategoryProvider'
+            - '@Gally\Category\Repository\CategoryRepository'
+            - '@Gally\Search\Elasticsearch\Request\QueryFactory'
+        tags:
+            - { name: 'gally.search.aggregation.resolver' }
+
+    Gally\Search\Elasticsearch\Request\Aggregation\ConfigResolver\PriceAggregationConfigResolver:
+        arguments:
+            - '@Gally\Entity\Service\PriceGroupProvider'
+        tags:
+            - { name: 'gally.search.aggregation.resolver' }
+
+    Gally\Search\Elasticsearch\Request\Aggregation\ConfigResolver\StockAggregationConfigResolver:
+        tags:
+            - { name: 'gally.search.aggregation.resolver' }

@@ -1,0 +1,9 @@
+Gally\Metadata\Model\SourceFieldLabel:
+    product_name_fr:
+        source_field: '@product_name'
+        catalog: '@catalog1_fr'
+        label: 'Nom'
+    product_name_en:
+        source_field: '@product_name'
+        catalog: '@catalog1_en'
+        label: 'Name'

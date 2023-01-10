@@ -1,9 +1,0 @@
-elasticsuite:
-    indices_settings:
-        prefix: elasticsuite
-        timestamp_pattern: "{{Ymd}}_{{His}}"
-        number_of_shards: 1
-        number_of_replicas: 0
-        # TODO remove me as this is defined in client ?
-        batch_indexing_size: 1000
-        time_before_ghost: 3600

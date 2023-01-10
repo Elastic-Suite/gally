@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="https://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="https://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+   <entity name="Gally\Category\Model\Category\ProductMerchandising"
+           repository-class="Gally\Category\Repository\CategoryProductMerchandisingRepository"
+           table="category_product_merchandising">
+
+        <id name="id" type="integer">
+            <generator strategy="AUTO"/>
+        </id>
+
+        <many-to-one field="category" target-entity="Gally\Category\Model\Category">
+            <join-column name="category_id" referenced-column-name="id" nullable="false" on-delete="CASCADE" on-update="CASCADE"/>
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </many-to-one>
+        <many-to-one field="catalog" target-entity="Gally\Catalog\Model\Catalog">
+            <join-column name="catalog_id" referenced-column-name="id" nullable="true" on-delete="CASCADE" on-update="CASCADE"/>
+        </many-to-one>
+        <many-to-one field="localizedCatalog" target-entity="Gally\Catalog\Model\LocalizedCatalog">
+            <join-column name="localized_catalog_id" referenced-column-name="id" nullable="true" on-delete="CASCADE" on-update="CASCADE"/>
+        </many-to-one>
+
+        <unique-constraints>
+            <unique-constraint columns="category_id,product_id" name="unique_category_id_product_id">
+                <options>
+                    <option name="where">((catalog_id IS NULL) AND (localized_catalog_id IS NULL))</option>
+                </options>
+            </unique-constraint>
+            <unique-constraint columns="category_id,product_id,catalog_id" name="unique_category_id_product_id_catalog_id">
+                <options>
+                    <option name="where">((catalog_id IS NOT NULL) AND (localized_catalog_id IS NULL))</option>
+                </options>
+            </unique-constraint>
+            <unique-constraint columns="category_id,product_id,catalog_id,localized_catalog_id" name="unique_category_id_product_id_catalog_id_localized_catalog_id">
+                <options>
+                    <option name="where">((catalog_id IS NOT NULL) AND (localized_catalog_id IS NOT NULL))</option>
+                </options>
+            </unique-constraint>
+        </unique-constraints>
+
+        <field name="productId" type="integer" nullable="false" />
+        <field name="position" type="integer" nullable="true" />
+
+    </entity>
+
+</doctrine-mapping>

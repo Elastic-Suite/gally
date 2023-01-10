@@ -1,0 +1,354 @@
+imports:
+    - { resource: elasticsearch/query_factory.yaml }
+    - { resource: elasticsearch/aggregation_factory.yaml }
+    - { resource: elasticsearch/query_assembler.yaml }
+    - { resource: elasticsearch/aggregation_assembler.yaml }
+    - { resource: elasticsearch/aggregation_resolver.yaml }
+    - { resource: elasticsearch/request_type.yaml }
+
+services:
+    Gally\Search\Repository\Facet\ConfigurationRepository:
+        arguments:
+            - '@Doctrine\Persistence\ManagerRegistry'
+        tags:
+            - { name: doctrine.repository_service }
+
+    # Use to remove eager loading extension from default item data provider.
+    gally.search.dataprovider.item_data_provider.no_eager_loading:
+        parent: api_platform.doctrine.orm.default.item_data_provider
+        arguments:
+            $itemExtensions: []
+
+    # Use to remove eager loading extension from default item data provider.
+    gally.search.dataprovider.collection_data_provider.no_eager_loading:
+        parent: api_platform.doctrine.orm.default.collection_data_provider
+        arguments:
+            $collectionExtensions:
+                - '@api_platform.doctrine.orm.query_extension.filter'
+                - '@api_platform.doctrine.orm.query_extension.filter_eager_loading'
+                - '@api_platform.doctrine.orm.query_extension.order'
+                - '@api_platform.doctrine.orm.query_extension.pagination'
+
+    Gally\Search\DataProvider\Facet\ConfigurationItemDataProvider:
+        arguments:
+            - '@doctrine'
+            - '@gally.search.dataprovider.item_data_provider.no_eager_loading'
+            - '@api_platform.doctrine.orm.default.item_data_provider'
+        tags:
+            - { name: api_platform.item_data_provider, priority: 2 }
+        autoconfigure: false
+
+    Gally\Search\DataProvider\Facet\ConfigurationCollectionDataProvider:
+        arguments:
+            - '@doctrine'
+            - '@gally.search.dataprovider.collection_data_provider.no_eager_loading'
+            - '@Gally\Metadata\Repository\MetadataRepository'
+        tags:
+            - { name: api_platform.collection_data_provider, priority: 2 }
+        autoconfigure: false
+
+    Gally\Search\DataPersister\Facet\ConfigurationDataPersister:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: api_platform.data_persister }
+
+    Gally\DependencyInjection\GenericFactory:
+        public: false
+
+    Gally\Search\Elasticsearch\Adapter\Common\Request\SortOrder\Assembler:
+        arguments:
+            - '@Gally\Search\Elasticsearch\Adapter\Common\Request\Query\Assembler'
+
+    gally.search.container.configuration.factory:
+        parent: Gally\DependencyInjection\GenericFactory
+        arguments:
+            - 'Gally\Search\Elasticsearch\Request'
+
+    Gally\Search\Elasticsearch\Request\ContainerConfigurationFactoryInterface: '@gally.search.container.configuration.factory'
+    
+    Gally\Search\Elasticsearch\Request\Aggregation\Provider\GenericAggregationProvider: ~
+    
+    Gally\Search\Elasticsearch\Request\Aggregation\Provider\FilterableSourceFields:
+        arguments:
+            - '@Gally\Search\Repository\Facet\ConfigurationRepository'
+            - '@Gally\Category\Service\CurrentCategoryProvider'
+            - !tagged_iterator { tag: 'gally.search.aggregation.resolver' }
+            - {
+                coverageModifier: '@Gally\Search\Elasticsearch\Request\Aggregation\Modifier\Coverage',
+                viewMore: '@Gally\Search\Elasticsearch\Request\Aggregation\Modifier\ViewMore',
+            }
+
+    gally.search.request.factory:
+        class: Gally\Search\Elasticsearch\RequestFactory
+
+    Gally\Search\Elasticsearch\RequestFactoryInterface:
+        public: true
+        alias: gally.search.request.factory
+        
+    Gally\Search\Elasticsearch\Builder\Request\Query\Fulltext\SearchableFieldFilter: ~
+    Gally\Search\Elasticsearch\Builder\Request\Query\Fulltext\FuzzyFieldFilter: ~
+    
+    Gally\Search\Elasticsearch\Builder\Request\Query\Fulltext\FulltextQueryBuilder:
+        arguments:
+            - '@Gally\Search\Elasticsearch\Request\QueryFactory'
+            - '@Gally\Search\Elasticsearch\Builder\Request\Query\Fulltext\SearchableFieldFilter'
+            - '@Gally\Search\Elasticsearch\Builder\Request\Query\Fulltext\FuzzyFieldFilter'
+
+    Gally\Search\Elasticsearch\Builder\Request\Query\QueryBuilder:
+        arguments:
+            - '@Gally\Search\Elasticsearch\Request\QueryFactory'
+            - '@Gally\Search\Elasticsearch\Builder\Request\Query\Fulltext\FulltextQueryBuilder'
+            - '@Gally\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
+
+    Gally\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder:
+        arguments:
+            - '@Gally\Search\Elasticsearch\Request\QueryFactory'
+
+    Gally\Search\Elasticsearch\Builder\Request\SortOrder\SortOrderBuilder:
+        arguments:
+            - '@Gally\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
+
+    Gally\Search\Elasticsearch\Builder\Request\Aggregation\AggregationBuilder:
+        arguments:
+            - '@Gally\Search\Elasticsearch\Request\AggregationFactory'
+            - '@Gally\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
+                
+    Gally\Search\Elasticsearch\Spellchecker:
+        arguments:
+            - '@api_platform.elasticsearch.client'
+            - '@Gally\Cache\Service\CacheManagerInterface'
+
+    Gally\Search\Elasticsearch\Builder\Request\SimpleRequestBuilder:
+        arguments:
+            - '@Gally\Search\Elasticsearch\RequestFactoryInterface'
+            - '@Gally\Search\Elasticsearch\Builder\Request\Query\QueryBuilder'
+            - '@Gally\Search\Elasticsearch\Builder\Request\SortOrder\SortOrderBuilder'
+            - '@Gally\Search\Elasticsearch\Builder\Request\Aggregation\AggregationBuilder'
+            - '@Gally\Search\Elasticsearch\Spellchecker\RequestFactoryInterface'
+            - '@Gally\Search\Elasticsearch\Spellchecker'
+
+    Gally\Search\Elasticsearch\Builder\Response\AggregationBuilder: ~
+
+    Gally\Search\Elasticsearch\Adapter\Common\Request\Mapper:
+        arguments:
+            - '@Gally\Search\Elasticsearch\Adapter\Common\Request\Query\Assembler'
+            - '@Gally\Search\Elasticsearch\Adapter\Common\Request\SortOrder\Assembler'
+            - '@Gally\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler'
+
+    Gally\Search\Elasticsearch\Adapter:
+        arguments:
+            - '@Gally\Search\Elasticsearch\Adapter\Common\Request\Mapper'
+            - '@api_platform.elasticsearch.client'
+            - '@Gally\Search\Elasticsearch\Builder\Response\AggregationBuilder'
+            - '@logger'
+
+    Gally\Search\GraphQl\Type\Definition\SortEnumType:
+        lazy: true
+        tags:
+            - { name: api_platform.graphql.type }
+
+    Gally\Search\GraphQl\Type\Definition\SortInputType:
+        arguments:
+            - '@Gally\Search\GraphQl\Type\Definition\SortEnumType'
+            - '@Gally\Entity\Service\PriceGroupProvider'
+            - '@Gally\Search\Service\ReverseSourceFieldProvider'
+        tags:
+            - { name: api_platform.graphql.type }
+
+    Gally\Search\GraphQl\Type\Definition\SortOptionType:
+        arguments:
+            - '@Gally\Search\GraphQl\Type\Definition\SortEnumType'
+        tags:
+            - { name: api_platform.graphql.type }
+
+    Gally\Search\GraphQl\Type\Definition\FieldFilterInputType:
+        arguments:
+            - {
+                boolFilter: '@Gally\Search\GraphQl\Type\Definition\Filter\BoolFilterInputType',
+                equalFilter: '@Gally\Search\GraphQl\Type\Definition\Filter\EqualTypeFilterInputType',
+                matchFilter: '@Gally\Search\GraphQl\Type\Definition\Filter\MatchFilterInputType',
+                rangeFilter: '@Gally\Search\GraphQl\Type\Definition\Filter\RangeFilterInputType',
+                existFilter: '@Gally\Search\GraphQl\Type\Definition\Filter\ExistFilterInputType',
+            }
+            - '@Gally\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
+        tags:
+            - { name: api_platform.graphql.type }
+
+    Gally\Search\GraphQl\Type\Definition\Filter\BoolFilterInputType:
+        lazy: true
+        arguments:
+            - '@Gally\Search\GraphQl\Type\Definition\FieldFilterInputType'
+            - '@Gally\Search\Elasticsearch\Request\QueryFactory'
+        tags:
+            - { name: api_platform.graphql.type }
+
+    Gally\Search\GraphQl\Type\Definition\Filter\ExistFilterInputType:
+        lazy: true
+        arguments:
+            - '@Gally\Search\Service\ReverseSourceFieldProvider'
+            - '@Gally\Search\Elasticsearch\Request\QueryFactory'
+        tags:
+            - { name: api_platform.graphql.type }
+
+    Gally\Search\GraphQl\Type\Definition\Filter\EqualTypeFilterInputType:
+        arguments:
+            - '@Gally\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
+            - '@Gally\Search\Service\ReverseSourceFieldProvider'
+        tags:
+            - { name: api_platform.graphql.type }
+
+    Gally\Search\GraphQl\Type\Definition\Filter\MatchFilterInputType:
+        arguments:
+            - '@Gally\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
+            - '@Gally\Search\Service\ReverseSourceFieldProvider'
+        tags:
+            - { name: api_platform.graphql.type }
+
+    Gally\Search\GraphQl\Type\Definition\Filter\RangeFilterInputType:
+        arguments:
+            - '@Gally\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
+            - '@Gally\Search\Service\ReverseSourceFieldProvider'
+        tags:
+            - { name: api_platform.graphql.type }
+
+    Gally\Search\Service\GraphQl\FilterManager:
+        arguments:
+            - '@Gally\Search\GraphQl\Type\Definition\FieldFilterInputType'
+            - '%api_platform.graphql.nesting_separator%'
+
+    Gally\Search\DataProvider\DocumentDataProvider:
+        arguments:
+            - '@serializer'
+            - '@api_platform.pagination'
+            - '@Gally\Metadata\Repository\MetadataRepository'
+            - '@Gally\Catalog\Repository\LocalizedCatalogRepository'
+            - '@Gally\Search\Elasticsearch\Builder\Request\SimpleRequestBuilder'
+            - '@Gally\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider'
+            - '@Gally\Search\Elasticsearch\Adapter'
+            - '@Gally\Search\Service\GraphQl\FilterManager'
+            - '@Gally\Search\GraphQl\Type\Definition\SortInputType'
+        tags:
+            - { name: api_platform.collection_data_provider }
+
+    Gally\Search\Serializer\DocumentDenormalizer:
+        tags:
+            - { name: serializer.normalizer }
+
+    Gally\Search\Resolver\DummyResolver:
+        tags:
+            - { name: api_platform.graphql.query_resolver }
+            
+    Gally\Search\Decoration\GraphQl\AddAggregationsType:
+        decorates: api_platform.graphql.type_builder
+        arguments:
+            - '@api_platform.graphql.types_container'
+            - '@.inner'
+            
+    Gally\Search\Decoration\GraphQl\AddAggregationsData:
+        decorates: api_platform.graphql.resolver.stage.serialize
+        decoration_priority: 10
+        arguments:
+#            - '@api_platform.graphql.types_container'
+            - '@.inner'
+            - '@Gally\Metadata\Repository\MetadataRepository'
+            - '@Gally\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider'
+            - '@Gally\Catalog\Repository\LocalizedCatalogRepository'
+            - '@Gally\Search\Repository\Facet\ConfigurationRepository'
+            - '@Gally\Category\Service\CurrentCategoryProvider'
+            - '@Gally\Search\Service\ReverseSourceFieldProvider'
+            - '@Gally\Category\Repository\CategoryConfigurationRepository'
+            - !tagged_iterator { tag: 'gally.entity_api.filter' }
+            
+    Gally\Search\Decoration\GraphQl\AddAggregationsInContext:
+        decorates: api_platform.graphql.serializer.context_builder
+        arguments:
+            - '@.inner'
+    
+    Gally\Search\Elasticsearch\Request\Container\RelevanceConfiguration\GenericRelevanceConfiguration:
+        arguments:
+            - '%gally.relevance%'
+    
+    Gally\Search\Decoration\GraphQl\AddSortInfoType:
+        decorates: api_platform.graphql.type_builder
+        arguments:
+            - '@api_platform.graphql.types_container'
+            - '@Gally\Search\GraphQl\Type\Definition\SortOptionType'
+            - '@.inner'
+
+    Gally\Search\Decoration\GraphQl\AddSortInfoData:
+        decorates: api_platform.graphql.resolver.stage.serialize
+        decoration_priority: 2
+        arguments:
+            - !tagged_iterator { tag: 'gally.product_api.sort_order_provider', index_by: 'provider_name' }
+            - '@Gally\Search\Service\ReverseSourceFieldProvider'
+            - '@Gally\Metadata\Repository\MetadataRepository'
+            - '@.inner'
+
+    Gally\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider: ~
+    
+    
+    gally.search.spellchecker.request.factory:
+        class: Gally\Search\Elasticsearch\Spellchecker\RequestFactory
+
+    Gally\Search\Elasticsearch\Spellchecker\RequestFactoryInterface:
+        public: true
+        alias: gally.search.spellchecker.request.factory
+
+    Gally\Search\EventSubscriber\GenerateFacetConfigurationId:
+        tags:
+            - { name: doctrine.event_subscriber }
+                
+    Gally\Search\Service\SearchSettingsProvider:
+        arguments:
+            - '%gally.search_settings%'
+    
+    Gally\Search\Service\ReverseSourceFieldProvider:
+        arguments:
+            - '@Gally\Metadata\Repository\SourceFieldRepository'
+            - '%api_platform.graphql.nesting_separator%'
+
+    Gally\Search\Elasticsearch\Request\Aggregation\CoverageProvider:
+        arguments:
+            - '@Gally\Search\Elasticsearch\Adapter'
+
+    Gally\Search\Elasticsearch\Request\Aggregation\Modifier\Coverage:
+        arguments:
+            - '@Gally\Search\Elasticsearch\Builder\Request\SimpleRequestBuilder'
+            - '@Gally\Search\Elasticsearch\Request\Aggregation\CoverageProvider'
+            - '@Gally\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider'
+
+    Gally\Search\Elasticsearch\Request\Aggregation\Provider\CoverageAggregationProvider:
+        arguments:
+            - '@Gally\Metadata\Repository\SourceFieldRepository'
+            - '@Gally\Search\Elasticsearch\Request\QueryFactory'
+            - '@Gally\Search\Service\SearchSettingsProvider'
+            - '@Gally\Entity\Service\PriceGroupProvider'
+                
+    Gally\Search\Service\ViewMoreContext: ~
+
+    Gally\Search\Elasticsearch\Request\Aggregation\Modifier\ViewMore:
+        arguments:
+            - '@Gally\Search\Service\ViewMoreContext'
+                
+    Gally\Search\DataProvider\Facet\OptionDataProvider:
+        arguments:
+            - '@Gally\Metadata\Repository\MetadataRepository'
+            - '@Gally\Catalog\Repository\LocalizedCatalogRepository'
+            - '@Gally\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider'
+            - '@Gally\Search\Elasticsearch\Builder\Request\SimpleRequestBuilder'
+            - '@Gally\Search\Elasticsearch\Adapter'
+            - '@Gally\Search\Service\GraphQl\FilterManager'
+            - '@Gally\Search\Service\ViewMoreContext'
+            - '@Gally\Search\Service\ReverseSourceFieldProvider'
+            - '@Gally\Category\Repository\CategoryConfigurationRepository'
+            - '%api_platform.graphql.nesting_separator%'
+        tags:
+            - { name: api_platform.collection_data_provider }
+
+    gally.container_configuration.coverage_rate.factory:
+        parent: 'Gally\Search\Elasticsearch\Request\Container\Configuration\GenericContainerConfigurationFactory'
+        arguments:
+            $aggregationProvider: '@Gally\Search\Elasticsearch\Request\Aggregation\Provider\CoverageAggregationProvider'
+        tags:
+            - { name: gally.container_configuration.factory, requestType: coverage_rate }

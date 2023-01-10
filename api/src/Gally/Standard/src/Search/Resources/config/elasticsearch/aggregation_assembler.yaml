@@ -1,0 +1,136 @@
+services:
+    
+    Gally\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Metric:
+        public: false
+    
+    gally.search.request.aggregation.assembler.metric.avg:
+        parent: Gally\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Metric
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'gally.search.request.aggregation.assembler', aggregationType: 'avgMetric' }
+    
+    gally.search.request.aggregation.assembler.metric.min:
+        parent: Gally\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Metric
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'gally.search.request.aggregation.assembler', aggregationType: 'minMetric' }
+    
+    gally.search.request.aggregation.assembler.metric.max:
+        parent: Gally\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Metric
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'gally.search.request.aggregation.assembler', aggregationType: 'maxMetric' }
+    
+    gally.search.request.aggregation.assembler.metric.sum:
+        parent: Gally\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Metric
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'gally.search.request.aggregation.assembler', aggregationType: 'sumMetric' }
+    
+    gally.search.request.aggregation.assembler.metric.stats:
+        parent: Gally\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Metric
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'gally.search.request.aggregation.assembler', aggregationType: 'statsMetric' }
+    
+    gally.search.request.aggregation.assembler.metric.extended_stats:
+        parent: Gally\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Metric
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'gally.search.request.aggregation.assembler', aggregationType: 'extendedStatsMetric' }
+    
+    gally.search.request.aggregation.assembler.metric.cardinality:
+        parent: Gally\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Metric
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'gally.search.request.aggregation.assembler', aggregationType: 'cardinalityMetric' }
+    
+    gally.search.request.aggregation.assembler.metric.percentiles:
+        parent: Gally\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Metric
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'gally.search.request.aggregation.assembler', aggregationType: 'percentilesMetric' }
+    
+    gally.search.request.aggregation.assembler.metric.top_hits:
+        parent: Gally\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Metric
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'gally.search.request.aggregation.assembler', aggregationType: 'topHitsMetric' }
+    
+    Gally\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Bucket\DateHistogram:
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'gally.search.request.aggregation.assembler', aggregationType: 'dateHistogramBucket' }
+    
+    Gally\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Bucket\Histogram:
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'gally.search.request.aggregation.assembler', aggregationType: 'histogramBucket' }
+    
+    Gally\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Bucket\QueryGroup:
+        abstract: false
+        lazy: true
+        arguments:
+            - '@Gally\Search\Elasticsearch\Adapter\Common\Request\Query\Assembler'
+        tags:
+            - { name: 'gally.search.request.aggregation.assembler', aggregationType: 'queryGroupBucket' }
+    
+    Gally\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Bucket\ReverseNested:
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'gally.search.request.aggregation.assembler', aggregationType: 'reverseNestedBucket' }
+    
+    Gally\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Bucket\SignificantTerms:
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'gally.search.request.aggregation.assembler', aggregationType: 'significantTermsBucket' }
+    
+    Gally\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Bucket\Terms:
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'gally.search.request.aggregation.assembler', aggregationType: 'termsBucket' }
+
+    Gally\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Bucket\MultiTerms:
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'gally.search.request.aggregation.assembler', aggregationType: 'multiTermsBucket' }
+
+    Gally\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Pipeline\BucketSelector:
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'gally.search.request.aggregation.assembler', aggregationType: 'bucketSelectorPipeline' }
+    
+    Gally\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Pipeline\MaxBucket:
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'gally.search.request.aggregation.assembler', aggregationType: 'maxBucketPipeline' }
+    
+    Gally\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler\Pipeline\MovingFunction:
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'gally.search.request.aggregation.assembler', aggregationType: 'movingFunctionPipeline' }
+
+    Gally\Search\Elasticsearch\Adapter\Common\Request\Aggregation\Assembler:
+        public: true
+        lazy: true
+        arguments: 
+            - '@Gally\Search\Elasticsearch\Adapter\Common\Request\Query\Assembler'
+            - !tagged_iterator { tag: 'gally.search.request.aggregation.assembler', index_by: 'aggregationType' }

@@ -1,0 +1,1039 @@
+include:
+    - ../fixtures/metadata.yaml
+
+Gally\Metadata\Model\SourceField:
+    product_accessory_announcement_date:
+        metadata: '@product'
+        code: accessory_announcement_date
+        type: text
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_accessory_brand:
+        metadata: '@product'
+        code: accessory_brand
+        type: select
+        isSearchable: true
+        weight: 1
+        isSpellchecked: true
+        isFilterable: true
+        isSortable: true
+        isUsedForRules: true
+    product_accessory_custom_engraving_text:
+        metadata: '@product'
+        code: accessory_custom_engraving_text
+        type: text
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_accessory_description_detailed_extra:
+        metadata: '@product'
+        code: accessory_description_detailed_extra
+        type: text
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_accessory_description_extra:
+        metadata: '@product'
+        code: accessory_description_extra
+        type: text
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_accessory_description_pagebuilder_extra:
+        metadata: '@product'
+        code: accessory_description_pagebuilder_extra
+        type: text
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_accessory_gemstone_addon:
+        metadata: '@product'
+        code: accessory_gemstone_addon
+        type: select
+        isSearchable: true
+        weight: 1
+        isSpellchecked: true
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_accessory_recyclable_material:
+        metadata: '@product'
+        code: accessory_recyclable_material
+        type: select
+        isSearchable: true
+        weight: 1
+        isSpellchecked: true
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_color:
+        metadata: '@product'
+        code: color
+        type: select
+        isSearchable: true
+        weight: 1
+        isSpellchecked: true
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_cost:
+        metadata: '@product'
+        code: cost
+        type: float
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: true
+    product_country_of_manufacture:
+        metadata: '@product'
+        code: country_of_manufacture
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_custom_design:
+        metadata: '@product'
+        code: custom_design
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_custom_design_from:
+        metadata: '@product'
+        code: custom_design_from
+        type: text
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_custom_design_to:
+        metadata: '@product'
+        code: custom_design_to
+        type: text
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_custom_layout:
+        metadata: '@product'
+        code: custom_layout
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_description:
+        metadata: '@product'
+        code: description
+        type: text
+        isSearchable: true
+        weight: 1
+        isSpellchecked: true
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_description_extra:
+        metadata: '@product'
+        code: description_extra
+        type: text
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_fashion_color:
+        metadata: '@product'
+        code: fashion_color
+        type: select
+        isSearchable: true
+        weight: 1
+        isSpellchecked: true
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_fashion_material:
+        metadata: '@product'
+        code: fashion_material
+        type: select
+        isSearchable: true
+        weight: 1
+        isSpellchecked: true
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_fashion_size:
+        metadata: '@product'
+        code: fashion_size
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_fashion_style:
+        metadata: '@product'
+        code: fashion_style
+        type: select
+        isSearchable: true
+        weight: 1
+        isSpellchecked: true
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_gallery:
+        metadata: '@product'
+        code: gallery
+        type: text
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_gift_message_available:
+        metadata: '@product'
+        code: gift_message_available
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_has_video:
+        metadata: '@product'
+        code: has_video
+        type: select
+        isSearchable: true
+        weight: 1
+        isSpellchecked: true
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_image:
+        metadata: '@product'
+        code: image
+        type: text
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: true
+    product_image_label:
+        metadata: '@product'
+        code: image_label
+        type: text
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_links_exist:
+        metadata: '@product'
+        code: links_exist
+        type: int
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_links_purchased_separately:
+        metadata: '@product'
+        code: links_purchased_separately
+        type: int
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_links_title:
+        metadata: '@product'
+        code: links_title
+        type: text
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_manufacturer:
+        metadata: '@product'
+        code: manufacturer
+        type: select
+        isSearchable: true
+        weight: 1
+        isSpellchecked: true
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_meta_description:
+        metadata: '@product'
+        code: meta_description
+        type: text
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_meta_keyword:
+        metadata: '@product'
+        code: meta_keyword
+        type: text
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_meta_title:
+        metadata: '@product'
+        code: meta_title
+        type: text
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_minimal_price:
+        metadata: '@product'
+        code: minimal_price
+        type: float
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_msrp:
+        metadata: '@product'
+        code: msrp
+        type: float
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_msrp_display_actual_price_type:
+        metadata: '@product'
+        code: msrp_display_actual_price_type
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_news_from_date:
+        metadata: '@product'
+        code: news_from_date
+        type: text
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_news_to_date:
+        metadata: '@product'
+        code: news_to_date
+        type: text
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_old_id:
+        metadata: '@product'
+        code: old_id
+        type: int
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_options_container:
+        metadata: '@product'
+        code: options_container
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_page_layout:
+        metadata: '@product'
+        code: page_layout
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_price_type:
+        metadata: '@product'
+        code: price_type
+        type: int
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_price_view:
+        metadata: '@product'
+        code: price_view
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_samples_title:
+        metadata: '@product'
+        code: samples_title
+        type: text
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_shipment_type:
+        metadata: '@product'
+        code: shipment_type
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_short_description:
+        metadata: '@product'
+        code: short_description
+        type: text
+        isSearchable: true
+        weight: 1
+        isSpellchecked: true
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_sku_type:
+        metadata: '@product'
+        code: sku_type
+        type: int
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_small_image:
+        metadata: '@product'
+        code: small_image
+        type: text
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_small_image_label:
+        metadata: '@product'
+        code: small_image_label
+        type: text
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_special_from_date:
+        metadata: '@product'
+        code: special_from_date
+        type: text
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_special_price:
+        metadata: '@product'
+        code: special_price
+        type: float
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_special_to_date:
+        metadata: '@product'
+        code: special_to_date
+        type: text
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_status:
+        metadata: '@product'
+        code: status
+        type: select
+        isSearchable: true
+        weight: 1
+        isSpellchecked: true
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_swatch_image:
+        metadata: '@product'
+        code: swatch_image
+        type: text
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_tax_class_id:
+        metadata: '@product'
+        code: tax_class_id
+        type: select
+        isSearchable: true
+        weight: 1
+        isSpellchecked: true
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_thumbnail:
+        metadata: '@product'
+        code: thumbnail
+        type: text
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_thumbnail_label:
+        metadata: '@product'
+        code: thumbnail_label
+        type: text
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_tier_price:
+        metadata: '@product'
+        code: tier_price
+        type: float
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_url_key:
+        metadata: '@product'
+        code: url_key
+        type: text
+        isSearchable: true
+        weight: 1
+        isSpellchecked: true
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_url_path:
+        metadata: '@product'
+        code: url_path
+        type: text
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_video_file:
+        metadata: '@product'
+        code: video_file
+        type: text
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_visibility:
+        metadata: '@product'
+        code: visibility
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_weight:
+        metadata: '@product'
+        code: weight
+        type: float
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_weight_type:
+        metadata: '@product'
+        code: weight_type
+        type: int
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_has_options:
+        metadata: '@product'
+        code: has_options
+        type: boolean
+        isUsedForRules: true
+    product_activity:
+        metadata: '@product'
+        code: activity
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_allow_message:
+        metadata: '@product'
+        code: allow_message
+        type: int
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_allow_open_amount:
+        metadata: '@product'
+        code: allow_open_amount
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_category_gear:
+        metadata: '@product'
+        code: category_gear
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_climate:
+        metadata: '@product'
+        code: climate
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_collar:
+        metadata: '@product'
+        code: collar
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_eco_collection:
+        metadata: '@product'
+        code: eco_collection
+        type: boolean
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_email_template:
+        metadata: '@product'
+        code: email_template
+        type: text
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_erin_recommends:
+        metadata: '@product'
+        code: erin_recommends
+        type: boolean
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_es_is_discounted:
+        metadata: '@product'
+        code: es_is_discounted
+        type: boolean
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_es_is_in_stock:
+        metadata: '@product'
+        code: es_is_in_stock
+        type: boolean
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_features_bags:
+        metadata: '@product'
+        code: features_bags
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_format:
+        metadata: '@product'
+        code: format
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_gender:
+        metadata: '@product'
+        code: gender
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_giftcard_amounts:
+        metadata: '@product'
+        code: giftcard_amounts
+        type: float
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_giftcard_type:
+        metadata: '@product'
+        code: giftcard_type
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_gift_wrapping_available:
+        metadata: '@product'
+        code: gift_wrapping_available
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_gift_wrapping_price:
+        metadata: '@product'
+        code: gift_wrapping_price
+        type: float
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_is_redeemable:
+        metadata: '@product'
+        code: is_redeemable
+        type: int
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_is_returnable:
+        metadata: '@product'
+        code: is_returnable
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_lifetime:
+        metadata: '@product'
+        code: lifetime
+        type: int
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_material:
+        metadata: '@product'
+        code: material
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_new:
+        metadata: '@product'
+        code: new
+        type: boolean
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_open_amount_max:
+        metadata: '@product'
+        code: open_amount_max
+        type: float
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_open_amount_min:
+        metadata: '@product'
+        code: open_amount_min
+        type: float
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_pattern:
+        metadata: '@product'
+        code: pattern
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_performance_fabric:
+        metadata: '@product'
+        code: performance_fabric
+        type: boolean
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_purpose:
+        metadata: '@product'
+        code: purpose
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_sale:
+        metadata: '@product'
+        code: sale
+        type: boolean
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_size:
+        metadata: '@product'
+        code: size
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_sleeve:
+        metadata: '@product'
+        code: sleeve
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_strap_bags:
+        metadata: '@product'
+        code: strap_bags
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_style_bags:
+        metadata: '@product'
+        code: style_bags
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_style_bottom:
+        metadata: '@product'
+        code: style_bottom
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_style_general:
+        metadata: '@product'
+        code: style_general
+        type: select
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: true
+        isSortable: false
+        isUsedForRules: true
+    product_use_config_allow_message:
+        metadata: '@product'
+        code: use_config_allow_message
+        type: int
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_use_config_email_template:
+        metadata: '@product'
+        code: use_config_email_template
+        type: int
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_use_config_is_redeemable:
+        metadata: '@product'
+        code: use_config_is_redeemable
+        type: int
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false
+    product_use_config_lifetime:
+        metadata: '@product'
+        code: use_config_lifetime
+        type: int
+        isSearchable: false
+        weight: 1
+        isSpellchecked: false
+        isFilterable: false
+        isSortable: false
+        isUsedForRules: false

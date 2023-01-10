@@ -1,0 +1,6 @@
+services:
+    Gally\Analysis\Service\Config:
+        public: true
+        arguments:
+            - '@Gally\Cache\Service\CacheManagerInterface'
+            - '%gally.analysis%'

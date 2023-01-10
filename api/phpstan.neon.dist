@@ -5,7 +5,7 @@ parameters:
     excludePaths:
         - src/App
         - src/Acme
-        - src/Elasticsuite/**/Legacy
+        - src/Gally/**/Legacy
     inferPrivatePropertyTypeFromConstructor: true
     symfony:
         container_xml_path: var/cache/dev/KernelDevDebugContainer.xml
