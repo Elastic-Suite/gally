@@ -11,7 +11,7 @@ versions in the future.
 
 @package   Elasticsuite
 @author    ElasticSuite Team <elasticsuite@smile.fr>
-@copyright 2022 Smile
+@copyright 2022-present Smile
 @license   Licensed to Smile-SA. All rights reserved. No warranty, explicit or implicit, provided.
            Unauthorized copying of this file, via any medium, is strictly prohibited.
 HEADER;
