@@ -28,9 +28,6 @@
         <testsuite name="Gally Test Suite Unit">
             <directory>src/Gally/**/**/**/Tests/Unit</directory>
         </testsuite>
-        <testsuite name="Acme Test Suite">
-            <directory>src/Acme/**/src/**/Tests/</directory>
-        </testsuite>
     </testsuites>
 
     <coverage processUncoveredFiles="true">

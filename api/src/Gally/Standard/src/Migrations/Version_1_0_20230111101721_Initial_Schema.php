@@ -1,30 +1,34 @@
 <?php
+/**
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Gally to newer versions in the future.
+ *
+ * @package   Gally
+ * @author    Gally Team <elasticsuite@smile.fr>
+ * @copyright 2022-present Smile
+ * @license   Open Software License v. 3.0 (OSL-3.0)
+ */
 
 declare(strict_types=1);
 
-namespace DoctrineMigrations;
+namespace Gally\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 
-/**
- * Auto-generated Migration: Please modify to your needs!
- */
-final class Version20230109181405 extends AbstractMigration
+final class Version_1_0_20230111101721_Initial_Schema extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return '';
+        return 'Initial schema';
     }
 
     public function up(Schema $schema): void
     {
-        // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE SEQUENCE catalog_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE SEQUENCE category_configuration_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE SEQUENCE category_product_merchandising_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
-        $this->addSql('CREATE SEQUENCE declarative_greeting_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
-        $this->addSql('CREATE SEQUENCE example_category_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE SEQUENCE localized_catalog_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE SEQUENCE metadata_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE SEQUENCE source_field_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
@@ -49,8 +53,6 @@ final class Version20230109181405 extends AbstractMigration
         $this->addSql('CREATE UNIQUE INDEX unique_category_id_product_id ON category_product_merchandising (category_id, product_id) WHERE ((catalog_id IS NULL) AND (localized_catalog_id IS NULL))');
         $this->addSql('CREATE UNIQUE INDEX unique_category_id_product_id_catalog_id ON category_product_merchandising (category_id, product_id, catalog_id) WHERE ((catalog_id IS NOT NULL) AND (localized_catalog_id IS NULL))');
         $this->addSql('CREATE UNIQUE INDEX unique_category_id_product_id_catalog_id_localized_catalog_id ON category_product_merchandising (category_id, product_id, catalog_id, localized_catalog_id) WHERE ((catalog_id IS NOT NULL) AND (localized_catalog_id IS NOT NULL))');
-        $this->addSql('CREATE TABLE declarative_greeting (id INT NOT NULL, name VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
-        $this->addSql('CREATE TABLE example_category (id INT NOT NULL, name VARCHAR(255) NOT NULL, description TEXT DEFAULT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE TABLE facet_configuration (id VARCHAR(255) NOT NULL, source_field_id INT NOT NULL, category_id VARCHAR(255) DEFAULT NULL, display_mode VARCHAR(255) DEFAULT NULL, coverage_rate INT DEFAULT NULL, max_size INT DEFAULT NULL, sort_order VARCHAR(255) DEFAULT NULL, is_recommendable BOOLEAN DEFAULT NULL, is_virtual BOOLEAN DEFAULT NULL, position INT DEFAULT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_108F591B7173162 ON facet_configuration (source_field_id)');
         $this->addSql('CREATE INDEX IDX_108F591B12469DE2 ON facet_configuration (category_id)');
@@ -97,7 +99,6 @@ final class Version20230109181405 extends AbstractMigration
 
     public function down(Schema $schema): void
     {
-        // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE SCHEMA public');
         $this->addSql('ALTER TABLE category_configuration DROP CONSTRAINT FK_BB39809CCC3C66FC');
         $this->addSql('ALTER TABLE category_product_merchandising DROP CONSTRAINT FK_CF6203D8CC3C66FC');
@@ -117,8 +118,6 @@ final class Version20230109181405 extends AbstractMigration
         $this->addSql('DROP SEQUENCE catalog_id_seq CASCADE');
         $this->addSql('DROP SEQUENCE category_configuration_id_seq CASCADE');
         $this->addSql('DROP SEQUENCE category_product_merchandising_id_seq CASCADE');
-        $this->addSql('DROP SEQUENCE declarative_greeting_id_seq CASCADE');
-        $this->addSql('DROP SEQUENCE example_category_id_seq CASCADE');
         $this->addSql('DROP SEQUENCE localized_catalog_id_seq CASCADE');
         $this->addSql('DROP SEQUENCE metadata_id_seq CASCADE');
         $this->addSql('DROP SEQUENCE source_field_id_seq CASCADE');
@@ -130,8 +129,6 @@ final class Version20230109181405 extends AbstractMigration
         $this->addSql('DROP TABLE category');
         $this->addSql('DROP TABLE category_configuration');
         $this->addSql('DROP TABLE category_product_merchandising');
-        $this->addSql('DROP TABLE declarative_greeting');
-        $this->addSql('DROP TABLE example_category');
         $this->addSql('DROP TABLE facet_configuration');
         $this->addSql('DROP TABLE localized_catalog');
         $this->addSql('DROP TABLE metadata');
