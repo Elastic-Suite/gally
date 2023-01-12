@@ -32,6 +32,12 @@ COPY . ./
 
 FROM api_platform_pwa_common AS api_platform_pwa_ci
 
+RUN set -xe; \
+    ln -Tsr gally-admin/packages/components pwa/node_modules/gally-admin-components; \
+    ln -Tsr gally-admin/packages/shared pwa/node_modules/gally-admin-shared; \
+    ln -Tsr gally-admin/packages/components example-app/node_modules/gally-admin-components ; \
+    ln -Tsr gally-admin/packages/shared example-app/node_modules/gally-admin-shared; \
+
 CMD ["yarn", "dev"]
 
 
@@ -113,7 +119,7 @@ CMD ["yarn", "start"]
 
 # "build" stage
 # depends on the "common" stage above
-FROM api_platform_pwa_ci AS api_platform_pwa_prod
+FROM api_platform_pwa_common AS api_platform_pwa_prod
 
 ENV NODE_ENV production
 ARG NEXT_PUBLIC_ENTRYPOINT
