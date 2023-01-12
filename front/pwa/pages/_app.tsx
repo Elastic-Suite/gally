@@ -3,7 +3,7 @@ import { Inter } from '@next/font/google'
 import type { AppProps } from 'next/app'
 import Script from 'next/script'
 import Head from 'next/head'
-import { GallyApp } from 'gally-admin-components'
+import dynamic from 'next/dynamic'
 
 import 'gally-admin-components/dist/style.css'
 
@@ -12,6 +12,13 @@ const inter = Inter({
   subsets: ['latin'],
   variable: '--gally-font',
 })
+
+const GallyApp = dynamic(
+  () => import('gally-admin-components').then((mod) => mod.GallyApp),
+  {
+    ssr: false,
+  }
+)
 
 function App(props: AppProps): JSX.Element {
   return (
