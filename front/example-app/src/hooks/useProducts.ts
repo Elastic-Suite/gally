@@ -23,7 +23,7 @@ import { useProductSort } from './useProductSort'
 
 export function useProducts(
   requestType: ProductRequestType,
-  filters?: IProductFieldFilterInput
+  currentCategoryId?: string,
 ): IProductsHook {
   const graphqlApi = useApiGraphql()
   const [search, setSearch] = useState('')
@@ -34,11 +34,8 @@ export function useProducts(
   const [activeFilters, setActiveFilters] = useState<IActiveFilters>([])
   const [moreOptions, setMoreOptions] = useState<IFilterMoreOptions>(new Map())
   const queryFilters: IProductFieldFilterInput = useMemo(
-    () => ({
-      ...filters,
-      ...getProductFilters(activeFilters),
-    }),
-    [activeFilters, filters]
+    () => getProductFilters(activeFilters),
+    [activeFilters]
   )
 
   const [products, setProducts, load, debouncedLoad] =
@@ -77,6 +74,9 @@ export function useProducts(
         if (sort) {
           variables.sort = { [sort]: sortOrder }
         }
+        if (currentCategoryId) {
+          variables.currentCategoryId = currentCategoryId
+        }
         const loadFunction = activeFilters.length === 0 ? load : debouncedLoad
         return loadFunction(
           getSearchProductsQuery(queryFilters, true),
@@ -87,6 +87,7 @@ export function useProducts(
     },
     [
       activeFilters,
+      currentCategoryId,
       debouncedLoad,
       load,
       localizedCatalogId,
@@ -105,7 +106,7 @@ export function useProducts(
     (filter: IGraphqlProductAggregation) => {
       const variables: IGraphqlViewMoreFacetOptionsVariables = {
         aggregation: filter.field,
-        catalogId: String(localizedCatalogId),
+        localizedCatalog: String(localizedCatalogId),
       }
       if (search) {
         variables.search = search

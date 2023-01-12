@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo } from 'react'
+import { useContext, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { ICategory, ProductRequestType } from 'gally-admin-shared'
 
@@ -26,7 +26,6 @@ function findCategory(categories: ICategory[], id: string): ICategory {
 
 function Category(): JSX.Element {
   const { id } = useParams()
-  const filters = useMemo(() => ({ category__id: { eq: id } }), [id])
   const {
     activeFilters,
     loadMore,
@@ -43,7 +42,7 @@ function Category(): JSX.Element {
     sort,
     sortOptions,
     sortOrder,
-  } = useProducts(ProductRequestType.CATALOG, filters)
+  } = useProducts(ProductRequestType.CATALOG, id)
   const categories = useContext(categoryContext)
   const category = findCategory(categories, id)
 
@@ -81,4 +80,7 @@ function Category(): JSX.Element {
   )
 }
 
-export default Category
+export default function CategoryWrapper(): JSX.Element {
+  const { id } = useParams()
+  return <Category key={id} />
+}
