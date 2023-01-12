@@ -32,6 +32,7 @@ export const FacetLink = styled('button')(({ theme }) => ({
   flex: 1,
   marginRight: '16px',
   cursor: 'pointer',
+  marginBottom: theme.spacing(1),
 
   '&.active': {
     color: theme.palette.primary.main,
