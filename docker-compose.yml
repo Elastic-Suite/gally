@@ -135,6 +135,11 @@ services:
     ports:
       - 9200:9200
       # - 9300:9300
+    healthcheck:
+      test: curl --write-out %{http_code} --fail --silent --output /dev/null http://localhost:9200/_cluster/health?wait_for_status=green&timeout=5s >/dev/null || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 10
 
 # Mercure is installed as a Caddy module, prevent the Flex recipe from installing another service
 ###> symfony/mercure-bundle ###
