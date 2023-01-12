@@ -12,6 +12,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Checkout Gally admin
+        uses: actions/checkout@v3
+        with:
+          repository: 'Elastic-Suite/gally-admin'
+          ref: main
+          path: front/gally-admin
       - name: Cache Composer dependencies
         uses: actions/cache@v2
         with:
@@ -42,6 +48,9 @@ jobs:
       - name: Yarn Install dependencies
         working-directory: front
         run: yarn --frozen-lockfile
+      - name: Yarn build
+        working-directory: front/gally-admin
+        run: yarn build
       - name: Typescript
         working-directory: front
         run: yarn typescript:ci
