@@ -47,25 +47,25 @@ FROM api_platform_pwa_ci AS api_platform_pwa_dev
 # env variable needed for chokidar-cli
 ENV SHELL /bin/sh
 
-COPY ./docker-entrypoint-pwa.sh /docker-entrypoint.sh
-ENTRYPOINT ["/docker-entrypoint.sh"]
 
-RUN addgroup -g 1042 docker && \
-	adduser -u 1042 -G docker -h /home/docker -s /bin/sh -D docker
 
-RUN USER=docker && \
-	GROUP=docker && \
+RUN USER=node && \
+	GROUP=node && \
 	apk add --no-cache curl && \
 	curl -SsL https://github.com/boxboat/fixuid/releases/download/v0.5.1/fixuid-0.5.1-linux-amd64.tar.gz | tar -C /usr/local/bin -xzf - && \
 	chown root:root /usr/local/bin/fixuid && \
 	chmod 4755 /usr/local/bin/fixuid && \
 	mkdir -p /etc/fixuid && \
-	printf "user: $USER\ngroup: $GROUP\npaths:\n  - /usr/src/front" > /etc/fixuid/config.yml
+	printf "user: $USER\ngroup: $GROUP\npaths:\n  - /usr/src/front\n  - /home/node" > /etc/fixuid/config.yml
 
 RUN set -xe; \
   apk add --no-cache git;
 
-USER 1042
+COPY ./docker-entrypoint-pwa.sh /docker-entrypoint.sh
+ENTRYPOINT ["/docker-entrypoint.sh"]
+
+USER node
+ENV HOME=/home/node
 CMD ["yarn", "dev"]
 
 
