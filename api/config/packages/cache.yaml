@@ -20,15 +20,3 @@ framework:
 
         app: cache.adapter.redis_tag_aware
         default_redis_provider: redis://redis
-
-        # system: default adapters are apcu and phpfiles and are chained together
-        # in \Symfony\Bundle\FrameworkBundle\DependencyInjection\FrameworkExtension::registerCacheConfiguration:L.2124 
-          
-        # TODO Move this into Gally Bundle ?
-        # pools:
-            # gally.example.simple.cache:
-            #     adapter: cache.app
-
-            # gally.example.tags.cache:
-            #    adapter: cache.adapter.redis
-            #    tags: true
