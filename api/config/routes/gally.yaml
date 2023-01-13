@@ -1,0 +1,3 @@
+gally:
+    resource: .
+    type: gally

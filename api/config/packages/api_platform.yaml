@@ -1,23 +1,8 @@
 api_platform:
-    version: 1.0.0
+    mapping:
+        paths: [ '%kernel.project_dir%/src/Entity' ]
     elasticsearch:
         hosts: ['%env(ELASTICSEARCH_HOST)%']
-    patch_formats:
-        json: ['application/merge-patch+json']
-    swagger:
-        versions: [3]
-        api_keys:
-            apiKey:
-                name: Authorization
-                type: header
-    # Mercure integration, remove if unwanted
-    # mercure: ~
     http_cache:
         invalidation:
-            enabled: true
             varnish_urls: ['%env(VARNISH_URL)%']
-        max_age: 3600
-        shared_max_age: 7200
-        public: true
-    graphql:
-        nesting_separator: __
