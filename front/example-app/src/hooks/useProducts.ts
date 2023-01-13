@@ -105,7 +105,7 @@ export function useProducts(
     (filter: IGraphqlProductAggregation) => {
       const variables: IGraphqlViewMoreFacetOptionsVariables = {
         aggregation: filter.field,
-        catalogId: String(localizedCatalogId),
+        localizedCatalog: String(localizedCatalogId),
       }
       if (search) {
         variables.search = search
