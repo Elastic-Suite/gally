@@ -2,10 +2,9 @@ parameters:
     level: 5
     paths:
         - src
+        - vendor/gally/gally-standard
     excludePaths:
-        - src/App
         - src/Acme
-        - src/Gally/**/Legacy
     inferPrivatePropertyTypeFromConstructor: true
     symfony:
         container_xml_path: var/cache/dev/KernelDevDebugContainer.xml
