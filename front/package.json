@@ -8,6 +8,7 @@
     "dev:shared": "yarn --cwd ./gally-admin/packages/shared start",
     "build": "yarn --cwd ./pwa build",
     "build:pwa": "yarn --cwd ./pwa build",
+    "build:gally-admin": "yarn --cwd ./gally-admin/packages/shared build && yarn --cwd ./gally-admin/packages/components build",
     "build:example": "yarn --cwd ./example-app build",
     "build:storybook": "yarn --cwd ./pwa build-storybook",
     "build-storybook": "yarn --cwd ./pwa build-storybook",
