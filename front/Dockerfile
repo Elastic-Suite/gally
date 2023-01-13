@@ -33,10 +33,10 @@ COPY . ./
 FROM api_platform_pwa_common AS api_platform_pwa_ci
 
 RUN set -xe; \
-    ln -Tsr gally-admin/packages/components pwa/node_modules/gally-admin-components; \
-    ln -Tsr gally-admin/packages/shared pwa/node_modules/gally-admin-shared; \
-    ln -Tsr gally-admin/packages/components example-app/node_modules/gally-admin-components ; \
-    ln -Tsr gally-admin/packages/shared example-app/node_modules/gally-admin-shared; \
+    ln -Ts ../../gally-admin/packages/components pwa/node_modules/gally-admin-components; \
+    ln -Ts ../../gally-admin/packages/shared pwa/node_modules/gally-admin-shared; \
+    ln -Ts ../../gally-admin/packages/components example-app/node_modules/gally-admin-components ; \
+    ln -Ts ../../gally-admin/packages/shared example-app/node_modules/gally-admin-shared; \
 
 CMD ["yarn", "dev"]
 
