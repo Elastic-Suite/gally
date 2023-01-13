@@ -16,22 +16,16 @@ WORKDIR /usr/src/front
 
 ENV NEXT_TELEMETRY_DISABLED 1
 
-# prevent the reinstallation of node modules at every changes in the source code
-RUN mkdir -p ./example-app/coverage ./pwa/coverage
-COPY package.json yarn.lock ./
-COPY example-app/package.json ./example-app
-COPY pwa/package.json ./pwa
-COPY pwa/public ./pwa/public
+COPY . ./
 
 RUN set -xe; \
 	yarn install --frozen-lockfile;
-
-COPY . ./
 
 
 
 FROM api_platform_pwa_common AS api_platform_pwa_ci
 
+RUN mkdir -p ./example-app/coverage ./pwa/coverage
 RUN set -xe; \
     ln -Ts ../../gally-admin/packages/components pwa/node_modules/gally-admin-components; \
     ln -Ts ../../gally-admin/packages/shared pwa/node_modules/gally-admin-shared; \
