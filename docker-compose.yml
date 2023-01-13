@@ -32,6 +32,11 @@ services:
     environment:
       API_PLATFORM_CLIENT_GENERATOR_ENTRYPOINT: https://caddy
       NEXT_PUBLIC_ENTRYPOINT: https://caddy
+    healthcheck:
+      test: test $$(curl --connect-timeout 2 -s -o /dev/null -w ''%{http_code}'' http://localhost:3000) -eq 200
+      interval: 10s
+      timeout: 5s
+      retries: 10
 
   caddy:
     build:
