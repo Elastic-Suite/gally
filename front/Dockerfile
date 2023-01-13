@@ -36,7 +36,8 @@ RUN set -xe; \
     ln -Ts ../../gally-admin/packages/components pwa/node_modules/gally-admin-components; \
     ln -Ts ../../gally-admin/packages/shared pwa/node_modules/gally-admin-shared; \
     ln -Ts ../../gally-admin/packages/components example-app/node_modules/gally-admin-components ; \
-    ln -Ts ../../gally-admin/packages/shared example-app/node_modules/gally-admin-shared;
+    ln -Ts ../../gally-admin/packages/shared example-app/node_modules/gally-admin-shared; \
+    yarn build:gally-admin;
 
 CMD ["yarn", "dev"]
 
