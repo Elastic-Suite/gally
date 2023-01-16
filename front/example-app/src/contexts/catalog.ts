@@ -1,5 +1,5 @@
 import { createContext } from 'react'
-import { IGraphqlCatalog, ILocalizedCatalog } from 'gally-admin-shared'
+import { IGraphqlCatalog, ILocalizedCatalog } from '@elastic-suite/gally-admin-shared'
 
 export interface ICatalogContext {
   catalog: Partial<IGraphqlCatalog>

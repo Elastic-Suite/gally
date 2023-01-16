@@ -1,2 +1,2 @@
-import { Login } from 'gally-admin-components'
+import { Login } from '@elastic-suite/gally-admin-components'
 export default Login

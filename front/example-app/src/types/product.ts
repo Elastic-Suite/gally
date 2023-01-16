@@ -6,7 +6,7 @@ import {
   IGraphqlSearchProducts,
   IOptions,
   SortOrder,
-} from 'gally-admin-shared'
+} from '@elastic-suite/gally-admin-shared'
 
 import { IActiveFilters, IFilterMoreOptions } from './facet'
 

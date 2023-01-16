@@ -20,7 +20,7 @@ import {
   fetchApi,
   getListApiParameters,
   isError,
-} from 'gally-admin-shared'
+} from '@elastic-suite/gally-admin-shared'
 
 export function useApiFetch(secure = true): IFetchApi {
   return useCallback<IFetchApi>(

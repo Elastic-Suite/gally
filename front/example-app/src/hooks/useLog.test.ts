@@ -1,4 +1,4 @@
-import { log } from 'gally-admin-shared'
+import { log } from '@elastic-suite/gally-admin-shared'
 
 import { renderHookWithProviders } from '../utils/tests'
 

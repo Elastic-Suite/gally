@@ -1,5 +1,5 @@
 import { useContext, useMemo } from 'react'
-import { IResource, getResource, schemaContext } from 'gally-admin-shared'
+import { IResource, getResource, schemaContext } from '@elastic-suite/gally-admin-shared'
 
 export function useResource(resourceName: string): IResource {
   const api = useContext(schemaContext)

@@ -1,6 +1,6 @@
 import { ReactNode, useCallback, useEffect, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ProductRequestType } from 'gally-admin-shared'
+import { ProductRequestType } from '@elastic-suite/gally-admin-shared'
 
 import { searchContext } from '../../../contexts'
 import { useProducts } from '../../../hooks'

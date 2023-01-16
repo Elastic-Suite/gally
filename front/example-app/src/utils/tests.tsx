@@ -1,7 +1,7 @@
 import { RenderOptions, render, renderHook } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { ReactNode } from 'react'
-import { api } from 'gally-admin-shared'
+import { api } from '@elastic-suite/gally-admin-shared'
 
 import TestProvider from './TestProvider'
 
