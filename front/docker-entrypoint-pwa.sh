@@ -9,7 +9,13 @@ then
   cd gally-admin
   yarn install --frozen-lockfile;
   yarn build
-  cd ../pwa/node_modules
+  cd packages/shared/node_modules
+  ln -Ts ../../../../node_modules/react react
+  ln -Ts ../../../../node_modules/react-dom react-dom
+  cd ../../components/node_modules
+  ln -Ts ../../../../node_modules/react react
+  ln -Ts ../../../../node_modules/react-dom react-dom
+  cd ../../../../pwa/node_modules
   ln -Ts ../../gally-admin/packages/components gally-admin-components
   ln -Ts ../../gally-admin/packages/shared gally-admin-shared
   cd ../..
