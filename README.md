@@ -42,7 +42,7 @@ Gally is MACH ready and perfectly designed to use in a Composable Commerce appro
 
 ## Credits
 
-Gally is engineered by the [ElasticSuite team](https://elasticsuite.io), par of the Smile-SA group (https://www.smile.eu).
+Gally is engineered by the [ElasticSuite team](https://elasticsuite.io), part of the Smile-SA group (https://www.smile.eu).
 
 Elasticsearch is a reserved trademark of [Elastic](https://elastic.co)
 Api Platform was created by [Kévin Dunglas](https://dunglas.fr).
