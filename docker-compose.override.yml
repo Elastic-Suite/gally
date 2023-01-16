@@ -40,6 +40,7 @@ services:
       - ./front:/usr/src/front:rw,cached
 
   example:
+    user: ${UUID?You must set UUID env var}:${GUID?You must set GUID env var}
     build:
       context: ./front
       target: api_platform_example_dev
