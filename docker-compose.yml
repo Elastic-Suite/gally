@@ -84,7 +84,7 @@ services:
       - caddy
     restart: unless-stopped
     volumes:
-      - './api/docker/varnish/default.vcl:/etc/varnish/default.vcl:ro'
+      - './api/docker/varnish/default.vcl:/etc/varnish/default.vcl:ro,z'
     environment:
       - VARNISH_SIZE=512M
     #   - SERVERNAME=${SERVER_NAME:-localhost, caddy:80}
@@ -105,9 +105,9 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-!ChangeMe!}
       - POSTGRES_USER=${POSTGRES_USER:-api-platform}
     volumes:
-      - db_data:/var/lib/postgresql/data:rw
+      - db_data:/var/lib/postgresql/data:rw,z
       # you may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
-      # - ./api/docker/db/data:/var/lib/postgresql/data:rw
+      # - ./api/docker/db/data:/var/lib/postgresql/data:rw,z
 
   redis:
     image: docker.io/bitnami/redis:6.2
@@ -132,7 +132,7 @@ services:
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m" # 512 Mo HEAP
       - cluster.routing.allocation.disk.threshold_enabled=false # Avoid ES going read-only because low disk space availability
     volumes:
-      - es_data:/usr/share/elasticsearch/data:rw
+      - es_data:/usr/share/elasticsearch/data:rw,z
     ulimits:
       memlock:
         soft: -1
