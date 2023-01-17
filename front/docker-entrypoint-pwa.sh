@@ -9,7 +9,11 @@ then
   cd gally-admin
   yarn install --frozen-lockfile;
   yarn build
-  cd packages/shared/node_modules
+  cd node_modules
+  rm -rf react react-dom
+  ln -Ts ../../node_modules/react react
+  ln -Ts ../../node_modules/react-dom react-dom
+  cd ../packages/shared/node_modules
   ln -Ts ../../../../node_modules/react react
   ln -Ts ../../../../node_modules/react-dom react-dom
   cd ../../components/node_modules
