@@ -10,7 +10,7 @@ ARG ELASTIC_VERSION=7.16.3
 # ARG XDEBUG_VERSION=3.1.2
 
 # "php" stage
-FROM php:${PHP_VERSION}-fpm-alpine AS api_platform_php
+FROM php:${PHP_VERSION}-fpm-alpine AS gally_php
 
 # persistent / runtime deps
 RUN apk add --no-cache \
@@ -133,7 +133,7 @@ CMD ["php-fpm"]
 
 # "php+xdebug" stage
 # ENV XDEBUG_VERSION=${XDEBUG_VERSION}
-FROM api_platform_php as api_platform_php_dev
+FROM gally_php as gally_php_dev
 
 ARG XDEBUG_VERSION=3.1.2
 RUN set -eux; \
@@ -144,7 +144,7 @@ RUN set -eux; \
 
 # "caddy" stage
 # depends on the "php" stage above
-FROM caddy:${CADDY_VERSION}-builder-alpine AS api_platform_caddy_builder
+FROM caddy:${CADDY_VERSION}-builder-alpine AS gally_caddy_builder
 
 # install Mercure and Vulcain modules
 RUN xcaddy build \
@@ -153,15 +153,15 @@ RUN xcaddy build \
     --with github.com/dunglas/vulcain \
     --with github.com/dunglas/vulcain/caddy
 
-FROM caddy:${CADDY_VERSION} AS api_platform_caddy
+FROM caddy:${CADDY_VERSION} AS gally_caddy
 
 WORKDIR /srv/api
 
-COPY --from=api_platform_caddy_builder /usr/bin/caddy /usr/bin/caddy
-COPY --from=api_platform_php /srv/api/public public/
+COPY --from=gally_caddy_builder /usr/bin/caddy /usr/bin/caddy
+COPY --from=gally_php /srv/api/public public/
 COPY docker/caddy/Caddyfile /etc/caddy/Caddyfile
 
-FROM docker.elastic.co/elasticsearch/elasticsearch:${ELASTIC_VERSION} AS api_platform_elasticsearch
+FROM docker.elastic.co/elasticsearch/elasticsearch:${ELASTIC_VERSION} AS gally_elasticsearch
 
 WORKDIR /usr/share/elasticsearch
 
