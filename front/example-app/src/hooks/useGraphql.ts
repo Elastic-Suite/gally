@@ -13,7 +13,7 @@ import {
   LoadStatus,
   fetchGraphql,
   isError,
-} from 'gally-admin-shared'
+} from '@elastic-suite/gally-admin-shared'
 
 import { catalogContext } from '../contexts'
 

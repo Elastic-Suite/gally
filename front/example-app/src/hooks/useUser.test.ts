@@ -1,5 +1,5 @@
 import { act } from '@testing-library/react'
-import { getUser, storageGet } from 'gally-admin-shared'
+import { getUser, storageGet } from '@elastic-suite/gally-admin-shared'
 
 import { renderHookWithProviders } from '../utils/tests'
 

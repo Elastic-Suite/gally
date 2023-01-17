@@ -1,5 +1,5 @@
 import { FormGroup, Switch } from '@mui/material'
-import { IGraphqlProductAggregation } from 'gally-admin-shared'
+import { IGraphqlProductAggregation } from '@elastic-suite/gally-admin-shared'
 
 import { IFilterChange } from '../../types'
 

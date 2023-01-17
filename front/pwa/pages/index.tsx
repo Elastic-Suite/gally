@@ -1,2 +1,2 @@
-import { Welcome } from 'gally-admin-components'
+import { Welcome } from '@elastic-suite/gally-admin-components'
 export default Welcome

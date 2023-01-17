@@ -1,4 +1,4 @@
-import { resourceWithRef } from 'gally-admin-shared'
+import { resourceWithRef } from '@elastic-suite/gally-admin-shared'
 
 import { renderHookWithProviders } from '../utils/tests'
 

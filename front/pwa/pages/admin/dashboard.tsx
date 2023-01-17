@@ -1,2 +1,2 @@
-import { AdminDashboard } from 'gally-admin-components'
+import { AdminDashboard } from '@elastic-suite/gally-admin-components'
 export default AdminDashboard

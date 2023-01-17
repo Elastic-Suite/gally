@@ -1,6 +1,6 @@
 import { createContext } from 'react'
 
-export * from 'gally-admin-shared/src/types'
+export * from '@elastic-suite/gally-admin-shared/src/types'
 
 export const schemaContext = createContext({})
 

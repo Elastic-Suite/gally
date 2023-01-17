@@ -27,11 +27,12 @@ FROM api_platform_pwa_common AS api_platform_pwa_ci
 
 RUN mkdir -p ./example-app/coverage ./pwa/coverage
 RUN set -xe; \
-    rm -rf pwa/node_modules/gally-admin-* example-app/node_modules/gally-admin-*; \
-    ln -Ts ../../gally-admin/packages/components pwa/node_modules/gally-admin-components; \
-    ln -Ts ../../gally-admin/packages/shared pwa/node_modules/gally-admin-shared; \
-    ln -Ts ../../gally-admin/packages/components example-app/node_modules/gally-admin-components ; \
-    ln -Ts ../../gally-admin/packages/shared example-app/node_modules/gally-admin-shared; \
+    rm -rf pwa/node_modules/@elastic-suite/gally-admin-* example-app/node_modules/@elastic-suite/gally-admin-*; \
+    mkdir pwa/node_modules/@elastic-suite example-app/node_modules/@elastic-suite; \
+    ln -Ts ../../../gally-admin/packages/components pwa/node_modules/@elastic-suite/gally-admin-components; \
+    ln -Ts ../../../gally-admin/packages/shared pwa/node_modules/@elastic-suite/gally-admin-shared; \
+    ln -Ts ../../../gally-admin/packages/components example-app/node_modules/@elastic-suite/gally-admin-components ; \
+    ln -Ts ../../../gally-admin/packages/shared example-app/node_modules/@elastic-suite/gally-admin-shared; \
     yarn build:gally-admin;
 
 CMD ["yarn", "dev"]

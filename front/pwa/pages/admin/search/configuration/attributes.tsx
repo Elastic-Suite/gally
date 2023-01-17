@@ -1,2 +1,2 @@
-import { AdminSearchFacetsConfigurationAttributes } from 'gally-admin-components'
+import { AdminSearchFacetsConfigurationAttributes } from '@elastic-suite/gally-admin-components'
 export default AdminSearchFacetsConfigurationAttributes
