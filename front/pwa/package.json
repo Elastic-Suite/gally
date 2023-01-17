@@ -17,7 +17,7 @@
     "prettier:ci": "prettier --check --ignore-unknown --ignore-path .gitignore .",
     "typescript": "tsc --noEmit",
     "typescript:ci": "tsc --noEmit",
-    "prepare": "cd public && ln -fsT ../../node_modules/gally-admin-components/public/locales/ locales && ln -fsT ../../node_modules/gally-admin-components/public/images/ images"
+    "prepare": "cd public && ln -fsT ../../node_modules/@elastic-suite/gally-admin-components/public/locales/ locales && ln -fsT ../../node_modules/@elastic-suite/gally-admin-components/public/images/ images"
   },
   "dependencies": {
     "@emotion/react": "11.10.4",
@@ -29,8 +29,8 @@
     "autosuggest-highlight": "3.3.4",
     "classnames": "2.3.2",
     "dayjs": "1.11.6",
-    "gally-admin-components": "0.1.14",
-    "gally-admin-shared": "0.1.14",
+    "@elastic-suite/gally-admin-components": "0.2.0",
+    "@elastic-suite/gally-admin-shared": "0.2.0",
     "i18next": "22.4.6",
     "i18next-chained-backend": "3.1.0",
     "i18next-http-backend": "1.4.1",

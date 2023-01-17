@@ -8,7 +8,7 @@ import {
 } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button, TextField } from '@mui/material'
-import { ILogin, isError, isValidUser } from 'gally-admin-shared'
+import { ILogin, isError, isValidUser } from '@elastic-suite/gally-admin-shared'
 
 import { requestedPathContext, userContext } from '../../contexts'
 import { useApiFetch } from '../../hooks'

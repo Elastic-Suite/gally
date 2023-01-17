@@ -7,7 +7,7 @@ import {
   IFetch,
   IGraphqlProductAggregation,
   IGraphqlViewMoreFacetOption,
-} from 'gally-admin-shared'
+} from '@elastic-suite/gally-admin-shared'
 
 import { IActiveFilters, IFilterChange } from '../../types'
 

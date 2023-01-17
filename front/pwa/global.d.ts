@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import 'gally-admin-shared'
+import '@elastic-suite/gally-admin-shared'
 import { SnackbarKey } from 'notistack'
 
 declare module 'notistack' {

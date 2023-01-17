@@ -1,7 +1,7 @@
 import {
   IGraphqlProductAggregation,
   IGraphqlProductAggregationOption,
-} from 'gally-admin-shared'
+} from '@elastic-suite/gally-admin-shared'
 import classNames from 'classnames'
 
 import { IFilterChange } from '../../types'

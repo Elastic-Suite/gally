@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 // const { i18n } = require('./next-i18next.config')
-const { nextI18nConfig } = require('gally-admin-components')
+const { nextI18nConfig } = require('@elastic-suite/gally-admin-components')
 
 module.exports = {
   headers() {

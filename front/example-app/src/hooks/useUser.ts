@@ -5,7 +5,7 @@ import {
   storageGet,
   storageSet,
   tokenStorageKey,
-} from 'gally-admin-shared'
+} from '@elastic-suite/gally-admin-shared'
 
 import { useLog } from './useLog'
 
