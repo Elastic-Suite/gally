@@ -4,7 +4,7 @@ services:
   php:
     build:
       context: ./api
-      target: api_platform_php
+      target: gally_php
     depends_on:
       - database
       - elasticsearch
@@ -28,7 +28,7 @@ services:
   pwa:
     build:
       context: ./front
-      target: api_platform_pwa_prod
+      target: gally_pwa_prod
     environment:
       API_PLATFORM_CLIENT_GENERATOR_ENTRYPOINT: https://caddy
       NEXT_PUBLIC_ENTRYPOINT: https://caddy
@@ -41,7 +41,7 @@ services:
   caddy:
     build:
       context: api/
-      target: api_platform_caddy
+      target: gally_caddy
     depends_on:
       - php
       - pwa
@@ -123,7 +123,7 @@ services:
   elasticsearch:
     build:
       context: api/
-      target: api_platform_elasticsearch
+      target: gally_elasticsearch
     # restart: unless-stopped
     environment:
       - cluster.name=es-docker-cluster
