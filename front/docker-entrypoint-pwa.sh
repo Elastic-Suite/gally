@@ -20,8 +20,9 @@ then
   ln -Ts ../../../../node_modules/react react
   ln -Ts ../../../../node_modules/react-dom react-dom
   cd ../../../../pwa/node_modules
-  ln -Ts ../../gally-admin/packages/components gally-admin-components
-  ln -Ts ../../gally-admin/packages/shared gally-admin-shared
+  mkdir @elastic-suite
+  ln -Ts ../../../gally-admin/packages/components @elastic-suite/gally-admin-components
+  ln -Ts ../../../gally-admin/packages/shared @elastic-suite/gally-admin-shared
   cd ../..
 fi
 

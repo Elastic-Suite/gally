@@ -1,6 +1,9 @@
 import { useContext, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { ICategory, ProductRequestType } from 'gally-admin-shared'
+import {
+  ICategory,
+  ProductRequestType,
+} from '@elastic-suite/gally-admin-shared'
 
 import { categoryContext } from '../../contexts'
 import { useProducts } from '../../hooks'

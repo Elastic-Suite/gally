@@ -15,7 +15,7 @@ import {
   IOptions,
   // LoadStatus,
   SortOrder,
-} from 'gally-admin-shared'
+} from '@elastic-suite/gally-admin-shared'
 import { Box } from '@mui/system'
 
 import { IProduct } from '../../types/'

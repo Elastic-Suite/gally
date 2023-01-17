@@ -1,6 +1,11 @@
 import { act } from '@testing-library/react'
 
-import { IError, LoadStatus, fetchGraphql, log } from 'gally-admin-shared'
+import {
+  IError,
+  LoadStatus,
+  fetchGraphql,
+  log,
+} from '@elastic-suite/gally-admin-shared'
 import { renderHookWithProviders } from '../utils/tests'
 
 import { useApiGraphql, useGraphqlApi } from './useGraphql'

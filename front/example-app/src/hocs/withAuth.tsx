@@ -1,6 +1,6 @@
 import { FunctionComponent, useContext, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { isValidUser } from 'gally-admin-shared'
+import { isValidUser } from '@elastic-suite/gally-admin-shared'
 
 import { requestedPathContext, userContext } from '../contexts'
 

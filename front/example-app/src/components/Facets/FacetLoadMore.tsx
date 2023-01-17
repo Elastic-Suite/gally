@@ -4,7 +4,7 @@ import {
   IGraphqlProductAggregation,
   IGraphqlProductAggregationOption,
   IGraphqlViewMoreFacetOption,
-} from 'gally-admin-shared'
+} from '@elastic-suite/gally-admin-shared'
 
 interface IProps {
   filter: IGraphqlProductAggregation

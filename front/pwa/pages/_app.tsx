@@ -5,7 +5,7 @@ import Script from 'next/script'
 import Head from 'next/head'
 import dynamic from 'next/dynamic'
 
-import 'gally-admin-components/dist/style.css'
+import '@elastic-suite/gally-admin-components/dist/style.css'
 
 // eslint-disable-next-line new-cap
 const inter = Inter({
@@ -14,7 +14,8 @@ const inter = Inter({
 })
 
 const GallyApp = dynamic(
-  () => import('gally-admin-components').then((mod) => mod.GallyApp),
+  () =>
+    import('@elastic-suite/gally-admin-components').then((mod) => mod.GallyApp),
   {
     ssr: false,
   }

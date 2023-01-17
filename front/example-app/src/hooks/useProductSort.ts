@@ -4,7 +4,7 @@ import {
   IGraphqlCategorySortingOption,
   IOptions,
   SortOrder,
-} from 'gally-admin-shared'
+} from '@elastic-suite/gally-admin-shared'
 
 import { getCategorySortingOptionsQuery } from '../constants'
 

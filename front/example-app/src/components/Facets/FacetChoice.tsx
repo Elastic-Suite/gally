@@ -2,7 +2,7 @@ import { Checkbox } from '@mui/material'
 import {
   IGraphqlProductAggregation,
   IGraphqlProductAggregationOption,
-} from 'gally-admin-shared'
+} from '@elastic-suite/gally-admin-shared'
 
 import { IFilterChange } from '../../types'
 
