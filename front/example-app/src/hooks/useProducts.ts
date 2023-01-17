@@ -23,7 +23,7 @@ import { useProductSort } from './useProductSort'
 
 export function useProducts(
   requestType: ProductRequestType,
-  currentCategoryId?: string,
+  currentCategoryId?: string
 ): IProductsHook {
   const graphqlApi = useApiGraphql()
   const [search, setSearch] = useState('')
