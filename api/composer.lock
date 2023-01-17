@@ -1975,12 +1975,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Elastic-Suite/gally-standard.git",
-                "reference": "f5509ab5b28593b8a9a4c07177e6047fe4d5aba0"
+                "reference": "5efcd01f819f2b5c2dd88fb768d0a217de373883"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Elastic-Suite/gally-standard/zipball/f5509ab5b28593b8a9a4c07177e6047fe4d5aba0",
-                "reference": "f5509ab5b28593b8a9a4c07177e6047fe4d5aba0",
+                "url": "https://api.github.com/repos/Elastic-Suite/gally-standard/zipball/5efcd01f819f2b5c2dd88fb768d0a217de373883",
+                "reference": "5efcd01f819f2b5c2dd88fb768d0a217de373883",
                 "shasum": ""
             },
             "require": {
@@ -2064,7 +2064,7 @@
                 "issues": "https://github.com/Elastic-Suite/gally-standard/issues",
                 "source": "https://github.com/Elastic-Suite/gally-standard/tree/master"
             },
-            "time": "2023-01-11T15:37:55+00:00"
+            "time": "2023-01-17T14:21:16+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
