@@ -6,10 +6,10 @@ services:
     build:
       target: api_platform_php_dev
     volumes:
-      - ./api:/srv/api:rw,cached
-      - ./api/docker/php/conf.d/api-platform.dev.ini:/usr/local/etc/php/conf.d/api-platform.ini
+      - ./api:/srv/api:rw,cached,z
+      - ./api/docker/php/conf.d/api-platform.dev.ini:/usr/local/etc/php/conf.d/api-platform.ini:z
       # if you develop on Linux, you may use a bind-mounted host directory instead
-      - ./api/var:/srv/api/var:rw
+      - ./api/var:/srv/api/var:rw,z
     # If supported by your version of docker/docker-compose
     # extra_hosts:
     #  - host.docker.internal:host-gateway
@@ -36,8 +36,8 @@ services:
       context: ./front
       target: api_platform_pwa_ci
     volumes:
-      - ./front/example-app/coverage:/usr/src/front/example-app/coverage:rw,cached
-      - ./front/pwa/coverage:/usr/src/front/pwa/coverage:rw,cached
+      - ./front/example-app/coverage:/usr/src/front/example-app/coverage:rw,cached,z
+      - ./front/pwa/coverage:/usr/src/front/pwa/coverage:rw,cached,z
 
   example:
     build:
@@ -46,8 +46,8 @@ services:
 
   caddy:
     volumes:
-      - ./api/docker/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
-      - ./api/public:/srv/api/public:ro
+      - ./api/docker/caddy/Caddyfile:/etc/caddy/Caddyfile:ro,z
+      - ./api/public:/srv/api/public:ro,z
     depends_on:
       - php
       - pwa
