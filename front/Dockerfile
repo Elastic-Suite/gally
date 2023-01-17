@@ -7,7 +7,7 @@ ARG NODE_VERSION=16
 ARG public_url
 
 # "common" stage
-FROM node:${NODE_VERSION}-alpine AS api_platform_pwa_common
+FROM node:${NODE_VERSION}-alpine AS gally_pwa_common
 
 EXPOSE 3000
 EXPOSE 3001
@@ -23,7 +23,7 @@ RUN set -xe; \
 
 
 
-FROM api_platform_pwa_common AS api_platform_pwa_ci
+FROM gally_pwa_common AS gally_pwa_ci
 
 RUN mkdir -p ./example-app/coverage ./pwa/coverage
 RUN set -xe; \
@@ -39,13 +39,13 @@ CMD ["yarn", "dev"]
 
 
 
-FROM api_platform_pwa_common AS api_platform_example_ci
+FROM gally_pwa_common AS gally_example_ci
 
 CMD ["yarn", "start:example"]
 
 
 
-FROM api_platform_pwa_ci AS api_platform_pwa_dev
+FROM gally_pwa_ci AS gally_pwa_dev
 
 # env variable needed for chokidar-cli
 ENV SHELL /bin/sh
@@ -71,7 +71,7 @@ CMD ["yarn", "dev"]
 
 
 
-FROM api_platform_example_ci AS api_platform_example_dev
+FROM gally_example_ci AS gally_example_dev
 
 ENV WDS_SOCKET_PORT 443
 
@@ -98,7 +98,7 @@ CMD ["yarn", "start:example"]
 
 # "build" stage
 # depends on the "common" stage above
-FROM api_platform_pwa_ci AS api_platform_pwa_int
+FROM gally_pwa_ci AS gally_pwa_int
 
 ENV NODE_ENV production
 ARG NEXT_PUBLIC_ENTRYPOINT
@@ -116,7 +116,7 @@ CMD ["yarn", "start"]
 
 # "build" stage
 # depends on the "common" stage above
-FROM api_platform_pwa_common AS api_platform_pwa_prod
+FROM gally_pwa_common AS gally_pwa_prod
 
 ENV NODE_ENV production
 ARG NEXT_PUBLIC_ENTRYPOINT

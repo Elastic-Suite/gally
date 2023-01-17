@@ -4,7 +4,7 @@ version: "3.4"
 services:
   php:
     build:
-      target: api_platform_php_dev
+      target: gally_php_dev
     volumes:
       - ./api:/srv/api:rw,cached,z
       - ./api/docker/php/conf.d/api-platform.dev.ini:/usr/local/etc/php/conf.d/api-platform.ini:z
@@ -34,7 +34,7 @@ services:
   pwa:
     build:
       context: ./front
-      target: api_platform_pwa_ci
+      target: gally_pwa_ci
     volumes:
       - ./front/example-app/coverage:/usr/src/front/example-app/coverage:rw,cached,z
       - ./front/pwa/coverage:/usr/src/front/pwa/coverage:rw,cached,z
@@ -42,7 +42,7 @@ services:
   example:
     build:
       context: ./front
-      target: api_platform_example_ci
+      target: gally_example_ci
 
   caddy:
     volumes:
