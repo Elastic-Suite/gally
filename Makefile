@@ -141,7 +141,7 @@ fixtures_append: ## Append fixtures
 	@$(SYMFONY) doctrine:fixtures:load --append
 
 index_clear: ## Delete all Elasticsearch indices
-index_clear: c=elasticsuite:index:clear
+index_clear: c=gally:index:clear
 index_clear: sf
 
 
