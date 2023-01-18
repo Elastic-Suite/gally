@@ -27,6 +27,7 @@ FROM gally_pwa_common AS gally_pwa_ci
 
 RUN mkdir -p ./example-app/coverage ./pwa/coverage
 RUN set -xe; \
+	apk add --no-cache curl; \
     rm -rf pwa/node_modules/@elastic-suite/gally-admin-* example-app/node_modules/@elastic-suite/gally-admin-*; \
     mkdir pwa/node_modules/@elastic-suite example-app/node_modules/@elastic-suite; \
     ln -Ts ../../../gally-admin/packages/components pwa/node_modules/@elastic-suite/gally-admin-components; \
@@ -52,7 +53,6 @@ ENV SHELL /bin/sh
 
 RUN USER=node && \
 	GROUP=node && \
-	apk add --no-cache curl && \
 	curl -SsL https://github.com/boxboat/fixuid/releases/download/v0.5.1/fixuid-0.5.1-linux-amd64.tar.gz | tar -C /usr/local/bin -xzf - && \
 	chown root:root /usr/local/bin/fixuid && \
 	chmod 4755 /usr/local/bin/fixuid && \
