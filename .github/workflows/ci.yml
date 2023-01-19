@@ -28,7 +28,7 @@ jobs:
         run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml pull --ignore-pull-failures || true
       - name: Start services
         run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml up --build -d
-      - name: Wait for services
+      - name: Wait for php service
         run: |
           while status="$(docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" "$(docker-compose -f docker-compose.yml -f docker-compose.ci.yml ps -q php)")"; do
             case $status in
@@ -40,6 +40,20 @@ jobs:
                 exit 1
               ;;
             esac
+          done
+          exit 1
+      - name: Wait for elasticsearch service
+        run: |
+          while status="$(docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" "$(docker-compose -f docker-compose.yml -f docker-compose.ci.yml ps -q elasticsearch)")"; do
+          case $status in
+           starting) sleep 1;;
+           healthy) exit 0;;
+           unhealthy)
+             docker-compose -f docker-compose.yml -f docker-compose.ci.yml ps
+             docker-compose -f docker-compose.yml -f docker-compose.ci.yml logs
+             exit 1
+           ;;
+          esac
           done
           exit 1
       - name: Check HTTP reachability
