@@ -65,6 +65,18 @@ exec: ## Execute a command on a given container
 db: ## Connect to the DB
 	@$(PHP_DATABASE) sh -c 'psql $$POSTGRES_DB $$POSTGRES_USER'
 
+init-dev-env: ## Initialize current environment with dev repositories
+	git config core.hooksPath ./hooks
+	$(DOCKER_COMP) run --rm --entrypoint="rm -rf nodes_modules/gally* pwa/node_modules/gally* example-app/node_modules/gally*" pwa
+	[ -d api/packages/gally-standard ] || git clone git@github.com:Elastic-Suite/gally-standard.git api/packages/gally-standard
+	[ -d api/packages/gally-premium ] || git clone git@github.com:Elastic-Suite/gally-premium.git api/packages/gally-premium
+	[ -d front/gally-admin ] || git clone git@github.com:Elastic-Suite/gally-admin.git front/gally-admin
+	$(MAKE) start
+	$(COMPOSER) config repositories.gally-standard '{ "type": "path", "url": "./packages/gally-standard", "options": { "versions": { "gally/gally-standard": "dev-master"}} }'
+	$(COMPOSER) config repositories.gally-premium '{ "type": "path", "url": "./packages/gally-premium", "options": { "versions": { "gally/gally-premium": "dev-master"}} }'
+	$(COMPOSER) require gally/gally-standard dev-master --no-scripts
+	$(COMPOSER) require gally/gally-premium dev-master
+
 phpcsfixer: ## Run php cs fixer, pass the parameter "o=" to ass options, make phpcsfixer o="--dry-run"
 	@$(eval o ?=)
 	@$(PHP_CS_FIXER) fix --path-mode=intersection vendor/gally/gally-standard --diff $(o)

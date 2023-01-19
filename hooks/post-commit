@@ -1,0 +1,11 @@
+#!/bin/bash
+
+protected_files="api/composer.json api/composer.lock api/symfony.lock api/config/bundles.php"
+commit_file_list=$(git diff --name-only HEAD^ HEAD)
+
+for file in $protected_files; do
+    if grep "$file" <<< "$commit_file_list"; then
+      echo "Warning: Be careful you are about to commit protected files ($protected_files)"
+      break
+    fi
+done

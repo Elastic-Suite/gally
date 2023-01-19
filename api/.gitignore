@@ -1,3 +1,6 @@
+### Dev pacakges
+/packages/
+
 /docker/db/data
 
 ###> symfony/framework-bundle ###
