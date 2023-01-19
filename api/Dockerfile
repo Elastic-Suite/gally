@@ -97,6 +97,11 @@ COPY patches patches/
 
 # prevent the reinstallation of vendors at every changes in the source code
 COPY composer.json composer.lock symfony.lock ./
+
+# copy dev packages directory if exist
+# (for docker-compose version, we need a least on file to exist, so we add the composer.json to prevent failure if packages is missing)
+COPY composer.json package* packages/
+
 RUN set -eux; \
 	composer install --prefer-dist --no-dev --no-scripts --no-progress; \
 	composer clear-cache
