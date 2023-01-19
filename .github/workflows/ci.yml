@@ -163,6 +163,6 @@ jobs:
             cd front/gally-admin && git fetch --all && git reset --hard origin/main &&
             cd /home/ubuntu/standalone &&
             docker-compose run --rm php composer config repositories.gally-premium composer https://packagist.smile.fr/gally
-            docker-compose run --rm -e COMPOSER_AUTH=$COMPOSER_AUTH php composer require gally/gally-premium dev-master
+            docker-compose run --rm -e COMPOSER_AUTH php composer require gally/gally-premium dev-master
             SERVER_NAME=$HOSTNAME APP_SECRET=$APP_SECRET POSTGRES_PASSWORD=$POSTGRES_PASSWORD docker-compose -f docker-compose.yml -f docker-compose.int.yml up -d --build 
           "
