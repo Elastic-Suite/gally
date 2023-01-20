@@ -168,6 +168,7 @@ jobs:
             cd /home/ubuntu/standalone &&
             cp /home/ubuntu/auth.json api/ &&
             docker-compose run --rm php rm -rf vendor/gally/gally-premium &&
+            docker-compose run --rm php composer config repositories.gally-premium composer https://packagist.smile.fr/gally &&
             docker-compose run -e COMPOSER_AUTH php composer require gally/gally-premium dev-master &&
             SERVER_NAME=$HOSTNAME APP_SECRET=$APP_SECRET POSTGRES_PASSWORD=$POSTGRES_PASSWORD docker-compose -f docker-compose.yml -f docker-compose.int.yml up -d --build 
           "
