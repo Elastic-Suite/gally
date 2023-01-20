@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { ButtonGroup, IconButton, styled } from '@mui/material'
 import { IProduct } from '../../types/'
 import Card from '@mui/material/Card'
@@ -12,6 +12,8 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import Badge, { BadgeProps } from '@mui/material/Badge'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
+import { joinUrlPath } from '@elastic-suite/gally-admin-shared'
+import { configurationsContext } from 'src/contexts'
 
 const Root = styled('div')({
   color: 'black',
@@ -32,8 +34,12 @@ interface IProps {
 
 function ProductCard(props: IProps): JSX.Element {
   const { product } = props
-
   const [count, setCount] = useState(1)
+  const baseUrl = useContext(configurationsContext)?.['base_url/media']
+
+  if (!baseUrl) {
+    return null
+  }
 
   return (
     <Root>
@@ -46,7 +52,7 @@ function ProductCard(props: IProps): JSX.Element {
           height="200px"
           style={{ objectFit: 'contain' }}
           alt="green iguana"
-          image={`https://localhost/media/catalog/product/${product.image}`}
+          image={joinUrlPath(baseUrl, product.image as string)}
         />
         <CardContent>
           <Typography
