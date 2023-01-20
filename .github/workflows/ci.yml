@@ -168,7 +168,6 @@ jobs:
             cd /home/ubuntu/standalone &&
             cp /home/ubuntu/auth.json api/ &&
             docker-compose run --rm php rm -rf vendor/gally/gally-premium &&
-            docker-compose run --rm php composer remove gally/gally-premium dev-master &&
-            COMPOSER_AUTH=$COMPOSER_AUTH docker-compose run -e COMPOSER_AUTH php composer require gally/gally-premium dev-master &&
+            docker-compose run -e COMPOSER_AUTH php composer require gally/gally-premium dev-master &&
             SERVER_NAME=$HOSTNAME APP_SECRET=$APP_SECRET POSTGRES_PASSWORD=$POSTGRES_PASSWORD docker-compose -f docker-compose.yml -f docker-compose.int.yml up -d --build 
           "
