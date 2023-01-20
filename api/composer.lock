@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5e5ec2e95e827eadc80068aafa7299c2",
+    "content-hash": "abc9a7484dc65fdce0532104f0f66e17",
     "packages": [
         {
             "name": "api-platform/core",
@@ -2121,16 +2121,16 @@
         },
         {
             "name": "gally/gally-standard",
-            "version": "1.0.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Elastic-Suite/gally-standard.git",
-                "reference": "8d476a743e19a7af38c5c0ba2babc900a19c32d8"
+                "reference": "676d27978e3e6677caa4238bc7bad3f540c5dc5f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Elastic-Suite/gally-standard/zipball/8d476a743e19a7af38c5c0ba2babc900a19c32d8",
-                "reference": "8d476a743e19a7af38c5c0ba2babc900a19c32d8",
+                "url": "https://api.github.com/repos/Elastic-Suite/gally-standard/zipball/676d27978e3e6677caa4238bc7bad3f540c5dc5f",
+                "reference": "676d27978e3e6677caa4238bc7bad3f540c5dc5f",
                 "shasum": ""
             },
             "require": {
@@ -2171,6 +2171,7 @@
                 "symfony/var-dumper": "6.0.*",
                 "symfony/web-profiler-bundle": "6.0.*"
             },
+            "default-branch": true,
             "type": "symfony-bundle",
             "extra": {
                 "symfony": {
@@ -2211,9 +2212,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Elastic-Suite/gally-standard/issues",
-                "source": "https://github.com/Elastic-Suite/gally-standard/tree/1.0.0"
+                "source": "https://github.com/Elastic-Suite/gally-standard/tree/master"
             },
-            "time": "2023-01-20T14:34:40+00:00"
+            "time": "2023-01-19T13:59:05+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -12457,7 +12458,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "gally/gally-standard": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
