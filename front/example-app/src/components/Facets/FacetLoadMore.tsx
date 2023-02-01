@@ -24,9 +24,11 @@ function FacetLoadMore(props: IProps): JSX.Element {
 
   return (
     <>
-      <FormGroup aria-labelledby={id}>
-        {filter.options.map(renderOption)}
-      </FormGroup>
+      {!moreOptions?.data && (
+        <FormGroup aria-labelledby={id}>
+          {filter.options.map(renderOption)}
+        </FormGroup>
+      )}
       <Collapse in={open}>
         <FormGroup aria-labelledby={id}>
           {moreOptions?.data?.map(renderOption)}
