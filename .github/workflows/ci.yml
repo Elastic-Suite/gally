@@ -1,6 +1,8 @@
 name: CI
 
 on:
+  schedule:
+    - cron: '*/30 * * * 1-5'
   push:
     branches:
       - master
@@ -143,20 +145,45 @@ jobs:
         run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml logs
 
   deploy-master:
-#    needs: tests
-    name: Gally master
-    if: github.ref == 'refs/heads/master'
+    needs: tests
+    name: Deploy master
+    if: ${{ github.ref == 'refs/heads/master'  && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') }}
     uses: ./.github/workflows/deploy-int.yml
+    with:
+      back_branch: master
+      front_branch: main
+      composer_version: dev-master
     secrets: inherit
   
   deploy-1_0_X:
-    #    needs: tests
-    name: Gally 1.0.x
-    if: github.ref == 'refs/heads/1.0.x'
+    needs: tests
+    name: Deploy 1.0.x
+    if: ${{ github.ref == 'refs/heads/1.0.x'  && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') }}
     uses: ./.github/workflows/deploy-int.yml
+    with:
+      back_branch: 1.0.x
+      front_branch: 1.0.x
+      composer_version: 1.0.x-dev
     secrets:
       AWS_DEPLOY_KEY: ${{ secrets.AWS_DEPLOY_KEY }}
       AWS_HOSTNAME: ${{ secrets.AWS_HOSTNAME_1_0_x }}
+      AWS_USER: ${{ secrets.AWS_USER }}
+      APP_SECRET: ${{ secrets.APP_SECRET }}
+      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
+      
+  deploy-demo:
+    needs: tests
+    name: Deploy demo
+    if: ${{ github.event_name == 'workflow_dispatch' && startsWith(github.ref, 'refs/tags/') }}
+    uses: ./.github/workflows/deploy-int.yml
+    with:
+      back_branch: ${{ github.ref_name }}
+      front_branch: ${{ format('v{0}', github.ref_name) }}
+      composer_version: ${{ github.ref_name }}
+    secrets:
+      AWS_DEPLOY_KEY: ${{ secrets.AWS_DEPLOY_KEY }}
+      AWS_HOSTNAME: ${{ secrets.AWS_HOSTNAME_DEMO }}
       AWS_USER: ${{ secrets.AWS_USER }}
       APP_SECRET: ${{ secrets.APP_SECRET }}
       POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
