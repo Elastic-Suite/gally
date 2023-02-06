@@ -142,8 +142,22 @@ jobs:
         if: ${{ failure() }}
         run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml logs
 
-  deploy:
+  deploy-master:
 #    needs: tests
+    name: Gally master
     if: github.ref == 'refs/heads/master'
     uses: ./.github/workflows/deploy-int.yml
     secrets: inherit
+  
+  deploy-1_0_X:
+    #    needs: tests
+    name: Gally 1.0.x
+    if: github.ref == 'refs/heads/1.0.x'
+    uses: ./.github/workflows/deploy-int.yml
+    secrets:
+      AWS_DEPLOY_KEY: ${{ secrets.AWS_DEPLOY_KEY }}
+      AWS_HOSTNAME: ${{ secrets.AWS_HOSTNAME_1_0_x }}
+      AWS_USER: ${{ secrets.AWS_USER }}
+      APP_SECRET: ${{ secrets.APP_SECRET }}
+      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
