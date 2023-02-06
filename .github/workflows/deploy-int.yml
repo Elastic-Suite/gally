@@ -35,7 +35,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} "
             cd /home/ubuntu/standalone &&
             docker system prune -af &&
-            docker volume rm $(docker volume ls -q | awk '!/_/' | tr '\n' ' ') || true &&
+            ([[ $(docker volume ls -q | awk '!/_/' | tr '\n' ' ' | wc -l) -eq 0 ]] || docker volume rm $(docker volume ls -q | awk '!/_/' | tr '\n' ' ')) &&
             docker-compose down &&
             git fetch --all &&
             git reset --hard origin/master &&
