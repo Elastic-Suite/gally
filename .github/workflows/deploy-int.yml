@@ -18,6 +18,7 @@ on:
 
 jobs:
   deploy:
+    name: Deploy integration
     runs-on: ubuntu-latest
     
     steps:      
