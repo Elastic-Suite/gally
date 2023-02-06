@@ -1,0 +1,49 @@
+name: Deploy integration
+
+on:
+  workflow_call:
+    secrets:
+      AWS_DEPLOY_KEY:
+        required: true
+      AWS_HOSTNAME:
+        required: true
+      AWS_USER:
+        required: true
+      APP_SECRET:
+        required: true
+      POSTGRES_PASSWORD:
+        required: true
+      COMPOSER_AUTH:
+        required: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:      
+      - name: Deploy in EC2
+        env:
+            PRIVATE_KEY: ${{ secrets.AWS_DEPLOY_KEY }}
+            HOSTNAME : ${{ secrets.AWS_HOSTNAME }}
+            USER_NAME : ${{ secrets.AWS_USER }}
+            APP_SECRET: ${{ secrets.APP_SECRET }}
+            POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+            COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
+        run: |
+          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} "
+            cd /home/ubuntu/standalone &&
+            docker system prune -af &&
+            docker volume rm $(docker volume ls -q | awk '!/_/' | tr '\n' ' ') || true &&
+            docker-compose down &&
+            git fetch --all &&
+            git reset --hard origin/master &&
+            make .env &&
+            cd front/gally-admin && git fetch --all && git reset --hard origin/main &&
+            cd /home/ubuntu/standalone &&
+            cp /home/ubuntu/auth.json api/ &&
+            docker-compose run --rm php rm -rf vendor/gally/gally-premium &&
+            docker-compose run --rm php composer config repositories.gally-premium composer https://packagist.smile.fr/gally &&
+            docker-compose run -e COMPOSER_AUTH php composer require gally/gally-premium dev-master &&
+            SERVER_NAME=$HOSTNAME APP_SECRET=$APP_SECRET POSTGRES_PASSWORD=$POSTGRES_PASSWORD docker-compose -f docker-compose.yml -f docker-compose.int.yml up -d --build 
+          "
