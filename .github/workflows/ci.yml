@@ -12,11 +12,32 @@ on:
       - master
       - 1.0.x
     types: [review_requested, ready_for_review, synchronize]
-  workflow_dispatch: ~
+  workflow_dispatch:
+    inputs:
+      run_tests:
+        description: 'Run tests ?'
+        type: boolean
+        default: false
+        required: true
+      deploy_master:
+        description: "Deploy master integration ?"
+        type: boolean
+        default: false
+        required: true
+      deploy_1_0_0:
+        description: "Deploy 1.0.x integration ?"
+        type: boolean
+        default: false
+        required: true
+      deploy_demo:
+        description: "Deploy demo integration ? (Can be deployed only if you choose a tag)"
+        type: boolean
+        default: false
+        required: true
 
 jobs:
   tests:
-    if: github.event.pull_request.draft == false
+    if: ${{ (github.event_name != 'schedule' && github.event_name != 'workflow_dispatch' && github.event.pull_request.draft == false) || (github.event_name == 'workflow_dispatch' && (inputs.run_tests == true || inputs.deploy_demo == true)) }}
     name: Tests
     runs-on: ubuntu-latest
     steps:
@@ -145,9 +166,8 @@ jobs:
         run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml logs
 
   deploy-master:
-    needs: tests
     name: Deploy master
-    if: ${{ github.ref == 'refs/heads/master'  && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') }}
+    if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.deploy_master == true) }}
     uses: ./.github/workflows/deploy-int.yml
     with:
       back_branch: master
@@ -156,9 +176,8 @@ jobs:
     secrets: inherit
   
   deploy-1_0_X:
-    needs: tests
     name: Deploy 1.0.x
-    if: ${{ github.ref == 'refs/heads/1.0.x'  && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') }}
+    if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.deploy_1_0_0 == true) }}
     uses: ./.github/workflows/deploy-int.yml
     with:
       back_branch: 1.0.x
@@ -175,7 +194,7 @@ jobs:
   deploy-demo:
     needs: tests
     name: Deploy demo
-    if: ${{ github.event_name == 'workflow_dispatch' && startsWith(github.ref, 'refs/tags/') }}
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.deploy_demo == true && startsWith(github.ref, 'refs/tags/') }}
     uses: ./.github/workflows/deploy-int.yml
     with:
       back_branch: ${{ github.ref_name }}
