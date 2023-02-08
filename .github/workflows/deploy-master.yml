@@ -1,0 +1,23 @@
+name: Deploy master
+
+on:
+  schedule:
+    - cron: '30 5 * * 1-5'
+  workflow_dispatch: ~
+
+jobs:
+  tests:
+    name: Tests
+    uses: ./.github/workflows/tests.yml
+    with:
+      ref: master
+    secrets: inherit
+  
+  deploy-master:
+    name: Deploy master
+    uses: ./.github/workflows/deploy-int.yml
+    with:
+      back_branch: master
+      front_branch: main
+      composer_version: dev-master
+    secrets: inherit
