@@ -14,6 +14,7 @@ jobs:
     secrets: inherit
   
   deploy-master:
+    needs: tests
     name: Deploy master
     uses: ./.github/workflows/deploy-int.yml
     with:
