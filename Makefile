@@ -72,10 +72,10 @@ init-dev-env: ## Initialize current environment with dev repositories
 	[ -d api/packages/gally-premium ] || git clone git@github.com:Elastic-Suite/gally-premium.git api/packages/gally-premium
 	[ -d front/gally-admin ] || git clone git@github.com:Elastic-Suite/gally-admin.git front/gally-admin
 	$(MAKE) start
-	$(COMPOSER) config repositories.gally-standard '{ "type": "path", "url": "./packages/gally-standard", "options": { "versions": { "gally/gally-standard": "dev-master"}} }'
-	$(COMPOSER) config repositories.gally-premium '{ "type": "path", "url": "./packages/gally-premium", "options": { "versions": { "gally/gally-premium": "dev-master"}} }'
-	$(COMPOSER) require gally/gally-standard dev-master --no-scripts
-	$(COMPOSER) require gally/gally-premium dev-master
+	$(COMPOSER) config repositories.gally-standard '{ "type": "path", "url": "./packages/gally-standard", "options": { "versions": { "gally/gally-standard": "1.0.x-dev"}} }'
+	$(COMPOSER) config repositories.gally-premium '{ "type": "path", "url": "./packages/gally-premium", "options": { "versions": { "gally/gally-premium": "1.0.x-dev"}} }'
+	$(COMPOSER) require gally/gally-standard 1.0.x-dev --no-scripts
+	$(COMPOSER) require gally/gally-premium 1.0.x-dev
 
 phpcsfixer: ## Run php cs fixer, pass the parameter "o=" to ass options, make phpcsfixer o="--dry-run"
 	@$(eval o ?=)
