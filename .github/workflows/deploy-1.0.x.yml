@@ -3,11 +3,18 @@ name: Deploy 1.0.x
 on:
   schedule:
     - cron: '30 5 * * 1-5'
-  workflow_dispatch: ~
+  workflow_dispatch:
+    inputs:
+      skip_tests:
+        description: 'Skip tests before delivery ?'
+        type: boolean
+        default: false
+        required: false
 
 jobs:
   tests:
     name: Tests
+    if: ${{ inputs.skip_tests == false }}
     uses: ./.github/workflows/tests.yml
     with:
       ref: 1.0.x
