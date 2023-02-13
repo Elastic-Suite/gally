@@ -23,6 +23,9 @@ jobs:
   deploy-1_0_X:
     needs: tests
     name: Deploy 1.0.x
+    if: |
+      always() && 
+      (needs.tests.result == 'success' || needs.tests.result == 'skipped')
     uses: ./.github/workflows/deploy-int.yml
     with:
       back_branch: 1.0.x
