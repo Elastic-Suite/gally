@@ -23,6 +23,9 @@ jobs:
   deploy-master:
     needs: tests
     name: Deploy master
+    if: |
+      always() && 
+      (needs.tests.result == 'success' || needs.tests.result == 'skipped')
     uses: ./.github/workflows/deploy-int.yml
     with:
       back_branch: master
