@@ -28,8 +28,8 @@ jobs:
       (needs.tests.result == 'success' || needs.tests.result == 'skipped')
     uses: ./.github/workflows/deploy-int.yml
     with:
-      back_branch: 1.0.x
-      front_branch: 1.0.x
+      back_branch: origin/1.0.x
+      front_branch: origin/1.0.x
       composer_version: 1.0.x-dev
     secrets:
       AWS_DEPLOY_KEY: ${{ secrets.AWS_DEPLOY_KEY }}
