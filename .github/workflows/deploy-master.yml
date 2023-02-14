@@ -28,7 +28,7 @@ jobs:
       (needs.tests.result == 'success' || needs.tests.result == 'skipped')
     uses: ./.github/workflows/deploy-int.yml
     with:
-      back_branch: master
-      front_branch: main
+      back_branch: origin/master
+      front_branch: origin/main
       composer_version: dev-master
     secrets: inherit
