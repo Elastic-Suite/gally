@@ -27,7 +27,7 @@ jobs:
       (needs.tests.result == 'success' || needs.tests.result == 'skipped')
     uses: ./.github/workflows/deploy-int.yml
     with:
-      back_branch: ${{ format('origin/{0}', github.ref_name) }}
+      back_branch: ${{ format('tags/{0}', github.ref_name) }}
       front_branch: ${{ format('tags/v{0}', github.ref_name) }}
       composer_version: ${{ github.ref_name }}
     secrets:
