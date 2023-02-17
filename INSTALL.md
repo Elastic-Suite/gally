@@ -12,7 +12,7 @@ In order to run Gally, you will need:
 
 # Run the application with docker on dev environment
 
-1. Fork the repository https://github.com/Elastic-Suite/standalone using “gally” as repository name
+1. Fork the repository https://github.com/Elastic-Suite/gally
 2. Clone your repository: git clone git@github.com:USERNAME/gally.git
 3. Go in the project directory: cd gally
 4. Build and run the application: make up
