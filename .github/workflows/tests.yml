@@ -1,0 +1,142 @@
+name: Tests
+
+on:
+  workflow_call:
+    inputs:
+      ref:
+        description: 'The branch, tag or SHA to checkout'
+        type: string
+        default: ''
+        required: false
+
+jobs:
+  tests:
+    if: github.event.pull_request.draft == false
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ inputs.ref }}
+      - name: Checkout Gally admin
+        uses: actions/checkout@v3
+        with:
+          repository: 'Elastic-Suite/gally-admin'
+          ref: main
+          path: front/gally-admin
+      - name: Pull images
+        run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml pull --ignore-pull-failures || true
+      - name: Start services
+        run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml up --build -d
+      - name: Wait for php service
+        run: |
+          while status="$(docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" "$(docker-compose -f docker-compose.yml -f docker-compose.ci.yml ps -q php)")"; do
+            case $status in
+              starting) sleep 1;;
+              healthy) exit 0;;
+              unhealthy)
+                docker-compose -f docker-compose.yml -f docker-compose.ci.yml ps
+                docker-compose -f docker-compose.yml -f docker-compose.ci.yml logs
+                exit 1
+              ;;
+            esac
+          done
+          exit 1
+      - name: Wait for elasticsearch service
+        run: |
+          while status="$(docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" "$(docker-compose -f docker-compose.yml -f docker-compose.ci.yml ps -q elasticsearch)")"; do
+          case $status in
+           starting) sleep 1;;
+           healthy) exit 0;;
+           unhealthy)
+             docker-compose -f docker-compose.yml -f docker-compose.ci.yml ps
+             docker-compose -f docker-compose.yml -f docker-compose.ci.yml logs
+             exit 1
+           ;;
+          esac
+          done
+          exit 1
+      - name: Check HTTP reachability
+        id: http_reachability
+        run: curl -v -o /dev/null http://localhost
+      - name: HTTP Failure
+        if: ${{ failure() && steps.tests.http_reachability == 'failure' }}
+        run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml logs
+      - name: Check HTTPS reachability
+        id: https_reachability
+        run: curl  -vk -o /dev/null https://localhost
+      - name: HTTPS Failure
+        if: ${{ failure() && steps.tests.https_reachability == 'failure' }}
+        run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml logs
+      - name: Create test database
+        run: |
+          docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec -e XDEBUG_MODE=off -T php bin/console -e test doctrine:database:create
+          docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec -e XDEBUG_MODE=off -T php bin/console -e test doctrine:migrations:migrate --no-interaction
+      - name: Doctrine Schema Validator
+        run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec -e XDEBUG_MODE=off -T php bin/console doctrine:schema:validate --skip-sync
+      - name: Fixtures load
+        run: |
+          docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec -e XDEBUG_MODE=off -T php bin/console gally:index:clear --no-interaction
+          docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec -e XDEBUG_MODE=off -T php bin/console hautelook:fixtures:load --no-interaction -vv
+          docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec -e XDEBUG_MODE=off -T php bin/console doctrine:fixtures:load --append --no-interaction
+      - name: Coverage
+        run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec -e XDEBUG_MODE=coverage -T php bin/phpunit --coverage-clover=coverage/coverage.xml vendor/gally/gally-standard
+
+      - name: Cleanup coverage file
+        run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec -T php sed -i 's:<file name="/srv/:<file name="/:' coverage/coverage.xml
+
+      - if: ${{ github.event_name == 'pull_request' }}
+        name: Download artifact
+        uses: dawidd6/action-download-artifact@v2.14.1
+        continue-on-error: true
+        id: base_coverage_report
+        with:
+          workflow: .github/workflows/ci.yml
+          branch: ${{ github.base_ref }}
+          name: coverage-report
+          path: coverage/base # Retrieve previous coverage file at the root directory, not inside api/coverage
+
+      - name: Backend Coverage Report as Comment (Compared to a base)
+        if: ${{ github.event_name == 'pull_request' && steps.base_coverage_report.outcome == 'success' }}
+        uses: lucassabreu/comment-coverage-clover@main
+        continue-on-error: true
+        with:
+          with-chart: false
+          file: api/coverage/coverage.xml
+          base-file: coverage/base/coverage.xml
+          max-line-coverage-decrease: 10.0
+          max-method-coverage-decrease: 10.0
+          min-line-coverage: 75
+          min-method-coverage: 75
+          signature: "Backend Coverage compared to target branch"
+
+      - name: Backend Coverage Report as Comment (Clean)
+        uses: lucassabreu/comment-coverage-clover@v0.3.0
+        if: ${{ (github.event_name == 'pull_request' && steps.base_coverage_report.outcome != 'success') || github.event_name == 'push'}}
+        with:
+          with-chart: false
+          file: api/coverage/coverage.xml
+          signature: "Backend Coverage of this branch"
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: coverage-report
+          path: api/coverage/coverage.xml
+
+      - name: Jest
+        run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec -T pwa yarn test:ci
+
+      - name: Frontend Coverage Report
+        uses: 5monkeys/cobertura-action@v12
+        if: ${{ github.event_name == 'pull_request' }}
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          report_name: "Frontend Coverage of this branch"
+          path: front/example-app/coverage/cobertura-coverage.xml
+          minimum_coverage: 1
+          fail_below_threshold: false
+
+      - name: "[End] Job failed, gathering logs"
+        if: ${{ failure() }}
+        run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml logs

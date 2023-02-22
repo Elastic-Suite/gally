@@ -1,0 +1,40 @@
+name: Deploy 1.0.x
+
+on:
+  schedule:
+    - cron: '30 5 * * 1-5'
+  workflow_dispatch:
+    inputs:
+      skip_tests:
+        description: 'Skip tests before delivery ?'
+        type: boolean
+        default: false
+        required: false
+
+jobs:
+  tests:
+    name: Tests
+    if: ${{ inputs.skip_tests == false }}
+    uses: ./.github/workflows/tests.yml
+    with:
+      ref: 1.0.x
+    secrets: inherit
+  
+  deploy-1_0_X:
+    needs: tests
+    name: Deploy 1.0.x
+    if: |
+      always() && 
+      (needs.tests.result == 'success' || needs.tests.result == 'skipped')
+    uses: ./.github/workflows/deploy-int.yml
+    with:
+      back_branch: origin/1.0.x
+      front_branch: origin/1.0.x
+      composer_version: 1.0.x-dev
+    secrets:
+      AWS_DEPLOY_KEY: ${{ secrets.AWS_DEPLOY_KEY }}
+      AWS_HOSTNAME: ${{ secrets.AWS_HOSTNAME_1_0_x }}
+      AWS_USER: ${{ secrets.AWS_USER }}
+      APP_SECRET: ${{ secrets.APP_SECRET }}
+      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
