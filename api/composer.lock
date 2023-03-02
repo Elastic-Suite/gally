@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4d3599cc9c14115681bda19642c8c935",
+    "content-hash": "0de67fff8cfad303ba9112c119abe5e0",
     "packages": [
         {
             "name": "api-platform/core",
@@ -2170,16 +2170,16 @@
         },
         {
             "name": "gally/gally-standard",
-            "version": "1.0.x-dev",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Elastic-Suite/gally-standard.git",
-                "reference": "843f67353929273e09c1dc0f075f9a321c756361"
+                "reference": "b6c9a3f73cecff9ed9c5bb7bd3774a56a4a04531"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Elastic-Suite/gally-standard/zipball/843f67353929273e09c1dc0f075f9a321c756361",
-                "reference": "843f67353929273e09c1dc0f075f9a321c756361",
+                "url": "https://api.github.com/repos/Elastic-Suite/gally-standard/zipball/b6c9a3f73cecff9ed9c5bb7bd3774a56a4a04531",
+                "reference": "b6c9a3f73cecff9ed9c5bb7bd3774a56a4a04531",
                 "shasum": ""
             },
             "require": {
@@ -2221,7 +2221,6 @@
                 "symfony/var-dumper": "6.0.*",
                 "symfony/web-profiler-bundle": "6.0.*"
             },
-            "default-branch": true,
             "type": "symfony-bundle",
             "extra": {
                 "symfony": {
@@ -2262,9 +2261,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Elastic-Suite/gally-standard/issues",
-                "source": "https://github.com/Elastic-Suite/gally-standard/tree/1.0.x"
+                "source": "https://github.com/Elastic-Suite/gally-standard/tree/master"
             },
-            "time": "2023-03-02T08:11:48+00:00"
+            "time": "2023-03-02T09:31:35+00:00"
         },
         {
             "name": "gedmo/doctrine-extensions",
