@@ -2,17 +2,6 @@
 
 declare(strict_types=1);
 
-$header = <<<'HEADER'
-DISCLAIMER
-
-Do not edit or add to this file if you wish to upgrade Gally to newer versions in the future.
-
-@package   Gally
-@author    Gally Team <elasticsuite@smile.fr>
-@copyright 2022-present Smile
-@license   Open Software License v. 3.0 (OSL-3.0)
-HEADER;
-
 $finder = PhpCsFixer\Finder::create()
     ->in(__DIR__)
     ->exclude([
@@ -57,12 +46,6 @@ return (new PhpCsFixer\Config())
         ],
         'explicit_indirect_variable' => true,
         'fully_qualified_strict_types' => true,
-        'header_comment' => [
-            'comment_type' => 'PHPDoc',
-            'header' => $header,
-            'location' => 'after_open',
-            'separate' => 'bottom',
-        ],
         'logical_operators' => true,
         'multiline_comment_opening_closing' => true,
         'multiline_whitespace_before_semicolons' => [
