@@ -82,11 +82,14 @@ switch-dev-env: ## Switch current environment with dev repositories on a compose
 	$(COMPOSER) require gally/gally-standard $(v) --no-scripts
 	$(COMPOSER) require gally/gally-premium $(v)
 
-phpcsfixer: ## Run php cs fixer, pass the parameter "o=" to ass options, make phpcsfixer o="--dry-run"
+phpcsfixer: ## Run php cs fixer, pass the parameter "o=" to pass options, make phpcsfixer o="--dry-run"
 	@$(eval o ?=)
-	@$(PHP_CS_FIXER) fix --path-mode=intersection vendor/gally/gally-standard --diff $(o)
+	@$(PHP_CS_FIXER) fix --path-mode=intersection src/ --diff $(o)
+	@cd api; for package in vendor/gally/* ; do \
+		$(PHP_CS_FIXER) fix --path-mode=intersection $$package --diff $(o) ;\
+	done
 
-phpcsfixer_dryrun: ## Run php cs fixer wuth dry run optoin
+phpcsfixer_dryrun: ## Run php cs fixer with dry run option
 phpcsfixer_dryrun: o="--dry-run"
 phpcsfixer_dryrun: phpcsfixer
 
