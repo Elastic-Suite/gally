@@ -71,34 +71,11 @@
 {$SERVER_NAME} {
     log
 
-    # named matchers
-    @do_varnish_pass {
-        header !X-Caddy-Forwarded
-        # method GET
-        # protocol https
-        not {
-            header Upgrade websocket
-        }
-    }
-
-    # do the cache pass
-    reverse_proxy @do_varnish_pass http://{$VARNISH_UPSTREAM} {
-        # request_header +X-Caddy-Forwarded 1
-        header_up X-Caddy-Forwarded 1
-        # header_up Host {http.reverse_proxy.upstream.hostport}
-    }
-
     import snippet
 }
 
 http://{$SERVER_NAME}:8080 {
     log
-
-    @do_redirect_https {
-        header !X-Caddy-Forwarded
-    }
-
-    redir @do_redirect_https https://{$SERVER_NAME}{uri} permanent
 
     import snippet
 }
