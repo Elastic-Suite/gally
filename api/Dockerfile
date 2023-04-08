@@ -62,6 +62,7 @@ RUN set -eux; \
 
 # PHP Redis install
 RUN apk add --no-cache pcre-dev $PHPIZE_DEPS \
+	&& pecl update-channels \
 	&& pecl install redis \
     && docker-php-ext-enable redis.so
 
