@@ -1,2 +1,2 @@
-import { AdminBoostNew } from '@elastic-suite/gally-admin-components'
-export default AdminBoostNew
+import { AdminBoostCreate } from '@elastic-suite/gally-admin-components'
+export default AdminBoostCreate
