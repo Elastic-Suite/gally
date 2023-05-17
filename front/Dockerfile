@@ -19,7 +19,8 @@ ENV NEXT_TELEMETRY_DISABLED 1
 COPY . ./
 
 RUN set -xe; \
-	yarn install --frozen-lockfile;
+	yarn install --frozen-lockfile; \
+    yarn cache clean;
 
 
 
