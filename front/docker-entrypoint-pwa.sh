@@ -9,6 +9,7 @@ then
   cd gally-admin
   yarn install --frozen-lockfile;
   yarn build
+  yarn cache clean
   cd node_modules
   rm -rf react react-dom
   ln -Ts ../../node_modules/react react
