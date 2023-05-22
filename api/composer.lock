@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0de67fff8cfad303ba9112c119abe5e0",
+    "content-hash": "63b602cb31b995f61e81ef321390f330",
     "packages": [
         {
             "name": "api-platform/core",
@@ -2169,18 +2169,84 @@
             "time": "2021-05-22T16:11:15+00:00"
         },
         {
-            "name": "gally/gally-standard",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Elastic-Suite/gally-standard.git",
-                "reference": "9d920dcf690525988e754d78e11f590a70e1a3df"
-            },
+            "name": "gally/gally-premium",
+            "version": "1.0.x-dev",
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Elastic-Suite/gally-standard/zipball/9d920dcf690525988e754d78e11f590a70e1a3df",
-                "reference": "9d920dcf690525988e754d78e11f590a70e1a3df",
-                "shasum": ""
+                "type": "path",
+                "url": "./packages/gally-premium",
+                "reference": "d3848c62fcb0cf54dc90bacd162fdefacc4ed48e"
+            },
+            "require": {
+                "gally/gally-standard": "~1.0.0"
+            },
+            "require-dev": {
+                "api-platform/schema-generator": "^4.0",
+                "doctrine/doctrine-fixtures-bundle": "^3.4",
+                "friendsofphp/php-cs-fixer": "~3.4.0",
+                "hautelook/alice-bundle": "^2.10",
+                "justinrainbow/json-schema": "^5.2",
+                "liip/test-fixtures-bundle": "^2.0.0",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan": "^1.4",
+                "phpstan/phpstan-doctrine": "^1.2",
+                "phpstan/phpstan-phpunit": "^1.0",
+                "phpstan/phpstan-symfony": "^1.1",
+                "phpunit/phpunit": "^9.5",
+                "symfony/browser-kit": "6.0.*",
+                "symfony/css-selector": "6.0.*",
+                "symfony/debug-bundle": "6.0.*",
+                "symfony/http-client": "6.0.*",
+                "symfony/maker-bundle": "^1.21",
+                "symfony/phpunit-bridge": "6.0.*",
+                "symfony/stopwatch": "6.0.*",
+                "symfony/var-dumper": "6.0.*",
+                "symfony/web-profiler-bundle": "6.0.*"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "symfony": {
+                    "require": "^6.1"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Gally\\VirtualCategory\\": "VirtualCategory/src/"
+                }
+            },
+            "license": [
+                "Proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "The Elasticsuite Team",
+                    "email": "elasticsuite@smile.fr"
+                }
+            ],
+            "description": "The Open Source E-Commerce Searchandising Suite",
+            "homepage": "https://elasticsuite.io",
+            "keywords": [
+                "API",
+                "E-commerce",
+                "Elasticsearch",
+                "GraphQL",
+                "HAL",
+                "JSON-LD",
+                "JSONAPI",
+                "OpenAPI",
+                "REST",
+                "Swagger"
+            ],
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "gally/gally-standard",
+            "version": "1.0.x-dev",
+            "dist": {
+                "type": "path",
+                "url": "./packages/gally-standard",
+                "reference": "3dd386291b502ca7e9227f741a6bc1ce209fba29"
             },
             "require": {
                 "api-platform/core": "~2.6.0",
@@ -2235,7 +2301,6 @@
                     "Gally\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "OSL-3.0"
             ],
@@ -2248,22 +2313,20 @@
             "description": "The Open Source E-Commerce Searchandising Suite",
             "homepage": "https://elasticsuite.io",
             "keywords": [
+                "API",
+                "E-commerce",
+                "Elasticsearch",
+                "GraphQL",
+                "HAL",
                 "JSON-LD",
-                "api",
-                "e-commerce",
-                "elasticsearch",
-                "graphql",
-                "hal",
-                "jsonapi",
-                "openapi",
-                "rest",
-                "swagger"
+                "JSONAPI",
+                "OpenAPI",
+                "REST",
+                "Swagger"
             ],
-            "support": {
-                "issues": "https://github.com/Elastic-Suite/gally-standard/issues",
-                "source": "https://github.com/Elastic-Suite/gally-standard/tree/master"
-            },
-            "time": "2023-05-22T16:24:52+00:00"
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "gedmo/doctrine-extensions",
@@ -8655,16 +8718,16 @@
         },
         {
             "name": "symfony/web-link",
-            "version": "v6.0.3",
+            "version": "v6.0.19",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/web-link.git",
-                "reference": "52d6af6c4476c8ebdef968cb39030826253eb5e4"
+                "reference": "65cbc32c8177cfec22afde261e54533c408e5fa0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/web-link/zipball/52d6af6c4476c8ebdef968cb39030826253eb5e4",
-                "reference": "52d6af6c4476c8ebdef968cb39030826253eb5e4",
+                "url": "https://api.github.com/repos/symfony/web-link/zipball/65cbc32c8177cfec22afde261e54533c408e5fa0",
+                "reference": "65cbc32c8177cfec22afde261e54533c408e5fa0",
                 "shasum": ""
             },
             "require": {
@@ -8721,7 +8784,7 @@
                 "push"
             ],
             "support": {
-                "source": "https://github.com/symfony/web-link/tree/v6.0.3"
+                "source": "https://github.com/symfony/web-link/tree/v6.0.19"
             },
             "funding": [
                 {
@@ -8737,7 +8800,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-01-02T09:55:41+00:00"
+            "time": "2023-01-01T08:36:10+00:00"
         },
         {
             "name": "symfony/yaml",
@@ -12689,6 +12752,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "gally/gally-premium": 20,
         "gally/gally-standard": 20
     },
     "prefer-stable": false,

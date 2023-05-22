@@ -146,6 +146,8 @@ services:
       - discovery.type=single-node
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m" # 512 Mo HEAP
       - cluster.routing.allocation.disk.threshold_enabled=false # Avoid ES going read-only because low disk space availability
+      - xpack.security.enabled=false # Avoid warning in fixture_load
+      - action.destructive_requires_name=false # Avoid warning in fixture_load
     volumes:
       - es_data:/usr/share/elasticsearch/data:rw,z
     ulimits:
@@ -166,7 +168,7 @@ services:
     depends_on:
       - caddy
     ports:
-#      - "80:80"
+      - "1234:80"
       - "3307:3306"
       - "8888:8888"
       - "9999:9999"
@@ -182,6 +184,8 @@ services:
       # Serve magento over http
       - traefik.http.routers.shopware-http.rule=Host(`shopware.localhost`)
       - traefik.http.routers.shopware-http.entrypoints=http
+      - traefik.http.routers.shopwarede-http.rule=Host(`shopware-de.localhost`)
+      - traefik.http.routers.shopwarede-http.entrypoints=http
       # Serve magento over https
       - traefik.http.routers.shopware-https.rule=Host(`shopware.localhost`)
       - traefik.http.routers.shopware-https.entrypoints=https

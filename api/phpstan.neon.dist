@@ -2,7 +2,7 @@ parameters:
     level: 5
     paths:
         - src
-        - vendor/gally/gally-standard
+        - packages
     excludePaths:
         - src/Acme
     inferPrivatePropertyTypeFromConstructor: true
