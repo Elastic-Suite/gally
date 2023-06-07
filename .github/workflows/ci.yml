@@ -4,11 +4,13 @@ on:
   push:
     branches:
       - master
-      - 1.0.x 
+      - 1.0.x
+      - feature-boost
   pull_request:
     branches:
       - master
       - 1.0.x
+      - feature-boost
     types: [review_requested, ready_for_review, synchronize]
   workflow_dispatch: ~
 
