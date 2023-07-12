@@ -30,6 +30,7 @@ services:
         client_port=9000
         idekey=PHPSTORM
       PHP_IDE_CONFIG: serverName=api-platform
+      TRUSTED_HOSTS: ^${SERVER_NAME:-example\.com|localhost}|caddy$|gally.localhost$$
 
   pwa:
     user: ${UUID?You must set UUID env var}:${GUID?You must set GUID env var}
@@ -57,8 +58,13 @@ services:
       - php
       - pwa
       - example
+    networks:
+      default:
+        aliases:
+          - 'gally.localhost'
     environment:
       EXAMPLE_UPSTREAM: example:3001
+      SERVER_NAME: gally.localhost
       # MERCURE_EXTRA_DIRECTIVES: demo
 
 ###> doctrine/doctrine-bundle ###
@@ -71,3 +77,8 @@ services:
 
 ###> symfony/mercure-bundle ###
 ###< symfony/mercure-bundle ###
+
+# Create default gally network in order to be able to connect other services.
+networks:
+  default:
+    name: 'gally-proxy'
