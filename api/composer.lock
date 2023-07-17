@@ -2231,16 +2231,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Elastic-Suite/gally-standard.git",
-                "reference": "9d920dcf690525988e754d78e11f590a70e1a3df"
+                "reference": "633c670cde7c45e6f943aa2fbda7dc2ea3de8c24"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Elastic-Suite/gally-standard/zipball/9d920dcf690525988e754d78e11f590a70e1a3df",
-                "reference": "9d920dcf690525988e754d78e11f590a70e1a3df",
+                "url": "https://api.github.com/repos/Elastic-Suite/gally-standard/zipball/633c670cde7c45e6f943aa2fbda7dc2ea3de8c24",
+                "reference": "633c670cde7c45e6f943aa2fbda7dc2ea3de8c24",
                 "shasum": ""
             },
             "require": {
                 "api-platform/core": "~2.6.0",
+                "beberlei/doctrineextensions": "^1.3",
                 "composer/package-versions-deprecated": "^1.11",
                 "cweagans/composer-patches": "^1.7",
                 "elasticsearch/elasticsearch": "^7.0",
@@ -2320,7 +2321,7 @@
                 "issues": "https://github.com/Elastic-Suite/gally-standard/issues",
                 "source": "https://github.com/Elastic-Suite/gally-standard/tree/master"
             },
-            "time": "2023-05-22T16:24:52+00:00"
+            "time": "2023-07-04T16:05:23+00:00"
         },
         {
             "name": "gedmo/doctrine-extensions",
