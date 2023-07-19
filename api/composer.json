@@ -122,6 +122,9 @@
         "patches": {
             "lexik/jwt-authentication-bundle": {
                 "Fix forward port of trait that does not preload correctly": "patches/jwt-authenticator.patch"
+            },
+            "api-platform/core": {
+                "Fix Elasticsearch bridge data providers enabled by default": "patches/api-platform-elasticsearch-bridge.patch"
             }
         }
     }
