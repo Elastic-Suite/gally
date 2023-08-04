@@ -155,8 +155,8 @@ FROM caddy:${CADDY_VERSION}-builder-alpine AS gally_caddy_builder
 RUN xcaddy build \
     --with github.com/dunglas/mercure@v0.14.6  \
     --with github.com/dunglas/mercure/caddy@v0.14.6  \
-    --with github.com/dunglas/vulcain \
-    --with github.com/dunglas/vulcain/caddy
+    --with github.com/dunglas/vulcain@v0.4.3 \
+    --with github.com/dunglas/vulcain/caddy@v0.4.3
 
 FROM caddy:${CADDY_VERSION} AS gally_caddy
 
