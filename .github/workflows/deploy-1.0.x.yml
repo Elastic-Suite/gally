@@ -17,8 +17,10 @@ jobs:
     if: ${{ inputs.skip_tests == false }}
     uses: ./.github/workflows/tests.yml
     with:
-      ref: 1.0.x
-    secrets: inherit
+      version: 1.0.x
+      last_published_version: 1.0.1
+    secrets:
+      COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
   
   deploy-1_0_X:
     needs: tests
@@ -28,9 +30,8 @@ jobs:
       (needs.tests.result == 'success' || needs.tests.result == 'skipped')
     uses: ./.github/workflows/deploy-int.yml
     with:
-      back_branch: origin/1.0.x
-      front_branch: origin/1.0.x
-      composer_version: 1.0.x-dev
+      version: 1.0.x
+      last_published_version: 1.0.1
     secrets:
       AWS_DEPLOY_KEY: ${{ secrets.AWS_DEPLOY_KEY }}
       AWS_HOSTNAME: ${{ secrets.AWS_HOSTNAME_1_0_x }}

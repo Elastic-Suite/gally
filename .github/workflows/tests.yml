@@ -3,88 +3,93 @@ name: Tests
 on:
   workflow_call:
     inputs:
-      ref:
-        description: 'The branch, tag or SHA to checkout'
+      version:
+        description: "Version of Gally's packages (ex: master or 1.0.x)"
         type: string
-        default: ''
+        default: 'master'
         required: false
+      last_published_version:
+        description: "Last release of the current version"
+        required: false
+        default: "dev-master"
+        type: string
+    secrets:
+      COMPOSER_AUTH:
+        required: true
 
 jobs:
   tests:
     if: github.event.pull_request.draft == false
     name: Tests
     runs-on: ubuntu-latest
+    
+    env:
+      back_branch: ${{ inputs.version }}
+      front_branch: ${{ inputs.version == 'master' && 'main' || inputs.version }}
+      composer_version: ${{ inputs.version == 'master' && 'dev-master' || (contains(inputs.version, 'x') && format('{0}-dev', inputs.version) || inputs.version) }}
+    
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          ref: ${{ inputs.ref }}
+          ref: ${{ env.back_branch }}
       - name: Checkout Gally admin
         uses: actions/checkout@v3
         with:
           repository: 'Elastic-Suite/gally-admin'
-          ref: main
+          ref: ${{env.front_branch}}
           path: front/gally-admin
+      - name: update gally standard package
+        working-directory: api
+        run: composer require "gally/gally-standard:${{ env.composer_version }} as ${{ inputs.last_published_version }}"
+      - name: Add premium package repository
+        uses: php-actions/composer@v6
+        with:
+          php_version: "8.1"
+          args: --working-dir api
+          command: config repositories.gally-premium composer https://packagist.smile.fr/gally
+        env:
+          COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
+      - name: Install premium package
+        uses: php-actions/composer@v6
+        with:
+          php_version: "8.1"
+          args: --no-cache --working-dir api
+          command: require gally/gally-premium:${{ env.composer_version }}
+        env:
+          COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
       - name: Pull images
-        run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml pull --ignore-pull-failures || true
+        run: docker compose -f docker-compose.yml -f docker-compose.ci.yml pull --ignore-pull-failures || true
       - name: Start services
-        run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml up --build -d
-      - name: Wait for php service
-        run: |
-          while status="$(docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" "$(docker-compose -f docker-compose.yml -f docker-compose.ci.yml ps -q php)")"; do
-            case $status in
-              starting) sleep 1;;
-              healthy) exit 0;;
-              unhealthy)
-                docker-compose -f docker-compose.yml -f docker-compose.ci.yml ps
-                docker-compose -f docker-compose.yml -f docker-compose.ci.yml logs
-                exit 1
-              ;;
-            esac
-          done
-          exit 1
-      - name: Wait for elasticsearch service
-        run: |
-          while status="$(docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" "$(docker-compose -f docker-compose.yml -f docker-compose.ci.yml ps -q elasticsearch)")"; do
-          case $status in
-           starting) sleep 1;;
-           healthy) exit 0;;
-           unhealthy)
-             docker-compose -f docker-compose.yml -f docker-compose.ci.yml ps
-             docker-compose -f docker-compose.yml -f docker-compose.ci.yml logs
-             exit 1
-           ;;
-          esac
-          done
-          exit 1
+        run: docker compose -f docker-compose.yml -f docker-compose.ci.yml up --build -d --wait
       - name: Check HTTP reachability
         id: http_reachability
         run: curl -v -o /dev/null http://localhost
       - name: HTTP Failure
         if: ${{ failure() && steps.tests.http_reachability == 'failure' }}
-        run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml logs
+        run: docker compose -f docker-compose.yml -f docker-compose.ci.yml logs
       - name: Check HTTPS reachability
         id: https_reachability
         run: curl  -vk -o /dev/null https://localhost
       - name: HTTPS Failure
         if: ${{ failure() && steps.tests.https_reachability == 'failure' }}
-        run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml logs
+        run: docker compose -f docker-compose.yml -f docker-compose.ci.yml logs
       - name: Create test database
         run: |
-          docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec -e XDEBUG_MODE=off -T php bin/console -e test doctrine:database:create
-          docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec -e XDEBUG_MODE=off -T php bin/console -e test doctrine:migrations:migrate --no-interaction
+          docker compose -f docker-compose.yml -f docker-compose.ci.yml exec -e XDEBUG_MODE=off -T php bin/console -e test doctrine:database:create
+          docker compose -f docker-compose.yml -f docker-compose.ci.yml exec -e XDEBUG_MODE=off -T php bin/console -e test doctrine:migrations:migrate --no-interaction
       - name: Doctrine Schema Validator
-        run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec -e XDEBUG_MODE=off -T php bin/console doctrine:schema:validate --skip-sync
+        run: docker compose -f docker-compose.yml -f docker-compose.ci.yml exec -e XDEBUG_MODE=off -T php bin/console doctrine:schema:validate --skip-sync
       - name: Fixtures load
         run: |
-          docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec -e XDEBUG_MODE=off -T php bin/console gally:index:clear --no-interaction
-          docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec -e XDEBUG_MODE=off -T php bin/console hautelook:fixtures:load --no-interaction -vv
-          docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec -e XDEBUG_MODE=off -T php bin/console doctrine:fixtures:load --append --no-interaction
+          docker compose -f docker-compose.yml -f docker-compose.ci.yml exec -e XDEBUG_MODE=off -T php bin/console gally:index:clear --no-interaction
+          docker compose -f docker-compose.yml -f docker-compose.ci.yml exec -e XDEBUG_MODE=off -T php bin/console hautelook:fixtures:load --no-interaction -vv
+          docker compose -f docker-compose.yml -f docker-compose.ci.yml exec -e XDEBUG_MODE=off -T php bin/console doctrine:fixtures:load --append --no-interaction
       - name: Coverage
-        run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec -e XDEBUG_MODE=coverage -T php bin/phpunit --coverage-clover=coverage/coverage.xml vendor/gally/gally-standard
+        run: docker compose -f docker-compose.yml -f docker-compose.ci.yml exec -e XDEBUG_MODE=coverage -T php bin/phpunit --coverage-clover=coverage/coverage.xml vendor/gally
 
       - name: Cleanup coverage file
-        run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec -T php sed -i 's:<file name="/srv/:<file name="/:' coverage/coverage.xml
+        run: docker compose -f docker-compose.yml -f docker-compose.ci.yml exec -T php sed -i 's:<file name="/srv/:<file name="/:' coverage/coverage.xml
 
       - if: ${{ github.event_name == 'pull_request' }}
         name: Download artifact
@@ -125,7 +130,7 @@ jobs:
           path: api/coverage/coverage.xml
 
       - name: Jest
-        run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec -T pwa yarn test:ci
+        run: docker compose -f docker-compose.yml -f docker-compose.ci.yml exec -T pwa yarn test:ci
 
       - name: Frontend Coverage Report
         uses: 5monkeys/cobertura-action@v12
@@ -139,4 +144,4 @@ jobs:
 
       - name: "[End] Job failed, gathering logs"
         if: ${{ failure() }}
-        run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml logs
+        run: docker compose -f docker-compose.yml -f docker-compose.ci.yml logs
