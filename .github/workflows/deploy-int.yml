@@ -3,17 +3,14 @@ name: Deploy integration
 on:
   workflow_call:
     inputs:
-      back_branch:
-        description: 'Back branch to deploy'
+      version:
+        description: "Version of Gally's packages (ex: master or 1.0.x)"
         required: true
         type: string
-      front_branch:
-        description: 'Front branch to deploy'
-        required: true
-        type: string
-      composer_version:
-        description: "Composer version of Gally's packages"
-        required: true
+      last_published_version:
+        description: "Last release of the current version"
+        required: false
+        default: "dev-master"
         type: string
     secrets:
       AWS_DEPLOY_KEY:
@@ -37,6 +34,9 @@ jobs:
     steps:      
       - name: Deploy in EC2
         env:
+            back_branch: ${{ format('origin/{0}', inputs.version) }}
+            front_branch: ${{ inputs.version == 'master' && 'origin/main' || format('origin/{0}', inputs.version) }}
+            composer_version: ${{ inputs.version == 'master' && 'dev-master' || (contains(inputs.version, 'x') && format('{0}-dev', inputs.version) || inputs.version) }}
             PRIVATE_KEY: ${{ secrets.AWS_DEPLOY_KEY }}
             HOSTNAME : ${{ secrets.AWS_HOSTNAME }}
             USER_NAME : ${{ secrets.AWS_USER }}
@@ -53,13 +53,13 @@ jobs:
             ([[ $(docker volume ls -q | awk '!/_/' | tr '\n' ' ' | wc -l) -eq 0 ]] || docker volume rm $(docker volume ls -q | awk '!/_/' | tr '\n' ' ')) &&
             make .env &&
             docker-compose down &&
-            git fetch --all && git reset --hard  && git checkout ${{ inputs.back_branch }} &&
+            git fetch --all && git reset --hard  && git checkout ${{ env.back_branch }} &&
             [ -d front/gally-admin ] || git clone https://github.com/Elastic-Suite/gally-admin.git front/gally-admin &&
-            cd front/gally-admin && git fetch --all && git reset --hard && git checkout ${{ inputs.front_branch }} &&
+            cd front/gally-admin && git fetch --all && git reset --hard && git checkout ${{ env.front_branch }} &&
             cd /home/ubuntu/gally &&
             docker-compose run --rm php rm -rf vendor/gally/gally-premium &&
             docker-compose run --rm php composer config repositories.gally-premium composer https://packagist.smile.fr/gally &&
-            docker-compose run -e COMPOSER_AUTH='$COMPOSER_AUTH' php composer require gally/gally-standard ${{ inputs.composer_version }} &&
-            docker-compose run -e COMPOSER_AUTH='$COMPOSER_AUTH' php composer require gally/gally-premium ${{ inputs.composer_version }} &&
+            docker-compose run --rm -e COMPOSER_AUTH='$COMPOSER_AUTH' php composer require \"gally/gally-standard:${{ env.composer_version }} as ${{ inputs.last_published_version }}\" &&
+            docker-compose run --rm -e COMPOSER_AUTH='$COMPOSER_AUTH' php composer require \"gally/gally-premium:${{ env.composer_version }}\" &&
             SERVER_NAME=$HOSTNAME APP_SECRET=$APP_SECRET POSTGRES_PASSWORD=$POSTGRES_PASSWORD docker-compose -f docker-compose.yml -f docker-compose.int.yml up -d --build
           "
