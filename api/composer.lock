@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f79ebc1b5d396ff1e739b4eef31cb07c",
+    "content-hash": "f7a0b91ef49f5156cab242e31431e4f3",
     "packages": [
         {
             "name": "api-platform/core",
@@ -2170,16 +2170,16 @@
         },
         {
             "name": "gally/gally-standard",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Elastic-Suite/gally-standard.git",
-                "reference": "c4a871edec8cbeff5718ca5d277b823d988c7583"
+                "reference": "d54873fbea7780785e37712c638d1702084126ed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Elastic-Suite/gally-standard/zipball/c4a871edec8cbeff5718ca5d277b823d988c7583",
-                "reference": "c4a871edec8cbeff5718ca5d277b823d988c7583",
+                "url": "https://api.github.com/repos/Elastic-Suite/gally-standard/zipball/d54873fbea7780785e37712c638d1702084126ed",
+                "reference": "d54873fbea7780785e37712c638d1702084126ed",
                 "shasum": ""
             },
             "require": {
@@ -2261,9 +2261,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Elastic-Suite/gally-standard/issues",
-                "source": "https://github.com/Elastic-Suite/gally-standard/tree/1.0.1"
+                "source": "https://github.com/Elastic-Suite/gally-standard/tree/1.0.2"
             },
-            "time": "2023-07-20T09:27:29+00:00"
+            "time": "2023-07-28T08:23:18+00:00"
         },
         {
             "name": "gedmo/doctrine-extensions",
