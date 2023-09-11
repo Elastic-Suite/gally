@@ -34,3 +34,7 @@ export interface IProduct extends Omit<IGraphqlProduct, 'price'> {
   price?: number
   image?: string
 }
+
+export interface IProductAutoComplete extends IProduct {
+  type?: 'product'
+}
