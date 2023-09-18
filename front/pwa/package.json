@@ -20,6 +20,8 @@
     "prepare": "cd public && ln -fsT ../../node_modules/@elastic-suite/gally-admin-components/public/locales/ locales && ln -fsT ../../node_modules/@elastic-suite/gally-admin-components/public/images/ images"
   },
   "dependencies": {
+    "@elastic-suite/gally-admin-components": "1.1.0-alpha.1",
+    "@elastic-suite/gally-admin-shared": "1.1.0-alpha.1",
     "@emotion/react": "11.10.4",
     "@emotion/styled": "11.10.4",
     "@mui/material": "5.10.5",
@@ -29,8 +31,6 @@
     "autosuggest-highlight": "3.3.4",
     "classnames": "2.3.2",
     "dayjs": "1.11.6",
-    "@elastic-suite/gally-admin-components": "1.1.0-alpha.1",
-    "@elastic-suite/gally-admin-shared": "1.1.0-alpha.1",
     "i18next": "22.4.6",
     "i18next-chained-backend": "3.1.0",
     "i18next-http-backend": "1.4.1",

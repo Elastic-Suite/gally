@@ -18,7 +18,7 @@ jobs:
     uses: ./.github/workflows/tests.yml
     with:
       version: 1.0.x
-      last_published_version: 1.0.1
+      last_published_version: 1.0.2
     secrets:
       COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
   
@@ -31,7 +31,7 @@ jobs:
     uses: ./.github/workflows/deploy-int.yml
     with:
       version: 1.0.x
-      last_published_version: 1.0.1
+      last_published_version: 1.0.2
     secrets:
       AWS_DEPLOY_KEY: ${{ secrets.AWS_DEPLOY_KEY }}
       AWS_HOSTNAME: ${{ secrets.AWS_HOSTNAME_1_0_x }}
