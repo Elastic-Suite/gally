@@ -1,4 +1,4 @@
-name: Deploy 1.0.x
+name: Deploy 1.0.x New version
 
 on:
   schedule:
