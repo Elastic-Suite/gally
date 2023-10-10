@@ -40,7 +40,7 @@ jobs:
       - name: Deploy in EC2
         env:
             back_branch: ${{ format('origin/{0}', inputs.version) }}
-            front_branch: ${{ inputs.version == 'master' && 'origin/main' || front_version_is_tag == true && format('origin/v{0}', inputs.version) || format('origin/{0}', inputs.version) }}
+            front_branch: ${{ inputs.version == 'master' && 'origin/main' || inputs.front_version_is_tag == true && format('origin/v{0}', inputs.version) || format('origin/{0}', inputs.version) }}
             composer_version: ${{ inputs.version == 'master' && 'dev-master' || (contains(inputs.version, 'x') && format('{0}-dev', inputs.version) || inputs.version) }}
             PRIVATE_KEY: ${{ secrets.AWS_DEPLOY_KEY }}
             HOSTNAME : ${{ secrets.AWS_HOSTNAME }}
