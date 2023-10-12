@@ -102,6 +102,9 @@ COPY composer.json composer.lock symfony.lock ./
 # (for docker-compose version, we need a least on file to exist, so we add the composer.json to prevent failure if packages is missing)
 COPY composer.json package* packages/
 
+ARG COMPOSER_AUTH
+ENV COMPOSER_AUTH=${COMPOSER_AUTH}
+
 RUN set -eux; \
 	composer install --prefer-dist --no-dev --no-scripts --no-progress; \
 	composer clear-cache
