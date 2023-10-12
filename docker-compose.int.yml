@@ -4,9 +4,6 @@ version: "3.4"
 # Production environment override
 services:
   php:
-    build:
-      args:
-        COMPOSER_AUTH: ${COMPOSER_AUTH}
     environment:
       APP_ENV: dev # Needed for fixtures bundles to work.
       APP_SECRET: ${APP_SECRET}
@@ -14,9 +11,6 @@ services:
       XDEBUG_MODE: 'off'
 
   caddy:
-    build:
-      args:
-        COMPOSER_AUTH: ${COMPOSER_AUTH}
     environment:
       EXAMPLE_UPSTREAM: pwa:3000
       # MERCURE_PUBLISHER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET}
