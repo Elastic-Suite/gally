@@ -13,8 +13,15 @@ on:
         required: false
         default: "dev-master"
         type: string
+      use_default_github_ref:
+        description: 'Use default github ref to checkout Gally ?'
+        type: boolean
+        default: false
+        required: false
     secrets:
       COMPOSER_AUTH:
+        required: true
+      PACKAGIST_URL:
         required: true
 
 jobs:
@@ -24,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     
     env:
-      back_branch: ${{ inputs.version }}
+      ref: ${{ inputs.use_default_github_ref == false && inputs.version || '' }}
       front_branch: ${{ inputs.version == 'master' && 'main' || inputs.version }}
       composer_version: ${{ inputs.version == 'master' && 'dev-master' || (contains(inputs.version, 'x') && format('{0}-dev', inputs.version) || inputs.version) }}
     
@@ -32,7 +39,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          ref: ${{ env.back_branch }}
+          ref: ${{ env.ref }}
       - name: Checkout Gally admin
         uses: actions/checkout@v3
         with:
@@ -47,7 +54,7 @@ jobs:
         with:
           php_version: "8.1"
           args: --working-dir api
-          command: config repositories.gally-premium composer https://packagist.smile.fr/gally
+          command: config repositories.gally-premium composer ${{ secrets.PACKAGIST_URL }}
         env:
           COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
       - name: Install premium package
@@ -62,6 +69,8 @@ jobs:
         run: docker compose -f docker-compose.yml -f docker-compose.ci.yml pull --ignore-pull-failures || true
       - name: Start services
         run: docker compose -f docker-compose.yml -f docker-compose.ci.yml up --build -d --wait
+        env:
+          COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
       - name: Check HTTP reachability
         id: http_reachability
         run: curl -v -o /dev/null http://localhost

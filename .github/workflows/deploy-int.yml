@@ -35,6 +35,8 @@ on:
         required: true
       COMPOSER_AUTH:
         required: true
+      PACKAGIST_URL:
+        required: true
 
 jobs:
   deploy:
@@ -53,6 +55,7 @@ jobs:
             APP_SECRET: ${{ secrets.APP_SECRET }}
             POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
             COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
+            PACKAGIST_URL: ${{ secrets.PACKAGIST_URL }}
         run: |
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} "
@@ -68,8 +71,8 @@ jobs:
             cd front/gally-admin && git fetch --all && git reset --hard && git checkout ${{ env.front_branch }} &&
             cd /home/ubuntu/gally &&
             docker-compose run --rm php rm -rf vendor/gally/gally-premium &&
-            docker-compose run --rm php composer config repositories.gally-premium composer https://packagist.smile.fr/gally &&
+            docker-compose run --rm php composer config repositories.gally-premium composer $PACKAGIST_URL &&
             docker-compose run --rm -e COMPOSER_AUTH='$COMPOSER_AUTH' php composer require \"gally/gally-standard:${{ env.composer_version }} as ${{ inputs.last_published_version }}\" &&
             docker-compose run --rm -e COMPOSER_AUTH='$COMPOSER_AUTH' php composer require \"gally/gally-premium:${{ env.composer_version }}\" &&
-            SERVER_NAME=$HOSTNAME APP_SECRET=$APP_SECRET POSTGRES_PASSWORD=$POSTGRES_PASSWORD  COMPOSER_AUTH='$COMPOSER_AUTH' docker-compose -f docker-compose.yml -f docker-compose.int.yml up -d --build
+            SERVER_NAME=$HOSTNAME APP_SECRET=$APP_SECRET POSTGRES_PASSWORD=$POSTGRES_PASSWORD COMPOSER_AUTH='$COMPOSER_AUTH' docker-compose -f docker-compose.yml -f docker-compose.int.yml up -d --build
           "
