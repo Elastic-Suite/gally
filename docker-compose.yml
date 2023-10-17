@@ -5,6 +5,8 @@ services:
     build:
       context: ./api
       target: gally_php
+      args:
+        COMPOSER_AUTH: ${COMPOSER_AUTH:-}
     depends_on:
       - database
       - elasticsearch
@@ -42,6 +44,8 @@ services:
     build:
       context: api/
       target: gally_caddy
+      args:
+        COMPOSER_AUTH: ${COMPOSER_AUTH:-}
     depends_on:
       - php
       - pwa
@@ -105,7 +109,7 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-!ChangeMe!}
       - POSTGRES_USER=${POSTGRES_USER:-api-platform}
     volumes:
-      - db_data:/var/lib/postgresql/data:rw,z
+      - db_data:/var/lib/postgresql/data:rw
       # you may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
       # - ./api/docker/db/data:/var/lib/postgresql/data:rw,z
 
@@ -132,7 +136,7 @@ services:
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m" # 512 Mo HEAP
       - cluster.routing.allocation.disk.threshold_enabled=false # Avoid ES going read-only because low disk space availability
     volumes:
-      - es_data:/usr/share/elasticsearch/data:rw,z
+      - es_data:/usr/share/elasticsearch/data:rw
     ulimits:
       memlock:
         soft: -1
