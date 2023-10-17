@@ -39,3 +39,4 @@ jobs:
       APP_SECRET: ${{ secrets.APP_SECRET }}
       POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
       COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
+      PACKAGIST_URL: ${{ secrets.PACKAGIST_URL }}
