@@ -20,7 +20,5 @@ jobs:
     name: Tests
     uses: ./.github/workflows/tests.yml
     with:
-      version: 1.1.x
-      last_published_version: 1.1.0
       use_default_github_ref: true
     secrets: inherit
