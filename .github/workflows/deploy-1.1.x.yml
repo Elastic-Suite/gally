@@ -21,6 +21,7 @@ jobs:
       last_published_version: 1.1.0
     secrets:
       COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
+      PACKAGIST_URL: ${{ secrets.PACKAGIST_URL }}
   
   deploy-1_1_X:
     needs: tests
