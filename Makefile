@@ -136,6 +136,16 @@ jest: ## Run jest unit tests
 jest_update: ## Run jest unit tests
 	@$(DOCKER_COMP) exec pwa yarn test:update
 
+varnish_flush: ## Flush varnish cache
+	@$(DOCKER_COMP) exec varnish varnishadm 'ban req.url ~ .'
+
+.env:
+ifeq (,$(wildcard ./env))
+	touch .env
+endif
+	grep "UUID" .env || echo "UUID=$(shell id -u)" >> .env
+	grep "GUID" .env || echo "GUID=$(shell id -g)" >> .env
+
 ## —— Symfony 🎵 ———————————————————————————————————————————————————————————————
 sf: ## List all Symfony commands or pass the parameter "c=" to run a given command, example: make sf c=about
 	@$(eval c ?=)
@@ -164,11 +174,3 @@ fixtures_append: ## Append fixtures
 index_clear: ## Delete all Elasticsearch indices
 index_clear: c=gally:index:clear
 index_clear: sf
-
-
-.env:
-ifeq (,$(wildcard ./env))
-	touch .env
-endif
-	grep "UUID" .env || echo "UUID=$(shell id -u)" >> .env
-	grep "GUID" .env || echo "GUID=$(shell id -g)" >> .env
