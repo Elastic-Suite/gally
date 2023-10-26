@@ -1,6 +1,5 @@
 import { Dispatch, SetStateAction, useId, useMemo } from 'react'
 import {
-  Grid,
   InputLabel,
   MenuItem,
   Select,
@@ -8,17 +7,15 @@ import {
   TablePagination,
 } from '@mui/material'
 import {
+  ICmsPage,
   IFetch,
-  IGraphqlSearchProducts,
+  IGraphqlSearchDocuments,
   IOptions,
   // LoadStatus,
   SortOrder,
 } from '@elastic-suite/gally-admin-shared'
 import { Box } from '@mui/system'
 
-import { IProduct } from '../../types/'
-
-import ProductCard from './ProductCard'
 import {
   Container,
   CustomResultPagination,
@@ -28,7 +25,7 @@ import {
 interface IProps {
   page: number
   pageSize: number
-  products: IFetch<IGraphqlSearchProducts>
+  documents: IFetch<IGraphqlSearchDocuments>
   setPage: Dispatch<SetStateAction<number>>
   setPageSize: Dispatch<SetStateAction<number>>
   setSort: Dispatch<SetStateAction<string>>
@@ -38,11 +35,11 @@ interface IProps {
   sortOrder: SortOrder
 }
 
-function Products(props: IProps): JSX.Element {
+function CmsPages(props: IProps): JSX.Element {
   const {
     page,
     pageSize,
-    products,
+    documents,
     setPage,
     setPageSize,
     setSort,
@@ -51,21 +48,20 @@ function Products(props: IProps): JSX.Element {
     sortOptions,
     sortOrder,
   } = props
-  const total = products.data?.products.paginationInfo.totalCount
+  const total = documents.data?.documents.paginationInfo.totalCount
   const sortLabelId = useId()
   const sortSelectId = useId()
   const sortOrderLabelId = useId()
   const sortOrderSelectId = useId()
-
-  const rows: IProduct[] = useMemo(
+  const cmsPages: ICmsPage[] = useMemo(
     () =>
-      products.data?.products.collection.map((product) => {
-        return {
-          ...product,
-          price: product.price?.[0]?.price,
-        }
-      }) ?? [],
-    [products]
+      documents.data?.documents.collection.map((document) => ({
+        ...document,
+        title: document.source?.title,
+        content: document.source?.content,
+        contentHeading: document.source?.content_heading,
+      })) ?? [],
+    [documents]
   )
 
   function handleSortChange(event: SelectChangeEvent): void {
@@ -138,7 +134,7 @@ function Products(props: IProps): JSX.Element {
         <TablePagination
           labelRowsPerPage="Rows per page"
           component="div"
-          count={products.data?.products.paginationInfo.totalCount || 0}
+          count={documents.data?.documents.paginationInfo.totalCount || 0}
           rowsPerPageOptions={[10, 30, 50]}
           page={page}
           onPageChange={handleChangePage}
@@ -146,19 +142,41 @@ function Products(props: IProps): JSX.Element {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </CustomResultPagination>
-      <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={{ md: 3 }} columns={{ md: 12 }}>
-          {rows.map((item) => {
-            return (
-              <Grid item md={4} key={item.id}>
-                <ProductCard product={item} />
-              </Grid>
-            )
-          })}
-        </Grid>
+      <Box sx={{ display: 'flex', gap: 2, flexDirection: 'column' }}>
+        {cmsPages.map((cmsPage) => {
+          const tags = cmsPage.source?.tags
+            ?.map((tag: { label: string; value: string }) => tag.label)
+            .join(' | ')
+          return (
+            <Box
+              key={cmsPage.id}
+              sx={{
+                padding: 1,
+                display: 'flex',
+                gap: 1,
+                flexDirection: 'column',
+                position: 'relative',
+                borderRadius: 1,
+                color: '#70757a',
+              }}
+            >
+              <Box
+                sx={{
+                  textDecoration: 'underline',
+                  color: '#151A47',
+                  fontSize: 18,
+                }}
+              >
+                {cmsPage.title}
+              </Box>
+              <Box>{cmsPage.contentHeading}</Box>
+              {Boolean(tags) && <Box>Tags: {tags}</Box>}
+            </Box>
+          )
+        })}
       </Box>
     </>
   )
 }
 
-export default Products
+export default CmsPages

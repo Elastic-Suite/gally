@@ -1,6 +1,6 @@
 import {
-  IGraphqlProductAggregation,
-  IGraphqlProductAggregationOption,
+  IGraphqlAggregation,
+  IGraphqlAggregationOption,
 } from '@elastic-suite/gally-admin-shared'
 import classNames from 'classnames'
 
@@ -10,9 +10,9 @@ import { FacetLink } from './Facet.styled'
 
 interface IProps {
   activeOptions: string[]
-  filter: IGraphqlProductAggregation
+  filter: IGraphqlAggregation
   onChange: IFilterChange
-  option: IGraphqlProductAggregationOption
+  option: IGraphqlAggregationOption
 }
 
 function FacetCategory(props: IProps): JSX.Element {

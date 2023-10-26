@@ -1,7 +1,7 @@
 import { Checkbox } from '@mui/material'
 import {
-  IGraphqlProductAggregation,
-  IGraphqlProductAggregationOption,
+  IGraphqlAggregation,
+  IGraphqlAggregationOption,
 } from '@elastic-suite/gally-admin-shared'
 
 import { IFilterChange } from '../../types'
@@ -10,9 +10,9 @@ import { FormControlLabel } from './Facet.styled'
 
 interface IProps {
   activeOptions: string[]
-  filter: IGraphqlProductAggregation
+  filter: IGraphqlAggregation
   onChange: IFilterChange
-  option: IGraphqlProductAggregationOption
+  option: IGraphqlAggregationOption
 }
 
 function FacetChoice(props: IProps): JSX.Element {

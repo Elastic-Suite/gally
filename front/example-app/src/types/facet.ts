@@ -1,22 +1,22 @@
 import {
   IFetch,
-  IGraphqlProductAggregation,
+  IGraphqlAggregation,
   IGraphqlViewMoreFacetOption,
 } from '@elastic-suite/gally-admin-shared'
 
 export interface IActiveFilter {
-  filter: IGraphqlProductAggregation
+  filter: IGraphqlAggregation
   value: string
 }
 
 export type IActiveFilters = IActiveFilter[]
 
 export type IFilterChange = (
-  filter: IGraphqlProductAggregation,
+  filter: IGraphqlAggregation,
   value: string
 ) => () => void
 
 export type IFilterMoreOptions = Map<
-  IGraphqlProductAggregation,
+  IGraphqlAggregation,
   IFetch<IGraphqlViewMoreFacetOption[]>
 >

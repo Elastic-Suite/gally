@@ -1,2 +1,5 @@
+export * from './category'
+export * from './document'
+export * from './entity'
 export * from './facet'
 export * from './product'

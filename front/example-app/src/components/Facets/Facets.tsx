@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from 'react'
 import { Chip, styled } from '@mui/material'
 import {
   AggregationType,
-  IGraphqlProductAggregation,
+  IGraphqlAggregation,
 } from '@elastic-suite/gally-admin-shared'
 
 import { IActiveFilters, IFilterMoreOptions } from '../../types'
@@ -18,18 +18,15 @@ const Filters = styled('div')(({ theme }) => ({
   },
 }))
 
-function getOptionLabel(
-  filter: IGraphqlProductAggregation,
-  value: string
-): string {
+function getOptionLabel(filter: IGraphqlAggregation, value: string): string {
   const option = filter.options.find((option) => option.value === value)
   return option?.label ?? value
 }
 
 interface IProps {
   activeFilters: IActiveFilters
-  filters: IGraphqlProductAggregation[]
-  loadMore: (filter: IGraphqlProductAggregation) => void
+  filters: IGraphqlAggregation[]
+  loadMore: (filter: IGraphqlAggregation) => void
   moreOptions: IFilterMoreOptions
   onFilterChange: Dispatch<SetStateAction<IActiveFilters>>
 }
@@ -38,7 +35,7 @@ function Facets(props: IProps): JSX.Element {
   const { activeFilters, filters, loadMore, moreOptions, onFilterChange } =
     props
 
-  function handleChange(filter: IGraphqlProductAggregation, value: string) {
+  function handleChange(filter: IGraphqlAggregation, value: string) {
     return () =>
       onFilterChange((prevState) => {
         const clone = [...prevState]
@@ -71,7 +68,7 @@ function Facets(props: IProps): JSX.Element {
       })
   }
 
-  function handleDelete(filter: IGraphqlProductAggregation, value: string) {
+  function handleDelete(filter: IGraphqlAggregation, value: string) {
     return () =>
       onFilterChange((prevState) => {
         const clone = [...prevState]
@@ -89,7 +86,6 @@ function Facets(props: IProps): JSX.Element {
 
   return (
     <div style={{ marginRight: '16px' }}>
-      <h2 style={{ color: '#151A47' }}>Filters</h2>
       <Filters>
         {activeFilters.map(({ filter, value }) => (
           <Chip

@@ -1,5 +1,5 @@
 import { Slider } from '@mui/material'
-import { IGraphqlProductAggregation } from '@elastic-suite/gally-admin-shared'
+import { IGraphqlAggregation } from '@elastic-suite/gally-admin-shared'
 
 import { IFilterChange } from '../../types'
 
@@ -7,7 +7,7 @@ import { Container } from './Facet.styled'
 
 interface IProps {
   activeOptions: string[]
-  filter: IGraphqlProductAggregation
+  filter: IGraphqlAggregation
   id: string
   onChange: IFilterChange
 }

@@ -1,16 +1,18 @@
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react'
 import {
-  IGraphqlProductSortingOptions,
+  IGraphqlSortingOptions,
   IOptions,
   ISortingOption,
   SortOrder,
 } from '@elastic-suite/gally-admin-shared'
 
-import { getProductSortingOptionsQuery } from '../constants'
+import { getSortingOptionsQuery } from '../constants'
 
 import { useGraphqlApi } from './useGraphql'
 
-export function useProductSort(): [
+export function useDocumentSort(
+  entityType: string
+): [
   string,
   SortOrder,
   IOptions<string>,
@@ -20,22 +22,24 @@ export function useProductSort(): [
   const [sort, setSort] = useState('')
   const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.ASC)
 
-  const [productSortingOptions, , loadSortOptions] =
-    useGraphqlApi<IGraphqlProductSortingOptions>()
+  const [categorySortingOptions, , loadSortOptions] =
+    useGraphqlApi<IGraphqlSortingOptions>()
   const sortOptions: IOptions<string> = useMemo(
     () =>
-      productSortingOptions.data?.productSortingOptions?.map(
+      categorySortingOptions.data?.sortingOptions?.map(
         (obj: ISortingOption) => ({
           value: obj.code,
           label: obj.label,
         })
       ) ?? [],
-    [productSortingOptions]
+    [categorySortingOptions]
   )
 
+  const variables = useMemo(() => ({ entityType }), [entityType])
+
   useEffect(() => {
-    loadSortOptions(getProductSortingOptionsQuery)
-  }, [loadSortOptions])
+    loadSortOptions(getSortingOptionsQuery, variables)
+  }, [loadSortOptions, variables])
 
   return [sort, sortOrder, sortOptions, setSort, setSortOrder]
 }
