@@ -79,5 +79,5 @@ A GraphQL test client should be available at https://localhost/graphql/
 1. Deploy the source on your environment
 2. Initialize your `.env` file in the project root directory with the variables: UUID, GUID, APP_SECRET, POSTGRES_PASSWORD, APP_ENV
 3. Run the application: docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
-4. Install the application: docker compose -f docker-compose.yml -f docker-compose.prod.yml exec php bin/console hautelook:fixtures:load
+4. Install the application: docker compose -f docker-compose.yml -f docker-compose.prod.yml exec php bin/console hautelook:fixtures:load -e prod
 5. The application should be available from the port 443 of your server
