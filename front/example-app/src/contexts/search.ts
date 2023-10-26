@@ -1,9 +1,12 @@
 import { createContext } from 'react'
 
-import { IProductsHook } from '../types'
+import { IDocumentsHook, IProductsHook } from '../types'
 
-export interface ISearchContext extends IProductsHook {
+export interface ISearchContext {
+  search: string
   onSearch: (search: string) => void
+  productSearch: IProductsHook
+  cmsPageSearch: IDocumentsHook
 }
 
 export const searchContext = createContext<ISearchContext>(null)

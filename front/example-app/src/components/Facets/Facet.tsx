@@ -5,7 +5,7 @@ import classnames from 'classnames'
 import {
   AggregationType,
   IFetch,
-  IGraphqlProductAggregation,
+  IGraphqlAggregation,
   IGraphqlViewMoreFacetOption,
 } from '@elastic-suite/gally-admin-shared'
 
@@ -40,8 +40,8 @@ const ExpandMoreIcon = styled(ExpandMore)({
 
 interface IProps {
   activeFilters: IActiveFilters
-  filter: IGraphqlProductAggregation
-  loadMore: (filter: IGraphqlProductAggregation) => void
+  filter: IGraphqlAggregation
+  loadMore: (filter: IGraphqlAggregation) => void
   moreOptions?: IFetch<IGraphqlViewMoreFacetOption[]>
   onChange: IFilterChange
 }
@@ -58,16 +58,19 @@ function Facet(props: IProps): JSX.Element {
     setOpen((prevState) => !prevState)
   }
 
-  function getFacet(): JSX.Element {
+  function getFacet(): JSX.Element | null {
     switch (filter.type) {
       case AggregationType.BOOLEAN:
         return (
-          <FacetBoolean
-            activeOptions={activeOptions}
-            filter={filter}
-            id={id}
-            onChange={onChange}
-          />
+          filter.options.filter((option) => Boolean(Number(option.value)))
+            .length > 0 && (
+            <FacetBoolean
+              activeOptions={activeOptions}
+              filter={filter}
+              id={id}
+              onChange={onChange}
+            />
+          )
         )
 
       case AggregationType.CATEGORY:
@@ -119,6 +122,11 @@ function Facet(props: IProps): JSX.Element {
         )
     }
   }
+  const facet = getFacet()
+
+  if (!facet) {
+    return null
+  }
 
   return (
     <>
@@ -128,7 +136,7 @@ function Facet(props: IProps): JSX.Element {
           <ExpandMoreIcon className={classnames({ 'is-open': open })} />
         </IconButton>
       </Title>
-      <Collapse in={open}>{getFacet()}</Collapse>
+      <Collapse in={open}>{facet}</Collapse>
       <CustomSeparator />
     </>
   )

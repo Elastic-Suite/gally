@@ -1,4 +1,4 @@
-import { IGraphqlDocument } from '@elastic-suite/gally-admin-shared/src/types/documents'
+import { IGraphqlDocument } from '@elastic-suite/gally-admin-shared/'
 
 export interface ICategoryAutoComplete extends IGraphqlDocument {
   type?: 'category'

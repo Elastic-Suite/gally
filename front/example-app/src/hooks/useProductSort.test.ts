@@ -9,7 +9,7 @@ jest.mock('./useGraphql', () => ({
   useGraphqlApi: () => [
     {
       data: {
-        categorySortingOptions: [
+        productSortingOptions: [
           { label: 'Position', code: 'category__position' },
           { label: 'Name', code: 'name' },
           { label: 'Final price', code: 'price__price' },

@@ -35,15 +35,15 @@ import {
   IGraphqlSearchProductsVariables,
   ProductRequestType,
   addPrefixKeyObject,
+  categoryEntityType,
   getAutoCompleteSearchQuery,
   getCategoryPathLabel,
   joinUrlPath,
 } from '@elastic-suite/gally-admin-shared'
 import { useGraphqlApi } from '../../hooks'
-import { IProductAutoComplete } from '../../types'
+import { ICategoryAutoComplete, IProductAutoComplete } from '../../types'
 import { IGraphqlSearchDocumentsVariables } from '@elastic-suite/gally-admin-shared/src/types/documents'
 import { IGraphqlSearchCategories } from '@elastic-suite/gally-admin-shared/src'
-import { ICategoryAutoComplete } from '../../types/category'
 import {
   AUTOCOMPLETE_CATEGORY_TYPE,
   AUTOCOMPLETE_PRODUCT_TYPE,
@@ -137,7 +137,7 @@ function SearchBar(props: IProps): JSX.Element {
         }
 
         const categoryVariables: IGraphqlSearchDocumentsVariables = {
-          entityType: 'category',
+          entityType: categoryEntityType,
           localizedCatalog: String(localizedCatalogId),
           currentPage: 1,
           pageSize: 5,
@@ -146,12 +146,16 @@ function SearchBar(props: IProps): JSX.Element {
 
         const variables = {
           ...productVariables,
-          ...addPrefixKeyObject(categoryVariables, 'category'),
+          ...addPrefixKeyObject(categoryVariables, categoryEntityType),
         }
 
         controller.current = new AbortController()
         return debouncedLoad(
-          getAutoCompleteSearchQuery(null, false),
+          getAutoCompleteSearchQuery(
+            null,
+            { equalFilter: { field: 'is_active', eq: 'true' } },
+            false
+          ),
           variables as unknown as Record<string, unknown>,
           { signal: controller.current.signal }
         )

@@ -26,8 +26,15 @@ export const getCategoryTreeQuery = `query categories($localizedCatalogId: Int) 
   }
 }`
 
-export const getCategorySortingOptionsQuery = `query getCategorySortingOptions {
-  categorySortingOptions {
+export const getSortingOptionsQuery = `query getSortingOptionsQuery ($entityType: String) {
+  sortingOptions (entityType: $entityType) {
+    label
+    code
+  }
+}`
+
+export const getProductSortingOptionsQuery = `query getProductSortingOptionsQuery {
+  productSortingOptions {
     label
     code
   }

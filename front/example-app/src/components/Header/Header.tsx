@@ -48,13 +48,13 @@ function Header(): JSX.Element {
         )
       }
     }
-  }, [catalog])
+  }, [catalog, onLocalizedCatalogIdChange])
 
   useEffect(() => {
     if (catalogs.length !== 0 && !catalog) {
       onCatalogIdChange(catalogs[0].id as string)
     }
-  }, [catalogs])
+  }, [catalogs, onCatalogIdChange, catalog])
 
   return (
     <AppBar component="nav">

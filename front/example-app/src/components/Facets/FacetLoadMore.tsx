@@ -1,17 +1,17 @@
 import { Button, Collapse, FormGroup } from '@mui/material'
 import {
   IFetch,
-  IGraphqlProductAggregation,
-  IGraphqlProductAggregationOption,
+  IGraphqlAggregation,
+  IGraphqlAggregationOption,
   IGraphqlViewMoreFacetOption,
 } from '@elastic-suite/gally-admin-shared'
 
 interface IProps {
-  filter: IGraphqlProductAggregation
+  filter: IGraphqlAggregation
   id: string
-  loadMore: (filter: IGraphqlProductAggregation) => void
+  loadMore: (filter: IGraphqlAggregation) => void
   moreOptions?: IFetch<IGraphqlViewMoreFacetOption[]>
-  renderOption: (option: IGraphqlProductAggregationOption) => JSX.Element
+  renderOption: (option: IGraphqlAggregationOption) => JSX.Element
 }
 
 function FacetLoadMore(props: IProps): JSX.Element {
