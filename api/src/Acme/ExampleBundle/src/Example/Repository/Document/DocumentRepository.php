@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Acme\Example\Example\Repository\Document;
 
-use Elasticsearch\Client;
+use OpenSearch\Client;
 
 class DocumentRepository implements DocumentRepositoryInterface
 {

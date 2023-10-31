@@ -17,7 +17,7 @@ services:
       APP_ENV: dev
       # Lots of change between Xdebug 2 and Xdebug 3, see https://xdebug.org/docs/upgrade_guide
       # and https://xdebug.org/docs/all_settings
-      # XDEBUG_MODE: debug
+      XDEBUG_MODE: debug
       XDEBUG_CONFIG: >-
         # Replaces remote_connect_back=1
         discover_client_host=1

@@ -13,12 +13,13 @@
         "doctrine/doctrine-bundle": "^2.1",
         "doctrine/doctrine-migrations-bundle": "^3.0",
         "doctrine/orm": "^2.7",
-        "elasticsearch/elasticsearch": "^7.0",
+        "gally/gally-premium": "dev-master",
         "gally/gally-standard": "dev-master",
         "guzzlehttp/guzzle": "^7.0",
         "hautelook/alice-bundle": "^2.10",
         "lexik/jwt-authentication-bundle": "^2.14",
         "nelmio/cors-bundle": "^2.1",
+        "opensearch-project/opensearch-php": "^2.1",
         "phpdocumentor/reflection-docblock": "^5.2",
         "stof/doctrine-extensions-bundle": "^1.7",
         "symfony/asset": "6.0.*",
@@ -75,7 +76,8 @@
             "symfony/flex": true,
             "symfony/runtime": true,
             "phpstan/extension-installer": true,
-            "cweagans/composer-patches": true
+            "cweagans/composer-patches": true,
+            "php-http/discovery": true
         }
     },
     "autoload": {
@@ -126,6 +128,26 @@
             },
             "api-platform/core": {
                 "Fix Elasticsearch bridge data providers enabled by default": "patches/api-platform-elasticsearch-bridge.patch"
+            }
+        }
+    },
+    "repositories": {
+        "gally-premium": {
+            "type": "path",
+            "url": "./packages/gally-premium",
+            "options": {
+                "versions": {
+                    "gally/gally-premium": "dev-master"
+                }
+            }
+        },
+        "gally-standard": {
+            "type": "path",
+            "url": "./packages/gally-standard",
+            "options": {
+                "versions": {
+                    "gally/gally-standard": "dev-master"
+                }
             }
         }
     }

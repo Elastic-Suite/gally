@@ -23,12 +23,12 @@ services:
     Acme\Example\Example\Repository\Document\DocumentRepositoryInterface: '@Acme\Example\Example\Repository\Document\DocumentRepository'
     Acme\Example\Example\Repository\Document\DocumentRepository:
         arguments:
-            - '@api_platform.elasticsearch.client'
+            - '@OpenSearch\Client'
 
     Acme\Example\Example\Repository\Index\IndexRepositoryInterface: '@Acme\Example\Example\Repository\Index\IndexRepository'
     Acme\Example\Example\Repository\Index\IndexRepository:
         arguments:
-            - '@api_platform.elasticsearch.client'
+            - '@OpenSearch\Client'
 
     Acme\Example\Example\Repository\Category\CategoryRepository:
         arguments:
@@ -66,7 +66,7 @@ services:
     Acme\Example\Example\Repository\ResultDocument\ResultDocumentRepositoryInterface: '@Acme\Example\Example\Repository\ResultDocument\ResultDocumentRepository'
     Acme\Example\Example\Repository\ResultDocument\ResultDocumentRepository:
         arguments:
-            - '@api_platform.elasticsearch.client'
+            - '@OpenSearch\Client'
     
     Acme\Example\Example\DataProvider\ResultDocumentDataProvider:
         arguments:

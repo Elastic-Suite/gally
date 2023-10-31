@@ -7,7 +7,7 @@ services:
       target: gally_php
     depends_on:
       - database
-      - elasticsearch
+      - opensearch
       - redis
     restart: unless-stopped
     volumes:
@@ -120,19 +120,25 @@ services:
     volumes:
       - 'redis_data:/bitnami/redis/data'
 
-  elasticsearch:
+  opensearch:
     build:
       context: api/
-      target: gally_elasticsearch
+      target: gally_opensearch
     # restart: unless-stopped
     environment:
-      - cluster.name=es-docker-cluster
-      - bootstrap.memory_lock=true
+      - cluster.name=os-docker-cluster
+      - node.name=opensearch-node-data # Name the node that will run in this container
+      - bootstrap.memory_lock=true # Disable JVM heap memory swapping
       - discovery.type=single-node
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m" # 512 Mo HEAP
+      - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m" # Set min and max JVM heap sizes to at least 50% of system RAM
       - cluster.routing.allocation.disk.threshold_enabled=false # Avoid ES going read-only because low disk space availability
+      - "DISABLE_SECURITY_PLUGIN=true"
+      - plugins.ml_commons.allow_registering_model_via_url=true
+#      - discovery.seed_hosts=opensearch-node1,opensearch-node2,opensearch-nodeml # Nodes to look for when discovering the cluster
+#      - cluster.initial_cluster_manager_nodes=opensearch-node1,opensearch-node2,opensearch-nodeml # Nodes eligible to serve as cluster manager
+#      - bootstrap.memory_lock=true
     volumes:
-      - es_data:/usr/share/elasticsearch/data:rw,z
+      - os_data:/usr/share/opensearch/data:rw,z
     ulimits:
       memlock:
         soft: -1
@@ -157,7 +163,7 @@ volumes:
 ###> doctrine/doctrine-bundle ###
   db_data:
 ###< doctrine/doctrine-bundle ###
-  es_data:
+  os_data:
 ###> symfony/mercure-bundle ###
 ###< symfony/mercure-bundle ###
   redis_data:

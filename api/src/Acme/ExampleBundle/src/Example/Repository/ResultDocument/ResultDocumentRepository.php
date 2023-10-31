@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Acme\Example\Example\Repository\ResultDocument;
 
 use Acme\Example\Example\Model\ExampleResultDocument;
-use Elasticsearch\Client;
+use OpenSearch\Client;
 
 class ResultDocumentRepository implements ResultDocumentRepositoryInterface
 {
