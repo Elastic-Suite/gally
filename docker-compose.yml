@@ -134,10 +134,12 @@ services:
       - cluster.name=os-docker-cluster     # Search cluster name
       - node.name=opensearch-node-data     # Name the node that will run in this container
       - bootstrap.memory_lock=true         # Disable JVM heap memory swapping
-      - discovery.type=single-node
       - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m" # Set min and max JVM heap sizes to at least 50% of system RAM
       - cluster.routing.allocation.disk.threshold_enabled=false # Avoid ES going read-only because low disk space availability
       - "DISABLE_SECURITY_PLUGIN=true"     # Disable security plugin
+      - plugins.ml_commons.allow_registering_model_via_url=true
+      - discovery.seed_hosts=search,search-ml # Nodes to look for when discovering the cluster
+      - cluster.initial_cluster_manager_nodes=search,search-ml # Nodes eligible to serve as cluster manager
     volumes:
       - os2_data:/usr/share/opensearch/data:rw
     ulimits:
@@ -146,6 +148,32 @@ services:
         hard: -1
     ports:
       - 9200:9200
+    healthcheck:
+      test: test $$(curl --write-out %{http_code} --fail --silent --output /dev/null http://localhost:9200/_cluster/health?wait_for_status=green&timeout=5s) -eq 200
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      
+  search-ml:
+    build:
+      context: api/
+      target: gally_opensearch2
+    # restart: unless-stopped
+    environment:
+      - cluster.name=os-docker-cluster     # Search cluster name
+      - node.name=opensearch-node-ml # Name the node that will run in this container
+      - bootstrap.memory_lock=true         # Disable JVM heap memory swapping
+      - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m" # Set min and max JVM heap sizes to at least 50% of system RAM
+      - cluster.routing.allocation.disk.threshold_enabled=false # Avoid ES going read-only because low disk space availability
+      - "DISABLE_SECURITY_PLUGIN=true"     # Disable security plugin
+      - node.roles=ml
+      - plugins.ml_commons.allow_registering_model_via_url=true
+      - discovery.seed_hosts=search,search-ml # Nodes to look for when discovering the cluster
+      - cluster.initial_cluster_manager_nodes=search,search-ml # Nodes eligible to serve as cluster manager
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
     healthcheck:
       test: test $$(curl --write-out %{http_code} --fail --silent --output /dev/null http://localhost:9200/_cluster/health?wait_for_status=green&timeout=5s) -eq 200
       interval: 10s
