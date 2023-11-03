@@ -2164,7 +2164,7 @@
             "dist": {
                 "type": "path",
                 "url": "./packages/gally-premium",
-                "reference": "f5129d816c6cbcd21bc53a8f71bcaecb30cda7a6"
+                "reference": "193abe3d8586c0782f17164d147b7a4e3bf934b0"
             },
             "require": {
                 "gally/gally-standard": "dev-master"
@@ -2202,7 +2202,8 @@
                 "psr-4": {
                     "Gally\\VirtualCategory\\": "VirtualCategory/src/",
                     "Gally\\Boost\\": "Boost/src/",
-                    "Gally\\Thesaurus\\": "Thesaurus/src/"
+                    "Gally\\Thesaurus\\": "Thesaurus/src/",
+                    "Gally\\VectorSearch\\": "VectorSearch/src/"
                 }
             },
             "license": [

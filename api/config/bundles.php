@@ -23,4 +23,5 @@ return [
     Gally\VirtualCategory\GallyVirtualCategoryBundle::class => ['all' => true],
     Gally\Boost\GallyBoostBundle::class => ['all' => true],
     Gally\Thesaurus\GallyThesaurusBundle::class => ['all' => true],
+    Gally\VectorSearch\GallyVectorSearchBundle::class => ['all' => true],
 ];

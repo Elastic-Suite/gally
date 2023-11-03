@@ -7,6 +7,8 @@
 ARG PHP_VERSION=8.1
 ARG CADDY_VERSION=2.6.4
 ARG OPENSEARCH_VERSION=2.11.0
+ARG ELASTIC7_VERSION=7.16.3
+ARG ELASTIC8_VERSION=8.10.4
 # ARG XDEBUG_VERSION=3.1.2
 
 # "php" stage
@@ -172,3 +174,17 @@ WORKDIR /usr/share/opensearch
 
 RUN bin/opensearch-plugin install analysis-phonetic
 RUN bin/opensearch-plugin install analysis-icu
+
+FROM docker.elastic.co/elasticsearch/elasticsearch:${ELASTIC7_VERSION} AS gally_elasticsearch7
+
+WORKDIR /usr/share/elasticsearch
+
+RUN bin/elasticsearch-plugin install analysis-phonetic
+RUN bin/elasticsearch-plugin install analysis-icu
+
+FROM docker.elastic.co/elasticsearch/elasticsearch:${ELASTIC8_VERSION} AS gally_elasticsearch8
+
+WORKDIR /usr/share/elasticsearch
+
+RUN bin/elasticsearch-plugin install analysis-phonetic
+RUN bin/elasticsearch-plugin install analysis-icu
