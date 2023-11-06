@@ -6,7 +6,9 @@
 # https://docs.docker.com/engine/reference/builder/#understand-how-arg-and-from-interact
 ARG PHP_VERSION=8.1
 ARG CADDY_VERSION=2.6.4
-ARG ELASTIC_VERSION=7.16.3
+ARG OPENSEARCH2_VERSION=2.11.0
+ARG ELASTIC7_VERSION=7.16.3
+ARG ELASTIC8_VERSION=8.10.4
 # ARG XDEBUG_VERSION=3.1.2
 
 # "php" stage
@@ -169,7 +171,21 @@ COPY --from=gally_caddy_builder /usr/bin/caddy /usr/bin/caddy
 COPY --from=gally_php /srv/api/public public/
 COPY docker/caddy/Caddyfile /etc/caddy/Caddyfile
 
-FROM docker.elastic.co/elasticsearch/elasticsearch:${ELASTIC_VERSION} AS gally_elasticsearch
+FROM opensearchproject/opensearch:${OPENSEARCH2_VERSION} AS gally_opensearch2
+
+WORKDIR /usr/share/opensearch
+
+RUN bin/opensearch-plugin install analysis-phonetic
+RUN bin/opensearch-plugin install analysis-icu
+
+FROM docker.elastic.co/elasticsearch/elasticsearch:${ELASTIC7_VERSION} AS gally_elasticsearch7
+
+WORKDIR /usr/share/elasticsearch
+
+RUN bin/elasticsearch-plugin install analysis-phonetic
+RUN bin/elasticsearch-plugin install analysis-icu
+
+FROM docker.elastic.co/elasticsearch/elasticsearch:${ELASTIC8_VERSION} AS gally_elasticsearch8
 
 WORKDIR /usr/share/elasticsearch
 

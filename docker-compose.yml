@@ -9,7 +9,7 @@ services:
         COMPOSER_AUTH: ${COMPOSER_AUTH:-}
     depends_on:
       - database
-      - elasticsearch
+      - search
       - redis
     restart: unless-stopped
     volumes:
@@ -101,6 +101,7 @@ services:
     #    published: 8080
     #    protocol: tcp
        
+
   database:
     image: postgres:${POSTGRES_VERSION:-13}-alpine
     environment:
@@ -124,26 +125,27 @@ services:
     volumes:
       - 'redis_data:/bitnami/redis/data'
 
-  elasticsearch:
+  search:
     build:
       context: api/
-      target: gally_elasticsearch
+      target: gally_opensearch2
     # restart: unless-stopped
     environment:
-      - cluster.name=es-docker-cluster
-      - bootstrap.memory_lock=true
+      - cluster.name=os-docker-cluster     # Search cluster name
+      - node.name=opensearch-node-data     # Name the node that will run in this container
+      - bootstrap.memory_lock=true         # Disable JVM heap memory swapping
       - discovery.type=single-node
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m" # 512 Mo HEAP
+      - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m" # Set min and max JVM heap sizes to at least 50% of system RAM
       - cluster.routing.allocation.disk.threshold_enabled=false # Avoid ES going read-only because low disk space availability
+      - "DISABLE_SECURITY_PLUGIN=true"     # Disable security plugin
     volumes:
-      - es_data:/usr/share/elasticsearch/data:rw
+      - os2_data:/usr/share/opensearch/data:rw
     ulimits:
       memlock:
         soft: -1
         hard: -1
     ports:
       - 9200:9200
-      # - 9300:9300
     healthcheck:
       test: test $$(curl --write-out %{http_code} --fail --silent --output /dev/null http://localhost:9200/_cluster/health?wait_for_status=green&timeout=5s) -eq 200
       interval: 10s
@@ -161,7 +163,7 @@ volumes:
 ###> doctrine/doctrine-bundle ###
   db_data:
 ###< doctrine/doctrine-bundle ###
-  es_data:
+  os2_data:
 ###> symfony/mercure-bundle ###
 ###< symfony/mercure-bundle ###
   redis_data:
