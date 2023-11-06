@@ -1,0 +1,23 @@
+name: Test search engine compatibility
+
+on:
+  workflow_dispatch:
+    inputs:
+      search_engine:
+        required: false
+        default: opensearch
+        type: choice
+        options:
+          - opensearch
+          - elasticsearch7
+          - elasticsearch8
+
+jobs:
+  tests:
+    name: Tests
+    uses: ./.github/workflows/tests.yml
+    with:
+      version: ${{ github.ref_name }}
+      last_published_version: ${{ github.ref_name }}
+      search_engine: ${{ inputs.search_engine }}
+    secrets: inherit
