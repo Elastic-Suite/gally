@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Acme\Example\Example\Repository\Index;
 
-use Elasticsearch\Client;
+use OpenSearch\Client;
 use Acme\Example\Example\Model\ExampleIndex;
 
 class IndexRepository implements IndexRepositoryInterface

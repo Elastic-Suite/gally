@@ -6,7 +6,7 @@ on:
       version:
         description: "Version of Gally's packages (ex: master or 1.0.x)"
         type: string
-        default: 'master'
+        default: "master"
         required: false
       last_published_version:
         description: "Last release of the current version"
@@ -14,10 +14,20 @@ on:
         default: "dev-master"
         type: string
       use_default_github_ref:
-        description: 'Use default github ref to checkout Gally ?'
+        description: "Use default github ref to checkout Gally ?"
         type: boolean
         default: false
         required: false
+      search_engine:
+        description: "What search engine do you want to run the tests against ?"
+        required: false
+        default: "opensearch"
+        type: choice
+        options:
+          - opensearch
+          - elasticsearch7
+          - elasticsearch8
+
     secrets:
       COMPOSER_AUTH:
         required: true
@@ -34,6 +44,7 @@ jobs:
       ref: ${{ inputs.use_default_github_ref == false && inputs.version || '' }}
       front_branch: ${{ inputs.version == 'master' && 'main' || inputs.version }}
       composer_version: ${{ inputs.version == 'master' && 'dev-master' || (contains(inputs.version, 'x') && format('{0}-dev', inputs.version) || inputs.version) }}
+      docker_compose_cmd: docker compose -f docker-compose.yml -f docker-compose.ci.yml ${{ inputs.search_engine == 'opensearch' || format('-f docker-compose.{0}.yml', inputs.search_engine) }} 
     
     steps:
       - name: Checkout
@@ -66,9 +77,9 @@ jobs:
         env:
           COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
       - name: Pull images
-        run: docker compose -f docker-compose.yml -f docker-compose.ci.yml pull --ignore-pull-failures || true
+        run: ${{env.docker_compose_cmd}} pull --ignore-pull-failures || true
       - name: Start services
-        run: docker compose -f docker-compose.yml -f docker-compose.ci.yml up --build -d --wait
+        run: ${{env.docker_compose_cmd}} up --build -d --wait
         env:
           COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
       - name: Check HTTP reachability
@@ -76,29 +87,29 @@ jobs:
         run: curl -v -o /dev/null http://localhost
       - name: HTTP Failure
         if: ${{ failure() && steps.tests.http_reachability == 'failure' }}
-        run: docker compose -f docker-compose.yml -f docker-compose.ci.yml logs
+        run: ${{env.docker_compose_cmd}} logs
       - name: Check HTTPS reachability
         id: https_reachability
         run: curl  -vk -o /dev/null https://localhost
       - name: HTTPS Failure
         if: ${{ failure() && steps.tests.https_reachability == 'failure' }}
-        run: docker compose -f docker-compose.yml -f docker-compose.ci.yml logs
+        run: ${{env.docker_compose_cmd}} logs
       - name: Create test database
         run: |
-          docker compose -f docker-compose.yml -f docker-compose.ci.yml exec -e XDEBUG_MODE=off -T php bin/console -e test doctrine:database:create
-          docker compose -f docker-compose.yml -f docker-compose.ci.yml exec -e XDEBUG_MODE=off -T php bin/console -e test doctrine:migrations:migrate --no-interaction
+          ${{env.docker_compose_cmd}} exec -e XDEBUG_MODE=off -T php bin/console -e test doctrine:database:create
+          ${{env.docker_compose_cmd}} exec -e XDEBUG_MODE=off -T php bin/console -e test doctrine:migrations:migrate --no-interaction
       - name: Doctrine Schema Validator
-        run: docker compose -f docker-compose.yml -f docker-compose.ci.yml exec -e XDEBUG_MODE=off -T php bin/console doctrine:schema:validate --skip-sync
+        run: ${{env.docker_compose_cmd}} exec -e XDEBUG_MODE=off -T php bin/console doctrine:schema:validate --skip-sync
       - name: Fixtures load
         run: |
-          docker compose -f docker-compose.yml -f docker-compose.ci.yml exec -e XDEBUG_MODE=off -T php bin/console gally:index:clear --no-interaction
-          docker compose -f docker-compose.yml -f docker-compose.ci.yml exec -e XDEBUG_MODE=off -T php bin/console hautelook:fixtures:load --no-interaction -vv
-          docker compose -f docker-compose.yml -f docker-compose.ci.yml exec -e XDEBUG_MODE=off -T php bin/console doctrine:fixtures:load --append --no-interaction
+          ${{env.docker_compose_cmd}} exec -e XDEBUG_MODE=off -T php bin/console gally:index:clear --no-interaction
+          ${{env.docker_compose_cmd}} exec -e XDEBUG_MODE=off -T php bin/console hautelook:fixtures:load --no-interaction -vv
+          ${{env.docker_compose_cmd}} exec -e XDEBUG_MODE=off -T php bin/console doctrine:fixtures:load --append --no-interaction
       - name: Coverage
-        run: docker compose -f docker-compose.yml -f docker-compose.ci.yml exec -e XDEBUG_MODE=coverage -T php bin/phpunit --coverage-clover=coverage/coverage.xml vendor/gally
+        run: ${{env.docker_compose_cmd}} exec -e XDEBUG_MODE=coverage -T php bin/phpunit --coverage-clover=coverage/coverage.xml vendor/gally
 
       - name: Cleanup coverage file
-        run: docker compose -f docker-compose.yml -f docker-compose.ci.yml exec -T php sed -i 's:<file name="/srv/:<file name="/:' coverage/coverage.xml
+        run: ${{env.docker_compose_cmd}} exec -T php sed -i 's:<file name="/srv/:<file name="/:' coverage/coverage.xml
 
       - if: ${{ github.event_name == 'pull_request' }}
         name: Download artifact
@@ -139,7 +150,7 @@ jobs:
           path: api/coverage/coverage.xml
 
       - name: Jest
-        run: docker compose -f docker-compose.yml -f docker-compose.ci.yml exec -T pwa yarn test:ci
+        run: ${{env.docker_compose_cmd}} exec -T pwa yarn test:ci
 
       - name: Frontend Coverage Report
         uses: 5monkeys/cobertura-action@v12
@@ -153,4 +164,4 @@ jobs:
 
       - name: "[End] Job failed, gathering logs"
         if: ${{ failure() }}
-        run: docker compose -f docker-compose.yml -f docker-compose.ci.yml logs
+        run: ${{env.docker_compose_cmd}} logs
