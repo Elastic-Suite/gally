@@ -1,4 +1,4 @@
-name: Deploy demo
+name: Deploy gally shopware demo
 
 on:
   workflow_dispatch:
