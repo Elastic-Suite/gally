@@ -12,7 +12,7 @@ on:
 jobs:
   tests:
     name: Tests
-    if: ${{ inputs.skip_tests == false && startsWith(github.ref, 'refs/tags/') }}
+    if: ${{ inputs.skip_tests == false }}
     uses: ./.github/workflows/tests.yml
     with:
       version: ${{ github.ref_name }}
@@ -24,7 +24,6 @@ jobs:
     name: Deploy gally for shopware demo
     if: |
       always() && 
-      startsWith(github.ref, 'refs/tags/') && 
       (needs.tests.result == 'success' || needs.tests.result == 'skipped')
     uses: ./.github/workflows/deploy-int.yml
     with:
