@@ -37,7 +37,7 @@ on:
         required: true
       PACKAGIST_URL:
         required: true
-      MEDIA:URL:
+      MEDIA_URL:
         required: false
 
 jobs:
