@@ -138,8 +138,8 @@ services:
       - cluster.routing.allocation.disk.threshold_enabled=false # Avoid ES going read-only because low disk space availability
       - "DISABLE_SECURITY_PLUGIN=true"     # Disable security plugin
       - plugins.ml_commons.allow_registering_model_via_url=true
-      - discovery.seed_hosts=search,search-ml # Nodes to look for when discovering the cluster
-      - cluster.initial_cluster_manager_nodes=search,search-ml # Nodes eligible to serve as cluster manager
+      - discovery.seed_hosts=search        # Nodes to look for when discovering the cluster
+      - cluster.initial_cluster_manager_nodes=opensearch-node-data # Nodes eligible to serve as cluster manager
     volumes:
       - os2_data:/usr/share/opensearch/data:rw
     ulimits:
@@ -168,8 +168,8 @@ services:
       - "DISABLE_SECURITY_PLUGIN=true"     # Disable security plugin
       - node.roles=ml
       - plugins.ml_commons.allow_registering_model_via_url=true
-      - discovery.seed_hosts=search,search-ml # Nodes to look for when discovering the cluster
-      - cluster.initial_cluster_manager_nodes=search,search-ml # Nodes eligible to serve as cluster manager
+      - discovery.seed_hosts=search # Nodes to look for when discovering the cluster
+      - cluster.initial_cluster_manager_nodes=opensearch-node-data # Nodes eligible to serve as cluster manager
     ulimits:
       memlock:
         soft: -1
