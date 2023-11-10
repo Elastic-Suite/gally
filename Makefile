@@ -164,6 +164,7 @@ generate_migration: sf
 
 fixtures_load: ## Load fixtures (Delete DB and Elasticsearch data)
 	@$(SYMFONY) gally:index:clear
+	@$(SYMFONY) gally:vector-search:upload-model
 	@$(SYMFONY) hautelook:fixtures:load
 	@$(SYMFONY) doctrine:fixtures:load --append #Append argument used because the database is already reset by the previous command
 
