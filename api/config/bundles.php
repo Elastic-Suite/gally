@@ -20,4 +20,8 @@ return [
     Hautelook\AliceBundle\HautelookAliceBundle::class => ['all' => true],
     Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle::class => ['all' => true],
     Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle::class => ['all' => true],
+    Gally\VirtualCategory\GallyVirtualCategoryBundle::class => ['all' => true],
+    Gally\Boost\GallyBoostBundle::class => ['all' => true],
+    Gally\Thesaurus\GallyThesaurusBundle::class => ['all' => true],
+    Gally\VectorSearch\GallyVectorSearchBundle::class => ['all' => true],
 ];

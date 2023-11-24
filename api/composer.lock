@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cd9dfbc13593229ec82e0475f89289b1",
+    "content-hash": "5fb2d0291684219ae84e5397e66ef545",
     "packages": [
         {
             "name": "api-platform/core",
@@ -2159,17 +2159,101 @@
             "time": "2021-05-22T16:11:15+00:00"
         },
         {
+            "name": "gally/gally-premium",
+            "version": "dev-feat-gally-llm",
+            "dist": {
+                "type": "zip",
+                "url": "https://elasticsuite.repo.packagist.com/cop-ecommerce/dists/gally/gally-premium/dev-feat-gally-llm/76b90b7ae62da86da39197317c6a34273838746e.zip",
+                "reference": "76b90b7ae62da86da39197317c6a34273838746e",
+                "mirrors": [
+                    {
+                        "url": "https://elasticsuite.repo.packagist.com/cop-ecommerce/dists/%package%/%version%/r%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "gally/gally-standard": "dev-feat-gally-llm"
+            },
+            "require-dev": {
+                "api-platform/schema-generator": "^4.0",
+                "doctrine/doctrine-fixtures-bundle": "^3.4",
+                "friendsofphp/php-cs-fixer": "~3.4.0",
+                "hautelook/alice-bundle": "^2.10",
+                "justinrainbow/json-schema": "^5.2",
+                "liip/test-fixtures-bundle": "^2.0.0",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan": "^1.4",
+                "phpstan/phpstan-doctrine": "^1.2",
+                "phpstan/phpstan-phpunit": "^1.0",
+                "phpstan/phpstan-symfony": "^1.1",
+                "phpunit/phpunit": "^9.5",
+                "symfony/browser-kit": "6.0.*",
+                "symfony/css-selector": "6.0.*",
+                "symfony/debug-bundle": "6.0.*",
+                "symfony/http-client": "6.0.*",
+                "symfony/maker-bundle": "^1.21",
+                "symfony/phpunit-bridge": "6.0.*",
+                "symfony/stopwatch": "6.0.*",
+                "symfony/var-dumper": "6.0.*",
+                "symfony/web-profiler-bundle": "6.0.*"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "symfony": {
+                    "require": "^6.1"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Gally\\VirtualCategory\\": "VirtualCategory/src/",
+                    "Gally\\Boost\\": "Boost/src/",
+                    "Gally\\Thesaurus\\": "Thesaurus/src/",
+                    "Gally\\VectorSearch\\": "VectorSearch/src/"
+                }
+            },
+            "notification-url": "https://elasticsuite.repo.packagist.com/cop-ecommerce/downloads/",
+            "license": [
+                "Proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "The Elasticsuite Team",
+                    "email": "elasticsuite@smile.fr"
+                }
+            ],
+            "description": "The Open Source E-Commerce Searchandising Suite",
+            "homepage": "https://elasticsuite.io",
+            "keywords": [
+                "API",
+                "E-commerce",
+                "Elasticsearch",
+                "GraphQL",
+                "HAL",
+                "JSON-LD",
+                "JSONAPI",
+                "OpenAPI",
+                "REST",
+                "Swagger"
+            ],
+            "support": {
+                "source": "https://github.com/Elastic-Suite/gally-premium/tree/feat-gally-llm",
+                "issues": "https://github.com/Elastic-Suite/gally-premium/issues"
+            },
+            "time": "2023-11-22T10:30:53+00:00"
+        },
+        {
             "name": "gally/gally-standard",
-            "version": "dev-master",
+            "version": "dev-feat-gally-llm",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Elastic-Suite/gally-standard.git",
-                "reference": "6bb028991e5c74dfa132e5aaba0c1f119eb038a4"
+                "reference": "0d561bbf34a0bde44623d0c48b89e2b7aa7b5d36"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Elastic-Suite/gally-standard/zipball/6bb028991e5c74dfa132e5aaba0c1f119eb038a4",
-                "reference": "6bb028991e5c74dfa132e5aaba0c1f119eb038a4",
+                "url": "https://api.github.com/repos/Elastic-Suite/gally-standard/zipball/0d561bbf34a0bde44623d0c48b89e2b7aa7b5d36",
+                "reference": "0d561bbf34a0bde44623d0c48b89e2b7aa7b5d36",
                 "shasum": ""
             },
             "require": {
@@ -2180,6 +2264,7 @@
                 "guzzlehttp/guzzle": "^7.0",
                 "lexik/jwt-authentication-bundle": "^2.14",
                 "nelmio/cors-bundle": "^2.1",
+                "opensearch-project/opensearch-php": "^2.1",
                 "php": ">=8.1",
                 "stof/doctrine-extensions-bundle": "^1.7",
                 "symfony/intl": "6.0.*",
@@ -2251,9 +2336,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Elastic-Suite/gally-standard/issues",
-                "source": "https://github.com/Elastic-Suite/gally-standard/tree/master"
+                "source": "https://github.com/Elastic-Suite/gally-standard/tree/feat-gally-llm"
             },
-            "time": "2023-10-10T12:09:24+00:00"
+            "time": "2023-11-23T18:26:02+00:00"
         },
         {
             "name": "gedmo/doctrine-extensions",
@@ -12768,6 +12853,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "gally/gally-premium": 20,
         "gally/gally-standard": 20
     },
     "prefer-stable": false,

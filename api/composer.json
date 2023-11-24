@@ -13,7 +13,8 @@
         "doctrine/doctrine-bundle": "^2.1",
         "doctrine/doctrine-migrations-bundle": "^3.0",
         "doctrine/orm": "^2.7",
-        "gally/gally-standard": "dev-master",
+        "gally/gally-premium": "dev-feat-gally-llm",
+        "gally/gally-standard": "dev-feat-gally-llm",
         "guzzlehttp/guzzle": "^7.0",
         "hautelook/alice-bundle": "^2.10",
         "lexik/jwt-authentication-bundle": "^2.14",
@@ -127,6 +128,12 @@
             "api-platform/core": {
                 "Fix Elasticsearch bridge data providers enabled by default": "patches/api-platform-elasticsearch-bridge.patch"
             }
+        }
+    },
+    "repositories": {
+        "gally-premium": {
+            "type": "composer",
+            "url": "https://elasticsuite.repo.packagist.com/cop-ecommerce/"
         }
     }
 }
