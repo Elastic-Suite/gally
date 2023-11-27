@@ -14,7 +14,7 @@
         "doctrine/doctrine-migrations-bundle": "^3.0",
         "doctrine/orm": "^2.7",
         "elasticsearch/elasticsearch": "^7.0",
-        "gally/gally-standard": "dev-master",
+        "gally/gally-standard": "1.2.x-dev",
         "guzzlehttp/guzzle": "^7.0",
         "hautelook/alice-bundle": "^2.10",
         "lexik/jwt-authentication-bundle": "^2.14",
