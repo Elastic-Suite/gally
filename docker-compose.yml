@@ -175,7 +175,7 @@ services:
         soft: -1
         hard: -1
     volumes:
-      - os2_data:/usr/share/opensearch/data:rw
+      - os2_lm_data:/usr/share/opensearch/data:rw
     healthcheck:
       test: test $$(curl --write-out %{http_code} --fail --silent --output /dev/null http://localhost:9200/_cluster/health?wait_for_status=green&timeout=5s) -eq 200
       interval: 10s

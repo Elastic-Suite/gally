@@ -2163,8 +2163,8 @@
             "version": "dev-feat-gally-llm",
             "dist": {
                 "type": "zip",
-                "url": "https://elasticsuite.repo.packagist.com/cop-ecommerce/dists/gally/gally-premium/dev-feat-gally-llm/40a6d3b70b7c380693961d01d3b6fe29f7193b84.zip",
-                "reference": "40a6d3b70b7c380693961d01d3b6fe29f7193b84",
+                "url": "https://elasticsuite.repo.packagist.com/cop-ecommerce/dists/gally/gally-premium/dev-feat-gally-llm/a4f185ae48266854455238b026e65a70dc267418.zip",
+                "reference": "a4f185ae48266854455238b026e65a70dc267418",
                 "mirrors": [
                     {
                         "url": "https://elasticsuite.repo.packagist.com/cop-ecommerce/dists/%package%/%version%/r%reference%.%type%",
@@ -2240,7 +2240,7 @@
                 "source": "https://github.com/Elastic-Suite/gally-premium/tree/feat-gally-llm",
                 "issues": "https://github.com/Elastic-Suite/gally-premium/issues"
             },
-            "time": "2023-11-22T10:30:53+00:00"
+            "time": "2023-11-28T10:43:41+00:00"
         },
         {
             "name": "gally/gally-standard",
