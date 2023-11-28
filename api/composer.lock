@@ -2248,12 +2248,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Elastic-Suite/gally-standard.git",
-                "reference": "7294b15d36aece1b31e419ed8c6ec97df9e26188"
+                "reference": "407e01ed95961f632da92faed71010537905fcf4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Elastic-Suite/gally-standard/zipball/7294b15d36aece1b31e419ed8c6ec97df9e26188",
-                "reference": "7294b15d36aece1b31e419ed8c6ec97df9e26188",
+                "url": "https://api.github.com/repos/Elastic-Suite/gally-standard/zipball/407e01ed95961f632da92faed71010537905fcf4",
+                "reference": "407e01ed95961f632da92faed71010537905fcf4",
                 "shasum": ""
             },
             "require": {
