@@ -2163,8 +2163,8 @@
             "version": "dev-feat-gally-llm",
             "dist": {
                 "type": "zip",
-                "url": "https://elasticsuite.repo.packagist.com/cop-ecommerce/dists/gally/gally-premium/dev-feat-gally-llm/76b90b7ae62da86da39197317c6a34273838746e.zip",
-                "reference": "76b90b7ae62da86da39197317c6a34273838746e",
+                "url": "https://elasticsuite.repo.packagist.com/cop-ecommerce/dists/gally/gally-premium/dev-feat-gally-llm/40a6d3b70b7c380693961d01d3b6fe29f7193b84.zip",
+                "reference": "40a6d3b70b7c380693961d01d3b6fe29f7193b84",
                 "mirrors": [
                     {
                         "url": "https://elasticsuite.repo.packagist.com/cop-ecommerce/dists/%package%/%version%/r%reference%.%type%",
