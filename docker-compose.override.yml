@@ -1,5 +1,7 @@
 version: "3.4"
 
+name: demo-gally
+
 # Development environment override
 services:
   php:
@@ -14,7 +16,7 @@ services:
     # extra_hosts:
     #  - host.docker.internal:host-gateway
     environment:
-      APP_ENV: dev
+      APP_ENV: prod
       # Lots of change between Xdebug 2 and Xdebug 3, see https://xdebug.org/docs/upgrade_guide
       # and https://xdebug.org/docs/all_settings
       # XDEBUG_MODE: debug
@@ -30,6 +32,7 @@ services:
         client_port=9000
         idekey=PHPSTORM
       PHP_IDE_CONFIG: serverName=api-platform
+      TRUSTED_HOSTS: ^${SERVER_NAME:-example\.com|localhost}|caddy$|gally.localhost$$
 
   pwa:
     user: ${UUID?You must set UUID env var}:${GUID?You must set GUID env var}
@@ -53,12 +56,17 @@ services:
     volumes:
       - ./api/docker/caddy/Caddyfile:/etc/caddy/Caddyfile:ro,z
       - ./api/public:/srv/api/public:ro,z
+    networks:
+      default:
+        aliases:
+          - 'gally.localhost'
     depends_on:
       - php
       - pwa
       - example
     environment:
       EXAMPLE_UPSTREAM: example:3001
+      SERVER_NAME: gally.localhost
       # MERCURE_EXTRA_DIRECTIVES: demo
 
 ###> doctrine/doctrine-bundle ###
@@ -71,3 +79,7 @@ services:
 
 ###> symfony/mercure-bundle ###
 ###< symfony/mercure-bundle ###
+
+networks:
+  default:
+    name: 'demo-proxy'
