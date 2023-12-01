@@ -2,12 +2,12 @@
 
 fixuid || :
 
-yarn install --frozen-lockfile
+yarn install --frozen-lockfile --network-timeout 120000
 
 if [ -d gally-admin ]
 then
   cd gally-admin
-  yarn install --frozen-lockfile;
+  yarn install --frozen-lockfile --network-timeout 120000;
   yarn build
   yarn cache clean
   cd node_modules
