@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "126d66b5b21efec0626afb6a9ed18819",
+    "content-hash": "c3b907cedcb96f3d2a32b41938723ff5",
     "packages": [
         {
             "name": "api-platform/core",
@@ -2227,16 +2227,16 @@
         },
         {
             "name": "gally/gally-standard",
-            "version": "1.2.x-dev",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Elastic-Suite/gally-standard.git",
-                "reference": "720878be8a08638333d72c686d38cae6f1da3ec6"
+                "reference": "abfc74677b52ae95b2a04f3dbf8a409617aee688"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Elastic-Suite/gally-standard/zipball/720878be8a08638333d72c686d38cae6f1da3ec6",
-                "reference": "720878be8a08638333d72c686d38cae6f1da3ec6",
+                "url": "https://api.github.com/repos/Elastic-Suite/gally-standard/zipball/abfc74677b52ae95b2a04f3dbf8a409617aee688",
+                "reference": "abfc74677b52ae95b2a04f3dbf8a409617aee688",
                 "shasum": ""
             },
             "require": {
@@ -2319,9 +2319,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Elastic-Suite/gally-standard/issues",
-                "source": "https://github.com/Elastic-Suite/gally-standard/tree/master"
+                "source": "https://github.com/Elastic-Suite/gally-standard/tree/1.2.0"
             },
-            "time": "2023-11-27T12:03:45+00:00"
+            "time": "2023-12-11T10:09:10+00:00"
         },
         {
             "name": "gedmo/doctrine-extensions",
@@ -12746,9 +12746,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "gally/gally-standard": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
