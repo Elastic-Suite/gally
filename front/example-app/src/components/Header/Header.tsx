@@ -1,6 +1,9 @@
 import { useContext, useEffect, useId } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { Bundle } from '@elastic-suite/gally-admin-shared'
 import {
   AppBar,
+  Button,
   InputLabel,
   MenuItem,
   Select,
@@ -8,9 +11,8 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material'
-import { Link } from 'react-router-dom'
 
-import { catalogContext } from '../../contexts'
+import { catalogContext, extraBundlesContext } from '../../contexts'
 
 import HeaderFormControl from '../HeaderFormControl/HeaderFormControl'
 import SearchBar from '../SearchBar/SearchBar'
@@ -28,6 +30,10 @@ function Header(): JSX.Element {
     onCatalogIdChange,
     onLocalizedCatalogIdChange,
   } = useContext(catalogContext)
+  const navigate = useNavigate()
+  const { isExtraBundleAvailable } = useContext(extraBundlesContext)
+
+  const demoVectorSearchLabel = 'Demo Vector Search'
 
   function handleCatalogChange(event: SelectChangeEvent<string>): void {
     onCatalogIdChange(event.target.value)
@@ -71,6 +77,16 @@ function Header(): JSX.Element {
           </div>
           <div>Gally - Example App</div>
         </Typography>
+        {isExtraBundleAvailable(Bundle.VECTOR_SEARCH) && (
+          <Button
+            variant="contained"
+            style={{ border: '1px solid white', textTransform: 'none' }}
+            disableElevation
+            onClick={(): void => navigate('/vectorSearch')}
+          >
+            {demoVectorSearchLabel}
+          </Button>
+        )}
         {Boolean(catalog && localizedCatalog) && (
           <HeaderFormControl size="small">
             <SearchBar shrink />
