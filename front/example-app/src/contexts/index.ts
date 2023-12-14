@@ -1,6 +1,7 @@
 export * from './catalog'
 export * from './category'
 export * from './configurations'
+export * from './extraBundles'
 export * from './search'
 export * from './requestedPath'
 export * from './user'

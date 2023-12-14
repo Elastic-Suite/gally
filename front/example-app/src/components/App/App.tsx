@@ -4,6 +4,7 @@ import Category from '../../pages/Category/Category'
 import Homepage from '../../pages/Homepage/Homepage'
 import Login from '../../pages/Login/Login'
 import Search from '../../pages/Search/Search'
+import VectorSearch from '../../pages/VectorSearch/VectorSearch'
 
 import Layout from '../Layout/Layout'
 import AppProvider from '../Providers/AppProvider/AppProvider'
@@ -19,6 +20,7 @@ function App(): JSX.Element {
             <Route path="/login" element={<Login />} />
             <Route path="/category/:id" element={<Category />} />
             <Route path="/search" element={<Search />} />
+            <Route path="/vectorSearch" element={<VectorSearch />} />
           </Routes>
         </Layout>
       </AppProvider>

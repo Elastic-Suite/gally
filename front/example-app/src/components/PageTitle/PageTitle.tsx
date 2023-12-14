@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { styled } from '@mui/system'
 
-const CustomTitle = styled('div')({
+export const CustomTitle = styled('div')({
   position: 'relative',
   marginTop: '8px',
   marginBottom: '48px',
