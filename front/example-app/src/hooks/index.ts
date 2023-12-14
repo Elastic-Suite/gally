@@ -1,6 +1,7 @@
 export * from './useApi'
 export * from './useGraphql'
 export * from './useLog'
+export * from './useVectorSearchDocuments'
 export * from './useProducts'
 export * from './useProductSort'
 export * from './useResource'

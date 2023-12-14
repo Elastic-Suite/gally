@@ -36,7 +36,11 @@ interface IProps {
   sort: string
   sortOptions: IOptions<string>
   sortOrder: SortOrder
+  hasSortOptions?: boolean
+  itemsPerRow?: number
 }
+
+const MAX_ITEMS_PER_ROW = 4
 
 function Products(props: IProps): JSX.Element {
   const {
@@ -50,8 +54,10 @@ function Products(props: IProps): JSX.Element {
     sort,
     sortOptions,
     sortOrder,
+    hasSortOptions = true,
+    itemsPerRow = 3,
   } = props
-  const total = products.data?.products.paginationInfo.totalCount
+  const total = products.data?.products?.paginationInfo?.totalCount ?? 0
   const sortLabelId = useId()
   const sortSelectId = useId()
   const sortOrderLabelId = useId()
@@ -67,6 +73,9 @@ function Products(props: IProps): JSX.Element {
       }) ?? [],
     [products]
   )
+
+  const mdItemsPerRow =
+    12 / Math.max(Math.min(itemsPerRow, MAX_ITEMS_PER_ROW), 1)
 
   function handleSortChange(event: SelectChangeEvent): void {
     setSort(event.target.value)
@@ -94,51 +103,53 @@ function Products(props: IProps): JSX.Element {
 
   return (
     <>
-      <Container>
-        <div>
-          <SelectFormControl margin="normal" variant="outlined">
-            <InputLabel id={sortLabelId}>Sort by</InputLabel>
-            <Select
-              id={sortSelectId}
-              label="Sort by"
-              labelId={sortLabelId}
-              onChange={handleSortChange}
-              value={sort}
-            >
-              {sortOptions.map((sortOption) => (
-                <MenuItem key={sortOption.value} value={sortOption.value}>
-                  {sortOption.label}
-                </MenuItem>
-              ))}
-            </Select>
-          </SelectFormControl>
-          <SelectFormControl margin="normal" variant="outlined">
-            <InputLabel id={sortOrderLabelId}>Sort order</InputLabel>
-            <Select
-              id={sortOrderSelectId}
-              label="Sort order"
-              labelId={sortOrderLabelId}
-              onChange={handleSortOrderChange}
-              value={sortOrder}
-            >
-              {Object.values(SortOrder).map((value) => {
-                return (
-                  <MenuItem key={value} value={value}>
-                    {value}
+      {hasSortOptions === true && (
+        <Container>
+          <div>
+            <SelectFormControl margin="normal" variant="outlined">
+              <InputLabel id={sortLabelId}>Sort by</InputLabel>
+              <Select
+                id={sortSelectId}
+                label="Sort by"
+                labelId={sortLabelId}
+                onChange={handleSortChange}
+                value={sort}
+              >
+                {sortOptions.map((sortOption) => (
+                  <MenuItem key={sortOption.value} value={sortOption.value}>
+                    {sortOption.label}
                   </MenuItem>
-                )
-              })}
-            </Select>
-          </SelectFormControl>
-        </div>
-      </Container>
+                ))}
+              </Select>
+            </SelectFormControl>
+            <SelectFormControl margin="normal" variant="outlined">
+              <InputLabel id={sortOrderLabelId}>Sort order</InputLabel>
+              <Select
+                id={sortOrderSelectId}
+                label="Sort order"
+                labelId={sortOrderLabelId}
+                onChange={handleSortOrderChange}
+                value={sortOrder}
+              >
+                {Object.values(SortOrder).map((value) => {
+                  return (
+                    <MenuItem key={value} value={value}>
+                      {value}
+                    </MenuItem>
+                  )
+                })}
+              </Select>
+            </SelectFormControl>
+          </div>
+        </Container>
+      )}
       <CustomResultPagination>
         <div>{total !== undefined && `${total} Result(s)`}</div>
 
         <TablePagination
           labelRowsPerPage="Rows per page"
           component="div"
-          count={products.data?.products.paginationInfo.totalCount || 0}
+          count={products.data?.products?.paginationInfo?.totalCount || 0}
           rowsPerPageOptions={[10, 30, 50]}
           page={page}
           onPageChange={handleChangePage}
@@ -150,7 +161,7 @@ function Products(props: IProps): JSX.Element {
         <Grid container spacing={{ md: 3 }} columns={{ md: 12 }}>
           {rows.map((item) => {
             return (
-              <Grid item md={4} key={item.id}>
+              <Grid item md={mdItemsPerRow} key={item.id}>
                 <ProductCard product={item} />
               </Grid>
             )
