@@ -74,7 +74,8 @@ function Products(props: IProps): JSX.Element {
     [products]
   )
 
-  const mdItemsPerRow = 12 / Math.min(itemsPerRow, MAX_ITEMS_PER_ROW)
+  const mdItemsPerRow =
+    12 / Math.max(Math.min(itemsPerRow, MAX_ITEMS_PER_ROW), 1)
 
   function handleSortChange(event: SelectChangeEvent): void {
     setSort(event.target.value)
