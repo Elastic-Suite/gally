@@ -86,8 +86,8 @@ switch-dev-env: ## Switch current environment with dev repositories on a compose
 phpcsfixer: ## Run php cs fixer, pass the parameter "o=" to pass options, make phpcsfixer o="--dry-run"
 	@$(eval o ?=)
 	@$(PHP_CS_FIXER) fix --path-mode=intersection src/ --diff $(o)
-	@cd api; for package in vendor/gally/* ; do \
-		$(PHP_CS_FIXER) fix --path-mode=intersection $$package --diff $(o) ;\
+	@for package in $$(ls api/vendor/gally); do \
+		$(PHP_CS_FIXER) fix --path-mode=intersection vendor/gally/$$package --diff $(o) ;\
 	done
 
 phpcsfixer_dryrun: ## Run php cs fixer with dry run option
