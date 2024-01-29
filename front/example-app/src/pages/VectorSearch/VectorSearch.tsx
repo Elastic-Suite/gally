@@ -21,7 +21,7 @@ import { useProducts, useVectorSearchDocuments } from 'src/hooks'
 import { transformVectorSearchDocumentsIntoProducts } from 'src/services'
 import PageLayout from 'src/components/PageLayout/PageLayout'
 import { CustomTitle } from 'src/components/PageTitle/PageTitle'
-import Products from 'src/components/Products/Products'
+import ProductList from 'src/components/Products/ProductList'
 
 function VectorSearch(): JSX.Element {
   const leftPanelTitle = 'Fulltext search'
@@ -45,7 +45,7 @@ function VectorSearch(): JSX.Element {
     sortOptions: productsSortOptions,
     sortOrder: productsSortOrder,
     loadProducts,
-  } = useProducts(ProductRequestType.SEARCH, null, search)
+  } = useProducts(ProductRequestType.SEARCH, null, search, 50)
 
   const {
     page: VSPage,
@@ -59,7 +59,7 @@ function VectorSearch(): JSX.Element {
     sortOptions: VSSortOptions,
     sortOrder: VSSortOrder,
     loadVectorSearchDocuments,
-  } = useVectorSearchDocuments(productEntityType, search)
+  } = useVectorSearchDocuments(productEntityType, search, 50)
 
   const vectorSearchProducts: IFetch<IGraphqlSearchProducts> = useMemo(() => {
     return transformVectorSearchDocumentsIntoProducts(vectorSearchDocuments)
@@ -119,7 +119,7 @@ function VectorSearch(): JSX.Element {
       <div style={{ display: 'flex', gap: '15px' }}>
         <div style={{ flex: 1 }}>
           <CustomTitle>{leftPanelTitle}</CustomTitle>
-          <Products
+          <ProductList
             hasSortOptions={false}
             page={productsPage}
             pageSize={productsPageSize}
@@ -131,7 +131,6 @@ function VectorSearch(): JSX.Element {
             sort={productsSort}
             sortOptions={productsSortOptions}
             sortOrder={productsSortOrder}
-            itemsPerRow={2}
           />
         </div>
         <Divider
@@ -145,7 +144,7 @@ function VectorSearch(): JSX.Element {
         />
         <div style={{ flex: 1 }}>
           <CustomTitle>{rightPanelTitle}</CustomTitle>
-          <Products
+          <ProductList
             hasSortOptions={false}
             page={VSPage}
             pageSize={VSPageSize}
@@ -157,7 +156,6 @@ function VectorSearch(): JSX.Element {
             sort={VSSort}
             sortOptions={VSSortOptions}
             sortOrder={VSSortOrder}
-            itemsPerRow={2}
           />
         </div>
       </div>
