@@ -26,11 +26,12 @@ import { useDocumentSort } from './useDocumentSort'
 
 export function useVectorSearchDocuments(
   entityType: string,
-  search?: string
+  search?: string,
+  defaultPageSize ?: number
 ): IVectorSearchDocumentsHook {
   const graphqlApi = useApiGraphql()
   const [page, setPage] = useState(0)
-  const [pageSize, setPageSize] = useState(10)
+  const [pageSize, setPageSize] = useState(defaultPageSize ? defaultPageSize : 10)
   const { localizedCatalogId } = useContext(catalogContext)
   const [sort, sortOrder, sortOptions, setSort, setSortOrder] =
     useDocumentSort(entityType)
