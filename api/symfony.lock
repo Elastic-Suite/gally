@@ -168,6 +168,9 @@
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.5"
     },
+    "gally/gally-premium": {
+        "version": "dev-demo-llm"
+    },
     "gally/gally-standard": {
         "version": "dev-master"
     },
@@ -347,6 +350,9 @@
     },
     "psr/cache": {
         "version": "3.0.0"
+    },
+    "psr/clock": {
+        "version": "1.0.0"
     },
     "psr/container": {
         "version": "2.0.2"
