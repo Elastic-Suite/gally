@@ -13,7 +13,7 @@
         "doctrine/doctrine-bundle": "^2.1",
         "doctrine/doctrine-migrations-bundle": "^3.0",
         "doctrine/orm": "^2.7",
-        "gally/gally-premium": "dev-demo-llm",
+        "gally/gally-premium": "dev-demo-llm-ada",
         "gally/gally-standard": "dev-refacto-gally-llm",
         "guzzlehttp/guzzle": "^7.0",
         "hautelook/alice-bundle": "^2.10",
