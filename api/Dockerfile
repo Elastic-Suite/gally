@@ -238,7 +238,7 @@ COPY docker/opensearch/config/* $OPENSEARCH_PATH_CONF/
 COPY docker/opensearch/bin/* $OPENSEARCH_HOME/
 RUN if [[ -d $PERFORMANCE_ANALYZER_PLUGIN_CONFIG_DIR ]] ; then mv $OPENSEARCH_PATH_CONF/performance-analyzer.properties $PERFORMANCE_ANALYZER_PLUGIN_CONFIG_DIR/ ; fi
 
-FROM nvidia/cuda:12.0.0-base-centos7 AS gally_opensearch2_gpu
+FROM nvidia/cuda:11.6.1-base-centos7 AS gally_opensearch2_gpu
 
 ARG UID=1000
 ARG GID=1000

@@ -2176,8 +2176,8 @@
             "version": "dev-demo-llm",
             "dist": {
                 "type": "zip",
-                "url": "https://elasticsuite.repo.packagist.com/cop-ecommerce/dists/gally/gally-premium/dev-demo-llm/e20e90311e9a3d800d9e01ad418154356d553232.zip",
-                "reference": "e20e90311e9a3d800d9e01ad418154356d553232",
+                "url": "https://elasticsuite.repo.packagist.com/cop-ecommerce/dists/gally/gally-premium/dev-demo-llm/ce756dbcd08b1593f8224d19316cdeb08b22fd25.zip",
+                "reference": "ce756dbcd08b1593f8224d19316cdeb08b22fd25",
                 "mirrors": [
                     {
                         "url": "https://elasticsuite.repo.packagist.com/cop-ecommerce/dists/%package%/%version%/r%reference%.%type%",
@@ -2254,7 +2254,7 @@
                 "source": "https://github.com/Elastic-Suite/gally-premium/tree/demo-llm",
                 "issues": "https://github.com/Elastic-Suite/gally-premium/issues"
             },
-            "time": "2024-01-31T16:32:11+00:00"
+            "time": "2024-02-01T13:30:50+00:00"
         },
         {
             "name": "gally/gally-standard",
@@ -2262,12 +2262,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Elastic-Suite/gally-standard.git",
-                "reference": "bb40f57cbb5e03b5a1ea93ed13d50b544b395ad1"
+                "reference": "ce336e1826f655c9e18f286b46ad9490c22933df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Elastic-Suite/gally-standard/zipball/bb40f57cbb5e03b5a1ea93ed13d50b544b395ad1",
-                "reference": "bb40f57cbb5e03b5a1ea93ed13d50b544b395ad1",
+                "url": "https://api.github.com/repos/Elastic-Suite/gally-standard/zipball/ce336e1826f655c9e18f286b46ad9490c22933df",
+                "reference": "ce336e1826f655c9e18f286b46ad9490c22933df",
                 "shasum": ""
             },
             "require": {
@@ -2352,7 +2352,7 @@
                 "issues": "https://github.com/Elastic-Suite/gally-standard/issues",
                 "source": "https://github.com/Elastic-Suite/gally-standard/tree/refacto-gally-llm"
             },
-            "time": "2024-01-31T16:13:51+00:00"
+            "time": "2024-02-01T14:43:57+00:00"
         },
         {
             "name": "gedmo/doctrine-extensions",
