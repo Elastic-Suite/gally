@@ -1,0 +1,14 @@
+version: "3.4"
+
+services:  
+  search-ml:
+    build:
+      context: api/
+      target: gally_opensearch2_gpu
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
