@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cd9dfbc13593229ec82e0475f89289b1",
+    "content-hash": "664e9425039b25a5cc60416978e21a3f",
     "packages": [
         {
             "name": "api-platform/core",
@@ -2160,16 +2160,16 @@
         },
         {
             "name": "gally/gally-standard",
-            "version": "dev-master",
+            "version": "1.3.0-alpha1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Elastic-Suite/gally-standard.git",
-                "reference": "6d95d5f7f297b00aeba3e9bf254f03d085394d52"
+                "reference": "897411f3c0f7a1b867d60d65f227fbaeacfda7ce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Elastic-Suite/gally-standard/zipball/6d95d5f7f297b00aeba3e9bf254f03d085394d52",
-                "reference": "6d95d5f7f297b00aeba3e9bf254f03d085394d52",
+                "url": "https://api.github.com/repos/Elastic-Suite/gally-standard/zipball/897411f3c0f7a1b867d60d65f227fbaeacfda7ce",
+                "reference": "897411f3c0f7a1b867d60d65f227fbaeacfda7ce",
                 "shasum": ""
             },
             "require": {
@@ -2180,6 +2180,7 @@
                 "guzzlehttp/guzzle": "^7.0",
                 "lexik/jwt-authentication-bundle": "^2.14",
                 "nelmio/cors-bundle": "^2.1",
+                "opensearch-project/opensearch-php": "^2.1",
                 "php": ">=8.1",
                 "stof/doctrine-extensions-bundle": "^1.7",
                 "symfony/intl": "6.0.*",
@@ -2251,9 +2252,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Elastic-Suite/gally-standard/issues",
-                "source": "https://github.com/Elastic-Suite/gally-standard/tree/master"
+                "source": "https://github.com/Elastic-Suite/gally-standard/tree/1.3.0-alpha1"
             },
-            "time": "2023-11-27T12:03:45+00:00"
+            "time": "2024-02-22T15:48:20+00:00"
         },
         {
             "name": "gedmo/doctrine-extensions",
@@ -12768,7 +12769,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "gally/gally-standard": 20
+        "gally/gally-standard": 15
     },
     "prefer-stable": false,
     "prefer-lowest": false,
