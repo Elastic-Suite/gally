@@ -1,11 +1,27 @@
-import {Dispatch, SetStateAction, useId, useMemo} from 'react'
-import {InputLabel, MenuItem, Select, SelectChangeEvent, TablePagination, styled,} from '@mui/material'
-import {IFetch, IGraphqlSearchProducts, IOptions, SortOrder,} from '@elastic-suite/gally-admin-shared'
-import {Box} from '@mui/system'
+import { Dispatch, SetStateAction, useId, useMemo } from 'react'
+import {
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  TablePagination,
+  styled,
+} from '@mui/material'
+import {
+  IFetch,
+  IGraphqlSearchProducts,
+  IOptions,
+  SortOrder,
+} from '@elastic-suite/gally-admin-shared'
+import { Box } from '@mui/system'
 
-import {IProduct} from '../../types/'
+import { IProduct } from '../../types/'
 
-import {Container, CustomResultPagination, SelectFormControl,} from '../Search/Search.styled'
+import {
+  Container,
+  CustomResultPagination,
+  SelectFormControl,
+} from '../Search/Search.styled'
 
 interface IProps {
   page: number
@@ -79,7 +95,7 @@ function ProductList(props: IProps): JSX.Element {
   const FullWidthTable = styled('table')({
     width: '100%',
   })
-  const RightAlignedCell = styled('td')({textAlign: 'right'})
+  const RightAlignedCell = styled('td')({ textAlign: 'right' })
 
   return (
     <>

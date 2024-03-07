@@ -25,11 +25,13 @@ export function useProducts(
   requestType: ProductRequestType,
   currentCategoryId?: string,
   search?: string,
-  defaultPageSize ?: number
+  defaultPageSize?: number
 ): IProductsHook {
   const graphqlApi = useApiGraphql()
   const [page, setPage] = useState(0)
-  const [pageSize, setPageSize] = useState(defaultPageSize ? defaultPageSize : 10)
+  const [pageSize, setPageSize] = useState(
+    defaultPageSize ? defaultPageSize : 10
+  )
   const { localizedCatalogId } = useContext(catalogContext)
   const [sort, sortOrder, sortOptions, setSort, setSortOrder] = useProductSort()
   const [activeFilters, setActiveFilters] = useState<IActiveFilters>([])
