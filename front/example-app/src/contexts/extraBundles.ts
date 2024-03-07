@@ -8,4 +8,7 @@ interface IExtraBundlesContext {
 
 export const extraBundlesContext = createContext<
   IExtraBundlesContext | undefined
->(undefined)
+>({
+  extraBundles: [],
+  isExtraBundleAvailable: () => false,
+})
