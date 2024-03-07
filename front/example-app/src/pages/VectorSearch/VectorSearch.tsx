@@ -21,7 +21,7 @@ import { useProducts, useVectorSearchDocuments } from 'src/hooks'
 import { transformVectorSearchDocumentsIntoProducts } from 'src/services'
 import PageLayout from 'src/components/PageLayout/PageLayout'
 import { CustomTitle } from 'src/components/PageTitle/PageTitle'
-import ProductList from 'src/components/Products/ProductList'
+import ProductList from 'src/components/VectorSearch/ProductList'
 
 function VectorSearch(): JSX.Element {
   const leftPanelTitle = 'Fulltext search'
