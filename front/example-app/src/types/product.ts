@@ -14,6 +14,7 @@ export interface IProductsHook extends IEntitiesHook {
 export interface IProduct extends Omit<IGraphqlProduct, 'price'> {
   price?: number
   image?: string
+  description?: string
 }
 
 export interface IProductAutoComplete extends IProduct {

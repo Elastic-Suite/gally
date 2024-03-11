@@ -23,6 +23,11 @@ export function transformVectorSearchDocumentsIntoProducts(
               document.source.name.length > 0
                 ? (document.source?.name[0] as string)
                 : '',
+            description:
+              Array.isArray(document.source?.description) &&
+              document.source.description.length > 0
+                ? (document.source?.description[0] as string)
+                : '',
             score: Number(document.score),
             image: document.source?.image as string,
             stock: document.source?.stock ?? undefined,
