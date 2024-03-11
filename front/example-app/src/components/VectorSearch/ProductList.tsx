@@ -166,7 +166,15 @@ function ProductList(props: IProps): JSX.Element {
             return (
               <tr key={item.id}>
                 <td>{item.sku}</td>
-                <td>{item.name}</td>
+                <td
+                  title={
+                    item.description
+                      ? item.description.replace(/(<([^>]+)>)/, '')
+                      : ''
+                  }
+                >
+                  {item.name}
+                </td>
                 <RightAlignedCell>{item.score.toFixed(4)}</RightAlignedCell>
               </tr>
             )
