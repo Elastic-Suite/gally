@@ -152,7 +152,7 @@ services:
       test: test $$(curl --write-out %{http_code} --fail --silent --output /dev/null http://localhost:9200/_cluster/health?wait_for_status=green&timeout=5s) -eq 200
       interval: 10s
       timeout: 5s
-      retries: 10
+      retries: 20
       
   search-ml:
     build:
@@ -180,7 +180,7 @@ services:
       test: test $$(curl --write-out %{http_code} --fail --silent --output /dev/null http://localhost:9200/_cluster/health?wait_for_status=green&timeout=5s) -eq 200
       interval: 10s
       timeout: 5s
-      retries: 10
+      retries: 20
 
 # Mercure is installed as a Caddy module, prevent the Flex recipe from installing another service
 ###> symfony/mercure-bundle ###
