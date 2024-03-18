@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "664e9425039b25a5cc60416978e21a3f",
+    "content-hash": "dcc78e3b3ef10e2313a62f44f29a0d87",
     "packages": [
         {
             "name": "api-platform/core",
@@ -2160,16 +2160,16 @@
         },
         {
             "name": "gally/gally-standard",
-            "version": "1.3.0-alpha1",
+            "version": "1.3.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Elastic-Suite/gally-standard.git",
-                "reference": "897411f3c0f7a1b867d60d65f227fbaeacfda7ce"
+                "reference": "175e638ef42a0d688045ac3c35fbdbdbf477921d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Elastic-Suite/gally-standard/zipball/897411f3c0f7a1b867d60d65f227fbaeacfda7ce",
-                "reference": "897411f3c0f7a1b867d60d65f227fbaeacfda7ce",
+                "url": "https://api.github.com/repos/Elastic-Suite/gally-standard/zipball/175e638ef42a0d688045ac3c35fbdbdbf477921d",
+                "reference": "175e638ef42a0d688045ac3c35fbdbdbf477921d",
                 "shasum": ""
             },
             "require": {
@@ -2252,9 +2252,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Elastic-Suite/gally-standard/issues",
-                "source": "https://github.com/Elastic-Suite/gally-standard/tree/1.3.0-alpha1"
+                "source": "https://github.com/Elastic-Suite/gally-standard/tree/master"
             },
-            "time": "2024-02-22T15:48:20+00:00"
+            "time": "2024-03-11T08:17:00+00:00"
         },
         {
             "name": "gedmo/doctrine-extensions",
@@ -12769,7 +12769,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "gally/gally-standard": 15
+        "gally/gally-standard": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
