@@ -56,12 +56,16 @@ function ProductCard(props: IProps): JSX.Element {
         />
         <CardContent>
           <Typography
-            style={{ display: 'flex', justifyContent: 'space-between' }}
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              minHeight: '64px',
+            }}
             gutterBottom
             variant="h6"
             component="div"
           >
-            {product.name}{' '}
+            {product.name}
             <Chip
               style={{
                 background: product?.stock?.status ? 'green' : 'red',

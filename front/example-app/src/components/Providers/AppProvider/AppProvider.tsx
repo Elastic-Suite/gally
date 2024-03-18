@@ -3,6 +3,7 @@ import { ReactNode } from 'react'
 import CatalogProvider from '../CatalogProvider/CatalogProvider'
 import CategoryProvider from '../CategoryProvider/CategoryProvider'
 import ConfigurationsProvider from '../ConfigurationsProvider/ConfigurationsProvider'
+import ExtraBundlesProvider from '../ExtraBundlesProvider/ExtraBundlesProvider'
 import RequestedPathProvider from '../RequestedPathProvider/RequestedPathProvider'
 import SchemaProvider from '../SchemaProvider/SchemaProvider'
 import SearchProvider from '../SearchProvider/SearchProvider'
@@ -20,9 +21,11 @@ function AppProvider(props: IProps): JSX.Element {
         <CatalogProvider>
           <ConfigurationsProvider>
             <RequestedPathProvider>
-              <CategoryProvider>
-                <SearchProvider>{children}</SearchProvider>
-              </CategoryProvider>
+              <ExtraBundlesProvider>
+                <CategoryProvider>
+                  <SearchProvider>{children}</SearchProvider>
+                </CategoryProvider>
+              </ExtraBundlesProvider>
             </RequestedPathProvider>
           </ConfigurationsProvider>
         </CatalogProvider>

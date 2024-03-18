@@ -1,24 +1,22 @@
 import { Dispatch, SetStateAction, useId, useMemo } from 'react'
 import {
-  Grid,
   InputLabel,
   MenuItem,
   Select,
   SelectChangeEvent,
   TablePagination,
+  styled,
 } from '@mui/material'
 import {
   IFetch,
   IGraphqlSearchProducts,
   IOptions,
-  // LoadStatus,
   SortOrder,
 } from '@elastic-suite/gally-admin-shared'
 import { Box } from '@mui/system'
 
 import { IProduct } from '../../types/'
 
-import ProductCard from './ProductCard'
 import {
   Container,
   CustomResultPagination,
@@ -37,12 +35,9 @@ interface IProps {
   sortOptions: IOptions<string>
   sortOrder: SortOrder
   hasSortOptions?: boolean
-  itemsPerRow?: number
 }
 
-const MAX_ITEMS_PER_ROW = 4
-
-function Products(props: IProps): JSX.Element {
+function ProductList(props: IProps): JSX.Element {
   const {
     page,
     pageSize,
@@ -55,7 +50,6 @@ function Products(props: IProps): JSX.Element {
     sortOptions,
     sortOrder,
     hasSortOptions = true,
-    itemsPerRow = 3,
   } = props
   const total = products.data?.products?.paginationInfo?.totalCount ?? 0
   const sortLabelId = useId()
@@ -73,9 +67,6 @@ function Products(props: IProps): JSX.Element {
       }) ?? [],
     [products]
   )
-
-  const mdItemsPerRow =
-    12 / Math.max(Math.min(itemsPerRow, MAX_ITEMS_PER_ROW), 1)
 
   function handleSortChange(event: SelectChangeEvent): void {
     setSort(event.target.value)
@@ -100,6 +91,11 @@ function Products(props: IProps): JSX.Element {
     setPageSize(parseInt(event.target.value, 10))
     setPage(0)
   }
+
+  const FullWidthTable = styled('table')({
+    width: '100%',
+  })
+  const RightAlignedCell = styled('td')({ textAlign: 'right' })
 
   return (
     <>
@@ -158,18 +154,35 @@ function Products(props: IProps): JSX.Element {
         />
       </CustomResultPagination>
       <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={{ md: 3 }} columns={{ md: 12 }}>
+        <FullWidthTable>
+          <thead>
+            <tr>
+              <th>Sku</th>
+              <th>Name</th>
+              <th>Score</th>
+            </tr>
+          </thead>
           {rows.map((item) => {
             return (
-              <Grid item md={mdItemsPerRow} key={item.id}>
-                <ProductCard product={item} />
-              </Grid>
+              <tr key={item.id}>
+                <td>{item.sku}</td>
+                <td
+                  title={
+                    item.description
+                      ? item.description.replace(/(<([^>]+)>)/, '')
+                      : ''
+                  }
+                >
+                  {item.name}
+                </td>
+                <RightAlignedCell>{item.score.toFixed(4)}</RightAlignedCell>
+              </tr>
             )
           })}
-        </Grid>
+        </FullWidthTable>
       </Box>
     </>
   )
 }
 
-export default Products
+export default ProductList

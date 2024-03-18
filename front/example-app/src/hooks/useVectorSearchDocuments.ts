@@ -1,50 +1,56 @@
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import {
-  ICategoryTypeDefaultFilterInputType,
+  IDocumentFieldFilterInput,
   IGraphqlAggregation,
-  IGraphqlSearchProducts,
-  IGraphqlSearchProductsVariables,
-  IGraphqlViewMoreProductFacetOptions,
-  IGraphqlViewMoreProductFacetOptionsVariables,
-  IProductFieldFilterInput,
+  IGraphqlSearchDocumentsVariables,
+  IGraphqlVectorSearchDocuments,
+  IGraphqlViewMoreFacetOptions,
+  IGraphqlViewMoreFacetOptionsVariables,
   LoadStatus,
-  ProductRequestType,
-  getMoreFacetProductOptionsQuery,
-  getSearchProductsQuery,
+  addPrefixKeyObject,
+  getMoreFacetOptionsQuery,
+  getVectorSearchDocumentsQuery,
   isError,
 } from '@elastic-suite/gally-admin-shared'
 
 import { catalogContext } from '../contexts'
-import { IActiveFilters, IFilterMoreOptions, IProductsHook } from '../types'
-import { getProductFilters } from '../services'
+import {
+  IActiveFilters,
+  IFilterMoreOptions,
+  IVectorSearchDocumentsHook,
+} from '../types'
 
 import { useApiGraphql, useGraphqlApi } from './useGraphql'
-import { useProductSort } from './useProductSort'
+import { getDocumentFilters } from '../services/document'
+import { useDocumentSort } from './useDocumentSort'
 
-export function useProducts(
-  requestType: ProductRequestType,
-  currentCategoryId?: string,
+export function useVectorSearchDocuments(
+  entityType: string,
   search?: string,
   defaultPageSize?: number
-): IProductsHook {
+): IVectorSearchDocumentsHook {
   const graphqlApi = useApiGraphql()
   const [page, setPage] = useState(0)
   const [pageSize, setPageSize] = useState(
     defaultPageSize ? defaultPageSize : 10
   )
   const { localizedCatalogId } = useContext(catalogContext)
-  const [sort, sortOrder, sortOptions, setSort, setSortOrder] = useProductSort()
+  const [sort, sortOrder, sortOptions, setSort, setSortOrder] =
+    useDocumentSort(entityType)
   const [activeFilters, setActiveFilters] = useState<IActiveFilters>([])
   const [moreOptions, setMoreOptions] = useState<IFilterMoreOptions>(new Map())
-  const queryFilters: IProductFieldFilterInput = useMemo(
-    () => getProductFilters(activeFilters),
+  const queryFilters: IDocumentFieldFilterInput[] = useMemo(
+    () => getDocumentFilters(activeFilters),
     [activeFilters]
   )
 
-  const [products, setProducts, load, debouncedLoad] =
-    useGraphqlApi<IGraphqlSearchProducts>()
-  const field = products.data?.products?.sortInfo.current[0].field
-  const direction = products.data?.products?.sortInfo.current[0].direction
+  const [vectorSearchDocuments, setVectorSearchDocument, load, debouncedLoad] =
+    useGraphqlApi<IGraphqlVectorSearchDocuments>()
+  const field =
+    vectorSearchDocuments.data?.vectorSearchDocuments?.sortInfo.current[0].field
+  const direction =
+    vectorSearchDocuments.data?.vectorSearchDocuments?.sortInfo.current[0]
+      .direction
 
   useEffect(() => {
     setSort((prevState) => {
@@ -61,45 +67,44 @@ export function useProducts(
     })
   }, [direction, field, setSort, setSortOrder])
 
-  const loadProducts = useCallback(
+  const loadVectorSearchDocuments = useCallback(
     (condition: boolean) => {
       setMoreOptions(new Map())
       if (localizedCatalogId && condition) {
-        const variables: IGraphqlSearchProductsVariables = {
+        const documentVariables: IGraphqlSearchDocumentsVariables = {
           localizedCatalog: String(localizedCatalogId),
-          requestType,
+          entityType,
           currentPage: page + 1,
           pageSize,
         }
         if (search) {
-          variables.search = search
+          documentVariables.search = search
         }
         if (sort) {
-          variables.sort = { [sort]: sortOrder }
+          documentVariables.sort = { field: sort, direction: sortOrder }
         }
-        if (currentCategoryId) {
-          variables.currentCategoryId = currentCategoryId
+        const variables = {
+          ...addPrefixKeyObject(documentVariables, entityType),
         }
         const loadFunction = activeFilters.length === 0 ? load : debouncedLoad
         return loadFunction(
-          getSearchProductsQuery(queryFilters, true),
+          getVectorSearchDocumentsQuery(entityType, queryFilters, true),
           variables as unknown as Record<string, unknown>
         )
       }
-      setProducts(null)
+      setVectorSearchDocument(null)
     },
     [
       activeFilters,
-      currentCategoryId,
       debouncedLoad,
       load,
       localizedCatalogId,
       page,
       pageSize,
       queryFilters,
-      requestType,
+      entityType,
       search,
-      setProducts,
+      setVectorSearchDocument,
       sort,
       sortOrder,
     ]
@@ -107,20 +112,16 @@ export function useProducts(
 
   const loadMore = useCallback(
     (filter: IGraphqlAggregation) => {
-      const variables: IGraphqlViewMoreProductFacetOptionsVariables = {
+      const variables: IGraphqlViewMoreFacetOptionsVariables = {
         aggregation: filter.field,
         localizedCatalog: String(localizedCatalogId),
+        entityType,
       }
       if (search) {
         variables.search = search
       }
-      if (queryFilters.category__id) {
-        variables.currentCategoryId = (
-          queryFilters.category__id as ICategoryTypeDefaultFilterInputType
-        ).eq
-      }
-      graphqlApi<IGraphqlViewMoreProductFacetOptions>(
-        getMoreFacetProductOptionsQuery(queryFilters),
+      graphqlApi<IGraphqlViewMoreFacetOptions>(
+        getMoreFacetOptionsQuery(queryFilters),
         variables as unknown as Record<string, unknown>
       ).then((json) => {
         if (isError(json)) {
@@ -139,7 +140,7 @@ export function useProducts(
                 [
                   filter,
                   {
-                    data: json.viewMoreProductFacetOptions,
+                    data: json.viewMoreFacetOptions,
                     status: LoadStatus.SUCCEEDED,
                   },
                 ],
@@ -148,18 +149,18 @@ export function useProducts(
         }
       })
     },
-    [graphqlApi, localizedCatalogId, queryFilters, search]
+    [graphqlApi, localizedCatalogId, queryFilters, search, entityType]
   )
 
   return useMemo(
     () => ({
       activeFilters,
       loadMore,
-      loadProducts,
+      loadVectorSearchDocuments,
       moreOptions,
       page,
       pageSize,
-      products,
+      vectorSearchDocuments,
       setActiveFilters,
       setPage,
       setPageSize,
@@ -172,11 +173,11 @@ export function useProducts(
     [
       activeFilters,
       loadMore,
-      loadProducts,
+      loadVectorSearchDocuments,
       moreOptions,
       page,
       pageSize,
-      products,
+      vectorSearchDocuments,
       setSort,
       setSortOrder,
       sort,
