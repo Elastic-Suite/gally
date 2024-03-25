@@ -1,6 +1,8 @@
 import {
+  AggregationType,
   IFetch,
   IGraphqlAggregation,
+  IGraphqlAggregationOption,
   IGraphqlViewMoreFacetOption,
 } from '@elastic-suite/gally-admin-shared'
 
@@ -20,3 +22,9 @@ export type IFilterMoreOptions = Map<
   IGraphqlAggregation,
   IFetch<IGraphqlViewMoreFacetOption[]>
 >
+
+export interface IFacetAutocomplete extends Omit<IGraphqlAggregation, 'type'> {
+  fieldType: AggregationType
+  type: 'attribute'
+  option: IGraphqlAggregationOption
+}
