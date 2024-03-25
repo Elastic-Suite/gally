@@ -21,12 +21,13 @@ function FacetSlider(props: IProps): JSX.Element {
       value: min,
       label: min,
     },
-    {
+  ]
+  if (min !== max) {
+    marks.push({
       value: max,
       label: max,
-    },
-  ]
-
+    })
+  }
   function handleChange(_: Event, value: number | number[]): void {
     onChange(filter, String(value))()
   }
