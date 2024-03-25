@@ -33,6 +33,10 @@ up: ## Start the docker hub in detached mode (no logs)
 	$(MAKE) .env
 	@$(DOCKER_COMP) up --detach
 
+up-connectors: ## Start the docker hub in detached mode with connectors conf (no logs)
+	$(MAKE) .env
+	@$(DOCKER_COMP) -f docker-compose.yml -f docker-compose.override.yml -f docker-compose.connectors.yml up --detach
+
 start: build up ## Build and start the containers
 
 down: ## Stop the docker hub
