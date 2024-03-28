@@ -78,5 +78,8 @@ jobs:
             docker-compose run --rm -e COMPOSER_AUTH='$COMPOSER_AUTH' php composer require \"gally/gally-standard:${{ env.composer_version }} as ${{ inputs.last_published_version }}\" &&
             docker-compose run --rm -e COMPOSER_AUTH='$COMPOSER_AUTH' php composer require \"gally/gally-premium:${{ env.composer_version }}\" &&
             [ -z ${MEDIA_URL} ] || echo -e \"gally:\n  base_url:\n    media: '$MEDIA_URL'\" > api/config/packages/gally_configuration.yaml &&
-            SERVER_NAME=$HOSTNAME APP_SECRET=$APP_SECRET POSTGRES_PASSWORD=$POSTGRES_PASSWORD COMPOSER_AUTH='$COMPOSER_AUTH' docker-compose -f docker-compose.yml -f docker-compose.int.yml up -d --build
+            SERVER_NAME=$HOSTNAME APP_SECRET=$APP_SECRET POSTGRES_PASSWORD=$POSTGRES_PASSWORD COMPOSER_AUTH='$COMPOSER_AUTH' docker-compose -f docker-compose.yml -f docker-compose.int.yml up -d --build &&
+            docker-compose logs php &&
+            SERVER_NAME=$HOSTNAME APP_SECRET=$APP_SECRET POSTGRES_PASSWORD=$POSTGRES_PASSWORD docker-compose -f docker-compose.yml -f docker-compose.int.yml exec php bin/console gally:vector-search:upload-model &&
+            SERVER_NAME=$HOSTNAME APP_SECRET=$APP_SECRET POSTGRES_PASSWORD=$POSTGRES_PASSWORD docker-compose -f docker-compose.yml -f docker-compose.int.yml exec php bin/console
           "
