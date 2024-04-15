@@ -1,0 +1,42 @@
+name: Deploy gally sylius demo
+
+on:
+  workflow_dispatch:
+    inputs:
+      skip_tests:
+        description: 'Skip tests before delivery ?'
+        type: boolean
+        default: false
+        required: false
+
+jobs:
+  tests:
+    name: Tests
+    if: ${{ inputs.skip_tests == false }}
+    uses: ./.github/workflows/tests.yml
+    with:
+      version: ${{ github.ref_name }}
+      last_published_version: ${{ github.ref_name }}
+    secrets: inherit
+
+  deploy-demo-llm:
+    needs: tests
+    name: Deploy gally for llm demo
+    if: |
+      always() && 
+      (needs.tests.result == 'success' || needs.tests.result == 'skipped')
+    uses: ./.github/workflows/deploy-int.yml
+    with:
+      version: ${{ github.ref_name }}
+      last_published_version: ${{ github.ref_name }}
+      back_version_is_tag: false
+      front_version_is_tag: false
+    secrets:
+      AWS_DEPLOY_KEY: ${{ secrets.AWS_DEPLOY_KEY }}
+      AWS_HOSTNAME: ${{ secrets.AWS_HOSTNAME_DEMO_LLM }}
+      AWS_USER: ${{ secrets.AWS_USER }}
+      APP_SECRET: ${{ secrets.APP_SECRET }}
+      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
+      PACKAGIST_URL: ${{ secrets.PACKAGIST_URL }}
+      MEDIA_URL: ${{ secrets.MEDIA_URL_DEMO_LLM }}
