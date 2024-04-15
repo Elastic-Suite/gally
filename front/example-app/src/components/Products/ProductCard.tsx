@@ -52,7 +52,7 @@ function ProductCard(props: IProps): JSX.Element {
           height="200px"
           style={{ objectFit: 'contain' }}
           alt="green iguana"
-          image={joinUrlPath(baseUrl, product.image as string)}
+          image={product.image ? joinUrlPath(baseUrl, product.image as string) : 'https://placehold.co/200x200'}
         />
         <CardContent>
           <Typography
