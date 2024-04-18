@@ -7,6 +7,8 @@
 ARG PHP_VERSION=8.1
 ARG CADDY_VERSION=2.6.4
 ARG ELASTIC_VERSION=7.16.3
+ARG VARNISH_VERSION=7.2.1
+ARG NGINX_VERSION=3.17
 # ARG XDEBUG_VERSION=3.1.2
 
 # "php" stage
@@ -175,3 +177,30 @@ WORKDIR /usr/share/elasticsearch
 
 RUN bin/elasticsearch-plugin install analysis-phonetic
 RUN bin/elasticsearch-plugin install analysis-icu
+
+FROM varnish:${VARNISH_VERSION} AS gally_varnish
+
+USER root
+
+RUN set -eux; \
+	apt update; \
+    apt install gettext-base
+
+COPY --chown=varnish docker/varnish/default.vcl /etc/varnish/default.vcl
+
+USER varnish
+
+COPY docker/varnish/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
+
+ENTRYPOINT ["docker-entrypoint"]
+
+
+FROM nginx:alpine${NGINX_VERSION} AS gally_nginx
+
+WORKDIR /srv/api
+
+COPY ./docker/nginx/templates/default.conf.template /etc/nginx/templates/default.conf.template
+COPY ./docker/nginx/nginx.conf /etc/nginx/nginx.conf
+COPY --from=gally_php /srv/api/public public/
+
+CMD ["nginx", "-g", "daemon off;"]

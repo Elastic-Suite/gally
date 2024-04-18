@@ -2,8 +2,8 @@ vcl 4.0;
 import std;
 
 backend default {
-    .host = "caddy";
-    .port = "8080";
+    .host = "${BACKEND_HOST}";
+    .port = "${BACKEND_PORT}";
     .max_connections        = 300;
     .first_byte_timeout     = 300s;   # How long to wait before we receive a first byte from our backend?
     .connect_timeout        = 5s;     # How long to wait for a backend connection?
@@ -26,7 +26,7 @@ backend default {
 # Hosts allowed to send BAN requests
 acl invalidators {
   "localhost";
-  "php";
+  "${PHP_UPSTREAM}";
   # local Kubernetes network
   # "10.0.0.0"/8;
   # "172.16.0.0"/12;

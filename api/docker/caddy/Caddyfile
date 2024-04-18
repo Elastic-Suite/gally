@@ -1,6 +1,7 @@
 {
     # Debug
     {$DEBUG}
+    auto_https disable_redirects
 }
 
 (snippet) {
@@ -52,11 +53,13 @@
 
     reverse_proxy @example http://{$EXAMPLE_UPSTREAM}
 
-    php_fastcgi unix//var/run/php/php-fpm.sock {
-        trusted_proxies {$CADDY_TRUSTED_PROXIES}
-    }
-    encode zstd gzip
-    file_server
+    reverse_proxy http://{$PHP_UPSTREAM}
+
+#    php_fastcgi {$PHP_FASTCGI} {
+#        trusted_proxies {$CADDY_TRUSTED_PROXIES}
+#    }
+#    encode zstd gzip
+#    file_server
 }
 
 # {$SERVER_NAME}
@@ -68,7 +71,7 @@
 #     path /health-check
 # }
 
-{$SERVER_NAME} {
+http://{$CONTAINER_APP_HOSTNAME}:80 {
     log
 
     # named matchers
@@ -91,14 +94,18 @@
     import snippet
 }
 
-http://{$SERVER_NAME}:8080 {
+http://{$CONTAINER_APP_HOSTNAME}:8080 {
     log
 
     @do_redirect_https {
         header !X-Caddy-Forwarded
     }
 
-    redir @do_redirect_https https://{$SERVER_NAME}{uri} permanent
+    redir @do_redirect_https http://{$CONTAINER_APP_HOSTNAME}{uri} permanent
 
     import snippet
+}
+
+https://{$CONTAINER_APP_HOSTNAME} {
+    redir http://{hostport}{uri} 301
 }

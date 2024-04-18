@@ -22,7 +22,7 @@ services:
     environment:
       DATABASE_URL: postgresql://${POSTGRES_USER:-api-platform}:${POSTGRES_PASSWORD:-!ChangeMe!}@database:5432/${POSTGRES_DB:-api}?serverVersion=${POSTGRES_VERSION:-13}
       TRUSTED_PROXIES: ${TRUSTED_PROXIES:-127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16}
-      TRUSTED_HOSTS: ^${SERVER_NAME:-example\.com|localhost}|caddy$$
+      TRUSTED_HOSTS: ^${SERVER_NAME:-example\.com|localhost|127.0.0.1}|caddy|nginx$$
       # MERCURE_URL: ${CADDY_MERCURE_URL:-http://caddy/.well-known/mercure}
       # MERCURE_PUBLIC_URL: https://${SERVER_NAME:-localhost}/.well-known/mercure
       # MERCURE_JWT_SECRET: ${CADDY_MERCURE_JWT_SECRET:-!ChangeMe!}
@@ -39,6 +39,23 @@ services:
       interval: 10s
       timeout: 5s
       retries: 10
+      
+  nginx:
+    build:
+      context: api/
+      target: gally_nginx
+      args:
+        COMPOSER_AUTH: ${COMPOSER_AUTH:-}
+    depends_on:
+      - php
+      - pwa
+    environment:
+      PWA_UPSTREAM: pwa:3000
+      SERVER_NAME: ${SERVER_NAME:-localhost}
+      CONTAINER_APP_HOSTNAME: ${CONTAINER_APP_HOSTNAME:-localhost}
+      CADDY_TRUSTED_PROXIES: ${CADDY_TRUSTED_PROXIES:-127.0.0.0/8 10.0.0.0/8 172.16.0.0/12 192.168.0.0/16}
+      PHP_FASTCGI: ${PHP_FASTCGI:-php:9000}
+    restart: unless-stopped
 
   caddy:
     build:
@@ -49,16 +66,19 @@ services:
     depends_on:
       - php
       - pwa
+      - nginx
     environment:
       PWA_UPSTREAM: pwa:3000
       # EXAMPLE_UPSTREAM: example:3001
       # SERVER_NAME: ${SERVER_NAME:-localhost, caddy:80}
       SERVER_NAME: ${SERVER_NAME:-localhost}
+      CONTAINER_APP_HOSTNAME: ${CONTAINER_APP_HOSTNAME:-localhost}
       # VARNISH_UPSTREAM: varnish:80
       VARNISH_UPSTREAM: varnish:80
       # MERCURE_PUBLISHER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET:-!ChangeMe!}
       # MERCURE_SUBSCRIBER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET:-!ChangeMe!}
       CADDY_TRUSTED_PROXIES: ${CADDY_TRUSTED_PROXIES:-127.0.0.0/8 10.0.0.0/8 172.16.0.0/12 192.168.0.0/16}
+      PHP_UPSTREAM: ${PHP_UPSTREAM:-nginx:80}
     restart: unless-stopped
     volumes:
       - php_socket:/var/run/php
@@ -82,15 +102,17 @@ services:
         protocol: tcp
 
   varnish:
-    # image: varnish:fresh-alpine
-    image: varnish:7.2.1
+    build:
+      context: api/
+      target: gally_varnish
     depends_on:
       - caddy
-    restart: unless-stopped
-    volumes:
-      - './api/docker/varnish/default.vcl:/etc/varnish/default.vcl:ro,z'
     environment:
-      - VARNISH_SIZE=512M
+      VARNISH_SIZE: 512M
+      BACKEND_HOST: ${BACKEND_HOST:-caddy}
+      BACKEND_PORT: ${BACKEND_PORT:-8080}
+      PHP_UPSTREAM: ${PHP_UPSTREAM:-php}
+    restart: unless-stopped
     #   - SERVERNAME=${SERVER_NAME:-localhost, caddy:80}
     # If http2 not already supported out of the box
     # command: "-p default_keep=300 -p feature=+http2"

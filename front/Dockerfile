@@ -12,11 +12,15 @@ FROM node:${NODE_VERSION}-alpine AS gally_pwa_common
 EXPOSE 3000
 EXPOSE 3001
 
+#USER node
+
 WORKDIR /usr/src/front
 
 ENV NEXT_TELEMETRY_DISABLED 1
 
 COPY . ./
+
+#COPY --chown=node . ./
 
 RUN set -xe; \
 	yarn install --frozen-lockfile --network-timeout 120000; \
