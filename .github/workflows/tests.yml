@@ -47,15 +47,18 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: ${{ env.ref }}
+
       - name: Checkout Gally admin
         uses: actions/checkout@v3
         with:
           repository: 'Elastic-Suite/gally-admin'
           ref: ${{env.front_branch}}
           path: front/gally-admin
+
       - name: update gally standard package
         working-directory: api
         run: composer require "gally/gally-standard:${{ env.composer_version }} as ${{ inputs.last_published_version }}"
+
       - name: Add premium package repository
         uses: php-actions/composer@v6
         with:
@@ -64,6 +67,7 @@ jobs:
           command: config repositories.gally-premium composer ${{ secrets.PACKAGIST_URL }}
         env:
           COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
+
       - name: Install premium package
         uses: php-actions/composer@v6
         with:
@@ -72,35 +76,48 @@ jobs:
           command: require gally/gally-premium:${{ env.composer_version }}
         env:
           COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
+
       - name: Pull images
         run: ${{env.docker_compose_cmd}} pull --ignore-pull-failures || true
+
       - name: Start services
-        run: ${{env.docker_compose_cmd}} up --build -d --wait
+        run: ${{env.docker_compose_cmd}} up --build -d
         env:
           COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
+
+      - name: Wait services
+        run: ${{env.docker_compose_cmd}} wait php database search search-ml
+
       - name: Check HTTP reachability
         id: http_reachability
         run: curl -v -o /dev/null http://localhost
+
       - name: HTTP Failure
         if: ${{ failure() && steps.tests.http_reachability == 'failure' }}
         run: ${{env.docker_compose_cmd}} logs
+
       - name: Check HTTPS reachability
         id: https_reachability
         run: curl  -vk -o /dev/null https://localhost
+
       - name: HTTPS Failure
         if: ${{ failure() && steps.tests.https_reachability == 'failure' }}
         run: ${{env.docker_compose_cmd}} logs
+
       - name: Create test database
         run: |
           ${{env.docker_compose_cmd}} exec -e XDEBUG_MODE=off -T php bin/console -e test doctrine:database:create
           ${{env.docker_compose_cmd}} exec -e XDEBUG_MODE=off -T php bin/console -e test doctrine:migrations:migrate --no-interaction
+
       - name: Doctrine Schema Validator
         run: ${{env.docker_compose_cmd}} exec -e XDEBUG_MODE=off -T php bin/console doctrine:schema:validate --skip-sync
+
       - name: Fixtures load
         run: |
           ${{env.docker_compose_cmd}} exec -e XDEBUG_MODE=off -T php bin/console gally:index:clear --no-interaction
           ${{env.docker_compose_cmd}} exec -e XDEBUG_MODE=off -T php bin/console hautelook:fixtures:load --no-interaction -vv
           ${{env.docker_compose_cmd}} exec -e XDEBUG_MODE=off -T php bin/console doctrine:fixtures:load --append --no-interaction
+
       - name: Coverage
         run: ${{env.docker_compose_cmd}} exec -e XDEBUG_MODE=coverage -T php bin/phpunit --coverage-clover=coverage/coverage.xml vendor/gally
 
@@ -144,6 +161,9 @@ jobs:
         with:
           name: coverage-report
           path: api/coverage/coverage.xml
+
+      - name: Wait services
+        run: ${{env.docker_compose_cmd}} wait pwa
 
       - name: Jest
         run: ${{env.docker_compose_cmd}} exec -T pwa yarn test:ci
