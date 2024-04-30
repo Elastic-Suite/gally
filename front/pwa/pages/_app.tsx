@@ -24,11 +24,18 @@ const GallyApp = dynamic(
 function App(props: AppProps): JSX.Element {
   return (
     <>
+      {/* eslint-disable react/no-unknown-property*/}
+      <style jsx global>{`
+        body {
+          font-family: ${inter.style.fontFamily};
+          --gally-font: ${inter.style.fontFamily};
+        }
+      `}</style>
       <Head>
         <title>Gally Admin</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
-      <main className={inter.variable}>
+      <main>
         <GallyApp {...props} />
       </main>
       <Script
