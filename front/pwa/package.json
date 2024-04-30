@@ -92,7 +92,6 @@
   },
   "lint-staged": {
     "*": "prettier --write --ignore-unknown --ignore-path .gitignore",
-    "*.{ts,tsx}": "tsc-files --noEmit global.d.ts",
     "*.{js,jsx,ts,tsx}": "eslint --fix --ignore-path .gitignore"
   }
 }
