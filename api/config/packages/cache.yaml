@@ -19,4 +19,4 @@ framework:
             #my.dedicated.cache: null
 
         app: cache.adapter.redis_tag_aware
-        default_redis_provider: redis://redis
+        default_redis_provider: redis://%env(REDIS_SERVER)%
