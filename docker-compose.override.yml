@@ -49,17 +49,17 @@ services:
     environment:
       PUBLIC_URL: https://localhost/example
 
-  caddy:
-    volumes:
-      - ./api/docker/caddy/Caddyfile:/etc/caddy/Caddyfile:ro,z
-      - ./api/public:/srv/api/public:ro,z
-    depends_on:
-      - php
-      - pwa
-      - example
-    environment:
-      EXAMPLE_UPSTREAM: example:3001
-      # MERCURE_EXTRA_DIRECTIVES: demo
+#  caddy:
+#    volumes:
+#      - ./api/docker/caddy/Caddyfile:/etc/caddy/Caddyfile:ro,z
+#      - ./api/public:/srv/api/public:ro,z
+#    depends_on:
+#      - php
+#      - pwa
+#      - example
+#    environment:
+#      EXAMPLE_UPSTREAM: example:3001
+#      # MERCURE_EXTRA_DIRECTIVES: demo
 
 ###> doctrine/doctrine-bundle ###
   database:

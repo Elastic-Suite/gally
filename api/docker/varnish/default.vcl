@@ -43,7 +43,7 @@ sub vcl_recv {
 
   # To allow API Platform to ban by cache tags
   if (req.method == "BAN") {
-    if (client.ip !~ invalidators) {
+    if (client.ip !~ invalidators && "${VARNISH_BAN_IP_CHECK_DISABLED}" != "1") {
       return (synth(405, "Not allowed"));
     }
 
