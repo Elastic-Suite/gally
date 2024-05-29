@@ -23,7 +23,7 @@ map $uri $exampleAppPaths  {
 
 # /etc/nginx/conf.d/example.com.conf
 server {
-    server_name $SERVER_NAME;
+    server_name $CONTAINER_APP_HOSTNAME;
     root /srv/api/public;
     listen 80;
 

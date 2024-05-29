@@ -57,11 +57,6 @@ services:
       PHP_FASTCGI: ${PHP_FASTCGI:-php:9000}
       EXAMPLE_UPSTREAM: 'example:3001'
     restart: unless-stopped
-    ports:
-      # HTTP
-      - target: 80
-        published: ${HTTP_PORT:-80}
-        protocol: tcp
 
 #  caddy:
 #    build:
@@ -116,7 +111,7 @@ services:
     environment:
       VARNISH_SIZE: 512M
       BACKEND_HOST: ${BACKEND_HOST:-nginx}
-      BACKEND_PORT: ${BACKEND_PORT:-8080}
+      BACKEND_PORT: ${BACKEND_PORT:-80}
       PHP_UPSTREAM: ${PHP_UPSTREAM:-php}
       #todo put 0 by default for the next conf
       VARNISH_BAN_IP_CHECK_DISABLED: ${VARNISH_BAN_IP_CHECK_DISABLED:-1}
@@ -130,6 +125,11 @@ services:
     #  - target: 80
     #    published: 8080
     #    protocol: tcp
+    ports:
+      # HTTP
+      - target: 80
+        published: ${HTTP_PORT:-80}
+        protocol: tcp
        
   database:
     image: postgres:${POSTGRES_VERSION:-13}-alpine
