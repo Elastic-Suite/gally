@@ -184,11 +184,7 @@ function SearchBar(props: IProps): JSX.Element {
 
         controller.current = new AbortController()
         return debouncedLoad(
-          getAutoCompleteSearchQuery(
-            null,
-            { equalFilter: { field: 'is_active', eq: 'true' } },
-            true
-          ),
+          getAutoCompleteSearchQuery(null, null, true),
           variables as unknown as Record<string, unknown>,
           { signal: controller.current.signal }
         )
