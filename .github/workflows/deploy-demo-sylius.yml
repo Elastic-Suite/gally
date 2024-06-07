@@ -16,7 +16,7 @@ jobs:
     uses: ./.github/workflows/tests.yml
     with:
       version: ${{ github.ref_name }}
-      last_published_version: ${{ github.ref_name }}
+      last_published_version: 1.3.0
     secrets: inherit
 
   deploy-demo-sylius:
