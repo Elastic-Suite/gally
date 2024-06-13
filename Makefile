@@ -75,7 +75,7 @@ init-dev-env: .env ## Initialize current environment with dev repositories
 	$(MAKE) switch-dev-env
 
 switch-dev-env: ## Switch current environment with dev repositories on a composer version, pass the parameter "v=" to set the composer version, example: make switch-dev-env v=1.0.1
-	@$(eval v ?= 1.3.0)
+	@$(eval v ?= 1.3.1)
 	$(DOCKER_COMP) up -d --wait php # Wait php container to be ready
 	$(COMPOSER) config repositories.gally-standard '{ "type": "path", "url": "./packages/gally-standard", "options": { "versions": { "gally/gally-standard": "$(v)"}} }'
 	$(COMPOSER) config repositories.gally-premium '{ "type": "path", "url": "./packages/gally-premium", "options": { "versions": { "gally/gally-premium": "$(v)"}} }'
