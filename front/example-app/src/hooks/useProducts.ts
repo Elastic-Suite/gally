@@ -114,6 +114,9 @@ export function useProducts(
       if (search) {
         variables.search = search
       }
+      if (currentCategoryId) {
+        variables.currentCategoryId = currentCategoryId
+      }
       if (queryFilters.category__id) {
         variables.currentCategoryId = (
           queryFilters.category__id as ICategoryTypeDefaultFilterInputType
