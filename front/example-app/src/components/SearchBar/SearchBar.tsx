@@ -31,6 +31,7 @@ import {
   searchContext,
 } from '../../contexts'
 import {
+  IGraphqlAggregationOption,
   IGraphqlSearchProducts,
   IGraphqlSearchProductsVariables,
   ProductRequestType,
@@ -41,11 +42,16 @@ import {
   joinUrlPath,
 } from '@elastic-suite/gally-admin-shared'
 import { useGraphqlApi } from '../../hooks'
-import { ICategoryAutoComplete, IProductAutoComplete } from '../../types'
+import {
+  ICategoryAutoComplete,
+  IFacetAutocomplete,
+  IProductAutoComplete,
+} from '../../types'
 import { IGraphqlSearchDocumentsVariables } from '@elastic-suite/gally-admin-shared/src/types/documents'
 import { IGraphqlSearchCategories } from '@elastic-suite/gally-admin-shared/src'
 import {
   AUTOCOMPLETE_CATEGORY_TYPE,
+  AUTOCOMPLETE_FACET_TYPE,
   AUTOCOMPLETE_PRODUCT_TYPE,
 } from '../../constants'
 import { useNavigate } from 'react-router-dom'
@@ -58,7 +64,7 @@ interface IProps {
 
 const StyledAutocomplete = styled(
   Autocomplete<
-    IProductAutoComplete | ICategoryAutoComplete,
+    IProductAutoComplete | ICategoryAutoComplete | IFacetAutocomplete,
     boolean,
     boolean,
     boolean
@@ -87,13 +93,16 @@ const StyledPopper = styled(Popper)(() => ({
     width: 540,
   },
 }))
-
 function SearchBar(props: IProps): JSX.Element {
   const { shrink } = props
   const searchId = useId()
 
   const { localizedCatalogId } = useContext(catalogContext)
-  const { onSearch, search: searchedText } = useContext(searchContext)
+  const {
+    onSearch,
+    search: searchedText,
+    productSearch: { setActiveFilters },
+  } = useContext(searchContext)
   const baseUrl = useContext(configurationsContext)?.['base_url/media']
   const categories = useContext(categoryContext)
 
@@ -105,7 +114,11 @@ function SearchBar(props: IProps): JSX.Element {
     IGraphqlSearchProducts & IGraphqlSearchCategories
   >()
 
-  let options: (IProductAutoComplete | ICategoryAutoComplete)[] =
+  let options: (
+    | IProductAutoComplete
+    | ICategoryAutoComplete
+    | IFacetAutocomplete
+  )[] =
     documents.data?.products.collection.map((product) => {
       return {
         ...product,
@@ -120,7 +133,27 @@ function SearchBar(props: IProps): JSX.Element {
       type: AUTOCOMPLETE_CATEGORY_TYPE,
     })) ?? []
   )
-
+  documents.data?.products?.aggregations?.forEach((aggregation) => {
+    let aggregationOptions: IGraphqlAggregationOption[] = []
+    switch (aggregation.type) {
+      case 'checkbox':
+        aggregationOptions = aggregation.options
+        break
+      case 'boolean':
+        aggregationOptions = aggregation.options.filter(
+          (option) => option.value === '1'
+        )
+        break
+    }
+    options = options.concat(
+      aggregationOptions.map((option) => ({
+        ...aggregation,
+        type: AUTOCOMPLETE_FACET_TYPE,
+        fieldType: aggregation.type,
+        option,
+      }))
+    )
+  })
   const loadDocuments = useCallback(
     (querySearch: string) => {
       if (
@@ -130,7 +163,7 @@ function SearchBar(props: IProps): JSX.Element {
       ) {
         const productVariables: IGraphqlSearchProductsVariables = {
           localizedCatalog: String(localizedCatalogId),
-          requestType: ProductRequestType.SEARCH,
+          requestType: ProductRequestType.AUTOCOMPLETE,
           currentPage: 1,
           pageSize: 5,
           search: querySearch,
@@ -151,11 +184,7 @@ function SearchBar(props: IProps): JSX.Element {
 
         controller.current = new AbortController()
         return debouncedLoad(
-          getAutoCompleteSearchQuery(
-            null,
-            { equalFilter: { field: 'is_active', eq: 'true' } },
-            false
-          ),
+          getAutoCompleteSearchQuery(null, null, true),
           variables as unknown as Record<string, unknown>,
           { signal: controller.current.signal }
         )
@@ -175,7 +204,7 @@ function SearchBar(props: IProps): JSX.Element {
 
   function handleSearchChange(
     _event: ChangeEvent<HTMLInputElement>,
-    value: IProductAutoComplete | ICategoryAutoComplete
+    value: IProductAutoComplete | ICategoryAutoComplete | IFacetAutocomplete
   ): void {
     let querySearch = ''
 
@@ -185,6 +214,20 @@ function SearchBar(props: IProps): JSX.Element {
 
     if (value?.type === AUTOCOMPLETE_PRODUCT_TYPE) {
       querySearch = value.name
+      setActiveFilters([])
+    }
+
+    if (value?.type === AUTOCOMPLETE_FACET_TYPE) {
+      querySearch = search
+      setActiveFilters([
+        {
+          filter: {
+            ...value,
+            type: value.fieldType,
+          },
+          value: value.option.value,
+        },
+      ])
     }
     setSearch(querySearch)
     if (querySearch.trim()) {
@@ -198,9 +241,9 @@ function SearchBar(props: IProps): JSX.Element {
 
   function handleSubmit(event: FormEvent): void {
     event.preventDefault()
+    setActiveFilters([])
     onSearch(search)
   }
-
   return (
     <form onSubmit={handleSubmit}>
       <StyledAutocomplete
@@ -218,6 +261,8 @@ function SearchBar(props: IProps): JSX.Element {
 
             case AUTOCOMPLETE_PRODUCT_TYPE:
               return option.name
+            case AUTOCOMPLETE_FACET_TYPE:
+              return search
           }
         }}
         filterOptions={(
@@ -235,6 +280,9 @@ function SearchBar(props: IProps): JSX.Element {
           switch (option.type) {
             case AUTOCOMPLETE_CATEGORY_TYPE:
               return 'Categories'
+
+            case AUTOCOMPLETE_FACET_TYPE:
+              return 'Attributs'
 
             case AUTOCOMPLETE_PRODUCT_TYPE:
             default:
@@ -274,8 +322,13 @@ function SearchBar(props: IProps): JSX.Element {
           </>
         )}
         renderOption={(props, option): ReactNode => {
+          let key
+          // To avoid Facets to have the same keys
+          if (option.type === AUTOCOMPLETE_FACET_TYPE) {
+            key = `${option.label} ${option.option.label} ${option.option.value}`
+          }
           return (
-            <li {...props}>
+            <li {...props} {...(key ? { key } : {})}>
               <Grid container alignItems="center">
                 {option.type === AUTOCOMPLETE_PRODUCT_TYPE && (
                   <>
@@ -310,6 +363,18 @@ function SearchBar(props: IProps): JSX.Element {
                           (option.source.path as string).split('/'),
                           categories
                         )}
+                      </Box>
+                    </Typography>
+                  </Grid>
+                )}
+                {option.type === AUTOCOMPLETE_FACET_TYPE && (
+                  <Grid item sx={{ wordWrap: 'break-word' }}>
+                    <Box component="span">{option.label}</Box>
+                    <Typography variant="body2" color="text.secondary">
+                      <Box component="span">
+                        {option.fieldType === 'boolean'
+                          ? 'Yes'
+                          : option.option.label}
                       </Box>
                     </Typography>
                   </Grid>

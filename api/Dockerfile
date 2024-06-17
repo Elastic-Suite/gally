@@ -6,7 +6,9 @@
 # https://docs.docker.com/engine/reference/builder/#understand-how-arg-and-from-interact
 ARG PHP_VERSION=8.1
 ARG CADDY_VERSION=2.6.4
-ARG OPENSEARCH2_VERSION=2.11.0
+# On opensearch update, check a fix for this issue has been released : https://github.com/opensearch-project/ml-commons/issues/2308
+# and if so, check if we can re-enable test on multiple model and remove the configuration of the memory_threshold of the cluster.
+ARG OPENSEARCH2_VERSION=2.14.0
 ARG ELASTIC7_VERSION=7.16.3
 ARG ELASTIC8_VERSION=8.10.4
 # ARG XDEBUG_VERSION=3.1.2

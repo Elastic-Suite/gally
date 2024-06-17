@@ -69,7 +69,7 @@ exec: ## Execute a command on a given container
 db: ## Connect to the DB
 	@$(PHP_DATABASE) sh -c 'psql $$POSTGRES_DB $$POSTGRES_USER'
 
-init-dev-env: ## Initialize current environment with dev repositories
+init-dev-env: .env ## Initialize current environment with dev repositories
 	git config core.hooksPath ./hooks
 	$(DOCKER_COMP) run --rm --entrypoint="rm -rf nodes_modules/gally* pwa/node_modules/gally* example-app/node_modules/gally*" pwa
 	[ -d api/packages/gally-standard ] || git clone git@github.com:Elastic-Suite/gally-standard.git api/packages/gally-standard
@@ -79,7 +79,7 @@ init-dev-env: ## Initialize current environment with dev repositories
 	$(MAKE) switch-dev-env
 
 switch-dev-env: ## Switch current environment with dev repositories on a composer version, pass the parameter "v=" to set the composer version, example: make switch-dev-env v=1.0.1
-	@$(eval v ?= dev-master)
+	@$(eval v ?= 1.3.1)
 	$(DOCKER_COMP) up -d --wait php # Wait php container to be ready
 	$(COMPOSER) config repositories.gally-standard '{ "type": "path", "url": "./packages/gally-standard", "options": { "versions": { "gally/gally-standard": "$(v)"}} }'
 	$(COMPOSER) config repositories.gally-premium '{ "type": "path", "url": "./packages/gally-premium", "options": { "versions": { "gally/gally-premium": "$(v)"}} }'
@@ -168,7 +168,7 @@ generate_migration: sf
 
 fixtures_load: ## Load fixtures (Delete DB and Elasticsearch data)
 	@$(SYMFONY) gally:index:clear
-	@$(SYMFONY) gally:vector-search:upload-model
+	@$(SYMFONY) list gally --raw | grep gally:vector-search:upload-model && $(SYMFONY) gally:vector-search:upload-model || true
 	@$(SYMFONY) hautelook:fixtures:load
 	@$(SYMFONY) doctrine:fixtures:load --append #Append argument used because the database is already reset by the previous command
 
