@@ -26,7 +26,7 @@ Gally is MACH ready and perfectly designed to use in a Composable Commerce appro
 
 * Gally uses Elasticsearch, allowing you to benefit from all the power of this technology, but you do not need to understand all the complicated concepts behind it, since they're wrapped nicely by Gally's logic.
 
-* Gally uses [Api-Platform](https://api-platform.com/), allowing you to extend anything related to the data model or to the features. You'll also benefit of all the API-Platform capabilities : 
+* Gally uses [Symfony](https://symfony.com/) and [Api-Platform](https://api-platform.com/), allowing you to extend anything related to the data model or to the features. You'll also benefit of all the API-Platform capabilities : 
   * Design your own data model as plain old PHP classes or [**import an existing one**](https://api-platform.com/docs/schema-generator)
       from the [Schema.org](https://schema.org/) vocabulary.
   * Benefit from Content Negotiation: [GraphQL](https://graphql.org), [JSON-LD](https://json-ld.org), [Hydra](https://hydra-cg.com),
