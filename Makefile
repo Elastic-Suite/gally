@@ -171,6 +171,7 @@ fixtures_load: ## Load fixtures (Delete DB and Elasticsearch data)
 	@$(SYMFONY) list gally --raw | grep gally:vector-search:upload-model && $(SYMFONY) gally:vector-search:upload-model || true
 	@$(SYMFONY) hautelook:fixtures:load
 	@$(SYMFONY) doctrine:fixtures:load --append #Append argument used because the database is already reset by the previous command
+	@$(MAKE) varnish_flush
 
 fixtures_append: ## Append fixtures
 	@$(SYMFONY) hautelook:fixtures:load --append
