@@ -36,6 +36,32 @@ export function getProductFilters(
           activeFilter.filter.field as keyof IProductFieldFilterInput
         ] as ISelectTypeDefaultFilterInputType
       ).in.push(activeFilter.value)
+    } else if (activeFilter.filter.type === AggregationType.HISTOGRAM) {
+      const field = activeFilter.filter.field as keyof IProductFieldFilterInput
+      const arrayValue = activeFilter.value.split('-')
+      const [firstValue, secondValue] = arrayValue
+
+      if (!(field in acc)) {
+        acc[field] = {}
+      }
+
+      if (arrayValue.length > 1) {
+        const isFirstValueIsAsterisk = firstValue === '*'
+        const isSecondValueIsAsterisk = secondValue === '*'
+        let data: Record<string, number> = {}
+
+        if (isFirstValueIsAsterisk && !isSecondValueIsAsterisk) {
+          data = { lt: Number(secondValue) }
+        } else if (!isFirstValueIsAsterisk && !isSecondValueIsAsterisk) {
+          data = { gte: Number(firstValue), lte: Number(secondValue) }
+        } else {
+          data = { gt: Number(firstValue) }
+        }
+
+        ;(acc[field] as Record<string, number>) = data
+      } else {
+        ;(acc[field] as Record<string, string>).eq = firstValue
+      }
     }
     return acc
   }, {})

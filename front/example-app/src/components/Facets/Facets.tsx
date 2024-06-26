@@ -42,13 +42,23 @@ function Facets(props: IProps): JSX.Element {
         // For the following types we only manage one value: replace the previous one with the new one
         if (
           filter.type === AggregationType.CATEGORY ||
+          filter.type === AggregationType.HISTOGRAM ||
           filter.type === AggregationType.SLIDER
         ) {
           const filterIndex = prevState.findIndex(
             (activeFilter) => activeFilter.filter.field === filter.field
           )
+
           if (filterIndex !== -1) {
-            clone.splice(filterIndex, 1, { filter, value })
+            // For the following type, if the value is the same from the previous, we remove the filter from the array
+            if (
+              filter.type === AggregationType.HISTOGRAM &&
+              prevState[filterIndex].value === value
+            ) {
+              clone.splice(filterIndex, 1)
+            } else {
+              clone.splice(filterIndex, 1, { filter, value })
+            }
             return clone
           }
         }
