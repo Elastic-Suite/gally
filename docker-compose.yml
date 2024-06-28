@@ -131,7 +131,7 @@ services:
       target: gally_opensearch2
     # restart: unless-stopped
     environment:
-      - "OPENSEARCH_JAVA_OPTS=-Xms1g -Xmx1g" # Set min and max JVM heap sizes to at least 50% of system RAM
+      - "OPENSEARCH_JAVA_OPTS=-Xms2g -Xmx2g" # Set min and max JVM heap sizes to at least 50% of system RAM
       - "DISABLE_SECURITY_PLUGIN=true"       # Disable security plugin
       - cluster.name=os-docker-cluster       # Search cluster name
       - cluster.routing.allocation.disk.threshold_enabled=false     # Avoid ES going read-only because low disk space availability
@@ -162,7 +162,7 @@ services:
       target: gally_opensearch2
     # restart: unless-stopped
     environment:
-      - "OPENSEARCH_JAVA_OPTS=-Xms1g -Xmx1g" # Set min and max JVM heap sizes to at least 50% of system RAM
+      - "OPENSEARCH_JAVA_OPTS=-Xms2g -Xmx2g" # Set min and max JVM heap sizes to at least 50% of system RAM
       - "DISABLE_SECURITY_PLUGIN=true"       # Disable security plugin
       - cluster.name=os-docker-cluster       # Search cluster name
       - cluster.routing.allocation.disk.threshold_enabled=false # Avoid ES going read-only because low disk space availability
