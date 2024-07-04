@@ -72,7 +72,7 @@ const StyledAutocomplete = styled(
 )(({ theme }) => ({
   '&.MuiAutocomplete-hasClearIcon': {
     '.MuiInputBase-root': {
-      width: 280,
+      width: 500,
       paddingRight: theme.spacing(2),
     },
   },
