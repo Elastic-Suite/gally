@@ -1,0 +1,132 @@
+# Complete list of all available properties: https://docs.platform.sh/create-apps/app-reference.html
+
+# This file describes an application. You can have multiple applications
+# in the same project.
+
+# The name of this app. Must be unique within a project.
+- name: api
+  source:
+      root: api
+
+  variables:
+      env:
+          APP_ENV: 'prod'
+
+  dependencies:
+      php:
+          composer/composer: "^2"
+    
+    # The type of the application to build.
+  type: php:8.1
+  build:
+      flavor: composer
+
+  runtime:
+      extensions:
+          - apcu
+          - pdo_pgsql
+          - sodium
+          - redis
+    
+    # The relationships of the application with services or other applications.
+    # The left-hand side is the name of the relationship as it will be exposed
+    # to the application in the PLATFORM_RELATIONSHIPS variable. The right-hand
+    # side is in the form `<service name>:<endpoint name>`.
+  relationships:
+      database: "postgresql:postgresql"
+      opensearch: "opensearch:opensearch"
+      redis: "redis:redis"
+    
+    # The configuration of app when it is exposed to the web .
+  web:
+      locations:
+          "/":
+              # The public directory of the app, relative to its root.
+              root: "public"
+              # The front-controller script to send non-static requests to.
+              passthru: "/index.php"
+    
+    # The size of the persistent disk of the application (in MB).
+  disk: 2048
+    
+    # The mounts that will be performed when the package is deployed.
+  mounts:
+      "/var/cache": "shared:files/cache"
+      "/var/log": "shared:files/log"
+      "/var/sessions": "shared:files/sessions"
+    
+    # The hooks that will be performed when the package is deployed.
+  hooks:
+      build: |
+          bin/console lexik:jwt:generate-keypair --skip-if-exists --no-interaction
+          bin/console --env=prod assets:install --no-debug
+          
+      deploy: |
+          bin/console --env=prod cache:clear
+          bin/console doctrine:migrations:migrate -n --allow-no-migration
+          
+# A unique name for the app. Must be lowercase alphanumeric characters. Changing the name destroys data associated
+# with the app.
+- name: admin
+    
+    # Information on the app's source code and operations that can be run on it.
+    # More information: https://docs.platform.sh/create-apps/app-reference.html#source
+  source:
+      root: front
+
+  # The runtime the application uses.
+  # Complete list of available runtimes: https://docs.platform.sh/create-apps/app-reference.html#types
+  type: 'nodejs:18'
+
+  # The size of the persistent disk of the application (in MB). Minimum value is 128.
+  disk: 2048
+
+  # Mounts define directories that are writable after the build is complete. If set as a local source, disk property is required.
+  # More information: https://docs.platform.sh/create-apps/app-reference.html#mounts
+  mounts:
+    # Next.js will try to cache files, so it must be writeable.
+    '/.next':
+        source: local
+        source_path: 'next'
+
+  # The web key configures the web server running in front of your app.
+  # More information: https://docs.platform.sh/create-apps/app-reference.html#web
+  web:
+    # Commands are run once after deployment to start the application process.
+    # More information: https://docs.platform.sh/create-apps/app-reference.html#web-commands
+    commands:
+        # The command to launch your app. If it terminates, it’s restarted immediately.
+        #start: npx next start -p $PORT
+        start: yarn start
+
+  # Specifies a default set of build tasks to run. Flavors are language-specific.
+  # More information: https://docs.platform.sh/create-apps/app-reference.html#build
+  build:
+    flavor: none
+
+  # Installs global dependencies as part of the build process. They’re independent of your app’s dependencies and
+  # are available in the PATH during the build process and in the runtime environment. They’re installed before
+  # the build hook runs using a package manager for the language.
+  # More information: https://docs.platform.sh/create-apps/app-reference.html#dependencies
+  dependencies:
+    nodejs:
+        yarn: "^1.22.0"
+
+  # Hooks allow you to customize your code/environment as the project moves through the build and deploy stages
+  # More information: https://docs.platform.sh/create-apps/app-reference.html#hooks
+  hooks:
+    # The build hook is run after any build flavor.
+    # More information: https://docs.platform.sh/create-apps/hooks/hooks-comparison.html#build-hook
+    build: |
+        yarn
+        yarn install --frozen-lockfile --network-timeout 120000
+        yarn build
+        # Move committed files in soon-to-be mounts into temp directory.
+        chmod +x platformsh_handle_mounts.sh
+        ./platformsh_handle_mounts.sh
+    
+    # The deploy hook is run after the app container has been started, but before it has started accepting requests.
+    # More information: https://docs.platform.sh/create-apps/hooks/hooks-comparison.html#deploy-hook
+    deploy: |
+        # Move committed files from temp directory back into mounts.
+        ./platformsh_handle_mounts.sh
