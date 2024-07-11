@@ -1,0 +1,15 @@
+postgresql:
+    type: postgresql:13
+    disk: 256
+       
+opensearch:        
+    type: opensearch:2
+    disk: 256
+    configuration:
+        plugins:
+            - analysis-icu
+            - analysis-phonetic
+
+redis:
+    type: redis-persistent:6.2
+    disk: 256
