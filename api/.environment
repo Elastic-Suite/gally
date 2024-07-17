@@ -30,5 +30,6 @@ export DATABASE_URL=$DB_SCHEME://$DB_USERNAME:$DB_PASSWORD@$DB_HOST:$DB_PORT/mai
 # Set environment variables for Redis
 export REDIS_SERVER=$(echo $PLATFORM_RELATIONSHIPS | base64 --decode | jq -r ".redis[0].host")
 
-export TRUSTED_HOSTS=^$PLATFORM_ENVIRONMENT-$PLATFORM_PROJECT.eu.platformsh.site$
-export SERVER_NAME=$PLATFORM_ENVIRONMENT-$PLATFORM_PROJECT.eu.platformsh.site
+export TRUSTED_HOSTS=^$(echo $PLATFORM_ROUTES | base64 --decode | jq -r "keys[0]" | awk -F[/:] '{print $4}')$
+export SERVER_NAME=$(echo $PLATFORM_ROUTES | base64 --decode | jq -r "keys[0]" | awk -F[/:] '{print $4}')
+export VARNISH_URL=$(echo $PLATFORM_ROUTES | base64 --decode | jq -r "keys[0]" | awk -F[/:] '{print $4}')
