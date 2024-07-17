@@ -58,6 +58,9 @@ services:
 
 ###> doctrine/doctrine-bundle ###
   database:
+    environment:
+      # You should definitely change the password in production
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-!ChangeMe!}
     ports:
       - target: 5432
         published: 5432

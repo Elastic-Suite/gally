@@ -30,6 +30,7 @@ services:
         client_port=9000
         idekey=PHPSTORM
       PHP_IDE_CONFIG: serverName=api-platform
+      # MERCURE_JWT_SECRET: ${CADDY_MERCURE_JWT_SECRET:-!ChangeMe!}
 
   pwa:
     user: ${UUID?You must set UUID env var}:${GUID?You must set GUID env var}
@@ -60,9 +61,22 @@ services:
     environment:
       EXAMPLE_UPSTREAM: example:3001
       # MERCURE_EXTRA_DIRECTIVES: demo
+      # MERCURE_PUBLISHER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET:-!ChangeMe!}
+      # MERCURE_SUBSCRIBER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET:-!ChangeMe!}
+      
+  redis:
+    ports:
+      - '6379:6379'
+        
+  search:
+    ports:
+      - '9200:9200'
 
 ###> doctrine/doctrine-bundle ###
   database:
+    environment:
+      # You should definitely change the password in production
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-!ChangeMe!}
     ports:
       - target: 5432
         published: 5432
