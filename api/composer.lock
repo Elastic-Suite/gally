@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "108e2e9411e683ef6809db5c51f6afd7",
+    "content-hash": "976582cd16de59d9e18e4428720f44fd",
     "packages": [
         {
             "name": "api-platform/core",
@@ -2157,6 +2157,91 @@
                 }
             ],
             "time": "2021-05-22T16:11:15+00:00"
+        },
+        {
+            "name": "gally/gally-premium",
+            "version": "1.3.1",
+            "dist": {
+                "type": "zip",
+                "url": "https://elasticsuite.repo.packagist.com/cop-ecommerce/dists/gally/gally-premium/1.3.1.0/b6088dc58a911e59e2ee2a4c2f23c012c86013fd.zip",
+                "reference": "b6088dc58a911e59e2ee2a4c2f23c012c86013fd",
+                "mirrors": [
+                    {
+                        "url": "https://elasticsuite.repo.packagist.com/cop-ecommerce/dists/%package%/%version%/r%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "gally/gally-standard": "1.3.1"
+            },
+            "require-dev": {
+                "api-platform/schema-generator": "^4.0",
+                "doctrine/doctrine-fixtures-bundle": "^3.4",
+                "friendsofphp/php-cs-fixer": "~3.4.0",
+                "hautelook/alice-bundle": "^2.10",
+                "justinrainbow/json-schema": "^5.2",
+                "liip/test-fixtures-bundle": "^2.0.0",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan": "^1.4",
+                "phpstan/phpstan-doctrine": "^1.2",
+                "phpstan/phpstan-phpunit": "^1.0",
+                "phpstan/phpstan-symfony": "^1.1",
+                "phpunit/phpunit": "^9.5",
+                "symfony/browser-kit": "6.0.*",
+                "symfony/css-selector": "6.0.*",
+                "symfony/debug-bundle": "6.0.*",
+                "symfony/http-client": "6.0.*",
+                "symfony/maker-bundle": "^1.21",
+                "symfony/phpunit-bridge": "6.0.*",
+                "symfony/stopwatch": "6.0.*",
+                "symfony/var-dumper": "6.0.*",
+                "symfony/web-profiler-bundle": "6.0.*"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "symfony": {
+                    "require": "^6.1"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Gally\\VirtualCategory\\": "VirtualCategory/src/",
+                    "Gally\\Boost\\": "Boost/src/",
+                    "Gally\\Thesaurus\\": "Thesaurus/src/",
+                    "Gally\\Explain\\": "Explain/src/",
+                    "Gally\\VectorSearch\\": "VectorSearch/src/"
+                }
+            },
+            "notification-url": "https://elasticsuite.repo.packagist.com/cop-ecommerce/downloads/",
+            "license": [
+                "Proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "The Elasticsuite Team",
+                    "email": "elasticsuite@smile.fr"
+                }
+            ],
+            "description": "The Open Source E-Commerce Searchandising Suite",
+            "homepage": "https://elasticsuite.io",
+            "keywords": [
+                "API",
+                "E-commerce",
+                "Elasticsearch",
+                "GraphQL",
+                "HAL",
+                "JSON-LD",
+                "JSONAPI",
+                "OpenAPI",
+                "REST",
+                "Swagger"
+            ],
+            "support": {
+                "source": "https://github.com/Elastic-Suite/gally-premium/tree/1.3.1",
+                "issues": "https://github.com/Elastic-Suite/gally-premium/issues"
+            },
+            "time": "2024-06-13T08:49:24+00:00"
         },
         {
             "name": "gally/gally-standard",
