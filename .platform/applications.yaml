@@ -56,10 +56,13 @@
       "/var/sessions": "shared:files/sessions"
     
     # The hooks that will be performed when the package is deployed.
+    # Remove the last two lines when Varnish will be supported on PSH.
   hooks:
-      build: |
+      build: |           
           bin/console lexik:jwt:generate-keypair --skip-if-exists --no-interaction
           bin/console --env=prod assets:install --no-debug
+          sed -i -e 'H;x;/^\(  *\)\n\1/{s/\n.*//;x;d;}' -e 's/.*//;x;/http_cache/{s/^\( *\).*/ \1/;x;d;}' config/packages/api_platform.yaml
+          sed -i -e 'H;x;/^\(  *\)\n\1/{s/\n.*//;x;d;}' -e 's/.*//;x;/http_cache/{s/^\( *\).*/ \1/;x;d;}' vendor/gally/gally-standard/src/Configuration/Resources/config/api_platform.yaml
           
       deploy: |
           bin/console --env=prod cache:clear
