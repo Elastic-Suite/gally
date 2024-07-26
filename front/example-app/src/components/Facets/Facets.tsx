@@ -47,8 +47,16 @@ function Facets(props: IProps): JSX.Element {
           const filterIndex = prevState.findIndex(
             (activeFilter) => activeFilter.filter.field === filter.field
           )
+
           if (filterIndex !== -1) {
-            clone.splice(filterIndex, 1, { filter, value })
+            // For the following type, if the value is the same from the previous, we remove the filter from the array
+            if (
+              prevState[filterIndex].value === value
+            ) {
+              clone.splice(filterIndex, 1)
+            } else {
+              clone.splice(filterIndex, 1, { filter, value })
+            }
             return clone
           }
         }
