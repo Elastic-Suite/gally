@@ -75,6 +75,11 @@ jobs:
           command: require gally/gally-premium:${{ env.composer_version }}
         env:
           COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
+      - name: Install sample data package
+        working-directory: api
+        run: composer require "gally/gally-sample-data:${{ env.composer_version }} as ${{ inputs.last_published_version }}"
+        env:
+          COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
       - name: Pull images
         run: ${{env.docker_compose_cmd}} pull --ignore-pull-failures || true
       - name: Start services
@@ -143,6 +148,9 @@ jobs:
 
       - name: Jest
         run: ${{env.docker_compose_cmd}} exec -T pwa yarn test:ci
+
+      - name: e2e
+        run: ${{env.docker_compose_cmd}} exec -T e2e yarn test:ci
 
       - name: Frontend Coverage Report
         uses: 5monkeys/cobertura-action@v12
