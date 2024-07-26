@@ -101,7 +101,7 @@ function Facet(props: IProps): JSX.Element {
             onChange={onChange}
           />
         )
-      case AggregationType.HISTOGRAM || AggregationType.HISTOGRAM_DATE :
+      case AggregationType.HISTOGRAM || AggregationType.HISTOGRAM_DATE:
         return (
           <FacetLoadMore
             filter={filter}
