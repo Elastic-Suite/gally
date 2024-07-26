@@ -50,9 +50,7 @@ function Facets(props: IProps): JSX.Element {
 
           if (filterIndex !== -1) {
             // For the following type, if the value is the same from the previous, we remove the filter from the array
-            if (
-              prevState[filterIndex].value === value
-            ) {
+            if (prevState[filterIndex].value === value) {
               clone.splice(filterIndex, 1)
             } else {
               clone.splice(filterIndex, 1, { filter, value })
