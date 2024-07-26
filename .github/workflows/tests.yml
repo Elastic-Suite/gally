@@ -145,6 +145,9 @@ jobs:
       - name: Jest
         run: ${{env.docker_compose_cmd}} exec -T pwa yarn test:ci
 
+      - name: e2e
+        run: ${{env.docker_compose_cmd}} exec -T e2e yarn test:ci
+
       - name: Frontend Coverage Report
         uses: 5monkeys/cobertura-action@v12
         if: ${{ github.event_name == 'pull_request' }}
