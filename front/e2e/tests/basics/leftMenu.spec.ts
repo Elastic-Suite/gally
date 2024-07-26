@@ -6,7 +6,6 @@ test('Menu', async ({ page }) => {
 
   const sidebar = await page.getByTestId('sidebarMenu')
   const collapseButton = await page.getByTestId('sidebarMenuCollapseButton')
-
   const labelMenuItemIconList = await await page
     .getByTestId('labelMenuItemIcon')
     .all()
@@ -19,7 +18,6 @@ test('Menu', async ({ page }) => {
   const labelMenuLinkItemList = await (
     await page.getByTestId('labelMenuLinkItem')
   ).all()
-
   for (const locator of menuItemChildrenList) {
     await expect(locator).not.toBeVisible()
   }
