@@ -101,6 +101,24 @@ function Facet(props: IProps): JSX.Element {
             onChange={onChange}
           />
         )
+      case AggregationType.HISTOGRAM || AggregationType.HISTOGRAM_DATE :
+        return (
+          <FacetLoadMore
+            filter={filter}
+            id={id}
+            loadMore={loadMore}
+            moreOptions={moreOptions}
+            renderOption={(option): JSX.Element => (
+              <FacetChoice
+                key={String(option.value)}
+                activeOptions={activeOptions}
+                filter={filter}
+                onChange={onChange}
+                option={option}
+              />
+            )}
+          />
+        )
 
       default:
         return (
