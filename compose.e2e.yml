@@ -1,0 +1,13 @@
+# E2E environment override
+services:
+  e2e:
+    build:
+      context: .
+      dockerfile: ./docker/front/Dockerfile.e2e
+    environment:
+      - SERVER_BASE_URL=https://${E2E_SERVER_NAME:-gally.e2e}
+      - API_SERVER_BASE_URL=https://${E2E_SERVER_NAME:-gally.e2e}/${API_ROUTE_PREFIX:-api}
+    depends_on:
+      - proxy
+    extra_hosts:
+      - ${E2E_SERVER_NAME:-gally.e2e}:host-gateway
