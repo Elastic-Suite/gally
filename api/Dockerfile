@@ -4,14 +4,13 @@
 
 
 # https://docs.docker.com/engine/reference/builder/#understand-how-arg-and-from-interact
-ARG PHP_VERSION=8.1
+ARG PHP_VERSION=8.3
 ARG CADDY_VERSION=2.6.4
 # On opensearch update, check a fix for this issue has been released : https://github.com/opensearch-project/ml-commons/issues/2308
 # and if so, check if we can re-enable test on multiple model and remove the configuration of the memory_threshold of the cluster.
 ARG OPENSEARCH2_VERSION=2.14.0
 ARG ELASTIC7_VERSION=7.16.3
 ARG ELASTIC8_VERSION=8.10.4
-# ARG XDEBUG_VERSION=3.1.2
 
 # "php" stage
 FROM php:${PHP_VERSION}-fpm-alpine AS gally_php
@@ -144,13 +143,11 @@ ENTRYPOINT ["docker-entrypoint"]
 CMD ["php-fpm"]
 
 # "php+xdebug" stage
-# ENV XDEBUG_VERSION=${XDEBUG_VERSION}
 FROM gally_php as gally_php_dev
 
-ARG XDEBUG_VERSION=3.1.2
 RUN set -eux; \
-	apk add --no-cache --virtual .build-deps $PHPIZE_DEPS; \
-	pecl install xdebug-${XDEBUG_VERSION}; \
+	apk add --no-cache --virtual .build-deps $PHPIZE_DEPS linux-headers; \
+	pecl install xdebug; \
 	docker-php-ext-enable xdebug; \
 	apk del .build-deps
 

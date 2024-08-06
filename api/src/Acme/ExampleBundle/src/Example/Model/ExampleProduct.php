@@ -18,8 +18,7 @@ use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Elasticsearch\DataProvider\Filter\TermFilter;
-use Gally\User\Constant\Role;
-use Gally\Entity\Model\Attribute\AttributeInterface;
+use Gally\Metadata\Model\Attribute\AttributeInterface;
 
 #[
     ApiResource(
