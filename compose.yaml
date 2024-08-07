@@ -1,118 +1,95 @@
-version: "3.4"
-
 services:
+  proxy:
+    build:
+      context: ./docker/proxy
+    ports:
+      - "443:443"
+    volumes:
+      - ./docker/certs:/etc/nginx/certs:ro #todo check how to manage ssl on prod !
+    depends_on:
+      - varnish
+    environment:
+      - API_SERVER_NAME=${API_SERVER_NAME:-api.localhost}
+      - PWA_SERVER_NAME=${PWA_SERVER_NAME:-localhost}
+      - BACKEND_UPSTREAM=varnish:80
+
+  varnish:
+    build:
+      context: ./docker/varnish
+    depends_on:
+      - router
+    environment:
+      - BACKEND_HOST=router
+      - BACKEND_PORT=80
+      - PHP_UPSTREAM=php
+      - VARNISH_SIZE=512M
+
+  router:
+    build:
+      context: ./docker/router
+    volumes:
+      - ./api/public:/app/public # Todo upgrade: native with don't bind this directory in production mode, file are copied in the container
+    depends_on:
+      - php
+      - pwa 
+    environment:
+      - API_SERVER_NAME=${API_SERVER_NAME:-api.localhost}
+      - API_UPSTREAM=${API_UPSTREAM:-php:9000}
+      - PWA_SERVER_NAME=${PWA_SERVER_NAME:-localhost}
+      - PWA_UPSTREAM=${PWA_UPSTREAM:-pwa:3000}
+  
   php:
     build:
       context: ./api
-      target: gally_php
+      target: gally_php_prod
       args:
         COMPOSER_AUTH: ${COMPOSER_AUTH:-}
     depends_on:
       - database
       - search
       - redis
-    restart: unless-stopped
-    volumes:
-      - php_socket:/var/run/php
-    healthcheck:
-      interval: 10s
-      timeout: 3s
-      retries: 10
-      start_period: 120s
     environment:
-      DATABASE_URL: postgresql://${POSTGRES_USER:-api-platform}:${POSTGRES_PASSWORD:-!ChangeMe!}@database:5432/${POSTGRES_DB:-api}?serverVersion=${POSTGRES_VERSION:-13}
-      TRUSTED_PROXIES: ${TRUSTED_PROXIES:-127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16}
-      TRUSTED_HOSTS: ^${SERVER_NAME:-example\.com|localhost}|caddy$$
-      # MERCURE_URL: ${CADDY_MERCURE_URL:-http://caddy/.well-known/mercure}
-      # MERCURE_PUBLIC_URL: https://${SERVER_NAME:-localhost}/.well-known/mercure
-      # MERCURE_JWT_SECRET: ${CADDY_MERCURE_JWT_SECRET:-!ChangeMe!}
+      - APP_ENV=${APP_ENV:-prod}
+      - APP_SECRET=${APP_SECRET:-!ChangeMe!}
+      - PWA_UPSTREAM=pwa:3000
+      - SERVER_NAME=${API_SERVER_NAME:-api.localhost}, php:80
+      - TRUSTED_PROXIES=${TRUSTED_PROXIES:-127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16}
+      - TRUSTED_HOSTS=${TRUSTED_HOSTS:-^${API_SERVER_NAME:-example\.com|api.localhost}|php$$}
+      - CORS_ALLOW_ORIGIN=^https?://${PWA_SERVER_NAME:-localhost}$
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-app}:${POSTGRES_PASSWORD:-!ChangeMe!}@database:5432/${POSTGRES_DB:-app}?serverVersion=${POSTGRES_VERSION:-16}&charset=${POSTGRES_CHARSET:-utf8}
+      - GALLY_CATALOG_MEDIA_URL=${GALLY_CATALOG_MEDIA_URL}
 
   pwa:
     build:
       context: ./front
       target: gally_pwa_prod
+      args:
+        - NEXT_PUBLIC_ENTRYPOINT=${PWA_SERVER_NAME:-localhost} # Why this .. todo upgrade
+        - NEXT_PUBLIC_API_URL=https://${API_SERVER_NAME:-localhost}
     environment:
-      API_PLATFORM_CLIENT_GENERATOR_ENTRYPOINT: https://caddy
-      NEXT_PUBLIC_ENTRYPOINT: https://caddy
+      # old value
+#      - NEXT_PUBLIC_ENTRYPOINT=http://php # Why this .. todo upgrade
+      - NEXT_PUBLIC_ENTRYPOINT=${PWA_SERVER_NAME:-localhost} # Why this .. todo upgrade
+      - NEXT_PUBLIC_API_URL=https://${API_SERVER_NAME:-localhost}
     healthcheck:
       test: test $$(curl --connect-timeout 2 -s -o /dev/null -w ''%{http_code}'' http://localhost:3000) -eq 200
       interval: 10s
       timeout: 5s
       retries: 20
-
-  caddy:
-    build:
-      context: api/
-      target: gally_caddy
-      args:
-        COMPOSER_AUTH: ${COMPOSER_AUTH:-}
-    depends_on:
-      - php
-      - pwa
-    environment:
-      PWA_UPSTREAM: pwa:3000
-      # EXAMPLE_UPSTREAM: example:3001
-      # SERVER_NAME: ${SERVER_NAME:-localhost, caddy:80}
-      SERVER_NAME: ${SERVER_NAME:-localhost}
-      # VARNISH_UPSTREAM: varnish:80
-      VARNISH_UPSTREAM: varnish:80
-      # MERCURE_PUBLISHER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET:-!ChangeMe!}
-      # MERCURE_SUBSCRIBER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET:-!ChangeMe!}
-      CADDY_TRUSTED_PROXIES: ${CADDY_TRUSTED_PROXIES:-127.0.0.0/8 10.0.0.0/8 172.16.0.0/12 192.168.0.0/16}
-    restart: unless-stopped
-    volumes:
-      - php_socket:/var/run/php
-      - caddy_data:/data
-      - caddy_config:/config
-    ports:
-      # HTTP
-      - target: 80
-        published: ${HTTP_PORT:-80}
-        protocol: tcp
-      # HTTPS
-      - target: 443
-        published: ${HTTPS_PORT:-443}
-        protocol: tcp
-      # HTTP/3
-      - target: 443
-        published: ${HTTP3_PORT:-443}
-        protocol: udp
-      - target: 8080
-        published: 8080
-        protocol: tcp
-
-  varnish:
-    # image: varnish:fresh-alpine
-    image: varnish:7.2.1
-    depends_on:
-      - caddy
-    restart: unless-stopped
-    volumes:
-      - './api/docker/varnish/default.vcl:/etc/varnish/default.vcl:ro,z'
-    environment:
-      - VARNISH_SIZE=512M
-    #   - SERVERNAME=${SERVER_NAME:-localhost, caddy:80}
-    # If http2 not already supported out of the box
-    # command: "-p default_keep=300 -p feature=+http2"
-    command: "-p default_keep=300 -p http_resp_hdr_len=65k"
-    # restart: unless-stopped
-    # ports: 
-    #  - target: 80
-    #    published: 8080
-    #    protocol: tcp
-       
-
+  
+  ###> doctrine/doctrine-bundle ###
   database:
-    image: postgres:${POSTGRES_VERSION:-13}-alpine
+    image: postgres:${POSTGRES_VERSION:-16}-alpine
     environment:
-      - POSTGRES_DB=${POSTGRES_DB:-api}
+      - POSTGRES_DB=${POSTGRES_DB:-app}
       # You should definitely change the password in production
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-!ChangeMe!}
-      - POSTGRES_USER=${POSTGRES_USER:-api-platform}
+      - POSTGRES_USER=${POSTGRES_USER:-app}
     volumes:
-      - db_data:/var/lib/postgresql/data:rw
+      - db_data:/var/lib/postgresql/data
       # you may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
-      # - ./api/docker/db/data:/var/lib/postgresql/data:rw,z
+      # - ./api/docker/db/data:/var/lib/postgresql/data
+  ###< doctrine/doctrine-bundle ###
 
   redis:
     image: docker.io/bitnami/redis:6.2
@@ -120,19 +97,17 @@ services:
       # ALLOW_EMPTY_PASSWORD is recommended only for development.
       - ALLOW_EMPTY_PASSWORD=yes
       # - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
-    ports:
-      - '6379:6379'
     volumes:
       - 'redis_data:/bitnami/redis/data'
 
   search:
     build:
-      context: api/
+      context: docker/search/
       target: gally_opensearch2
     # restart: unless-stopped
     environment:
       - "OPENSEARCH_JAVA_OPTS=-Xms1g -Xmx1g" # Set min and max JVM heap sizes to at least 50% of system RAM
-      - "DISABLE_SECURITY_PLUGIN=true"       # Disable security plugin
+      - "DISABLE_SECURITY_PLUGIN=true"       # Disable security plugin todo upgrade : manage security
       - cluster.name=os-docker-cluster       # Search cluster name
       - cluster.routing.allocation.disk.threshold_enabled=false     # Avoid ES going read-only because low disk space availability
       - cluster.initial_cluster_manager_nodes=opensearch-node-data # Nodes eligible to serve as cluster manager
@@ -155,10 +130,10 @@ services:
       interval: 10s
       timeout: 5s
       retries: 20
-      
+
   search-ml:
     build:
-      context: api/
+      context: docker/search/
       target: gally_opensearch2
     # restart: unless-stopped
     environment:
@@ -186,20 +161,11 @@ services:
       timeout: 5s
       retries: 20
 
-# Mercure is installed as a Caddy module, prevent the Flex recipe from installing another service
-###> symfony/mercure-bundle ###
-###< symfony/mercure-bundle ###
-
 volumes:
-  php_socket:
-  caddy_data:
-  caddy_config:
 ###> doctrine/doctrine-bundle ###
   db_data:
 ###< doctrine/doctrine-bundle ###
   os2_data:
   os2_ml_data:
-###> symfony/mercure-bundle ###
-###< symfony/mercure-bundle ###
   redis_data:
     driver: local

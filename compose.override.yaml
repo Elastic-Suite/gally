@@ -1,0 +1,62 @@
+# Development environment override
+services:
+  # Todo upgrade: connect example app in router 
+  router:
+    depends_on:
+      - example
+    environment:
+      - EXAMPLE_UPSTREAM=example:3001
+
+  php:
+    build:
+      context: ./api
+      target: gally_php_dev
+    volumes:
+      - ./api:/app:rw,cached,z
+      - ./api/docker/php/conf.d/app.dev.ini:/usr/local/etc/php/conf.d/app.dev.ini:ro,z
+    environment:
+      # See https://xdebug.org/docs/all_settings#mode
+      - XDEBUG_MODE=${XDEBUG_MODE:-off}
+      - GALLY_CATALOG_MEDIA_URL=${GALLY_CATALOG_MEDIA_URL:-https://${PWA_SERVER_NAME}/media/catalog/product/}
+    extra_hosts:
+      # Ensure that host.docker.internal is correctly defined on Linux
+      - host.docker.internal:host-gateway
+    tty: true
+
+  pwa:
+    user: ${UUID?You must set UUID env var}:${GUID?You must set GUID env var}
+    build:
+      context: ./front
+      target: gally_pwa_dev
+      args:
+        NEXT_PUBLIC_API_BASE_URL: https://${API_SERVER_NAME:-localhost}
+        NEXT_PUBLIC_ENTRYPOINT: https://${API_SERVER_NAME:-localhost}
+    volumes:
+      - ./front:/usr/src/front:rw,cached,z
+    environment:
+      - API_PLATFORM_CREATE_CLIENT_ENTRYPOINT=${API_SERVER_NAME-api.localhost} # Todo upgrade: not used ?
+      - API_PLATFORM_CREATE_CLIENT_OUTPUT=. # Todo upgrade: not used ?
+      # On Linux, you may want to comment the following line for improved performance
+      - WATCHPACK_POLLING="true"
+
+  example:
+    user: ${UUID?You must set UUID env var}:${GUID?You must set GUID env var}
+    build:
+      context: ./front
+      target: gally_example_dev
+    volumes:
+      - ./front:/usr/src/front:rw,cached,z
+    environment:
+      PUBLIC_URL: https://${PWA_SERVER_NAME:-localhost}/example
+
+###> doctrine/doctrine-bundle ###
+  database:
+    ports:
+      - target: 5432
+        published: 5432
+        protocol: tcp
+###< doctrine/doctrine-bundle ###
+
+  redis:
+    ports:
+      - '6379:6379'

@@ -1,5 +1,5 @@
 # Executables (local)
-DOCKER_COMP := $(shell docker compose ls 1>&2 2>/dev/null && echo 'docker compose' || echo 'docker-compose')
+DOCKER_COMP = docker compose
 
 # Docker containers
 PHP_CONT = $(DOCKER_COMP) exec php
@@ -19,28 +19,24 @@ PHP_STAN     = $(PHP_CONT) vendor/bin/phpstan
 
 ## —— 🎵 🐳 The Symfony-docker Makefile 🐳 🎵 ——————————————————————————————————
 help: ## Outputs this help screen
-	@grep -E '(^[a-zA-Z0-9_-]+:.*?##.*$$)|(^##)' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}{printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/'
+	@grep -E '(^[a-zA-Z0-9_-]+:.*?##.*$$)|(^##)' $(firstword $(MAKEFILE_LIST)) | awk 'BEGIN {FS = ":.*?## "}{printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/'
 
 ## —— Docker 🐳 ————————————————————————————————————————————————————————————————
-build: ## Builds the Docker images
-	$(MAKE) .env
+build: .env certs ## Builds the Docker images
 	@$(DOCKER_COMP) build
 
 build_no_cache: ## Builds the Docker images (without cache)
 	@$(DOCKER_COMP) build --pull --no-cache
 
-up: ## Start the docker hub in detached mode (no logs)
-	$(MAKE) .env
+up: .env certs ## Start the docker hub in detached mode (no logs)
 	@$(DOCKER_COMP) up --detach
 
-up-connectors: ## Start the docker hub in detached mode with connectors conf (no logs)
-	$(MAKE) .env
-	@$(DOCKER_COMP) -f docker-compose.yml -f docker-compose.override.yml -f docker-compose.connectors.yml up --detach
+up-connectors: .env certs ## Start the docker hub in detached mode with connectors conf (no logs)
+	@$(DOCKER_COMP) -f compose.yml -f compose.override.yml -f compose.connectors.yml up --detach
 
 start: build up ## Build and start the containers
 
-down: ## Stop the docker hub
-	$(MAKE) .env
+down: .env ## Stop the docker hub
 	@$(DOCKER_COMP) down --remove-orphans
 
 logs: ## Show live logs, pass the parameter "s=" to get logs of a given service, example: make logs s=elasticsearch
@@ -144,11 +140,13 @@ varnish_flush: ## Flush varnish cache
 	@$(DOCKER_COMP) exec varnish varnishadm 'ban req.url ~ .'
 
 .env:
-ifeq (,$(wildcard ./env))
-	touch .env
-endif
-	grep "UUID" .env || echo "UUID=$(shell id -u)" >> .env
-	grep "GUID" .env || echo "GUID=$(shell id -g)" >> .env
+	@echo "UUID=$(shell id -u)" >> .env
+	@echo "GUID=$(shell id -g)" >> .env
+
+docker/certs/server.crt:
+	@bash docker/generate-certs.sh > /dev/null 2>&1
+
+certs: docker/certs/server.crt
 
 ## —— Symfony 🎵 ———————————————————————————————————————————————————————————————
 sf: ## List all Symfony commands or pass the parameter "c=" to run a given command, example: make sf c=about

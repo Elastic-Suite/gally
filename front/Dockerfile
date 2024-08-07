@@ -121,6 +121,7 @@ FROM gally_pwa_common AS gally_pwa_prod
 
 ENV NODE_ENV production
 ARG NEXT_PUBLIC_ENTRYPOINT
+ARG NEXT_PUBLIC_API_URL
 
 RUN set -eux; \
 	yarn build

@@ -12,8 +12,11 @@
 *.yml text eol=lf
 bin/console text eol=lf
 composer.lock text eol=lf merge=ours
+pnpm-lock.yaml text eol=lf merge=ours
 
 *.ico binary
 *.png binary
 
 update-deps.sh export-ignore
+.github/CONTRIBUTING.md
+.github/workflows/release.yml
