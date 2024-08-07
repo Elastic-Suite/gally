@@ -1,9 +1,7 @@
-version: "3.4"
-
 services:
   search:
     build:
-      context: api/
+      context: docker/search
       target: gally_elasticsearch7
     # restart: unless-stopped
     environment:

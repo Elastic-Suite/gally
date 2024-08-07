@@ -1,6 +1,8 @@
 #!/bin/sh
 set -e
 
+# TODO upgrade clean this file with new version
+
 # first arg is `-f` or `--some-option`
 if [ "${1#-}" != "$1" ]; then
 	set -- php-fpm "$@"

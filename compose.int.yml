@@ -1,0 +1,21 @@
+services: # Todo upgrade : test inte
+  router:
+    build:
+      context: ./docker/router
+    depends_on:
+      - example
+    environment:
+      - EXAMPLE_UPSTREAM=example:3001
+
+  php:
+    environment:
+      - APP_ENV=dev # Needed for fixtures bundles to work.
+      - APP_SECRET=${APP_SECRET}
+      - XDEBUG_MODE='off'
+
+  pwa:
+    build:
+      context: ./front
+      target: gally_pwa_int
+      args:
+        public_url: https://${PWA_SERVER_NAME}/example

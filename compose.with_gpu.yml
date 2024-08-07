@@ -1,9 +1,7 @@
-version: "3.4"
-
 services:  
   search-ml:
     build:
-      context: api/
+      context: docker/search
       target: gally_opensearch2_gpu
     deploy:
       resources:

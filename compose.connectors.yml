@@ -1,0 +1,14 @@
+services:
+  php:
+    environment:
+      - TRUSTED_HOSTS=${TRUSTED_HOSTS:-^${API_SERVER_NAME:-example\.com|api.localhost}|php$$}
+
+  caddy:
+    networks:
+      default:
+        aliases:
+          - ${API_SERVER_NAME:-api.localhost}
+
+networks:
+  default:
+    name: 'connectors-proxy'
