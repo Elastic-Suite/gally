@@ -9,8 +9,8 @@ services:
     depends_on:
       - varnish
     environment:
-      - API_SERVER_NAME=${API_SERVER_NAME:-api.localhost}
-      - PWA_SERVER_NAME=${PWA_SERVER_NAME:-localhost}
+      - API_SERVER_NAME=${API_SERVER_NAME:-api.gally.localhost}
+      - PWA_SERVER_NAME=${PWA_SERVER_NAME:-gally.localhost}
       - BACKEND_UPSTREAM=varnish:80
 
   varnish:
@@ -33,9 +33,9 @@ services:
       - php
       - pwa 
     environment:
-      - API_SERVER_NAME=${API_SERVER_NAME:-api.localhost}
+      - API_SERVER_NAME=${API_SERVER_NAME:-api.gally.localhost}
       - API_UPSTREAM=${API_UPSTREAM:-php:9000}
-      - PWA_SERVER_NAME=${PWA_SERVER_NAME:-localhost}
+      - PWA_SERVER_NAME=${PWA_SERVER_NAME:-gally.localhost}
       - PWA_UPSTREAM=${PWA_UPSTREAM:-pwa:3000}
   
   php:
@@ -52,25 +52,25 @@ services:
       - APP_ENV=${APP_ENV:-prod}
       - APP_SECRET=${APP_SECRET:-!ChangeMe!}
       - PWA_UPSTREAM=pwa:3000
-      - SERVER_NAME=${API_SERVER_NAME:-api.localhost}, php:80
+      - SERVER_NAME=${API_SERVER_NAME:-api.gally.localhost}, php:80
       - TRUSTED_PROXIES=${TRUSTED_PROXIES:-127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16}
-      - TRUSTED_HOSTS=${TRUSTED_HOSTS:-^${API_SERVER_NAME:-example\.com|api.localhost}|php$$}
-      - CORS_ALLOW_ORIGIN=^https?://${PWA_SERVER_NAME:-localhost}$
+      - TRUSTED_HOSTS=${TRUSTED_HOSTS:-^${API_SERVER_NAME:-example\.com|api.gally.localhost}|php$$}
+      - CORS_ALLOW_ORIGIN=^https?://${PWA_SERVER_NAME:-gally.localhost}$
       - DATABASE_URL=postgresql://${POSTGRES_USER:-app}:${POSTGRES_PASSWORD:-!ChangeMe!}@database:5432/${POSTGRES_DB:-app}?serverVersion=${POSTGRES_VERSION:-16}&charset=${POSTGRES_CHARSET:-utf8}
-      - GALLY_CATALOG_MEDIA_URL=${GALLY_CATALOG_MEDIA_URL}
+      - GALLY_CATALOG_MEDIA_URL=${GALLY_CATALOG_MEDIA_URL:-https://gally.localhost/media/catalog/product/}
 
   pwa:
     build:
       context: ./front
       target: gally_pwa_prod
       args:
-        - NEXT_PUBLIC_ENTRYPOINT=${PWA_SERVER_NAME:-localhost} # Why this .. todo upgrade
-        - NEXT_PUBLIC_API_URL=https://${API_SERVER_NAME:-localhost}
+        - NEXT_PUBLIC_ENTRYPOINT=${PWA_SERVER_NAME:-gally.localhost} # Why this .. todo upgrade
+        - NEXT_PUBLIC_API_URL=https://${API_SERVER_NAME:-api.gally.localhost}
     environment:
       # old value
 #      - NEXT_PUBLIC_ENTRYPOINT=http://php # Why this .. todo upgrade
-      - NEXT_PUBLIC_ENTRYPOINT=${PWA_SERVER_NAME:-localhost} # Why this .. todo upgrade
-      - NEXT_PUBLIC_API_URL=https://${API_SERVER_NAME:-localhost}
+      - NEXT_PUBLIC_ENTRYPOINT=${PWA_SERVER_NAME:-gally.localhost} # Why this .. todo upgrade
+      - NEXT_PUBLIC_API_URL=https://${API_SERVER_NAME:-api.gally.localhost}
     healthcheck:
       test: test $$(curl --connect-timeout 2 -s -o /dev/null -w ''%{http_code}'' http://localhost:3000) -eq 200
       interval: 10s
