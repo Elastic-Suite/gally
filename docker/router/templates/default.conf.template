@@ -3,7 +3,7 @@ upstream fastcgi_backend {
 }
 
 server {
-    server_name $ADMIN_SERVER_NAME;
+    server_name $PWA_SERVER_NAME;
     root /app/public;
     listen 80;
 
