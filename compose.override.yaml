@@ -2,6 +2,8 @@
 services:
   # Todo upgrade: connect example app in router 
   router:
+    volumes:
+      - ./api/public:/app/public
     depends_on:
       - example
     environment:
@@ -11,7 +13,7 @@ services:
     build:
       context: ./api
       target: gally_php_dev
-    volumes:
+    volumes: !override
       - ./api:/app:rw,cached,z
       - ./api/docker/php/conf.d/app.dev.ini:/usr/local/etc/php/conf.d/app.dev.ini:ro,z
     environment:

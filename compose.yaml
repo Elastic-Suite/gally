@@ -28,7 +28,7 @@ services:
     build:
       context: ./docker/router
     volumes:
-      - ./api/public:/app/public # Todo upgrade: native with don't bind this directory in production mode, file are copied in the container
+      - php_static_files:/app/public:ro
     depends_on:
       - php
       - pwa 
@@ -44,12 +44,13 @@ services:
       target: gally_php_prod
       args:
         COMPOSER_AUTH: ${COMPOSER_AUTH:-}
-    depends_on:
+    volumes:
+      - php_static_files:/app/public:rw
+      - jwt_keys:/srv/api/config/jwt
+    depends_on: 
       - database
       - search
       - redis
-    volumes:
-      - jwt_keys:/srv/api/config/jwt
     environment:
       - APP_ENV=${APP_ENV:-prod}
       - APP_SECRET=${APP_SECRET:-!ChangeMe!}
@@ -160,6 +161,7 @@ services:
       retries: 20
 
 volumes:
+  php_static_files:
   jwt_keys:
 ###> doctrine/doctrine-bundle ###
   db_data:
