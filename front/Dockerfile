@@ -43,6 +43,8 @@ CMD ["yarn", "dev"]
 
 FROM gally_pwa_common AS gally_example_ci
 
+ARG REACT_APP_API_URL
+
 CMD ["yarn", "start:example"]
 
 
@@ -75,6 +77,7 @@ CMD ["yarn", "dev"]
 FROM gally_example_ci AS gally_example_dev
 
 ENV WDS_SOCKET_PORT 443
+ARG NEXT_PUBLIC_API_URL
 
 RUN USER=node && \
 	GROUP=node && \
@@ -121,7 +124,6 @@ FROM gally_pwa_common AS gally_pwa_prod
 
 ENV NODE_ENV production
 ARG NEXT_PUBLIC_ENTRYPOINT
-ARG NEXT_PUBLIC_API_URL
 
 RUN set -eux; \
 	yarn build

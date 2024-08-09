@@ -46,10 +46,13 @@ services:
     build:
       context: ./front
       target: gally_example_dev
+      args:
+        - REACT_APP_API_URL=https://${API_SERVER_NAME:-api.gally.localhost}
     volumes:
       - ./front:/usr/src/front:rw,cached,z
     environment:
-      PUBLIC_URL: https://${PWA_SERVER_NAME:-gally.localhost}/example
+      - PUBLIC_URL=https://${PWA_SERVER_NAME:-gally.localhost}/example # Todo upgrade: not used ?
+      - REACT_APP_API_URL=https://${API_SERVER_NAME:-api.gally.localhost}
 
 ###> doctrine/doctrine-bundle ###
   database:
