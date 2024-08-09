@@ -1,34 +1,24 @@
 #!/bin/sh
 set -e
 
-# TODO upgrade clean this file with new version
-
 # first arg is `-f` or `--some-option`
 if [ "${1#-}" != "$1" ]; then
 	set -- php-fpm "$@"
 fi
 
 if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
-	PHP_INI_RECOMMENDED="$PHP_INI_DIR/php.ini-production"
-	if [ "$APP_ENV" != 'prod' ]; then
-		PHP_INI_RECOMMENDED="$PHP_INI_DIR/php.ini-development"
-	fi
-	ln -sf "$PHP_INI_RECOMMENDED" "$PHP_INI_DIR/php.ini"
-
-	mkdir -p var/cache var/log
-	setfacl -R -m u:www-data:rwX -m u:"$(whoami)":rwX var
-	setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX var
-
-	if [ "$APP_ENV" != 'prod' ]; then
+	if [ -z "$(ls -A 'vendor/' 2>/dev/null)" ]; then
 		composer install --prefer-dist --no-progress --no-interaction
+	fi
 
+	if [ "$APP_ENV" != 'prod' ]; then
 		echo "Making sure public / private keys for JWT exist..."
 		php bin/console lexik:jwt:generate-keypair --skip-if-exists --no-interaction
 		setfacl -R -m u:www-data:rX -m u:"$(whoami)":rwX config/jwt
 		setfacl -dR -m u:www-data:rX -m u:"$(whoami)":rwX config/jwt
 	fi
 
-	if grep -q DATABASE_URL= .env; then
+	if grep -q ^DATABASE_URL= .env; then
 		echo "Waiting for database to be ready..."
 		ATTEMPTS_LEFT_TO_REACH_DATABASE=60
 		until [ $ATTEMPTS_LEFT_TO_REACH_DATABASE -eq 0 ] || DATABASE_ERROR=$(php bin/console dbal:run-sql -q "SELECT 1" 2>&1); do
@@ -50,7 +40,9 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 			echo "The database is now ready and reachable"
 		fi
 
-		php bin/console doctrine:migrations:migrate --no-interaction
+		if [ "$( find ./migrations -iname '*.php' -print -quit )" ]; then
+			php bin/console doctrine:migrations:migrate --no-interaction --all-or-nothing
+		fi
 	fi
 
 	if grep -q ELASTICSEARCH_URL= .env; then
@@ -79,6 +71,9 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 			php bin/console gally:vector-search:upload-model
 		fi
 	fi
+
+	setfacl -R -m u:www-data:rwX -m u:"$(whoami)":rwX var
+	setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX var
 fi
 
 exec docker-php-entrypoint "$@"
