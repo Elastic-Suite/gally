@@ -7,6 +7,18 @@ if [ "${1#-}" != "$1" ]; then
 fi
 
 if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
+	if [ -d "php_static_files" ]; then
+		echo "rsync php_static_files directory in public directory"
+       	rsync -av php_static_files/ public/
+	fi
+
+	 if [ -n "$CONTAINER_APP_HOSTNAME" ]; then
+		echo "Set SERVER_NAME in Azure context"
+		SERVER_NAME=$CONTAINER_APP_HOSTNAME
+	else
+		echo "NOT set SERVER_NAME in Azure context '$CONTAINER_APP_HOSTNAME'"
+    fi
+
 	if [ -z "$(ls -A 'vendor/' 2>/dev/null)" ]; then
 		composer install --prefer-dist --no-progress --no-interaction
 	fi
@@ -48,7 +60,6 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 	if grep -q ELASTICSEARCH_URL= .env; then
 		echo "Waiting for search engine to be ready..."
 		ATTEMPTS_LEFT_TO_REACH_SEARCH=60
-		export $(grep 'ELASTICSEARCH_URL=' .env | xargs)
 		until [ $ATTEMPTS_LEFT_TO_REACH_SEARCH -eq 0 ] || SEARCH_ERROR=$(curl -s ${ELASTICSEARCH_URL}); do
 			sleep 1
 			ATTEMPTS_LEFT_TO_REACH_SEARCH=$((ATTEMPTS_LEFT_TO_REACH_SEARCH - 1))

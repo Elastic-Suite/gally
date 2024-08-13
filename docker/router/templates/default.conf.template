@@ -2,32 +2,27 @@ upstream fastcgi_backend {
     server "$API_UPSTREAM";
 }
 
-server {
-    server_name $PWA_SERVER_NAME;
-    root /app/public;
-    listen 80;
-
-    location / {
-        # WebSocket support
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "upgrade";
-
-        # Overwrite X-Forwarded-For with actual client IP
-        add_header X-Forwarded-For $remote_addr;
-
-        # to let webapp know it's https traffic.
-        add_header X-Forwarded-Proto $scheme;
-
-        proxy_pass http://$PWA_UPSTREAM;
-    }
-
-    access_log /dev/stdout main;
-    error_log /dev/stderr notice;
+map $uri $pwaPaths  {
+    default '';
+    /favicon.ico 'pwa';
+    /manifest.json 'pwa';
+    /robots.txt 'pwa';
+    "~^/_next" 'pwa';
+    "~^/sitemap" 'pwa';
+    "~^/locales" 'pwa';
+    "~^/images" 'pwa';
+    "~^/media" 'pwa';
+    "~^/storybook-static" 'pwa';
 }
 
+map $uri $exampleAppPaths  {
+     default '';
+    "~^/example" 'exampleApp';
+    "~^/ws" 'exampleApp';
+ }
+
 server {
-    server_name $API_SERVER_NAME;
+    server_name $CONTAINER_APP_HOSTNAME;
     root /app/public;
     listen 80;
 
@@ -36,7 +31,38 @@ server {
     fastcgi_buffers 64 16k;
     fastcgi_buffer_size 64k;
 
+    # Is pwa stream ?
+    set $pwaUpstream 'p';
+    if ($uri ~ "(?i)(?:^/docs|^/graphql|^/bundles/|^/_profiler|^/_wdt|\\.(?:json|html$|csv$|ya?ml$|xml$))") {
+        set $pwaUpstream '';
+    }
+
+    if ($http_accept ~ '\btext/html\b') {
+        set $pwaUpstream "${pwaUpstream}wa";
+    }
+
+    if ($pwaUpstream != 'pwa') {
+        set $pwaUpstream "${pwaPaths}";
+    }
+
+    # Is example app stream ?
+    set $exampleUpstream "$EXAMPLE_UPSTREAM";
+    if ($exampleUpstream != '') {
+        set $exampleUpstream $exampleAppPaths;
+    }
+
     location / {
+       if ($pwaUpstream = 'pwa') {
+           # Forwarded to pwa
+           proxy_pass http://$PWA_UPSTREAM;
+           break;
+       }
+
+       if ($exampleUpstream = 'exampleApp') {
+           # Forwarded to example app
+           proxy_pass http://$EXAMPLE_UPSTREAM;
+           break;
+       }
 
         # Overwrite X-Forwarded-For with actual client IP
         add_header X-Forwarded-For $remote_addr;

@@ -60,14 +60,16 @@ services:
       - CORS_ALLOW_ORIGIN=^https?://${PWA_SERVER_NAME:-gally.localhost}$
       - DATABASE_URL=postgresql://${POSTGRES_USER:-app}:${POSTGRES_PASSWORD:-!ChangeMe!}@database:5432/${POSTGRES_DB:-app}?serverVersion=${POSTGRES_VERSION:-16}&charset=${POSTGRES_CHARSET:-utf8}
       - GALLY_CATALOG_MEDIA_URL=${GALLY_CATALOG_MEDIA_URL:-https://gally.localhost/media/catalog/product/}
+      - ELASTICSEARCH_URL=${ELASTICSEARCH_URL:-http://search:9200/}
+
 
   pwa:
     build:
       context: ./front
       target: gally_pwa_prod
-      args:
-        - NEXT_PUBLIC_ENTRYPOINT=${PWA_SERVER_NAME:-gally.localhost} # Why this .. todo upgrade
-        - NEXT_PUBLIC_API_URL=https://${API_SERVER_NAME:-api.gally.localhost}
+#      args:
+#        - NEXT_PUBLIC_ENTRYPOINT=${PWA_SERVER_NAME:-gally.localhost} # Why this .. todo upgrade
+#        - NEXT_PUBLIC_API_URL=https://${API_SERVER_NAME:-api.gally.localhost}
     environment:
       # old value
 #      - NEXT_PUBLIC_ENTRYPOINT=http://php # Why this .. todo upgrade
@@ -112,13 +114,15 @@ services:
       - "DISABLE_SECURITY_PLUGIN=true"       # Disable security plugin todo upgrade : manage security
       - cluster.name=os-docker-cluster       # Search cluster name
       - cluster.routing.allocation.disk.threshold_enabled=false     # Avoid ES going read-only because low disk space availability
-      - cluster.initial_cluster_manager_nodes=opensearch-node-data # Nodes eligible to serve as cluster manager
+#      - cluster.initial_cluster_manager_nodes=opensearch-node-data # Nodes eligible to serve as cluster manager
       - node.name=opensearch-node-data       # Name the node that will run in this container
       - bootstrap.memory_lock=true           # Disable JVM heap memory swapping
-      - discovery.seed_hosts=search          # Nodes to look for when discovering the cluster
+#      - discovery.seed_hosts=search          # Nodes to look for when discovering the cluster
       - plugins.ml_commons.allow_registering_model_via_url=true
       - plugins.ml_commons.native_memory_threshold=100 # Prevent memory issue after multiple deploy (https://github.com/opensearch-project/ml-commons/issues/2308)
       - plugins.ml_commons.jvm_heap_memory_threshold=100 # Prevent memory issue after multiple deploy (https://github.com/opensearch-project/ml-commons/issues/2308)
+      - discovery.type=single-node
+      - plugins.ml_commons.only_run_on_ml_node=false
     volumes:
       - os2_data:/usr/share/opensearch/data:rw
     ulimits:
@@ -133,35 +137,35 @@ services:
       timeout: 5s
       retries: 20
 
-  search-ml:
-    build:
-      context: docker/search/
-      target: gally_opensearch2
-    # restart: unless-stopped
-    environment:
-      - "OPENSEARCH_JAVA_OPTS=-Xms1g -Xmx1g" # Set min and max JVM heap sizes to at least 50% of system RAM
-      - "DISABLE_SECURITY_PLUGIN=true"       # Disable security plugin
-      - cluster.name=os-docker-cluster       # Search cluster name
-      - cluster.routing.allocation.disk.threshold_enabled=false # Avoid ES going read-only because low disk space availability
-      - cluster.initial_cluster_manager_nodes=opensearch-node-data # Nodes eligible to serve as cluster manager
-      - node.name=opensearch-node-ml         # Name the node that will run in this container
-      - node.roles=ml                        # Define this node as an ml node
-      - bootstrap.memory_lock=true           # Disable JVM heap memory swapping
-      - discovery.seed_hosts=search          # Nodes to look for when discovering the cluster
-      - plugins.ml_commons.allow_registering_model_via_url=true
-      - plugins.ml_commons.native_memory_threshold=100 # Prevent memory issue after multiple deploy (https://github.com/opensearch-project/ml-commons/issues/2308)
-      - plugins.ml_commons.jvm_heap_memory_threshold=100 # Prevent memory issue after multiple deploy (https://github.com/opensearch-project/ml-commons/issues/2308)
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    volumes:
-      - os2_ml_data:/usr/share/opensearch/data:rw
-    healthcheck:
-      test: test $$(curl --write-out %{http_code} --fail --silent --output /dev/null http://localhost:9200/_cluster/health?wait_for_status=green&timeout=5s) -eq 200
-      interval: 10s
-      timeout: 5s
-      retries: 20
+#  search-ml:
+#    build:
+#      context: docker/search/
+#      target: gally_opensearch2
+#    # restart: unless-stopped
+#    environment:
+#      - "OPENSEARCH_JAVA_OPTS=-Xms1g -Xmx1g" # Set min and max JVM heap sizes to at least 50% of system RAM
+#      - "DISABLE_SECURITY_PLUGIN=true"       # Disable security plugin
+#      - cluster.name=os-docker-cluster       # Search cluster name
+#      - cluster.routing.allocation.disk.threshold_enabled=false # Avoid ES going read-only because low disk space availability
+#      - cluster.initial_cluster_manager_nodes=opensearch-node-data # Nodes eligible to serve as cluster manager
+#      - node.name=opensearch-node-ml         # Name the node that will run in this container
+#      - node.roles=ml                        # Define this node as an ml node
+#      - bootstrap.memory_lock=true           # Disable JVM heap memory swapping
+#      - discovery.seed_hosts=search          # Nodes to look for when discovering the cluster
+#      - plugins.ml_commons.allow_registering_model_via_url=true
+#      - plugins.ml_commons.native_memory_threshold=100 # Prevent memory issue after multiple deploy (https://github.com/opensearch-project/ml-commons/issues/2308)
+#      - plugins.ml_commons.jvm_heap_memory_threshold=100 # Prevent memory issue after multiple deploy (https://github.com/opensearch-project/ml-commons/issues/2308)
+#    ulimits:
+#      memlock:
+#        soft: -1
+#        hard: -1
+#    volumes:
+#      - os2_ml_data:/usr/share/opensearch/data:rw
+#    healthcheck:
+#      test: test $$(curl --write-out %{http_code} --fail --silent --output /dev/null http://localhost:9200/_cluster/health?wait_for_status=green&timeout=5s) -eq 200
+#      interval: 10s
+#      timeout: 5s
+#      retries: 20
 
 volumes:
   php_static_files:

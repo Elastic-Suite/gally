@@ -24,6 +24,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 	gettext \
 	git \
     patch \
+    rsync \
 	&& rm -rf /var/lib/apt/lists/*
 
 ARG COMPOSER_AUTH
@@ -93,6 +94,7 @@ COPY --link docker/php/conf.d/app.prod.ini $PHP_INI_DIR/conf.d/
 # prevent the reinstallation of vendors at every changes in the source code
 COPY --link composer.* symfony.* patches ./
 COPY --link patches ./patches
+COPY --link packages ./packages
 
 RUN set -eux; \
 	composer install --no-cache --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress
@@ -107,3 +109,8 @@ RUN set -eux; \
 	composer dump-env prod; \
 	composer run-script --no-dev post-install-cmd; \
 	chmod +x bin/console; sync;
+
+FROM gally_php_prod AS gally_php_azure
+
+COPY --from=gally_php_prod /app/public /app/php_static_files
+
