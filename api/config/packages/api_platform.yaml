@@ -3,4 +3,4 @@ api_platform:
         paths: [ '%kernel.project_dir%/src/Entity' ]
     http_cache:
         invalidation:
-            varnish_urls: ['%env(VARNISH_URL)%']
+            varnish_urls: [ '%env(VARNISH_URL)%' ]
