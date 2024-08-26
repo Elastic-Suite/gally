@@ -26,8 +26,6 @@ import Search from '@mui/icons-material/Search'
 
 import {
   catalogContext,
-  categoryContext,
-  configurationsContext,
   searchContext,
 } from '../../contexts'
 import {
@@ -38,8 +36,6 @@ import {
   addPrefixKeyObject,
   categoryEntityType,
   getAutoCompleteSearchQuery,
-  getCategoryPathLabel,
-  joinUrlPath,
 } from '@elastic-suite/gally-admin-shared'
 import { useGraphqlApi } from '../../hooks'
 import {
@@ -103,8 +99,6 @@ function SearchBar(props: IProps): JSX.Element {
     search: searchedText,
     productSearch: { setActiveFilters },
   } = useContext(searchContext)
-  const baseUrl = useContext(configurationsContext)?.['base_url/media']
-  const categories = useContext(categoryContext)
 
   const controller = useRef<AbortController>()
   const navigate = useNavigate()
@@ -293,7 +287,7 @@ function SearchBar(props: IProps): JSX.Element {
 
             case AUTOCOMPLETE_PRODUCT_TYPE:
             default:
-              return 'Products'
+              return 'Documents'
           }
         }}
         renderGroup={(item): ReactNode => {
@@ -339,14 +333,6 @@ function SearchBar(props: IProps): JSX.Element {
               <Grid container alignItems="center">
                 {option.type === AUTOCOMPLETE_PRODUCT_TYPE && (
                   <>
-                    <Grid item sx={{ display: 'flex', width: 50 }}>
-                      <img
-                        height="50px"
-                        style={{ objectFit: 'contain' }}
-                        alt={option.name}
-                        src={joinUrlPath(baseUrl, option.image as string)}
-                      />
-                    </Grid>
                     <Grid
                       item
                       sx={{
@@ -355,23 +341,18 @@ function SearchBar(props: IProps): JSX.Element {
                       }}
                     >
                       <Box component="span">{option.name}</Box>
-                      <Typography variant="body2" color="text.secondary">
-                        Sku: {option.sku} - ${option.price}
-                      </Typography>
+                      {option.document_type !== null && option.document_type !== 'File' && <Typography variant="body2" color="text.secondary">
+                        Document Type: {option.document_type}
+                      </Typography>}
+                      {option.file_type !== null && <Typography variant="body2" color="text.secondary">
+                        File Type: {option.file_type}
+                      </Typography>}
                     </Grid>
                   </>
                 )}
                 {option.type === AUTOCOMPLETE_CATEGORY_TYPE && (
                   <Grid item sx={{ wordWrap: 'break-word' }}>
                     <Box component="span">{option.source.name}</Box>
-                    <Typography variant="body2" color="text.secondary">
-                      <Box component="span">
-                        {getCategoryPathLabel(
-                          (option.source.path as string).split('/'),
-                          categories
-                        )}
-                      </Box>
-                    </Typography>
                   </Grid>
                 )}
                 {option.type === AUTOCOMPLETE_FACET_TYPE && (

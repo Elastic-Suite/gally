@@ -36,6 +36,9 @@ function FacetLoadMore(props: IProps): JSX.Element {
       </Collapse>
       {Boolean(filter.hasMore) && !open && (
         <Button
+          sx={{
+            display: 'none'
+          }}
           disabled={Boolean(moreOptions?.error)}
           onClick={handleToggleMore}
         >
