@@ -1,10 +1,8 @@
 import { useContext, useEffect, useId } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { Bundle } from '@elastic-suite/gally-admin-shared'
+import { Link } from 'react-router-dom'
 import {
   AppBar,
   Box,
-  Button,
   InputLabel,
   MenuItem,
   Select,
@@ -13,7 +11,7 @@ import {
   Typography,
 } from '@mui/material'
 
-import { catalogContext, extraBundlesContext } from '../../contexts'
+import { catalogContext } from '../../contexts'
 
 import HeaderFormControl from '../HeaderFormControl/HeaderFormControl'
 import SearchBar from '../SearchBar/SearchBar'
@@ -32,10 +30,6 @@ function Header(): JSX.Element {
     onCatalogIdChange,
     onLocalizedCatalogIdChange,
   } = useContext(catalogContext)
-  const navigate = useNavigate()
-  const { isExtraBundleAvailable } = useContext(extraBundlesContext)
-
-  const demoVectorSearchLabel = 'Demo Vector Search'
 
   function handleCatalogChange(event: SelectChangeEvent<string>): void {
     onCatalogIdChange(event.target.value)
@@ -91,16 +85,6 @@ function Header(): JSX.Element {
             </HeaderFormControl>
           )}
           <Box>
-            {isExtraBundleAvailable(Bundle.VECTOR_SEARCH) && (
-              <Button
-                variant="contained"
-                style={{ border: '1px solid white', textTransform: 'none' }}
-                disableElevation
-                onClick={(): void => navigate('/vectorSearch')}
-              >
-                {demoVectorSearchLabel}
-              </Button>
-            )}
             <HeaderFormControl size="small" variant="outlined">
               <InputLabel id={catalogLabelId} shrink>
                 Catalog
@@ -122,7 +106,7 @@ function Header(): JSX.Element {
               </Select>
             </HeaderFormControl>
             {Boolean(catalog) && (
-              <HeaderFormControl size="small" variant="outlined">
+              <HeaderFormControl sx={{display: 'none'}} size="small" variant="outlined">
                 <InputLabel id={localizedCatalogLabelId} shrink>
                   Localized catalog
                 </InputLabel>

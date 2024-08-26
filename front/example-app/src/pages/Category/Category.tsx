@@ -1,11 +1,11 @@
 import { useContext, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import {
   ICategory,
   ProductRequestType,
 } from '@elastic-suite/gally-admin-shared'
 
-import { categoryContext } from '../../contexts'
+import {catalogContext, categoryContext} from '../../contexts'
 import { useProducts } from '../../hooks'
 
 import Facets from '../../components/Facets/Facets'
@@ -48,13 +48,21 @@ function Category(): JSX.Element {
   } = useProducts(ProductRequestType.CATALOG, id)
   const categories = useContext(categoryContext)
   const category = findCategory(categories, id)
+  const {
+    catalog
+  } = useContext(catalogContext)
+
+  const navigate = useNavigate()
+  if (!category) {
+    navigate(`/index.html`)
+  }
 
   useEffect(() => {
     loadProducts(Boolean(category))
   }, [category, loadProducts])
 
   return (
-    <PageLayout title={category?.name} selectCategoryId={category?.id}>
+    <PageLayout title={catalog?.name}>
       <TwoColsLayout
         left={
           <Facets
