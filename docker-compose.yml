@@ -136,6 +136,7 @@ services:
       - plugins.ml_commons.allow_registering_model_via_url=true
       - plugins.ml_commons.native_memory_threshold=100 # Prevent memory issue after multiple deploy (https://github.com/opensearch-project/ml-commons/issues/2308)
       - plugins.ml_commons.jvm_heap_memory_threshold=100 # Prevent memory issue after multiple deploy (https://github.com/opensearch-project/ml-commons/issues/2308)
+      - indices.query.bool.max_clause_count=2048
     volumes:
       - os2_data:/usr/share/opensearch/data:rw
     ulimits:
