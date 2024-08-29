@@ -165,11 +165,8 @@
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.5"
     },
-    "gally/gally-premium": {
-        "version": "dev-master"
-    },
     "gally/gally-standard": {
-        "version": "dev-master"
+        "version": "2.0.x-dev"
     },
     "gedmo/doctrine-extensions": {
         "version": "v3.9.0"
@@ -604,23 +601,11 @@
             "tests/bootstrap.php"
         ]
     },
-    "symfony/polyfill-intl-grapheme": {
-        "version": "v1.24.0"
-    },
-    "symfony/polyfill-intl-normalizer": {
-        "version": "v1.24.0"
-    },
-    "symfony/polyfill-mbstring": {
-        "version": "v1.24.0"
-    },
     "symfony/polyfill-php56": {
         "version": "v1.20.0"
     },
     "symfony/polyfill-php70": {
         "version": "v1.20.0"
-    },
-    "symfony/polyfill-php81": {
-        "version": "v1.24.0"
     },
     "symfony/polyfill-uuid": {
         "version": "v1.27.0"

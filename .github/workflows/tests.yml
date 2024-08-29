@@ -40,9 +40,13 @@ jobs:
       ref: ${{ inputs.use_default_github_ref == false && inputs.version || '' }}
       front_branch: ${{ inputs.version == 'master' && 'main' || inputs.version }}
       composer_version: ${{ inputs.version == 'master' && 'dev-master' || (contains(inputs.version, 'x') && format('{0}-dev', inputs.version) || inputs.version) }}
-      docker_compose_cmd: docker compose -f docker-compose.yml -f docker-compose.ci.yml ${{ inputs.search_engine != 'opensearch' && format('-f docker-compose.{0}.yml', inputs.search_engine) || '' }}
+      docker_compose_cmd: docker compose -f compose.yml -f compose.ci.yml ${{ inputs.search_engine != 'opensearch' && format('-f compose.{0}.yml', inputs.search_engine) || '' }}
     
     steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+            php-version: 8.3
       - name: Checkout
         uses: actions/checkout@v2
         with:
@@ -59,7 +63,7 @@ jobs:
       - name: Add premium package repository
         uses: php-actions/composer@v6
         with:
-          php_version: "8.1"
+          php_version: "8.3"
           args: --working-dir api
           command: config repositories.gally-premium composer ${{ secrets.PACKAGIST_URL }}
         env:
@@ -67,23 +71,19 @@ jobs:
       - name: Install premium package
         uses: php-actions/composer@v6
         with:
-          php_version: "8.1"
-          args: --no-cache --working-dir api
+          php_version: "8.3"
+          args: --no-scripts --no-cache --working-dir api
           command: require gally/gally-premium:${{ env.composer_version }}
         env:
           COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
+      - name: Generate certificates
+        run: bash ./docker/generate-certs.sh
       - name: Pull images
         run: ${{env.docker_compose_cmd}} pull --ignore-pull-failures || true
       - name: Start services
         run: ${{env.docker_compose_cmd}} up --build -d --wait
         env:
           COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
-      - name: Check HTTP reachability
-        id: http_reachability
-        run: curl -v -o /dev/null http://localhost
-      - name: HTTP Failure
-        if: ${{ failure() && steps.tests.http_reachability == 'failure' }}
-        run: ${{env.docker_compose_cmd}} logs
       - name: Check HTTPS reachability
         id: https_reachability
         run: curl  -vk -o /dev/null https://localhost
@@ -92,15 +92,15 @@ jobs:
         run: ${{env.docker_compose_cmd}} logs
       - name: Create test database
         run: |
-          ${{env.docker_compose_cmd}} exec -e XDEBUG_MODE=off -T php bin/console -e test doctrine:database:create
-          ${{env.docker_compose_cmd}} exec -e XDEBUG_MODE=off -T php bin/console -e test doctrine:migrations:migrate --no-interaction
+          ${{env.docker_compose_cmd}} exec -T php bin/console -e test doctrine:database:create
+          ${{env.docker_compose_cmd}} exec -T php bin/console -e test doctrine:migrations:migrate --no-interaction
       - name: Doctrine Schema Validator
-        run: ${{env.docker_compose_cmd}} exec -e XDEBUG_MODE=off -T php bin/console doctrine:schema:validate --skip-sync
+        run: ${{env.docker_compose_cmd}} exec -T php bin/console doctrine:schema:validate --skip-sync
       - name: Fixtures load
         run: |
-          ${{env.docker_compose_cmd}} exec -e XDEBUG_MODE=off -T php bin/console gally:index:clear --no-interaction
-          ${{env.docker_compose_cmd}} exec -e XDEBUG_MODE=off -T php bin/console hautelook:fixtures:load --no-interaction -vv
-          ${{env.docker_compose_cmd}} exec -e XDEBUG_MODE=off -T php bin/console doctrine:fixtures:load --append --no-interaction
+          ${{env.docker_compose_cmd}} exec -T php bin/console gally:index:clear --no-interaction
+          ${{env.docker_compose_cmd}} exec -T php bin/console hautelook:fixtures:load --no-interaction -vv
+          ${{env.docker_compose_cmd}} exec -T php bin/console doctrine:fixtures:load --append --no-interaction
       - name: Coverage
         run: ${{env.docker_compose_cmd}} exec -e XDEBUG_MODE=coverage -T php bin/phpunit --coverage-clover=coverage/coverage.xml vendor/gally
 

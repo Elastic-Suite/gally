@@ -2,6 +2,12 @@ upstream fastcgi_backend {
     server "$API_UPSTREAM";
 }
 
+# Test if example app upstream is defined
+map $EXAMPLE_UPSTREAM $example_upstream {
+    default $EXAMPLE_UPSTREAM;
+    "" "not_defined";
+}
+
 server {
     server_name $PWA_SERVER_NAME;
     root /app/public;
@@ -12,7 +18,11 @@ server {
     }
 
     location ~ ^/(example|ws) {
-        proxy_pass http://$EXAMPLE_UPSTREAM;
+        if ($example_upstream = "not_defined") {
+            return 404;
+        }
+
+        proxy_pass http://$example_upstream;
     }
 
     # WebSocket support

@@ -50,10 +50,9 @@ RUN set -eux; \
 ###< doctrine/doctrine-bundle ###
 ###< recipes ###
 
-# TODO upgrade : old version do this still require ??
 # copy dev packages directory if exist
 # (for docker-compose version, we need a least on file to exist, so we add the composer.json to prevent failure if packages is missing)
-#COPY composer.json package* packages/
+COPY composer.json package* packages/
 
 COPY --link docker/php/conf.d/app.ini $PHP_INI_DIR/conf.d/
 COPY --link --chmod=755 docker/php/docker-entrypoint.sh /usr/local/bin/docker-entrypoint

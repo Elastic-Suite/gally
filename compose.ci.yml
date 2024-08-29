@@ -1,4 +1,15 @@
 services: # TODO upgrade : test ci
+  php:
+    build:
+      context: ./api
+      target: gally_php_dev
+    volumes: !override
+      - ./api:/app:rw,cached,z
+      - ./api/docker/php/conf.d/app.dev.ini:/usr/local/etc/php/conf.d/app.dev.ini:ro,z
+    environment:
+      APP_ENV: dev
+      XDEBUG_MODE:  off
+
   pwa:
     build:
       context: ./front
