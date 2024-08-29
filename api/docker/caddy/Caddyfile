@@ -71,6 +71,10 @@
 {$SERVER_NAME} {
     log
 
+    basicauth / {
+        {$BASIC_AUTH_USER} {$BASIC_AUTH_HASH}
+    }
+
     # named matchers
     @do_varnish_pass {
         header !X-Caddy-Forwarded
