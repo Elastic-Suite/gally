@@ -1,4 +1,4 @@
-services: # TODO upgrade : test ci
+services:
   php:
     build:
       context: ./api
