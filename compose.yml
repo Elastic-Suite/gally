@@ -37,6 +37,7 @@ services:
       - API_UPSTREAM=${API_UPSTREAM:-php:9000}
       - PWA_SERVER_NAME=${PWA_SERVER_NAME:-gally.localhost}
       - PWA_UPSTREAM=${PWA_UPSTREAM:-pwa:3000}
+      - EXAMPLE_UPSTREAM=${PWA_UPSTREAM:-pwa:3000}
   
   php:
     build:
