@@ -44,7 +44,7 @@ jobs:
   deploy:
     name: Integration
     runs-on: ubuntu-latest
-    
+      
     steps:      
       - name: Deploy in EC2
         env:
@@ -68,15 +68,15 @@ jobs:
             docker system prune -af &&
             ([[ $(docker volume ls -q | awk '!/_/' | wc -l) -eq 0 ]] || docker volume rm $(docker volume ls -q | awk '!/_/' | tr '\n' ' ')) &&
             make .env &&
-            docker-compose down &&
+            docker compose -f compose.yml -f compose.int.yml down &&
             git fetch --all && git reset --hard  && git checkout ${{ env.back_branch }} &&
             [ -d front/gally-admin ] || git clone https://github.com/Elastic-Suite/gally-admin.git front/gally-admin &&
             cd front/gally-admin && git fetch --all && git reset --hard && git checkout ${{ env.front_branch }} &&
             cd /home/ubuntu/gally &&
-            docker-compose run --rm php rm -rf vendor/gally/gally-premium &&
-            docker-compose run --rm php composer config repositories.gally-premium composer $PACKAGIST_URL &&
-            docker-compose run --rm -e COMPOSER_AUTH='$COMPOSER_AUTH' php composer require \"gally/gally-standard:${{ env.composer_version }} as ${{ inputs.last_published_version }}\" &&
-            docker-compose run --rm -e COMPOSER_AUTH='$COMPOSER_AUTH' php composer require \"gally/gally-premium:${{ env.composer_version }}\" &&
+            docker compose run --rm php rm -rf vendor/gally/gally-premium &&
+            docker compose run --rm php composer config repositories.gally-premium composer $PACKAGIST_URL &&
+            docker compose run --rm -e COMPOSER_AUTH='$COMPOSER_AUTH' php composer require \"gally/gally-standard:${{ env.composer_version }} as ${{ inputs.last_published_version }}\" &&
+            docker compose run --rm -e COMPOSER_AUTH='$COMPOSER_AUTH' php composer require \"gally/gally-premium:${{ env.composer_version }}\" &&
             [ -z ${MEDIA_URL} ] || echo -e \"gally:\n  base_url:\n    media: '$MEDIA_URL'\" > api/config/packages/gally_configuration.yaml &&
-            SERVER_NAME=$HOSTNAME APP_SECRET=$APP_SECRET POSTGRES_PASSWORD=$POSTGRES_PASSWORD COMPOSER_AUTH='$COMPOSER_AUTH' docker-compose -f docker-compose.yml -f docker-compose.int.yml up -d --build
+            SERVER_NAME=$HOSTNAME APP_SECRET=$APP_SECRET POSTGRES_PASSWORD=$POSTGRES_PASSWORD COMPOSER_AUTH='$COMPOSER_AUTH' docker compose -f compose.yml -f compose.int.yml up -d --build
           "

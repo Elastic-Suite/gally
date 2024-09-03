@@ -5,7 +5,7 @@ services:
     ports:
       - "443:443"
     volumes:
-      - ./docker/certs:/etc/nginx/certs:ro #todo check how to manage ssl on prod !
+      - ./docker/certs:/etc/nginx/certs
     depends_on:
       - varnish
     environment:
@@ -82,6 +82,16 @@ services:
       interval: 10s
       timeout: 5s
       retries: 20
+      
+  certbot:
+    image: certbot/certbot
+    entrypoint: "/bin/sh -c 'if [ \"${ENVIRONMENT}\" = \"local\" ]; then sleep infinity; else certbot certonly --webroot --webroot-path=/var/www/certbot -d YOUR_DOMAIN_HERE --non-interactive --agree-tos --register-unsafely-without-email; fi'"
+    volumes:
+      - ./docker/certs:/etc/letsencrypt
+      - ./docker/certbot/www:/var/www/certbot
+    environment:
+      - ENVIRONMENT=${ENVIRONMENT:-local}
+      - CERTBOT_DOMAIN=${DOMAIN:-your-generated-domain}
   
   ###> doctrine/doctrine-bundle ###
   database:

@@ -45,7 +45,7 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 
 	if grep -q ELASTICSEARCH_URL= .env; then
 		echo "Waiting for search engine to be ready..."
-		ATTEMPTS_LEFT_TO_REACH_SEARCH=60
+		ATTEMPTS_LEFT_TO_REACH_SEARCH=100
 		export $(grep 'ELASTICSEARCH_URL=' .env | xargs)
 		until [ $ATTEMPTS_LEFT_TO_REACH_SEARCH -eq 0 ] || SEARCH_ERROR=$(curl -s ${ELASTICSEARCH_URL}); do
 			sleep 1

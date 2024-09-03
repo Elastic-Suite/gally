@@ -32,16 +32,16 @@ help: ## Outputs this help screen
 	@grep -E '(^[a-zA-Z0-9_-]+:.*?##.*$$)|(^##)' $(firstword $(MAKEFILE_LIST)) | awk 'BEGIN {FS = ":.*?## "}{printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/'
 
 ## —— Docker 🐳 ————————————————————————————————————————————————————————————————
-build: .env certs ## Builds the Docker images
+build: .env ## Builds the Docker images
 	@$(DOCKER_COMP) build
 
 build_no_cache: ## Builds the Docker images (without cache)
 	@$(DOCKER_COMP) build --pull --no-cache
 
-up: .env certs ## Start the docker hub in detached mode (no logs)
+up: .env ## Start the docker hub in detached mode (no logs)
 	@$(DOCKER_COMP) up --detach
 
-up-connectors: .env certs ## Start the docker hub in detached mode with connectors conf (no logs)
+up-connectors: .env ## Start the docker hub in detached mode with connectors conf (no logs)
 	@$(DOCKER_COMP) -f compose.yml -f compose.override.yml -f compose.connectors.yml up --detach
 
 start: build up ## Build and start the containers
@@ -152,11 +152,6 @@ varnish_flush: ## Flush varnish cache
 .env:
 	@echo "UUID=$(shell id -u)" >> .env
 	@echo "GUID=$(shell id -g)" >> .env
-
-docker/certs/server.crt:
-	@bash docker/generate-certs.sh > /dev/null 2>&1
-
-certs: docker/certs/server.crt
 
 ## —— Symfony 🎵 ———————————————————————————————————————————————————————————————
 sf: ## List all Symfony commands or pass the parameter "c=" to run a given command, example: make sf c=about

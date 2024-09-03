@@ -2,8 +2,6 @@ services: # Todo upgrade : test inte
   router:
     build:
       context: ./docker/router
-    depends_on:
-      - example
     environment:
       - EXAMPLE_UPSTREAM=example:3001
 

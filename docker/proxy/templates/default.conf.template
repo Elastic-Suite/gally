@@ -2,8 +2,8 @@ server {
     listen 443 ssl;
     server_name ${API_SERVER_NAME} ${PWA_SERVER_NAME};
 
-    ssl_certificate /etc/nginx/certs/server.crt;
-    ssl_certificate_key /etc/nginx/certs/server.key;
+    ssl_certificate /etc/nginx/certs/$PWA_SERVER_NAME/fullchain.pem;
+    ssl_certificate_key /etc/nginx/certs/$PWA_SERVER_NAME/privkey.pem;
 
     location / {
         # WebSocket support

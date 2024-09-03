@@ -93,8 +93,6 @@ COPY --link conf.d/app.prod.ini $PHP_INI_DIR/conf.d/
 # prevent the reinstallation of vendors at every changes in the source code
 COPY --from=api_src --link composer.* symfony.* patches ./
 COPY --from=api_src --link patches ./patches
-# TODO not commit this line !!!!!!!!!!!!!!!!!!!!
-COPY --from=api_src --link packages ./packages
 
 RUN set -eux; \
 	composer install --no-cache --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress
