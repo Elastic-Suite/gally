@@ -1,18 +1,16 @@
 services:
   php:
     build:
-      context: ./api
       target: gally_php_dev
     volumes: !override
       - ./api:/app:rw,cached,z
-      - ./api/docker/php/conf.d/app.dev.ini:/usr/local/etc/php/conf.d/app.dev.ini:ro,z
+      - ./docker/php/conf.d/app.dev.ini:/usr/local/etc/php/conf.d/app.dev.ini:ro,z
     environment:
       APP_ENV: dev
-      XDEBUG_MODE:  off
+      XDEBUG_MODE: off
 
   pwa:
     build:
-      context: ./front
       target: gally_pwa_ci
     volumes:
       - ./front/example-app/coverage:/usr/src/front/example-app/coverage:rw,cached,z
@@ -20,5 +18,7 @@ services:
 
   example:
     build:
-      context: ./front
+      context: ./docker/front
       target: gally_example_ci
+      additional_contexts:
+        front_src: ./front

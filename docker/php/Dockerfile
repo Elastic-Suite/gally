@@ -52,11 +52,11 @@ RUN set -eux; \
 
 # copy dev packages directory if exist
 # (for docker-compose version, we need a least on file to exist, so we add the composer.json to prevent failure if packages is missing)
-COPY composer.json package* packages/
+COPY --from=api_src composer.json package* packages/
 
-COPY --link docker/php/conf.d/app.ini $PHP_INI_DIR/conf.d/
-COPY --link --chmod=755 docker/php/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
-COPY --link docker/php/php-fpm.d/zz-docker.conf /usr/local/etc/php-fpm.d/zz-docker.conf
+COPY --link conf.d/app.ini $PHP_INI_DIR/conf.d/
+COPY --link --chmod=755 docker-entrypoint.sh /usr/local/bin/docker-entrypoint
+COPY --link php-fpm.d/zz-docker.conf /usr/local/etc/php-fpm.d/zz-docker.conf
 
 ENTRYPOINT ["docker-entrypoint"]
 
@@ -76,7 +76,7 @@ RUN set -eux; \
     xdebug \
 	;
 
-COPY --link docker/php/conf.d/app.dev.ini $PHP_INI_DIR/conf.d/
+COPY --link conf.d/app.dev.ini $PHP_INI_DIR/conf.d/
 
 CMD ["php-fpm"]
 
@@ -87,17 +87,20 @@ ENV APP_ENV=prod
 
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
-COPY --link docker/php/conf.d/app.prod.ini $PHP_INI_DIR/conf.d/
+COPY --link conf.d/app.prod.ini $PHP_INI_DIR/conf.d/
+
 
 # prevent the reinstallation of vendors at every changes in the source code
-COPY --link composer.* symfony.* patches ./
-COPY --link patches ./patches
+COPY --from=api_src --link composer.* symfony.* patches ./
+COPY --from=api_src --link patches ./patches
+# TODO not commit this line !!!!!!!!!!!!!!!!!!!!
+COPY --from=api_src --link packages ./packages
 
 RUN set -eux; \
 	composer install --no-cache --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress
 
 # copy sources
-COPY --link . ./
+COPY --from=api_src --link . ./
 RUN rm -Rf docker/php/
 
 RUN set -eux; \

@@ -55,7 +55,7 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 
 		if [ $ATTEMPTS_LEFT_TO_REACH_SEARCH -eq 0 ]; then
 			echo "The search engine is not up or not reachable:"
-			echo "$SEARCH_ERROR"
+			echo "curl -s $ELASTICSEARCH_URL : $SEARCH_ERROR"
 			exit 1
 		else
 			echo "The search engine is now reachable"

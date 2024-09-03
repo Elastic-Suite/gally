@@ -11,11 +11,10 @@ services:
 
   php:
     build:
-      context: ./api
       target: gally_php_dev
     volumes: !override
       - ./api:/app:rw,cached,z
-      - ./api/docker/php/conf.d/app.dev.ini:/usr/local/etc/php/conf.d/app.dev.ini:ro,z
+      - ./docker/php/conf.d/app.dev.ini:/usr/local/etc/php/conf.d/app.dev.ini:ro,z
     environment:
       - APP_ENV=${APP_ENV:-dev}
       # See https://xdebug.org/docs/all_settings#mode
@@ -29,7 +28,6 @@ services:
   pwa:
     user: ${UUID?You must set UUID env var}:${GUID?You must set GUID env var}
     build:
-      context: ./front
       target: gally_pwa_dev
       args:
         - NEXT_PUBLIC_ENTRYPOINT=${PWA_SERVER_NAME:-gally.localhost} # Why this .. todo upgrade
@@ -45,8 +43,10 @@ services:
   example:
     user: ${UUID?You must set UUID env var}:${GUID?You must set GUID env var}
     build:
-      context: ./front
+      context: ./docker/front
       target: gally_example_dev
+      additional_contexts: 
+        front_src: ./front
       args:
         - REACT_APP_API_URL=https://${API_SERVER_NAME:-api.gally.localhost}
     volumes:

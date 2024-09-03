@@ -40,8 +40,10 @@ services:
   
   php:
     build:
-      context: ./api
+      context: ./docker/php
       target: gally_php_prod
+      additional_contexts:
+        api_src: ./api
       args:
         COMPOSER_AUTH: ${COMPOSER_AUTH:-}
     volumes:
@@ -64,8 +66,10 @@ services:
 
   pwa:
     build:
-      context: ./front
+      context: ./docker/front
       target: gally_pwa_prod
+      additional_contexts:
+        front_src: ./front
       args:
         - NEXT_PUBLIC_ENTRYPOINT=${PWA_SERVER_NAME:-gally.localhost}
         - NEXT_PUBLIC_API_URL=https://${API_SERVER_NAME:-api.gally.localhost}

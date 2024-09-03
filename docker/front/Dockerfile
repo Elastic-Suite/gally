@@ -16,7 +16,7 @@ WORKDIR /usr/src/front
 
 ENV NEXT_TELEMETRY_DISABLED 1
 
-COPY . ./
+COPY --from=front_src . ./
 
 RUN set -xe; \
 	yarn install --frozen-lockfile --network-timeout 120000; \
