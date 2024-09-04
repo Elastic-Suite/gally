@@ -54,7 +54,7 @@ import {
   AUTOCOMPLETE_FACET_TYPE,
   AUTOCOMPLETE_PRODUCT_TYPE,
 } from '../../constants'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const MIN_AUTOCOMPLETE_CHAR = 3
 
@@ -110,6 +110,7 @@ function SearchBar(props: IProps): JSX.Element {
   const navigate = useNavigate()
 
   const [search, setSearch] = useState('')
+  const location = useLocation()
   const [documents, setDocuments, _load, debouncedLoad] = useGraphqlApi<
     IGraphqlSearchProducts & IGraphqlSearchCategories
   >()
@@ -201,6 +202,12 @@ function SearchBar(props: IProps): JSX.Element {
   useEffect(() => {
     loadDocuments(search)
   }, [loadDocuments, search])
+
+  useEffect(() => {
+    if (location.pathname !== '/search') {
+      setSearch('')
+    }
+  }, [location])
 
   function handleSearchChange(
     _event: ChangeEvent<HTMLInputElement>,
