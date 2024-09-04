@@ -1,30 +1,70 @@
 import { test, expect } from '@playwright/test';
 
-test('has title', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
-
-  // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/Playwright/);
+test.beforeEach(async ({page}) => {
+  await page.goto('/fr/login');
 });
 
-test('get started link', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
+test('gally connexion success', async ({ page }) => {
+  await page.getByTestId("emailInput").fill("admin@example.com")
+  await page.getByTestId("passwordInput").fill("apassword")
+  await page.getByTestId("submitButton").click()
 
-  // Click the get started link.
-  await page.getByRole('link', { name: 'Get started' }).click();
-
-  // Expects page to have a heading with the name of Installation.
-  await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
+  await expect(page).toHaveURL("/fr/admin/settings/scope/catalogs")
 });
 
+test('gally connexion invalid email', async ({ page }) => {
+  await page.getByTestId("emailInput").fill("admin@")
+  await page.getByTestId("passwordInput").fill("apassword")
+  await page.getByTestId("submitButton").click()
+  const emailErrorElement = await page.getByTestId("emailInputErrorMessage")
 
-test('gally', async ({ page }) => {
-  // const context = await browser.newContext({
-  //   ignoreHTTPSErrors: true
-  // });
-  // const page = await context.newPage();
-  await page.goto('https://localhost/fr/login');
+  await expect(emailErrorElement).toHaveText("formError.emailInput")
+  await expect(page).toHaveURL("/fr/login")
+});
 
-  await expect(page).toHaveTitle(/Connexion - Gally/);
+test('gally connexion empty email', async ({ page }) => {
+  await page.getByTestId("passwordInput").fill("apassword")
+  await page.getByTestId("submitButton").click()
+  const emailErrorElement = await page.getByTestId("emailInputErrorMessage")
 
+  await expect(emailErrorElement).toHaveText("La valeur est requise")
+  await expect(page).toHaveURL("/fr/login")
+});
+
+test('gally connexion empty password', async ({ page }) => {
+  await page.getByTestId("emailInput").fill("admin@example.com")
+  await page.getByTestId("submitButton").click()
+  const passwordErrorElement = await page.getByTestId("passwordInputErrorMessage")
+
+  await expect(passwordErrorElement).toHaveText("La valeur est requise")
+  await expect(page).toHaveURL("/fr/login")
+});
+
+test('gally connexion empty password and empty email', async ({ page }) => {
+  await page.getByTestId("submitButton").click()
+  const emailErrorElement = await page.getByTestId("emailInputErrorMessage")
+  const passwordErrorElement = await page.getByTestId("passwordInputErrorMessage")
+
+  await expect(emailErrorElement).toHaveText("La valeur est requise")
+  await expect(passwordErrorElement).toHaveText("La valeur est requise")
+  await expect(page).toHaveURL("/fr/login")
+});
+
+test('gally connexion invalid credential', async ({ page }) => {
+  await page.getByTestId("emailInput").fill("admin@example.comd")
+  await page.getByTestId("passwordInput").fill("apasswordd")
+  await page.getByTestId("submitButton").click()
+  const invalidCredentials = await page.getByText("Invalid credentials.")
+  await expect(invalidCredentials).toBeVisible()
+  await expect(page).toHaveURL("/fr/login")
+});
+
+test('gally redirection when the user is authenticated', async ({ page }) => {
+  await page.getByTestId("emailInput").fill("admin@example.com")
+  await page.getByTestId("passwordInput").fill("apassword")
+  await page.getByTestId("submitButton").click()
+
+  await expect(page).toHaveURL("/fr/admin/settings/scope/catalogs")
+  await page.goto("/fr/login")
+  await expect(page).toHaveURL("/fr/admin/settings/scope/catalogs")
 });
