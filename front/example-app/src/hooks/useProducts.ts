@@ -1,4 +1,11 @@
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import {
+  SetStateAction,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 import {
   ICategoryTypeDefaultFilterInputType,
   IGraphqlAggregation,
@@ -154,6 +161,11 @@ export function useProducts(
     [graphqlApi, localizedCatalogId, queryFilters, search]
   )
 
+  function updateFilters(filters: SetStateAction<IActiveFilters>): void {
+    setActiveFilters(filters)
+    setPage(0)
+  }
+
   return useMemo(
     () => ({
       activeFilters,
@@ -163,7 +175,7 @@ export function useProducts(
       page,
       pageSize,
       products,
-      setActiveFilters,
+      setActiveFilters: updateFilters,
       setPage,
       setPageSize,
       setSort,
