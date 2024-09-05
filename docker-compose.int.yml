@@ -10,6 +10,11 @@ services:
   caddy:
     environment:
       EXAMPLE_UPSTREAM: pwa:3000
+    networks:
+      default:
+        aliases:
+          - ifpen.gally.dev
+
 
   pwa:
     build:
@@ -17,3 +22,7 @@ services:
       target: gally_pwa_int
       args:
         public_url: https://${SERVER_NAME}/example
+    volumes:
+      - /home/ubuntu/data/gael_files:/usr/src/front/pwa/public/gael_files:rw,cached,z
+      - /home/ubuntu/data/prisme_files:/usr/src/front/pwa/public/prisme_files:rw,cached,z
+
