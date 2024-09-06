@@ -7,11 +7,9 @@ if [ "${1#-}" != "$1" ]; then
 fi
 
 if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
-	if [ -z "$(ls -A 'vendor/' 2>/dev/null)" ]; then
-		composer install --prefer-dist --no-progress --no-interaction
-	fi
-
 	if [ "$APP_ENV" != 'prod' ]; then
+		composer install --prefer-dist --no-progress --no-interaction
+
 		echo "Making sure public / private keys for JWT exist..."
 		php bin/console lexik:jwt:generate-keypair --skip-if-exists --no-interaction
 		setfacl -R -m u:www-data:rX -m u:"$(whoami)":rwX config/jwt

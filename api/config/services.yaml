@@ -4,6 +4,8 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    route_prefix: '%env(string:default:default_route_prefix:API_ROUTE_PREFIX)%'
+    default_route_prefix: ''
 
 services:
     # default configuration for services in *this* file

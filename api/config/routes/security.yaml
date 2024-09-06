@@ -1,3 +1,4 @@
 _security_logout:
     resource: security.route_loader.logout
     type: service
+    prefix: '%route_prefix%'

@@ -22,6 +22,8 @@ framework:
     #fragments: true
     php_errors:
         log: true
+    assets:
+        base_path: '%route_prefix%'
 
 when@test:
     framework:

@@ -20,7 +20,7 @@ security:
             stateless: true
             provider: gally_user_provider
             json_login:
-                check_path: /authentication_token
+                check_path: '%target_route_prefix%/authentication_token'
                 username_path: email
                 password_path: password
                 success_handler: lexik_jwt_authentication.handler.authentication_success

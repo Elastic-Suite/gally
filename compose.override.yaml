@@ -30,13 +30,11 @@ services:
     build:
       target: gally_pwa_dev
       args:
-        - NEXT_PUBLIC_ENTRYPOINT=${PWA_SERVER_NAME:-gally.localhost} # Why this .. todo upgrade
-        - NEXT_PUBLIC_API_URL=https://${API_SERVER_NAME:-api.gally.localhost}
+        - NEXT_PUBLIC_ENTRYPOINT=${SERVER_NAME:-${PWA_SERVER_NAME:-gally.localhost}}
+        - NEXT_PUBLIC_API_URL=https://${SERVER_NAME:-${API_SERVER_NAME:-api.gally.localhost}}/${API_ROUTE_PREFIX:-}
     volumes:
       - ./front:/usr/src/front:rw,cached,z
     environment:
-      - API_PLATFORM_CREATE_CLIENT_ENTRYPOINT=${API_SERVER_NAME-api.gally.localhost} # Todo upgrade: not used ?
-      - API_PLATFORM_CREATE_CLIENT_OUTPUT=. # Todo upgrade: not used ?
       # On Linux, you may want to comment the following line for improved performance
       - WATCHPACK_POLLING="true"
 
@@ -48,12 +46,12 @@ services:
       additional_contexts: 
         front_src: ./front
       args:
-        - REACT_APP_API_URL=https://${API_SERVER_NAME:-api.gally.localhost}
+        - REACT_APP_API_URL=https://${SERVER_NAME:-${API_SERVER_NAME:-api.gally.localhost}}/${API_ROUTE_PREFIX:-}
     volumes:
       - ./front:/usr/src/front:rw,cached,z
     environment:
-      - PUBLIC_URL=https://${PWA_SERVER_NAME:-gally.localhost}/example # Todo upgrade: not used ?
-      - REACT_APP_API_URL=https://${API_SERVER_NAME:-api.gally.localhost}
+      - PUBLIC_URL=https://${PWA_SERVER_NAME:-gally.localhost}/example
+      - REACT_APP_API_URL=https://${SERVER_NAME:-${API_SERVER_NAME:-api.gally.localhost}}/${API_ROUTE_PREFIX:-}
 
 ###> doctrine/doctrine-bundle ###
   database:

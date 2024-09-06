@@ -1,3 +1,4 @@
 gally:
     resource: .
     type: gally
+    prefix: '%route_prefix%'
