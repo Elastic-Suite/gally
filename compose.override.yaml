@@ -1,6 +1,5 @@
 # Development environment override
 services:
-  # Todo upgrade: connect example app in router 
   router:
     volumes:
       - ./api/public:/app/public

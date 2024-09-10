@@ -1,9 +1,9 @@
-services: # Todo upgrade : test inte
+services:
   router:
     build:
       context: ./docker/router
     environment:
-      - EXAMPLE_UPSTREAM=example:3001
+      - EXAMPLE_UPSTREAM=pwa:3000
 
   php:
     environment:
@@ -15,4 +15,4 @@ services: # Todo upgrade : test inte
     build:
       target: gally_pwa_int
       args:
-        public_url: https://${PWA_SERVER_NAME}/example
+        - public_url=https://${SERVER_NAME:-${PWA_SERVER_NAME:-gally.localhost}}/example

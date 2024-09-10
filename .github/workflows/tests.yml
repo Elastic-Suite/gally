@@ -76,8 +76,6 @@ jobs:
           command: require gally/gally-premium:${{ env.composer_version }}
         env:
           COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
-      - name: Generate certificates
-        run: bash ./docker/generate-certs.sh
       - name: Pull images
         run: ${{env.docker_compose_cmd}} pull --ignore-pull-failures || true
       - name: Start services

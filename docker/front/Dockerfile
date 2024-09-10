@@ -14,6 +14,8 @@ EXPOSE 3001
 
 WORKDIR /usr/src/front
 
+ARG NEXT_PUBLIC_API_URL
+ENV NEXT_PUBLIC_API_URL $NEXT_PUBLIC_API_URL
 ENV NEXT_TELEMETRY_DISABLED 1
 
 COPY --from=front_src . ./
@@ -77,7 +79,6 @@ CMD ["yarn", "dev"]
 FROM gally_example_ci AS gally_example_dev
 
 ENV WDS_SOCKET_PORT 443
-ARG NEXT_PUBLIC_API_URL
 
 RUN USER=node && \
 	GROUP=node && \
