@@ -15,7 +15,9 @@ EXPOSE 3001
 WORKDIR /usr/src/front
 
 ARG NEXT_PUBLIC_API_URL
+ARG REACT_APP_API_URL
 ENV NEXT_PUBLIC_API_URL $NEXT_PUBLIC_API_URL
+ENV REACT_APP_API_URL $REACT_APP_API_URL
 ENV NEXT_TELEMETRY_DISABLED 1
 
 COPY --from=front_src . ./
@@ -44,8 +46,6 @@ CMD ["yarn", "dev"]
 
 
 FROM gally_pwa_common AS gally_example_ci
-
-ARG REACT_APP_API_URL
 
 CMD ["yarn", "start:example"]
 

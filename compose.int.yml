@@ -15,4 +15,4 @@ services:
     build:
       target: gally_pwa_int
       args:
-        - public_url=https://${SERVER_NAME:-${PWA_SERVER_NAME:-gally.localhost}}/example
+        - public_url=https://${SERVER_NAME}/example

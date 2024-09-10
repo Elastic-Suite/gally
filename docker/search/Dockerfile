@@ -1,6 +1,5 @@
 # Todo upgrade : update opensearch
 ARG OPENSEARCH2_VERSION=2.14.0
-# TODO upgrade: should be keep elasticsearch ?
 ARG ELASTIC7_VERSION=7.16.3
 ARG ELASTIC8_VERSION=8.10.4
 

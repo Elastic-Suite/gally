@@ -9,7 +9,7 @@ services:
     depends_on:
       - varnish
     environment:
-      - PWA_SERVER_NAME=${PWA_SERVER_NAME:-${SERVER_NAME:-gally.localhost}}
+      - SERVER_NAME=${SERVER_NAME:-gally.localhost}
       - API_SERVER_NAME=${API_SERVER_NAME:-api.gally.localhost}
       - BACKEND_UPSTREAM=varnish:80
 
@@ -33,7 +33,7 @@ services:
       - php
       - pwa 
     environment:
-      - PWA_SERVER_NAME=${SERVER_NAME:-${PWA_SERVER_NAME:-gally.localhost}}
+      - SERVER_NAME=${SERVER_NAME:-gally.localhost}
       - API_SERVER_NAME=${API_SERVER_NAME:-api.gally.localhost}
       - API_ROUTE_PREFIX=${API_ROUTE_PREFIX:-api}
       - PWA_UPSTREAM=${PWA_UPSTREAM:-pwa:3000}
@@ -61,9 +61,9 @@ services:
       - SERVER_NAME=${SERVER_NAME:-${API_SERVER_NAME:-api.gally.localhost}}, php:80 
       - API_ROUTE_PREFIX=${API_ROUTE_PREFIX:-}
       - TRUSTED_PROXIES=${TRUSTED_PROXIES:-127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16}
-      - TRUSTED_HOSTS=${TRUSTED_HOSTS:-^${SERVER_NAME:-${PWA_SERVER_NAME:-example\.com|api.gally.localhost}}|localhost|php$$}
-      - CORS_ALLOW_ORIGIN=^https?://${SERVER_NAME:-${PWA_SERVER_NAME:-gally.localhost}}$
-      - GALLY_CATALOG_MEDIA_URL=${GALLY_CATALOG_MEDIA_URL:-https://${SERVER_NAME:-${PWA_SERVER_NAME:-gally.localhost}}/media/catalog/product/}
+      - TRUSTED_HOSTS=${TRUSTED_HOSTS:-^${SERVER_NAME:-example\.com|api.gally.localhost}|localhost|php$$}
+      - CORS_ALLOW_ORIGIN=^https?://${SERVER_NAME:-gally.localhost}$
+      - GALLY_CATALOG_MEDIA_URL=${GALLY_CATALOG_MEDIA_URL:-https://${SERVER_NAME:-gally.localhost}/media/catalog/product/}
       - DATABASE_URL=postgresql://${POSTGRES_USER:-app}:${POSTGRES_PASSWORD:-!ChangeMe!}@database:5432/${POSTGRES_DB:-app}?serverVersion=${POSTGRES_VERSION:-16}&charset=${POSTGRES_CHARSET:-utf8}
 
   pwa:
@@ -73,11 +73,13 @@ services:
       additional_contexts:
         front_src: ./front
       args:
-        - NEXT_PUBLIC_ENTRYPOINT=${SERVER_NAME:-${PWA_SERVER_NAME:-gally.localhost}}
+        - NEXT_PUBLIC_ENTRYPOINT=${SERVER_NAME:-gally.localhost}
         - NEXT_PUBLIC_API_URL=https://${SERVER_NAME:-${API_SERVER_NAME:-api.gally.localhost}}/${API_ROUTE_PREFIX:-}
+        - REACT_APP_API_URL=https://${SERVER_NAME:-${API_SERVER_NAME:-api.gally.localhost}}/${API_ROUTE_PREFIX:-}
     environment:
-      - NEXT_PUBLIC_ENTRYPOINT=${SERVER_NAME:-${PWA_SERVER_NAME:-gally.localhost}}
+      - NEXT_PUBLIC_ENTRYPOINT=${SERVER_NAME:-gally.localhost}
       - NEXT_PUBLIC_API_URL=https://${SERVER_NAME:-${API_SERVER_NAME:-api.gally.localhost}}/${API_ROUTE_PREFIX:-}
+      - REACT_APP_API_URL=https://${SERVER_NAME:-${API_SERVER_NAME:-api.gally.localhost}}/${API_ROUTE_PREFIX:-}
     healthcheck:
       test: test $$(curl --connect-timeout 2 -s -o /dev/null -w ''%{http_code}'' http://localhost:3000) -eq 200
       interval: 10s

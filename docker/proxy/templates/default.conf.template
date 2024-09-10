@@ -1,9 +1,13 @@
 server {
     listen 443 ssl;
-    server_name ${API_SERVER_NAME} ${PWA_SERVER_NAME};
+    server_name ${SERVER_NAME} ${API_SERVER_NAME};
 
-    ssl_certificate /etc/nginx/certs/$PWA_SERVER_NAME/fullchain.pem;
-    ssl_certificate_key /etc/nginx/certs/$PWA_SERVER_NAME/privkey.pem;
+    ssl_certificate /etc/nginx/certs/${SERVER_NAME}/fullchain.pem;
+    ssl_certificate_key /etc/nginx/certs/${SERVER_NAME}/privkey.pem;
+
+    proxy_buffer_size 64k;
+    proxy_buffers 64 16k;
+    proxy_busy_buffers_size 64k;
 
     location / {
         # WebSocket support

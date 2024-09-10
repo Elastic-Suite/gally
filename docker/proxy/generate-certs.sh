@@ -1,7 +1,7 @@
 #!/bin/bash
 
-CERT_PATH="/etc/nginx/certs/$PWA_SERVER_NAME/fullchain.pem"
-KEY_PATH="/etc/nginx/certs/$PWA_SERVER_NAME/privkey.pem"
+CERT_PATH="/etc/nginx/certs/${SERVER_NAME}/fullchain.pem"
+KEY_PATH="/etc/nginx/certs/${SERVER_NAME}/privkey.pem"
 
 # Generate self sign certificates if they note exists
 if [[ ! -f "$CERT_PATH" ]]; then
@@ -9,5 +9,5 @@ if [[ ! -f "$CERT_PATH" ]]; then
 	openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 	  -keyout $KEY_PATH \
 	  -out $CERT_PATH \
-	  -subj "/CN=${PWA_SERVER_NAME:-localhost}"
+	  -subj "/CN=${SERVER_NAME:-localhost}"
 fi

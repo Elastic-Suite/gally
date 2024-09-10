@@ -8,6 +8,11 @@ server {
     root /app/public;
     listen 80;
 
+    client_body_buffer_size 4m;
+    client_max_body_size 256m;
+    fastcgi_buffers 64 16k;
+    fastcgi_buffer_size 64k;
+
     location / {
         proxy_pass http://$PWA_UPSTREAM;
     }
