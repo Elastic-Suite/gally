@@ -3,4 +3,4 @@
 !/helm/api-platform/charts/.gitignore
 /.idea
 /node_modules
-/docker/certs/
+/docker/certbot/certs/

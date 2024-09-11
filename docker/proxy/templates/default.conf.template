@@ -1,4 +1,18 @@
 server {
+    listen 80;
+    server_name ${SERVER_NAME} ${API_SERVER_NAME};
+
+    # Rediriger tout le trafic HTTP vers HTTPS
+    location /.well-known/acme-challenge/ {
+        root /var/www/certbot;
+    }
+
+    location / {
+        return 301 https://$host$request_uri;
+    }
+}
+
+server {
     listen 443 ssl;
     server_name ${SERVER_NAME} ${API_SERVER_NAME};
 

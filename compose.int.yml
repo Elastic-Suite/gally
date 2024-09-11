@@ -1,4 +1,9 @@
 services:
+  
+  certbot:
+    environment:
+      - SELF_SIGNED=true
+
   router:
     build:
       context: ./docker/router

@@ -1,8 +1,6 @@
 vcl 4.0;
 import std;
 
-# Todo upgrade : Test acl ban & php acl
-
 backend default {
     .host = "${BACKEND_HOST}";
     .port = "${BACKEND_PORT}";

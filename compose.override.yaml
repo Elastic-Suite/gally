@@ -1,5 +1,10 @@
 # Development environment override
 services:
+  
+  certbot: 
+    environment:
+      - SELF_SIGNED=true
+  
   router:
     volumes:
       - ./api/public:/app/public

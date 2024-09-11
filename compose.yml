@@ -3,15 +3,30 @@ services:
     build:
       context: ./docker/proxy
     ports:
+      - "80:80"
       - "443:443"
     volumes:
-      - ./docker/certs:/etc/nginx/certs
+      - ./docker/certbot/certs:/etc/nginx/certs
+      - ./docker/certbot/www:/var/www/certbot
     depends_on:
       - varnish
     environment:
       - SERVER_NAME=${SERVER_NAME:-gally.localhost}
       - API_SERVER_NAME=${API_SERVER_NAME:-api.gally.localhost}
       - BACKEND_UPSTREAM=varnish:80
+        
+  certbot:
+    build:
+      context: ./docker/certbot
+    volumes:
+      - ./docker/certbot/certs:/etc/letsencrypt 
+      - ./docker/certbot/www:/var/www/certbot 
+    depends_on:
+      - proxy
+    environment:
+      - SERVER_NAME=${SERVER_NAME:-gally.localhost}
+      - API_SERVER_NAME=${API_SERVER_NAME:-api.gally.localhost}
+      - HAS_MULTIPLE_DOMAINS=${API_SERVER_NAME}
 
   varnish:
     build:
@@ -85,17 +100,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 20
-      
-  
-#  certbot:
-#    image: certbot/certbot
-#    entrypoint: "/bin/sh -c 'if [ \"${ENVIRONMENT}\" = \"local\" ]; then sleep infinity; else certbot certonly --webroot --webroot-path=/var/www/certbot -d YOUR_DOMAIN_HERE --non-interactive --agree-tos --register-unsafely-without-email; fi'"
-#    volumes:
-#      - ./docker/certs:/etc/letsencrypt
-#      - ./docker/certbot/www:/var/www/certbot
-#    environment:
-#      - ENVIRONMENT=${ENVIRONMENT:-local}
-#      - CERTBOT_DOMAIN=${DOMAIN:-your-generated-domain}
   
   ###> doctrine/doctrine-bundle ###
   database:
