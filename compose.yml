@@ -9,7 +9,10 @@ services:
       - ./docker/certbot/certs:/etc/nginx/certs
       - ./docker/certbot/www:/var/www/certbot
     depends_on:
-      - varnish
+      varnish: 
+        condition: service_started
+      certbot:
+          condition: service_healthy
     environment:
       - SERVER_NAME=${SERVER_NAME:-gally.localhost}
       - API_SERVER_NAME=${API_SERVER_NAME:-api.gally.localhost}
@@ -21,9 +24,8 @@ services:
     volumes:
       - ./docker/certbot/certs:/etc/letsencrypt 
       - ./docker/certbot/www:/var/www/certbot 
-    depends_on:
-      - proxy
     environment:
+      - SELF_SIGNED=true
       - SERVER_NAME=${SERVER_NAME:-gally.localhost}
       - API_SERVER_NAME=${API_SERVER_NAME:-api.gally.localhost}
       - HAS_MULTIPLE_DOMAINS=${API_SERVER_NAME:-}
