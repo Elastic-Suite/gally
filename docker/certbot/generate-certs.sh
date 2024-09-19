@@ -36,5 +36,7 @@ if [[ -z $SELF_SIGNED ]]; then
 		sleep 48h & wait;
 		certbot renew;
 	done
+else
+	sleep infinity
 fi
 

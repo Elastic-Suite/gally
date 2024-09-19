@@ -34,7 +34,7 @@ jobs:
   tests:
     if: github.event.pull_request.draft == false
     name: Tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     
     env:
       ref: ${{ inputs.use_default_github_ref == false && inputs.version || '' }}
