@@ -98,7 +98,6 @@ jobs:
         run: |
           ${{env.docker_compose_cmd}} exec -T php bin/console gally:index:clear --no-interaction
           ${{env.docker_compose_cmd}} exec -T php bin/console hautelook:fixtures:load --no-interaction -vv
-          ${{env.docker_compose_cmd}} exec -T php bin/console doctrine:fixtures:load --append --no-interaction
       - name: Coverage
         run: ${{env.docker_compose_cmd}} exec -e XDEBUG_MODE=coverage -T php bin/phpunit --coverage-clover=coverage/coverage.xml vendor/gally
 
