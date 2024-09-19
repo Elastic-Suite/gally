@@ -2,7 +2,7 @@ security:
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
-        Gally\User\Model\User:
+        Gally\User\Entity\User:
             algorithm: auto
 
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
@@ -10,7 +10,7 @@ security:
         # used to reload user from session & other features (e.g. switch_user)
         gally_user_provider:
             entity:
-                class: Gally\User\Model\User
+                class: Gally\User\Entity\User
                 property: email
     firewalls:
         dev:
@@ -55,3 +55,8 @@ when@test:
                 cost: 4 # Lowest possible value for bcrypt
                 time_cost: 3 # Lowest possible value for argon
                 memory_cost: 10 # Lowest possible value for argon
+                
+        firewalls:
+            main:
+                json_login:
+                    check_path: '/authentication_token'

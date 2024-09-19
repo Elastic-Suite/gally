@@ -1,4 +1,8 @@
 services:
+  certbot:
+    environment:
+      - SELF_SIGNED=true
+
   php:
     build:
       target: gally_php_dev

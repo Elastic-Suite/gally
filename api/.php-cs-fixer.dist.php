@@ -21,7 +21,7 @@ $finder = PhpCsFixer\Finder::create()
     // ]);
 
 return (new PhpCsFixer\Config())
-    ->setParallelConfig(PhpCsFixer\Runner\Parallel\ParallelConfigFactory::detect())
+//    ->setParallelConfig(PhpCsFixer\Runner\Parallel\ParallelConfigFactory::detect()) commented because this break header rule
     ->setRiskyAllowed(true)
     ->setRules([
         '@DoctrineAnnotation' => true,

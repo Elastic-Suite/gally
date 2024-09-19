@@ -80,6 +80,7 @@ init-dev-env: .env ## Initialize current environment with dev repositories
 	$(DOCKER_COMP) run --rm --entrypoint="rm -rf nodes_modules/gally* pwa/node_modules/gally* example-app/node_modules/gally*" pwa
 	[ -d api/packages/gally-standard ] || git clone git@github.com:Elastic-Suite/gally-standard.git api/packages/gally-standard
 	[ -d api/packages/gally-premium ] || git clone git@github.com:Elastic-Suite/gally-premium.git api/packages/gally-premium
+	[ -d api/packages/gally-sample-data ] || git clone git@github.com:Elastic-Suite/gally-sample-data.git api/packages/gally-sample-data
 	[ -d front/gally-admin ] || git clone git@github.com:Elastic-Suite/gally-admin.git front/gally-admin
 	$(MAKE) start
 	$(MAKE) switch-dev-env
@@ -89,9 +90,11 @@ switch-dev-env: ## Switch current environment with dev repositories on a compose
 	$(DOCKER_COMP) up -d --wait php # Wait php container to be ready
 	$(COMPOSER) config repositories.gally-standard '{ "type": "path", "url": "./packages/gally-standard", "options": { "versions": { "gally/gally-standard": "$(v)"}} }'
 	$(COMPOSER) config repositories.gally-premium '{ "type": "path", "url": "./packages/gally-premium", "options": { "versions": { "gally/gally-premium": "$(v)"}} }'
+	$(COMPOSER) config repositories.gally-sample-data '{ "type": "path", "url": "./packages/gally-sample-data", "options": { "versions": { "gally/gally-sample-data": "$(v)"}} }'
 	$(COMPOSER) remove gally/gally-premium gally/gally-standard --no-scripts
 	$(COMPOSER) require gally/gally-standard $(v) --no-scripts
-	$(COMPOSER) require gally/gally-premium $(v)
+	$(COMPOSER) require gally/gally-premium $(v) --no-scripts
+	$(COMPOSER) require gally/gally-sample-data $(v) --no-scripts
 
 phpcsfixer: ## Run php cs fixer, pass the parameter "o=" to pass options, make phpcsfixer o="--dry-run"
 	@$(eval o ?=)

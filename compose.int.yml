@@ -12,7 +12,6 @@ services:
 
   php:
     environment:
-      - APP_ENV=dev # Needed for fixtures bundles to work.
       - APP_SECRET=${APP_SECRET}
       - XDEBUG_MODE='off'
 

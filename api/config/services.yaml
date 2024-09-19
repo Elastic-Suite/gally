@@ -26,3 +26,8 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    
+    
+when@test:
+    parameters:
+        route_prefix: '' # Don't use prefix for test

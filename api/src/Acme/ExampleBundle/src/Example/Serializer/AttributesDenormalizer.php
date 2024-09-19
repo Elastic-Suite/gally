@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Acme\Example\Example\Serializer;
 
 use Acme\Example\Example\Model\ExampleProduct;
-use Gally\Metadata\Model\Attribute\Type\TextAttribute;
+use Gally\Metadata\Entity\Attribute\Type\TextAttribute;
 use Symfony\Component\Serializer\Normalizer\ContextAwareDenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;

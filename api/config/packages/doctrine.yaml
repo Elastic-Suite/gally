@@ -12,12 +12,13 @@ doctrine:
         auto_generate_proxy_classes: true
         enable_lazy_ghost_objects: true
         report_fields_where_declared: true
-        validate_xml_mapping: true
+        validate_xml_mapping: false # gedmo extension is not compatible with xml mapping yet (https://github.com/doctrine-extensions/DoctrineExtensions/issues/2613)
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
         # todo upgrade set it back to true and :
-        # - rename model foders to entity 
-        # rename XXXBundle.php (GallyBundle.php) remove doctrine mapping (DoctrineOrmMappingsPass::createXmlMappingDriver()
-        auto_mapping: false
+        # - rename model foders to entity  -> ok
+        # - rename XXXBundle.php (GallyBundle.php) remove doctrine mapping (DoctrineOrmMappingsPass::createXmlMappingDriver()
+        # - this doesn't not work for standard bundle because entities are in a sub folder
+        auto_mapping: true
         mappings:
             App:
                 type: attribute
