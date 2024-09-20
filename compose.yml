@@ -82,6 +82,8 @@ services:
       - CORS_ALLOW_ORIGIN=^https?://${SERVER_NAME:-gally.localhost}$
       - GALLY_CATALOG_MEDIA_URL=${GALLY_CATALOG_MEDIA_URL:-https://${SERVER_NAME:-gally.localhost}/media/catalog/product/}
       - DATABASE_URL=postgresql://${POSTGRES_USER:-app}:${POSTGRES_PASSWORD:-!ChangeMe!}@database:5432/${POSTGRES_DB:-app}?serverVersion=${POSTGRES_VERSION:-16}&charset=${POSTGRES_CHARSET:-utf8}
+      - ELASTICSEARCH_URL=https://${SEARCH_user:-admin}:${SEARCH_PASSWORD:-!ChangeMe0!}@${SEARCH_HOST:-search}:9200/
+      - ELASTICSEARCH_SSL_VERIFICATION=true
 
   pwa:
     build:
@@ -130,27 +132,30 @@ services:
     build:
       context: docker/search/
       target: gally_opensearch2
-    # restart: unless-stopped
     environment:
-      - "OPENSEARCH_JAVA_OPTS=-Xms1g -Xmx1g" # Set min and max JVM heap sizes to at least 50% of system RAM
-      - "DISABLE_SECURITY_PLUGIN=true"       # Disable security plugin todo upgrade : manage security
       - cluster.name=os-docker-cluster       # Search cluster name
-      - cluster.routing.allocation.disk.threshold_enabled=false     # Avoid ES going read-only because low disk space availability
-      - cluster.initial_cluster_manager_nodes=opensearch-node-data # Nodes eligible to serve as cluster manager
       - node.name=opensearch-node-data       # Name the node that will run in this container
-      - bootstrap.memory_lock=true           # Disable JVM heap memory swapping
       - discovery.seed_hosts=search          # Nodes to look for when discovering the cluster
+      - cluster.initial_cluster_manager_nodes=opensearch-node-data # Nodes eligible to serve as cluster manager
+      - OPENSEARCH_JAVA_OPTS=-Xms1g -Xmx1g # Set min and max JVM heap sizes to at least 50% of system RAM
+      - bootstrap.memory_lock=true           # Disable JVM heap memory swapping
+      - cluster.routing.allocation.disk.threshold_enabled=false     # Avoid ES going read-only because low disk space availability
       - plugins.ml_commons.allow_registering_model_via_url=true
       - plugins.ml_commons.native_memory_threshold=100 # Prevent memory issue after multiple deploy (https://github.com/opensearch-project/ml-commons/issues/2308)
       - plugins.ml_commons.jvm_heap_memory_threshold=100 # Prevent memory issue after multiple deploy (https://github.com/opensearch-project/ml-commons/issues/2308)
+      - plugins.security.audit.type=debug # https://github.com/opensearch-project/security/issues/3130
+      - OPENSEARCH_INITIAL_ADMIN_PASSWORD=${OPENSEARCH_ADMIN_PASSWORD:-!ChangeMe0!}
     volumes:
       - os2_data:/usr/share/opensearch/data:rw
     ulimits:
       memlock:
         soft: -1
         hard: -1
+    ports:
+      - 9200:9200
+      - 9600:9600    
     healthcheck:
-      test: test $$(curl --write-out %{http_code} --fail --silent --output /dev/null http://localhost:9200/_cluster/health?wait_for_status=green&timeout=5s) -eq 200
+      test: test $$(curl -uadmin:$${OPENSEARCH_INITIAL_ADMIN_PASSWORD:-!ChangeMe0!} -k --write-out %{http_code} --fail --silent --output /dev/null https://localhost:9200/_cluster/health?wait_for_status=green&timeout=5s) -eq 200
       interval: 10s
       timeout: 5s
       retries: 20
@@ -159,20 +164,20 @@ services:
     build:
       context: docker/search/
       target: gally_opensearch2
-    # restart: unless-stopped
     environment:
-      - "OPENSEARCH_JAVA_OPTS=-Xms1g -Xmx1g" # Set min and max JVM heap sizes to at least 50% of system RAM
-      - "DISABLE_SECURITY_PLUGIN=true"       # Disable security plugin
       - cluster.name=os-docker-cluster       # Search cluster name
-      - cluster.routing.allocation.disk.threshold_enabled=false # Avoid ES going read-only because low disk space availability
-      - cluster.initial_cluster_manager_nodes=opensearch-node-data # Nodes eligible to serve as cluster manager
       - node.name=opensearch-node-ml         # Name the node that will run in this container
-      - node.roles=ml                        # Define this node as an ml node
-      - bootstrap.memory_lock=true           # Disable JVM heap memory swapping
       - discovery.seed_hosts=search          # Nodes to look for when discovering the cluster
+      - cluster.initial_cluster_manager_nodes=opensearch-node-data # Nodes eligible to serve as cluster manager
+      - OPENSEARCH_JAVA_OPTS=-Xms1g -Xmx1g # Set min and max JVM heap sizes to at least 50% of system RAM
+      - bootstrap.memory_lock=true           # Disable JVM heap memory swapping
+      - node.roles=ml                        # Define this node as an ml node
+      - cluster.routing.allocation.disk.threshold_enabled=false # Avoid ES going read-only because low disk space availability
       - plugins.ml_commons.allow_registering_model_via_url=true
       - plugins.ml_commons.native_memory_threshold=100 # Prevent memory issue after multiple deploy (https://github.com/opensearch-project/ml-commons/issues/2308)
       - plugins.ml_commons.jvm_heap_memory_threshold=100 # Prevent memory issue after multiple deploy (https://github.com/opensearch-project/ml-commons/issues/2308)
+      - plugins.security.audit.type=debug # https://github.com/opensearch-project/security/issues/3130
+      - OPENSEARCH_INITIAL_ADMIN_PASSWORD=${OPENSEARCH_ADMIN_PASSWORD:-!ChangeMe0!}
     ulimits:
       memlock:
         soft: -1
@@ -180,7 +185,7 @@ services:
     volumes:
       - os2_ml_data:/usr/share/opensearch/data:rw
     healthcheck:
-      test: test $$(curl --write-out %{http_code} --fail --silent --output /dev/null http://localhost:9200/_cluster/health?wait_for_status=green&timeout=5s) -eq 200
+      test: test $$(curl -uadmin:$${OPENSEARCH_INITIAL_ADMIN_PASSWORD:-!ChangeMe0!} -k --write-out %{http_code} --fail --silent --output /dev/null https://localhost:9200/_cluster/health?wait_for_status=green&timeout=5s) -eq 200
       interval: 10s
       timeout: 5s
       retries: 20

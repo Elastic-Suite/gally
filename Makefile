@@ -91,7 +91,7 @@ switch-dev-env: ## Switch current environment with dev repositories on a compose
 	$(COMPOSER) config repositories.gally-standard '{ "type": "path", "url": "./packages/gally-standard", "options": { "versions": { "gally/gally-standard": "$(v)"}} }'
 	$(COMPOSER) config repositories.gally-premium '{ "type": "path", "url": "./packages/gally-premium", "options": { "versions": { "gally/gally-premium": "$(v)"}} }'
 	$(COMPOSER) config repositories.gally-sample-data '{ "type": "path", "url": "./packages/gally-sample-data", "options": { "versions": { "gally/gally-sample-data": "$(v)"}} }'
-	$(COMPOSER) remove gally/gally-premium gally/gally-standard --no-scripts
+	$(COMPOSER) remove gally/gally-premium gally/gally-sample-data gally/gally-standard --no-scripts
 	$(COMPOSER) require gally/gally-standard $(v) --no-scripts
 	$(COMPOSER) require gally/gally-premium $(v) --no-scripts
 	$(COMPOSER) require gally/gally-sample-data $(v) --no-scripts

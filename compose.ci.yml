@@ -11,8 +11,9 @@ services:
       - ./api:/app:rw,cached,z
       - ./docker/php/conf.d/app.dev.ini:/usr/local/etc/php/conf.d/app.dev.ini:ro,z
     environment:
-      APP_ENV: dev
-      XDEBUG_MODE: off
+      - APP_ENV=dev
+      - XDEBUG_MODE=off
+      - ELASTICSEARCH_SSL_VERIFICATION=false
 
   pwa:
     build:

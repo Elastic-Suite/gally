@@ -43,9 +43,8 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 
 	if grep -q ELASTICSEARCH_URL= .env; then
 		echo "Waiting for search engine to be ready..."
-		ATTEMPTS_LEFT_TO_REACH_SEARCH=100
-		export $(grep 'ELASTICSEARCH_URL=' .env | xargs)
-		until [ $ATTEMPTS_LEFT_TO_REACH_SEARCH -eq 0 ] || SEARCH_ERROR=$(curl -s ${ELASTICSEARCH_URL}); do
+		ATTEMPTS_LEFT_TO_REACH_SEARCH=60
+		until [ $ATTEMPTS_LEFT_TO_REACH_SEARCH -eq 0 ] || SEARCH_ERROR=$(curl -ks ${ELASTICSEARCH_URL}); do
 			sleep 1
 			ATTEMPTS_LEFT_TO_REACH_SEARCH=$((ATTEMPTS_LEFT_TO_REACH_SEARCH - 1))
 			echo "Still waiting for search engine to be ready... Or maybe the search engine is not reachable. $ATTEMPTS_LEFT_TO_REACH_SEARCH attempts left."
@@ -59,7 +58,9 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 			echo "The search engine is now reachable"
 		fi
 
-		curl -s "${ELASTICSEARCH_URL}_cluster/health?wait_for_status=green&timeout=30s"
+		sleep 10 # Wait security plugin start
+
+		curl -ks "${ELASTICSEARCH_URL}_cluster/health?wait_for_status=green&timeout=30s"
 		echo "The search engine is now ready"
 
 		if php bin/console list gally --raw | grep -q gally:vector-search:upload-model; then
