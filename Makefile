@@ -94,7 +94,7 @@ switch-dev-env: ## Switch current environment with dev repositories on a compose
 	$(COMPOSER) remove gally/gally-premium gally/gally-sample-data gally/gally-standard --no-scripts
 	$(COMPOSER) require gally/gally-standard $(v) --no-scripts
 	$(COMPOSER) require gally/gally-premium $(v) --no-scripts
-	$(COMPOSER) require gally/gally-sample-data $(v) --no-scripts
+	$(COMPOSER) require gally/gally-sample-data $(v)
 
 phpcsfixer: ## Run php cs fixer, pass the parameter "o=" to pass options, make phpcsfixer o="--dry-run"
 	@$(eval o ?=)
