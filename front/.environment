@@ -1,0 +1,6 @@
+#############################################################################################
+#### Platform.sh environment file.
+#### THIS FILE IS USED ONLY WHEN DEPLOYING GALLY ON PLATFORM.SH
+#############################################################################################
+
+export SERVER_NAME=api.$PLATFORM_ENVIRONMENT-$PLATFORM_PROJECT.eu.platformsh.site

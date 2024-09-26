@@ -1,5 +1,15 @@
+# Include .env if exist
+ifneq (,$(wildcard ./.env))
+    include .env
+    export
+endif
+
 # Executables (local)
-DOCKER_COMP := $(shell docker compose ls 1>&2 2>/dev/null && echo 'docker compose' || echo 'docker-compose')
+DOCKER_COMP_EXEC := $(shell docker compose ls 1>&2 2>/dev/null && echo 'docker compose' || echo 'docker-compose')
+ASK_CONFIRMATION := "read -p '\e[31mThis Makefile is meant to be used in a development environment, are you sure you want to continue? (y/n)\e[0m ' REPLY; \
+    [ "\$$REPLY" = "y" ] \
+    || exit 0; $(DOCKER_COMP_EXEC)"
+DOCKER_COMP := $(shell [ "${APP_ENV}" = "prod" ] && echo $(ASK_CONFIRMATION) || echo $(DOCKER_COMP_EXEC))
 
 # Docker containers
 PHP_CONT = $(DOCKER_COMP) exec php

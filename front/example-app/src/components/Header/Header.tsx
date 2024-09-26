@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Bundle } from '@elastic-suite/gally-admin-shared'
 import {
   AppBar,
+  Box,
   Button,
   InputLabel,
   MenuItem,
@@ -65,73 +66,82 @@ function Header(): JSX.Element {
   return (
     <AppBar component="nav">
       <Toolbar>
-        <Typography
-          style={{ display: 'flex', alignItems: 'center', gap: '12px' }}
-          component={Link}
-          sx={{ flexGrow: 1 }}
-          to="/"
-          variant="h6"
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            width: '100%',
+          }}
         >
-          <div>
-            <img src={Logo} alt="Logo" />
-          </div>
-          <div>Gally - Example App</div>
-        </Typography>
-        {isExtraBundleAvailable(Bundle.VECTOR_SEARCH) && (
-          <Button
-            variant="contained"
-            style={{ border: '1px solid white', textTransform: 'none' }}
-            disableElevation
-            onClick={(): void => navigate('/vectorSearch')}
+          <Typography
+            style={{ display: 'flex', alignItems: 'center', gap: '12px' }}
+            component={Link}
+            to="/"
+            variant="h6"
           >
-            {demoVectorSearchLabel}
-          </Button>
-        )}
-        {Boolean(catalog && localizedCatalog) && (
-          <HeaderFormControl size="small">
-            <SearchBar shrink />
-          </HeaderFormControl>
-        )}
-        <HeaderFormControl size="small" variant="outlined">
-          <InputLabel id={catalogLabelId} shrink>
-            Catalog
-          </InputLabel>
-          <Select
-            labelId={catalogLabelId}
-            id={catalogSelectId}
-            value={catalog?.id ?? ''}
-            label="Catalog"
-            onChange={handleCatalogChange}
-            data-testid="header-catalog-select"
-            data-testlength={catalogs.length}
-          >
-            {catalogs.map((catalog) => (
-              <MenuItem key={catalog.id} value={catalog.id}>
-                {catalog.name}
-              </MenuItem>
-            ))}
-          </Select>
-        </HeaderFormControl>
-        {Boolean(catalog) && (
-          <HeaderFormControl size="small" variant="outlined">
-            <InputLabel id={localizedCatalogLabelId} shrink>
-              Localized catalog
-            </InputLabel>
-            <Select
-              labelId={localizedCatalogLabelId}
-              id={localizedCatalogSelectId}
-              value={localizedCatalog?.id ?? ''}
-              label="Localized Catalog"
-              onChange={handleLocalizedCatalogChange}
-            >
-              {catalog.localizedCatalogs.edges.map(({ node }) => (
-                <MenuItem key={node.id} value={node.id}>
-                  {node.name}
-                </MenuItem>
-              ))}
-            </Select>
-          </HeaderFormControl>
-        )}
+            <div>
+              <img src={Logo} alt="Logo" />
+            </div>
+            <div>Gally - Example App</div>
+          </Typography>
+          {Boolean(catalog && localizedCatalog) && (
+            <HeaderFormControl size="small">
+              <SearchBar shrink />
+            </HeaderFormControl>
+          )}
+          <Box>
+            {isExtraBundleAvailable(Bundle.VECTOR_SEARCH) && (
+              <Button
+                variant="contained"
+                style={{ border: '1px solid white', textTransform: 'none' }}
+                disableElevation
+                onClick={(): void => navigate('/vectorSearch')}
+              >
+                {demoVectorSearchLabel}
+              </Button>
+            )}
+            <HeaderFormControl size="small" variant="outlined">
+              <InputLabel id={catalogLabelId} shrink>
+                Catalog
+              </InputLabel>
+              <Select
+                labelId={catalogLabelId}
+                id={catalogSelectId}
+                value={catalog?.id ?? ''}
+                label="Catalog"
+                onChange={handleCatalogChange}
+                data-testid="header-catalog-select"
+                data-testlength={catalogs.length}
+              >
+                {catalogs.map((catalog) => (
+                  <MenuItem key={catalog.id} value={catalog.id}>
+                    {catalog.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </HeaderFormControl>
+            {Boolean(catalog) && (
+              <HeaderFormControl size="small" variant="outlined">
+                <InputLabel id={localizedCatalogLabelId} shrink>
+                  Localized catalog
+                </InputLabel>
+                <Select
+                  labelId={localizedCatalogLabelId}
+                  id={localizedCatalogSelectId}
+                  value={localizedCatalog?.id ?? ''}
+                  label="Localized Catalog"
+                  onChange={handleLocalizedCatalogChange}
+                >
+                  {catalog.localizedCatalogs.edges.map(({ node }) => (
+                    <MenuItem key={node.id} value={node.id}>
+                      {node.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </HeaderFormControl>
+            )}
+          </Box>
+        </Box>
       </Toolbar>
     </AppBar>
   )

@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { HashRouter, Route, Routes } from 'react-router-dom'
 
 import Category from '../../pages/Category/Category'
 import Homepage from '../../pages/Homepage/Homepage'
@@ -11,7 +11,7 @@ import AppProvider from '../Providers/AppProvider/AppProvider'
 
 function App(): JSX.Element {
   return (
-    <BrowserRouter basename="/example">
+    <HashRouter basename="/">
       <AppProvider>
         <Layout>
           <Routes>
@@ -24,7 +24,7 @@ function App(): JSX.Element {
           </Routes>
         </Layout>
       </AppProvider>
-    </BrowserRouter>
+    </HashRouter>
   )
 }
 

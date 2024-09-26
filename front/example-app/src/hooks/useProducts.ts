@@ -1,4 +1,11 @@
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import {
+  SetStateAction,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 import {
   ICategoryTypeDefaultFilterInputType,
   IGraphqlAggregation,
@@ -114,6 +121,9 @@ export function useProducts(
       if (search) {
         variables.search = search
       }
+      if (currentCategoryId) {
+        variables.currentCategoryId = currentCategoryId
+      }
       if (queryFilters.category__id) {
         variables.currentCategoryId = (
           queryFilters.category__id as ICategoryTypeDefaultFilterInputType
@@ -151,6 +161,11 @@ export function useProducts(
     [graphqlApi, localizedCatalogId, queryFilters, search]
   )
 
+  function updateFilters(filters: SetStateAction<IActiveFilters>): void {
+    setActiveFilters(filters)
+    setPage(0)
+  }
+
   return useMemo(
     () => ({
       activeFilters,
@@ -160,7 +175,7 @@ export function useProducts(
       page,
       pageSize,
       products,
-      setActiveFilters,
+      setActiveFilters: updateFilters,
       setPage,
       setPageSize,
       setSort,
