@@ -78,5 +78,6 @@ jobs:
             docker compose run --rm php composer config repositories.gally-premium composer $PACKAGIST_URL &&
             docker compose run --rm -e COMPOSER_AUTH='$COMPOSER_AUTH' php composer require \"gally/gally-standard:${{ env.composer_version }} as ${{ inputs.last_published_version }}\" &&
             docker compose run --rm -e COMPOSER_AUTH='$COMPOSER_AUTH' php composer require \"gally/gally-premium:${{ env.composer_version }}\" &&
+            docker compose run --rm -e COMPOSER_AUTH='$COMPOSER_AUTH' php composer require \"gally/gally-sample-data:${{ env.composer_version }}\" &&
             GALLY_CATALOG_MEDIA_URL=${MEDIA_URL} SERVER_NAME=$HOSTNAME API_ROUTE_PREFIX=api APP_SECRET=$APP_SECRET POSTGRES_PASSWORD=$POSTGRES_PASSWORD COMPOSER_AUTH='$COMPOSER_AUTH' docker compose -f compose.yml -f compose.int.yml up -d --build
           "
