@@ -43,11 +43,27 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 
 	if grep -q ELASTICSEARCH_URL= .env; then
 		echo "Waiting for search engine to be ready..."
-		ATTEMPTS_LEFT_TO_REACH_SEARCH=60
+		ATTEMPTS_LEFT_TO_REACH_SEARCH=30
 		until [ $ATTEMPTS_LEFT_TO_REACH_SEARCH -eq 0 ] || SEARCH_ERROR=$(curl -ks ${ELASTICSEARCH_URL}); do
-			sleep 1
+			sleep 2
 			ATTEMPTS_LEFT_TO_REACH_SEARCH=$((ATTEMPTS_LEFT_TO_REACH_SEARCH - 1))
 			echo "Still waiting for search engine to be ready... Or maybe the search engine is not reachable. $ATTEMPTS_LEFT_TO_REACH_SEARCH attempts left."
+		done
+
+		echo "Waiting for search engine security plugin to be ready..."
+		ATTEMPTS_LEFT_TO_REACH_SEARCH=20
+		ES_READY=0
+		until [ $ATTEMPTS_LEFT_TO_REACH_SEARCH -eq 0 ] || [ $ES_READY -eq 1 ]; do
+			response=$(curl -ks "${ELASTICSEARCH_URL}_cluster/health")
+			result=$(echo "$response" | grep "Security not initialized" | cat)
+			if [ -z "${result}" ]; then
+				echo $response
+			else
+				echo $response
+				ES_READY=1
+			fi
+			ATTEMPTS_LEFT_TO_REACH_SEARCH=$((ATTEMPTS_LEFT_TO_REACH_SEARCH - 1))
+			sleep 2
 		done
 
 		if [ $ATTEMPTS_LEFT_TO_REACH_SEARCH -eq 0 ]; then
@@ -57,8 +73,6 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 		else
 			echo "The search engine is now reachable"
 		fi
-
-		sleep 10 # Wait security plugin start
 
 		curl -ks "${ELASTICSEARCH_URL}_cluster/health?wait_for_status=green&timeout=30s"
 		echo "The search engine is now ready"
