@@ -49,6 +49,14 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 			ATTEMPTS_LEFT_TO_REACH_SEARCH=$((ATTEMPTS_LEFT_TO_REACH_SEARCH - 1))
 			echo "Still waiting for search engine to be ready... Or maybe the search engine is not reachable. $ATTEMPTS_LEFT_TO_REACH_SEARCH attempts left."
 		done
+		
+		if [ $ATTEMPTS_LEFT_TO_REACH_SEARCH -eq 0 ]; then
+			echo "The search engine is not up or not reachable:"
+			echo "curl -s $ELASTICSEARCH_URL : $SEARCH_ERROR"
+			exit 1
+		else
+			echo "The search engine is now reachable"
+		fi
 
 		echo "Waiting for search engine security plugin to be ready..."
 		ATTEMPTS_LEFT_TO_REACH_SEARCH=20
