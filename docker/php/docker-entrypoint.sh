@@ -58,8 +58,6 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 			result=$(echo "$response" | grep "Security not initialized" | cat)
 			if [ -z "${result}" ]; then
 				echo $response
-			else
-				echo $response
 				ES_READY=1
 			fi
 			ATTEMPTS_LEFT_TO_REACH_SEARCH=$((ATTEMPTS_LEFT_TO_REACH_SEARCH - 1))
