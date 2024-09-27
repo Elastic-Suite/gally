@@ -43,13 +43,13 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 
 	if grep -q ELASTICSEARCH_URL= .env; then
 		echo "Waiting for search engine to be ready..."
-		ATTEMPTS_LEFT_TO_REACH_SEARCH=30
+		ATTEMPTS_LEFT_TO_REACH_SEARCH=100
 		until [ $ATTEMPTS_LEFT_TO_REACH_SEARCH -eq 0 ] || SEARCH_ERROR=$(curl -ks ${ELASTICSEARCH_URL}); do
 			sleep 2
 			ATTEMPTS_LEFT_TO_REACH_SEARCH=$((ATTEMPTS_LEFT_TO_REACH_SEARCH - 1))
 			echo "Still waiting for search engine to be ready... Or maybe the search engine is not reachable. $ATTEMPTS_LEFT_TO_REACH_SEARCH attempts left."
 		done
-		
+
 		if [ $ATTEMPTS_LEFT_TO_REACH_SEARCH -eq 0 ]; then
 			echo "The search engine is not up or not reachable:"
 			echo "curl -s $ELASTICSEARCH_URL : $SEARCH_ERROR"
