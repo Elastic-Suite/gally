@@ -61,7 +61,6 @@
     "@babel/plugin-syntax-flow": "7.18.6",
     "@babel/plugin-transform-react-jsx": "7.19.0",
     "@next/eslint-plugin-next": "12.3.0",
-    "@playwright/test": "1.45.3",
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "13.4.0",
     "@types/autosuggest-highlight": "3.2.0",

@@ -33,7 +33,3 @@ tsconfig.*.json
 # custom
 /public/images
 /public/locales
-/test-results/
-/playwright-report/
-/blob-report/
-/playwright/.cache/
