@@ -43,7 +43,7 @@ export function useProducts(
   const [sort, sortOrder, sortOptions, setSort, setSortOrder] = useProductSort()
   const [activeFilters, setActiveFilters] = useState<IActiveFilters>([])
   const [moreOptions, setMoreOptions] = useState<IFilterMoreOptions>(new Map())
-  const queryFilters: IProductFieldFilterInput = useMemo(
+  const queryFilters: IProductFieldFilterInput[] = useMemo(
     () => getProductFilters(activeFilters),
     [activeFilters]
   )
@@ -118,15 +118,18 @@ export function useProducts(
         aggregation: filter.field,
         localizedCatalog: String(localizedCatalogId),
       }
+      const categoryIdFilter = queryFilters.find(
+        (value) => Object.keys(value)[0] === 'category__id'
+      )
       if (search) {
         variables.search = search
       }
       if (currentCategoryId) {
         variables.currentCategoryId = currentCategoryId
       }
-      if (queryFilters.category__id) {
+      if (categoryIdFilter) {
         variables.currentCategoryId = (
-          queryFilters.category__id as ICategoryTypeDefaultFilterInputType
+          categoryIdFilter.category_id as ICategoryTypeDefaultFilterInputType
         ).eq
       }
       graphqlApi<IGraphqlViewMoreProductFacetOptions>(
