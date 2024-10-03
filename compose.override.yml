@@ -36,7 +36,7 @@ services:
       target: gally_pwa_dev
       args:
         - NEXT_PUBLIC_ENTRYPOINT=${SERVER_NAME:-gally.localhost}
-        - NEXT_PUBLIC_API_URL=https://${SERVER_NAME:-${API_SERVER_NAME:-api.gally.localhost}}/${API_ROUTE_PREFIX:-}
+        - NEXT_PUBLIC_API_URL=https://${API_SERVER_NAME:-${SERVER_NAME:-api.gally.localhost}}/${API_ROUTE_PREFIX:-}
     volumes:
       - ./front:/usr/src/front:rw,cached,z
     environment:
@@ -51,12 +51,12 @@ services:
       additional_contexts: 
         front_src: ./front
       args:
-        - REACT_APP_API_URL=https://${SERVER_NAME:-${API_SERVER_NAME:-api.gally.localhost}}/${API_ROUTE_PREFIX:-}
+        - REACT_APP_API_URL=https://${API_SERVER_NAME:-${SERVER_NAME:-api.gally.localhost}}/${API_ROUTE_PREFIX:-}
     volumes:
       - ./front:/usr/src/front:rw,cached,z
     environment:
       - PUBLIC_URL=https://${SERVER_NAME:-gally.localhost}/example
-      - REACT_APP_API_URL=https://${SERVER_NAME:-${API_SERVER_NAME:-api.gally.localhost}}/${API_ROUTE_PREFIX:-}
+      - REACT_APP_API_URL=https://${API_SERVER_NAME:-${SERVER_NAME:-api.gally.localhost}}/${API_ROUTE_PREFIX:-}
 
 ###> doctrine/doctrine-bundle ###
   database:
