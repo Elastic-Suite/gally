@@ -1,0 +1,26 @@
+services:
+  proxy_init_certs:
+    build:
+      context: ./docker/proxy-init-certs
+    ports:
+      - "80:80"
+    volumes:
+      - ./docker/certbot/certs:/etc/nginx/certs
+      - certbot_www:/var/www/certbot
+    environment:
+      - SERVER_NAME=${SERVER_NAME:-gally.localhost}
+      - API_SERVER_NAME=${API_SERVER_NAME:-api.gally.localhost}
+        
+  certbot_init_certs:
+    build:
+      context: ./docker/certbot-init-certs
+    volumes:
+      - ./docker/certbot/certs:/etc/letsencrypt
+      - certbot_www:/var/www/certbot
+    environment:
+      - SERVER_NAME=${SERVER_NAME:-gally.localhost}
+      - API_SERVER_NAME=${API_SERVER_NAME:-api.gally.localhost}
+      - HAS_MULTIPLE_DOMAINS=${API_SERVER_NAME:-}
+
+volumes:
+  certbot_www:
