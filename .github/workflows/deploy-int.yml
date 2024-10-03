@@ -70,14 +70,14 @@ jobs:
             make .env &&
             POSTGRES_PASSWORD=$POSTGRES_PASSWORD docker compose -f compose.yml -f compose.int.yml up -d database && 
             docker compose -f compose.yml -f compose.int.yml down &&
-            SERVER_NAME=$HOSTNAME docker compose -f compose.init_certs.yml build &&
-            SERVER_NAME=$HOSTNAME docker compose -f compose.init_certs.yml up proxy_init_certs -d &&
-            SERVER_NAME=$HOSTNAME docker compose -f compose.init_certs.yml up certbot_init_certs &&
-            docker compose -f compose.init_certs.yml down &&
             git fetch --all && git reset --hard  && git checkout ${{ env.back_branch }} &&
             [ -d front/gally-admin ] || git clone https://github.com/Elastic-Suite/gally-admin.git front/gally-admin &&
             cd front/gally-admin && git fetch --all && git reset --hard && git checkout ${{ env.front_branch }} &&
             cd /home/ubuntu/gally &&
+            SERVER_NAME=$HOSTNAME docker compose -f compose.init_certs.yml build &&
+            SERVER_NAME=$HOSTNAME docker compose -f compose.init_certs.yml up proxy_init_certs -d &&
+            SERVER_NAME=$HOSTNAME docker compose -f compose.init_certs.yml up certbot_init_certs &&
+            docker compose -f compose.init_certs.yml down &&
             docker compose run --rm php rm -rf vendor/gally/gally-premium &&
             docker compose run --rm php composer config repositories.gally-premium composer $PACKAGIST_URL &&
             docker compose run --rm -e COMPOSER_AUTH='$COMPOSER_AUTH' php composer require \"gally/gally-standard:${{ env.composer_version }} as ${{ inputs.last_published_version }}\" &&
