@@ -22,7 +22,7 @@ services:
     build:
       context: ./docker/certbot
     volumes:
-      - ./docker/certbot/certs:/etc/letsencrypt/live
+      - ./docker/certbot/certs:/etc/letsencrypt
     environment:
       - SERVER_NAME=${SERVER_NAME:-gally.localhost}
       - API_SERVER_NAME=${API_SERVER_NAME:-api.gally.localhost}

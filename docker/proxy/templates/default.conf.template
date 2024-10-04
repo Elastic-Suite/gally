@@ -16,8 +16,8 @@ server {
     listen 443 ssl;
     server_name ${SERVER_NAME} ${API_SERVER_NAME};
 
-    ssl_certificate /etc/nginx/certs/${SERVER_NAME}/fullchain.pem;
-    ssl_certificate_key /etc/nginx/certs/${SERVER_NAME}/privkey.pem;
+    ssl_certificate /etc/nginx/certs/live/${SERVER_NAME}/fullchain.pem;
+    ssl_certificate_key /etc/nginx/certs/live/${SERVER_NAME}/privkey.pem;
 
     proxy_buffer_size 64k;
     proxy_buffers 64 16k;
