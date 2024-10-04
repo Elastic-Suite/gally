@@ -1,7 +1,7 @@
 #!/bin/sh
 
-CERT_PATH="/etc/letsencrypt/${SERVER_NAME}/fullchain.pem"
-KEY_PATH="/etc/letsencrypt/${SERVER_NAME}/privkey.pem"
+CERT_PATH="/etc/letsencrypt/live/${SERVER_NAME}/fullchain.pem"
+KEY_PATH="/etc/letsencrypt/live/${SERVER_NAME}/privkey.pem"
 
 if [[ ! -f "$CERT_PATH" ]]; then
     mkdir -p $(dirname $CERT_PATH)

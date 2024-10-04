@@ -1,8 +1,4 @@
 services:
-  
-  certbot:
-    environment:
-      - SELF_SIGNED=true
 
   router:
     build:
