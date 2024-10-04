@@ -22,9 +22,8 @@ services:
     build:
       context: ./docker/certbot
     volumes:
-      - ./docker/certbot/certs:/etc/letsencrypt 
+      - ./docker/certbot/certs:/etc/letsencrypt/live
     environment:
-      - SELF_SIGNED=true
       - SERVER_NAME=${SERVER_NAME:-gally.localhost}
       - API_SERVER_NAME=${API_SERVER_NAME:-api.gally.localhost}
       - HAS_MULTIPLE_DOMAINS=${API_SERVER_NAME:-}
