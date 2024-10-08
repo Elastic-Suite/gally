@@ -65,7 +65,7 @@ services:
         COMPOSER_AUTH: ${COMPOSER_AUTH:-}
     volumes:
       - php_static_files:/app/public:rw
-      - jwt_keys:/srv/api/config/jwt
+      - jwt_keys:/app/config/jwt
     depends_on: 
       - database
       - search
