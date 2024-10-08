@@ -23,7 +23,8 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 	file \
 	gettext \
 	git \
-    patch \
+	patch \
+	rsync \
 	&& rm -rf /var/lib/apt/lists/*
 
 ARG COMPOSER_AUTH
@@ -94,6 +95,7 @@ COPY --link conf.d/app.prod.ini $PHP_INI_DIR/conf.d/
 # prevent the reinstallation of vendors at every changes in the source code
 COPY --from=api_src --link composer.* symfony.* patches ./
 COPY --from=api_src --link patches ./patches
+COPY --from=api_src --link packages ./packages
 
 RUN set -eux; \
 	composer install --no-cache --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress
@@ -110,3 +112,6 @@ RUN set -eux; \
 	chmod +x bin/console; \
 	rm -rf var/cache/*; \
 	sync;
+
+# copy public files in php_static_files to save them, because they can be overwritten when a volume is mounted between php and router containers
+COPY --from=api_src public php_static_files

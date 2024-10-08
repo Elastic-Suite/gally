@@ -7,6 +7,11 @@ if [ "${1#-}" != "$1" ]; then
 fi
 
 if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
+	if [ -d "php_static_files" ]; then
+		echo "rsync php_static_files directory in public directory"
+		rsync -av php_static_files/ public/
+	fi
+
 	if [ "$APP_ENV" != 'prod' ]; then
 		composer install --prefer-dist --no-progress --no-interaction
 
