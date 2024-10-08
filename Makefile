@@ -55,7 +55,7 @@ logs: ## Show live logs, pass the parameter "s=" to get logs of a given service,
 
 sh: ## Connect to the PHP FPM container, pass the parameter "s=" to connect to another service, example: make sh s=database
 	@$(eval s ?= php)
-	@$(DOCKER_COMP) exec $(s) sh
+	@$(DOCKER_COMP) exec $(s) bash
 
 ## —— Composer 🧙 ——————————————————————————————————————————————————————————————
 composer: ## Run composer, pass the parameter "c=" to run a given command, example: make composer c='req symfony/orm-pack'
