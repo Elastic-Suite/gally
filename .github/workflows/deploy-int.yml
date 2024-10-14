@@ -68,6 +68,7 @@ jobs:
             docker system prune -af &&
             ([[ $(docker volume ls -q | awk '!/_/' | wc -l) -eq 0 ]] || docker volume rm $(docker volume ls -q | awk '!/_/' | tr '\n' ' ')) &&
             make .env &&
+            POSTGRES_PASSWORD=$POSTGRES_PASSWORD docker compose -f compose.yml -f compose.int.yml up -d database &&
             docker-compose down &&
             git fetch --all && git reset --hard  && git checkout ${{ env.back_branch }} &&
             [ -d front/gally-admin ] || git clone https://github.com/Elastic-Suite/gally-admin.git front/gally-admin &&
