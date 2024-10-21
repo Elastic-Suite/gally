@@ -75,7 +75,9 @@ const extractPaths = (items) => {
   }, [])
 }
 
-test('Left Menu', async ({ page }) => {
+test('Left Menu', {
+  tag: "@premium"
+},async ({ page }) => {
   // Correct login attempt
   await login(page)
 

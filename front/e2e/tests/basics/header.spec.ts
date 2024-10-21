@@ -45,7 +45,7 @@ test('Header', async ({ page }) => {
 
   await userMenuContent.getByText('Déconnexion').click()
 
-  await expect(page).toHaveURL('https://localhost/fr/login')
+  await expect(page).toHaveURL('https://gally.localhost/fr/login')
 
   await login(page)
 })

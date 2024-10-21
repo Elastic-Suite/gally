@@ -1,6 +1,6 @@
 {
   "private": true,
-  "workspaces": ["example-app", "pwa", "gally-admin/packages/components", "gally-admin/packages/shared"],
+  "workspaces": ["example-app", "pwa", "gally-admin/packages/components", "gally-admin/packages/shared", "e2e"],
   "scripts": {
     "dev": "concurrently \"npm:dev:pwa\" \"npm:dev:components\" \"npm:dev:shared\"",
     "dev:pwa": "yarn --cwd pwa dev",
@@ -25,7 +25,11 @@
     "prettier:ci": "yarn --cwd pwa prettier:ci && yarn --cwd example-app prettier:ci",
     "typescript": "yarn --cwd pwa typescript && yarn --cwd example-app typescript",
     "typescript:ci": "yarn --cwd pwa typescript:ci && yarn --cwd example-app typescript:ci",
-    "prepare": "yarn --cwd pwa prepare && cd .. && husky install front/.husky"
+    "prepare": "yarn --cwd pwa prepare && cd .. && husky install front/.husky",
+    "e2e:test": "yarn --cwd e2e test",
+    "e2e:test::ci": "yarn --cwd e2e test:ci",
+    "e2e:test:standard": "yarn --cwd e2e test:standard",
+    "e2e:test:premium": "yarn --cwd e2e test:premium"
   },
   "devDependencies": {
     "concurrently": "7.4.0",
