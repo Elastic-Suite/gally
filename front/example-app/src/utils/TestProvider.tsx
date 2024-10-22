@@ -3,8 +3,10 @@ import { IApi, IUser, schemaContext } from '@elastic-suite/gally-admin-shared'
 
 import {
   ICatalogContext,
+  ISettingsContext,
   catalogContext,
   categoryContext,
+  settingsContext,
   userContext,
 } from '../contexts'
 import { catalogsGraphql, categoriesGraphql } from '../mocks'
@@ -36,6 +38,13 @@ const catalogContextValue = {
   onLocalizedCatalogIdChange: (): void => void null,
 } as ICatalogContext
 
+const settingsContextValue: ISettingsContext = {
+  longitude: '',
+  latitude: '',
+  setLatitude: (): void => void null,
+  setLongitude: (): void => void null,
+}
+
 function TestProvider(props: IProps): JSX.Element {
   const { api, children } = props
 
@@ -51,7 +60,11 @@ function TestProvider(props: IProps): JSX.Element {
           <categoryContext.Provider
             value={categoriesGraphql.data.getCategoryTree.categories}
           >
-            <RequestedPathProvider>{children}</RequestedPathProvider>
+            <RequestedPathProvider>
+              <settingsContext.Provider value={settingsContextValue}>
+                {children}
+              </settingsContext.Provider>
+            </RequestedPathProvider>
           </categoryContext.Provider>
         </catalogContext.Provider>
       </schemaContext.Provider>
