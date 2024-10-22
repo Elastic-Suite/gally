@@ -18,6 +18,7 @@ import { catalogContext, extraBundlesContext } from '../../contexts'
 import HeaderFormControl from '../HeaderFormControl/HeaderFormControl'
 import SearchBar from '../SearchBar/SearchBar'
 import Logo from './logo.svg'
+import Settings from '../Settings/Settings'
 
 function Header(): JSX.Element {
   const catalogLabelId = useId()
@@ -142,6 +143,7 @@ function Header(): JSX.Element {
             )}
           </Box>
         </Box>
+        <Settings />
       </Toolbar>
     </AppBar>
   )
