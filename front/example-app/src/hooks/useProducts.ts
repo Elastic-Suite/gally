@@ -21,7 +21,7 @@ import {
   isError,
 } from '@elastic-suite/gally-admin-shared'
 
-import { catalogContext } from '../contexts'
+import { catalogContext, settingsContext } from '../contexts'
 import { IActiveFilters, IFilterMoreOptions, IProductsHook } from '../types'
 import { getProductFilters } from '../services'
 
@@ -47,6 +47,7 @@ export function useProducts(
     () => getProductFilters(activeFilters),
     [activeFilters]
   )
+  const { longitude, latitude } = useContext(settingsContext)
 
   const [products, setProducts, load, debouncedLoad] =
     useGraphqlApi<IGraphqlSearchProducts>()
@@ -90,7 +91,15 @@ export function useProducts(
         const loadFunction = activeFilters.length === 0 ? load : debouncedLoad
         return loadFunction(
           getSearchProductsQuery(queryFilters, true),
-          variables as unknown as Record<string, unknown>
+          variables as unknown as Record<string, unknown>,
+          {
+            headers: {
+              ...(latitude !== '' &&
+                longitude !== '' && {
+                  'reference-location': `${latitude}, ${longitude}`,
+                }),
+            },
+          }
         )
       }
       setProducts(null)
@@ -109,6 +118,8 @@ export function useProducts(
       setProducts,
       sort,
       sortOrder,
+      latitude,
+      longitude,
     ]
   )
 
@@ -134,7 +145,15 @@ export function useProducts(
       }
       graphqlApi<IGraphqlViewMoreProductFacetOptions>(
         getMoreFacetProductOptionsQuery(queryFilters),
-        variables as unknown as Record<string, unknown>
+        variables as unknown as Record<string, unknown>,
+        {
+          headers: {
+            ...(latitude !== '' &&
+              longitude !== '' && {
+                'reference-location': `${latitude}, ${longitude}`,
+              }),
+          },
+        }
       ).then((json) => {
         if (isError(json)) {
           setMoreOptions(
@@ -161,7 +180,15 @@ export function useProducts(
         }
       })
     },
-    [graphqlApi, localizedCatalogId, queryFilters, search]
+    [
+      graphqlApi,
+      localizedCatalogId,
+      queryFilters,
+      search,
+      latitude,
+      longitude,
+      currentCategoryId,
+    ]
   )
 
   function updateFilters(filters: SetStateAction<IActiveFilters>): void {

@@ -8,6 +8,7 @@ import RequestedPathProvider from '../RequestedPathProvider/RequestedPathProvide
 import SchemaProvider from '../SchemaProvider/SchemaProvider'
 import SearchProvider from '../SearchProvider/SearchProvider'
 import UserProvider from '../UserProvider/UserProvider'
+import SettingsProvider from '../SettingsProvider/SettingsProvider'
 
 interface IProps {
   children: ReactNode
@@ -22,9 +23,11 @@ function AppProvider(props: IProps): JSX.Element {
           <ConfigurationsProvider>
             <RequestedPathProvider>
               <ExtraBundlesProvider>
-                <CategoryProvider>
-                  <SearchProvider>{children}</SearchProvider>
-                </CategoryProvider>
+                <SettingsProvider>
+                  <CategoryProvider>
+                    <SearchProvider>{children}</SearchProvider>
+                  </CategoryProvider>
+                </SettingsProvider>
               </ExtraBundlesProvider>
             </RequestedPathProvider>
           </ConfigurationsProvider>
