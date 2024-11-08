@@ -20,7 +20,7 @@ jobs:
     name: Tests
     uses: ./.github/workflows/tests.yml
     with:
-      version: master
-      last_published_version: dev-master
+      version: 2.0.x
+      last_published_version: 2.0.x-dev
       use_default_github_ref: true
     secrets: inherit
