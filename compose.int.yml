@@ -10,7 +10,6 @@ services:
     environment:
       - APP_SECRET=${APP_SECRET}
       - XDEBUG_MODE=off
-      - ELASTICSEARCH_SSL_VERIFICATION=false
 
   pwa:
     build:

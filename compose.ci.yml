@@ -13,7 +13,6 @@ services:
     environment:
       - APP_ENV=dev
       - XDEBUG_MODE=off
-      - ELASTICSEARCH_SSL_VERIFICATION=false
 
   pwa:
     build:
