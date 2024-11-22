@@ -3,7 +3,7 @@ services:
     networks:
       default:
         aliases:
-          - ${API_SERVER_NAME:-api.gally.localhost}
+          - ${SERVER_NAME:-gally.localhost}
 
 networks:  
   default:
