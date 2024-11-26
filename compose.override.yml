@@ -57,6 +57,19 @@ services:
     environment:
       - PUBLIC_URL=https://${SERVER_NAME:-gally.localhost}/example
       - REACT_APP_API_URL=https://${API_SERVER_NAME:-${SERVER_NAME:-api.gally.localhost}}/${API_ROUTE_PREFIX:-}
+  e2e:
+    build:
+      context: .
+      dockerfile: ./docker/front/Dockerfile.e2e
+    environment:
+      - SERVER_BASE_URL=https://${SERVER_NAME:-gally.localhost}
+      - API_SERVER_BASE_URL=https://${API_SERVER_NAME:-api.gally.localhost}
+    depends_on:
+      - proxy
+    extra_hosts:
+      - ${SERVER_NAME:-gally.localhost}:host-gateway
+      - ${API_SERVER_NAME:-api.gally.localhost}:host-gateway
+        
 
 ###> doctrine/doctrine-bundle ###
   database:
