@@ -70,7 +70,7 @@ services:
       - APP_ENV=${APP_ENV:-prod}
       - APP_SECRET=${APP_SECRET:-!ChangeMe!}
       - SERVER_NAME=${SERVER_NAME:-gally.localhost}, php:80 
-      - API_ROUTE_PREFIX=${API_ROUTE_PREFIX:-}
+      - API_ROUTE_PREFIX=${API_ROUTE_PREFIX:-api}
       - TRUSTED_PROXIES=${TRUSTED_PROXIES:-127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16}
       - TRUSTED_HOSTS=${TRUSTED_HOSTS:-^${SERVER_NAME:-|gally.localhost}|localhost|php$$}
       - CORS_ALLOW_ORIGIN=^https?://${SERVER_NAME:-gally.localhost}$
@@ -87,14 +87,14 @@ services:
         front_src: ./front
       args:
         - NEXT_PUBLIC_ENTRYPOINT=${SERVER_NAME:-gally.localhost}
-        - NEXT_PUBLIC_API_URL=https://${SERVER_NAME:-gally.localhost}/${API_ROUTE_PREFIX:-}
-        - NEXT_PUBLIC_API_ROUTE_PREFIX=${API_ROUTE_PREFIX:-}
-        - REACT_APP_API_URL=https://${SERVER_NAME:-gally.localhost}/${API_ROUTE_PREFIX:-}
+        - NEXT_PUBLIC_API_URL=https://${SERVER_NAME:-gally.localhost}/${API_ROUTE_PREFIX:-api}
+        - NEXT_PUBLIC_API_ROUTE_PREFIX=${API_ROUTE_PREFIX:-api}
+        - REACT_APP_API_URL=https://${SERVER_NAME:-gally.localhost}/${API_ROUTE_PREFIX:-api}
     environment:
       - NEXT_PUBLIC_ENTRYPOINT=${SERVER_NAME:-gally.localhost}
-      - NEXT_PUBLIC_API_URL=https://${SERVER_NAME:-gally.localhost}/${API_ROUTE_PREFIX:-}
-      - NEXT_PUBLIC_API_ROUTE_PREFIX=${API_ROUTE_PREFIX:-}
-      - REACT_APP_API_URL=https://${SERVER_NAME:-gally.localhost}/${API_ROUTE_PREFIX:-}
+      - NEXT_PUBLIC_API_URL=https://${SERVER_NAME:-gally.localhost}/${API_ROUTE_PREFIX:-api}
+      - NEXT_PUBLIC_API_ROUTE_PREFIX=${API_ROUTE_PREFIX:-api}
+      - REACT_APP_API_URL=https://${SERVER_NAME:-gally.localhost}/${API_ROUTE_PREFIX:-api}
     healthcheck:
       test: test $$(curl --connect-timeout 2 -s -o /dev/null -w ''%{http_code}'' http://localhost:3000) -eq 200
       interval: 10s
