@@ -2057,12 +2057,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Elastic-Suite/gally-standard.git",
-                "reference": "43e09f29f55c2f1623f55a0df601ec88dcb476f7"
+                "reference": "135d94629dcbae9d00f2125b3883e86bcb73aba5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Elastic-Suite/gally-standard/zipball/43e09f29f55c2f1623f55a0df601ec88dcb476f7",
-                "reference": "43e09f29f55c2f1623f55a0df601ec88dcb476f7",
+                "url": "https://api.github.com/repos/Elastic-Suite/gally-standard/zipball/135d94629dcbae9d00f2125b3883e86bcb73aba5",
+                "reference": "135d94629dcbae9d00f2125b3883e86bcb73aba5",
                 "shasum": ""
             },
             "require": {
@@ -2090,6 +2090,7 @@
                 "phpunit/phpunit": "^9.5",
                 "symfony/phpunit-bridge": "6.0.*"
             },
+            "default-branch": true,
             "type": "symfony-bundle",
             "extra": {
                 "symfony": {
@@ -2130,9 +2131,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Elastic-Suite/gally-standard/issues",
-                "source": "https://github.com/Elastic-Suite/gally-standard/tree/master"
+                "source": "https://github.com/Elastic-Suite/gally-standard/tree/2.0.x"
             },
-            "time": "2024-11-07T15:58:11+00:00"
+            "time": "2024-11-27T09:06:05+00:00"
         },
         {
             "name": "gedmo/doctrine-extensions",
