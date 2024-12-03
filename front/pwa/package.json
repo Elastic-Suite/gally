@@ -20,8 +20,8 @@
     "prepare": "cd public && ln -fsT ../../node_modules/@elastic-suite/gally-admin-components/public/locales/ locales && ln -fsT ../../node_modules/@elastic-suite/gally-admin-components/public/images/ images"
   },
   "dependencies": {
-    "@elastic-suite/gally-admin-components": "2.0.0-alpha.0",
-    "@elastic-suite/gally-admin-shared": "2.0.0-alpha.0",
+    "@elastic-suite/gally-admin-components": "2.0.0",
+    "@elastic-suite/gally-admin-shared": "2.0.0",
     "@emotion/react": "11.10.4",
     "@emotion/styled": "11.10.4",
     "@mui/material": "5.10.5",

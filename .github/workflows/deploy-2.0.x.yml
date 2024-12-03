@@ -18,7 +18,7 @@ jobs:
     uses: ./.github/workflows/tests.yml
     with:
       version: 2.0.x
-      last_published_version: 2.0.x-dev
+      last_published_version: 2.0.0
     secrets:
       COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
       PACKAGIST_URL: ${{ secrets.PACKAGIST_URL }}
@@ -32,7 +32,7 @@ jobs:
     uses: ./.github/workflows/deploy-int.yml
     with:
       version: 2.0.x
-      last_published_version: 2.0.x-dev
+      last_published_version: 2.0.0
     secrets:
       AWS_DEPLOY_KEY: ${{ secrets.AWS_DEPLOY_KEY }}
       AWS_HOSTNAME: ${{ secrets.AWS_HOSTNAME_STABLE }}
