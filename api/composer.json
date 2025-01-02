@@ -11,6 +11,8 @@
         "doctrine/doctrine-bundle": "^2.7",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.12",
+        "gally/gally-premium": "2.0.0",
+        "gally/gally-sample-data": "2.0.0",
         "gally/gally-standard": "2.0.0",
         "hautelook/alice-bundle": "2.11.0",
         "lexik/jwt-authentication-bundle": "^2.14",
@@ -118,6 +120,35 @@
         "symfony": {
             "allow-contrib": false,
             "require": "6.4.*"
+        }
+    },
+    "repositories": {
+        "gally-sample-data": {
+            "type": "path",
+            "url": "./packages/gally-sample-data",
+            "options": {
+                "versions": {
+                    "gally/gally-sample-data": "2.0.0"
+                }
+            }
+        },
+        "gally-premium": {
+            "type": "path",
+            "url": "./packages/gally-premium",
+            "options": {
+                "versions": {
+                    "gally/gally-premium": "2.0.0"
+                }
+            }
+        },
+        "gally-standard": {
+            "type": "path",
+            "url": "./packages/gally-standard",
+            "options": {
+                "versions": {
+                    "gally/gally-standard": "2.0.0"
+                }
+            }
         }
     }
 }

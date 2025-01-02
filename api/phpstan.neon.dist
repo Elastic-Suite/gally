@@ -3,6 +3,8 @@ parameters:
     paths:
         - src
         - vendor/gally/
+        - packages/gally-standard/
+        - packages/gally-premium/
     excludePaths:
         - src/Acme
     inferPrivatePropertyTypeFromConstructor: true

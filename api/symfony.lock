@@ -165,8 +165,14 @@
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.5"
     },
+    "gally/gally-premium": {
+        "version": "2.0.0"
+    },
+    "gally/gally-sample-data": {
+        "version": "2.0.0"
+    },
     "gally/gally-standard": {
-        "version": "2.0.x-dev"
+        "version": "2.0.0"
     },
     "gedmo/doctrine-extensions": {
         "version": "v3.9.0"

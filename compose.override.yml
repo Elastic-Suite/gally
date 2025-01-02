@@ -33,9 +33,9 @@ services:
     user: ${UUID?You must set UUID env var}:${GUID?You must set GUID env var}
     build:
       target: gally_pwa_dev
-      args:
-        - NEXT_PUBLIC_ENTRYPOINT=${SERVER_NAME:-gally.localhost}
-        - NEXT_PUBLIC_API_URL=https://${SERVER_NAME:-gally.localhost}/${API_ROUTE_PREFIX:-api}
+#      args:
+#        - NEXT_PUBLIC_ENTRYPOINT=${SERVER_NAME:-gally.localhost}
+#        - NEXT_PUBLIC_API_URL=https://${SERVER_NAME:-gally.localhost}/${API_ROUTE_PREFIX:-api}
     volumes:
       - ./front:/usr/src/front:rw,cached,z
     environment:
