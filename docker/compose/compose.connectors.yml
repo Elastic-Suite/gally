@@ -1,3 +1,4 @@
+# Add this compose file to your docker compose command if you want to use gally to develop connector locally
 services:
   proxy:
     networks:

@@ -1,0 +1,20 @@
+# Example file for a reverse proxy with traefik, you can run it with 
+# "docker compose -f docker/traefik.yml up -d"
+# /!\ Be careful traefik will need port 80 nd 443 of your system.
+
+name: reverse-proxy
+services:
+  reverse-proxy:
+    # The official v3 Traefik docker image
+    image: traefik:v3.2
+    # Enables the web UI and tells Traefik to listen to docker
+    command:
+        - "--providers.docker=true"
+        - "--providers.docker.exposedbydefault=false"
+        - "--entrypoints.http.address=:80"
+        - "--entrypoints.https.address=:443"
+        - "--api.insecure=true"
+    network_mode: host
+    volumes:
+      # So that Traefik can listen to the Docker events
+      - /var/run/docker.sock:/var/run/docker.sock
