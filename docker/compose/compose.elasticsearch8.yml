@@ -1,3 +1,4 @@
+# Add this compose file to your docker compose command if you want to use gally with elasticsearch 8 (NB opensearch 2 is recommended)
 services:
   search:
     build:

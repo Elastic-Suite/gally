@@ -1,3 +1,4 @@
+# Add this compose file to your docker compose command if you want to enable gpu acceleration for vector computation (WIP)
 services:  
   search-ml:
     build:

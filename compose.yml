@@ -3,8 +3,8 @@ services:
     build:
       context: ./docker/proxy
     ports:
-      - "80:80"
-      - "443:443"
+      - "${HTTP_PORT:-80}:80"
+      - "${HTTPS_PORT:-443}:443"
     volumes:
       - ./docker/certbot/certs:/etc/nginx/certs
       - ./docker/certbot/www:/var/www/certbot
@@ -35,6 +35,15 @@ services:
       - BACKEND_PORT=80
       - PHP_UPSTREAM=php
       - VARNISH_SIZE=512M
+    labels:
+      - traefik.enable=true
+      # Serve gally over http
+      - traefik.http.routers.gally-http.rule=Host(`${SERVER_NAME:-gally.localhost}`)
+      - traefik.http.routers.gally-http.entrypoints=http
+      # Serve gally over https
+      - traefik.http.routers.gally-https.rule=Host(`${SERVER_NAME:-gally.localhost}`)
+      - traefik.http.routers.gally-https.entrypoints=https
+      - traefik.http.routers.gally-https.tls=true
 
   router:
     build:
@@ -148,8 +157,8 @@ services:
         soft: -1
         hard: -1
     ports:
-      - 9200:9200
-      - 9600:9600    
+      - 9200
+      - 9600    
     healthcheck:
       test: test $$(curl -uadmin:$${OPENSEARCH_INITIAL_ADMIN_PASSWORD:-!ChangeMe0!} -k --write-out %{http_code} --fail --silent --output /dev/null https://localhost:9200/_cluster/health?wait_for_status=green&timeout=5s) -eq 200
       interval: 10s
