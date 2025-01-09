@@ -14,7 +14,7 @@ class Kernel extends BaseKernel
     {
         $container = parent::buildContainer();
 
-        $routePrefix = getenv('API_ROUTE_PREFIX');
+        $routePrefix = $container->getParameter('route_prefix');
         $container->setParameter('target_route_prefix', $routePrefix ? "/$routePrefix" : '');
 
         return $container;

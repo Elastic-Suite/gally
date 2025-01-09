@@ -30,4 +30,4 @@ services:
     
 when@test:
     parameters:
-        route_prefix: '' # Don't use prefix for test
+        route_prefix: 'api'
