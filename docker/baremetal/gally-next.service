@@ -1,0 +1,17 @@
+[Unit]
+Description=Gally Front (Next.js)
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/yarn start
+WorkingDirectory=/var/gally/front
+Restart=always
+RestartSec=10
+User=node
+Group=node
+Environment=PORT=3000
+Environment=NODE_ENV=production
+LimitNOFILE=65535
+
+[Install]
+WantedBy=multi-user.target

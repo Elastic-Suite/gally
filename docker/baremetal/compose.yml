@@ -1,0 +1,48 @@
+name: bare-metal
+services:
+  server:
+    build:
+        context: .        
+    privileged: true
+    ports:
+        - 443:443
+    volumes:
+      - ./:/var/install
+      - ../..:/var/gally
+    environment:
+      APP_ENV: prod
+      SERVER_NAME: gally.baremetal.localhost
+      NEXT_PUBLIC_API_URL: https://gally.baremetal.localhost/api
+      API_ROUTE_PREFIX: api
+      NEXT_PUBLIC_API_ROUTE_PREFIX: api
+      PWA_UPSTREAM: localhost:3000
+      TRUSTED_HOSTS: ^gally.baremetal.localhost|localhost|php$$
+      ELASTICSEARCH_SSL_VERIFICATION: 0
+      GALLY_CATALOG_MEDIA_URL: https://gally.baremetal.localhost/media/catalog/product/
+  search:
+    build:
+        context: .        
+    privileged: true
+    ports:
+        - 9200:9200
+    volumes:
+      - ./:/var/install
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    environment:
+      OPENSEARCH_INITIAL_ADMIN_PASSWORD: Blop123!Blop123!
+  search-ml:
+    build:
+        context: .        
+    privileged: true
+    volumes:
+      - ./:/var/install
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    environment:
+      OPENSEARCH_INITIAL_ADMIN_PASSWORD: Blop123!Blop123!
+      
