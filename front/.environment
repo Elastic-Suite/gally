@@ -3,4 +3,7 @@
 #### THIS FILE IS USED ONLY WHEN DEPLOYING GALLY ON PLATFORM.SH
 #############################################################################################
 
-export SERVER_NAME=api.$PLATFORM_ENVIRONMENT-$PLATFORM_PROJECT.eu.platformsh.site
+export SERVER_NAME=$(echo $PLATFORM_ROUTES | base64 --decode | jq -r "keys[0]" | awk -F[/:] '{print $4}')
+export NEXT_PUBLIC_ENTRYPOINT=$(echo $PLATFORM_ROUTES | base64 --decode | jq -r "keys[0]" | awk -F[/:] '{print $4}')
+export NEXT_PUBLIC_API_URL=https://$SERVER_NAME/$NEXT_PUBLIC_API_ROUTE_PREFIX
+export REACT_APP_API_URL=https://$SERVER_NAME/$NEXT_PUBLIC_API_ROUTE_PREFIX
