@@ -85,7 +85,7 @@
   variables:
       env:
           NEXT_PUBLIC_API_ROUTE_PREFIX: 'api'
-          NEXT_PUBLIC_API_URL: 'https://upsun-deployment-config-3xlvpkq-kxux3rltbhsgo.fr-3.platformsh.site/api'
+#          NEXT_PUBLIC_API_URL: 'Set this as an environment variable in Platform.sh'
 
   # The size of the persistent disk of the application (in MB). Minimum value is 128.
   disk: 2048
