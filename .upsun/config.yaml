@@ -6,7 +6,7 @@ applications:
     variables:
         env:
             NEXT_PUBLIC_API_ROUTE_PREFIX: 'api'
-            NEXT_PUBLIC_API_URL: 'https://upsun-deployment-config-3xlvpkq-kxux3rltbhsgo.fr-3.platformsh.site/api'
+#            NEXT_PUBLIC_API_URL: 'Set this as an environment variable in Upsun'
     mounts:
       "/.npm":
         source: "storage"
