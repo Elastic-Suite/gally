@@ -11,6 +11,8 @@
   variables:
       env:
           APP_ENV: 'prod'
+          API_ROUTE_PREFIX: 'api'
+          ELASTICSEARCH_SSL_VERIFICATION: false
 
   dependencies:
       php:
