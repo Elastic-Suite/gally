@@ -64,10 +64,24 @@ applications:
       build: |
           bin/console lexik:jwt:generate-keypair --skip-if-exists --no-interaction
           bin/console --env=prod assets:install --no-debug
-          sed -i '/VectorSearch/d' config/bundles.php
           [ -z "${MEDIA_URL}" ] || echo "gally:\n  base_url:\n    media: '${MEDIA_URL}'" > config/packages/gally_configuration.yaml
       
       deploy: |
+          OPENSEARCH_URL="http://opensearch.internal:9200"
+          # Check the number of nodes in the cluster
+          NODE_COUNT=$(curl -s "$OPENSEARCH_URL/_cat/nodes?h=name" | wc -l)
+      
+          if [ "$NODE_COUNT" -eq 1 ]; then
+            echo "This is a single-node OpenSearch cluster. Proceeding with the settings change."
+    
+            # Change the setting plugins.ml_commons.only_run_on_ml_node to false
+            curl -X PUT "$OPENSEARCH_URL/_cluster/settings" \
+              -H "Content-Type: application/json" \
+              -d '{ "persistent": { "plugins.ml_commons.only_run_on_ml_node": false}}'
+            echo "Setting updated successfully."
+          else
+            echo "This is a multi-node OpenSearch cluster. No changes made."
+          fi
           bin/console --env=prod cache:clear
           bin/console doctrine:migrations:migrate -n --allow-no-migration    
     relationships:
