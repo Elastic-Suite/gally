@@ -16,3 +16,13 @@ opensearch:
 redis:
     type: redis-persistent:7.0
     disk: 256
+    
+varnish:
+    type: varnish:7.6
+    relationships:
+        api: 'api:http'
+        admin: 'admin:http'
+    configuration:
+        vcl: !include
+            type: string
+            path: default.vcl

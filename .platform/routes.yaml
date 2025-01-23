@@ -1,23 +1,8 @@
-# Route / to default React App.    
+# Route everything to Varnish and he will dispatch.   
 https://{default}/:
     cache:
-        cookies:
-            - '*'
-        default_ttl: 0
-        enabled: true
-        headers:
-            - Accept
-            - Accept-Language
-    ssi:
-        enabled: false
-    type: upstream
-    upstream: admin:http
-
-# Route /api to Api platform app.    
-https://{default}/api:
-    cache:
         enabled: false
     ssi:
         enabled: false
     type: upstream
-    upstream: api:http
+    upstream: varnish:http
