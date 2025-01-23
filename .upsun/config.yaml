@@ -64,7 +64,6 @@ applications:
       build: |
           bin/console lexik:jwt:generate-keypair --skip-if-exists --no-interaction
           bin/console --env=prod assets:install --no-debug
-          sed -i '/BAN/d' vendor/api-platform/core/src/HttpCache/VarnishPurger.php
           sed -i '/VectorSearch/d' config/bundles.php
           [ -z "${MEDIA_URL}" ] || echo "gally:\n  base_url:\n    media: '${MEDIA_URL}'" > config/packages/gally_configuration.yaml
       
@@ -77,6 +76,17 @@ applications:
       redis: "redis:redis"
           
 services:
+    
+  varnish:
+    type: varnish:7.6
+    relationships:
+      api: 'api:http'
+      admin: 'admin:http'
+    configuration:
+      vcl: !include
+        type: string
+        path: default.vcl
+            
   postgresql:
     type: postgresql:15
 
@@ -94,26 +104,11 @@ services:
             - opensearch-knn
           
 routes:
-# Route / to default React App.    
+# Route everything to Varnish and he will dispatch.   
     https://{default}/:
         cache:
-            cookies:
-                - '*'
-            default_ttl: 0
-            enabled: true
-            headers:
-                - Accept
-                - Accept-Language
-        ssi:
-            enabled: false
-        type: upstream
-        upstream: admin:http
-
-# Route /api to Api platform app.    
-    https://{default}/api:
-        cache:
             enabled: false
         ssi:
             enabled: false
         type: upstream
-        upstream: api:http
+        upstream: varnish:http
