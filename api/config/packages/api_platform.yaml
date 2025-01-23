@@ -3,4 +3,6 @@ api_platform:
         paths: [ '%kernel.project_dir%/src/Entity' ]
     http_cache:
         invalidation:
+            # If you disable the invalidation, comment or remove the "varnish urls" config just below
+            enabled: true
             varnish_urls: [ '%env(VARNISH_URL)%' ]
