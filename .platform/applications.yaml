@@ -64,8 +64,7 @@
   hooks:
       build: |
           bin/console lexik:jwt:generate-keypair --skip-if-exists --no-interaction
-          bin/console --env=prod assets:install --no-debug
-          sed -i '/BAN/d' vendor/api-platform/core/src/HttpCache/VarnishPurger.php          
+          bin/console --env=prod assets:install --no-debug         
           sed -i '/VectorSearch/d' config/bundles.php
           
       deploy: |
