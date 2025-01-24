@@ -82,6 +82,10 @@ applications:
           else
             echo "This is a multi-node OpenSearch cluster. No changes made."
           fi
+          # Change the setting plugins.ml_commons.disk_free_space_threshold to -1 to avoid Disk Circuit Breaker
+          curl -X PUT "$OPENSEARCH_URL/_cluster/settings" \
+            -H "Content-Type: application/json" \
+            -d '{ "persistent": { "plugins.ml_commons.disk_free_space_threshold": -1}}'
           bin/console --env=prod cache:clear
           bin/console doctrine:migrations:migrate -n --allow-no-migration    
     relationships:
