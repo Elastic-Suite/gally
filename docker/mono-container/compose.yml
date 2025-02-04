@@ -1,0 +1,15 @@
+services:
+  server:
+    build:
+      context: .
+      additional_contexts:
+        api_src: ../../api
+        front_src: ../../front
+      args:
+        - SERVER_NAME=image.localhost
+        - OPENSEARCH_INITIAL_ADMIN_PASSWORD=Blop123!Blop123!
+    ports:
+      - "80:80"
+      - "443:443"
+      - "9201:9200"
+
