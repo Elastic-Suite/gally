@@ -13,5 +13,12 @@ export async function login(page: Page) {
   await passwordInput.fill('apassword')
   await submitButton.click()
 
-  await expect(page).toHaveURL('/fr/admin/settings/scope/catalogs')
+  await page.waitForResponse(async (response) => {
+    console.log('STATUS => ', response.status())
+    console.log('URL => ', response.url())
+    console.log('BODY => ', (await response.body()).toJSON())
+    return true
+  })
+
+  await expect(page).toHaveURL('/fr/admin/settings/scope/catalogs', {})
 }
