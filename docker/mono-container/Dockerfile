@@ -6,7 +6,7 @@ ENV SERVER_NAME $SERVER_NAME
 ARG OPENSEARCH_INITIAL_ADMIN_PASSWORD
 ENV OPENSEARCH_INITIAL_ADMIN_PASSWORD $OPENSEARCH_INITIAL_ADMIN_PASSWORD
 
-# Prerequist
+# Prerequisites
 RUN apt-get update ; \
     apt-get install -y curl gettext gnupg lsb-release openssl supervisor
 RUN curl -sSLo /usr/share/keyrings/deb.sury.org-php.gpg https://packages.sury.org/php/apt.gpg; \
@@ -63,6 +63,20 @@ RUN mkdir /run/php; \
 
 # Pwa
 COPY --from=front_src . /var/gally/front
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash && \
+    export NVM_DIR="$HOME/.nvm"  && \
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" && \
+	nvm install 16 && \
+	npm install -g yarn && \
+	cd /var/gally/front && \
+	yarn install --frozen-lockfile --network-timeout 120000 && \
+	yarn cache clean && \
+	yarn build && \
+	useradd node && \
+    mkdir -p /var/log/yarn/ && \
+    chown node:node -R /var/log/yarn && \
+    ln -s "$(which node)" /usr/bin/node && \
+    ln -s "$(which yarn)" /usr/bin/yarn
 
 COPY supervisord.conf /etc/supervisor/supervisord.conf
 COPY docker-entrypoint.sh /docker-entrypoint.sh

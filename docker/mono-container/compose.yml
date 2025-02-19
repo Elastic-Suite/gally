@@ -8,8 +8,9 @@ services:
       args:
         - SERVER_NAME=image.localhost
         - OPENSEARCH_INITIAL_ADMIN_PASSWORD=Blop123!Blop123!
+    environment:
+      - ELASTICSEARCH_SSL_VERIFICATION=false
     ports:
       - "80:80"
       - "443:443"
       - "9201:9200"
-
