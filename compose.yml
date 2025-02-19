@@ -22,6 +22,7 @@ services:
       context: ./docker/certbot
     volumes:
       - ./docker/certbot/certs:/etc/letsencrypt
+      - ./docker/certbot/www:/var/www/certbot
     environment:
       - SERVER_NAME=${SERVER_NAME:-gally.localhost}
 
