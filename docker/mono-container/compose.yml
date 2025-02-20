@@ -6,10 +6,19 @@ services:
         api_src: ../../api
         front_src: ../../front
       args:
-        - SERVER_NAME=image.localhost
+        - SERVER_NAME=gally.localhost
         - OPENSEARCH_INITIAL_ADMIN_PASSWORD=Blop123!Blop123!
+        - NEXT_PUBLIC_API_ROUTE_PREFIX=${API_ROUTE_PREFIX:-api}
+        - NEXT_PUBLIC_API_URL=https://${SERVER_NAME:-gally.localhost}/${API_ROUTE_PREFIX:-api}
     environment:
       - ELASTICSEARCH_SSL_VERIFICATION=false
+      - API_ROUTE_PREFIX=${API_ROUTE_PREFIX:-api}
+      - TRUSTED_PROXIES=${TRUSTED_PROXIES:-127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16}
+      - TRUSTED_HOSTS=${TRUSTED_HOSTS:-^${SERVER_NAME:-gally.localhost}$$}
+      - CORS_ALLOW_ORIGIN=${CORS_ALLOW_ORIGIN:-^https?://${SERVER_NAME:-gally.localhost}$}
+      - GALLY_CATALOG_MEDIA_URL=${GALLY_CATALOG_MEDIA_URL:-https://${SERVER_NAME:-gally.localhost}/media/catalog/product/}
+      - NEXT_PUBLIC_API_ROUTE_PREFIX=${API_ROUTE_PREFIX:-api}
+      - NEXT_PUBLIC_API_URL=https://${SERVER_NAME:-gally.localhost}/${API_ROUTE_PREFIX:-api}
     ports:
       - "80:80"
       - "443:443"
