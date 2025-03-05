@@ -9,7 +9,6 @@ test('Boosts', async ({ page }) => {
   await navigateTo(page, 'Boosts', '/fr/admin/merchandize/boost/grid')
 
   const createButton = await page.getByTestId('createButtonResourceGrid')
-
   /*
       Grid Boost
   */
@@ -71,8 +70,7 @@ test('Boosts', async ({ page }) => {
   const saveButton = await page.getByTestId('submitButtonResourceForm')
   await saveButton.click()
   await expect(page).toHaveURL('/fr/admin/merchandize/boost/grid')
-  await expect(await page.getByText(newName)).toBeDefined() // TO DO : Manipulate the grid instead of research in the page.
-
+  
   /*
       Edit Boost
   */
