@@ -14,17 +14,17 @@ FROM docker.elastic.co/elasticsearch/elasticsearch:${ELASTIC7_VERSION} AS gally_
 
 WORKDIR /usr/share/elasticsearch
 
-RUN bin/opensearch-plugin install -b analysis-phonetic
-RUN bin/opensearch-plugin install -b analysis-icu
-RUN bin/opensearch-plugin install -b ingest-attachment
+RUN bin/elasticsearch-plugin install -b analysis-phonetic
+RUN bin/elasticsearch-plugin install -b analysis-icu
+RUN bin/elasticsearch-plugin install -b ingest-attachment
 
 FROM docker.elastic.co/elasticsearch/elasticsearch:${ELASTIC8_VERSION} AS gally_elasticsearch8
 
 WORKDIR /usr/share/elasticsearch
 
-RUN bin/opensearch-plugin install -b analysis-phonetic
-RUN bin/opensearch-plugin install -b analysis-icu
-RUN bin/opensearch-plugin install -b ingest-attachment
+RUN bin/elasticsearch-plugin install -b analysis-phonetic
+RUN bin/elasticsearch-plugin install -b analysis-icu
+RUN bin/elasticsearch-plugin install -b ingest-attachment
 
 FROM amazonlinux:2 AS gally_opensearch2_gpu_builder
 
