@@ -52,7 +52,7 @@
                       passthru: '/bundles/$resourceName'
     
     # The size of the persistent disk of the application (in MB).
-  disk: 2048
+  disk: 512
     
     # The mounts that will be performed when the package is deployed.
   mounts:
@@ -109,7 +109,7 @@
 #          NEXT_PUBLIC_API_URL: 'Set this as an environment variable in Platform.sh'
 
   # The size of the persistent disk of the application (in MB). Minimum value is 128.
-  disk: 2048
+  disk: 512
 
   # Mounts define directories that are writable after the build is complete. If set as a local source, disk property is required.
   # More information: https://docs.platform.sh/create-apps/app-reference.html#mounts

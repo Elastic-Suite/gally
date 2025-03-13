@@ -12,6 +12,7 @@ opensearch:
             - opensearch-ml-plugin
             - neural-search
             - opensearch-knn
+            - opensearch-job-scheduler
 
 redis:
     type: redis-persistent:7.0
