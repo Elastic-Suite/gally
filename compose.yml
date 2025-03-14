@@ -39,12 +39,12 @@ services:
     labels:
       - traefik.enable=true
       # Serve gally over http
-      - traefik.http.routers.gally-http.rule=Host(`${SERVER_NAME:-gally.localhost}`)
-      - traefik.http.routers.gally-http.entrypoints=http
+      - traefik.http.routers.gally-$COMPOSE_PROJECT_NAME-http.rule=Host(`${SERVER_NAME:-gally.localhost}`)
+      - traefik.http.routers.gally-$COMPOSE_PROJECT_NAME-http.entrypoints=http
       # Serve gally over https
-      - traefik.http.routers.gally-https.rule=Host(`${SERVER_NAME:-gally.localhost}`)
-      - traefik.http.routers.gally-https.entrypoints=https
-      - traefik.http.routers.gally-https.tls=true
+      - traefik.http.routers.gally-$COMPOSE_PROJECT_NAME-https.rule=Host(`${SERVER_NAME:-gally.localhost}`)
+      - traefik.http.routers.gally-$COMPOSE_PROJECT_NAME-https.entrypoints=https
+      - traefik.http.routers.gally-$COMPOSE_PROJECT_NAME-https.tls=true
 
   router:
     build:
