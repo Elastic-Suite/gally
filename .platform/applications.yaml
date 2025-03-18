@@ -69,12 +69,12 @@
     # The hooks that will be performed when the package is deployed.
   hooks:
       build: |
+          composer dump-autoload --no-dev --classmap-authoritative
           bin/console lexik:jwt:generate-keypair --skip-if-exists --no-interaction
           bin/console --env=prod assets:install --no-debug         
           sed -i '/VectorSearch/d' config/bundles.php
           
       deploy: |
-          composer dump-autoload -o --apcu
           OPENSEARCH_URL="http://opensearch.internal:9200"
           # Check the number of nodes in the cluster
           NODE_COUNT=$(curl -s "$OPENSEARCH_URL/_cat/nodes?h=name" | wc -l)
