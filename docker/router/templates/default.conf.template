@@ -86,8 +86,8 @@ server {
         proxy_pass http://$EXAMPLE_UPSTREAM;
     }
 
-    location /$API_ROUTE_PREFIX {
-        rewrite ^/$API_ROUTE_PREFIX/(.*)$ /$1 break;
+    location /{{API_ROUTE_PREFIX}} {
+        rewrite ^/{{API_ROUTE_PREFIX}}/(.*)$ /$1 break;
 
         # Overwrite X-Forwarded-For with actual client IP
         add_header X-Forwarded-For $remote_addr;
