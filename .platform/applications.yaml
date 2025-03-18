@@ -74,6 +74,7 @@
           sed -i '/VectorSearch/d' config/bundles.php
           
       deploy: |
+          composer dump-autoload -o --apcu
           OPENSEARCH_URL="http://opensearch.internal:9200"
           # Check the number of nodes in the cluster
           NODE_COUNT=$(curl -s "$OPENSEARCH_URL/_cat/nodes?h=name" | wc -l)
