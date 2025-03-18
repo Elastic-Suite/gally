@@ -9,6 +9,11 @@
       root: api
 
   variables:
+      php:
+          opcache.preload: '/app/config/preload.php'
+          opcache.max_accelerated_files: 16000
+          opcache.memory_consumption: 128
+          opcache.validate_timestamps: 0
       env:
           APP_ENV: 'prod'
           API_ROUTE_PREFIX: 'api'
@@ -29,6 +34,7 @@
           - pdo_pgsql
           - sodium
           - redis
+          - opcache
     
     # The relationships of the application with services or other applications.
     # The left-hand side is the name of the relationship as it will be exposed
