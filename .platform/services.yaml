@@ -17,6 +17,8 @@ opensearch:
 redis:
     type: redis-persistent:7.0
     disk: 256
+    configuration:
+        maxmemory_policy: volatile-lru
     
 varnish:
     type: varnish:7.6
