@@ -106,7 +106,7 @@ jobs:
 
       - if: ${{ github.event_name == 'pull_request' }}
         name: Download artifact
-        uses: dawidd6/action-download-artifact@v2.14.1
+        uses: dawidd6/action-download-artifact@v6
         continue-on-error: true
         id: base_coverage_report
         with:
