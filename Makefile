@@ -73,7 +73,6 @@ db: ## Connect to the DB
 	@$(PHP_DATABASE) sh -c 'psql $$POSTGRES_DB $$POSTGRES_USER'
 
 init-dev-env: .env ## Initialize current environment with dev repositories
-	git config core.hooksPath ./hooks
 	$(DOCKER_COMP) run --rm --entrypoint="rm -rf nodes_modules/gally* pwa/node_modules/gally* example-app/node_modules/gally*" pwa
 	[ -d api/packages/gally-standard ] || git clone git@github.com:Elastic-Suite/gally-standard.git api/packages/gally-standard
 	[ -d api/packages/gally-premium ] || git clone git@github.com:Elastic-Suite/gally-premium.git api/packages/gally-premium
@@ -81,6 +80,8 @@ init-dev-env: .env ## Initialize current environment with dev repositories
 	[ -d front/gally-admin ] || git clone git@github.com:Elastic-Suite/gally-admin.git front/gally-admin
 	$(MAKE) start
 	$(MAKE) switch-dev-env
+	cd front && yarn install --frozen-lockfile --network-timeout 120000 && cd -
+	sh ./hooks/initHooksPath.sh
 
 switch-dev-env: ## Switch current environment with dev repositories on a composer version, pass the parameter "v=" to set the composer version, example: make switch-dev-env v=2.0.0
 	@$(eval v ?= dev-main)
