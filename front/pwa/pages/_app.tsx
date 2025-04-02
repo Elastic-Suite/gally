@@ -1,7 +1,6 @@
 import React from 'react'
 import { Inter } from '@next/font/google'
 import type { AppProps } from 'next/app'
-import Script from 'next/script'
 import Head from 'next/head'
 import dynamic from 'next/dynamic'
 
@@ -38,14 +37,6 @@ function App(props: AppProps): JSX.Element {
       <main>
         <GallyApp {...props} />
       </main>
-      <Script
-        type="module"
-        src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js"
-      />
-      <Script
-        noModule
-        src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js"
-      />
     </>
   )
 }
