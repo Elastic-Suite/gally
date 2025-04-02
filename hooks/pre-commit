@@ -1,0 +1,12 @@
+#!/bin/bash
+
+commit_file_list=$(git diff --name-only HEAD^ HEAD)
+
+# Actions for files in the "front/" folder
+if echo "$commit_file_list" | grep -q "^front/"; then
+    echo "🛠 Files in front detected, running front pre-commit..."
+    ./front/.husky/pre-commit
+fi
+
+echo "✅ Pre-commit OK"
+exit 0
