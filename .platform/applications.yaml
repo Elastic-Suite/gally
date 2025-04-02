@@ -11,7 +11,8 @@
   variables:
       php:
           opcache.preload: '/app/config/preload.php'
-          opcache.max_accelerated_files: 16000
+          opcache.max_accelerated_files: 20000
+          opcache.interned_strings_buffer: 16
           opcache.memory_consumption: 128
           opcache.validate_timestamps: 0
       env:
