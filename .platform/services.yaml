@@ -1,8 +1,8 @@
 postgresql:
     type: postgresql:15
     disk: 256
-       
-opensearch:        
+
+opensearch:
     type: opensearch:2
     disk: 256
     configuration:
@@ -19,7 +19,7 @@ redis:
     disk: 256
     configuration:
         maxmemory_policy: volatile-lru
-    
+
 varnish:
     type: varnish:7.6
     relationships:
@@ -29,3 +29,7 @@ varnish:
         vcl: !include
             type: string
             path: default.vcl
+    
+network-storage:
+    type: network-storage:2.0
+    disk: 256
