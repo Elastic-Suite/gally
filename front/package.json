@@ -1,6 +1,12 @@
 {
   "private": true,
-  "workspaces": ["example-app", "pwa", "gally-admin/packages/components", "gally-admin/packages/shared"],
+  "workspaces": [
+    "example-app",
+    "pwa",
+    "gally-admin/packages/components",
+    "gally-admin/packages/shared",
+    "gally-admin"
+  ],
   "scripts": {
     "dev": "concurrently \"npm:dev:pwa\" \"npm:dev:components\" \"npm:dev:shared\"",
     "dev:pwa": "yarn --cwd pwa dev",
@@ -25,7 +31,8 @@
     "prettier:ci": "yarn --cwd pwa prettier:ci && yarn --cwd example-app prettier:ci",
     "typescript": "yarn --cwd pwa typescript && yarn --cwd example-app typescript",
     "typescript:ci": "yarn --cwd pwa typescript:ci && yarn --cwd example-app typescript:ci",
-    "prepare": "yarn --cwd pwa prepare && cd .. && husky install front/.husky"
+    "prepare": "yarn --cwd pwa prepare && (([ -d gally-admin ] && yarn --cwd gally-admin husky:install) || true)",
+    "husky:install": "cd .. && husky install front/.husky"
   },
   "devDependencies": {
     "concurrently": "7.4.0",
