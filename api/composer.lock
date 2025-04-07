@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cfa89f8fad19bdc6239e6eaf65864334",
+    "content-hash": "b9fc8344fd99e6ac88cf974c44724e12",
     "packages": [
         {
             "name": "api-platform/core",
@@ -2050,6 +2050,78 @@
                 }
             ],
             "time": "2024-03-20T12:50:41+00:00"
+        },
+        {
+            "name": "gally/gally-premium",
+            "version": "dev-poc-ifpen",
+            "dist": {
+                "type": "zip",
+                "url": "https://elasticsuite.repo.packagist.com/cop-ecommerce/dists/gally/gally-premium/dev-poc-ifpen/f36c5970dbe3a4dc2a9e048a352794f76211f04c.zip",
+                "reference": "f36c5970dbe3a4dc2a9e048a352794f76211f04c",
+                "mirrors": [
+                    {
+                        "url": "https://elasticsuite.repo.packagist.com/cop-ecommerce/dists/%package%/%version%/r%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "gally/gally-standard": "2.0.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "~3.4.0",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan": "^1.4",
+                "phpstan/phpstan-doctrine": "^1.2",
+                "phpstan/phpstan-phpunit": "^1.0",
+                "phpstan/phpstan-symfony": "^1.1",
+                "phpunit/phpunit": "^9.5",
+                "symfony/phpunit-bridge": "6.0.*"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "symfony": {
+                    "require": "^6.1"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Gally\\VirtualCategory\\": "VirtualCategory/src/",
+                    "Gally\\Boost\\": "Boost/src/",
+                    "Gally\\Thesaurus\\": "Thesaurus/src/",
+                    "Gally\\Explain\\": "Explain/src/",
+                    "Gally\\VectorSearch\\": "VectorSearch/src/"
+                }
+            },
+            "notification-url": "https://elasticsuite.repo.packagist.com/cop-ecommerce/downloads/",
+            "license": [
+                "Proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "The Elasticsuite Team",
+                    "email": "elasticsuite@smile.fr"
+                }
+            ],
+            "description": "The Open Source E-Commerce Searchandising Suite",
+            "homepage": "https://elasticsuite.io",
+            "keywords": [
+                "API",
+                "E-commerce",
+                "Elasticsearch",
+                "GraphQL",
+                "HAL",
+                "JSON-LD",
+                "JSONAPI",
+                "OpenAPI",
+                "REST",
+                "Swagger"
+            ],
+            "support": {
+                "source": "https://github.com/Elastic-Suite/gally-premium/tree/poc-ifpen",
+                "issues": "https://github.com/Elastic-Suite/gally-premium/issues"
+            },
+            "time": "2025-04-07T07:28:26+00:00"
         },
         {
             "name": "gally/gally-standard",
@@ -12764,7 +12836,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": {
+        "gally/gally-premium": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

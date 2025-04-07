@@ -11,6 +11,7 @@
         "doctrine/doctrine-bundle": "^2.7",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.12",
+        "gally/gally-premium": "poc-ifpen-dev",
         "gally/gally-standard": "2.0.0",
         "hautelook/alice-bundle": "2.11.0",
         "lexik/jwt-authentication-bundle": "^2.14",
@@ -118,6 +119,12 @@
         "symfony": {
             "allow-contrib": false,
             "require": "6.4.*"
+        }
+    },
+    "repositories": {
+        "gally-premium": {
+            "type": "composer",
+            "url": "https://elasticsuite.repo.packagist.com/cop-ecommerce/"
         }
     }
 }
