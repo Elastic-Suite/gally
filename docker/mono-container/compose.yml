@@ -1,0 +1,45 @@
+services:
+  server:
+    build:
+      context: .
+      args:
+        - SERVER_NAME=${SERVER_NAME:-gally.localhost}
+        - OPENSEARCH_INITIAL_ADMIN_PASSWORD=${OPENSEARCH_ADMIN_PASSWORD:-!ChangeMe0!}
+    environment:
+      - ELASTICSEARCH_SSL_VERIFICATION=false
+      - TRUSTED_PROXIES=${TRUSTED_PROXIES:-127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16}
+      - TRUSTED_HOSTS=${TRUSTED_HOSTS:-^${SERVER_NAME:-gally.localhost}$$}
+      - CORS_ALLOW_ORIGIN=${CORS_ALLOW_ORIGIN:-^https?://${SERVER_NAME:-gally.localhost}$}
+      - GALLY_CATALOG_MEDIA_URL=${GALLY_CATALOG_MEDIA_URL:-https://${SERVER_NAME:-gally.localhost}/media/catalog/product/}
+      - VARNISH_URL=http://localhost:6081/
+      - OPENSEARCH_INITIAL_ADMIN_PASSWORD=${OPENSEARCH_ADMIN_PASSWORD:-!ChangeMe0!}
+      - ELASTICSEARCH_URL=https://${SEARCH_USER:-admin}:${OPENSEARCH_ADMIN_PASSWORD:-!ChangeMe0!}@localhost:9200/
+    ports:
+      - 80
+      - 443
+      - 9200
+    volumes:
+      - jwt_keys:/var/gally/api/config/jwt
+      - db_data:/var/lib/postgresql/data
+      - os2_data:/var/lib/opensearch:rw
+      - redis_data:/var/lib/redis
+      - ../../api:/var/gally/api:rw,cached,z
+      - api_var:/var/gally/api/var
+      - ../../front:/var/gally/front:rw,cached,z
+    labels:
+      - traefik.enable=true
+      # Serve gally over http
+      - traefik.http.routers.gally-$COMPOSE_PROJECT_NAME-http.rule=Host(`${SERVER_NAME:-gally.localhost}`)
+      - traefik.http.routers.gally-$COMPOSE_PROJECT_NAME-http.entrypoints=http
+      # Serve gally over https
+      - traefik.http.routers.gally-$COMPOSE_PROJECT_NAME-https.rule=Host(`${SERVER_NAME:-gally.localhost}`)
+      - traefik.http.routers.gally-$COMPOSE_PROJECT_NAME-https.entrypoints=https
+      - traefik.http.routers.gally-$COMPOSE_PROJECT_NAME-https.tls=true
+
+volumes:
+  jwt_keys:
+  db_data:
+  os2_data:
+  redis_data:
+  api_var:
+    driver: local
