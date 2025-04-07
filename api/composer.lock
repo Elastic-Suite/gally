@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b9fc8344fd99e6ac88cf974c44724e12",
+    "content-hash": "828b149f8ea9142c6a9a798798acca06",
     "packages": [
         {
             "name": "api-platform/core",
@@ -2125,17 +2125,17 @@
         },
         {
             "name": "gally/gally-standard",
-            "version": "2.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Elastic-Suite/gally-standard.git",
-                "reference": "135d94629dcbae9d00f2125b3883e86bcb73aba5"
-            },
+            "version": "2.0.x-dev",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Elastic-Suite/gally-standard/zipball/135d94629dcbae9d00f2125b3883e86bcb73aba5",
-                "reference": "135d94629dcbae9d00f2125b3883e86bcb73aba5",
-                "shasum": ""
+                "url": "https://elasticsuite.repo.packagist.com/cop-ecommerce/dists/gally/gally-standard/2.0.9999999.9999999-dev/e9a297aa2de9975b3834ef81fc383b4efe70ca24.zip",
+                "reference": "e9a297aa2de9975b3834ef81fc383b4efe70ca24",
+                "mirrors": [
+                    {
+                        "url": "https://elasticsuite.repo.packagist.com/cop-ecommerce/dists/%package%/%version%/r%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
             },
             "require": {
                 "api-platform/core": "^3.3.0",
@@ -2162,6 +2162,7 @@
                 "phpunit/phpunit": "^9.5",
                 "symfony/phpunit-bridge": "6.0.*"
             },
+            "default-branch": true,
             "type": "symfony-bundle",
             "extra": {
                 "symfony": {
@@ -2176,7 +2177,7 @@
                     "Gally\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "notification-url": "https://elasticsuite.repo.packagist.com/cop-ecommerce/downloads/",
             "license": [
                 "OSL-3.0"
             ],
@@ -2189,22 +2190,22 @@
             "description": "The Open Source E-Commerce Searchandising Suite",
             "homepage": "https://elasticsuite.io",
             "keywords": [
+                "API",
+                "E-commerce",
+                "Elasticsearch",
+                "GraphQL",
+                "HAL",
                 "JSON-LD",
-                "api",
-                "e-commerce",
-                "elasticsearch",
-                "graphql",
-                "hal",
-                "jsonapi",
-                "openapi",
-                "rest",
-                "swagger"
+                "JSONAPI",
+                "OpenAPI",
+                "REST",
+                "Swagger"
             ],
             "support": {
-                "issues": "https://github.com/Elastic-Suite/gally-standard/issues",
-                "source": "https://github.com/Elastic-Suite/gally-standard/tree/2.0.0"
+                "source": "https://github.com/Elastic-Suite/gally-standard/tree/2.0.x",
+                "issues": "https://github.com/Elastic-Suite/gally-standard/issues"
             },
-            "time": "2024-11-27T09:06:05+00:00"
+            "time": "2025-03-28T16:02:28+00:00"
         },
         {
             "name": "gedmo/doctrine-extensions",
@@ -12834,10 +12835,18 @@
             "time": "2022-08-05T12:50:50+00:00"
         }
     ],
-    "aliases": [],
+    "aliases": [
+        {
+            "package": "gally/gally-standard",
+            "version": "2.0.9999999.9999999-dev",
+            "alias": "2.0.0",
+            "alias_normalized": "2.0.0.0"
+        }
+    ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "gally/gally-premium": 20
+        "gally/gally-premium": 20,
+        "gally/gally-standard": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

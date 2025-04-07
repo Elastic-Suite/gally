@@ -5,6 +5,8 @@ services:
       context: ./docker/router
     environment:
       - EXAMPLE_UPSTREAM=pwa:3000
+    volumes:
+      - .htpasswd:/etc/nginx/.htpasswd:ro
 
   php:
     environment:

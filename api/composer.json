@@ -12,7 +12,7 @@
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.12",
         "gally/gally-premium": "poc-ifpen-dev",
-        "gally/gally-standard": "2.0.0",
+        "gally/gally-standard": "2.0.x-dev as 2.0.0",
         "hautelook/alice-bundle": "2.11.0",
         "lexik/jwt-authentication-bundle": "^2.14",
         "nelmio/cors-bundle": "^2.2",
