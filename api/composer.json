@@ -11,7 +11,7 @@
         "doctrine/doctrine-bundle": "^2.7",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.12",
-        "gally/gally-standard": "dev-main",
+        "gally/gally-standard": "2.1.x-dev",
         "hautelook/alice-bundle": "2.11.0",
         "lexik/jwt-authentication-bundle": "^2.14",
         "nelmio/cors-bundle": "^2.2",

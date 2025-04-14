@@ -20,7 +20,7 @@ jobs:
     secrets:
       COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
       PACKAGIST_URL: ${{ secrets.PACKAGIST_URL }}
-  
+
   deploy-2_0_X:
     needs: tests
     name: Deploy 2.0.x
