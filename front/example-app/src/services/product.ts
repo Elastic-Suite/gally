@@ -32,8 +32,10 @@ export function getProductFilters(
           eq: true,
         } as IStockTypeDefaultFilterInputType
       } else if (activeFilter.filter.type === AggregationType.SLIDER) {
+        const [min, max] = activeFilter.value.split(' - ')
         acc[activeFilter.filter.field as keyof IProductFieldFilterInput] = {
-          lte: Number(activeFilter.value),
+          lte: Number(max),
+          gte: Number(min),
         } as IEntityIntegerTypeFilterInput
       } else if (
         activeFilter.filter.type === AggregationType.CHECKBOX ||

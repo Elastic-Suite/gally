@@ -1,77 +1,8 @@
+# Route everything to Varnish and he will dispatch.   
 https://{default}/:
     cache:
         enabled: false
     ssi:
         enabled: false
     type: upstream
-    upstream: api:http
-
-https://{default}/admin:
-    cache:
-        cookies:
-            - '*'
-        default_ttl: 0
-        enabled: true
-        headers:
-            - Accept
-            - Accept-Language
-    ssi:
-        enabled: false
-    type: upstream
-    upstream: admin:http
-
-https://{default}/login:
-    cache:
-        cookies:
-            - '*'
-        default_ttl: 0
-        enabled: true
-        headers:
-            - Accept
-            - Accept-Language
-    ssi:
-        enabled: false
-    type: upstream
-    upstream: admin:http
-    
-https://{default}/_next:
-    cache:
-        cookies:
-            - '*'
-        default_ttl: 0
-        enabled: true
-        headers:
-            - Accept
-            - Accept-Language
-    ssi:
-        enabled: false
-    type: upstream
-    upstream: admin:http   
-    
-https://{default}/locales:
-    cache:
-        cookies:
-            - '*'
-        default_ttl: 0
-        enabled: true
-        headers:
-            - Accept
-            - Accept-Language
-    ssi:
-        enabled: false
-    type: upstream
-    upstream: admin:http   
-
-https://{default}/images:
-    cache:
-        cookies:
-            - '*'
-        default_ttl: 0
-        enabled: true
-        headers:
-            - Accept
-            - Accept-Language
-    ssi:
-        enabled: false
-    type: upstream
-    upstream: admin:http   
+    upstream: varnish:http

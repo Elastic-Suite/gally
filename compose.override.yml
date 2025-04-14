@@ -56,15 +56,3 @@ services:
     environment:
       - PUBLIC_URL=https://${SERVER_NAME:-gally.localhost}/example
       - REACT_APP_API_URL=https://${SERVER_NAME:-gally.localhost}/${API_ROUTE_PREFIX:-api}
-
-###> doctrine/doctrine-bundle ###
-  database:
-    ports:
-      - target: 5432
-        published: 5432
-        protocol: tcp
-###< doctrine/doctrine-bundle ###
-
-  redis:
-    ports:
-      - '6379:6379'

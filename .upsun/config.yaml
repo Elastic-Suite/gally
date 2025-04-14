@@ -1,0 +1,151 @@
+applications:
+    api:
+        source:
+            root: api
+        variables:
+            php:
+                opcache.preload: '/app/config/preload.php'
+                opcache.max_accelerated_files: 20000
+                opcache.interned_strings_buffer: 16
+                opcache.memory_consumption: 128
+                opcache.validate_timestamps: 0
+            env:
+                APP_ENV: 'prod'
+                API_ROUTE_PREFIX: 'api'
+                ELASTICSEARCH_SSL_VERIFICATION: false
+        dependencies:
+            php:
+                composer/composer: "^2"
+        type: php:8.3
+        build:
+            flavor: composer
+        runtime:
+            extensions:
+                - apcu
+                - pdo_pgsql
+                - sodium
+                - redis
+                - opcache
+        relationships:
+            database: "postgresql:postgresql"
+            opensearch: "opensearch:opensearch"
+            redis: "redis:redis"
+        web:
+            locations:
+                "/":
+                    root: "public"
+                    passthru: "/index.php"
+                    rules:
+                        '^/api/bundles/(?<resourceName>.*)$':
+                            passthru: '/bundles/$resourceName'
+        mounts:
+            'var/cache':
+                source: tmp
+            'var/log':
+                source: tmp
+            'config/jwt':
+                source: service
+                service: network-storage
+        hooks:
+            build: |
+                composer dump-autoload --no-dev --classmap-authoritative
+                bin/console --env=prod assets:install --no-debug        
+            
+            deploy: |
+                OPENSEARCH_URL="http://opensearch.internal:9200"
+                # Check the number of nodes in the cluster
+                NODE_COUNT=$(curl -s "$OPENSEARCH_URL/_cat/nodes?h=name" | wc -l)
+                
+                if [ "$NODE_COUNT" -eq 1 ]; then
+                echo "This is a single-node OpenSearch cluster. Proceeding with the settings change."
+                
+                # Change the setting plugins.ml_commons.only_run_on_ml_node to false
+                curl -X PUT "$OPENSEARCH_URL/_cluster/settings" \
+                -H "Content-Type: application/json" \
+                -d '{ "persistent": { "plugins.ml_commons.only_run_on_ml_node": false}}'
+                echo "Setting updated successfully."
+                else
+                echo "This is a multi-node OpenSearch cluster. No changes made."
+                fi
+                # Change the setting plugins.ml_commons.disk_free_space_threshold to -1 to avoid Disk Circuit Breaker
+                curl -X PUT "$OPENSEARCH_URL/_cluster/settings" \
+                -H "Content-Type: application/json" \
+                -d '{ "persistent": { "plugins.ml_commons.disk_free_space_threshold": -1}}'
+                bin/console lexik:jwt:generate-keypair --skip-if-exists --no-interaction
+                bin/console --env=prod cache:clear
+                bin/console doctrine:migrations:migrate -n --allow-no-migration
+    
+    admin:
+        source:
+            root: front
+        type: 'nodejs:18'
+        variables:
+            env:
+                NEXT_PUBLIC_API_ROUTE_PREFIX: 'api'
+        #            NEXT_PUBLIC_API_URL: 'Set this as an environment variable in Upsun'
+        mounts:
+            '/.next':
+                source: storage
+        web:
+            commands:
+                start: yarn start
+        build:
+            flavor: none
+        dependencies:
+            nodejs:
+                yarn: "^1.22.0"
+        hooks:
+            build: |
+                yarn
+                yarn install --frozen-lockfile --network-timeout 120000
+                yarn build
+                # Move committed files in soon-to-be mounts into temp directory.
+                chmod +x platformsh_handle_mounts.sh
+                ./platformsh_handle_mounts.sh
+            deploy: |
+                # Move committed files from temp directory back into mounts.
+                ./platformsh_handle_mounts.sh
+
+services:
+    
+    postgresql:
+        type: postgresql:15
+    
+    opensearch:
+        type: opensearch:2
+        configuration:
+            plugins:
+                - analysis-icu
+                - analysis-phonetic
+                - opensearch-ml-plugin
+                - neural-search
+                - opensearch-knn
+                - opensearch-job-scheduler
+    
+    redis:
+        type: redis-persistent:7.0
+        configuration:
+            maxmemory_policy: volatile-lru
+    
+    varnish:
+        type: varnish:7.6
+        relationships:
+            api: 'api:http'
+            admin: 'admin:http'
+        configuration:
+            vcl: !include
+                type: string
+                path: default.vcl
+                
+    network-storage:
+        type: network-storage:2.0
+
+routes:
+    # Route everything to Varnish and he will dispatch.   
+    https://{default}/:
+        cache:
+            enabled: false
+        ssi:
+            enabled: false
+        type: upstream
+        upstream: varnish:http

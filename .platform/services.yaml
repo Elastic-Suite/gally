@@ -1,15 +1,35 @@
 postgresql:
-    type: postgresql:13
+    type: postgresql:15
     disk: 256
-       
-opensearch:        
+
+opensearch:
     type: opensearch:2
     disk: 256
     configuration:
         plugins:
             - analysis-icu
             - analysis-phonetic
+            - opensearch-ml-plugin
+            - neural-search
+            - opensearch-knn
+            - opensearch-job-scheduler
 
 redis:
-    type: redis-persistent:6.2
+    type: redis-persistent:7.0
+    disk: 256
+    configuration:
+        maxmemory_policy: volatile-lru
+
+varnish:
+    type: varnish:7.6
+    relationships:
+        api: 'api:http'
+        admin: 'admin:http'
+    configuration:
+        vcl: !include
+            type: string
+            path: default.vcl
+    
+network-storage:
+    type: network-storage:2.0
     disk: 256

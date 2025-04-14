@@ -22,6 +22,11 @@ on:
         required: false
         default: false
         type: boolean
+      add_sample_data:
+        description: "Install sample data"
+        required: false
+        default: true
+        type: boolean
     secrets:
       AWS_DEPLOY_KEY:
         required: true
@@ -51,6 +56,7 @@ jobs:
             back_branch: ${{ inputs.back_version_is_tag == true && format('tags/{0}', inputs.version) || format('origin/{0}', inputs.version) }}
             front_branch: ${{ inputs.version == 'master' && 'origin/main' || inputs.front_version_is_tag == true && format('tags/v{0}', inputs.version) || format('origin/{0}', inputs.version) }}
             composer_version: ${{ inputs.version == 'master' && 'dev-master' || (contains(inputs.version, 'x') && format('{0}-dev', inputs.version) || inputs.version) }}
+            add_sample_data: ${{ inputs.add_sample_data }}
             PRIVATE_KEY: ${{ secrets.AWS_DEPLOY_KEY }}
             HOSTNAME : ${{ secrets.AWS_HOSTNAME }}
             USER_NAME : ${{ secrets.AWS_USER }}
@@ -63,15 +69,15 @@ jobs:
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
           ssh -o StrictHostKeyChecking=no -o ServerAliveInterval=30 -i private_key ${USER_NAME}@${HOSTNAME} "
             cd /home/ubuntu/ &&
-            [ -d gally ] || git clone https://github.com/Elastic-Suite/gally.git gally &&
+            ([ -d gally ] || git clone https://github.com/Elastic-Suite/gally.git gally) &&
             cd /home/ubuntu/gally &&
             docker system prune -af &&
             ([[ $(docker volume ls -q | awk '!/_/' | wc -l) -eq 0 ]] || docker volume rm $(docker volume ls -q | awk '!/_/' | tr '\n' ' ')) &&
             make .env &&
-            POSTGRES_PASSWORD=$POSTGRES_PASSWORD docker compose -f compose.yml -f compose.int.yml up -d database && 
+            POSTGRES_PASSWORD=$POSTGRES_PASSWORD docker compose -f compose.yml -f compose.int.yml up -d database &&  
             docker compose -f compose.yml -f compose.int.yml down &&
-            git fetch --all && git reset --hard  && git checkout ${{ env.back_branch }} &&
-            [ -d front/gally-admin ] || git clone https://github.com/Elastic-Suite/gally-admin.git front/gally-admin &&
+            git fetch --all && git reset --hard && git checkout ${{ env.back_branch }} &&
+            ([ -d front/gally-admin ] || git clone https://github.com/Elastic-Suite/gally-admin.git front/gally-admin) &&
             cd front/gally-admin && git fetch --all && git reset --hard && git checkout ${{ env.front_branch }} &&
             cd /home/ubuntu/gally &&
             SERVER_NAME=$HOSTNAME docker compose -f compose.init_certs.yml build &&
@@ -82,7 +88,11 @@ jobs:
             docker compose run --rm php composer config repositories.gally-premium composer $PACKAGIST_URL &&
             docker compose run --rm -e COMPOSER_AUTH='$COMPOSER_AUTH' php composer require \"gally/gally-standard:${{ env.composer_version }} as ${{ inputs.last_published_version }}\" &&
             docker compose run --rm -e COMPOSER_AUTH='$COMPOSER_AUTH' php composer require \"gally/gally-premium:${{ env.composer_version }}\" &&
-            docker compose run --rm -e COMPOSER_AUTH='$COMPOSER_AUTH' php composer require \"gally/gally-sample-data:${{ env.composer_version }}\" &&
+            echo \"Sample data value: ${{ env.add_sample_data }}\" &&
+            ([ \"${{ env.add_sample_data }}\" = false ] || echo \"Install sample data\") &&
+            ([ \"${{ env.add_sample_data }}\" = false ] || docker compose run --rm -e COMPOSER_AUTH='$COMPOSER_AUTH' php composer require \"gally/gally-sample-data:${{ env.composer_version }}\") &&
+            ([ \"${{ env.add_sample_data }}\" = true ] || docker compose run --rm -e COMPOSER_AUTH='$COMPOSER_AUTH' php composer require \"doctrine/doctrine-fixtures-bundle\":\"^3.4\") &&
             docker compose run --rm php sed -i \"s/DoctrineFixturesBundle::class => \['dev' => true, 'test' => true]/DoctrineFixturesBundle::class => ['all' => true]/g\" config/bundles.php &&
-            GALLY_CATALOG_MEDIA_URL=${MEDIA_URL} SERVER_NAME=$HOSTNAME API_ROUTE_PREFIX=api APP_SECRET=$APP_SECRET POSTGRES_PASSWORD=$POSTGRES_PASSWORD COMPOSER_AUTH='$COMPOSER_AUTH' docker compose -f compose.yml -f compose.int.yml up -d --build
+            GALLY_CATALOG_MEDIA_URL=${MEDIA_URL} SERVER_NAME=$HOSTNAME API_ROUTE_PREFIX=api APP_SECRET=$APP_SECRET POSTGRES_PASSWORD=$POSTGRES_PASSWORD COMPOSER_AUTH='$COMPOSER_AUTH' docker compose -f compose.yml -f compose.int.yml up -d --build &&
+            GALLY_CATALOG_MEDIA_URL=${MEDIA_URL} SERVER_NAME=$HOSTNAME API_ROUTE_PREFIX=api APP_SECRET=$APP_SECRET POSTGRES_PASSWORD=$POSTGRES_PASSWORD COMPOSER_AUTH='$COMPOSER_AUTH' docker compose -f compose.yml -f compose.int.yml exec php bin/console lexik:jwt:generate-keypair --skip-if-exists
           "

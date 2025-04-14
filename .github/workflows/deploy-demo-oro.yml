@@ -1,4 +1,4 @@
-name: Deploy gally sylius demo
+name: Deploy gally oro demo
 
 on:
   workflow_dispatch:
@@ -19,9 +19,9 @@ jobs:
       last_published_version: 2.0.0
     secrets: inherit
 
-  deploy-demo-sylius:
+  deploy-demo-shopware:
     needs: tests
-    name: Deploy gally for sylius demo
+    name: Deploy gally for oro demo
     if: |
       always() && 
       (needs.tests.result == 'success' || needs.tests.result == 'skipped')
@@ -31,12 +31,13 @@ jobs:
       last_published_version: 2.0.0
       back_version_is_tag: false
       front_version_is_tag: false
+      add_sample_data: false
     secrets:
       AWS_DEPLOY_KEY: ${{ secrets.AWS_DEPLOY_KEY }}
-      AWS_HOSTNAME: ${{ secrets.AWS_HOSTNAME_DEMO_SYLIUS }}
+      AWS_HOSTNAME: ${{ secrets.AWS_HOSTNAME_DEMO_ORO }}
       AWS_USER: ${{ secrets.AWS_USER }}
       APP_SECRET: ${{ secrets.APP_SECRET }}
       POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
       COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
       PACKAGIST_URL: ${{ secrets.PACKAGIST_URL }}
-      MEDIA_URL: ${{ secrets.MEDIA_URL_DEMO_SYLIUS }}
+      MEDIA_URL: ${{ secrets.MEDIA_URL_DEMO_ORO }}

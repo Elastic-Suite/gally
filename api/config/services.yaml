@@ -5,7 +5,7 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
     route_prefix: '%env(string:default:default_route_prefix:API_ROUTE_PREFIX)%'
-    default_route_prefix: ''
+    default_route_prefix: 'api'
 
 services:
     # default configuration for services in *this* file
@@ -30,4 +30,4 @@ services:
     
 when@test:
     parameters:
-        route_prefix: '' # Don't use prefix for test
+        route_prefix: 'api'

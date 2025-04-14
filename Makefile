@@ -41,9 +41,6 @@ build_no_cache: ## Builds the Docker images (without cache)
 up: .env ## Start the docker hub in detached mode (no logs)
 	@$(DOCKER_COMP) up --detach
 
-up-connectors: .env ## Start the docker hub in detached mode with connectors conf (no logs)
-	@$(DOCKER_COMP) -f compose.yml -f compose.override.yml -f compose.connectors.yml up --detach
-
 start: build up ## Build and start the containers
 
 down: .env ## Stop the docker hub

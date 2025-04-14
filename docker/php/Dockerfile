@@ -113,4 +113,4 @@ RUN set -eux; \
 	sync;
 
 # copy public files in php_static_files to save them, because they can be overwritten when a volume is mounted between php and router containers
-COPY --from=api_src public php_static_files
+RUN cp -r public php_static_files

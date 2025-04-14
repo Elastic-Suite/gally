@@ -6,22 +6,25 @@ FROM opensearchproject/opensearch:${OPENSEARCH2_VERSION} AS gally_opensearch2
 
 WORKDIR /usr/share/opensearch
 
-RUN bin/opensearch-plugin install analysis-phonetic
-RUN bin/opensearch-plugin install analysis-icu
+RUN bin/opensearch-plugin install -b analysis-phonetic
+RUN bin/opensearch-plugin install -b analysis-icu
+RUN bin/opensearch-plugin install -b ingest-attachment
 
 FROM docker.elastic.co/elasticsearch/elasticsearch:${ELASTIC7_VERSION} AS gally_elasticsearch7
 
 WORKDIR /usr/share/elasticsearch
 
-RUN bin/elasticsearch-plugin install analysis-phonetic
-RUN bin/elasticsearch-plugin install analysis-icu
+RUN bin/elasticsearch-plugin install -b analysis-phonetic
+RUN bin/elasticsearch-plugin install -b analysis-icu
+RUN bin/elasticsearch-plugin install -b ingest-attachment
 
 FROM docker.elastic.co/elasticsearch/elasticsearch:${ELASTIC8_VERSION} AS gally_elasticsearch8
 
 WORKDIR /usr/share/elasticsearch
 
-RUN bin/elasticsearch-plugin install analysis-phonetic
-RUN bin/elasticsearch-plugin install analysis-icu
+RUN bin/elasticsearch-plugin install -b analysis-phonetic
+RUN bin/elasticsearch-plugin install -b analysis-icu
+RUN bin/elasticsearch-plugin install -b ingest-attachment
 
 FROM amazonlinux:2 AS gally_opensearch2_gpu_builder
 
@@ -105,8 +108,9 @@ ARG DISABLE_INSTALL_DEMO_CONFIG=true
 ARG DISABLE_SECURITY_PLUGIN=false
 RUN ./opensearch-onetime-setup.sh
 
-RUN bin/opensearch-plugin install analysis-phonetic
-RUN bin/opensearch-plugin install analysis-icu
+RUN bin/opensearch-plugin install -b analysis-phonetic
+RUN bin/opensearch-plugin install -b analysis-icu
+RUN bin/opensearch-plugin install -b ingest-attachment
 
 EXPOSE 9200 9300 9600 9650
 
