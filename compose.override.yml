@@ -21,6 +21,7 @@ services:
       - ./docker/php/conf.d/app.dev.ini:/usr/local/etc/php/conf.d/app.dev.ini:ro,z
     environment:
       - APP_ENV=${APP_ENV:-dev}
+      - TRUSTED_HOSTS=${TRUSTED_HOSTS:-^${SERVER_NAME:-|gally.localhost}|localhost|${E2E_SERVER_NAME:-gally.e2e}|php$$}
       # See https://xdebug.org/docs/all_settings#mode
       - XDEBUG_MODE=${XDEBUG_MODE:-off}
       - PHP_IDE_CONFIG=serverName=gally
@@ -41,6 +42,9 @@ services:
     environment:
       # On Linux, you may want to comment the following line for improved performance
       - WATCHPACK_POLLING="true"
+      - NEXT_PUBLIC_ENTRYPOINT=
+      - NEXT_PUBLIC_API_URL=
+      - REACT_APP_API_URL=
 
   example:
     user: ${UUID?You must set UUID env var}:${GUID?You must set GUID env var}
@@ -56,3 +60,10 @@ services:
     environment:
       - PUBLIC_URL=https://${SERVER_NAME:-gally.localhost}/example
       - REACT_APP_API_URL=https://${SERVER_NAME:-gally.localhost}/${API_ROUTE_PREFIX:-api}
+
+  e2e:
+    extends:
+      file: ./compose.e2e.yml
+      service: e2e
+    volumes:
+      - ./front/e2e/:/usr/src/app:rw,cached,z
