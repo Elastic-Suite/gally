@@ -1,0 +1,12 @@
+FROM mcr.microsoft.com/playwright:v1.39.0
+
+WORKDIR /usr/src/app
+
+COPY ./front/e2e/ .
+
+RUN yarn install --frozen-lockfile
+
+RUN npx playwright install chromium
+RUN npx playwright install-deps chromium
+
+CMD ["sleep", "infinity"]
