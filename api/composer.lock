@@ -2057,12 +2057,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Elastic-Suite/gally-standard.git",
-                "reference": "f53bf49582e3d05a9cdcd3b6ff2c10670f1bf69c"
+                "reference": "00bcc07ec46b6144ad130faa08440fc8e8b755b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Elastic-Suite/gally-standard/zipball/f53bf49582e3d05a9cdcd3b6ff2c10670f1bf69c",
-                "reference": "f53bf49582e3d05a9cdcd3b6ff2c10670f1bf69c",
+                "url": "https://api.github.com/repos/Elastic-Suite/gally-standard/zipball/00bcc07ec46b6144ad130faa08440fc8e8b755b8",
+                "reference": "00bcc07ec46b6144ad130faa08440fc8e8b755b8",
                 "shasum": ""
             },
             "require": {
@@ -2132,7 +2132,7 @@
                 "issues": "https://github.com/Elastic-Suite/gally-standard/issues",
                 "source": "https://github.com/Elastic-Suite/gally-standard/tree/master"
             },
-            "time": "2024-12-09T15:44:37+00:00"
+            "time": "2025-04-14T12:19:27+00:00"
         },
         {
             "name": "gedmo/doctrine-extensions",
@@ -12774,6 +12774,6 @@
         "ext-ctype": "*",
         "ext-iconv": "*"
     },
-    "platform-dev": {},
+    "platform-dev": [],
     "plugin-api-version": "2.6.0"
 }
