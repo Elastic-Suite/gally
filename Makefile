@@ -143,6 +143,9 @@ phpunit: ## Run php unit tests, pass the parameter "p=" to launch tests on a spe
 jest: ## Run jest unit tests
 	@$(DOCKER_COMP) exec pwa yarn test
 
+e2e: ## Run e2e tests
+	@$(DOCKER_COMP) exec e2e yarn test
+
 jest_update: ## Run jest unit tests
 	@$(DOCKER_COMP) exec pwa yarn test:update
 
