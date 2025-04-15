@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ad3d444f76e39a96f766a2bbfba214f7",
+    "content-hash": "83c45826963dfb3d15b1555467c1bf27",
     "packages": [
         {
             "name": "api-platform/core",
@@ -2053,7 +2053,7 @@
         },
         {
             "name": "gally/gally-standard",
-            "version": "2.1.x-dev",
+            "version": "v2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Elastic-Suite/gally-standard.git",
@@ -2130,7 +2130,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Elastic-Suite/gally-standard/issues",
-                "source": "https://github.com/Elastic-Suite/gally-standard/tree/2.1.x"
+                "source": "https://github.com/Elastic-Suite/gally-standard/tree/v2.1.0"
             },
             "time": "2025-04-15T09:37:44+00:00"
         },
@@ -12764,9 +12764,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "gally/gally-standard": 20
-    },
+    "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
@@ -12774,6 +12772,6 @@
         "ext-ctype": "*",
         "ext-iconv": "*"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "plugin-api-version": "2.6.0"
 }
