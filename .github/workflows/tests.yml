@@ -4,14 +4,14 @@ on:
   workflow_call:
     inputs:
       version:
-        description: "Version of Gally's packages (ex: master or 1.0.x)"
+        description: "Version of Gally's packages (ex: main or 1.0.x)"
         type: string
-        default: "master"
+        default: "main"
         required: false
       last_published_version:
         description: "Last release of the current version"
         required: false
-        default: "dev-master"
+        default: "dev-main"
         type: string
       use_default_github_ref:
         description: "Use default github ref to checkout Gally ?"
@@ -38,8 +38,7 @@ jobs:
     
     env:
       ref: ${{ inputs.use_default_github_ref == false && inputs.version || '' }}
-      front_branch: ${{ inputs.version == 'master' && 'main' || inputs.version }}
-      composer_version: ${{ inputs.version == 'master' && 'dev-master' || (contains(inputs.version, 'x') && format('{0}-dev', inputs.version) || inputs.version) }}
+      composer_version: ${{ inputs.version == 'main' && 'dev-main' || (contains(inputs.version, 'x') && format('{0}-dev', inputs.version) || inputs.version) }}
       docker_compose_cmd: docker compose -f compose.yml -f compose.ci.yml ${{ inputs.search_engine != 'opensearch' && format('-f compose.{0}.yml', inputs.search_engine) || '' }}
     
     steps:
@@ -55,7 +54,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: 'Elastic-Suite/gally-admin'
-          ref: ${{env.front_branch}}
+          ref: ${{ inputs.version }}
           path: front/gally-admin
       - name: update gally standard package
         working-directory: api

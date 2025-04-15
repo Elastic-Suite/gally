@@ -17,7 +17,7 @@ jobs:
     if: ${{ inputs.skip_tests == false }}
     uses: ./.github/workflows/tests.yml
     with:
-      version: master
+      version: main
     secrets: inherit
   
   deploy-master:
@@ -28,5 +28,5 @@ jobs:
       (needs.tests.result == 'success' || needs.tests.result == 'skipped')
     uses: ./.github/workflows/deploy-int.yml
     with:
-      version: master
+      version: main
     secrets: inherit

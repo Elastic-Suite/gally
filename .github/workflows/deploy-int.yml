@@ -4,21 +4,16 @@ on:
   workflow_call:
     inputs:
       version:
-        description: "Version of Gally's packages (ex: master or 1.0.x)"
+        description: "Version of Gally's packages (ex: main or 1.0.x)"
         required: true
         type: string
       last_published_version:
         description: "Last release of the current version"
         required: false
-        default: "dev-master"
+        default: "dev-main"
         type: string
-      back_version_is_tag:
-        description: "Back version to deploy is a tag ?"
-        required: false
-        default: false
-        type: boolean
-      front_version_is_tag:
-        description: "Front version to deploy is a tag ?"
+      version_is_tag:
+        description: "Version to deploy is a tag ?"
         required: false
         default: false
         type: boolean
@@ -53,9 +48,8 @@ jobs:
     steps:      
       - name: Deploy in EC2
         env:
-            back_branch: ${{ inputs.back_version_is_tag == true && format('tags/{0}', inputs.version) || format('origin/{0}', inputs.version) }}
-            front_branch: ${{ inputs.version == 'master' && 'origin/main' || inputs.front_version_is_tag == true && format('tags/v{0}', inputs.version) || format('origin/{0}', inputs.version) }}
-            composer_version: ${{ inputs.version == 'master' && 'dev-master' || (contains(inputs.version, 'x') && format('{0}-dev', inputs.version) || inputs.version) }}
+            branch: ${{ inputs.version_is_tag == true && format('tags/v{0}', inputs.version) || format('origin/{0}', inputs.version) }}
+            composer_version: ${{ inputs.version == 'main' && 'dev-main' || (contains(inputs.version, 'x') && format('{0}-dev', inputs.version) || inputs.version) }}
             add_sample_data: ${{ inputs.add_sample_data }}
             PRIVATE_KEY: ${{ secrets.AWS_DEPLOY_KEY }}
             HOSTNAME : ${{ secrets.AWS_HOSTNAME }}
@@ -76,9 +70,9 @@ jobs:
             make .env &&
             POSTGRES_PASSWORD=$POSTGRES_PASSWORD docker compose -f compose.yml -f compose.int.yml up -d database &&  
             docker compose -f compose.yml -f compose.int.yml down &&
-            git fetch --all && git reset --hard && git checkout ${{ env.back_branch }} &&
+            git fetch --all && git reset --hard && git checkout ${{ env.branch }} &&
             ([ -d front/gally-admin ] || git clone https://github.com/Elastic-Suite/gally-admin.git front/gally-admin) &&
-            cd front/gally-admin && git fetch --all && git reset --hard && git checkout ${{ env.front_branch }} &&
+            cd front/gally-admin && git fetch --all && git reset --hard && git checkout ${{ env.branch }} &&
             cd /home/ubuntu/gally &&
             SERVER_NAME=$HOSTNAME docker compose -f compose.init_certs.yml build &&
             SERVER_NAME=$HOSTNAME docker compose -f compose.init_certs.yml up proxy_init_certs -d &&
