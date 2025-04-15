@@ -1,7 +1,9 @@
 import { test, expect } from '@playwright/test'
 import { login } from '../helper/auth'
 
-const authentificationURL = `${process.env.API_SERVER_BASE_URL || "https://gally.local"}/authentication_token`
+const authentificationURL = `${
+  process.env.API_SERVER_BASE_URL || 'https://gally.local'
+}/authentication_token`
 
 test('Login page', async ({ page }) => {
   await page.goto('/fr/login')
@@ -18,8 +20,12 @@ test('Login page', async ({ page }) => {
   const passwordErrorElement = await page.getByTestId(
     'passwordInputErrorMessage'
   )
-  await expect(emailErrorElement).toHaveText('La valeur est requise')
-  await expect(passwordErrorElement).toHaveText('La valeur est requise')
+  await expect(emailErrorElement).toHaveText('La valeur est requise', {
+    useInnerText: true,
+  })
+  await expect(passwordErrorElement).toHaveText('La valeur est requise', {
+    useInnerText: true,
+  })
   await expect(page).toHaveURL('/fr/login')
 
   // Check validation messages for empty fields
@@ -27,7 +33,10 @@ test('Login page', async ({ page }) => {
   await emailInput.fill('admin@')
   await submitButton.click()
   emailErrorElement = await page.getByTestId('emailInputErrorMessage')
-  await expect(emailErrorElement).toHaveText("Le format de l'adresse e-mail est invalide.")
+  await expect(emailErrorElement).toHaveText(
+    "Le format de l'adresse e-mail est invalide.",
+    { useInnerText: true }
+  )
 
   // Check validation message when log in with incorrect credentials
 
