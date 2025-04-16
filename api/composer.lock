@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "83c45826963dfb3d15b1555467c1bf27",
+    "content-hash": "d4ee48d95c0ab4a1df4daab7d365b0bd",
     "packages": [
         {
             "name": "api-platform/core",
@@ -2053,16 +2053,16 @@
         },
         {
             "name": "gally/gally-standard",
-            "version": "v2.1.0",
+            "version": "dev-main",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Elastic-Suite/gally-standard.git",
-                "reference": "9a06b6b7203e80fd0d862a586f56df0469bc51fb"
+                "reference": "274a0236c2a7d255e07ebc6489c2b98f5eb09e71"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Elastic-Suite/gally-standard/zipball/9a06b6b7203e80fd0d862a586f56df0469bc51fb",
-                "reference": "9a06b6b7203e80fd0d862a586f56df0469bc51fb",
+                "url": "https://api.github.com/repos/Elastic-Suite/gally-standard/zipball/274a0236c2a7d255e07ebc6489c2b98f5eb09e71",
+                "reference": "274a0236c2a7d255e07ebc6489c2b98f5eb09e71",
                 "shasum": ""
             },
             "require": {
@@ -2090,6 +2090,7 @@
                 "phpunit/phpunit": "^9.5",
                 "symfony/phpunit-bridge": "6.0.*"
             },
+            "default-branch": true,
             "type": "symfony-bundle",
             "extra": {
                 "symfony": {
@@ -2130,9 +2131,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Elastic-Suite/gally-standard/issues",
-                "source": "https://github.com/Elastic-Suite/gally-standard/tree/v2.1.0"
+                "source": "https://github.com/Elastic-Suite/gally-standard/tree/main"
             },
-            "time": "2025-04-15T09:37:44+00:00"
+            "time": "2025-04-16T12:31:35+00:00"
         },
         {
             "name": "gedmo/doctrine-extensions",
@@ -12764,7 +12765,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": {
+        "gally/gally-standard": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
@@ -12772,6 +12775,6 @@
         "ext-ctype": "*",
         "ext-iconv": "*"
     },
-    "platform-dev": {},
+    "platform-dev": [],
     "plugin-api-version": "2.6.0"
 }
