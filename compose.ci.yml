@@ -13,6 +13,7 @@ services:
     environment:
       - APP_ENV=dev
       - XDEBUG_MODE=off
+      - TRUSTED_HOSTS=${TRUSTED_HOSTS:-^${SERVER_NAME:-|gally.localhost}|localhost|${E2E_SERVER_NAME:-gally.e2e}|php$$}
 
   pwa:
     build:
@@ -20,10 +21,20 @@ services:
     volumes:
       - ./front/example-app/coverage:/usr/src/front/example-app/coverage:rw,cached,z
       - ./front/pwa/coverage:/usr/src/front/pwa/coverage:rw,cached,z
-
+    environment:
+      - NEXT_PUBLIC_ENTRYPOINT=
+      - NEXT_PUBLIC_API_URL=
+      - REACT_APP_API_URL=
   example:
     build:
       context: ./docker/front
       target: gally_example_ci
       additional_contexts:
         front_src: ./front
+
+  e2e:
+    extends:
+      file: ./compose.e2e.yml
+      service: e2e
+    environment:
+      - CI=true
