@@ -99,7 +99,10 @@
             -d '{ "persistent": { "plugins.ml_commons.disk_free_space_threshold": -1}}'
             bin/console lexik:jwt:generate-keypair --skip-if-exists --no-interaction
             bin/console --env=prod cache:clear
+            bin/console --env=prod gally:cache:clear-all
             bin/console doctrine:migrations:migrate -n --allow-no-migration
+        post_deploy: |
+            curl -X BAN $VARNISH_URL -H 'ApiPlatform-Ban-Regex: .*' -I
 
 # A unique name for the app. Must be lowercase alphanumeric characters. Changing the name destroys data associated
 # with the app.

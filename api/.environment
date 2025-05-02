@@ -32,4 +32,4 @@ export REDIS_SERVER=$(echo $PLATFORM_RELATIONSHIPS | base64 --decode | jq -r ".r
 
 export TRUSTED_HOSTS=^$(echo $PLATFORM_ROUTES | base64 --decode | jq -r "keys[0]" | awk -F[/:] '{print $4}')$
 export SERVER_NAME=$(echo $PLATFORM_ROUTES | base64 --decode | jq -r "keys[0]" | awk -F[/:] '{print $4}')
-export VARNISH_URL=http://$(echo $PLATFORM_ROUTES | base64 --decode | jq -r "keys[0]" | awk -F[/:] '{print $4}')
+export VARNISH_URL=https://$(echo $PLATFORM_ROUTES | base64 --decode | jq -r "keys[0]" | awk -F[/:] '{print $4}')
