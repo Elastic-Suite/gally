@@ -54,12 +54,12 @@ services:
       additional_contexts: 
         front_src: ./front
       args:
-        - REACT_APP_API_URL=https://${SERVER_NAME:-gally.localhost}/${API_ROUTE_PREFIX:-api}
+        - REACT_APP_API_URL=https://${SERVER_NAME:-gally.localhost}:${HTTPS_PORT:-443}/${API_ROUTE_PREFIX:-api}
     volumes:
       - ./front:/usr/src/front:rw,cached,z
     environment:
       - PUBLIC_URL=https://${SERVER_NAME:-gally.localhost}/example
-      - REACT_APP_API_URL=https://${SERVER_NAME:-gally.localhost}/${API_ROUTE_PREFIX:-api}
+      - REACT_APP_API_URL=https://${SERVER_NAME:-gally.localhost}:${HTTPS_PORT:-443}/${API_ROUTE_PREFIX:-api}
 
   e2e:
     extends:
