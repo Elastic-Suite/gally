@@ -1,5 +1,10 @@
 # Development environment override
 services:
+
+  proxy:
+    ports: !override
+      - "${HTTP_PORT:-80}:80"
+      - "${HTTPS_PORT:-443}:443"
   
   certbot:
     environment:
@@ -35,8 +40,9 @@ services:
     build:
       target: gally_pwa_dev
       args:
-        - NEXT_PUBLIC_ENTRYPOINT=${SERVER_NAME:-gally.localhost}
-        - NEXT_PUBLIC_API_URL=https://${SERVER_NAME:-gally.localhost}/${API_ROUTE_PREFIX:-api}
+        - NEXT_PUBLIC_ENTRYPOINT=
+        - NEXT_PUBLIC_API_URL=
+        - REACT_APP_API_URL=
     volumes:
       - ./front:/usr/src/front:rw,cached,z
     environment:
@@ -53,13 +59,8 @@ services:
       target: gally_example_dev
       additional_contexts: 
         front_src: ./front
-      args:
-        - REACT_APP_API_URL=https://${SERVER_NAME:-gally.localhost}/${API_ROUTE_PREFIX:-api}
     volumes:
       - ./front:/usr/src/front:rw,cached,z
-    environment:
-      - PUBLIC_URL=https://${SERVER_NAME:-gally.localhost}/example
-      - REACT_APP_API_URL=https://${SERVER_NAME:-gally.localhost}/${API_ROUTE_PREFIX:-api}
 
   e2e:
     extends:
