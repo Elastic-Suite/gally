@@ -31,7 +31,7 @@
     "prettier:ci": "yarn --cwd pwa prettier:ci && yarn --cwd example-app prettier:ci",
     "typescript": "yarn --cwd pwa typescript && yarn --cwd example-app typescript",
     "typescript:ci": "yarn --cwd pwa typescript:ci && yarn --cwd example-app typescript:ci",
-    "prepare": "yarn --cwd pwa prepare && (([ -d gally-admin ] && yarn --cwd gally-admin prepare) || true)",
+    "prepare": "yarn --cwd pwa prepare && (([ -d gally-admin ] && yarn --cwd gally-admin husky:install) || true)",
     "husky:install": "cd .. && husky install front/.husky"
   },
   "devDependencies": {
