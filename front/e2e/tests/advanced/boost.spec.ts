@@ -3,17 +3,29 @@ import { randomUUID } from 'crypto'
 import { login } from '../helper/auth'
 import { navigateTo } from '../helper/menu'
 import { Dropdown } from '../helper/dropdown'
+import { Grid } from '../helper/grid'
 
 test('Boosts', async ({ page }) => {
   await login(page)
   await navigateTo(page, 'Boosts', '/fr/admin/merchandize/boost/grid')
 
   const createButton = await page.getByTestId('createButtonResourceGrid')
-
   /*
       Grid Boost
   */
   // TO DO
+  const grid = new Grid(page, 'BoostTable')
+  grid.expectHeadersToEqual([
+    ' ',
+    'Nom',
+    'Modèle',
+    'Type de requête',
+    'Actif',
+    'Catalogue(s) localisé(s)',
+    'Actions',
+  ])
+
+  grid.expectToFindWhere('Nom', 'Boost "Tank dress"')
 
   /*
       Create Boost
@@ -71,7 +83,6 @@ test('Boosts', async ({ page }) => {
   const saveButton = await page.getByTestId('submitButtonResourceForm')
   await saveButton.click()
   await expect(page).toHaveURL('/fr/admin/merchandize/boost/grid')
-  await expect(await page.getByText(newName)).toBeDefined() // TO DO : Manipulate the grid instead of research in the page.
 
   /*
       Edit Boost
