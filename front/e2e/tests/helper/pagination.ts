@@ -94,4 +94,36 @@ export class Pagination {
     await previousButton.click()
     return true
   }
+
+  public async expectCountToBe(value: number): Promise<void> {
+    const pagination = await this.getPagination()
+    await expect(await pagination.getByTestId('count')).toHaveText(
+      value.toString()
+    )
+  }
+
+  public async expectCountToBeDifferentFrom(value: number): Promise<void> {
+    const pagination = await this.getPagination()
+    await expect(await pagination.getByTestId('count')).not.toHaveText(
+      value.toString()
+    )
+  }
+
+  public async expectRowsPerPageToBe(value: number): Promise<void> {
+    const pagination = await this.getPagination()
+    const input = await pagination.locator('input')
+    await expect(input).toHaveValue(value.toString())
+  }
+
+  public async expectOptionsToBe(options: string[]): Promise<void> {
+    const pagination = await this.getPagination()
+    const dropdown = await pagination.locator('.MuiInputBase-root')
+    await dropdown.click()
+
+    const ul = await this.page.locator('#menu- .MuiList-root')
+    await expect(await ul.locator('li')).toHaveText(options, {
+      useInnerText: true,
+    })
+    await (await this.page.locator('#menu-')).click()
+  }
 }
