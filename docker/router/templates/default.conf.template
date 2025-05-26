@@ -22,6 +22,9 @@ upstream fastcgi_backend {
 #        # to let webapp know it's https traffic.
 #        add_header X-Forwarded-Proto $scheme;
 #
+#        # to let webapp know the client port.
+#        add_header X-Forwarded-Port $server_port;
+#
 #        try_files $uri /index.php$is_args$args;
 #    }
 #
@@ -95,6 +98,9 @@ server {
         # to let webapp know it's https traffic.
         add_header X-Forwarded-Proto $scheme;
 
+        # to let webapp know the client port.
+        add_header X-Forwarded-Port $server_port;
+
         try_files $uri /index.php$is_args$args;
     }
 
@@ -144,6 +150,9 @@ server {
 
     # to let webapp know it's https traffic.
     add_header X-Forwarded-Proto $scheme;
+
+    # to let webapp know the client port.
+    add_header X-Forwarded-Port $server_port;
 
     access_log /dev/stdout main;
     error_log /dev/stderr notice;
