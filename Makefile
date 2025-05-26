@@ -162,8 +162,9 @@ sf: ## List all Symfony commands or pass the parameter "c=" to run a given comma
 	@$(eval c ?=)
 	@$(SYMFONY) $(c)
 
-cc: c=c:c ## Clear the cache
-cc: sf
+cc: ## Clear the cache
+	@$(SYMFONY) cache:clear
+	@$(SYMFONY) gally:cache:clear-all
 
 migrate: ## Run symfony migration
 migrate: c=doctrine:migrations:migrate -n --allow-no-migration
