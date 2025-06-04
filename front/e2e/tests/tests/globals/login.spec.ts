@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test'
-import { login } from '../helper/auth'
+import { login } from '../../helper/auth'
 
 const authentificationURL = `${
   process.env.API_SERVER_BASE_URL || 'https://gally.local'
