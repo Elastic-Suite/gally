@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test'
 import { randomUUID } from 'crypto'
-import { login } from '../helper/auth'
-import { navigateTo } from '../helper/menu'
-import { Dropdown } from '../helper/dropdown'
+import { login } from '../../../helper/auth'
+import { navigateTo } from '../../../helper/menu'
+import { Dropdown } from '../../../helper/dropdown'
 
 test('Boosts', async ({ page }) => {
   await login(page)

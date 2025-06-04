@@ -7,6 +7,15 @@ export async function navigateTo(
 ) {
   const sidebarMenu = await page.getByTestId('sidebarMenu')
   const link = await sidebarMenu.getByText(menuItemLabel)
+  
+  const menuItemChildrenButtonList = await page
+    .getByTestId('menuItemChildrenButton')
+    .all()
+
+  for (const locator of menuItemChildrenButtonList) {
+    await locator.click()
+  }
+
   await link.click()
   if (expectedURL) {
     await expect(page).toHaveURL(expectedURL)
