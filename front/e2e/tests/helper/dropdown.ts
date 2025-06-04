@@ -110,6 +110,7 @@ export class Dropdown<isMultiple extends boolean = false> {
         await this.getDropdown()
       ).getByTestId(`${this.dropdownDataTestId}InputText`)
       await expect(inputText).toHaveValue(value)
+      await button.click()
     }
   }
 
