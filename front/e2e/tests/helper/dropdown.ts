@@ -110,6 +110,7 @@ export class Dropdown<isMultiple extends boolean = false> {
         await this.getDropdown()
       ).getByTestId(`${this.dropdownDataTestId}InputText`)
       await expect(inputText).toHaveValue(value)
+      await button.click()
     }
   }
 
@@ -168,5 +169,20 @@ export class Dropdown<isMultiple extends boolean = false> {
       .getByTestId(`${this.dropdownDataTestId}Tag`)
       .all()
     expect(tags.length).toBe(newTags.length + values.length)
+  }
+
+  public async expectToHaveValue(
+    value: isMultiple extends true ? string[] : string
+  ) {
+    const dropdown = await this.getDropdown()
+    if (Array.isArray(value)) {
+      const tags = await dropdown.getByTestId(`${this.dropdownDataTestId}Tag`)
+      expect(tags).toHaveText(value)
+    } else {
+      const inputText = await dropdown.getByTestId(
+        `${this.dropdownDataTestId}InputText`
+      )
+      await expect(inputText).toHaveValue(value)
+    }
   }
 }
