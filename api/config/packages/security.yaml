@@ -25,7 +25,8 @@ security:
                 password_path: password
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
-            jwt: ~
+            jwt:
+                authenticator: gally.authenticator
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -42,6 +43,7 @@ security:
         - { path: ^/docs, roles: PUBLIC_ACCESS } # Allows accessing the Swagger UI
         - { path: ^/graphql, roles: PUBLIC_ACCESS } # Allows accessing GraphiQL
         - { path: ^/authentication_token, roles: PUBLIC_ACCESS }
+        - { path: ^/forgot-password, role: PUBLIC_ACCESS }
 
 when@test:
     security:
