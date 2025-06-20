@@ -23,7 +23,7 @@ services:
       - APP_ENV=${APP_ENV:-dev}
       - TRUSTED_HOSTS=${TRUSTED_HOSTS:-^${SERVER_NAME:-|gally.localhost}|localhost|${E2E_SERVER_NAME:-gally.e2e}|php$$}
       # See https://xdebug.org/docs/all_settings#mode
-      - XDEBUG_MODE=${XDEBUG_MODE:-off}
+      - XDEBUG_MODE=${XDEBUG_MODE:-debug}
       - PHP_IDE_CONFIG=serverName=gally
     extra_hosts:
       # Ensure that host.docker.internal is correctly defined on Linux
@@ -67,3 +67,12 @@ services:
       service: e2e
     volumes:
       - ./front/e2e/:/usr/src/app:rw,cached,z
+
+  mailer:
+    image: axllent/mailpit
+    ports:
+      - "1025"
+      - "8025"
+    environment:
+      MP_SMTP_AUTH_ACCEPT_ANY: 1
+      MP_SMTP_AUTH_ALLOW_INSECURE: 1
