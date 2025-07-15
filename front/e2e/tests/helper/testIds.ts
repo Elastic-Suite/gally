@@ -1,16 +1,21 @@
-export enum ComponentTestPrefix {
+// TODO: factorize this with packages/components/src/utils/testIds.ts
+export enum TestId {
   CATALOGS = 'catalogs',
+  NB_ACTIVE_LOCALES = 'nbActiveLocales',
   LANGUAGE = 'language',
   MENU_ITEM_ICON = 'menuItemIcon',
 }
 
-type testIdSuffix = `-${string}`| ''
-export type TestId = `${ComponentTestPrefix}${testIdSuffix}`
+type ItemId = `|${string}` | ''
+export type FullTestId = `${TestId}${ItemId}`
 
-function normalizeId(id: string): testIdSuffix {
-  return `-${id?.toLowerCase().replace(/[^a-z0-9]/g, '')}`
+function normalizeItemId(itemId?: string): ItemId {
+  return itemId ? `|${itemId}` : ''
 }
 
-export function generateTestId(prefix: ComponentTestPrefix, id?: string): TestId {
-  return `${prefix}${id ? normalizeId(id) : ''}`
+export function generateTestId(
+  testId: TestId,
+  itemId?: string
+): FullTestId {
+  return `${testId}${normalizeItemId(itemId)}`
 }
