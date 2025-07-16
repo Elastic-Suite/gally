@@ -1,32 +1,55 @@
 import { Locator, Page, expect } from '@playwright/test'
-import { findAsync } from './global'
 
+/**
+ * A generic Dropdown class to interact with single or multi-select dropdowns in Playwright.
+ * @template isMultiple - Whether the dropdown allows multiple selections.
+ */
 export class Dropdown<isMultiple extends boolean = false> {
   private dropdownLocator: Locator
   private dropdwonButton: Locator
+  private parent?: Locator
 
   private page: Page
   private dropdownDataTestId: string
   private isMultiple: isMultiple
 
-  constructor(page: Page, dropdownDataTestId: string, isMultiple?: isMultiple) {
+  /**
+   * Creates a new Dropdown instance.
+   * @param page - The Playwright Page object.
+   * @param dropdownDataTestId - The base data-testid of the dropdown component.
+   * @param isMultiple - Whether the dropdown allows multiple selection.
+   * @param parent - Optional parent locator to scope the dropdown.
+   */
+  constructor(
+    page: Page,
+    dropdownDataTestId: string,
+    isMultiple?: isMultiple,
+    parent?: Locator
+  ) {
     this.page = page
     this.dropdownDataTestId = dropdownDataTestId
     this.isMultiple = (isMultiple ?? false) as isMultiple
+    this.parent = parent
   }
 
-  public async getDropdown() {
+  /**
+   * Returns the dropdown container Locator.
+   */
+  private getDropdown(): Locator {
     if (!this.dropdownLocator) {
-      this.dropdownLocator = await this.page.getByTestId(
+      this.dropdownLocator = (this.parent || this.page).getByTestId(
         this.dropdownDataTestId
       )
     }
     return this.dropdownLocator
   }
 
-  public async getButton() {
+  /**
+   * Returns the dropdown toggle button Locator.
+   */
+  private getButton(): Locator {
     if (!this.dropdwonButton) {
-      const dropdown = await this.getDropdown()
+      const dropdown = this.getDropdown()
       this.dropdwonButton = dropdown.getByTestId(
         `${this.dropdownDataTestId}Button`
       )
@@ -34,167 +57,245 @@ export class Dropdown<isMultiple extends boolean = false> {
     return this.dropdwonButton
   }
 
-  private async getOptions() {
-    return await this.page
-      .getByTestId(`${this.dropdownDataTestId}DropdownOption`)
-      .all()
+  /**
+   * Returns the list of dropdown option Locators.
+   */
+  private getOptions(): Locator {
+    return this.page.getByTestId(`${this.dropdownDataTestId}DropdownOption`)
   }
 
-  public async selectFirstValue() {
-    const button = await this.getButton()
-    await button.click()
+  /**
+   * Checks if the dropdown is currently open.
+   */
+  private async isOpen(): Promise<boolean> {
+    const option = this.getOptions().first()
+    return await option.isVisible()
+  }
 
-    const options = await this.getOptions()
-    if (options.length === 0)
+  /**
+   * Opens the dropdown (if not already open).
+   */
+  private async open(): Promise<void> {
+    const option = this.getOptions().first()
+    const button = this.getButton()
+    if (!(await this.isOpen())) {
+      await button.click()
+    }
+    await expect(option).toBeVisible()
+  }
+
+  /**
+   * Closes the dropdown (if open).
+   */
+  private async close(): Promise<void> {
+    const option = this.getOptions().first()
+    const button = this.getButton()
+    if (await this.isOpen()) {
+      await button.click()
+    }
+    await expect(option).not.toBeVisible()
+  }
+
+  /**
+   * Selects the first available option in the dropdown.
+   */
+  public async selectFirstValue(): Promise<void> {
+    const dropdown = this.getDropdown()
+    const options = this.getOptions()
+
+    await this.open()
+
+    if ((await options.count()) === 0)
       throw new Error(
         `No options found for dropdown: ${this.dropdownDataTestId}`
       )
 
-    const firstOptionLabel = await options[0].innerText()
-    await options[0].click()
+    const firstOption = options.first()
+    await firstOption.click()
 
-    const dropdown = await this.getDropdown()
+    const firstOptionLabel = await firstOption.innerText()
     if (this.isMultiple) {
       const tag = await dropdown.getByTestId(`${this.dropdownDataTestId}Tag`)
-      await expect(await tag.innerText()).toBe(firstOptionLabel)
+      await expect(await tag).toHaveText(firstOptionLabel, {
+        useInnerText: true,
+      })
     } else {
-      const inputText = await dropdown.getByTestId(
+      const inputText = dropdown.getByTestId(
         `${this.dropdownDataTestId}InputText`
       )
       await expect(inputText).toHaveValue(firstOptionLabel)
     }
+
+    await this.close()
   }
 
-  public async selectValue(value: isMultiple extends true ? string[] : string) {
-    const button = await this.getButton()
-    await button.click()
+  /**
+   * Selects one or more values in the dropdown.
+   * @param value - A string (for single) or array of strings (for multi).
+   */
+  public async selectValue(
+    value: isMultiple extends true ? string[] : string
+  ): Promise<void> {
+    const dropdown = this.getDropdown()
+    const options = this.getOptions()
 
-    const options = await this.getOptions()
-    if (options.length === 0)
-      throw new Error(
-        `No options found for dropdown: ${this.dropdownDataTestId}`
-      )
+    await this.open()
 
     if (Array.isArray(value)) {
       for (const label of value) {
-        const selectedOption = await findAsync(
-          options,
-          async (option) => (await option.innerText()) === label
-        )
-
-        if (!selectedOption)
-          throw new Error(
-            `Option '${label}' not found in dropdown: ${this.dropdownDataTestId}`
-          )
+        const selectedOption = options.getByText(label, { exact: true })
         await selectedOption.click()
       }
 
-      const dropdown = await this.getDropdown()
-      const tags = await dropdown
-        .getByTestId(`${this.dropdownDataTestId}Tag`)
-        .all()
-      const tagTexts = await Promise.all(tags.map((tag) => tag.innerText()))
-      expect(tagTexts).toEqual(value)
+      const tags = dropdown.getByTestId(`${this.dropdownDataTestId}Tag`)
+      await expect(tags).toHaveText(value, {
+        useInnerText: true,
+      })
     } else {
-      const selectedOption = await findAsync(
-        options,
-        async (option) => (await option.innerText()) === value
-      )
-      if (!selectedOption)
-        throw new Error(
-          `Option '${value}' not found in dropdown: ${this.dropdownDataTestId}`
-        )
+      const selectedOption = options.getByText(value, { exact: true })
       await selectedOption.click()
 
-      const inputText = await (
-        await this.getDropdown()
-      ).getByTestId(`${this.dropdownDataTestId}InputText`)
+      const inputText = dropdown.getByTestId(
+        `${this.dropdownDataTestId}InputText`
+      )
       await expect(inputText).toHaveValue(value)
-      await button.click()
     }
+
+    await this.close()
   }
 
-  public async removeFirstSelectedValue(this: Dropdown<true>) {
+  /**
+   * Removes the first selected value (only for multi-select).
+   */
+  public async removeFirstSelectedValue(this: Dropdown<true>): Promise<void> {
+    const dropdown = this.getDropdown()
+    const tags = dropdown.getByTestId(`${this.dropdownDataTestId}Tag`)
+    const firstTag = tags.first()
+    const defaultTagsCount = await tags.count()
+
     if (!this.isMultiple) {
       throw new Error(
         `The dropdown ${this.dropdownDataTestId} must be mulitple`
       )
     }
-    const dropdown = await this.getDropdown()
-    const tags = await dropdown
-      .getByTestId(`${this.dropdownDataTestId}Tag`)
-      .all()
-    if (tags.length === 0) {
+
+    if (defaultTagsCount === 0) {
       throw new Error(
         `No selected value found for dropdown: ${this.dropdownDataTestId}`
       )
     }
-    const removeButtonTag = await tags[0].locator('button')
+
+    const removeButtonTag = firstTag.locator('button')
     await removeButtonTag.click()
 
-    const newTags = await dropdown
-      .getByTestId(`${this.dropdownDataTestId}Tag`)
-      .all()
-    expect(tags.length).toBe(newTags.length + 1)
+    await expect(tags).toHaveCount(defaultTagsCount - 1)
   }
 
-  public async removeSelectedValues(this: Dropdown<true>, values: string[]) {
+  /**
+   * Removes multiple selected values (only for multi-select).
+   * @param values - An array of labels to remove.
+   */
+  public async removeSelectedValues(
+    this: Dropdown<true>,
+    values: string[]
+  ): Promise<void> {
+    const dropdown = this.getDropdown()
+    const tags = dropdown.getByTestId(`${this.dropdownDataTestId}Tag`)
+    const defaultTagsCount = await tags.count()
+
     if (!this.isMultiple)
       throw new Error(
         `The dropdown ${this.dropdownDataTestId} must be mulitple`
       )
-    const dropdown = await this.getDropdown()
-    const tags = await dropdown
-      .getByTestId(`${this.dropdownDataTestId}Tag`)
-      .all()
-    if (tags.length === 0)
+
+    if (defaultTagsCount === 0)
       throw new Error(
         `No selected value found for dropdown: ${this.dropdownDataTestId}`
       )
 
     for (const label of values) {
-      const tag = await findAsync(
-        tags,
-        async (tag) => (await tag.innerText()) === label
-      )
-      if (!tag)
-        throw new Error(
-          `Selected value '${label}' not found in dropdown: ${this.dropdownDataTestId}`
-        )
-      const removeButtonTag = await tag.locator('button')
+      const tag = tags.getByText(label, { exact: true })
+      const removeButtonTag = tag.locator('button')
       await removeButtonTag.click()
     }
 
-    const newTags = await dropdown
-      .getByTestId(`${this.dropdownDataTestId}Tag`)
-      .all()
-    expect(tags.length).toBe(newTags.length + values.length)
+    await expect(tags).toHaveCount(defaultTagsCount + values.length)
   }
 
+  /**
+   * Asserts the selected value(s) of the dropdown.
+   * @param value - A string or array of selected values.
+   */
   public async expectToHaveValue(
     value: isMultiple extends true ? string[] : string
-  ) {
-    const dropdown = await this.getDropdown()
+  ): Promise<void> {
+    const dropdown = this.getDropdown()
     if (Array.isArray(value)) {
-      const tags = await dropdown.getByTestId(`${this.dropdownDataTestId}Tag`)
-      expect(tags).toHaveText(value)
+      const tags = dropdown.getByTestId(`${this.dropdownDataTestId}Tag`)
+      await expect(tags).toHaveText(value, { useInnerText: true })
     } else {
-      const inputText = await dropdown.getByTestId(
+      const inputText = dropdown.getByTestId(
         `${this.dropdownDataTestId}InputText`
       )
       await expect(inputText).toHaveValue(value)
     }
   }
 
-  public async expectOptionsToBe(options: string[]) {
-    const button = await this.getButton()
-    await button.click()
-
-    const optionsList = await this.page.getByTestId(
+  /**
+   * Asserts that the dropdown displays a specific list of options.
+   * @param options - List of expected dropdown option texts.
+   */
+  public async expectToHaveOptions(options: string[]): Promise<void> {
+    await this.open()
+    const optionsList = this.page.getByTestId(
       `${this.dropdownDataTestId}DropdownOption`
     )
 
     await expect(optionsList).toHaveText(options, { useInnerText: true })
-    await button.click()
+    await this.close()
+  }
+
+  /**
+   * Clears all selected values in the dropdown.
+   */
+  public async clear() {
+    const dropdown = this.getDropdown()
+
+    if (this.isMultiple) {
+      const tags = dropdown.getByTestId(`${this.dropdownDataTestId}Tag`)
+      const tagsCount = await tags.count()
+
+      if (!this.isMultiple)
+        throw new Error(
+          `The dropdown ${this.dropdownDataTestId} must be mulitple`
+        )
+
+      if (tagsCount === 0)
+        throw new Error(
+          `No selected value found for dropdown: ${this.dropdownDataTestId}`
+        )
+
+      for (let i = 0; i < tagsCount; i++) {
+        const tag = tags.first()
+        const removeButtonTag = tag.locator('button')
+        await removeButtonTag.click()
+      }
+
+      await expect(tags).toHaveCount(0)
+    } else {
+      const clearButton = this.page.getByTestId(
+        `${this.dropdownDataTestId}ClearButton`
+      )
+      await dropdown.hover() // To display the clearButton
+      await clearButton.click()
+    }
+  }
+
+  /**
+   * Asserts that the dropdown is visible on the page.
+   */
+  public async expectToBeVisible(): Promise<void> {
+    const dropdown = this.getDropdown()
+    await expect(dropdown).toBeVisible()
   }
 }
