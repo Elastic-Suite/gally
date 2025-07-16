@@ -5,8 +5,8 @@ services:
       context: .
       dockerfile: ./docker/front/Dockerfile.e2e
     environment:
-      - SERVER_BASE_URL=https://${E2E_SERVER_NAME:-gally.e2e}
-      - API_SERVER_BASE_URL=https://${E2E_SERVER_NAME:-gally.e2e}/${API_ROUTE_PREFIX:-api}
+      - SERVER_BASE_URL=https://${E2E_SERVER_NAME:-gally.e2e}${HTTPS_PORT:+:$HTTPS_PORT}
+      - API_SERVER_BASE_URL=https://${E2E_SERVER_NAME:-gally.e2e}${HTTPS_PORT:+:$HTTPS_PORT}/${API_ROUTE_PREFIX:-api}
     depends_on:
       - proxy
     extra_hosts:
