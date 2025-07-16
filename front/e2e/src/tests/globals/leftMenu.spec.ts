@@ -4,21 +4,19 @@ import { login } from '../../helper/auth'
 test('Menu', async ({ page }) => {
   await login(page)
 
-  const sidebar = await page.getByTestId('sidebarMenu')
-  const collapseButton = await page.getByTestId('sidebarMenuCollapseButton')
+  const sidebar = page.getByTestId('sidebarMenu')
+  const collapseButton = page.getByTestId('sidebarMenuCollapseButton')
 
-  const labelMenuItemIconList = await await page
+  const labelMenuItemIconList = await page
     .getByTestId('labelMenuItemIcon')
     .all()
   const menuItemChildrenButtonList = await page
     .getByTestId('menuItemChildrenButton')
     .all()
-  const menuItemChildrenList = await (
-    await page.getByTestId('menuItemChildren')
-  ).all()
-  const labelMenuLinkItemList = await (
-    await page.getByTestId('labelMenuLinkItem')
-  ).all()
+  const menuItemChildrenList = await page.getByTestId('menuItemChildren').all()
+  const labelMenuLinkItemList = await page
+    .getByTestId('labelMenuLinkItem')
+    .all()
 
   for (const locator of menuItemChildrenList) {
     await expect(locator).not.toBeVisible()
