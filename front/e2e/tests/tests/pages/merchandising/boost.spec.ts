@@ -3,42 +3,143 @@ import { randomUUID } from 'crypto'
 import { login } from '../../../helper/auth'
 import { navigateTo } from '../../../helper/menu'
 import { Dropdown } from '../../../helper/dropdown'
+import { Switch } from '../../../helper/switch'
+import { Grid } from '../../../helper/grid'
+import { Filter, FilterType } from '../../../helper/filter'
+import { AlertMessage } from '../../../helper/alertMessage'
+
+const GridLabelsAndFilters = {
+  name: {
+    gridLabel: 'Name',
+    filterTestId: 'name',
+  },
+  model: {
+    gridLabel: 'Model',
+    filterTestId: 'model[]',
+  },
+  requestType: {
+    gridLabel: 'Request type',
+    filterTestId: 'requestTypes.requestType[]',
+  },
+  isActive: {
+    gridLabel: 'Enable',
+    filterTestId: 'isActive',
+  },
+  localizedCatalogs: {
+    gridLabel: 'Localized catalog(s)',
+    filterTestId: 'localizedCatalogs.id[]',
+  },
+  actions: {
+    gridLabel: 'Actions',
+  },
+} as const
 
 test('Boosts', async ({ page }) => {
   await login(page)
-  await navigateTo(page, 'Boosts', '/fr/admin/merchandize/boost/grid')
+  await navigateTo(page, 'Boosts', '/admin/merchandize/boost/grid')
 
-  const createButton = await page.getByTestId('createButtonResourceGrid')
+  const grid = new Grid(page, 'BoostTable')
+  await grid.expectHeadersToBe([
+    GridLabelsAndFilters.name.gridLabel,
+    GridLabelsAndFilters.model.gridLabel,
+    GridLabelsAndFilters.requestType.gridLabel,
+    GridLabelsAndFilters.isActive.gridLabel,
+    GridLabelsAndFilters.localizedCatalogs.gridLabel,
+    GridLabelsAndFilters.actions.gridLabel,
+  ])
 
-  /*
-      Grid Boost
-  */
-  // TO DO
+  await grid.pagination.expectToHaveOptions(['10', '25', '50'])
+  await grid.pagination.expectToHaveRowsPerPage(50)
+
+  const defaultRowCount = await grid.getCountLines()
+
+  const filter = new Filter(page, 'BoostFilter', {
+    [GridLabelsAndFilters.name.filterTestId]: FilterType.TEXT,
+    [GridLabelsAndFilters.model.filterTestId]: FilterType.DROPDOWN,
+    [GridLabelsAndFilters.requestType.filterTestId]: FilterType.DROPDOWN,
+    [GridLabelsAndFilters.isActive.filterTestId]: FilterType.BOOLEAN,
+    [GridLabelsAndFilters.localizedCatalogs.filterTestId]: FilterType.DROPDOWN,
+  })
+
+  await filter.addFilter(
+    GridLabelsAndFilters.name.filterTestId,
+    'Boost "Tank dress"'
+  )
+  await filter.addFilter(GridLabelsAndFilters.model.filterTestId, [
+    'Constant score',
+    'Proportional to an attribute value',
+  ])
+  await filter.addFilter(GridLabelsAndFilters.requestType.filterTestId, [
+    'Category listing',
+  ])
+  await filter.addFilter(GridLabelsAndFilters.isActive.filterTestId, true)
+  await filter.addFilter(GridLabelsAndFilters.localizedCatalogs.filterTestId, [
+    'COM French Catalog',
+  ])
+
+  await filter.removeFilter(
+    GridLabelsAndFilters.name.filterTestId,
+    'Boost "Tank dress"'
+  )
+  await filter.removeFilter(
+    GridLabelsAndFilters.model.filterTestId,
+    'Constant score'
+  )
+  await filter.removeFilter(
+    GridLabelsAndFilters.model.filterTestId,
+    'Proportional to an attribute value'
+  )
+
+  await filter.removeFilter(
+    GridLabelsAndFilters.requestType.filterTestId,
+    'Category listing'
+  )
+  await filter.removeFilter(GridLabelsAndFilters.isActive.filterTestId, true)
+  await filter.removeFilter(
+    GridLabelsAndFilters.localizedCatalogs.filterTestId,
+    'COM French Catalog'
+  )
+
+
+  await filter.addFilter(
+    GridLabelsAndFilters.name.filterTestId,
+    'Boost "Tank dress"'
+  )
+
+  await grid.pagination.expectToHaveCount(1)
+
+  await grid.expectToFindLineWhere([
+    {
+      columnName: GridLabelsAndFilters.name.gridLabel,
+      value: 'Boost "Tank dress"',
+    },
+  ])
+
+  await filter.clearFilters()
+  await grid.pagination.expectToHaveCount(defaultRowCount)
+
+  const createButton = page.getByTestId('createButtonResourceGrid')
 
   /*
       Create Boost
   */
   await createButton.click()
-  await expect(page).toHaveURL('/fr/admin/merchandize/boost/create')
+  await expect(page).toHaveURL('/admin/merchandize/boost/create')
 
   // isActive Switch
-  const isActiveInput = await page.getByTestId('isActive')
-  const isActiveCheckbox = await isActiveInput.locator("input[type='checkbox']")
-
-  await expect(isActiveCheckbox).toBeChecked()
-  await isActiveInput.click()
-  await expect(isActiveCheckbox).not.toBeChecked()
-  await isActiveInput.click()
-  await expect(isActiveCheckbox).toBeChecked()
+  const isActiveSwitch = new Switch(page, 'isActive')
+  await isActiveSwitch.expectToBeChecked()
+  await isActiveSwitch.disable()
+  await isActiveSwitch.enable()
 
   // Boost Preview
-  const previewFieldSet = await page.getByTestId('previewFieldSet')
+  const previewFieldSet = page.getByTestId('previewFieldSet')
   await expect(
-    await previewFieldSet.getByTestId('previewRequiredMessage')
+    previewFieldSet.getByTestId('previewRequiredMessage')
   ).toBeVisible()
 
   // name InputText
-  const nameInput = await page.getByTestId('name')
+  const nameInput = page.getByTestId('name')
   const newName = randomUUID()
 
   await expect(nameInput).toBeEmpty()
@@ -60,26 +161,73 @@ test('Boosts', async ({ page }) => {
 
   // Model Dropdown
   const modelDropdown = new Dropdown(page, 'model')
-  await modelDropdown.selectValue('Constante')
+  await modelDropdown.selectValue('Constant score')
 
   // Preview Boost Required Message
   await expect(
-    await previewFieldSet.getByTestId('previewRequiredMessage')
+    previewFieldSet.getByTestId('previewRequiredMessage')
   ).not.toBeVisible()
 
   // Create the Boost and verify his existence
-  const saveButton = await page.getByTestId('submitButtonResourceForm')
-  await saveButton.click()  
-  await expect(page).toHaveURL('/fr/admin/merchandize/boost/grid')
-  await expect(await page.getByText(newName)).toBeDefined() // TO DO : Manipulate the grid instead of research in the page.
+  const saveButton = page.getByTestId('submitButtonResourceForm')
+  await saveButton.click()
+  await expect(page).toHaveURL('/admin/merchandize/boost/grid')
+  await grid.expectToFindLineWhere([
+    {
+      columnName: GridLabelsAndFilters.name.gridLabel,
+      value: newName,
+    },
+  ])
+  await filter.addFilter(GridLabelsAndFilters.name.filterTestId, newName)
+  await grid.pagination.expectToHaveCount(1)
 
   /*
       Edit Boost
   */
-  // TO DO
 
+  const editLink = page.locator("[data-testid='BoostTable'] a")
+  await editLink.click()
+  await expect(page).toHaveURL(/\/admin\/merchandize\/boost\/edit\?id=\d+$/)
+
+  await localizedCatalogs.expectToHaveValue([
+    'COM French Catalog',
+    'COM English Catalog',
+    'FR French Catalog',
+    'EN French Catalog',
+  ])
+  await localizedCatalogs.clear()
+  await localizedCatalogs.selectValue(['COM French Catalog'])
+
+  await saveButton.click()
+  const alertMessage = new AlertMessage(page)
+  await alertMessage.expectToHaveText('Updating of the boost with success')
+
+  const backButton = page.getByTestId('backButton')
+  await backButton.click()
+  await expect(page).toHaveURL('/admin/merchandize/boost/grid')
   /*
       Delete Boost
   */
-  // TO DO
+
+  await filter.addFilter(GridLabelsAndFilters.name.filterTestId, newName)
+  await grid.pagination.expectToHaveCount(1)
+  await grid.expectToFindLineWhere([
+    {
+      columnName: GridLabelsAndFilters.name.gridLabel,
+      value: newName,
+    },
+    {
+      columnName: GridLabelsAndFilters.localizedCatalogs.gridLabel,
+      value: 'COM French Catalog',
+    },
+  ])
+
+  await editLink.click()
+
+  const deleteButtonResourceForm = page.getByTestId('deleteButtonResourceForm')
+  await deleteButtonResourceForm.click()
+  await page.getByTestId('dialogConfirmButton').click()
+  await expect(page).toHaveURL('/admin/merchandize/boost/grid')
+  await filter.addFilter(GridLabelsAndFilters.name.filterTestId, newName)
+  await grid.pagination.expectToHaveCount(0)
 })
