@@ -1,9 +1,9 @@
 import { test, expect } from '@playwright/test'
-import { Grid } from '../../../helper/grid'
-import { Filter, FilterType } from '../../../helper/filter'
-import { Dropdown } from '../../../helper/dropdown'
-import { login } from '../../../helper/auth'
-import { navigateTo } from '../../../helper/menu'
+import { Grid } from '../../../../helper/grid'
+import { Filter, FilterType } from '../../../../helper/filter'
+import { Dropdown } from '../../../../helper/dropdown'
+import { login } from '../../../../helper/auth'
+import { navigateTo } from '../../../../helper/menu'
 
 const GridLabelsAndFilters = {
   defaultLabel: { gridLabel: 'Attribute label' },

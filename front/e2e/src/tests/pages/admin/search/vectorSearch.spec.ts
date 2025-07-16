@@ -1,10 +1,10 @@
 import { test, expect } from '@playwright/test'
-import { Grid } from '../../../helper/grid'
-import { Filter, FilterType } from '../../../helper/filter'
-import { Dropdown } from '../../../helper/dropdown'
-import { login } from '../../../helper/auth'
-import { navigateTo } from '../../../helper/menu'
-import { Switch } from '../../../helper/switch'
+import { Grid } from '../../../../helper/grid'
+import { Filter, FilterType } from '../../../../helper/filter'
+import { Dropdown } from '../../../../helper/dropdown'
+import { login } from '../../../../helper/auth'
+import { navigateTo } from '../../../../helper/menu'
+import { Switch } from '../../../../helper/switch'
 
 const GridLabelsAndFilters = {
   defaultLabel: { gridLabel: 'Attribute label' },
