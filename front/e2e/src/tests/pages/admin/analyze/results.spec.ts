@@ -1,7 +1,7 @@
-import { login } from '../../../helper/auth'
-import { Dropdown } from '../../../helper/dropdown'
-import { Grid } from '../../../helper/grid'
-import { navigateTo } from '../../../helper/menu'
+import { login } from '../../../../helper/auth'
+import { Dropdown } from '../../../../helper/dropdown'
+import { Grid } from '../../../../helper/grid'
+import { navigateTo } from '../../../../helper/menu'
 import { test, expect } from '@playwright/test'
 
 const gridLabels = ['Code', 'Image', 'Name', 'Score', 'Stock', 'Price']

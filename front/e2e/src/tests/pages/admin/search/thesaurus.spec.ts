@@ -1,11 +1,11 @@
 import { test, expect } from '@playwright/test'
-import { Grid } from '../../../helper/grid'
-import { Filter, FilterType } from '../../../helper/filter'
-import { login } from '../../../helper/auth'
-import { navigateTo } from '../../../helper/menu'
-import { Dropdown } from '../../../helper/dropdown'
+import { Grid } from '../../../../helper/grid'
+import { Filter, FilterType } from '../../../../helper/filter'
+import { login } from '../../../../helper/auth'
+import { navigateTo } from '../../../../helper/menu'
+import { Dropdown } from '../../../../helper/dropdown'
 import { randomUUID } from 'crypto'
-import { Switch } from '../../../helper/switch'
+import { Switch } from '../../../../helper/switch'
 
 const GridLabelsAndFilters = {
   name: {
