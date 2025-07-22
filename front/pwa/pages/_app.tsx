@@ -1,5 +1,5 @@
 import React from 'react'
-import { Inter } from '@next/font/google'
+import { Inter } from 'next/font/google'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import dynamic from 'next/dynamic'
