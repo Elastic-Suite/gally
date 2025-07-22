@@ -35,7 +35,7 @@ exports[`Header match snapshot 1`] = `
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeSmall MuiInputLabel-outlined MuiFormLabel-colorPrimary css-1sumxir-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              id=":r0:"
+              id="«r0»"
             >
               Catalog
             </label>
@@ -47,9 +47,9 @@ exports[`Header match snapshot 1`] = `
               <div
                 aria-expanded="false"
                 aria-haspopup="listbox"
-                aria-labelledby=":r0: :r1:"
+                aria-labelledby="«r0» «r1»"
                 class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
-                id=":r1:"
+                id="«r1»"
                 role="button"
                 tabindex="0"
               >
