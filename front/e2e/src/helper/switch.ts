@@ -1,4 +1,5 @@
 import { Locator, Page, expect } from '@playwright/test'
+import {generateTestId, TestId} from "./testIds";
 
 /**
  * Represents a toggle switch component on a web page.
@@ -18,12 +19,12 @@ export class Switch {
    * Creates a new Switch instance.
    *
    * @param page - The Playwright Page object
-   * @param switchDataTestId - The data-testid attribute used to locate the switch
+   * @param componentId - The data-testid attribute used to locate the switch
    * @param parent - Optional parent Locator if the switch is within a container
    */
-  constructor(page: Page, switchDataTestId: string, parent?: Locator) {
+  constructor(page: Page, componentId: string, parent?: Locator) {
     this.page = page
-    this.switchDataTestId = switchDataTestId
+    this.switchDataTestId = generateTestId(TestId.SWITCH, componentId)
     this.parent = parent
   }
 

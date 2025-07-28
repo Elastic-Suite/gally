@@ -1,5 +1,6 @@
-import { Locator, Page, expect } from '@playwright/test'
-import { Dropdown } from './dropdown'
+import {expect, Locator, Page} from '@playwright/test'
+import {Dropdown} from './dropdown'
+import {generateTestId, TestId} from "./testIds";
 
 /**
  * Enumeration of supported filter types.
@@ -17,7 +18,7 @@ export enum FilterType {
  */
 export class Filter<TFilters extends Record<string, FilterType>> {
   private page: Page
-  private filterDataTestId: string
+  private testId: string
 
   private filter: Locator
   private clearAllButton: Locator
@@ -30,18 +31,18 @@ export class Filter<TFilters extends Record<string, FilterType>> {
    * Creates a new Filter instance.
    *
    * @param page - The Playwright Page instance
-   * @param filterDataTestId - Base data-testid for filter components
+   * @param componentId - Base data-testid for filter components
    * @param filters - Mapping of filter keys to their FilterType
    */
-  constructor(page: Page, filterDataTestId: string, filters: TFilters) {
+  constructor(page: Page, componentId: string, filters: TFilters) {
     this.page = page
-    this.filterDataTestId = filterDataTestId
+    this.testId = generateTestId(TestId.FILTER, componentId)
     this.filters = filters
   }
 
   private getFilter(): Locator {
     if (!this.filter) {
-      this.filter = this.page.getByTestId(this.filterDataTestId)
+      this.filter = this.page.getByTestId(this.testId)
     }
     return this.filter
   }
@@ -49,7 +50,7 @@ export class Filter<TFilters extends Record<string, FilterType>> {
   private getClearAllButton(): Locator {
     if (!this.clearAllButton) {
       this.clearAllButton = this.page
-        .getByTestId(`${this.filterDataTestId}ClearAllButton`)
+        .getByTestId(generateTestId(TestId.FILTER_CLEAR_BUTTON, this.testId))
         .first()
     }
     return this.clearAllButton
@@ -58,7 +59,7 @@ export class Filter<TFilters extends Record<string, FilterType>> {
   private getToggleButton(): Locator {
     if (!this.toggleButton) {
       this.toggleButton = this.page.getByTestId(
-        `${this.filterDataTestId}ToggleButton`
+        generateTestId(TestId.FILTER_TOGGLE_BUTTON, this.testId)
       )
     }
     return this.toggleButton
@@ -67,7 +68,7 @@ export class Filter<TFilters extends Record<string, FilterType>> {
   private getApplyButton(): Locator {
     if (!this.applyButton) {
       this.applyButton = this.page.getByTestId(
-        `${this.filterDataTestId}ApplyButton`
+        generateTestId(TestId.FILTER_APPLY_BUTTON, this.testId)
       )
     }
     return this.applyButton
@@ -75,8 +76,9 @@ export class Filter<TFilters extends Record<string, FilterType>> {
 
   private getSearchBar(): Locator {
     if (!this.searchBar) {
+      const searchBarTestId = generateTestId(TestId.FILTER_SEARCH_BAR, this.testId)
       this.searchBar = this.page.getByTestId(
-        `${this.filterDataTestId}SearchBar`
+        generateTestId(TestId.INPUT_TEXT, searchBarTestId)
       )
     }
     return this.searchBar
@@ -90,7 +92,7 @@ export class Filter<TFilters extends Record<string, FilterType>> {
   public async getActiveFiltersCount(): Promise<number> {
     const toggleButton = this.getToggleButton()
     const count = toggleButton.getByTestId(
-      `${this.filterDataTestId}ActiveFiltersCount`
+      generateTestId(TestId.FILTER_NB_ACTIVE_FILTERS, this.testId)
     )
     if (await count.isVisible()) {
       return Number.parseInt(await count.innerText())
@@ -139,13 +141,15 @@ export class Filter<TFilters extends Record<string, FilterType>> {
       ? string
       : TFilters[Name] extends FilterType.RANGE
       ? [number, number]
-      : never
+            : never
   ): Promise<void> {
     const filter = this.getFilter()
+    const chipsBox = filter.getByTestId(generateTestId(TestId.FILTER_CHIPS_BOX, this.testId))
     const toggleButton = this.getToggleButton()
     let count = await this.getActiveFiltersCount()
 
-    const chips = filter.getByTestId(`${this.filterDataTestId}${name}Chip`)
+    const chipDataTestId = generateTestId(TestId.CHIP, name)
+    const chips = chipsBox.getByTestId(chipDataTestId)
     const chip = chips.filter({
       hasText:
         typeof value === 'boolean'
@@ -157,12 +161,13 @@ export class Filter<TFilters extends Record<string, FilterType>> {
           : value,
     })
 
-    const chipCloseButton = chip.getByTestId('chipCloseButton')
+    const deleteIconTestId = generateTestId(TestId.CHIP_DELETE_ICON, chipDataTestId)
+    const chipCloseButton = chip.getByTestId(generateTestId(TestId.IONICON,deleteIconTestId))
     await chipCloseButton.click()
     count--
 
     const activeFiltersCount = toggleButton.getByTestId(
-      `${this.filterDataTestId}ActiveFiltersCount`
+      generateTestId(TestId.FILTER_NB_ACTIVE_FILTERS, this.testId)
     )
 
     if (count === 0) {
@@ -215,15 +220,15 @@ export class Filter<TFilters extends Record<string, FilterType>> {
       }
       case FilterType.RANGE: {
         const [firstValue, secondValue] = value as [number, number]
-        const firstInputText = filter.getByTestId(`${name}First`)
-        const secondInputText = filter.getByTestId(`${name}Second`)
+        const firstInputText = filter.getByTestId(generateTestId(TestId.RANGE_FROM_INPUT, name))
+        const secondInputText = filter.getByTestId(generateTestId(TestId.RANGE_TO_INPUT, name))
         await firstInputText.fill(firstValue.toString())
         await secondInputText.fill(secondValue.toString())
         count++
         break
       }
       case FilterType.TEXT: {
-        const inputText = filter.getByTestId(name)
+        const inputText = filter.getByTestId(generateTestId(TestId.INPUT_TEXT, name))
         await inputText.fill(value as string)
         count++
         break
@@ -233,7 +238,7 @@ export class Filter<TFilters extends Record<string, FilterType>> {
     await applyButton.click()
 
     const activeFiltersCount = toggleButton.getByTestId(
-      `${this.filterDataTestId}ActiveFiltersCount`
+      generateTestId(TestId.FILTER_NB_ACTIVE_FILTERS, this.testId)
     )
     await expect(activeFiltersCount).toHaveText(count.toString())
   }
@@ -246,7 +251,7 @@ export class Filter<TFilters extends Record<string, FilterType>> {
   public async expectFiltersCountToBe(count: number): Promise<void> {
     const toggleButton = this.getToggleButton()
     const spanValue = toggleButton.getByTestId(
-      `${this.filterDataTestId}ActiveFiltersCount`
+      generateTestId(TestId.FILTER_NB_ACTIVE_FILTERS, this.testId)
     )
 
     if (await spanValue.isVisible()) {

@@ -1,4 +1,5 @@
-import { Locator, Page, expect } from '@playwright/test'
+import {expect, Locator, Page} from '@playwright/test'
+import {generateTestId, TestId} from "./testIds";
 
 /**
  * A generic Dropdown class to interact with single or multi-select dropdowns in Playwright.
@@ -10,24 +11,25 @@ export class Dropdown<isMultiple extends boolean = false> {
   private parent?: Locator
 
   private page: Page
-  private dropdownDataTestId: string
+  private dropdownTestId: string
   private isMultiple: isMultiple
 
   /**
    * Creates a new Dropdown instance.
    * @param page - The Playwright Page object.
-   * @param dropdownDataTestId - The base data-testid of the dropdown component.
+   * @param componentId - The base data-testid of the dropdown component.
    * @param isMultiple - Whether the dropdown allows multiple selection.
    * @param parent - Optional parent locator to scope the dropdown.
    */
   constructor(
     page: Page,
-    dropdownDataTestId: string,
+    componentId: string,
     isMultiple?: isMultiple,
     parent?: Locator
   ) {
     this.page = page
-    this.dropdownDataTestId = dropdownDataTestId
+    this.dropdownTestId = generateTestId(TestId.DROPDOWN, componentId)
+
     this.isMultiple = (isMultiple ?? false) as isMultiple
     this.parent = parent
   }
@@ -38,7 +40,7 @@ export class Dropdown<isMultiple extends boolean = false> {
   private getDropdown(): Locator {
     if (!this.dropdownLocator) {
       this.dropdownLocator = (this.parent || this.page).getByTestId(
-        this.dropdownDataTestId
+        this.dropdownTestId
       )
     }
     return this.dropdownLocator
@@ -51,7 +53,7 @@ export class Dropdown<isMultiple extends boolean = false> {
     if (!this.dropdwonButton) {
       const dropdown = this.getDropdown()
       this.dropdwonButton = dropdown.getByTestId(
-        `${this.dropdownDataTestId}Button`
+        generateTestId(TestId.IONICON, generateTestId(TestId.DROPDOWN_COLLAPSING_ICON, this.dropdownTestId))
       )
     }
     return this.dropdwonButton
@@ -61,7 +63,27 @@ export class Dropdown<isMultiple extends boolean = false> {
    * Returns the list of dropdown option Locators.
    */
   private getOptions(): Locator {
-    return this.page.getByTestId(`${this.dropdownDataTestId}DropdownOption`)
+    return this.page.getByTestId(
+      generateTestId(TestId.DROPDOWN_OPTION, this.dropdownTestId)
+    )
+  }
+
+  private getInputText(): Locator {
+    return this.getDropdown().getByTestId(
+      generateTestId(TestId.INPUT_TEXT, this.dropdownTestId)
+    )
+  }
+
+  private getChips(): Locator {
+    return this.getDropdown().getByTestId(generateTestId(
+      TestId.CHIP, this.dropdownTestId
+    ))
+  }
+
+  private getClearButton(): Locator {
+    return this.getDropdown().getByTestId(
+      generateTestId(TestId.DROPDOWN_CLEAR_ICON, this.dropdownTestId)
+    )
   }
 
   /**
@@ -100,14 +122,13 @@ export class Dropdown<isMultiple extends boolean = false> {
    * Selects the first available option in the dropdown.
    */
   public async selectFirstValue(): Promise<void> {
-    const dropdown = this.getDropdown()
     const options = this.getOptions()
 
     await this.open()
 
     if ((await options.count()) === 0)
       throw new Error(
-        `No options found for dropdown: ${this.dropdownDataTestId}`
+        `No options found for dropdown: ${this.dropdownTestId}`
       )
 
     const firstOption = options.first()
@@ -115,14 +136,12 @@ export class Dropdown<isMultiple extends boolean = false> {
 
     const firstOptionLabel = await firstOption.innerText()
     if (this.isMultiple) {
-      const tag = await dropdown.getByTestId(`${this.dropdownDataTestId}Tag`)
-      await expect(await tag).toHaveText(firstOptionLabel, {
+      const chips = this.getChips()
+      await expect(chips).toHaveText(firstOptionLabel, {
         useInnerText: true,
       })
     } else {
-      const inputText = dropdown.getByTestId(
-        `${this.dropdownDataTestId}InputText`
-      )
+      const inputText = this.getInputText()
       await expect(inputText).toHaveValue(firstOptionLabel)
     }
 
@@ -136,28 +155,25 @@ export class Dropdown<isMultiple extends boolean = false> {
   public async selectValue(
     value: isMultiple extends true ? string[] : string
   ): Promise<void> {
-    const dropdown = this.getDropdown()
     const options = this.getOptions()
 
     await this.open()
 
     if (Array.isArray(value)) {
       for (const label of value) {
-        const selectedOption = options.getByText(label, { exact: true })
+        const selectedOption = options.getByText(label, {exact: true})
         await selectedOption.click()
       }
 
-      const tags = dropdown.getByTestId(`${this.dropdownDataTestId}Tag`)
-      await expect(tags).toHaveText(value, {
+      const chips = this.getChips()
+      await expect(chips).toHaveText(value, {
         useInnerText: true,
       })
     } else {
-      const selectedOption = options.getByText(value, { exact: true })
+      const selectedOption = options.getByText(value, {exact: true})
       await selectedOption.click()
 
-      const inputText = dropdown.getByTestId(
-        `${this.dropdownDataTestId}InputText`
-      )
+      const inputText = this.getInputText()
       await expect(inputText).toHaveValue(value)
     }
 
@@ -168,27 +184,26 @@ export class Dropdown<isMultiple extends boolean = false> {
    * Removes the first selected value (only for multi-select).
    */
   public async removeFirstSelectedValue(this: Dropdown<true>): Promise<void> {
-    const dropdown = this.getDropdown()
-    const tags = dropdown.getByTestId(`${this.dropdownDataTestId}Tag`)
-    const firstTag = tags.first()
-    const defaultTagsCount = await tags.count()
+    const chips = this.getChips()
+    const firstTag = chips.first()
+    const defaultTagsCount = await chips.count()
 
     if (!this.isMultiple) {
       throw new Error(
-        `The dropdown ${this.dropdownDataTestId} must be mulitple`
+        `The dropdown ${this.dropdownTestId} must be mulitple`
       )
     }
 
     if (defaultTagsCount === 0) {
       throw new Error(
-        `No selected value found for dropdown: ${this.dropdownDataTestId}`
+        `No selected value found for dropdown: ${this.dropdownTestId}`
       )
     }
 
     const removeButtonTag = firstTag.locator('button')
     await removeButtonTag.click()
 
-    await expect(tags).toHaveCount(defaultTagsCount - 1)
+    await expect(chips).toHaveCount(defaultTagsCount - 1)
   }
 
   /**
@@ -199,27 +214,26 @@ export class Dropdown<isMultiple extends boolean = false> {
     this: Dropdown<true>,
     values: string[]
   ): Promise<void> {
-    const dropdown = this.getDropdown()
-    const tags = dropdown.getByTestId(`${this.dropdownDataTestId}Tag`)
-    const defaultTagsCount = await tags.count()
+    const chips = this.getChips()
+    const defaultTagsCount = await chips.count()
 
     if (!this.isMultiple)
       throw new Error(
-        `The dropdown ${this.dropdownDataTestId} must be mulitple`
+        `The dropdown ${this.dropdownTestId} must be mulitple`
       )
 
     if (defaultTagsCount === 0)
       throw new Error(
-        `No selected value found for dropdown: ${this.dropdownDataTestId}`
+        `No selected value found for dropdown: ${this.dropdownTestId}`
       )
 
     for (const label of values) {
-      const tag = tags.getByText(label, { exact: true })
-      const removeButtonTag = tag.locator('button')
+      const chip = chips.getByText(label, {exact: true})
+      const removeButtonTag = chip.locator('button')
       await removeButtonTag.click()
     }
 
-    await expect(tags).toHaveCount(defaultTagsCount + values.length)
+    await expect(chips).toHaveCount(defaultTagsCount + values.length)
   }
 
   /**
@@ -229,14 +243,11 @@ export class Dropdown<isMultiple extends boolean = false> {
   public async expectToHaveValue(
     value: isMultiple extends true ? string[] : string
   ): Promise<void> {
-    const dropdown = this.getDropdown()
     if (Array.isArray(value)) {
-      const tags = dropdown.getByTestId(`${this.dropdownDataTestId}Tag`)
-      await expect(tags).toHaveText(value, { useInnerText: true })
+      const chips = this.getChips()
+      await expect(chips).toHaveText(value, {useInnerText: true})
     } else {
-      const inputText = dropdown.getByTestId(
-        `${this.dropdownDataTestId}InputText`
-      )
+      const inputText = this.getInputText()
       await expect(inputText).toHaveValue(value)
     }
   }
@@ -247,11 +258,9 @@ export class Dropdown<isMultiple extends boolean = false> {
    */
   public async expectToHaveOptions(options: string[]): Promise<void> {
     await this.open()
-    const optionsList = this.page.getByTestId(
-      `${this.dropdownDataTestId}DropdownOption`
-    )
+    const optionsList = this.getOptions()
 
-    await expect(optionsList).toHaveText(options, { useInnerText: true })
+    await expect(optionsList).toHaveText(options, {useInnerText: true})
     await this.close()
   }
 
@@ -262,30 +271,28 @@ export class Dropdown<isMultiple extends boolean = false> {
     const dropdown = this.getDropdown()
 
     if (this.isMultiple) {
-      const tags = dropdown.getByTestId(`${this.dropdownDataTestId}Tag`)
-      const tagsCount = await tags.count()
+      const chips = this.getChips()
+      const chipsCount = await chips.count()
 
       if (!this.isMultiple)
         throw new Error(
-          `The dropdown ${this.dropdownDataTestId} must be mulitple`
+          `The dropdown ${this.dropdownTestId} must be mulitple`
         )
 
-      if (tagsCount === 0)
+      if (chipsCount === 0)
         throw new Error(
-          `No selected value found for dropdown: ${this.dropdownDataTestId}`
+          `No selected value found for dropdown: ${this.dropdownTestId}`
         )
 
-      for (let i = 0; i < tagsCount; i++) {
-        const tag = tags.first()
-        const removeButtonTag = tag.locator('button')
-        await removeButtonTag.click()
+      for (let i = 0; i < chipsCount; i++) {
+        const chip = chips.first()
+        const removeButtonChip = chip.locator('button')
+        await removeButtonChip.click()
       }
 
-      await expect(tags).toHaveCount(0)
+      await expect(chips).toHaveCount(0)
     } else {
-      const clearButton = this.page.getByTestId(
-        `${this.dropdownDataTestId}ClearButton`
-      )
+      const clearButton = this.getClearButton()
       await dropdown.hover() // To display the clearButton
       await clearButton.click()
     }
@@ -294,8 +301,8 @@ export class Dropdown<isMultiple extends boolean = false> {
   /**
    * Asserts that the dropdown is visible on the page.
    */
-  public async expectToBeVisible(): Promise<void> {
+  public async expectToBeVisible(visible?: boolean = true): Promise<void> {
     const dropdown = this.getDropdown()
-    await expect(dropdown).toBeVisible()
+    await (visible ? expect(dropdown) : expect(dropdown).not).toBeVisible()
   }
 }
