@@ -1,4 +1,19 @@
-import { Page, expect } from '@playwright/test'
+import {expect, Page} from '@playwright/test'
+import {generateTestId, TestId} from "./testIds";
+
+const testIds = {
+  email: generateTestId(TestId.INPUT_TEXT, 'email'),
+  password: generateTestId(TestId.INPUT_TEXT, 'password'),
+  submitButton: generateTestId(TestId.BUTTON, 'form-submit'),
+  appBar: generateTestId(TestId.APP_BAR),
+  userMenu: generateTestId(TestId.USER_MENU),
+  logOutButton: generateTestId(TestId.LOG_OUT_BUTTON)
+}
+
+const texts = {
+  email: 'admin@example.com',
+  password: "apassword",
+}
 
 /**
  * Logs in the user with predefined credentials.
@@ -10,13 +25,13 @@ export async function login(page: Page): Promise<void> {
   await page.goto('/login')
 
   // Get inputs and submit button
-  const emailInput = page.getByTestId('emailInput')
-  const passwordInput = page.getByTestId('passwordInput')
-  const submitButton = page.getByTestId('submitButton')
+  const emailInput = page.getByTestId(testIds.email)
+  const passwordInput = page.getByTestId(testIds.password)
+  const submitButton = page.getByTestId(testIds.submitButton)
 
   // Fill with correct credentials and submit the form
-  await emailInput.fill('admin@example.com')
-  await passwordInput.fill('apassword')
+  await emailInput.fill(texts.email)
+  await passwordInput.fill(texts.password)
   await submitButton.click()
 
   // Assert that the URL changed to the expected admin page
@@ -30,9 +45,9 @@ export async function login(page: Page): Promise<void> {
  * @param page - The Playwright Page instance to operate on.
  */
 export async function logout(page: Page): Promise<void> {
-  const appBar = page.getByTestId('appBar')
-  const userMenu = appBar.getByTestId('userMenu')
-  const logOutButton = userMenu.getByTestId('logOutButton')
+  const appBar = page.getByTestId(testIds.appBar)
+  const userMenu = appBar.getByTestId(testIds.userMenu)
+  const logOutButton = userMenu.getByTestId(testIds.logOutButton)
 
   await userMenu.click()
   await expect(logOutButton).toBeVisible()
@@ -41,6 +56,6 @@ export async function logout(page: Page): Promise<void> {
 
   // Assert the page redirects to the login URL after logout
   await expect(page).toHaveURL(
-    `${process.env.SERVER_BASE_URL || 'https://gally.local'}/login`
+    '/login'
   )
 }
