@@ -31,8 +31,8 @@ The goal is to use these tests as an automatic safety net to verify that the app
 │
 ├── 📂 tests/      # Playwright test files
 │ ├── 📂 globals/     # Common tests - globals
-│ │ ├── header.spec.ts
-│ │ └── leftMenu.spec.ts
+│ │ ├── appBar.spec.ts
+│ │ └── sideBar.spec.ts
 │ │
 │ └── 📂 pages/     # Tests spécifiques à chaque pages
     └── ...

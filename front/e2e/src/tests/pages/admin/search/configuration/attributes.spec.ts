@@ -1,149 +1,196 @@
-import { test, expect } from '@playwright/test'
-import { Grid } from '../../../../../helper/grid'
-import { Filter, FilterType } from '../../../../../helper/filter'
-import { Dropdown } from '../../../../../helper/dropdown'
-import { login } from '../../../../../helper/auth'
-import { navigateTo } from '../../../../../helper/menu'
-import { Switch } from '../../../../../helper/switch'
+import {test, expect} from '@playwright/test'
+import {Grid} from '../../../../../helper/grid'
+import {Filter, FilterType} from '../../../../../helper/filter'
+import {Dropdown} from '../../../../../helper/dropdown'
+import {login} from '../../../../../helper/auth'
+import {navigateTo} from '../../../../../helper/menu'
+import {Switch} from '../../../../../helper/switch'
+import {generateTestId, TestId} from "../../../../../helper/testIds";
 
-const GridLabelsAndFilters = {
-  code: {
-    gridLabel: 'Attribute code',
-    filterTestId: 'code',
+const resourceName = 'SourceField'
+
+const testIds = {
+  filter: {
+    code: 'code',
+    defaultLabel: 'defaultLabel',
+    weight: 'weight[]',
+    isSpellchecked: 'isSpellchecked',
+    isSpannable: 'isSpannable',
+    defaultSearchAnalyzer: 'defaultSearchAnalyzer[]',
   },
-  defaultLabel: { gridLabel: 'Attribute label', filterTestId: 'defaultLabel' },
-  weight: { gridLabel: 'Search weight', filterTestId: 'weight[]' },
-  isSpellchecked: {
-    gridLabel: 'Used in spellcheck',
-    filterTestId: 'isSpellchecked',
-  },
-  isSpannable: {
-    gridLabel: 'Use for span queries',
-    filterTestId: 'isSpannable',
-  },
-  defaultSearchAnalyzer: {
-    gridLabel: 'Analyzer',
-    filterTestId: 'defaultSearchAnalyzer[]',
-  },
+  grid: {
+    testId: generateTestId(TestId.TABLE, resourceName),
+    editableFields: {
+      weight: 'weight',
+      isSpellchecked: 'isSpellchecked',
+      isSpannable: 'isSpannable',
+      defaultSearchAnalyzer: 'defaultSearchAnalyzer',
+    }
+  }
 } as const
 
-test('Search Configuration attributes', async ({ page }) => {
-  await login(page)
-  await navigateTo(page, 'Attributes', '/admin/search/configuration/attributes')
+const texts = {
+  labelMenuPage: 'Attributes',
+  gridHeaders: {
+    code: 'Attribute code',
+    defaultLabel: 'Attribute label',
+    weight: 'Search weight',
+    isSpellchecked: 'Used in spellcheck',
+    isSpannable: 'Use for span queries',
+    defaultSearchAnalyzer: 'Analyzer',
+  },
+  paginationOptions: ['10', '25', '50'],
+  filtersToApply: {
+    code: 'sku',
+    weight: ['10'],
+    defaultLabel: 'Sku',
+    isSpellchecked: true,
+    isSpannable: true,
+    defaultSearchAnalyzer: ['standard', 'reference'],
+    searchTermCategory: 'Category',
+  }
+} as const
 
-  const grid = new Grid(page, 'SourceFieldTable')
-  await grid.expectHeadersToBe([
-    GridLabelsAndFilters.code.gridLabel,
-    GridLabelsAndFilters.defaultLabel.gridLabel,
-    GridLabelsAndFilters.weight.gridLabel,
-    GridLabelsAndFilters.isSpellchecked.gridLabel,
-    GridLabelsAndFilters.isSpannable.gridLabel,
-    GridLabelsAndFilters.defaultSearchAnalyzer.gridLabel,
-  ])
+test('Pages > Search > Configurations > Attributes', {tag: ['@premium', '@standard']}, async ({page}) => {
+  await test.step('Login and navigate to the attributes page ', async () => {
+    await login(page)
+    await navigateTo(
+      page,
+      texts.labelMenuPage,
+      '/admin/search/configuration/attributes'
+    )
+  })
+
+  const grid = new Grid(page, resourceName)
+  const filter = new Filter(page, resourceName, {
+    [testIds.filter.code]: FilterType.TEXT,
+    [testIds.filter.defaultLabel]: FilterType.TEXT,
+    [testIds.filter.weight]: FilterType.DROPDOWN,
+    [testIds.filter.isSpellchecked]: FilterType.BOOLEAN,
+    [testIds.filter.isSpannable]: FilterType.BOOLEAN,
+    [testIds.filter.defaultSearchAnalyzer]:
+    FilterType.DROPDOWN,
+  })
 
   const entityDropdown = new Dropdown(page, 'entity')
   await entityDropdown.expectToHaveValue('Product')
 
-  await grid.pagination.expectToHaveOptions(['10', '25', '50'])
-  await grid.pagination.expectToHaveRowsPerPage(50)
-  await grid.pagination.changeRowsPerPage(10)
-  const nextPage = await grid.pagination.goToNextPage()
-  await expect(nextPage).toBe(true)
-
-  const filter = new Filter(page, 'SourceFieldFilter', {
-    [GridLabelsAndFilters.code.filterTestId]: FilterType.TEXT,
-    [GridLabelsAndFilters.defaultLabel.filterTestId]: FilterType.TEXT,
-    [GridLabelsAndFilters.weight.filterTestId]: FilterType.DROPDOWN,
-    [GridLabelsAndFilters.isSpellchecked.filterTestId]: FilterType.BOOLEAN,
-    [GridLabelsAndFilters.isSpannable.filterTestId]: FilterType.BOOLEAN,
-    [GridLabelsAndFilters.defaultSearchAnalyzer.filterTestId]:
-      FilterType.DROPDOWN,
+  await test.step('Verify grid headers and pagination', async () => {
+    await grid.expectHeadersToBe(Object.values(texts.gridHeaders))
+    await grid.pagination.expectToHaveOptions(texts.paginationOptions)
+    await grid.pagination.expectToHaveRowsPerPage(50)
+    await grid.pagination.changeRowsPerPage(10)
+    const nextPage = await grid.pagination.goToNextPage()
+    await expect(nextPage).toBe(true)
   })
 
-  await filter.addFilter(GridLabelsAndFilters.code.filterTestId, 'sku')
-  await filter.addFilter(GridLabelsAndFilters.defaultLabel.filterTestId, 'Sku')
-  await filter.addFilter(GridLabelsAndFilters.isSpellchecked.filterTestId, true)
-  await filter.addFilter(GridLabelsAndFilters.isSpannable.filterTestId, true)
-  await filter.addFilter(GridLabelsAndFilters.weight.filterTestId, ['10'])
-  await filter.addFilter(
-    GridLabelsAndFilters.defaultSearchAnalyzer.filterTestId,
-    ['standard', 'reference']
-  )
+  await test.step('Add some filters and remove them', async () => {
+    await filter.addFilter(testIds.filter.code, texts.filtersToApply.code)
+    await filter.addFilter(
+      testIds.filter.defaultLabel,
+      texts.filtersToApply.defaultLabel
+    )
+    await filter.addFilter(
+      testIds.filter.isSpellchecked,
+      texts.filtersToApply.isSpellchecked
+    )
+    await filter.addFilter(testIds.filter.isSpannable, texts.filtersToApply.isSpannable)
+    await filter.addFilter(testIds.filter.weight, texts.filtersToApply.weight)
+    await filter.addFilter(
+      testIds.filter.defaultSearchAnalyzer,
+      texts.filtersToApply.defaultSearchAnalyzer
+    )
 
+    await filter.removeFilter(testIds.filter.code, texts.filtersToApply.code)
+    await filter.removeFilter(
+      testIds.filter.defaultLabel,
+      texts.filtersToApply.defaultLabel
+    )
+    await filter.removeFilter(
+      testIds.filter.isSpellchecked,
+      texts.filtersToApply.isSpellchecked
+    )
+    await filter.removeFilter(
+      testIds.filter.isSpannable,
+      texts.filtersToApply.isSpannable
+    )
+    for (let i = 0; i < texts.filtersToApply.weight.length; i++) {
+      await filter.removeFilter(
+        testIds.filter.weight,
+        texts.filtersToApply.weight[i]
+      )
+    }
+    for (let i = 0; i < texts.filtersToApply.defaultSearchAnalyzer.length; i++) {
+      await filter.removeFilter(
+        testIds.filter.defaultSearchAnalyzer,
+        texts.filtersToApply.defaultSearchAnalyzer[i]
+      )
+    }
 
-  await filter.removeFilter(GridLabelsAndFilters.code.filterTestId, 'sku')
-  await filter.removeFilter(
-    GridLabelsAndFilters.defaultLabel.filterTestId,
-    'Sku'
-  )
-  await filter.removeFilter(
-    GridLabelsAndFilters.isSpellchecked.filterTestId,
-    true
-  )
-  await filter.removeFilter(GridLabelsAndFilters.isSpannable.filterTestId, true)
-  await filter.removeFilter(GridLabelsAndFilters.weight.filterTestId, '10')
-  await filter.removeFilter(
-    GridLabelsAndFilters.defaultSearchAnalyzer.filterTestId,
-    'standard'
-  )
-  await filter.removeFilter(
-    GridLabelsAndFilters.defaultSearchAnalyzer.filterTestId,
-    'reference'
-  )
+    await filter.addFilter(testIds.filter.code, texts.filtersToApply.code)
+    await filter.addFilter(
+      testIds.filter.defaultLabel,
+      texts.filtersToApply.defaultLabel
+    )
 
+    await grid.pagination.expectToHaveCount(1)
+    await grid.expectToFindLineWhere([
+      {columnName: texts.gridHeaders.code, value: texts.filtersToApply.code},
+    ])
 
-  await filter.addFilter(GridLabelsAndFilters.code.filterTestId, 'sku')
-  await filter.addFilter(GridLabelsAndFilters.defaultLabel.filterTestId, 'Sku')
+    await filter.clearFilters()
 
+    await grid.pagination.expectNotToHaveCount(1)
 
-  await grid.pagination.expectToHaveCount(1)
-  await grid.expectToFindLineWhere([
-    { columnName: GridLabelsAndFilters.code.gridLabel, value: 'sku' },
-  ])
+    await filter.searchTerm(texts.filtersToApply.code)
+    await grid.pagination.expectToHaveCount(1)
+    await grid.expectToFindLineWhere([
+      {columnName: texts.gridHeaders.code, value: texts.filtersToApply.code},
+    ])
 
-  await filter.clearFilters()
+    await filter.clearFilters()
+    await grid.pagination.expectNotToHaveCount(1)
 
-  await grid.pagination.expectNotToHaveCount(1)
+    await filter.searchTerm(texts.filtersToApply.searchTermCategory)
+    await grid.pagination.expectToHaveCount(1)
 
-  await filter.searchTerm('sku')
-  await grid.pagination.expectToHaveCount(1)
-  await grid.expectToFindLineWhere([
-    { columnName: GridLabelsAndFilters.code.gridLabel, value: 'sku' },
-  ])
+    await grid.expectToFindLineWhere([
+      {
+        columnName: texts.gridHeaders.defaultLabel,
+        value: texts.filtersToApply.searchTermCategory,
+      },
+    ])
+  })
 
-  await filter.clearFilters()
-  await grid.pagination.expectNotToHaveCount(1)
+  await test.step('Verify that fields in the grid are editable', async () => {
+    const weightDropdown = new Dropdown(page, testIds.grid.editableFields.weight)
+    await weightDropdown.selectValue('10')
 
-  await filter.searchTerm('Category')
-  await grid.pagination.expectToHaveCount(1)
-  await grid.expectToFindLineWhere([
-    {
-      columnName: GridLabelsAndFilters.defaultLabel.gridLabel,
-      value: 'Category',
-    },
-  ])
+    const sourceFieldTableLocator = page.getByTestId(testIds.grid.testId)
+    const isSpellcheckedSwitch = new Switch(
+      page,
+      testIds.grid.editableFields.isSpellchecked,
+      sourceFieldTableLocator
+    )
+    await isSpellcheckedSwitch.toggle()
 
-  const weightDropdown = new Dropdown(page, 'weight')
-  await weightDropdown.selectValue('10')
+    const isSpannableSwitch = new Switch(
+      page,
+      testIds.grid.editableFields.isSpannable,
+      sourceFieldTableLocator
+    )
+    await isSpannableSwitch.toggle()
 
-  const sourceFieldTableLocator = page.getByTestId('SourceFieldTable')
-  const isSpellcheckedSwitch = new Switch(
-    page,
-    'isSpellchecked',
-    sourceFieldTableLocator
-  )
-  await isSpellcheckedSwitch.toggle()
+    const defaultSearchAnalyzerDropdown = new Dropdown(
+      page,
+      testIds.grid.editableFields.defaultSearchAnalyzer,
+    )
+    await defaultSearchAnalyzerDropdown.selectValue('reference')
 
-  const isSpannableSwitch = new Switch(
-    page,
-    'isSpannable',
-    sourceFieldTableLocator
-  )
-  await isSpannableSwitch.toggle()
-
-  const defaultSearchAnalyzerDropdown = new Dropdown(
-    page,
-    'defaultSearchAnalyzer'
-  )
-  await defaultSearchAnalyzerDropdown.selectValue('reference')
+    // Reset editable fields :
+    await weightDropdown.selectValue('1')
+    await isSpellcheckedSwitch.toggle()
+    await isSpannableSwitch.toggle()
+    await defaultSearchAnalyzerDropdown.selectValue('standard')
+  })
 })
