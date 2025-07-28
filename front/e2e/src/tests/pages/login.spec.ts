@@ -1,49 +1,75 @@
-import { test, expect } from '@playwright/test'
-import { login } from '../../helper/auth'
-import { AlertMessage } from '../../helper/alertMessage'
+import {test, expect} from '@playwright/test'
+import {login} from '../../helper/auth'
+import {AlertMessage, AlertMessageType} from '../../helper/alertMessage'
+import {generateTestId, TestId} from "../../helper/testIds";
 
-test('Login page', async ({ page }) => {
+const testIds = {
+  email: generateTestId(TestId.INPUT_TEXT, 'email'),
+  password: generateTestId(TestId.INPUT_TEXT, 'password'),
+  submitButton: generateTestId(TestId.BUTTON, 'form-submit'),
+  emailErrorMessage: generateTestId(TestId.HELPER_TEXT, 'email'),
+  passwordErrorMessage: generateTestId(TestId.HELPER_TEXT, 'password'),
+}
+
+const texts = {
+  errors: {
+    required: 'The value is required',
+    invalidEmail: 'The email address format is invalid.',
+    invalidCredentials: 'Invalid credentials.',
+  },
+  credentials: {
+    email: {
+      invalid: 'admin@',
+      valid: 'admin@example.com',
+    },
+    password: {
+      invalid: 'wrongPassword',
+    }
+  }
+}
+
+test('Login page', {tag: ['@premium', '@standard']}, async ({page}) => {
   await page.goto('/login')
 
   // Get inputs and submit button
-  const emailInput = await page.getByTestId('emailInput')
-  const passwordInput = await page.getByTestId('passwordInput')
-  const submitButton = await page.getByTestId('submitButton')
+  const emailInput = await page.getByTestId(testIds.email)
+  const passwordInput = await page.getByTestId(testIds.password)
+  const submitButton = await page.getByTestId(testIds.submitButton)
 
   // Error messages locators :
-  const emailErrorMessage = page.getByTestId('emailInputErrorMessage')
-  const passwordErrorMessage = page.getByTestId('passwordInputErrorMessage')
+  const emailErrorMessage = page.getByTestId(testIds.emailErrorMessage)
+  const passwordErrorMessage = page.getByTestId(testIds.passwordErrorMessage)
 
-  // Check validation messages for empty fields
+  await test.step('Check validation messages for empty fields', async () => {
+    await submitButton.click()
 
-  await submitButton.click()
-
-  await expect(emailErrorMessage).toHaveText('The value is required', {
-    useInnerText: true,
+    await expect(emailErrorMessage).toHaveText(texts.errors.required, {
+      useInnerText: true,
+    })
+    await expect(passwordErrorMessage).toHaveText(texts.errors.required, {
+      useInnerText: true,
+    })
+    await expect(page).toHaveURL('/login')
   })
-  await expect(passwordErrorMessage).toHaveText('The value is required', {
-    useInnerText: true,
+
+  await test.step('Check validation messages for invalid format email', async () => {
+    await emailInput.fill(texts.credentials.email.invalid)
+    await submitButton.click()
+    await expect(emailErrorMessage).toHaveText(texts.errors.invalidEmail, {
+      useInnerText: true,
+    })
   })
-  await expect(page).toHaveURL('/login')
 
-  // Check validation messages for empty fields
+  await test.step('Check validation message when log in with incorrect credentials', async () => {
+    await emailInput.fill(texts.credentials.email.valid)
+    await passwordInput.fill(texts.credentials.password.invalid)
+    await submitButton.click()
 
-  await emailInput.fill('admin@')
-  await submitButton.click()
-  await expect(emailErrorMessage).toHaveText(
-    'The email address format is invalid.',
-    { useInnerText: true }
-  )
+    const alertMessage = new AlertMessage(page)
+    await alertMessage.expectToHaveText(texts.errors.invalidCredentials, AlertMessageType.ERROR)
+  })
 
-  // Check validation message when log in with incorrect credentials
-
-  await emailInput.fill('admin@example.com')
-  await passwordInput.fill('WrongPassword')
-  await submitButton.click()
-
-  const alertMessage = new AlertMessage(page)
-  await alertMessage.expectToHaveText('Invalid credentials.')
-
-  // Check that there is a redirection when there is correct login credentials
-  await login(page)
+  await test.step('Check that there is a redirection when there is correct login credentials', async () => {
+    await login(page)
+  })
 })
