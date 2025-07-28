@@ -1,4 +1,5 @@
 import { Locator, Page, expect } from '@playwright/test'
+import {generateTestId, TestId} from "./testIds";
 
 /**
  * Represents a pagination component on a web page.
@@ -19,16 +20,18 @@ export class Pagination {
 
   /** Locator for the pagination container */
   private pagination: Locator
+  private componentId: string
 
   /**
    * Creates a new Pagination instance.
    *
    * @param page - The Playwright Page object
-   * @param paginationDataTestId - The data-testid used to locate the pagination element
+   * @param componentId - The component id used to locate the pagination element
    */
-  constructor(page: Page, paginationDataTestId: string) {
+  constructor(page: Page, componentId: string) {
     this.page = page
-    this.paginationDataTestId = paginationDataTestId
+    this.componentId = componentId
+    this.paginationDataTestId = generateTestId(TestId.PAGINATION, componentId)
   }
 
   /**
@@ -76,7 +79,7 @@ export class Pagination {
    */
   public async getFromNumber(): Promise<number> {
     const pagination = this.getPagination()
-    const from = await pagination.getByTestId('from').innerText()
+    const from = await pagination.getByTestId(generateTestId(TestId.PAGINATION_FROM, this.componentId)).innerText()
     return Number.parseInt(from)
   }
 
@@ -87,7 +90,7 @@ export class Pagination {
    */
   public async getToNumber(): Promise<number> {
     const pagination = this.getPagination()
-    const to = await pagination.getByTestId('to').innerText()
+    const to = await pagination.getByTestId(generateTestId(TestId.PAGINATION_TO, this.componentId)).innerText()
     return Number.parseInt(to)
   }
 
@@ -98,7 +101,7 @@ export class Pagination {
    */
   public async getCountNumber(): Promise<number> {
     const pagination = this.getPagination()
-    const count = await pagination.getByTestId('count').innerText()
+    const count = await pagination.getByTestId(generateTestId(TestId.PAGINATION_COUNT, this.componentId)).innerText()
     return Number.parseInt(count)
   }
 
@@ -169,7 +172,7 @@ export class Pagination {
    */
   public async expectToHaveCount(value: number): Promise<void> {
     const pagination = this.getPagination()
-    await expect(pagination.getByTestId('count')).toHaveText(value.toString())
+    await expect(pagination.getByTestId(generateTestId(TestId.PAGINATION_COUNT, this.componentId))).toHaveText(value.toString())
   }
 
   /**
@@ -179,7 +182,7 @@ export class Pagination {
    */
   public async expectNotToHaveCount(value: number): Promise<void> {
     const pagination = this.getPagination()
-    await expect(pagination.getByTestId('count')).not.toHaveText(
+    await expect(pagination.getByTestId(generateTestId(TestId.PAGINATION_COUNT, this.componentId))).not.toHaveText(
       value.toString()
     )
   }

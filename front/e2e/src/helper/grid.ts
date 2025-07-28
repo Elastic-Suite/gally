@@ -1,5 +1,6 @@
-import { Locator, Page, expect } from '@playwright/test'
-import { Pagination } from './pagination'
+import {Locator, Page, expect} from '@playwright/test'
+import {Pagination} from './pagination'
+import {generateTestId, TestId} from "./testIds";
 
 /**
  * Represents a grid (table) component with header and row validation,
@@ -22,12 +23,12 @@ export class Grid {
    * Creates a new Grid instance.
    *
    * @param page - The Playwright Page object
-   * @param gridDataTestId - The data-testid identifying the grid container
+   * @param componentId - The component id identifying the grid container
    */
-  constructor(page: Page, gridDataTestId: string) {
+  constructor(page: Page, componentId: string) {
     this.page = page
-    this.gridDataTestId = gridDataTestId
-    this.pagination = new Pagination(page, `${gridDataTestId}Pagination`)
+    this.gridDataTestId = generateTestId(TestId.TABLE, componentId)
+    this.pagination = new Pagination(page, componentId)
   }
 
   /**
@@ -53,12 +54,12 @@ export class Grid {
     // Wait for the header row to be attached in the DOM
     await this.page.waitForSelector(
       `[data-testId="${this.gridDataTestId}"] thead tr > th`,
-      { state: 'attached' }
+      {state: 'attached'}
     )
 
     // Assert that the headers match the expected text
     await expect(
-      await grid.locator('thead tr > th').filter({ hasText: /\S/ })
+      await grid.locator('thead tr > th').filter({hasText: /\S/})
     ).toHaveText(headerNames, {
       useInnerText: true,
     })
@@ -85,15 +86,15 @@ export class Grid {
   public async expectToFindLineWhere(
     conditions:
       | {
-          columnName: string
-          value: string
-        }[]
+      columnName: string
+      value: string
+    }[]
       | [
-          {
-            columnName: string
-            value: string
-          }
-        ]
+      {
+        columnName: string
+        value: string
+      }
+    ]
   ): Promise<void> {
     const grid = await this.getGrid()
 
@@ -106,7 +107,7 @@ export class Grid {
     const columnHeaders = await grid.locator('thead tr th').allInnerTexts()
 
     // Map column names to indices
-    const columnIndices = conditions.map(({ columnName }) => {
+    const columnIndices = conditions.map(({columnName}) => {
       const index = columnHeaders.findIndex(
         (header) => header.trim() === columnName
       )
@@ -124,13 +125,13 @@ export class Grid {
     const rows = await grid.locator(`tbody tr`)
 
     // Use Playwright's toPass to assert that at least one row matches all conditions
-    expect(async () => {
+    await expect(async () => {
       const rowsCount = await rows.count()
 
       for (let i = 0; i < rowsCount; i++) {
         const row = rows.nth(i)
         const matchesAllConditions = await Promise.all(
-          conditions.map(async ({ value }, index) => {
+          conditions.map(async ({value}, index) => {
             const cell = row.locator(
               `td:nth-child(${columnIndices[index] + 1})`
             )
@@ -145,6 +146,13 @@ export class Grid {
 
       // No match found - force the assertion to fail
       throw new Error('No row matches the given conditions.')
-    }).toPass()
+    }).toPass({
+      timeout: 30000
+    })
+  }
+
+  public async expectToBeVisible(): Promise<void> {
+    const grid = this.getGrid()
+    await expect(grid).toBeVisible()
   }
 }
