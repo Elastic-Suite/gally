@@ -35,7 +35,7 @@ interface IProps {
 function ProductCard(props: IProps): JSX.Element {
   const { product } = props
   const [count, setCount] = useState(1)
-  const baseUrl = useContext(configurationsContext)?.['base_url/media']
+  const baseUrl = useContext(configurationsContext)?.['gally.base_url.media']
 
   if (!baseUrl) {
     return null

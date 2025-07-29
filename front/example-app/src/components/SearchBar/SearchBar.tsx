@@ -103,7 +103,7 @@ function SearchBar(props: IProps): JSX.Element {
     search: searchedText,
     productSearch: { setActiveFilters },
   } = useContext(searchContext)
-  const baseUrl = useContext(configurationsContext)?.['base_url/media']
+  const baseUrl = useContext(configurationsContext)?.['gally.base_url.media']
   const categories = useContext(categoryContext)
 
   const controller = useRef<AbortController>()
