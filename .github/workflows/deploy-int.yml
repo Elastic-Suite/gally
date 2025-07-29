@@ -87,6 +87,10 @@ jobs:
             ([ \"${{ env.add_sample_data }}\" = false ] || docker compose run --rm -e COMPOSER_AUTH='$COMPOSER_AUTH' php composer require \"gally/gally-sample-data:${{ env.composer_version }}\") &&
             ([ \"${{ env.add_sample_data }}\" = true ] || docker compose run --rm -e COMPOSER_AUTH='$COMPOSER_AUTH' php composer require \"doctrine/doctrine-fixtures-bundle\":\"^3.4\") &&
             docker compose run --rm php sed -i \"s/DoctrineFixturesBundle::class => \['dev' => true, 'test' => true]/DoctrineFixturesBundle::class => ['all' => true]/g\" config/bundles.php &&
+            docker compose run --rm php sed -i \"s/NelmioAliceBundle::class => \['dev' => true, 'test' => true]/NelmioAliceBundle::class => ['all' => true]/g\" config/bundles.php &&
+            docker compose run --rm php sed -i \"s/FidryAliceDataFixturesBundle::class => \['dev' => true, 'test' => true]/FidryAliceDataFixturesBundle::class => ['all' => true]/g\" config/bundles.php &&
+            docker compose run --rm php sed -i \"s/HautelookAliceBundle::class => \['dev' => true, 'test' => true]/HautelookAliceBundle::class => ['all' => true]/g\" config/bundles.php &&
             GALLY_CATALOG_MEDIA_URL=${MEDIA_URL} SERVER_NAME=$HOSTNAME API_ROUTE_PREFIX=api APP_SECRET=$APP_SECRET POSTGRES_PASSWORD=$POSTGRES_PASSWORD COMPOSER_AUTH='$COMPOSER_AUTH' docker compose -f compose.yml -f compose.int.yml up -d --build &&
             GALLY_CATALOG_MEDIA_URL=${MEDIA_URL} SERVER_NAME=$HOSTNAME API_ROUTE_PREFIX=api APP_SECRET=$APP_SECRET POSTGRES_PASSWORD=$POSTGRES_PASSWORD COMPOSER_AUTH='$COMPOSER_AUTH' docker compose -f compose.yml -f compose.int.yml exec php bin/console lexik:jwt:generate-keypair --skip-if-exists
           "
+
