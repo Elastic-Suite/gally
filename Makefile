@@ -175,15 +175,17 @@ generate_migration: c=doctrine:migrations:diff --namespace 'DoctrineMigrations'
 generate_migration: sf
 
 fixtures_load: ## Load fixtures (Delete DB and Elasticsearch data)
-	@$(SYMFONY) gally:index:clear
-	@$(SYMFONY) list gally --raw | grep gally:vector-search:upload-model && $(SYMFONY) gally:vector-search:upload-model || true
-	@$(SYMFONY) hautelook:fixtures:load
-	@$(SYMFONY) doctrine:fixtures:load --append #Append argument used because the database is already reset by the previous command
-	@$(MAKE) varnish_flush
-
-fixtures_append: ## Append fixtures
-	@$(SYMFONY) hautelook:fixtures:load --append
-	@$(SYMFONY) doctrine:fixtures:load --append
+	@read -p "⚠️  This will ERASE your database. Are you sure? (y/N) " confirm; \
+	if [ "$$confirm" = "y" ] || [ "$$confirm" = "Y" ]; then \
+		$(SYMFONY) doctrine:database:drop --force; \
+		$(SYMFONY) gally:index:clear --no-interaction; \
+		$(SYMFONY) doctrine:database:create; \
+		$(MAKE) migrate; \
+		$(SYMFONY) list gally --raw | grep gally:vector-search:upload-model && $(SYMFONY) gally:vector-search:upload-model || true; \
+		$(SYMFONY) hautelook:fixtures:load --no-interaction --append; \
+		$(SYMFONY) doctrine:fixtures:load --no-interaction --append; \
+		$(MAKE) varnish_flush; \
+	fi
 
 index_clear: ## Delete all Elasticsearch indices
 index_clear: c=gally:index:clear
