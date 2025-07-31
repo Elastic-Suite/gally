@@ -120,6 +120,25 @@ test('Pages > Analyze > Results page', {tag: ['@premium']}, async ({page}) => {
     ).toHaveText(texts.errors.required, {useInnerText: true})
   })
 
+  page.on('response', async response => {
+    console.log(response.url())
+    if (response.url().includes('graphql')) {
+      const json = await response.json()
+      console.log("RESPONSE GRAPHQL => ", await response.json())
+      if (json.errors) {
+        for (const error of json.errors) {
+          console.error("loc", error.locations)
+          console.error("path", error.path)
+          console.error("ext", error.extensions)
+
+        }
+      } else {
+        console.log("RESPONSE GRAPHQL => ", (await response.json()).data.explain.collection)
+
+      }
+    }
+  })
+
   await test.step('Fill input and click explain', async () => {
     await searchTermInput.fill(texts.termToSearch)
     await explainButton.click()
@@ -136,6 +155,7 @@ test('Pages > Analyze > Results page', {tag: ['@premium']}, async ({page}) => {
       )
     ).json()
   })
+
 
   await test.step('Verify products grid is visible and sorted by score', async () => {
     await productsPreviewGrid.expectToBeVisible()
