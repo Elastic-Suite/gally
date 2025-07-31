@@ -74,7 +74,7 @@ test('Pages > Search > Facets', {tag: ['@premium', '@standard']}, async ({page})
   async function waitForUpdateResponse() {
     await page.waitForResponse(response => {
       return response.url().includes(`${baseURL}/api/facet_configurations`) && response.ok()
-    }, {timeout: 30000})
+    }, {timeout: 5000})
   }
 
   await test.step('Login and navigate to the facets page', async () => {

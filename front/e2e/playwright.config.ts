@@ -16,7 +16,7 @@ export default defineConfig({
     permissions: ['clipboard-read', 'clipboard-write'],
   },
   expect: {
-    timeout: 30000, // 30s per expect
+    timeout: 5000, // 5s per expect
   },
   projects: [
     {

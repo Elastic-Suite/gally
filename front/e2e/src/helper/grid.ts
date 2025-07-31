@@ -7,17 +7,14 @@ import {generateTestId, TestId} from "./testIds";
  * and an integrated pagination system.
  */
 export class Grid {
-  /** Playwright Page object */
-  private page: Page
-
-  /** The data-testid used to identify the grid */
-  private gridDataTestId: string
-
-  /** Locator for the grid element */
-  private grid: Locator
-
   /** Pagination instance associated with this grid */
   public pagination: Pagination
+  /** Playwright Page object */
+  private page: Page
+  /** The data-testid used to identify the grid */
+  private gridDataTestId: string
+  /** Locator for the grid element */
+  private grid: Locator
 
   /**
    * Creates a new Grid instance.
@@ -29,18 +26,6 @@ export class Grid {
     this.page = page
     this.gridDataTestId = generateTestId(TestId.TABLE, componentId)
     this.pagination = new Pagination(page, componentId)
-  }
-
-  /**
-   * Lazily retrieves the grid Locator.
-   *
-   * @returns The Locator for the grid
-   */
-  private getGrid(): Locator {
-    if (!this.grid) {
-      this.grid = this.page.getByTestId(this.gridDataTestId)
-    }
-    return this.grid
   }
 
   /**
@@ -147,12 +132,24 @@ export class Grid {
       // No match found - force the assertion to fail
       throw new Error('No row matches the given conditions.')
     }).toPass({
-      timeout: 30000
+      timeout: 5000
     })
   }
 
   public async expectToBeVisible(): Promise<void> {
     const grid = this.getGrid()
     await expect(grid).toBeVisible()
+  }
+
+  /**
+   * Lazily retrieves the grid Locator.
+   *
+   * @returns The Locator for the grid
+   */
+  private getGrid(): Locator {
+    if (!this.grid) {
+      this.grid = this.page.getByTestId(this.gridDataTestId)
+    }
+    return this.grid
   }
 }
