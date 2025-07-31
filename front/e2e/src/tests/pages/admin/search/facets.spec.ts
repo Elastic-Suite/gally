@@ -62,7 +62,6 @@ const texts = {
     'Result count',
     'Admin sort',
     'Name',
-    'Relevance',
   ],
   noCustomValuesMessage: "You don't have any custom value",
   customValuesMessage: (nb: number) => `You are using ${nb} custom value${nb > 1 ? 's' : ''}`

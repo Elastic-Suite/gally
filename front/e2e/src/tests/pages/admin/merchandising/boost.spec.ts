@@ -244,6 +244,14 @@ test('Pages > Merchandising > Boosts', {tag: ['@premium']}, async ({page}) => {
   })
 
   const editLink = page.locator(`[data-testid="${testIds.grid}"] a`)
+  const baseURL = process.env.SERVER_BASE_URL || 'https://gally.local'
+
+  page.on('response', async response => {
+    if (response.url().includes('api/boosts')) {
+      console.log(await response.json())
+    }
+    console.log('⬅️ Response:', response.status(), response.url());
+  });
 
   await test.step('Edit a Boost', async () => {
     await editLink.click()
