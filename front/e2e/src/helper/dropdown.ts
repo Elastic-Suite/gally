@@ -35,90 +35,6 @@ export class Dropdown<isMultiple extends boolean = false> {
   }
 
   /**
-   * Returns the dropdown container Locator.
-   */
-  private getDropdown(): Locator {
-    if (!this.dropdownLocator) {
-      this.dropdownLocator = (this.parent || this.page).getByTestId(
-        this.dropdownTestId
-      )
-    }
-    return this.dropdownLocator
-  }
-
-  /**
-   * Returns the dropdown toggle button Locator.
-   */
-  private getButton(): Locator {
-    if (!this.dropdwonButton) {
-      const dropdown = this.getDropdown()
-      this.dropdwonButton = dropdown.getByTestId(
-        generateTestId(TestId.IONICON, generateTestId(TestId.DROPDOWN_COLLAPSING_ICON, this.dropdownTestId))
-      )
-    }
-    return this.dropdwonButton
-  }
-
-  /**
-   * Returns the list of dropdown option Locators.
-   */
-  private getOptions(): Locator {
-    return this.page.getByTestId(
-      generateTestId(TestId.DROPDOWN_OPTION, this.dropdownTestId)
-    )
-  }
-
-  private getInputText(): Locator {
-    return this.getDropdown().getByTestId(
-      generateTestId(TestId.INPUT_TEXT, this.dropdownTestId)
-    )
-  }
-
-  private getChips(): Locator {
-    return this.getDropdown().getByTestId(generateTestId(
-      TestId.CHIP, this.dropdownTestId
-    ))
-  }
-
-  private getClearButton(): Locator {
-    return this.getDropdown().getByTestId(
-      generateTestId(TestId.DROPDOWN_CLEAR_ICON, this.dropdownTestId)
-    )
-  }
-
-  /**
-   * Checks if the dropdown is currently open.
-   */
-  private async isOpen(): Promise<boolean> {
-    const option = this.getOptions().first()
-    return await option.isVisible()
-  }
-
-  /**
-   * Opens the dropdown (if not already open).
-   */
-  private async open(): Promise<void> {
-    const option = this.getOptions().first()
-    const button = this.getButton()
-    if (!(await this.isOpen())) {
-      await button.click()
-    }
-    await expect(option).toBeVisible()
-  }
-
-  /**
-   * Closes the dropdown (if open).
-   */
-  private async close(): Promise<void> {
-    const option = this.getOptions().first()
-    const button = this.getButton()
-    if (await this.isOpen()) {
-      await button.click()
-    }
-    await expect(option).not.toBeVisible()
-  }
-
-  /**
    * Selects the first available option in the dropdown.
    */
   public async selectFirstValue(): Promise<void> {
@@ -163,6 +79,7 @@ export class Dropdown<isMultiple extends boolean = false> {
       for (const label of value) {
         const selectedOption = options.getByText(label, {exact: true})
         await selectedOption.click()
+        await this.page.waitForTimeout(2000)
       }
 
       const chips = this.getChips()
@@ -304,5 +221,89 @@ export class Dropdown<isMultiple extends boolean = false> {
   public async expectToBeVisible(visible?: boolean = true): Promise<void> {
     const dropdown = this.getDropdown()
     await (visible ? expect(dropdown) : expect(dropdown).not).toBeVisible()
+  }
+
+  /**
+   * Returns the dropdown container Locator.
+   */
+  private getDropdown(): Locator {
+    if (!this.dropdownLocator) {
+      this.dropdownLocator = (this.parent || this.page).getByTestId(
+        this.dropdownTestId
+      )
+    }
+    return this.dropdownLocator
+  }
+
+  /**
+   * Returns the dropdown toggle button Locator.
+   */
+  private getButton(): Locator {
+    if (!this.dropdwonButton) {
+      const dropdown = this.getDropdown()
+      this.dropdwonButton = dropdown.getByTestId(
+        generateTestId(TestId.IONICON, generateTestId(TestId.DROPDOWN_COLLAPSING_ICON, this.dropdownTestId))
+      )
+    }
+    return this.dropdwonButton
+  }
+
+  /**
+   * Returns the list of dropdown option Locators.
+   */
+  private getOptions(): Locator {
+    return this.page.getByTestId(
+      generateTestId(TestId.DROPDOWN_OPTION, this.dropdownTestId)
+    )
+  }
+
+  private getInputText(): Locator {
+    return this.getDropdown().getByTestId(
+      generateTestId(TestId.INPUT_TEXT, this.dropdownTestId)
+    )
+  }
+
+  private getChips(): Locator {
+    return this.getDropdown().getByTestId(generateTestId(
+      TestId.CHIP, this.dropdownTestId
+    ))
+  }
+
+  private getClearButton(): Locator {
+    return this.getDropdown().getByTestId(
+      generateTestId(TestId.DROPDOWN_CLEAR_ICON, this.dropdownTestId)
+    )
+  }
+
+  /**
+   * Checks if the dropdown is currently open.
+   */
+  private async isOpen(): Promise<boolean> {
+    const option = this.getOptions().first()
+    return await option.isVisible()
+  }
+
+  /**
+   * Opens the dropdown (if not already open).
+   */
+  private async open(): Promise<void> {
+    const option = this.getOptions().first()
+    const button = this.getButton()
+    if (!(await this.isOpen())) {
+      await button.click()
+    }
+    await expect(option).toBeVisible()
+  }
+
+  /**
+   * Closes the dropdown (if open).
+   */
+  private async close(): Promise<void> {
+    const option = this.getOptions().first()
+    const button = this.getButton()
+    if (await this.isOpen()) {
+      await button.click()
+    }
+    await expect(option).not.toBeVisible()
   }
 }
