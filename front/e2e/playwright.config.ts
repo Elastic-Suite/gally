@@ -4,7 +4,7 @@ export default defineConfig({
   testDir: './src/tests',
   fullyParallel: false,
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
+  retries: process.env.CI ? 0 : 0, // Experimental settings, update it if necessary for the CI
   workers: process.env.CI ? 1 : 1, // We put 1 worker even for dev mode to save computer resources
   reporter: [['list', {printSteps: true}]],
   timeout: 120000, // 2min per test
@@ -16,7 +16,7 @@ export default defineConfig({
     permissions: ['clipboard-read', 'clipboard-write'],
   },
   expect: {
-    timeout: 30000, // 30s per expect
+    timeout: 5000, // 5s per expect
   },
   projects: [
     {
