@@ -228,6 +228,44 @@ test('Pages > Merchandising > Boosts', {tag: ['@premium']}, async ({page}) => {
       previewFieldSet.getByTestId(testIds.form.previewRequiredMessage)
     ).not.toBeVisible()
 
+    const baseURL = process.env.SERVER_BASE_URL || 'https://gally.local'
+
+    page.on('request', request => {
+      if (
+        request.method() === 'POST' &&
+        request.url() === `${baseURL}/api/boosts`
+      ) {
+        console.log('POST request to /api/boosts:', JSON.parse(request.postData()));
+      } else if (
+        request.method() === 'PUT' &&
+        /\/api\/boosts\/\d+$/.test(request.url())
+      ) {
+        console.log('PUT request to /api/boosts:', JSON.parse(request.postData()));
+      }
+    });
+
+    page.on('response', async response => {
+      if (
+        response.request().method() === 'POST' &&
+        response.url() === `${baseURL}/api/boosts`
+      ) {
+        const json = await response.json();
+        console.log('CREATE RESPONSE:', json);
+      } else if (
+        response.request().method() === 'PUT' &&
+        /\/api\/boosts\/\d+$/.test(response.url())
+      ) {
+        const json = await response.json();
+        console.log('PUT RESPONSE:', json);
+      } else if (
+        response.request().method() === 'GET' &&
+        /\/api\/boosts\/\d+$/.test(response.url())
+      ) {
+        const json = await response.json();
+        console.log('GET RESPONSE:', json);
+      }
+    });
+
     // Create the Boost
     await saveButton.click()
     await expect(page).toHaveURL('/admin/merchandize/boost/grid')
@@ -244,14 +282,13 @@ test('Pages > Merchandising > Boosts', {tag: ['@premium']}, async ({page}) => {
   })
 
   const editLink = page.locator(`[data-testid="${testIds.grid}"] a`)
-  const baseURL = process.env.SERVER_BASE_URL || 'https://gally.local'
 
-  page.on('response', async response => {
-    if (response.url().includes('api/boosts')) {
-      console.log(await response.json())
-    }
-    console.log('⬅️ Response:', response.status(), response.url());
-  });
+  // page.on('response', async response => {
+  //   if (response.url().includes('api/boosts')) {
+  //     console.log(await response.json())
+  //   }
+  //   console.log('⬅️ Response:', response.status(), response.url());
+  // });
 
   await test.step('Edit a Boost', async () => {
     await editLink.click()
