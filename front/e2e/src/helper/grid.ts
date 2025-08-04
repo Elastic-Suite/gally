@@ -2,6 +2,11 @@ import {Locator, Page, expect} from '@playwright/test'
 import {Pagination} from './pagination'
 import {generateTestId, TestId} from "./testIds";
 
+interface GridCondition {
+  columnName: string
+  value: string
+}
+
 /**
  * Represents a grid (table) component with header and row validation,
  * and an integrated pagination system.
@@ -69,17 +74,7 @@ export class Grid {
    * @throws Error if the column name doesn't exist
    */
   public async expectToFindLineWhere(
-    conditions:
-      | {
-      columnName: string
-      value: string
-    }[]
-      | [
-      {
-        columnName: string
-        value: string
-      }
-    ]
+    conditions: GridCondition[]
   ): Promise<void> {
     const grid = await this.getGrid()
 

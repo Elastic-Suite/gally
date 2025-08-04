@@ -87,11 +87,11 @@ page.setDefaultNavigationTimeout(15000); // 15 secondes
 
 **Purpose** : Limits how long to wait for specific actions.
 
-**Configuration locale (par action)** :
+**Local configuration (per action)** :
 ```js
 await page.click('button.submit', { timeout: 5000 }); // 5 secondes
 ```
-**Configuration globale (pour toutes les actions)** :
+**Global configuration (for all actions)** :
 ```js
 test.use({ actionTimeout: 5000 });
 ```
@@ -113,32 +113,32 @@ await expect(locator).toBeVisible({ timeout: 3000 });
 **Configuration** :
 
 By default : 30 seconds
-**Surcharge locale** :
+**Local timeout using per-test config overload** :
 
 ```js
 test('my test', async ({ page }) => {
   // test code
-}, 20000); // timeout à 20 secondes
+}, 20000); // 20 seconds timeout
 ```
 
-**Surcharge globale dans le fichier de config**:
+**Global timeoout using configuration file**:
 ```js
 // playwright.config.ts
-timeout: 30000, // 30 secondes
+timeout: 30000, // 30 seconds
 
-## Commandes mises à disposition
+## Commands
 
-### Lancer les tests sur le conteneur
+### Run tests in container
 ```shell
 make up
 ```
 
-### Rentrer dans le conteneur des tests
+### Run a shell in tests container
 ```shell
 docker compose exec e2e bash
 ```
 
-### Commandes disponibles dans le package.json
+### Run test command defined in package.json
 ```shell
 yarn test
 ```
