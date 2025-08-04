@@ -120,25 +120,6 @@ test('Pages > Analyze > Results page', {tag: ['@premium']}, async ({page}) => {
     ).toHaveText(texts.errors.required, {useInnerText: true})
   })
 
-  page.on('response', async response => {
-    console.log(response.url())
-    if (response.url().includes('graphql')) {
-      const json = await response.json()
-      console.log("RESPONSE GRAPHQL => ", await response.json())
-      if (json.errors) {
-        for (const error of json.errors) {
-          console.error("loc", error.locations)
-          console.error("path", error.path)
-          console.error("ext", error.extensions)
-
-        }
-      } else {
-        console.log("RESPONSE GRAPHQL => ", (await response.json()).data.explain.collection)
-
-      }
-    }
-  })
-
   await test.step('Fill input and click explain', async () => {
     await searchTermInput.fill(texts.termToSearch)
     await explainButton.click()
@@ -257,15 +238,6 @@ test('Pages > Analyze > Results page', {tag: ['@premium']}, async ({page}) => {
   })
 
   await test.step('Copy explain query to clipboard', async () => {
-    // const matchTable = page.getByTestId('matchesReadOnlyTable')
-    // const collapseButtons = await matchTable
-    //   .getByTestId('matchesReadOnlyTableCollapseSubRowButton')
-    //   .all()
-
-    // for (const button of collapseButtons) {
-    //   await button.click()
-    // }
-
     const clipboardText = await page.evaluate(async () => {
       return await navigator.clipboard.readText()
     })
