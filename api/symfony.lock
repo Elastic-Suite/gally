@@ -165,6 +165,9 @@
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.5"
     },
+    "gally/gally-premium": {
+        "version": "dev-main"
+    },
     "gally/gally-standard": {
         "version": "2.0.x-dev"
     },
