@@ -1,7 +1,7 @@
-import {test, expect} from '@playwright/test'
+import {expect, test} from '@playwright/test'
 import {login} from '../../helper/auth'
 import {AlertMessage, AlertMessageType} from '../../helper/alertMessage'
-import {generateTestId, TestId} from "../../helper/testIds";
+import {TestId, generateTestId} from "../../helper/testIds";
 
 const testIds = {
   email: generateTestId(TestId.INPUT_TEXT, 'email'),
