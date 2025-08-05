@@ -1,5 +1,5 @@
-import {expect, Page} from '@playwright/test'
-import {generateTestId, TestId} from "./testIds";
+import {Page, expect, test} from '@playwright/test'
+import {TestId, generateTestId} from "./testIds";
 
 const testIds = {
   email: generateTestId(TestId.INPUT_TEXT, 'email'),
@@ -10,18 +10,50 @@ const testIds = {
   logOutButton: generateTestId(TestId.LOG_OUT_BUTTON)
 }
 
-const texts = {
-  email: 'admin@example.com',
-  password: "apassword",
+interface IUserCredentials {
+  email: `${string}@${string}.${Lowercase<string>}`
+  password: string
 }
+
+const rolesInfos: Record<UserRole, IUserCredentials> = {
+  admin: {
+    email: 'admin@example.com',
+    password: 'apassword',
+  },
+  contributor: {
+    email: 'contributor@example.com',
+    password: 'apassword',
+  },
+}
+
+export enum UserRole {
+  ADMIN = 'admin',
+  CONTRIBUTOR = 'contributor',
+}
+
+export function runTestsAsRoles(
+  roles: UserRole[],
+  callback: (page: Page, role?: UserRole) => Promise<void>
+): void {
+  for (const role of roles) {
+    // Instantiate an isolated test context for each role
+    test(`Test as ${role} role`, async ({ page }) => {
+      await login(page, role)
+      // Run callback with a page authenticated with the specified role
+      await callback(page, role)
+    })
+  }
+}
+
 
 /**
  * Logs in the user with predefined credentials.
  * Navigates to the login page, fills email and password, and submits the form.
  * Then, expects to be redirected to the admin catalogs settings page.
  * @param page - The Playwright Page instance to operate on.
+ * @param role - User role to log in as. Defaults to admin.
  */
-export async function login(page: Page): Promise<void> {
+export async function login(page: Page, role: UserRole = UserRole.ADMIN): Promise<void> {
   await page.goto('/login')
 
   // Get inputs and submit button
@@ -30,8 +62,8 @@ export async function login(page: Page): Promise<void> {
   const submitButton = page.getByTestId(testIds.submitButton)
 
   // Fill with correct credentials and submit the form
-  await emailInput.fill(texts.email)
-  await passwordInput.fill(texts.password)
+  await emailInput.fill(rolesInfos[role].email)
+  await passwordInput.fill(rolesInfos[role].password)
   await submitButton.click()
 
   // Assert that the URL changed to the expected admin page
