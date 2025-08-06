@@ -7,43 +7,39 @@ security:
 
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
-        # used to reload user from session & other features (e.g. switch_user)
-        gally_user_provider:
+        saml_provider:
             entity:
                 class: Gally\User\Entity\User
                 property: email
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             stateless: true
-            provider: gally_user_provider
-            json_login:
-                check_path: '%target_route_prefix%/authentication_token'
-                username_path: email
-                password_path: password
-                success_handler: lexik_jwt_authentication.handler.authentication_success
-                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+            provider: saml_provider
+            entry_point: saml
+            saml:
+                identifier_attribute: email
+                use_attribute_friendly_name: false
+                check_path: saml_acs # Controller name
+                login_path: saml_login # Controller name
+                success_handler: App\Authentication\AuthenticationSuccessHandler
+                failure_handler: App\Authentication\AuthenticationFailureHandler
+            logout:
+                path: saml_logout
             jwt:
                 authenticator: gally.authenticator
-
-            # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#the-firewall
-
-            # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
-    
-    role_hierarchy:
-        ROLE_ADMIN: ['ROLE_CONTRIBUTOR']
-
-    # Easy way to control access for large sections of your site
-    # Note: Only the *first* access control that matches will be used
     access_control:
+        - { path: ^/saml/(metadata|login|acs), roles: PUBLIC_ACCESS } # Allows accessing the saml api
         - { path: ^/docs, roles: PUBLIC_ACCESS } # Allows accessing the Swagger UI
         - { path: ^/graphql, roles: PUBLIC_ACCESS } # Allows accessing GraphiQL
         - { path: ^/authentication_token, roles: PUBLIC_ACCESS }
         - { path: ^/forgot-password, role: PUBLIC_ACCESS }
+
+    role_hierarchy:
+        ROLE_ADMIN: ['ROLE_CONTRIBUTOR']
 
 when@test:
     security:
@@ -57,7 +53,7 @@ when@test:
                 cost: 4 # Lowest possible value for bcrypt
                 time_cost: 3 # Lowest possible value for argon
                 memory_cost: 10 # Lowest possible value for argon
-                
+        
         firewalls:
             main:
                 json_login:

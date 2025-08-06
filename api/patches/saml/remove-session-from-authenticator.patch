@@ -1,0 +1,34 @@
+--- a/vendor/nbgrp/onelogin-saml-bundle/src/Security/Http/Authenticator/SamlAuthenticator.php
++++ b/vendor/nbgrp/onelogin-saml-bundle/src/Security/Http/Authenticator/SamlAuthenticator.php
+@@ -77,14 +77,10 @@
+
+     public function authenticate(Request $request): Passport
+     {
+-        if (!$request->hasSession()) {
+-            throw new SessionUnavailableException('This authentication method requires a session.');
+-        }
+-
+         $oneLoginAuth = $this->getOneLoginAuth($request);
+         Utils::setProxyVars($this->useProxyVars);
+
+-        $this->processResponse($oneLoginAuth, $request->getSession());
++        $this->processResponse($oneLoginAuth);
+
+         if ($oneLoginAuth->getErrors()) {
+             $errorReason = $oneLoginAuth->getLastErrorReason() ?? 'Undefined OneLogin auth error.';
+@@ -122,14 +118,10 @@
+         return $this->failureHandler->onAuthenticationFailure($request, $exception);
+     }
+
+-    protected function processResponse(Auth $oneLoginAuth, SessionInterface $session): void
++    protected function processResponse(Auth $oneLoginAuth): void
+     {
+         $requestId = null;
+         $security = $oneLoginAuth->getSettings()->getSecurityData();
+-        if ($security['rejectUnsolicitedResponsesWithInResponseTo'] ?? false) {
+-            /** @var string $requestId */
+-            $requestId = $session->get(self::LAST_REQUEST_ID);
+-        }
+
+         $oneLoginAuth->processResponse($requestId);
+     }

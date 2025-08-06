@@ -60,7 +60,7 @@ services:
       - PWA_UPSTREAM=${PWA_UPSTREAM:-pwa:3000}
       - API_UPSTREAM=${API_UPSTREAM:-php:9000}
       - EXAMPLE_UPSTREAM=${PWA_UPSTREAM:-pwa:3000}
-  
+
   php:
     build:
       context: ./docker/php
@@ -88,6 +88,12 @@ services:
       - DATABASE_URL=postgresql://${POSTGRES_USER:-app}:${POSTGRES_PASSWORD:-!ChangeMe!}@database:5432/${POSTGRES_DB:-app}?serverVersion=${POSTGRES_VERSION:-16}&charset=${POSTGRES_CHARSET:-utf8}
       - ELASTICSEARCH_URL=https://${SEARCH_USER:-admin}:${SEARCH_PASSWORD:-!ChangeMe0!}@${SEARCH_HOST:-search}:9200/
       - ELASTICSEARCH_SSL_VERIFICATION=false
+      - SAML_METADATA_URL=${SAML_METADATA_URL}
+      - SAML_SSO_URL=${SAML_SSO_URL}
+      - SAML_LOGOUT_URL=${SAML_LOGOUT_URL}
+      - SAML_IDP_PUBLIC_KEY=${SAML_IDP_PUBLIC_KEY}
+      - SAML_SP_PUBLIC_KEY=${SAML_SP_PUBLIC_KEY}
+      - SAML_SP_PRIVATE_KEY=${SAML_SP_PRIVATE_KEY}
 
   pwa:
     build:

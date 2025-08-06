@@ -241,6 +241,9 @@
     "namshi/jose": {
         "version": "7.2.3"
     },
+    "nbgrp/onelogin-saml-bundle": {
+        "version": "v1.4.0"
+    },
     "nelmio/alice": {
         "version": "3.12",
         "recipe": {

@@ -1,0 +1,3 @@
+nbgrp_saml:
+    resource: '@NbgrpOneloginSamlBundle/Resources/config/routes.php'
+    prefix: '%route_prefix%'

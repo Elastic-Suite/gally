@@ -1,0 +1,35 @@
+nbgrp_onelogin_saml:
+    onelogin_settings:
+        default:
+            # Mandatory settings
+            idp:
+                entityId: '%env(SAML_METADATA_URL)%'
+                singleSignOnService:
+                    url: '%env(SAML_SSO_URL)%'
+                    binding: 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect'
+                singleLogoutService:
+                    url: '%env(SAML_LOGOUT_URL)%'
+                    binding: 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect'
+                x509cert: '%env(base64:SAML_IDP_PUBLIC_KEY)%'
+
+            sp:
+                entityId: '<request_scheme_and_host>/api/saml/metadata'
+                assertionConsumerService:
+                    url: '<request_scheme_and_host>/api/saml/acs'
+                    binding: 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST'
+                singleLogoutService:
+                    url: '<request_scheme_and_host>/api/saml/logout'
+                    binding: 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect'
+                privateKey: '%env(base64:SAML_SP_PRIVATE_KEY)%'
+                x509cert: '%env(base64:SAML_SP_PUBLIC_KEY)%'
+
+            # Optional settings, cf. https://github.com/nbgrp/onelogin-saml-bundle for a list of all available settings
+            baseurl: '<request_scheme_and_host>/api/saml/'
+            security:
+                # Enable SP encryption (optional, if omitted then the SP private/public key must also be removed)
+                signMetadata: true
+                authnRequestsSigned: true
+                logoutRequestSigned: true
+                logoutResponseSigned: true
+                #wantAssertionsEncrypted: true
+                #wantNameIdEncrypted: true

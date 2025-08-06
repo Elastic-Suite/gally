@@ -26,4 +26,5 @@ return [
     Gally\Thesaurus\GallyThesaurusBundle::class => ['all' => true],
     Gally\Explain\GallyExplainBundle::class => ['all' => true],
     Gally\VectorSearch\GallyVectorSearchBundle::class => ['all' => true],
+    Nbgrp\OneloginSamlBundle\NbgrpOneloginSamlBundle::class => ['all' => true],
 ];
