@@ -109,5 +109,6 @@ return (new PhpCsFixer\Config())
             ],
         ],
         'void_return' => false, // BC breaks; to be done in API Platform 3.0
+        'yoda_style' => false,
     ])
     ->setFinder($finder);
