@@ -10,6 +10,6 @@ SERVER_NAME=mono.localhost docker compose -f docker/mono-container/compose.yml b
 SERVER_NAME=mono.localhost docker compose -f docker/mono-container/compose.yml up -d
 SERVER_NAME=mono.localhost docker compose exec server bash
 cd api
-bin/console hautelook:fixtures:load
+bin/console hautelook:fixtures:load --append
 bin/console gally:user:create 
 ```
