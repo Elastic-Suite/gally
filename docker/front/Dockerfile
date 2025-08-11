@@ -3,7 +3,7 @@
 
 
 # https://docs.docker.com/engine/reference/builder/#understand-how-arg-and-from-interact
-ARG NODE_VERSION=16
+ARG NODE_VERSION=18
 ARG public_url
 
 # "common" stage
