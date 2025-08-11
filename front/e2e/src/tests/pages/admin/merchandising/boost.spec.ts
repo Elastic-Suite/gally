@@ -62,8 +62,8 @@ const texts = {
   },
   boostToCreateValues: {
     localizedCatalogs: [
-      'COM English Catalog',
       'COM French Catalog',
+      'COM English Catalog',
       'FR French Catalog',
       'EN French Catalog',
     ],
