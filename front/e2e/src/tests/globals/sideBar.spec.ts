@@ -1,24 +1,32 @@
-import { test, expect } from '@playwright/test'
-import { login } from '../helper/auth'
+import {expect, test} from '@playwright/test'
+import {login} from '../../helper/auth'
+import {generateTestId, TestId} from "../../helper/testIds";
 
-test('Menu', async ({ page }) => {
+const testIds = {
+  sideBar: generateTestId(TestId.SIDE_BAR),
+  collapseButton: generateTestId(TestId.SIDE_BAR_COLLAPSING_BUTTON),
+  labelMenuItemIcon: generateTestId(TestId.LABEL_MENU_ITEM_ICON),
+  menuItemChildrenButton: generateTestId(TestId.MENU_ITEM_CHILDREN_COLLAPSING_BUTTON),
+  menuItemChildren: generateTestId(TestId.MENU_ITEM_CHILDREN),
+  labelMenuLinkItem: generateTestId(TestId.MENU_ITEM_LINK)
+}
+
+test('Globals > Layout > Side Bar', {tag: ['@premium', '@standard']}, async ({page}) => {
   await login(page)
 
-  const sidebar = await page.getByTestId('sidebarMenu')
-  const collapseButton = await page.getByTestId('sidebarMenuCollapseButton')
+  const sidebar = page.getByTestId(testIds.sideBar)
+  const collapseButton = page.getByTestId(testIds.collapseButton)
 
-  const labelMenuItemIconList = await await page
-    .getByTestId('labelMenuItemIcon')
+  const labelMenuItemIconList = await page
+    .getByTestId(testIds.labelMenuItemIcon)
     .all()
   const menuItemChildrenButtonList = await page
-    .getByTestId('menuItemChildrenButton')
+    .getByTestId(testIds.menuItemChildrenButton)
     .all()
-  const menuItemChildrenList = await (
-    await page.getByTestId('menuItemChildren')
-  ).all()
-  const labelMenuLinkItemList = await (
-    await page.getByTestId('labelMenuLinkItem')
-  ).all()
+  const menuItemChildrenList = await page.getByTestId(testIds.menuItemChildren).all()
+  const labelMenuLinkItemList = await page
+    .getByTestId(testIds.labelMenuLinkItem)
+    .all()
 
   for (const locator of menuItemChildrenList) {
     await expect(locator).not.toBeVisible()
@@ -39,15 +47,15 @@ test('Menu', async ({ page }) => {
   await collapseButton.click()
 
   // Wait for menu transition to end
-  await page.evaluate(() => {
+  await page.evaluate((sideBarTestId) => {
     return new Promise<void>((resolve) => {
-      const element = document.querySelector('[data-testid="sidebarMenu"]')
+      const element = document.querySelector(`[data-testid="${sideBarTestId}"]`)
 
       element?.addEventListener('animationend', () => resolve(), {
         once: true,
       })
     })
-  })
+  }, testIds.sideBar)
 
   await expect((await sidebar.boundingBox())?.width).toBeLessThan(
     defaultSideBarWidth as number

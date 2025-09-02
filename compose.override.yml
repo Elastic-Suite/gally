@@ -79,3 +79,13 @@ services:
     environment:
       MP_SMTP_AUTH_ACCEPT_ANY: 1
       MP_SMTP_AUTH_ALLOW_INSECURE: 1
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.gally-mail-$COMPOSE_PROJECT_NAME-http.loadbalancer.server.port=8025
+      # Serve gally over http
+      - traefik.http.routers.gally-mail-$COMPOSE_PROJECT_NAME-http.rule=Host(`mail.${SERVER_NAME:-gally.localhost}`)
+      - traefik.http.routers.gally-mail-$COMPOSE_PROJECT_NAME-http.entrypoints=http
+      # Serve gally over https
+      - traefik.http.routers.gally-mail-$COMPOSE_PROJECT_NAME-https.rule=Host(`mail.${SERVER_NAME:-gally.localhost}`)
+      - traefik.http.routers.gally-mail-$COMPOSE_PROJECT_NAME-https.entrypoints=https
+      - traefik.http.routers.gally-mail-$COMPOSE_PROJECT_NAME-https.tls=true

@@ -31,15 +31,18 @@ security:
                 path: saml_logout
             jwt:
                 authenticator: gally.authenticator
+
+    role_hierarchy:
+        ROLE_ADMIN: ['ROLE_CONTRIBUTOR']
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/saml/(metadata|login|acs), roles: PUBLIC_ACCESS } # Allows accessing the saml api
         - { path: ^/docs, roles: PUBLIC_ACCESS } # Allows accessing the Swagger UI
         - { path: ^/graphql, roles: PUBLIC_ACCESS } # Allows accessing GraphiQL
         - { path: ^/authentication_token, roles: PUBLIC_ACCESS }
         - { path: ^/forgot-password, role: PUBLIC_ACCESS }
-
-    role_hierarchy:
-        ROLE_ADMIN: ['ROLE_CONTRIBUTOR']
 
 when@test:
     security:
