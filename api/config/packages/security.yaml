@@ -11,6 +11,10 @@ security:
             entity:
                 class: Gally\User\Entity\User
                 property: email
+        gally_user_provider:
+            entity:
+                class: Gally\User\Entity\User
+                property: email
 
     firewalls:
         dev:
@@ -18,17 +22,25 @@ security:
             security: false
         main:
             stateless: true
-            provider: saml_provider
-            entry_point: saml
-            saml:
-                identifier_attribute: email
-                use_attribute_friendly_name: false
-                check_path: saml_acs # Controller name
-                login_path: saml_login # Controller name
-                success_handler: App\Authentication\AuthenticationSuccessHandler
-                failure_handler: App\Authentication\AuthenticationFailureHandler
-            logout:
-                path: saml_logout
+            provider: gally_user_provider
+            json_login:
+                check_path: '%target_route_prefix%/authentication_token'
+                username_path: email
+                password_path: password
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+#          Waiting front ready for saml
+#            provider: saml_provider
+#            entry_point: saml
+#            saml:
+#                identifier_attribute: email
+#                use_attribute_friendly_name: false
+#                check_path: saml_acs # Controller name
+#                login_path: saml_login # Controller name
+#                success_handler: App\Authentication\AuthenticationSuccessHandler
+#                failure_handler: App\Authentication\AuthenticationFailureHandler
+#            logout:
+#                path: saml_logout
             jwt:
                 authenticator: gally.authenticator
 
