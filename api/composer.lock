@@ -1977,12 +1977,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Elastic-Suite/gally-standard.git",
-                "reference": "274a0236c2a7d255e07ebc6489c2b98f5eb09e71"
+                "reference": "46c3a07ea110cff4244adb6af05cee973d423d5f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Elastic-Suite/gally-standard/zipball/274a0236c2a7d255e07ebc6489c2b98f5eb09e71",
-                "reference": "274a0236c2a7d255e07ebc6489c2b98f5eb09e71",
+                "url": "https://api.github.com/repos/Elastic-Suite/gally-standard/zipball/46c3a07ea110cff4244adb6af05cee973d423d5f",
+                "reference": "46c3a07ea110cff4244adb6af05cee973d423d5f",
                 "shasum": ""
             },
             "require": {
@@ -1993,11 +1993,14 @@
                 "nelmio/cors-bundle": "^2.2",
                 "opensearch-project/opensearch-php": "^2.1",
                 "php": ">=8.2",
+                "scienta/doctrine-json-functions": "*",
                 "stof/doctrine-extensions-bundle": "^1.7",
                 "symfony/intl": "6.4.*",
+                "symfony/mailer": "6.4.*",
                 "symfony/proxy-manager-bridge": "6.4.*",
                 "symfony/translation": "6.4.*",
                 "symfony/uid": "6.4.*",
+                "tilleuls/forgot-password-bundle": "^2.0",
                 "webonyx/graphql-php": "^15.12"
             },
             "require-dev": {
@@ -2053,7 +2056,7 @@
                 "issues": "https://github.com/Elastic-Suite/gally-standard/issues",
                 "source": "https://github.com/Elastic-Suite/gally-standard/tree/main"
             },
-            "time": "2025-04-16T12:31:35+00:00"
+            "time": "2025-09-02T14:14:52+00:00"
         },
         {
             "name": "gedmo/doctrine-extensions",
@@ -13343,6 +13346,6 @@
         "ext-ctype": "*",
         "ext-iconv": "*"
     },
-    "platform-dev": {},
+    "platform-dev": [],
     "plugin-api-version": "2.6.0"
 }
