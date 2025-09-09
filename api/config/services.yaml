@@ -24,10 +24,48 @@ services:
             - '../src/Tests/'
             - '../src/Acme/'
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    App\Search\Elasticsearch\Request\Aggregation\ConfigResolver\DateAggregationConfigResolver:
+        arguments:
+            - '@Gally\Configuration\Service\ConfigurationManager'
+            - '%app.search_settings%'
+        tags:
+            - { name: 'gally.search.aggregation.resolver' }
     
+    App\GraphQl\Type\Definition\Filter\DateTypeFilterInputType:
+        arguments:
+            - '@Gally\Search\Elasticsearch\Builder\Request\Query\Filter\FilterQueryBuilder'
+            - '@Gally\Search\Elasticsearch\Request\QueryFactory'
+            - '%api_platform.graphql.nesting_separator%'
+        tags:
+            - { name: api_platform.graphql.type }
+            - { name: gally.entity_api.filter }
     
+    App\Search\Decoration\GraphQl\AddAggregationsData:
+        decorates: api_platform.graphql.state_processor.normalize
+        decoration_priority: 5
+        arguments:
+            - '@.inner'
+            - '@Gally\Metadata\Repository\MetadataRepository'
+            - '@Gally\Search\Elasticsearch\Request\Container\Configuration\ContainerConfigurationProvider'
+            - '@Gally\Catalog\Repository\LocalizedCatalogRepository'
+            - '@Symfony\Contracts\Translation\TranslatorInterface'
+            - '%app.search_settings%'
+                
+    App\Search\Elasticsearch\Adapter\Common\Request\Query\Assembler\DateRange:
+        abstract: false
+        lazy: true
+        tags:
+            - { name: 'gally.search.request.query.assembler', queryType: 'dateRangeQuery' }
+          
+    Gally\Search\Elasticsearch\Request\Aggregation\ConfigResolver\DateAggregationConfigResolver:
+        alias: App\Search\Elasticsearch\Request\Aggregation\ConfigResolver\DateAggregationConfigResolver
+                
+    Gally\Metadata\GraphQl\Type\Definition\Filter\DateTypeFilterInputType:
+        alias: App\GraphQl\Type\Definition\Filter\DateTypeFilterInputType
+                
+    Gally\Search\Elasticsearch\Adapter\Common\Request\Query\Assembler\DateRange:
+        alias: App\Search\Elasticsearch\Adapter\Common\Request\Query\Assembler\DateRange
+
 when@test:
     parameters:
         route_prefix: 'api'

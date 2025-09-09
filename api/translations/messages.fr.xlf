@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0"
+       srcLang="en-US" trgLang="fr-FR">
+    <file id="messages.fr">
+        <unit id="search.date_facet.less_than_a_week.label">
+            <segment>
+                <source>search.date_facet.less_than_a_week.label</source>
+                <target>Moins d'une semaine</target>
+            </segment>
+        </unit>
+        <unit id="search.date_facet.less_than_a_month.label">
+            <segment>
+                <source>search.date_facet.less_than_a_month.label</source>
+                <target>Moins d'un mois</target>
+            </segment>
+        </unit>
+        <unit id="search.date_facet.less_than_6_months.label">
+            <segment>
+                <source>search.date_facet.less_than_6_months.label</source>
+                <target>Moins de 6 mois</target>
+            </segment>
+        </unit>
+        <unit id="search.date_facet.others.label">
+            <segment>
+                <source>search.date_facet.others.label</source>
+                <target>Plus ancien</target>
+            </segment>
+        </unit>
+        <unit id="search.distance_facet.option_fromto.label">
+            <segment>
+                <source>search.distance_facet.option_fromto.label</source>
+                <target>De %distanceFrom%unit à %distanceTo%unit</target>
+            </segment>
+        </unit>
+    </file>
+</xliff>

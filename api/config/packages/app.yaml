@@ -1,0 +1,8 @@
+parameters:
+    app.search_settings:
+        aggregations:
+            default_date_ranges:
+                - { key: "less_than_a_week", label: "search.date_facet.less_than_a_week.label", from: "now-7d/d", to: "now" }
+                - { key: "less_than_a_month", label: "search.date_facet.less_than_a_month.label", from: "now-1M/M", to: "now" }
+                - { key: "less_than_6_months", label: "search.date_facet.less_than_6_months.label", from: "now-6M/M", to: "now" }
+                - { key: "others", label: "search.date_facet.others.label", to: "now-6M/M" }

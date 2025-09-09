@@ -1,0 +1,5 @@
+gally:
+    search_settings:
+        default_date_field_format: 'yyyy-MM-dd'
+        aggregations:
+            default_date_range_interval: '1d'
