@@ -67,7 +67,8 @@ const texts = {
   paginationOptions: ['10', '25', '50'],
   tabs: {
     scope: 'Scope',
-    searchableAndFilterableAttributes: 'Searchable and filterable attributes'
+    searchableAndFilterableAttributes: 'Searchable and filterable attributes',
+    users: 'Users',
   }
 }
 
