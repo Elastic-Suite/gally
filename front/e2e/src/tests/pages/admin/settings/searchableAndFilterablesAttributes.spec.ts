@@ -1,11 +1,11 @@
-import {test, expect} from '@playwright/test'
+import {expect, test} from '@playwright/test'
 import {Grid} from '../../../../helper/grid'
 import {Filter, FilterType} from '../../../../helper/filter'
 import {Dropdown} from '../../../../helper/dropdown'
 import {login} from '../../../../helper/auth'
 import {navigateTo} from '../../../../helper/menu'
 import {Switch} from '../../../../helper/switch'
-import {generateTestId, TestId} from '../../../../helper/testIds'
+import {TestId, generateTestId} from '../../../../helper/testIds'
 import {Tabs} from "../../../../helper/tabs";
 
 const GridLabelsAndFilters = {
@@ -67,6 +67,8 @@ const texts = {
   paginationOptions: ['10', '25', '50'],
   tabs: {
     scope: 'Scope',
+    searchableAndFilterableAttributes: 'Attributes',
+    configurations: 'Configurations',
     searchableAndFilterableAttributes: 'Searchable and filterable attributes',
     users: 'Users',
   }

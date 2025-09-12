@@ -44,6 +44,9 @@ RUN set -eux; \
 		zip \
 	;
 
+# Install PCov separately via PECL
+RUN pecl install pcov && docker-php-ext-enable pcov
+
 ###> recipes ###
 ###> doctrine/doctrine-bundle ###
 RUN set -eux; \
