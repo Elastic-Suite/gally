@@ -116,7 +116,7 @@ jobs:
           ${{env.docker_compose_cmd}} exec -T php bin/console hautelook:fixtures:load --append --no-interaction -vv
           ${{env.docker_compose_cmd}} exec -T php bin/console doctrine:fixtures:load --append --no-interaction -vv
       - name: Coverage
-        run: ${{env.docker_compose_cmd}} exec -e XDEBUG_MODE=coverage -T php bin/phpunit --coverage-clover=coverage/coverage.xml vendor/gally
+        run: ${{env.docker_compose_cmd}} exec -T php php -d pcov.enabled=1 -d pcov.directory=vendor/gally bin/phpunit --coverage-clover=coverage/coverage.xml vendor/gally
 
       - name: Cleanup coverage file
         run: ${{env.docker_compose_cmd}} exec -T php sed -i 's:<file name="/srv/:<file name="/:' coverage/coverage.xml
