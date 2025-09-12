@@ -69,6 +69,7 @@ const texts = {
     scope: 'Scope',
     searchableAndFilterableAttributes: 'Attributes',
     configurations: 'Configurations',
+    searchableAndFilterableAttributes: 'Searchable and filterable attributes',
     users: 'Users',
   }
 }
