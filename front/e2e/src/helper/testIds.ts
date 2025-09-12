@@ -106,6 +106,7 @@ export enum TestId {
   TAB = 'tab',
   RULES_MANAGER = 'rulesManager',
   COMBINATION_RULES = 'combinationRules',
+  CONFIGURATION_FORM = 'configurationForm',
 }
 
 type ItemId = `|${string}` | ''
