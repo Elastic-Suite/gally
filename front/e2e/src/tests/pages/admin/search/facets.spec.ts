@@ -60,8 +60,11 @@ const texts = {
   ],
   sortOrderOptions: [
     'Result count',
-    'Admin sort',
-    'Name',
+    'Admin sort - slow',
+    'Name (A → Z)',
+    'Name (Z → A) - slow',
+    'Natural sort (A → Z) - slow',
+    'Natural sort (Z → A) - slow',
   ],
   noCustomValuesMessage: "You don't have any custom value",
   customValuesMessage: (nb: number) => `You are using ${nb} custom value${nb > 1 ? 's' : ''}`

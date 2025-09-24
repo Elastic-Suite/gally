@@ -67,22 +67,22 @@ const texts = {
   paginationOptions: ['10', '25', '50'],
   tabs: {
     scope: 'Scope',
-    searchableAndFilterableAttributes: 'Attributes',
+    attributes: 'Attributes',
     configurations: 'Configurations',
     users: 'Users',
   }
 }
 
-test('Pages > Settings > Tab > Searchable and Filterable attributes', {tag: ['@premium', '@standard']}, async ({
+test('Pages > Settings > Tab > Attributes', {tag: ['@premium', '@standard']}, async ({
                                                                                                                  page,
                                                                                                                }) => {
-  await test.step('Login and navigate to Searchable and Filterable attributes in the Settings page', async () => {
+  await test.step('Login and navigate to Attributes in the Settings page', async () => {
     await login(page)
     await navigateTo(page, 'Settings', '/admin/settings/scope/catalogs')
 
     const tabs = new Tabs(page)
     await tabs.expectToHaveTabs(Object.values(texts.tabs))
-    await tabs.navigateTo(texts.tabs.searchableAndFilterableAttributes, '/admin/settings/attributes')
+    await tabs.navigateTo(texts.tabs.attributes, '/admin/settings/attributes')
   })
 
   const grid = new Grid(page, resourceName)
