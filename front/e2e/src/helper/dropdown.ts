@@ -79,7 +79,6 @@ export class Dropdown<isMultiple extends boolean = false> {
       for (const label of value) {
         const selectedOption = options.getByText(label, {exact: true})
         await selectedOption.click()
-        await this.page.waitForTimeout(2000)
       }
 
       const chips = this.getChips()
