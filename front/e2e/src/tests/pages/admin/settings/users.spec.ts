@@ -1,11 +1,11 @@
 /* eslint-disable testing-library/prefer-screen-queries */
-import { expect, test } from '@playwright/test'
-import { login } from '../../../../helper/auth'
-import { navigateTo } from '../../../../helper/menu'
-import { Dropdown } from '../../../../helper/dropdown'
-import { Tabs } from '../../../../helper/tabs'
-import { TestId, generateTestId } from '../../../../helper/testIds'
-import { Switch } from '../../../../helper/switch'
+import {expect, test} from '@playwright/test'
+import {login, UserRole} from '../../../../helper/auth'
+import {navigateTo} from '../../../../helper/menu'
+import {Dropdown} from '../../../../helper/dropdown'
+import {Tabs} from '../../../../helper/tabs'
+import {generateTestId, TestId} from '../../../../helper/testIds'
+import {Switch} from '../../../../helper/switch'
 import {Grid} from "../../../../helper/grid";
 import {Filter, FilterType} from "../../../../helper/filter";
 import {randomUUID} from "crypto";
@@ -74,13 +74,46 @@ const texts = {
   paginationOptions: ['10', '25', '50'],
   tabs: {
     scope: 'Scope',
-    searchableAndFilterableAttributes: 'Searchable and filterable attributes',
+    attributes: 'Attributes',
+    configurations: 'Configurations',
     users: 'Users',
   },
 } as const
 
 test('Pages > Configuration > Users', { tag: ['@premium', '@standard'] }, async ({ page }) => {
-  await test.step('Login and navigate to the users page', async () => {
+  await test.step('Login as CONTRIBUTOR', async () => {
+    await login(page, UserRole.CONTRIBUTOR)
+
+    const gridDataTestId = generateTestId(TestId.TABLE, resourceName)
+
+    await navigateTo(
+      page,
+      texts.labelMenuPage,
+      '/admin/settings/scope/catalogs'
+    )
+
+    await test.step('Verify if tab "Users" is not present', async () => {
+      const tabs = new Tabs(page)
+      await tabs.expectToHaveTabs([texts.tabs.scope, texts.tabs.attributes, texts.tabs.configurations])
+    })
+
+    await test.step('Verify if contributor user has no access to user user gird page', async () => {
+      await page.goto('/admin/settings/user/grid')
+      await expect(page.locator(`[data-testId="${gridDataTestId}"]`)).toHaveCount(0)
+    })
+
+    await test.step('Verify if contributor user has no access to user create page', async () => {
+      await page.goto('/admin/settings/user/create')
+      await expect(page).toHaveURL('admin/settings/scope/catalogs')
+    })
+
+    await test.step('Verify if contributor user has no access to user update page', async () => {
+      await page.goto('/admin/settings/user/edit?id=1')
+      await expect(page).toHaveURL('admin/settings/scope/catalogs')
+    })
+  })
+
+  await test.step('Login and navigate to the users page as ADMIN', async () => {
     await login(page)
     await navigateTo(
       page,
@@ -213,7 +246,7 @@ test('Pages > Configuration > Users', { tag: ['@premium', '@standard'] }, async 
     })
 
     // email InputText
-    await test.step('Fill the "first name" field text', async () => {
+    await test.step('Fill the "email" field text', async () => {
       await expect(emailInput).toBeEmpty()
       await emailInput.fill(newUserEmail)
       await expect(emailInput).toHaveValue(newUserEmail)
@@ -251,8 +284,13 @@ test('Pages > Configuration > Users', { tag: ['@premium', '@standard'] }, async 
     await editLink.click()
     await expect(page).toHaveURL(/\/admin\/settings\/user\/edit\?id=\d+$/)
 
-    await dummyPasswordInput.isDisabled()
-    await emailInput.isDisabled()
+    await test.step('Check password field text is disabled', async () => {
+      await dummyPasswordInput.isDisabled()
+    })
+
+    await test.step('Check email field text is disabled', async () => {
+      await emailInput.isDisabled()
+    })
 
     await rolesDropdown.expectToHaveValue(texts.createValues.expectedRolesAfterSave)
     await rolesDropdown.clear()
