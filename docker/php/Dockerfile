@@ -44,9 +44,6 @@ RUN set -eux; \
 		zip \
 	;
 
-# Install PCov separately via PECL
-RUN pecl install pcov && docker-php-ext-enable pcov
-
 ###> recipes ###
 ###> doctrine/doctrine-bundle ###
 RUN set -eux; \
@@ -82,6 +79,21 @@ RUN set -eux; \
 	;
 
 COPY --link conf.d/app.dev.ini $PHP_INI_DIR/conf.d/
+
+CMD ["php-fpm"]
+
+# CI php image
+FROM gally_php_base AS gally_php_ci
+
+ENV APP_ENV=dev
+VOLUME /app/var/
+
+RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
+
+RUN set -eux; \
+	install-php-extensions \
+    pcov \
+	;
 
 CMD ["php-fpm"]
 
