@@ -56,6 +56,7 @@ export enum TestId {
   PAGINATION_FROM = 'paginationFrom',
   PAGINATION_TO = 'paginationTo',
   PAGINATION_COUNT = 'paginationCount',
+  POPIN_CATALOGS = 'popinCatalogs',
   SIDE_BAR = 'sidebar',
   SIDE_BAR_COLLAPSING_BUTTON = 'sidebarCollapsingButton',
   MENU_ITEM = 'menuItem',
