@@ -14,14 +14,15 @@ interface IProps {
 function ConfigurationsProvider(props: IProps): JSX.Element {
   const { children } = props
 
-  const [configurations] =
-    useFetchApi<IHydraResponse<IConfigurations>>('/configurations')
+  const [configurations] = useFetchApi<IHydraResponse<IConfigurations>>(
+    '/public_configurations'
+  )
 
   const value =
     configurations?.data &&
     Object.fromEntries(
       configurations.data['hydra:member'].map((configuration) => [
-        configuration.id,
+        configuration.path,
         configuration.value,
       ])
     )
