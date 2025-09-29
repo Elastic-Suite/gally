@@ -164,4 +164,5 @@ jobs:
           fail_below_threshold: false
 
       - name: "[End] Job failed, gathering logs"
+        if: always()
         run: ${{env.docker_compose_cmd}} logs -t
