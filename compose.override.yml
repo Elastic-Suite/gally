@@ -63,6 +63,8 @@ services:
         front_src: ./front
     volumes:
       - ./front:/usr/src/front:rw,cached,z
+    environment:
+      - PUBLIC_URL=https://${SERVER_NAME:-gally.localhost}/example
 
   e2e:
     extends:
