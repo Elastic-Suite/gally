@@ -126,7 +126,7 @@ services:
   ###< doctrine/doctrine-bundle ###
 
   redis:
-    image: docker.io/bitnami/redis:6.2
+    image: redis:6.2
     environment:
       # ALLOW_EMPTY_PASSWORD is recommended only for development.
       - ALLOW_EMPTY_PASSWORD=yes
