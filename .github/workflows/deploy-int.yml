@@ -39,6 +39,12 @@ on:
         required: true
       MEDIA_URL:
         required: false
+      MAILER_DSN:
+        required: true
+      GALLY_DEFAULT_SENDER_NAME:
+        required: true
+      GALLY_DEFAULT_SENDER_EMAIL:
+        required: true
 
 jobs:
   deploy:
@@ -59,6 +65,9 @@ jobs:
             COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
             PACKAGIST_URL: ${{ secrets.PACKAGIST_URL }}
             MEDIA_URL: ${{ secrets.MEDIA_URL }}
+            MAILER_DSN: ${{ secrets.MAILER_DSN }}
+            GALLY_DEFAULT_SENDER_NAME: ${{ secrets.GALLY_DEFAULT_SENDER_NAME }}
+            GALLY_DEFAULT_SENDER_EMAIL: ${{ secrets.GALLY_DEFAULT_SENDER_EMAIL }}
         run: |
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
           ssh -o StrictHostKeyChecking=no -o ServerAliveInterval=30 -i private_key ${USER_NAME}@${HOSTNAME} "
@@ -90,7 +99,7 @@ jobs:
             docker compose run --rm php sed -i \"s/NelmioAliceBundle::class => \['dev' => true, 'test' => true]/NelmioAliceBundle::class => ['all' => true]/g\" config/bundles.php &&
             docker compose run --rm php sed -i \"s/FidryAliceDataFixturesBundle::class => \['dev' => true, 'test' => true]/FidryAliceDataFixturesBundle::class => ['all' => true]/g\" config/bundles.php &&
             docker compose run --rm php sed -i \"s/HautelookAliceBundle::class => \['dev' => true, 'test' => true]/HautelookAliceBundle::class => ['all' => true]/g\" config/bundles.php &&
-            GALLY_CATALOG_MEDIA_URL=${MEDIA_URL} SERVER_NAME=$HOSTNAME API_ROUTE_PREFIX=api APP_SECRET=$APP_SECRET POSTGRES_PASSWORD=$POSTGRES_PASSWORD COMPOSER_AUTH='$COMPOSER_AUTH' docker compose -f compose.yml -f compose.int.yml up -d --build &&
-            GALLY_CATALOG_MEDIA_URL=${MEDIA_URL} SERVER_NAME=$HOSTNAME API_ROUTE_PREFIX=api APP_SECRET=$APP_SECRET POSTGRES_PASSWORD=$POSTGRES_PASSWORD COMPOSER_AUTH='$COMPOSER_AUTH' docker compose -f compose.yml -f compose.int.yml exec php bin/console lexik:jwt:generate-keypair --skip-if-exists
+            GALLY_DEFAULT_SENDER_NAME=${GALLY_DEFAULT_SENDER_NAME} GALLY_DEFAULT_SENDER_EMAIL=${GALLY_DEFAULT_SENDER_EMAIL} MAILER_DSN=${MAILER_DSN} GALLY_CATALOG_MEDIA_URL=${MEDIA_URL} SERVER_NAME=$HOSTNAME API_ROUTE_PREFIX=api APP_SECRET=$APP_SECRET POSTGRES_PASSWORD=$POSTGRES_PASSWORD COMPOSER_AUTH='$COMPOSER_AUTH' docker compose -f compose.yml -f compose.int.yml up -d --build &&
+            GALLY_DEFAULT_SENDER_NAME=${GALLY_DEFAULT_SENDER_NAME} GALLY_DEFAULT_SENDER_EMAIL=${GALLY_DEFAULT_SENDER_EMAIL} MAILER_DSN=${MAILER_DSN} GALLY_CATALOG_MEDIA_URL=${MEDIA_URL} SERVER_NAME=$HOSTNAME API_ROUTE_PREFIX=api APP_SECRET=$APP_SECRET POSTGRES_PASSWORD=$POSTGRES_PASSWORD COMPOSER_AUTH='$COMPOSER_AUTH' docker compose -f compose.yml -f compose.int.yml exec php bin/console lexik:jwt:generate-keypair --skip-if-exists
           "
 
