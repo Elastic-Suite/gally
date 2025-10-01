@@ -39,3 +39,6 @@ jobs:
       COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
       PACKAGIST_URL: ${{ secrets.PACKAGIST_URL }}
       MEDIA_URL: ${{ secrets.MEDIA_URL_DEMO_ORO }}
+      MAILER_DSN: ${{ secrets.MAILER_DSN }}
+      GALLY_DEFAULT_SENDER_NAME: ${{ secrets.GALLY_DEFAULT_SENDER_NAME_ORO }}
+      GALLY_DEFAULT_SENDER_EMAIL: ${{ secrets.GALLY_DEFAULT_SENDER_EMAIL_ORO }}
