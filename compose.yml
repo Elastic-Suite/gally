@@ -85,6 +85,9 @@ services:
       - TRUSTED_HOSTS=${TRUSTED_HOSTS:-^${SERVER_NAME:-|gally.localhost}|localhost|php$$}
       - CORS_ALLOW_ORIGIN=${CORS_ALLOW_ORIGIN:-^https?://${SERVER_NAME:-gally.localhost}$}
       - GALLY_CATALOG_MEDIA_URL=${GALLY_CATALOG_MEDIA_URL:-https://${SERVER_NAME:-gally.localhost}/media/catalog/product/}
+      - MAILER_DSN=$MAILER_DSN
+      - GALLY_DEFAULT_SENDER_NAME=${GALLY_DEFAULT_SENDER_NAME:-Gally}
+      - GALLY_DEFAULT_SENDER_EMAIL=${GALLY_DEFAULT_SENDER_EMAIL:-noreply@gally.localhost}
       - DATABASE_URL=postgresql://${POSTGRES_USER:-app}:${POSTGRES_PASSWORD:-!ChangeMe!}@database:5432/${POSTGRES_DB:-app}?serverVersion=${POSTGRES_VERSION:-16}&charset=${POSTGRES_CHARSET:-utf8}
       - ELASTICSEARCH_URL=https://${SEARCH_USER:-admin}:${SEARCH_PASSWORD:-!ChangeMe0!}@${SEARCH_HOST:-search}:9200/
       - ELASTICSEARCH_SSL_VERIFICATION=false
