@@ -82,6 +82,21 @@ COPY --link conf.d/app.dev.ini $PHP_INI_DIR/conf.d/
 
 CMD ["php-fpm"]
 
+# CI php image
+FROM gally_php_base AS gally_php_ci
+
+ENV APP_ENV=dev
+VOLUME /app/var/
+
+RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
+
+RUN set -eux; \
+	install-php-extensions \
+    pcov \
+	;
+
+CMD ["php-fpm"]
+
 # Prod php image
 FROM gally_php_base AS gally_php_prod
 
