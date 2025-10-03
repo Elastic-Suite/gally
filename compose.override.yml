@@ -7,11 +7,11 @@ services:
       - "${HTTPS_PORT:-443}:443"
     environment:
       - HTTPS_PORT=${HTTPS_PORT:-443}
-  
+
   certbot:
     environment:
       - SELF_SIGNED=true
-  
+
   router:
     volumes:
       - ./api/public:/app/public
@@ -49,6 +49,7 @@ services:
     volumes:
       - ./front:/usr/src/front:rw,cached,z
     environment:
+      - SKIP_YARN_INSTALL=${SKIP_YARN_INSTALL:-false}
       # On Linux, you may want to comment the following line for improved performance
       - WATCHPACK_POLLING="true"
       - NEXT_PUBLIC_ENTRYPOINT=
@@ -60,12 +61,13 @@ services:
     build:
       context: ./docker/front
       target: gally_example_dev
-      additional_contexts: 
+      additional_contexts:
         front_src: ./front
     volumes:
       - ./front:/usr/src/front:rw,cached,z
     environment:
       - PUBLIC_URL=https://${SERVER_NAME:-gally.localhost}/example
+      - SKIP_YARN_INSTALL=${SKIP_YARN_INSTALL:-false}
 
   e2e:
     extends:
@@ -92,3 +94,4 @@ services:
       - traefik.http.routers.gally-mail-$COMPOSE_PROJECT_NAME-https.rule=Host(`mail.${SERVER_NAME:-gally.localhost}`)
       - traefik.http.routers.gally-mail-$COMPOSE_PROJECT_NAME-https.entrypoints=https
       - traefik.http.routers.gally-mail-$COMPOSE_PROJECT_NAME-https.tls=true
+
