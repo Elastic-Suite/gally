@@ -14,6 +14,7 @@ services:
       - APP_ENV=dev
       - XDEBUG_MODE=off
       - TRUSTED_HOSTS=${TRUSTED_HOSTS:-^${SERVER_NAME:-|gally.localhost}|localhost|${E2E_SERVER_NAME:-gally.e2e}|php$$}
+      - MAILER_DSN=${MAILER_DSN:-smtp://mailer:1025}
 
   pwa:
     build:
