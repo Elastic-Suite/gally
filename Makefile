@@ -41,6 +41,9 @@ build_no_cache: ## Builds the Docker images (without cache)
 up: .env ## Start the docker hub in detached mode (no logs)
 	@$(DOCKER_COMP) up --detach
 
+up-cron: .env ## Start the docker hub in detached mode (no logs) with cron container
+	@$(DOCKER_COMP) --profile cron up --detach
+
 start: build up ## Build and start the containers
 
 down: .env ## Stop the docker hub
@@ -173,7 +176,7 @@ migrate: c=doctrine:migrations:migrate -n --allow-no-migration
 migrate: sf
 
 generate_migration: ## Generate symfony migration
-generate_migration: c=doctrine:migrations:diff --namespace 'DoctrineMigrations'
+generate_migration: c=doctrine:migrations:diff --namespace 'Gally\Migrations'
 generate_migration: sf
 
 fixtures_load: ## Load fixtures (Delete DB and Elasticsearch data)
