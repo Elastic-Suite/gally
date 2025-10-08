@@ -1,3 +1,16 @@
+x-base-php-env : &php-base-env
+  APP_ENV: dev
+  XDEBUG_MODE: off
+  MAILER_DSN: ${MAILER_DSN:-smtp://mailer:1025}
+
+x-base-php: &php-base
+  build:
+    target: gally_php_ci
+  volumes: !override
+    - ./api:/app:rw,cached,z
+    - ./docker/php/conf.d/app.dev.ini:/usr/local/etc/php/conf.d/app.dev.ini:ro,z
+  environment: *php-base-env
+  
 services:
 
   certbot:
@@ -5,16 +18,16 @@ services:
       - SELF_SIGNED=true
 
   php:
-    build:
-      target: gally_php_ci
-    volumes: !override
-      - ./api:/app:rw,cached,z
-      - ./docker/php/conf.d/app.dev.ini:/usr/local/etc/php/conf.d/app.dev.ini:ro,z
+    <<: *php-base
     environment:
-      - APP_ENV=dev
-      - XDEBUG_MODE=off
-      - TRUSTED_HOSTS=${TRUSTED_HOSTS:-^${SERVER_NAME:-|gally.localhost}|localhost|${E2E_SERVER_NAME:-gally.e2e}|php$$}
-      - MAILER_DSN=${MAILER_DSN:-smtp://mailer:1025}
+      <<: *php-base-env
+      TRUSTED_HOSTS: ${TRUSTED_HOSTS:-^${SERVER_NAME:-|gally.localhost}|localhost|${E2E_SERVER_NAME:-gally.e2e}|php$$}
+
+  cron:
+    <<: *php-base
+    environment:
+      <<: *php-base-env
+      CRONTAB: ~
 
   pwa:
     build:

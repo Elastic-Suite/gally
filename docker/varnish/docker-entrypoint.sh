@@ -1,11 +1,15 @@
 #!/bin/sh
 set -e
 
-envsubst < /etc/varnish/default.vcl > /tmp/default.vcl
+# Generate VCL from template
+envsubst < /etc/varnish/default.vcl.template > /tmp/default.vcl
+
+# Remove CRON_UPSTREAM line if variable is empty
+if [ -z "$CRON_UPSTREAM" ]; then
+    sed -i '/^[[:space:]]*"";$/d' /tmp/default.vcl
+fi
 
 cat /tmp/default.vcl > /etc/varnish/default.vcl
-
-envsubst < /etc/varnish/default.vcl.template > /etc/varnish/default.vcl
 
 # this will check if the first argument is a flag
 # but only works if all arguments require a hyphenated flag
