@@ -40,6 +40,7 @@
         "symfony/validator": "6.4.*",
         "symfony/yaml": "6.4.*",
         "tilleuls/forgot-password-bundle": "^2.0",
+        "vich/uploader-bundle": "^2.8",
         "webonyx/graphql-php": "^15.12"
     },
     "require-dev": {
