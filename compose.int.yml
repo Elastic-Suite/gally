@@ -1,3 +1,7 @@
+x-base-php-env : &php-base-env
+  APP_ENV: ${APP_SECRET}
+  XDEBUG_MODE: off
+
 services:
 
   router:
@@ -8,8 +12,11 @@ services:
 
   php:
     environment:
-      - APP_SECRET=${APP_SECRET}
-      - XDEBUG_MODE=off
+      <<: *php-base-env
+
+  cron:
+    environment:
+      <<: *php-base-env
 
   pwa:
     build:

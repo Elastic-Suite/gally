@@ -1,4 +1,21 @@
 # Development environment override
+x-base-php-env : &php-base-env
+  APP_ENV: ${APP_ENV:-dev}
+  MAILER_DSN: ${MAILER_DSN:-smtp://mailer:1025}
+
+x-base-php: &php-base
+  build:
+    target: gally_php_dev
+  volumes: !override
+    - ./api:/app:rw,cached,z
+    - ./docker/php/conf.d/app.dev.ini:/usr/local/etc/php/conf.d/app.dev.ini:ro,z
+  environment: *php-base-env
+  extra_hosts:
+    # Ensure that host.docker.internal is correctly defined on Linux
+    - host.docker.internal:host-gateway
+  tty: true
+
+
 services:
 
   proxy:
@@ -21,22 +38,23 @@ services:
       - EXAMPLE_UPSTREAM=example:3001
 
   php:
-    build:
-      target: gally_php_dev
-    volumes: !override
-      - ./api:/app:rw,cached,z
-      - ./docker/php/conf.d/app.dev.ini:/usr/local/etc/php/conf.d/app.dev.ini:ro,z
+    <<: *php-base
     environment:
-      - APP_ENV=${APP_ENV:-dev}
-      - TRUSTED_HOSTS=${TRUSTED_HOSTS:-^${SERVER_NAME:-|gally.localhost}|localhost|${E2E_SERVER_NAME:-gally.e2e}|php$$}
+      <<: *php-base-env
+      TRUSTED_HOSTS: ${TRUSTED_HOSTS:-^${SERVER_NAME:-|gally.localhost}|localhost|${E2E_SERVER_NAME:-gally.e2e}|php$$}
       # See https://xdebug.org/docs/all_settings#mode
-      - XDEBUG_MODE=${XDEBUG_MODE:-off}
-      - PHP_IDE_CONFIG=serverName=gally
-      - MAILER_DSN=${MAILER_DSN:-smtp://mailer:1025}
-    extra_hosts:
-      # Ensure that host.docker.internal is correctly defined on Linux
-      - host.docker.internal:host-gateway
-    tty: true
+      XDEBUG_MODE: ${XDEBUG_MODE:-off}
+      PHP_IDE_CONFIG: serverName=gally
+
+  cron:
+    <<: *php-base
+    environment:
+      <<: *php-base-env
+#      CRONTAB: |
+#        * * * * * cd /app && echo 'botbotbotis' >> /app/var/log/cron_cleanup.log 2>&1
+  #        * * * * * cd /app && flock -n /tmp/messenger.lock php bin/console messenger:consume async --limit=10 --time-limit=30 --memory-limit=128M >> /app/var/log/cron_worker.log 2>&1
+  #        0 * * * * cd /app && php bin/console messenger:failed:remove --force >> /app/var/log/cron_cleanup.log 2>&1
+  #        15 * * * * cd /app && php bin/console messenger:failed:retry --force >> /app/var/log/cron_cleanup.log 2>&1
 
   pwa:
     user: ${UUID?You must set UUID env var}:${GUID?You must set GUID env var}
