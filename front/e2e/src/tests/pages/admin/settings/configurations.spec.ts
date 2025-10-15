@@ -14,7 +14,7 @@ const testIds = {
   },
   fields: {
     baseUrlField: generateTestId(TestId.INPUT_TEXT, 'gally.base_url.media'),
-    defaultSenderField: generateTestId(TestId.INPUT_TEXT, 'gally.email.default_sender'),
+    defaultSenderField: generateTestId(TestId.INPUT_TEXT, 'gally.email.default_sender_email'),
     highlightCollectorFieldsSwitch: generateTestId(TestId.SWITCH, 'gally_explain.highlight_collector_fields'),
   },
 }
@@ -40,7 +40,7 @@ const texts = {
     search: 'Search',
     boost: 'Boost',
     thesaurus: 'Thesaurus',
-    vectorSearch: 'Recherche vectorielle',
+    vectorSearch: 'Vector Search',
     explain: 'Explain',
   }
 }
