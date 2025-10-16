@@ -185,7 +185,7 @@ test.beforeEach(async ({ context }) => {
 });
 
 test.describe('Parameters Page', () => {
-  runTestsAsRoles([UserRole.ADMIN, UserRole.CONTRIBUTOR], async (page: Page) => {
+  runTestsAsRoles([UserRole.ADMIN, UserRole.CONTRIBUTOR], { tag: ['@premium', '@standard'] }, async (page: Page) => {
     await testParametersPage(page)
   })
 })
