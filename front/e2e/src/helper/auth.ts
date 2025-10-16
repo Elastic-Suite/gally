@@ -1,4 +1,4 @@
-import {Page, expect, test} from '@playwright/test'
+import { Page, expect, test, TestDetails } from '@playwright/test'
 import {TestId, generateTestId} from "./testIds";
 
 const testIds = {
@@ -31,13 +31,22 @@ export enum UserRole {
   CONTRIBUTOR = 'contributor',
 }
 
+type TestDetailsWithRequiredTag = TestDetails & Required<Pick<TestDetails, 'tag'>>
+
 export function runTestsAsRoles(
   roles: UserRole[],
+  details: TestDetailsWithRequiredTag,
   callback: (page: Page, role?: UserRole) => Promise<void>
 ): void {
+  // Adds the @multirole to the existing tag, these tests can be slower than the others
+  // So it might be useful to have an easy way to include/exclude them from a run
+  const detailsWithMultiroleTag: TestDetailsWithRequiredTag  = {
+    ...details,
+    tag: [...new Set([...details.tag, '@multiroles'])]
+  }
   for (const role of roles) {
     // Instantiate an isolated test context for each role
-    test(`Test as ${role} role`, async ({ page }) => {
+    test(`Test as ${role} role`, detailsWithMultiroleTag, async ({ page }) => {
       await login(page, role)
       // Run callback with a page authenticated with the specified role
       await callback(page, role)
