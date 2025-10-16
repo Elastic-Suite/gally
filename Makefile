@@ -144,9 +144,10 @@ phpunit: ## Run php unit tests, pass the parameter "p=" to launch tests on a spe
 jest: ## Run jest unit tests
 	@$(DOCKER_COMP) exec pwa yarn test
 
-e2e: ## Run e2e tests or pass the parameter "f=" to filters tests, example: make e2e f=login
+e2e: ## Run e2e tests or pass the parameter "f=" to filters tests and "t=" to run only certain tags, example: make e2e f=login t=standard
 	@$(eval f ?=)
-	@$(DOCKER_COMP) exec e2e yarn test $(f)
+	@$(eval t ?=)
+	@$(DOCKER_COMP) exec e2e yarn test $(f) $(if $(t),--grep $(t))
 
 jest_update: ## Run jest unit tests
 	@$(DOCKER_COMP) exec pwa yarn test:update
