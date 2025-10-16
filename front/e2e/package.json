@@ -12,7 +12,9 @@
     "test": "yarn playwright test",
     "test:ci": "yarn playwright test",
     "test:standard": "yarn playwright test --grep @standard",
-    "test:premium": "yarn playwright test --grep @premium"
+    "test:ci:standard": "yarn playwright test --grep @standard",
+    "test:premium": "yarn playwright test --grep @premium",
+    "test:ci:premium": "yarn playwright test --grep @premium"
   },
   "dependencies": {}
 }
