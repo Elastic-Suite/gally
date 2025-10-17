@@ -48,13 +48,6 @@ services:
 
   cron:
     <<: *php-base
-    environment:
-      <<: *php-base-env
-#      CRONTAB: |
-#        * * * * * cd /app && echo 'botbotbotis' >> /app/var/log/cron_cleanup.log 2>&1
-  #        * * * * * cd /app && flock -n /tmp/messenger.lock php bin/console messenger:consume async --limit=10 --time-limit=30 --memory-limit=128M >> /app/var/log/cron_worker.log 2>&1
-  #        0 * * * * cd /app && php bin/console messenger:failed:remove --force >> /app/var/log/cron_cleanup.log 2>&1
-  #        15 * * * * cd /app && php bin/console messenger:failed:retry --force >> /app/var/log/cron_cleanup.log 2>&1
 
   pwa:
     user: ${UUID?You must set UUID env var}:${GUID?You must set GUID env var}

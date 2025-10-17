@@ -4,6 +4,9 @@ set -e
 # Call PHP entrypoint
 docker-entrypoint "$@"
 
+# Export environment variables for cron
+printenv | grep -v "no_proxy" > /etc/environment
+
 if [ -z "$CRONTAB" ]; then
     echo "You must specify a crontab with the environment variable \$CRONTAB."
     exit 1

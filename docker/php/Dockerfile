@@ -26,6 +26,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 	patch \
 	rsync \
 	cron \
+	procps \
 	&& rm -rf /var/lib/apt/lists/*
 
 ARG COMPOSER_AUTH

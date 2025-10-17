@@ -105,10 +105,9 @@ services:
     environment:
       <<: *php-base-env
       CRONTAB: |
-         * * * * * cd /app && echo 'test my cron' >> /proc/1/fd/1 2>> /proc/1/fd/2
-#        * * * * * cd /app && flock -n /tmp/messenger.lock php bin/console messenger:consume async --limit=10 --time-limit=30 --memory-limit=128M >> /proc/1/fd/1 2>> /proc/1/fd/2
-#        0 * * * * cd /app && php bin/console messenger:failed:remove --force >> /proc/1/fd/1 2>> /proc/1/fd/2
-#        15 * * * * cd /app && php bin/console messenger:failed:retry --force >> /proc/1/fd/1 2>> /proc/1/fd/2
+        * * * * * cd /app && { echo "[$(date '+\%Y-\%m-\%d \%H:\%M:\%S')] messenger:consume"; flock -n /tmp/gally_messenger.lock /usr/local/bin/php bin/console messenger:consume async -vv --limit=10 --time-limit=30 --memory-limit=128M; } >> /proc/1/fd/1 2>> /proc/1/fd/2
+        20 * * * * cd /app && { echo "[$(date '+\%Y-\%m-\%d \%H:\%M:\%S')] messenger:failed:remove"; php bin/console messenger:failed:remove --force; } >> /proc/1/fd/1 2>> /proc/1/fd/2
+        35 * * * * cd /app && { echo "[$(date '+\%Y-\%m-\%d \%H:\%M:\%S')] messenger:failed:retry"; php bin/console messenger:failed:retry --force; } >> /proc/1/fd/1 2>> /proc/1/fd/2
     healthcheck:
       test: [ "CMD", "pgrep", "cron" ]
       interval: 30s
