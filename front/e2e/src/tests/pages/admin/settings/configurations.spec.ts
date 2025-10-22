@@ -1,11 +1,12 @@
 /* eslint-disable testing-library/prefer-screen-queries */
-import { expect, test } from '@playwright/test'
+import { Page, expect, test } from '@playwright/test'
 import { login } from '../../../../helper/auth'
 import { navigateTo } from '../../../../helper/menu'
 import { Dropdown } from '../../../../helper/dropdown'
 import { Tabs } from '../../../../helper/tabs'
 import { TestId, generateTestId } from '../../../../helper/testIds'
 import { Switch } from '../../../../helper/switch'
+import { GallyPackage } from '../../../../helper/gallyPackage'
 
 const testIds = {
   form: {
@@ -35,13 +36,20 @@ const texts = {
     user: "Users",
   },
   configurationSubtabs: {
-    general: 'General',
-    index: 'Index',
-    search: 'Search',
-    boost: 'Boost',
-    thesaurus: 'Thesaurus',
-    vectorSearch: 'Vector Search',
-    explain: 'Explain',
+    [GallyPackage.STANDARD.toString()]: {
+      general: 'General',
+      index: 'Index',
+      search: 'Search',
+    },
+    [GallyPackage.PREMIUM.toString()]: {
+      general: 'General',
+      index: 'Index',
+      search: 'Search',
+      boost: 'Boost',
+      thesaurus: 'Thesaurus',
+      vectorSearch: 'Vector Search',
+      explain: 'Explain',
+    }
   }
 }
 
@@ -57,7 +65,8 @@ const testValues = {
   },
 }
 
-test('Pages > Configuration > Configuration Form', { tag: ['@premium', '@standard'] }, async ({ page }) => {
+async function testConfigurationsPage(page: Page, gallyPackage: GallyPackage): Promise<void> {
+
   await test.step('Login and navigate to the configuration form page', async () => {
     await login(page)
     await navigateTo(
@@ -92,10 +101,9 @@ test('Pages > Configuration > Configuration Form', { tag: ['@premium', '@standar
     await expect(page.getByTestId(testIds.fields.defaultSenderField)).not.toBeEmpty()
   })
 
-
   await test.step('Verify configuration subtabs are present', async () => {
     // Expected subtabs based on the configuration groups
-    const expectedSubtabs = Object.values(texts.configurationSubtabs)
+    const expectedSubtabs = Object.values(texts.configurationSubtabs[gallyPackage.toString()])
 
     // Check presence of all subtabs
     const configurationTabs = new Tabs(page,'configurationsGroups')
@@ -191,29 +199,39 @@ test('Pages > Configuration > Configuration Form', { tag: ['@premium', '@standar
     await page.getByTestId(testIds.fields.defaultSenderField).fill(testValues.general.defaultSender)
   })
 
-  await test.step('Navigate to Explain tab and test switch functionality', async () => {
-    // Navigate to the Explain subtab
-    const configurationTabs = new Tabs(page,'configurationsGroups')
-    await configurationTabs.navigateTo('Explain')
+  if (gallyPackage === GallyPackage.PREMIUM) {
+    await test.step('Navigate to Explain tab and test switch functionality', async () => {
+      // Navigate to the Explain subtab
+      const configurationTabs = new Tabs(page,'configurationsGroups')
+      await configurationTabs.navigateTo('Explain')
 
-    // Wait for the Explain tab content to load
-    await page.waitForTimeout(1000)
+      // Wait for the Explain tab content to load
+      await page.waitForTimeout(1000)
 
-    // Check for the presence of the boolean field for highlight collector fields
-    const highlightCollectorFieldsSwitch = new Switch(page, 'gally_explain.highlight_collector_fields')
-    await highlightCollectorFieldsSwitch.expectToBeVisible()
+      // Check for the presence of the boolean field for highlight collector fields
+      const highlightCollectorFieldsSwitch = new Switch(page, 'gally_explain.highlight_collector_fields')
+      await highlightCollectorFieldsSwitch.expectToBeVisible()
 
-    // Test the switch functionality
-    await highlightCollectorFieldsSwitch.expectToBeChecked()
+      // Test the switch functionality
+      await highlightCollectorFieldsSwitch.expectToBeChecked()
 
-    // Toggle the switch
-    await highlightCollectorFieldsSwitch.toggle()
+      // Toggle the switch
+      await highlightCollectorFieldsSwitch.toggle()
 
-    // Verify the state changed
-    await highlightCollectorFieldsSwitch.expectToBeChecked(false)
+      // Verify the state changed
+      await highlightCollectorFieldsSwitch.expectToBeChecked(false)
 
-    // Toggle back to original state
-    await highlightCollectorFieldsSwitch.toggle()
-    await highlightCollectorFieldsSwitch.expectToBeChecked(true)
-  })
+      // Toggle back to original state
+      await highlightCollectorFieldsSwitch.toggle()
+      await highlightCollectorFieldsSwitch.expectToBeChecked(true)
+    })
+  }
+}
+
+test('Pages > Configuration > Standard Configuration Form', { tag: ['@standard'] }, async ({ page }) => {
+  await testConfigurationsPage(page, GallyPackage.STANDARD)
+})
+
+test('Pages > Configuration > Premium Configuration Form', { tag: ['@premium'] }, async ({ page }) => {
+  await testConfigurationsPage(page, GallyPackage.PREMIUM)
 })
