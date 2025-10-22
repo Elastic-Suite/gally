@@ -163,7 +163,8 @@ services:
         hard: -1
     ports:
       - 9200
-      - 9600    
+      - 9600
+    init: true
     healthcheck:
       test: test $$(curl -uadmin:$${OPENSEARCH_INITIAL_ADMIN_PASSWORD:-!ChangeMe0!} -k --write-out %{http_code} --fail --silent --output /dev/null https://localhost:9200/_cluster/health?wait_for_status=green&timeout=5s) -eq 200
       interval: 10s
