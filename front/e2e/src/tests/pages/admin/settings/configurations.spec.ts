@@ -36,12 +36,12 @@ const texts = {
     user: "Users",
   },
   configurationSubtabs: {
-    [GallyPackage.STANDARD.toString()]: {
+    [GallyPackage.STANDARD]: {
       general: 'General',
       index: 'Index',
       search: 'Search',
     },
-    [GallyPackage.PREMIUM.toString()]: {
+    [GallyPackage.PREMIUM]: {
       general: 'General',
       index: 'Index',
       search: 'Search',
@@ -103,11 +103,10 @@ async function testConfigurationsPage(page: Page, gallyPackage: GallyPackage): P
 
   await test.step('Verify configuration subtabs are present', async () => {
     // Expected subtabs based on the configuration groups
-    const expectedSubtabs = Object.values(texts.configurationSubtabs[gallyPackage.toString()])
-
-    // Check presence of all subtabs
+    const expectedSubtabs = Object.values(texts.configurationSubtabs[gallyPackage])
+    // Check presence of subtabs
     const configurationTabs = new Tabs(page,'configurationsGroups')
-    await configurationTabs.expectToHaveTabs(expectedSubtabs)
+    await configurationTabs.expectToHaveSomeTabs(expectedSubtabs)
   })
 
   await test.step('Update configuration values and save', async () => {

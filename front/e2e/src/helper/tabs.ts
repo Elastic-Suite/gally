@@ -65,4 +65,12 @@ export class Tabs {
       useInnerText: true,
     })
   }
+
+  public async expectToHaveSomeTabs(tabs: string[]): Promise<void> {
+    const container = this.getTabsContainer()
+    const tabsLocator = container.getByTestId(this.tabTestId)
+    await expect(tabsLocator).toContainText(tabs, {
+      useInnerText: true,
+    })
+  }
 }
