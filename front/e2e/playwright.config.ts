@@ -16,7 +16,7 @@ export default defineConfig({
     permissions: ['clipboard-read', 'clipboard-write'],
   },
   expect: {
-    timeout: process.env.CI ? 60000 : 20000, // 20s per expect in local, 60 in CI
+    timeout: process.env.CI ? 30000 : 20000, // 20s per expect in local, 60 in CI
   },
   projects: [
     {
