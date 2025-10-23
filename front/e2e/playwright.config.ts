@@ -7,7 +7,7 @@ export default defineConfig({
   retries: process.env.CI ? 0 : 0, // Experimental settings, update it if necessary for the CI
   workers: process.env.CI ? 1 : 1, // We put 1 worker even for dev mode to save computer resources
   reporter: [['list', {printSteps: true}]],
-  timeout: process.env.CI ? 180000 : 120000, // 2min per test in local, 3min in CI
+  timeout: process.env.CI ? 180000 : 120000, // 3min in CI per test, 2min in local
   use: {
     baseURL: process.env.SERVER_BASE_URL || 'https://gally.local',
     trace: 'on',
@@ -16,7 +16,7 @@ export default defineConfig({
     permissions: ['clipboard-read', 'clipboard-write'],
   },
   expect: {
-    timeout: process.env.CI ? 30000 : 20000, // 20s per expect in local, 60 in CI
+    timeout: process.env.CI ? 30000 : 20000, // 30s in CI per expect, 20s in local,
   },
   projects: [
     {
