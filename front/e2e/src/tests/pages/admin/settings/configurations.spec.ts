@@ -54,19 +54,23 @@ const texts = {
 }
 
 // Test configuration values for different scopes
-const testValues = {
-  general: {
-    baseUrl: `https://example.com/media/catalog/product${Math.random()}`,
-    defaultSender: `contactgeneral${Math.random()}@example.com`,
-  },
-  catalog: {
-    baseUrl: `https://example.com/media/catalog/productcatalog${Math.random()}`,
-    defaultSender: `contactcatalog${Math.random()}@example.com`,
-  },
+// Must be a function so when running premium and standard tests
+// back to back, the values change between each test
+function getTestValues(): Record<string, Record<string, string>> {
+  return {
+    general: {
+      baseUrl: `https://example.com/media/catalog/product${Math.random()}`,
+      defaultSender: `contactgeneral${Math.random()}@example.com`,
+    },
+    catalog: {
+      baseUrl: `https://example.com/media/catalog/productcatalog${Math.random()}`,
+      defaultSender: `contactcatalog${Math.random()}@example.com`,
+    },
+  }
 }
 
 async function testConfigurationsPage(page: Page, gallyPackage: GallyPackage): Promise<void> {
-
+  const testValues = getTestValues()
   await test.step('Login and navigate to the configuration form page', async () => {
     await login(page)
     await navigateTo(
