@@ -67,9 +67,11 @@ export class Dropdown<isMultiple extends boolean = false> {
   /**
    * Selects one or more values in the dropdown.
    * @param value - A string (for single) or array of strings (for multi).
+   * @param expectedValues - A string (for single) or array of strings (for multi).
    */
   public async selectValue(
-    value: isMultiple extends true ? string[] : string
+    value: isMultiple extends true ? string[] : string,
+    expectedValues?: typeof value
   ): Promise<void> {
     const options = this.getOptions()
 
@@ -82,7 +84,7 @@ export class Dropdown<isMultiple extends boolean = false> {
       }
 
       const chips = this.getChips()
-      await expect(chips).toHaveText(value, {
+      await expect(chips).toHaveText(expectedValues || value, {
         useInnerText: true,
       })
     } else {
@@ -90,7 +92,7 @@ export class Dropdown<isMultiple extends boolean = false> {
       await selectedOption.click()
 
       const inputText = this.getInputText()
-      await expect(inputText).toHaveValue(value)
+      await expect(inputText).toHaveValue(expectedValues as string || value)
     }
 
     await this.close()
