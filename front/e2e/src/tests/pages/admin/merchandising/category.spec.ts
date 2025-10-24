@@ -56,6 +56,9 @@ test('Pages > Merchandising > Categories', {tag: ['@premium', '@standard']}, asy
   const pageTitle = page.getByTestId(generateTestId(TestId.PAGE_TITLE, 'categoriesProducts')).locator('h1')
 
   await test.step('Verify grid headers, pagination and searchBar', async () => {
+    console.log('-------------------')
+    console.log(await page.content())
+    console.log('-------------------')
     await grid.expectHeadersToBe(Object.values(texts.gridHeaders))
     await grid.pagination.expectToHaveOptions(texts.paginationOptions)
     await grid.pagination.expectToHaveRowsPerPage(50)
