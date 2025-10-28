@@ -1,4 +1,4 @@
-import {expect, test} from '@playwright/test'
+import {Page, expect, test} from '@playwright/test'
 import {Grid} from '../../../../helper/grid'
 import {Dropdown} from '../../../../helper/dropdown'
 import {login} from '../../../../helper/auth'
@@ -6,6 +6,7 @@ import {navigateTo} from '../../../../helper/menu'
 import {AlertMessage, AlertMessageType} from '../../../../helper/alertMessage'
 import {Switch} from '../../../../helper/switch'
 import {generateTestId, TestId} from "../../../../helper/testIds";
+import { GallyPackage } from '../../../../helper/gallyPackage'
 
 const testIds = {
   defaultSorting: 'defaultSorting',
@@ -46,7 +47,7 @@ const texts = {
   stockStatus: 'Stock status'
 } as const
 
-test('Pages > Merchandising > Categories', {tag: ['@premium', '@standard']}, async ({page}) => {
+async function testCategoriesPage(page: Page, gallyPackage: GallyPackage): Promise<void> {
   await test.step('Login and navigate to the Categories page', async () => {
     await login(page)
     await navigateTo(page, texts.labelMenuPage, '/admin/merchandize/categories')
@@ -97,7 +98,9 @@ test('Pages > Merchandising > Categories', {tag: ['@premium', '@standard']}, asy
   await test.step('Expect configuration fields to be visible', async () => {
     await defaultSortingDropdown.expectToBeVisible()
     await useNameInProductSearchSwitch.expectToBeVisible()
-    await isVirtualSwitch.expectToBeVisible()
+    if (gallyPackage === GallyPackage.PREMIUM) {
+      await isVirtualSwitch.expectToBeVisible()
+    }
     await expect(categoriesProductsSaveButton).toBeDisabled()
   })
 
@@ -132,6 +135,14 @@ test('Pages > Merchandising > Categories', {tag: ['@premium', '@standard']}, asy
     await defaultSortingDropdown.expectToHaveValue(texts.brand)
   })
 
+  await test.step('Reset default sorting values for "All catalogs"', async () => {
+    await catalogDropdown.selectValue(texts.allCatalog)
+    await defaultSortingDropdown.selectValue(texts.position)
+    await categoriesProductsSaveButton.click()
+    await alertMessage.expectToHaveText(texts.saveDataMessage, AlertMessageType.SUCCESS)
+    await catalogDropdown.selectValue(texts.catalogs[0])
+  })
+
   const categoryCollapseTreeListButton = await page
     .getByTestId(testIds.categoryCollapseTreeListButton)
     .all()
@@ -142,24 +153,26 @@ test('Pages > Merchandising > Categories', {tag: ['@premium', '@standard']}, asy
       await collapseButton.click()
     }
 
-    const categoyBasButton = page
+    const categoryBasButton = page
       .getByTestId(testIds.treeItemTitleButton)
       .filter({
         hasText: texts.basCategory,
       })
 
-    await expect(categoyBasButton).toBeVisible()
+    await expect(categoryBasButton).toBeVisible()
 
-    await categoyBasButton.click()
+    await categoryBasButton.click()
 
     await expect(pageTitle).toHaveText(texts.basCategory)
     await defaultSortingDropdown.selectValue(texts.price)
-    await isVirtualSwitch.enable()
 
-    const combinationRules = page.getByTestId(testIds.combinationRules)
-    await expect(combinationRules).toBeVisible()
-    await isVirtualSwitch.disable()
-    await expect(combinationRules).not.toBeVisible()
+    if (gallyPackage === GallyPackage.PREMIUM) {
+      await isVirtualSwitch.enable()
+      const combinationRules = page.getByTestId(testIds.combinationRules)
+      await expect(combinationRules).toBeVisible()
+      await isVirtualSwitch.disable()
+      await expect(combinationRules).not.toBeVisible()
+    }
 
     await expect(categoriesProductsSaveButton).not.toBeDisabled()
     await categoriesProductsSaveButton.click()
@@ -188,5 +201,29 @@ test('Pages > Merchandising > Categories', {tag: ['@premium', '@standard']}, asy
     await catalogDropdown.selectValue(texts.allCatalog)
     await defaultSortingDropdown.expectToHaveValue(texts.position)
   })
+
+  await test.step('Reset default sorting values for "COM Catalog"', async () => {
+    // Reset default sorting  on com_fr for FR_fr locale
+    await catalogDropdown.selectValue(texts.catalogs[0])
+    await localizedCatalogDropdown.selectValue(texts.locales[0])
+    await defaultSortingDropdown.selectValue(texts.position)
+    await categoriesProductsSaveButton.click()
+    await alertMessage.expectToHaveText(texts.saveDataMessage, AlertMessageType.SUCCESS)
+
+    // Reset default sorting  on com_fr for all locales
+    await catalogDropdown.selectValue(texts.catalogs[0])
+    await localizedCatalogDropdown.selectValue(texts.allLocales)
+    await defaultSortingDropdown.selectValue(texts.position)
+    await expect(categoriesProductsSaveButton).not.toBeDisabled()
+    await categoriesProductsSaveButton.click()
+    await alertMessage.expectToHaveText(texts.saveDataMessage, AlertMessageType.SUCCESS)
+  })
+}
+
+test('Pages > Merchandising > Standard Categories', {tag: ['@standard']}, async ({page}) => {
+  await testCategoriesPage(page, GallyPackage.STANDARD)
 })
 
+test('Pages > Merchandising > Premium Categories', {tag: ['@premium']}, async ({page}) => {
+  await testCategoriesPage(page, GallyPackage.PREMIUM)
+})

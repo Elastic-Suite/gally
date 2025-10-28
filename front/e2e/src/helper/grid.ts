@@ -43,7 +43,7 @@ export class Grid {
 
     // Wait for the header row to be attached in the DOM
     await this.page.waitForSelector(
-      `[data-testId="${this.gridDataTestId}"] thead tr > th`,
+      `[data-testid="${this.gridDataTestId}"] thead tr > th`,
       {state: 'attached'}
     )
 
