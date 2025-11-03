@@ -136,7 +136,7 @@ services:
       - ALLOW_EMPTY_PASSWORD=yes
       # - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
     volumes:
-      - 'redis_data:/bitnami/redis/data'
+      - 'redis_data:/data'
 
   search:
     build:
