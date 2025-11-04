@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5d0e9b7968b1f747fa77a4e2cbb3c04e",
+    "content-hash": "ee2c0c03ec8c7b1d56bcddab63150c62",
     "packages": [
         {
             "name": "api-platform/core",
@@ -1973,16 +1973,16 @@
         },
         {
             "name": "gally/gally-standard",
-            "version": "dev-main",
+            "version": "2.2.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Elastic-Suite/gally-standard.git",
-                "reference": "c9bb5e34b49df4eea5e2a6e8d4ed7dbb6ac23493"
+                "reference": "7cf28a09ed5bfea36262ecd51b2ac817134493a8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Elastic-Suite/gally-standard/zipball/c9bb5e34b49df4eea5e2a6e8d4ed7dbb6ac23493",
-                "reference": "c9bb5e34b49df4eea5e2a6e8d4ed7dbb6ac23493",
+                "url": "https://api.github.com/repos/Elastic-Suite/gally-standard/zipball/7cf28a09ed5bfea36262ecd51b2ac817134493a8",
+                "reference": "7cf28a09ed5bfea36262ecd51b2ac817134493a8",
                 "shasum": ""
             },
             "require": {
@@ -2013,7 +2013,6 @@
                 "phpunit/phpunit": "^9.5",
                 "symfony/phpunit-bridge": "6.0.*"
             },
-            "default-branch": true,
             "type": "symfony-bundle",
             "extra": {
                 "symfony": {
@@ -2054,9 +2053,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Elastic-Suite/gally-standard/issues",
-                "source": "https://github.com/Elastic-Suite/gally-standard/tree/main"
+                "source": "https://github.com/Elastic-Suite/gally-standard/tree/2.2.x"
             },
-            "time": "2025-10-07T16:54:12+00:00"
+            "time": "2025-11-04T10:26:35+00:00"
         },
         {
             "name": "gedmo/doctrine-extensions",
