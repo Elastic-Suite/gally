@@ -19,12 +19,6 @@ return [
     Hautelook\AliceBundle\HautelookAliceBundle::class => ['dev' => true, 'test' => true],
     Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle::class => ['all' => true],
     Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle::class => ['all' => true],
-    CoopTilleuls\ForgotPasswordBundle\CoopTilleulsForgotPasswordBundle::class => ['all' => true],
     Gally\GallyBundle::class => ['all' => true],
-    Gally\VirtualCategory\GallyVirtualCategoryBundle::class => ['all' => true],
-    Gally\Boost\GallyBoostBundle::class => ['all' => true],
-    Gally\Thesaurus\GallyThesaurusBundle::class => ['all' => true],
-    Gally\Explain\GallyExplainBundle::class => ['all' => true],
-    Gally\VectorSearch\GallyVectorSearchBundle::class => ['all' => true],
-//    Gally\SampleData\GallySampleDataBundle::class => ['all' => true],
+    CoopTilleuls\ForgotPasswordBundle\CoopTilleulsForgotPasswordBundle::class => ['all' => true],
 ];
