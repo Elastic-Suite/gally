@@ -146,7 +146,7 @@ services:
       - cluster.name=os-docker-cluster       # Search cluster name
       - node.name=gally-search-node       # Name the node that will run in this container
       - discovery.type=single-node
-      - OPENSEARCH_JAVA_OPTS=-Xms2g -Xmx2g # Set min and max JVM heap sizes to at least 50% of system RAM
+      - OPENSEARCH_JAVA_OPTS=-Xms1g -Xmx1g # Set min and max JVM heap sizes to at least 50% of system RAM
       - bootstrap.memory_lock=true           # Disable JVM heap memory swapping
       - cluster.routing.allocation.disk.threshold_enabled=false     # Avoid ES going read-only because low disk space availability
       - plugins.ml_commons.only_run_on_ml_node=false
