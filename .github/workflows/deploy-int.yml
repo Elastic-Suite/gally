@@ -91,14 +91,15 @@ jobs:
             docker compose run --rm php composer config repositories.gally-premium composer $PACKAGIST_URL &&
             docker compose run --rm -e COMPOSER_AUTH='$COMPOSER_AUTH' php composer require \"gally/gally-standard:${{ env.composer_version }} as ${{ inputs.last_published_version }}\" &&
             docker compose run --rm -e COMPOSER_AUTH='$COMPOSER_AUTH' php composer require \"gally/gally-premium:${{ env.composer_version }}\" &&
-            echo \"Sample data value: ${{ env.add_sample_data }}\" &&
-            ([ \"${{ env.add_sample_data }}\" = false ] || echo \"Install sample data\") &&
-            ([ \"${{ env.add_sample_data }}\" = false ] || docker compose run --rm -e COMPOSER_AUTH='$COMPOSER_AUTH' php composer require \"gally/gally-sample-data:${{ env.composer_version }}\") &&
-            ([ \"${{ env.add_sample_data }}\" = true ] || docker compose run --rm -e COMPOSER_AUTH='$COMPOSER_AUTH' php composer require \"doctrine/doctrine-fixtures-bundle\":\"^3.4\") &&
-            docker compose run --rm php sed -i \"s/DoctrineFixturesBundle::class => \['dev' => true, 'test' => true]/DoctrineFixturesBundle::class => ['all' => true]/g\" config/bundles.php &&
-            docker compose run --rm php sed -i \"s/NelmioAliceBundle::class => \['dev' => true, 'test' => true]/NelmioAliceBundle::class => ['all' => true]/g\" config/bundles.php &&
-            docker compose run --rm php sed -i \"s/FidryAliceDataFixturesBundle::class => \['dev' => true, 'test' => true]/FidryAliceDataFixturesBundle::class => ['all' => true]/g\" config/bundles.php &&
-            docker compose run --rm php sed -i \"s/HautelookAliceBundle::class => \['dev' => true, 'test' => true]/HautelookAliceBundle::class => ['all' => true]/g\" config/bundles.php &&
+            echo "Sample data value: ${{ env.add_sample_data }}" &&
+            if [ "${{ env.add_sample_data }}" = "true" ]; then
+              echo "Install sample data";
+              docker compose run --rm -e COMPOSER_AUTH='$COMPOSER_AUTH' php composer require \"gally/gally-sample-data:${{ env.composer_version }}\";
+              docker compose run --rm php sed -i \"s/DoctrineFixturesBundle::class => \['dev' => true, 'test' => true]/DoctrineFixturesBundle::class => ['all' => true]/g\" config/bundles.php &&
+              docker compose run --rm php sed -i \"s/NelmioAliceBundle::class => \['dev' => true, 'test' => true]/NelmioAliceBundle::class => ['all' => true]/g\" config/bundles.php &&
+              docker compose run --rm php sed -i \"s/FidryAliceDataFixturesBundle::class => \['dev' => true, 'test' => true]/FidryAliceDataFixturesBundle::class => ['all' => true]/g\" config/bundles.php &&
+              docker compose run --rm php sed -i \"s/HautelookAliceBundle::class => \['dev' => true, 'test' => true]/HautelookAliceBundle::class => ['all' => true]/g\" config/bundles.php &&
+            fi &&
             GALLY_DEFAULT_SENDER_NAME='${GALLY_DEFAULT_SENDER_NAME}' GALLY_DEFAULT_SENDER_EMAIL='${GALLY_DEFAULT_SENDER_EMAIL}' MAILER_DSN='${MAILER_DSN}' GALLY_CATALOG_MEDIA_URL=${MEDIA_URL} SERVER_NAME=$HOSTNAME API_ROUTE_PREFIX=api APP_SECRET=$APP_SECRET POSTGRES_PASSWORD=$POSTGRES_PASSWORD COMPOSER_AUTH='$COMPOSER_AUTH' docker compose -f compose.yml -f compose.int.yml up -d --build &&
             GALLY_DEFAULT_SENDER_NAME='${GALLY_DEFAULT_SENDER_NAME}' GALLY_DEFAULT_SENDER_EMAIL='${GALLY_DEFAULT_SENDER_EMAIL}' MAILER_DSN='${MAILER_DSN}' GALLY_CATALOG_MEDIA_URL=${MEDIA_URL} SERVER_NAME=$HOSTNAME API_ROUTE_PREFIX=api APP_SECRET=$APP_SECRET POSTGRES_PASSWORD=$POSTGRES_PASSWORD COMPOSER_AUTH='$COMPOSER_AUTH' docker compose -f compose.yml -f compose.int.yml exec php bin/console lexik:jwt:generate-keypair --skip-if-exists
           "
