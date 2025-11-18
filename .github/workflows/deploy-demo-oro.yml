@@ -16,7 +16,7 @@ jobs:
     uses: ./.github/workflows/tests.yml
     with:
       version: ${{ github.ref_name }}
-      last_published_version: 2.2.0
+      last_published_version: 2.2.1
     secrets: inherit
 
   deploy-demo-shopware:
@@ -28,7 +28,7 @@ jobs:
     uses: ./.github/workflows/deploy-int.yml
     with:
       version: ${{ github.ref_name }}
-      last_published_version: 2.2.0
+      last_published_version: 2.2.1
       add_sample_data: false
     secrets:
       AWS_DEPLOY_KEY: ${{ secrets.AWS_DEPLOY_KEY }}

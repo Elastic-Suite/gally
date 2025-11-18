@@ -21,6 +21,6 @@ jobs:
     uses: ./.github/workflows/tests.yml
     with:
       version: 2.2.x
-      last_published_version: 2.2.0
+      last_published_version: 2.2.1
       use_default_github_ref: true
     secrets: inherit
