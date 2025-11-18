@@ -42,6 +42,18 @@ jobs:
       docker_compose_cmd: docker compose -f compose.yml -f compose.ci.yml ${{ inputs.search_engine != 'opensearch' && format('-f compose.{0}.yml', inputs.search_engine) || '' }}
     
     steps:
+      - name: Disk cleanup
+        shell: bash
+        run: |
+          echo "Before cleanup"
+          df -h /
+          echo "Removing SDKs & heavyweight folders..."
+          sudo rm -rf /usr/local/lib/android || true
+          sudo rm -rf /usr/local/.ghcup || true      
+          sudo rm -rf /usr/local/share/chromium || true
+          echo "Final free space:"
+          df -h /
+
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
