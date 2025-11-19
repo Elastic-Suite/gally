@@ -25,6 +25,8 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 	git \
 	patch \
 	rsync \
+	cron \
+	procps \
 	&& rm -rf /var/lib/apt/lists/*
 
 ARG COMPOSER_AUTH
@@ -57,6 +59,7 @@ COPY --from=api_src composer.json package* packages/
 
 COPY --link conf.d/app.ini $PHP_INI_DIR/conf.d/
 COPY --link --chmod=755 docker-entrypoint.sh /usr/local/bin/docker-entrypoint
+COPY --link --chmod=755 docker-entrypoint-cron.sh /usr/local/bin/docker-entrypoint-cron
 COPY --link php-fpm.d/zz-docker.conf /usr/local/etc/php-fpm.d/zz-docker.conf
 
 ENTRYPOINT ["docker-entrypoint"]
