@@ -1,10 +1,10 @@
-import {test, expect} from '@playwright/test'
+import {expect, test} from '@playwright/test'
 import {Grid} from '../../../../helper/grid'
 import {Filter, FilterType} from '../../../../helper/filter'
 import {Dropdown} from '../../../../helper/dropdown'
 import {login} from '../../../../helper/auth'
 import {navigateTo} from '../../../../helper/menu'
-import {generateTestId, TestId} from "../../../../helper/testIds";
+import {TestId, generateTestId} from "../../../../helper/testIds"
 
 const resourceName = 'FacetConfiguration'
 
@@ -37,6 +37,7 @@ const texts = {
   labelMenuPage: 'Facets',
   pageTitle: 'Facets',
   gridHeaders: {
+    defaultCode: 'Attribute code',
     defaultLabel: 'Attribute label',
     displayMode: 'Display',
     coverageRate: 'Coverage',
@@ -74,7 +75,7 @@ const texts = {
 const baseURL = process.env.SERVER_BASE_URL || 'https://gally.local'
 
 test('Pages > Search > Facets', {tag: ['@premium', '@standard']}, async ({page}) => {
-  async function waitForUpdateResponse() {
+  async function waitForUpdateResponse(): Promise<void> {
     await page.waitForResponse(response => {
       return response.url().includes(`${baseURL}/api/facet_configurations`) && response.ok()
     }, {timeout: 5000})
@@ -96,6 +97,7 @@ test('Pages > Search > Facets', {tag: ['@premium', '@standard']}, async ({page})
 
   await test.step('Verify grid headers and pagination', async () => {
     await grid.expectHeadersToBe([
+      texts.gridHeaders.defaultCode,
       texts.gridHeaders.defaultLabel,
       texts.gridHeaders.displayMode,
       texts.gridHeaders.coverageRate,
