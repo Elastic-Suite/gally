@@ -151,6 +151,7 @@ jest: ## Run jest unit tests
 	@$(DOCKER_COMP) exec pwa yarn test
 
 e2e: ## Run e2e tests or pass the parameter "f=" to filters tests and "t=" to run only certain tags, example: make e2e f=login t=standard
+	@echo "\033[33m⚠️  E2E tests expect a clean application state. If you have modified your configuration and the tests fail, run 'make fixtures_load'\033[0m"
 	@$(eval f ?=)
 	@$(eval t ?=)
 	@$(DOCKER_COMP) exec e2e yarn test $(f) $(if $(t),--grep $(t))
