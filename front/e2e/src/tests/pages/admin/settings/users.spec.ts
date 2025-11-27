@@ -1,6 +1,6 @@
 /* eslint-disable testing-library/prefer-screen-queries */
 import {expect, test} from '@playwright/test'
-import {login, UserRole} from '../../../../helper/auth'
+import { login, logout, UserRole } from '../../../../helper/auth'
 import {navigateTo} from '../../../../helper/menu'
 import {Dropdown} from '../../../../helper/dropdown'
 import {Tabs} from '../../../../helper/tabs'
@@ -111,6 +111,8 @@ test('Pages > Configuration > Users', { tag: ['@premium', '@standard'] }, async 
       await page.goto('/admin/settings/user/edit?id=1')
       await expect(page).toHaveURL('admin/settings/scope/catalogs')
     })
+
+    await logout(page)
   })
 
   await test.step('Login and navigate to the users page as ADMIN', async () => {
