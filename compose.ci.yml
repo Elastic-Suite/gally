@@ -1,9 +1,9 @@
 services:
-  
+
   certbot:
     environment:
       - SELF_SIGNED=true
-  
+
   php:
     build:
       target: gally_php_ci
@@ -37,5 +37,7 @@ services:
     extends:
       file: ./compose.e2e.yml
       service: e2e
+    volumes:
+      - ./front/e2e/playwright-report:/usr/src/app/playwright-report:rw,cached,z
     environment:
       - CI=true

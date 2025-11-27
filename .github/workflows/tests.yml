@@ -35,12 +35,12 @@ jobs:
     if: github.event.pull_request.draft == false
     name: Tests
     runs-on: ubuntu-24.04
-    
+
     env:
       ref: ${{ inputs.use_default_github_ref == false && inputs.version || '' }}
       composer_version: ${{ inputs.version == 'main' && 'dev-main' || (contains(inputs.version, 'x') && format('{0}-dev', inputs.version) || inputs.version) }}
       docker_compose_cmd: docker compose -f compose.yml -f compose.ci.yml ${{ inputs.search_engine != 'opensearch' && format('-f compose.{0}.yml', inputs.search_engine) || '' }}
-    
+
     steps:
       - name: Disk cleanup
         shell: bash
@@ -163,8 +163,16 @@ jobs:
         run: ${{env.docker_compose_cmd}} exec -T pwa yarn test:ci
 
       - name: e2e
+        id: e2e
         continue-on-error: true
         run: ${{env.docker_compose_cmd}} exec -T e2e yarn test:ci
+
+      - uses: actions/upload-artifact@v4
+        if: ${{ always() }}
+        with:
+          name: playwright-report
+          path: front/e2e/playwright-report
+          retention-days: 30
 
       - name: Frontend Coverage Report
         uses: 5monkeys/cobertura-action@v12
