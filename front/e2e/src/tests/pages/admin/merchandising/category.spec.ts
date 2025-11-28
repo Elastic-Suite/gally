@@ -47,6 +47,52 @@ const texts = {
   stockStatus: 'Stock status'
 } as const
 
+let catalogDropdown: Dropdown = null
+let localizedCatalogDropdown: Dropdown = null
+
+function resetDropdowns(): void {
+  catalogDropdown = null
+  localizedCatalogDropdown = null
+}
+
+// Add this before your test functions
+test.beforeEach(() => {
+  resetDropdowns()
+})
+
+function getCatalogDropdown(page: Page): Dropdown {
+  if (!catalogDropdown) {
+    catalogDropdown = new Dropdown(page, testIds.catalogSwitcher)
+  }
+  return catalogDropdown
+}
+
+function getLocalizedCatalogDropdown(page: Page): Dropdown {
+  if (!localizedCatalogDropdown) {
+    localizedCatalogDropdown = new Dropdown(
+      page,
+      testIds.localizedCatalogSwitcher
+    )
+  }
+  return localizedCatalogDropdown
+}
+
+async function changeScopeDropdown(page: Page, dropdown: Dropdown, value: string, waitForRequest = true): Promise<void> {
+  const catalogInformationsResponse = page.waitForResponse('**/api/category_configurations/category/**')
+  await dropdown.selectValue(value)
+  if (waitForRequest) {
+    await catalogInformationsResponse
+  }
+}
+
+async function selectCatalog(page: Page, catalog: string, waitForRequest = true): Promise<void> {
+  await changeScopeDropdown(page, getCatalogDropdown(page), catalog, waitForRequest)
+}
+
+async function selectLocalizedCatalog(page: Page, localizedCatalog: string, waitForRequest = true): Promise<void> {
+  await changeScopeDropdown(page, getLocalizedCatalogDropdown(page), localizedCatalog, waitForRequest)
+}
+
 async function testCategoriesPage(page: Page, gallyPackage: GallyPackage): Promise<void> {
   await test.step('Login and navigate to the Categories page', async () => {
     await login(page)
@@ -74,7 +120,6 @@ async function testCategoriesPage(page: Page, gallyPackage: GallyPackage): Promi
     }])
   })
 
-
   // Editable configuration fields
   const defaultSortingDropdown = new Dropdown(
     page,
@@ -85,12 +130,6 @@ async function testCategoriesPage(page: Page, gallyPackage: GallyPackage): Promi
     testIds.useNameInProductSearch
   )
   const isVirtualSwitch = new Switch(page, testIds.isVirtual)
-
-  const catalogDropdown = new Dropdown(page, testIds.catalogSwitcher)
-  const localizedCatalogDropdown = new Dropdown(
-    page,
-    testIds.localizedCatalogSwitcher
-  )
   const categoriesProductsSaveButton = page.getByTestId(testIds.categoriesProductsSaveButton)
 
   const alertMessage = new AlertMessage(page)
@@ -105,25 +144,25 @@ async function testCategoriesPage(page: Page, gallyPackage: GallyPackage): Promi
   })
 
   await test.step('Open catalog dropdown and choose a value', async () => {
-    await catalogDropdown.expectToHaveOptions([texts.allCatalog, ...texts.catalogs])
-    await catalogDropdown.expectToHaveValue(texts.allCatalog)
-    await localizedCatalogDropdown.expectToBeVisible(false)
-    await catalogDropdown.selectValue(texts.catalogs[0])
-    await localizedCatalogDropdown.expectToBeVisible()
+    await getCatalogDropdown(page).expectToHaveOptions([texts.allCatalog, ...texts.catalogs])
+    await getCatalogDropdown(page).expectToHaveValue(texts.allCatalog)
+    await getLocalizedCatalogDropdown(page).expectToBeVisible(false)
+    await selectCatalog(page, texts.catalogs[0])
+    await getLocalizedCatalogDropdown(page).expectToBeVisible()
   })
 
   await test.step('Open localized catalog dropdown and choose a value', async () => {
-    await localizedCatalogDropdown.expectToHaveOptions([
+    await getLocalizedCatalogDropdown(page).expectToHaveOptions([
       texts.allLocales,
       ...texts.locales,
     ])
-    await localizedCatalogDropdown.expectToHaveValue(texts.allLocales)
-    await localizedCatalogDropdown.selectValue(texts.locales[0])
+    await getLocalizedCatalogDropdown(page).expectToHaveValue(texts.allLocales)
+    await selectLocalizedCatalog(page, texts.locales[0])
   })
 
   await test.step('Select "All catalogs" in catalog dropdown and modify the configuration', async () => {
-    await catalogDropdown.selectValue(texts.allCatalog)
-    await localizedCatalogDropdown.expectToBeVisible(false)
+    await selectCatalog(page, texts.allCatalog)
+    await getLocalizedCatalogDropdown(page).expectToBeVisible(false)
     await defaultSortingDropdown.selectValue(texts.brand)
     await expect(categoriesProductsSaveButton).not.toBeDisabled()
     await categoriesProductsSaveButton.click()
@@ -131,16 +170,16 @@ async function testCategoriesPage(page: Page, gallyPackage: GallyPackage): Promi
   })
 
   await test.step('Select "COM catalog" in catalog dropdown', async () => {
-    await catalogDropdown.selectValue(texts.catalogs[0])
+    await selectCatalog(page, texts.catalogs[0])
     await defaultSortingDropdown.expectToHaveValue(texts.brand)
   })
 
   await test.step('Reset default sorting values for "All catalogs"', async () => {
-    await catalogDropdown.selectValue(texts.allCatalog)
+    await selectCatalog(page, texts.allCatalog)
     await defaultSortingDropdown.selectValue(texts.position)
     await categoriesProductsSaveButton.click()
     await alertMessage.expectToHaveText(texts.saveDataMessage, AlertMessageType.SUCCESS)
-    await catalogDropdown.selectValue(texts.catalogs[0])
+    await selectCatalog(page, texts.catalogs[0])
   })
 
   const categoryCollapseTreeListButton = await page
@@ -180,39 +219,43 @@ async function testCategoriesPage(page: Page, gallyPackage: GallyPackage): Promi
   })
 
   await test.step('Select a locale', async () => {
-    await localizedCatalogDropdown.selectValue(texts.locales[0])
+    await selectLocalizedCatalog(page, texts.locales[0])
     await defaultSortingDropdown.expectToHaveValue(texts.price)
   })
 
   await test.step('Select "All catalogs"', async () => {
-    await catalogDropdown.selectValue(texts.allCatalog)
+    await selectCatalog(page, texts.allCatalog)
     await defaultSortingDropdown.expectToHaveValue(texts.position)
   })
 
-  await test.step('Select catalog and localized catalog, modify the configuration and select All locales and All catalog to verify that the configuration is not apply to them', async () => {
-    await catalogDropdown.selectValue(texts.catalogs[0])
-    await localizedCatalogDropdown.selectValue(texts.locales[0])
+  await test.step('Select catalog and localized catalog, modify the configuration and select All locales and All catalog to verify that the configuration is not applied to them', async () => {
+    await selectCatalog(page, texts.catalogs[0])
+    await selectLocalizedCatalog(page, texts.locales[0])
     await defaultSortingDropdown.selectValue(texts.stockStatus)
     await expect(categoriesProductsSaveButton).not.toBeDisabled()
     await categoriesProductsSaveButton.click()
     await alertMessage.expectToHaveText(texts.saveDataMessage, AlertMessageType.SUCCESS)
-    await localizedCatalogDropdown.selectValue(texts.allLocales)
+    await selectLocalizedCatalog(page, texts.allLocales)
     await defaultSortingDropdown.expectToHaveValue(texts.price)
-    await catalogDropdown.selectValue(texts.allCatalog)
+    await selectCatalog(page, texts.allCatalog)
     await defaultSortingDropdown.expectToHaveValue(texts.position)
   })
 
   await test.step('Reset default sorting values for "COM Catalog"', async () => {
     // Reset default sorting  on com_fr for FR_fr locale
-    await catalogDropdown.selectValue(texts.catalogs[0])
-    await localizedCatalogDropdown.selectValue(texts.locales[0])
-    await defaultSortingDropdown.selectValue(texts.position)
+    await selectCatalog(page, texts.catalogs[0])
+    await selectLocalizedCatalog(page, texts.locales[0])
+    // BEWARE: we set price here because we run standard and premium back to back
+    // AND we can't remove configuration values for localized catalogs once set
+    await defaultSortingDropdown.selectValue(texts.price)
     await categoriesProductsSaveButton.click()
     await alertMessage.expectToHaveText(texts.saveDataMessage, AlertMessageType.SUCCESS)
 
     // Reset default sorting  on com_fr for all locales
-    await catalogDropdown.selectValue(texts.catalogs[0])
-    await localizedCatalogDropdown.selectValue(texts.allLocales)
+    // No wait for request as the value is the same as the last one for the catalog
+    // We keep this selection to be consistent with the rest of the test
+    await selectCatalog(page, texts.catalogs[0], false)
+    await selectLocalizedCatalog(page, texts.allLocales)
     await defaultSortingDropdown.selectValue(texts.position)
     await expect(categoriesProductsSaveButton).not.toBeDisabled()
     await categoriesProductsSaveButton.click()
