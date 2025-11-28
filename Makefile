@@ -41,10 +41,16 @@ build_no_cache: ## Builds the Docker images (without cache)
 up: .env ## Start the docker hub in detached mode (no logs)
 	@$(DOCKER_COMP) up --detach
 
+up-cron: .env ## Start the docker hub in detached mode (no logs) with cron profile
+	@CRON_UPSTREAM=cron $(DOCKER_COMP) --profile cron up --detach --force-recreate varnish cron
+
 start: build up ## Build and start the containers
 
 down: .env ## Stop the docker hub
 	@$(DOCKER_COMP) down --remove-orphans
+
+down-cron: .env ## Stop the docker hub with cron profile
+	@$(DOCKER_COMP) --profile cron down --remove-orphans
 
 logs: ## Show live logs, pass the parameter "s=" to get logs of a given service, example: make logs s=elasticsearch
 	@$(eval s ?=)
