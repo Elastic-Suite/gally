@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5148ef2081cb8349cc0b6f7375c20666",
+    "content-hash": "5542ede76b36156a648671d7a6fdc9a3",
     "packages": [
         {
             "name": "api-platform/core",
@@ -1976,12 +1976,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Elastic-Suite/gally-standard.git",
-                "reference": "7fdbf17396d0f0bf9453b8cfbaf903d8a3560641"
+                "reference": "54875a5e2a507b7867cd56c5c7b86a3ee44c1791"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Elastic-Suite/gally-standard/zipball/7fdbf17396d0f0bf9453b8cfbaf903d8a3560641",
-                "reference": "7fdbf17396d0f0bf9453b8cfbaf903d8a3560641",
+                "url": "https://api.github.com/repos/Elastic-Suite/gally-standard/zipball/54875a5e2a507b7867cd56c5c7b86a3ee44c1791",
+                "reference": "54875a5e2a507b7867cd56c5c7b86a3ee44c1791",
                 "shasum": ""
             },
             "require": {
@@ -1994,12 +1994,15 @@
                 "php": ">=8.2",
                 "scienta/doctrine-json-functions": "*",
                 "stof/doctrine-extensions-bundle": "^1.7",
+                "symfony/doctrine-messenger": "^6.4",
                 "symfony/intl": "6.4.*",
                 "symfony/mailer": "6.4.*",
+                "symfony/messenger": "6.4.*",
                 "symfony/proxy-manager-bridge": "6.4.*",
                 "symfony/translation": "6.4.*",
                 "symfony/uid": "6.4.*",
                 "tilleuls/forgot-password-bundle": "^2.0",
+                "vich/uploader-bundle": "^2.8",
                 "webonyx/graphql-php": "^15.12"
             },
             "require-dev": {
@@ -2055,7 +2058,7 @@
                 "issues": "https://github.com/Elastic-Suite/gally-standard/issues",
                 "source": "https://github.com/Elastic-Suite/gally-standard/tree/main"
             },
-            "time": "2025-11-05T09:23:13+00:00"
+            "time": "2025-12-02T15:28:06+00:00"
         },
         {
             "name": "gedmo/doctrine-extensions",
@@ -13818,6 +13821,6 @@
         "ext-ctype": "*",
         "ext-iconv": "*"
     },
-    "platform-dev": {},
+    "platform-dev": [],
     "plugin-api-version": "2.6.0"
 }
