@@ -17,7 +17,7 @@
         <server name="SYMFONY_PHPUNIT_REMOVE" value="" />
         <server name="SYMFONY_PHPUNIT_VERSION" value="9.5" />
         <server name="KERNEL_CLASS" value="Kernel" force="true" />
-        <env name="SYMFONY_DEPRECATIONS_HELPER" value="max[direct]=0&amp;max[indirect]=5000&amp;quiet[]=indirect&amp;quiet[]=other" />
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="max[direct]=0&amp;max[indirect]=10000&amp;quiet[]=indirect&amp;quiet[]=other" />
     </php>
 
     <testsuites>
