@@ -1,13 +1,14 @@
 import {expect, test} from '@playwright/test'
 import {randomUUID} from 'crypto'
-import {login} from '../../../../helper/auth'
-import {navigateTo} from '../../../../helper/menu'
+import {login} from '../../../../utils/auth'
+import {navigateTo} from '../../../../utils/menu'
 import {Dropdown} from '../../../../helper/dropdown'
 import {Switch} from '../../../../helper/switch'
 import {Grid} from '../../../../helper/grid'
 import {Filter, FilterType} from '../../../../helper/filter'
 import {AlertMessage, AlertMessageType} from '../../../../helper/alertMessage'
-import {generateTestId, TestId} from "../../../../helper/testIds";
+import {generateTestId, TestId} from "../../../../utils/testIds";
+import {deleteEntity, getCommonFormTestIds} from "../../../../utils/form";
 
 const resourceName = 'Boost'
 
@@ -21,21 +22,16 @@ const testIds = {
     localizedCatalogs: 'localizedCatalogs.id[]',
   },
   form: {
+    ... getCommonFormTestIds(resourceName),
     localizedCatalogs: 'localizedCatalogs',
     isActive: 'isActive',
     name: generateTestId(TestId.INPUT_TEXT, 'name'),
     requestType: 'requestTypes',
     model: 'model',
-    submitButton: generateTestId(TestId.BUTTON, 'submit'),
-    deleteButton: generateTestId(TestId.BUTTON, 'delete'),
-    backButton: generateTestId(TestId.BUTTON, 'back'),
-    deleteBoostPopin: {
-      dialogConfirmButton: generateTestId(TestId.DIALOG_CONFIRM_BUTTON, resourceName),
-    },
     previewFieldSet: generateTestId(TestId.FIELD_SET, 'preview'),
     previewRequiredMessage: generateTestId(TestId.PREVIEW_REQUIRED_MESSAGE)
   },
-  createBoostButton: generateTestId(TestId.GRID_CREATE_BUTTON, resourceName)
+  ... Grid.getCommonGridTestIds(resourceName)
 } as const
 
 const texts = {
@@ -60,7 +56,7 @@ const texts = {
     isActive: true,
     localizedCatalogs: ['COM French Catalog']
   },
-  boostToCreateValues: {
+  createValues: {
     localizedCatalogs: [
       'COM French Catalog',
       'COM English Catalog',
@@ -73,17 +69,22 @@ const texts = {
     ],
     model: 'Constant score'
   },
-  boostToEditValues: {
+  editValues: {
     localizedCatalogs: ['COM French Catalog'],
     editedLocalizedCatalogDisplay: 'COM Catalog - COM French Catalog',
   },
-  paginationOptions: ['10', '25', '50']
 } as const
+
+const urls = {
+  grid: '/admin/merchandize/boost/grid',
+  create: '/admin/merchandize/boost/create',
+  edit: /\/admin\/merchandize\/boost\/edit\?id=\d+$/
+}
 
 test('Pages > Merchandising > Boosts', {tag: ['@premium']}, async ({page}) => {
   await test.step('Login and navigate to the Boosts page', async () => {
     await login(page)
-    await navigateTo(page, texts.labelMenuPage, '/admin/merchandize/boost/grid')
+    await navigateTo(page, texts.labelMenuPage, urls.grid)
   })
 
   // Grid and Filters Locators:
@@ -95,7 +96,7 @@ test('Pages > Merchandising > Boosts', {tag: ['@premium']}, async ({page}) => {
     [testIds.filter.isActive]: FilterType.BOOLEAN,
     [testIds.filter.localizedCatalogs]: FilterType.DROPDOWN,
   })
-  const createButton = page.getByTestId(testIds.createBoostButton)
+  const createButton = page.getByTestId(testIds.createButton)
 
   // Form Locators (Edit / Create):
   const localizedCatalogs = new Dropdown(page, testIds.form.localizedCatalogs, true)
@@ -105,91 +106,48 @@ test('Pages > Merchandising > Boosts', {tag: ['@premium']}, async ({page}) => {
   const requestTypesDropdown = new Dropdown(page, testIds.form.requestType, true)
   const modelDropdown = new Dropdown(page, testIds.form.model)
   const saveButton = page.getByTestId(testIds.form.submitButton)
-  const deleteButton = page.getByTestId(testIds.form.deleteButton)
 
-  // Define a name for the new created Boost.
+  // Define a name for the new created Entity.
   const newName = randomUUID()
 
   await test.step('Verify grid headers and pagination', async () => {
-    await grid.expectHeadersToBe(Object.values(texts.gridHeaders))
-    await grid.pagination.expectToHaveOptions(texts.paginationOptions)
-    await grid.pagination.expectToHaveRowsPerPage(50)
+    await grid.expectHeadersAndPaginationToBe(Object.values(texts.gridHeaders))
   })
 
   await test.step('Add some filters and remove them', async () => {
     const defaultRowCount = await grid.getCountLines()
+    const applicableFilters = {
+      [testIds.filter.name]: texts.filtersToApply.name,
+      [testIds.filter.model]: texts.filtersToApply.model,
+      [testIds.filter.requestType]: texts.filtersToApply.requestType,
+      [testIds.filter.isActive]: texts.filtersToApply.isActive,
+      [testIds.filter.localizedCatalogs]: texts.filtersToApply.localizedCatalogs,
+    }
+
     await test.step('Apply all filters available', async () => {
-      await filter.addFilter(
-        testIds.filter.name,
-        texts.filtersToApply.name
-      )
-      await filter.addFilter(testIds.filter.model, texts.filtersToApply.model)
-      await filter.addFilter(testIds.filter.requestType, texts.filtersToApply.requestType)
-      await filter.addFilter(testIds.filter.isActive, true)
-      await filter.addFilter(
-        testIds.filter.localizedCatalogs,
-        texts.filtersToApply.localizedCatalogs
-      )
+      await filter.addFilters(applicableFilters)
     })
 
     await test.step('Remove applied filters one by one', async () => {
-      await filter.removeFilter(
-        testIds.filter.name,
-        texts.filtersToApply.name
-      )
-
-      for (let i = 0; i < texts.filtersToApply.model.length; i++) {
-        await filter.removeFilter(
-          testIds.filter.model,
-          texts.filtersToApply.model[i]
-        )
-      }
-
-      for (let i = 0; i < texts.filtersToApply.requestType.length; i++) {
-        await filter.removeFilter(
-          testIds.filter.requestType,
-          texts.filtersToApply.requestType[i]
-        )
-      }
-
-      await filter.removeFilter(
-        testIds.filter.isActive,
-        texts.filtersToApply.isActive
-      )
-
-      for (let i = 0; i < texts.filtersToApply.localizedCatalogs.length; i++) {
-        await filter.removeFilter(
-          testIds.filter.localizedCatalogs,
-          texts.filtersToApply.localizedCatalogs[i]
-        )
-      }
+      await filter.removeFilters(applicableFilters)
     })
 
     await test.step('Apply a filter and compare the grid to see if it works', async () => {
-      await filter.addFilter(
-        testIds.filter.name,
-        texts.filtersToApply.name
+      await grid.expectRowsAfterFiltersToBe(
+        filter,
+        {[testIds.filter.name]: texts.filtersToApply.name},
+        [{columnName: texts.gridHeaders.name, value: texts.filtersToApply.name}]
       )
-
-      await grid.pagination.expectToHaveCount(1)
-
-      await grid.expectToFindLineWhere([
-        {
-          columnName: texts.gridHeaders.name,
-          value: texts.filtersToApply.name,
-        },
-      ])
     })
 
     await test.step('Clear filter', async () => {
-      await filter.clearFilters()
-      await grid.pagination.expectToHaveCount(defaultRowCount)
+      await grid.expectAllFiltersRemoved(filter, defaultRowCount)
     })
   })
 
   await test.step('Create a Boost', async () => {
     await createButton.click()
-    await expect(page).toHaveURL('/admin/merchandize/boost/create')
+    await expect(page).toHaveURL(urls.create)
 
     // isActive Switch
     await test.step('Disable and enable the "isActive" switch', async () => {
@@ -211,17 +169,17 @@ test('Pages > Merchandising > Boosts', {tag: ['@premium']}, async ({page}) => {
     })
 
     // Localized Catalogs Multiple Dropdown
-    await test.step('Choose localize catalogs in "localized Catalogs" dropdown', async () => {
-      await localizedCatalogs.selectValue(texts.boostToCreateValues.localizedCatalogs)
+    await test.step('Choose localized catalogs in "localized Catalogs" dropdown', async () => {
+      await localizedCatalogs.selectValue(texts.createValues.localizedCatalogs)
     })
 
     // Request types Multiple Dropdown
-    await test.step('Choose requestypes in the requestTypes component', async () => {
-      await requestTypesDropdown.selectValue(texts.boostToCreateValues.requestType)
+    await test.step('Choose request type in the requestTypes component', async () => {
+      await requestTypesDropdown.selectValue(texts.createValues.requestType)
     })
 
     // Model Dropdown
-    await modelDropdown.selectValue(texts.boostToCreateValues.model)
+    await modelDropdown.selectValue(texts.createValues.model)
 
     // Preview Boost Required Message
     await expect(
@@ -230,58 +188,59 @@ test('Pages > Merchandising > Boosts', {tag: ['@premium']}, async ({page}) => {
 
     // Create the Boost
     await saveButton.click()
-    await expect(page).toHaveURL('/admin/merchandize/boost/grid')
+    await expect(page).toHaveURL(urls.grid)
   })
+
   await test.step('Verify the boost existence in the grid', async () => {
-    await grid.expectToFindLineWhere([
-      {
-        columnName: texts.gridHeaders.name,
-        value: newName,
-      },
-    ])
-    await filter.addFilter(testIds.filter.name, newName)
-    await grid.pagination.expectToHaveCount(1)
+    await grid.expectRowsAfterFiltersToBe(
+      filter,
+      {[testIds.filter.name]: newName},
+      [{columnName: texts.gridHeaders.name, value: newName}]
+    )
   })
 
   const editLink = page.locator(`[data-testid="${testIds.grid}"] a`)
 
   await test.step('Edit a Boost', async () => {
     await editLink.click()
-    await expect(page).toHaveURL(/\/admin\/merchandize\/boost\/edit\?id=\d+$/)
+    await expect(page).toHaveURL(urls.edit)
 
-    await localizedCatalogs.expectToHaveValue(texts.boostToCreateValues.localizedCatalogs)
+    await localizedCatalogs.expectToHaveValue(texts.createValues.localizedCatalogs)
     await localizedCatalogs.clear()
-    await localizedCatalogs.selectValue(texts.boostToEditValues.localizedCatalogs)
+    await localizedCatalogs.selectValue(texts.editValues.localizedCatalogs)
 
     await saveButton.click()
     const alertMessage = new AlertMessage(page)
     await alertMessage.expectToHaveText('Updating of the boost with success', AlertMessageType.SUCCESS)
 
-    const backButton = page.getByTestId(testIds.form.backButton)
-    await backButton.click()
-    await expect(page).toHaveURL('/admin/merchandize/boost/grid')
+    await page.getByTestId(testIds.form.backButton).click()
+    await expect(page).toHaveURL(urls.grid)
+
+    await grid.expectRowsAfterFiltersToBe(
+      filter,
+      {[testIds.filter.name]: newName},
+      [
+        {
+          columnName: texts.gridHeaders.name,
+          value: newName,
+        },
+        {
+          columnName: texts.gridHeaders.localizedCatalogs,
+          value: texts.editValues.editedLocalizedCatalogDisplay
+        },
+      ]
+    )
   })
 
   await test.step('Delete the Boost', async () => {
-    await filter.addFilter(testIds.filter.name, newName)
-    await grid.pagination.expectToHaveCount(1)
-    await grid.expectToFindLineWhere([
-      {
-        columnName: texts.gridHeaders.name,
-        value: newName,
-      },
-      {
-        columnName: texts.gridHeaders.localizedCatalogs,
-        value: texts.boostToEditValues.editedLocalizedCatalogDisplay
-      },
-    ])
-
     await editLink.click()
 
-    await deleteButton.click()
-    await page.getByTestId(testIds.form.deleteBoostPopin.dialogConfirmButton).click()
-    await expect(page).toHaveURL('/admin/merchandize/boost/grid')
-    await filter.addFilter(testIds.filter.name, newName)
-    await grid.pagination.expectToHaveCount(0)
+    await deleteEntity(
+      page,
+      testIds.form.deleteButton,
+      testIds.form.deletePopin.dialogConfirmButton,
+      urls.grid
+    )
+    await grid.expectRowsAfterFiltersToBe(filter, {[testIds.filter.name]: newName}, [], 0)
   })
 })

@@ -2,10 +2,10 @@ import {test, expect} from '@playwright/test'
 import {Grid} from '../../../../helper/grid'
 import {Filter, FilterType} from '../../../../helper/filter'
 import {Dropdown} from '../../../../helper/dropdown'
-import {login} from '../../../../helper/auth'
-import {navigateTo} from '../../../../helper/menu'
+import {login} from '../../../../utils/auth'
+import {navigateTo} from '../../../../utils/menu'
 import {Switch} from '../../../../helper/switch'
-import {generateTestId, TestId} from "../../../../helper/testIds";
+import {generateTestId, TestId} from "../../../../utils/testIds";
 
 const resourceName = "VectorConfiguration"
 
@@ -31,6 +31,10 @@ const texts = {
     position: 'Position',
     prompt: 'Prompt'
   },
+  filtersToApply: {
+    isVectorisable: true,
+    defaultLabel: 'Product Name',
+  },
   paginationOptions: ['10', '25', '50']
 } as const
 
@@ -48,9 +52,11 @@ test('Pages > Search > Vector Search', {tag: ['@premium']}, async ({page}) => {
   await entityDropdown.expectToHaveValue('Product')
 
   await test.step('Verify grid headers and pagination', async () => {
-    await grid.expectHeadersToBe(Object.values(texts.gridHeaders))
-    await grid.pagination.expectToHaveOptions(texts.paginationOptions)
-    await grid.pagination.expectNotToHaveCount(25)
+    await grid.expectHeadersAndPaginationToBe(
+      Object.values(texts.gridHeaders),
+      ['10', '25', '50'],
+      25
+    )
     await grid.pagination.changeRowsPerPage(10)
     const nextPage = await grid.pagination.goToNextPage()
     await expect(nextPage).toBe(true)
@@ -59,42 +65,41 @@ test('Pages > Search > Vector Search', {tag: ['@premium']}, async ({page}) => {
   const defaultRowCount = await grid.pagination.getCountNumber()
 
   await test.step('Add some filters and remove them', async () => {
-    await filter.addFilter(
-      testIds.filter.isVectorisable,
-      true
-    )
-    await grid.pagination.expectToHaveCount(1)
-    await grid.expectToFindLineWhere([
-      {
-        columnName: texts.gridHeaders.defaultLabel,
-        value: 'Product Name',
-      },
-    ])
+    const applicableFilters = {
+      [testIds.filter.isVectorisable]: texts.filtersToApply.isVectorisable,
+    }
 
-    await filter.removeFilter(
-      testIds.filter.isVectorisable,
-      true
-    )
-    await filter.addFilter(
-      testIds.filter.isVectorisable,
-      true
-    )
+    await test.step('Apply all filters available', async () => {
+      await filter.addFilters(applicableFilters)
+    })
 
-    await filter.clearFilters()
+    await test.step('Remove applied filters one by one', async () => {
+      await filter.removeFilters(applicableFilters)
+    })
 
-    await grid.pagination.expectToHaveCount(defaultRowCount)
+    await test.step('Apply a filter and compare the grid to see if it works', async () => {
+      await grid.expectRowsAfterFiltersToBe(
+        filter,
+        {[testIds.filter.isVectorisable]: texts.filtersToApply.isVectorisable},
+        [{columnName: texts.gridHeaders.defaultLabel, value: texts.filtersToApply.defaultLabel}]
+      )
+    })
+
+    await test.step('Clear filter', async () => {
+      await grid.expectAllFiltersRemoved(filter, defaultRowCount)
+    })
+
+    const term = 'Announcement Date'
+    await test.step(`Search in the grid '${term}'`, async () => {
+      await grid.expectRowsAfterSearchToBe(
+        filter,
+        term,
+        [{columnName: texts.gridHeaders.defaultLabel, value: term}]
+      )
+    })
   })
 
-  await test.step('Search a term', async () => {
-    await filter.searchTerm('Announcement Date')
-    await grid.pagination.expectToHaveCount(1)
-    await grid.expectToFindLineWhere([
-      {
-        columnName: texts.gridHeaders.defaultLabel,
-        value: 'Announcement Date',
-      },
-    ])
-  })
+
 
   await test.step('Verify that fields in the grid are editable', async () => {
     const vectorConfigurationTableLocator = page.getByTestId(

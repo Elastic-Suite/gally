@@ -1,5 +1,5 @@
 import {expect, Locator, Page} from '@playwright/test'
-import {generateTestId, TestId} from "./testIds";
+import {generateTestId, TestId} from "../utils/testIds";
 
 /**
  * A generic Dropdown class to interact with single or multi-select dropdowns in Playwright.

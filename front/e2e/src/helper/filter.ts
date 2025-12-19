@@ -1,6 +1,6 @@
 import {expect, Locator, Page} from '@playwright/test'
 import {Dropdown} from './dropdown'
-import {generateTestId, TestId} from "./testIds";
+import {generateTestId, TestId} from "../utils/testIds";
 
 /**
  * Enumeration of supported filter types.
@@ -11,6 +11,21 @@ export enum FilterType {
   TEXT,
   RANGE,
 }
+
+export type FilterValue<T extends FilterType> =
+  T extends FilterType.BOOLEAN
+    ? boolean
+    : T extends FilterType.TEXT
+    ? string
+    : T extends FilterType.DROPDOWN
+    ? string[]
+    : T extends FilterType.RANGE
+    ? [number, number]
+    : never;
+
+export type FilterValues<TFilters extends Record<string, FilterType>> = {
+  [K in keyof TFilters]?: FilterValue<TFilters[K]>;
+};
 
 /**
  * Generic class to manage and assert filters in a UI, supporting
@@ -177,6 +192,21 @@ export class Filter<TFilters extends Record<string, FilterType>> {
     }
   }
 
+  public async removeFilters(filters: Partial<{ [K in keyof TFilters]: any }>): Promise<void> {
+    for (const name in filters) {
+      const value = filters[name];
+
+      // If it's an array (only for DROPDOWN), iterate.
+      if (Array.isArray(value) && this.filters[name] !== FilterType.RANGE) {
+        for (const item of value) {
+          await this.removeFilter(name as keyof TFilters & string, item);
+        }
+      } else {
+        await this.removeFilter(name as keyof TFilters & string, value);
+      }
+    }
+  }
+
   /**
    * Adds a new filter based on its type and value.
    *
@@ -185,15 +215,7 @@ export class Filter<TFilters extends Record<string, FilterType>> {
    */
   public async addFilter<Name extends keyof TFilters & string>(
     name: Name,
-    value: TFilters[Name] extends FilterType.BOOLEAN
-      ? boolean
-      : TFilters[Name] extends FilterType.TEXT
-      ? string
-      : TFilters[Name] extends FilterType.DROPDOWN
-      ? string[]
-      : TFilters[Name] extends FilterType.RANGE
-      ? [number, number]
-      : never
+    value: FilterValue<TFilters[Name]>
   ): Promise<void> {
     const type = this.filters[name]
     const filter = this.getFilter()
@@ -241,6 +263,17 @@ export class Filter<TFilters extends Record<string, FilterType>> {
       generateTestId(TestId.FILTER_NB_ACTIVE_FILTERS, this.testId)
     )
     await expect(activeFiltersCount).toHaveText(count.toString())
+  }
+
+  public async addFilters(filters: FilterValues<TFilters>): Promise<void> {
+    for (const name in filters) {
+      const value = filters[name];
+
+        await this.addFilter(
+          name as keyof TFilters & string,
+          value as FilterValue<TFilters[keyof TFilters]>
+        );
+    }
   }
 
   /**

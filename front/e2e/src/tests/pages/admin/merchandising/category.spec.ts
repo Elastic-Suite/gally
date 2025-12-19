@@ -1,12 +1,12 @@
 import {Page, expect, test} from '@playwright/test'
 import {Grid} from '../../../../helper/grid'
 import {Dropdown} from '../../../../helper/dropdown'
-import {login} from '../../../../helper/auth'
-import {navigateTo} from '../../../../helper/menu'
+import {login} from '../../../../utils/auth'
+import {navigateTo} from '../../../../utils/menu'
 import {AlertMessage, AlertMessageType} from '../../../../helper/alertMessage'
 import {Switch} from '../../../../helper/switch'
-import {generateTestId, TestId} from "../../../../helper/testIds";
-import { GallyPackage } from '../../../../helper/gallyPackage'
+import {generateTestId, TestId} from "../../../../utils/testIds";
+import { GallyPackage } from '../../../../utils/gallyPackage'
 
 const testIds = {
   defaultSorting: 'defaultSorting',
@@ -35,7 +35,6 @@ const texts = {
     'COM Catalog', 'FR Catalog', 'UK Catalog'
   ],
   locales: ['French (France)', 'English (United States)'],
-  paginationOptions: ['10', '25', '50'],
   productToSearch: 'Gold Omni Bangle Set',
   allCatalog: "All catalog",
   allLocales: "All locales",
@@ -103,9 +102,7 @@ async function testCategoriesPage(page: Page, gallyPackage: GallyPackage): Promi
   const pageTitle = page.getByTestId(generateTestId(TestId.PAGE_TITLE, 'categoriesProducts')).locator('h1')
 
   await test.step('Verify grid headers, pagination and searchBar', async () => {
-    await grid.expectHeadersToBe(Object.values(texts.gridHeaders))
-    await grid.pagination.expectToHaveOptions(texts.paginationOptions)
-    await grid.pagination.expectToHaveRowsPerPage(50)
+    await grid.expectHeadersAndPaginationToBe(Object.values(texts.gridHeaders))
     await grid.pagination.changeRowsPerPage(10)
     const nextPage = await grid.pagination.goToNextPage()
     await expect(nextPage).toBe(true)
