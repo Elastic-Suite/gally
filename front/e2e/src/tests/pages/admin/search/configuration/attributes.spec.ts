@@ -2,10 +2,10 @@ import {test, expect} from '@playwright/test'
 import {Grid} from '../../../../../helper/grid'
 import {Filter, FilterType} from '../../../../../helper/filter'
 import {Dropdown} from '../../../../../helper/dropdown'
-import {login} from '../../../../../helper/auth'
-import {navigateTo} from '../../../../../helper/menu'
+import {login} from '../../../../../utils/auth'
+import {navigateTo} from '../../../../../utils/menu'
 import {Switch} from '../../../../../helper/switch'
-import {generateTestId, TestId} from "../../../../../helper/testIds";
+import {generateTestId, TestId} from "../../../../../utils/testIds";
 
 const resourceName = 'SourceField'
 
@@ -39,7 +39,6 @@ const texts = {
     isSpannable: 'Use for span queries',
     defaultSearchAnalyzer: 'Analyzer',
   },
-  paginationOptions: ['10', '25', '50'],
   filtersToApply: {
     code: 'sku',
     weight: ['10'],
@@ -76,90 +75,66 @@ test('Pages > Search > Configurations > Attributes', {tag: ['@premium', '@standa
   await entityDropdown.expectToHaveValue('Product')
 
   await test.step('Verify grid headers and pagination', async () => {
-    await grid.expectHeadersToBe(Object.values(texts.gridHeaders))
-    await grid.pagination.expectToHaveOptions(texts.paginationOptions)
-    await grid.pagination.expectToHaveRowsPerPage(50)
+    await grid.expectHeadersAndPaginationToBe(Object.values(texts.gridHeaders))
     await grid.pagination.changeRowsPerPage(10)
     const nextPage = await grid.pagination.goToNextPage()
     await expect(nextPage).toBe(true)
   })
 
   await test.step('Add some filters and remove them', async () => {
-    await filter.addFilter(testIds.filter.code, texts.filtersToApply.code)
-    await filter.addFilter(
-      testIds.filter.defaultLabel,
-      texts.filtersToApply.defaultLabel
-    )
-    await filter.addFilter(
-      testIds.filter.isSpellchecked,
-      texts.filtersToApply.isSpellchecked
-    )
-    await filter.addFilter(testIds.filter.isSpannable, texts.filtersToApply.isSpannable)
-    await filter.addFilter(testIds.filter.weight, texts.filtersToApply.weight)
-    await filter.addFilter(
-      testIds.filter.defaultSearchAnalyzer,
-      texts.filtersToApply.defaultSearchAnalyzer
-    )
+    const defaultRowCount = await grid.getCountLines()
 
-    await filter.removeFilter(testIds.filter.code, texts.filtersToApply.code)
-    await filter.removeFilter(
-      testIds.filter.defaultLabel,
-      texts.filtersToApply.defaultLabel
-    )
-    await filter.removeFilter(
-      testIds.filter.isSpellchecked,
-      texts.filtersToApply.isSpellchecked
-    )
-    await filter.removeFilter(
-      testIds.filter.isSpannable,
-      texts.filtersToApply.isSpannable
-    )
-    for (let i = 0; i < texts.filtersToApply.weight.length; i++) {
-      await filter.removeFilter(
-        testIds.filter.weight,
-        texts.filtersToApply.weight[i]
-      )
-    }
-    for (let i = 0; i < texts.filtersToApply.defaultSearchAnalyzer.length; i++) {
-      await filter.removeFilter(
-        testIds.filter.defaultSearchAnalyzer,
-        texts.filtersToApply.defaultSearchAnalyzer[i]
-      )
+    const applicableFilters = {
+      [testIds.filter.code]: texts.filtersToApply.code,
+      [testIds.filter.defaultLabel]: texts.filtersToApply.defaultLabel,
+      [testIds.filter.isSpellchecked]: texts.filtersToApply.isSpellchecked,
+      [testIds.filter.isSpannable]: texts.filtersToApply.isSpannable,
+      [testIds.filter.weight]: texts.filtersToApply.weight,
+      [testIds.filter.defaultSearchAnalyzer]: texts.filtersToApply.defaultSearchAnalyzer,
+      [testIds.filter.weight]: texts.filtersToApply.weight,
     }
 
-    await filter.addFilter(testIds.filter.code, texts.filtersToApply.code)
-    await filter.addFilter(
-      testIds.filter.defaultLabel,
-      texts.filtersToApply.defaultLabel
-    )
+    await test.step('Apply all filters available', async () => {
+      await filter.addFilters(applicableFilters)
+    })
 
-    await grid.pagination.expectToHaveCount(1)
-    await grid.expectToFindLineWhere([
-      {columnName: texts.gridHeaders.code, value: texts.filtersToApply.code},
-    ])
+    await test.step('Remove applied filters one by one', async () => {
+      await filter.removeFilters(applicableFilters)
+    })
 
-    await filter.clearFilters()
+    await test.step('Apply a filter and compare the grid to see if it works', async () => {
+      await grid.expectRowsAfterFiltersToBe(
+        filter,
+        {[testIds.filter.defaultLabel]: texts.filtersToApply.defaultLabel},
+        [{columnName: texts.gridHeaders.code, value: texts.filtersToApply.code}]
+      )
+    })
 
-    await grid.pagination.expectNotToHaveCount(1)
+    await test.step('Clear filter', async () => {
+      await grid.expectAllFiltersRemoved(filter, defaultRowCount)
+    })
 
-    await filter.searchTerm(texts.filtersToApply.code)
-    await grid.pagination.expectToHaveCount(1)
-    await grid.expectToFindLineWhere([
-      {columnName: texts.gridHeaders.code, value: texts.filtersToApply.code},
-    ])
+    await test.step(`Search in the grid '${texts.filtersToApply.code}'`, async () => {
+      await grid.expectRowsAfterSearchToBe(
+        filter,
+        texts.filtersToApply.code,
+        [{columnName: texts.gridHeaders.code, value: texts.filtersToApply.code}]
+      )
+      await grid.expectAllFiltersRemoved(filter, defaultRowCount)
+    })
 
-    await filter.clearFilters()
-    await grid.pagination.expectNotToHaveCount(1)
-
-    await filter.searchTerm(texts.filtersToApply.searchTermCategory)
-    await grid.pagination.expectToHaveCount(1)
-
-    await grid.expectToFindLineWhere([
-      {
-        columnName: texts.gridHeaders.defaultLabel,
-        value: texts.filtersToApply.searchTermCategory,
-      },
-    ])
+    await test.step(`Search in the grid '${texts.filtersToApply.searchTermCategory}'`, async () => {
+      await grid.expectRowsAfterSearchToBe(
+        filter,
+        texts.filtersToApply.searchTermCategory,
+        [
+          {
+            columnName: texts.gridHeaders.defaultLabel,
+            value: texts.filtersToApply.searchTermCategory,
+          },
+        ]
+      )
+    })
   })
 
   await test.step('Verify that fields in the grid are editable', async () => {

@@ -1,13 +1,14 @@
 import {expect, test} from '@playwright/test'
 import {Grid} from '../../../../helper/grid'
 import {Filter, FilterType} from '../../../../helper/filter'
-import {login} from '../../../../helper/auth'
-import {navigateTo} from '../../../../helper/menu'
+import {login} from '../../../../utils/auth'
+import {navigateTo} from '../../../../utils/menu'
 import {Dropdown} from '../../../../helper/dropdown'
 import {randomUUID} from 'crypto'
 import {Switch} from '../../../../helper/switch'
-import {generateTestId, TestId} from "../../../../helper/testIds";
+import {generateTestId, TestId} from "../../../../utils/testIds";
 import {AlertMessage, AlertMessageType} from "../../../../helper/alertMessage";
+import {deleteEntity, getCommonFormTestIds} from "../../../../utils/form";
 
 const resourceName = 'Thesaurus'
 
@@ -21,6 +22,7 @@ const testIds = {
     context: 'localizedCatalogs.id[]',
   },
   form: {
+    ... getCommonFormTestIds(resourceName),
     name: generateTestId(TestId.INPUT_TEXT, 'name'),
     isActive: 'isActive',
     scopeType: 'scopeType',
@@ -37,15 +39,11 @@ const testIds = {
     expansionsReferenceTerm: generateTestId(TestId.INPUT_TEXT, generateTestId(TestId.EXPANSION_REFERENCE_TERM, "expansions")),
     expansionsTrashButton: generateTestId(TestId.EXPANSION_TRASH_BUTTON, "expansions"),
     expansionsTermsInput: generateTestId(TestId.INPUT_TEXT, generateTestId(TestId.TEXT_FIELD_TAGS, generateTestId(TestId.EXPANSION_TERMS, "expansions"))),
-    submitButton: generateTestId(TestId.BUTTON, 'submit'),
-    deleteButton: generateTestId(TestId.BUTTON, 'delete'),
-    backButton: generateTestId(TestId.BUTTON, 'back'),
-    confirmDeleteButton: generateTestId(TestId.DIALOG_CONFIRM_BUTTON, resourceName),
     nameError: generateTestId(TestId.HELPER_TEXT, 'name'),
     scopeTypeError: generateTestId(TestId.HELPER_TEXT, generateTestId(TestId.DROPDOWN, 'scopeType')),
     typeError: generateTestId(TestId.HELPER_TEXT, generateTestId(TestId.DROPDOWN, 'type')),
   },
-  createThesaurusButton: generateTestId(TestId.GRID_CREATE_BUTTON, resourceName)
+  ... Grid.getCommonGridTestIds(resourceName)
 } as const
 
 const texts = {
@@ -58,7 +56,6 @@ const texts = {
     context: 'Context',
     actions: 'Actions',
   },
-  paginationOptions: ['10', '25', '50'],
   filtersToApply: {
     name: 'Thesaurus #1 - Synonym',
     type: [
@@ -73,12 +70,19 @@ const texts = {
   }
 } as const
 
+const urls = {
+  grid: '/admin/search/thesaurus/grid',
+  create: '/admin/search/thesaurus/create',
+  edit: /\/admin\/search\/thesaurus\/edit\?id=\d+$/
+}
+
 test('Pages > Search > Thésaurus', {tag: ['@premium']}, async ({page}) => {
   await test.step('Login and navigate to the Thesaurus page', async () => {
     await login(page)
     await navigateTo(page, texts.labelMenuPage, '/admin/search/thesaurus/grid')
   })
 
+  // Grid and Filters Locators:
   const grid = new Grid(page, resourceName)
   const filter = new Filter(page, resourceName, {
     [testIds.filter.name]: FilterType.TEXT,
@@ -87,67 +91,9 @@ test('Pages > Search > Thésaurus', {tag: ['@premium']}, async ({page}) => {
     [testIds.filter.isActive]: FilterType.BOOLEAN,
     [testIds.filter.context]: FilterType.DROPDOWN,
   })
-  const alertMessage = new AlertMessage(page)
+  const createButton = page.getByTestId(testIds.createButton)
 
-  await test.step('Verify grid headers and pagination', async () => {
-    await grid.expectHeadersToBe(Object.values(texts.gridHeaders))
-    await grid.pagination.expectToHaveOptions(texts.paginationOptions)
-    await grid.pagination.expectToHaveRowsPerPage(50)
-  })
-
-  const defaultRowCount = await grid.getCountLines()
-
-  await test.step('Add some filters and remove them', async () => {
-    await filter.addFilter(
-      testIds.filter.name,
-      texts.filtersToApply.name
-    )
-    await filter.addFilter(testIds.filter.type,
-      texts.filtersToApply.type
-    )
-    await filter.addFilter(testIds.filter.terms, texts.filtersToApply.terms)
-    await filter.addFilter(testIds.filter.isActive, texts.filtersToApply.isActive)
-    await filter.addFilter(testIds.filter.context, texts.filtersToApply.context)
-
-    await filter.removeFilter(
-      testIds.filter.name,
-      texts.filtersToApply.name
-    )
-
-    for (let i = 0; i < texts.filtersToApply.type.length; i++) {
-      await filter.removeFilter(
-        testIds.filter.type,
-        texts.filtersToApply.type[i]
-      )
-    }
-
-    await filter.removeFilter(testIds.filter.terms, texts.filtersToApply.terms)
-    await filter.removeFilter(testIds.filter.isActive, texts.filtersToApply.isActive)
-    for (let i = 0; i < texts.filtersToApply.context.length; i++) {
-      await filter.removeFilter(
-        testIds.filter.context,
-        texts.filtersToApply.context[i]
-      )
-    }
-    await filter.addFilter(
-      testIds.filter.name,
-      texts.filtersToApply.name
-    )
-
-    await grid.pagination.expectToHaveCount(1)
-
-    await grid.expectToFindLineWhere([
-      {
-        columnName: texts.gridHeaders.name,
-        value: texts.filtersToApply.name,
-      },
-    ])
-
-    await filter.clearFilters()
-
-    await grid.pagination.expectToHaveCount(defaultRowCount)
-  })
-
+  // Form Locators (Edit / Create):
   const nameInput = page.getByTestId(testIds.form.name)
   const isActiveSwitch = new Switch(page, testIds.form.isActive)
   const scopeTypeDropdown = new Dropdown(page, testIds.form.scopeType)
@@ -167,13 +113,49 @@ test('Pages > Search > Thésaurus', {tag: ['@premium']}, async ({page}) => {
   const submitButtonResourceForm = page.getByTestId(testIds.form.submitButton)
   const newName = randomUUID()
 
+  const alertMessage = new AlertMessage(page)
+
+  await test.step('Verify grid headers and pagination', async () => {
+    await grid.expectHeadersAndPaginationToBe(Object.values(texts.gridHeaders))
+  })
+
+  await test.step('Add some filters and remove them', async () => {
+    const defaultRowCount = await grid.getCountLines()
+    const applicableFilters = {
+      [testIds.filter.name]: texts.filtersToApply.name,
+      [testIds.filter.type]: texts.filtersToApply.type,
+      [testIds.filter.terms]: texts.filtersToApply.terms,
+      [testIds.filter.isActive]: texts.filtersToApply.isActive,
+      [testIds.filter.context]: texts.filtersToApply.context,
+    }
+
+    await test.step('Apply all filters available', async () => {
+      await filter.addFilters(applicableFilters)
+    })
+
+    await test.step('Remove applied filters one by one', async () => {
+      await filter.removeFilters(applicableFilters)
+    })
+
+    await test.step('Apply a filter and compare the grid to see if it works', async () => {
+      await grid.expectRowsAfterFiltersToBe(
+        filter,
+        {[testIds.filter.name]: texts.filtersToApply.name},
+        [{columnName: texts.gridHeaders.name, value: texts.filtersToApply.name}]
+      )
+    })
+
+    await test.step('Clear filter', async () => {
+      await grid.expectAllFiltersRemoved(filter, defaultRowCount)
+    })
+  })
+
   await test.step('Create a thesaurus', async () => {
-    const createButton = page.getByTestId(testIds.createThesaurusButton)
     await createButton.click()
-    await expect(page).toHaveURL('/admin/search/thesaurus/create')
+    await expect(page).toHaveURL(urls.create)
 
     await submitButtonResourceForm.click()
-    await expect(page).toHaveURL('/admin/search/thesaurus/create')
+    await expect(page).toHaveURL(urls.create)
     await expect(page.getByTestId(testIds.form.nameError)).toBeVisible()
     await expect(
       await page.getByTestId(testIds.form.scopeTypeError)
@@ -232,26 +214,27 @@ test('Pages > Search > Thésaurus', {tag: ['@premium']}, async ({page}) => {
 
     await submitButtonResourceForm.click()
     await alertMessage.expectToHaveText('Creating of the thesaurus with success', AlertMessageType.SUCCESS)
-    await expect(page).toHaveURL('/admin/search/thesaurus/grid')
-    await filter.addFilter(testIds.filter.name, newName)
-    await grid.pagination.expectToHaveCount(1)
-    await grid.expectToFindLineWhere([
-      {
-        columnName: texts.gridHeaders.name,
-        value: newName,
-      },
+    await expect(page).toHaveURL(urls.grid)
 
-      {
-        columnName: texts.gridHeaders.type,
-        value: 'Synonym',
-      },
-    ])
   })
+
+  await test.step('Verify the thesaurus existence in the grid', async () => {
+    await grid.expectRowsAfterFiltersToBe(
+      filter,
+      {[testIds.filter.name]: newName},
+      [
+        {columnName: texts.gridHeaders.name, value: newName},
+        {columnName: texts.gridHeaders.type, value: 'Synonym'},
+      ]
+    )
+  })
+
   const editLink = page.locator(`[data-testid='${testIds.grid}'] a`)
 
   await test.step('Edit the thesaurus', async () => {
     await editLink.click()
-    await expect(page).toHaveURL(/\/admin\/search\/thesaurus\/edit\?id=\d+$/)
+    await expect(page).toHaveURL(urls.edit)
+
     await typeDropdown.selectValue('Expansion')
     await expect(synonymField).not.toBeVisible()
     await expect(expansionsField).toBeVisible()
@@ -283,30 +266,27 @@ test('Pages > Search > Thésaurus', {tag: ['@premium']}, async ({page}) => {
 
     await alertMessage.expectToHaveText('Updating of the thesaurus with success', AlertMessageType.SUCCESS)
     await backButton.click()
-    await expect(page).toHaveURL('/admin/search/thesaurus/grid')
-    await filter.addFilter(testIds.filter.name, newName)
-    await grid.pagination.expectToHaveCount(1)
-    await grid.expectToFindLineWhere([
-      {
-        columnName: texts.gridHeaders.name,
-        value: newName,
-      },
-      {
-        columnName: texts.gridHeaders.type,
-        value: 'Expansion',
-      },
-    ])
+    await expect(page).toHaveURL(urls.grid)
+
+    await grid.expectRowsAfterFiltersToBe(
+      filter,
+      {[testIds.filter.name]: newName},
+      [
+        {columnName: texts.gridHeaders.name, value: newName},
+        {columnName: texts.gridHeaders.type, value: 'Expansion'},
+      ]
+    )
   })
 
   await test.step('Delete the Thesaurus', async () => {
     await editLink.click()
-    const deleteButtonResourceForm = page.getByTestId(
-      testIds.form.deleteButton
+
+    await deleteEntity(
+      page,
+      testIds.form.deleteButton,
+      testIds.form.deletePopin.dialogConfirmButton,
+      urls.grid
     )
-    await deleteButtonResourceForm.click()
-    await page.getByTestId(testIds.form.confirmDeleteButton).click()
-    await expect(page).toHaveURL('/admin/search/thesaurus/grid')
-    await filter.addFilter(testIds.filter.name, newName)
-    await grid.pagination.expectToHaveCount(0)
+    await grid.expectRowsAfterFiltersToBe(filter, {[testIds.filter.name]: newName}, [], 0)
   })
 })

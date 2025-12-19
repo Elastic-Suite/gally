@@ -1,6 +1,7 @@
 import {Locator, Page, expect} from '@playwright/test'
 import {Pagination} from './pagination'
-import {generateTestId, TestId} from "./testIds";
+import {generateTestId, TestId} from "../utils/testIds";
+import {Filter, FilterType, FilterValues} from "./filter";
 
 interface GridCondition {
   columnName: string
@@ -53,6 +54,82 @@ export class Grid {
     ).toHaveText(headerNames, {
       useInnerText: true,
     })
+  }
+
+  /**
+   * Asserts that the grid headers match the given list.
+   * Asserts that the pagination dropdown contains the given pagination options.
+   * Asserts that the "rows per page" input has the expected value.
+   *
+   * @param headerNames - An array of expected header titles
+   * @param paginationOptions - Array of expected pagination options (as strings)
+   * @param rowsPerPage - Expected number of rows per page
+   *
+   */
+  public async expectHeadersAndPaginationToBe(headerNames: string[], paginationOptions: string[] = ['10', '25', '50'] , rowsPerPage: number = 50): Promise<void> {
+    await this.expectHeadersToBe(headerNames)
+    await this.pagination.expectToHaveOptions(paginationOptions)
+    await this.pagination.expectToHaveRowsPerPage(rowsPerPage)
+  }
+
+  /**
+   * Assert that the expected rows are present after the filters have been applied.
+   *
+   * @param filter - Grid's filter
+   * @param filtersToApply - Filters to apply
+   * @param expectedRow - An array of objects containing:
+   *   - columnName: the header of the column to search in
+   *   - value: the expected value in that column
+   * @param expectedRowCount - Expected row count
+   */
+  public async expectRowsAfterFiltersToBe<TFilters extends Record<string, FilterType>>(
+    filter: Filter<TFilters>,
+    filtersToApply: FilterValues<TFilters>,
+    expectedRow: GridCondition[],
+    expectedRowCount: number = 1,
+  ) {
+    await filter.addFilters(filtersToApply)
+    await this.pagination.expectToHaveCount(expectedRowCount)
+    if (expectedRowCount !== 0 || expectedRow.length !== 0) {
+      await this.expectToFindLineWhere(expectedRow)
+    }
+  }
+
+  /**
+   * Assert that the expected rows are present after the search has been done.
+   *
+   * @param filter - Grid's filter
+   * @param term - The search term to input
+   * @param expectedRow - An array of objects containing:
+   *   - columnName: the header of the column to search in
+   *   - value: the expected value in that column
+   * @param expectedRowCount - Expected row count
+   */
+  public async expectRowsAfterSearchToBe<TFilters extends Record<string, FilterType>>(
+    filter: Filter<TFilters>,
+    term: string,
+    expectedRow: GridCondition[],
+    expectedRowCount: number = 1,
+  ) {
+    await filter.searchTerm(term)
+    await this.pagination.expectToHaveCount(expectedRowCount)
+    if (expectedRowCount !== 0 || expectedRow.length !== 0) {
+      await this.expectToFindLineWhere(expectedRow)
+    }
+  }
+
+  /**
+   * Assert that All filters have been removed.
+   *
+   * @param filter - Grid's filter
+   * @param defaultRowCount - Row count without filters
+   */
+  public async expectAllFiltersRemoved<TFilters extends Record<string, FilterType>>(
+    filter: Filter<TFilters>,
+    defaultRowCount: number,
+  ) {
+    await filter.clearFilters()
+    await this.pagination.expectToHaveCount(defaultRowCount)
   }
 
   /**
@@ -134,6 +211,14 @@ export class Grid {
   public async expectToBeVisible(): Promise<void> {
     const grid = this.getGrid()
     await expect(grid).toBeVisible()
+  }
+
+  public static getCommonGridTestIds(
+    resourceName: string,
+  ) {
+    return {
+      createButton: generateTestId(TestId.GRID_CREATE_BUTTON, resourceName)
+    } as const
   }
 
   /**

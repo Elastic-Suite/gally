@@ -1,9 +1,9 @@
-import {login} from '../../../../helper/auth'
+import {login} from '../../../../utils/auth'
 import {Dropdown} from '../../../../helper/dropdown'
 import {Grid} from '../../../../helper/grid'
-import {navigateTo} from '../../../../helper/menu'
+import {navigateTo} from '../../../../utils/menu'
 import {expect, test} from '@playwright/test'
-import {generateTestId, TestId} from "../../../../helper/testIds";
+import {generateTestId, TestId} from "../../../../utils/testIds";
 
 const testIds = {
   explainButton: generateTestId(TestId.BUTTON, 'explain'),

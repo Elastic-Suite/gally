@@ -1,5 +1,5 @@
 import { Locator, Page, expect } from '@playwright/test'
-import {generateTestId, TestId} from "./testIds";
+import {generateTestId, TestId} from "../utils/testIds";
 
 /**
  * Helper class to interact with alert messages on the page.

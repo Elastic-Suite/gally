@@ -2,9 +2,9 @@ import {expect, test} from '@playwright/test'
 import {Grid} from '../../../../helper/grid'
 import {Filter, FilterType} from '../../../../helper/filter'
 import {Dropdown} from '../../../../helper/dropdown'
-import {login} from '../../../../helper/auth'
-import {navigateTo} from '../../../../helper/menu'
-import {TestId, generateTestId} from "../../../../helper/testIds"
+import {login} from '../../../../utils/auth'
+import {navigateTo} from '../../../../utils/menu'
+import {TestId, generateTestId} from "../../../../utils/testIds"
 
 const resourceName = 'FacetConfiguration'
 
@@ -46,7 +46,6 @@ const texts = {
     facetInternalLogic: "Facet internal logic",
     position: 'Position',
   },
-  paginationOptions: ['10', '25', '50'],
   filtersToApply: {
     displayMode: ['Auto'],
     coverageRate: [0, 100],
@@ -97,77 +96,37 @@ test('Pages > Search > Facets', {tag: ['@premium', '@standard']}, async ({page})
   })
 
   await test.step('Verify grid headers and pagination', async () => {
-    await grid.expectHeadersToBe([
-      texts.gridHeaders.defaultCode,
-      texts.gridHeaders.defaultLabel,
-      texts.gridHeaders.displayMode,
-      texts.gridHeaders.coverageRate,
-      texts.gridHeaders.maxSize,
-      texts.gridHeaders.sortOrder,
-      texts.gridHeaders.facetInternalLogic,
-      texts.gridHeaders.position,
-    ])
-    await grid.pagination.expectToHaveOptions(texts.paginationOptions)
-    await grid.pagination.expectToHaveRowsPerPage(50)
+    await grid.expectHeadersAndPaginationToBe(Object.values(texts.gridHeaders))
     await grid.pagination.changeRowsPerPage(10)
     const nextPage = await grid.pagination.goToNextPage()
     await expect(nextPage).toBe(true)
   })
 
   await test.step('Add some filters and remove them', async () => {
-    await filter.addFilter(testIds.filter.displayMode, texts.filtersToApply.displayMode)
-    await filter.addFilter(
-      testIds.filter.coverageRate,
-      texts.filtersToApply.coverageRate
-    )
-    await filter.addFilter(testIds.filter.maxSize, texts.filtersToApply.maxSize)
-    await filter.addFilter(testIds.filter.sortOrder, texts.filtersToApply.sortOrder)
-    await filter.addFilter(testIds.filter.position, texts.filtersToApply.position)
-
-    for (let i = 0; i < texts.filtersToApply.displayMode.length; i++) {
-      await filter.removeFilter(
-        testIds.filter.displayMode,
-        texts.filtersToApply.displayMode[i]
-      )
+    const applicableFilters = {
+      [testIds.filter.displayMode]: texts.filtersToApply.displayMode,
+      [testIds.filter.coverageRate]: texts.filtersToApply.coverageRate,
+      [testIds.filter.maxSize]: texts.filtersToApply.maxSize,
+      [testIds.filter.sortOrder]: texts.filtersToApply.sortOrder,
+      [testIds.filter.position]: texts.filtersToApply.position,
     }
 
-    await filter.removeFilter(
-      testIds.filter.coverageRate,
-      texts.filtersToApply.coverageRate
-    )
-    await filter.removeFilter(
-      testIds.filter.maxSize,
-      texts.filtersToApply.maxSize
-    )
-    for (let i = 0; i < texts.filtersToApply.sortOrder.length; i++) {
-      await filter.removeFilter(
-        testIds.filter.sortOrder,
-        texts.filtersToApply.sortOrder[i]
+    await test.step('Apply all filters available', async () => {
+      await filter.addFilters(applicableFilters)
+    })
+
+    await test.step('Remove applied filters one by one', async () => {
+      await filter.removeFilters(applicableFilters)
+    })
+
+    const term = texts.filtersToApply.searchedTerm
+    await test.step(`Search in the grid '${term}'`, async () => {
+      await grid.expectRowsAfterSearchToBe(
+        filter,
+        term,
+        [{columnName: texts.gridHeaders.defaultLabel, value: term}]
       )
-    }
-    await filter.removeFilter(
-      testIds.filter.position,
-      texts.filtersToApply.position
-    )
-
-    await filter.addFilter(testIds.filter.displayMode, texts.filtersToApply.displayMode)
-    await filter.addFilter(
-      testIds.filter.coverageRate,
-      texts.filtersToApply.coverageRate
-    )
-
-    await filter.clearFilters()
-
-    await filter.searchTerm(texts.filtersToApply.searchedTerm)
-
-    await grid.pagination.expectToHaveCount(1)
-
-    await grid.expectToFindLineWhere([
-      {
-        columnName: texts.gridHeaders.defaultLabel,
-        value: texts.filtersToApply.searchedTerm,
-      },
-    ])
+    })
   })
 
   // Verify that fields are editable.

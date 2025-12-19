@@ -2,10 +2,10 @@ import {expect, test} from '@playwright/test'
 import {Grid} from '../../../../helper/grid'
 import {Filter, FilterType} from '../../../../helper/filter'
 import {Dropdown} from '../../../../helper/dropdown'
-import {login} from '../../../../helper/auth'
-import {navigateTo} from '../../../../helper/menu'
+import {login} from '../../../../utils/auth'
+import {navigateTo} from '../../../../utils/menu'
 import {Switch} from '../../../../helper/switch'
-import {TestId, generateTestId} from '../../../../helper/testIds'
+import {TestId, generateTestId} from '../../../../utils/testIds'
 import {Tabs} from "../../../../helper/tabs";
 
 const GridLabelsAndFilters = {
@@ -64,6 +64,16 @@ const texts = {
     isUsedForRules: 'Use in rule engine',
     isUsedInAutocomplete: 'Displayed in autocomplete',
   },
+  filtersToApply: {
+    code: 'sku',
+    defaultLabel: 'Sku',
+    type: ['Text', 'Price'],
+    isFilterable: true,
+    isSearchable: true,
+    isSortable: true,
+    isUsedForRules: true,
+    isUsedInAutocomplete: true,
+  },
   paginationOptions: ['10', '25', '50'],
   tabs: {
     scope: 'Scope',
@@ -73,9 +83,7 @@ const texts = {
   }
 }
 
-test('Pages > Settings > Tab > Attributes', {tag: ['@premium', '@standard']}, async ({
-                                                                                                                 page,
-                                                                                                               }) => {
+test('Pages > Settings > Tab > Attributes', {tag: ['@premium', '@standard']}, async ({page}) => {
   await test.step('Login and navigate to Attributes in the Settings page', async () => {
     await login(page)
     await navigateTo(page, 'Settings', '/admin/settings/scope/catalogs')
@@ -100,104 +108,72 @@ test('Pages > Settings > Tab > Attributes', {tag: ['@premium', '@standard']}, as
   await entityDropdown.expectToHaveValue('Product')
 
   await test.step('Verify grid headers and pagination', async () => {
-    await grid.expectHeadersToBe(Object.values(texts.gridHeaders))
-
-    await grid.pagination.expectToHaveRowsPerPage(50)
+    await grid.expectHeadersAndPaginationToBe(Object.values(texts.gridHeaders))
     await grid.pagination.changeRowsPerPage(10)
     const nextPage = await grid.pagination.goToNextPage()
     await expect(nextPage).toBe(true)
     await grid.pagination.expectToHaveOptions(texts.paginationOptions)
   })
+
   await test.step('Add some filters and remove them', async () => {
-    await filter.addFilter(testIds.filter.code, 'sku')
-    await filter.addFilter(
-      testIds.filter.defaultLabel,
-      'Sku'
-    )
-    await filter.addFilter(testIds.filter.type, [
-      'Text',
-      'Price',
-    ])
-    await filter.addFilter(testIds.filter.isFilterable, true)
-    await filter.addFilter(testIds.filter.isSearchable, true)
-    await filter.addFilter(testIds.filter.isSortable, true)
-    await filter.addFilter(
-      testIds.filter.isUsedForRules,
-      true
-    )
-    await filter.addFilter(
-      testIds.filter.isUsedInAutocomplete,
-      true
-    )
+    const defaultRowCount = await grid.getCountLines()
 
-    await expect(await filter.getActiveFiltersCount()).toBe(9)
+    const applicableFilters = {
+      [testIds.filter.code]: texts.filtersToApply.code,
+      [testIds.filter.defaultLabel]: texts.filtersToApply.defaultLabel,
+      [testIds.filter.type]: texts.filtersToApply.type,
+      [testIds.filter.isFilterable]: texts.filtersToApply.isFilterable,
+      [testIds.filter.isSearchable]: texts.filtersToApply.isSearchable,
+      [testIds.filter.isSortable]: texts.filtersToApply.isSortable,
+      [testIds.filter.isUsedForRules]: texts.filtersToApply.isUsedForRules,
+      [testIds.filter.isUsedInAutocomplete]: texts.filtersToApply.isUsedInAutocomplete,
+    }
 
-    await filter.removeFilter(testIds.filter.code, 'sku')
-    await filter.removeFilter(
-      testIds.filter.defaultLabel,
-      'Sku'
-    )
-    await filter.removeFilter(testIds.filter.type, 'Text')
-    await filter.removeFilter(testIds.filter.type, 'Price')
-    await filter.removeFilter(
-      testIds.filter.isFilterable,
-      true
-    )
-    await filter.removeFilter(
-      testIds.filter.isSearchable,
-      true
-    )
-    await filter.removeFilter(
-      testIds.filter.isSortable,
-      true
-    )
-    await filter.removeFilter(
-      testIds.filter.isUsedForRules,
-      true
-    )
-    await filter.removeFilter(
-      testIds.filter.isUsedInAutocomplete,
-      true
-    )
+    await test.step('Apply all filters available', async () => {
+      await filter.addFilters(applicableFilters)
+    })
 
-    await filter.addFilter(testIds.filter.code, 'sku')
-    await filter.addFilter(
-      testIds.filter.defaultLabel,
-      'Sku'
-    )
+    await test.step('Verify filters applied count', async () => {
+      await expect(await filter.getActiveFiltersCount()).toBe(9)
+    })
 
-    await grid.pagination.expectToHaveCount(2)
-    await grid.expectToFindLineWhere([
-      {columnName: GridLabelsAndFilters.code.gridLabel, value: 'sku'},
-    ])
+    await test.step('Remove applied filters one by one', async () => {
+      await filter.removeFilters(applicableFilters)
+    })
 
-    await filter.clearFilters()
+    await test.step('Apply a filter and compare the grid to see if it works', async () => {
+      await filter.addFilter(testIds.filter.code, texts.filtersToApply.code)
+      await filter.addFilter(testIds.filter.defaultLabel, texts.filtersToApply.defaultLabel)
+      await grid.pagination.expectToHaveCount(2)
+      await grid.expectToFindLineWhere([
+        {columnName: GridLabelsAndFilters.code.gridLabel, value: 'sku'},
+      ])
+    })
 
-    await grid.pagination.expectNotToHaveCount(2)
+    await test.step('Clear filter', async () => {
+      await grid.expectAllFiltersRemoved(filter, defaultRowCount)
+    })
+
+    let term = 'Category'
+    await test.step(`Search in the grid '${term}'`, async () => {
+      await grid.expectRowsAfterSearchToBe(
+        filter,
+        term,
+        [{columnName: GridLabelsAndFilters.defaultLabel.gridLabel, value: term}],
+        2
+      )
+      await grid.expectAllFiltersRemoved(filter, defaultRowCount)
+    })
+
+    term = 'manufacturer'
+    await test.step(`Search in the grid '${term}'`, async () => {
+      await grid.expectRowsAfterSearchToBe(
+        filter,
+        term,
+        [{columnName: GridLabelsAndFilters.code.gridLabel, value: term}]
+      )
+    })
   })
-
-  await test.step('Search a term', async () => {
-    await filter.searchTerm('Category')
-    await grid.pagination.expectToHaveCount(2)
-    await grid.expectToFindLineWhere([
-      {
-        columnName: GridLabelsAndFilters.defaultLabel.gridLabel,
-        value: 'Category',
-      },
-    ])
-
-    await filter.clearFilters()
-    await grid.pagination.expectNotToHaveCount(2)
-  })
-
-  await filter.searchTerm('manufacturer')
-  await grid.pagination.expectToHaveCount(1)
-  await grid.expectToFindLineWhere([
-    {
-      columnName: GridLabelsAndFilters.code.gridLabel,
-      value: 'manufacturer',
-    },
-  ])
 
   await test.step('Verify that fields in the grid are editable', async () => {
     const sourceFieldTableLocator = page.getByTestId(testIds.grid.testId)
