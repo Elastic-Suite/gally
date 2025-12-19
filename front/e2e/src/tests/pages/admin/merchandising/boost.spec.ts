@@ -1,13 +1,13 @@
 import {expect, test} from '@playwright/test'
 import {randomUUID} from 'crypto'
-import {login} from '../../../../helper/auth'
-import {navigateTo} from '../../../../helper/menu'
+import {login} from '../../../../utils/auth'
+import {navigateTo} from '../../../../utils/menu'
 import {Dropdown} from '../../../../helper/dropdown'
 import {Switch} from '../../../../helper/switch'
 import {Grid} from '../../../../helper/grid'
 import {Filter, FilterType} from '../../../../helper/filter'
 import {AlertMessage, AlertMessageType} from '../../../../helper/alertMessage'
-import {generateTestId, TestId} from "../../../../helper/testIds";
+import {generateTestId, TestId} from "../../../../utils/testIds";
 
 const resourceName = 'Boost'
 
@@ -263,6 +263,7 @@ test('Pages > Merchandising > Boosts', {tag: ['@premium']}, async ({page}) => {
   })
 
   await test.step('Delete the Boost', async () => {
+
     await filter.addFilter(testIds.filter.name, newName)
     await grid.pagination.expectToHaveCount(1)
     await grid.expectToFindLineWhere([

@@ -1,12 +1,12 @@
 import {Page, expect, test} from '@playwright/test'
 import {Grid} from '../../../../helper/grid'
 import {Dropdown} from '../../../../helper/dropdown'
-import {login} from '../../../../helper/auth'
-import {navigateTo} from '../../../../helper/menu'
+import {login} from '../../../../utils/auth'
+import {navigateTo} from '../../../../utils/menu'
 import {AlertMessage, AlertMessageType} from '../../../../helper/alertMessage'
 import {Switch} from '../../../../helper/switch'
-import {generateTestId, TestId} from "../../../../helper/testIds";
-import { GallyPackage } from '../../../../helper/gallyPackage'
+import {generateTestId, TestId} from "../../../../utils/testIds";
+import { GallyPackage } from '../../../../utils/gallyPackage'
 
 const testIds = {
   defaultSorting: 'defaultSorting',

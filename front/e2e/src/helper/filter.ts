@@ -1,6 +1,6 @@
 import {expect, Locator, Page} from '@playwright/test'
 import {Dropdown} from './dropdown'
-import {generateTestId, TestId} from "./testIds";
+import {generateTestId, TestId} from "../utils/testIds";
 
 /**
  * Enumeration of supported filter types.

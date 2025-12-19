@@ -1,5 +1,5 @@
 import {expect, Locator, Page} from "@playwright/test";
-import {generateTestId, TestId} from "./testIds";
+import {generateTestId, TestId} from "../utils/testIds";
 
 /**
  * Utility class to interact with a Tabs component in Playwright tests.

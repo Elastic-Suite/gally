@@ -1,10 +1,10 @@
 /* eslint-disable testing-library/prefer-screen-queries */
 import {expect, test} from '@playwright/test'
-import { login, logout, UserRole } from '../../../../helper/auth'
-import {navigateTo} from '../../../../helper/menu'
+import { login, logout, UserRole } from '../../../../utils/auth'
+import {navigateTo} from '../../../../utils/menu'
 import {Dropdown} from '../../../../helper/dropdown'
 import {Tabs} from '../../../../helper/tabs'
-import {generateTestId, TestId} from '../../../../helper/testIds'
+import {generateTestId, TestId} from '../../../../utils/testIds'
 import {Switch} from '../../../../helper/switch'
 import {Grid} from "../../../../helper/grid";
 import {Filter, FilterType} from "../../../../helper/filter";

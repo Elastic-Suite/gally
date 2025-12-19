@@ -1,6 +1,6 @@
 import {Locator, Page, expect} from '@playwright/test'
 import {Pagination} from './pagination'
-import {generateTestId, TestId} from "./testIds";
+import {generateTestId, TestId} from "../utils/testIds";
 
 interface GridCondition {
   columnName: string

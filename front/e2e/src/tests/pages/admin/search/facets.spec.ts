@@ -2,9 +2,9 @@ import {expect, test} from '@playwright/test'
 import {Grid} from '../../../../helper/grid'
 import {Filter, FilterType} from '../../../../helper/filter'
 import {Dropdown} from '../../../../helper/dropdown'
-import {login} from '../../../../helper/auth'
-import {navigateTo} from '../../../../helper/menu'
-import {TestId, generateTestId} from "../../../../helper/testIds"
+import {login} from '../../../../utils/auth'
+import {navigateTo} from '../../../../utils/menu'
+import {TestId, generateTestId} from "../../../../utils/testIds"
 
 const resourceName = 'FacetConfiguration'
 
