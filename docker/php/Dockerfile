@@ -3,7 +3,7 @@
 # Adapted from https://github.com/dunglas/symfony-docker
 
 # Versions
-FROM php:8.3-fpm AS gally_php_upstream
+FROM php:8.4-fpm AS gally_php_upstream
 
 # The different stages of this Dockerfile are meant to be built into separate images
 # https://docs.docker.com/develop/develop-images/multistage-build/#stop-at-a-specific-build-stage

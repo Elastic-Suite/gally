@@ -16,7 +16,6 @@ x-base-php: &php-base
     - host.docker.internal:host-gateway
   tty: true
 
-
 services:
   proxy:
     ports: !override
@@ -92,6 +91,10 @@ services:
       service: e2e
     volumes:
       - ./front/e2e/:/usr/src/app:rw,cached,z
+
+  database:
+    ports:
+      - "54320:5432"
 
   mailer:
     image: axllent/mailpit

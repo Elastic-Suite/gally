@@ -86,10 +86,10 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ] || [ -n 
 		curl -ks "${ELASTICSEARCH_URL}_cluster/health?wait_for_status=green&timeout=30s"
 		echo "The search engine is now ready"
 
-		if php bin/console list gally --raw | grep -q gally:vector-search:upload-model; then
-			echo "Load ml model in opensearch"
-			php bin/console gally:vector-search:upload-model
-		fi
+#		if php bin/console list gally --raw | grep -q gally:vector-search:upload-model; then
+#			echo "Load ml model in opensearch"
+#			php bin/console gally:vector-search:upload-model
+#		fi
 	fi
 
 	setfacl -R -m u:www-data:rwX -m u:"$(whoami)":rwX var
