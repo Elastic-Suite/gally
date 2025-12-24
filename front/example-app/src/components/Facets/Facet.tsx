@@ -80,12 +80,13 @@ function Facet(props: IProps): JSX.Element {
             id={id}
             loadMore={loadMore}
             moreOptions={moreOptions}
-            renderOption={(option): JSX.Element => (
+            onOptionChange={onChange}
+            renderOption={(option, onOptionChange): JSX.Element => (
               <FacetCategory
                 key={String(option.value)}
                 activeOptions={activeOptions}
                 filter={filter}
-                onChange={onChange}
+                onChange={onOptionChange}
                 option={option}
               />
             )}
@@ -108,12 +109,13 @@ function Facet(props: IProps): JSX.Element {
             id={id}
             loadMore={loadMore}
             moreOptions={moreOptions}
-            renderOption={(option): JSX.Element => (
+            onOptionChange={onChange}
+            renderOption={(option, onOptionChange): JSX.Element => (
               <FacetChoice
                 key={String(option.value)}
                 activeOptions={activeOptions}
                 filter={filter}
-                onChange={onChange}
+                onChange={onOptionChange}
                 option={option}
               />
             )}
@@ -127,12 +129,13 @@ function Facet(props: IProps): JSX.Element {
             id={id}
             loadMore={loadMore}
             moreOptions={moreOptions}
-            renderOption={(option): JSX.Element => (
+            onOptionChange={onChange}
+            renderOption={(option, onOptionChange): JSX.Element => (
               <FacetChoice
                 key={String(option.value)}
                 activeOptions={activeOptions}
                 filter={filter}
-                onChange={onChange}
+                onChange={onOptionChange}
                 option={option}
               />
             )}

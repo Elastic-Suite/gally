@@ -124,7 +124,7 @@ export function useProducts(
   )
 
   const loadMore = useCallback(
-    (filter: IGraphqlAggregation) => {
+    (filter: IGraphqlAggregation, optionSearch?: string) => {
       const variables: IGraphqlViewMoreProductFacetOptionsVariables = {
         aggregation: filter.field,
         localizedCatalog: String(localizedCatalogId),
@@ -134,6 +134,9 @@ export function useProducts(
       )
       if (search) {
         variables.search = search
+      }
+      if (optionSearch) {
+        variables.optionSearch = optionSearch
       }
       if (currentCategoryId) {
         variables.currentCategoryId = currentCategoryId

@@ -101,7 +101,7 @@ export function useDocuments(
   )
 
   const loadMore = useCallback(
-    (filter: IGraphqlAggregation) => {
+    (filter: IGraphqlAggregation, optionSearch?: string) => {
       const variables: IGraphqlViewMoreFacetOptionsVariables = {
         aggregation: filter.field,
         localizedCatalog: String(localizedCatalogId),
@@ -109,6 +109,9 @@ export function useDocuments(
       }
       if (search) {
         variables.search = search
+      }
+      if (optionSearch) {
+        variables.optionSearch = optionSearch
       }
       graphqlApi<IGraphqlViewMoreFacetOptions>(
         getMoreFacetOptionsQuery(queryFilters),
