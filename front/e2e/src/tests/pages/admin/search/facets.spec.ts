@@ -43,6 +43,7 @@ const texts = {
     coverageRate: 'Coverage',
     maxSize: 'Max size',
     sortOrder: 'Sort order',
+    facetInternalLogic: "Facet internal logic",
     position: 'Position',
   },
   paginationOptions: ['10', '25', '50'],
@@ -103,6 +104,7 @@ test('Pages > Search > Facets', {tag: ['@premium', '@standard']}, async ({page})
       texts.gridHeaders.coverageRate,
       texts.gridHeaders.maxSize,
       texts.gridHeaders.sortOrder,
+      texts.gridHeaders.facetInternalLogic,
       texts.gridHeaders.position,
     ])
     await grid.pagination.expectToHaveOptions(texts.paginationOptions)
