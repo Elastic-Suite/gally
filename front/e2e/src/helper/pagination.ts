@@ -1,5 +1,5 @@
 import { Locator, Page, expect } from '@playwright/test'
-import {generateTestId, TestId} from "./testIds";
+import {generateTestId, TestId} from "../utils/testIds";
 
 /**
  * Represents a pagination component on a web page.

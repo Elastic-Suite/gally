@@ -2,9 +2,15 @@ import {expect, test} from '@playwright/test'
 import {Grid} from '../../../../helper/grid'
 import {Filter, FilterType} from '../../../../helper/filter'
 import {Dropdown} from '../../../../helper/dropdown'
+<<<<<<< HEAD
+import {login} from '../../../../helper/auth'
+import {navigateTo} from '../../../../helper/menu'
+import {TestId, generateTestId} from "../../../../helper/testIds"
+=======
 import {login} from '../../../../utils/auth'
 import {navigateTo} from '../../../../utils/menu'
-import {TestId, generateTestId} from "../../../../utils/testIds"
+import {generateTestId, TestId} from "../../../../utils/testIds";
+>>>>>>> feat(#1340374): draft e2e tests
 
 const resourceName = 'FacetConfiguration'
 

@@ -1,12 +1,12 @@
 import {expect, test} from '@playwright/test'
 import {Grid} from '../../../../helper/grid'
 import {Filter, FilterType} from '../../../../helper/filter'
-import {login} from '../../../../helper/auth'
-import {navigateTo} from '../../../../helper/menu'
+import {login} from '../../../../utils/auth'
+import {navigateTo} from '../../../../utils/menu'
 import {Dropdown} from '../../../../helper/dropdown'
 import {randomUUID} from 'crypto'
 import {Switch} from '../../../../helper/switch'
-import {generateTestId, TestId} from "../../../../helper/testIds";
+import {generateTestId, TestId} from "../../../../utils/testIds";
 import {AlertMessage, AlertMessageType} from "../../../../helper/alertMessage";
 
 const resourceName = 'Thesaurus'
@@ -58,7 +58,6 @@ const texts = {
     context: 'Context',
     actions: 'Actions',
   },
-  paginationOptions: ['10', '25', '50'],
   filtersToApply: {
     name: 'Thesaurus #1 - Synonym',
     type: [
@@ -90,9 +89,7 @@ test('Pages > Search > Thésaurus', {tag: ['@premium']}, async ({page}) => {
   const alertMessage = new AlertMessage(page)
 
   await test.step('Verify grid headers and pagination', async () => {
-    await grid.expectHeadersToBe(Object.values(texts.gridHeaders))
-    await grid.pagination.expectToHaveOptions(texts.paginationOptions)
-    await grid.pagination.expectToHaveRowsPerPage(50)
+    await grid.expectHeadersAndPaginationTobe(Object.values(texts.gridHeaders))
   })
 
   const defaultRowCount = await grid.getCountLines()
@@ -300,9 +297,7 @@ test('Pages > Search > Thésaurus', {tag: ['@premium']}, async ({page}) => {
 
   await test.step('Delete the Thesaurus', async () => {
     await editLink.click()
-    const deleteButtonResourceForm = page.getByTestId(
-      testIds.form.deleteButton
-    )
+    const deleteButtonResourceForm = page.getByTestId(testIds.form.deleteButton)
     await deleteButtonResourceForm.click()
     await page.getByTestId(testIds.form.confirmDeleteButton).click()
     await expect(page).toHaveURL('/admin/search/thesaurus/grid')

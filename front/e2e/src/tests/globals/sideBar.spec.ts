@@ -1,6 +1,6 @@
 import {expect, test} from '@playwright/test'
-import {login} from '../../helper/auth'
-import {generateTestId, TestId} from "../../helper/testIds";
+import {login} from '../../utils/auth'
+import {generateTestId, TestId} from "../../utils/testIds";
 
 const testIds = {
   sideBar: generateTestId(TestId.SIDE_BAR),

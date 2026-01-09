@@ -1,7 +1,7 @@
 import { Page, expect, test } from '@playwright/test'
-import { UserRole, runTestsAsRoles } from '../../../../helper/auth'
-import { TestId, generateTestId } from '../../../../helper/testIds'
-import { navigateTo } from '../../../../helper/menu'
+import { UserRole, runTestsAsRoles } from '../../../../utils/auth'
+import { TestId, generateTestId } from '../../../../utils/testIds'
+import { navigateTo } from '../../../../utils/menu'
 
 const existingCatalogs: Record<string, string[]> = {
   'COM': ['French (France)', 'English (United States)', 'Spanish (Spain)', 'Italian (Italy)', 'German (Germany)', 'Dutch (Netherlands)', 'Polish (Poland)'],

@@ -75,16 +75,10 @@ const texts = {
   },
 } as const
 
-const urls = {
-  grid: '/admin/merchandize/boost/grid',
-  create: '/admin/merchandize/boost/create',
-  edit: /\/admin\/merchandize\/boost\/edit\?id=\d+$/
-}
-
 test('Pages > Merchandising > Boosts', {tag: ['@premium']}, async ({page}) => {
   await test.step('Login and navigate to the Boosts page', async () => {
     await login(page)
-    await navigateTo(page, texts.labelMenuPage, urls.grid)
+    await navigateTo(page, texts.labelMenuPage, '/admin/merchandize/boost/grid')
   })
 
   // Grid and Filters Locators:
@@ -152,7 +146,7 @@ test('Pages > Merchandising > Boosts', {tag: ['@premium']}, async ({page}) => {
 
   await test.step('Create a Boost', async () => {
     await createButton.click()
-    await expect(page).toHaveURL(urls.create)
+    await expect(page).toHaveURL('/admin/merchandize/boost/create')
 
     // isActive Switch
     await test.step('Disable and enable the "isActive" switch', async () => {
@@ -193,7 +187,7 @@ test('Pages > Merchandising > Boosts', {tag: ['@premium']}, async ({page}) => {
 
     // Create the Boost
     await saveButton.click()
-    await expect(page).toHaveURL(urls.grid)
+    await expect(page).toHaveURL('/admin/merchandize/boost/grid')
   })
 
   await test.step('Verify the boost existence in the grid', async () => {
@@ -208,7 +202,7 @@ test('Pages > Merchandising > Boosts', {tag: ['@premium']}, async ({page}) => {
 
   await test.step('Edit a Boost', async () => {
     await editLink.click()
-    await expect(page).toHaveURL(urls.edit)
+    await expect(page).toHaveURL(/\/admin\/merchandize\/boost\/edit\?id=\d+$/)
 
     await localizedCatalogs.expectToHaveValue(texts.createValues.localizedCatalogs)
     await localizedCatalogs.clear()
@@ -218,8 +212,9 @@ test('Pages > Merchandising > Boosts', {tag: ['@premium']}, async ({page}) => {
     const alertMessage = new AlertMessage(page)
     await alertMessage.expectToHaveText('Updating of the boost with success', AlertMessageType.SUCCESS)
 
-    await page.getByTestId(testIds.form.backButton).click()
-    await expect(page).toHaveURL(urls.grid)
+    const backButton = page.getByTestId(testIds.form.backButton)
+    await backButton.click()
+    await expect(page).toHaveURL('/admin/merchandize/boost/grid')
 
     await grid.expectRowsToBe(
       filter,
@@ -244,7 +239,7 @@ test('Pages > Merchandising > Boosts', {tag: ['@premium']}, async ({page}) => {
       page,
       testIds.form.deleteButton,
       testIds.form.deletePopin.dialogConfirmButton,
-      urls.grid
+      '/admin/merchandize/boost/grid'
     )
     await grid.expectRowsToBe(filter, {[testIds.filter.name]: newName}, [], 0)
   })

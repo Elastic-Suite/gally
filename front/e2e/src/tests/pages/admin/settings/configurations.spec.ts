@@ -1,12 +1,12 @@
 /* eslint-disable testing-library/prefer-screen-queries */
 import { Page, expect, test } from '@playwright/test'
-import { login } from '../../../../helper/auth'
-import { navigateTo } from '../../../../helper/menu'
+import { login } from '../../../../utils/auth'
+import { navigateTo } from '../../../../utils/menu'
 import { Dropdown } from '../../../../helper/dropdown'
 import { Tabs } from '../../../../helper/tabs'
-import { TestId, generateTestId } from '../../../../helper/testIds'
+import { TestId, generateTestId } from '../../../../utils/testIds'
 import { Switch } from '../../../../helper/switch'
-import { GallyPackage } from '../../../../helper/gallyPackage'
+import { GallyPackage } from '../../../../utils/gallyPackage'
 
 const testIds = {
   form: {
