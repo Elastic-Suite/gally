@@ -58,7 +58,6 @@ const texts = {
     context: 'Context',
     actions: 'Actions',
   },
-  paginationOptions: ['10', '25', '50'],
   filtersToApply: {
     name: 'Thesaurus #1 - Synonym',
     type: [
@@ -90,9 +89,7 @@ test('Pages > Search > Thésaurus', {tag: ['@premium']}, async ({page}) => {
   const alertMessage = new AlertMessage(page)
 
   await test.step('Verify grid headers and pagination', async () => {
-    await grid.expectHeadersToBe(Object.values(texts.gridHeaders))
-    await grid.pagination.expectToHaveOptions(texts.paginationOptions)
-    await grid.pagination.expectToHaveRowsPerPage(50)
+    await grid.expectHeadersAndPaginationTobe(Object.values(texts.gridHeaders))
   })
 
   const defaultRowCount = await grid.getCountLines()

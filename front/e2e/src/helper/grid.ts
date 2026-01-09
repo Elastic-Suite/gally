@@ -82,7 +82,7 @@ export class Grid {
    *   - value: the expected value in that column
    * @param expectedRowCount - Expected row count
    */
-  public async expectColumnsToBe<TFilters extends Record<string, FilterType>>(
+  public async expectRowsToBe<TFilters extends Record<string, FilterType>>(
     filter: Filter<TFilters>,
     filtersToApply: FilterValues<TFilters>,
     expectedRow: GridCondition[],
@@ -90,7 +90,9 @@ export class Grid {
   ) {
     await filter.addFilters(filtersToApply)
     await this.pagination.expectToHaveCount(expectedRowCount)
-    await this.expectToFindLineWhere(expectedRow)
+    if (expectedRowCount !== 0 || expectedRow.length !== 0) {
+      await this.expectToFindLineWhere(expectedRow)
+    }
   }
 
   /**
@@ -186,6 +188,14 @@ export class Grid {
   public async expectToBeVisible(): Promise<void> {
     const grid = this.getGrid()
     await expect(grid).toBeVisible()
+  }
+
+  public static getCommonGridTestIds(
+    resourceName: string,
+  ) {
+    return {
+      createButton: generateTestId(TestId.GRID_CREATE_BUTTON, resourceName)
+    } as const
   }
 
   /**
