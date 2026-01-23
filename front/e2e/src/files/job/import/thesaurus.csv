@@ -1,0 +1,5 @@
+id,name,type,is_active,scope_type,scope_codes,terms
+,Clothing Synonyms,synonym,true,localized_catalog,COM_FR;COM_EN,"dress,robe,gown;shirt,chemise,blouse;pants,pantalon,trousers"
+,Fashion Expansions,expansion,true,localized_catalog,COM_FR,"dress:robe,evening dress,cocktail dress;shoes:chaussures,sneakers,boots,sandals"
+,Electronics Synonyms,synonym,0,localized_catalog,COM_EN,"phone,smartphone,mobile;laptop,notebook,computer"
+,Size Expansions,expansion,1,locale,fr_FR,"small:petit,XS,S;large:grand,XL,XXL,XXXL"
