@@ -89,6 +89,7 @@ export enum TestId {
   DIALOG_CANCEL_BUTTON = 'dialogCancelButton',
   DIALOG_CONFIRM_BUTTON = 'dialogConfirmButton',
   GRID_CREATE_BUTTON = 'gridCreateButton',
+  GRID_JOB_BUTTON = 'gridJobButton',
   FIELD_SET = 'fieldSet',
   PREVIEW_REQUIRED_MESSAGE = 'previewRequiredMessage',
   RESOURCE_TABLE_NB_CUSTOM_VALUES_MESSAGE = 'resourceTableNbCustomValuesMessage',
@@ -108,13 +109,25 @@ export enum TestId {
   RULES_MANAGER = 'rulesManager',
   COMBINATION_RULES = 'combinationRules',
   CONFIGURATION_FORM = 'configurationForm',
+  IMPORT_EXPORT_PROFILE_RUN = 'importExportProfileRun',
+  LOGS = 'logs',
+  JOBFILE = 'jobFile',
+  JOBPROFILE = 'jobProfile',
+  STATUS = 'status',
+  UPLOAD_JOB_FILE_MODAL = 'uploadJobFileModal',
+  UPLOAD_JOB_FILE_MODAL_TITLE = 'uploadJobFileModalTitle',
+  FILE_UPLOAD_DROPZONE = 'fileUploadDropZone',
+  FILE_UPLOAD_DROPZONE_SELECTED_FILE_NAME = 'selectedFileName',
+  FILE_DOWNLOADER = 'fileDownloader',
 }
 
-type ItemId = `|${string}` | ''
+export const TEST_ID_SEPARATOR = '|'
+
+type ItemId = `${typeof TEST_ID_SEPARATOR}${string}` | ''
 export type FullTestId = `${TestId}${ItemId}`
 
 function normalizeItemId(itemId?: string): ItemId {
-  return itemId ? `|${itemId}` : ''
+  return itemId ? `${TEST_ID_SEPARATOR}${itemId}` : ''
 }
 
 export function generateTestId(testId: TestId, itemId?: string): FullTestId {
