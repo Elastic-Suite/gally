@@ -10,7 +10,7 @@ doctrine:
         use_savepoints: true
     orm:
         auto_generate_proxy_classes: true
-        enable_lazy_ghost_objects: true
+        enable_native_lazy_objects: true
         report_fields_where_declared: true
         validate_xml_mapping: false # gedmo extension is not compatible with xml mapping yet (https://github.com/doctrine-extensions/DoctrineExtensions/issues/2613)
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
@@ -35,7 +35,6 @@ when@prod:
     doctrine:
         orm:
             auto_generate_proxy_classes: false
-            proxy_dir: '%kernel.build_dir%/doctrine/orm/Proxies'
             query_cache_driver:
                 type: pool
                 pool: doctrine.system_cache_pool
