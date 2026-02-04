@@ -57,7 +57,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.3
+          php-version: 8.4
       - name: Checkout
         uses: actions/checkout@v2
         with:
@@ -74,7 +74,7 @@ jobs:
       - name: Add premium package repository
         uses: php-actions/composer@v6
         with:
-          php_version: "8.3"
+          php_version: "8.4"
           args: --working-dir api
           command: config repositories.gally-premium composer ${{ secrets.PACKAGIST_URL }}
         env:
@@ -82,7 +82,7 @@ jobs:
       - name: Install premium package
         uses: php-actions/composer@v6
         with:
-          php_version: "8.3"
+          php_version: "8.4"
           args: --no-scripts --no-cache --working-dir api
           command: require gally/gally-premium:${{ env.composer_version }}
         env:

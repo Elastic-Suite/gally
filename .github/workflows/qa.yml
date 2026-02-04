@@ -27,7 +27,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
       - uses: php-actions/composer@v6
         with: 
-          php_version: "8.3"
+          php_version: "8.4"
           args: --working-dir api --no-scripts
       # PHP-CS-Fixer cannot run locally since src/Gally has been moved elsewhere
       #- name: PHP-CS-Fixer
