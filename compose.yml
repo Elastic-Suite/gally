@@ -176,6 +176,9 @@ services:
       - plugins.ml_commons.native_memory_threshold=100 # Prevent memory issue after multiple deploy (https://github.com/opensearch-project/ml-commons/issues/2308)
       - plugins.ml_commons.jvm_heap_memory_threshold=100 # Prevent memory issue after multiple deploy (https://github.com/opensearch-project/ml-commons/issues/2308)
       - plugins.security.audit.type=debug # https://github.com/opensearch-project/security/issues/3130
+      # To prevent a yellow cluster status caused by system indices that store ISM policies and index templates: 
+      - opendistro.index_state_management.history.number_of_replicas=0 # Prevent OpenSearch from requiring replicas for system indices in single-node mode. https://github.com/opensearch-project/security/issues/4739
+      - plugins.index_state_management.history.number_of_replicas=0 # Prevent OpenSearch from requiring replicas for system indices in single-node mode. https://github.com/opensearch-project/security/issues/4739
       - OPENSEARCH_INITIAL_ADMIN_PASSWORD=${OPENSEARCH_ADMIN_PASSWORD:-!ChangeMe0!}
     volumes:
       - os2_data:/usr/share/opensearch/data:rw
