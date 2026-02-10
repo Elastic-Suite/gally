@@ -172,7 +172,7 @@ export class Filter<TFilters extends Record<string, FilterType>> {
             ? 'Yes'
             : 'No'
           : Array.isArray(value)
-          ? `${value[0]}-${value[1]}`
+          ? `${value[0]} - ${value[1]}`
           : value,
     })
 

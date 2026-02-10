@@ -67,8 +67,7 @@ test('Pages > Search > Configurations > Attributes', {tag: ['@premium', '@standa
     [testIds.filter.weight]: FilterType.DROPDOWN,
     [testIds.filter.isSpellchecked]: FilterType.BOOLEAN,
     [testIds.filter.isSpannable]: FilterType.BOOLEAN,
-    [testIds.filter.defaultSearchAnalyzer]:
-    FilterType.DROPDOWN,
+    [testIds.filter.defaultSearchAnalyzer]: FilterType.DROPDOWN,
   })
 
   const entityDropdown = new Dropdown(page, 'entity')
@@ -87,11 +86,12 @@ test('Pages > Search > Configurations > Attributes', {tag: ['@premium', '@standa
     const applicableFilters = {
       [testIds.filter.code]: texts.filtersToApply.code,
       [testIds.filter.defaultLabel]: texts.filtersToApply.defaultLabel,
-      [testIds.filter.isSpellchecked]: texts.filtersToApply.isSpellchecked,
+      [testIds.filter.weight]: texts.filtersToApply.weight,
       [testIds.filter.isSpannable]: texts.filtersToApply.isSpannable,
+      [testIds.filter.isSpellchecked]: texts.filtersToApply.isSpellchecked,
       [testIds.filter.weight]: texts.filtersToApply.weight,
       [testIds.filter.defaultSearchAnalyzer]: texts.filtersToApply.defaultSearchAnalyzer,
-      [testIds.filter.weight]: texts.filtersToApply.weight,
+
     }
 
     await test.step('Apply all filters available', async () => {

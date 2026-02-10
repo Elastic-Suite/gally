@@ -4,6 +4,8 @@ export enum TestId {
   NB_ACTIVE_LOCALES = 'nbActiveLocales',
   LANGUAGE = 'language',
   INPUT_TEXT = 'inputText',
+  INPUT_INTEGER = 'inputInteger',
+  INPUT_FLOAT = 'inputFloat',
   RANGE_TO_INPUT = 'rangeToInput',
   RANGE_FROM_INPUT = 'rangeFromInput',
   SLIDER = 'slider',
@@ -123,13 +125,15 @@ export enum TestId {
 
 export const TEST_ID_SEPARATOR = '|'
 
-type ItemId = `${typeof TEST_ID_SEPARATOR}${string}` | ''
+type ItemIds = (TestId | string)[]
+type ItemId = `${typeof TEST_ID_SEPARATOR}${TestId | string}` | ''
 export type FullTestId = `${TestId}${ItemId}`
 
-function normalizeItemId(itemId?: string): ItemId {
-  return itemId ? `${TEST_ID_SEPARATOR}${itemId}` : ''
+function normalizeItemId(itemIds: ItemIds): ItemId {
+  const filtered = itemIds.filter((itemId) => itemId)
+  return filtered.length > 0 ? `${TEST_ID_SEPARATOR}${filtered.join(TEST_ID_SEPARATOR)}` as ItemId : ''
 }
 
-export function generateTestId(testId: TestId, itemId?: string): FullTestId {
-  return `${testId}${normalizeItemId(itemId)}`
+export function generateTestId(testId: TestId, ...itemIds: ItemIds): FullTestId {
+  return `${testId}${normalizeItemId(itemIds)}`
 }

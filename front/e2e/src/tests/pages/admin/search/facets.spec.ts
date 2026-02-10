@@ -4,7 +4,7 @@ import {Filter, FilterType} from '../../../../helper/filter'
 import {Dropdown} from '../../../../helper/dropdown'
 import {login} from '../../../../utils/auth'
 import {navigateTo} from '../../../../utils/menu'
-import {TestId, generateTestId} from "../../../../utils/testIds"
+import {generateTestId, TestId} from "../../../../utils/testIds"
 
 const resourceName = 'FacetConfiguration'
 
@@ -20,10 +20,10 @@ const testIds = {
     testId: generateTestId(TestId.TABLE, resourceName),
     editableFields: {
       displayMode: 'displayMode',
-      coverageRate: generateTestId(TestId.INPUT_TEXT, 'coverageRate'),
-      maxSize: generateTestId(TestId.INPUT_TEXT, 'maxSize'),
+      coverageRate: generateTestId(TestId.INPUT_TEXT, TestId.INPUT_INTEGER, 'coverageRate'),
+      maxSize: generateTestId(TestId.INPUT_TEXT, TestId.INPUT_INTEGER,  'maxSize'),
       sortOrder: 'sortOrder',
-      position: generateTestId(TestId.INPUT_TEXT, 'position'),
+      position: generateTestId(TestId.INPUT_TEXT, TestId.INPUT_INTEGER, 'position'),
     }
   },
   resetDefaultValuesButton: generateTestId(TestId.BUTTON, 'resetDefaultValues'),

@@ -27,7 +27,7 @@ const testIds = {
     name: generateTestId(TestId.INPUT_TEXT, 'name'),
     localizedCatalogs: 'localizedCatalogs',
     recommenderTypes: 'recommenderTypes',
-    priority: generateTestId(TestId.INPUT_TEXT, 'priority'),
+    priority: generateTestId(TestId.INPUT_TEXT, TestId.INPUT_INTEGER, 'priority'),
   },
   ... Grid.getCommonGridTestIds(resourceName)
 } as const
