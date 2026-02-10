@@ -14,7 +14,7 @@ const testIds = {
     testId: generateTestId(TestId.TABLE, resourceName),
     editableFields: {
       isVectorisable: 'isVectorisable',
-      position: generateTestId(TestId.INPUT_TEXT, 'position'),
+      position: generateTestId(TestId.INPUT_TEXT, TestId.INPUT_INTEGER, 'position'),
       prompt: generateTestId(TestId.INPUT_TEXT, 'prompt')
     }
   },

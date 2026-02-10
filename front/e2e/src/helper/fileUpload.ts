@@ -1,5 +1,5 @@
 import { Locator, Page, expect } from '@playwright/test'
-import { TestId, generateTestId } from './testIds'
+import { TestId, generateTestId } from '../utils/testIds'
 import path from 'node:path'
 
 /**

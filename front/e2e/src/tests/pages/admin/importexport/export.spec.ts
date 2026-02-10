@@ -1,8 +1,8 @@
 /* eslint-disable testing-library/prefer-screen-queries */
 import { Page, expect, test } from '@playwright/test'
-import { login } from '../../../../helper/auth'
-import { navigateTo } from '../../../../helper/menu'
-import { TestId, generateTestId } from '../../../../helper/testIds'
+import { login } from '../../../../utils/auth'
+import { navigateTo } from '../../../../utils/menu'
+import { TestId, generateTestId } from '../../../../utils/testIds'
 import { Grid } from '../../../../helper/grid'
 import { Dropdown } from '../../../../helper/dropdown'
 import { Tabs } from '../../../../helper/tabs'
@@ -11,9 +11,9 @@ const jobResourceName = 'Job'
 
 const texts = {
   labelMenuPage: 'Import / Export',
-  jobProfileValue: 'Thesaurus export',
+  jobProfileValue: 'Thesaurus',
   profile: {
-    thesaurusExport: 'Thesaurus export',
+    thesaurusExport: 'Thesaurus',
   },
   status: {
     new: 'New',
@@ -51,7 +51,7 @@ function getResourceConfig(name: string): Required<IExportResourceConfig> {
   }
 
   const displayName =
-    input.profileDisplayName ?? `${uppercaseFirstLetter(name)} export`
+    input.profileDisplayName ?? uppercaseFirstLetter(name)
 
   return {
     name,

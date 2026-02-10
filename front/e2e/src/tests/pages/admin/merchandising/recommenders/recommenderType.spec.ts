@@ -128,7 +128,7 @@ test('Pages > Merchandising > Recommenders > Recommender Types', {tag: ['@premiu
 
     await saveButton.click()
     const alertMessage = new AlertMessage(page)
-    await alertMessage.expectToHaveText('Updating of the recommendertype with success', AlertMessageType.SUCCESS)
+    await alertMessage.expectToHaveText('Updating of the recommender type with success\n', AlertMessageType.SUCCESS)
 
     await page.getByTestId(testIds.form.backButton).click()
     await expect(page).toHaveURL(urls.grid)
