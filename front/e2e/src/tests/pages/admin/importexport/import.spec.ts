@@ -64,7 +64,7 @@ function getResourceConfig(name: string): Required<IImportResourceConfig> {
     fileName: input.fileName ?? `${name}.csv`,
     profileDisplayName: displayName,
     expectedStatus: input.expectedStatus ?? 'New',
-    modalTitle: input.modalTitle ?? displayName,
+    modalTitle: input.modalTitle ?? `Import: ${displayName}`,
   }
 }
 
