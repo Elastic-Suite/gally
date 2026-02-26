@@ -149,6 +149,12 @@ async function testParametersPage(page: Page): Promise<void> {
     // Test id is built from all available locales, so if the popin is located the test is OK
     const otherLocalesPopin = page.getByTestId(generateTestId(TestId.POPIN_CATALOGS, existingCatalogs.COM.join('|')))
     await expect(otherLocalesPopin).toBeVisible()
+
+    // Close the popin
+    const closeButton = page.getByTestId(
+      generateTestId(TestId.POPIN_CATALOGS, 'close')
+    )
+    await closeButton.click()
   })
 
   await test.step('Check navigation to active locales subtab show expected data', async () => {

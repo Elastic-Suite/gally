@@ -1,6 +1,6 @@
 /* eslint-disable testing-library/prefer-screen-queries */
 import {expect, test} from '@playwright/test'
-import { login, logout, UserRole } from '../../../../utils/auth'
+import { getHomePageUrl, login, logout, UserRole } from '../../../../utils/auth'
 import {navigateTo} from '../../../../utils/menu'
 import {Dropdown} from '../../../../helper/dropdown'
 import {Tabs} from '../../../../helper/tabs'
@@ -36,7 +36,7 @@ const testIds = {
 } as const
 
 const texts = {
-  labelMenuPage: 'Configuration',
+  labelMenuPage: 'Settings',
   gridHeaders: {
     firstName: 'First name',
     lastName: 'Last name',
@@ -85,6 +85,7 @@ const urls = {
 test('Pages > Configuration > Users', { tag: ['@premium', '@standard'] }, async ({ page }) => {
   await test.step('Login as CONTRIBUTOR', async () => {
     await login(page, UserRole.CONTRIBUTOR)
+    const homePageUrl = getHomePageUrl(page)
 
     const gridDataTestId = generateTestId(TestId.TABLE, resourceName)
 
@@ -99,19 +100,19 @@ test('Pages > Configuration > Users', { tag: ['@premium', '@standard'] }, async 
       await tabs.expectToHaveTabs([texts.tabs.scope, texts.tabs.attributes, texts.tabs.configurations])
     })
 
-    await test.step('Verify if contributor user has no access to user user gird page', async () => {
+    await test.step('Verify if contributor user has no access to user user grid page', async () => {
       await page.goto('/admin/settings/user/grid')
       await expect(page.locator(`[data-testId="${gridDataTestId}"]`)).toHaveCount(0)
     })
 
     await test.step('Verify if contributor user has no access to user create page', async () => {
       await page.goto('/admin/settings/user/create')
-      await expect(page).toHaveURL('admin/settings/scope/catalogs')
+      await expect(page).toHaveURL(homePageUrl)
     })
 
     await test.step('Verify if contributor user has no access to user update page', async () => {
       await page.goto('/admin/settings/user/edit?id=1')
-      await expect(page).toHaveURL('admin/settings/scope/catalogs')
+      await expect(page).toHaveURL(homePageUrl)
     })
 
     await logout(page)

@@ -1,5 +1,13 @@
-import { Page, expect, test, TestDetails } from '@playwright/test'
+import { Page, TestDetails, expect, test } from '@playwright/test'
 import {TestId, generateTestId} from "./testIds";
+
+// Extend the Page type to include custom properties
+declare module '@playwright/test' {
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  interface Page {
+    isPremium?: boolean
+  }
+}
 
 const testIds = {
   email: generateTestId(TestId.INPUT_TEXT, 'email'),
@@ -8,6 +16,11 @@ const testIds = {
   appBar: generateTestId(TestId.APP_BAR),
   userMenu: generateTestId(TestId.USER_MENU),
   logOutButton: generateTestId(TestId.LOG_OUT_BUTTON)
+}
+
+const urls = {
+  premiumHomePageUrl: '/admin/analyze/search_usage',
+  standardHomePageUrl: '/admin/settings/scope/catalogs'
 }
 
 interface IUserCredentials {
@@ -32,6 +45,19 @@ export enum UserRole {
 }
 
 type TestDetailsWithRequiredTag = TestDetails & Required<Pick<TestDetails, 'tag'>>
+
+export function getHomePageUrl(page: Page): string {
+  // BEWARE: We must intercept the packages API call made during login navigation to check if we are on premium or not
+  // Do not use this function before/without calling login first
+  if (!('isPremium' in page)) {
+    // eslint-disable-next-line no-console
+    console.warn(`
+      ⚠️  Warning: a test is using homepage url without having called the login helper function first.
+      It might cause the test to fail when testing without premium API packages 
+    `)
+  }
+  return page.isPremium ? urls.premiumHomePageUrl : urls.standardHomePageUrl
+}
 
 export function runTestsAsRoles(
   roles: UserRole[],
@@ -63,7 +89,16 @@ export function runTestsAsRoles(
  * @param role - User role to log in as. Defaults to admin.
  */
 export async function login(page: Page, role: UserRole = UserRole.ADMIN): Promise<void> {
+  // Wait for the API response
+  const extraBundles = page.waitForResponse(`**/api/extra_bundles**`)
+
   await page.goto('/login')
+  const extraBundlesResponse = await extraBundles
+  const extraBundlesData = await extraBundlesResponse.json()
+  const isPremium = extraBundlesData?.['hydra:member'].length > 0
+
+  // Store the premium status on the page object
+  Object.assign(page, { isPremium })
 
   // Get inputs and submit button
   const emailInput = page.getByTestId(testIds.email)
@@ -73,10 +108,14 @@ export async function login(page: Page, role: UserRole = UserRole.ADMIN): Promis
   // Fill with correct credentials and submit the form
   await emailInput.fill(rolesInfos[role].email)
   await passwordInput.fill(rolesInfos[role].password)
+
   await submitButton.click()
 
+  const expectedHomePageUrl = isPremium
+    ? urls.premiumHomePageUrl
+    : urls.standardHomePageUrl
   // Assert that the URL changed to the expected admin page
-  await expect(page).toHaveURL('/admin/settings/scope/catalogs', {})
+  await expect(page).toHaveURL(expectedHomePageUrl, {})
 }
 
 /**
