@@ -21,7 +21,7 @@ const testIds = {
 }
 
 const texts = {
-  labelMenuPage: 'Configuration',
+  labelMenuPage: 'Settings',
   scopes: {
     general: 'All localized catalogs',
     catalog: 'COM French Catalog',
