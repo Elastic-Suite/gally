@@ -35,6 +35,7 @@ const testIds = {
       'period'
     ),
     submitButton: generateTestId(TestId.FILTER_APPLY_BUTTON, 'searchUsage'),
+    resetButton: generateTestId(TestId.FILTER_CLEAR_BUTTON, 'searchUsage'),
   },
   kpiGroup: generateTestId(TestId.KPI_GROUP),
   kpis: kpisTestIds,
@@ -159,6 +160,13 @@ async function submitFilters(page): Promise<void> {
   await kpisResponse
 }
 
+async function resetFilters(page): Promise<void> {
+  const submitButton = page.getByTestId(testIds.filters.resetButton)
+  const kpisResponse = page.waitForResponse('**/api/kpis**')
+  await submitButton.click()
+  await kpisResponse
+}
+
 test('Pages > Analyze > Search usage page', {tag: ['@premium']}, async ({page}) => {
   await test.step('Login and navigate to the search usage page', async () => {
     await login(page)
@@ -241,6 +249,16 @@ test('Pages > Analyze > Search usage page', {tag: ['@premium']}, async ({page}) 
         testIds.kpis[kpis[i]],
         texts.futureDateFilteredKpis[kpis[i]]
       )
+    }
+  })
+
+  await test.step('Reset all filters and check KPIs have the starting value', async () => {
+    await resetFilters(page)
+    // wait for kpi animations to be completed
+    await page.waitForTimeout(200)
+    for (let i = 0; i < kpis.length; i++) {
+      // eslint-disable-next-line no-await-in-loop
+      await checkKpi(page, testIds.kpis[kpis[i]], texts.kpis[kpis[i]])
     }
   })
 })
