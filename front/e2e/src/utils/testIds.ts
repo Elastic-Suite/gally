@@ -121,6 +121,9 @@ export enum TestId {
   FILE_UPLOAD_DROPZONE = 'fileUploadDropZone',
   FILE_UPLOAD_DROPZONE_SELECTED_FILE_NAME = 'selectedFileName',
   FILE_DOWNLOADER = 'fileDownloader',
+  KPI = 'kpi',
+  KPI_GROUP = 'kpiGroup',
+  KPI_FILTERS = 'kpiFilters',
 }
 
 export const TEST_ID_SEPARATOR = '|'
