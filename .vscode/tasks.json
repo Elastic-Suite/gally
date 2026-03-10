@@ -1,0 +1,38 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Gally up",
+            "type": "shell",
+            "command": "make up"
+        },
+        {
+            "label": "Gally cache clean",
+            "type": "shell",
+            "command": "make cc"
+        },
+        {
+            "label": "Gally phpstan",
+            "type": "shell",
+            "command": "make exec s=php c=\"vendor/bin/phpstan --memory-limit=-1 analyse --error-format=raw\"",
+            // "isBackground": true,
+            "problemMatcher": {
+                "owner": "phpstan",
+                "source": "phpstan",
+                "fileLocation": ["relative", "${workspaceFolder}/api/packages"],
+                "severity": "warning",
+                "pattern": [
+                    {
+                        // "loop": true,
+                        "regexp": "^.*/(gally-.+):(\\d+):(.+)$",
+                        "file": 1,
+                        "line": 2,
+                        "message": 3
+                    }
+                ]
+            }
+        }
+    ]
+}
