@@ -1,0 +1,63 @@
+name: Deploy 2.2.x
+
+on:
+  # schedule:
+  #   - cron: '30 1 * * 1-5'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to deploy'
+        type: choice
+        options:
+          - main
+          - 2.2.x
+          - 2.1.x
+          - 2.0.x
+          - 1.3.x
+          - 1.2.x
+          - 1.1.x
+          - 1.0.x
+        default: '2.2.x'
+        required: false
+      skip_tests:
+        description: 'Skip tests before delivery ?'
+        type: boolean
+        default: false
+        required: false
+
+env:
+  VERSION: ${{ inputs.version || '2.2.x' }}
+
+jobs:
+  tests:
+    name: Tests
+    if: ${{ inputs.skip_tests == 'false' }}
+    uses: ./.github/workflows/tests.yml
+    with:
+      version: ${{ env.VERSION }}
+      last_published_version: 2.2.1
+    secrets:
+      COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
+      PACKAGIST_URL: ${{ secrets.PACKAGIST_URL }}
+
+  deploy-2_2_X:
+    needs: tests
+    name: Deploy ${{ env.VERSION }}
+    if: |
+      always() &&
+      (needs.tests.result == 'success' || needs.tests.result == 'skipped')
+    uses: ./.github/workflows/deploy-int.yml
+    with:
+      version: ${{ env.VERSION }}
+      last_published_version: 2.2.1
+    secrets:
+      AWS_DEPLOY_KEY: ${{ secrets.AWS_DEPLOY_KEY }}
+      AWS_HOSTNAME: ${{ secrets.AWS_HOSTNAME_STABLE }}
+      AWS_USER: ${{ secrets.AWS_USER }}
+      APP_SECRET: ${{ secrets.APP_SECRET }}
+      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
+      PACKAGIST_URL: ${{ secrets.PACKAGIST_URL }}
+      MAILER_DSN: ${{ secrets.MAILER_DSN }}
+      GALLY_DEFAULT_SENDER_NAME: ${{ secrets.GALLY_DEFAULT_SENDER_NAME_STABLE }}
+      GALLY_DEFAULT_SENDER_EMAIL: ${{ secrets.GALLY_DEFAULT_SENDER_EMAIL_STABLE }}
