@@ -133,6 +133,15 @@ function getLocalizedCatalogDropdown(page: Page): Dropdown {
   return localizedCatalogDropdown
 }
 
+function resetDropdowns(): void {
+  catalogDropdown = null
+  localizedCatalogDropdown = null
+}
+
+test.beforeEach(() => {
+  resetDropdowns()
+})
+
 function getDoubleDatePicker(page: Page): {
   from: Locator
   to: Locator
@@ -153,112 +162,117 @@ async function checkKpi(
   await expect(kpi).toContainText(`${label}${value}`)
 }
 
-async function submitFilters(page): Promise<void> {
+async function submitFilters(page: Page): Promise<void> {
   const submitButton = page.getByTestId(testIds.filters.submitButton)
   const kpisResponse = page.waitForResponse('**/api/kpis**')
   await submitButton.click()
   await kpisResponse
 }
 
-async function resetFilters(page): Promise<void> {
+async function resetFilters(page: Page): Promise<void> {
   const submitButton = page.getByTestId(testIds.filters.resetButton)
   const kpisResponse = page.waitForResponse('**/api/kpis**')
   await submitButton.click()
   await kpisResponse
 }
 
-test('Pages > Analyze > Search usage page', {tag: ['@premium']}, async ({page}) => {
-  await test.step('Login and navigate to the search usage page', async () => {
-    await login(page)
-    await navigateTo(page, texts.labelMenuPage, '/admin/analyze/search_usage')
-  })
+test(
+  'Pages > Analyze > Search usage page',
+  { tag: ['@premium'] },
+  async ({ page }) => {
+    await test.step('Login and navigate to the search usage page', async () => {
+      await login(page)
+      await navigateTo(page, texts.labelMenuPage, '/admin/analyze/search_usage')
+    })
 
-  await test.step('Check filters, KPI group, and KPIS existence', async () => {
-    expect(page.getByTestId(testIds.filtersContainer)).toBeTruthy()
-    const catalogSwitcher = getCatalogDropdown(page)
-    expect(catalogSwitcher).toBeTruthy()
-    const doubleDatePicker = getDoubleDatePicker(page)
-    expect(doubleDatePicker).toBeTruthy()
-    const submitButton = page.getByTestId(testIds.filters.submitButton)
-    expect(submitButton).toBeTruthy()
-    await expect(page.getByTestId(testIds.kpiGroup)).toBeTruthy()
+    await test.step('Check filters, KPI group, and KPIS existence', async () => {
+      expect(page.getByTestId(testIds.filtersContainer)).toBeTruthy()
+      const catalogSwitcher = getCatalogDropdown(page)
+      await catalogSwitcher.expectToBeVisible()
+      const doubleDatePicker = getDoubleDatePicker(page)
+      await expect(doubleDatePicker.from).toBeVisible()
+      await expect(doubleDatePicker.to).toBeVisible()
+      const submitButton = page.getByTestId(testIds.filters.submitButton)
+      await expect(submitButton).toBeVisible()
+      await expect(page.getByTestId(testIds.kpiGroup)).toBeVisible()
 
-    // wait for kpi animations to be completed
-    await page.waitForTimeout(200)
+      // wait for kpi animations to be completed
+      await page.waitForTimeout(200)
 
-    for (let i = 0; i < kpis.length; i++) {
-      // eslint-disable-next-line no-await-in-loop
-      await checkKpi(page, testIds.kpis[kpis[i]], texts.kpis[kpis[i]])
-    }
-  })
+      for (let i = 0; i < kpis.length; i++) {
+        // eslint-disable-next-line no-await-in-loop
+        await checkKpi(page, testIds.kpis[kpis[i]], texts.kpis[kpis[i]])
+      }
+    })
 
-  await test.step('Add catalog COM FR filter and check KPIs update', async () => {
-    const catalogSwitcher = getCatalogDropdown(page)
-    await catalogSwitcher.selectValue(texts.catalogCom)
-    const localizedCatalogSwitcher = getLocalizedCatalogDropdown(page)
-    await localizedCatalogSwitcher.selectValue(texts.localizedCatalogFr)
+    await test.step('Add catalog COM FR filter and check KPIs update', async () => {
+      const catalogSwitcher = getCatalogDropdown(page)
+      await catalogSwitcher.selectValue(texts.catalogCom)
+      const localizedCatalogSwitcher = getLocalizedCatalogDropdown(page)
+      await localizedCatalogSwitcher.selectValue(texts.localizedCatalogFr)
 
-    await submitFilters(page)
-    // wait for kpi animations to be completed
-    await page.waitForTimeout(200)
+      await submitFilters(page)
+      // wait for kpi animations to be completed
+      await page.waitForTimeout(200)
 
-    for (let i = 0; i <= 1; i++) {
-      // eslint-disable-next-line no-await-in-loop
-      await checkKpi(
-        page,
-        testIds.kpis[kpis[i]],
-        texts.catalogComFrFilteredKpis[kpis[i]]
-      )
-    }
-  })
+      for (let i = 0; i <= 1; i++) {
+        // eslint-disable-next-line no-await-in-loop
+        await checkKpi(
+          page,
+          testIds.kpis[kpis[i]],
+          texts.catalogComFrFilteredKpis[kpis[i]]
+        )
+      }
+    })
 
-  await test.step('Add valid date interval filter and check KPIs have values', async () => {
-    const catalogSwitcher = getCatalogDropdown(page)
-    await catalogSwitcher.clear()
-    const doubleDatePicker = getDoubleDatePicker(page)
-    await doubleDatePicker.from.fill(texts.filtersToApply.someResultsDateFrom)
-    await doubleDatePicker.to.fill(texts.filtersToApply.someResultsDateTo)
+    await test.step('Add valid date interval filter and check KPIs have values', async () => {
+      const catalogSwitcher = getCatalogDropdown(page)
+      await catalogSwitcher.clear()
+      const doubleDatePicker = getDoubleDatePicker(page)
+      await doubleDatePicker.from.fill(texts.filtersToApply.someResultsDateFrom)
+      await doubleDatePicker.to.fill(texts.filtersToApply.someResultsDateTo)
 
-    await submitFilters(page)
-    // wait for kpi animations to be completed
-    await page.waitForTimeout(200)
+      await submitFilters(page)
+      // wait for kpi animations to be completed
+      await page.waitForTimeout(200)
 
-    for (let i = 0; i <= 1; i++) {
-      // eslint-disable-next-line no-await-in-loop
-      await checkKpi(
-        page,
-        testIds.kpis[kpis[i]],
-        texts.validDateIntervalFilteredKpis[kpis[i]]
-      )
-    }
-  })
+      for (let i = 0; i <= 1; i++) {
+        // eslint-disable-next-line no-await-in-loop
+        await checkKpi(
+          page,
+          testIds.kpis[kpis[i]],
+          texts.validDateIntervalFilteredKpis[kpis[i]]
+        )
+      }
+    })
 
-  await test.step('Add future date filter and check KPIs have 0 value', async () => {
-    const doubleDatePicker = getDoubleDatePicker(page)
-    await doubleDatePicker.from.fill(texts.filtersToApply.noResultsDateFrom)
-    await doubleDatePicker.to.fill(texts.filtersToApply.noResultsDateTo)
+    await test.step('Add future date filter and check KPIs have 0 value', async () => {
+      const doubleDatePicker = getDoubleDatePicker(page)
+      await doubleDatePicker.from.fill(texts.filtersToApply.noResultsDateFrom)
+      await doubleDatePicker.to.fill(texts.filtersToApply.noResultsDateTo)
 
-    await submitFilters(page)
-    // wait for kpi animations to be completed
-    await page.waitForTimeout(200)
+      await submitFilters(page)
+      // wait for kpi animations to be completed
+      await page.waitForTimeout(200)
 
-    for (let i = 0; i <= 1; i++) {
-      // eslint-disable-next-line no-await-in-loop
-      await checkKpi(
-        page,
-        testIds.kpis[kpis[i]],
-        texts.futureDateFilteredKpis[kpis[i]]
-      )
-    }
-  })
+      for (let i = 0; i <= 1; i++) {
+        // eslint-disable-next-line no-await-in-loop
+        await checkKpi(
+          page,
+          testIds.kpis[kpis[i]],
+          texts.futureDateFilteredKpis[kpis[i]]
+        )
+      }
+    })
 
-  await test.step('Reset all filters and check KPIs have the starting value', async () => {
-    await resetFilters(page)
-    // wait for kpi animations to be completed
-    await page.waitForTimeout(200)
-    for (let i = 0; i < kpis.length; i++) {
-      // eslint-disable-next-line no-await-in-loop
-      await checkKpi(page, testIds.kpis[kpis[i]], texts.kpis[kpis[i]])
-    }
-  })
-})
+    await test.step('Reset all filters and check KPIs have the starting value', async () => {
+      await resetFilters(page)
+      // wait for kpi animations to be completed
+      await page.waitForTimeout(200)
+      for (let i = 0; i < kpis.length; i++) {
+        // eslint-disable-next-line no-await-in-loop
+        await checkKpi(page, testIds.kpis[kpis[i]], texts.kpis[kpis[i]])
+      }
+    })
+  }
+)
