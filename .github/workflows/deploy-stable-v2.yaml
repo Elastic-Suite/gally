@@ -25,31 +25,54 @@ on:
         default: false
         required: false
 
-env:
-  VERSION: ${{ inputs.version || '2.2.x' }}
-
 jobs:
+  prepare:
+    name: Prepare deployment
+    runs-on: ubuntu-latest
+    outputs:
+      last_published_version: ${{ steps.set-version.outputs.last_published_version }}
+    steps:
+      - name: Set last published version based on selected version
+        id: set-version
+        env:
+          VERSION_MAP: |
+            {
+              "main": "dev-main",
+              "2.2.x": "2.2.1",
+              "2.1.x": "2.1.0",
+              "2.0.x": "2.0.0",
+              "1.3.x": "1.3.0",
+              "1.2.x": "1.2.0",
+              "1.1.x": "1.1.0",
+              "1.0.x": "1.0.0"
+            }
+        run: |
+          VERSION="${{ inputs.version || '2.2.x' }}"
+          LAST_PUBLISHED=$(echo "$VERSION_MAP" | jq -r ".\"$VERSION\" // \"dev-main\"")
+          echo "last_published_version=$LAST_PUBLISHED" >> $GITHUB_OUTPUT
+
   tests:
+    needs: prepare
     name: Tests
     if: ${{ inputs.skip_tests == 'false' }}
     uses: ./.github/workflows/tests.yml
     with:
-      version: ${{ env.VERSION }}
-      last_published_version: 2.2.1
+      version: ${{ inputs.version || '2.2.x' }}
+      last_published_version: ${{ needs.prepare.outputs.last_published_version }}
     secrets:
       COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
       PACKAGIST_URL: ${{ secrets.PACKAGIST_URL }}
 
   deploy-2_2_X:
-    needs: tests
-    name: Deploy ${{ env.VERSION }}
+    needs: [prepare, tests]
+    name: Deploy ${{ inputs.version || '2.2.x' }}
     if: |
       always() &&
       (needs.tests.result == 'success' || needs.tests.result == 'skipped')
     uses: ./.github/workflows/deploy-int.yml
     with:
-      version: ${{ env.VERSION }}
-      last_published_version: 2.2.1
+      version: ${{ inputs.version || '2.2.x' }}
+      last_published_version: ${{ needs.prepare.outputs.last_published_version }}
     secrets:
       AWS_DEPLOY_KEY: ${{ secrets.AWS_DEPLOY_KEY }}
       AWS_HOSTNAME: ${{ secrets.AWS_HOSTNAME_STABLE }}
