@@ -182,6 +182,10 @@ generate_migration: ## Generate symfony migration
 generate_migration: c=doctrine:migrations:diff --namespace 'DoctrineMigrations'
 generate_migration: sf
 
+consume_messages: ## Consume messages from message provider, pass the parameter "r=" to consume a specific receiver, example: make consume_messages r=async
+	@$(eval r ?=)
+	@$(SYMFONY) messenger:consume $(if $(r),$(r),--all) -vv
+
 fixtures_load: ## Load fixtures (Delete DB and Elasticsearch data)
 	@read -p "⚠️  This will ERASE your database. Are you sure? (y/N) " confirm; \
 	if [ "$$confirm" = "y" ] || [ "$$confirm" = "Y" ]; then \
