@@ -53,7 +53,7 @@ const texts = {
   kpis: {
     searchCount: {
       label: 'Searches',
-      value: 21,
+      value: 51,
     },
     categoryViewCount: {
       label: 'Category views',
@@ -72,11 +72,11 @@ const texts = {
       value: 6,
     },
     sessionCount: {
-      label: 'Page views',
+      label: 'Sessions',
       value: 30,
     },
     visitorCount: {
-      label: 'Visitors',
+      label: 'Unique visitors',
       value: 15,
     },
   },
