@@ -23,6 +23,17 @@ const urls = {
   standardHomePageUrl: '/admin/settings/scope/catalogs'
 }
 
+interface IExtraBundle {
+  id: string
+  name: string
+}
+
+/**
+ * Bundle names to exclude when checking premium status.
+ * Add bundle names here to ignore them in the premium check.
+ */
+const excludedBundleNames: string[] = ['GallySampleDataBundle']
+
 interface IUserCredentials {
   email: `${string}@${string}.${Lowercase<string>}`
   password: string
@@ -95,7 +106,9 @@ export async function login(page: Page, role: UserRole = UserRole.ADMIN): Promis
   await page.goto('/login')
   const extraBundlesResponse = await extraBundles
   const extraBundlesData = await extraBundlesResponse.json()
-  const isPremium = extraBundlesData?.['hydra:member'].length > 0
+  const isPremium = extraBundlesData?.['hydra:member'].filter(
+    (bundle: { name: string }) => !excludedBundleNames.includes(bundle.name)
+  ).length > 0
 
   // Store the premium status on the page object
   Object.assign(page, { isPremium })
