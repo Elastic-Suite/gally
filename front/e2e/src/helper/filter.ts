@@ -225,6 +225,7 @@ export class Filter<TFilters extends Record<string, FilterType>> {
 
     if (!(await applyButton.isVisible())) {
       await toggleButton.click()
+      await expect(applyButton).toBeVisible()
     }
 
     switch (type) {

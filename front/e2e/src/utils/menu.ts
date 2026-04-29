@@ -16,7 +16,8 @@ import {generateTestId, TestId} from "./testIds";
  */
 const testIds = {
   sideBar: generateTestId(TestId.SIDE_BAR),
-  menuItemChildrenButton: generateTestId(TestId.MENU_ITEM_CHILDREN_COLLAPSING_BUTTON)
+  menuItemChildrenButton: generateTestId(TestId.MENU_ITEM_CHILDREN_COLLAPSING_BUTTON),
+  menuItemChildren: generateTestId(TestId.MENU_ITEM_CHILDREN)
 }
 
 export async function navigateTo(
@@ -30,13 +31,24 @@ export async function navigateTo(
   // Find the link inside the sidebar with the given label
   const link = sidebarMenu.getByText(menuItemLabel).first()
 
-  // Expand any collapsible menu items before clicking
+  // Retrieve all toggle buttons for collapsible menu sections
   const menuItemChildrenButtonList = await page
     .getByTestId(testIds.menuItemChildrenButton)
     .all()
 
-  for (const locator of menuItemChildrenButtonList) {
-    await locator.click()
+  // Retrieve all collapsible menu children containers
+  const menuItemChildrenList = await page
+    .getByTestId(testIds.menuItemChildren)
+    .all()
+
+  // Expand all collapsible menu items by clicking each toggle button
+  for (const button of menuItemChildrenButtonList) {
+    await button.click()
+  }
+
+  // Wait for all menu children to be visible before proceeding
+  for (const children of menuItemChildrenList) {
+    await expect(children).toBeVisible()
   }
 
   // Click the desired link
