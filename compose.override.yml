@@ -49,6 +49,10 @@ services:
       # See https://xdebug.org/docs/all_settings#mode
       XDEBUG_MODE: ${XDEBUG_MODE:-off}
       PHP_IDE_CONFIG: serverName=gally
+      BLACKFIRE_CLIENT_ID: ${BLACKFIRE_CLIENT_ID}
+      BLACKFIRE_CLIENT_TOKEN: ${BLACKFIRE_CLIENT_TOKEN}
+      BLACKFIRE_AGENT_HOST: blackfire
+      BLACKFIRE_AGENT_PORT: 8307
 
   cron:
     <<: *php-base
@@ -112,3 +116,14 @@ services:
       - traefik.http.routers.gally-mail-$COMPOSE_PROJECT_NAME-https.entrypoints=https
       - traefik.http.routers.gally-mail-$COMPOSE_PROJECT_NAME-https.tls=true
 
+  blackfire:
+    profiles:
+      - blackfire
+    image: blackfire/blackfire:latest
+    environment:
+      - BLACKFIRE_SERVER_ID=${BLACKFIRE_SERVER_ID}
+      - BLACKFIRE_SERVER_TOKEN=${BLACKFIRE_SERVER_TOKEN}
+    ports:
+      - "8307"
+    depends_on:
+      - php
