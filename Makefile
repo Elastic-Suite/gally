@@ -159,6 +159,9 @@ e2e: ## Run e2e tests or pass the parameter "f=" to filters tests and "t=" to ru
 jest_update: ## Run jest unit tests
 	@$(DOCKER_COMP) exec pwa yarn test:update
 
+test_sdk: ## Run SDK integration and unit tests
+	@$(DOCKER_COMP) exec pwa yarn test:sdk
+
 varnish_flush: ## Flush varnish cache
 	@$(DOCKER_COMP) exec varnish varnishadm 'ban req.url ~ .'
 
