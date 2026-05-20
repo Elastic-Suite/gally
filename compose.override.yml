@@ -72,6 +72,9 @@ services:
       - NEXT_PUBLIC_ENTRYPOINT=
       - NEXT_PUBLIC_API_URL=
       - REACT_APP_API_URL=
+      - SDK_API_URL=https://${SERVER_NAME:-gally.localhost}/${API_ROUTE_PREFIX:-api}
+    extra_hosts:
+      - ${SERVER_NAME:-gally.localhost}:host-gateway
 
   example:
     user: ${UUID?You must set UUID env var}:${GUID?You must set GUID env var}

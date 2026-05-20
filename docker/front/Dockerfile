@@ -3,7 +3,7 @@
 
 
 # https://docs.docker.com/engine/reference/builder/#understand-how-arg-and-from-interact
-ARG NODE_VERSION=18
+ARG NODE_VERSION=20
 ARG public_url
 
 # "common" stage
@@ -67,7 +67,7 @@ RUN USER=node && \
 	printf "user: $USER\ngroup: $GROUP\npaths:\n  - /usr/src/front\n  - /home/node" > /etc/fixuid/config.yml
 
 RUN set -xe; \
-  apk add --no-cache git;
+  apk add --no-cache git bash;
 
 COPY ./docker-entrypoint-pwa.sh /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
