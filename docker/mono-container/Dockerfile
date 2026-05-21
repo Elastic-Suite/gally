@@ -15,6 +15,8 @@ RUN install -d /usr/share/postgresql-common/pgdg; \
     echo "deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list
 RUN curl -o- https://artifacts.opensearch.org/publickeys/opensearch.pgp | gpg --dearmor --batch --yes -o /usr/share/keyrings/opensearch-keyring; \
     echo "deb [signed-by=/usr/share/keyrings/opensearch-keyring] https://artifacts.opensearch.org/releases/bundle/opensearch/2.x/apt stable main" | tee /etc/apt/sources.list.d/opensearch-2.x.list
+RUN curl -fsSL https://packagecloud.io/varnishcache/varnish75/gpgkey | gpg --dearmor -o /usr/share/keyrings/varnish-keyring.gpg; \
+    echo "deb [signed-by=/usr/share/keyrings/varnish-keyring.gpg] https://packagecloud.io/varnishcache/varnish75/debian/ bookworm main" > /etc/apt/sources.list.d/varnish.list
 RUN apt-get update
 
 # Databases
@@ -40,7 +42,13 @@ RUN set -xe; \
 
 # Webserver
 RUN apt-get install -y nginx varnish
-RUN mkdir -p /etc/nginx/template/ /etc/varnish/template/ /etc/nginx/certs/live/${SERVER_NAME} /var/log/php-fpm/
+RUN mkdir -p /etc/nginx/template/ /etc/varnish/template/ /etc/nginx/certs/live/${SERVER_NAME} /var/log/php-fpm/ /var/log/mailpit /var/log/cron
+
+# Mail
+ARG MAILPIT_VERSION=v1.21.8
+RUN curl -sL "https://github.com/axllent/mailpit/releases/download/${MAILPIT_VERSION}/mailpit-linux-amd64.tar.gz" | tar -xz -C /tmp && \
+    mv /tmp/mailpit /usr/local/bin/mailpit && \
+    chmod +x /usr/local/bin/mailpit
 COPY nginx.conf /etc/nginx/template/default.template
 COPY varnish.vcl /etc/varnish/template/default.vcl.template
 RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
@@ -62,10 +70,11 @@ RUN sed -i 's/^group = www-data/group = root/' /etc/php/8.3/fpm/pool.d/www.conf
 RUN mkdir -p /run/php
 
 # Pwa
+ARG NODE_VERSION=18
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash; \
     export NVM_DIR="$HOME/.nvm"; \
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"; \
-    nvm install 16; \
+    nvm install ${NODE_VERSION}; \
     npm install -g yarn; \
     ln -s "$(which node)" /usr/bin/node; \
     ln -s "$(which npm)" /usr/bin/npm; \
