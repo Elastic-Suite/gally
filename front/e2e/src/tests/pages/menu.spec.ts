@@ -19,12 +19,16 @@ const urls = {
 }
 
 async function ensureCollapsibledMenuSectionsAreOpened(page: Page) {
-  // Retrieve all toggle buttons for collapsible menu sections
-  const menuItemChildrenButtonList = await page
-    .getByTestId(testIds.menuItemChildrenButton)
-    .all()
+  const buttonsLocator = page.getByTestId(testIds.menuItemChildrenButton)
 
-  return menuItemChildrenButtonList.every(async m => await m.getAttribute('data-collapsed') === 'true')
+  // Wait for the last element to be visible to ensure sidebar has rendered
+  await expect(buttonsLocator.last()).toBeVisible()
+
+  const menuItemChildrenButtonList = await buttonsLocator.all()
+  const collapsedStates = await Promise.all(
+    menuItemChildrenButtonList.map(m => m.getAttribute('data-collapsed'))
+  )
+  return collapsedStates.every(state => state === 'false')
 }
 
 test('Menu collapsible navigation', { tag: ['@premium', '@standard'] }, async ({ page }) => {
