@@ -193,7 +193,7 @@ fixtures_load: ## Load fixtures (Delete DB and Elasticsearch data)
 	@read -p "⚠️  This will ERASE your database. Are you sure? (y/N) " confirm; \
 	if [ "$$confirm" = "y" ] || [ "$$confirm" = "Y" ]; then \
 		$(SYMFONY) doctrine:database:drop --force; \
-		$(SYMFONY) gally:index:clear --no-interaction; \
+		$(SYMFONY) gally:index:clear --with-data-streams --no-interaction; \
 		$(SYMFONY) doctrine:database:create; \
 		$(MAKE) migrate; \
 		$(SYMFONY) list gally --raw | grep gally:vector-search:upload-model && $(SYMFONY) gally:vector-search:upload-model || true; \
@@ -202,6 +202,6 @@ fixtures_load: ## Load fixtures (Delete DB and Elasticsearch data)
 		$(MAKE) varnish_flush; \
 	fi
 
-index_clear: ## Delete all Elasticsearch indices
-index_clear: c=gally:index:clear
+index_clear: ## Delete all Elasticsearch indices and data streams
+index_clear: c=gally:index:clear --with-data-streams
 index_clear: sf
