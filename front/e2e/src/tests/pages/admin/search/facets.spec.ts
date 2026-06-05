@@ -1,10 +1,10 @@
-import {expect, test} from '@playwright/test'
-import {Grid} from '../../../../helper/grid'
-import {Filter, FilterType} from '../../../../helper/filter'
-import {Dropdown} from '../../../../helper/dropdown'
-import {login} from '../../../../utils/auth'
-import {navigateTo} from '../../../../utils/menu'
-import {generateTestId, TestId} from "../../../../utils/testIds"
+import { expect, Page, test } from '@playwright/test'
+import { Grid } from '../../../../helper/grid'
+import { Filter, FilterType } from '../../../../helper/filter'
+import { Dropdown } from '../../../../helper/dropdown'
+import { login } from '../../../../utils/auth'
+import { navigateTo } from '../../../../utils/menu'
+import { generateTestId, TestId } from "../../../../utils/testIds"
 
 const resourceName = 'FacetConfiguration'
 
@@ -21,7 +21,7 @@ const testIds = {
     editableFields: {
       displayMode: 'displayMode',
       coverageRate: generateTestId(TestId.INPUT_TEXT, TestId.INPUT_INTEGER, 'coverageRate'),
-      maxSize: generateTestId(TestId.INPUT_TEXT, TestId.INPUT_INTEGER,  'maxSize'),
+      maxSize: generateTestId(TestId.INPUT_TEXT, TestId.INPUT_INTEGER, 'maxSize'),
       sortOrder: 'sortOrder',
       position: generateTestId(TestId.INPUT_TEXT, TestId.INPUT_INTEGER, 'position'),
     }
@@ -74,11 +74,36 @@ const texts = {
 
 const baseURL = process.env.SERVER_BASE_URL || 'https://gally.local'
 
-test('Pages > Search > Facets', {tag: ['@premium', '@standard']}, async ({page}) => {
-  async function waitForUpdateResponse(): Promise<void> {
-    await page.waitForResponse(response => {
-      return response.url().includes(`${baseURL}/api/facet_configurations`) && response.ok()
-    }, {timeout: 5000})
+test('Pages > Search > Facets', { tag: ['@premium', '@standard'] }, async ({ page }) => {
+  async function waitForUpdateResponse(
+    page: Page,
+    trigger: () => Promise<void>
+  ): Promise<void> {
+    // Register both waits BEFORE triggering the action
+    const patchResponsePromise = page.waitForResponse(
+      response =>
+        // First call updates the values
+        response.url().includes('/api/facet_configurations') &&
+        response.request().method() === 'PATCH' &&
+        response.ok(),
+      { timeout: 5000 }
+    )
+
+    const getResponsePromise = page.waitForResponse(
+      response =>
+        // Then grid is refreshed by another GET call
+        response.url().includes('/api/facet_configurations') &&
+        response.request().method() === 'GET' &&
+        response.ok(),
+      { timeout: 5000 }
+    )
+
+    // Trigger the UI action that causes PATCH then GET
+    await trigger()
+
+    // Ensure order of calls is respected
+    await patchResponsePromise
+    await getResponsePromise
   }
 
   await test.step('Login and navigate to the facets page', async () => {
@@ -124,7 +149,7 @@ test('Pages > Search > Facets', {tag: ['@premium', '@standard']}, async ({page})
       await grid.expectRowsAfterSearchToBe(
         filter,
         term,
-        [{columnName: texts.gridHeaders.defaultLabel, value: term}]
+        [{ columnName: texts.gridHeaders.defaultLabel, value: term }]
       )
     })
   })
@@ -134,30 +159,53 @@ test('Pages > Search > Facets', {tag: ['@premium', '@standard']}, async ({page})
   await test.step('Verify that fields in the grid are editable', async () => {
     const displayModeDropdown = new Dropdown(page, testIds.grid.editableFields.displayMode)
     await displayModeDropdown.expectToHaveOptions(texts.displayModeOptions)
-    await displayModeDropdown.selectValue(texts.displayModeOptions[1])
-    await displayModeDropdown.selectValue(texts.displayModeOptions[0])
+    await waitForUpdateResponse(page, async () => {
+      await displayModeDropdown.selectValue(texts.displayModeOptions[1])
+    })
+    await waitForUpdateResponse(page, async () => {
+      await displayModeDropdown.selectValue(texts.displayModeOptions[0])
+    })
 
     const coverageRateInput = page.getByTestId(testIds.grid.editableFields.coverageRate)
-    await coverageRateInput.fill('70')
+    await waitForUpdateResponse(page, async () => {
+      await coverageRateInput.fill('70')
+    })
     await expect(coverageRateInput).toHaveValue('70')
-    await coverageRateInput.fill('90')
+
+    await waitForUpdateResponse(page, async () => {
+      await coverageRateInput.fill('90')
+    })
     await expect(coverageRateInput).toHaveValue('90')
 
     const maxSizeInput = page.getByTestId(testIds.grid.editableFields.maxSize)
-    await maxSizeInput.fill('20')
+    await waitForUpdateResponse(page, async () => {
+      await maxSizeInput.fill('20')
+    })
     await expect(maxSizeInput).toHaveValue('20')
-    await maxSizeInput.fill('10')
+
+    await waitForUpdateResponse(page, async () => {
+      await maxSizeInput.fill('10')
+    })
     await expect(maxSizeInput).toHaveValue('10')
 
     const sortOrderDropdown = new Dropdown(page, testIds.grid.editableFields.sortOrder)
     await sortOrderDropdown.expectToHaveOptions(texts.sortOrderOptions)
-    await sortOrderDropdown.selectValue(texts.sortOrderOptions[1])
-    await sortOrderDropdown.selectValue(texts.sortOrderOptions[0])
+    await waitForUpdateResponse(page, async () => {
+      await sortOrderDropdown.selectValue(texts.sortOrderOptions[1])
+    })
+    await waitForUpdateResponse(page, async () => {
+      await sortOrderDropdown.selectValue(texts.sortOrderOptions[0])
+    })
 
     const positionInput = page.getByTestId(testIds.grid.editableFields.position)
-    await positionInput.fill('1')
+    await waitForUpdateResponse(page, async () => {
+      await positionInput.fill('1')
+    })
     await expect(positionInput).toHaveValue('1')
-    await positionInput.fill('')
+
+    await waitForUpdateResponse(page, async () => {
+      await positionInput.fill('')
+    })
     await expect(positionInput).toHaveValue('')
 
     const resetValuesButton = page.getByTestId(testIds.resetDefaultValuesButton)
@@ -166,18 +214,26 @@ test('Pages > Search > Facets', {tag: ['@premium', '@standard']}, async ({page})
       texts.noCustomValuesMessage
     )
     await expect(resetValuesButton).toBeDisabled()
-    await displayModeDropdown.selectValue(texts.displayModeOptions[2])
-    await waitForUpdateResponse()
-    await coverageRateInput.fill('70')
-    await waitForUpdateResponse()
+
+    await waitForUpdateResponse(page, async () => {
+      await displayModeDropdown.selectValue(texts.displayModeOptions[2])
+    })
+    await waitForUpdateResponse(page, async () => {
+      await coverageRateInput.fill('70')
+    })
     await expect(coverageRateInput).toHaveValue('70')
-    await maxSizeInput.fill('20')
-    await waitForUpdateResponse()
+
+    await waitForUpdateResponse(page, async () => {
+      await maxSizeInput.fill('20')
+    })
     await expect(maxSizeInput).toHaveValue('20')
-    await sortOrderDropdown.selectValue(texts.sortOrderOptions[1])
-    await waitForUpdateResponse()
-    await positionInput.fill('1')
-    await waitForUpdateResponse()
+
+    await waitForUpdateResponse(page, async () => {
+      await sortOrderDropdown.selectValue(texts.sortOrderOptions[1])
+    })
+    await waitForUpdateResponse(page, async () => {
+      await positionInput.fill('1')
+    })
     await expect(positionInput).toHaveValue('1')
 
     await expect(customValueCountMessage).toHaveText(
@@ -185,7 +241,9 @@ test('Pages > Search > Facets', {tag: ['@premium', '@standard']}, async ({page})
     )
 
     await expect(resetValuesButton).not.toBeDisabled()
-    await resetValuesButton.click()
+    await waitForUpdateResponse(page, async () => {
+      await resetValuesButton.click()
+    })
 
     await expect(maxSizeInput).toHaveValue('10')
     await expect(coverageRateInput).toHaveValue('90')
@@ -195,7 +253,9 @@ test('Pages > Search > Facets', {tag: ['@premium', '@standard']}, async ({page})
       texts.noCustomValuesMessage
     )
 
-    await sortOrderDropdown.selectValue(texts.sortOrderOptions[1])
+    await waitForUpdateResponse(page, async () => {
+      await sortOrderDropdown.selectValue(texts.sortOrderOptions[1])
+    })
 
     await expect(customValueCountMessage).toHaveText(
       texts.customValuesMessage(1)
@@ -215,11 +275,13 @@ test('Pages > Search > Facets', {tag: ['@premium', '@standard']}, async ({page})
     await sortOrderDropdown.expectToHaveValue(texts.sortOrderOptions[1])
 
     await expect(coverageRateInput).toHaveValue('90')
-    await coverageRateInput.fill('70')
-    await waitForUpdateResponse()
+    await waitForUpdateResponse(page, async () => {
+      await coverageRateInput.fill('70')
+    })
     await expect(coverageRateInput).toHaveValue('70')
-    await sortOrderDropdown.selectValue(texts.sortOrderOptions[0])
-    await waitForUpdateResponse()
+    await waitForUpdateResponse(page, async () => {
+      await sortOrderDropdown.selectValue(texts.sortOrderOptions[0])
+    })
 
     await expect(customValueCountMessage).toHaveText(
       texts.customValuesMessage(2)
