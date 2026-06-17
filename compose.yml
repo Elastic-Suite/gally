@@ -99,11 +99,20 @@ services:
   
   php:
     <<: *php-base
+    healthcheck:
+      test: ["CMD", "test", "-f", "/tmp/entrypoint-ready"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
   
   cron:
     <<: *php-base
     entrypoint: ["/usr/local/bin/docker-entrypoint-cron"]
     command: []
+    depends_on:
+      php:
+        condition: service_healthy
     environment:
       <<: *php-base-env
       CRONTAB: |
