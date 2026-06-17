@@ -24,6 +24,12 @@ services:
       - CRON_UPSTREAM=
   php:
     <<: *php-base
+    healthcheck:
+      test: ["CMD", "test", "-f", "/tmp/entrypoint-ready"]
+      interval: 5s
+      timeout: 5s
+      retries: 40
+      start_period: 60s
     environment:
       <<: *php-base-env
       TRUSTED_HOSTS: ${TRUSTED_HOSTS:-^${SERVER_NAME:-|gally.localhost}|localhost|${E2E_SERVER_NAME:-gally.e2e}|php$$}
