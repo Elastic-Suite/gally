@@ -2957,12 +2957,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Elastic-Suite/gally-standard.git",
-                "reference": "b39ea8ab375aa7458cdfa6d72e0ba7a0c75b531f"
+                "reference": "3b4686940907178aa24fc9d8a5104d85bbeea270"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Elastic-Suite/gally-standard/zipball/b39ea8ab375aa7458cdfa6d72e0ba7a0c75b531f",
-                "reference": "b39ea8ab375aa7458cdfa6d72e0ba7a0c75b531f",
+                "url": "https://api.github.com/repos/Elastic-Suite/gally-standard/zipball/3b4686940907178aa24fc9d8a5104d85bbeea270",
+                "reference": "3b4686940907178aa24fc9d8a5104d85bbeea270",
                 "shasum": ""
             },
             "require": {
@@ -2989,11 +2989,11 @@
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^3.0",
-                "phpstan/extension-installer": "^1.1",
-                "phpstan/phpstan": "^1.4",
-                "phpstan/phpstan-doctrine": "^1.2",
-                "phpstan/phpstan-phpunit": "^1.0",
-                "phpstan/phpstan-symfony": "^1.1",
+                "phpstan/extension-installer": "^1.4",
+                "phpstan/phpstan": "^2.0",
+                "phpstan/phpstan-doctrine": "^2.0",
+                "phpstan/phpstan-phpunit": "^2.0",
+                "phpstan/phpstan-symfony": "^2.0",
                 "phpunit/phpunit": "^9.5",
                 "symfony/phpunit-bridge": "7.3.*"
             },
@@ -3040,7 +3040,7 @@
                 "issues": "https://github.com/Elastic-Suite/gally-standard/issues",
                 "source": "https://github.com/Elastic-Suite/gally-standard/tree/main"
             },
-            "time": "2026-04-28T14:22:20+00:00"
+            "time": "2026-06-17T09:32:48+00:00"
         },
         {
             "name": "gedmo/doctrine-extensions",
