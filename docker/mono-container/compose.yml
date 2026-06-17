@@ -6,18 +6,27 @@ services:
         - SERVER_NAME=${SERVER_NAME:-gally.localhost}
         - OPENSEARCH_INITIAL_ADMIN_PASSWORD=${OPENSEARCH_ADMIN_PASSWORD:-!ChangeMe0!}
     environment:
+      - APP_ENV=${APP_ENV:-dev}
+      - APP_SECRET=${APP_SECRET:-!ChangeMe!}
       - ELASTICSEARCH_SSL_VERIFICATION=false
       - TRUSTED_PROXIES=${TRUSTED_PROXIES:-127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16}
       - TRUSTED_HOSTS=${TRUSTED_HOSTS:-^${SERVER_NAME:-gally.localhost}$$}
       - CORS_ALLOW_ORIGIN=${CORS_ALLOW_ORIGIN:-^https?://${SERVER_NAME:-gally.localhost}$}
       - GALLY_CATALOG_MEDIA_URL=${GALLY_CATALOG_MEDIA_URL:-https://${SERVER_NAME:-gally.localhost}/media/catalog/product/}
+      - GALLY_FRONT_URL=${GALLY_FRONT_URL:-https://${SERVER_NAME:-gally.localhost}}
+      - GALLY_DEFAULT_SENDER_NAME=${GALLY_DEFAULT_SENDER_NAME:-Gally}
+      - GALLY_DEFAULT_SENDER_EMAIL=${GALLY_DEFAULT_SENDER_EMAIL:-noreply@gally.localhost}
+      - MAILER_DSN=${MAILER_DSN:-smtp://localhost:1025}
+      - DATABASE_URL=${DATABASE_URL:-postgresql://api-platform:!ChangeMe!@localhost:5432/api?serverVersion=16&charset=utf8}
       - VARNISH_URL=http://localhost:6081/
       - OPENSEARCH_INITIAL_ADMIN_PASSWORD=${OPENSEARCH_ADMIN_PASSWORD:-!ChangeMe0!}
       - ELASTICSEARCH_URL=https://${SEARCH_USER:-admin}:${OPENSEARCH_ADMIN_PASSWORD:-!ChangeMe0!}@localhost:9200/
+      - REDIS_SERVER=redis://localhost
     ports:
       - 80
       - 443
       - 9200
+      - 8025
     volumes:
       - jwt_keys:/var/gally/api/config/jwt
       - db_data:/var/lib/postgresql/data
