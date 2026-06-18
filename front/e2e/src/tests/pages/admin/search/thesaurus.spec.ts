@@ -1,14 +1,14 @@
-import {expect, test} from '@playwright/test'
-import {Grid} from '../../../../helper/grid'
-import {Filter, FilterType} from '../../../../helper/filter'
-import {login} from '../../../../utils/auth'
-import {navigateTo} from '../../../../utils/menu'
-import {Dropdown} from '../../../../helper/dropdown'
-import {randomUUID} from 'crypto'
-import {Switch} from '../../../../helper/switch'
-import {generateTestId, TestId} from "../../../../utils/testIds";
-import {AlertMessage, AlertMessageType} from "../../../../helper/alertMessage";
-import {deleteEntity, getCommonFormTestIds} from "../../../../utils/form";
+import { expect, test } from '@playwright/test'
+import { Grid } from '../../../../helper/grid'
+import { Filter, FilterType } from '../../../../helper/filter'
+import { login } from '../../../../utils/auth'
+import { navigateTo } from '../../../../utils/menu'
+import { Dropdown } from '../../../../helper/dropdown'
+import { randomUUID } from 'crypto'
+import { Switch } from '../../../../helper/switch'
+import { generateTestId, TestId } from "../../../../utils/testIds"
+import { AlertMessage, AlertMessageType } from "../../../../helper/alertMessage"
+import { deleteEntity, getCommonFormTestIds } from "../../../../utils/form"
 
 const resourceName = 'Thesaurus'
 
@@ -22,7 +22,7 @@ const testIds = {
     context: 'localizedCatalogs.id[]',
   },
   form: {
-    ... getCommonFormTestIds(resourceName),
+    ...getCommonFormTestIds(resourceName),
     name: generateTestId(TestId.INPUT_TEXT, 'name'),
     isActive: 'isActive',
     scopeType: 'scopeType',
@@ -43,7 +43,7 @@ const testIds = {
     scopeTypeError: generateTestId(TestId.HELPER_TEXT, generateTestId(TestId.DROPDOWN, 'scopeType')),
     typeError: generateTestId(TestId.HELPER_TEXT, generateTestId(TestId.DROPDOWN, 'type')),
   },
-  ... Grid.getCommonGridTestIds(resourceName)
+  ...Grid.getCommonGridTestIds(resourceName)
 } as const
 
 const texts = {
@@ -76,7 +76,7 @@ const urls = {
   edit: /\/admin\/search\/thesaurus\/edit\?id=\d+$/
 }
 
-test('Pages > Search > Thésaurus', {tag: ['@premium']}, async ({page}) => {
+test('Pages > Search > Thésaurus', { tag: ['@premium'] }, async ({ page }) => {
   await test.step('Login and navigate to the Thesaurus page', async () => {
     await login(page)
     await navigateTo(page, texts.labelMenuPage, '/admin/search/thesaurus/grid')
@@ -140,8 +140,8 @@ test('Pages > Search > Thésaurus', {tag: ['@premium']}, async ({page}) => {
     await test.step('Apply a filter and compare the grid to see if it works', async () => {
       await grid.expectRowsAfterFiltersToBe(
         filter,
-        {[testIds.filter.name]: texts.filtersToApply.name},
-        [{columnName: texts.gridHeaders.name, value: texts.filtersToApply.name}]
+        { [testIds.filter.name]: texts.filtersToApply.name },
+        [{ columnName: texts.gridHeaders.name, value: texts.filtersToApply.name }]
       )
     })
 
@@ -213,7 +213,7 @@ test('Pages > Search > Thésaurus', {tag: ['@premium']}, async ({page}) => {
     await synonymField.getByTestId(testIds.form.synonymsTrashButton).last().click()
 
     await submitButtonResourceForm.click()
-    await alertMessage.expectToHaveText('Creating of the thesaurus with success', AlertMessageType.SUCCESS)
+    await alertMessage.expectToHaveText('The thesaurus has been created successfully', AlertMessageType.SUCCESS)
     await expect(page).toHaveURL(urls.grid)
 
   })
@@ -221,10 +221,10 @@ test('Pages > Search > Thésaurus', {tag: ['@premium']}, async ({page}) => {
   await test.step('Verify the thesaurus existence in the grid', async () => {
     await grid.expectRowsAfterFiltersToBe(
       filter,
-      {[testIds.filter.name]: newName},
+      { [testIds.filter.name]: newName },
       [
-        {columnName: texts.gridHeaders.name, value: newName},
-        {columnName: texts.gridHeaders.type, value: 'Synonym'},
+        { columnName: texts.gridHeaders.name, value: newName },
+        { columnName: texts.gridHeaders.type, value: 'Synonym' },
       ]
     )
   })
@@ -264,16 +264,16 @@ test('Pages > Search > Thésaurus', {tag: ['@premium']}, async ({page}) => {
     await submitButtonResourceForm.click()
     const backButton = page.getByTestId(testIds.form.backButton)
 
-    await alertMessage.expectToHaveText('Updating of the thesaurus with success', AlertMessageType.SUCCESS)
+    await alertMessage.expectToHaveText('The thesaurus has been updated successfully', AlertMessageType.SUCCESS)
     await backButton.click()
     await expect(page).toHaveURL(urls.grid)
 
     await grid.expectRowsAfterFiltersToBe(
       filter,
-      {[testIds.filter.name]: newName},
+      { [testIds.filter.name]: newName },
       [
-        {columnName: texts.gridHeaders.name, value: newName},
-        {columnName: texts.gridHeaders.type, value: 'Expansion'},
+        { columnName: texts.gridHeaders.name, value: newName },
+        { columnName: texts.gridHeaders.type, value: 'Expansion' },
       ]
     )
   })
@@ -287,6 +287,6 @@ test('Pages > Search > Thésaurus', {tag: ['@premium']}, async ({page}) => {
       testIds.form.deletePopin.dialogConfirmButton,
       urls.grid
     )
-    await grid.expectRowsAfterFiltersToBe(filter, {[testIds.filter.name]: newName}, [], 0)
+    await grid.expectRowsAfterFiltersToBe(filter, { [testIds.filter.name]: newName }, [], 0)
   })
 })

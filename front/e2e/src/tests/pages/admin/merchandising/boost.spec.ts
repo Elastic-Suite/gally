@@ -1,14 +1,14 @@
-import {expect, test} from '@playwright/test'
-import {randomUUID} from 'crypto'
-import {login} from '../../../../utils/auth'
-import {navigateTo} from '../../../../utils/menu'
-import {Dropdown} from '../../../../helper/dropdown'
-import {Switch} from '../../../../helper/switch'
-import {Grid} from '../../../../helper/grid'
-import {Filter, FilterType} from '../../../../helper/filter'
-import {AlertMessage, AlertMessageType} from '../../../../helper/alertMessage'
-import {generateTestId, TestId} from "../../../../utils/testIds";
-import {deleteEntity, getCommonFormTestIds} from "../../../../utils/form";
+import { expect, test } from '@playwright/test'
+import { randomUUID } from 'crypto'
+import { login } from '../../../../utils/auth'
+import { navigateTo } from '../../../../utils/menu'
+import { Dropdown } from '../../../../helper/dropdown'
+import { Switch } from '../../../../helper/switch'
+import { Grid } from '../../../../helper/grid'
+import { Filter, FilterType } from '../../../../helper/filter'
+import { AlertMessage, AlertMessageType } from '../../../../helper/alertMessage'
+import { generateTestId, TestId } from "../../../../utils/testIds"
+import { deleteEntity, getCommonFormTestIds } from "../../../../utils/form"
 
 const resourceName = 'Boost'
 
@@ -22,7 +22,7 @@ const testIds = {
     localizedCatalogs: 'localizedCatalogs.id[]',
   },
   form: {
-    ... getCommonFormTestIds(resourceName),
+    ...getCommonFormTestIds(resourceName),
     localizedCatalogs: 'localizedCatalogs',
     isActive: 'isActive',
     name: generateTestId(TestId.INPUT_TEXT, 'name'),
@@ -31,7 +31,7 @@ const testIds = {
     previewFieldSet: generateTestId(TestId.FIELD_SET, 'preview'),
     previewRequiredMessage: generateTestId(TestId.PREVIEW_REQUIRED_MESSAGE)
   },
-  ... Grid.getCommonGridTestIds(resourceName)
+  ...Grid.getCommonGridTestIds(resourceName)
 } as const
 
 const texts = {
@@ -81,7 +81,7 @@ const urls = {
   edit: /\/admin\/merchandize\/boost\/edit\?id=\d+$/
 }
 
-test('Pages > Merchandising > Boosts', {tag: ['@premium']}, async ({page}) => {
+test('Pages > Merchandising > Boosts', { tag: ['@premium'] }, async ({ page }) => {
   await test.step('Login and navigate to the Boosts page', async () => {
     await login(page)
     await navigateTo(page, texts.labelMenuPage, urls.grid)
@@ -135,8 +135,8 @@ test('Pages > Merchandising > Boosts', {tag: ['@premium']}, async ({page}) => {
     await test.step('Apply a filter and compare the grid to see if it works', async () => {
       await grid.expectRowsAfterFiltersToBe(
         filter,
-        {[testIds.filter.name]: texts.filtersToApply.name},
-        [{columnName: texts.gridHeaders.name, value: texts.filtersToApply.name}]
+        { [testIds.filter.name]: texts.filtersToApply.name },
+        [{ columnName: texts.gridHeaders.name, value: texts.filtersToApply.name }]
       )
     })
 
@@ -194,8 +194,8 @@ test('Pages > Merchandising > Boosts', {tag: ['@premium']}, async ({page}) => {
   await test.step('Verify the boost existence in the grid', async () => {
     await grid.expectRowsAfterFiltersToBe(
       filter,
-      {[testIds.filter.name]: newName},
-      [{columnName: texts.gridHeaders.name, value: newName}]
+      { [testIds.filter.name]: newName },
+      [{ columnName: texts.gridHeaders.name, value: newName }]
     )
   })
 
@@ -211,14 +211,14 @@ test('Pages > Merchandising > Boosts', {tag: ['@premium']}, async ({page}) => {
 
     await saveButton.click()
     const alertMessage = new AlertMessage(page)
-    await alertMessage.expectToHaveText('Updating of the boost with success', AlertMessageType.SUCCESS)
+    await alertMessage.expectToHaveText('The boost has been updated successfully', AlertMessageType.SUCCESS)
 
     await page.getByTestId(testIds.form.backButton).click()
     await expect(page).toHaveURL(urls.grid)
 
     await grid.expectRowsAfterFiltersToBe(
       filter,
-      {[testIds.filter.name]: newName},
+      { [testIds.filter.name]: newName },
       [
         {
           columnName: texts.gridHeaders.name,
@@ -241,6 +241,6 @@ test('Pages > Merchandising > Boosts', {tag: ['@premium']}, async ({page}) => {
       testIds.form.deletePopin.dialogConfirmButton,
       urls.grid
     )
-    await grid.expectRowsAfterFiltersToBe(filter, {[testIds.filter.name]: newName}, [], 0)
+    await grid.expectRowsAfterFiltersToBe(filter, { [testIds.filter.name]: newName }, [], 0)
   })
 })

@@ -1,14 +1,14 @@
-import {expect, test} from '@playwright/test'
-import {randomUUID} from 'crypto'
-import {login} from '../../../../../utils/auth'
-import {navigateTo} from '../../../../../utils/menu'
-import {Dropdown} from '../../../../../helper/dropdown'
-import {Switch} from '../../../../../helper/switch'
-import {Grid} from '../../../../../helper/grid'
-import {Filter, FilterType} from '../../../../../helper/filter'
-import {AlertMessage, AlertMessageType} from '../../../../../helper/alertMessage'
-import {generateTestId, TestId} from "../../../../../utils/testIds";
-import {deleteEntity, getCommonFormTestIds} from "../../../../../utils/form";
+import { expect, test } from '@playwright/test'
+import { randomUUID } from 'crypto'
+import { login } from '../../../../../utils/auth'
+import { navigateTo } from '../../../../../utils/menu'
+import { Dropdown } from '../../../../../helper/dropdown'
+import { Switch } from '../../../../../helper/switch'
+import { Grid } from '../../../../../helper/grid'
+import { Filter, FilterType } from '../../../../../helper/filter'
+import { AlertMessage, AlertMessageType } from '../../../../../helper/alertMessage'
+import { generateTestId, TestId } from "../../../../../utils/testIds"
+import { deleteEntity, getCommonFormTestIds } from "../../../../../utils/form"
 
 const resourceName = 'Recommender'
 
@@ -22,14 +22,14 @@ const testIds = {
     recommenderTypes: 'recommenderTypes.id[]',
   },
   form: {
-    ... getCommonFormTestIds(resourceName),
+    ...getCommonFormTestIds(resourceName),
     isActive: 'isActive',
     name: generateTestId(TestId.INPUT_TEXT, 'name'),
     localizedCatalogs: 'localizedCatalogs',
     recommenderTypes: 'recommenderTypes',
     priority: generateTestId(TestId.INPUT_TEXT, TestId.INPUT_INTEGER, 'priority'),
   },
-  ... Grid.getCommonGridTestIds(resourceName)
+  ...Grid.getCommonGridTestIds(resourceName)
 } as const
 
 const texts = {
@@ -69,9 +69,9 @@ const texts = {
     },
   ],
   editValues: {
-      localizedCatalogs: ['COM French Catalog'],
-      editedLocalizedCatalogDisplay: 'COM Catalog - COM French Catalog',
-    }
+    localizedCatalogs: ['COM French Catalog'],
+    editedLocalizedCatalogDisplay: 'COM Catalog - COM French Catalog',
+  }
 } as const
 
 const urls = {
@@ -79,13 +79,13 @@ const urls = {
   create: '/admin/merchandize/recommender/auto_recommender/create',
   edit: /\/admin\/merchandize\/recommender\/auto_recommender\/edit\?id=\d+$/
 }
-test('Pages > Merchandising > Recommenders > Auto recommenders', {tag: ['@premium']}, async ({page}) => {
+test('Pages > Merchandising > Recommenders > Auto recommenders', { tag: ['@premium'] }, async ({ page }) => {
   await test.step('Login and navigate to the "Auto recommenders" page', async () => {
     await login(page)
     await navigateTo(page, texts.labelMenuPage, urls.grid)
   })
 
-    // Grid and Filters Locators:
+  // Grid and Filters Locators:
   const grid = new Grid(page, resourceName)
   const filter = new Filter(page, resourceName, {
     [testIds.filter.name]: FilterType.TEXT,
@@ -106,7 +106,7 @@ test('Pages > Merchandising > Recommenders > Auto recommenders', {tag: ['@premiu
 
   // Define a name for the new created Entity.
   const recommenderNameSuffix = '_e2e_test_recommender'
-  const names =[
+  const names = [
     randomUUID() + recommenderNameSuffix,
     randomUUID() + recommenderNameSuffix,
   ]
@@ -130,8 +130,8 @@ test('Pages > Merchandising > Recommenders > Auto recommenders', {tag: ['@premiu
   await test.step('Verify the recommender #1 existence in the grid', async () => {
     await grid.expectRowsAfterFiltersToBe(
       filter,
-      {[testIds.filter.name]: names[0]},
-      [{columnName: texts.gridHeaders.name, value: names[0]}]
+      { [testIds.filter.name]: names[0] },
+      [{ columnName: texts.gridHeaders.name, value: names[0] }]
     )
   })
 
@@ -147,14 +147,14 @@ test('Pages > Merchandising > Recommenders > Auto recommenders', {tag: ['@premiu
 
     await saveButton.click()
     const alertMessage = new AlertMessage(page)
-    await alertMessage.expectToHaveText('Updating of the auto recommender with success', AlertMessageType.SUCCESS)
+    await alertMessage.expectToHaveText('The auto recommender has been updated successfully', AlertMessageType.SUCCESS)
 
     await page.getByTestId(testIds.form.backButton).click()
     await expect(page).toHaveURL(urls.grid)
 
     await grid.expectRowsAfterFiltersToBe(
       filter,
-      {[testIds.filter.name]: names[0]},
+      { [testIds.filter.name]: names[0] },
       [
         {
           columnName: texts.gridHeaders.name,
@@ -195,8 +195,8 @@ test('Pages > Merchandising > Recommenders > Auto recommenders', {tag: ['@premiu
     await test.step('Apply a filter and compare the grid to see if it works', async () => {
       await grid.expectRowsAfterFiltersToBe(
         filter,
-        {[testIds.filter.name]: names[0]},
-        [{columnName: texts.gridHeaders.name, value: names[0]}]
+        { [testIds.filter.name]: names[0] },
+        [{ columnName: texts.gridHeaders.name, value: names[0] }]
       )
     })
 
@@ -220,7 +220,7 @@ test('Pages > Merchandising > Recommenders > Auto recommenders', {tag: ['@premiu
         // Test only for the first recommender because when all recommenders will be removed, the grid disappear.
         if (i === 0) {
           await expect(page).toHaveURL(urls.grid)
-          await grid.expectRowsAfterFiltersToBe(filter, {[testIds.filter.name]: names[i]}, [], 0)
+          await grid.expectRowsAfterFiltersToBe(filter, { [testIds.filter.name]: names[i] }, [], 0)
           await filter.clearFilters()
         }
       })
