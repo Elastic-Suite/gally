@@ -1,12 +1,12 @@
-import {expect, test} from '@playwright/test'
-import {randomUUID} from 'crypto'
-import {login} from '../../../../../utils/auth'
-import {navigateTo} from '../../../../../utils/menu'
-import {Grid} from '../../../../../helper/grid'
-import {Filter, FilterType} from '../../../../../helper/filter'
-import {AlertMessage, AlertMessageType} from '../../../../../helper/alertMessage'
-import {generateTestId, TestId} from "../../../../../utils/testIds";
-import {deleteEntity, getCommonFormTestIds} from "../../../../../utils/form";
+import { expect, test } from '@playwright/test'
+import { randomUUID } from 'crypto'
+import { login } from '../../../../../utils/auth'
+import { navigateTo } from '../../../../../utils/menu'
+import { Grid } from '../../../../../helper/grid'
+import { Filter, FilterType } from '../../../../../helper/filter'
+import { AlertMessage, AlertMessageType } from '../../../../../helper/alertMessage'
+import { generateTestId, TestId } from "../../../../../utils/testIds"
+import { deleteEntity, getCommonFormTestIds } from "../../../../../utils/form"
 
 const resourceName = 'RecommenderType'
 
@@ -17,11 +17,11 @@ const testIds = {
     code: 'code'
   },
   form: {
-    ... getCommonFormTestIds(resourceName),
+    ...getCommonFormTestIds(resourceName),
     name: generateTestId(TestId.INPUT_TEXT, 'name'),
     code: generateTestId(TestId.INPUT_TEXT, 'code'),
   },
-  ... Grid.getCommonGridTestIds(resourceName)
+  ...Grid.getCommonGridTestIds(resourceName)
 } as const
 
 const texts = {
@@ -43,7 +43,7 @@ const urls = {
   edit: /\/admin\/merchandize\/recommender\/recommender_type\/edit\?id=\d+$/
 }
 
-test('Pages > Merchandising > Recommenders > Recommender Types', {tag: ['@premium']}, async ({page}) => {
+test('Pages > Merchandising > Recommenders > Recommender Types', { tag: ['@premium'] }, async ({ page }) => {
   await test.step('Login and navigate to the "Recommender Types" page', async () => {
     await login(page)
     await navigateTo(page, texts.labelMenuPage, urls.grid)
@@ -89,8 +89,8 @@ test('Pages > Merchandising > Recommenders > Recommender Types', {tag: ['@premiu
     await test.step('Apply a filter and compare the grid to see if it works', async () => {
       await grid.expectRowsAfterFiltersToBe(
         filter,
-        {[testIds.filter.name]: texts.filtersToApply.name},
-        [{columnName: texts.gridHeaders.name, value: texts.filtersToApply.name}]
+        { [testIds.filter.name]: texts.filtersToApply.name },
+        [{ columnName: texts.gridHeaders.name, value: texts.filtersToApply.name }]
       )
     })
 
@@ -112,8 +112,8 @@ test('Pages > Merchandising > Recommenders > Recommender Types', {tag: ['@premiu
   await test.step('Verify the recommender type existence in the grid', async () => {
     await grid.expectRowsAfterFiltersToBe(
       filter,
-      {[testIds.filter.name]: newNameCreation},
-      [{columnName: texts.gridHeaders.name, value: newNameCreation}]
+      { [testIds.filter.name]: newNameCreation },
+      [{ columnName: texts.gridHeaders.name, value: newNameCreation }]
     )
   })
 
@@ -128,14 +128,14 @@ test('Pages > Merchandising > Recommenders > Recommender Types', {tag: ['@premiu
 
     await saveButton.click()
     const alertMessage = new AlertMessage(page)
-    await alertMessage.expectToHaveText('Updating of the recommender type with success\n', AlertMessageType.SUCCESS)
+    await alertMessage.expectToHaveText('The recommender type has been updated successfully', AlertMessageType.SUCCESS)
 
     await page.getByTestId(testIds.form.backButton).click()
     await expect(page).toHaveURL(urls.grid)
 
     await grid.expectRowsAfterFiltersToBe(
       filter,
-      {[testIds.filter.name]: newName},
+      { [testIds.filter.name]: newName },
       [
         {
           columnName: texts.gridHeaders.name,
@@ -154,6 +154,6 @@ test('Pages > Merchandising > Recommenders > Recommender Types', {tag: ['@premiu
       testIds.form.deletePopin.dialogConfirmButton,
       urls.grid
     )
-    await grid.expectRowsAfterFiltersToBe(filter, {[testIds.filter.name]: newName}, [], 0)
+    await grid.expectRowsAfterFiltersToBe(filter, { [testIds.filter.name]: newName }, [], 0)
   })
 })

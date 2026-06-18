@@ -1,16 +1,16 @@
 /* eslint-disable testing-library/prefer-screen-queries */
-import {expect, test} from '@playwright/test'
+import { expect, test } from '@playwright/test'
 import { getHomePageUrl, login, logout, UserRole } from '../../../../utils/auth'
-import {navigateTo} from '../../../../utils/menu'
-import {Dropdown} from '../../../../helper/dropdown'
-import {Tabs} from '../../../../helper/tabs'
-import {generateTestId, TestId} from '../../../../utils/testIds'
-import {Switch} from '../../../../helper/switch'
-import {Grid} from "../../../../helper/grid";
-import {Filter, FilterType} from "../../../../helper/filter";
-import {randomUUID} from "crypto";
-import {AlertMessage, AlertMessageType} from "../../../../helper/alertMessage";
-import {deleteEntity, getCommonFormTestIds} from "../../../../utils/form";
+import { navigateTo } from '../../../../utils/menu'
+import { Dropdown } from '../../../../helper/dropdown'
+import { Tabs } from '../../../../helper/tabs'
+import { generateTestId, TestId } from '../../../../utils/testIds'
+import { Switch } from '../../../../helper/switch'
+import { Grid } from "../../../../helper/grid"
+import { Filter, FilterType } from "../../../../helper/filter"
+import { randomUUID } from "crypto"
+import { AlertMessage, AlertMessageType } from "../../../../helper/alertMessage"
+import { deleteEntity, getCommonFormTestIds } from "../../../../utils/form"
 
 const resourceName = 'User'
 
@@ -24,7 +24,7 @@ const testIds = {
     roles: 'roles[]',
   },
   form: {
-    ... getCommonFormTestIds(resourceName),
+    ...getCommonFormTestIds(resourceName),
     isActive: 'isActive',
     firstName: generateTestId(TestId.INPUT_TEXT, 'firstName'),
     lastName: generateTestId(TestId.INPUT_TEXT, 'lastName'),
@@ -32,7 +32,7 @@ const testIds = {
     roles: 'roles',
     dummyPassword: generateTestId(TestId.INPUT_TEXT, 'dummyPassword'),
   },
-  ... Grid.getCommonGridTestIds(resourceName)
+  ...Grid.getCommonGridTestIds(resourceName)
 } as const
 
 const texts = {
@@ -182,8 +182,8 @@ test('Pages > Configuration > Users', { tag: ['@premium', '@standard'] }, async 
     await test.step('Apply a filter and compare the grid to see if it works', async () => {
       await grid.expectRowsAfterFiltersToBe(
         filter,
-        {[testIds.filter.firstName]: texts.filtersToApply.firstName},
-        [{columnName: texts.gridHeaders.firstName, value: texts.filtersToApply.firstName}]
+        { [testIds.filter.firstName]: texts.filtersToApply.firstName },
+        [{ columnName: texts.gridHeaders.firstName, value: texts.filtersToApply.firstName }]
       )
     })
 
@@ -242,8 +242,8 @@ test('Pages > Configuration > Users', { tag: ['@premium', '@standard'] }, async 
   await test.step('Verify the user existence in the grid', async () => {
     await grid.expectRowsAfterFiltersToBe(
       filter,
-      {[testIds.filter.email]: newUserEmail},
-      [{columnName: texts.gridHeaders.email, value: newUserEmail}]
+      { [testIds.filter.email]: newUserEmail },
+      [{ columnName: texts.gridHeaders.email, value: newUserEmail }]
     )
   })
 
@@ -267,7 +267,7 @@ test('Pages > Configuration > Users', { tag: ['@premium', '@standard'] }, async 
 
     await saveButton.click()
     const alertMessage = new AlertMessage(page)
-    await alertMessage.expectToHaveText('Updating of the user with success', AlertMessageType.SUCCESS)
+    await alertMessage.expectToHaveText('The user has been updated successfully', AlertMessageType.SUCCESS)
 
     const backButton = page.getByTestId(testIds.form.backButton)
     await backButton.click()
@@ -275,10 +275,10 @@ test('Pages > Configuration > Users', { tag: ['@premium', '@standard'] }, async 
 
     await grid.expectRowsAfterFiltersToBe(
       filter,
-      {[testIds.filter.email]: newUserEmail},
+      { [testIds.filter.email]: newUserEmail },
       [
-        {columnName: texts.gridHeaders.email, value: newUserEmail},
-        {columnName: texts.gridHeaders.roles, value: texts.editValues.editedRoleDisplay},
+        { columnName: texts.gridHeaders.email, value: newUserEmail },
+        { columnName: texts.gridHeaders.roles, value: texts.editValues.editedRoleDisplay },
       ]
     )
   })
@@ -292,6 +292,6 @@ test('Pages > Configuration > Users', { tag: ['@premium', '@standard'] }, async 
       testIds.form.deletePopin.dialogConfirmButton,
       urls.grid
     )
-    await grid.expectRowsAfterFiltersToBe(filter, {[testIds.filter.email]: newUserEmail}, [], 0)
+    await grid.expectRowsAfterFiltersToBe(filter, { [testIds.filter.email]: newUserEmail }, [], 0)
   })
 })
