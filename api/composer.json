@@ -14,7 +14,7 @@
         "doctrine/doctrine-bundle": "^2.7",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^3.0",
-        "gally/gally-standard": "dev-main",
+        "gally/gally-standard": "2.3.x-dev",
         "lexik/jwt-authentication-bundle": "^3.2",
         "nelmio/cors-bundle": "^2.2",
         "nyholm/psr7": "*",
