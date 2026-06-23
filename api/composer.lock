@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e73947387d07d8f753c31915910a9ab2",
+    "content-hash": "4a7c88dd57fd6252a9b9e14a09541a0b",
     "packages": [
         {
             "name": "api-platform/doctrine-common",
@@ -2953,7 +2953,7 @@
         },
         {
             "name": "gally/gally-standard",
-            "version": "2.3.x-dev",
+            "version": "dev-main",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Elastic-Suite/gally-standard.git",
@@ -2997,6 +2997,7 @@
                 "phpunit/phpunit": "^9.5",
                 "symfony/phpunit-bridge": "7.3.*"
             },
+            "default-branch": true,
             "type": "symfony-bundle",
             "extra": {
                 "symfony": {
@@ -3037,7 +3038,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Elastic-Suite/gally-standard/issues",
-                "source": "https://github.com/Elastic-Suite/gally-standard/tree/2.3.x"
+                "source": "https://github.com/Elastic-Suite/gally-standard/tree/main"
             },
             "time": "2026-06-19T12:45:09+00:00"
         },
