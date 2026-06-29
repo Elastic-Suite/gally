@@ -45,7 +45,7 @@ services:
       - ./docker/certbot/www:/var/www/certbot
     depends_on:
       varnish: 
-        condition: service_started
+        condition: service_healthy
       certbot:
           condition: service_healthy
     environment:
@@ -67,6 +67,12 @@ services:
     depends_on:
       - router
       - cron
+    healthcheck:
+      test: ["CMD", "sh", "-c", "nc -z localhost 80"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
     environment:
       - BACKEND_HOST=router
       - BACKEND_PORT=80
