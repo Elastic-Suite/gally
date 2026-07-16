@@ -1,5 +1,5 @@
 x-base-php-env : &php-base-env
-  APP_ENV: ${APP_SECRET}
+  APP_SECRET: ${APP_SECRET}
   XDEBUG_MODE: off
 
 services:
