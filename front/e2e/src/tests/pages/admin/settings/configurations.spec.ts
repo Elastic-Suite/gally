@@ -69,6 +69,17 @@ function getTestValues(): Record<string, Record<string, string>> {
   }
 }
 
+async function waitForConfigurationsResponse(page: Page, trigger: () => Promise<void>): Promise<void> {
+  const configurationsResponse = page.waitForResponse(
+    response =>
+      response.url().includes('/configurations') &&
+      response.request().method() === 'GET' &&
+      response.ok()
+  )
+  await trigger()
+  await configurationsResponse
+}
+
 async function testConfigurationsPage(page: Page, gallyPackage: GallyPackage): Promise<void> {
   const testValues = getTestValues()
   await test.step('Login and navigate to the configuration form page', async () => {
@@ -137,10 +148,7 @@ async function testConfigurationsPage(page: Page, gallyPackage: GallyPackage): P
 
   await test.step('Change scope and save scoped value', async () => {
     // Change scope to catalog
-    await scopeDropdown.selectValue(texts.scopes.catalog)
-
-    // Wait for form to update with new scope values
-    await page.waitForTimeout(1000) // Give time for API call to complete
+    await waitForConfigurationsResponse(page, () => scopeDropdown.selectValue(texts.scopes.catalog))
 
     // Fill in configuration values for general scope
     await page.getByTestId(testIds.fields.defaultSenderField).fill(testValues.catalog.defaultSender)
@@ -154,14 +162,12 @@ async function testConfigurationsPage(page: Page, gallyPackage: GallyPackage): P
 
   await test.step('Switch between scopes and verify different values', async () => {
     // Switch back to general scope
-    await scopeDropdown.selectValue(texts.scopes.general)
-    await page.waitForTimeout(1000)
+    await waitForConfigurationsResponse(page, () => scopeDropdown.selectValue(texts.scopes.general))
 
     // Verify general scope values are restored
     await expect(page.getByTestId(testIds.fields.defaultSenderField)).toHaveValue(testValues.general.defaultSender)
     // Switch to catalog scope
-    await scopeDropdown.selectValue(texts.scopes.catalog)
-    await page.waitForTimeout(1000)
+    await waitForConfigurationsResponse(page, () => scopeDropdown.selectValue(texts.scopes.catalog))
 
     // Verify catalog scope values are shown
     await expect(page.getByTestId(testIds.fields.defaultSenderField)).toHaveValue(testValues.catalog.defaultSender)
@@ -169,8 +175,7 @@ async function testConfigurationsPage(page: Page, gallyPackage: GallyPackage): P
 
   await test.step('Verify save button is disabled when no changes are made', async () => {
     // Ensure we're on a scope with saved values
-    await scopeDropdown.selectValue(texts.scopes.general)
-    await page.waitForTimeout(1000)
+    await waitForConfigurationsResponse(page, () => scopeDropdown.selectValue(texts.scopes.general))
 
     // Save button should be disabled when no changes are made
     await expect(page.getByTestId(testIds.form.saveButton)).toBeDisabled()
@@ -206,10 +211,7 @@ async function testConfigurationsPage(page: Page, gallyPackage: GallyPackage): P
     await test.step('Navigate to Explain tab and test switch functionality', async () => {
       // Navigate to the Explain subtab
       const configurationTabs = new Tabs(page,'configurationsGroups')
-      await configurationTabs.navigateTo('Explain')
-
-      // Wait for the Explain tab content to load
-      await page.waitForTimeout(1000)
+      await waitForConfigurationsResponse(page, () => configurationTabs.navigateTo('Explain'))
 
       // Check for the presence of the boolean field for highlight collector fields
       const highlightCollectorFieldsSwitch = new Switch(page, 'gally_explain.highlight_collector_fields')
