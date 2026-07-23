@@ -1,0 +1,6965 @@
+[
+  {
+    "sku": "VA01",
+    "name": "Dulcea Infinity Scarf",
+    "description": "<p>Made of super soft pima cotton, this lightweight scarf is laid out in a chic, continuous loop. Double it or drape it to create the perfect embellishment to any ensemble.</p><ul><li>58\" L x 32\" W</li><li>Cotton/Viscose blend</li></ul>",
+    "image": "/v/a/va01-rn_main.jpg",
+    "url_key": "dulcea-infinity-scarf",
+    "price": [
+      {
+        "price": 48,
+        "original_price": 48,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Peach",
+        "value": "22"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      },
+      {
+        "label": "Khaki",
+        "value": "23"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": null,
+    "fashion_material": [
+      {
+        "label": "Organic Cotton",
+        "value": "51"
+      },
+      {
+        "label": "Spandex",
+        "value": "55"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_3",
+        "name": "Accessories",
+        "is_parent": null
+      },
+      {
+        "id": "cat_6",
+        "name": "Scarves",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VA02",
+    "name": "Carola Infinity Scarf",
+    "description": "<p>Made of super soft pima cotton, this lightweight scarf is laid out in a chic, continuous loop. Double it or drape it to create the perfect embellishment to any ensemble.</p><ul><li>58\" L x 32\" W</li><li>Cotton/Viscose blend</li></ul>",
+    "image": "/v/a/va02-pe_main.jpg",
+    "url_key": "carola-infinity-scarf",
+    "price": [
+      {
+        "price": 48,
+        "original_price": 48,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Peach",
+        "value": "22"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      },
+      {
+        "label": "Khaki",
+        "value": "23"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": null,
+    "fashion_material": [
+      {
+        "label": "Organic Cotton",
+        "value": "51"
+      },
+      {
+        "label": "Spandex",
+        "value": "55"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_3",
+        "name": "Accessories",
+        "is_parent": null
+      },
+      {
+        "id": "cat_6",
+        "name": "Scarves",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VA03",
+    "name": "Ombre Infinity Scarf",
+    "description": "<p>Made of super soft pima cotton, this lightweight scarf is laid out in a chic, continuous loop. Double it or drape it to create the perfect embellishment to any ensemble.</p><ul><li>58\" L x 32\" W</li><li>Cotton/Viscose blend</li></ul>",
+    "image": "/v/a/va03-ly_main.jpg",
+    "url_key": "ombre-infinity-scarf",
+    "price": [
+      {
+        "price": 48,
+        "original_price": 48,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Lily",
+        "value": "27"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      },
+      {
+        "label": "Latte",
+        "value": "28"
+      },
+      {
+        "label": "Khaki",
+        "value": "23"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": null,
+    "fashion_material": [
+      {
+        "label": "Organic Cotton",
+        "value": "51"
+      },
+      {
+        "label": "Spandex",
+        "value": "55"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_3",
+        "name": "Accessories",
+        "is_parent": null
+      },
+      {
+        "id": "cat_6",
+        "name": "Scarves",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VA04",
+    "name": "Antonia Infinity Scarf",
+    "description": "<p>Made of super soft pima cotton, this lightweight scarf is laid out in a chic, continuous loop. Double it or drape it to create the perfect embellishment to any ensemble.</p><ul><li>58\" L x 32\" W</li><li>Cotton/Viscose blend</li></ul>",
+    "image": "/v/a/va04-ll_main.jpg",
+    "url_key": "antonia-infinity-scarf",
+    "price": [
+      {
+        "price": 48,
+        "original_price": 48,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Peach",
+        "value": "22"
+      },
+      {
+        "label": "Lily",
+        "value": "27"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      },
+      {
+        "label": "Khaki",
+        "value": "23"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": null,
+    "fashion_material": [
+      {
+        "label": "Viscose",
+        "value": "56"
+      },
+      {
+        "label": "Polyester",
+        "value": "52"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_3",
+        "name": "Accessories",
+        "is_parent": null
+      },
+      {
+        "id": "cat_6",
+        "name": "Scarves",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VA05",
+    "name": "Luna Scarf",
+    "description": "<p>This is the perfect addition to add a touch of whimsy to your favorite outfit. Oversized for versatility, this scarf will quickly become your new best friend. </p><ul><li>72\" L x 42\" W</li><li>Cotton/Viscose blend</li></ul>",
+    "image": "/v/a/va05-ll_main.jpg",
+    "url_key": "luna-scarf",
+    "price": [
+      {
+        "price": 58,
+        "original_price": 58,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Mint",
+        "value": "26"
+      },
+      {
+        "label": "Lily",
+        "value": "27"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": null,
+    "fashion_material": [
+      {
+        "label": "Cotton",
+        "value": "47"
+      },
+      {
+        "label": "Rayon",
+        "value": "53"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_3",
+        "name": "Accessories",
+        "is_parent": null
+      },
+      {
+        "id": "cat_6",
+        "name": "Scarves",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VA06",
+    "name": "Natalia Scarf",
+    "description": "<p>This is the perfect addition to add a touch of whimsy to your favorite outfit. Oversized for versatility, this scarf will quickly become your new best friend. </p><ul><li>72\" L x 42\" W</li><li>Cotton/Viscose blend</li></ul>",
+    "image": "/v/a/va06-ly_main.jpg",
+    "url_key": "natalia-scarf",
+    "price": [
+      {
+        "price": 58,
+        "original_price": 58,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Mint",
+        "value": "26"
+      },
+      {
+        "label": "Lily",
+        "value": "27"
+      },
+      {
+        "label": "Latte",
+        "value": "28"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": null,
+    "fashion_material": [
+      {
+        "label": "Cotton",
+        "value": "47"
+      },
+      {
+        "label": "Rayon",
+        "value": "53"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_3",
+        "name": "Accessories",
+        "is_parent": null
+      },
+      {
+        "id": "cat_6",
+        "name": "Scarves",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VA07",
+    "name": "Laser Cut Stretch Belt",
+    "description": "<ul><li>S: 28\" L; M: 30\" L; L: 32\" L</li><li>4\" W</li><li>Leather, elastic</li><li>Rounded metal buckle</li><li>Wipe clean</li></ul>",
+    "image": "/v/a/va07-bc_main.jpg",
+    "url_key": "laser-cut-stretch-belt",
+    "price": [
+      {
+        "price": 43,
+        "original_price": 48,
+        "is_discounted": true
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Cocoa",
+        "value": "29"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": null,
+    "fashion_material": [
+      {
+        "label": "Cotton",
+        "value": "47"
+      },
+      {
+        "label": "Spandex",
+        "value": "55"
+      },
+      {
+        "label": "Leather",
+        "value": "49"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_3",
+        "name": "Accessories",
+        "is_parent": null
+      },
+      {
+        "id": "cat_4",
+        "name": "Belts",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VA08",
+    "name": "Thick Leather Braided Belt",
+    "description": "<ul><li>S: 28\" L; M: 30\" L; L: 32\" L</li><li>3\" W</li><li>100% Leather</li><li>Braided pattern</li><li>Rounded metal buckle</li><li>Wipe clean</li></ul>",
+    "image": "/v/a/va08-br_main.jpg",
+    "url_key": "thick-leather-braided-belt",
+    "price": [
+      {
+        "price": 48,
+        "original_price": 48,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Cocoa",
+        "value": "29"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": null,
+    "fashion_material": [
+      {
+        "label": "Leather",
+        "value": "49"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_3",
+        "name": "Accessories",
+        "is_parent": null
+      },
+      {
+        "id": "cat_4",
+        "name": "Belts",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VA09",
+    "name": "Thin Leather Braided Belt",
+    "description": "<ul><li>S: 28\" L; M: 30\" L; L: 32\" L</li><li>1\" W</li><li>100% Leather</li><li>Braided pattern</li><li>Rounded metal buckle</li><li>Wipe clean</li></ul>",
+    "image": "/v/a/va09-br_main.jpg",
+    "url_key": "thin-leather-braided-belt",
+    "price": [
+      {
+        "price": 38,
+        "original_price": 38,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Cocoa",
+        "value": "29"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": null,
+    "fashion_material": [
+      {
+        "label": "Leather",
+        "value": "49"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_3",
+        "name": "Accessories",
+        "is_parent": null
+      },
+      {
+        "id": "cat_4",
+        "name": "Belts",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VA10",
+    "name": "Stretch Belt With Leather Clasp",
+    "description": "<ul><li>S: 28\" L; M: 30\" L; L: 32\" L</li><li>2\" W</li><li>Cotton, leather</li><li>Fold over front clasp</li><li>Wipe clean</li></ul>",
+    "image": "/v/a/va10-ct_main.jpg",
+    "url_key": "stretch-belt-with-leather-clasp",
+    "price": [
+      {
+        "price": 48,
+        "original_price": 48,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Cocoa",
+        "value": "29"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": null,
+    "fashion_material": [
+      {
+        "label": "Cotton",
+        "value": "47"
+      },
+      {
+        "label": "Spandex",
+        "value": "55"
+      },
+      {
+        "label": "Leather",
+        "value": "49"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_3",
+        "name": "Accessories",
+        "is_parent": null
+      },
+      {
+        "id": "cat_4",
+        "name": "Belts",
+        "is_parent": true
+      },
+      {
+        "id": "cat_15",
+        "name": "Shop The Look",
+        "is_parent": null
+      },
+      {
+        "id": "cat_21",
+        "name": "Timeless Sophistication",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VA12-SI-NA",
+    "name": "Augusta Earrings",
+    "description": "<p>Silver & aqua chandelier earrings.</p><ul><li>2.5 inch length</li><li>Sterling silver</li><li>Fish hook style</li></ul>",
+    "image": "/v/a/va12-ts_main.jpg",
+    "url_key": "augusta-earrings",
+    "price": [
+      {
+        "price": 78,
+        "original_price": 78,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Silver",
+        "value": "6"
+      }
+    ],
+    "fashion_size": null,
+    "fashion_style": null,
+    "fashion_material": [
+      {
+        "label": "Sterling Silver",
+        "value": "8"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_3",
+        "name": "Accessories",
+        "is_parent": true
+      },
+      {
+        "id": "cat_5",
+        "name": "Jewelry",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 100
+    }
+  },
+  {
+    "sku": "VA13-GO-NA",
+    "name": "Carmina Necklace",
+    "description": "<p>A medley of brightly colored glass seed beads.</p><ul><li>20 inch length</li><li>Goldtone</li><li>Lobster clasp</li></ul>",
+    "image": "/v/a/va13-sg_main.jpg",
+    "url_key": "carmina-necklace",
+    "price": [
+      {
+        "price": 78,
+        "original_price": 98,
+        "is_discounted": true
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      }
+    ],
+    "fashion_size": null,
+    "fashion_style": null,
+    "fashion_material": [
+      {
+        "label": "14K Gold",
+        "value": "7"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_3",
+        "name": "Accessories",
+        "is_parent": true
+      },
+      {
+        "id": "cat_5",
+        "name": "Jewelry",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 100
+    }
+  },
+  {
+    "sku": "VA14-SI-NA",
+    "name": "Augusta Necklace",
+    "description": "<p>A medley of brightly colored glass seed beads.</p><ul><li>20 inch length</li><li>Silvertone</li><li>Lobster clasp</li></ul>",
+    "image": "/v/a/va14-ts_main.jpg",
+    "url_key": "augusta-necklace",
+    "price": [
+      {
+        "price": 98,
+        "original_price": 98,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Silver",
+        "value": "6"
+      }
+    ],
+    "fashion_size": null,
+    "fashion_style": null,
+    "fashion_material": [
+      {
+        "label": "Sterling Silver",
+        "value": "8"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_3",
+        "name": "Accessories",
+        "is_parent": true
+      },
+      {
+        "id": "cat_5",
+        "name": "Jewelry",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 100
+    }
+  },
+  {
+    "sku": "VA15-SI-NA",
+    "name": "Silver Sol Earrings",
+    "description": "<p>Simple, elegant silver stud earrings. </p><ul><li>3/8 inch diameter </li><li>Sterling silver</li><li>Post back</li></ul>",
+    "image": "/v/a/va15-si_main.jpg",
+    "url_key": "silver-sol-earrings",
+    "price": [
+      {
+        "price": 48,
+        "original_price": 48,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Silver",
+        "value": "6"
+      }
+    ],
+    "fashion_size": null,
+    "fashion_style": null,
+    "fashion_material": [
+      {
+        "label": "Sterling Silver",
+        "value": "8"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_3",
+        "name": "Accessories",
+        "is_parent": true
+      },
+      {
+        "id": "cat_5",
+        "name": "Jewelry",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 100
+    }
+  },
+  {
+    "sku": "VA16-GO-NA",
+    "name": "Gold Sol Earrings",
+    "description": "<p>Simple, elegant gold stud earrings.</p><ul><li>3/8 inch diameter </li><li>18K gold</li><li>Post back</li></ul>",
+    "image": "/v/a/va16-go_main.jpg",
+    "url_key": "gold-sol-earrings",
+    "price": [
+      {
+        "price": 48,
+        "original_price": 48,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      }
+    ],
+    "fashion_size": null,
+    "fashion_style": null,
+    "fashion_material": [
+      {
+        "label": "14K Gold",
+        "value": "7"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_3",
+        "name": "Accessories",
+        "is_parent": true
+      },
+      {
+        "id": "cat_5",
+        "name": "Jewelry",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 100
+    }
+  },
+  {
+    "sku": "VA17-SI-NA",
+    "name": "Silver Cirque Earrings",
+    "description": "<p>Simple, silver hoop earrings complement every outfit without feeling overstated. </p><ul><li>1.5 inch diameter</li><li>Silver-plated</li><li>Snap-top closure</li></ul>",
+    "image": "/v/a/va17-si_main.jpg",
+    "url_key": "silver-cirque-earrings",
+    "price": [
+      {
+        "price": 68,
+        "original_price": 68,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Silver",
+        "value": "6"
+      }
+    ],
+    "fashion_size": null,
+    "fashion_style": null,
+    "fashion_material": [
+      {
+        "label": "Sterling Silver",
+        "value": "8"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_3",
+        "name": "Accessories",
+        "is_parent": true
+      },
+      {
+        "id": "cat_5",
+        "name": "Jewelry",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 100
+    }
+  },
+  {
+    "sku": "VA18-GO-NA",
+    "name": "Gold Cirque Earrings",
+    "description": "<p>Simple, gold hoop earrings complement every outfit without feeling overstated. </p><ul><li>1.5 inch diameter</li><li>14K gold</li><li>Snap-top closure</li></ul>",
+    "image": "/v/a/va18-go_main.jpg",
+    "url_key": "gold-cirque-earrings",
+    "price": [
+      {
+        "price": 68,
+        "original_price": 68,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      }
+    ],
+    "fashion_size": null,
+    "fashion_style": null,
+    "fashion_material": [
+      {
+        "label": "14K Gold",
+        "value": "7"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_3",
+        "name": "Accessories",
+        "is_parent": true
+      },
+      {
+        "id": "cat_5",
+        "name": "Jewelry",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 100
+    }
+  },
+  {
+    "sku": "VA19-GO-NA",
+    "name": "Gold Omni Bangle Set",
+    "description": "<p>Made for mixing & matching, these bangles can be worn simply or with additional bracelets for more advanced accessorizing. </p><ul><li>Set of 8</li><li>7 inch diameter</li><li>14K gold</li></ul>",
+    "image": "/v/a/va19-go_main.jpg",
+    "url_key": "gold-omni-bangle-set",
+    "price": [
+      {
+        "price": 78,
+        "original_price": 98,
+        "is_discounted": true
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      }
+    ],
+    "fashion_size": null,
+    "fashion_style": null,
+    "fashion_material": [
+      {
+        "label": "14K Gold",
+        "value": "7"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_3",
+        "name": "Accessories",
+        "is_parent": true
+      },
+      {
+        "id": "cat_5",
+        "name": "Jewelry",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 100
+    }
+  },
+  {
+    "sku": "VA21-GO-NA",
+    "name": "Gold Veritas Cuff Set",
+    "description": "<p>Made for mixing & matching, these bangles can be worn simply or with additional bracelets for more advanced accessorizing. </p><ul><li>Set of 2</li><li>6.5 inch diameter</li><li>14K gold, onyx, turquoise</li></ul>",
+    "image": "/v/a/va21-gbt_main.jpg",
+    "url_key": "gold-veritas-cuff-set",
+    "price": [
+      {
+        "price": 118,
+        "original_price": 118,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      }
+    ],
+    "fashion_size": null,
+    "fashion_style": null,
+    "fashion_material": [
+      {
+        "label": "14K Gold",
+        "value": "7"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_3",
+        "name": "Accessories",
+        "is_parent": true
+      },
+      {
+        "id": "cat_5",
+        "name": "Jewelry",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 100
+    }
+  },
+  {
+    "sku": "VA22-SI-NA",
+    "name": "Silver Amor Bangle Set",
+    "description": "<p>Made for mixing & matching, these bangles can be worn simply or with additional bracelets for more advanced accessorizing. </p><ul><li>Set of 4</li><li>7.5 inch diameter</li><li>Sterling Silver</li></ul>",
+    "image": "/v/a/va22-si_main.jpg",
+    "url_key": "silver-amor-bangle-set",
+    "price": [
+      {
+        "price": 98,
+        "original_price": 98,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Silver",
+        "value": "6"
+      }
+    ],
+    "fashion_size": null,
+    "fashion_style": null,
+    "fashion_material": [
+      {
+        "label": "Sterling Silver",
+        "value": "8"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_3",
+        "name": "Accessories",
+        "is_parent": true
+      },
+      {
+        "id": "cat_5",
+        "name": "Jewelry",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 98
+    }
+  },
+  {
+    "sku": "VA23",
+    "name": "Augusta Trio",
+    "description": "This trio is designed for versatility. Brighten up a simple look or add another layer of “wow” to an already vibrant ensemble. Go as big and bold, or understated as you're in the mood to be.",
+    "image": "/v/a/va23_main.jpg",
+    "url_key": "augusta-trio",
+    "price": [
+      {
+        "price": 78,
+        "original_price": 78,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Silver",
+        "value": "6"
+      },
+      {
+        "label": "Gold",
+        "value": "5"
+      }
+    ],
+    "fashion_size": null,
+    "fashion_style": null,
+    "fashion_material": [
+      {
+        "label": "Sterling Silver",
+        "value": "8"
+      },
+      {
+        "label": "14K Gold",
+        "value": "7"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_3",
+        "name": "Accessories",
+        "is_parent": true
+      },
+      {
+        "id": "cat_5",
+        "name": "Jewelry",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VA24",
+    "name": "Night Out Collection",
+    "description": "Tired of stressing over the right accessory combination? We’ve done the work for you. All combinations shown here have been vetted and tested out on the town by our in-house stylists.",
+    "image": "/v/a/va24_main.jpg",
+    "url_key": "night-out-collection",
+    "price": [
+      {
+        "price": 156,
+        "original_price": 156,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Silver",
+        "value": "6"
+      }
+    ],
+    "fashion_size": null,
+    "fashion_style": null,
+    "fashion_material": [
+      {
+        "label": "14K Gold",
+        "value": "7"
+      },
+      {
+        "label": "Sterling Silver",
+        "value": "8"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_3",
+        "name": "Accessories",
+        "is_parent": true
+      },
+      {
+        "id": "cat_5",
+        "name": "Jewelry",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VD01",
+    "name": "Angelina Tank Dress",
+    "description": "<p>The Angelina Tank Dress is simple yet sophisticated. This dress can be thrown over a swimsuit for last minute lunch plans or belted for dinner on the patio. The high-low hemline gives it the perfect amount of swing. </p><p>Features:</p><ul><li>Scoopneck</li><li>Sleeveless</li><li>Hits below the knee</li><li>Longer back hemline</li><li>Machine wash, tumble dry low</li></ul>",
+    "image": "/v/d/vd01-ll_main.jpg",
+    "url_key": "angelina-tank-dress",
+    "price": [
+      {
+        "price": 98,
+        "original_price": 98,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Peach",
+        "value": "22"
+      },
+      {
+        "label": "Mint",
+        "value": "26"
+      },
+      {
+        "label": "Lily",
+        "value": "27"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Sleeveless",
+        "value": "63"
+      },
+      {
+        "label": "Below Knee",
+        "value": "59"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Cotton",
+        "value": "47"
+      },
+      {
+        "label": "Viscose",
+        "value": "56"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_14",
+        "name": "Dresses",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VD02",
+    "name": "Candace Dress",
+    "description": "<p>The Candace dress is the perfect escape for the days when you just can't bear the thought of wearing pants. From the serene pattern of the fabric to the incredibly soft material, everything about this dress says “ahhhhh.\"</p><p>Features:</p><ul><li>Deep v-neck</li><li>Draped short sleeves</li><li>Hits below the knee</li><li>Front &amp; back ties</li><li>Machine wash, line dry</li></ul>",
+    "image": "/v/d/vd02-ll_main.jpg",
+    "url_key": "candace-dress",
+    "price": [
+      {
+        "price": 108,
+        "original_price": 108,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Peach",
+        "value": "22"
+      },
+      {
+        "label": "Mint",
+        "value": "26"
+      },
+      {
+        "label": "Lily",
+        "value": "27"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Short Sleeve",
+        "value": "62"
+      },
+      {
+        "label": "Below Knee",
+        "value": "59"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Organic Cotton",
+        "value": "51"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_14",
+        "name": "Dresses",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VD03",
+    "name": "Karena Halter Dress",
+    "description": "<p>The Karena Halter Dress loves to be the center of attention. The jersey material of this dress resists wrinkles, and hangs beautifully in all the right places. It's perfect for a long day of sun &amp; fun. </p><p>Features:</p><ul><li>Halter top</li><li>Open back, neck tie</li><li>Hits below the knee</li><li>Longer back hemline</li><li>Machine wash, line dry</li></ul>",
+    "image": "/v/d/vd03-mt_main.jpg",
+    "url_key": "karena-halter-dress",
+    "price": [
+      {
+        "price": 78,
+        "original_price": 78,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Mint",
+        "value": "26"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      },
+      {
+        "label": "Latte",
+        "value": "28"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Halter Top",
+        "value": "61"
+      },
+      {
+        "label": "Below Knee",
+        "value": "59"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Cotton",
+        "value": "47"
+      },
+      {
+        "label": "Viscose",
+        "value": "56"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_14",
+        "name": "Dresses",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VD04",
+    "name": "Felicia Maxi Dress",
+    "description": "<p>The Felicia Maxi Dress is your go-to on the days when you don't feel like wearing anything at all. This dress is lightweight without being see-through, and forgiving exactly where you need it to be. </p><p>Features:</p><ul><li>Scoop neck</li><li>Spaghetti straps</li><li>Hits below the ankles</li><li>Elastic waist</li><li>Machine wash, line dry</li></ul>",
+    "image": "/v/d/vd04-pe_main.jpg",
+    "url_key": "felicia-maxi-dress",
+    "price": [
+      {
+        "price": 128,
+        "original_price": 128,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Peach",
+        "value": "22"
+      },
+      {
+        "label": "Mint",
+        "value": "26"
+      },
+      {
+        "label": "Khaki",
+        "value": "23"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Sleeveless",
+        "value": "63"
+      },
+      {
+        "label": "Ankle Length",
+        "value": "60"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Cotton",
+        "value": "47"
+      },
+      {
+        "label": "Viscose",
+        "value": "56"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_14",
+        "name": "Dresses",
+        "is_parent": true
+      },
+      {
+        "id": "cat_15",
+        "name": "Shop The Look",
+        "is_parent": null
+      },
+      {
+        "id": "cat_21",
+        "name": "Timeless Sophistication",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VD05",
+    "name": "Veronica Maxi Dress",
+    "description": "<p>The Veronica Maxi Dress is literally a tall drink of water. Perfect for those days when you'd rather be sitting on the beach. This dress will keep you feeling cool on the even the hottest days. </p><p>Features:</p><ul><li>Scoop neck</li><li>Knot racerback</li><li>Hits at the ankles</li><li>Elastic waist</li><li>Machine wash, line dry</li></ul>",
+    "image": "/v/d/vd05-ly_main.jpg",
+    "url_key": "veronica-maxi-dress",
+    "price": [
+      {
+        "price": 88,
+        "original_price": 88,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Mint",
+        "value": "26"
+      },
+      {
+        "label": "Lily",
+        "value": "27"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      },
+      {
+        "label": "Khaki",
+        "value": "23"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Halter Top",
+        "value": "61"
+      },
+      {
+        "label": "Ankle Length",
+        "value": "60"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Rayon",
+        "value": "53"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_14",
+        "name": "Dresses",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VD06",
+    "name": "Flora Tank Dress",
+    "description": "<p>The Flora Tank Dress is soft to the touch, featuring a sheer, crushed velvet overlay that adds texture without heat. The vertical pattern of the design elegantly slims and camouflages.    </p><p>Features:</p><ul><li>Scoop neck</li><li>Two layers</li><li>Hits above the knee</li><li>Elastic waist</li><li>Dry clean only</li></ul>",
+    "image": "/v/d/vd06-mt_main.jpg",
+    "url_key": "flora-tank-dress",
+    "price": [
+      {
+        "price": 148,
+        "original_price": 148,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Peach",
+        "value": "22"
+      },
+      {
+        "label": "Mint",
+        "value": "26"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Sleeveless",
+        "value": "63"
+      },
+      {
+        "label": "Above Knee",
+        "value": "58"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Organic Cotton",
+        "value": "51"
+      },
+      {
+        "label": "Nylon",
+        "value": "50"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_14",
+        "name": "Dresses",
+        "is_parent": true
+      },
+      {
+        "id": "cat_15",
+        "name": "Shop The Look",
+        "is_parent": null
+      },
+      {
+        "id": "cat_20",
+        "name": "Retire your LBD",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VD07",
+    "name": "Paulina Draped Tank Dress",
+    "description": "<p>The Paulina Tank Dress has the potential to replace your favorite LBD. This dress is chic yet classic, with the flexibility to dress up its delicate draping. No one needs to know you're incredibly comfortable.  </p><p>Features:</p><ul><li>Draped scoop neck</li><li>Lined</li><li>Hits at the knee</li><li>Elastic waist</li><li>Machine wash, line dry</li></ul>",
+    "image": "/v/d/vd07-pe_main.jpg",
+    "url_key": "paulina-draped-tank-dress",
+    "price": [
+      {
+        "price": 108,
+        "original_price": 108,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Peach",
+        "value": "22"
+      },
+      {
+        "label": "Mint",
+        "value": "26"
+      },
+      {
+        "label": "Lily",
+        "value": "27"
+      },
+      {
+        "label": "Latte",
+        "value": "28"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Sleeveless",
+        "value": "63"
+      },
+      {
+        "label": "Above Knee",
+        "value": "58"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Cotton",
+        "value": "47"
+      },
+      {
+        "label": "Linen",
+        "value": "48"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_14",
+        "name": "Dresses",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VD08",
+    "name": "Valentina Tank Dress",
+    "description": "<p>The Valentina Tank Dress has lines placed in all the right places. What this freeform dress lacks in structure it makes up in exceptional design and composition. Wash &amp; wear care is a bonus.  </p><p>Features:</p><ul><li>Scoop neck</li><li>Piping around the neckline &amp; arms</li><li>Hits at the ankle</li><li>Elastic waist</li><li>Machine wash, line dry</li></ul>",
+    "image": "/v/d/vd08-ll_main.jpg",
+    "url_key": "valentina-tank-dress",
+    "price": [
+      {
+        "price": 78,
+        "original_price": 78,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Peach",
+        "value": "22"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      },
+      {
+        "label": "Latte",
+        "value": "28"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Sleeveless",
+        "value": "63"
+      },
+      {
+        "label": "Ankle Length",
+        "value": "60"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Cotton",
+        "value": "47"
+      },
+      {
+        "label": "Linen",
+        "value": "48"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_14",
+        "name": "Dresses",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VD09",
+    "name": "Alexia Maxi Dress",
+    "description": "<p>The Alexia Maxi Dress laughs at the notion that horizontal stripes are a no-no. The pattern in this dress creates a wonderful slimming effect. Add in the exceptionally soft fabric and it's downright irresistible.     </p><p>Features:</p><ul><li>Scoop neck</li><li>Capped sleeves</li><li>Hits at the ankle</li><li>Front pocket</li><li>Machine wash, line dry</li></ul>",
+    "image": "/v/d/vd09-pe_main.jpg",
+    "url_key": "alexia-maxi-dress",
+    "price": [
+      {
+        "price": 78,
+        "original_price": 78,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Peach",
+        "value": "22"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      },
+      {
+        "label": "Khaki",
+        "value": "23"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Short Sleeve",
+        "value": "62"
+      },
+      {
+        "label": "Ankle Length",
+        "value": "60"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Viscose",
+        "value": "56"
+      },
+      {
+        "label": "Linen",
+        "value": "48"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_14",
+        "name": "Dresses",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VD10",
+    "name": "Claudia Crochet Dress",
+    "description": "<p>The Claudia Dress is made to be paired with your favorite wardrobe basics. The sheer cotton material is perfect over a tank top and a pair of leggings. Gorgeous crochet details complete the look. </p><p>Features:</p><ul><li>Scoop neck</li><li>Short sleeves</li><li>Hits above the knee</li><li>Crochet details</li><li>Hand wash, line dry</li></ul>",
+    "image": "/v/d/vd10-ly_main.jpg",
+    "url_key": "claudia-crochet-dress",
+    "price": [
+      {
+        "price": 98,
+        "original_price": 98,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Peach",
+        "value": "22"
+      },
+      {
+        "label": "Lily",
+        "value": "27"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Short Sleeve",
+        "value": "62"
+      },
+      {
+        "label": "Above Knee",
+        "value": "58"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Organic Cotton",
+        "value": "51"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_14",
+        "name": "Dresses",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VD11",
+    "name": "Athena Tank Dress",
+    "description": "<p>The Athena Tank Dress offers a high level of structure &amp; details without sacrificing comfort. The collar and front pocket accents paired with pleating detail give a polished look with little effort.   </p><p>Features:</p><ul><li>Crewneck</li><li>Sleeveless</li><li>Hits above the knee</li><li>Pleated design</li><li>Dry clean only</li></ul>",
+    "image": "/v/d/vd11-ly_main.jpg",
+    "url_key": "athena-tank-dress",
+    "price": [
+      {
+        "price": 128,
+        "original_price": 128,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Peach",
+        "value": "22"
+      },
+      {
+        "label": "Lily",
+        "value": "27"
+      },
+      {
+        "label": "Latte",
+        "value": "28"
+      },
+      {
+        "label": "Khaki",
+        "value": "23"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Sleeveless",
+        "value": "63"
+      },
+      {
+        "label": "Above Knee",
+        "value": "58"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Silk",
+        "value": "54"
+      },
+      {
+        "label": "Rayon",
+        "value": "53"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_14",
+        "name": "Dresses",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VD12",
+    "name": "Petra Sundress",
+    "description": "<p>The Petra Sundress strikes a delightful balance between fun and functional. The easy style of this dress lends itself to relaxing and having a good time. Put your hands in the pockets and just chill.  </p><p>Features:</p><ul><li>V-neck</li><li>Capped sleeve</li><li>Hits above the knee</li><li>Keyhole back, side pockets</li><li>Hand wash, line dry</li></ul>",
+    "image": "/v/d/vd12-rn_main.jpg",
+    "url_key": "petra-sundress",
+    "price": [
+      {
+        "price": 108,
+        "original_price": 108,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      },
+      {
+        "label": "Latte",
+        "value": "28"
+      },
+      {
+        "label": "Khaki",
+        "value": "23"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Short Sleeve",
+        "value": "62"
+      },
+      {
+        "label": "Above Knee",
+        "value": "58"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Cotton",
+        "value": "47"
+      },
+      {
+        "label": "Rayon",
+        "value": "53"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_14",
+        "name": "Dresses",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VP01",
+    "name": "Selena Pants",
+    "description": "<p>The Selena Pants are one of the more form-fitting pieces in the Venia collection. But don't be fooled by their appearance. These gems are made with soft pima cotton and just the right amount of stretch.</p><p>Features:</p><ul><li>Cotton waistband</li><li>Drawstring waist</li><li>Sits just below waist</li><li>31\" inseam</li><li>Machine wash, line dry</li></ul>",
+    "image": "/v/p/vp01-ll_main.jpg",
+    "url_key": "selena-pants",
+    "price": [
+      {
+        "price": 108,
+        "original_price": 108,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Mint",
+        "value": "26"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      },
+      {
+        "label": "Latte",
+        "value": "28"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Slim Fit",
+        "value": "66"
+      },
+      {
+        "label": "Ankle Length",
+        "value": "60"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Organic Cotton",
+        "value": "51"
+      },
+      {
+        "label": "Spandex",
+        "value": "55"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_11",
+        "name": "Bottoms",
+        "is_parent": null
+      },
+      {
+        "id": "cat_12",
+        "name": "Pants & Shorts",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VP02",
+    "name": "Gloria Palazzo Pants",
+    "description": "<p>The Gloria Palazzo Pants are pretty much the best pants ever. Dress them up or dress them down. Throw them on in lieu of a skirt and feel sweet freedom from the constraints of regular pants. </p><p>Features:</p><ul><li>Elastic waistband</li><li>Pull on</li><li>Sits at the waist</li><li>32\" inseam</li><li>Machine wash, line dry</li></ul>",
+    "image": "/v/p/vp02-pe_main.jpg",
+    "url_key": "gloria-palazzo-pants",
+    "price": [
+      {
+        "price": 88,
+        "original_price": 88,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Peach",
+        "value": "22"
+      },
+      {
+        "label": "Mint",
+        "value": "26"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Wide Leg",
+        "value": "67"
+      },
+      {
+        "label": "Full Length",
+        "value": "69"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Polyester",
+        "value": "52"
+      },
+      {
+        "label": "Spandex",
+        "value": "55"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_11",
+        "name": "Bottoms",
+        "is_parent": null
+      },
+      {
+        "id": "cat_12",
+        "name": "Pants & Shorts",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VP03",
+    "name": "Camilla Palazzo Pants",
+    "description": "<p>The Camilla Palazzo Pants are a toss up when it comes to fashion or function. And really it doesn't matter because you'll love them for both. They carry amazing detail without the need for structure. </p><p>Features:</p><ul><li>Elastic waistband</li><li>Pull on</li><li>Sits at the waist</li><li>32\" inseam</li><li>Machine wash, line dry</li></ul>",
+    "image": "/v/p/vp03-pe_main.jpg",
+    "url_key": "camilla-palazzo-pants",
+    "price": [
+      {
+        "price": 88,
+        "original_price": 88,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Peach",
+        "value": "22"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      },
+      {
+        "label": "Khaki",
+        "value": "23"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Straight Leg",
+        "value": "70"
+      },
+      {
+        "label": "Full Length",
+        "value": "69"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Polyester",
+        "value": "52"
+      },
+      {
+        "label": "Spandex",
+        "value": "55"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_11",
+        "name": "Bottoms",
+        "is_parent": null
+      },
+      {
+        "id": "cat_12",
+        "name": "Pants & Shorts",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VP04",
+    "name": "Clara Wide Leg Pants",
+    "description": "<p>Slip on the Clara Wide Leg Pants and you'll immediately begin to feel something like an ocean breeze sweep over you. These pants are wrinkle-resistant and easy going, just like you. </p><p>Features:</p><ul><li>Cotton fold-down waistband</li><li>Wrinkle-resistant linen</li><li>Sits just below the waist</li><li>32\" inseam</li><li>Hand wash, line dry</li></ul>",
+    "image": "/v/p/vp04-ll_main.jpg",
+    "url_key": "clara-wide-leg-pants",
+    "price": [
+      {
+        "price": 98,
+        "original_price": 98,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Mint",
+        "value": "26"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      },
+      {
+        "label": "Khaki",
+        "value": "23"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Straight Leg",
+        "value": "70"
+      },
+      {
+        "label": "Full Length",
+        "value": "69"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Organic Cotton",
+        "value": "51"
+      },
+      {
+        "label": "Spandex",
+        "value": "55"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_11",
+        "name": "Bottoms",
+        "is_parent": null
+      },
+      {
+        "id": "cat_12",
+        "name": "Pants & Shorts",
+        "is_parent": true
+      },
+      {
+        "id": "cat_15",
+        "name": "Shop The Look",
+        "is_parent": null
+      },
+      {
+        "id": "cat_19",
+        "name": "Perfectly Beachy",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VP05",
+    "name": "Honora Wide Leg Pants",
+    "description": "<p>The Honora Wide Leg Pants definitely hold their own when it comes to standing out from the crowd. These pants feature a unique design and a varying color palette to make pairing a snap.</p><p>Features:</p><ul><li>Elastic waistband</li><li>Drawstring waist</li><li>Sits just below the waist</li><li>31\" inseam</li><li>Machine wash, line dry</li></ul>",
+    "image": "/v/p/vp05-rn_main.jpg",
+    "url_key": "honora-wide-leg-pants",
+    "price": [
+      {
+        "price": 78,
+        "original_price": 78,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Mint",
+        "value": "26"
+      },
+      {
+        "label": "Lily",
+        "value": "27"
+      },
+      {
+        "label": "Latte",
+        "value": "28"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Wide Leg",
+        "value": "67"
+      },
+      {
+        "label": "Full Length",
+        "value": "69"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Organic Cotton",
+        "value": "51"
+      },
+      {
+        "label": "Nylon",
+        "value": "50"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_11",
+        "name": "Bottoms",
+        "is_parent": null
+      },
+      {
+        "id": "cat_12",
+        "name": "Pants & Shorts",
+        "is_parent": true
+      },
+      {
+        "id": "cat_15",
+        "name": "Shop The Look",
+        "is_parent": null
+      },
+      {
+        "id": "cat_16",
+        "name": "Minimalist Sensibility",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VP06",
+    "name": "Calista Linen Pants",
+    "description": "<p>The Calista Linen Pants are subdued yet classic. Your closet will welcome these versatile additions. Forget everything you know about linen, because things are about to get interesting. </p><p>Features:</p><ul><li>Cotton waistband</li><li>Drawstring waist</li><li>Sits just below the waist</li><li>31\" inseam</li><li>Machine wash, line dry</li></ul>",
+    "image": "/v/p/vp06-ly_main.jpg",
+    "url_key": "calista-linen-pants",
+    "price": [
+      {
+        "price": 98,
+        "original_price": 98,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Peach",
+        "value": "22"
+      },
+      {
+        "label": "Lily",
+        "value": "27"
+      },
+      {
+        "label": "Latte",
+        "value": "28"
+      },
+      {
+        "label": "Khaki",
+        "value": "23"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Straight Leg",
+        "value": "70"
+      },
+      {
+        "label": "Full Length",
+        "value": "69"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Organic Cotton",
+        "value": "51"
+      },
+      {
+        "label": "Linen",
+        "value": "48"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_11",
+        "name": "Bottoms",
+        "is_parent": null
+      },
+      {
+        "id": "cat_12",
+        "name": "Pants & Shorts",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VP07",
+    "name": "Fauna Palazzo Pants",
+    "description": "<p>The Fauna Palazzo Pants are not for the weak of heart. They are a bold fashion statement, and demand a personality to match. These sheer pants will be the life of the party, with or without you. </p><p>Features:</p><ul><li>Elastic waist</li><li>Tie waistband</li><li>Cotton hot pants lining</li><li>32\" inseam</li><li>Hand wash, line dry</li></ul>",
+    "image": "/v/p/vp07-ll_main.jpg",
+    "url_key": "fauna-palazzo-pants",
+    "price": [
+      {
+        "price": 88,
+        "original_price": 88,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Peach",
+        "value": "22"
+      },
+      {
+        "label": "Lily",
+        "value": "27"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Wide Leg",
+        "value": "67"
+      },
+      {
+        "label": "Full Length",
+        "value": "69"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Polyester",
+        "value": "52"
+      },
+      {
+        "label": "Spandex",
+        "value": "55"
+      },
+      {
+        "label": "Cotton",
+        "value": "47"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_11",
+        "name": "Bottoms",
+        "is_parent": null
+      },
+      {
+        "id": "cat_12",
+        "name": "Pants & Shorts",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VP08",
+    "name": "Bella Eyelet Capris",
+    "description": "<p>The Bella Eyelet Capris are a reminder of simpler days. Pair these with a vibrant top and you're off for whatever the day holds in store. Prepare yourself for thoughtful design and impeccable seam placement.</p><p>Features:</p><ul><li>Set on waist</li><li>Zip fly</li><li>Sit just below the waist</li><li>26\" inseam</li><li>Machine wash, machine dry</li></ul>",
+    "image": "/v/p/vp08-rn_main.jpg",
+    "url_key": "bella-eyelet-capris",
+    "price": [
+      {
+        "price": 98,
+        "original_price": 98,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Mint",
+        "value": "26"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      },
+      {
+        "label": "Latte",
+        "value": "28"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "8",
+        "value": "41"
+      },
+      {
+        "label": "6",
+        "value": "40"
+      },
+      {
+        "label": "4",
+        "value": "39"
+      },
+      {
+        "label": "10",
+        "value": "42"
+      },
+      {
+        "label": "2",
+        "value": "38"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Slim Fit",
+        "value": "66"
+      },
+      {
+        "label": "Capri",
+        "value": "68"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Organic Cotton",
+        "value": "51"
+      },
+      {
+        "label": "Spandex",
+        "value": "55"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_11",
+        "name": "Bottoms",
+        "is_parent": null
+      },
+      {
+        "id": "cat_12",
+        "name": "Pants & Shorts",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VP09",
+    "name": "Lenora Crochet Shorts",
+    "description": "<p>The Lenora Crochet Shorts are perfect for those days when the weather dictates your wardrobe options. The good news is you can keep cool and still look good. These cotton shorts have got you covered. </p><p>Features:</p><ul><li>Elastic waist </li><li>Drawstring waist</li><li>Sit just below the waist</li><li>4\" inseam</li><li>Hand wash, line dry</li></ul>",
+    "image": "/v/p/vp09-pe_main.jpg",
+    "url_key": "lenora-crochet-shorts",
+    "price": [
+      {
+        "price": 78,
+        "original_price": 78,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Peach",
+        "value": "22"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      },
+      {
+        "label": "Latte",
+        "value": "28"
+      },
+      {
+        "label": "Khaki",
+        "value": "23"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Above Knee",
+        "value": "58"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Organic Cotton",
+        "value": "51"
+      },
+      {
+        "label": "Spandex",
+        "value": "55"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_11",
+        "name": "Bottoms",
+        "is_parent": null
+      },
+      {
+        "id": "cat_12",
+        "name": "Pants & Shorts",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VP10",
+    "name": "Portia Shorts",
+    "description": "<p>The Portia Shorts take the classic combo of black and white and add the contemporary edge of a dress short. Feminine scalloped edges finish these shorts and make them truly elegant. </p><p>Features:</p><ul><li>Elastic drawstring waist </li><li>Scalloped edges</li><li>Sit just below the waist</li><li>3\" inseam</li><li>Hand wash, line dry</li></ul>",
+    "image": "/v/p/vp10-la_main.jpg",
+    "url_key": "portia-shorts",
+    "price": [
+      {
+        "price": 98,
+        "original_price": 98,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Mint",
+        "value": "26"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      },
+      {
+        "label": "Latte",
+        "value": "28"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Above Knee",
+        "value": "58"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Viscose",
+        "value": "56"
+      },
+      {
+        "label": "Rayon",
+        "value": "53"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_11",
+        "name": "Bottoms",
+        "is_parent": null
+      },
+      {
+        "id": "cat_12",
+        "name": "Pants & Shorts",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VP11",
+    "name": "Amara Crochet Shorts",
+    "description": "<p>The Amara Crochet Shorts are just…wow. Rows of varying crochet patterns cover a complementary linen short. These shorts are overflowing with hand-stitched details that will garner attention (the good kind).       </p><p>Features:</p><ul><li>Set on waist</li><li>Side zip</li><li>Sit just below the waist</li><li>3\" inseam</li><li>Hand wash, line dry</li></ul>",
+    "image": "/v/p/vp11-pe_main.jpg",
+    "url_key": "amara-crochet-shorts",
+    "price": [
+      {
+        "price": 108,
+        "original_price": 108,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Peach",
+        "value": "22"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      },
+      {
+        "label": "Khaki",
+        "value": "23"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Above Knee",
+        "value": "58"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Organic Cotton",
+        "value": "51"
+      },
+      {
+        "label": "Linen",
+        "value": "48"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_11",
+        "name": "Bottoms",
+        "is_parent": null
+      },
+      {
+        "id": "cat_12",
+        "name": "Pants & Shorts",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VP12",
+    "name": "Liana Lace Shorts",
+    "description": "<p>The Liana Lace Shorts are a juxtaposition of new sophistication and classic style. The lace overlay brings back an elegant ornament of femininity without feeling formal or stodgy.     </p><p>Features:</p><ul><li>Set on waist</li><li>Zip fly</li><li>Sit just below the waist</li><li>4\" inseam</li><li>Machine wash, machine dry</li></ul>",
+    "image": "/v/p/vp12-la_main.jpg",
+    "url_key": "liana-lace-shorts",
+    "price": [
+      {
+        "price": 98,
+        "original_price": 98,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Lily",
+        "value": "27"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      },
+      {
+        "label": "Latte",
+        "value": "28"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "8",
+        "value": "41"
+      },
+      {
+        "label": "6",
+        "value": "40"
+      },
+      {
+        "label": "4",
+        "value": "39"
+      },
+      {
+        "label": "10",
+        "value": "42"
+      },
+      {
+        "label": "2",
+        "value": "38"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Above Knee",
+        "value": "58"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Polyester",
+        "value": "52"
+      },
+      {
+        "label": "Spandex",
+        "value": "55"
+      },
+      {
+        "label": "Cotton",
+        "value": "47"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_11",
+        "name": "Bottoms",
+        "is_parent": null
+      },
+      {
+        "id": "cat_12",
+        "name": "Pants & Shorts",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VSK01",
+    "name": "Bellona Skirt",
+    "description": "<p>The Bellona Skirt features stretchy, heathered material that moves right along with you. The a-line cut allows for long, easy strides while strategically placed external seams provide texture and contour. </p><p>Features:</p><ul><li>Pull on</li><li>Length: 44\"</li><li>Hits below the ankle</li><li>Roll down waist</li><li>Machine wash, line dry</li></ul>",
+    "image": "/v/s/vsk01-la_main.jpg",
+    "url_key": "bellona-skirt",
+    "price": [
+      {
+        "price": 78,
+        "original_price": 78,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Mint",
+        "value": "26"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      },
+      {
+        "label": "Latte",
+        "value": "28"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Full Length",
+        "value": "69"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Viscose",
+        "value": "56"
+      },
+      {
+        "label": "Linen",
+        "value": "48"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_11",
+        "name": "Bottoms",
+        "is_parent": null
+      },
+      {
+        "id": "cat_13",
+        "name": "Skirts",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VSK02",
+    "name": "Rowena Skirt",
+    "description": "<p>The Rowena Skirt will have you twirling a little more than usual. Inset kick panels give this skirt more swing than your typical maxi skirt. Try it. We guarantee you'll find more reasons to dance. </p><p>Features:</p><ul><li>Pull on</li><li>Length: 43\"</li><li>Hits below the ankle</li><li>Kick pleats</li><li>Machine wash, line dry</li></ul>",
+    "image": "/v/s/vsk02-ll_main.jpg",
+    "url_key": "rowena-skirt",
+    "price": [
+      {
+        "price": 78,
+        "original_price": 78,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Peach",
+        "value": "22"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      },
+      {
+        "label": "Khaki",
+        "value": "23"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Full Length",
+        "value": "69"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Viscose",
+        "value": "56"
+      },
+      {
+        "label": "Linen",
+        "value": "48"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_11",
+        "name": "Bottoms",
+        "is_parent": null
+      },
+      {
+        "id": "cat_13",
+        "name": "Skirts",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VSK03",
+    "name": "Johanna Skirt",
+    "description": "<p>The Johanna Skirt is probably the last skirt you'll ever need. Soft jersey fabric makes this the quintessential everyday skirt. Wear it to work. Wear it to the beach. Ditch the sweats and wear it grocery shopping. </p><p>Features:</p><ul><li>Pull on</li><li>Length: 42\"</li><li>Hits below the ankle</li><li>Thick waistband</li><li>Machine wash, line dry</li></ul>",
+    "image": "/v/s/vsk03-pe_main.jpg",
+    "url_key": "johanna-skirt",
+    "price": [
+      {
+        "price": 78,
+        "original_price": 78,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Peach",
+        "value": "22"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      },
+      {
+        "label": "Khaki",
+        "value": "23"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Full Length",
+        "value": "69"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Viscose",
+        "value": "56"
+      },
+      {
+        "label": "Linen",
+        "value": "48"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_11",
+        "name": "Bottoms",
+        "is_parent": null
+      },
+      {
+        "id": "cat_13",
+        "name": "Skirts",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VSK04",
+    "name": "Daria Crochet Skirt",
+    "description": "<p>The Daria Crochet Skirt has a genuine air of innocence about it. From its modest lines to the delicate crochet detail, this skirt just feels fresh. Wear with a soft tee or tank and be on your way. </p><p>Features:</p><ul><li>Pull on</li><li>Length: 26\"</li><li>Hits below the knee</li><li>Roll down waist</li><li>Hand wash, line dry</li></ul>",
+    "image": "/v/s/vsk04-kh_main.jpg",
+    "url_key": "daria-crochet-skirt",
+    "price": [
+      {
+        "price": 98,
+        "original_price": 98,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Peach",
+        "value": "22"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      },
+      {
+        "label": "Khaki",
+        "value": "23"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Below Knee",
+        "value": "59"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Organic Cotton",
+        "value": "51"
+      },
+      {
+        "label": "Nylon",
+        "value": "50"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_11",
+        "name": "Bottoms",
+        "is_parent": null
+      },
+      {
+        "id": "cat_13",
+        "name": "Skirts",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VSK05",
+    "name": "Agatha Skirt",
+    "description": "<p>The Agatha Skirt has a large circumference that lends itself to all sorts of drama. Take it out for a spin. The stretchy, cozy fabric is ready for all kinds of adventure. Just be prepared for whatever lies in store.  </p><p>Features:</p><ul><li>Pull on</li><li>Length: 43\"</li><li>Hits below the ankle</li><li>Thick waistband</li><li>Machine wash, line dry</li></ul>",
+    "image": "/v/s/vsk05-pe_main.jpg",
+    "url_key": "agatha-skirt",
+    "price": [
+      {
+        "price": 78,
+        "original_price": 78,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Peach",
+        "value": "22"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      },
+      {
+        "label": "Khaki",
+        "value": "23"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Full Length",
+        "value": "69"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Viscose",
+        "value": "56"
+      },
+      {
+        "label": "Linen",
+        "value": "48"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_11",
+        "name": "Bottoms",
+        "is_parent": null
+      },
+      {
+        "id": "cat_13",
+        "name": "Skirts",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VSK06",
+    "name": "Leona Skirt",
+    "description": "<p>The Leona Skirt hugs you in all the right places. The rouched waistband adds a little formality to this otherwise casual skirt. Its a-line shape keeps things breezy while still looking put together.  </p><p>Features:</p><ul><li>Pull on</li><li>Length: 44\"</li><li>Hits below the ankle</li><li>Thick, rouched waistband</li><li>Hand wash, line dry</li></ul>",
+    "image": "/v/s/vsk06-la_main.jpg",
+    "url_key": "leona-skirt",
+    "price": [
+      {
+        "price": 88,
+        "original_price": 88,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Mint",
+        "value": "26"
+      },
+      {
+        "label": "Lily",
+        "value": "27"
+      },
+      {
+        "label": "Latte",
+        "value": "28"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Full Length",
+        "value": "69"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Viscose",
+        "value": "56"
+      },
+      {
+        "label": "Linen",
+        "value": "48"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_11",
+        "name": "Bottoms",
+        "is_parent": null
+      },
+      {
+        "id": "cat_13",
+        "name": "Skirts",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VSK07",
+    "name": "Davina Skirt",
+    "description": "<p>The Davina Skirt is sure to warrant a second glance. While the sheer top layer falls somewhere around the ankles, the interior lining falls above the knee. Add in a long side slit and things just got a lot more interesting.  </p><p>Features:</p><ul><li>Pull on</li><li>Length: 42\"</li><li>Hits below the ankle</li><li>Short lining, sheer overlay</li><li>Hand wash, line dry</li></ul>",
+    "image": "/v/s/vsk07-rn_main.jpg",
+    "url_key": "davina-skirt",
+    "price": [
+      {
+        "price": 108,
+        "original_price": 108,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Peach",
+        "value": "22"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      },
+      {
+        "label": "Khaki",
+        "value": "23"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Full Length",
+        "value": "69"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Viscose",
+        "value": "56"
+      },
+      {
+        "label": "Polyester",
+        "value": "52"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_11",
+        "name": "Bottoms",
+        "is_parent": null
+      },
+      {
+        "id": "cat_13",
+        "name": "Skirts",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VSK08",
+    "name": "Tatiana Skirt",
+    "description": "<p>The Tatiana Skirt is just plain flirty and fun. The energetic print and short length demand attention no matter what the occasion. Strap on a pair of wedges and your legs will look amazing!</p><p>Features:</p><ul><li>Pull on</li><li>Length: 17\"</li><li>Hits mid thigh</li><li>Elastic waist</li><li>Hand wash, line dry</li></ul>",
+    "image": "/v/s/vsk08-ly_main.jpg",
+    "url_key": "tatiana-skirt",
+    "price": [
+      {
+        "price": 98,
+        "original_price": 98,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Peach",
+        "value": "22"
+      },
+      {
+        "label": "Mint",
+        "value": "26"
+      },
+      {
+        "label": "Lily",
+        "value": "27"
+      },
+      {
+        "label": "Latte",
+        "value": "28"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Above Knee",
+        "value": "58"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Viscose",
+        "value": "56"
+      },
+      {
+        "label": "Polyester",
+        "value": "52"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_11",
+        "name": "Bottoms",
+        "is_parent": null
+      },
+      {
+        "id": "cat_13",
+        "name": "Skirts",
+        "is_parent": true
+      },
+      {
+        "id": "cat_15",
+        "name": "Shop The Look",
+        "is_parent": null
+      },
+      {
+        "id": "cat_18",
+        "name": "Carefree Days",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VSK09",
+    "name": "Iona Skirt",
+    "description": "<p>The Iona Skirt is quite unique. Its lines are generous and flattering, without hugging the body too close. Pleating in the front as well as two long walking slits make this skirt extremely easy to wear. </p><p>Features:</p><ul><li>Pull on</li><li>Length: 42\"</li><li>Hits below ankle</li><li>Front walking slits</li><li>Machine wash, line dry</li></ul>",
+    "image": "/v/s/vsk09-rn_main.jpg",
+    "url_key": "iona-skirt",
+    "price": [
+      {
+        "price": 88,
+        "original_price": 88,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Peach",
+        "value": "22"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      },
+      {
+        "label": "Khaki",
+        "value": "23"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Full Length",
+        "value": "69"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Viscose",
+        "value": "56"
+      },
+      {
+        "label": "Rayon",
+        "value": "53"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_11",
+        "name": "Bottoms",
+        "is_parent": null
+      },
+      {
+        "id": "cat_13",
+        "name": "Skirts",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VSK10",
+    "name": "Samara Skirt",
+    "description": "<p>The Samara Skirt has a nice fit and flare feel to it. It hugs closely down through the hips and gracefully extends down past the ankles. The jersey material and complex pattern compliment every figure. </p><p>Features:</p><ul><li>Pull on</li><li>Length: 43\"</li><li>Hits below ankle</li><li>Elastic waistband</li><li>Machine wash, line dry</li></ul>",
+    "image": "/v/s/vsk10-pe_main.jpg",
+    "url_key": "samara-skirt",
+    "price": [
+      {
+        "price": 108,
+        "original_price": 108,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Peach",
+        "value": "22"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      },
+      {
+        "label": "Khaki",
+        "value": "23"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Full Length",
+        "value": "69"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Viscose",
+        "value": "56"
+      },
+      {
+        "label": "Linen",
+        "value": "48"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_11",
+        "name": "Bottoms",
+        "is_parent": null
+      },
+      {
+        "id": "cat_13",
+        "name": "Skirts",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VSK11",
+    "name": "Pomona Skirt",
+    "description": "<p>The Pomona Skirt lets you appear slightly wild, while still maintaining your composure. You don't need to do much in seeking a companion for this skirt. A simple tank or tee will do.   </p><p>Features:</p><ul><li>Pull on</li><li>Length: 43\"</li><li>Hits below ankle</li><li>Elastic waistband</li><li>Machine wash, line dry</li></ul>",
+    "image": "/v/s/vsk11-ly_main.jpg",
+    "url_key": "pomona-skirt",
+    "price": [
+      {
+        "price": 98,
+        "original_price": 98,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Mint",
+        "value": "26"
+      },
+      {
+        "label": "Lily",
+        "value": "27"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Full Length",
+        "value": "69"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Viscose",
+        "value": "56"
+      },
+      {
+        "label": "Polyester",
+        "value": "52"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_11",
+        "name": "Bottoms",
+        "is_parent": null
+      },
+      {
+        "id": "cat_13",
+        "name": "Skirts",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VSK12",
+    "name": "Isadora Skirt",
+    "description": "<p>The Isadora Skirt has just the right amount of flounce to make it playful and yet still chic. Lovely wrap detail and draped layering in the front add a bit of sophistication to the lush print. </p><p>Features:</p><ul><li>Side zip</li><li>Length: 17\"</li><li>Hits mid thigh</li><li>Set on waist</li><li>Dry clean recommended</li></ul>",
+    "image": "/v/s/vsk12-la_main.jpg",
+    "url_key": "isadora-skirt",
+    "price": [
+      {
+        "price": 118,
+        "original_price": 118,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Mint",
+        "value": "26"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      },
+      {
+        "label": "Latte",
+        "value": "28"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "8",
+        "value": "41"
+      },
+      {
+        "label": "6",
+        "value": "40"
+      },
+      {
+        "label": "4",
+        "value": "39"
+      },
+      {
+        "label": "10",
+        "value": "42"
+      },
+      {
+        "label": "2",
+        "value": "38"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Above Knee",
+        "value": "58"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Viscose",
+        "value": "56"
+      },
+      {
+        "label": "Silk",
+        "value": "54"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_11",
+        "name": "Bottoms",
+        "is_parent": null
+      },
+      {
+        "id": "cat_13",
+        "name": "Skirts",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VSW01",
+    "name": "Carina Cardigan",
+    "description": "<p>The Carina Cardigan is the perfect complement to a breezy summer evening. The loose knit, lightweight cotton fabric moves with you and provides just the right amount of breathable warmth.</p><p>Features:</p><ul><li>Open front </li><li>3/4 sleeve</li><li>Tapered to hip </li><li>Specked design </li><li>Dry clean recommended </li></ul>",
+    "image": "/v/s/vsw01-rn_main.jpg",
+    "url_key": "carina-cardigan",
+    "price": [
+      {
+        "price": 78,
+        "original_price": 78,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Peach",
+        "value": "22"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      },
+      {
+        "label": "Khaki",
+        "value": "23"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Long Sleeve",
+        "value": "64"
+      },
+      {
+        "label": "Open Front",
+        "value": "71"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Cotton",
+        "value": "47"
+      },
+      {
+        "label": "Acrylic",
+        "value": "45"
+      },
+      {
+        "label": "Wool",
+        "value": "57"
+      },
+      {
+        "label": "Nylon",
+        "value": "50"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_8",
+        "name": "Tops",
+        "is_parent": null
+      },
+      {
+        "id": "cat_10",
+        "name": "Sweaters",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VSW02",
+    "name": "Juno Sweater",
+    "description": "<p>The Juno Sweater is a good time waiting to happen. This fun &amp; functional two-layer cotton sweater combines subtlety with a hint of bold personality. Pair with shorts or jeans and get outside.</p><p>Features:</p><ul><li>Two layer open weave</li><li>Long sleeve</li><li>Sits on the hip</li><li>Fitted </li><li>Machine wash, line dry</li></ul>",
+    "image": "/v/s/vsw02-pe_main.jpg",
+    "url_key": "juno-sweater",
+    "price": [
+      {
+        "price": 68,
+        "original_price": 68,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Peach",
+        "value": "22"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      },
+      {
+        "label": "Khaki",
+        "value": "23"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "3/4 Sleeve",
+        "value": "65"
+      },
+      {
+        "label": "Crew",
+        "value": "72"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Organic Cotton",
+        "value": "51"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_8",
+        "name": "Tops",
+        "is_parent": null
+      },
+      {
+        "id": "cat_10",
+        "name": "Sweaters",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VSW03",
+    "name": "Phoebe Cardigan",
+    "description": "<p>The Phoebe Cardigan is a great addition to any tank dress. Perfect to have for those warm days that turn into chilly nights. Keeps arms warm without hiding what you're wearing underneath.</p><p>Features:</p><ul><li>Open front </li><li>Short sleeve</li><li>Hits mid-thigh</li><li>Great with a belt</li><li>Machine wash, line dry</li></ul>",
+    "image": "/v/s/vsw03-kh_main.jpg",
+    "url_key": "phoebe-cardigan",
+    "price": [
+      {
+        "price": 88,
+        "original_price": 88,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Mint",
+        "value": "26"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      },
+      {
+        "label": "Khaki",
+        "value": "23"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "3/4 Sleeve",
+        "value": "65"
+      },
+      {
+        "label": "Open Front",
+        "value": "71"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Acrylic",
+        "value": "45"
+      },
+      {
+        "label": "Nylon",
+        "value": "50"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_8",
+        "name": "Tops",
+        "is_parent": null
+      },
+      {
+        "id": "cat_10",
+        "name": "Sweaters",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VSW04",
+    "name": "Rosalina Cardigan",
+    "description": "<p>The Rosalina Cardigan is the definition of easy going. This lightweight cotton sweater has a fun little swing and just enough extra material to wrap it around you a little tighter when the temperature requires. </p><p>Features:</p><ul><li>Open front </li><li>Long sleeve</li><li>Hits below the hip</li><li>Great with a belt</li><li>Machine wash, line dry</li></ul>",
+    "image": "/v/s/vsw04-pe_main.jpg",
+    "url_key": "rosalina-cardigan",
+    "price": [
+      {
+        "price": 98,
+        "original_price": 98,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Peach",
+        "value": "22"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      },
+      {
+        "label": "Khaki",
+        "value": "23"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Long Sleeve",
+        "value": "64"
+      },
+      {
+        "label": "Open Front",
+        "value": "71"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Cotton",
+        "value": "47"
+      },
+      {
+        "label": "Cashmere",
+        "value": "46"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_8",
+        "name": "Tops",
+        "is_parent": null
+      },
+      {
+        "id": "cat_10",
+        "name": "Sweaters",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VSW05",
+    "name": "Hanna Sweater",
+    "description": "<p>The Hanna Sweater will make you feel like you're sitting overlooking the ocean, no matter where you are. This sheer cotton sweater is fabulous over a tank top and feels perfectly beachy. </p><p>Features:</p><ul><li>Crewneck</li><li>3/4 sleeve</li><li>Hits just below the waist</li><li>Great for layering</li><li>Machine wash, line dry</li></ul>",
+    "image": "/v/s/vsw05-kh_main.jpg",
+    "url_key": "hanna-sweater",
+    "price": [
+      {
+        "price": 98,
+        "original_price": 98,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Mint",
+        "value": "26"
+      },
+      {
+        "label": "Lily",
+        "value": "27"
+      },
+      {
+        "label": "Khaki",
+        "value": "23"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "3/4 Sleeve",
+        "value": "65"
+      },
+      {
+        "label": "Crew",
+        "value": "72"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Organic Cotton",
+        "value": "51"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_8",
+        "name": "Tops",
+        "is_parent": null
+      },
+      {
+        "id": "cat_10",
+        "name": "Sweaters",
+        "is_parent": true
+      },
+      {
+        "id": "cat_15",
+        "name": "Shop The Look",
+        "is_parent": null
+      },
+      {
+        "id": "cat_19",
+        "name": "Perfectly Beachy",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VSW06",
+    "name": "Sabina Hooded Cardigan",
+    "description": "<p>The Sabina Cardigan is perfect for those days when you want to look good without a whole lot of effort. Breathable cotton combined with a hood and pockets will have you looking perfectly put together.</p><p>Features:</p><ul><li>Open front</li><li>Long sleeve</li><li>Hits just below the waist</li><li>Hooded, side pockets</li><li>Dry clean recommended</li></ul>",
+    "image": "/v/s/vsw06-rn_main.jpg",
+    "url_key": "sabina-hooded-cardigan",
+    "price": [
+      {
+        "price": 108,
+        "original_price": 108,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Peach",
+        "value": "22"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      },
+      {
+        "label": "Khaki",
+        "value": "23"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Long Sleeve",
+        "value": "64"
+      },
+      {
+        "label": "Hooded",
+        "value": "73"
+      },
+      {
+        "label": "Open Front",
+        "value": "71"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Cotton",
+        "value": "47"
+      },
+      {
+        "label": "Cashmere",
+        "value": "46"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_8",
+        "name": "Tops",
+        "is_parent": null
+      },
+      {
+        "id": "cat_10",
+        "name": "Sweaters",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VSW07",
+    "name": "Brigid Boucle Cardigan",
+    "description": "<p>The Brigid Cardigan brings texture and richness to any outfit. Perfect over a tank and jeans or your favorite sundress. This sweater can be dressed up or down depending on your mood. </p><p>Features:</p><ul><li>Open front</li><li>3/4 sleeve</li><li>Sit below the hip</li><li>Versatile</li><li>Machine wash, line dry</li></ul>",
+    "image": "/v/s/vsw07-mt_main.jpg",
+    "url_key": "brigid-boucle-cardigan",
+    "price": [
+      {
+        "price": 118,
+        "original_price": 118,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Mint",
+        "value": "26"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      },
+      {
+        "label": "Latte",
+        "value": "28"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "3/4 Sleeve",
+        "value": "65"
+      },
+      {
+        "label": "Open Front",
+        "value": "71"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Cotton",
+        "value": "47"
+      },
+      {
+        "label": "Acrylic",
+        "value": "45"
+      },
+      {
+        "label": "Wool",
+        "value": "57"
+      },
+      {
+        "label": "Nylon",
+        "value": "50"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_8",
+        "name": "Tops",
+        "is_parent": null
+      },
+      {
+        "id": "cat_10",
+        "name": "Sweaters",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VSW08",
+    "name": "Roxana Cropped Sweater",
+    "description": "<p>The Roxana Sweater will perk your closet right up. This bold boucle top is the right choice for those days when you're seeking a sunny disposition. Soft fabric and loose fit will keep you feeling good. </p><p>Features:</p><ul><li>Crewneck</li><li>Long sleeve</li><li>Cropped</li><li>Loose fit</li><li>Machine wash, line dry</li></ul>",
+    "image": "/v/s/vsw08-ll_main.jpg",
+    "url_key": "roxana-cropped-sweater",
+    "price": [
+      {
+        "price": 78,
+        "original_price": 78,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Mint",
+        "value": "26"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      },
+      {
+        "label": "Khaki",
+        "value": "23"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Long Sleeve",
+        "value": "64"
+      },
+      {
+        "label": "Crew",
+        "value": "72"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Cotton",
+        "value": "47"
+      },
+      {
+        "label": "Nylon",
+        "value": "50"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_8",
+        "name": "Tops",
+        "is_parent": null
+      },
+      {
+        "id": "cat_10",
+        "name": "Sweaters",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VSW09",
+    "name": "Helena Cardigan",
+    "description": "<p>The Helena Cardigan is understated yet elegant. Great for keeping you warm without feeling constricted. The soft lines of this sweater provide endless comfort while keeping you looking flawless.  </p><p>Features:</p><ul><li>Open front</li><li>Long sleeve</li><li>Sits below the hip</li><li>Loose fit</li><li>Machine wash, line dry</li></ul>",
+    "image": "/v/s/vsw09-rn_main.jpg",
+    "url_key": "helena-cardigan",
+    "price": [
+      {
+        "price": 98,
+        "original_price": 98,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Mint",
+        "value": "26"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      },
+      {
+        "label": "Khaki",
+        "value": "23"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Long Sleeve",
+        "value": "64"
+      },
+      {
+        "label": "Open Front",
+        "value": "71"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Cotton",
+        "value": "47"
+      },
+      {
+        "label": "Cashmere",
+        "value": "46"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_8",
+        "name": "Tops",
+        "is_parent": null
+      },
+      {
+        "id": "cat_10",
+        "name": "Sweaters",
+        "is_parent": true
+      },
+      {
+        "id": "cat_15",
+        "name": "Shop The Look",
+        "is_parent": null
+      },
+      {
+        "id": "cat_18",
+        "name": "Carefree Days",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VSW10",
+    "name": "Corina Lace-Back Sweater",
+    "description": "<p>The Corina Sweater is delicate and sweet with a hint of mystique. This heathered knit beauty has an inset lace back that is slightly unexpected. You'll be looking for opportunities to walk away.  </p><p>Features:</p><ul><li>Crewneck</li><li>3/4 sleeve</li><li>Cropped</li><li>Back lace detail</li><li>Dry clean only</li></ul>",
+    "image": "/v/s/vsw10-ly_main.jpg",
+    "url_key": "corina-lace-back-sweater",
+    "price": [
+      {
+        "price": 108,
+        "original_price": 108,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Mint",
+        "value": "26"
+      },
+      {
+        "label": "Lily",
+        "value": "27"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "3/4 Sleeve",
+        "value": "65"
+      },
+      {
+        "label": "Crew",
+        "value": "72"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Cotton",
+        "value": "47"
+      },
+      {
+        "label": "Viscose",
+        "value": "56"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_8",
+        "name": "Tops",
+        "is_parent": null
+      },
+      {
+        "id": "cat_10",
+        "name": "Sweaters",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VSW11",
+    "name": "Echo Sweater",
+    "description": "<p>The Echo Sweater is sure to become your favorite weekend staple. Soft material and easy fit make it the perfect option for reading a book on the deck, or grabbing a cup of coffee with a friend. </p><p>Features:</p><ul><li>Crewneck</li><li>3/4 sleeve</li><li>Sits below waist</li><li>Two front pockets</li><li>Machine wash, line dry</li></ul>",
+    "image": "/v/s/vsw11-pe_main.jpg",
+    "url_key": "echo-sweater",
+    "price": [
+      {
+        "price": 78,
+        "original_price": 78,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Peach",
+        "value": "22"
+      },
+      {
+        "label": "Mint",
+        "value": "26"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "3/4 Sleeve",
+        "value": "65"
+      },
+      {
+        "label": "Crew",
+        "value": "72"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Cashmere",
+        "value": "46"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_8",
+        "name": "Tops",
+        "is_parent": null
+      },
+      {
+        "id": "cat_10",
+        "name": "Sweaters",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VSW12",
+    "name": "Lorena Cardigan",
+    "description": "<p>The Lorena Cardigan is a simple way to dress up any outfit while remaining comfortable. Wide sleeves provide ease of movement while the back offers beautiful inset floral detail. </p><p>Features:</p><ul><li>Open front</li><li>Short sleeve</li><li>Hits low on the hips</li><li>Back inset detail</li><li>Hand wash, line dry</li></ul>",
+    "image": "/v/s/vsw12-pe_main.jpg",
+    "url_key": "lorena-cardigan",
+    "price": [
+      {
+        "price": 98,
+        "original_price": 98,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Peach",
+        "value": "22"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      },
+      {
+        "label": "Khaki",
+        "value": "23"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Short Sleeve",
+        "value": "62"
+      },
+      {
+        "label": "Open Front",
+        "value": "71"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Cotton",
+        "value": "47"
+      },
+      {
+        "label": "Viscose",
+        "value": "56"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_8",
+        "name": "Tops",
+        "is_parent": null
+      },
+      {
+        "id": "cat_10",
+        "name": "Sweaters",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VT01",
+    "name": "Penelope Peasant Blouse",
+    "description": "<p>The Penelope Peasant Blouse will quickly become one of the most versatile pieces of your wardrobe. The classic sheer gauze material is a nod to this timeless style. Accessorize and make it your own.</p><p>Features:</p><ul><li>Crewneck</li><li>Long sleeve</li><li>Hits below the waist</li><li>Keyhole detail</li><li>Machine, line dry</li></ul>",
+    "image": "/v/t/vt01-kh_main.jpg",
+    "url_key": "penelope-peasant-blouse",
+    "price": [
+      {
+        "price": 88,
+        "original_price": 88,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Peach",
+        "value": "22"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      },
+      {
+        "label": "Khaki",
+        "value": "23"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Long Sleeve",
+        "value": "64"
+      },
+      {
+        "label": "Crew",
+        "value": "72"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Organic Cotton",
+        "value": "51"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_8",
+        "name": "Tops",
+        "is_parent": null
+      },
+      {
+        "id": "cat_9",
+        "name": "Blouses & Shirts",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VT02",
+    "name": "Chloe Silk Shell",
+    "description": "<p>The Chloe Shell is stunning on its own or as a layering piece. Made with soft, silk blend fabric, this top is flattering on every body type. The cap sleeves and detailed stitching offer just the right amount of femininity.  </p><p>Features:</p><ul><li>Scoop neck</li><li>Capped sleeve</li><li>Hits below the waist</li><li>Stitching detail</li><li>Dry clean only </li></ul>",
+    "image": "/v/t/vt02-rn_main.jpg",
+    "url_key": "chloe-silk-shell",
+    "price": [
+      {
+        "price": 68,
+        "original_price": 68,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Peach",
+        "value": "22"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      },
+      {
+        "label": "Khaki",
+        "value": "23"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Short Sleeve",
+        "value": "62"
+      },
+      {
+        "label": "Scoopneck",
+        "value": "74"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Silk",
+        "value": "54"
+      },
+      {
+        "label": "Rayon",
+        "value": "53"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_8",
+        "name": "Tops",
+        "is_parent": null
+      },
+      {
+        "id": "cat_9",
+        "name": "Blouses & Shirts",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VT03",
+    "name": "Susanna Draped Tank",
+    "description": "<p>The Susana Draped Tank is made of heathered jersey material and flaunts a draped, wrapover front. This sleeveless top doesn't sacrifice comfort for style. Yes, you can have it all. </p><p>Features:</p><ul><li>V-neck</li><li>Sleeveless</li><li>Hits at the waist</li><li>Wrapover front</li><li>Machine wash, line dry</li></ul>",
+    "image": "/v/t/vt03-rn_main.jpg",
+    "url_key": "susanna-draped-tank",
+    "price": [
+      {
+        "price": 98,
+        "original_price": 98,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Mint",
+        "value": "26"
+      },
+      {
+        "label": "Lily",
+        "value": "27"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Sleeveless",
+        "value": "63"
+      },
+      {
+        "label": "V-neck",
+        "value": "75"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Cotton",
+        "value": "47"
+      },
+      {
+        "label": "Spandex",
+        "value": "55"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_8",
+        "name": "Tops",
+        "is_parent": null
+      },
+      {
+        "id": "cat_9",
+        "name": "Blouses & Shirts",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VT04",
+    "name": "Anna Draped Top",
+    "description": "<p>The Anna Draped Top hangs beautifully in the all the right places. The soft, sheer material offers graceful lines and seamless movement. Back lace detail and tie at the neckline complete the look.  </p><p>Features:</p><ul><li>Draped neckline</li><li>Capped sleeves</li><li>Hits at the hips</li><li>Lace detail back &amp; tie neckline</li><li>Hand wash, line dry</li></ul>",
+    "image": "/v/t/vt04-mt_main.jpg",
+    "url_key": "anna-draped-top",
+    "price": [
+      {
+        "price": 88,
+        "original_price": 88,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Mint",
+        "value": "26"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      },
+      {
+        "label": "Latte",
+        "value": "28"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Short Sleeve",
+        "value": "62"
+      },
+      {
+        "label": "Crew",
+        "value": "72"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Cotton",
+        "value": "47"
+      },
+      {
+        "label": "Viscose",
+        "value": "56"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_8",
+        "name": "Tops",
+        "is_parent": null
+      },
+      {
+        "id": "cat_9",
+        "name": "Blouses & Shirts",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VT05",
+    "name": "Cora Open-Back Tank",
+    "description": "<p>The Cora Tank carries intrigue both coming and going. The delicate lace panel in the front, the slight a-line form, and the open back design make this top a target for compliments galore.  </p><p>Features:</p><ul><li>Crewneck</li><li>Sleeveless </li><li>Sits at the waist</li><li>Front lace panel and open back</li><li>Hand wash, line dry</li></ul>",
+    "image": "/v/t/vt05-pe_main.jpg",
+    "url_key": "cora-open-back-tank",
+    "price": [
+      {
+        "price": 108,
+        "original_price": 108,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Peach",
+        "value": "22"
+      },
+      {
+        "label": "Mint",
+        "value": "26"
+      },
+      {
+        "label": "Lily",
+        "value": "27"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Sleeveless",
+        "value": "63"
+      },
+      {
+        "label": "Crew",
+        "value": "72"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Cotton",
+        "value": "47"
+      },
+      {
+        "label": "Rayon",
+        "value": "53"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_8",
+        "name": "Tops",
+        "is_parent": null
+      },
+      {
+        "id": "cat_9",
+        "name": "Blouses & Shirts",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": false,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VT06",
+    "name": "Isabella Sleeveless Blouse",
+    "description": "<p>The Isabella Blouse is a wonderful balance of grace and comfort. The attention to detail is notable, from the open design along the shoulders, to the perfectly placed seams, to the peplum waist. </p><p>Features:</p><ul><li>Button down</li><li>Sleeveless </li><li>Sits at the waist</li><li>Open design along the shoulders</li><li>Dry clean recommended</li></ul>",
+    "image": "/v/t/vt06-mt_main.jpg",
+    "url_key": "isabella-sleeveless-blouse",
+    "price": [
+      {
+        "price": 88,
+        "original_price": 88,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Mint",
+        "value": "26"
+      },
+      {
+        "label": "Lily",
+        "value": "27"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Short Sleeve",
+        "value": "62"
+      },
+      {
+        "label": "Button-down",
+        "value": "76"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Cotton",
+        "value": "47"
+      },
+      {
+        "label": "Rayon",
+        "value": "53"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_8",
+        "name": "Tops",
+        "is_parent": null
+      },
+      {
+        "id": "cat_9",
+        "name": "Blouses & Shirts",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VT07",
+    "name": "Serena Blouse",
+    "description": "<p>The Serena Blouse is made with a silk rayon blend that will keep you feeling light and airy. Resistant to watermarks, you can feel confident in any temperature while looking flawless. </p><p>Features:</p><ul><li>Button down</li><li>Sleeveless </li><li>Sits at the hips</li><li>Spread collar</li><li>Dry clean recommended</li></ul>",
+    "image": "/v/t/vt07-rn_main.jpg",
+    "url_key": "serena-blouse",
+    "price": [
+      {
+        "price": 88,
+        "original_price": 88,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Peach",
+        "value": "22"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      },
+      {
+        "label": "Khaki",
+        "value": "23"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Short Sleeve",
+        "value": "62"
+      },
+      {
+        "label": "Button-down",
+        "value": "76"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Silk",
+        "value": "54"
+      },
+      {
+        "label": "Rayon",
+        "value": "53"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_8",
+        "name": "Tops",
+        "is_parent": null
+      },
+      {
+        "id": "cat_9",
+        "name": "Blouses & Shirts",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VT08",
+    "name": "Aurora Sleeveless Blouse",
+    "description": "<p>The Aurora Blouse is ready to go wherever you are. This top is wrinkle resistant, so it packs beautifully and hangs perfectly. Tabbed detail at the shoulders and dual pockets offer just the right amount of thoughtful design. </p><p>Features:</p><ul><li>Button down</li><li>Sleeveless </li><li>Falls below the hips</li><li>Shoulder tabs, pockets</li><li>Dry clean recommended</li></ul>",
+    "image": "/v/t/vt08-mt_main.jpg",
+    "url_key": "aurora-sleeveless-blouse",
+    "price": [
+      {
+        "price": 98,
+        "original_price": 98,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Mint",
+        "value": "26"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      },
+      {
+        "label": "Latte",
+        "value": "28"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Sleeveless",
+        "value": "63"
+      },
+      {
+        "label": "Button-down",
+        "value": "76"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Silk",
+        "value": "54"
+      },
+      {
+        "label": "Rayon",
+        "value": "53"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_8",
+        "name": "Tops",
+        "is_parent": null
+      },
+      {
+        "id": "cat_9",
+        "name": "Blouses & Shirts",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VT09",
+    "name": "Emilia Cropped Lace Top",
+    "description": "<p>The Emilia Lace Top is made to spice up your wardrobe without making you feel uncomfortable. Gorgeous open lace detail, back buttons, and the fun, cropped length will give you a little extra pep in your step.  </p><p>Features:</p><ul><li>Crewneck </li><li>Button down back</li><li>Short sleeve</li><li>Cropped</li><li>Dry clean recommended</li></ul>",
+    "image": "/v/t/vt09-ll_main.jpg",
+    "url_key": "emilia-cropped-lace-top",
+    "price": [
+      {
+        "price": 78,
+        "original_price": 78,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Peach",
+        "value": "22"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      },
+      {
+        "label": "Khaki",
+        "value": "23"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Short Sleeve",
+        "value": "62"
+      },
+      {
+        "label": "Crew",
+        "value": "72"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Organic Cotton",
+        "value": "51"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_8",
+        "name": "Tops",
+        "is_parent": null
+      },
+      {
+        "id": "cat_9",
+        "name": "Blouses & Shirts",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VT10",
+    "name": "Vitalia Top",
+    "description": "<p>The Vitalia Top is all about mixing it up. An interesting mix of cotton &amp; rayon materials makes this top hard to pin down. Wear it casual or dress it up. There are no rules here. </p><p>Features:</p><ul><li>V-neck</li><li>Capped sleeve</li><li>Sits on the hips</li><li>Faux wrap detail</li><li>Dry clean recommended</li></ul>",
+    "image": "/v/t/vt10-ly_main.jpg",
+    "url_key": "vitalia-top",
+    "price": [
+      {
+        "price": 98,
+        "original_price": 98,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Peach",
+        "value": "22"
+      },
+      {
+        "label": "Lily",
+        "value": "27"
+      },
+      {
+        "label": "Latte",
+        "value": "28"
+      },
+      {
+        "label": "Khaki",
+        "value": "23"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Short Sleeve",
+        "value": "62"
+      },
+      {
+        "label": "V-neck",
+        "value": "75"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Cotton",
+        "value": "47"
+      },
+      {
+        "label": "Rayon",
+        "value": "53"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_8",
+        "name": "Tops",
+        "is_parent": null
+      },
+      {
+        "id": "cat_9",
+        "name": "Blouses & Shirts",
+        "is_parent": true
+      },
+      {
+        "id": "cat_15",
+        "name": "Shop The Look",
+        "is_parent": null
+      },
+      {
+        "id": "cat_17",
+        "name": "Outside the Lines",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VT11",
+    "name": "Valeria Two-Layer Tank",
+    "description": "<p>The Valeria Tank features two layers of possibility. The loose fit flatters without impacting comfort and the tiered material hangs beautifully. Wear alone or add a belt for a little more definition. </p><p>Features:</p><ul><li>Scoop neck</li><li>Sleeveless</li><li>Sits below the hips</li><li>Two layers</li><li>Machine wash, tumble dry low</li></ul>",
+    "image": "/v/t/vt11-ll_main.jpg",
+    "url_key": "valeria-two-layer-tank",
+    "price": [
+      {
+        "price": 68,
+        "original_price": 68,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Mint",
+        "value": "26"
+      },
+      {
+        "label": "Lily",
+        "value": "27"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Sleeveless",
+        "value": "63"
+      },
+      {
+        "label": "Scoopneck",
+        "value": "74"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Cotton",
+        "value": "47"
+      },
+      {
+        "label": "Viscose",
+        "value": "56"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_8",
+        "name": "Tops",
+        "is_parent": null
+      },
+      {
+        "id": "cat_9",
+        "name": "Blouses & Shirts",
+        "is_parent": true
+      },
+      {
+        "id": "cat_15",
+        "name": "Shop The Look",
+        "is_parent": null
+      },
+      {
+        "id": "cat_16",
+        "name": "Minimalist Sensibility",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VT12",
+    "name": "Jillian Top",
+    "description": "<p>The Jillian Top takes a wardrobe essential and kicks it up a notch with soft, heathered material and lace detail. Next time you feel like wearing a t-shirt, grab this instead. Comfort can look this good.  </p><p>Features:</p><ul><li>Crewneck</li><li>Capped sleeve</li><li>Sits on the hips</li><li>Longer back hemline</li><li>Machine wash, line dry</li></ul>",
+    "image": "/v/t/vt12-kh_main.jpg",
+    "url_key": "jillian-top",
+    "price": [
+      {
+        "price": 58,
+        "original_price": 58,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": "5"
+      },
+      {
+        "label": "Rain",
+        "value": "25"
+      },
+      {
+        "label": "Peach",
+        "value": "22"
+      },
+      {
+        "label": "Lilac",
+        "value": "24"
+      },
+      {
+        "label": "Khaki",
+        "value": "23"
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": "33"
+      },
+      {
+        "label": "XS",
+        "value": "37"
+      },
+      {
+        "label": "S",
+        "value": "36"
+      },
+      {
+        "label": "M",
+        "value": "35"
+      },
+      {
+        "label": "L",
+        "value": "34"
+      }
+    ],
+    "fashion_style": [
+      {
+        "label": "Short Sleeve",
+        "value": "62"
+      },
+      {
+        "label": "Scoopneck",
+        "value": "74"
+      }
+    ],
+    "fashion_material": [
+      {
+        "label": "Cotton",
+        "value": "47"
+      },
+      {
+        "label": "Acrylic",
+        "value": "45"
+      },
+      {
+        "label": "Wool",
+        "value": "57"
+      }
+    ],
+    "category": [
+      {
+        "id": "cat_8",
+        "name": "Tops",
+        "is_parent": null
+      },
+      {
+        "id": "cat_9",
+        "name": "Blouses & Shirts",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 0
+    }
+  },
+  {
+    "sku": "VVP01",
+    "name": "Venia Stylist Consultation",
+    "description": "<p>Indulge in our personal styling service that uses a combination of expert stylists and technology to handpick apparel and accessories based on your budget, size and style. This is a great treat for yourself, or someone you think may need a little style intervention. ;-)</p><p>Quantity is per 15 minute consultation</p>",
+    "image": "/v/v/vvp01_main.jpg",
+    "url_key": "venia-stylist-consultation",
+    "price": [
+      {
+        "price": 15,
+        "original_price": 15,
+        "is_discounted": false
+      }
+    ],
+    "fashion_color": null,
+    "fashion_size": null,
+    "fashion_style": null,
+    "fashion_material": null,
+    "category": [
+      {
+        "id": "cat_7",
+        "name": "New Products",
+        "is_parent": true
+      }
+    ],
+    "stock": {
+      "status": true,
+      "qty": 1000
+    }
+  }
+]

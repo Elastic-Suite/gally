@@ -1,0 +1,192 @@
+[
+  {
+    "id": "cat_2",
+    "name": "Default Category",
+    "level": 1,
+    "path": "cat_2",
+    "isVirtual": false,
+    "count": 84,
+    "children": [
+      {
+        "id": "cat_11",
+        "name": "Bas",
+        "level": 2,
+        "path": "cat_2/cat_11",
+        "isVirtual": false,
+        "count": 24,
+        "children": [
+          {
+            "id": "cat_12",
+            "name": "Pantalons & Shorts",
+            "level": 3,
+            "path": "cat_2/cat_11/cat_12",
+            "isVirtual": false,
+            "count": 12,
+            "image": "/v/p/vp01-ll_main.jpg"
+          },
+          {
+            "id": "cat_13",
+            "name": "Jupes",
+            "level": 3,
+            "path": "cat_2/cat_11/cat_13",
+            "isVirtual": false,
+            "count": 12,
+            "image": "/v/s/vsk01-la_main.jpg"
+          }
+        ],
+        "image": "/v/p/vp12-la_main.jpg"
+      },
+      {
+        "id": "cat_14",
+        "name": "Robes",
+        "level": 2,
+        "path": "cat_2/cat_14",
+        "isVirtual": false,
+        "count": 12,
+        "image": "/v/d/vd07-pe_main.jpg"
+      },
+      {
+        "id": "cat_15",
+        "name": "Shop The Look",
+        "level": 2,
+        "path": "cat_2/cat_15",
+        "isVirtual": false,
+        "count": 10,
+        "children": [
+          {
+            "id": "cat_16",
+            "name": "Minimalist Sensibility",
+            "level": 3,
+            "path": "cat_2/cat_15/cat_16",
+            "isVirtual": false,
+            "count": 2,
+            "image": "/v/p/vp05-rn_main.jpg"
+          },
+          {
+            "id": "cat_17",
+            "name": "Outside the Lines",
+            "level": 3,
+            "path": "cat_2/cat_15/cat_17",
+            "isVirtual": false,
+            "count": 1,
+            "image": "/v/t/vt10-ly_main.jpg"
+          },
+          {
+            "id": "cat_18",
+            "name": "Carefree Days",
+            "level": 3,
+            "path": "cat_2/cat_15/cat_18",
+            "isVirtual": false,
+            "count": 2,
+            "image": "/v/s/vsk08-ly_main.jpg"
+          },
+          {
+            "id": "cat_19",
+            "name": "Perfectly Beachy",
+            "level": 3,
+            "path": "cat_2/cat_15/cat_19",
+            "isVirtual": false,
+            "count": 2,
+            "image": "/v/p/vp04-ll_main.jpg"
+          },
+          {
+            "id": "cat_20",
+            "name": "Retire your LBD",
+            "level": 3,
+            "path": "cat_2/cat_15/cat_20",
+            "isVirtual": false,
+            "count": 1,
+            "image": "/v/d/vd06-mt_main.jpg"
+          },
+          {
+            "id": "cat_21",
+            "name": "Timeless Sophistication",
+            "level": 3,
+            "path": "cat_2/cat_15/cat_21",
+            "isVirtual": false,
+            "count": 2,
+            "image": "/v/a/va10-ct_main.jpg"
+          }
+        ],
+        "image": "/v/a/va10-ct_main.jpg"
+      },
+      {
+        "id": "cat_3",
+        "name": "Accessoires",
+        "level": 2,
+        "path": "cat_2/cat_3",
+        "isVirtual": false,
+        "count": 23,
+        "children": [
+          {
+            "id": "cat_4",
+            "name": "Ceintures",
+            "level": 3,
+            "path": "cat_2/cat_3/cat_4",
+            "isVirtual": false,
+            "count": 4,
+            "image": "/v/a/va07-bc_main.jpg"
+          },
+          {
+            "id": "cat_5",
+            "name": "Bijoux",
+            "level": 3,
+            "path": "cat_2/cat_3/cat_5",
+            "isVirtual": false,
+            "count": 13,
+            "image": "/v/a/va19-go_main.jpg"
+          },
+          {
+            "id": "cat_6",
+            "name": "Écharpes",
+            "level": 3,
+            "path": "cat_2/cat_3/cat_6",
+            "isVirtual": false,
+            "count": 6,
+            "image": "/v/a/va01-rn_main.jpg"
+          }
+        ],
+        "image": "/v/a/va19-go_main.jpg"
+      },
+      {
+        "id": "cat_7",
+        "name": "New Products",
+        "level": 2,
+        "path": "cat_2/cat_7",
+        "isVirtual": true,
+        "count": 1,
+        "image": "/v/t/vt11-ll_main.jpg"
+      },
+      {
+        "id": "cat_8",
+        "name": "Hauts",
+        "level": 2,
+        "path": "cat_2/cat_8",
+        "isVirtual": false,
+        "count": 24,
+        "children": [
+          {
+            "id": "cat_10",
+            "name": "Sweats",
+            "level": 3,
+            "path": "cat_2/cat_8/cat_10",
+            "isVirtual": false,
+            "count": 12,
+            "image": "/v/s/vsw01-rn_main.jpg"
+          },
+          {
+            "id": "cat_9",
+            "name": "Chemisiers et T-shirts",
+            "level": 3,
+            "path": "cat_2/cat_8/cat_9",
+            "isVirtual": false,
+            "count": 12,
+            "image": "/v/t/vt01-kh_main.jpg"
+          }
+        ],
+        "image": "/v/s/vsw01-rn_main.jpg"
+      }
+    ],
+    "image": "/v/a/va19-go_main.jpg"
+  }
+]

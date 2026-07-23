@@ -1,47 +1,38 @@
-import React, { SyntheticEvent, useState } from 'react'
-import { Box, Tab, Tabs as TabsBase } from '@mui/material'
+import { useState, type ReactNode } from 'react'
 
-import { ITab } from '@elastic-suite/gally-admin-shared'
-
-import TabPanel from './TabPanel'
-import { a11yProps } from './a11yProps'
-
-interface IProps {
-  defaultActiveId?: number
-  onChange?: (id: number) => void
-  tabs: ITab[]
+export interface TabItem {
+  label: string
+  content: ReactNode
 }
 
-export default function Tabs(props: IProps): JSX.Element {
-  const { defaultActiveId, onChange, tabs } = props
-  const [activeId, setActiveId] = useState(defaultActiveId ?? tabs[0].id)
+export function Tabs({ items }: { items: TabItem[] }) {
+  const [active, setActive] = useState(0)
 
-  const handleChange = (event: SyntheticEvent, id: number): void => {
-    event.preventDefault()
-    setActiveId(id)
-    if (onChange) {
-      onChange(id)
-    }
-  }
+  if (!items.length) return null
 
   return (
-    <Box sx={{ width: '100%', marginTop: '-12px' }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <TabsBase
-          value={activeId}
-          onChange={handleChange}
-          aria-label="basic tabs example"
-        >
-          {tabs.map(({ id, label }) => (
-            <Tab key={id} label={label} {...a11yProps('simple-tabpanel', id)} />
-          ))}
-        </TabsBase>
-      </Box>
-      {tabs.map(({ id, Component, componentProps }) => (
-        <TabPanel key={id} value={activeId} id={id}>
-          <Component {...componentProps} active={id === activeId} />
-        </TabPanel>
-      ))}
-    </Box>
+    <div>
+      <div role="tablist" className="flex gap-6 border-b border-line-200">
+        {items.map((item, index) => (
+          <button
+            key={item.label}
+            type="button"
+            role="tab"
+            aria-selected={active === index}
+            onClick={() => setActive(index)}
+            className={`-mb-px border-b-2 py-3 text-sm font-medium ${
+              active === index
+                ? 'border-brand-500 text-brand-600'
+                : 'border-transparent text-ink-900/60 hover:text-ink-900'
+            }`}
+          >
+            {item.label}
+          </button>
+        ))}
+      </div>
+      <div role="tabpanel" className="py-6">
+        {items[active].content}
+      </div>
+    </div>
   )
 }

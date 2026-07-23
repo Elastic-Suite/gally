@@ -1,0 +1,55 @@
+@import 'tailwindcss';
+
+@font-face {
+  font-family: 'Geist';
+  src: url('./assets/fonts/Geist-Variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('./assets/fonts/GeistMono-Variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-sans: 'Geist', system-ui, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, monospace;
+
+  --color-brand-50: #f2f1fd;
+  --color-brand-100: #e6e4fb;
+  --color-brand-200: #c3bef6;
+  --color-brand-300: #9e98f4;
+  --color-brand-400: #6c5fe8;
+  --color-brand-500: #4a3bdd;
+  --color-brand-600: #3c2fb8;
+  --color-brand-700: #2f2590;
+  --color-brand-800: #221a6a;
+  --color-brand-900: #1a0f4d;
+
+  --color-accent-50: #fdf1ef;
+  --color-accent-100: #fbe1dd;
+  --color-accent-300: #f39488;
+  --color-accent-500: #ed7465;
+  --color-accent-600: #d85c4d;
+  --color-accent-700: #b8493c;
+
+  --color-ink-900: #1c1f21;
+  --color-paper-50: #fcfcfc;
+  --color-line-200: #e6eaec;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-ink-900);
+  background-color: var(--color-paper-50);
+}
+
+.dotted-bg {
+  background-image: radial-gradient(var(--color-line-200) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
