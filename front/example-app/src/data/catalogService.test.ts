@@ -1,13 +1,18 @@
 import { describe, expect, it } from 'vitest'
 import {
+  applyArticleFilters,
   applyFilters,
+  computeArticleFacets,
   computeFacets,
+  emptyArticleFilters,
   emptyFilters,
   getCompatibleProducts,
   getProduct,
   getProductsForCategory,
   getSimilarProducts,
+  searchArticles,
   searchProducts,
+  suggestTerms,
 } from './catalogService'
 
 describe('getProductsForCategory', () => {
@@ -85,5 +90,40 @@ describe('recommendations', () => {
     expect(
       compatible.every((p) => p.categories.some((c) => c.id === 'cat_11')),
     ).toBe(true)
+  })
+})
+
+describe('suggestTerms', () => {
+  it('suggests a matching term without repeating the exact query', () => {
+    const terms = suggestTerms('fr', 'sweat')
+    expect(terms.some((t) => t.toLowerCase().startsWith('sweat'))).toBe(true)
+    expect(terms.some((t) => t.toLowerCase() === 'sweat')).toBe(false)
+  })
+
+  it('returns nothing for a very short query', () => {
+    expect(suggestTerms('fr', 'a')).toHaveLength(0)
+  })
+})
+
+describe('CMS article search and facets', () => {
+  it('finds the gilet guide and facets it by section', () => {
+    const articles = searchArticles('fr', 'gilet')
+    expect(articles.some((a) => a.slug === 'bien-choisir-son-gilet')).toBe(true)
+
+    const facets = computeArticleFacets(articles, emptyArticleFilters(), [])
+    const sectionFacet = facets.find((f) => f.field === 'sections')
+    expect(sectionFacet).toBeDefined()
+    expect(sectionFacet!.options.some((o) => o.value === 'Guides style')).toBe(
+      true,
+    )
+  })
+
+  it('filters articles by section', () => {
+    const articles = searchArticles('fr', 'gilet')
+    const filtered = applyArticleFilters(articles, {
+      ...emptyArticleFilters(),
+      sections: ['Actualités mode'],
+    })
+    expect(filtered).toHaveLength(0)
   })
 })

@@ -5,6 +5,7 @@ import { suggest, type SearchSuggestions } from '../../data/catalogService'
 import { formatPrice } from '../../lib/format'
 
 const EMPTY: SearchSuggestions = {
+  terms: [],
   products: [],
   categories: [],
   attributes: [],
@@ -44,7 +45,8 @@ export function SearchAutocomplete() {
   }
 
   const hasResults =
-    results.products.length +
+    results.terms.length +
+      results.products.length +
       results.categories.length +
       results.attributes.length >
     0
@@ -77,6 +79,40 @@ export function SearchAutocomplete() {
             <p className="text-sm text-ink-900/60">
               No suggestions for &ldquo;{query}&rdquo;.
             </p>
+          )}
+
+          {results.terms.length > 0 && (
+            <div className="mb-3">
+              <p className="mb-1.5 text-xs font-semibold uppercase tracking-wide text-ink-900/50">
+                Suggested searches
+              </p>
+              <ul className="flex flex-col gap-2">
+                {results.terms.map((term) => (
+                  <li key={term}>
+                    <button
+                      type="button"
+                      onClick={() => goToSearch(term)}
+                      className="flex w-full items-center gap-2 text-left text-sm hover:text-brand-500"
+                    >
+                      <svg
+                        viewBox="0 0 20 20"
+                        width="16"
+                        height="16"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.6"
+                        className="shrink-0 text-ink-900/40"
+                        aria-hidden="true"
+                      >
+                        <circle cx="9" cy="9" r="6" />
+                        <path strokeLinecap="round" d="M17 17l-3.5-3.5" />
+                      </svg>
+                      <span className="flex-1">{term}</span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
           )}
 
           {results.products.length > 0 && (

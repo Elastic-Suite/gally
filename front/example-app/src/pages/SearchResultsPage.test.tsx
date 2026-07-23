@@ -24,5 +24,6 @@ describe('SearchResultsPage', () => {
       'true',
     )
     expect(screen.getAllByTestId('article-card').length).toBeGreaterThan(0)
+    expect(screen.getByText('Section')).toBeInTheDocument()
   })
 })

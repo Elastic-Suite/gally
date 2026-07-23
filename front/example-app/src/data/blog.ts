@@ -1,5 +1,11 @@
 import { resolveProductImage } from './normalize'
-import type { BlogArticle, BlogSection, Locale } from './types'
+import type {
+  ArticleFilters,
+  BlogArticle,
+  BlogSection,
+  Facet,
+  Locale,
+} from './types'
 
 const BLOG_FR: BlogSection[] = [
   {
@@ -194,4 +200,98 @@ export function searchArticles(locale: Locale, query: string): BlogArticle[] {
         article.excerpt.toLowerCase().includes(q) ||
         article.body.some((paragraph) => paragraph.toLowerCase().includes(q)),
     )
+}
+
+export function emptyArticleFilters(): ArticleFilters {
+  return { sections: [], categoryIds: [] }
+}
+
+export function hasActiveArticleFilters(filters: ArticleFilters): boolean {
+  return filters.sections.length > 0 || filters.categoryIds.length > 0
+}
+
+function matchesArticleFilters(
+  article: BlogArticle,
+  filters: ArticleFilters,
+  exclude?: keyof ArticleFilters,
+): boolean {
+  if (
+    exclude !== 'sections' &&
+    filters.sections.length &&
+    !filters.sections.includes(article.section)
+  ) {
+    return false
+  }
+  if (
+    exclude !== 'categoryIds' &&
+    filters.categoryIds.length &&
+    !article.relatedCategoryIds.some((id) => filters.categoryIds.includes(id))
+  ) {
+    return false
+  }
+  return true
+}
+
+export function applyArticleFilters(
+  articles: BlogArticle[],
+  filters: ArticleFilters,
+): BlogArticle[] {
+  return articles.filter((a) => matchesArticleFilters(a, filters))
+}
+
+/**
+ * Builds the CMS search sidebar facets: a "Section" facet (the blog rubric)
+ * and a "Category" facet (product categories the article relates to).
+ * Mirrors computeFacets' sticky-count behaviour for products.
+ */
+export function computeArticleFacets(
+  articles: BlogArticle[],
+  filters: ArticleFilters,
+  categoryOptions: { id: string; name: string }[],
+): Facet[] {
+  const facets: Facet[] = []
+
+  const sectionCandidates = articles.filter((a) =>
+    matchesArticleFilters(a, filters, 'sections'),
+  )
+  const sectionCounts = new Map<string, number>()
+  for (const article of sectionCandidates) {
+    sectionCounts.set(
+      article.section,
+      (sectionCounts.get(article.section) ?? 0) + 1,
+    )
+  }
+  if (sectionCounts.size) {
+    facets.push({
+      field: 'sections',
+      label: 'Section',
+      type: 'checkbox',
+      options: [...sectionCounts.entries()]
+        .map(([value, count]) => ({ label: value, value, count }))
+        .sort((a, b) => b.count - a.count),
+    })
+  }
+
+  const categoryCandidates = articles.filter((a) =>
+    matchesArticleFilters(a, filters, 'categoryIds'),
+  )
+  const categoryCounts = categoryOptions
+    .map((opt) => ({
+      label: opt.name,
+      value: opt.id,
+      count: categoryCandidates.filter((a) =>
+        a.relatedCategoryIds.includes(opt.id),
+      ).length,
+    }))
+    .filter((opt) => opt.count > 0)
+  if (categoryCounts.length) {
+    facets.push({
+      field: 'categoryIds',
+      label: 'Category',
+      type: 'checkbox',
+      options: categoryCounts,
+    })
+  }
+
+  return facets
 }

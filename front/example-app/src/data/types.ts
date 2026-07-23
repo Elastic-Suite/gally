@@ -96,3 +96,8 @@ export interface BlogSection {
   title: string
   articles: BlogArticle[]
 }
+
+export interface ArticleFilters {
+  sections: string[]
+  categoryIds: string[]
+}

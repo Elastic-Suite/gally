@@ -6,7 +6,14 @@ import {
 export { getAllProducts }
 import categoryIndexFr from './raw/categoryProductIndex.fr.json'
 import categoryIndexEn from './raw/categoryProductIndex.en.json'
-import { getBlog, searchArticles } from './blog'
+import {
+  applyArticleFilters,
+  computeArticleFacets,
+  emptyArticleFilters,
+  getBlog,
+  hasActiveArticleFilters,
+  searchArticles,
+} from './blog'
 import type {
   ActiveFilters,
   CategoryNode,
@@ -100,6 +107,18 @@ export function getProduct(
 
 export function emptyFilters(): ActiveFilters {
   return { categoryIds: [], colors: [], sizes: [], materials: [], styles: [] }
+}
+
+export function hasActiveFilters(filters: ActiveFilters): boolean {
+  return (
+    filters.categoryIds.length > 0 ||
+    filters.colors.length > 0 ||
+    filters.sizes.length > 0 ||
+    filters.materials.length > 0 ||
+    filters.styles.length > 0 ||
+    filters.minPrice !== undefined ||
+    filters.maxPrice !== undefined
+  )
 }
 
 function matchesFilters(
@@ -276,7 +295,51 @@ export function searchProducts(locale: Locale, query: string): Product[] {
     .map(({ product }) => product)
 }
 
+const termVocabularyCache = new Map<Locale, string[]>()
+
+function buildTermVocabulary(locale: Locale): string[] {
+  const cached = termVocabularyCache.get(locale)
+  if (cached) return cached
+
+  const terms = new Set<string>()
+  for (const product of getAllProducts(locale)) {
+    for (const word of product.name.split(/\s+/)) terms.add(word)
+    for (const opt of [
+      ...product.colors,
+      ...product.sizes,
+      ...product.materials,
+      ...product.styles,
+    ]) {
+      terms.add(opt.label)
+    }
+  }
+  const collectCategoryNames = (nodes: CategoryNode[]) => {
+    for (const node of nodes) {
+      terms.add(node.name)
+      collectCategoryNames(node.children)
+    }
+  }
+  collectCategoryNames(getCategoryTree(locale))
+
+  const vocabulary = [...terms]
+  termVocabularyCache.set(locale, vocabulary)
+  return vocabulary
+}
+
+/** Suggested search terms (query completions), mirroring Gally's termSuggestions. */
+export function suggestTerms(locale: Locale, query: string): string[] {
+  const q = query.trim().toLowerCase()
+  if (q.length < 2) return []
+  return buildTermVocabulary(locale)
+    .filter(
+      (term) => term.toLowerCase().startsWith(q) && term.toLowerCase() !== q,
+    )
+    .sort((a, b) => a.length - b.length)
+    .slice(0, 6)
+}
+
 export interface SearchSuggestions {
+  terms: string[]
   products: Product[]
   categories: CategoryNode[]
   attributes: {
@@ -288,7 +351,8 @@ export interface SearchSuggestions {
 
 export function suggest(locale: Locale, query: string): SearchSuggestions {
   const q = query.trim().toLowerCase()
-  if (q.length < 2) return { products: [], categories: [], attributes: [] }
+  if (q.length < 2)
+    return { terms: [], products: [], categories: [], attributes: [] }
 
   const products = searchProducts(locale, query).slice(0, 5)
 
@@ -333,6 +397,7 @@ export function suggest(locale: Locale, query: string): SearchSuggestions {
   }
 
   return {
+    terms: suggestTerms(locale, query),
     products,
     categories: categories.slice(0, 5),
     attributes: [...attrMap.values()].slice(0, 6),
@@ -374,4 +439,11 @@ export function getCompatibleProducts(
   return getProductsForCategory(locale, complementId).slice(0, count)
 }
 
-export { getBlog, searchArticles }
+export {
+  applyArticleFilters,
+  computeArticleFacets,
+  emptyArticleFilters,
+  getBlog,
+  hasActiveArticleFilters,
+  searchArticles,
+}

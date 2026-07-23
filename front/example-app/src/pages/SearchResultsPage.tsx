@@ -1,15 +1,20 @@
 import { useMemo } from 'react'
 import { useLocale } from '../hooks/useLocale'
 import { useProductFilters } from '../hooks/useProductFilters'
+import { useArticleFilters } from '../hooks/useArticleFilters'
 import { FacetSidebar } from '../components/FacetSidebar/FacetSidebar'
 import { ProductGrid } from '../components/ProductGrid/ProductGrid'
 import { Pagination } from '../components/Pagination/Pagination'
 import { Tabs } from '../components/Tabs/Tabs'
 import { ArticleCard } from '../components/ArticleCard/ArticleCard'
 import {
+  applyArticleFilters,
   applyFilters,
+  computeArticleFacets,
   computeFacets,
   findCategoryById,
+  hasActiveFilters,
+  hasActiveArticleFilters,
   searchArticles,
   searchProducts,
   sortProducts,
@@ -32,12 +37,17 @@ export function SearchResultsPage() {
     setPageSize,
     clearAll,
   } = useProductFilters()
+  const {
+    filters: articleFilters,
+    toggleValue: toggleArticleValue,
+    clearAll: clearArticleFilters,
+  } = useArticleFilters()
 
   const scopeProducts = useMemo(
     () => searchProducts(language, query),
     [language, query],
   )
-  const articles = useMemo(
+  const scopeArticles = useMemo(
     () => searchArticles(language, query),
     [language, query],
   )
@@ -50,14 +60,37 @@ export function SearchResultsPage() {
     [language],
   )
 
+  const articleCategoryOptions = useMemo(() => {
+    const ids = new Set(scopeArticles.flatMap((a) => a.relatedCategoryIds))
+    return [...ids]
+      .map((id) => findCategoryById(language, id))
+      .filter((c): c is NonNullable<typeof c> => Boolean(c))
+      .map((c) => ({ id: c.id, name: c.name }))
+  }, [scopeArticles, language])
+
   const facets = useMemo(
     () => computeFacets(scopeProducts, filters, topLevelOptions),
     [scopeProducts, filters, topLevelOptions],
   )
 
+  const articleFacets = useMemo(
+    () =>
+      computeArticleFacets(
+        scopeArticles,
+        articleFilters,
+        articleCategoryOptions,
+      ),
+    [scopeArticles, articleFilters, articleCategoryOptions],
+  )
+
   const products = useMemo(
     () => sortProducts(applyFilters(scopeProducts, filters), sort),
     [scopeProducts, filters, sort],
+  )
+
+  const articles = useMemo(
+    () => applyArticleFilters(scopeArticles, articleFilters),
+    [scopeArticles, articleFilters],
   )
 
   const pageProducts = useMemo(() => {
@@ -79,9 +112,20 @@ export function SearchResultsPage() {
               <div className="flex flex-col gap-8 lg:flex-row">
                 <FacetSidebar
                   facets={facets}
-                  filters={filters}
-                  onToggle={toggleValue}
+                  selectedValues={{
+                    categoryIds: filters.categoryIds,
+                    colors: filters.colors,
+                    sizes: filters.sizes,
+                    materials: filters.materials,
+                    styles: filters.styles,
+                  }}
+                  onToggle={
+                    toggleValue as (field: string, value: string) => void
+                  }
                   onPriceRangeChange={setPriceRange}
+                  minPrice={filters.minPrice}
+                  maxPrice={filters.maxPrice}
+                  hasActiveFilters={hasActiveFilters(filters)}
                   onClearAll={clearAll}
                 />
                 <div className="dotted-bg flex-1 rounded-xl p-4">
@@ -118,18 +162,35 @@ export function SearchResultsPage() {
           },
           {
             label: `CMS pages (${articles.length})`,
-            content:
-              articles.length > 0 ? (
-                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                  {articles.map((article) => (
-                    <ArticleCard key={article.slug} article={article} />
-                  ))}
+            content: (
+              <div className="flex flex-col gap-8 lg:flex-row">
+                <FacetSidebar
+                  facets={articleFacets}
+                  selectedValues={{
+                    sections: articleFilters.sections,
+                    categoryIds: articleFilters.categoryIds,
+                  }}
+                  onToggle={
+                    toggleArticleValue as (field: string, value: string) => void
+                  }
+                  hasActiveFilters={hasActiveArticleFilters(articleFilters)}
+                  onClearAll={clearArticleFilters}
+                />
+                <div className="dotted-bg flex-1 rounded-xl p-4">
+                  {articles.length > 0 ? (
+                    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                      {articles.map((article) => (
+                        <ArticleCard key={article.slug} article={article} />
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="py-16 text-center text-ink-900/60">
+                      No CMS pages match this search.
+                    </p>
+                  )}
                 </div>
-              ) : (
-                <p className="py-16 text-center text-ink-900/60">
-                  No CMS pages match this search.
-                </p>
-              ),
+              </div>
+            ),
           },
         ]}
       />

@@ -10,6 +10,7 @@ import {
   computeFacets,
   findCategoryBySlug,
   getProductsForCategory,
+  hasActiveFilters,
   sortProducts,
 } from '../data/catalogService'
 import type { SortKey } from '../data/types'
@@ -72,9 +73,18 @@ export function CategoryPage() {
       <div className="mt-6 flex flex-col gap-8 lg:flex-row">
         <FacetSidebar
           facets={facets}
-          filters={filters}
-          onToggle={toggleValue}
+          selectedValues={{
+            categoryIds: filters.categoryIds,
+            colors: filters.colors,
+            sizes: filters.sizes,
+            materials: filters.materials,
+            styles: filters.styles,
+          }}
+          onToggle={toggleValue as (field: string, value: string) => void}
           onPriceRangeChange={setPriceRange}
+          minPrice={filters.minPrice}
+          maxPrice={filters.maxPrice}
+          hasActiveFilters={hasActiveFilters(filters)}
           onClearAll={clearAll}
         />
         <div className="dotted-bg flex-1 rounded-xl p-4">

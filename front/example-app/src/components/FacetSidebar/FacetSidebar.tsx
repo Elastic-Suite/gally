@@ -1,45 +1,35 @@
 import { useMemo, useState } from 'react'
 import { useLocale } from '../../hooks/useLocale'
 import { formatPrice } from '../../lib/format'
-import type { ActiveFilters, Facet } from '../../data/types'
-
-type ListField = 'categoryIds' | 'colors' | 'sizes' | 'materials' | 'styles'
+import type { Facet } from '../../data/types'
 
 interface FacetSidebarProps {
   facets: Facet[]
-  filters: ActiveFilters
-  onToggle: (field: ListField, value: string) => void
-  onPriceRangeChange: (min: number | undefined, max: number | undefined) => void
+  selectedValues: Record<string, string[]>
+  onToggle: (field: string, value: string) => void
+  onPriceRangeChange?: (
+    min: number | undefined,
+    max: number | undefined,
+  ) => void
+  minPrice?: number
+  maxPrice?: number
+  hasActiveFilters: boolean
   onClearAll: () => void
-}
-
-const FIELD_MAP: Record<string, ListField> = {
-  categoryIds: 'categoryIds',
-  sizes: 'sizes',
-  colors: 'colors',
-  materials: 'materials',
-  styles: 'styles',
 }
 
 const VISIBLE_OPTIONS_DEFAULT = 5
 
 export function FacetSidebar({
   facets,
-  filters,
+  selectedValues,
   onToggle,
   onPriceRangeChange,
+  minPrice,
+  maxPrice,
+  hasActiveFilters,
   onClearAll,
 }: FacetSidebarProps) {
   const { country, language } = useLocale()
-
-  const hasActiveFilters =
-    filters.categoryIds.length > 0 ||
-    filters.colors.length > 0 ||
-    filters.sizes.length > 0 ||
-    filters.materials.length > 0 ||
-    filters.styles.length > 0 ||
-    filters.minPrice !== undefined ||
-    filters.maxPrice !== undefined
 
   return (
     <aside className="w-full shrink-0 lg:w-64" aria-label="Filters">
@@ -63,17 +53,17 @@ export function FacetSidebar({
             <PriceFacet
               key={facet.field}
               facet={facet}
-              minPrice={filters.minPrice}
-              maxPrice={filters.maxPrice}
-              onChange={onPriceRangeChange}
+              minPrice={minPrice}
+              maxPrice={maxPrice}
+              onChange={onPriceRangeChange ?? (() => {})}
               format={(value) => formatPrice(value, country, language)}
             />
           ) : (
             <CheckboxFacet
               key={facet.field}
               facet={facet}
-              selected={filters[FIELD_MAP[facet.field]] as string[]}
-              onToggle={(value) => onToggle(FIELD_MAP[facet.field], value)}
+              selected={selectedValues[facet.field] ?? []}
+              onToggle={(value) => onToggle(facet.field, value)}
             />
           ),
         )}
