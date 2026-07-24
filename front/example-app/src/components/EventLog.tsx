@@ -24,6 +24,9 @@ export default function EventLog() {
             <span style={{ color: '#ffab91' }}>{e.time}</span>{' '}
             <span style={{ color: '#80cbc4' }}>[{e.type}]</span>{' '}
             {e.detail}
+            {e.meaning && (
+              <div className="event-log-meaning">💡 {e.meaning}</div>
+            )}
           </div>
         ))}
       </div>

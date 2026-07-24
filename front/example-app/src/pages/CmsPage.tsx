@@ -7,7 +7,7 @@ const CMS_PAGES: Record<string, { title: string; content: string[] }> = {
       'ElasticSuite is the leading open-source searchandising solution for e-commerce, powering hundreds of online stores worldwide.',
       'Built on cutting-edge AI and Elasticsearch technology, our platform delivers intelligent search, dynamic faceting, and personalized product recommendations that drive conversion.',
       'From small boutiques to enterprise retailers, ElasticSuite adapts to your catalog and your customers\' behavior, continuously learning and optimizing to deliver the best possible shopping experience.',
-      'Our latest innovation, Gally, brings vector search capabilities that understand semantic meaning — so when a customer searches for "summer eyewear", they find exactly what they\'re looking for, even if the product title says "UV-protection sunglasses".',
+      'Our latest innovation, Gally, brings vector search capabilities that understand semantic meaning — so when a customer searches for "summer dress", they find exactly what they\'re looking for, even if the product title says "floral midi skirt".',
     ],
   },
   'shipping-returns': {
