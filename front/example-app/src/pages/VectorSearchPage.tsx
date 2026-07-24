@@ -1,26 +1,104 @@
-import { useState } from 'react';
-import { useSearch } from '../hooks/useSearch';
-import ProductCard from '../components/ProductCard';
+import { useState, useEffect } from 'react';
+import { useCatalog } from '../contexts/CatalogContext';
+
+const BASE_URI = 'https://gally.localhost/api';
+const AUTH_EMAIL = 'admin@example.com';
+const AUTH_PASSWORD = 'apassword';
+
+interface ExplainMatch {
+  field: string;
+  originalField: string;
+  analyzer: string;
+  weight: number;
+  score: number;
+}
+
+interface ExplainBoost {
+  boost_mode: string;
+  weight: number;
+  total: number;
+  details: any[];
+}
+
+interface ExplainProduct {
+  id: string;
+  sku: string;
+  name: string;
+  score: number;
+  boosts: ExplainBoost | null;
+  matches: ExplainMatch[];
+  legends: Record<string, { field: string; legend: string }>;
+}
+
+async function getToken(): Promise<string> {
+  const cached = sessionStorage.getItem('gally_explain_token');
+  if (cached) {
+    try {
+      const payload = JSON.parse(atob(cached.split('.')[1]));
+      if (payload.exp * 1000 > Date.now()) return cached;
+    } catch { /* refresh */ }
+  }
+  const res = await fetch(`${BASE_URI}/authentication_token`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: AUTH_EMAIL, password: AUTH_PASSWORD }),
+  });
+  const data = await res.json();
+  if (data.token) { sessionStorage.setItem('gally_explain_token', data.token); return data.token; }
+  throw new Error('Auth failed');
+}
+
+async function fetchExplain(localizedCatalog: string, query: string, pageSize = 6): Promise<ExplainProduct[]> {
+  const token = await getToken();
+  const gql = `{
+    explain(
+      localizedCatalog: "${localizedCatalog}",
+      requestType: product_search,
+      search: "${query.replace(/"/g, '\\"')}",
+      pageSize: ${pageSize}
+    ) {
+      collection { id sku name score boosts matches legends }
+    }
+  }`;
+  const res = await fetch(`${BASE_URI}/graphql`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+    body: JSON.stringify({ query: gql }),
+  });
+  const data = await res.json();
+  return data?.data?.explain?.collection || [];
+}
 
 export default function VectorSearchPage() {
-  const [query, setQuery] = useState('summer lightweight eyewear');
+  const [query, setQuery] = useState('tank dress');
+  const [results, setResults] = useState<ExplainProduct[]>([]);
+  const [loading, setLoading] = useState(false);
+  const { selectedLocalizedCatalog } = useCatalog();
 
-  // Standard search
-  const standard = useSearch({ searchQuery: query, pageSize: 6 });
-  // For demo: vector search would use a different endpoint/flag
-  // Here we simulate by using same query — in real implementation the API handles vector vs keyword
-  const vector = useSearch({ searchQuery: query, pageSize: 6 });
+  useEffect(() => {
+    if (!selectedLocalizedCatalog || !query.trim()) return;
+    setLoading(true);
+    const timeout = setTimeout(() => {
+      fetchExplain(selectedLocalizedCatalog.code, query, 6)
+        .then(setResults)
+        .catch(() => setResults([]))
+        .finally(() => setLoading(false));
+    }, 500);
+    return () => clearTimeout(timeout);
+  }, [query, selectedLocalizedCatalog]);
+
+  const maxScore = results.length > 0 ? results[0].score : 1;
 
   return (
-    <div>
+    <div className="explain-page">
       <div className="page-title">
-        <div className="breadcrumb">Home / Vector Search Comparison</div>
-        <h1>Vector Search Preview</h1>
+        <div className="breadcrumb">Home / Search Intelligence</div>
+        <h1>🧠 Comment Gally classe vos produits</h1>
       </div>
 
       <p style={{ color: 'var(--gray-600)', marginBottom: '1.5rem', maxWidth: '700px' }}>
-        Compare standard keyword search with AI-powered vector search. Vector search understands
-        semantic meaning — finding relevant products even when exact keywords don't match.
+        Visualisez en temps réel comment Gally calcule le score de pertinence de chaque produit.
+        Comprenez l'impact des <strong>boosts</strong>, des <strong>champs texte</strong> et de la <strong>popularité</strong> sur le classement.
       </p>
 
       <div style={{ marginBottom: '2rem' }}>
@@ -28,90 +106,102 @@ export default function VectorSearchPage() {
           type="text"
           className="search-bar"
           style={{
-            background: 'white',
-            color: 'var(--gray-900)',
+            background: 'white', color: 'var(--gray-900)',
             border: '2px solid var(--indigo-200)',
-            width: '100%',
-            maxWidth: '500px',
-            padding: '0.75rem 1.25rem',
-            fontSize: '1rem',
+            width: '100%', maxWidth: '500px',
+            padding: '0.75rem 1.25rem', fontSize: '1rem',
           }}
-          placeholder="Enter a semantic query…"
+          placeholder="Tapez une requête…"
           value={query}
           onChange={e => setQuery(e.target.value)}
         />
       </div>
 
-      <div className="vector-compare">
-        {/* Standard Search */}
-        <div className="vector-panel">
-          <h3>🔤 Standard Keyword Search</h3>
-          <p style={{ fontSize: '0.8rem', color: 'var(--gray-500)', marginBottom: '1rem' }}>
-            Matches exact keywords in product titles and descriptions
-          </p>
-          {standard.loading ? (
-            <div className="loading"><div className="loading-spinner" /> Loading…</div>
-          ) : (
-            <div style={{ display: 'grid', gap: '1rem' }}>
-              {standard.products.length > 0 ? (
-                standard.products.map((p: any, i: number) => (
-                  <div key={i} style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', padding: '0.5rem', borderRadius: 'var(--radius-sm)', background: 'var(--gray-50)' }}>
-                    <span style={{ fontSize: '0.75rem', color: 'var(--gray-400)', width: '20px' }}>#{i + 1}</span>
-                    <div>
-                      <div style={{ fontSize: '0.85rem', fontWeight: 500 }}>{p.name}</div>
-                      <div style={{ fontSize: '0.75rem', color: 'var(--gray-500)' }}>{p.sku}</div>
-                    </div>
+      {loading && (
+        <div className="loading"><div className="loading-spinner" /> Analyse en cours…</div>
+      )}
+
+      {!loading && results.length > 0 && (
+        <div className="explain-results-page">
+          {/* Legends banner */}
+          {results[0]?.legends && (
+            <div className="explain-legends-banner">
+              <h4>📖 Comment lire les résultats</h4>
+              <div className="legends-grid">
+                {Object.entries(results[0].legends).slice(0, 5).map(([key, val]) => (
+                  <div key={key} className="legend-card">
+                    <code>{val.field}</code>
+                    <span>{val.legend}</span>
                   </div>
-                ))
-              ) : (
-                <div className="empty-state" style={{ padding: '2rem' }}>
-                  <p>No keyword matches found</p>
-                </div>
-              )}
+                ))}
+              </div>
             </div>
           )}
-        </div>
 
-        {/* Vector Search */}
-        <div className="vector-panel boosted">
-          <h3>🧠 AI Vector Search</h3>
-          <p style={{ fontSize: '0.8rem', color: 'var(--gray-500)', marginBottom: '1rem' }}>
-            Understands intent and semantic meaning for better relevance
-          </p>
-          {vector.loading ? (
-            <div className="loading"><div className="loading-spinner" /> Loading…</div>
-          ) : (
-            <div style={{ display: 'grid', gap: '1rem' }}>
-              {vector.products.length > 0 ? (
-                vector.products.map((p: any, i: number) => (
-                  <div key={i} style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', padding: '0.5rem', borderRadius: 'var(--radius-sm)', background: 'rgba(255, 107, 107, 0.05)' }}>
-                    <span style={{ fontSize: '0.75rem', color: 'var(--coral-500)', width: '20px', fontWeight: 700 }}>#{i + 1}</span>
-                    <div>
-                      <div style={{ fontSize: '0.85rem', fontWeight: 500 }}>{p.name}</div>
-                      <div style={{ fontSize: '0.75rem', color: 'var(--gray-500)' }}>{p.sku}</div>
+          {/* Product ranking cards */}
+          <div className="explain-ranking">
+            {results.map((product, idx) => (
+              <div key={product.id} className="explain-rank-card">
+                {/* Header */}
+                <div className="explain-rank-header">
+                  <div className="explain-rank-position">
+                    <span className="rank-number">#{idx + 1}</span>
+                    <div className="rank-score-bar">
+                      <div className="rank-score-fill" style={{ width: `${(product.score / maxScore) * 100}%` }} />
                     </div>
-                    {i === 0 && <span style={{ marginLeft: 'auto', fontSize: '0.7rem', background: 'var(--coral-500)', color: 'white', padding: '0.15rem 0.5rem', borderRadius: 'var(--radius-pill)' }}>Best Match</span>}
                   </div>
-                ))
-              ) : (
-                <div className="empty-state" style={{ padding: '2rem' }}>
-                  <p>No vector results yet</p>
+                  <div className="explain-rank-info">
+                    <h3>{product.name}</h3>
+                    <span className="explain-rank-sku">{product.sku}</span>
+                  </div>
+                  <div className="explain-rank-score">{product.score.toFixed(1)}</div>
                 </div>
-              )}
-            </div>
-          )}
-        </div>
-      </div>
 
-      {/* Show products as cards below */}
-      {vector.products.length > 0 && (
-        <div style={{ marginTop: '2rem' }}>
-          <h2 style={{ marginBottom: '1rem' }}>Vector Search Results</h2>
-          <div className="products-grid">
-            {vector.products.map((p: any, i: number) => (
-              <ProductCard key={p.sku || i} product={p} />
+                {/* Boost badge */}
+                {product.boosts && product.boosts.weight > 1 && (
+                  <div className="explain-boost-badge">
+                    <span className="boost-icon">🚀</span>
+                    <span>Boost ×{product.boosts.weight}</span>
+                    {product.boosts.details?.[0]?.details?.[0]?.description && (
+                      <span className="boost-reason">{product.boosts.details[0].details[0].description}</span>
+                    )}
+                  </div>
+                )}
+
+                {/* Field match breakdown */}
+                {product.matches && product.matches.length > 0 && (
+                  <div className="explain-field-matches">
+                    <div className="field-matches-label">Contribution par champ :</div>
+                    <div className="field-matches-grid">
+                      {product.matches
+                        .sort((a, b) => b.score - a.score)
+                        .slice(0, 6)
+                        .map((m, i) => {
+                          const pct = Math.min((m.score / product.score) * 100, 50);
+                          return (
+                            <div key={i} className="field-match-row">
+                              <span className="field-match-name">{m.field.replace(/^\[/, '').replace(/\]$/, '')}</span>
+                              <span className="field-match-type">{m.analyzer}</span>
+                              <div className="field-match-bar-container">
+                                <div className="field-match-bar" style={{ width: `${pct * 2}%` }} />
+                              </div>
+                              <span className="field-match-value">{m.score.toFixed(1)}</span>
+                            </div>
+                          );
+                        })}
+                    </div>
+                  </div>
+                )}
+              </div>
             ))}
           </div>
+        </div>
+      )}
+
+      {!loading && results.length === 0 && query.trim() && (
+        <div className="empty-state">
+          <h3>Aucun résultat</h3>
+          <p>Essayez une autre requête.</p>
         </div>
       )}
     </div>
