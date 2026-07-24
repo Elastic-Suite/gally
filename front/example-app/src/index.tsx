@@ -4,6 +4,8 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import { CatalogProvider } from './contexts/CatalogContext';
 import { CartProvider } from './contexts/CartContext';
+import { DemoProvider } from './contexts/DemoContext';
+import { SearchBarProvider } from './contexts/SearchBarContext';
 import './styles.css';
 
 const root = ReactDOM.createRoot(
@@ -14,7 +16,11 @@ root.render(
     <BrowserRouter basename="/example">
       <CatalogProvider>
         <CartProvider>
-          <App />
+          <DemoProvider>
+            <SearchBarProvider>
+              <App />
+            </SearchBarProvider>
+          </DemoProvider>
         </CartProvider>
       </CatalogProvider>
     </BrowserRouter>

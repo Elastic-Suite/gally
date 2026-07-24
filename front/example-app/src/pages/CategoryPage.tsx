@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSearch } from '../hooks/useSearch';
 import { useTracking } from '../hooks/useTracking';
@@ -35,14 +35,14 @@ export default function CategoryPage() {
   useEffect(() => { setPage(1); setFilters({}); }, [code]);
 
   // Build filter array from state
-  const filterArray = Object.entries(filters)
+  const filterArray = useMemo(() => Object.entries(filters)
     .filter(([, v]) => v !== undefined)
     .map(([field, value]) => {
       if (Array.isArray(value)) return { [field]: { in: value } };
       if (typeof value === 'object' && value.gte !== undefined) return { [field]: value };
       if (typeof value === 'boolean') return { [field]: { eq: value } };
       return { [field]: { eq: value } };
-    });
+    }), [filters]);
 
   const { products, total, pageCount, aggregations, loading } = useSearch({
     categoryCode: code,
@@ -53,21 +53,31 @@ export default function CategoryPage() {
     pageSize: 20,
   });
 
+  const trackedCatRef = useRef('');
+  const trackedDisplayRef = useRef('');
+
   useEffect(() => {
-    if (code && total > 0) {
+    const key = `${code}|${page}|${total}`;
+    if (code && total > 0 && trackedCatRef.current !== key) {
+      trackedCatRef.current = key;
       trackCategoryView(code, total, page, pageCount);
     }
   }, [code, total, page, pageCount, trackCategoryView]);
 
   useEffect(() => {
-    if (products.length > 0) {
-      trackDisplay(products.map((p: any, i: number) => ({ sku: p.sku, position: i })));
+    if (products.length > 0 && !loading) {
+      const key = products.map((p: any) => p.sku).join(',');
+      if (trackedDisplayRef.current !== key) {
+        trackedDisplayRef.current = key;
+        trackDisplay(products.map((p: any, i: number) => ({ sku: p.sku, position: i })));
+      }
     }
-  }, [products, trackDisplay]);
+  }, [products, loading, trackDisplay]);
 
   const handleFilterChange = useCallback((field: string, value: any) => {
     setFilters(prev => ({ ...prev, [field]: value }));
     setPage(1);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
   const handleSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -96,6 +106,7 @@ export default function CategoryPage() {
           aggregations={aggregations}
           activeFilters={filters}
           onFilterChange={handleFilterChange}
+          loading={loading}
         />
 
         <div>
@@ -114,7 +125,18 @@ export default function CategoryPage() {
           </div>
 
           {loading ? (
-            <div className="loading"><div className="loading-spinner" /> Loading…</div>
+            <div className="products-grid">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div key={i} className="skeleton-card">
+                  <div className="skeleton-card-image skeleton-shimmer" />
+                  <div className="skeleton-card-body">
+                    <div className="skeleton skeleton-text" style={{ width: '80%' }} />
+                    <div className="skeleton skeleton-text" style={{ width: '50%', marginTop: '0.5rem' }} />
+                    <div className="skeleton skeleton-btn" style={{ width: '100px', marginTop: '0.75rem' }} />
+                  </div>
+                </div>
+              ))}
+            </div>
           ) : products.length === 0 ? (
             <div className="empty-state">
               <h3>No products found</h3>
@@ -130,14 +152,14 @@ export default function CategoryPage() {
 
           {pageCount > 1 && (
             <div className="pagination">
-              <button disabled={page <= 1} onClick={() => setPage(p => p - 1)}>←</button>
+              <button disabled={page <= 1} onClick={() => { setPage(p => p - 1); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>←</button>
               {Array.from({ length: Math.min(pageCount, 5) }, (_, i) => i + 1).map(p => (
-                <button key={p} className={p === page ? 'active' : ''} onClick={() => setPage(p)}>
+                <button key={p} className={p === page ? 'active' : ''} onClick={() => { setPage(p); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
                   {p}
                 </button>
               ))}
               {pageCount > 5 && <span>…</span>}
-              <button disabled={page >= pageCount} onClick={() => setPage(p => p + 1)}>→</button>
+              <button disabled={page >= pageCount} onClick={() => { setPage(p => p + 1); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>→</button>
             </div>
           )}
         </div>

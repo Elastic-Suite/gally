@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useSearch } from '../hooks/useSearch';
 import { useTracking } from '../hooks/useTracking';
@@ -18,9 +18,15 @@ export default function Homepage() {
     categoryCode: secondCategory?.id,
   });
 
+  const trackedDisplayRef = useRef('');
+
   useEffect(() => {
     if (products.length > 0) {
-      trackDisplay(products.map((p: any, i: number) => ({ sku: p.source?.sku || p.sku, position: i })));
+      const key = products.map((p: any) => p.source?.sku || p.sku).join(',');
+      if (trackedDisplayRef.current !== key) {
+        trackedDisplayRef.current = key;
+        trackDisplay(products.map((p: any, i: number) => ({ sku: p.source?.sku || p.sku, position: i })));
+      }
     }
   }, [products, trackDisplay]);
 
@@ -33,35 +39,29 @@ export default function Homepage() {
           Discover how ElasticSuite powers product discovery with AI-driven search,
           faceted navigation, and real-time recommendations.
         </p>
-        <Link to="/search?q=" className="btn btn-coral btn-lg">Explore Products</Link>
+        <Link to="/search?q=" className="btn btn-coral btn-lg">Explorer les robes</Link>
       </section>
-
-      {/* Stats Band */}
-      <div className="stats-band">
-        <div className="stat-card">
-          <div className="stat-value coral">-40%</div>
-          <div className="stat-label">No Results Pages</div>
-        </div>
-        <div className="stat-card">
-          <div className="stat-value">+30%</div>
-          <div className="stat-label">Conversion Rate</div>
-        </div>
-        <div className="stat-card">
-          <div className="stat-value">+15%</div>
-          <div className="stat-label">Cart Value</div>
-        </div>
-        <div className="stat-card">
-          <div className="stat-value coral">x2</div>
-          <div className="stat-label">Merchandising Efficiency</div>
-        </div>
-      </div>
 
       {/* Category Navigation */}
       <CategoryNav />
 
       {/* Product Sliders */}
       {loading ? (
-        <div className="loading"><div className="loading-spinner" /> Loading products…</div>
+        <div className="product-slider">
+          <div className="skeleton skeleton-text" style={{ width: '200px', height: '1.5rem', marginBottom: '1rem' }} />
+          <div className="slider-track">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <div key={i} className="skeleton-card">
+                <div className="skeleton-card-image skeleton-shimmer" />
+                <div className="skeleton-card-body">
+                  <div className="skeleton skeleton-text" style={{ width: '80%' }} />
+                  <div className="skeleton skeleton-text" style={{ width: '50%', marginTop: '0.5rem' }} />
+                  <div className="skeleton skeleton-btn" style={{ width: '100px', marginTop: '0.75rem' }} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       ) : (
         <>
           <ProductSlider products={products.slice(0, 8)} title="Trending Now" />

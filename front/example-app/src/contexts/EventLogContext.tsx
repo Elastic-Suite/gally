@@ -4,12 +4,13 @@ interface EventLogEntry {
   id: number;
   type: string;
   detail: string;
+  meaning: string;
   time: string;
 }
 
 interface EventLogContextType {
   entries: EventLogEntry[];
-  log: (type: string, detail: string) => void;
+  log: (type: string, detail: string, meaning?: string) => void;
   visible: boolean;
   toggleVisible: () => void;
 }
@@ -22,11 +23,12 @@ export function EventLogProvider({ children }: { children: ReactNode }) {
   const [entries, setEntries] = useState<EventLogEntry[]>([]);
   const [visible, setVisible] = useState(false);
 
-  const log = useCallback((type: string, detail: string) => {
+  const log = useCallback((type: string, detail: string, meaning?: string) => {
     const entry: EventLogEntry = {
       id: nextId++,
       type,
       detail,
+      meaning: meaning || '',
       time: new Date().toLocaleTimeString(),
     };
     setEntries(prev => [entry, ...prev].slice(0, 50));

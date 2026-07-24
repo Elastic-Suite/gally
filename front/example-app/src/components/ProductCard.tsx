@@ -31,7 +31,7 @@ export default function ProductCard({ product }: Props) {
 
   return (
     <div className="product-card">
-      <Link to={`/product/${sku}`}>
+      <Link to={`/product/${encodeURIComponent(sku)}`}>
         <div className="product-card-image">
           {isNew && <span className="product-card-badge">New</span>}
           {!stock.status && <span className="product-card-badge" style={{ background: 'var(--gray-500)' }}>Out of Stock</span>}
@@ -43,7 +43,7 @@ export default function ProductCard({ product }: Props) {
         </div>
       </Link>
       <div className="product-card-body">
-        <Link to={`/product/${sku}`}>
+        <Link to={`/product/${encodeURIComponent(sku)}`}>
           <div className="product-card-name">{name}</div>
         </Link>
         <div className="product-card-price">
@@ -59,7 +59,7 @@ export default function ProductCard({ product }: Props) {
         <div className="product-card-actions">
           <button
             className="btn btn-coral btn-sm"
-            onClick={() => addToCart({ sku, name, price })}
+            onClick={() => addToCart({ sku, name, price, childSku: sku, image })}
             disabled={!stock.status}
           >
             {stock.status ? 'Add to cart' : 'Unavailable'}
