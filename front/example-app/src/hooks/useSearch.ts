@@ -56,12 +56,19 @@ export function useSearch(options: SearchOptions) {
       const sm = getSearchManager();
       const hasCategory = !!optionsRef.current.categoryCode;
       const searchQuery = optionsRef.current.searchQuery;
+      // When a searchQuery is provided (even empty string from ?q=), use product_search mode.
+      // The SDK requires searchQuery to be a non-empty string to trigger product_search.
+      // When no category and query is empty, pass '*' to force product_search mode.
+      const isSearchMode = !hasCategory && searchQuery !== undefined;
+      const effectiveQuery = isSearchMode
+        ? (searchQuery || '*')
+        : (searchQuery || undefined);
       // API requires currentCategoryId for product_catalog requests.
       // When no category is set, use searchQuery (even empty string) to trigger product_search mode.
       const response = await sm.search({
         localizedCatalog: selectedLocalizedCatalog.code,
         metadata: 'product',
-        searchQuery: hasCategory ? (searchQuery || undefined) : (searchQuery ?? ''),
+        searchQuery: effectiveQuery,
         currentPage: optionsRef.current.currentPage ?? 1,
         pageSize: optionsRef.current.pageSize ?? 20,
         isAutocomplete: optionsRef.current.isAutocomplete ?? false,

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useSearch } from '../hooks/useSearch';
 import { useTracking } from '../hooks/useTracking';
@@ -14,10 +14,17 @@ export default function SearchPage() {
   const [activeFilters, setActiveFilters] = useState<Record<string, any>>({});
   const [facetsOpen, setFacetsOpen] = useState(false);
 
-  // Reset page when query changes
-  useEffect(() => { setPage(1); }, [query]);
+  // Reset page and filters when query changes
+  const prevQueryRef = useRef(query);
+  useEffect(() => {
+    if (prevQueryRef.current !== query) {
+      setPage(1);
+      setActiveFilters({});
+      prevQueryRef.current = query;
+    }
+  }, [query]);
 
-  const filters = Object.entries(activeFilters)
+  const filters = useMemo(() => Object.entries(activeFilters)
     .filter(([, val]) => val !== undefined)
     .map(([field, val]) => {
       if (typeof val === 'object' && val.gte !== undefined) {
@@ -30,7 +37,7 @@ export default function SearchPage() {
         return { [field]: { in: val } };
       }
       return { [field]: { eq: val } };
-    });
+    }), [activeFilters]);
 
   const { products, total, pageCount, aggregations, loading } = useSearch({
     searchQuery: query,
@@ -42,22 +49,33 @@ export default function SearchPage() {
   });
 
   const { trackSearch, trackDisplay } = useTracking();
+  const trackedRef = useRef('');
 
   useEffect(() => {
-    if (query && total > 0) {
+    const key = `${query}|${page}|${total}`;
+    if (query && total > 0 && trackedRef.current !== key) {
+      trackedRef.current = key;
       trackSearch(query, total, page, pageCount);
     }
   }, [query, total, page, pageCount, trackSearch]);
 
+  const trackedDisplayRef = useRef('');
+
   useEffect(() => {
-    if (products.length > 0) {
-      trackDisplay(products.map((p: any, i: number) => ({ sku: p.sku, position: (page - 1) * 20 + i })));
+    if (products.length > 0 && !loading) {
+      const key = products.map((p: any) => p.sku).join(',');
+      if (trackedDisplayRef.current !== key) {
+        trackedDisplayRef.current = key;
+        trackDisplay(products.map((p: any, i: number) => ({ sku: p.sku, position: (page - 1) * 20 + i })));
+      }
     }
-  }, [products, page, trackDisplay]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [products, loading]);
 
   const handleFilterChange = useCallback((field: string, value: any) => {
     setActiveFilters(prev => ({ ...prev, [field]: value }));
     setPage(1);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
   return (
@@ -77,6 +95,7 @@ export default function SearchPage() {
             aggregations={aggregations}
             activeFilters={activeFilters}
             onFilterChange={handleFilterChange}
+            loading={loading}
           />
         </div>
 
@@ -103,9 +122,17 @@ export default function SearchPage() {
           </div>
 
           {loading && (
-            <div className="loading">
-              <div className="loading-spinner" />
-              Searching…
+            <div className="products-grid">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div key={i} className="skeleton-card">
+                  <div className="skeleton-card-image skeleton-shimmer" />
+                  <div className="skeleton-card-body">
+                    <div className="skeleton skeleton-text" style={{ width: '80%' }} />
+                    <div className="skeleton skeleton-text" style={{ width: '50%', marginTop: '0.5rem' }} />
+                    <div className="skeleton skeleton-btn" style={{ width: '100px', marginTop: '0.75rem' }} />
+                  </div>
+                </div>
+              ))}
             </div>
           )}
 
@@ -124,13 +151,13 @@ export default function SearchPage() {
 
           {pageCount > 1 && (
             <div className="pagination">
-              <button disabled={page <= 1} onClick={() => setPage(p => p - 1)}>‹ Prev</button>
+              <button disabled={page <= 1} onClick={() => { setPage(p => p - 1); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>‹ Prev</button>
               {Array.from({ length: Math.min(pageCount, 7) }, (_, i) => i + 1).map(p => (
-                <button key={p} className={p === page ? 'active' : ''} onClick={() => setPage(p)}>
+                <button key={p} className={p === page ? 'active' : ''} onClick={() => { setPage(p); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
                   {p}
                 </button>
               ))}
-              <button disabled={page >= pageCount} onClick={() => setPage(p => p + 1)}>Next ›</button>
+              <button disabled={page >= pageCount} onClick={() => { setPage(p => p + 1); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>Next ›</button>
             </div>
           )}
         </div>

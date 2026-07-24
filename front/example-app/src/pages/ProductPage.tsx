@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSearch } from '../hooks/useSearch';
 import { useTracking } from '../hooks/useTracking';
@@ -25,15 +25,40 @@ export default function ProductPage() {
 
   const p = rawProduct ? getProductFields(rawProduct) : null;
 
+  const trackedSkuRef = useRef('');
+
   useEffect(() => {
-    if (sku) trackProductView(sku);
+    if (sku && trackedSkuRef.current !== sku) {
+      trackedSkuRef.current = sku;
+      trackProductView(sku);
+    }
   }, [sku, trackProductView]);
 
   // Recommendations — fetch generic products
   const { products: recommendations } = useSearch({ pageSize: 8 });
 
   if (loading) {
-    return <div className="loading"><div className="loading-spinner" /> Loading product…</div>;
+    return (
+      <div>
+        <div className="page-title">
+          <div className="skeleton skeleton-text" style={{ width: '200px' }} />
+        </div>
+        <div className="product-detail">
+          <div className="product-detail-image skeleton-shimmer" />
+          <div className="product-detail-info">
+            <div className="skeleton skeleton-text" style={{ width: '80px', height: '20px' }} />
+            <div className="skeleton skeleton-text" style={{ width: '60%', height: '2rem', marginTop: '0.5rem' }} />
+            <div className="skeleton skeleton-text" style={{ width: '120px', height: '14px', marginTop: '0.5rem' }} />
+            <div className="skeleton skeleton-text" style={{ width: '150px', height: '1.8rem', marginTop: '1rem' }} />
+            <div className="skeleton skeleton-text" style={{ width: '100%', height: '60px', marginTop: '1.5rem' }} />
+            <div style={{ display: 'flex', gap: '1rem', marginTop: '1.5rem' }}>
+              <div className="skeleton skeleton-btn" style={{ width: '160px' }} />
+              <div className="skeleton skeleton-btn" style={{ width: '120px' }} />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   if (!p) {
@@ -126,8 +151,9 @@ export default function ProductPage() {
                 sku: p.sku,
                 name: p.name,
                 price: p.price,
+                image: p.image,
                 variant: hasVariants ? colors[selectedVariant]?.label : undefined,
-                childSku: p.typeId === 'configurable' ? `${p.sku}-${selectedVariant}` : undefined,
+                childSku: p.typeId === 'configurable' ? `${p.sku}-${selectedVariant}` : p.sku,
               })}
             >
               {p.stock.status ? 'Add to Cart' : 'Out of Stock'}
