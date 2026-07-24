@@ -9,6 +9,7 @@ export interface CartItem {
   qty: number;
   variant?: string;
   childSku?: string;
+  image?: string;
 }
 
 interface CartContextType {
@@ -49,7 +50,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         entityCode: item.sku,
         payload: JSON.stringify({
           cart: { qty },
-          ...(item.childSku && { child_sku: item.childSku }),
+          child_sku: item.childSku || item.sku,
         }),
       });
     } catch (e) {
