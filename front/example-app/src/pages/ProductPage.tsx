@@ -9,7 +9,7 @@ import { getProductFields } from '../components/ProductCard';
 
 export default function ProductPage() {
   const { sku } = useParams<{ sku: string }>();
-  const { currencySymbol } = useCatalog();
+  const { currencySymbol, selectedLocalizedCatalog, categories } = useCatalog();
   const { addToCart } = useCart();
   const { trackProductView } = useTracking();
   const [selectedVariant, setSelectedVariant] = useState(0);
@@ -28,14 +28,19 @@ export default function ProductPage() {
   const trackedSkuRef = useRef('');
 
   useEffect(() => {
-    if (sku && trackedSkuRef.current !== sku) {
+    // Wait for the catalog to load — the tracker rejects VIEW events fired
+    // before selectedLocalizedCatalog is set (no localizedCatalogCode yet).
+    if (sku && selectedLocalizedCatalog && trackedSkuRef.current !== sku) {
       trackedSkuRef.current = sku;
       trackProductView(sku);
     }
-  }, [sku, trackProductView]);
+  }, [sku, selectedLocalizedCatalog, trackProductView]);
 
-  // Recommendations — fetch generic products
-  const { products: recommendations } = useSearch({ pageSize: 8 });
+  // Recommendations — a plain catalog browse of the root category, not a search.
+  // Still a placeholder for the dedicated productRecommendations GraphQL query
+  // (see .agent.md's "What's Left / TODO" section) — not real recs yet.
+  const rootCategory = categories.length > 0 ? categories[0] : null;
+  const { products: recommendations } = useSearch({ pageSize: 8, categoryCode: rootCategory?.id });
 
   if (loading) {
     return (
