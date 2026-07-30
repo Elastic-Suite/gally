@@ -641,6 +641,43 @@ a:hover {
   color: var(--gray-400);
 }
 
+/* ─── Active Filter Chips ────────────────────────────────── */
+.active-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--indigo-100);
+  background: var(--indigo-50);
+  color: var(--indigo-700);
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.filter-chip:hover {
+  border-color: var(--coral-500);
+  color: var(--coral-600);
+}
+
+.filter-chip-clear {
+  background: transparent;
+  border-color: var(--gray-300);
+  color: var(--gray-600);
+}
+.filter-chip-clear:hover {
+  border-color: var(--gray-400);
+  color: var(--gray-800);
+}
+
 .facet-show-more {
   font-size: 0.8rem;
   color: var(--indigo-600);
@@ -1258,6 +1295,10 @@ a:hover {
   box-shadow: var(--shadow-sm);
   border: 1px solid var(--gray-200);
   overflow-x: auto;
+  /* Without this, setting overflow-x alone makes the browser compute overflow-y as
+     auto too, clipping the absolutely-positioned .category-nav-submenu dropdown —
+     the actual cause of hover submenus disappearing (not a stacking/z-index issue). */
+  overflow-y: visible;
 }
 
 .category-nav-list {

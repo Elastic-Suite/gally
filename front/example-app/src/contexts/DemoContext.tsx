@@ -36,7 +36,7 @@ interface DemoContextType {
 const DemoContext = createContext<DemoContextType | null>(null);
 
 export function DemoProvider({ children }: { children: ReactNode }) {
-  const [introSeen, setIntroSeen] = useState(false);
+  const [introSeen, setIntroSeen] = useState(true);
   const [audience, setAudience] = useState<AudienceMode>('direction');
   const [storyActive, setStoryActive] = useState(false);
   const [storyStep, setStoryStep] = useState(0);

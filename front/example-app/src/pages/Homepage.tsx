@@ -7,9 +7,14 @@ import CategoryNav from '../components/CategoryNav';
 import { useCatalog } from '../contexts/CatalogContext';
 
 export default function Homepage() {
-  const { products, loading } = useSearch({ pageSize: 8 });
   const { trackDisplay } = useTracking();
   const { categories } = useCatalog();
+
+  // "Trending Now" is a plain catalog browse of the root category, not a search —
+  // product_catalog requires a real currentCategoryId, so use the root rather than
+  // faking a product_search with a wildcard query.
+  const rootCategory = categories.length > 0 ? categories[0] : null;
+  const { products, loading } = useSearch({ pageSize: 8, categoryCode: rootCategory?.id });
 
   // Get second set of products for "New Arrivals" — use a different category if available
   const secondCategory = categories.length > 1 ? categories[1] : null;

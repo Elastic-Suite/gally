@@ -39,7 +39,7 @@ export default function SearchPage() {
       return { [field]: { eq: val } };
     }), [activeFilters]);
 
-  const { products, total, pageCount, aggregations, loading } = useSearch({
+  const { products, total, pageCount, aggregations, loading, viewMoreOptions } = useSearch({
     searchQuery: query,
     currentPage: page,
     pageSize: 20,
@@ -96,6 +96,7 @@ export default function SearchPage() {
             activeFilters={activeFilters}
             onFilterChange={handleFilterChange}
             loading={loading}
+            onLoadMore={viewMoreOptions}
           />
         </div>
 

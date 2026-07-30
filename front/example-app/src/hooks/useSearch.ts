@@ -56,15 +56,12 @@ export function useSearch(options: SearchOptions) {
       const sm = getSearchManager();
       const hasCategory = !!optionsRef.current.categoryCode;
       const searchQuery = optionsRef.current.searchQuery;
-      // When a searchQuery is provided (even empty string from ?q=), use product_search mode.
-      // The SDK requires searchQuery to be a non-empty string to trigger product_search.
-      // When no category and query is empty, pass '*' to force product_search mode.
-      const isSearchMode = !hasCategory && searchQuery !== undefined;
-      const effectiveQuery = isSearchMode
-        ? (searchQuery || '*')
-        : (searchQuery || undefined);
-      // API requires currentCategoryId for product_catalog requests.
-      // When no category is set, use searchQuery (even empty string) to trigger product_search mode.
+      // product_catalog requires currentCategoryId (API 400s otherwise), so whenever
+      // there's no category — regardless of whether the caller passed searchQuery as
+      // '', undefined, or omitted it entirely — force product_search mode via '*'.
+      const effectiveQuery = hasCategory
+        ? (searchQuery || undefined)
+        : (searchQuery || '*');
       const response = await sm.search({
         localizedCatalog: selectedLocalizedCatalog.code,
         metadata: 'product',
@@ -107,7 +104,36 @@ export function useSearch(options: SearchOptions) {
     JSON.stringify(options.filters),
   ]);
 
-  return { ...result, refetch: doSearch };
+  // Fetches the full option list for one facet field, bypassing the backend's
+  // default ~10-option truncation (aggregation.hasMore). Used by the facet
+  // sidebar's "Show more" action.
+  const viewMoreOptions = useCallback(async (field: string) => {
+    if (!selectedLocalizedCatalog) return [];
+    const sm = getSearchManager();
+    const hasCategory = !!optionsRef.current.categoryCode;
+    const searchQuery = optionsRef.current.searchQuery;
+    const isSearchMode = !hasCategory && searchQuery !== undefined;
+    const effectiveQuery = isSearchMode
+      ? (searchQuery || '*')
+      : (searchQuery || undefined);
+    try {
+      return await sm.viewMoreProductFilterOption({
+        localizedCatalog: selectedLocalizedCatalog.code,
+        metadata: 'product',
+        searchQuery: effectiveQuery,
+        filters: optionsRef.current.filters ?? [],
+        categoryId: optionsRef.current.categoryCode,
+        isAutocomplete: false,
+        selectedFields: [],
+        currentPage: 1,
+        pageSize: 1,
+      }, field);
+    } catch {
+      return [];
+    }
+  }, [selectedLocalizedCatalog]);
+
+  return { ...result, refetch: doSearch, viewMoreOptions };
 }
 
 export function useAutocomplete() {

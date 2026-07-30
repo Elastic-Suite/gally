@@ -44,7 +44,7 @@ export default function CategoryPage() {
       return { [field]: { eq: value } };
     }), [filters]);
 
-  const { products, total, pageCount, aggregations, loading } = useSearch({
+  const { products, total, pageCount, aggregations, loading, viewMoreOptions } = useSearch({
     categoryCode: code,
     currentPage: page,
     sortField: sortField || undefined,
@@ -107,6 +107,7 @@ export default function CategoryPage() {
           activeFilters={filters}
           onFilterChange={handleFilterChange}
           loading={loading}
+          onLoadMore={viewMoreOptions}
         />
 
         <div>
