@@ -63,9 +63,13 @@ export async function fetchCategoryTree(catalogId: number, localizedCatalogId: n
   });
   const data = await res.json();
   const root = data?.data?.getCategoryTree?.categories || [];
-  // The root is usually a single "Default Category" node — return its children
+  // The root is usually a single "Default Category" node wrapping the real top-level
+  // categories as children. Keep it as its own (childless) leading entry — it's the
+  // "browse everything" link the nav bar should show first — followed by its children
+  // as the actual top-level categories.
   if (root.length === 1 && root[0].children) {
-    return root[0].children;
+    const { children, ...defaultCategory } = root[0];
+    return [defaultCategory, ...children];
   }
   return root;
 }
