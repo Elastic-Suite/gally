@@ -89,7 +89,7 @@ init-dev-env: .env ## Initialize current environment with dev repositories
 	cd front && yarn install --frozen-lockfile --network-timeout 120000 && cd -
 	sh ./hooks/initHooksPath.sh
 
-switch-dev-env: ## Switch current environment with dev repositories on a composer version, pass the parameter "v=" to set the composer version, example: make switch-dev-env v=2.2.1
+switch-dev-env: ## Switch current environment with dev repositories on a composer version, pass the parameter "v=" to set the composer version, example: make switch-dev-env v=2.3.0
 	@$(eval v ?= dev-main)
 	$(DOCKER_COMP) up -d --wait php # Wait php container to be ready
 	$(COMPOSER) config repositories.gally-standard '{ "type": "path", "url": "./packages/gally-standard", "options": { "versions": { "gally/gally-standard": "$(v)"}} }'
