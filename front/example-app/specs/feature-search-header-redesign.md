@@ -3,6 +3,11 @@
 ## Status: implemented
 ## Page/Component: src/components/Header.tsx, src/components/SearchBar.tsx, src/components/SearchOverlay.tsx
 
+> **Note:** exact visual values below (blur amount, panel background, search-bar size, grid column ratios)
+> were superseded by a later visual pass — see `specs/feature-acp-visual-redesign.md` for the current
+> numbers. The mechanisms described here (portal requirement, `ResizeObserver` header-height, keyboard nav,
+> state preservation) are still accurate as-is.
+
 ## Behaviour (testable)
 - [x] Header is split into two sticky rows inside `.header-sticky-group` (`position: sticky` moved here from
       `.header`): row 1 (`.header`/`.header-inner`) keeps logo, nav links, catalog/locale selectors, cart —

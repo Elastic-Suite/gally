@@ -85,7 +85,7 @@ function SkeletonRows({ withThumb, count = 3 }: { withThumb?: boolean; count?: n
   return (
     <>
       {Array.from({ length: count }).map((_, i) => (
-        <div className="autocomplete-skeleton-item" key={i}>
+        <div className={`autocomplete-skeleton-item ${withThumb ? 'autocomplete-skeleton-product' : ''}`} key={i}>
           {withThumb && <div className="autocomplete-skeleton-thumb skeleton-shimmer" />}
           <div className="autocomplete-skeleton-lines">
             <div className="autocomplete-skeleton-line skeleton-shimmer" />
@@ -142,30 +142,34 @@ function ProductsColumn({ results, loading, highlightedKey, onSelect }: {
     <>
       <div className="autocomplete-section-title">{t('overlay.productsTitle')}</div>
       {loading ? (
-        <SkeletonRows withThumb />
+        <div className="autocomplete-products-grid">
+          <SkeletonRows withThumb />
+        </div>
       ) : results.length === 0 ? (
         <EmptyNote text={t('overlay.noProducts')} />
       ) : (
-        results.map((item: any, idx: number) => {
-          const { name, sku, price, image } = getProductFields(item);
-          const key = `product-${sku}`;
-          return (
-            <div
-              key={idx}
-              data-item-key={key}
-              className={`autocomplete-item ${key === highlightedKey ? 'highlighted' : ''}`}
-              onClick={() => onSelect(`/product/${encodeURIComponent(sku)}`)}
-            >
-              <div className="autocomplete-thumb">
-                {image ? <img src={image} alt={name} style={{ width: 40, height: 40, objectFit: 'contain' }} /> : 'IMG'}
+        <div className="autocomplete-products-grid">
+          {results.map((item: any, idx: number) => {
+            const { name, sku, price, image } = getProductFields(item);
+            const key = `product-${sku}`;
+            return (
+              <div
+                key={idx}
+                data-item-key={key}
+                className={`autocomplete-item autocomplete-product ${key === highlightedKey ? 'highlighted' : ''}`}
+                onClick={() => onSelect(`/product/${encodeURIComponent(sku)}`)}
+              >
+                <div className="autocomplete-thumb">
+                  {image ? <img src={image} alt={name} style={{ width: 80, height: 80, objectFit: 'contain' }} /> : 'IMG'}
+                </div>
+                <div className="autocomplete-info">
+                  <div className="name">{name}</div>
+                  <div className="price">{formatPrice(price)}</div>
+                </div>
               </div>
-              <div className="autocomplete-info">
-                <div className="name">{name}</div>
-                <div className="price">{formatPrice(price)}</div>
-              </div>
-            </div>
-          );
-        })
+            );
+          })}
+        </div>
       )}
     </>
   );
