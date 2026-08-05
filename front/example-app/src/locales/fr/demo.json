@@ -1,0 +1,165 @@
+{
+  "intro": {
+    "welcome": "Bienvenue dans la démo Gally",
+    "presentationMode": "Mode de présentation :",
+    "direction": "Direction",
+    "marketing": "Marketing",
+    "hintDirection": "Vue épurée, focus parcours & ROI",
+    "hintMarketing": "Vue complète avec tracker d'events et preview vector",
+    "startGuided": "Lancer le parcours guidé →",
+    "exploreFreely": "Explorer librement"
+  },
+  "story": {
+    "resumePill": "📖 Reprendre le récit",
+    "actLabel": "Acte {{num}}",
+    "close": "Fermer",
+    "actTitle": "Acte {{act}} — {{title}}",
+    "prev": "‹ Précédent",
+    "next": "Suivant ›"
+  },
+  "closing": {
+    "title": "Le Bilan",
+    "stats": {
+      "noResults": "Pages \"aucun résultat\"",
+      "conversion": "Taux de conversion",
+      "aov": "Panier moyen"
+    },
+    "timeline": {
+      "heading": "📊 Ce que Gally a appris pendant le parcours",
+      "intro": "Chaque interaction de Camille a été captée. Voici comment ces données améliorent l'expérience pour les prochains visiteurs.",
+      "search": {
+        "eventPrefix": "Camille recherche",
+        "consequence": "→ Gally enregistre la requête et le nombre de résultats. Les termes populaires remontent dans l'autocomplete. Les requêtes sans résultat sont détectées pour enrichir le catalogue."
+      },
+      "display": {
+        "event": "{{count}} produits affichés avec leur position",
+        "consequence": "→ Gally mesure le taux d'impression de chaque produit. Les produits vus mais jamais cliqués sont identifiés pour ajuster leur ranking."
+      },
+      "viewCategory": {
+        "event": "Camille visite la catégorie Robes",
+        "consequence": "→ Le contexte \"catégorie\" est mémorisé pour la session. Toutes les actions suivantes sont automatiquement rattachées à cette catégorie."
+      },
+      "viewProduct": {
+        "event": "Camille consulte une fiche produit",
+        "consequence": "→ Le score de popularité du produit augmente. Gally utilise ce signal pour mieux classer ce produit dans les prochaines recherches similaires."
+      },
+      "addToCart": {
+        "event": "Camille ajoute le produit au panier",
+        "consequence": "→ Signal fort de conversion : le produit est boosté dans les résultats. Combiné avec VIEW:product, il alimente les recommandations \"Fréquemment consultés ensemble\"."
+      },
+      "order": {
+        "event": "Commande finalisée",
+        "consequence": "→ Boucle complète : les produits achetés ensemble alimentent les recommandations \"Fréquemment achetés ensemble\". Le chiffre d'affaires par requête permet d'optimiser la pertinence en fonction du revenu généré."
+      },
+      "summary": {
+        "eventTypes": "6 types d'événements",
+        "eventTypesSuffix": "captés automatiquement",
+        "popularityScore": "Score de popularité",
+        "popularityScoreSuffix": "recalculé en continu",
+        "recommendations": "Recommandations",
+        "recommendationsSuffix": "enrichies à chaque session",
+        "relevance": "Pertinence",
+        "relevanceSuffix": "optimisée par le comportement réel"
+      }
+    },
+    "market": "Le marché",
+    "delay": {
+      "heading": "⏱ Délai de mise en place",
+      "marketValue": "6 à 12 mois",
+      "gallyValue": "Quelques jours",
+      "ctaBudget": "Et côté budget ? →"
+    },
+    "cost": {
+      "heading": "💰 Coût la première année",
+      "marketValue": "80 000 — 100 000 €",
+      "gallyValue": "À partir de ~12 000 €",
+      "gallyNote": "Forfait flat, non indexé sur le catalogue ou les requêtes",
+      "ctaPricing": "Voir nos plans →"
+    },
+    "pricing": {
+      "heading": "📋 Nos offres",
+      "popular": "Populaire",
+      "business": "Business",
+      "businessPrice": "999 €",
+      "perMonth": "/mois",
+      "businessFeatures": [
+        "Recherche intelligente", "Facettes avancées", "Recherche vectorielle",
+        "Merchandising visuel", "Recommandations", "Support prioritaire"
+      ],
+      "talkToSales": "Parler à un commercial",
+      "enterprise": "Enterprise",
+      "enterprisePrice": "Sur devis",
+      "enterpriseFeatures": [
+        "Tout Business +", "Multi-store illimité", "SLA dédié",
+        "Intégration sur-mesure", "Account manager"
+      ]
+    },
+    "disclaimer": "Ordres de grandeur observés sur des projets de search e-commerce comparables — hors coûts internes. À affiner selon le contexte du prospect."
+  },
+  "insights": {
+    "toggle": "📊 Gally Insights",
+    "heading": "📊 Ce que Gally sait",
+    "summary": "{{count}} événements captés",
+    "empty": "Naviguez dans le site pour voir Gally apprendre de vos interactions.",
+    "sections": {
+      "search": {
+        "title_one": "{{count}} recherche",
+        "title_other": "{{count}} recherches",
+        "consequence": "Les termes populaires remontent dans l'autocomplete. Les requêtes sans résultat sont détectées."
+      },
+      "category": {
+        "title_one": "{{count}} catégorie visitée",
+        "title_other": "{{count}} catégories visitées",
+        "consequence": "Le contexte catégorie est mémorisé. Les actions suivantes y sont automatiquement rattachées."
+      },
+      "display": {
+        "title_one": "{{count}} affichage de produit",
+        "title_other": "{{count}} affichages de produits",
+        "consequence": "Gally mesure le taux d'impression et optimise le classement des produits peu vus."
+      },
+      "product": {
+        "title_one": "{{count}} fiche produit consultée",
+        "title_other": "{{count}} fiches produit consultées",
+        "consequence": "Le score de popularité augmente. Ces produits seront mieux classés dans les prochaines recherches."
+      },
+      "cart": {
+        "title_one": "{{count}} ajout au panier",
+        "title_other": "{{count}} ajouts au panier",
+        "consequence": "Signal fort de conversion : ces produits sont boostés dans les résultats et alimentent les recommandations."
+      },
+      "order": {
+        "title_one": "{{count}} commande",
+        "title_other": "{{count}} commandes",
+        "consequence": "Boucle complète : alimente les recommandations \"Fréquemment achetés ensemble\" et l'optimisation par revenu."
+      }
+    }
+  },
+  "explain": {
+    "toggle": "🧠 Explain",
+    "analyzing": "Analyse en cours...",
+    "explainFailed": "Échec de l'explication",
+    "headerPrefix": "🧠 Explain —",
+    "category": "Catégorie",
+    "boostPrefix": "🚀 Boost ×",
+    "modePrefix": "mode :",
+    "fieldMatches": "📐 Correspondances de champs",
+    "legend": "📖 Légende"
+  },
+  "eventLog": {
+    "toggleShow": "📊 Événements ({{count}})",
+    "close": "✕ Fermer",
+    "title": "🔴 Événements de tracking (en direct)",
+    "empty": "Aucun événement pour l'instant…"
+  },
+  "toast": {
+    "addedToCart": "✓ Produit ajouté au panier"
+  },
+  "trackingMeaning": {
+    "categoryView": "Gally enregistre la visite de la catégorie \"{{categoryCode}}\" — permet d'analyser quelles catégories attirent le plus de trafic et d'optimiser le merchandising.",
+    "productView": "Gally enregistre la consultation du produit \"{{sku}}\" — alimente le score de popularité et les recommandations personnalisées.",
+    "search": "Gally enregistre la recherche \"{{query}}\" ({{count}} résultats) — améliore l'autocomplete, détecte les recherches sans résultat, et affine la pertinence.",
+    "display": "Gally enregistre l'affichage de {{count}} produits avec leur position — mesure le taux d'impression et optimise le classement.",
+    "addToCart": "Gally enregistre l'ajout au panier de \"{{sku}}\" (×{{qty}}) — signal fort de conversion utilisé pour booster ce produit dans les résultats.",
+    "order": "Gally enregistre la commande #{{orderId}} ({{total}}€, {{count}} article(s)) — boucle le cycle : les produits achetés ensemble alimentent les recommandations \"Fréquemment achetés ensemble\"."
+  }
+}

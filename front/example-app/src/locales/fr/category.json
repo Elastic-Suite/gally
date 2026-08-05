@@ -1,0 +1,30 @@
+{
+  "category": {
+    "fallbackName": "Catégorie",
+    "breadcrumb": "Accueil / Catégories / {{name}}",
+    "countInCategory_one": "{{count}} produit dans cette catégorie",
+    "countInCategory_other": "{{count}} produits dans cette catégorie",
+    "count_one": "{{count}} produit",
+    "count_other": "{{count}} produits",
+    "sort": {
+      "placeholder": "Trier par",
+      "relevance": "Pertinence",
+      "nameAsc": "Nom A-Z",
+      "nameDesc": "Nom Z-A",
+      "priceAsc": "Prix ↑",
+      "priceDesc": "Prix ↓"
+    },
+    "emptyTitle": "Aucun produit trouvé",
+    "emptyBody": "Essayez d'ajuster vos filtres ou votre recherche."
+  },
+  "homepage": {
+    "heroTitle": "La recherche intelligente pour l'e-commerce",
+    "heroBody": "Découvrez comment ElasticSuite propulse la découverte produit grâce à une recherche pilotée par l'IA, une navigation à facettes et des recommandations en temps réel.",
+    "shopDresses": "Découvrir les robes",
+    "trending": "Tendances du moment",
+    "moreProducts": "Plus de produits",
+    "readyTitle": "Prêt à transformer votre expérience de recherche ?",
+    "readyBody": "Parcourez les catégories, testez les facettes de recherche et découvrez la recherche vectorielle en action.",
+    "tryVectorSearch": "Essayer la recherche vectorielle"
+  }
+}

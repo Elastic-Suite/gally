@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useSearch } from '../hooks/useSearch';
 import { useTracking } from '../hooks/useTracking';
 import { useCatalog } from '../contexts/CatalogContext';
@@ -8,8 +9,9 @@ import ProductSlider from '../components/ProductSlider';
 import { getProductFields } from '../components/ProductCard';
 
 export default function ProductPage() {
+  const { t } = useTranslation('product');
   const { sku } = useParams<{ sku: string }>();
-  const { currencySymbol, selectedLocalizedCatalog, categories } = useCatalog();
+  const { formatPrice, selectedLocalizedCatalog, categories } = useCatalog();
   const { addToCart } = useCart();
   const { trackProductView } = useTracking();
   const [selectedVariant, setSelectedVariant] = useState(0);
@@ -70,8 +72,8 @@ export default function ProductPage() {
   if (!p) {
     return (
       <div className="empty-state" style={{ margin: '3rem auto' }}>
-        <h3>Product not found</h3>
-        <p>SKU: {sku}</p>
+        <h3>{t('page.notFound')}</h3>
+        <p>{t('page.sku', { sku })}</p>
       </div>
     );
   }
@@ -83,7 +85,7 @@ export default function ProductPage() {
   return (
     <div>
       <div className="page-title">
-        <div className="breadcrumb">Home / Products / {p.name}</div>
+        <div className="breadcrumb">{t('page.breadcrumb', { name: p.name })}</div>
       </div>
 
       <div className="product-detail">
@@ -97,18 +99,18 @@ export default function ProductPage() {
 
         <div className="product-detail-info">
           <span style={{ fontSize: '0.75rem', background: 'var(--indigo-50)', padding: '0.25rem 0.75rem', borderRadius: 'var(--radius-pill)', color: 'var(--indigo-700)' }}>
-            {p.typeId === 'configurable' ? 'Configurable' : 'Simple'}
+            {p.typeId === 'configurable' ? t('page.type.configurable') : t('page.type.simple')}
           </span>
           <h1>{p.name}</h1>
-          <div className="product-detail-brand">SKU: {p.sku}</div>
+          <div className="product-detail-brand">{t('page.sku', { sku: p.sku })}</div>
           <div className="product-detail-price">
             {p.isDiscounted && p.originalPrice && (
               <span style={{ textDecoration: 'line-through', color: 'var(--gray-400)', marginRight: '0.75rem', fontSize: '0.9em' }}>
-                {currencySymbol}{p.originalPrice}
+                {formatPrice(p.originalPrice)}
               </span>
             )}
             <span style={p.isDiscounted ? { color: 'var(--coral-500)' } : {}}>
-              {currencySymbol}{p.price}
+              {formatPrice(p.price)}
             </span>
           </div>
 
@@ -121,13 +123,13 @@ export default function ProductPage() {
 
           {materials.length > 0 && (
             <div style={{ marginBottom: '1rem' }}>
-              <strong>Material:</strong> {materials.map(m => m.label).join(', ')}
+              <strong>{t('page.material')}</strong> {materials.map(m => m.label).join(', ')}
             </div>
           )}
 
           {hasVariants && (
             <div className="product-variants">
-              <h4>Color</h4>
+              <h4>{t('page.color')}</h4>
               <div className="variant-options">
                 {colors.map((c, i) => (
                   <div
@@ -144,8 +146,8 @@ export default function ProductPage() {
 
           <div style={{ marginBottom: '1rem', fontSize: '0.85rem' }}>
             {p.stock.status
-              ? <span style={{ color: 'var(--green-600, #43a047)' }}>✓ In Stock ({p.stock.qty} available)</span>
-              : <span style={{ color: 'var(--coral-500)' }}>✕ Out of Stock</span>
+              ? <span style={{ color: 'var(--green-600, #43a047)' }}>{t('page.inStock', { count: p.stock.qty })}</span>
+              : <span style={{ color: 'var(--coral-500)' }}>{t('page.outOfStockLong')}</span>
             }
           </div>
 
@@ -162,9 +164,9 @@ export default function ProductPage() {
                 childSku: p.typeId === 'configurable' ? `${p.sku}-${selectedVariant}` : p.sku,
               })}
             >
-              {p.stock.status ? 'Add to Cart' : 'Out of Stock'}
+              {p.stock.status ? t('page.addToCart') : t('card.outOfStock')}
             </button>
-            <button className="btn btn-outline btn-lg">♡ Wishlist</button>
+            <button className="btn btn-outline btn-lg">{t('page.wishlist')}</button>
           </div>
         </div>
       </div>
@@ -173,7 +175,7 @@ export default function ProductPage() {
       {recommendations.length > 0 && (
         <section className="recommendations">
           <ProductSlider
-            title="You May Also Like"
+            title={t('page.recommendations')}
             products={recommendations.filter((r: any) => (r.source?.sku || r.sku) !== sku).slice(0, 6)}
           />
         </section>

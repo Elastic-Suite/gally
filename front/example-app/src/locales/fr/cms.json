@@ -1,0 +1,30 @@
+{
+  "breadcrumbPrefix": "Accueil / Pages / {{title}}",
+  "about": {
+    "title": "À propos d'ElasticSuite",
+    "content": [
+      "ElasticSuite est la solution open-source de searchandising leader pour l'e-commerce, propulsant des centaines de boutiques en ligne dans le monde.",
+      "Construite sur une technologie IA de pointe et Elasticsearch, notre plateforme offre une recherche intelligente, un système de facettes dynamique et des recommandations produit personnalisées qui boostent la conversion.",
+      "Des petites boutiques aux grands distributeurs, ElasticSuite s'adapte à votre catalogue et au comportement de vos clients, apprenant et s'optimisant continuellement pour offrir la meilleure expérience d'achat possible.",
+      "Notre dernière innovation, Gally, apporte des capacités de recherche vectorielle qui comprennent le sens sémantique — ainsi, lorsqu'une cliente recherche une \"robe d'été\", elle trouve exactement ce qu'elle cherche, même si le titre du produit indique \"jupe midi fleurie\"."
+    ]
+  },
+  "shippingReturns": {
+    "title": "Livraison et retours",
+    "content": [
+      "Nous offrons la livraison standard gratuite pour toute commande de plus de 50 €. La livraison express est disponible au moment du paiement.",
+      "Livraison standard : 3 à 5 jours ouvrés. Express : 1 à 2 jours ouvrés.",
+      "Les retours sont acceptés dans un délai de 30 jours après la livraison. Les articles doivent être inutilisés et dans leur emballage d'origine.",
+      "Pour lancer un retour, veuillez contacter notre service client ou utiliser le portail de retours dans votre espace client."
+    ]
+  },
+  "faq": {
+    "title": "Foire aux questions",
+    "content": [
+      "Comment ElasticSuite améliore-t-il la recherche ? — Notre IA analyse les comportements des clients pour faire apparaître les résultats les plus pertinents, réduisant les pages \"aucun résultat\" jusqu'à 40 %.",
+      "Qu'est-ce que la recherche vectorielle ? — La recherche vectorielle utilise des embeddings IA pour comprendre le sens derrière les requêtes de recherche, et pas seulement une correspondance de mots-clés. Cela permet une recherche sémantique qui comprend l'intention.",
+      "Puis-je personnaliser les facettes ? — Oui ! ElasticSuite prend en charge les facettes sliders pour les prix, les nuanciers pour les couleurs, les interrupteurs booléens et les arborescences de catégories hiérarchiques — tout est configurable par catalogue.",
+      "Comment fonctionne le suivi des événements ? — Le SDK suit automatiquement les vues de page, les recherches, les vues de produit, les ajouts au panier et les commandes afin d'optimiser la pertinence de la recherche au fil du temps."
+    ]
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "bar": {
+    "placeholder": "Search products..."
+  },
+  "overlay": {
+    "suggestionsTitle": "🔍 Popular search terms",
+    "productsTitle": "Products",
+    "categoryTitle": "📁 Category",
+    "noSuggestions": "No matching search terms",
+    "noProducts": "No matching products",
+    "noCategories": "No matching categories",
+    "suggestions": [
+      "dress", "tank dress", "summer dress", "floral dress", "midi skirt",
+      "blouse", "jacket", "pants", "shoes", "accessories"
+    ]
+  },
+  "page": {
+    "breadcrumb": "Home / Search",
+    "allProducts": "All Products",
+    "resultsFor": "Results for \"{{query}}\"",
+    "searching": "Searching…",
+    "resultCount_one": "{{count}} result",
+    "resultCount_other": "{{count}} results",
+    "sort": {
+      "relevance": "Relevance",
+      "nameAsc": "Name A→Z",
+      "priceAsc": "Price: Low to High",
+      "priceDesc": "Price: High to Low"
+    },
+    "emptyTitle": "No results found",
+    "emptyBody": "Try a different search term or adjust your filters.",
+    "prev": "‹ Prev",
+    "next": "Next ›"
+  }
+}

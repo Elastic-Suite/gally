@@ -1,0 +1,18 @@
+{
+  "footer": {
+    "poweredBy": "Powered by",
+    "tagline": "Gally SDK Features Demo"
+  },
+  "nav": {
+    "home": "Home",
+    "categories": "Categories",
+    "searchIntelligence": "Search Intelligence",
+    "cms": "CMS"
+  },
+  "cart": {
+    "link": "Cart"
+  },
+  "actions": {
+    "filters": "Filters"
+  }
+}
