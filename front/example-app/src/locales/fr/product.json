@@ -1,0 +1,24 @@
+{
+  "card": {
+    "new": "Nouveau",
+    "outOfStock": "Rupture de stock",
+    "addToCart": "Ajouter au panier",
+    "unavailable": "Indisponible"
+  },
+  "page": {
+    "type": {
+      "configurable": "Configurable",
+      "simple": "Simple"
+    },
+    "sku": "Référence : {{sku}}",
+    "material": "Matière :",
+    "color": "Couleur",
+    "inStock": "✓ En stock ({{count}} disponible(s))",
+    "outOfStockLong": "✕ Rupture de stock",
+    "addToCart": "Ajouter au panier",
+    "wishlist": "♡ Liste de souhaits",
+    "notFound": "Produit introuvable",
+    "recommendations": "Vous aimerez aussi",
+    "breadcrumb": "Accueil / Produits / {{name}}"
+  }
+}

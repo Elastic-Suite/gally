@@ -1,5 +1,6 @@
 import { useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useCatalog } from '../contexts/CatalogContext';
 import { useSearchBarRef } from '../contexts/SearchBarContext';
 import { useSearch } from './useSearch';
@@ -18,6 +19,7 @@ interface UseStoryActionsOptions {
  * All DOM polling, highlights, navigation, and timers are managed here.
  */
 export function useStoryActions({ step, active, minimized }: UseStoryActionsOptions) {
+  const { t } = useTranslation('demo');
   const navigate = useNavigate();
   const navigateRef = useRef(navigate);
   navigateRef.current = navigate;
@@ -189,7 +191,7 @@ export function useStoryActions({ step, active, minimized }: UseStoryActionsOpti
           actionTimerRef.current = setTimeout(() => {
             btn.click();
             btn.classList.remove('story-highlight-btn');
-            showToast('✓ Produit ajouté au panier');
+            showToast(t('toast.addedToCart'));
             actionTimerRef.current = setTimeout(() => navigateRef.current('/cart'), 1500);
           }, 1000);
         };
@@ -198,7 +200,7 @@ export function useStoryActions({ step, active, minimized }: UseStoryActionsOpti
     };
     actionTimerRef.current = setTimeout(tryFlow, 500);
     return () => cleanup();
-  }, [resolveTarget, showToast, cleanup]);
+  }, [resolveTarget, showToast, cleanup, t]);
 
   // ── Effect: run action when step changes ─────────────────
 

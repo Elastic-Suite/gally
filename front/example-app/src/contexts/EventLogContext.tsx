@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useCallback, ReactNode } from 'react';
+import i18n from '../i18n';
 
 interface EventLogEntry {
   id: number;
@@ -29,7 +30,7 @@ export function EventLogProvider({ children }: { children: ReactNode }) {
       type,
       detail,
       meaning: meaning || '',
-      time: new Date().toLocaleTimeString(),
+      time: new Date().toLocaleTimeString(i18n.language),
     };
     setEntries(prev => [entry, ...prev].slice(0, 50));
   }, []);

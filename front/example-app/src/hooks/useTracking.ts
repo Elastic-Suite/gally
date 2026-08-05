@@ -1,9 +1,11 @@
 import { useCallback, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { getTracker, TrackingEventType } from '../sdk';
 import { useCatalog } from '../contexts/CatalogContext';
 import { useEventLog } from '../contexts/EventLogContext';
 
 export function useTracking() {
+  const { t } = useTranslation('demo');
   const { selectedLocalizedCatalog } = useCatalog();
   const { log } = useEventLog();
 
@@ -14,7 +16,7 @@ export function useTracking() {
   logRef.current = log;
 
   const trackCategoryView = useCallback((categoryCode: string, itemCount: number, page: number, pageCount: number) => {
-    logRef.current('VIEW:category', categoryCode, `Gally enregistre la visite de la catégorie "${categoryCode}" — permet d'analyser quelles catégories attirent le plus de trafic et d'optimiser le merchandising.`);
+    logRef.current('VIEW:category', categoryCode, t('trackingMeaning.categoryView', { categoryCode }));
     try {
       getTracker().push({
         eventType: TrackingEventType.VIEW,
@@ -33,10 +35,10 @@ export function useTracking() {
         }),
       });
     } catch (e) { console.warn('[Tracker]', e); }
-  }, []);
+  }, [t]);
 
   const trackProductView = useCallback((sku: string) => {
-    logRef.current('VIEW:product', sku, `Gally enregistre la consultation du produit "${sku}" — alimente le score de popularité et les recommandations personnalisées.`);
+    logRef.current('VIEW:product', sku, t('trackingMeaning.productView', { sku }));
     try {
       getTracker().push({
         eventType: TrackingEventType.VIEW,
@@ -45,10 +47,10 @@ export function useTracking() {
         entityCode: sku,
       });
     } catch (e) { console.warn('[Tracker]', e); }
-  }, []);
+  }, [t]);
 
   const trackSearch = useCallback((query: string, itemCount: number, page: number, pageCount: number) => {
-    logRef.current('SEARCH', query, `Gally enregistre la recherche "${query}" (${itemCount} résultats) — améliore l'autocomplete, détecte les recherches sans résultat, et affine la pertinence.`);
+    logRef.current('SEARCH', query, t('trackingMeaning.search', { query, count: itemCount }));
     try {
       getTracker().push({
         eventType: TrackingEventType.SEARCH,
@@ -67,10 +69,10 @@ export function useTracking() {
         }),
       });
     } catch (e) { console.warn('[Tracker]', e); }
-  }, []);
+  }, [t]);
 
   const trackDisplay = useCallback((items: { sku: string; position: number }[]) => {
-    logRef.current('DISPLAY', `${items.length} items`, `Gally enregistre l'affichage de ${items.length} produits avec leur position — mesure le taux d'impression et optimise le classement.`);
+    logRef.current('DISPLAY', `${items.length} items`, t('trackingMeaning.display', { count: items.length }));
     try {
       getTracker().push({
         eventType: TrackingEventType.DISPLAY,
@@ -81,10 +83,10 @@ export function useTracking() {
         }),
       });
     } catch (e) { console.warn('[Tracker]', e); }
-  }, []);
+  }, [t]);
 
   const trackAddToCart = useCallback((sku: string, qty: number, childSku?: string) => {
-    logRef.current('ADD_TO_CART', `${sku} x${qty}`, `Gally enregistre l'ajout au panier de "${sku}" (×${qty}) — signal fort de conversion utilisé pour booster ce produit dans les résultats.`);
+    logRef.current('ADD_TO_CART', `${sku} x${qty}`, t('trackingMeaning.addToCart', { sku, qty }));
     try {
       getTracker().push({
         eventType: TrackingEventType.ADD_TO_CART,
@@ -97,10 +99,10 @@ export function useTracking() {
         }),
       });
     } catch (e) { console.warn('[Tracker]', e); }
-  }, []);
+  }, [t]);
 
   const trackOrder = useCallback((orderId: string, total: number, items: { sku: string; childSku?: string; price: number; qty: number }[]) => {
-    logRef.current('ORDER', `#${orderId} — ${total}`, `Gally enregistre la commande #${orderId} (${total}€, ${items.length} article(s)) — boucle le cycle : les produits achetés ensemble alimentent les recommandations "Fréquemment achetés ensemble".`);
+    logRef.current('ORDER', `#${orderId} — ${total}`, t('trackingMeaning.order', { orderId, total, count: items.length }));
     try {
       getTracker().push({
         eventType: TrackingEventType.ORDER,
@@ -116,7 +118,7 @@ export function useTracking() {
         }),
       });
     } catch (e) { console.warn('[Tracker]', e); }
-  }, []);
+  }, [t]);
 
   return { trackCategoryView, trackProductView, trackSearch, trackDisplay, trackAddToCart, trackOrder };
 }

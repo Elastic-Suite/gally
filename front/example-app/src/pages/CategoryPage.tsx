@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useSearch } from '../hooks/useSearch';
 import { useTracking } from '../hooks/useTracking';
 import { useCatalog } from '../contexts/CatalogContext';
@@ -20,6 +21,7 @@ function findCategory(categories: ICategoryNode[], id: string): ICategoryNode | 
 }
 
 export default function CategoryPage() {
+  const { t } = useTranslation(['category', 'common']);
   const { code } = useParams<{ code: string }>();
   const { categories } = useCatalog();
   const [page, setPage] = useState(1);
@@ -29,7 +31,7 @@ export default function CategoryPage() {
   const { trackCategoryView, trackDisplay } = useTracking();
 
   const category = code ? findCategory(categories, code) : null;
-  const categoryName = category?.name || code || 'Category';
+  const categoryName = category?.name || code || t('category.fallbackName');
 
   // Reset page when category changes
   useEffect(() => { setPage(1); setFilters({}); }, [code]);
@@ -92,13 +94,13 @@ export default function CategoryPage() {
       <CategoryNav activeCode={code} />
 
       <div className="page-title">
-        <div className="breadcrumb">Home / Categories / {categoryName}</div>
+        <div className="breadcrumb">{t('category.breadcrumb', { name: categoryName })}</div>
         <h1>{categoryName}</h1>
-        {category && <span style={{ color: 'var(--gray-500)', fontSize: '0.9rem' }}>{category.count} products in this category</span>}
+        {category && <span style={{ color: 'var(--gray-500)', fontSize: '0.9rem' }}>{t('category.countInCategory', { count: category.count })}</span>}
       </div>
 
       <button className="btn btn-outline btn-sm mobile-filter-toggle">
-        ☰ Filters
+        ☰ {t('common:actions.filters')}
       </button>
 
       <div className="catalog-page">
@@ -112,15 +114,15 @@ export default function CategoryPage() {
 
         <div>
           <div className="products-header">
-            <span className="products-count">{total} products</span>
+            <span className="products-count">{t('category.count', { count: total })}</span>
             <div className="products-sort">
               <select onChange={handleSort} value={`${sortField}:${sortDirection}`}>
-                <option value=":asc">Sort by</option>
-                <option value="_score:desc">Relevance</option>
-                <option value="name:asc">Name A-Z</option>
-                <option value="name:desc">Name Z-A</option>
-                <option value="price__price:asc">Price ↑</option>
-                <option value="price__price:desc">Price ↓</option>
+                <option value=":asc">{t('category.sort.placeholder')}</option>
+                <option value="_score:desc">{t('category.sort.relevance')}</option>
+                <option value="name:asc">{t('category.sort.nameAsc')}</option>
+                <option value="name:desc">{t('category.sort.nameDesc')}</option>
+                <option value="price__price:asc">{t('category.sort.priceAsc')}</option>
+                <option value="price__price:desc">{t('category.sort.priceDesc')}</option>
               </select>
             </div>
           </div>
@@ -140,8 +142,8 @@ export default function CategoryPage() {
             </div>
           ) : products.length === 0 ? (
             <div className="empty-state">
-              <h3>No products found</h3>
-              <p>Try adjusting your filters or search term.</p>
+              <h3>{t('category.emptyTitle')}</h3>
+              <p>{t('category.emptyBody')}</p>
             </div>
           ) : (
             <div className="products-grid">
