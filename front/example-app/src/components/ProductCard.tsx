@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useCatalog } from '../contexts/CatalogContext';
 import { useCart } from '../contexts/CartContext';
 import { MEDIA_BASE_URL } from '../sdk';
@@ -24,7 +25,8 @@ function getProductFields(product: any) {
 }
 
 export default function ProductCard({ product }: Props) {
-  const { currencySymbol } = useCatalog();
+  const { t } = useTranslation('product');
+  const { formatPrice } = useCatalog();
   const { addToCart } = useCart();
 
   const { name, sku, image, price, originalPrice, isDiscounted, isNew, stock } = getProductFields(product);
@@ -33,8 +35,8 @@ export default function ProductCard({ product }: Props) {
     <div className="product-card">
       <Link to={`/product/${encodeURIComponent(sku)}`}>
         <div className="product-card-image">
-          {isNew && <span className="product-card-badge">New</span>}
-          {!stock.status && <span className="product-card-badge" style={{ background: 'var(--gray-500)' }}>Out of Stock</span>}
+          {isNew && <span className="product-card-badge">{t('card.new')}</span>}
+          {!stock.status && <span className="product-card-badge" style={{ background: 'var(--gray-500)' }}>{t('card.outOfStock')}</span>}
           {image ? (
             <img src={image} alt={name} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
           ) : (
@@ -49,11 +51,11 @@ export default function ProductCard({ product }: Props) {
         <div className="product-card-price">
           {isDiscounted && originalPrice && (
             <span style={{ textDecoration: 'line-through', color: 'var(--gray-400)', marginRight: '0.5rem', fontSize: '0.85em' }}>
-              {currencySymbol}{originalPrice}
+              {formatPrice(originalPrice)}
             </span>
           )}
           <span style={isDiscounted ? { color: 'var(--coral-500)', fontWeight: 600 } : {}}>
-            {currencySymbol}{price}
+            {formatPrice(price)}
           </span>
         </div>
         <div className="product-card-actions">
@@ -62,7 +64,7 @@ export default function ProductCard({ product }: Props) {
             onClick={() => addToCart({ sku, name, price, childSku: sku, image })}
             disabled={!stock.status}
           >
-            {stock.status ? 'Add to cart' : 'Unavailable'}
+            {stock.status ? t('card.addToCart') : t('card.unavailable')}
           </button>
         </div>
       </div>

@@ -1,13 +1,15 @@
 import { useLayoutEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useCatalog } from '../contexts/CatalogContext';
 import { useCart } from '../contexts/CartContext';
 import SearchBar from './SearchBar';
 
 export default function Header() {
+  const { t } = useTranslation('common');
   const {
     selectedCatalog, selectedLocalizedCatalog,
-    setCatalog, setLocalizedCatalog, catalogs, currencySymbol, categories, loadingCatalogs,
+    setCatalog, setLocalizedCatalog, catalogs, categories, loadingCatalogs,
   } = useCatalog();
   const { itemCount } = useCart();
   const location = useLocation();
@@ -41,15 +43,15 @@ export default function Header() {
           </Link>
 
           <nav className="header-nav">
-            <Link to="/" className={isActive('/')}>Home</Link>
+            <Link to="/" className={isActive('/')}>{t('nav.home')}</Link>
             <Link
               to={firstCategory ? `/category/${firstCategory.id}` : '/'}
               className={location.pathname.startsWith('/category') ? 'active' : ''}
             >
-              Categories
+              {t('nav.categories')}
             </Link>
-            <Link to="/explain" className={`expert-only ${isActive('/explain')}`}>Search Intelligence</Link>
-            <Link to="/cms/about" className={location.pathname.startsWith('/cms') ? 'active' : ''}>CMS</Link>
+            <Link to="/explain" className={`expert-only ${isActive('/explain')}`}>{t('nav.searchIntelligence')}</Link>
+            <Link to="/cms/about" className={location.pathname.startsWith('/cms') ? 'active' : ''}>{t('nav.cms')}</Link>
           </nav>
 
           <div className="context-selectors">
@@ -74,7 +76,7 @@ export default function Header() {
           </div>
 
           <Link to="/cart" className="cart-badge">
-            🛒 Cart
+            🛒 {t('cart.link')}
             {itemCount > 0 && <span className="cart-count">{itemCount}</span>}
           </Link>
         </div>
@@ -82,7 +84,7 @@ export default function Header() {
 
       <div className="header-search-band">
         <div className="header-search-row">
-          <SearchBar categories={categories} currencySymbol={currencySymbol} categoriesLoading={loadingCatalogs} />
+          <SearchBar categories={categories} categoriesLoading={loadingCatalogs} />
         </div>
       </div>
     </div>

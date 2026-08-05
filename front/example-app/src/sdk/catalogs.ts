@@ -27,11 +27,14 @@ export interface ICategoryNode {
   children?: ICategoryNode[];
 }
 
-export const CURRENCIES: Record<string, string> = {
-  EUR: '€',
-  GBP: '£',
-  USD: '$',
+// Maps ILocalizedCatalog.locale (e.g. "fr_FR") to the app's i18next language code.
+export const LANGUAGES: Record<string, string> = {
+  fr_FR: 'fr',
+  en_US: 'en',
+  de_DE: 'de',
 };
+
+export const DEFAULT_LANGUAGE = 'en';
 
 export async function fetchCatalogs(): Promise<ICatalog[]> {
   const res = await fetch(`${BASE_URI}/catalogs`, {
