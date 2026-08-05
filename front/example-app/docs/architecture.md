@@ -13,7 +13,9 @@ src/
 │   ├── useSearch.ts        # useSearch(options) reactive hook, useAutocomplete(), viewMoreOptions(field)
 │   └── useTracking.ts      # trackCategoryView/ProductView/Search/Display/AddToCart/Order
 ├── components/
-│   ├── Header.tsx          # Nav, catalog/locale selectors, search bar + autocomplete
+│   ├── Header.tsx          # Two-row sticky header: nav/selectors/cart (row 1) + search band (row 2)
+│   ├── SearchBar.tsx       # Search input, keyboard nav (arrows/Enter/Escape), searchBarRef external control
+│   ├── SearchOverlay.tsx   # Full-screen 3-col autocomplete popup (portaled), see ../specs/feature-search-header-redesign.md
 │   ├── CategoryNav.tsx     # Real category tree with hover submenus
 │   ├── ProductCard.tsx     # Image, price, discount, stock, add-to-cart
 │   ├── Facets.tsx          # Sidebar facets (checkbox/slider/boolean/swatch/category/search/show-more) + active-filter chips

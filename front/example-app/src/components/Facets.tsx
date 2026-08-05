@@ -20,6 +20,7 @@ interface Props {
   onFilterChange: (field: string, value: any) => void;
   loading?: boolean;
   onLoadMore?: (field: string) => Promise<FacetOption[]>;
+  open?: boolean;
 }
 
 // Facet fields to hide (not discriminant)
@@ -65,11 +66,11 @@ function guessColor(label: string): string {
   return `hsl(${Math.abs(hash) % 360}, 55%, 55%)`;
 }
 
-export default function Facets({ aggregations, activeFilters, onFilterChange, loading, onLoadMore }: Props) {
+export default function Facets({ aggregations, activeFilters, onFilterChange, loading, onLoadMore, open }: Props) {
   // Show skeleton when loading and no aggregations yet
   if (loading && aggregations.length === 0) {
     return (
-      <aside className="facets-sidebar">
+      <aside className={`facets-sidebar ${open ? 'open' : ''}`}>
         <h3 style={{ fontFamily: 'var(--font-sans)', fontSize: '1rem', marginBottom: '1rem' }}>Filters</h3>
         {Array.from({ length: 4 }).map((_, i) => (
           <div key={i} className="facet-group">
@@ -91,7 +92,7 @@ export default function Facets({ aggregations, activeFilters, onFilterChange, lo
   );
 
   return (
-    <aside className="facets-sidebar">
+    <aside className={`facets-sidebar ${open ? 'open' : ''}`}>
       <h3 style={{ fontFamily: 'var(--font-sans)', fontSize: '1rem', marginBottom: '1rem' }}>Filters</h3>
       <ActiveFilterChips
         aggregations={visibleAggregations}

@@ -90,15 +90,14 @@ export default function SearchPage() {
       </button>
 
       <div className="catalog-page">
-        <div className={`facets-sidebar ${facetsOpen ? 'open' : ''}`}>
-          <Facets
-            aggregations={aggregations}
-            activeFilters={activeFilters}
-            onFilterChange={handleFilterChange}
-            loading={loading}
-            onLoadMore={viewMoreOptions}
-          />
-        </div>
+        <Facets
+          aggregations={aggregations}
+          activeFilters={activeFilters}
+          onFilterChange={handleFilterChange}
+          loading={loading}
+          onLoadMore={viewMoreOptions}
+          open={facetsOpen}
+        />
 
         <div>
           <div className="products-header">

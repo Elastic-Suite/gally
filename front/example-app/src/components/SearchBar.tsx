@@ -1,0 +1,149 @@
+import React, { useState, useRef, useEffect, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSearchBarRef } from '../contexts/SearchBarContext';
+import { useAutocomplete } from '../hooks/useSearch';
+import SearchOverlay, { getSuggestionMatches, getCategoryMatches } from './SearchOverlay';
+import { getProductFields } from './ProductCard';
+
+interface SearchBarProps {
+  categories: any[];
+  currencySymbol: string;
+  categoriesLoading: boolean;
+}
+
+export default function SearchBar({ categories, currencySymbol, categoriesLoading }: SearchBarProps) {
+  const navigate = useNavigate();
+  const [query, setQuery] = useState('');
+  const [focused, setFocused] = useState(false);
+  const { results, loading, search, clear } = useAutocomplete();
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const searchBarRef = useSearchBarRef();
+  const [highlightedIndex, setHighlightedIndex] = useState(-1);
+
+  // Flattened, in-visual-order list of every navigable item across the 3 columns,
+  // so arrow keys can move through them as a single sequence.
+  const flatItems = useMemo(() => {
+    const items: { key: string; to: string }[] = [];
+    getSuggestionMatches(query).forEach(term => {
+      items.push({ key: `suggestion-${term}`, to: `/search?q=${encodeURIComponent(term)}` });
+    });
+    results.forEach((item: any) => {
+      const { sku } = getProductFields(item);
+      items.push({ key: `product-${sku}`, to: `/product/${encodeURIComponent(sku)}` });
+    });
+    getCategoryMatches(query, categories).forEach(cat => {
+      items.push({ key: `category-${cat.id}`, to: `/category/${cat.id}` });
+    });
+    return items;
+  }, [query, results, categories]);
+
+  useEffect(() => {
+    setHighlightedIndex(-1);
+  }, [query]);
+
+  // Keep the highlighted item visible if its column is scrolled.
+  useEffect(() => {
+    if (highlightedIndex < 0) return;
+    const key = flatItems[highlightedIndex]?.key;
+    if (!key) return;
+    document.querySelector(`[data-item-key="${key}"]`)?.scrollIntoView({ block: 'nearest' });
+  }, [highlightedIndex, flatItems]);
+
+  // Register search bar handle for external control (story companion)
+  useEffect(() => {
+    searchBarRef.current = {
+      setQuery: (q: string) => {
+        setQuery(q);
+        search(q);
+      },
+      submit: () => {
+        if (query.trim()) {
+          navigate(`/search?q=${encodeURIComponent(query.trim())}`);
+          clear();
+        }
+      },
+      clear: () => {
+        setQuery('');
+        clear();
+      },
+      inputRef,
+    };
+  });
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (query.trim()) {
+      navigate(`/search?q=${encodeURIComponent(query.trim())}`);
+      clear();
+    }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    setQuery(val);
+    search(val);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Escape') {
+      inputRef.current?.blur();
+      return;
+    }
+    if (flatItems.length === 0) return;
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setHighlightedIndex(i => (i + 1) % flatItems.length);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setHighlightedIndex(i => (i <= 0 ? flatItems.length - 1 : i - 1));
+    } else if (e.key === 'Enter' && highlightedIndex >= 0) {
+      e.preventDefault();
+      const item = flatItems[highlightedIndex];
+      if (item) {
+        navigate(item.to);
+        setQuery('');
+        clear();
+      }
+    }
+  };
+
+  // Gated on `focused` alone (not `results.length`) so blurring always closes the
+  // overlay, without having to wipe `results` — refocusing re-opens it instantly
+  // with the same suggestions still in place instead of an empty flash.
+  const isOverlayOpen = focused && (results.length > 0 || query.length >= 2);
+  const highlightedKey = highlightedIndex >= 0 ? flatItems[highlightedIndex]?.key ?? null : null;
+
+  return (
+    <form onSubmit={handleSearch} className={`search-bar-wrapper ${focused ? 'expanded' : ''} ${isOverlayOpen ? 'overlay-open' : ''}`}>
+      <span className="search-icon">🔍</span>
+      <input
+        ref={inputRef}
+        type="text"
+        className="search-bar"
+        placeholder="Search products..."
+        value={query}
+        onChange={handleInputChange}
+        onFocus={() => setFocused(true)}
+        // Delayed so a click on an overlay item (a plain div, not a button/link)
+        // still registers before the overlay unmounts. Only hides the overlay —
+        // `results` is intentionally left alone so refocusing restores it as-is.
+        onBlur={() => { setTimeout(() => { setFocused(false); }, 200); }}
+        onKeyDown={handleKeyDown}
+      />
+      <SearchOverlay
+        open={isOverlayOpen}
+        query={query}
+        results={results}
+        resultsLoading={loading}
+        categories={categories}
+        categoriesLoading={categoriesLoading}
+        currencySymbol={currencySymbol}
+        highlightedKey={highlightedKey}
+        navigate={navigate}
+        setQuery={setQuery}
+        clear={clear}
+      />
+    </form>
+  );
+}

@@ -112,8 +112,9 @@ See `specs/feature-facet-active-filters.md`.
 
 ### Facet/attribute-value autocomplete
 **Status: partial**
-Search bar typeahead included a third "Attributs" group (e.g. "Color: Red") that applied a facet filter
-directly on selection. The new `Header.tsx` `useAutocomplete` keeps only the Products + Categories groups.
+Search bar typeahead included an "Attributs" group (e.g. "Color: Red") that applied a facet filter directly
+on selection. The new `SearchOverlay.tsx` (see `specs/feature-search-header-redesign.md`) has 3 groups —
+Popular search terms, Products, Category — still no attribute-value group.
 - `src/components/SearchBar/SearchBar.tsx`
 
 ---
