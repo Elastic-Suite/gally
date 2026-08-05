@@ -1,35 +1,37 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export default function ClosingPage() {
+  const { t } = useTranslation('demo');
   const [revealStage, setRevealStage] = useState(0); // 0=delay, 1=cost, 2=pricing
 
   return (
     <div className="closing-page">
       <div className="page-title">
-        <h1>Le Bilan</h1>
+        <h1>{t('closing.title')}</h1>
       </div>
 
       {/* Stats band */}
       <div className="closing-stats">
         <div className="closing-stat">
           <span className="closing-stat-value coral">−40%</span>
-          <span className="closing-stat-label">Pages "aucun résultat"</span>
+          <span className="closing-stat-label">{t('closing.stats.noResults')}</span>
         </div>
         <div className="closing-stat">
           <span className="closing-stat-value">+30%</span>
-          <span className="closing-stat-label">Taux de conversion</span>
+          <span className="closing-stat-label">{t('closing.stats.conversion')}</span>
         </div>
         <div className="closing-stat">
           <span className="closing-stat-value">+15%</span>
-          <span className="closing-stat-label">Panier moyen</span>
+          <span className="closing-stat-label">{t('closing.stats.aov')}</span>
         </div>
       </div>
 
       {/* Tracking Journey Timeline */}
       <div className="closing-card" style={{ marginBottom: '2rem' }}>
-        <h3>📊 Ce que Gally a appris pendant le parcours</h3>
+        <h3>{t('closing.timeline.heading')}</h3>
         <p style={{ fontSize: '0.85rem', color: 'var(--gray-500)', marginBottom: '1.5rem' }}>
-          Chaque interaction de Camille a été captée. Voici comment ces données améliorent l'expérience pour les prochains visiteurs.
+          {t('closing.timeline.intro')}
         </p>
         <div className="tracking-timeline">
           <div className="timeline-item">
@@ -37,10 +39,10 @@ export default function ClosingPage() {
             <div className="timeline-content">
               <div className="timeline-event">
                 <span className="timeline-badge">SEARCH</span>
-                Camille recherche <strong>"tank dress"</strong>
+                {t('closing.timeline.search.eventPrefix')} <strong>"tank dress"</strong>
               </div>
               <div className="timeline-consequence">
-                → Gally enregistre la requête et le nombre de résultats. Les termes populaires remontent dans l'autocomplete. Les requêtes sans résultat sont détectées pour enrichir le catalogue.
+                {t('closing.timeline.search.consequence')}
               </div>
             </div>
           </div>
@@ -50,10 +52,10 @@ export default function ClosingPage() {
             <div className="timeline-content">
               <div className="timeline-event">
                 <span className="timeline-badge">DISPLAY</span>
-                12 produits affichés avec leur position
+                {t('closing.timeline.display.event', { count: 12 })}
               </div>
               <div className="timeline-consequence">
-                → Gally mesure le taux d'impression de chaque produit. Les produits vus mais jamais cliqués sont identifiés pour ajuster leur ranking.
+                {t('closing.timeline.display.consequence')}
               </div>
             </div>
           </div>
@@ -63,10 +65,10 @@ export default function ClosingPage() {
             <div className="timeline-content">
               <div className="timeline-event">
                 <span className="timeline-badge">VIEW:category</span>
-                Camille visite la catégorie Robes
+                {t('closing.timeline.viewCategory.event')}
               </div>
               <div className="timeline-consequence">
-                → Le contexte "catégorie" est mémorisé pour la session. Toutes les actions suivantes sont automatiquement rattachées à cette catégorie.
+                {t('closing.timeline.viewCategory.consequence')}
               </div>
             </div>
           </div>
@@ -76,10 +78,10 @@ export default function ClosingPage() {
             <div className="timeline-content">
               <div className="timeline-event">
                 <span className="timeline-badge">VIEW:product</span>
-                Camille consulte une fiche produit
+                {t('closing.timeline.viewProduct.event')}
               </div>
               <div className="timeline-consequence">
-                → Le score de popularité du produit augmente. Gally utilise ce signal pour mieux classer ce produit dans les prochaines recherches similaires.
+                {t('closing.timeline.viewProduct.consequence')}
               </div>
             </div>
           </div>
@@ -89,10 +91,10 @@ export default function ClosingPage() {
             <div className="timeline-content">
               <div className="timeline-event">
                 <span className="timeline-badge">ADD_TO_CART</span>
-                Camille ajoute le produit au panier
+                {t('closing.timeline.addToCart.event')}
               </div>
               <div className="timeline-consequence">
-                → Signal fort de conversion : le produit est boosté dans les résultats. Combiné avec VIEW:product, il alimente les recommandations "Fréquemment consultés ensemble".
+                {t('closing.timeline.addToCart.consequence')}
               </div>
             </div>
           </div>
@@ -102,10 +104,10 @@ export default function ClosingPage() {
             <div className="timeline-content">
               <div className="timeline-event">
                 <span className="timeline-badge">ORDER</span>
-                Commande finalisée
+                {t('closing.timeline.order.event')}
               </div>
               <div className="timeline-consequence">
-                → Boucle complète : les produits achetés ensemble alimentent les recommandations "Fréquemment achetés ensemble". Le chiffre d'affaires par requête permet d'optimiser la pertinence en fonction du revenu généré.
+                {t('closing.timeline.order.consequence')}
               </div>
             </div>
           </div>
@@ -113,16 +115,16 @@ export default function ClosingPage() {
 
         <div className="timeline-summary">
           <div className="timeline-summary-item">
-            <strong>6 types d'événements</strong> captés automatiquement
+            <strong>{t('closing.timeline.summary.eventTypes')}</strong> {t('closing.timeline.summary.eventTypesSuffix')}
           </div>
           <div className="timeline-summary-item">
-            <strong>Score de popularité</strong> recalculé en continu
+            <strong>{t('closing.timeline.summary.popularityScore')}</strong> {t('closing.timeline.summary.popularityScoreSuffix')}
           </div>
           <div className="timeline-summary-item">
-            <strong>Recommandations</strong> enrichies à chaque session
+            <strong>{t('closing.timeline.summary.recommendations')}</strong> {t('closing.timeline.summary.recommendationsSuffix')}
           </div>
           <div className="timeline-summary-item">
-            <strong>Pertinence</strong> optimisée par le comportement réel
+            <strong>{t('closing.timeline.summary.relevance')}</strong> {t('closing.timeline.summary.relevanceSuffix')}
           </div>
         </div>
       </div>
@@ -131,21 +133,21 @@ export default function ClosingPage() {
       <div className="closing-cards">
         {/* Stage 0: Delay — always visible */}
         <div className="closing-card">
-          <h3>⏱ Délai de mise en place</h3>
+          <h3>{t('closing.delay.heading')}</h3>
           <div className="closing-compare">
             <div className="closing-compare-col market">
-              <div className="closing-compare-label">Le marché</div>
-              <div className="closing-compare-value">6 à 12 mois</div>
+              <div className="closing-compare-label">{t('closing.market')}</div>
+              <div className="closing-compare-value">{t('closing.delay.marketValue')}</div>
             </div>
             <div className="closing-compare-vs">vs</div>
             <div className="closing-compare-col gally">
               <div className="closing-compare-label">Gally</div>
-              <div className="closing-compare-value">Quelques jours</div>
+              <div className="closing-compare-value">{t('closing.delay.gallyValue')}</div>
             </div>
           </div>
           {revealStage === 0 && (
             <button className="btn btn-primary closing-reveal-btn" onClick={() => setRevealStage(1)}>
-              Et côté budget ? →
+              {t('closing.delay.ctaBudget')}
             </button>
           )}
         </div>
@@ -153,22 +155,22 @@ export default function ClosingPage() {
         {/* Stage 1: Cost */}
         {revealStage >= 1 && (
           <div className="closing-card reveal-in">
-            <h3>💰 Coût la première année</h3>
+            <h3>{t('closing.cost.heading')}</h3>
             <div className="closing-compare">
               <div className="closing-compare-col market">
-                <div className="closing-compare-label">Le marché</div>
-                <div className="closing-compare-value">80 000 — 100 000 €</div>
+                <div className="closing-compare-label">{t('closing.market')}</div>
+                <div className="closing-compare-value">{t('closing.cost.marketValue')}</div>
               </div>
               <div className="closing-compare-vs">vs</div>
               <div className="closing-compare-col gally">
                 <div className="closing-compare-label">Gally</div>
-                <div className="closing-compare-value">À partir de ~12 000 €</div>
-                <div className="closing-compare-note">Forfait flat, non indexé sur le catalogue ou les requêtes</div>
+                <div className="closing-compare-value">{t('closing.cost.gallyValue')}</div>
+                <div className="closing-compare-note">{t('closing.cost.gallyNote')}</div>
               </div>
             </div>
             {revealStage === 1 && (
               <button className="btn btn-primary closing-reveal-btn" onClick={() => setRevealStage(2)}>
-                Voir nos plans →
+                {t('closing.cost.ctaPricing')}
               </button>
             )}
           </div>
@@ -177,36 +179,31 @@ export default function ClosingPage() {
         {/* Stage 2: Pricing */}
         {revealStage >= 2 && (
           <div className="closing-card reveal-in">
-            <h3>📋 Nos offres</h3>
+            <h3>{t('closing.pricing.heading')}</h3>
             <div className="pricing-cards">
               <div className="pricing-card featured">
-                <div className="pricing-badge">Populaire</div>
-                <h4>Business</h4>
-                <div className="pricing-price">999 €<span>/mois</span></div>
+                <div className="pricing-badge">{t('closing.pricing.popular')}</div>
+                <h4>{t('closing.pricing.business')}</h4>
+                <div className="pricing-price">{t('closing.pricing.businessPrice')}<span>{t('closing.pricing.perMonth')}</span></div>
                 <ul className="pricing-features">
-                  <li>Recherche intelligente</li>
-                  <li>Facettes avancées</li>
-                  <li>Recherche vectorielle</li>
-                  <li>Merchandising visuel</li>
-                  <li>Recommandations</li>
-                  <li>Support prioritaire</li>
+                  {(t('closing.pricing.businessFeatures', { returnObjects: true }) as string[]).map((f) => (
+                    <li key={f}>{f}</li>
+                  ))}
                 </ul>
                 <button className="btn btn-coral" style={{ width: '100%' }}>
-                  Parler à un commercial
+                  {t('closing.pricing.talkToSales')}
                 </button>
               </div>
               <div className="pricing-card">
-                <h4>Enterprise</h4>
-                <div className="pricing-price">Sur devis</div>
+                <h4>{t('closing.pricing.enterprise')}</h4>
+                <div className="pricing-price">{t('closing.pricing.enterprisePrice')}</div>
                 <ul className="pricing-features">
-                  <li>Tout Business +</li>
-                  <li>Multi-store illimité</li>
-                  <li>SLA dédié</li>
-                  <li>Intégration sur-mesure</li>
-                  <li>Account manager</li>
+                  {(t('closing.pricing.enterpriseFeatures', { returnObjects: true }) as string[]).map((f) => (
+                    <li key={f}>{f}</li>
+                  ))}
                 </ul>
                 <button className="btn btn-outline" style={{ width: '100%' }}>
-                  Parler à un commercial
+                  {t('closing.pricing.talkToSales')}
                 </button>
               </div>
             </div>
@@ -216,8 +213,7 @@ export default function ClosingPage() {
 
       {/* Disclaimer */}
       <p className="closing-disclaimer">
-        Ordres de grandeur observés sur des projets de search e-commerce comparables — hors coûts internes.
-        À affiner selon le contexte du prospect.
+        {t('closing.disclaimer')}
       </p>
     </div>
   );

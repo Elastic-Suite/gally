@@ -1,0 +1,24 @@
+{
+  "card": {
+    "new": "New",
+    "outOfStock": "Out of Stock",
+    "addToCart": "Add to cart",
+    "unavailable": "Unavailable"
+  },
+  "page": {
+    "type": {
+      "configurable": "Configurable",
+      "simple": "Simple"
+    },
+    "sku": "SKU: {{sku}}",
+    "material": "Material:",
+    "color": "Color",
+    "inStock": "✓ In Stock ({{count}} available)",
+    "outOfStockLong": "✕ Out of Stock",
+    "addToCart": "Add to Cart",
+    "wishlist": "♡ Wishlist",
+    "notFound": "Product not found",
+    "recommendations": "You May Also Like",
+    "breadcrumb": "Home / Products / {{name}}"
+  }
+}

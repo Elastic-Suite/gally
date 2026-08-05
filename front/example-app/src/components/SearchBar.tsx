@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useSearchBarRef } from '../contexts/SearchBarContext';
 import { useAutocomplete } from '../hooks/useSearch';
 import SearchOverlay, { getSuggestionMatches, getCategoryMatches } from './SearchOverlay';
@@ -7,11 +8,11 @@ import { getProductFields } from './ProductCard';
 
 interface SearchBarProps {
   categories: any[];
-  currencySymbol: string;
   categoriesLoading: boolean;
 }
 
-export default function SearchBar({ categories, currencySymbol, categoriesLoading }: SearchBarProps) {
+export default function SearchBar({ categories, categoriesLoading }: SearchBarProps) {
+  const { t } = useTranslation('search');
   const navigate = useNavigate();
   const [query, setQuery] = useState('');
   const [focused, setFocused] = useState(false);
@@ -121,7 +122,7 @@ export default function SearchBar({ categories, currencySymbol, categoriesLoadin
         ref={inputRef}
         type="text"
         className="search-bar"
-        placeholder="Search products..."
+        placeholder={t('bar.placeholder')}
         value={query}
         onChange={handleInputChange}
         onFocus={() => setFocused(true)}
@@ -138,7 +139,6 @@ export default function SearchBar({ categories, currencySymbol, categoriesLoadin
         resultsLoading={loading}
         categories={categories}
         categoriesLoading={categoriesLoading}
-        currencySymbol={currencySymbol}
         highlightedKey={highlightedKey}
         navigate={navigate}
         setQuery={setQuery}

@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useCallback, useEffect, ReactNode } from 'react';
 import {
     fetchCatalogs, fetchCategoryTree,
-    ICatalog, ILocalizedCatalog, ICategoryNode, CURRENCIES,
+    ICatalog, ILocalizedCatalog, ICategoryNode, LANGUAGES, DEFAULT_LANGUAGE,
 } from '../sdk/catalogs';
 
 interface ICatalogContextType {
@@ -10,7 +10,8 @@ interface ICatalogContextType {
   selectedLocalizedCatalog: ILocalizedCatalog | null;
   setCatalog: (code: string) => void;
   setLocalizedCatalog: (code: string) => void;
-  currencySymbol: string;
+  formatPrice: (amount: number) => string;
+  activeLanguage: string;
   categories: ICategoryNode[];
   loadingCatalogs: boolean;
 }
@@ -64,9 +65,17 @@ export function CatalogProvider({ children }: { children: ReactNode }) {
     if (lc) setSelectedLocalizedCatalog(lc);
   }, [catalogs]);
 
-  const currencySymbol = selectedLocalizedCatalog
-    ? CURRENCIES[selectedLocalizedCatalog.currency] || selectedLocalizedCatalog.currency
-    : '€';
+  const activeLanguage = selectedLocalizedCatalog
+    ? LANGUAGES[selectedLocalizedCatalog.locale] || DEFAULT_LANGUAGE
+    : DEFAULT_LANGUAGE;
+
+  const formatPrice = useCallback((amount: number) => {
+    if (!selectedLocalizedCatalog) return `€${amount.toFixed(2)}`;
+    return new Intl.NumberFormat(selectedLocalizedCatalog.locale.replace('_', '-'), {
+      style: 'currency',
+      currency: selectedLocalizedCatalog.currency,
+    }).format(amount);
+  }, [selectedLocalizedCatalog]);
 
   return (
     <CatalogContext.Provider value={{
@@ -75,7 +84,8 @@ export function CatalogProvider({ children }: { children: ReactNode }) {
       selectedLocalizedCatalog,
       setCatalog,
       setLocalizedCatalog,
-      currencySymbol,
+      formatPrice,
+      activeLanguage,
       categories,
       loadingCatalogs,
     }}>

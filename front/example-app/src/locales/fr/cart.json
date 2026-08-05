@@ -1,0 +1,70 @@
+{
+  "empty": {
+    "title": "Votre Panier",
+    "heading": "Votre panier est vide",
+    "body": "Commencez vos achats pour ajouter des produits.",
+    "browse": "Parcourir les produits"
+  },
+  "title_one": "Votre Panier ({{count}} article)",
+  "title_other": "Votre Panier ({{count}} articles)",
+  "bundle": {
+    "heading": "🎁 Pack accessoires −{{discount}}%",
+    "save": "Économisez",
+    "totalLabel": "Total pack :",
+    "addButton": "Ajouter le pack",
+    "items": {
+      "clutch": "Pochette assortie",
+      "belt": "Ceinture tissu",
+      "scarf": "Foulard léger"
+    }
+  },
+  "shipping": {
+    "unlocked": "✓ Livraison offerte !",
+    "remainingPrefix": "Plus que",
+    "remainingSuffix": "pour la livraison offerte",
+    "free": "Offerte"
+  },
+  "summary": {
+    "subtotal": "Sous-total",
+    "frequentlyBoughtTogether": "Fréquemment achetés ensemble",
+    "shipping": "Livraison",
+    "total": "Total",
+    "checkout": "Passer la commande"
+  },
+  "fbt": {
+    "items": {
+      "sandals": "Sandales tressées",
+      "hat": "Chapeau de paille",
+      "earrings": "Boucles d'oreilles dorées"
+    },
+    "selectedTotal": "Total sélectionné :",
+    "addToCart": "Ajouter au panier"
+  },
+  "recommendations": "Complétez votre look",
+  "checkout": {
+    "steps": {
+      "cart": "Panier",
+      "shipping": "Livraison",
+      "payment": "Paiement",
+      "confirmation": "Confirmation"
+    },
+    "shippingInfo": "Informations de livraison",
+    "placeholders": {
+      "firstName": "Prénom",
+      "lastName": "Nom",
+      "email": "E-mail",
+      "address": "Adresse",
+      "city": "Ville",
+      "zip": "Code postal",
+      "cardNumber": "Numéro de carte",
+      "expiry": "MM/AA",
+      "cvc": "CVC"
+    },
+    "continueToPayment": "Continuer vers le paiement →",
+    "payment": "Paiement",
+    "totalToPay": "Total à payer",
+    "placeOrder": "Passer la commande — {{amount}}",
+    "orderConfirmed": "Commande confirmée !",
+    "orderConfirmedBody": "Merci pour votre commande. Un événement de suivi a été envoyé à Gally."
+  }
+}

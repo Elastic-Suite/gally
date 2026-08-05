@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface FacetOption {
   label: string;
@@ -67,11 +68,12 @@ function guessColor(label: string): string {
 }
 
 export default function Facets({ aggregations, activeFilters, onFilterChange, loading, onLoadMore, open }: Props) {
+  const { t } = useTranslation('facets');
   // Show skeleton when loading and no aggregations yet
   if (loading && aggregations.length === 0) {
     return (
       <aside className={`facets-sidebar ${open ? 'open' : ''}`}>
-        <h3 style={{ fontFamily: 'var(--font-sans)', fontSize: '1rem', marginBottom: '1rem' }}>Filters</h3>
+        <h3 style={{ fontFamily: 'var(--font-sans)', fontSize: '1rem', marginBottom: '1rem' }}>{t('title')}</h3>
         {Array.from({ length: 4 }).map((_, i) => (
           <div key={i} className="facet-group">
             <div className="skeleton skeleton-text" style={{ width: '100px', height: '12px', marginBottom: '0.75rem' }} />
@@ -93,7 +95,7 @@ export default function Facets({ aggregations, activeFilters, onFilterChange, lo
 
   return (
     <aside className={`facets-sidebar ${open ? 'open' : ''}`}>
-      <h3 style={{ fontFamily: 'var(--font-sans)', fontSize: '1rem', marginBottom: '1rem' }}>Filters</h3>
+      <h3 style={{ fontFamily: 'var(--font-sans)', fontSize: '1rem', marginBottom: '1rem' }}>{t('title')}</h3>
       <ActiveFilterChips
         aggregations={visibleAggregations}
         activeFilters={activeFilters}
@@ -127,6 +129,7 @@ function ActiveFilterChips({
   activeFilters: Record<string, any>;
   onFilterChange: (field: string, value: any) => void;
 }) {
+  const { t } = useTranslation('facets');
   const chips: FilterChip[] = [];
 
   for (const [field, value] of Object.entries(activeFilters)) {
@@ -139,7 +142,7 @@ function ActiveFilterChips({
         const opt = agg?.options?.find(o => o.value === v);
         chips.push({
           key: `${field}:${v}`,
-          text: `${fieldLabel}: ${opt?.label || v}`,
+          text: t('chip.default', { label: fieldLabel, value: opt?.label || v }),
           onRemove: () => {
             const next = value.filter((x: string) => x !== v);
             onFilterChange(field, next.length ? next : undefined);
@@ -149,7 +152,7 @@ function ActiveFilterChips({
     } else if (typeof value === 'object' && value.gte !== undefined) {
       chips.push({
         key: field,
-        text: `${fieldLabel}: ${value.gte}–${value.lte}`,
+        text: t('chip.range', { label: fieldLabel, gte: value.gte, lte: value.lte }),
         onRemove: () => onFilterChange(field, undefined),
       });
     } else if (typeof value === 'boolean') {
@@ -162,7 +165,7 @@ function ActiveFilterChips({
       const opt = agg?.options?.find(o => o.value === value);
       chips.push({
         key: field,
-        text: `${fieldLabel}: ${opt?.label || value}`,
+        text: t('chip.default', { label: fieldLabel, value: opt?.label || value }),
         onRemove: () => onFilterChange(field, undefined),
       });
     }
@@ -188,7 +191,7 @@ function ActiveFilterChips({
             });
           }}
         >
-          Clear all
+          {t('clearAll')}
         </button>
       )}
     </div>
@@ -206,6 +209,7 @@ function FacetGroup({
   onChange: (val: any) => void;
   onLoadMore?: (field: string) => Promise<FacetOption[]>;
 }) {
+  const { t } = useTranslation('facets');
   const [expanded, setExpanded] = useState(false);
   const [search, setSearch] = useState('');
   const [extraOptions, setExtraOptions] = useState<FacetOption[] | null>(null);
@@ -264,7 +268,7 @@ function FacetGroup({
                 key={opt.value}
                 className={`swatch ${isActive ? 'active' : ''}`}
                 style={{ background: color, ...(opt.label.toLowerCase() === 'white' ? { border: '2px solid var(--gray-300)' } : {}) }}
-                title={`${opt.label} (${opt.count})`}
+                title={t('swatchTitle', { label: opt.label, count: opt.count })}
                 onClick={() => {
                   const current = Array.isArray(active) ? active : [];
                   const next = isActive
@@ -286,7 +290,7 @@ function FacetGroup({
       {(baseOptions.length > 5 || canFetchFromServer) && (
         <input
           className="facet-search"
-          placeholder={`Search ${aggregation.label.toLowerCase()}…`}
+          placeholder={t('searchPlaceholder', { label: aggregation.label.toLowerCase() })}
           value={search}
           onChange={e => setSearch(e.target.value)}
         />
@@ -314,15 +318,15 @@ function FacetGroup({
       {(hasMoreLocally || canFetchFromServer) && !expanded && (
         <div className="facet-show-more" onClick={handleShowMore}>
           {loadingMore
-            ? 'Loading…'
+            ? t('loading')
             : canFetchFromServer
-              ? '+ Show more'
-              : `+ Show more (${filteredOptions.length - 5})`}
+              ? t('showMore')
+              : t('showMoreCount', { count: filteredOptions.length - 5 })}
         </div>
       )}
       {expanded && filteredOptions.length > 5 && (
         <div className="facet-show-more" onClick={() => setExpanded(false)}>
-          − Show less
+          {t('showLess')}
         </div>
       )}
     </div>
@@ -352,6 +356,7 @@ function CategoryFacet({ aggregation, active, onChange }: { aggregation: Aggrega
 }
 
 function SliderFacet({ aggregation, active, onChange }: { aggregation: Aggregation; active: any; onChange: (val: any) => void }) {
+  const { t } = useTranslation('facets');
   const options = aggregation.options || [];
   const min = options.length > 0 ? parseFloat(options[0].value) : 0;
   const max = options.length > 0 ? parseFloat(options[options.length - 1].value) : 1000;
@@ -383,8 +388,8 @@ function SliderFacet({ aggregation, active, onChange }: { aggregation: Aggregati
       <div className="facet-title">{aggregation.label}</div>
       <div className="price-slider">
         <div className="price-slider-bounds">
-          <span className="price-bound-label">Min: {min}</span>
-          <span className="price-bound-label">Max: {max}</span>
+          <span className="price-bound-label">{t('min', { value: min })}</span>
+          <span className="price-bound-label">{t('max', { value: max })}</span>
         </div>
         <div className="price-slider-track-container">
           <div className="price-slider-track-bg" />
@@ -423,6 +428,7 @@ function SliderFacet({ aggregation, active, onChange }: { aggregation: Aggregati
 }
 
 function BooleanFacet({ aggregation, active, onChange }: { aggregation: Aggregation; active: any; onChange: (val: any) => void }) {
+  const { t } = useTranslation('facets');
   return (
     <div className="facet-group">
       <div className="facet-title">{aggregation.label}</div>
@@ -432,7 +438,7 @@ function BooleanFacet({ aggregation, active, onChange }: { aggregation: Aggregat
           checked={!!active}
           onChange={() => onChange(active ? undefined : true)}
         />
-        <span>Yes</span>
+        <span>{t('yes')}</span>
       </label>
     </div>
   );

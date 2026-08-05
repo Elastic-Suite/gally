@@ -1,15 +1,16 @@
 import { createPortal } from 'react-dom';
+import { useTranslation } from 'react-i18next';
+import i18n from '../i18n';
+import { useCatalog } from '../contexts/CatalogContext';
 import { getProductFields } from './ProductCard';
 
-// Popular search term suggestions (shown when query partially matches)
-const SEARCH_SUGGESTIONS = [
-  'dress', 'tank dress', 'summer dress', 'floral dress', 'midi skirt',
-  'blouse', 'jacket', 'pants', 'shoes', 'accessories',
-];
-
+// getSuggestionMatches is a plain (non-hook) function shared with SearchBar.tsx's
+// keyboard-nav list, so it reads the active language straight off the i18next
+// singleton rather than via useTranslation().
 export function getSuggestionMatches(query: string): string[] {
   if (query.length < 2) return [];
-  return SEARCH_SUGGESTIONS.filter(s =>
+  const suggestions = i18n.t('search:overlay.suggestions', { returnObjects: true }) as string[];
+  return suggestions.filter(s =>
     s.toLowerCase().includes(query.toLowerCase()) && s.toLowerCase() !== query.toLowerCase()
   ).slice(0, 3);
 }
@@ -34,7 +35,6 @@ interface SearchOverlayProps {
   resultsLoading: boolean;
   categories: any[];
   categoriesLoading: boolean;
-  currencySymbol: string;
   highlightedKey: string | null;
   navigate: (to: string) => void;
   setQuery: (q: string) => void;
@@ -42,7 +42,7 @@ interface SearchOverlayProps {
 }
 
 export default function SearchOverlay({
-  open, query, results, resultsLoading, categories, categoriesLoading, currencySymbol, highlightedKey, navigate, setQuery, clear,
+  open, query, results, resultsLoading, categories, categoriesLoading, highlightedKey, navigate, setQuery, clear,
 }: SearchOverlayProps) {
   if (!open) return null;
 
@@ -62,7 +62,6 @@ export default function SearchOverlay({
           <ProductsColumn
             results={results}
             loading={resultsLoading}
-            currencySymbol={currencySymbol}
             highlightedKey={highlightedKey}
             onSelect={closeAndGo}
           />
@@ -106,13 +105,14 @@ function EmptyNote({ text }: { text: string }) {
 function SuggestionsColumn({ query, highlightedKey, onSelect }: {
   query: string; highlightedKey: string | null; onSelect: (to: string) => void;
 }) {
+  const { t } = useTranslation('search');
   const matches = getSuggestionMatches(query);
 
   return (
     <>
-      <div className="autocomplete-section-title">🔍 Popular search terms</div>
+      <div className="autocomplete-section-title">{t('overlay.suggestionsTitle')}</div>
       {matches.length === 0 ? (
-        <EmptyNote text="No matching search terms" />
+        <EmptyNote text={t('overlay.noSuggestions')} />
       ) : (
         matches.map(term => {
           const key = `suggestion-${term}`;
@@ -133,16 +133,18 @@ function SuggestionsColumn({ query, highlightedKey, onSelect }: {
 }
 
 // Column: matching products (real API results, debounced)
-function ProductsColumn({ results, loading, currencySymbol, highlightedKey, onSelect }: {
-  results: any[]; loading: boolean; currencySymbol: string; highlightedKey: string | null; onSelect: (to: string) => void;
+function ProductsColumn({ results, loading, highlightedKey, onSelect }: {
+  results: any[]; loading: boolean; highlightedKey: string | null; onSelect: (to: string) => void;
 }) {
+  const { t } = useTranslation('search');
+  const { formatPrice } = useCatalog();
   return (
     <>
-      <div className="autocomplete-section-title">Products</div>
+      <div className="autocomplete-section-title">{t('overlay.productsTitle')}</div>
       {loading ? (
         <SkeletonRows withThumb />
       ) : results.length === 0 ? (
-        <EmptyNote text="No matching products" />
+        <EmptyNote text={t('overlay.noProducts')} />
       ) : (
         results.map((item: any, idx: number) => {
           const { name, sku, price, image } = getProductFields(item);
@@ -159,7 +161,7 @@ function ProductsColumn({ results, loading, currencySymbol, highlightedKey, onSe
               </div>
               <div className="autocomplete-info">
                 <div className="name">{name}</div>
-                <div className="price">{currencySymbol}{price}</div>
+                <div className="price">{formatPrice(price)}</div>
               </div>
             </div>
           );
@@ -173,15 +175,16 @@ function ProductsColumn({ results, loading, currencySymbol, highlightedKey, onSe
 function CategoriesColumn({ query, categories, loading, highlightedKey, onSelect }: {
   query: string; categories: any[]; loading: boolean; highlightedKey: string | null; onSelect: (to: string) => void;
 }) {
+  const { t } = useTranslation('search');
   const matches = getCategoryMatches(query, categories);
 
   return (
     <>
-      <div className="autocomplete-section-title">📁 Category</div>
+      <div className="autocomplete-section-title">{t('overlay.categoryTitle')}</div>
       {loading ? (
         <SkeletonRows />
       ) : matches.length === 0 ? (
-        <EmptyNote text="No matching categories" />
+        <EmptyNote text={t('overlay.noCategories')} />
       ) : (
         matches.map(cat => {
           const key = `category-${cat.id}`;

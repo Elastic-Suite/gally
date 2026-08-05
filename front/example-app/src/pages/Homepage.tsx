@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useSearch } from '../hooks/useSearch';
 import { useTracking } from '../hooks/useTracking';
 import ProductSlider from '../components/ProductSlider';
@@ -7,6 +8,7 @@ import CategoryNav from '../components/CategoryNav';
 import { useCatalog } from '../contexts/CatalogContext';
 
 export default function Homepage() {
+  const { t } = useTranslation('category');
   const { trackDisplay } = useTracking();
   const { categories } = useCatalog();
 
@@ -39,12 +41,11 @@ export default function Homepage() {
     <div>
       {/* Hero */}
       <section className="hero">
-        <h1>Intelligent Search for E-commerce</h1>
+        <h1>{t('homepage.heroTitle')}</h1>
         <p>
-          Discover how ElasticSuite powers product discovery with AI-driven search,
-          faceted navigation, and real-time recommendations.
+          {t('homepage.heroBody')}
         </p>
-        <Link to="/search?q=" className="btn btn-coral btn-lg">Explorer les robes</Link>
+        <Link to="/search?q=" className="btn btn-coral btn-lg">{t('homepage.shopDresses')}</Link>
       </section>
 
       {/* Category Navigation */}
@@ -69,20 +70,20 @@ export default function Homepage() {
         </div>
       ) : (
         <>
-          <ProductSlider products={products.slice(0, 8)} title="Trending Now" />
+          <ProductSlider products={products.slice(0, 8)} title={t('homepage.trending')} />
           {newArrivals.products.length > 0 && (
-            <ProductSlider products={newArrivals.products.slice(0, 8)} title={secondCategory ? secondCategory.name : 'More Products'} />
+            <ProductSlider products={newArrivals.products.slice(0, 8)} title={secondCategory ? secondCategory.name : t('homepage.moreProducts')} />
           )}
         </>
       )}
 
       {/* CTA Section */}
       <section style={{ textAlign: 'center', margin: '3rem 0' }}>
-        <h2>Ready to transform your search experience?</h2>
+        <h2>{t('homepage.readyTitle')}</h2>
         <p style={{ color: 'var(--gray-600)', marginBottom: '1.5rem' }}>
-          Browse categories, test search facets, and see vector search in action.
+          {t('homepage.readyBody')}
         </p>
-        <Link to="/vector-search" className="btn btn-primary btn-lg">Try Vector Search</Link>
+        <Link to="/vector-search" className="btn btn-primary btn-lg">{t('homepage.tryVectorSearch')}</Link>
       </section>
     </div>
   );

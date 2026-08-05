@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useCart } from '../contexts/CartContext';
 import { useCatalog } from '../contexts/CatalogContext';
 import { useSearch } from '../hooks/useSearch';
@@ -7,26 +8,27 @@ import ProductSlider from '../components/ProductSlider';
 
 const FREE_SHIPPING_THRESHOLD = 180;
 
-// Accessory bundle items (simulated)
+// Accessory bundle items (simulated). nameKey resolves against cart.json's bundle.items.
 const BUNDLE_ITEMS = [
-  { sku: 'acc-clutch', name: 'Pochette assortie', price: 29.90 },
-  { sku: 'acc-belt', name: 'Ceinture tissu', price: 19.90 },
-  { sku: 'acc-scarf', name: 'Foulard léger', price: 24.90 },
+  { sku: 'acc-clutch', nameKey: 'bundle.items.clutch', price: 29.90 },
+  { sku: 'acc-belt', nameKey: 'bundle.items.belt', price: 19.90 },
+  { sku: 'acc-scarf', nameKey: 'bundle.items.scarf', price: 24.90 },
 ];
 const BUNDLE_DISCOUNT = 0.20;
 const BUNDLE_TOTAL = BUNDLE_ITEMS.reduce((s, i) => s + i.price, 0);
 const BUNDLE_PRICE = +(BUNDLE_TOTAL * (1 - BUNDLE_DISCOUNT)).toFixed(2);
 
-// FBT items (simulated)
+// FBT items (simulated). nameKey resolves against cart.json's fbt.items.
 const FBT_ITEMS = [
-  { sku: 'fbt-sandals', name: 'Sandales tressées', price: 49.90 },
-  { sku: 'fbt-hat', name: 'Chapeau de paille', price: 34.90 },
-  { sku: 'fbt-earrings', name: 'Boucles d\'oreilles dorées', price: 22.90 },
+  { sku: 'fbt-sandals', nameKey: 'fbt.items.sandals', price: 49.90 },
+  { sku: 'fbt-hat', nameKey: 'fbt.items.hat', price: 34.90 },
+  { sku: 'fbt-earrings', nameKey: 'fbt.items.earrings', price: 22.90 },
 ];
 
 export default function CartPage() {
+  const { t } = useTranslation('cart');
   const { items, removeFromCart, updateQty, total, itemCount, addToCart } = useCart();
-  const { currencySymbol } = useCatalog();
+  const { formatPrice } = useCatalog();
   const navigate = useNavigate();
   const { products: recommendations } = useSearch({ pageSize: 4 });
   const [fbtChecked, setFbtChecked] = useState<Record<string, boolean>>({});
@@ -60,7 +62,7 @@ export default function CartPage() {
     BUNDLE_ITEMS.forEach((item, i) => {
       addToCart({
         sku: item.sku,
-        name: item.name,
+        name: t(item.nameKey),
         price: +(item.price * (1 - BUNDLE_DISCOUNT)).toFixed(2),
       });
     });
@@ -72,7 +74,7 @@ export default function CartPage() {
 
   const handleAddFbt = () => {
     FBT_ITEMS.filter(f => fbtChecked[f.sku]).forEach(item => {
-      addToCart({ sku: item.sku, name: item.name, price: item.price });
+      addToCart({ sku: item.sku, name: t(item.nameKey), price: item.price });
     });
     setFbtChecked({});
   };
@@ -80,12 +82,12 @@ export default function CartPage() {
   if (items.length === 0) {
     return (
       <div className="cart-page">
-        <div className="page-title"><h1>Votre Panier</h1></div>
+        <div className="page-title"><h1>{t('empty.title')}</h1></div>
         <div className="empty-state">
-          <h3>Votre panier est vide</h3>
-          <p>Commencez vos achats pour ajouter des produits.</p>
+          <h3>{t('empty.heading')}</h3>
+          <p>{t('empty.body')}</p>
           <Link to="/search?q=" className="btn btn-primary" style={{ marginTop: '1rem' }}>
-            Parcourir les produits
+            {t('empty.browse')}
           </Link>
         </div>
       </div>
@@ -94,7 +96,7 @@ export default function CartPage() {
 
   return (
     <div className="cart-page">
-      <div className="page-title"><h1>Votre Panier ({itemCount} articles)</h1></div>
+      <div className="page-title"><h1>{t('title', { count: itemCount })}</h1></div>
 
       {/* Cart Items */}
       {items.map(item => (
@@ -115,7 +117,7 @@ export default function CartPage() {
             <button onClick={() => updateQty(item.sku, item.qty + 1)}>+</button>
           </div>
           <div className="cart-item-price">
-            {currencySymbol}{(item.price * item.qty).toFixed(2)}
+            {formatPrice(item.price * item.qty)}
           </div>
           <button
             className="btn btn-outline btn-sm"
@@ -130,29 +132,29 @@ export default function CartPage() {
       {/* Accessory Bundle */}
       <div className="cart-bundle">
         <div className="cart-bundle-header">
-          <h3>🎁 Pack accessoires −{BUNDLE_DISCOUNT * 100}%</h3>
-          <span className="cart-bundle-badge">Économisez {currencySymbol}{(BUNDLE_TOTAL - BUNDLE_PRICE).toFixed(2)}</span>
+          <h3>{t('bundle.heading', { discount: BUNDLE_DISCOUNT * 100 })}</h3>
+          <span className="cart-bundle-badge">{t('bundle.save')} {formatPrice(BUNDLE_TOTAL - BUNDLE_PRICE)}</span>
         </div>
         <div className="cart-bundle-items">
           {BUNDLE_ITEMS.map(item => (
             <div key={item.sku} className="cart-bundle-item">
-              <span>{item.name}</span>
+              <span>{t(item.nameKey)}</span>
               <span className="cart-bundle-item-price">
-                <s>{currencySymbol}{item.price.toFixed(2)}</s>
+                <s>{formatPrice(item.price)}</s>
                 {' '}
-                {currencySymbol}{(item.price * (1 - BUNDLE_DISCOUNT)).toFixed(2)}
+                {formatPrice(item.price * (1 - BUNDLE_DISCOUNT))}
               </span>
             </div>
           ))}
         </div>
         <div className="cart-bundle-footer">
           <span className="cart-bundle-total">
-            Total pack : <strong>{currencySymbol}{BUNDLE_PRICE}</strong>
+            {t('bundle.totalLabel')} <strong>{formatPrice(BUNDLE_PRICE)}</strong>
             {' '}
-            <s className="cart-bundle-was">{currencySymbol}{BUNDLE_TOTAL.toFixed(2)}</s>
+            <s className="cart-bundle-was">{formatPrice(BUNDLE_TOTAL)}</s>
           </span>
           <button className="btn btn-coral btn-sm" onClick={handleAddBundle}>
-            Ajouter le pack
+            {t('bundle.addButton')}
           </button>
         </div>
       </div>
@@ -163,12 +165,12 @@ export default function CartPage() {
         <div className="shipping-bar">
           {freeShipping ? (
             <div className="shipping-bar-unlocked">
-              ✓ Livraison offerte !
+              {t('shipping.unlocked')}
             </div>
           ) : (
             <>
               <div className="shipping-bar-label">
-                Plus que <strong>{currencySymbol}{shippingRemaining.toFixed(2)}</strong> pour la livraison offerte
+                {t('shipping.remainingPrefix')} <strong>{formatPrice(shippingRemaining)}</strong> {t('shipping.remainingSuffix')}
               </div>
               <div className="shipping-bar-track">
                 <div className="shipping-bar-fill" style={{ width: `${shippingProgress}%` }} />
@@ -178,35 +180,35 @@ export default function CartPage() {
         </div>
 
         <div className="cart-summary-row">
-          <span>Sous-total</span>
-          <span>{currencySymbol}{total.toFixed(2)}</span>
+          <span>{t('summary.subtotal')}</span>
+          <span>{formatPrice(total)}</span>
         </div>
         {fbtTotal > 0 && (
           <div className="cart-summary-row">
-            <span>Fréquemment achetés ensemble</span>
-            <span>+{currencySymbol}{fbtTotal.toFixed(2)}</span>
+            <span>{t('summary.frequentlyBoughtTogether')}</span>
+            <span>+{formatPrice(fbtTotal)}</span>
           </div>
         )}
         <div className="cart-summary-row">
-          <span>Livraison</span>
-          <span className={freeShipping ? 'free-shipping-text' : ''}>{freeShipping ? 'Offerte' : '4,90 €'}</span>
+          <span>{t('summary.shipping')}</span>
+          <span className={freeShipping ? 'free-shipping-text' : ''}>{freeShipping ? t('shipping.free') : formatPrice(4.90)}</span>
         </div>
         <div className={`cart-summary-row total ${totalAnimating ? 'total-animate' : ''}`}>
-          <span>Total</span>
-          <span>{currencySymbol}{(grandTotal + (freeShipping ? 0 : 4.90)).toFixed(2)}</span>
+          <span>{t('summary.total')}</span>
+          <span>{formatPrice(grandTotal + (freeShipping ? 0 : 4.90))}</span>
         </div>
         <button
           className="btn btn-coral btn-lg"
           style={{ width: '100%', marginTop: '1rem' }}
           onClick={() => navigate('/checkout')}
         >
-          Passer la commande
+          {t('summary.checkout')}
         </button>
       </div>
 
       {/* Frequently Bought Together */}
       <div className="fbt-section">
-        <h3>Fréquemment achetés ensemble</h3>
+        <h3>{t('summary.frequentlyBoughtTogether')}</h3>
         <div className="fbt-items">
           {FBT_ITEMS.map(item => (
             <label key={item.sku} className="fbt-item">
@@ -216,17 +218,17 @@ export default function CartPage() {
                 onChange={() => handleToggleFbt(item.sku)}
               />
               <div className="fbt-item-info">
-                <span className="fbt-item-name">{item.name}</span>
-                <span className="fbt-item-price">{currencySymbol}{item.price.toFixed(2)}</span>
+                <span className="fbt-item-name">{t(item.nameKey)}</span>
+                <span className="fbt-item-price">{formatPrice(item.price)}</span>
               </div>
             </label>
           ))}
         </div>
         {fbtTotal > 0 && (
           <div className="fbt-footer">
-            <span>Total sélectionné : <strong>{currencySymbol}{fbtTotal.toFixed(2)}</strong></span>
+            <span>{t('fbt.selectedTotal')} <strong>{formatPrice(fbtTotal)}</strong></span>
             <button className="btn btn-primary btn-sm" onClick={handleAddFbt}>
-              Ajouter au panier
+              {t('fbt.addToCart')}
             </button>
           </div>
         )}
@@ -234,7 +236,7 @@ export default function CartPage() {
 
       {/* Cart Recommendations */}
       <section className="recommendations">
-        <ProductSlider title="Complétez votre look" products={recommendations.slice(0, 4)} />
+        <ProductSlider title={t('recommendations')} products={recommendations.slice(0, 4)} />
       </section>
     </div>
   );

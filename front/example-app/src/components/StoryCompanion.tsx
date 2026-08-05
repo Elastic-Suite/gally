@@ -1,7 +1,9 @@
+import { useTranslation } from 'react-i18next';
 import { useDemo } from '../contexts/DemoContext';
 import { useStoryActions } from '../hooks/useStoryActions';
 
 export default function StoryCompanion() {
+  const { t } = useTranslation(['demo', 'scenarios']);
   const {
     scenario, storyActive, storyStep, storyMinimized, currentStory,
     nextStep, prevStep, jumpStep, resumeStory, skipStory,
@@ -22,7 +24,7 @@ export default function StoryCompanion() {
   if (storyMinimized) {
     return (
       <button className="story-resume-pill" onClick={resumeStory}>
-        📖 Reprendre le récit
+        {t('story.resumePill')}
       </button>
     );
   }
@@ -32,6 +34,10 @@ export default function StoryCompanion() {
   const isFirst = storyStep === 0;
   const isLast = storyStep === steps.length - 1;
   const persona = currentStory.persona === 'camille' ? scenario.personas.customer : scenario.personas.merchant;
+  const stepBase = `scenarios:${scenario.i18nKey}.${currentStory.i18nKey}`;
+  const personaName = currentStory.persona === 'camille'
+    ? scenario.personas.customer.name
+    : t(`scenarios:${scenario.i18nKey}.personas.merchant.name`);
 
   return (
     <div className="story-dock">
@@ -42,28 +48,28 @@ export default function StoryCompanion() {
               key={i}
               className={`story-segment ${i === storyStep ? 'active' : ''} ${i < storyStep ? 'done' : ''}`}
               onClick={() => jumpStep(i)}
-              title={`Acte ${i + 1}`}
+              title={t('story.actLabel', { num: i + 1 })}
             />
           ))}
         </div>
-        <button className="story-close" onClick={skipStory} title="Fermer">✕</button>
+        <button className="story-close" onClick={skipStory} title={t('story.close')}>✕</button>
       </div>
 
       <div className="story-act-label">
-        Acte {currentStory.act} — {currentStory.title}
+        {t('story.actTitle', { act: currentStory.act, title: t(`${stepBase}.title`) })}
       </div>
 
       <div className="story-persona">
         <span className="story-persona-avatar">{persona.emoji}</span>
-        <span className="story-persona-name">{persona.name}</span>
+        <span className="story-persona-name">{personaName}</span>
       </div>
 
       <div
         className="story-bubble"
-        dangerouslySetInnerHTML={{ __html: currentStory.bubble }}
+        dangerouslySetInnerHTML={{ __html: t(`${stepBase}.bubble`) }}
       />
 
-      <div className="story-gain">{currentStory.gain}</div>
+      <div className="story-gain">{t(`${stepBase}.gain`)}</div>
 
       <div className="story-nav">
         <button
@@ -71,14 +77,14 @@ export default function StoryCompanion() {
           onClick={prevStep}
           disabled={isFirst}
         >
-          ‹ Précédent
+          {t('story.prev')}
         </button>
         <button
           className="btn btn-outline btn-sm"
           onClick={nextStep}
           disabled={isLast}
         >
-          Suivant ›
+          {t('story.next')}
         </button>
       </div>
     </div>

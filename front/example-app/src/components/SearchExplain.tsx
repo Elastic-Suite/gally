@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useSearchParams, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useCatalog } from '../contexts/CatalogContext';
 
 const BASE_URI = 'https://gally.localhost/api';
@@ -86,6 +87,7 @@ async function fetchExplain(
 }
 
 export default function SearchExplain() {
+  const { t } = useTranslation('demo');
   const [open, setOpen] = useState(false);
   const [results, setResults] = useState<ExplainProduct[]>([]);
   const [loading, setLoading] = useState(false);
@@ -100,7 +102,7 @@ export default function SearchExplain() {
   const isCategoryPage = location.pathname.startsWith('/category/');
   const categoryCode = isCategoryPage ? location.pathname.split('/category/')[1] : '';
 
-  const contextLabel = isSearchPage ? `"${query}"` : categoryCode ? `Catégorie` : '';
+  const contextLabel = isSearchPage ? `"${query}"` : categoryCode ? t('explain.category') : '';
 
   // Auto-fetch explain when on search or category page
   useEffect(() => {
@@ -120,9 +122,9 @@ export default function SearchExplain() {
       5,
     )
       .then(setResults)
-      .catch(e => setError(e.message || 'Explain failed'))
+      .catch(e => setError(e.message || t('explain.explainFailed')))
       .finally(() => setLoading(false));
-  }, [isSearchPage, isCategoryPage, query, categoryCode, selectedLocalizedCatalog]);
+  }, [isSearchPage, isCategoryPage, query, categoryCode, selectedLocalizedCatalog, t]);
 
   // Don't show if not on search or category page
   if (!isSearchPage && !isCategoryPage) return null;
@@ -131,7 +133,7 @@ export default function SearchExplain() {
   if (!open) {
     return (
       <button className="explain-toggle" onClick={() => setOpen(true)}>
-        🧠 Explain {results.length > 0 && <span className="explain-badge">{results.length}</span>}
+        {t('explain.toggle')} {results.length > 0 && <span className="explain-badge">{results.length}</span>}
       </button>
     );
   }
@@ -139,11 +141,11 @@ export default function SearchExplain() {
   return (
     <div className="explain-panel">
       <div className="explain-header">
-        <h3>🧠 Explain — {contextLabel}</h3>
+        <h3>{t('explain.headerPrefix')} {contextLabel}</h3>
         <button className="explain-close" onClick={() => setOpen(false)}>✕</button>
       </div>
 
-      {loading && <div className="explain-loading">Analyzing...</div>}
+      {loading && <div className="explain-loading">{t('explain.analyzing')}</div>}
       {error && <div className="explain-error">⚠ {error}</div>}
 
       {results.length > 0 && (
@@ -162,9 +164,9 @@ export default function SearchExplain() {
               {/* Boosts */}
               {product.boosts && product.boosts.weight > 1 && (
                 <div className="explain-section boost">
-                  <span className="explain-section-label">🚀 Boost ×{product.boosts.weight}</span>
+                  <span className="explain-section-label">{t('explain.boostPrefix')}{product.boosts.weight}</span>
                   <span className="explain-section-detail">
-                    mode: {product.boosts.boost_mode}
+                    {t('explain.modePrefix')} {product.boosts.boost_mode}
                     {product.boosts.details?.[0]?.details?.[0]?.description && (
                       <> — {product.boosts.details[0].details[0].description}</>
                     )}
@@ -175,7 +177,7 @@ export default function SearchExplain() {
               {/* Top matches */}
               {product.matches && product.matches.length > 0 && (
                 <div className="explain-matches">
-                  <span className="explain-section-label">📐 Field matches</span>
+                  <span className="explain-section-label">{t('explain.fieldMatches')}</span>
                   {product.matches
                     .sort((a, b) => b.score - a.score)
                     .slice(0, 5)
@@ -198,7 +200,7 @@ export default function SearchExplain() {
               {/* Legends (show once for first product) */}
               {idx === 0 && product.legends && Object.keys(product.legends).length > 0 && (
                 <div className="explain-legends">
-                  <span className="explain-section-label">📖 Legend</span>
+                  <span className="explain-section-label">{t('explain.legend')}</span>
                   {Object.entries(product.legends).slice(0, 4).map(([key, val]) => (
                     <div key={key} className="explain-legend-item">
                       <code>{val.field}</code> — {val.legend}

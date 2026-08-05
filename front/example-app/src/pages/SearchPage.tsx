@@ -1,11 +1,13 @@
 import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useSearch } from '../hooks/useSearch';
 import { useTracking } from '../hooks/useTracking';
 import Facets from '../components/Facets';
 import ProductCard from '../components/ProductCard';
 
 export default function SearchPage() {
+  const { t } = useTranslation(['search', 'common']);
   const [searchParams] = useSearchParams();
   const query = searchParams.get('q') || '';
   const [page, setPage] = useState(1);
@@ -81,12 +83,12 @@ export default function SearchPage() {
   return (
     <div>
       <div className="page-title">
-        <div className="breadcrumb">Home / Search</div>
-        <h1>{query ? `Results for "${query}"` : 'All Products'}</h1>
+        <div className="breadcrumb">{t('page.breadcrumb')}</div>
+        <h1>{query ? t('page.resultsFor', { query }) : t('page.allProducts')}</h1>
       </div>
 
       <button className="btn btn-outline mobile-filter-toggle" onClick={() => setFacetsOpen(!facetsOpen)}>
-        ☰ Filters
+        ☰ {t('common:actions.filters')}
       </button>
 
       <div className="catalog-page">
@@ -102,7 +104,7 @@ export default function SearchPage() {
         <div>
           <div className="products-header">
             <div className="products-count">
-              {loading ? 'Searching…' : `${total} results`}
+              {loading ? t('page.searching') : t('page.resultCount', { count: total })}
             </div>
             <div className="products-sort">
               <select
@@ -113,10 +115,10 @@ export default function SearchPage() {
                   setSortDirection(d as 'asc' | 'desc');
                 }}
               >
-                <option value="_score:desc">Relevance</option>
-                <option value="name:asc">Name A→Z</option>
-                <option value="price__price:asc">Price: Low to High</option>
-                <option value="price__price:desc">Price: High to Low</option>
+                <option value="_score:desc">{t('page.sort.relevance')}</option>
+                <option value="name:asc">{t('page.sort.nameAsc')}</option>
+                <option value="price__price:asc">{t('page.sort.priceAsc')}</option>
+                <option value="price__price:desc">{t('page.sort.priceDesc')}</option>
               </select>
             </div>
           </div>
@@ -144,20 +146,20 @@ export default function SearchPage() {
 
           {!loading && products.length === 0 && (
             <div className="empty-state">
-              <h3>No results found</h3>
-              <p>Try a different search term or adjust your filters.</p>
+              <h3>{t('page.emptyTitle')}</h3>
+              <p>{t('page.emptyBody')}</p>
             </div>
           )}
 
           {pageCount > 1 && (
             <div className="pagination">
-              <button disabled={page <= 1} onClick={() => { setPage(p => p - 1); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>‹ Prev</button>
+              <button disabled={page <= 1} onClick={() => { setPage(p => p - 1); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>{t('page.prev')}</button>
               {Array.from({ length: Math.min(pageCount, 7) }, (_, i) => i + 1).map(p => (
                 <button key={p} className={p === page ? 'active' : ''} onClick={() => { setPage(p); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
                   {p}
                 </button>
               ))}
-              <button disabled={page >= pageCount} onClick={() => { setPage(p => p + 1); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>Next ›</button>
+              <button disabled={page >= pageCount} onClick={() => { setPage(p => p + 1); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>{t('page.next')}</button>
             </div>
           )}
         </div>

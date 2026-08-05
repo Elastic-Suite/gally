@@ -1,0 +1,17 @@
+{
+  "title": "Filters",
+  "clearAll": "Clear all",
+  "loading": "Loading…",
+  "showMore": "+ Show more",
+  "showMoreCount": "+ Show more ({{count}})",
+  "showLess": "− Show less",
+  "yes": "Yes",
+  "searchPlaceholder": "Search {{label}}…",
+  "swatchTitle": "{{label}} ({{count}})",
+  "min": "Min: {{value}}",
+  "max": "Max: {{value}}",
+  "chip": {
+    "default": "{{label}}: {{value}}",
+    "range": "{{label}}: {{gte}}–{{lte}}"
+  }
+}
