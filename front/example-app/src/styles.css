@@ -1294,15 +1294,11 @@ a:hover {
   margin-bottom: 1.5rem;
   box-shadow: var(--shadow-sm);
   border: 1px solid var(--gray-200);
-  overflow-x: auto;
-  /* Without this, setting overflow-x alone makes the browser compute overflow-y as
-     auto too, clipping the absolutely-positioned .category-nav-submenu dropdown —
-     the actual cause of hover submenus disappearing (not a stacking/z-index issue). */
-  overflow-y: visible;
 }
 
 .category-nav-list {
   display: flex;
+  flex-wrap: wrap;
   list-style: none;
   gap: 0;
   padding: 0 1rem;
