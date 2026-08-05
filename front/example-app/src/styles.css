@@ -195,12 +195,8 @@ a:hover {
 
 /* ─── Header Search Band ─────────────────────────────────── */
 .header-search-band {
-  background: var(--gray-50);
   padding: 2rem 2rem 0;
-  transition: background 0.2s ease;
-}
-.header-search-band:has(.search-bar-wrapper.overlay-open) {
-  background: rgba(30, 27, 75, 0.92);
+  transition: background 0.2s ease, backdrop-filter 0.2s ease;
 }
 
 .header-search-row {
@@ -213,15 +209,10 @@ a:hover {
 /* ─── Search Bar ─────────────────────────────────────────── */
 .search-bar-wrapper {
   position: relative;
-  width: 66.6667%;
-  max-width: 900px;
-  min-width: 260px;
+  width: 80%;
+  max-width: 1100px;
+  min-width: 320px;
   z-index: 110;
-  transform: scale(1);
-  transition: transform 0.25s ease;
-}
-.search-bar-wrapper.expanded {
-  transform: scale(1.08);
 }
 .search-bar-wrapper.expanded .search-bar {
   box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.25);
@@ -229,12 +220,12 @@ a:hover {
 
 .search-bar {
   width: 100%;
-  padding: 0.5rem 1rem 0.5rem 2.25rem;
+  padding: 0.85rem 1.5rem 0.85rem 3rem;
   border: 1px solid var(--gray-300);
   border-radius: var(--radius-pill);
   background: var(--gray-100);
   color: var(--gray-900);
-  font-size: 0.85rem;
+  font-size: 1.05rem;
   font-family: var(--font-sans);
   outline: none;
   transition: all 0.2s;
@@ -249,20 +240,23 @@ a:hover {
 
 .search-icon {
   position: absolute;
-  left: 0.75rem;
+  left: 1.1rem;
   top: 50%;
   transform: translateY(-50%);
   opacity: 0.5;
-  font-size: 0.85rem;
+  font-size: 1.05rem;
 }
 
+/* The scrim alone owns the blur/tint. The panel below it is pure layout —
+   no background, border, or blur of its own — so it reads as one continuous
+   surface with the scrim rather than a card floating on top of it. */
 .search-overlay-scrim {
   position: fixed;
   inset: 0;
   z-index: 90;
-  background: rgba(30, 27, 75, 0.45);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(30, 27, 75, 0.55);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -271,18 +265,16 @@ a:hover {
 }
 
 .search-overlay-panel {
-  background: white;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
   width: 100%;
-  max-width: 1200px;
-  min-height: 20rem;
+  max-width: 1500px;
+  min-height: 24rem;
   max-height: calc(100vh - var(--header-height, 8.5rem) - 3rem);
   padding: 1.5rem;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  /* Suggestions and category both narrower, products get all the freed space. */
+  grid-template-columns: 0.7fr 1.6fr 0.7fr;
   gap: 1.5rem;
-  color: var(--gray-900);
+  color: rgba(255, 255, 255, 0.92);
 }
 
 .search-overlay-col {
@@ -299,22 +291,64 @@ a:hover {
   gap: 0.75rem;
   cursor: pointer;
   transition: background 0.15s;
-  border-bottom: 1px solid var(--gray-100);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-sm);
 }
 .autocomplete-item:hover {
-  background: var(--indigo-50);
+  background: rgba(255, 255, 255, 0.1);
 }
 .autocomplete-item.highlighted {
-  background: var(--indigo-50);
-  box-shadow: inset 3px 0 0 var(--indigo-600);
+  background: rgba(255, 255, 255, 0.16);
+  box-shadow: inset 3px 0 0 var(--coral-400);
 }
 .autocomplete-item:last-child {
   border-bottom: none;
 }
 
+/* Two cards per row instead of one wide row — the products column is now
+   wider (see .search-overlay-panel's grid-template-columns), so each card
+   gets roughly half that width while staying a normal horizontal row, which
+   alone brings it closer to square than a single full-width row would be. */
+.autocomplete-products-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.85rem;
+  margin: 0.75rem;
+}
+
+/* Product suggestions get their own opaque white card — everything else in the
+   panel sits directly on the blurred scrim, but cards need a solid surface to
+   stay readable, and the extra room lets them show bigger thumbs/text. Resets
+   `color` back to dark since the panel's own text color is now light (for the
+   text that sits directly on the blur), which would otherwise cascade in here
+   and make product text invisible against the white card. Stays horizontal
+   (thumb left, text right) — only the 2-per-row grid above and the bigger
+   thumb make it read closer to square, not a full vertical stack. */
+.autocomplete-item.autocomplete-product {
+  padding: 1rem;
+  gap: 0.85rem;
+  background: white;
+  border: none;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  color: var(--gray-900);
+}
+.autocomplete-item.autocomplete-product:hover {
+  background: white;
+  box-shadow: var(--shadow-md);
+}
+/* Unlike the other columns' rows, product cards are already opaque white at
+   rest, so a background-only highlight (like the other columns use) has
+   nothing to contrast against — needs its own tint + a thicker ring to
+   actually read as "selected" rather than a barely-there hairline. */
+.autocomplete-item.autocomplete-product.highlighted {
+  background: var(--indigo-50);
+  box-shadow: var(--shadow-md), 0 0 0 3px var(--indigo-600);
+}
+
 .autocomplete-thumb {
-  width: 40px;
-  height: 40px;
+  width: 64px;
+  height: 64px;
   border-radius: var(--radius-sm);
   background: var(--gray-200);
   display: flex;
@@ -322,54 +356,59 @@ a:hover {
   justify-content: center;
   font-size: 0.7rem;
   color: var(--gray-500);
+  flex-shrink: 0;
+}
+.autocomplete-item.autocomplete-product .autocomplete-thumb {
+  width: 80px;
+  height: 80px;
 }
 
 .autocomplete-info {
   flex: 1;
 }
 .autocomplete-info .name {
-  font-size: 0.85rem;
-  font-weight: 500;
+  font-size: 1.1rem;
+  font-weight: 600;
 }
 .autocomplete-info .price {
-  font-size: 0.8rem;
+  font-size: 1.05rem;
   color: var(--coral-500);
   font-weight: 600;
+  margin-top: 0.35rem;
 }
 
 .autocomplete-section-title {
-  padding: 0.5rem 1rem 0.25rem;
-  font-size: 0.7rem;
-  font-weight: 600;
+  padding: 0.65rem 1.1rem 0.35rem;
+  font-size: 0.85rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--gray-400);
-  background: var(--gray-50);
-  border-bottom: 1px solid var(--gray-100);
+  letter-spacing: 0.6px;
+  color: rgba(255, 255, 255, 0.95);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .autocomplete-suggestion {
-  padding: 0.5rem 1rem;
+  padding: 0.65rem 1.1rem;
 }
 .autocomplete-suggestion-text {
-  font-size: 0.85rem;
-  color: var(--indigo-600);
-  font-weight: 500;
+  font-size: 1.05rem;
+  color: white;
+  font-weight: 600;
 }
 
 .autocomplete-category {
-  padding: 0.5rem 1rem;
+  padding: 0.65rem 1.1rem;
 }
 .autocomplete-category-text {
-  font-size: 0.85rem;
-  color: var(--gray-700);
-  font-weight: 500;
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 600;
 }
 
 .autocomplete-empty {
-  padding: 1rem;
-  font-size: 0.8rem;
-  color: var(--gray-400);
+  padding: 1.1rem;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.7);
   font-style: italic;
 }
 
@@ -379,11 +418,30 @@ a:hover {
   gap: 0.75rem;
   padding: 0.75rem 1rem;
 }
+/* Non-product skeleton rows (suggestions/categories) sit directly on the
+   blurred scrim, so the shared light-gray shimmer (tuned for white cards)
+   would wash out — re-themed lighter here. Product rows keep the original
+   shimmer since their white card background is unchanged. */
+.autocomplete-skeleton-item:not(.autocomplete-skeleton-product) .skeleton-shimmer {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.15) 25%, rgba(255, 255, 255, 0.32) 50%, rgba(255, 255, 255, 0.15) 75%);
+  background-size: 200% 100%;
+}
+.autocomplete-skeleton-item.autocomplete-skeleton-product {
+  gap: 0.85rem;
+  padding: 1rem;
+  background: white;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
 .autocomplete-skeleton-thumb {
-  width: 40px;
-  height: 40px;
+  width: 64px;
+  height: 64px;
   border-radius: var(--radius-sm);
   flex-shrink: 0;
+}
+.autocomplete-skeleton-item.autocomplete-skeleton-product .autocomplete-skeleton-thumb {
+  width: 80px;
+  height: 80px;
 }
 .autocomplete-skeleton-lines {
   flex: 1;
