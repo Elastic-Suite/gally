@@ -1,0 +1,37 @@
+{
+  "demoDress": {
+    "name": "Dress Journey — Camille",
+    "description": "Discover how Gally transforms the e-commerce search experience, following Camille, a customer looking for the perfect dress.",
+    "personas": {
+      "customer": { "role": "The customer" },
+      "merchant": { "name": "The merchant", "role": "E-commerce merchant" }
+    },
+    "steps": {
+      "1": {
+        "title": "The arrival",
+        "bubble": "Camille searches for <strong>\"tank dress\"</strong> — a vague query. Autocomplete understands the intent and surfaces relevant results via vector search.\n      <div class=\"story-tracking-hint\">📊 <strong>Tracking:</strong> Gally logs a <code>SEARCH</code> event with the query, result count, and page. This surfaces popular searches, flags zero-result queries, and improves autocomplete.</div>",
+        "gain": "−40% no results"
+      },
+      "2": {
+        "title": "The exploration",
+        "bubble": "Camille browses summer dresses. Facets — <strong>color swatches</strong>, <strong>price slider</strong>, <strong>search within options</strong> — help her find exactly what she wants, with no bounce.\n      <div class=\"story-tracking-hint\">📊 <strong>Tracking:</strong> Gally logs <code>VIEW:category</code> (category visit) and <code>DISPLAY</code> (products shown with their position). This measures category performance and each product's impression rate.</div>",
+        "gain": "Lower bounce rate"
+      },
+      "3": {
+        "title": "The doubt",
+        "bubble": "The merchant hesitates: how do you steer ranking without a developer? Gally's <strong>Explain Query</strong> reveals how each product is ranked — <strong>boosts</strong>, <strong>text fields</strong>, <strong>relevance score</strong> — all controllable with no code.\n      <div class=\"story-tracking-hint\">📊 <strong>Tracking:</strong> <code>SEARCH</code>, <code>DISPLAY</code>, and <code>ADD_TO_CART</code> data collected continuously let Gally compute a per-product popularity score, usable as a merchandising boost criterion.</div>",
+        "gain": "Merchandising you control"
+      },
+      "4": {
+        "title": "The decision",
+        "bubble": "Camille adds a dress to her cart. Average-order-value levers kick in: <strong>−20% accessory pack</strong>, <strong>free-shipping threshold</strong>, <strong>frequently bought together</strong>.\n      <div class=\"story-tracking-hint\">📊 <strong>Tracking:</strong> Gally logs <code>ADD_TO_CART</code> for every product added — a strong conversion signal that boosts the product in results. <code>VIEW:product</code> and <code>ADD_TO_CART</code> combined feed the recommendations.</div>",
+        "gain": "+15% average order value"
+      },
+      "5": {
+        "title": "The recap",
+        "bubble": "What's the business impact? How much time and budget to get there? See the <strong>cost/time vs. market</strong> recap.\n      <div class=\"story-tracking-hint\">📊 <strong>Tracking:</strong> The <code>ORDER</code> event closes the full loop: products bought together feed the \"Frequently bought together\" recommendations, and revenue per query optimizes relevance.</div>",
+        "gain": "+30% conversion"
+      }
+    }
+  }
+}

@@ -1,17 +1,9 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useEventLog } from '../contexts/EventLogContext';
 
-/** Maps event types to timeline-style dot colors and human labels */
-const EVENT_META: Record<string, { color: string; label: string; icon: string }> = {
-  'SEARCH': { color: '#3f51b5', label: 'Recherche', icon: '🔍' },
-  'VIEW:category': { color: '#7c4dff', label: 'Visite catégorie', icon: '📁' },
-  'VIEW:product': { color: '#7c4dff', label: 'Visite produit', icon: '👁' },
-  'DISPLAY': { color: '#3949ab', label: 'Produits affichés', icon: '📋' },
-  'ADD_TO_CART': { color: '#ff6b6b', label: 'Ajout panier', icon: '🛒' },
-  'ORDER': { color: '#4caf50', label: 'Commande', icon: '✓' },
-};
-
 export default function TrackingInsights() {
+  const { t } = useTranslation('demo');
   const [open, setOpen] = useState(false);
   const { entries } = useEventLog();
 
@@ -28,7 +20,7 @@ export default function TrackingInsights() {
   if (!open) {
     return (
       <button className="tracking-insights-toggle" onClick={() => setOpen(true)}>
-        📊 Gally Insights {totalEvents > 0 && <span className="insights-badge">{totalEvents}</span>}
+        {t('insights.toggle')} {totalEvents > 0 && <span className="insights-badge">{totalEvents}</span>}
       </button>
     );
   }
@@ -36,25 +28,25 @@ export default function TrackingInsights() {
   return (
     <div className="tracking-insights-panel">
       <div className="insights-header">
-        <h3>📊 Ce que Gally sait</h3>
+        <h3>{t('insights.heading')}</h3>
         <button className="insights-close" onClick={() => setOpen(false)}>✕</button>
       </div>
 
       <div className="insights-summary">
-        <span>{totalEvents} événements captés</span>
+        <span>{t('insights.summary', { count: totalEvents })}</span>
       </div>
 
       {totalEvents === 0 ? (
         <div className="insights-empty">
-          Naviguez dans le site pour voir Gally apprendre de vos interactions.
+          {t('insights.empty')}
         </div>
       ) : (
         <div className="insights-sections">
           {searches.length > 0 && (
             <InsightSection
               icon="🔍" color="#3f51b5"
-              title={`${searches.length} recherche(s)`}
-              consequence="Les termes populaires remontent dans l'autocomplete. Les requêtes sans résultat sont détectées."
+              title={t('insights.sections.search.title', { count: searches.length })}
+              consequence={t('insights.sections.search.consequence')}
               details={searches.slice(0, 3).map(e => e.detail)}
             />
           )}
@@ -62,8 +54,8 @@ export default function TrackingInsights() {
           {categoryViews.length > 0 && (
             <InsightSection
               icon="📁" color="#7c4dff"
-              title={`${categoryViews.length} catégorie(s) visitée(s)`}
-              consequence="Le contexte catégorie est mémorisé. Les actions suivantes y sont automatiquement rattachées."
+              title={t('insights.sections.category.title', { count: categoryViews.length })}
+              consequence={t('insights.sections.category.consequence')}
               details={categoryViews.slice(0, 3).map(e => e.detail)}
             />
           )}
@@ -71,8 +63,8 @@ export default function TrackingInsights() {
           {displays.length > 0 && (
             <InsightSection
               icon="📋" color="#3949ab"
-              title={`${displays.length} affichage(s) de produits`}
-              consequence="Gally mesure le taux d'impression et optimise le classement des produits peu vus."
+              title={t('insights.sections.display.title', { count: displays.length })}
+              consequence={t('insights.sections.display.consequence')}
               details={displays.slice(0, 3).map(e => e.detail)}
             />
           )}
@@ -80,8 +72,8 @@ export default function TrackingInsights() {
           {productViews.length > 0 && (
             <InsightSection
               icon="👁" color="#7c4dff"
-              title={`${productViews.length} fiche(s) produit consultée(s)`}
-              consequence="Le score de popularité augmente. Ces produits seront mieux classés dans les prochaines recherches."
+              title={t('insights.sections.product.title', { count: productViews.length })}
+              consequence={t('insights.sections.product.consequence')}
               details={productViews.slice(0, 3).map(e => e.detail)}
             />
           )}
@@ -89,8 +81,8 @@ export default function TrackingInsights() {
           {addToCarts.length > 0 && (
             <InsightSection
               icon="🛒" color="#ff6b6b"
-              title={`${addToCarts.length} ajout(s) au panier`}
-              consequence="Signal fort de conversion : ces produits sont boostés dans les résultats et alimentent les recommandations."
+              title={t('insights.sections.cart.title', { count: addToCarts.length })}
+              consequence={t('insights.sections.cart.consequence')}
               details={addToCarts.slice(0, 3).map(e => e.detail)}
             />
           )}
@@ -98,8 +90,8 @@ export default function TrackingInsights() {
           {orders.length > 0 && (
             <InsightSection
               icon="✓" color="#4caf50"
-              title={`${orders.length} commande(s)`}
-              consequence="Boucle complète : alimente les recommandations 'Fréquemment achetés ensemble' et l'optimisation par revenu."
+              title={t('insights.sections.order.title', { count: orders.length })}
+              consequence={t('insights.sections.order.consequence')}
               details={orders.slice(0, 3).map(e => e.detail)}
             />
           )}

@@ -1,0 +1,37 @@
+{
+  "demoDress": {
+    "name": "Parcours Robe — Camille",
+    "description": "Découvrez comment Gally transforme l'expérience de recherche e-commerce, à travers le parcours de Camille, une cliente à la recherche de la robe parfaite.",
+    "personas": {
+      "customer": { "role": "La cliente" },
+      "merchant": { "name": "Le marchand", "role": "E-commerçant" }
+    },
+    "steps": {
+      "1": {
+        "title": "L'arrivée",
+        "bubble": "Camille cherche <strong>\"tank dress\"</strong> — une requête floue. L'autocomplete comprend l'intention et propose des résultats pertinents grâce à la recherche vectorielle.\n      <div class=\"story-tracking-hint\">📊 <strong>Tracking :</strong> Gally enregistre l'événement <code>SEARCH</code> avec la requête, le nombre de résultats et la page. Cela permet d'analyser les recherches populaires, détecter les requêtes sans résultat, et améliorer l'autocomplete.</div>",
+        "gain": "−40% no results"
+      },
+      "2": {
+        "title": "L'exploration",
+        "bubble": "Camille explore les robes d'été. Les facettes — <strong>swatches couleur</strong>, <strong>slider de prix</strong>, <strong>recherche dans les options</strong> — lui permettent de trouver exactement ce qu'elle veut, sans rebond.\n      <div class=\"story-tracking-hint\">📊 <strong>Tracking :</strong> Gally enregistre <code>VIEW:category</code> (visite de catégorie) et <code>DISPLAY</code> (produits affichés avec leur position). Cela mesure la performance des catégories et le taux d'impression de chaque produit.</div>",
+        "gain": "Moins de rebond"
+      },
+      "3": {
+        "title": "Le doute",
+        "bubble": "Le marchand hésite : comment piloter le ranking sans développeur ? L'<strong>Explain Query</strong> de Gally révèle comment chaque produit est classé — <strong>boosts</strong>, <strong>champs texte</strong>, <strong>score de pertinence</strong> — le tout pilotable sans code.\n      <div class=\"story-tracking-hint\">📊 <strong>Tracking :</strong> Les données de <code>SEARCH</code>, <code>DISPLAY</code> et <code>ADD_TO_CART</code> collectées en continu permettent à Gally de calculer un score de popularité par produit, utilisable comme critère de boost dans le merchandising.</div>",
+        "gain": "Merchandising piloté"
+      },
+      "4": {
+        "title": "La décision",
+        "bubble": "Camille ajoute une robe au panier. Les leviers de panier moyen entrent en jeu : <strong>pack accessoires −20%</strong>, <strong>seuil livraison offerte</strong>, <strong>fréquemment achetés ensemble</strong>.\n      <div class=\"story-tracking-hint\">📊 <strong>Tracking :</strong> Gally enregistre <code>ADD_TO_CART</code> pour chaque produit ajouté — un signal fort de conversion qui booste le produit dans les résultats. Les événements <code>VIEW:product</code> et <code>ADD_TO_CART</code> combinés alimentent les recommandations.</div>",
+        "gain": "+15% panier moyen"
+      },
+      "5": {
+        "title": "Le bilan",
+        "bubble": "Quel impact business ? Combien de temps et de budget pour arriver là ? Découvrez le bilan <strong>coût/délai vs marché</strong>.\n      <div class=\"story-tracking-hint\">📊 <strong>Tracking :</strong> L'événement <code>ORDER</code> boucle le cycle complet : les produits achetés ensemble alimentent les recommandations \"Fréquemment achetés ensemble\", et le chiffre d'affaires par requête permet d'optimiser la pertinence.</div>",
+        "gain": "+30% conversion"
+      }
+    }
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "empty": {
+    "title": "Your Cart",
+    "heading": "Your cart is empty",
+    "body": "Start shopping to add products.",
+    "browse": "Browse products"
+  },
+  "title_one": "Your Cart ({{count}} item)",
+  "title_other": "Your Cart ({{count}} items)",
+  "bundle": {
+    "heading": "🎁 Accessory Pack −{{discount}}%",
+    "save": "Save",
+    "totalLabel": "Pack total:",
+    "addButton": "Add pack",
+    "items": {
+      "clutch": "Matching clutch",
+      "belt": "Fabric belt",
+      "scarf": "Light scarf"
+    }
+  },
+  "shipping": {
+    "unlocked": "✓ Free shipping unlocked!",
+    "remainingPrefix": "Only",
+    "remainingSuffix": "left for free shipping",
+    "free": "Free"
+  },
+  "summary": {
+    "subtotal": "Subtotal",
+    "frequentlyBoughtTogether": "Frequently bought together",
+    "shipping": "Shipping",
+    "total": "Total",
+    "checkout": "Checkout"
+  },
+  "fbt": {
+    "items": {
+      "sandals": "Braided sandals",
+      "hat": "Straw hat",
+      "earrings": "Gold earrings"
+    },
+    "selectedTotal": "Selected total:",
+    "addToCart": "Add to cart"
+  },
+  "recommendations": "Complete your look",
+  "checkout": {
+    "steps": {
+      "cart": "Cart",
+      "shipping": "Shipping",
+      "payment": "Payment",
+      "confirmation": "Confirmation"
+    },
+    "shippingInfo": "Shipping Information",
+    "placeholders": {
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "address": "Address",
+      "city": "City",
+      "zip": "ZIP Code",
+      "cardNumber": "Card Number",
+      "expiry": "MM/YY",
+      "cvc": "CVC"
+    },
+    "continueToPayment": "Continue to Payment →",
+    "payment": "Payment",
+    "totalToPay": "Total to Pay",
+    "placeOrder": "Place Order — {{amount}}",
+    "orderConfirmed": "Order Confirmed!",
+    "orderConfirmedBody": "Thank you for your order. A tracking event has been sent to Gally."
+  }
+}
