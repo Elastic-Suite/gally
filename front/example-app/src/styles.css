@@ -91,14 +91,23 @@ a:hover {
 }
 
 /* ─── Header ─────────────────────────────────────────────── */
+/* Below .category-nav-submenu's z-index (50) so a scrolled-under category flyout
+   isn't covered by the sticky header/search bar. Raised back up only while the
+   search overlay (ACP) is open, so it can still sit above the rest of the page. */
+.header-sticky-group {
+  z-index: 40;
+}
+.header-sticky-group:has(.search-bar-wrapper.overlay-open) {
+  z-index: 100;
+}
+
 .header {
+  position: sticky;
+  top: 0;
+  z-index: 120;
   background: linear-gradient(135deg, var(--indigo-900) 0%, var(--indigo-700) 100%);
   color: white;
   padding: 0.75rem 2rem;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  box-shadow: var(--shadow-lg);
 }
 
 .header-inner {
@@ -107,6 +116,15 @@ a:hover {
   display: flex;
   align-items: center;
   gap: 2rem;
+  transition: filter 0.2s ease, opacity 0.2s ease;
+}
+
+/* When the search overlay is open, the rest of the header recedes along
+   with the page behind it — only the search form itself stays crisp. */
+.header-sticky-group:has(.search-bar-wrapper.overlay-open) .header-inner {
+  filter: blur(3px);
+  opacity: 0.45;
+  pointer-events: none;
 }
 
 .header-logo {
@@ -175,34 +193,57 @@ a:hover {
   color: white;
 }
 
+/* ─── Header Search Band ─────────────────────────────────── */
+.header-search-band {
+  background: var(--gray-50);
+  padding: 2rem 2rem 0;
+  transition: background 0.2s ease;
+}
+.header-search-band:has(.search-bar-wrapper.overlay-open) {
+  background: rgba(30, 27, 75, 0.92);
+}
+
+.header-search-row {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
 /* ─── Search Bar ─────────────────────────────────────────── */
 .search-bar-wrapper {
   position: relative;
-  width: 300px;
-  transition: width 0.3s ease;
+  width: 66.6667%;
+  max-width: 900px;
+  min-width: 260px;
   z-index: 110;
+  transform: scale(1);
+  transition: transform 0.25s ease;
 }
 .search-bar-wrapper.expanded {
-  width: 500px;
+  transform: scale(1.08);
+}
+.search-bar-wrapper.expanded .search-bar {
+  box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.25);
 }
 
 .search-bar {
   width: 100%;
   padding: 0.5rem 1rem 0.5rem 2.25rem;
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  border: 1px solid var(--gray-300);
   border-radius: var(--radius-pill);
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
+  background: var(--gray-100);
+  color: var(--gray-900);
   font-size: 0.85rem;
   font-family: var(--font-sans);
   outline: none;
   transition: all 0.2s;
 }
 .search-bar::placeholder {
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--gray-500);
 }
 .search-bar:focus {
-  background: rgba(255, 255, 255, 0.2);
+  background: white;
   border-color: var(--coral-400);
 }
 
@@ -215,18 +256,40 @@ a:hover {
   font-size: 0.85rem;
 }
 
-.autocomplete-dropdown {
-  position: absolute;
-  top: calc(100% + 8px);
-  left: 0;
-  right: 0;
-  background: white;
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-lg);
-  z-index: 200;
-  max-height: 400px;
+.search-overlay-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: rgba(30, 27, 75, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: calc(var(--header-height, 8.5rem) + 1rem) 2rem 2rem;
   overflow-y: auto;
+}
+
+.search-overlay-panel {
+  background: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  width: 100%;
+  max-width: 1200px;
+  min-height: 20rem;
+  max-height: calc(100vh - var(--header-height, 8.5rem) - 3rem);
+  padding: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
   color: var(--gray-900);
+}
+
+.search-overlay-col {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow-y: auto;
 }
 
 .autocomplete-item {
@@ -240,6 +303,10 @@ a:hover {
 }
 .autocomplete-item:hover {
   background: var(--indigo-50);
+}
+.autocomplete-item.highlighted {
+  background: var(--indigo-50);
+  box-shadow: inset 3px 0 0 var(--indigo-600);
 }
 .autocomplete-item:last-child {
   border-bottom: none;
@@ -299,6 +366,40 @@ a:hover {
   font-weight: 500;
 }
 
+.autocomplete-empty {
+  padding: 1rem;
+  font-size: 0.8rem;
+  color: var(--gray-400);
+  font-style: italic;
+}
+
+.autocomplete-skeleton-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+}
+.autocomplete-skeleton-thumb {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+.autocomplete-skeleton-lines {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.autocomplete-skeleton-line {
+  height: 10px;
+  border-radius: 4px;
+  width: 100%;
+}
+.autocomplete-skeleton-line.short {
+  width: 45%;
+}
+
 /* ─── Cart Badge ─────────────────────────────────────────── */
 .cart-badge {
   position: relative;
@@ -336,8 +437,8 @@ a:hover {
   color: white;
   padding: 2.5rem 2rem;
   text-align: center;
-  margin: -2rem -2rem 2rem;
-  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  margin: 0 -2rem 2rem;
+  border-radius: var(--radius-lg);
 }
 
 .hero h1 {
@@ -1512,9 +1613,19 @@ a:hover {
     flex-wrap: wrap;
     gap: 0.75rem;
   }
+  .header-search-row {
+    padding: 0 0.5rem;
+  }
   .search-bar-wrapper {
     width: 100%;
-    order: 10;
+  }
+  .search-overlay-scrim {
+    padding: calc(var(--header-height, 11.5rem) + 1rem) 1rem 1rem;
+  }
+  .search-overlay-panel {
+    grid-template-columns: 1fr;
+    min-height: 0;
+    max-height: calc(100vh - var(--header-height, 11.5rem) - 2rem);
   }
   .hero h1 {
     font-size: 2rem;

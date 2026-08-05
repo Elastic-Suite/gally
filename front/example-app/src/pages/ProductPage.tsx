@@ -14,16 +14,17 @@ export default function ProductPage() {
   const { trackProductView } = useTracking();
   const [selectedVariant, setSelectedVariant] = useState(0);
 
-  // Search for this specific product by SKU
-  const { products, loading } = useSearch({ searchQuery: sku, pageSize: 5 });
+  // Look up this specific product by exact SKU match. searchQuery is still
+  // passed (rather than left empty) purely to make useSearch pick product_search
+  // over product_catalog, which 400s without a currentCategoryId — the equalFilter
+  // below is what actually guarantees we get this exact product, not the query text.
+  const { products, loading } = useSearch({
+    searchQuery: sku,
+    filters: sku ? [{ sku: { eq: sku } }] : undefined,
+    pageSize: 1,
+  });
 
-  // Find the matching product
-  const rawProduct = products.find((p: any) => {
-    const s = p.source || p;
-    return s.sku === sku;
-  }) || products[0];
-
-  const p = rawProduct ? getProductFields(rawProduct) : null;
+  const p = products[0] ? getProductFields(products[0]) : null;
 
   const trackedSkuRef = useRef('');
 
@@ -75,8 +76,8 @@ export default function ProductPage() {
     );
   }
 
-  const colors = (rawProduct?.source?.fashion_color || []) as { label: string; value: any }[];
-  const materials = (rawProduct?.source?.fashion_material || []) as { label: string; value: any }[];
+  const colors = (products[0]?.source?.fashion_color || []) as { label: string; value: any }[];
+  const materials = (products[0]?.source?.fashion_material || []) as { label: string; value: any }[];
   const hasVariants = colors.length > 0;
 
   return (
