@@ -13,18 +13,37 @@ export default function SearchPage() {
   const [page, setPage] = useState(1);
   const [sortField, setSortField] = useState('');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
-  const [activeFilters, setActiveFilters] = useState<Record<string, any>>({});
   const [facetsOpen, setFacetsOpen] = useState(false);
 
-  // Reset page and filters when query changes
-  const prevQueryRef = useRef(query);
+  // Filters can arrive pre-applied in the URL as repeatable `f_<field>=<value>`
+  // params — that's how the autocomplete panel hands over an attribute option
+  // (see SearchOverlay's attributeFilterUrl). Values are always arrays because
+  // that's the shape the checkbox/swatch facets treat as "checked".
+  const urlFilters = useMemo(() => {
+    const out: Record<string, string[]> = {};
+    searchParams.forEach((value, key) => {
+      if (!key.startsWith('f_')) return;
+      const field = key.slice(2);
+      out[field] = [...(out[field] ?? []), value];
+    });
+    return out;
+  }, [searchParams]);
+
+  const [activeFilters, setActiveFilters] = useState<Record<string, any>>(urlFilters);
+
+  // Re-seed on any URL change, not just `q`: arriving from the ACP with a filter
+  // on the SAME query doesn't remount the page, so without this the incoming
+  // filter would be dropped. Sidebar toggles don't touch the URL, so they don't
+  // trigger this and aren't clobbered.
+  const searchKey = searchParams.toString();
+  const prevSearchRef = useRef(searchKey);
   useEffect(() => {
-    if (prevQueryRef.current !== query) {
+    if (prevSearchRef.current !== searchKey) {
+      prevSearchRef.current = searchKey;
       setPage(1);
-      setActiveFilters({});
-      prevQueryRef.current = query;
+      setActiveFilters(urlFilters);
     }
-  }, [query]);
+  }, [searchKey, urlFilters]);
 
   const filters = useMemo(() => Object.entries(activeFilters)
     .filter(([, val]) => val !== undefined)

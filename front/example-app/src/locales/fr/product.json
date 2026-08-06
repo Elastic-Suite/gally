@@ -3,7 +3,8 @@
     "new": "Nouveau",
     "outOfStock": "Rupture de stock",
     "addToCart": "Ajouter au panier",
-    "unavailable": "Indisponible"
+    "unavailable": "Indisponible",
+    "added": "✓ Ajouté"
   },
   "page": {
     "type": {
