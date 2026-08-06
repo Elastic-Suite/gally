@@ -12,6 +12,8 @@ const kpis = [
   'orderCount',
   'sessionCount',
   'visitorCount',
+  'sessionsWithSearchPercentage',
+  'averageSearchesPerSession'
 ]
 
 const kpisTestIds = kpis.reduce((acc: Record<string, string>, v) => {
@@ -78,6 +80,14 @@ const texts = {
     visitorCount: {
       label: 'Unique visitors',
       value: 15,
+    },
+    sessionsWithSearchPercentage: {
+      label: 'Sessions with search',
+      value: '56.67%',
+    },
+    averageSearchesPerSession: {
+      label: 'Searches per session',
+      value: 3.06,
     },
   },
   catalogComFrFilteredKpis: {
