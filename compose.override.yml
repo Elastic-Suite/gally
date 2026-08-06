@@ -61,6 +61,11 @@ services:
     profiles:
       - cron
 
+  search:
+    environment:
+      # Fixture loads push the base 1g heap past OpenSearch's 85% circuit breaker, silently disabling any running Transform (see SessionTransformProvisioner).
+      - OPENSEARCH_JAVA_OPTS=-Xms2g -Xmx2g
+
   pwa:
     user: ${UUID?You must set UUID env var}:${GUID?You must set GUID env var}
     build:
