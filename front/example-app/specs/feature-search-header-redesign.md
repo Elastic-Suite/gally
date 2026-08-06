@@ -62,7 +62,8 @@
       and re-deriving `isOverlayOpen` as `focused && (results.length > 0 || query.length >= 2)` instead of
       `results.length > 0 || (focused && query.length >= 2)` — the overlay still visually closes on blur, but
       `results` is preserved, so refocusing re-opens it instantly with the same suggestions instead of an empty
-      flash.
+      flash. **Superseded** by `specs/feature-acp-focus-empty-state.md`: the open condition is now `focused`
+      alone (empty query shows a prompt state). The `results`-preservation half of this bugfix still stands.
 - [x] **Bugfix — search bar painted over the sticky top nav on scroll:** `.header-search-band` (containing
       `.search-bar-wrapper`, `z-index: 110`) is a normal in-flow row, not itself sticky — only `.header`
       (`position: sticky`) is. `.header` was `z-index: 100`, i.e. *lower* than the search bar, so as the page

@@ -48,6 +48,12 @@ truth for what the ACP actually looks like.
 - [x] `.search-overlay-panel`'s `grid-template-columns` went `repeat(3, 1fr)` → `0.7fr 1.6fr 0.7fr`:
       Suggestions and Category both narrowed equally, Products absorbs the freed space. `max-width` grew
       `1200px → 1500px`, `min-height` `20rem → 24rem`.
+- [x] Narrowed again to `minmax(12rem, 0.45fr) 2.6fr minmax(12rem, 0.45fr)`: Suggestions and Category are
+      single-line text lists (one term per row, never wrapping content), so they don't need a proportional
+      share — they're floored at `12rem`, enough for the longest seeded suggestion/category name, and
+      Products takes everything else (~70% of the panel vs ~53% before). The `minmax()` floor matters at
+      narrow desktop widths, where a pure `0.45fr` would squeeze terms into wrapping; the mobile
+      single-column override is unaffected.
 
 ### Product cards: bigger, closer to square, but still horizontal
 - [x] Products render into a new `.autocomplete-products-grid` (2-column CSS grid, `gap: 0.85rem`) instead

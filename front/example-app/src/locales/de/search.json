@@ -6,6 +6,8 @@
     "suggestionsTitle": "🔍 Popular search terms",
     "productsTitle": "Products",
     "categoryTitle": "📁 Category",
+    "promptTitle": "Start typing to find your next favorite look",
+    "promptSubtitle": "Products, categories and trending searches appear as you type — two letters are all it takes to get started.",
     "noSuggestions": "No matching search terms",
     "noProducts": "No matching products",
     "noCategories": "No matching categories",

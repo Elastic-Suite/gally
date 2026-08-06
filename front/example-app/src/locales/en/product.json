@@ -3,7 +3,8 @@
     "new": "New",
     "outOfStock": "Out of Stock",
     "addToCart": "Add to cart",
-    "unavailable": "Unavailable"
+    "unavailable": "Unavailable",
+    "added": "✓ Added"
   },
   "page": {
     "type": {

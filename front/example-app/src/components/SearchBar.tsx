@@ -3,7 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useSearchBarRef } from '../contexts/SearchBarContext';
 import { useAutocomplete } from '../hooks/useSearch';
-import SearchOverlay, { getSuggestionMatches, getCategoryMatches } from './SearchOverlay';
+import SearchOverlay, {
+  getSuggestionMatches, getCategoryMatches, getAutocompleteAttributes, attributeFilterUrl,
+} from './SearchOverlay';
 import { getProductFields } from './ProductCard';
 
 interface SearchBarProps {
@@ -16,7 +18,7 @@ export default function SearchBar({ categories, categoriesLoading }: SearchBarPr
   const navigate = useNavigate();
   const [query, setQuery] = useState('');
   const [focused, setFocused] = useState(false);
-  const { results, loading, search, clear } = useAutocomplete();
+  const { results, aggregations, loading, search, clear } = useAutocomplete();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const searchBarRef = useSearchBarRef();
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
@@ -28,6 +30,16 @@ export default function SearchBar({ categories, categoriesLoading }: SearchBarPr
     getSuggestionMatches(query).forEach(term => {
       items.push({ key: `suggestion-${term}`, to: `/search?q=${encodeURIComponent(term)}` });
     });
+    // Attribute options sit under the suggestions in the same column, so they
+    // come second in the arrow-key sequence — the order here IS the visual order.
+    getAutocompleteAttributes(aggregations).forEach(attr => {
+      attr.options.forEach(opt => {
+        items.push({
+          key: `attribute-${attr.field}-${opt.value}`,
+          to: attributeFilterUrl(query, attr.field, opt.value),
+        });
+      });
+    });
     results.forEach((item: any) => {
       const { sku } = getProductFields(item);
       items.push({ key: `product-${sku}`, to: `/product/${encodeURIComponent(sku)}` });
@@ -36,7 +48,7 @@ export default function SearchBar({ categories, categoriesLoading }: SearchBarPr
       items.push({ key: `category-${cat.id}`, to: `/category/${cat.id}` });
     });
     return items;
-  }, [query, results, categories]);
+  }, [query, results, aggregations, categories]);
 
   useEffect(() => {
     setHighlightedIndex(-1);
@@ -51,6 +63,14 @@ export default function SearchBar({ categories, categoriesLoading }: SearchBarPr
   }, [highlightedIndex, flatItems]);
 
   // Register search bar handle for external control (story companion)
+  // The overlay is open for as long as the bar is focused, so anything that ends
+  // the search interaction (picking an item, submitting) has to close it
+  // explicitly — clearing the query alone would just leave the prompt state up.
+  const closeOverlay = () => {
+    setFocused(false);
+    inputRef.current?.blur();
+  };
+
   useEffect(() => {
     searchBarRef.current = {
       setQuery: (q: string) => {
@@ -61,11 +81,13 @@ export default function SearchBar({ categories, categoriesLoading }: SearchBarPr
         if (query.trim()) {
           navigate(`/search?q=${encodeURIComponent(query.trim())}`);
           clear();
+          closeOverlay();
         }
       },
       clear: () => {
         setQuery('');
         clear();
+        closeOverlay();
       },
       inputRef,
     };
@@ -76,6 +98,7 @@ export default function SearchBar({ categories, categoriesLoading }: SearchBarPr
     if (query.trim()) {
       navigate(`/search?q=${encodeURIComponent(query.trim())}`);
       clear();
+      closeOverlay();
     }
   };
 
@@ -105,14 +128,17 @@ export default function SearchBar({ categories, categoriesLoading }: SearchBarPr
         navigate(item.to);
         setQuery('');
         clear();
+        closeOverlay();
       }
     }
   };
 
-  // Gated on `focused` alone (not `results.length`) so blurring always closes the
-  // overlay, without having to wipe `results` — refocusing re-opens it instantly
-  // with the same suggestions still in place instead of an empty flash.
-  const isOverlayOpen = focused && (results.length > 0 || query.length >= 2);
+  // Gated on `focused` alone: the overlay opens the moment the bar is focused,
+  // even with an empty query — it then shows the "start typing" prompt instead of
+  // the three columns. Blurring always closes it, without having to wipe
+  // `results`, so refocusing re-opens it instantly with the same suggestions
+  // still in place instead of an empty flash.
+  const isOverlayOpen = focused;
   const highlightedKey = highlightedIndex >= 0 ? flatItems[highlightedIndex]?.key ?? null : null;
 
   return (
@@ -136,6 +162,7 @@ export default function SearchBar({ categories, categoriesLoading }: SearchBarPr
         open={isOverlayOpen}
         query={query}
         results={results}
+        aggregations={aggregations}
         resultsLoading={loading}
         categories={categories}
         categoriesLoading={categoriesLoading}
@@ -143,6 +170,7 @@ export default function SearchBar({ categories, categoriesLoading }: SearchBarPr
         navigate={navigate}
         setQuery={setQuery}
         clear={clear}
+        close={closeOverlay}
       />
     </form>
   );
