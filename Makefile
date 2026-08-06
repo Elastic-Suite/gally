@@ -115,6 +115,9 @@ phpstan: ## Run phpstan , pass the parameter "o=" to ass options, make phpstan o
 	@$(eval o ?=)
 	@$(PHP_STAN) --memory-limit=-1 analyse $(o)
 
+node_modules_clear: ## Remove all node_modules folders in front workspaces (useful when switching branch leaves them inconsistent)
+	@find front -name node_modules -type d -prune -print -exec rm -rf {} +
+
 yarn: ## Install dependencies on pwa container through yarn
 	@$(DOCKER_COMP) exec pwa yarn install
 
