@@ -271,10 +271,41 @@ a:hover {
   max-height: calc(100vh - var(--header-height, 8.5rem) - 3rem);
   padding: 1.5rem;
   display: grid;
-  /* Suggestions and category both narrower, products get all the freed space. */
-  grid-template-columns: 0.7fr 1.6fr 0.7fr;
+  /* Suggestions and category are single-line text lists — they only need enough
+     room for one term, so they're floored at 12rem and products takes the rest. */
+  grid-template-columns: minmax(12rem, 0.45fr) 2.6fr minmax(12rem, 0.45fr);
   gap: 1.5rem;
   color: rgba(255, 255, 255, 0.92);
+}
+
+/* Empty-query state: same panel envelope, single centered invitation. */
+.search-overlay-panel-prompt {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.search-prompt {
+  max-width: 34rem;
+}
+.search-prompt-icon {
+  font-size: 2.5rem;
+  opacity: 0.7;
+  margin-bottom: 1rem;
+}
+.search-prompt-title {
+  font-family: var(--font-serif);
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: white;
+  line-height: 1.25;
+}
+.search-prompt-subtitle {
+  margin-top: 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.75);
 }
 
 .search-overlay-col {
@@ -333,9 +364,38 @@ a:hover {
   box-shadow: var(--shadow-sm);
   color: var(--gray-900);
 }
+/* Hover reads as one motion: the card lifts off the blur, its shadow deepens,
+   the thumb pushes in slightly and the name takes the accent color. The generic
+   `.autocomplete-item` background transition is replaced here — a background
+   change is invisible on a card that's already opaque white. */
+.autocomplete-item.autocomplete-product {
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
 .autocomplete-item.autocomplete-product:hover {
   background: white;
-  box-shadow: var(--shadow-md);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+.autocomplete-item.autocomplete-product:hover .autocomplete-info .name {
+  color: var(--indigo-700);
+}
+.autocomplete-item.autocomplete-product .autocomplete-thumb img {
+  transition: transform 0.25s ease;
+}
+.autocomplete-item.autocomplete-product:hover .autocomplete-thumb img {
+  transform: scale(1.08);
+}
+/* The add button only fills in on card hover, so at rest the card stays calm and
+   the eye lands on the product, not on a grid of coral pills. */
+.autocomplete-item.autocomplete-product .autocomplete-add-to-cart {
+  opacity: 0.75;
+  transition: opacity 0.18s ease, background 0.18s ease, transform 0.18s ease;
+}
+.autocomplete-item.autocomplete-product:hover .autocomplete-add-to-cart {
+  opacity: 1;
+}
+.autocomplete-add-to-cart:hover:not(:disabled) {
+  transform: scale(1.05);
 }
 /* Unlike the other columns' rows, product cards are already opaque white at
    rest, so a background-only highlight (like the other columns use) has
@@ -361,6 +421,8 @@ a:hover {
 .autocomplete-item.autocomplete-product .autocomplete-thumb {
   width: 80px;
   height: 80px;
+  /* Keeps the hover zoom inside the thumb's rounded box. */
+  overflow: hidden;
 }
 
 .autocomplete-info {
@@ -375,6 +437,33 @@ a:hover {
   color: var(--coral-500);
   font-weight: 600;
   margin-top: 0.35rem;
+}
+
+/* Sits at the card's right edge, in the room the widened Products column freed
+   up (`.autocomplete-info` is flex: 1). Never shrinks or wraps — "Ajouter au
+   panier" is the longest label and must stay on one line. */
+.autocomplete-add-to-cart {
+  flex-shrink: 0;
+  white-space: nowrap;
+  align-self: center;
+}
+.autocomplete-add-to-cart:disabled {
+  background: var(--gray-400);
+  cursor: not-allowed;
+}
+
+/* Add confirmation, ~1.6s: the card reuses the same green `addedFlash` glow the
+   story mode already plays on `.product-card`, and the button holds a success
+   state. Specificity (0,3,0) is deliberate — it has to beat `.btn-coral:hover`,
+   which is declared later in the file, so the confirmation survives the pointer
+   still resting on the button. */
+.autocomplete-item.autocomplete-product.just-added {
+  animation: addedFlash 0.6s ease;
+}
+.autocomplete-item.autocomplete-product .autocomplete-add-to-cart.added {
+  background: var(--success);
+  opacity: 1;
+  transform: none;
 }
 
 .autocomplete-section-title {
@@ -399,10 +488,23 @@ a:hover {
 .autocomplete-category {
   padding: 0.65rem 1.1rem;
 }
-.autocomplete-category-text {
+.autocomplete-category-text,
+.autocomplete-attribute-text {
   font-size: 1.05rem;
   color: rgba(255, 255, 255, 0.95);
   font-weight: 600;
+}
+
+/* One block per source field flagged "Displayed in autocomplete", stacked under
+   the popular search terms in the same column. */
+.autocomplete-attribute-group {
+  margin-top: 1.25rem;
+}
+.autocomplete-attribute-count {
+  margin-left: auto;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-variant-numeric: tabular-nums;
 }
 
 .autocomplete-empty {

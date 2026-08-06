@@ -139,6 +139,11 @@ export function useSearch(options: SearchOptions) {
 export function useAutocomplete() {
   const { selectedLocalizedCatalog } = useCatalog();
   const [results, setResults] = useState<any[]>([]);
+  // Aggregations on an autocomplete request are NOT the facet configuration —
+  // the backend builds them from the source fields flagged "Displayed in
+  // autocomplete" (isUsedInAutocomplete), see AutocompleteSourceFields.php.
+  // Whatever comes back is what the merchandiser flagged; the front doesn't pick.
+  const [aggregations, setAggregations] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
@@ -147,6 +152,7 @@ export function useAutocomplete() {
 
     if (!query || query.length < 2 || !selectedLocalizedCatalog) {
       setResults([]);
+      setAggregations([]);
       return;
     }
 
@@ -159,21 +165,26 @@ export function useAutocomplete() {
           metadata: 'product',
           searchQuery: query,
           isAutocomplete: true,
-          pageSize: 5,
+          pageSize: 8,
           currentPage: 1,
           selectedFields: PRODUCT_FIELDS,
           filters: [],
         });
         setResults(response.getCollection());
+        setAggregations(response.getAggregations());
       } catch {
         setResults([]);
+        setAggregations([]);
       } finally {
         setLoading(false);
       }
     }, 300);
   }, [selectedLocalizedCatalog]);
 
-  const clear = useCallback(() => setResults([]), []);
+  const clear = useCallback(() => {
+    setResults([]);
+    setAggregations([]);
+  }, []);
 
-  return { results, loading, search, clear };
+  return { results, aggregations, loading, search, clear };
 }
