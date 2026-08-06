@@ -6,6 +6,8 @@
     "suggestionsTitle": "🔍 Recherches populaires",
     "productsTitle": "Produits",
     "categoryTitle": "📁 Catégorie",
+    "promptTitle": "Commencez à taper pour trouver votre prochain coup de cœur",
+    "promptSubtitle": "Produits, catégories et recherches tendance apparaissent au fil de la frappe — deux lettres suffisent pour démarrer.",
     "noSuggestions": "Aucun terme de recherche correspondant",
     "noProducts": "Aucun produit correspondant",
     "noCategories": "Aucune catégorie correspondante",
