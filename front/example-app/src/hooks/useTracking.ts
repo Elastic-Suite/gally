@@ -49,6 +49,42 @@ export function useTracking() {
     } catch (e) { console.warn('[Tracker]', e); }
   }, [t]);
 
+  // The blog runs on the `cms_page` entity, which is a first-class Gally metadata
+  // just like `product` — so its events go through the same tracker, only with a
+  // different metadataCode. That's the whole point of the section in demo terms.
+  //
+  // A LISTING is tracked as DISPLAY, not VIEW: the SDK validator requires an
+  // entityCode on every VIEW event (TrackingEventValidator's VIEW rule), and a list
+  // of articles has no single entity to name — inventing one would push a code that
+  // matches no document. DISPLAY is the event that actually models "these entities
+  // were shown, at these positions", exactly as trackDisplay does for products.
+  const trackCmsDisplay = useCallback((items: { id: string; position: number }[]) => {
+    if (items.length === 0) return; // the validator rejects an empty items array
+    logRef.current('DISPLAY:cms_page', `${items.length} articles`, t('trackingMeaning.cmsDisplay', { count: items.length }));
+    try {
+      getTracker().push({
+        eventType: TrackingEventType.DISPLAY,
+        metadataCode: 'cms_page',
+        localizedCatalogCode: catalogCodeRef.current,
+        payload: JSON.stringify({
+          items: items.map(i => ({ entityCode: i.id, display: { position: i.position } })),
+        }),
+      });
+    } catch (e) { console.warn('[Tracker]', e); }
+  }, [t]);
+
+  const trackCmsPageView = useCallback((id: string, title: string) => {
+    logRef.current('VIEW:cms_page', title || id, t('trackingMeaning.cmsPageView', { title: title || id }));
+    try {
+      getTracker().push({
+        eventType: TrackingEventType.VIEW,
+        metadataCode: 'cms_page',
+        localizedCatalogCode: catalogCodeRef.current,
+        entityCode: id,
+      });
+    } catch (e) { console.warn('[Tracker]', e); }
+  }, [t]);
+
   const trackSearch = useCallback((query: string, itemCount: number, page: number, pageCount: number) => {
     logRef.current('SEARCH', query, t('trackingMeaning.search', { query, count: itemCount }));
     try {
@@ -120,5 +156,8 @@ export function useTracking() {
     } catch (e) { console.warn('[Tracker]', e); }
   }, [t]);
 
-  return { trackCategoryView, trackProductView, trackSearch, trackDisplay, trackAddToCart, trackOrder };
+  return {
+    trackCategoryView, trackProductView, trackSearch, trackDisplay, trackAddToCart, trackOrder,
+    trackCmsDisplay, trackCmsPageView,
+  };
 }
