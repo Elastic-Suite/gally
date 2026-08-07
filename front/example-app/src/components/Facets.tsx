@@ -22,6 +22,9 @@ interface Props {
   loading?: boolean;
   onLoadMore?: (field: string) => Promise<FacetOption[]>;
   open?: boolean;
+  // Required, not optional: it picks which "no filters" message to show, and a wrong
+  // default would state something false about the result set.
+  resultCount: number;
 }
 
 // Facet fields to hide (not discriminant)
@@ -67,10 +70,22 @@ function guessColor(label: string): string {
   return `hsl(${Math.abs(hash) % 360}, 55%, 55%)`;
 }
 
-export default function Facets({ aggregations, activeFilters, onFilterChange, loading, onLoadMore, open }: Props) {
+export default function Facets({ aggregations, activeFilters, onFilterChange, loading, onLoadMore, open, resultCount }: Props) {
   const { t } = useTranslation('facets');
-  // Show skeleton when loading and no aggregations yet
-  if (loading && aggregations.length === 0) {
+
+  // A facet with 0 or 1 possible value can't narrow anything — every matching
+  // product already shares it — so it's noise, not a useful filter. Applies
+  // uniformly across all facet types (checkbox/boolean/swatch/slider/category).
+  const visibleAggregations = aggregations.filter(
+    agg => !IGNORED_FACETS.includes(agg.field) && (agg.options?.length ?? 0) > 1
+  );
+
+  // Skeleton whenever a request is in flight and there is nothing to draw. Keyed on
+  // visibleAggregations, not raw `aggregations`: a reload whose stale aggregations all
+  // turn out non-discriminant would otherwise fall through and flash the "no filters"
+  // message mid-request. Returning early here is also what guarantees that message
+  // only ever renders on a settled result.
+  if (loading && visibleAggregations.length === 0) {
     return (
       <aside className={`facets-sidebar ${open ? 'open' : ''}`}>
         <h3 style={{ fontFamily: 'var(--font-sans)', fontSize: '1rem', marginBottom: '1rem' }}>{t('title')}</h3>
@@ -86,12 +101,7 @@ export default function Facets({ aggregations, activeFilters, onFilterChange, lo
     );
   }
 
-  // A facet with 0 or 1 possible value can't narrow anything — every matching
-  // product already shares it — so it's noise, not a useful filter. Applies
-  // uniformly across all facet types (checkbox/boolean/swatch/slider/category).
-  const visibleAggregations = aggregations.filter(
-    agg => !IGNORED_FACETS.includes(agg.field) && (agg.options?.length ?? 0) > 1
-  );
+  const hasActiveFilters = Object.values(activeFilters).some(v => v !== undefined);
 
   return (
     <aside className={`facets-sidebar ${open ? 'open' : ''}`}>
@@ -101,15 +111,28 @@ export default function Facets({ aggregations, activeFilters, onFilterChange, lo
         activeFilters={activeFilters}
         onFilterChange={onFilterChange}
       />
-      {visibleAggregations.map(agg => (
-        <FacetGroup
-          key={agg.field}
-          aggregation={agg}
-          active={activeFilters[agg.field]}
-          onChange={(val) => onFilterChange(agg.field, val)}
-          onLoadMore={onLoadMore}
-        />
-      ))}
+      {visibleAggregations.length === 0 ? (
+        /* Nothing left to render: either the API returned no aggregations (it returns
+           none at all for a zero-result query) or every one was dropped just above as
+           non-discriminant. Without this the sidebar is a bare "Filters" heading on an
+           empty card, which reads as a loading bug rather than an answer. The three
+           cases are genuinely different, and only one of them is actionable. */
+        <p className="facets-empty">
+          {resultCount === 0
+            ? (hasActiveFilters ? t('empty.filteredOut') : t('empty.noResults'))
+            : t('empty.notDiscriminant', { count: resultCount })}
+        </p>
+      ) : (
+        visibleAggregations.map(agg => (
+          <FacetGroup
+            key={agg.field}
+            aggregation={agg}
+            active={activeFilters[agg.field]}
+            onChange={(val) => onFilterChange(agg.field, val)}
+            onLoadMore={onLoadMore}
+          />
+        ))
+      )}
     </aside>
   );
 }
@@ -261,7 +284,6 @@ function FacetGroup({
         <div className="facet-swatches">
           {filteredOptions.map(opt => {
             const color = guessColor(opt.label);
-            const isMulti = color.includes('gradient');
             const isActive = Array.isArray(active) && active.includes(opt.value);
             return (
               <div

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useSearchBarRef } from '../contexts/SearchBarContext';
 import { useAutocomplete } from '../hooks/useSearch';
+import { useCmsAutocomplete, cmsPageUrl } from '../hooks/useCms';
 import SearchOverlay, {
   getSuggestionMatches, getCategoryMatches, getAutocompleteAttributes, attributeFilterUrl,
 } from './SearchOverlay';
@@ -19,9 +20,24 @@ export default function SearchBar({ categories, categoriesLoading }: SearchBarPr
   const [query, setQuery] = useState('');
   const [focused, setFocused] = useState(false);
   const { results, aggregations, loading, search, clear } = useAutocomplete();
+  const {
+    pages: cmsPages, loading: cmsLoading, search: cmsSearch, clear: cmsClear,
+  } = useCmsAutocomplete();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const searchBarRef = useSearchBarRef();
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
+
+  // One keystroke drives two independent requests (products and cms_page). They're
+  // always issued and cleared together, so every call site goes through this pair
+  // rather than remembering both hooks.
+  const runSearch = (q: string) => {
+    search(q);
+    cmsSearch(q);
+  };
+  const clearAll = () => {
+    clear();
+    cmsClear();
+  };
 
   // Flattened, in-visual-order list of every navigable item across the 3 columns,
   // so arrow keys can move through them as a single sequence.
@@ -47,8 +63,13 @@ export default function SearchBar({ categories, categoriesLoading }: SearchBarPr
     getCategoryMatches(query, categories).forEach(cat => {
       items.push({ key: `category-${cat.id}`, to: `/category/${cat.id}` });
     });
+    // Blog rows sit under the categories in the same column, so they close the
+    // sequence — the order here IS the visual order.
+    cmsPages.forEach(page => {
+      items.push({ key: `blog-${page.id}`, to: cmsPageUrl(page.id) });
+    });
     return items;
-  }, [query, results, aggregations, categories]);
+  }, [query, results, aggregations, categories, cmsPages]);
 
   useEffect(() => {
     setHighlightedIndex(-1);
@@ -75,18 +96,18 @@ export default function SearchBar({ categories, categoriesLoading }: SearchBarPr
     searchBarRef.current = {
       setQuery: (q: string) => {
         setQuery(q);
-        search(q);
+        runSearch(q);
       },
       submit: () => {
         if (query.trim()) {
           navigate(`/search?q=${encodeURIComponent(query.trim())}`);
-          clear();
+          clearAll();
           closeOverlay();
         }
       },
       clear: () => {
         setQuery('');
-        clear();
+        clearAll();
         closeOverlay();
       },
       inputRef,
@@ -97,7 +118,7 @@ export default function SearchBar({ categories, categoriesLoading }: SearchBarPr
     e.preventDefault();
     if (query.trim()) {
       navigate(`/search?q=${encodeURIComponent(query.trim())}`);
-      clear();
+      clearAll();
       closeOverlay();
     }
   };
@@ -105,7 +126,7 @@ export default function SearchBar({ categories, categoriesLoading }: SearchBarPr
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
     setQuery(val);
-    search(val);
+    runSearch(val);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -127,7 +148,7 @@ export default function SearchBar({ categories, categoriesLoading }: SearchBarPr
       if (item) {
         navigate(item.to);
         setQuery('');
-        clear();
+        clearAll();
         closeOverlay();
       }
     }
@@ -166,10 +187,12 @@ export default function SearchBar({ categories, categoriesLoading }: SearchBarPr
         resultsLoading={loading}
         categories={categories}
         categoriesLoading={categoriesLoading}
+        cmsPages={cmsPages}
+        cmsLoading={cmsLoading}
         highlightedKey={highlightedKey}
         navigate={navigate}
         setQuery={setQuery}
-        clear={clear}
+        clear={clearAll}
         close={closeOverlay}
       />
     </form>

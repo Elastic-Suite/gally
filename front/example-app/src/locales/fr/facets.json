@@ -13,5 +13,11 @@
   "chip": {
     "default": "{{label}} : {{value}}",
     "range": "{{label}} : {{gte}} – {{lte}}"
+  },
+  "empty": {
+    "noResults": "Aucun filtre à afficher — cette recherche n'a rien trouvé.",
+    "filteredOut": "Plus aucun filtre. Retirez-en un ci-dessus pour retrouver des résultats.",
+    "notDiscriminant_one": "Un seul résultat : il n'y a plus rien à filtrer.",
+    "notDiscriminant_other": "Les {{count}} résultats partagent les mêmes caractéristiques : il n'y a plus rien à filtrer."
   }
 }

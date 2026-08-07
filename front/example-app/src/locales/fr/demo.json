@@ -156,6 +156,8 @@
   },
   "trackingMeaning": {
     "categoryView": "Gally enregistre la visite de la catégorie \"{{categoryCode}}\" — permet d'analyser quelles catégories attirent le plus de trafic et d'optimiser le merchandising.",
+    "cmsDisplay": "Gally enregistre l'affichage de {{count}} articles avec leur position — cms_page est une entité indexée à part entière, le contenu éditorial génère donc les mêmes signaux comportementaux que les produits.",
+    "cmsPageView": "Gally enregistre la lecture de l'article « {{title}} » — l'engagement sur le contenu alimente les mêmes signaux comportementaux que les vues produit.",
     "productView": "Gally enregistre la consultation du produit \"{{sku}}\" — alimente le score de popularité et les recommandations personnalisées.",
     "search": "Gally enregistre la recherche \"{{query}}\" ({{count}} résultats) — améliore l'autocomplete, détecte les recherches sans résultat, et affine la pertinence.",
     "display": "Gally enregistre l'affichage de {{count}} produits avec leur position — mesure le taux d'impression et optimise le classement.",

@@ -11,6 +11,8 @@
     "noSuggestions": "Aucun terme de recherche correspondant",
     "noProducts": "Aucun produit correspondant",
     "noCategories": "Aucune catégorie correspondante",
+    "blogTitle": "📝 Blog",
+    "noBlog": "Aucun article correspondant",
     "suggestions": [
       "robe", "robe débardeur", "robe d'été", "robe fleurie", "jupe midi",
       "blouse", "veste", "pantalon", "chaussures", "accessoires"
@@ -18,6 +20,10 @@
   },
   "page": {
     "breadcrumb": "Accueil / Recherche",
+    "typeProducts": "Produits",
+    "typeBlog": "Articles",
+    "noBlogTitle": "Aucun article ne correspond à cette recherche",
+    "noBlogBody": "Rien n'a encore été écrit à ce sujet — essayez l'onglet Produits, ou parcourez le blog par thème.",
     "allProducts": "Tous les produits",
     "resultsFor": "Résultats pour « {{query}} »",
     "searching": "Recherche en cours…",
