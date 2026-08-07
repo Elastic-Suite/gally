@@ -15,7 +15,10 @@
       "priceDesc": "Prix ↓"
     },
     "emptyTitle": "Aucun produit trouvé",
-    "emptyBody": "Essayez d'ajuster vos filtres ou votre recherche."
+    "emptyBody": "Essayez d'ajuster vos filtres ou votre recherche.",
+    "meta": {
+      "description": "Découvrez notre sélection {{name}} : {{count}} produits disponibles."
+    }
   },
   "homepage": {
     "heroTitle": "La recherche intelligente pour l'e-commerce",

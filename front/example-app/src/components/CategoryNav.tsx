@@ -1,14 +1,18 @@
+'use client';
+
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useParams } from 'next/navigation';
+import Link from './LocaleLink';
 import { useCatalog } from '../contexts/CatalogContext';
 import { ICategoryNode } from '../sdk/catalogs';
 
-interface Props {
-  activeCode?: string;
-}
-
-export default function CategoryNav({ activeCode }: Props) {
+// No activeCode prop: this renders from app/[locale]/category/layout.tsx, whose segment
+// has no [code], and from the homepage, which has no active category at all. Reading the
+// route directly keeps it correct in both places without threading a prop through.
+export default function CategoryNav() {
   const { categories } = useCatalog();
+  const params = useParams();
+  const activeCode = Array.isArray(params.code) ? params.code[0] : params.code;
 
   if (categories.length === 0) return null;
 
@@ -30,7 +34,7 @@ function CategoryItem({ cat, activeCode }: { cat: ICategoryNode; activeCode?: st
   return (
     <li className="category-nav-item">
       <Link
-        to={`/category/${cat.id}`}
+        href={`/category/${cat.id}`}
         className={activeCode === cat.id ? 'active' : ''}
         onMouseEnter={() => hasChildren && setOpen(true)}
         onMouseLeave={() => hasChildren && setOpen(false)}
@@ -41,7 +45,7 @@ function CategoryItem({ cat, activeCode }: { cat: ICategoryNode; activeCode?: st
         <ul className="category-nav-submenu" onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
           {cat.children!.map(child => (
             <li key={child.id}>
-              <Link to={`/category/${child.id}`} className={activeCode === child.id ? 'active' : ''}>
+              <Link href={`/category/${child.id}`} className={activeCode === child.id ? 'active' : ''}>
                 {child.name} <span style={{ opacity: 0.5, fontSize: '0.8em' }}>({child.count})</span>
               </Link>
             </li>

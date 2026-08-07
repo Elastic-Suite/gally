@@ -1,9 +1,10 @@
-import { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import i18n from '../i18n';
 import { useCatalog } from '../contexts/CatalogContext';
 import { useCart } from '../contexts/CartContext';
+import { useAddedFlash } from '../hooks/useAddedFlash';
+import { useMounted } from '../hooks/useMounted';
 import { getProductFields } from './ProductCard';
 import { CmsPage, cmsPageUrl } from '../hooks/useCms';
 
@@ -104,7 +105,13 @@ export default function SearchOverlay({
   open, query, results, aggregations, resultsLoading, categories, categoriesLoading,
   cmsPages, cmsLoading, highlightedKey, navigate, setQuery, clear, close,
 }: SearchOverlayProps) {
-  if (!open) return null;
+  // createPortal targets document.body during render, which does not exist while
+  // the server pre-renders this component — even though it is a client component.
+  // Gate the portal on a real mount. Must sit above the `open` early return so the
+  // hook order stays stable.
+  const mounted = useMounted();
+
+  if (!open || !mounted) return null;
 
   const closeAndGo = (to: string) => {
     navigate(to);
@@ -277,15 +284,11 @@ function ProductsColumn({ results, loading, highlightedKey, onSelect }: {
   // The header (and its cart badge) is blurred and dimmed while the ACP is open,
   // so an add has to confirm itself in place: the card flashes green and the
   // button flips to "Added" for a moment before returning to its normal label.
-  const [addedSku, setAddedSku] = useState<string | null>(null);
-  const addedTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
-  useEffect(() => () => clearTimeout(addedTimer.current), []);
+  const { addedKey: addedSku, flash } = useAddedFlash();
 
   const handleAdd = (item: { sku: string; name: string; price: number; image: string }) => {
     addToCart({ ...item, childSku: item.sku });
-    setAddedSku(item.sku);
-    clearTimeout(addedTimer.current);
-    addedTimer.current = setTimeout(() => setAddedSku(null), 1600);
+    flash(item.sku);
   };
 
   return (

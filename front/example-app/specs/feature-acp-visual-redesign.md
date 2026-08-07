@@ -3,6 +3,11 @@
 ## Status: implemented
 ## Page/Component: src/components/SearchBar.tsx, src/components/SearchOverlay.tsx, src/styles.css
 
+> **Superseded on two values:** the scrim's tint and blur are now `rgba(30,27,75,.72)` /
+> `blur(28px)`, raised because this doc's own decision to strip the panel's background left the
+> scrim as the only ground the light text gets. See
+> `specs/feature-add-to-cart-feedback-everywhere.md`. Everything else here is current.
+
 ## Context
 Follow-up to `specs/feature-search-header-redesign.md`, which shipped the original overlay. This spec
 supersedes that doc's *exact visual values* (blur amount, panel background, grid column ratios, search bar

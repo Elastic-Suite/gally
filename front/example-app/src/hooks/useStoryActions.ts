@@ -1,5 +1,8 @@
+'use client';
+
 import { useEffect, useRef, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
+import { useLocaleHref } from '../contexts/LocaleContext';
 import { useTranslation } from 'react-i18next';
 import { useCatalog } from '../contexts/CatalogContext';
 import { useSearchBarRef } from '../contexts/SearchBarContext';
@@ -20,9 +23,20 @@ interface UseStoryActionsOptions {
  */
 export function useStoryActions({ step, active, minimized }: UseStoryActionsOptions) {
   const { t } = useTranslation('demo');
-  const navigate = useNavigate();
-  const navigateRef = useRef(navigate);
-  navigateRef.current = navigate;
+  const router = useRouter();
+  const routerRef = useRef(router);
+  routerRef.current = router;
+
+  // Every route in this app now lives under a locale segment, so the raw paths the
+  // scenario descriptors carry ('/cart', '/product/VD10') would 404 if pushed as-is.
+  // Held in a ref for the same reason the router is: these runners fire from timers and
+  // DOM-polling callbacks that outlive the render they were created in.
+  const localeHref = useLocaleHref();
+  const localeHrefRef = useRef(localeHref);
+  localeHrefRef.current = localeHref;
+  const pushLocale = useCallback((path: string) => {
+    routerRef.current.push(localeHrefRef.current(path));
+  }, []);
 
   const { categories } = useCatalog();
   const categoriesRef = useRef(categories);
@@ -73,7 +87,7 @@ export function useStoryActions({ step, active, minimized }: UseStoryActionsOpti
   // ── Action Runners ───────────────────────────────────────
 
   const runTypeAndSearch = useCallback((action: Extract<StepAction, { type: 'type_and_search' }>) => {
-    navigateRef.current(action.startRoute);
+    pushLocale(action.startRoute);
     const startTyping = setTimeout(() => {
       const handle = searchBarRef.current;
       if (!handle) return;
@@ -87,7 +101,7 @@ export function useStoryActions({ step, active, minimized }: UseStoryActionsOpti
           typingRef.current = setTimeout(type, 80 + Math.random() * 60);
         } else {
           actionTimerRef.current = setTimeout(() => {
-            navigateRef.current(`/search?q=${encodeURIComponent(action.query)}`);
+            pushLocale(`/search?q=${encodeURIComponent(action.query)}`);
             handle.clear();
           }, 800);
         }
@@ -104,7 +118,7 @@ export function useStoryActions({ step, active, minimized }: UseStoryActionsOpti
     action: Extract<StepAction, { type: 'highlight_sequence' }>,
     target: string,
   ) => {
-    navigateRef.current(resolveTarget(target));
+    pushLocale(resolveTarget(target));
     let attempts = 0;
     const tryHighlight = () => {
       const parent = document.querySelector(action.selector) as HTMLElement | null;
@@ -141,7 +155,7 @@ export function useStoryActions({ step, active, minimized }: UseStoryActionsOpti
     _action: Extract<StepAction, { type: 'add_to_cart_flow' }>,
     target: string,
   ) => {
-    navigateRef.current(resolveTarget(target));
+    pushLocale(resolveTarget(target));
     let attempts = 0;
     const tryFlow = () => {
       const firstCard = document.querySelector('.product-card') as HTMLElement | null;
@@ -152,7 +166,7 @@ export function useStoryActions({ step, active, minimized }: UseStoryActionsOpti
         return;
       }
       if (!firstCard || products.length === 0) {
-        navigateRef.current('/cart');
+        pushLocale('/cart');
         return;
       }
 
@@ -172,8 +186,8 @@ export function useStoryActions({ step, active, minimized }: UseStoryActionsOpti
 
       actionTimerRef.current = setTimeout(() => {
         firstCard.classList.remove('story-highlight');
-        if (!sku) { navigateRef.current('/cart'); return; }
-        navigateRef.current(`/product/${encodeURIComponent(sku)}`);
+        if (!sku) { pushLocale('/cart'); return; }
+        pushLocale(`/product/${encodeURIComponent(sku)}`);
 
         let pdpAttempts = 0;
         const tryAdd = () => {
@@ -183,7 +197,7 @@ export function useStoryActions({ step, active, minimized }: UseStoryActionsOpti
             actionTimerRef.current = setTimeout(tryAdd, 300);
             return;
           }
-          if (!btn) { navigateRef.current('/cart'); return; }
+          if (!btn) { pushLocale('/cart'); return; }
 
           btn.classList.add('story-highlight-btn');
           btn.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -192,7 +206,7 @@ export function useStoryActions({ step, active, minimized }: UseStoryActionsOpti
             btn.click();
             btn.classList.remove('story-highlight-btn');
             showToast(t('toast.addedToCart'));
-            actionTimerRef.current = setTimeout(() => navigateRef.current('/cart'), 1500);
+            actionTimerRef.current = setTimeout(() => pushLocale('/cart'), 1500);
           }, 1000);
         };
         tryAdd();
@@ -218,7 +232,7 @@ export function useStoryActions({ step, active, minimized }: UseStoryActionsOpti
         return runAddToCartFlow(action, target);
       case 'navigate_only':
       default:
-        navigateRef.current(resolveTarget(target));
+        pushLocale(resolveTarget(target));
         return;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

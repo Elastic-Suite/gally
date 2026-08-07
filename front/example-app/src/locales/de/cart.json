@@ -1,70 +1,70 @@
 {
   "empty": {
-    "title": "Your Cart",
-    "heading": "Your cart is empty",
-    "body": "Start shopping to add products.",
-    "browse": "Browse products"
+    "title": "Ihr Warenkorb",
+    "heading": "Ihr Warenkorb ist leer",
+    "body": "Stöbern Sie los, um Produkte hinzuzufügen.",
+    "browse": "Produkte entdecken"
   },
-  "title_one": "Your Cart ({{count}} item)",
-  "title_other": "Your Cart ({{count}} items)",
+  "title_one": "Ihr Warenkorb ({{count}} Artikel)",
+  "title_other": "Ihr Warenkorb ({{count}} Artikel)",
   "bundle": {
-    "heading": "🎁 Accessory Pack −{{discount}}%",
-    "save": "Save",
-    "totalLabel": "Pack total:",
-    "addButton": "Add pack",
+    "heading": "🎁 Accessoire-Set −{{discount}}%",
+    "save": "Sie sparen",
+    "totalLabel": "Set-Gesamtpreis:",
+    "addButton": "Set hinzufügen",
     "items": {
-      "clutch": "Matching clutch",
-      "belt": "Fabric belt",
-      "scarf": "Light scarf"
+      "clutch": "Passende Clutch",
+      "belt": "Stoffgürtel",
+      "scarf": "Leichter Schal"
     }
   },
   "shipping": {
-    "unlocked": "✓ Free shipping unlocked!",
-    "remainingPrefix": "Only",
-    "remainingSuffix": "left for free shipping",
-    "free": "Free"
+    "unlocked": "✓ Versandkostenfrei freigeschaltet!",
+    "remainingPrefix": "Nur noch",
+    "remainingSuffix": "bis zum kostenlosen Versand",
+    "free": "Kostenlos"
   },
   "summary": {
-    "subtotal": "Subtotal",
-    "frequentlyBoughtTogether": "Frequently bought together",
-    "shipping": "Shipping",
-    "total": "Total",
-    "checkout": "Checkout"
+    "subtotal": "Zwischensumme",
+    "frequentlyBoughtTogether": "Häufig zusammen gekauft",
+    "shipping": "Versand",
+    "total": "Gesamt",
+    "checkout": "Zur Kasse"
   },
   "fbt": {
     "items": {
-      "sandals": "Braided sandals",
-      "hat": "Straw hat",
-      "earrings": "Gold earrings"
+      "sandals": "Geflochtene Sandalen",
+      "hat": "Strohhut",
+      "earrings": "Goldene Ohrringe"
     },
-    "selectedTotal": "Selected total:",
-    "addToCart": "Add to cart"
+    "selectedTotal": "Auswahl gesamt:",
+    "addToCart": "In den Warenkorb"
   },
-  "recommendations": "Complete your look",
+  "recommendations": "Vervollständigen Sie Ihren Look",
   "checkout": {
     "steps": {
-      "cart": "Cart",
-      "shipping": "Shipping",
-      "payment": "Payment",
-      "confirmation": "Confirmation"
+      "cart": "Warenkorb",
+      "shipping": "Versand",
+      "payment": "Zahlung",
+      "confirmation": "Bestätigung"
     },
-    "shippingInfo": "Shipping Information",
+    "shippingInfo": "Versandinformationen",
     "placeholders": {
-      "firstName": "First Name",
-      "lastName": "Last Name",
-      "email": "Email",
-      "address": "Address",
-      "city": "City",
-      "zip": "ZIP Code",
-      "cardNumber": "Card Number",
-      "expiry": "MM/YY",
-      "cvc": "CVC"
+      "firstName": "Vorname",
+      "lastName": "Nachname",
+      "email": "E-Mail",
+      "address": "Adresse",
+      "city": "Stadt",
+      "zip": "PLZ",
+      "cardNumber": "Kartennummer",
+      "expiry": "MM/JJ",
+      "cvc": "Prüfziffer"
     },
-    "continueToPayment": "Continue to Payment →",
-    "payment": "Payment",
-    "totalToPay": "Total to Pay",
-    "placeOrder": "Place Order — {{amount}}",
-    "orderConfirmed": "Order Confirmed!",
-    "orderConfirmedBody": "Thank you for your order. A tracking event has been sent to Gally."
+    "continueToPayment": "Weiter zur Zahlung →",
+    "payment": "Zahlung",
+    "totalToPay": "Zu zahlender Betrag",
+    "placeOrder": "Kostenpflichtig bestellen — {{amount}}",
+    "orderConfirmed": "Bestellung bestätigt!",
+    "orderConfirmedBody": "Vielen Dank für Ihre Bestellung. Ein Tracking-Event wurde an Gally gesendet."
   }
 }

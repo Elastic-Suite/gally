@@ -1,167 +1,167 @@
 {
   "intro": {
-    "welcome": "Welcome to the Gally demo",
-    "presentationMode": "Presentation mode:",
-    "direction": "Direction",
+    "welcome": "Willkommen zur Gally-Demo",
+    "presentationMode": "Präsentationsmodus:",
+    "direction": "Geschäftsleitung",
     "marketing": "Marketing",
-    "hintDirection": "Streamlined view, focused on the journey & ROI",
-    "hintMarketing": "Full view with the live event tracker and vector preview",
-    "startGuided": "Start the guided tour →",
-    "exploreFreely": "Explore freely"
+    "hintDirection": "Reduzierte Ansicht, fokussiert auf Journey & ROI",
+    "hintMarketing": "Vollständige Ansicht mit Live-Event-Tracker und Vektor-Vorschau",
+    "startGuided": "Geführte Tour starten →",
+    "exploreFreely": "Frei erkunden"
   },
   "story": {
-    "resumePill": "📖 Resume the story",
-    "actLabel": "Act {{num}}",
-    "close": "Close",
-    "actTitle": "Act {{act}} — {{title}}",
-    "prev": "‹ Previous",
-    "next": "Next ›"
+    "resumePill": "📖 Story fortsetzen",
+    "actLabel": "Akt {{num}}",
+    "close": "Schließen",
+    "actTitle": "Akt {{act}} — {{title}}",
+    "prev": "‹ Zurück",
+    "next": "Weiter ›"
   },
   "closing": {
-    "title": "The Recap",
+    "title": "Das Fazit",
     "stats": {
-      "noResults": "\"No results\" pages",
-      "conversion": "Conversion rate",
-      "aov": "Average order value"
+      "noResults": "Seiten ohne Treffer",
+      "conversion": "Conversion-Rate",
+      "aov": "Durchschnittlicher Bestellwert"
     },
     "timeline": {
-      "heading": "📊 What Gally learned during the journey",
-      "intro": "Every one of Camille's interactions was captured. Here's how this data improves the experience for future visitors.",
+      "heading": "📊 Was Gally während der Journey gelernt hat",
+      "intro": "Jede einzelne Interaktion von Camille wurde erfasst. So verbessern diese Daten das Erlebnis für künftige Besucherinnen und Besucher.",
       "search": {
-        "eventPrefix": "Camille searches for",
-        "consequence": "→ Gally logs the query and result count. Popular terms rise in autocomplete. Zero-result queries are flagged to enrich the catalog."
+        "eventPrefix": "Camille sucht nach",
+        "consequence": "→ Gally protokolliert die Suchanfrage und die Trefferzahl. Beliebte Begriffe steigen in der Autovervollständigung auf. Anfragen ohne Treffer werden markiert, um den Katalog anzureichern."
       },
       "display": {
-        "event": "{{count}} products displayed with their position",
-        "consequence": "→ Gally measures each product's impression rate. Products seen but never clicked are flagged to adjust their ranking."
+        "event": "{{count}} Produkte mit ihrer Position eingeblendet",
+        "consequence": "→ Gally misst die Impression-Rate jedes Produkts. Produkte, die gesehen, aber nie angeklickt werden, werden für eine Anpassung des Rankings markiert."
       },
       "viewCategory": {
-        "event": "Camille visits the Dresses category",
-        "consequence": "→ The \"category\" context is remembered for the session. Every following action is automatically attached to it."
+        "event": "Camille besucht die Kategorie „Kleider“",
+        "consequence": "→ Der Kontext „Kategorie“ wird für die Sitzung gemerkt. Jede folgende Aktion wird ihm automatisch zugeordnet."
       },
       "viewProduct": {
-        "event": "Camille views a product page",
-        "consequence": "→ The product's popularity score increases. Gally uses this signal to rank it higher in similar future searches."
+        "event": "Camille sieht sich eine Produktseite an",
+        "consequence": "→ Der Beliebtheitswert des Produkts steigt. Gally nutzt dieses Signal, um es bei ähnlichen Suchanfragen weiter oben zu platzieren."
       },
       "addToCart": {
-        "event": "Camille adds the product to her cart",
-        "consequence": "→ Strong conversion signal: the product gets boosted in results. Combined with VIEW:product, it feeds the \"Frequently viewed together\" recommendations."
+        "event": "Camille legt das Produkt in den Warenkorb",
+        "consequence": "→ Starkes Conversion-Signal: Das Produkt wird in den Ergebnissen hochgestuft. Zusammen mit VIEW:product speist es die Empfehlungen „Häufig zusammen angesehen“."
       },
       "order": {
-        "event": "Order placed",
-        "consequence": "→ Full loop: products bought together feed the \"Frequently bought together\" recommendations. Revenue per query lets relevance be optimized by generated revenue."
+        "event": "Bestellung aufgegeben",
+        "consequence": "→ Der Kreis schließt sich: Gemeinsam gekaufte Produkte speisen die Empfehlungen „Häufig zusammen gekauft“. Der Umsatz pro Suchanfrage erlaubt es, die Relevanz nach erzieltem Umsatz zu optimieren."
       },
       "summary": {
-        "eventTypes": "6 event types",
-        "eventTypesSuffix": "captured automatically",
-        "popularityScore": "Popularity score",
-        "popularityScoreSuffix": "recalculated continuously",
-        "recommendations": "Recommendations",
-        "recommendationsSuffix": "enriched every session",
-        "relevance": "Relevance",
-        "relevanceSuffix": "optimized by real behavior"
+        "eventTypes": "6 Event-Typen",
+        "eventTypesSuffix": "automatisch erfasst",
+        "popularityScore": "Beliebtheitswert",
+        "popularityScoreSuffix": "laufend neu berechnet",
+        "recommendations": "Empfehlungen",
+        "recommendationsSuffix": "mit jeder Sitzung angereichert",
+        "relevance": "Relevanz",
+        "relevanceSuffix": "durch echtes Verhalten optimiert"
       }
     },
-    "market": "The market",
+    "market": "Der Markt",
     "delay": {
-      "heading": "⏱ Time to launch",
-      "marketValue": "6 to 12 months",
-      "gallyValue": "A few days",
-      "ctaBudget": "What about the budget? →"
+      "heading": "⏱ Zeit bis zum Livegang",
+      "marketValue": "6 bis 12 Monate",
+      "gallyValue": "Wenige Tage",
+      "ctaBudget": "Und das Budget? →"
     },
     "cost": {
-      "heading": "💰 First-year cost",
-      "marketValue": "€80,000 — €100,000",
-      "gallyValue": "From ~€12,000",
-      "gallyNote": "Flat fee, not indexed on catalog size or query volume",
-      "ctaPricing": "See our plans →"
+      "heading": "💰 Kosten im ersten Jahr",
+      "marketValue": "80.000 € — 100.000 €",
+      "gallyValue": "Ab ca. 12.000 €",
+      "gallyNote": "Pauschalpreis, unabhängig von Katalogumfang und Anfragevolumen",
+      "ctaPricing": "Unsere Pakete ansehen →"
     },
     "pricing": {
-      "heading": "📋 Our offers",
-      "popular": "Popular",
+      "heading": "📋 Unsere Angebote",
+      "popular": "Beliebt",
       "business": "Business",
-      "businessPrice": "€999",
-      "perMonth": "/month",
+      "businessPrice": "999 €",
+      "perMonth": "/Monat",
       "businessFeatures": [
-        "Intelligent search", "Advanced facets", "Vector search",
-        "Visual merchandising", "Recommendations", "Priority support"
+        "Intelligente Suche", "Erweiterte Facetten", "Vektorsuche",
+        "Visuelles Merchandising", "Empfehlungen", "Priorisierter Support"
       ],
-      "talkToSales": "Talk to sales",
+      "talkToSales": "Vertrieb kontaktieren",
       "enterprise": "Enterprise",
-      "enterprisePrice": "Custom quote",
+      "enterprisePrice": "Individuelles Angebot",
       "enterpriseFeatures": [
-        "Everything in Business +", "Unlimited multi-store", "Dedicated SLA",
-        "Custom integration", "Account manager"
+        "Alles aus Business +", "Unbegrenzte Multi-Shop-Fähigkeit", "Dediziertes SLA",
+        "Individuelle Integration", "Persönliche Betreuung"
       ]
     },
-    "disclaimer": "Order-of-magnitude figures observed on comparable e-commerce search projects — excluding internal costs. To be refined based on the prospect's context."
+    "disclaimer": "Größenordnungen aus vergleichbaren E-Commerce-Suchprojekten — ohne interne Kosten. Im Einzelfall zu präzisieren."
   },
   "insights": {
     "toggle": "📊 Gally Insights",
-    "heading": "📊 What Gally knows",
-    "summary": "{{count}} events captured",
-    "empty": "Browse the site to see Gally learn from your interactions.",
+    "heading": "📊 Was Gally weiß",
+    "summary": "{{count}} Events erfasst",
+    "empty": "Stöbern Sie durch die Website und sehen Sie, wie Gally aus Ihren Interaktionen lernt.",
     "sections": {
       "search": {
-        "title_one": "{{count}} search",
-        "title_other": "{{count}} searches",
-        "consequence": "Popular terms rise in autocomplete. Zero-result queries are flagged."
+        "title_one": "{{count}} Suche",
+        "title_other": "{{count}} Suchen",
+        "consequence": "Beliebte Begriffe steigen in der Autovervollständigung auf. Anfragen ohne Treffer werden markiert."
       },
       "category": {
-        "title_one": "{{count}} category visited",
-        "title_other": "{{count}} categories visited",
-        "consequence": "The category context is remembered. Following actions are automatically attached to it."
+        "title_one": "{{count}} Kategorie besucht",
+        "title_other": "{{count}} Kategorien besucht",
+        "consequence": "Der Kategoriekontext wird gemerkt. Folgende Aktionen werden ihm automatisch zugeordnet."
       },
       "display": {
-        "title_one": "{{count}} product impression",
-        "title_other": "{{count}} product impressions",
-        "consequence": "Gally measures the impression rate and optimizes the ranking of under-viewed products."
+        "title_one": "{{count}} Produkt-Impression",
+        "title_other": "{{count}} Produkt-Impressionen",
+        "consequence": "Gally misst die Impression-Rate und optimiert das Ranking selten betrachteter Produkte."
       },
       "product": {
-        "title_one": "{{count}} product page viewed",
-        "title_other": "{{count}} product pages viewed",
-        "consequence": "The popularity score increases. These products will rank better in future searches."
+        "title_one": "{{count}} Produktseite angesehen",
+        "title_other": "{{count}} Produktseiten angesehen",
+        "consequence": "Der Beliebtheitswert steigt. Diese Produkte werden in künftigen Suchen besser platziert."
       },
       "cart": {
-        "title_one": "{{count}} item added to cart",
-        "title_other": "{{count}} items added to cart",
-        "consequence": "Strong conversion signal: these products are boosted in results and feed the recommendations."
+        "title_one": "{{count}} Artikel in den Warenkorb gelegt",
+        "title_other": "{{count}} Artikel in den Warenkorb gelegt",
+        "consequence": "Starkes Conversion-Signal: Diese Produkte werden in den Ergebnissen hochgestuft und speisen die Empfehlungen."
       },
       "order": {
-        "title_one": "{{count}} order",
-        "title_other": "{{count}} orders",
-        "consequence": "Full loop: feeds the \"Frequently bought together\" recommendations and revenue optimization."
+        "title_one": "{{count}} Bestellung",
+        "title_other": "{{count}} Bestellungen",
+        "consequence": "Der Kreis schließt sich: speist die Empfehlungen „Häufig zusammen gekauft“ und die Umsatzoptimierung."
       }
     }
   },
   "explain": {
-    "toggle": "🧠 Explain",
-    "analyzing": "Analyzing...",
-    "explainFailed": "Explain failed",
-    "headerPrefix": "🧠 Explain —",
-    "category": "Category",
+    "toggle": "🧠 Erklären",
+    "analyzing": "Wird analysiert...",
+    "explainFailed": "Erklärung fehlgeschlagen",
+    "headerPrefix": "🧠 Erklärung —",
+    "category": "Kategorie",
     "boostPrefix": "🚀 Boost ×",
-    "modePrefix": "mode:",
-    "fieldMatches": "📐 Field matches",
-    "legend": "📖 Legend"
+    "modePrefix": "Modus:",
+    "fieldMatches": "📐 Feldtreffer",
+    "legend": "📖 Legende"
   },
   "eventLog": {
     "toggleShow": "📊 Events ({{count}})",
-    "close": "✕ Close",
-    "title": "🔴 Tracking Events (live)",
-    "empty": "No events yet…"
+    "close": "✕ Schließen",
+    "title": "🔴 Tracking-Events (live)",
+    "empty": "Noch keine Events…"
   },
   "toast": {
-    "addedToCart": "✓ Product added to cart"
+    "addedToCart": "✓ Produkt in den Warenkorb gelegt"
   },
   "trackingMeaning": {
-    "categoryView": "Gally logs the visit to category \"{{categoryCode}}\" — helps analyze which categories draw the most traffic and optimize merchandising.",
-    "cmsDisplay": "Gally logs the impression of {{count}} articles with their position — cms_page is a first-class indexed entity, so editorial content earns the same behavioural signals as products.",
-    "cmsPageView": "Gally logs the article view for “{{title}}” — content engagement feeds the same behavioural signals as product views.",
-    "productView": "Gally logs the product view for \"{{sku}}\" — feeds the popularity score and personalized recommendations.",
-    "search": "Gally logs the search \"{{query}}\" ({{count}} results) — improves autocomplete, detects zero-result searches, and refines relevance.",
-    "display": "Gally logs the display of {{count}} products with their position — measures impression rate and optimizes ranking.",
-    "addToCart": "Gally logs the cart addition of \"{{sku}}\" (×{{qty}}) — strong conversion signal used to boost this product in results.",
-    "order": "Gally logs order #{{orderId}} ({{total}}€, {{count}} item(s)) — completes the loop: products bought together feed the \"Frequently bought together\" recommendations."
+    "categoryView": "Gally protokolliert den Besuch der Kategorie „{{categoryCode}}“ — hilft zu analysieren, welche Kategorien den meisten Traffic bringen, und das Merchandising zu optimieren.",
+    "cmsDisplay": "Gally protokolliert die Impression von {{count}} Artikeln mit ihrer Position — cms_page ist eine vollwertige indexierte Entität, redaktionelle Inhalte liefern also dieselben Verhaltenssignale wie Produkte.",
+    "cmsPageView": "Gally protokolliert die Artikelansicht für „{{title}}“ — Content-Engagement speist dieselben Verhaltenssignale wie Produktansichten.",
+    "productView": "Gally protokolliert die Produktansicht für „{{sku}}“ — speist den Beliebtheitswert und personalisierte Empfehlungen.",
+    "search": "Gally protokolliert die Suche „{{query}}“ ({{count}} Treffer) — verbessert die Autovervollständigung, erkennt Suchen ohne Treffer und verfeinert die Relevanz.",
+    "display": "Gally protokolliert die Einblendung von {{count}} Produkten mit ihrer Position — misst die Impression-Rate und optimiert das Ranking.",
+    "addToCart": "Gally protokolliert das Hinzufügen von „{{sku}}“ (×{{qty}}) zum Warenkorb — starkes Conversion-Signal, mit dem dieses Produkt in den Ergebnissen hochgestuft wird.",
+    "order": "Gally protokolliert Bestellung #{{orderId}} ({{total}} €, {{count}} Artikel) — schließt den Kreis: Gemeinsam gekaufte Produkte speisen die Empfehlungen „Häufig zusammen gekauft“."
   }
 }

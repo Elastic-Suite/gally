@@ -1,43 +1,43 @@
 {
   "bar": {
-    "placeholder": "Search products..."
+    "placeholder": "Produkte suchen..."
   },
   "overlay": {
-    "suggestionsTitle": "🔍 Popular search terms",
-    "productsTitle": "Products",
-    "categoryTitle": "📁 Category",
-    "promptTitle": "Start typing to find your next favorite look",
-    "promptSubtitle": "Products, categories and trending searches appear as you type — two letters are all it takes to get started.",
-    "noSuggestions": "No matching search terms",
-    "noProducts": "No matching products",
-    "noCategories": "No matching categories",
+    "suggestionsTitle": "🔍 Beliebte Suchbegriffe",
+    "productsTitle": "Produkte",
+    "categoryTitle": "📁 Kategorie",
+    "promptTitle": "Tippen Sie los und finden Sie Ihren nächsten Lieblingslook",
+    "promptSubtitle": "Produkte, Kategorien und Trendsuchen erscheinen beim Tippen — zwei Buchstaben genügen für den Anfang.",
+    "noSuggestions": "Keine passenden Suchbegriffe",
+    "noProducts": "Keine passenden Produkte",
+    "noCategories": "Keine passenden Kategorien",
     "blogTitle": "📝 Blog",
-    "noBlog": "No matching articles",
+    "noBlog": "Keine passenden Artikel",
     "suggestions": [
-      "dress", "tank dress", "summer dress", "floral dress", "midi skirt",
-      "blouse", "jacket", "pants", "shoes", "accessories"
+      "Kleid", "Trägerkleid", "Sommerkleid", "Blumenkleid", "Midirock",
+      "Bluse", "Jacke", "Hose", "Schuhe", "Accessoires"
     ]
   },
   "page": {
-    "breadcrumb": "Home / Search",
-    "typeProducts": "Products",
-    "typeBlog": "Articles",
-    "noBlogTitle": "No article matches this search",
-    "noBlogBody": "Nothing has been written about this yet — try the Products tab, or browse the blog by topic.",
-    "allProducts": "All Products",
-    "resultsFor": "Results for \"{{query}}\"",
-    "searching": "Searching…",
-    "resultCount_one": "{{count}} result",
-    "resultCount_other": "{{count}} results",
+    "breadcrumb": "Startseite / Suche",
+    "typeProducts": "Produkte",
+    "typeBlog": "Artikel",
+    "noBlogTitle": "Kein Artikel passt zu dieser Suche",
+    "noBlogBody": "Dazu wurde noch nichts geschrieben — versuchen Sie den Reiter „Produkte“ oder stöbern Sie im Blog nach Thema.",
+    "allProducts": "Alle Produkte",
+    "resultsFor": "Ergebnisse für „{{query}}“",
+    "searching": "Wird gesucht…",
+    "resultCount_one": "{{count}} Ergebnis",
+    "resultCount_other": "{{count}} Ergebnisse",
     "sort": {
-      "relevance": "Relevance",
+      "relevance": "Relevanz",
       "nameAsc": "Name A→Z",
-      "priceAsc": "Price: Low to High",
-      "priceDesc": "Price: High to Low"
+      "priceAsc": "Preis: aufsteigend",
+      "priceDesc": "Preis: absteigend"
     },
-    "emptyTitle": "No results found",
-    "emptyBody": "Try a different search term or adjust your filters.",
-    "prev": "‹ Prev",
-    "next": "Next ›"
+    "emptyTitle": "Keine Ergebnisse gefunden",
+    "emptyBody": "Versuchen Sie einen anderen Suchbegriff oder passen Sie Ihre Filter an.",
+    "prev": "‹ Zurück",
+    "next": "Weiter ›"
   }
 }

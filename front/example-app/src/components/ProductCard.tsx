@@ -1,39 +1,31 @@
-import { Link } from 'react-router-dom';
+'use client';
+
+import Link from './LocaleLink';
 import { useTranslation } from 'react-i18next';
 import { useCatalog } from '../contexts/CatalogContext';
 import { useCart } from '../contexts/CartContext';
-import { MEDIA_BASE_URL } from '../sdk';
+import { useAddedFlash } from '../hooks/useAddedFlash';
+import { getProductFields } from '../sdk/productFields';
 
 interface Props {
   product: any;
 }
 
-function getProductFields(product: any) {
-  // Products from search API come with a `source` wrapper
-  const s = product.source || product;
-  const name = Array.isArray(s.name) ? s.name[0] : s.name || 'Product';
-  const sku = s.sku || product.sku || 'unknown';
-  const image = s.image ? `${MEDIA_BASE_URL}${s.image}` : '';
-  const price = s.price?.[0]?.price ?? 0;
-  const originalPrice = s.price?.[0]?.original_price ?? s.price?.[0]?.originalPrice;
-  const isDiscounted = s.price?.[0]?.is_discounted ?? s.price?.[0]?.isDiscounted ?? false;
-  const isNew = s.new || s.is_new || false;
-  const typeId = s.type_id || 'simple';
-  const description = Array.isArray(s.description) ? s.description[0] : s.description || '';
-  const stock = s.stock || { status: true, qty: 0 };
-  return { name, sku, image, price, originalPrice, isDiscounted, isNew, typeId, description, stock };
-}
 
 export default function ProductCard({ product }: Props) {
   const { t } = useTranslation('product');
   const { formatPrice } = useCatalog();
   const { addToCart } = useCart();
+  // Same in-place confirmation the autocomplete uses — the cart badge is up in
+  // the header, too far from a card in a long grid to be noticed.
+  const { addedKey, flash } = useAddedFlash();
 
   const { name, sku, image, price, originalPrice, isDiscounted, isNew, stock } = getProductFields(product);
+  const justAdded = addedKey === sku;
 
   return (
-    <div className="product-card">
-      <Link to={`/product/${encodeURIComponent(sku)}`}>
+    <div className={`product-card ${justAdded ? 'just-added' : ''}`}>
+      <Link href={`/product/${encodeURIComponent(sku)}`}>
         <div className="product-card-image">
           {isNew && <span className="product-card-badge">{t('card.new')}</span>}
           {!stock.status && <span className="product-card-badge" style={{ background: 'var(--gray-500)' }}>{t('card.outOfStock')}</span>}
@@ -45,7 +37,7 @@ export default function ProductCard({ product }: Props) {
         </div>
       </Link>
       <div className="product-card-body">
-        <Link to={`/product/${encodeURIComponent(sku)}`}>
+        <Link href={`/product/${encodeURIComponent(sku)}`}>
           <div className="product-card-name">{name}</div>
         </Link>
         <div className="product-card-price">
@@ -60,11 +52,18 @@ export default function ProductCard({ product }: Props) {
         </div>
         <div className="product-card-actions">
           <button
-            className="btn btn-primary btn-sm"
-            onClick={() => addToCart({ sku, name, price, childSku: sku, image })}
+            className={`btn btn-primary btn-sm ${justAdded ? 'added' : ''}`}
+            onClick={() => {
+              addToCart({ sku, name, price, childSku: sku, image });
+              flash(sku);
+            }}
             disabled={!stock.status}
           >
-            {stock.status ? t('card.addToCart') : t('card.unavailable')}
+            {!stock.status
+              ? t('card.unavailable')
+              : justAdded
+                ? t('card.added')
+                : t('card.addToCart')}
           </button>
         </div>
       </div>
