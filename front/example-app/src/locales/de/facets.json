@@ -1,23 +1,23 @@
 {
-  "title": "Filters",
-  "clearAll": "Clear all",
-  "loading": "Loading…",
-  "showMore": "+ Show more",
-  "showMoreCount": "+ Show more ({{count}})",
-  "showLess": "− Show less",
-  "yes": "Yes",
-  "searchPlaceholder": "Search {{label}}…",
+  "title": "Filter",
+  "clearAll": "Alle zurücksetzen",
+  "loading": "Wird geladen…",
+  "showMore": "+ Mehr anzeigen",
+  "showMoreCount": "+ Mehr anzeigen ({{count}})",
+  "showLess": "− Weniger anzeigen",
+  "yes": "Ja",
+  "searchPlaceholder": "{{label}} durchsuchen…",
   "swatchTitle": "{{label}} ({{count}})",
-  "min": "Min: {{value}}",
-  "max": "Max: {{value}}",
+  "min": "Min.: {{value}}",
+  "max": "Max.: {{value}}",
   "chip": {
     "default": "{{label}}: {{value}}",
     "range": "{{label}}: {{gte}}–{{lte}}"
   },
   "empty": {
-    "noResults": "No filters to show — nothing matched this search.",
-    "filteredOut": "No filters left. Remove one above to bring results back.",
-    "notDiscriminant_one": "Only one result, so there is nothing left to filter.",
-    "notDiscriminant_other": "All {{count}} results share the same characteristics, so there is nothing left to filter."
+    "noResults": "Keine Filter verfügbar — diese Suche lieferte keine Treffer.",
+    "filteredOut": "Keine Filter mehr übrig. Entfernen Sie oben einen, um wieder Treffer zu erhalten.",
+    "notDiscriminant_one": "Nur ein Treffer — es gibt nichts mehr zu filtern.",
+    "notDiscriminant_other": "Alle {{count}} Treffer haben dieselben Eigenschaften — es gibt nichts mehr zu filtern."
   }
 }

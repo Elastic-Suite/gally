@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { FacetsSkeletonBody } from './skeletons';
 
 interface FacetOption {
   label: string;
@@ -83,55 +84,51 @@ export default function Facets({ aggregations, activeFilters, onFilterChange, lo
   // Skeleton whenever a request is in flight and there is nothing to draw. Keyed on
   // visibleAggregations, not raw `aggregations`: a reload whose stale aggregations all
   // turn out non-discriminant would otherwise fall through and flash the "no filters"
-  // message mid-request. Returning early here is also what guarantees that message
-  // only ever renders on a settled result.
-  if (loading && visibleAggregations.length === 0) {
-    return (
-      <aside className={`facets-sidebar ${open ? 'open' : ''}`}>
-        <h3 style={{ fontFamily: 'var(--font-sans)', fontSize: '1rem', marginBottom: '1rem' }}>{t('title')}</h3>
-        {Array.from({ length: 4 }).map((_, i) => (
-          <div key={i} className="facet-group">
-            <div className="skeleton skeleton-text" style={{ width: '100px', height: '12px', marginBottom: '0.75rem' }} />
-            {Array.from({ length: 4 }).map((_, j) => (
-              <div key={j} className="skeleton skeleton-text" style={{ width: `${60 + Math.random() * 30}%`, height: '14px', marginBottom: '0.5rem' }} />
-            ))}
-          </div>
-        ))}
-      </aside>
-    );
-  }
+  // message mid-request. This flag is also what guarantees that message only ever
+  // renders on a settled result.
+  const showSkeleton = loading && visibleAggregations.length === 0;
 
   const hasActiveFilters = Object.values(activeFilters).some(v => v !== undefined);
 
   return (
+    // The <aside> and its heading are rendered unconditionally: the sidebar's shell —
+    // its box, shadow, padding and sticky offset — does not depend on the results, so
+    // returning a different <aside> while loading made the whole container unmount and
+    // remount on every filter change. Only the rows below swap now.
     <aside className={`facets-sidebar ${open ? 'open' : ''}`}>
       <h3 style={{ fontFamily: 'var(--font-sans)', fontSize: '1rem', marginBottom: '1rem' }}>{t('title')}</h3>
-      <ActiveFilterChips
-        aggregations={visibleAggregations}
-        activeFilters={activeFilters}
-        onFilterChange={onFilterChange}
-      />
-      {visibleAggregations.length === 0 ? (
-        /* Nothing left to render: either the API returned no aggregations (it returns
-           none at all for a zero-result query) or every one was dropped just above as
-           non-discriminant. Without this the sidebar is a bare "Filters" heading on an
-           empty card, which reads as a loading bug rather than an answer. The three
-           cases are genuinely different, and only one of them is actionable. */
-        <p className="facets-empty">
-          {resultCount === 0
-            ? (hasActiveFilters ? t('empty.filteredOut') : t('empty.noResults'))
-            : t('empty.notDiscriminant', { count: resultCount })}
-        </p>
+      {showSkeleton ? (
+        <FacetsSkeletonBody />
       ) : (
-        visibleAggregations.map(agg => (
-          <FacetGroup
-            key={agg.field}
-            aggregation={agg}
-            active={activeFilters[agg.field]}
-            onChange={(val) => onFilterChange(agg.field, val)}
-            onLoadMore={onLoadMore}
-          />
-        ))
+        <>
+        <ActiveFilterChips
+          aggregations={visibleAggregations}
+          activeFilters={activeFilters}
+          onFilterChange={onFilterChange}
+        />
+        {visibleAggregations.length === 0 ? (
+          /* Nothing left to render: either the API returned no aggregations (it returns
+             none at all for a zero-result query) or every one was dropped just above as
+             non-discriminant. Without this the sidebar is a bare "Filters" heading on an
+             empty card, which reads as a loading bug rather than an answer. The three
+             cases are genuinely different, and only one of them is actionable. */
+          <p className="facets-empty">
+            {resultCount === 0
+              ? (hasActiveFilters ? t('empty.filteredOut') : t('empty.noResults'))
+              : t('empty.notDiscriminant', { count: resultCount })}
+          </p>
+        ) : (
+          visibleAggregations.map(agg => (
+            <FacetGroup
+              key={agg.field}
+              aggregation={agg}
+              active={activeFilters[agg.field]}
+              onChange={(val) => onFilterChange(agg.field, val)}
+              onLoadMore={onLoadMore}
+            />
+          ))
+        )}
+        </>
       )}
     </aside>
   );

@@ -1,30 +1,30 @@
 {
-  "breadcrumbPrefix": "Home / Pages / {{title}}",
+  "breadcrumbPrefix": "Startseite / Seiten / {{title}}",
   "about": {
-    "title": "About ElasticSuite",
+    "title": "Über ElasticSuite",
     "content": [
-      "ElasticSuite is the leading open-source searchandising solution for e-commerce, powering hundreds of online stores worldwide.",
-      "Built on cutting-edge AI and Elasticsearch technology, our platform delivers intelligent search, dynamic faceting, and personalized product recommendations that drive conversion.",
-      "From small boutiques to enterprise retailers, ElasticSuite adapts to your catalog and your customers' behavior, continuously learning and optimizing to deliver the best possible shopping experience.",
-      "Our latest innovation, Gally, brings vector search capabilities that understand semantic meaning — so when a customer searches for \"summer dress\", they find exactly what they're looking for, even if the product title says \"floral midi skirt\"."
+      "ElasticSuite ist die führende Open-Source-Searchandising-Lösung für den E-Commerce und treibt hunderte Onlineshops weltweit an.",
+      "Aufgebaut auf modernster KI- und Elasticsearch-Technologie liefert unsere Plattform intelligente Suche, dynamische Facettierung und personalisierte Produktempfehlungen, die die Conversion steigern.",
+      "Von der kleinen Boutique bis zum Großhändler passt sich ElasticSuite Ihrem Katalog und dem Verhalten Ihrer Kundschaft an — es lernt und optimiert kontinuierlich, um das bestmögliche Einkaufserlebnis zu bieten.",
+      "Unsere jüngste Innovation Gally bringt Vektorsuche mit semantischem Verständnis: Wer nach „Sommerkleid“ sucht, findet genau das Richtige — auch wenn das Produkt „geblümter Midirock“ heißt."
     ]
   },
   "shippingReturns": {
-    "title": "Shipping & Returns",
+    "title": "Versand & Rückgabe",
     "content": [
-      "We offer free standard shipping on all orders over €50. Express delivery is available at checkout.",
-      "Standard shipping: 3-5 business days. Express: 1-2 business days.",
-      "Returns are accepted within 30 days of delivery. Items must be unused and in original packaging.",
-      "To initiate a return, please contact our customer service team or use the returns portal in your account dashboard."
+      "Ab einem Bestellwert von 50 € liefern wir standardmäßig versandkostenfrei. Expressversand ist an der Kasse wählbar.",
+      "Standardversand: 3–5 Werktage. Express: 1–2 Werktage.",
+      "Rückgaben sind innerhalb von 30 Tagen nach Lieferung möglich. Die Artikel müssen ungetragen und originalverpackt sein.",
+      "Um eine Rückgabe zu starten, wenden Sie sich an unseren Kundenservice oder nutzen Sie das Retourenportal in Ihrem Kundenkonto."
     ]
   },
   "faq": {
-    "title": "Frequently Asked Questions",
+    "title": "Häufig gestellte Fragen",
     "content": [
-      "How does ElasticSuite improve search? — Our AI analyzes customer behavior patterns to surface the most relevant results, reducing \"no results\" pages by up to 40%.",
-      "What is vector search? — Vector search uses AI embeddings to understand the meaning behind search queries, not just keyword matching. This enables semantic search that understands intent.",
-      "Can I customize facets? — Yes! ElasticSuite supports slider facets for prices, swatches for colors, boolean toggles, and hierarchical category trees — all configurable per catalog.",
-      "How does event tracking work? — The SDK automatically tracks page views, searches, product views, add-to-cart events, and orders to optimize search relevance over time."
+      "Wie verbessert ElasticSuite die Suche? — Unsere KI analysiert das Verhalten der Kundschaft und hebt die relevantesten Ergebnisse hervor. Das reduziert Seiten ohne Treffer um bis zu 40 %.",
+      "Was ist Vektorsuche? — Die Vektorsuche nutzt KI-Embeddings, um die Bedeutung hinter einer Suchanfrage zu verstehen, statt nur Stichwörter abzugleichen. So wird eine semantische Suche möglich, die die Absicht erfasst.",
+      "Kann ich Facetten anpassen? — Ja! ElasticSuite unterstützt Slider-Facetten für Preise, Farbfelder, Ja/Nein-Schalter und hierarchische Kategoriebäume — alles pro Katalog konfigurierbar.",
+      "Wie funktioniert das Event-Tracking? — Das SDK erfasst automatisch Seitenaufrufe, Suchanfragen, Produktansichten, Warenkorb-Ereignisse und Bestellungen, um die Suchrelevanz mit der Zeit zu optimieren."
     ]
   }
 }
