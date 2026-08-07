@@ -110,6 +110,7 @@ export default function CategoryPage() {
           onFilterChange={handleFilterChange}
           loading={loading}
           onLoadMore={viewMoreOptions}
+          resultCount={total}
         />
 
         <div>

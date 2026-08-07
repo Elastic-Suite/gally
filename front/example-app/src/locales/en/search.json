@@ -11,6 +11,8 @@
     "noSuggestions": "No matching search terms",
     "noProducts": "No matching products",
     "noCategories": "No matching categories",
+    "blogTitle": "📝 Blog",
+    "noBlog": "No matching articles",
     "suggestions": [
       "dress", "tank dress", "summer dress", "floral dress", "midi skirt",
       "blouse", "jacket", "pants", "shoes", "accessories"
@@ -18,6 +20,10 @@
   },
   "page": {
     "breadcrumb": "Home / Search",
+    "typeProducts": "Products",
+    "typeBlog": "Articles",
+    "noBlogTitle": "No article matches this search",
+    "noBlogBody": "Nothing has been written about this yet — try the Products tab, or browse the blog by topic.",
     "allProducts": "All Products",
     "resultsFor": "Results for \"{{query}}\"",
     "searching": "Searching…",

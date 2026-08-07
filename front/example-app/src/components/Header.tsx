@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useCatalog } from '../contexts/CatalogContext';
 import { useCart } from '../contexts/CartContext';
+import brandLogo from '../assets/elasticsuite-solutions.svg';
 import SearchBar from './SearchBar';
 
 export default function Header() {
@@ -38,20 +39,22 @@ export default function Header() {
     <div className="header-sticky-group" ref={groupRef}>
       <header className="header">
         <div className="header-inner">
-          <Link to="/" className="header-logo">
-            Elastic<span>Suite</span>
+          {/* The official ElasticSuite Solutions lockup carries the wordmark itself, so
+              there is no text here — the accessible name lives on the link. */}
+          <Link to="/" className="header-logo" aria-label={t('brand.ariaLabel')}>
+            <img src={brandLogo} alt="" className="header-logo-img" />
           </Link>
 
+          {/* No Home item — the brand lockup above is the link to `/`. */}
           <nav className="header-nav">
-            <Link to="/" className={isActive('/')}>{t('nav.home')}</Link>
             <Link
               to={firstCategory ? `/category/${firstCategory.id}` : '/'}
               className={location.pathname.startsWith('/category') ? 'active' : ''}
             >
-              {t('nav.categories')}
+              {t('nav.products')}
             </Link>
             <Link to="/explain" className={`expert-only ${isActive('/explain')}`}>{t('nav.searchIntelligence')}</Link>
-            <Link to="/cms/about" className={location.pathname.startsWith('/cms') ? 'active' : ''}>{t('nav.cms')}</Link>
+            <Link to="/blog" className={location.pathname.startsWith('/blog') ? 'active' : ''}>{t('nav.cms')}</Link>
           </nav>
 
           <div className="context-selectors">

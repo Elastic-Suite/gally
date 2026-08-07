@@ -8,6 +8,7 @@ import productEn from '../locales/en/product.json';
 import categoryEn from '../locales/en/category.json';
 import cartEn from '../locales/en/cart.json';
 import cmsEn from '../locales/en/cms.json';
+import blogEn from '../locales/en/blog.json';
 import demoEn from '../locales/en/demo.json';
 import scenariosEn from '../locales/en/scenarios.json';
 
@@ -18,6 +19,7 @@ import productFr from '../locales/fr/product.json';
 import categoryFr from '../locales/fr/category.json';
 import cartFr from '../locales/fr/cart.json';
 import cmsFr from '../locales/fr/cms.json';
+import blogFr from '../locales/fr/blog.json';
 import demoFr from '../locales/fr/demo.json';
 import scenariosFr from '../locales/fr/scenarios.json';
 
@@ -28,27 +30,28 @@ import productDe from '../locales/de/product.json';
 import categoryDe from '../locales/de/category.json';
 import cartDe from '../locales/de/cart.json';
 import cmsDe from '../locales/de/cms.json';
+import blogDe from '../locales/de/blog.json';
 import demoDe from '../locales/de/demo.json';
 import scenariosDe from '../locales/de/scenarios.json';
 
 i18n.use(initReactI18next).init({
   fallbackLng: 'en',
   defaultNS: 'common',
-  ns: ['common', 'search', 'facets', 'product', 'category', 'cart', 'cms', 'demo', 'scenarios'],
+  ns: ['common', 'search', 'facets', 'product', 'category', 'cart', 'cms', 'blog', 'demo', 'scenarios'],
   debug: process.env.NODE_ENV === 'development',
   interpolation: { escapeValue: false },
   resources: {
     en: {
       common: commonEn, search: searchEn, facets: facetsEn, product: productEn,
-      category: categoryEn, cart: cartEn, cms: cmsEn, demo: demoEn, scenarios: scenariosEn,
+      category: categoryEn, cart: cartEn, cms: cmsEn, blog: blogEn, demo: demoEn, scenarios: scenariosEn,
     },
     fr: {
       common: commonFr, search: searchFr, facets: facetsFr, product: productFr,
-      category: categoryFr, cart: cartFr, cms: cmsFr, demo: demoFr, scenarios: scenariosFr,
+      category: categoryFr, cart: cartFr, cms: cmsFr, blog: blogFr, demo: demoFr, scenarios: scenariosFr,
     },
     de: {
       common: commonDe, search: searchDe, facets: facetsDe, product: productDe,
-      category: categoryDe, cart: cartDe, cms: cmsDe, demo: demoDe, scenarios: scenariosDe,
+      category: categoryDe, cart: cartDe, cms: cmsDe, blog: blogDe, demo: demoDe, scenarios: scenariosDe,
     },
   },
 });

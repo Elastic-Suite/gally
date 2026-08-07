@@ -1,0 +1,19 @@
+{
+  "breadcrumb": "Accueil / Blog",
+  "title": "Blog",
+  "intro": "Guides de style, dossiers matières et conseils d'entretien — tous indexés dans Gally en documents cms_page, cherchables et facettables comme le catalogue.",
+  "count_one": "{{count}} article",
+  "count_other": "{{count}} articles",
+  "readingTime_one": "{{count}} min de lecture",
+  "readingTime_other": "{{count}} min de lecture",
+  "browse": {
+    "type": "Type",
+    "topic": "Thème",
+    "all": "Tous"
+  },
+  "emptyTitle": "Aucun article ne correspond à ces filtres",
+  "emptyBody": "Essayez un autre thème, ou retirez le filtre de type pour tout afficher.",
+  "notFoundTitle": "Article introuvable",
+  "notFoundBody": "Cet article a peut-être été dépublié ou réindexé sous un autre identifiant.",
+  "backToList": "← Retour au blog"
+}

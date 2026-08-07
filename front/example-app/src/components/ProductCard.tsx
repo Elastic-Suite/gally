@@ -60,7 +60,7 @@ export default function ProductCard({ product }: Props) {
         </div>
         <div className="product-card-actions">
           <button
-            className="btn btn-coral btn-sm"
+            className="btn btn-primary btn-sm"
             onClick={() => addToCart({ sku, name, price, childSku: sku, image })}
             disabled={!stock.status}
           >

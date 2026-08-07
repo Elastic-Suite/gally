@@ -1,13 +1,15 @@
 {
+  "brand": {
+    "ariaLabel": "ElasticSuite Solutions — go to homepage"
+  },
   "footer": {
     "poweredBy": "Powered by",
     "tagline": "Gally SDK Features Demo"
   },
   "nav": {
-    "home": "Home",
-    "categories": "Categories",
+    "products": "Products",
     "searchIntelligence": "Search Intelligence",
-    "cms": "CMS"
+    "cms": "Blog"
   },
   "cart": {
     "link": "Cart"

@@ -42,7 +42,12 @@ export function useSearch(options: SearchOptions) {
     currentPage: 1,
     pageCount: 0,
     aggregations: [],
-    loading: false,
+    // `true`, not `false`: a search is always kicked off on mount, and until the
+    // catalog context resolves `doSearch` early-returns without touching this. Starting
+    // at `false` advertised "settled, zero results" before anything had been requested,
+    // which made empty states (the facet sidebar's, the results list's) flash first.
+    // Matches useCms, which already starts loading.
+    loading: true,
     error: null,
   });
 
