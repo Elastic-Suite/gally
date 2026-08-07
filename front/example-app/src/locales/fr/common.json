@@ -16,5 +16,13 @@
   },
   "actions": {
     "filters": "Filtres"
+  },
+  "meta": {
+    "search": "Recherche",
+    "cart": "Panier",
+    "checkout": "Commande",
+    "explain": "Intelligence de recherche",
+    "closing": "Synthèse",
+    "home": "Accueil"
   }
 }

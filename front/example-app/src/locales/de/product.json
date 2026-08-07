@@ -1,25 +1,25 @@
 {
   "card": {
-    "new": "New",
-    "outOfStock": "Out of Stock",
-    "addToCart": "Add to cart",
-    "unavailable": "Unavailable",
-    "added": "✓ Added"
+    "new": "Neu",
+    "outOfStock": "Nicht auf Lager",
+    "addToCart": "In den Warenkorb",
+    "unavailable": "Nicht verfügbar",
+    "added": "✓ Hinzugefügt"
   },
   "page": {
     "type": {
-      "configurable": "Configurable",
-      "simple": "Simple"
+      "configurable": "Konfigurierbar",
+      "simple": "Einfach"
     },
-    "sku": "SKU: {{sku}}",
+    "sku": "Artikelnummer: {{sku}}",
     "material": "Material:",
-    "color": "Color",
-    "inStock": "✓ In Stock ({{count}} available)",
-    "outOfStockLong": "✕ Out of Stock",
-    "addToCart": "Add to Cart",
-    "wishlist": "♡ Wishlist",
-    "notFound": "Product not found",
-    "recommendations": "You May Also Like",
-    "breadcrumb": "Home / Products / {{name}}"
+    "color": "Farbe",
+    "inStock": "✓ Auf Lager ({{count}} verfügbar)",
+    "outOfStockLong": "✕ Nicht auf Lager",
+    "addToCart": "In den Warenkorb",
+    "wishlist": "♡ Merkliste",
+    "notFound": "Produkt nicht gefunden",
+    "recommendations": "Das könnte Ihnen auch gefallen",
+    "breadcrumb": "Startseite / Produkte / {{name}}"
   }
 }

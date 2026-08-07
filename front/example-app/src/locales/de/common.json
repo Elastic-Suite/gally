@@ -1,20 +1,28 @@
 {
   "brand": {
-    "ariaLabel": "ElasticSuite Solutions — go to homepage"
+    "ariaLabel": "ElasticSuite Solutions — zur Startseite"
   },
   "footer": {
-    "poweredBy": "Powered by",
-    "tagline": "Gally SDK Features Demo"
+    "poweredBy": "Betrieben mit",
+    "tagline": "Funktionsdemo des Gally SDK"
   },
   "nav": {
-    "products": "Products",
-    "searchIntelligence": "Search Intelligence",
+    "products": "Produkte",
+    "searchIntelligence": "Such-Intelligenz",
     "cms": "Blog"
   },
   "cart": {
-    "link": "Cart"
+    "link": "Warenkorb"
   },
   "actions": {
-    "filters": "Filters"
+    "filters": "Filter"
+  },
+  "meta": {
+    "search": "Suche",
+    "cart": "Warenkorb",
+    "checkout": "Kasse",
+    "explain": "Such-Intelligenz",
+    "closing": "Zusammenfassung",
+    "home": "Startseite"
   }
 }

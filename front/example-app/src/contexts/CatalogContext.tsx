@@ -1,6 +1,8 @@
-import { createContext, useContext, useState, useCallback, useEffect, ReactNode } from 'react';
+'use client';
+
+import { createContext, useContext, useCallback, ReactNode } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 import {
-    fetchCatalogs, fetchCategoryTree,
     ICatalog, ILocalizedCatalog, ICategoryNode, LANGUAGES, DEFAULT_LANGUAGE,
 } from '../sdk/catalogs';
 
@@ -18,59 +20,51 @@ interface ICatalogContextType {
 
 const CatalogContext = createContext<ICatalogContextType | null>(null);
 
-export function CatalogProvider({ children }: { children: ReactNode }) {
-  const [catalogs, setCatalogs] = useState<ICatalog[]>([]);
-  const [selectedCatalog, setSelectedCatalog] = useState<ICatalog | null>(null);
-  const [selectedLocalizedCatalog, setSelectedLocalizedCatalog] = useState<ILocalizedCatalog | null>(null);
-  const [categories, setCategories] = useState<ICategoryNode[]>([]);
-  const [loadingCatalogs, setLoadingCatalogs] = useState(true);
+// Phase 2 inverted this provider. It used to OWN the selection: mount with nothing,
+// fetch the catalog list in a useEffect, pick a default, hold it in useState. Now the
+// URL owns it — app/[locale]/layout.tsx resolves the segment on the server and passes
+// the answer down, and selecting a catalog is a navigation.
+//
+// Nothing here is held in useState on purpose. Next reuses this layout instance across
+// locale changes, so seeded state would silently go stale the moment you switched
+// catalog. Deriving straight from props keeps the URL and the UI incapable of
+// disagreeing.
+export function CatalogProvider({
+  catalogs,
+  selectedCatalog,
+  selectedLocalizedCatalog,
+  categories,
+  children,
+}: {
+  catalogs: ICatalog[];
+  selectedCatalog: ICatalog;
+  selectedLocalizedCatalog: ILocalizedCatalog;
+  categories: ICategoryNode[];
+  children: ReactNode;
+}) {
+  const router = useRouter();
+  const pathname = usePathname();
 
-  // Fetch catalogs on mount
-  useEffect(() => {
-    fetchCatalogs()
-      .then(cats => {
-        setCatalogs(cats);
-        if (cats.length > 0) {
-          const first = cats[0];
-          setSelectedCatalog(first);
-          const defaultLC = first.localizedCatalogs.find(lc => lc.isDefault) || first.localizedCatalogs[0];
-          if (defaultLC) setSelectedLocalizedCatalog(defaultLC);
-        }
-      })
-      .catch(err => console.error('Failed to fetch catalogs:', err))
-      .finally(() => setLoadingCatalogs(false));
-  }, []);
+  // Swap the locale segment while staying on the same page, so switching catalog from a
+  // product page keeps you on that product rather than dumping you on the homepage.
+  const goToLocalizedCatalog = useCallback((code: string) => {
+    const segments = pathname.split('/');
+    segments[1] = code;
+    router.push(segments.join('/') || '/');
+  }, [pathname, router]);
 
-  // Fetch category tree when localized catalog changes
-  useEffect(() => {
-    if (selectedCatalog && selectedLocalizedCatalog) {
-      fetchCategoryTree(selectedCatalog.id, selectedLocalizedCatalog.id)
-        .then(setCategories)
-        .catch(err => console.error('Failed to fetch categories:', err));
-    }
-  }, [selectedCatalog, selectedLocalizedCatalog]);
+  const setLocalizedCatalog = goToLocalizedCatalog;
 
   const setCatalog = useCallback((code: string) => {
     const cat = catalogs.find(c => c.code === code);
-    if (cat) {
-      setSelectedCatalog(cat);
-      const defaultLC = cat.localizedCatalogs.find(lc => lc.isDefault) || cat.localizedCatalogs[0];
-      if (defaultLC) setSelectedLocalizedCatalog(defaultLC);
-    }
-  }, [catalogs]);
+    if (!cat) return;
+    const defaultLC = cat.localizedCatalogs.find(lc => lc.isDefault) || cat.localizedCatalogs[0];
+    if (defaultLC) goToLocalizedCatalog(defaultLC.code);
+  }, [catalogs, goToLocalizedCatalog]);
 
-  const setLocalizedCatalog = useCallback((code: string) => {
-    const allLC = catalogs.flatMap(c => c.localizedCatalogs);
-    const lc = allLC.find(l => l.code === code);
-    if (lc) setSelectedLocalizedCatalog(lc);
-  }, [catalogs]);
-
-  const activeLanguage = selectedLocalizedCatalog
-    ? LANGUAGES[selectedLocalizedCatalog.locale] || DEFAULT_LANGUAGE
-    : DEFAULT_LANGUAGE;
+  const activeLanguage = LANGUAGES[selectedLocalizedCatalog.locale] || DEFAULT_LANGUAGE;
 
   const formatPrice = useCallback((amount: number) => {
-    if (!selectedLocalizedCatalog) return `€${amount.toFixed(2)}`;
     return new Intl.NumberFormat(selectedLocalizedCatalog.locale.replace('_', '-'), {
       style: 'currency',
       currency: selectedLocalizedCatalog.currency,
@@ -87,7 +81,10 @@ export function CatalogProvider({ children }: { children: ReactNode }) {
       formatPrice,
       activeLanguage,
       categories,
-      loadingCatalogs,
+      // The catalog list is resolved before render now, so consumers that used this to
+      // show a spinner simply never see a loading state. Kept so their call sites and
+      // their empty-state branches stay untouched.
+      loadingCatalogs: false,
     }}>
       {children}
     </CatalogContext.Provider>
