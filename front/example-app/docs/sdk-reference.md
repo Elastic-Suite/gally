@@ -25,6 +25,53 @@ These facts were found the hard way. Never "simplify" them away.
 - `TrackingEventType` — `VIEW`, `DISPLAY`, `SEARCH`, `ADD_TO_CART`, `ORDER`
 - `Client` + `Configuration` — low-level HTTP/GraphQL client for direct API calls.
 
+## Non-product entities (`cms_page` — the blog)
+`SearchManager` is not product-only. Any `metadata` other than `'product'` is routed by
+the SDK to the generic `documents(entityType: ...)` GraphQL query (`graphql/Request.ts:getEndpoint()`).
+`cms_page` is the entity the Blog section runs on (57 documents per locale: 50 blog
+posts + 7 legacy buying guides). Everything below differs from the product path:
+
+- **No `requestType`.** `getRequestType()` returns `undefined` for non-product entities and
+  the variable is stripped. `documents` doesn't take a product request type at all.
+- **⚠️ `selectedFields` never reaches the query, but it is NOT ignored — it projects the
+  result.** The SDK hardcodes the GraphQL selection to `id data` for non-product entities,
+  so the server always returns the whole document; `Response` then filters `data._source`
+  down to exactly the keys you listed (`graphql/Response.ts`). List **raw `_source`
+  attribute names** (`content_heading`, `published_at`, `content_type`, …) — not GraphQL
+  field syntax, not the camelCase names of your own view model. Any key you omit is
+  silently dropped from every document; any key you list that isn't in `_source` is just
+  absent. An empty array still drops the whole `collection` block from the query — zero
+  documents, pagination only. Same trap as products.
+- **`isAutocomplete` is required by the TS option type** and inert here (it only ever feeds
+  `requestType`). Pass `false`.
+- **⚠️ Documents come back flattened, not wrapped.** After that projection
+  `getCollection()` returns plain `{ <source attr>: value }` objects — the
+  `{ id, data: { _id, _score, _source } }` envelope of the raw GraphQL response does
+  **not** survive, so `_id` and `_score` are unreachable and there is no `source` wrapper
+  like products have. Read the document id from the indexed `id` attribute (include `id`
+  in `selectedFields`); the collection item's GraphQL `id` was the IRI
+  (`/api/documents/18`) anyway, not the id.
+- **⚠️ Filters use a different input type.** Products take `{ field: { eq: v } }`;
+  `documents` takes `FieldFilterInput`, which names the field *inside* the filter:
+  `{ equalFilter: { field: 'topic__value', eq: 'materials' } }`. Also available:
+  `matchFilter`, `rangeFilter`, `boolFilter`, `existFilter`.
+- **⚠️ Not every field is filterable.** `url_key` is keyword-analyzed text with no `untouched`
+  sub-field, so filtering on it 500s with *"Unable to identify the field property to use for
+  filtering on \"url_key\", possible invalid mapping"*. `id` **is** filterable
+  (`equalFilter` on `id`) — that's why `/blog/:id` keys off the id, not the slug.
+- Sort variable shape differs (`{ field, direction }` vs the product `{ [field]: direction }`),
+  but `sortField`/`sortDirection` are the same SDK options — the Request builds the right one.
+- Select fields aggregate under a `__value` suffix: `content_type__value`, `topic__value`,
+  `author__value`, `tags__value`. A facet **excludes its own active filter** from its own
+  aggregation (picking a content type keeps both content types listed) while narrowing the
+  others — so browse chips can be rendered straight from the response.
+- **⚠️ Source-field changes need a cache flush, not just a reindex.** The filterable-field list
+  is cached per entity (`MetadataSourceFieldProviderCache`). After loading new source fields,
+  `bin/console cache:pool:clear --all` — from the host, `make sf c="cache:pool:clear --all"`.
+  Otherwise the new facets silently never appear in `aggregations`, even though the documents
+  and mapping are correct.
+- CMS `image` values are product media paths → prefix with `MEDIA_BASE_URL`, like a product image.
+
 ## Product Data Shape (from search `source`)
 Products are wrapped: `{ id, source: { ... } }`. Key source fields:
 - `sku` (string), `name` (string[]), `image` (string path like `/v/a/file.jpg` — prefix with `MEDIA_BASE_URL`)
