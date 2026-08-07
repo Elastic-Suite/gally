@@ -17,3 +17,14 @@
 
 ## MUST NOT change
 - Existing behaviour/props/tracking that must stay intact during refactor.
+- The most valuable section: it is what stops a later refactor undoing this one.
+
+---
+
+Write the spec **as part of the change**, not afterwards — it is how the next session knows why
+the code looks the way it does. Tick `- [x]` only for behaviour actually verified, and say so
+plainly when something could not be checked.
+
+For a **bugfix** (`bugfix-<name>.md`), add a `## Problem` section above the checklist and record
+the **root cause**, not just the fix — the wrong belief, not only the wrong line.
+`bugfix-cms-selected-fields-projection.md` is the reference shape.

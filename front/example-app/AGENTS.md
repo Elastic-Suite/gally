@@ -6,25 +6,38 @@ applyTo: '**'
 
 React 19 + TypeScript + CRA 5 + react-router-dom v6 showcase for `@elastic-suite/gally-sdk`.
 
-## Read before you code
-- SDK / API facts & gotchas → `docs/sdk-reference.md` (authoritative, do NOT contradict)
-- Visual rules → `docs/design-system.md`
-- The feature you're touching → `specs/feature-*.md`
+## Authoritative docs
+
+Single source of truth — read the relevant one before you code, and don't restate them here or
+anywhere else; duplicated rules drift.
+
+- `docs/sdk-reference.md` — SDK/API facts and gotchas. **Wins over every other file, this one included.**
+- `docs/design-system.md` — tokens, palette, typography, component patterns.
+- `specs/feature-*.md` / `specs/bugfix-*.md` — the feature you're touching.
+- `docs/architecture.md` — code map (regenerate-able, lower trust).
 
 ## Golden rules
-1. NEVER edit a component's props without checking all call sites in `src/pages` and `src/components`.
-2. The SDK gotchas in `docs/sdk-reference.md` were found the hard way. Never "simplify" them away.
-3. Reuse existing components in `src/components`. Do not create new visual primitives.
-4. Every page view / search / product view / add-to-cart / order MUST stay tracked via the SDK (see `docs/sdk-reference.md`).
-5. If a change touches >3 files or alters shared UI/`styles.css`, STOP and post a plan first.
 
-## Graphic stability (critical — one 58KB styles.css)
-- Colors, spacing, fonts come ONLY from the CSS variables in `docs/design-system.md`.
-- NEVER hardcode hex colors, px values, or font sizes in components or new CSS.
-- Palette is fixed: indigo deep `#1a1a2e` + coral accent `#ff6b6b`. Changing it requires an approved spec.
+1. Never change a component's props without checking **every** call site in `src/pages` and `src/components`.
+2. The gotchas in `docs/sdk-reference.md` were found the hard way — never "simplify" them away.
+3. Reuse the primitives in `src/components`. Reaching for a second card or chip idiom is the signal to stop.
+4. Page view / search / product view / add-to-cart / order **must stay tracked** via the SDK. Dropping a tracking call is a regression even if the UI is identical.
+5. A new user-visible string needs all three locales (`src/locales/{en,fr,de}/`) — a missing key renders as the raw key. Language follows the catalog selector, so check a non-English one.
+6. More than 3 files, or shared UI, or `src/styles.css` → **stop and post a plan before editing**.
+7. Every non-trivial change gets a spec in `specs/`, written as part of the change (`specs/_template.md`).
 
 ## Definition of done
-- Verify inside the Docker stack, never `npm run build` on the host (node_modules/package resolution only match inside the `example` container). Either:
-  - Tail the dev server the stack already runs: `make logs s=example` (or `docker compose logs -f example`) after saving, and confirm CRA's webpack-dev-server reports `webpack compiled successfully` with no new errors/warnings — this proves HMR picked up the change; or
-  - Run a real build inside the container: `docker compose exec example yarn build` (or `make sh s=example` then `npm run build`).
-- Tracking preserved, no new hardcoded style values, no new UI primitives.
+
+Verify **inside the Docker stack** — never `npm run build` on the host, package resolution only
+works in the `example` container:
+
+```bash
+make logs s=example                       # confirm `webpack compiled successfully`
+docker compose exec example yarn build    # or a real build in the container
+```
+
+No new errors or warnings · tracking preserved · no new hardcoded hex/px/font-size · no new visual
+primitive · call sites of any changed prop checked · facets still responsive.
+
+> Claude Code: the directory-scoped **`gally-storefront`** skill (`.claude/skills/gally-storefront/`,
+> beside this file) adds a task router and an SDK-trap shortlist. It defers to this file and `docs/`.
