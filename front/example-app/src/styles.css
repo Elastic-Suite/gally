@@ -265,9 +265,14 @@ a:hover {
   position: fixed;
   inset: 0;
   z-index: 90;
-  background: rgba(30, 27, 75, 0.55);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  /* The panel above owns no background of its own (see
+     specs/feature-acp-visual-redesign.md), so this is the only ground the
+     panel's light text ever gets — it has to hide the page behind it on its
+     own. Tuned up from .55/20px, which let busy category grids read through
+     the columns. */
+  background: rgba(30, 27, 75, 0.72);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -464,15 +469,15 @@ a:hover {
 }
 
 /* Add confirmation, ~1.6s: the card reuses the same green `addedFlash` glow the
-   story mode already plays on `.product-card`, and the button holds a success
-   state. The four-class selector (0,4,0) is deliberate — it has to beat
-   `.btn-primary:hover` (0,2,0), which is declared later in the file, so the
-   confirmation survives the pointer still resting on the button. */
+   story mode already plays on `.product-card`. The button's green comes from the
+   shared `.btn.added` rule; what stays here are the two overrides only the ACP
+   needs — the card-hover fade-in below rest opacity, and the button's own hover
+   scale, both of which would otherwise keep animating under the confirmation.
+   The four-class selector (0,4,0) is what beats them. */
 .autocomplete-item.autocomplete-product.just-added {
   animation: addedFlash 0.6s ease;
 }
 .autocomplete-item.autocomplete-product .autocomplete-add-to-cart.added {
-  background: var(--success);
   opacity: 1;
   transform: none;
 }
@@ -810,6 +815,16 @@ a:hover {
 .btn-lg {
   padding: 0.9rem 2rem;
   font-size: 1rem;
+}
+
+/* The ~1.6s add-to-cart confirmation (see src/hooks/useAddedFlash.ts), shared by
+   the autocomplete, the product grid and the product detail page. Position in
+   the file is load-bearing: at (0,2,0) it only ties with `.btn-primary:hover`
+   above, so it has to be declared *after* it — otherwise the confirmation
+   vanishes for as long as the pointer stays on the button you just clicked. */
+.btn.added {
+  background: var(--success);
+  color: white;
 }
 
 /* ─── Category Page Layout ───────────────────────────────── */
@@ -3109,6 +3124,14 @@ a:hover {
 }
 
 .product-card.story-added {
+  animation: addedFlash 0.6s ease;
+}
+
+/* Same glow, played by a real click instead of the guided story — see
+   src/components/ProductCard.tsx. Being an animation, it outranks the
+   `.product-card:hover` box-shadow for its whole duration, so the flash still
+   reads with the pointer resting on the card. */
+.product-card.just-added {
   animation: addedFlash 0.6s ease;
 }
 

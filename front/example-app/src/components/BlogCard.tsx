@@ -1,4 +1,6 @@
-import { Link } from 'react-router-dom';
+'use client';
+
+import Link from './LocaleLink';
 import { useTranslation } from 'react-i18next';
 import { CmsPage, cmsPageUrl, formatCmsDate } from '../hooks/useCms';
 
@@ -8,7 +10,7 @@ import { CmsPage, cmsPageUrl, formatCmsDate } from '../hooks/useCms';
 export default function BlogCard({ post, language }: { post: CmsPage; language: string }) {
   const { t } = useTranslation('blog');
   return (
-    <Link to={cmsPageUrl(post.id)} className="blog-card">
+    <Link href={cmsPageUrl(post.id)} className="blog-card">
       <div className="blog-card-image">
         {post.image
           ? <img src={post.image} alt={post.title} loading="lazy" />

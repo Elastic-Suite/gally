@@ -4,7 +4,30 @@ applyTo: '**'
 
 # Gally Example App — Agent Rules
 
-React 19 + TypeScript + CRA 5 + react-router-dom v6 showcase for `@elastic-suite/gally-sdk`.
+React 19 + TypeScript + **Next.js 16 App Router** showcase for `@elastic-suite/gally-sdk`.
+
+Routes live in `app/[locale]/**/page.tsx` as thin re-exports; the components they render live in
+`src/views/` (named `views`, not `pages`, because Next would claim `src/pages` as the Pages Router).
+`product/[sku]`, `blog/[id]` and `category/[code]` are **Server Components** that fetch, emit
+metadata and JSON-LD, and hand the data down as `initialData` — see
+`specs/feature-rsc-shells-phase3.md`. Everything else still renders client-side behind the
+`'use client'` boundary in `app/providers.tsx`. Phase history:
+`specs/feature-nextjs-migration-phase1.md`, `-phase2.md`, `-phase3.md`, plan in `specs/plan-ssr-seo.md`.
+
+**A Server Component cannot import from a module that imports React hooks** — it fails at request
+time, not at build. Data mappers shared by server shells and client hooks live in `src/sdk/`
+(`fields.ts`, `productFields.ts`, `cmsFields.ts`); never reach into `src/hooks/` or `src/components/`
+from `app/**`. Server fetchers in `src/sdk/server.ts` must mirror the matching hook's request shape
+exactly, or the server-rendered page and the hydrated one disagree.
+
+**The URL's first segment is the localized-catalog code** (`com_fr`, `com_en`, `fr_fr`, `fr_en`,
+`en_fr`, `en_en`) and it is resolved on the server in `app/[locale]/layout.tsx`. Two rules follow:
+- Link with `src/components/LocaleLink.tsx` (import it as `Link`), never `next/link` directly, and
+  use `useLocaleHref()` for `router.push`. A raw link drops the segment and resets the visitor to
+  the default catalog.
+- `src/sdk/index.ts` picks its base URI by environment. The browser uses `https://gally.localhost/api`;
+  Node uses `http://router/api`, because `gally.localhost` is 127.0.0.1 inside the container and a
+  server-side fetch to it dies with `ECONNREFUSED`.
 
 ## Authoritative docs
 
@@ -18,7 +41,7 @@ anywhere else; duplicated rules drift.
 
 ## Golden rules
 
-1. Never change a component's props without checking **every** call site in `src/pages` and `src/components`.
+1. Never change a component's props without checking **every** call site in `src/views` and `src/components`.
 2. The gotchas in `docs/sdk-reference.md` were found the hard way — never "simplify" them away.
 3. Reuse the primitives in `src/components`. Reaching for a second card or chip idiom is the signal to stop.
 4. Page view / search / product view / add-to-cart / order **must stay tracked** via the SDK. Dropping a tracking call is a regression even if the UI is identical.
@@ -32,9 +55,17 @@ Verify **inside the Docker stack** — never `npm run build` on the host, packag
 works in the `example` container:
 
 ```bash
-make logs s=example                       # confirm `webpack compiled successfully`
-docker compose exec example yarn build    # or a real build in the container
+make logs s=example                       # confirm `✓ Ready` / `✓ Compiled`, no ⨯ lines
+docker compose exec example sh -c "cd /usr/src/front/example-app && npx tsc --noEmit"
 ```
+
+`docker compose logs` prints UTC while `--since=<n>s` is computed against local time, so a short
+window can pull in log lines far older than it claims. Use `--timestamps` before believing an error
+is current — stale CRA webpack errors sat in that buffer for the whole migration.
+
+New-file rule: a client component reached from a route must carry `'use client'` **itself**. An
+`app/**/page.tsx` re-export does not pass client-ness down the import, and the failure is a 500 at
+request time, not a build error.
 
 No new errors or warnings · tracking preserved · no new hardcoded hex/px/font-size · no new visual
 primitive · call sites of any changed prop checked · facets still responsive.

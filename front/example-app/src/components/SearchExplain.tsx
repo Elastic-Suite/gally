@@ -1,5 +1,7 @@
+'use client';
+
 import { useState, useEffect, useRef } from 'react';
-import { useSearchParams, useLocation } from 'react-router-dom';
+import { useSearchParams, usePathname } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { useCatalog } from '../contexts/CatalogContext';
 
@@ -93,14 +95,14 @@ export default function SearchExplain() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const { selectedLocalizedCatalog } = useCatalog();
-  const [searchParams] = useSearchParams();
-  const location = useLocation();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
   const lastKeyRef = useRef('');
 
   const query = searchParams.get('q') || '';
-  const isSearchPage = location.pathname === '/search';
-  const isCategoryPage = location.pathname.startsWith('/category/');
-  const categoryCode = isCategoryPage ? location.pathname.split('/category/')[1] : '';
+  const isSearchPage = pathname === '/search';
+  const isCategoryPage = pathname.startsWith('/category/');
+  const categoryCode = isCategoryPage ? pathname.split('/category/')[1] : '';
 
   const contextLabel = isSearchPage ? `"${query}"` : categoryCode ? t('explain.category') : '';
 

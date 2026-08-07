@@ -1,6 +1,9 @@
+'use client';
+
 import React, { useState, useRef, useEffect, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
+import { useLocaleHref } from '../contexts/LocaleContext';
 import { useSearchBarRef } from '../contexts/SearchBarContext';
 import { useAutocomplete } from '../hooks/useSearch';
 import { useCmsAutocomplete, cmsPageUrl } from '../hooks/useCms';
@@ -16,7 +19,8 @@ interface SearchBarProps {
 
 export default function SearchBar({ categories, categoriesLoading }: SearchBarProps) {
   const { t } = useTranslation('search');
-  const navigate = useNavigate();
+  const router = useRouter();
+  const localeHref = useLocaleHref();
   const [query, setQuery] = useState('');
   const [focused, setFocused] = useState(false);
   const { results, aggregations, loading, search, clear } = useAutocomplete();
@@ -100,7 +104,7 @@ export default function SearchBar({ categories, categoriesLoading }: SearchBarPr
       },
       submit: () => {
         if (query.trim()) {
-          navigate(`/search?q=${encodeURIComponent(query.trim())}`);
+          router.push(localeHref(`/search?q=${encodeURIComponent(query.trim())}`));
           clearAll();
           closeOverlay();
         }
@@ -117,7 +121,7 @@ export default function SearchBar({ categories, categoriesLoading }: SearchBarPr
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (query.trim()) {
-      navigate(`/search?q=${encodeURIComponent(query.trim())}`);
+      router.push(localeHref(`/search?q=${encodeURIComponent(query.trim())}`));
       clearAll();
       closeOverlay();
     }
@@ -146,7 +150,7 @@ export default function SearchBar({ categories, categoriesLoading }: SearchBarPr
       e.preventDefault();
       const item = flatItems[highlightedIndex];
       if (item) {
-        navigate(item.to);
+        router.push(localeHref(item.to));
         setQuery('');
         clearAll();
         closeOverlay();
@@ -190,7 +194,7 @@ export default function SearchBar({ categories, categoriesLoading }: SearchBarPr
         cmsPages={cmsPages}
         cmsLoading={cmsLoading}
         highlightedKey={highlightedKey}
-        navigate={navigate}
+        navigate={(path: string) => router.push(localeHref(path))}
         setQuery={setQuery}
         clear={clearAll}
         close={closeOverlay}

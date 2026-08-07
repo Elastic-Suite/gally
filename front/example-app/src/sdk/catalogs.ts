@@ -36,6 +36,39 @@ export const LANGUAGES: Record<string, string> = {
 
 export const DEFAULT_LANGUAGE = 'en';
 
+// --- Locale-segment resolution (Phase 2) ---------------------------------------
+// The URL's first segment IS a localized-catalog code (`com_fr`, `en_en`, …), so one
+// segment identifies both the catalog and the language. These are plain functions over
+// an already-fetched catalog list, which keeps them usable from a server component and
+// from the client without a second round trip.
+
+export interface IResolvedCatalog {
+  catalog: ICatalog;
+  localizedCatalog: ILocalizedCatalog;
+}
+
+export function findLocalizedCatalog(
+  catalogs: ICatalog[],
+  code: string
+): IResolvedCatalog | null {
+  for (const catalog of catalogs) {
+    const localizedCatalog = catalog.localizedCatalogs.find(lc => lc.code === code);
+    if (localizedCatalog) return { catalog, localizedCatalog };
+  }
+  return null;
+}
+
+// Mirrors what CatalogContext used to pick on mount: the first catalog, then its
+// isDefault localized catalog (falling back to its first). Keeping the rule identical
+// means bare `/` lands where the SPA used to land.
+export function defaultLocalizedCatalog(catalogs: ICatalog[]): IResolvedCatalog | null {
+  const catalog = catalogs[0];
+  if (!catalog) return null;
+  const localizedCatalog =
+    catalog.localizedCatalogs.find(lc => lc.isDefault) || catalog.localizedCatalogs[0];
+  return localizedCatalog ? { catalog, localizedCatalog } : null;
+}
+
 export async function fetchCatalogs(): Promise<ICatalog[]> {
   const res = await fetch(`${BASE_URI}/catalogs`, {
     headers: { Accept: 'application/ld+json' },

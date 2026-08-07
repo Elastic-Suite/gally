@@ -1,19 +1,19 @@
 {
-  "breadcrumb": "Home / Blog",
+  "breadcrumb": "Startseite / Blog",
   "title": "Blog",
-  "intro": "Style guides, material deep-dives and care advice — all indexed in Gally as cms_page documents, searchable and facetable exactly like the catalog.",
-  "count_one": "{{count}} article",
-  "count_other": "{{count}} articles",
-  "readingTime_one": "{{count}} min read",
-  "readingTime_other": "{{count}} min read",
+  "intro": "Stilratgeber, Materialkunde und Pflegetipps — alle als cms_page-Dokumente in Gally indexiert, durchsuchbar und facettierbar genau wie der Katalog.",
+  "count_one": "{{count}} Artikel",
+  "count_other": "{{count}} Artikel",
+  "readingTime_one": "{{count}} Min. Lesezeit",
+  "readingTime_other": "{{count}} Min. Lesezeit",
   "browse": {
-    "type": "Type",
-    "topic": "Topic",
-    "all": "All"
+    "type": "Typ",
+    "topic": "Thema",
+    "all": "Alle"
   },
-  "emptyTitle": "No article matches those filters",
-  "emptyBody": "Try another topic, or clear the type filter to see everything.",
-  "notFoundTitle": "Article not found",
-  "notFoundBody": "This article may have been unpublished or reindexed under a different id.",
-  "backToList": "← Back to the blog"
+  "emptyTitle": "Kein Artikel passt zu diesen Filtern",
+  "emptyBody": "Versuchen Sie ein anderes Thema oder entfernen Sie den Typfilter, um alles zu sehen.",
+  "notFoundTitle": "Artikel nicht gefunden",
+  "notFoundBody": "Dieser Artikel wurde möglicherweise depubliziert oder unter einer anderen ID neu indexiert.",
+  "backToList": "← Zurück zum Blog"
 }

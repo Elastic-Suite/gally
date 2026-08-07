@@ -15,7 +15,10 @@
       "priceDesc": "Price ↓"
     },
     "emptyTitle": "No products found",
-    "emptyBody": "Try adjusting your filters or search term."
+    "emptyBody": "Try adjusting your filters or search term.",
+    "meta": {
+      "description": "Browse our {{name}} selection: {{count}} products available."
+    }
   },
   "homepage": {
     "heroTitle": "Intelligent Search for E-commerce",

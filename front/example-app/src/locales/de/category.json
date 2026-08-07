@@ -1,31 +1,34 @@
 {
   "category": {
-    "fallbackName": "Category",
-    "breadcrumb": "Home / Categories / {{name}}",
-    "countInCategory_one": "{{count}} product in this category",
-    "countInCategory_other": "{{count}} products in this category",
-    "count_one": "{{count}} product",
-    "count_other": "{{count}} products",
+    "fallbackName": "Kategorie",
+    "breadcrumb": "Startseite / Kategorien / {{name}}",
+    "countInCategory_one": "{{count}} Produkt in dieser Kategorie",
+    "countInCategory_other": "{{count}} Produkte in dieser Kategorie",
+    "count_one": "{{count}} Produkt",
+    "count_other": "{{count}} Produkte",
     "sort": {
-      "placeholder": "Sort by",
-      "relevance": "Relevance",
+      "placeholder": "Sortieren nach",
+      "relevance": "Relevanz",
       "nameAsc": "Name A-Z",
       "nameDesc": "Name Z-A",
-      "priceAsc": "Price ↑",
-      "priceDesc": "Price ↓"
+      "priceAsc": "Preis ↑",
+      "priceDesc": "Preis ↓"
     },
-    "emptyTitle": "No products found",
-    "emptyBody": "Try adjusting your filters or search term."
+    "emptyTitle": "Keine Produkte gefunden",
+    "emptyBody": "Passen Sie Ihre Filter oder Ihren Suchbegriff an.",
+    "meta": {
+      "description": "Entdecken Sie unsere {{name}}-Auswahl: {{count}} Produkte verfügbar."
+    }
   },
   "homepage": {
-    "heroTitle": "Intelligent Search for E-commerce",
-    "heroBody": "Discover how ElasticSuite powers product discovery with AI-driven search, faceted navigation, and real-time recommendations.",
-    "shopDresses": "Shop dresses",
-    "shopDressesQuery": "dress",
-    "trending": "Trending Now",
-    "moreProducts": "More Products",
-    "readyTitle": "Ready to transform your search experience?",
-    "readyBody": "Browse categories, test search facets, and see vector search in action.",
-    "tryVectorSearch": "Try Vector Search"
+    "heroTitle": "Intelligente Suche für den E-Commerce",
+    "heroBody": "Erleben Sie, wie ElasticSuite die Produktfindung antreibt — mit KI-gestützter Suche, Facettennavigation und Empfehlungen in Echtzeit.",
+    "shopDresses": "Kleider entdecken",
+    "shopDressesQuery": "Kleid",
+    "trending": "Gerade im Trend",
+    "moreProducts": "Weitere Produkte",
+    "readyTitle": "Bereit, Ihr Sucherlebnis zu verwandeln?",
+    "readyBody": "Stöbern Sie durch Kategorien, testen Sie Suchfacetten und sehen Sie die Vektorsuche in Aktion.",
+    "tryVectorSearch": "Vektorsuche ausprobieren"
   }
 }

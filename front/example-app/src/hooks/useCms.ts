@@ -1,92 +1,14 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { getSearchManager, MEDIA_BASE_URL } from '../sdk';
+import { getSearchManager } from '../sdk';
 import { useCatalog } from '../contexts/CatalogContext';
+import { CMS_FIELDS, CMS_METADATA } from '../sdk/fields';
+import { CmsPage, getCmsFields } from '../sdk/cmsFields';
 
-// The SDK routes any non-`product` metadata to the generic `documents(entityType:)`
-// query (see graphql/Request.ts:getEndpoint), so the whole cms_page section runs
-// through the same SearchManager as the catalog — no bespoke GraphQL here.
-const CMS_METADATA = 'cms_page';
+// Re-exported so the many existing importers of these names keep working unchanged.
+export type { CmsOption, CmsPage } from '../sdk/cmsFields';
+export { getCmsFields, cmsPageUrl, formatCmsDate } from '../sdk/cmsFields';
 
-// For non-product entities selectedFields never reaches the query — the SDK hardcodes
-// the selection to `id data` — but it is NOT ignored: Response projects `data._source`
-// down to exactly these keys client-side (graphql/Response.ts). So they must be raw
-// _source attribute names (`content_heading`, `published_at`, …), not the camelCase
-// names of CmsPage nor invented ones: any key not listed here is dropped, and any key
-// listed that the document doesn't have is simply absent.
-// It must also not be EMPTY, or the SDK drops the `collection` block from the query
-// and zero documents come back. Same trap as PRODUCT_FIELDS.
-const CMS_FIELDS = [
-  'id',
-  'title',
-  'content_heading',
-  'meta_description',
-  'content',
-  'url_key',
-  'image',
-  'content_type',
-  'topic',
-  'author',
-  'published_at',
-  'reading_time',
-  'is_featured',
-  'tags',
-];
 
-export interface CmsOption {
-  value: string;
-  label: string;
-}
-
-export interface CmsPage {
-  id: string;
-  title: string;
-  summary: string;
-  content: string;
-  urlKey: string;
-  image: string;
-  contentType: CmsOption | null;
-  topic: CmsOption | null;
-  author: CmsOption | null;
-  publishedAt: string;
-  readingTime: number | null;
-  isFeatured: boolean;
-  tags: CmsOption[];
-}
-
-// getCollection() hands back the _source already flattened and projected to CMS_FIELDS
-// — no { data: { _source } } envelope survives, and `_id`/`_score` are not reachable.
-// The document's own `id` attribute is indexed, so it comes through CMS_FIELDS instead.
-export function getCmsFields(doc: any): CmsPage {
-  const src = doc ?? {};
-  return {
-    id: String(src.id ?? ''),
-    title: src.title ?? '',
-    summary: src.content_heading ?? src.meta_description ?? '',
-    content: src.content ?? '',
-    urlKey: src.url_key ?? '',
-    // CMS illustrations are product media paths, so they need the same prefixing
-    // as a product image.
-    image: src.image ? `${MEDIA_BASE_URL}${src.image}` : '',
-    contentType: src.content_type ?? null,
-    topic: src.topic ?? null,
-    author: src.author ?? null,
-    publishedAt: src.published_at ?? '',
-    readingTime: src.reading_time ?? null,
-    isFeatured: !!src.is_featured,
-    tags: src.tags ?? [],
-  };
-}
-
-export const cmsPageUrl = (id: string) => `/blog/${encodeURIComponent(id)}`;
-
-export function formatCmsDate(value: string, language: string): string {
-  if (!value) return '';
-  // published_at comes back as "2026-08-05 15:14:01" — Safari won't parse that with a
-  // space, so normalize to ISO before handing it to Date.
-  const date = new Date(value.replace(' ', 'T'));
-  if (Number.isNaN(date.getTime())) return '';
-  return date.toLocaleDateString(language, { year: 'numeric', month: 'long', day: 'numeric' });
-}
 
 interface CmsSearchOptions {
   searchQuery?: string;
@@ -97,6 +19,10 @@ interface CmsSearchOptions {
   currentPage?: number;
   // Lets a caller (the detail page) skip the request until it knows what to ask for.
   skip?: boolean;
+  // Pages already fetched on the server for this exact query (Phase 3). Seeds the hook
+  // and skips the mount request, so the server-rendered article and the hydrated one
+  // come from a single fetch. Later option changes still refetch normally.
+  initialPages?: CmsPage[];
 }
 
 interface CmsSearchResult {
@@ -108,9 +34,23 @@ interface CmsSearchResult {
   error: string | null;
 }
 
+function cmsKey(o: CmsSearchOptions): string {
+  return JSON.stringify([
+    o.searchQuery, o.currentPage, o.pageSize, o.sortField,
+    o.sortDirection, o.skip, o.filters,
+  ]);
+}
+
 export function useCmsSearch(options: CmsSearchOptions) {
   const { selectedLocalizedCatalog } = useCatalog();
-  const [result, setResult] = useState<CmsSearchResult>({
+  const [result, setResult] = useState<CmsSearchResult>(() => options.initialPages ? {
+    pages: options.initialPages,
+    total: options.initialPages.length,
+    pageCount: 1,
+    aggregations: [],
+    loading: false,
+    error: null,
+  } : {
     pages: [],
     total: 0,
     pageCount: 0,
@@ -118,6 +58,12 @@ export function useCmsSearch(options: CmsSearchOptions) {
     loading: true,
     error: null,
   });
+
+  // See useSearch's serverFetchedKey — same reasoning: a one-shot skip is defeated by
+  // StrictMode's double-invoked effects and ignores whether the query still matches.
+  const serverFetchedKey = useRef<string | null>(
+    options.initialPages ? cmsKey(options) : null
+  );
 
   const optionsRef = useRef(options);
   optionsRef.current = options;
@@ -158,6 +104,10 @@ export function useCmsSearch(options: CmsSearchOptions) {
   }, [selectedLocalizedCatalog]);
 
   useEffect(() => {
+    if (serverFetchedKey.current !== null) {
+      if (serverFetchedKey.current === cmsKey(optionsRef.current)) return;
+      serverFetchedKey.current = null;
+    }
     doSearch();
   }, [
     doSearch,

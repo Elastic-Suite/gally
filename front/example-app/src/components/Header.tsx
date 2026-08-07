@@ -1,5 +1,8 @@
+'use client';
+
 import { useLayoutEffect, useRef } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import Link from './LocaleLink';
+import { usePathname } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { useCatalog } from '../contexts/CatalogContext';
 import { useCart } from '../contexts/CartContext';
@@ -13,13 +16,13 @@ export default function Header() {
     setCatalog, setLocalizedCatalog, catalogs, categories, loadingCatalogs,
   } = useCatalog();
   const { itemCount } = useCart();
-  const location = useLocation();
+  const pathname = usePathname();
   const groupRef = useRef<HTMLDivElement | null>(null);
 
   const localizedCatalogs = selectedCatalog?.localizedCatalogs || [];
   const firstCategory = categories.length > 0 ? categories[0] : null;
 
-  const isActive = (path: string) => location.pathname === path ? 'active' : '';
+  const isActive = (path: string) => pathname === path ? 'active' : '';
 
   // Expose the real rendered header height so the search overlay can offset
   // itself exactly below it, instead of guessing a fixed padding value.
@@ -41,20 +44,22 @@ export default function Header() {
         <div className="header-inner">
           {/* The official ElasticSuite Solutions lockup carries the wordmark itself, so
               there is no text here — the accessible name lives on the link. */}
-          <Link to="/" className="header-logo" aria-label={t('brand.ariaLabel')}>
-            <img src={brandLogo} alt="" className="header-logo-img" />
+          <Link href="/" className="header-logo" aria-label={t('brand.ariaLabel')}>
+            {/* CRA resolved an SVG import to a URL string; Next resolves it to a
+                StaticImageData object, so the URL now lives on .src */}
+            <img src={brandLogo.src} alt="" className="header-logo-img" />
           </Link>
 
           {/* No Home item — the brand lockup above is the link to `/`. */}
           <nav className="header-nav">
             <Link
-              to={firstCategory ? `/category/${firstCategory.id}` : '/'}
-              className={location.pathname.startsWith('/category') ? 'active' : ''}
+              href={firstCategory ? `/category/${firstCategory.id}` : '/'}
+              className={pathname.startsWith('/category') ? 'active' : ''}
             >
               {t('nav.products')}
             </Link>
-            <Link to="/explain" className={`expert-only ${isActive('/explain')}`}>{t('nav.searchIntelligence')}</Link>
-            <Link to="/blog" className={location.pathname.startsWith('/blog') ? 'active' : ''}>{t('nav.cms')}</Link>
+            <Link href="/explain" className={`expert-only ${isActive('/explain')}`}>{t('nav.searchIntelligence')}</Link>
+            <Link href="/blog" className={pathname.startsWith('/blog') ? 'active' : ''}>{t('nav.cms')}</Link>
           </nav>
 
           <div className="context-selectors">
@@ -78,7 +83,7 @@ export default function Header() {
             </select>
           </div>
 
-          <Link to="/cart" className="cart-badge">
+          <Link href="/cart" className="cart-badge">
             🛒 {t('cart.link')}
             {itemCount > 0 && <span className="cart-count">{itemCount}</span>}
           </Link>

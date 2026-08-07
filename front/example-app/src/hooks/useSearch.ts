@@ -1,17 +1,8 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { getSearchManager } from '../sdk';
 import { useCatalog } from '../contexts/CatalogContext';
+import { PRODUCT_FIELDS } from '../sdk/fields';
 
-// Fields to request from the API for product display.
-// Object/array types need sub-selections (e.g. fashion_color { label value }).
-// Note: price { price } and stock { status } are appended automatically by the SDK.
-const PRODUCT_FIELDS = [
-  'sku', 'name', 'image', 'description', 'url_key',
-  'fashion_color { label value }',
-  'fashion_material { label value }',
-  'visibility { label value }',
-  'new', 'cost',
-];
 
 interface SearchOptions {
   searchQuery?: string;
@@ -22,6 +13,16 @@ interface SearchOptions {
   pageSize?: number;
   currentPage?: number;
   isAutocomplete?: boolean;
+  // Data already fetched on the server for this exact query (Phase 3). When present the
+  // hook seeds itself from it and skips the mount fetch, so the page a crawler reads and
+  // the page a user sees are produced by one request, not two — and the loading skeleton
+  // never flashes. Any later change to the options still refetches normally.
+  initialData?: {
+    products: any[];
+    total: number;
+    pageCount: number;
+    aggregations: any[];
+  };
 }
 
 interface SearchResult {
@@ -34,9 +35,24 @@ interface SearchResult {
   error: string | null;
 }
 
+// The option subset that determines the result set. Must cover every option the fetch
+// effect keys off, or a changed query would be mistaken for the server-fetched one.
+function searchKey(o: SearchOptions): string {
+  return JSON.stringify([
+    o.searchQuery, o.categoryCode, o.currentPage, o.sortField,
+    o.sortDirection, o.pageSize, o.filters,
+  ]);
+}
+
 export function useSearch(options: SearchOptions) {
   const { selectedLocalizedCatalog } = useCatalog();
-  const [result, setResult] = useState<SearchResult>({
+  const [result, setResult] = useState<SearchResult>(() => options.initialData ? {
+    ...options.initialData,
+    currentPage: options.currentPage ?? 1,
+    // Already settled — the server did this request.
+    loading: false,
+    error: null,
+  } : {
     products: [],
     total: 0,
     currentPage: 1,
@@ -50,6 +66,16 @@ export function useSearch(options: SearchOptions) {
     loading: true,
     error: null,
   });
+
+  // Identifies WHICH query the server-supplied initialData belongs to, rather than just
+  // "skip the next fetch". A one-shot flag is wrong twice over: StrictMode double-invokes
+  // effects in dev, so the second pass would refetch and flash a skeleton over data we
+  // already had; and it says nothing about whether the current options still match what
+  // the server fetched. Cleared the moment the query moves off that first one, so
+  // navigating away and back refetches instead of redisplaying stale seeded results.
+  const serverFetchedKey = useRef<string | null>(
+    options.initialData ? searchKey(options) : null
+  );
 
   const optionsRef = useRef(options);
   optionsRef.current = options;
@@ -96,6 +122,10 @@ export function useSearch(options: SearchOptions) {
   }, [selectedLocalizedCatalog]);
 
   useEffect(() => {
+    if (serverFetchedKey.current !== null) {
+      if (serverFetchedKey.current === searchKey(optionsRef.current)) return;
+      serverFetchedKey.current = null;
+    }
     doSearch();
   }, [
     doSearch,

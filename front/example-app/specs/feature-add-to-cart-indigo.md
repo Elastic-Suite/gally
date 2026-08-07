@@ -17,6 +17,9 @@ changed** — only two stale comments.
 - [x] Verified computed style in a real browser: `rgb(40, 53, 147)` = `#283593` =
       `--indigo-800`, on both the card and the detail page.
 - [x] The autocomplete "added" confirmation still wins over the button's hover state.
+      (Since `specs/feature-add-to-cart-feedback-everywhere.md` the green itself lives in a shared
+      `.btn.added`, which ties with `.btn-primary:hover` at (0,2,0) and wins on source order
+      instead; the four-class ACP selector remains, for its `opacity`/`transform` overrides.)
       Its selector is four classes (0,4,0) and `.btn-primary:hover` is (0,2,0), so it
       beats it on specificity alone — the previous ordering argument against
       `.btn-coral:hover` is no longer load-bearing. Comment in `styles.css` corrected.
