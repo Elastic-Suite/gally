@@ -156,6 +156,8 @@
   },
   "trackingMeaning": {
     "categoryView": "Gally logs the visit to category \"{{categoryCode}}\" — helps analyze which categories draw the most traffic and optimize merchandising.",
+    "cmsDisplay": "Gally logs the impression of {{count}} articles with their position — cms_page is a first-class indexed entity, so editorial content earns the same behavioural signals as products.",
+    "cmsPageView": "Gally logs the article view for “{{title}}” — content engagement feeds the same behavioural signals as product views.",
     "productView": "Gally logs the product view for \"{{sku}}\" — feeds the popularity score and personalized recommendations.",
     "search": "Gally logs the search \"{{query}}\" ({{count}} results) — improves autocomplete, detects zero-result searches, and refines relevance.",
     "display": "Gally logs the display of {{count}} products with their position — measures impression rate and optimizes ranking.",

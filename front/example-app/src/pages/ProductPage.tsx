@@ -153,7 +153,7 @@ export default function ProductPage() {
 
           <div className="product-detail-actions">
             <button
-              className="btn btn-coral btn-lg"
+              className="btn btn-primary btn-lg"
               disabled={!p.stock.status}
               onClick={() => addToCart({
                 sku: p.sku,

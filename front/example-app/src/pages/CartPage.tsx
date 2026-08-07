@@ -153,7 +153,7 @@ export default function CartPage() {
             {' '}
             <s className="cart-bundle-was">{formatPrice(BUNDLE_TOTAL)}</s>
           </span>
-          <button className="btn btn-coral btn-sm" onClick={handleAddBundle}>
+          <button className="btn btn-primary btn-sm" onClick={handleAddBundle}>
             {t('bundle.addButton')}
           </button>
         </div>

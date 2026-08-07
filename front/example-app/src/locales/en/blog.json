@@ -1,0 +1,19 @@
+{
+  "breadcrumb": "Home / Blog",
+  "title": "Blog",
+  "intro": "Style guides, material deep-dives and care advice — all indexed in Gally as cms_page documents, searchable and facetable exactly like the catalog.",
+  "count_one": "{{count}} article",
+  "count_other": "{{count}} articles",
+  "readingTime_one": "{{count}} min read",
+  "readingTime_other": "{{count}} min read",
+  "browse": {
+    "type": "Type",
+    "topic": "Topic",
+    "all": "All"
+  },
+  "emptyTitle": "No article matches those filters",
+  "emptyBody": "Try another topic, or clear the type filter to see everything.",
+  "notFoundTitle": "Article not found",
+  "notFoundBody": "This article may have been unpublished or reindexed under a different id.",
+  "backToList": "← Back to the blog"
+}

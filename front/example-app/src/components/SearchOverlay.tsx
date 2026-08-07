@@ -5,6 +5,7 @@ import i18n from '../i18n';
 import { useCatalog } from '../contexts/CatalogContext';
 import { useCart } from '../contexts/CartContext';
 import { getProductFields } from './ProductCard';
+import { CmsPage, cmsPageUrl } from '../hooks/useCms';
 
 // getSuggestionMatches is a plain (non-hook) function shared with SearchBar.tsx's
 // keyboard-nav list, so it reads the active language straight off the i18next
@@ -52,6 +53,23 @@ export function attributeFilterUrl(query: string, field: string, value: string):
   return `/search?q=${encodeURIComponent(query.trim())}&f_${encodeURIComponent(field)}=${encodeURIComponent(value)}`;
 }
 
+// Wraps every occurrence of a query word in <mark> so a blog hit shows *why* it
+// matched — the title alone often doesn't contain the query verbatim. Words are
+// escaped before they reach the RegExp: a query like "50% off (sale)" is user
+// input, not a pattern.
+const escapeRegExp = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+export function highlightTerms(text: string, query: string): React.ReactNode {
+  const words = query.trim().split(/\s+/).filter(w => w.length >= 2).map(escapeRegExp);
+  if (words.length === 0) return text;
+  // Capturing group keeps the delimiters, so split() returns [text, match, text, ...]
+  // and the odd indexes are exactly the parts to mark.
+  const parts = text.split(new RegExp(`(${words.join('|')})`, 'gi'));
+  return parts.map((part, i) =>
+    i % 2 === 1 ? <mark key={i} className="autocomplete-mark">{part}</mark> : part
+  );
+}
+
 export function getCategoryMatches(query: string, categories: any[]): { id: string; name: string }[] {
   if (query.length < 2) return [];
   const flatCats: { id: string; name: string }[] = [];
@@ -73,6 +91,8 @@ interface SearchOverlayProps {
   resultsLoading: boolean;
   categories: any[];
   categoriesLoading: boolean;
+  cmsPages: CmsPage[];
+  cmsLoading: boolean;
   highlightedKey: string | null;
   navigate: (to: string) => void;
   setQuery: (q: string) => void;
@@ -81,7 +101,8 @@ interface SearchOverlayProps {
 }
 
 export default function SearchOverlay({
-  open, query, results, aggregations, resultsLoading, categories, categoriesLoading, highlightedKey, navigate, setQuery, clear, close,
+  open, query, results, aggregations, resultsLoading, categories, categoriesLoading,
+  cmsPages, cmsLoading, highlightedKey, navigate, setQuery, clear, close,
 }: SearchOverlayProps) {
   if (!open) return null;
 
@@ -130,6 +151,13 @@ export default function SearchOverlay({
             query={query}
             categories={categories}
             loading={categoriesLoading}
+            highlightedKey={highlightedKey}
+            onSelect={closeAndGo}
+          />
+          <BlogSection
+            query={query}
+            pages={cmsPages}
+            loading={cmsLoading}
             highlightedKey={highlightedKey}
             onSelect={closeAndGo}
           />
@@ -291,7 +319,7 @@ function ProductsColumn({ results, loading, highlightedKey, onSelect }: {
                 </div>
                 <button
                   type="button"
-                  className={`btn btn-coral btn-sm autocomplete-add-to-cart ${justAdded ? 'added' : ''}`}
+                  className={`btn btn-primary btn-sm autocomplete-add-to-cart ${justAdded ? 'added' : ''}`}
                   disabled={!stock.status}
                   // The whole card navigates to the product; adding to cart must not.
                   // preventDefault on mousedown keeps focus on the search input (the
@@ -348,5 +376,47 @@ function CategoriesColumn({ query, categories, loading, highlightedKey, onSelect
         })
       )}
     </>
+  );
+}
+
+// Stacked under the categories, in the same column: editorial content matching the
+// query. These are real cms_page documents from the search engine — the same query
+// that finds "dress" products also finds the posts written about them. Like every
+// other section it always renders its title plus exactly one of skeleton / empty
+// note / results, so the panel never changes shape between keystrokes.
+function BlogSection({ query, pages, loading, highlightedKey, onSelect }: {
+  query: string; pages: CmsPage[]; loading: boolean; highlightedKey: string | null; onSelect: (to: string) => void;
+}) {
+  const { t } = useTranslation(['search', 'blog']);
+
+  return (
+    <div className="autocomplete-blog-group">
+      <div className="autocomplete-section-title">{t('search:overlay.blogTitle')}</div>
+      {loading ? (
+        <SkeletonRows count={2} />
+      ) : pages.length === 0 ? (
+        <EmptyNote text={t('search:overlay.noBlog')} />
+      ) : (
+        pages.map(page => {
+          const key = `blog-${page.id}`;
+          return (
+            <div
+              key={page.id}
+              data-item-key={key}
+              className={`autocomplete-item autocomplete-blog ${key === highlightedKey ? 'highlighted' : ''}`}
+              onClick={() => onSelect(cmsPageUrl(page.id))}
+            >
+              <div className="autocomplete-blog-body">
+                <div className="autocomplete-blog-title">{highlightTerms(page.title, query)}</div>
+                <div className="autocomplete-blog-meta">
+                  {page.topic?.label}
+                  {page.readingTime ? ` · ${t('blog:readingTime', { count: page.readingTime })}` : ''}
+                </div>
+              </div>
+            </div>
+          );
+        })
+      )}
+    </div>
   );
 }

@@ -45,7 +45,14 @@ export default function Homepage() {
         <p>
           {t('homepage.heroBody')}
         </p>
-        <Link to="/search?q=" className="btn btn-coral btn-lg">{t('homepage.shopDresses')}</Link>
+        {/* The query is localized alongside the label: the catalog language follows the
+            locale, so a French visitor must search "robe", not "dress". */}
+        <Link
+          to={`/search?q=${encodeURIComponent(t('homepage.shopDressesQuery'))}`}
+          className="btn btn-coral btn-lg"
+        >
+          {t('homepage.shopDresses')}
+        </Link>
       </section>
 
       {/* Category Navigation */}

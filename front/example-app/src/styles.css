@@ -1,7 +1,7 @@
 /* ═══════════════════════════════════════════════════════════════
    Gally Features Demo — ElasticSuite-inspired Design System
    Palette: Indigo deep + Coral accent, light airy background
-   Typography: Playfair Display (serif titles) + Inter (body sans)
+   Typography: Geist throughout (titles and body), matching elasticsuite.io
    ═══════════════════════════════════════════════════════════════ */
 
 :root {
@@ -30,9 +30,14 @@
   --success: #4caf50;
   --warning: #ff9800;
 
-  /* Typography */
-  --font-serif: 'Playfair Display', Georgia, serif;
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  /* Typography — Geist, matching elasticsuite.io (same family and fallback stack).
+     The site sets everything in Geist, so display and body resolve to the same face.
+     They stay two tokens on purpose: the 10 display sites keep saying "this is a
+     title", so bringing back a distinct display face is a one-line change here.
+     Renamed from --font-serif: the value is a sans now, and a token called "serif"
+     holding Geist would mislead the next reader. */
+  --font-display: 'Geist', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-sans: 'Geist', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
   /* Spacing */
   --radius-sm: 6px;
@@ -61,7 +66,7 @@ body {
 }
 
 h1, h2, h3, h4 {
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   font-weight: 600;
   line-height: 1.3;
 }
@@ -127,15 +132,21 @@ a:hover {
   pointer-events: none;
 }
 
+/* Brand: the official ElasticSuite Solutions lockup, a single SVG that already
+   contains the mark and both wordmarks. No type is set here — everything visible
+   comes from the asset, which is why there is no `.header-logo span` rule. */
 .header-logo {
-  font-family: var(--font-serif);
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: white;
-  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
 }
-.header-logo span {
-  color: var(--coral-400);
+
+/* 2.5rem matches the `h-10` the lockup is used at on elasticsuite.io. The asset's
+   own 219:63 ratio then fixes the width (~8.7rem), so it never needs one set. */
+.header-logo-img {
+  display: block;
+  height: 2.5rem;
+  width: auto;
 }
 
 .header-nav {
@@ -295,7 +306,7 @@ a:hover {
   margin-bottom: 1rem;
 }
 .search-prompt-title {
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   font-size: 1.9rem;
   font-weight: 700;
   color: white;
@@ -386,7 +397,7 @@ a:hover {
   transform: scale(1.08);
 }
 /* The add button only fills in on card hover, so at rest the card stays calm and
-   the eye lands on the product, not on a grid of coral pills. */
+   the eye lands on the product, not on a grid of indigo pills. */
 .autocomplete-item.autocomplete-product .autocomplete-add-to-cart {
   opacity: 0.75;
   transition: opacity 0.18s ease, background 0.18s ease, transform 0.18s ease;
@@ -454,9 +465,9 @@ a:hover {
 
 /* Add confirmation, ~1.6s: the card reuses the same green `addedFlash` glow the
    story mode already plays on `.product-card`, and the button holds a success
-   state. Specificity (0,3,0) is deliberate — it has to beat `.btn-coral:hover`,
-   which is declared later in the file, so the confirmation survives the pointer
-   still resting on the button. */
+   state. The four-class selector (0,4,0) is deliberate — it has to beat
+   `.btn-primary:hover` (0,2,0), which is declared later in the file, so the
+   confirmation survives the pointer still resting on the button. */
 .autocomplete-item.autocomplete-product.just-added {
   animation: addedFlash 0.6s ease;
 }
@@ -636,7 +647,7 @@ a:hover {
 }
 
 .stat-value {
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   font-size: 2.2rem;
   font-weight: 700;
   color: var(--indigo-800);
@@ -1406,7 +1417,7 @@ a:hover {
 }
 
 .rank-number {
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   font-size: 1.2rem;
   font-weight: 700;
   color: #7c4dff;
@@ -1720,6 +1731,17 @@ a:hover {
 @keyframes shimmer {
   0% { background-position: 200% 0; }
   100% { background-position: -200% 0; }
+}
+
+/* Shown in the facet sidebar when there is no facet left to draw — see Facets.tsx.
+   Same muted italic note idiom as `.autocomplete-empty`, in the light sidebar's
+   palette rather than the dark panel's. Not a new primitive. */
+.facets-empty {
+  margin: 0;
+  font-size: 0.85rem;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--gray-500);
 }
 
 .empty-state {
@@ -2258,7 +2280,7 @@ a:hover {
 }
 
 .intro-logo {
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--indigo-900);
@@ -2423,7 +2445,7 @@ a:hover {
 }
 
 .story-act-label {
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   font-size: 0.95rem;
   font-weight: 600;
   color: var(--indigo-800);
@@ -2522,7 +2544,7 @@ a:hover {
 }
 
 .closing-stat-value {
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   font-size: 2rem;
   font-weight: 700;
   color: var(--indigo-800);
@@ -2591,7 +2613,7 @@ a:hover {
 }
 
 .closing-compare-value {
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   font-size: 1.3rem;
   font-weight: 700;
   color: var(--gray-800);
@@ -2668,7 +2690,7 @@ a:hover {
 }
 
 .pricing-price {
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   font-size: 2rem;
   font-weight: 700;
   color: var(--indigo-800);
@@ -3133,4 +3155,413 @@ a:hover {
 .story-cart-toast.visible {
   opacity: 1;
   transform: translate(-50%, -50%) scale(1);
+}
+
+/* ─── Search result type switch ──────────────────────────── */
+/* One query hits two indices; this switches which result set is shown. A centered
+   segmented switch rather than underline tabs, so the pair reads as a single choice
+   instead of as navigation. Built from the existing pill idiom (--radius-pill track,
+   raised --white + --shadow-sm thumb) — not a new primitive. The thumb slides between
+   the two segments; see .result-type-tabs::before. */
+.result-type-switch-row {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+/* `inline-grid` with equal 1fr columns, not inline-flex: the thumb below slides by
+   exactly one column, so the two segments have to be the same width. 1fr columns in
+   a content-sized grid both take the width of the wider segment, which keeps the
+   slide correct in every locale without measuring anything in JS. */
+.result-type-tabs {
+  position: relative;
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  border-radius: var(--radius-pill);
+  background: var(--gray-100);
+}
+
+/* The sliding thumb. A single pseudo-element behind both segments rather than a
+   background on the selected one — that is what there is to animate. Moved with
+   `transform` only, so it animates on the compositor and never reflows the row.
+   Width = one grid column: the track minus its 0.25rem padding either side and the
+   0.25rem gap, halved. */
+.result-type-tabs::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  top: 0.25rem;
+  bottom: 0.25rem;
+  left: 0.25rem;
+  width: calc((100% - 0.75rem) / 2);
+  border-radius: var(--radius-pill);
+  background: var(--white);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+/* 100% here is the thumb's own width — one column — so this lands it exactly on the
+   second column, gap included. */
+.result-type-tabs[data-active='blog']::before {
+  transform: translateX(calc(100% + 0.25rem));
+}
+
+.result-type-tab {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1.1rem;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--gray-600);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+.result-type-tab:hover {
+  color: var(--indigo-700);
+}
+/* No background or shadow here — the thumb draws those. Declared after :hover, at
+   equal specificity, so the selected segment keeps its colour when hovered. */
+.result-type-tab.active {
+  color: var(--indigo-800);
+}
+
+/* The slide is decoration; honour a reduced-motion preference by cutting it. */
+@media (prefers-reduced-motion: reduce) {
+  .result-type-tabs::before {
+    transition: none;
+  }
+}
+
+.result-type-icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+/* --gray-200, not --gray-100: the track is --gray-100, so the inactive badge would
+   otherwise disappear into it. */
+.result-type-count {
+  padding: 0.05rem 0.45rem;
+  border-radius: var(--radius-pill);
+  background: var(--gray-200);
+  color: var(--gray-600);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.result-type-tab.active .result-type-count {
+  background: var(--indigo-50);
+  color: var(--indigo-700);
+}
+
+/* ─── Blog (cms_page) ────────────────────────────────────── */
+/* The blog reuses the catalog's card idiom rather than inventing a second one:
+   same white surface, same radius/shadow, same lift on hover as .product-card. */
+.blog-page {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.blog-intro {
+  margin-top: 0.5rem;
+  max-width: 46rem;
+  color: var(--gray-600);
+  line-height: 1.6;
+}
+
+/* Two browse axes stacked as label + chip row: content type first (coarse),
+   topic second. Both are rendered from the API's aggregations. */
+.blog-browse {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.blog-browse-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+}
+
+.blog-browse-label {
+  flex-shrink: 0;
+  min-width: 4rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--gray-500);
+}
+
+.blog-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* The browse chips ARE .filter-chip (see "Active Filter Chips") — same pill, same
+   tokens. Only the two states that idiom lacks are added here: a chip used as a
+   toggle needs a selected state, and a browse chip carries its facet count. */
+.filter-chip-selected,
+.filter-chip-selected:hover {
+  background: var(--indigo-800);
+  border-color: var(--indigo-800);
+  color: white;
+}
+.filter-chip-count {
+  margin-left: 0.35rem;
+  opacity: 0.6;
+}
+
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.blog-card {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.blog-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.blog-card-image {
+  position: relative;
+  height: 180px;
+  background: linear-gradient(135deg, var(--indigo-50), var(--gray-100));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.blog-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.blog-card-image-fallback {
+  font-size: 2rem;
+  color: var(--gray-400);
+}
+
+/* Same placement and pill as .product-card-badge, in indigo instead of coral:
+   a topic is a classification, not a promotion. */
+.blog-card-topic {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  background: var(--indigo-800);
+  color: white;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.blog-card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 1rem;
+}
+
+.blog-card-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--gray-900);
+  margin-bottom: 0.5rem;
+}
+
+/* Summaries are index-length (a full paragraph), so they're clamped to keep the
+   grid rows even. */
+.blog-card-summary {
+  flex: 1;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--gray-600);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.blog-card-meta {
+  margin-top: 0.75rem;
+  font-size: 0.75rem;
+  color: var(--gray-500);
+}
+
+/* ─── Blog post (detail) ─────────────────────────────────── */
+.blog-post {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.blog-post-hero {
+  height: 320px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--indigo-50), var(--gray-100));
+}
+.blog-post-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.blog-post-title {
+  margin-top: 1.5rem;
+  font-size: 2.5rem;
+  line-height: 1.15;
+}
+
+.blog-post-meta {
+  margin-top: 0.75rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--gray-500);
+}
+
+.blog-post-badge {
+  background: var(--indigo-100);
+  color: var(--indigo-800);
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.blog-post-summary {
+  margin-top: 1.25rem;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--gray-700);
+  border-left: 3px solid var(--coral-500);
+  padding-left: 1rem;
+}
+
+/* The content blob is editorial HTML from the index, so its tags are styled here
+   rather than by component markup. */
+.blog-post-content {
+  margin-top: 1.75rem;
+  color: var(--gray-700);
+  line-height: 1.8;
+}
+.blog-post-content h2 {
+  font-size: 1.35rem;
+  margin: 1.75rem 0 0.75rem;
+  color: var(--gray-900);
+}
+.blog-post-content h3 {
+  font-size: 1.1rem;
+  margin: 1.25rem 0 0.5rem;
+  color: var(--gray-900);
+}
+.blog-post-content p {
+  margin-bottom: 1rem;
+}
+.blog-post-content ul,
+.blog-post-content ol {
+  margin: 0 0 1rem 1.25rem;
+}
+.blog-post-content li {
+  margin-bottom: 0.4rem;
+}
+.blog-post-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+}
+
+.blog-post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+/* Tags on a post are labels, not controls — same pill, without the affordance. */
+.blog-post-tags .filter-chip {
+  cursor: default;
+}
+.blog-post-tags .filter-chip:hover {
+  border-color: var(--indigo-100);
+  color: var(--indigo-700);
+}
+
+.blog-post-back {
+  display: inline-block;
+  margin-top: 2rem;
+}
+
+/* ─── Blog rows in the autocomplete popup ────────────────── */
+/* Sits under the categories in the third column, on the blurred scrim like the
+   rest of the panel — only the products column gets an opaque card. */
+.autocomplete-blog-group {
+  margin-top: 1.25rem;
+}
+
+.autocomplete-item.autocomplete-blog {
+  align-items: flex-start;
+}
+
+.autocomplete-blog-body {
+  min-width: 0;
+}
+
+.autocomplete-blog-title {
+  font-size: 0.9rem;
+  line-height: 1.35;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.autocomplete-blog-meta {
+  margin-top: 0.2rem;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Marks the matched words inside a blog title — shows why the article came back
+   when the query isn't in the title verbatim. */
+.autocomplete-mark {
+  background: transparent;
+  color: var(--coral-400);
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .blog-browse-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+  }
+  .blog-post-hero {
+    height: 200px;
+  }
+  .blog-post-title {
+    font-size: 1.75rem;
+  }
 }
