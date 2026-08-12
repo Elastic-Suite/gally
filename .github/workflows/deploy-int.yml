@@ -54,7 +54,7 @@ jobs:
     steps:      
       - name: Deploy in EC2
         env:
-            branch: ${{ inputs.version_is_tag == true && format('tags/v{0}', inputs.version) || format('origin/{0}', inputs.version) }}
+            branch: ${{ inputs.version_is_tag == true && format('tags/{0}', inputs.version) || format('origin/{0}', inputs.version) }}
             composer_version: ${{ inputs.version == 'main' && 'dev-main' || (contains(inputs.version, 'x') && format('{0}-dev', inputs.version) || inputs.version) }}
             add_sample_data: ${{ inputs.add_sample_data }}
             PRIVATE_KEY: ${{ secrets.AWS_DEPLOY_KEY }}
