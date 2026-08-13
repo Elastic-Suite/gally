@@ -22,6 +22,11 @@ on:
         required: false
         default: true
         type: boolean
+      sample_data_catalog:
+        description: "Sample data catalog to install (Default, Synchro diffusion, Cultura, Snowleader)"
+        required: false
+        default: "Default"
+        type: string
     secrets:
       AWS_DEPLOY_KEY:
         required: true
@@ -57,6 +62,7 @@ jobs:
             branch: ${{ inputs.version_is_tag == true && format('tags/{0}', inputs.version) || format('origin/{0}', inputs.version) }}
             composer_version: ${{ inputs.version == 'main' && 'dev-main' || (contains(inputs.version, 'x') && format('{0}-dev', inputs.version) || inputs.version) }}
             add_sample_data: ${{ inputs.add_sample_data }}
+            sample_data_catalog: ${{ inputs.sample_data_catalog }}
             PRIVATE_KEY: ${{ secrets.AWS_DEPLOY_KEY }}
             HOSTNAME : ${{ secrets.AWS_HOSTNAME }}
             USER_NAME : ${{ secrets.AWS_USER }}
@@ -93,12 +99,27 @@ jobs:
             docker compose run --rm -e COMPOSER_AUTH='$COMPOSER_AUTH' php composer require \"gally/gally-premium:${{ env.composer_version }}\" &&
             echo "Sample data value: ${{ env.add_sample_data }}" &&
             if [ "${{ env.add_sample_data }}" = "true" ]; then
-              echo "Install sample data";
-              docker compose run --rm -e COMPOSER_AUTH='$COMPOSER_AUTH' php composer require \"gally/gally-sample-data:${{ env.composer_version }}\";
+              echo "Install sample data (catalog: ${{ env.sample_data_catalog }})";
               docker compose run --rm php sed -i \"s/DoctrineFixturesBundle::class => \['dev' => true, 'test' => true]/DoctrineFixturesBundle::class => ['all' => true]/g\" config/bundles.php;
               docker compose run --rm php sed -i \"s/NelmioAliceBundle::class => \['dev' => true, 'test' => true]/NelmioAliceBundle::class => ['all' => true]/g\" config/bundles.php;
               docker compose run --rm php sed -i \"s/FidryAliceDataFixturesBundle::class => \['dev' => true, 'test' => true]/FidryAliceDataFixturesBundle::class => ['all' => true]/g\" config/bundles.php;
               docker compose run --rm php sed -i \"s/HautelookAliceBundle::class => \['dev' => true, 'test' => true]/HautelookAliceBundle::class => ['all' => true]/g\" config/bundles.php;
+              if [ "${{ env.sample_data_catalog }}" = "Default" ] || [ -z "${{ env.sample_data_catalog }}" ]; then
+                echo "Installing default sample data package";
+                docker compose run --rm -e COMPOSER_AUTH='$COMPOSER_AUTH' php composer require \"gally/gally-sample-data:${{ env.composer_version }}\";
+              else
+                echo "Installing catalog package for: ${{ env.sample_data_catalog }}";
+                docker compose run --rm -e COMPOSER_AUTH='$COMPOSER_AUTH' php composer require \"gally/gally-catalog:${{ env.composer_version }}\";
+                if [ "${{ env.sample_data_catalog }}" != "Cultura" ]; then
+                  docker compose run --rm php sed -i \"s/Gally\\\\\\\\CulturaCatalog\\\\\\\\GallyCulturaCatalogBundle::class => \['all' => true]/\/\/ Gally\\\\\\\\CulturaCatalog\\\\\\\\GallyCulturaCatalogBundle::class => ['all' => true]/g\" config/bundles.php;
+                fi;
+                if [ "${{ env.sample_data_catalog }}" != "Snowleader" ]; then
+                  docker compose run --rm php sed -i \"s/Gally\\\\\\\\SnowleaderCatalog\\\\\\\\GallySnowleaderCatalogBundle::class => \['all' => true]/\/\/ Gally\\\\\\\\SnowleaderCatalog\\\\\\\\GallySnowleaderCatalogBundle::class => ['all' => true]/g\" config/bundles.php;
+                fi;
+                if [ "${{ env.sample_data_catalog }}" != "Synchro diffusion" ]; then
+                  docker compose run --rm php sed -i \"s/Gally\\\\\\\\SynchroDiffusionCatalog\\\\\\\\GallySynchroDiffusionCatalogBundle::class => \['all' => true]/\/\/ Gally\\\\\\\\SynchroDiffusionCatalog\\\\\\\\GallySynchroDiffusionCatalogBundle::class => ['all' => true]/g\" config/bundles.php;
+                fi;
+              fi;
             fi &&
             GALLY_DEFAULT_SENDER_NAME='${GALLY_DEFAULT_SENDER_NAME}' GALLY_DEFAULT_SENDER_EMAIL='${GALLY_DEFAULT_SENDER_EMAIL}' MAILER_DSN='${MAILER_DSN}' GALLY_CATALOG_MEDIA_URL=${MEDIA_URL} SERVER_NAME=$HOSTNAME API_ROUTE_PREFIX=api APP_SECRET=$APP_SECRET POSTGRES_PASSWORD=$POSTGRES_PASSWORD COMPOSER_AUTH='$COMPOSER_AUTH' docker compose -f compose.yml -f compose.int.yml up -d --build &&
             GALLY_DEFAULT_SENDER_NAME='${GALLY_DEFAULT_SENDER_NAME}' GALLY_DEFAULT_SENDER_EMAIL='${GALLY_DEFAULT_SENDER_EMAIL}' MAILER_DSN='${MAILER_DSN}' GALLY_CATALOG_MEDIA_URL=${MEDIA_URL} SERVER_NAME=$HOSTNAME API_ROUTE_PREFIX=api APP_SECRET=$APP_SECRET POSTGRES_PASSWORD=$POSTGRES_PASSWORD COMPOSER_AUTH='$COMPOSER_AUTH' docker compose -f compose.yml -f compose.int.yml exec php bin/console lexik:jwt:generate-keypair --skip-if-exists
