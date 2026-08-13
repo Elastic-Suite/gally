@@ -12,11 +12,7 @@
     "noProducts": "Aucun produit correspondant",
     "noCategories": "Aucune catégorie correspondante",
     "blogTitle": "📝 Blog",
-    "noBlog": "Aucun article correspondant",
-    "suggestions": [
-      "robe", "robe débardeur", "robe d'été", "robe fleurie", "jupe midi",
-      "blouse", "veste", "pantalon", "chaussures", "accessoires"
-    ]
+    "noBlog": "Aucun article correspondant"
   },
   "page": {
     "breadcrumb": "Accueil / Recherche",

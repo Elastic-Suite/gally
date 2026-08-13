@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { getSearchManager } from '../sdk';
 import { useCatalog } from '../contexts/CatalogContext';
 import { CMS_FIELDS, CMS_METADATA } from '../sdk/fields';
@@ -132,6 +132,7 @@ const ACP_CMS_PAGE_SIZE = 4;
 export function useCmsAutocomplete() {
   const { selectedLocalizedCatalog } = useCatalog();
   const [pages, setPages] = useState<CmsPage[]>([]);
+  const [termSuggestions, setTermSuggestions] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
@@ -140,6 +141,7 @@ export function useCmsAutocomplete() {
 
     if (!query || query.length < 2 || !selectedLocalizedCatalog) {
       setPages([]);
+      setTermSuggestions([]);
       return;
     }
 
@@ -158,15 +160,22 @@ export function useCmsAutocomplete() {
           filters: [],
         });
         setPages(response.getCollection().map(getCmsFields));
+        setTermSuggestions(response.getTermSuggestions());
       } catch {
         setPages([]);
+        setTermSuggestions([]);
       } finally {
         setLoading(false);
       }
     }, 300);
   }, [selectedLocalizedCatalog]);
 
-  const clear = useCallback(() => setPages([]), []);
+  // Both, or picking a result leaves the blog terms behind in the merged
+  // suggestions column (SearchBar clears the two autocomplete hooks together).
+  const clear = useCallback(() => {
+    setPages([]);
+    setTermSuggestions([]);
+  }, []);
 
-  return { pages, loading, search, clear };
+  return { pages, termSuggestions, loading, search, clear };
 }

@@ -12,11 +12,7 @@
     "noProducts": "Keine passenden Produkte",
     "noCategories": "Keine passenden Kategorien",
     "blogTitle": "📝 Blog",
-    "noBlog": "Keine passenden Artikel",
-    "suggestions": [
-      "Kleid", "Trägerkleid", "Sommerkleid", "Blumenkleid", "Midirock",
-      "Bluse", "Jacke", "Hose", "Schuhe", "Accessoires"
-    ]
+    "noBlog": "Keine passenden Artikel"
   },
   "page": {
     "breadcrumb": "Startseite / Suche",

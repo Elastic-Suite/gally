@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { useSearch } from '../hooks/useSearch';
@@ -9,13 +9,19 @@ import { useTracking } from '../hooks/useTracking';
 import Facets from '../components/Facets';
 import ProductCard from '../components/ProductCard';
 import BlogCard from '../components/BlogCard';
+import { ProductGridSkeleton } from '../components/skeletons';
 
 // A query hits two indices at once. `product` is the default tab; `blog` shows the
 // cms_page documents the same query matched.
 type ResultType = 'product' | 'blog';
 const CMS_PAGE_SIZE = 10;
 
-export default function SearchPage() {
+// `initialData` is the first page of results for `?q=`, fetched by the Server Component.
+export default function SearchPage({
+  initialData,
+}: {
+  initialData?: { products: any[]; total: number; pageCount: number; aggregations: any[] };
+} = {}) {
   const { t, i18n } = useTranslation(['search', 'common', 'blog']);
   const searchParams = useSearchParams();
   const query = searchParams.get('q') || '';
@@ -75,6 +81,13 @@ export default function SearchPage() {
       return { [field]: { eq: val } };
     }), [activeFilters]);
 
+  // The server fetched the first page of this query only, relevance-sorted and unfiltered
+  // — exactly the state this component starts in. Handing the seed to the hook in any
+  // other state would show results that do not match the controls, so it is passed through
+  // only while the view still matches what the server actually requested. Same rule, same
+  // wording as CategoryPage.
+  const isServerFetchedView = page === 1 && !sortField && filters.length === 0;
+
   const { products, total, pageCount, aggregations, loading, viewMoreOptions } = useSearch({
     searchQuery: query,
     currentPage: page,
@@ -82,6 +95,7 @@ export default function SearchPage() {
     sortField: sortField || '_score',
     sortDirection,
     filters: filters.length > 0 ? filters : undefined,
+    initialData: initialData && isServerFetchedView ? initialData : undefined,
   });
 
   // Always fetched, whichever segment is active: the switch shows the count on both
@@ -225,20 +239,9 @@ export default function SearchPage() {
             </div>
           </div>
 
-          {loading && (
-            <div className="products-grid">
-              {Array.from({ length: 6 }).map((_, i) => (
-                <div key={i} className="skeleton-card">
-                  <div className="skeleton-card-image skeleton-shimmer" />
-                  <div className="skeleton-card-body">
-                    <div className="skeleton skeleton-text" style={{ width: '80%' }} />
-                    <div className="skeleton skeleton-text" style={{ width: '50%', marginTop: '0.5rem' }} />
-                    <div className="skeleton skeleton-btn" style={{ width: '100px', marginTop: '0.75rem' }} />
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
+          {/* The shared skeleton, not a local copy of it: this markup was duplicated from
+              skeletons.tsx and had already drifted to 6 cards against a pageSize of 20. */}
+          {loading ? <ProductGridSkeleton /> : null}
 
           <div className="products-grid">
             {products.map((p: any, i: number) => (
