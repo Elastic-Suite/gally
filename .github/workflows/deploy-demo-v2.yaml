@@ -19,7 +19,20 @@ on:
         type: boolean
         default: false
         required: false
-
+      sample_data:
+        description: 'Add sample data ?'
+        type: boolean
+        default: false
+        required: false
+      sample_data_catalog:
+        description: 'Select a sample data catalog ? (only used if sample_data is true)'
+        type: choice
+        options:
+          - Default
+          - Synchro diffusion
+          - Cultura
+          - Snowleader
+        required: false
 jobs:
   tests:
     name: Tests
@@ -41,7 +54,8 @@ jobs:
       version: ${{ github.ref_name }}
       last_published_version: 2.3.0
       version_is_tag: ${{ startsWith(github.ref, 'refs/tags/') }}
-      add_sample_data: false
+      add_sample_data: ${{ inputs.sample_data }}
+      sample_data_catalog: ${{ inputs.sample_data == true && inputs.sample_data_catalog || '' }}
     secrets:
       AWS_DEPLOY_KEY: ${{ secrets.AWS_DEPLOY_KEY }}
       AWS_HOSTNAME: ${{ secrets[format('AWS_HOSTNAME_DEMO_{0}', inputs.environment)] }}
