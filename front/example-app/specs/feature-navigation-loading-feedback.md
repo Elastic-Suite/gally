@@ -44,9 +44,20 @@ data corresponds to. The effect skips only while the current options still match
 clears the ref as soon as they do not — so navigating away and back refetches rather than
 redisplaying stale seeded results. Idempotent under repeated effect invocation.
 
+> **Superseded in mechanism by `bugfix-ssr-product-list-behind-suspense.md`; the problem and the
+> `serverFetchedKey` reasoning still stand.** The `loading.tsx` files are **gone**. They fixed frozen
+> navigation, but a Suspense boundary also defers the initial document: React streamed the real page
+> into a `<div hidden>` at the end of the response and moved it in with a script, so the
+> server-rendered product list did not render for a client with JavaScript disabled. Navigation
+> feedback is now produced on the client from `useLinkStatus()` — see
+> `src/contexts/NavigationContext.tsx` and `src/components/RouteSkeleton.tsx`. The first behaviour
+> checkbox below reads the streamed skeleton as proof the boundary existed; it was proof, and it was
+> also a description of the bug. Read the two specs together.
+
 ## Behaviour (testable)
 - [x] `loading.tsx` exists for product, blog post and category; the skeleton is **streamed first**
       in the HTML response, proving the Suspense boundary is in place
+      — *no longer true, and the streaming it demonstrated is the bug the successor spec fixes*
 - [x] SEO payload unaffected by streaming — title, `<h1>` and all JSON-LD still present in the
       same response on all three routes
 - [x] **TTFB improved**, because the shell no longer waits on the data fetch:
@@ -98,9 +109,13 @@ the improvement is verified structurally (the fallback and the content now produ
 model) rather than numerically. Lighthouse or the Performance panel would give the real figure.
 
 ## MUST NOT change
-- **Do not delete the `loading.tsx` files.** They look empty — three one-line re-exports — but their
-  existence is the Suspense boundary. Removing one silently restores the frozen-navigation bug, and
-  nothing in the type system or the build will complain.
+- ~~**Do not delete the `loading.tsx` files.**~~ **Reversed** by
+  `bugfix-ssr-product-list-behind-suspense.md`: they must NOT exist, because the boundary is what
+  makes the server-rendered page script-gated. The underlying rule survives in a different form —
+  *never leave a server-fetched navigation with no feedback*. That is now
+  `src/contexts/NavigationContext.tsx`, and breaking it is just as silent: if
+  `LinkPendingReporter` stops being rendered inside a `<Link>`, `useLinkStatus()` reports nothing
+  for ever and every click looks frozen again, with nothing failing.
 - **Keep the route skeleton and the view's loading branch rendering the same component.** They were
   duplicated markup before; that is how the `products-grid` / `product-grid` class mismatch nearly
   shipped a broken-layout skeleton.

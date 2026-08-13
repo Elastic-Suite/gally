@@ -14,11 +14,12 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   if (!resolved) return {};
 
   const doc = await fetchCmsPageById(resolved.localizedCatalog.code, id);
-  // notFound() MUST happen here, not only in the page body. These routes have a
-  // loading.tsx, so they stream: by the time the page component runs the 200 header is
-  // already flushed and notFound() can render the 404 UI but not set the status — a
-  // soft-404. generateMetadata resolves before the response flushes, so this is the last
-  // point a real 404 can still be returned. The fetch is cache()d, so it costs nothing.
+  // Kept alongside the layout guard rather than relying on the page body alone: metadata
+  // resolves before the response flushes, so this is the last point at which a real 404
+  // status is reachable if a Suspense boundary is ever reintroduced above this route (it
+  // would make the page stream, and a streamed notFound() can only paint 404 UI under a
+  // 200). The fetch is cache()d, so it costs nothing. See
+  // specs/bugfix-ssr-product-list-behind-suspense.md.
   if (!doc) notFound();
 
   const post = getCmsFields(doc);

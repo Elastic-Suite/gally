@@ -74,6 +74,43 @@ export const fetchCategoryProducts = cache(async (
   }
 });
 
+// The /search listing. `sortField: '_score'` and `sortDirection: 'desc'` are not defaults
+// picked here — they are what SearchPage passes on its first render, and the seeded state
+// is only reused while the hook's option key still matches, so a drift in either value
+// silently turns into a client refetch and the skeleton this exists to avoid.
+//
+// An empty query browses everything: the SDK needs a non-empty searchQuery to pick
+// product_search over product_catalog (which 400s without a category), and '*' is what
+// useSearch sends for the same case.
+export const fetchSearchProducts = cache(async (
+  localizedCatalog: string,
+  searchQuery: string,
+  pageSize = 20
+): Promise<ServerSearchResult> => {
+  try {
+    const response = await getSearchManager().search({
+      localizedCatalog,
+      metadata: 'product',
+      searchQuery: searchQuery || '*',
+      currentPage: 1,
+      pageSize,
+      isAutocomplete: false,
+      selectedFields: PRODUCT_FIELDS,
+      filters: [],
+      sortField: '_score',
+      sortDirection: 'desc',
+    });
+    return {
+      products: response.getCollection(),
+      total: response.getTotalCount(),
+      pageCount: response.getLastPage(),
+      aggregations: response.getAggregations(),
+    };
+  } catch {
+    return { products: [], total: 0, pageCount: 0, aggregations: [] };
+  }
+});
+
 export const fetchCmsPageById = cache(async (
   localizedCatalog: string,
   id: string

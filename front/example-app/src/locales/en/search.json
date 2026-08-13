@@ -12,11 +12,7 @@
     "noProducts": "No matching products",
     "noCategories": "No matching categories",
     "blogTitle": "📝 Blog",
-    "noBlog": "No matching articles",
-    "suggestions": [
-      "dress", "tank dress", "summer dress", "floral dress", "midi skirt",
-      "blouse", "jacket", "pants", "shoes", "accessories"
-    ]
+    "noBlog": "No matching articles"
   },
   "page": {
     "breadcrumb": "Home / Search",

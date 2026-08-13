@@ -20,6 +20,14 @@ Moved it to `app/[locale]/category/layout.tsx`, above the `[code]` segment. It n
 stays mounted across every `/category/*` navigation, and — being above `[code]/loading.tsx` — stays
 on screen during the fetch instead of being skeletonised.
 
+> **Amended by `bugfix-ssr-product-list-behind-suspense.md`.** The `loading.tsx` boundaries are gone
+> (they made the server-rendered page script-gated), so the pending-navigation skeleton now replaces
+> everything inside `<main>` — this layout included. `RouteSkeleton` redraws `CategoryNav` for
+> category targets to keep the bar on screen; verified present in 110/110 sampled frames of a
+> category → category transition. What is lost is `CategoryItem`'s hover state, because the bar is a
+> fresh instance for the duration of the transition. Everything else below still holds: the nav is
+> still rendered once per `/category/*` visit, not per page component.
+
 Placed above `[code]`, not at `[code]/layout.tsx`, so it unambiguously persists across different
 category ids rather than relying on how Next reconciles a layout whose own params changed.
 
@@ -77,8 +85,7 @@ Now the `<aside>` and its `<h3>` render unconditionally and only the rows below 
 </aside>
 ```
 
-`FacetsSkeleton` (still used by `category/[code]/loading.tsx`, which runs before `Facets` exists at
-all) now composes the same `FacetsSkeletonBody` inside an identical shell, so the two states are the
+`FacetsSkeleton` (still used by `RouteSkeleton`, which draws before `Facets` exists at all) now composes the same `FacetsSkeletonBody` inside an identical shell, so the two states are the
 same height and the route-level fallback and the in-component one cannot drift.
 
 The early-return's reasoning was preserved, not dropped: `showSkeleton` is still keyed on
@@ -94,7 +101,7 @@ flashing mid-request on a reload whose stale aggregations all turn out non-discr
 - **`ProductPage` and `BlogPostPage` keep their whole-page `if (loading)` early return.** Their
   shells are stable too, but since Phase 3 those branches are close to dead code: `sku` and `id`
   come from route params, so navigating between products is a route change served by the server
-  with `loading.tsx`, not a client refetch. Restructuring a 175-line component for a branch that
+  with a pending-navigation skeleton, not a client refetch. Restructuring a 175-line component for a branch that
   rarely runs is not worth the regression risk. **If either page ever gains a client-side way to
   change its entity without a navigation, revisit this.**
 

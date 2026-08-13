@@ -1,6 +1,12 @@
 # Feature: Header brand lockup — official "elasticsuite solutions" SVG
 
-## Status: implemented
+## Status: SUPERSEDED by specs/feature-logo-gally-example.md
+> The header no longer renders this lockup. The rabbit was cropped out of the asset and
+> "Gally example" is now set as type beside it — which is the reversal this spec's own
+> History section anticipated. `src/assets/elasticsuite-solutions.svg` is kept as the
+> provenance source of that crop and as the only copy of the official wordmarks; it is no
+> longer imported by any component. Everything below is history: `.header-logo-img` is now
+> `.header-logo-mark`, and `brand.ariaLabel` now says "Gally example".
 ## Page/Component: src/components/Header.tsx, src/assets/elasticsuite-solutions.svg, src/styles.css, src/locales/{en,fr,de}/common.json
 
 The top-left home link is the official ElasticSuite Solutions lockup: one SVG holding
