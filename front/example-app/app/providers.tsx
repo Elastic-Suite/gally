@@ -6,6 +6,7 @@ import { CartProvider } from '../src/contexts/CartContext';
 import { DemoProvider } from '../src/contexts/DemoContext';
 import { SearchBarProvider } from '../src/contexts/SearchBarContext';
 import { LocaleProvider } from '../src/contexts/LocaleContext';
+import { NavigationProvider } from '../src/contexts/NavigationContext';
 import I18nBridge from '../src/i18n/I18nBridge';
 import AppShell from '../src/components/AppShell';
 import { ICatalog, ILocalizedCatalog, ICategoryNode } from '../src/sdk/catalogs';
@@ -32,22 +33,26 @@ export default function Providers({
 }) {
   return (
     <LocaleProvider locale={locale}>
-      <CatalogProvider
-        catalogs={catalogs}
-        selectedCatalog={selectedCatalog}
-        selectedLocalizedCatalog={selectedLocalizedCatalog}
-        categories={categories}
-      >
-        <I18nBridge>
-          <CartProvider>
-            <DemoProvider>
-              <SearchBarProvider>
-                <AppShell>{children}</AppShell>
-              </SearchBarProvider>
-            </DemoProvider>
-          </CartProvider>
-        </I18nBridge>
-      </CatalogProvider>
+      {/* Above CatalogProvider because LocaleLink — which every link in the app is — reports
+          into it, and links exist in the header, the nav and every page. */}
+      <NavigationProvider>
+        <CatalogProvider
+          catalogs={catalogs}
+          selectedCatalog={selectedCatalog}
+          selectedLocalizedCatalog={selectedLocalizedCatalog}
+          categories={categories}
+        >
+          <I18nBridge>
+            <CartProvider>
+              <DemoProvider>
+                <SearchBarProvider>
+                  <AppShell>{children}</AppShell>
+                </SearchBarProvider>
+              </DemoProvider>
+            </CartProvider>
+          </I18nBridge>
+        </CatalogProvider>
+      </NavigationProvider>
     </LocaleProvider>
   );
 }

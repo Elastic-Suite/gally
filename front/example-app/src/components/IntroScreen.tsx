@@ -14,7 +14,9 @@ export default function IntroScreen() {
   return (
     <div className="intro-overlay">
       <div className="intro-card">
-        <div className="intro-logo">Elastic<span>Suite</span></div>
+        {/* Same wordmark as the header lockup, same white/coral split — here on a light
+            card, so the first word takes --indigo-900 from .intro-logo instead of white. */}
+        <div className="intro-logo">Gally <span>example</span></div>
         <h1>{t('intro.welcome')}</h1>
         <p className="intro-subtitle">{t(`scenarios:${scenario.i18nKey}.description`)}</p>
 

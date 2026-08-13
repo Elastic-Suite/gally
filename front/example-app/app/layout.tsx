@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   // `default` is the fallback for any route that sets none — after this change that
   // should only ever be an error page.
   title: {
-    default: 'Gally Features — ElasticSuite Demo',
+    default: 'Gally example — Features Demo',
     template: `%s · ${SITE_NAME}`,
   },
   // Lets Next resolve relative URLs in openGraph/alternates instead of emitting them

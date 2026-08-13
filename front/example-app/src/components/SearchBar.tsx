@@ -1,14 +1,14 @@
 'use client';
 
-import React, { useState, useRef, useEffect, useMemo } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocaleHref } from '../contexts/LocaleContext';
+import { useNavigate } from '../contexts/NavigationContext';
 import { useSearchBarRef } from '../contexts/SearchBarContext';
 import { useAutocomplete } from '../hooks/useSearch';
-import { useCmsAutocomplete, cmsPageUrl } from '../hooks/useCms';
+import { cmsPageUrl, useCmsAutocomplete } from '../hooks/useCms';
 import SearchOverlay, {
-  getSuggestionMatches, getCategoryMatches, getAutocompleteAttributes, attributeFilterUrl,
+  attributeFilterUrl, getAutocompleteAttributes, getCategoryMatches, getTermSuggestions,
 } from './SearchOverlay';
 import { getProductFields } from './ProductCard';
 
@@ -19,13 +19,16 @@ interface SearchBarProps {
 
 export default function SearchBar({ categories, categoriesLoading }: SearchBarProps) {
   const { t } = useTranslation('search');
-  const router = useRouter();
+  // useNavigate, not router.push: /search fetches its first page of results on the server,
+  // so submitting a query waits on that response. A bare push makes the wait invisible —
+  // the header would sit on the previous page with no feedback. See NavigationContext.
+  const navigate = useNavigate();
   const localeHref = useLocaleHref();
   const [query, setQuery] = useState('');
   const [focused, setFocused] = useState(false);
-  const { results, aggregations, loading, search, clear } = useAutocomplete();
+  const { results, aggregations, termSuggestions: productsTermSuggestions, loading, search, clear } = useAutocomplete();
   const {
-    pages: cmsPages, loading: cmsLoading, search: cmsSearch, clear: cmsClear,
+    pages: cmsPages, termSuggestions: cmsPagesTermSuggestions, loading: cmsLoading, search: cmsSearch, clear: cmsClear,
   } = useCmsAutocomplete();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const searchBarRef = useSearchBarRef();
@@ -43,11 +46,20 @@ export default function SearchBar({ categories, categoriesLoading }: SearchBarPr
     cmsClear();
   };
 
+  // The engine's popular search terms for this query, products and blog merged into
+  // the single list the Suggestions column renders. Computed here rather than inside
+  // the overlay so `flatItems` below can key off the exact same terms — when the two
+  // were derived separately, arrow keys highlighted rows that weren't on screen.
+  const termSuggestions = useMemo(
+    () => getTermSuggestions(productsTermSuggestions, cmsPagesTermSuggestions),
+    [productsTermSuggestions, cmsPagesTermSuggestions],
+  );
+
   // Flattened, in-visual-order list of every navigable item across the 3 columns,
   // so arrow keys can move through them as a single sequence.
   const flatItems = useMemo(() => {
     const items: { key: string; to: string }[] = [];
-    getSuggestionMatches(query).forEach(term => {
+    termSuggestions.forEach(term => {
       items.push({ key: `suggestion-${term}`, to: `/search?q=${encodeURIComponent(term)}` });
     });
     // Attribute options sit under the suggestions in the same column, so they
@@ -73,7 +85,7 @@ export default function SearchBar({ categories, categoriesLoading }: SearchBarPr
       items.push({ key: `blog-${page.id}`, to: cmsPageUrl(page.id) });
     });
     return items;
-  }, [query, results, aggregations, categories, cmsPages]);
+  }, [query, termSuggestions, results, aggregations, categories, cmsPages]);
 
   useEffect(() => {
     setHighlightedIndex(-1);
@@ -104,7 +116,7 @@ export default function SearchBar({ categories, categoriesLoading }: SearchBarPr
       },
       submit: () => {
         if (query.trim()) {
-          router.push(localeHref(`/search?q=${encodeURIComponent(query.trim())}`));
+          navigate(localeHref(`/search?q=${encodeURIComponent(query.trim())}`));
           clearAll();
           closeOverlay();
         }
@@ -121,7 +133,7 @@ export default function SearchBar({ categories, categoriesLoading }: SearchBarPr
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (query.trim()) {
-      router.push(localeHref(`/search?q=${encodeURIComponent(query.trim())}`));
+      navigate(localeHref(`/search?q=${encodeURIComponent(query.trim())}`));
       clearAll();
       closeOverlay();
     }
@@ -150,7 +162,7 @@ export default function SearchBar({ categories, categoriesLoading }: SearchBarPr
       e.preventDefault();
       const item = flatItems[highlightedIndex];
       if (item) {
-        router.push(localeHref(item.to));
+        navigate(localeHref(item.to));
         setQuery('');
         clearAll();
         closeOverlay();
@@ -188,13 +200,14 @@ export default function SearchBar({ categories, categoriesLoading }: SearchBarPr
         query={query}
         results={results}
         aggregations={aggregations}
+        termSuggestions={termSuggestions}
         resultsLoading={loading}
         categories={categories}
         categoriesLoading={categoriesLoading}
         cmsPages={cmsPages}
         cmsLoading={cmsLoading}
         highlightedKey={highlightedKey}
-        navigate={(path: string) => router.push(localeHref(path))}
+        navigate={(path: string) => navigate(localeHref(path))}
         setQuery={setQuery}
         clear={clearAll}
         close={closeOverlay}

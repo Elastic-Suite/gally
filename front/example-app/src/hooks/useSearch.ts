@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { getSearchManager } from '../sdk';
 import { useCatalog } from '../contexts/CatalogContext';
 import { PRODUCT_FIELDS } from '../sdk/fields';
@@ -16,7 +16,9 @@ interface SearchOptions {
   // Data already fetched on the server for this exact query (Phase 3). When present the
   // hook seeds itself from it and skips the mount fetch, so the page a crawler reads and
   // the page a user sees are produced by one request, not two — and the loading skeleton
-  // never flashes. Any later change to the options still refetches normally.
+  // never flashes. A seed arriving later for a query not yet shown (a route re-navigating
+  // to itself with a different `?q=`) is adopted the same way. Any option change with no
+  // matching seed still refetches normally.
   initialData?: {
     products: any[];
     total: number;
@@ -31,6 +33,7 @@ interface SearchResult {
   currentPage: number;
   pageCount: number;
   aggregations: any[];
+  termSuggestions?: any[];
   loading: boolean;
   error: string | null;
 }
@@ -85,8 +88,8 @@ export function useSearch(options: SearchOptions) {
     setResult(prev => ({ ...prev, loading: true, error: null }));
     try {
       const sm = getSearchManager();
-      const hasCategory = !!optionsRef.current.categoryCode;
-      const searchQuery = optionsRef.current.searchQuery;
+      const hasCategory = Boolean(optionsRef.current.categoryCode);
+      const {searchQuery} = optionsRef.current;
       // product_catalog requires currentCategoryId (API 400s otherwise), so whenever
       // there's no category — regardless of whether the caller passed searchQuery as
       // '', undefined, or omitted it entirely — force product_search mode via '*'.
@@ -113,6 +116,7 @@ export function useSearch(options: SearchOptions) {
         currentPage: optionsRef.current.currentPage ?? 1,
         pageCount: response.getLastPage(),
         aggregations: response.getAggregations(),
+        termSuggestions: response.getTermSuggestions(),
         loading: false,
         error: null,
       });
@@ -122,10 +126,27 @@ export function useSearch(options: SearchOptions) {
   }, [selectedLocalizedCatalog]);
 
   useEffect(() => {
-    if (serverFetchedKey.current !== null) {
-      if (serverFetchedKey.current === searchKey(optionsRef.current)) return;
-      serverFetchedKey.current = null;
+    const key = searchKey(optionsRef.current);
+    // Already showing exactly this query's server-fetched data.
+    if (serverFetchedKey.current === key) return;
+    // A *new* seed for a query we have not shown yet. This is /search re-navigating to
+    // itself with a different `?q=`: the route's Server Component runs again and passes
+    // fresh initialData, but this component never unmounted, so the useState initializer
+    // above cannot pick it up. Without this branch the seed would be ignored and the
+    // query refetched from the browser — a second identical request, behind a skeleton.
+    // The caller only passes initialData while the view matches it (isServerFetchedView),
+    // so if it is here it belongs to these options.
+    if (optionsRef.current.initialData) {
+      serverFetchedKey.current = key;
+      setResult({
+        ...optionsRef.current.initialData,
+        currentPage: optionsRef.current.currentPage ?? 1,
+        loading: false,
+        error: null,
+      });
+      return;
     }
+    serverFetchedKey.current = null;
     doSearch();
   }, [
     doSearch,
@@ -145,8 +166,8 @@ export function useSearch(options: SearchOptions) {
   const viewMoreOptions = useCallback(async (field: string) => {
     if (!selectedLocalizedCatalog) return [];
     const sm = getSearchManager();
-    const hasCategory = !!optionsRef.current.categoryCode;
-    const searchQuery = optionsRef.current.searchQuery;
+    const hasCategory = Boolean(optionsRef.current.categoryCode);
+    const {searchQuery} = optionsRef.current;
     const isSearchMode = !hasCategory && searchQuery !== undefined;
     const effectiveQuery = isSearchMode
       ? (searchQuery || '*')
@@ -179,6 +200,7 @@ export function useAutocomplete() {
   // autocomplete" (isUsedInAutocomplete), see AutocompleteSourceFields.php.
   // Whatever comes back is what the merchandiser flagged; the front doesn't pick.
   const [aggregations, setAggregations] = useState<any[]>([]);
+  const [termSuggestions, setTermSuggestions] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
@@ -188,6 +210,9 @@ export function useAutocomplete() {
     if (!query || query.length < 2 || !selectedLocalizedCatalog) {
       setResults([]);
       setAggregations([]);
+      // Deleting back down to one character must drop the terms too — otherwise the
+      // previous query's suggestions stay on screen with nothing they belong to.
+      setTermSuggestions([]);
       return;
     }
 
@@ -207,9 +232,11 @@ export function useAutocomplete() {
         });
         setResults(response.getCollection());
         setAggregations(response.getAggregations());
+        setTermSuggestions(response.getTermSuggestions());
       } catch {
         setResults([]);
         setAggregations([]);
+        setTermSuggestions([]);
       } finally {
         setLoading(false);
       }
@@ -219,7 +246,8 @@ export function useAutocomplete() {
   const clear = useCallback(() => {
     setResults([]);
     setAggregations([]);
+    setTermSuggestions([]);
   }, []);
 
-  return { results, aggregations, loading, search, clear };
+  return { results, aggregations, termSuggestions, loading, search, clear };
 }

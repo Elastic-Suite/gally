@@ -1,8 +1,8 @@
 import { notFound } from 'next/navigation';
 import { resolveLocale, fetchCmsPageById } from '../../../../src/sdk/server';
 
-// See app/[locale]/product/[sku]/layout.tsx — the existence check must run outside the
-// Suspense boundary loading.tsx creates, or the 404 status is already lost.
+// See app/[locale]/product/[sku]/layout.tsx — the existence check lives in the layout so the
+// 404 status is set before any of the page is produced.
 export default async function ArticleGuard({
   children,
   params,

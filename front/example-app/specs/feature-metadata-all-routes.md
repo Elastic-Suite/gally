@@ -136,7 +136,10 @@ of content on the category route. Verified 404s: `/product/NOPE`, `/blog/99999`,
 - **Never rely on `notFound()` in a page or in `generateMetadata` for a route that has a
   `loading.tsx`.** It renders the right UI under the wrong status, and nothing warns you. The check
   belongs in that route's `layout.tsx`. Deleting one of those guards silently reintroduces soft-404s
-  on an unbounded set of URLs.
+  on an unbounded set of URLs. (The `loading.tsx` files were later deleted for an unrelated reason —
+  `bugfix-ssr-product-list-behind-suspense.md` — so nothing streams today and the page-body checks
+  would also work. The layout guards stay, and the 404s verified above are still verified against
+  them; the rule stands for the moment any boundary is reintroduced.)
 - `findTrail()` in `src/sdk/categoryTree.ts` is shared by the category guard and the category route
   so that "does this category exist" is answered identically in both. Do not fork it.
 - `ItemList` must keep describing **only the first page** — the same rows the canonical URL renders.

@@ -132,31 +132,57 @@ a:hover {
   pointer-events: none;
 }
 
-/* Brand: the official ElasticSuite Solutions lockup, a single SVG that already
-   contains the mark and both wordmarks. No type is set here — everything visible
-   comes from the asset, which is why there is no `.header-logo span` rule. */
+/* Brand: the Gally rabbit as an asset, "Gally example" set here as type. The two
+   wordmark spans are targeted by their own classes — deliberately not a
+   `.header-logo span` catch-all, which previously forced the accent colour onto
+   every nested span. */
 .header-logo {
   display: inline-flex;
   align-items: center;
+  gap: 0.6rem;
   flex-shrink: 0;
 }
 
-/* 2.5rem matches the `h-10` the lockup is used at on elasticsuite.io. The asset's
-   own 219:63 ratio then fixes the width (~8.7rem), so it never needs one set. */
-.header-logo-img {
+/* 2.5rem is the height the lockup was used at on elasticsuite.io (`h-10`). The
+   cropped asset's own 67:63 ratio fixes the width (~2.66rem), so it never needs
+   one set. */
+.header-logo-mark {
   display: block;
   height: 2.5rem;
   width: auto;
 }
 
+/* The wordmark: two words on one line, coral picking up the mark's own colour the
+   way "solutions" did in the original lockup. */
+.header-logo-text {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.3rem;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+.header-logo-name {
+  color: var(--white);
+}
+.header-logo-accent {
+  color: var(--coral-500);
+}
+
 .header-nav {
   display: flex;
-  gap: 0.25rem;
+  align-items: center;
+  gap: 0.5rem;
   flex: 1;
   overflow-x: auto;
 }
 
-.header-nav a {
+/* Plain nav links (Search Intelligence). Scoped to direct children so the switch's
+   own tabs below, which are nested, never pick up this hover background — it would
+   fight the sliding thumb. */
+.header-nav > a {
   color: rgba(255, 255, 255, 0.8);
   padding: 0.5rem 0.75rem;
   border-radius: var(--radius-pill);
@@ -165,10 +191,93 @@ a:hover {
   white-space: nowrap;
   transition: all 0.2s;
 }
-.header-nav a:hover,
-.header-nav a.active {
+.header-nav > a:hover,
+.header-nav > a.active {
   color: white;
   background: rgba(255, 255, 255, 0.15);
+}
+
+/* ─── Header nav switch (Products / Articles) ────────────── */
+/* The same segmented-switch idiom as the search results type switch
+   (.result-type-tabs), inverted for the dark header: the track is a translucent
+   white well instead of --gray-100, and the raised thumb is solid --white with
+   --indigo-800 text. Structure is identical on purpose — inline-grid with two 1fr
+   columns so both segments are the width of the wider one, which is what lets the
+   thumb slide by exactly one column with no JS measurement. */
+.header-nav-switch {
+  position: relative;
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.12);
+  flex-shrink: 0;
+}
+
+/* The sliding thumb: one pseudo-element behind both segments, so there is something
+   continuous to animate. Moved with `transform` only — compositor-only, and it can
+   never reflow the header row it sits in. Width = one grid column: the track minus
+   its 0.25rem padding either side and the 0.25rem gap, halved. */
+.header-nav-switch::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  top: 0.25rem;
+  bottom: 0.25rem;
+  left: 0.25rem;
+  width: calc((100% - 0.75rem) / 2);
+  border-radius: var(--radius-pill);
+  background: var(--white);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease;
+}
+/* 100% is the thumb's own width — one column — so this lands it on the second
+   column, gap included. */
+.header-nav-switch[data-active='blog']::before {
+  transform: translateX(calc(100% + 0.25rem));
+}
+/* Off both sections (homepage, cart, /explain): no selection to show. The thumb is
+   faded out rather than removed, so it can slide back in from where it left. */
+.header-nav-switch[data-active='none']::before {
+  opacity: 0;
+}
+
+.header-nav-tab {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.45rem 1rem;
+  border-radius: var(--radius-pill);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: color 0.15s;
+}
+.header-nav-tab:hover {
+  color: var(--white);
+}
+/* No background or shadow here — the thumb draws those. Declared after :hover, at
+   equal specificity, so the selected segment keeps its colour when hovered. */
+.header-nav-tab.active,
+.header-nav-tab.active:hover {
+  color: var(--indigo-800);
+}
+
+.header-nav-icon {
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+/* The slide is decoration; honour a reduced-motion preference by cutting it. */
+@media (prefers-reduced-motion: reduce) {
+  .header-nav-switch::before {
+    transition: none;
+  }
 }
 
 .header-controls {
@@ -268,11 +377,19 @@ a:hover {
   /* The panel above owns no background of its own (see
      specs/feature-acp-visual-redesign.md), so this is the only ground the
      panel's light text ever gets — it has to hide the page behind it on its
-     own. Tuned up from .55/20px, which let busy category grids read through
-     the columns. */
-  background: rgba(30, 27, 75, 0.72);
-  backdrop-filter: blur(28px);
+     own. Tuned up twice for that reason (.55/20px → .72/28px → .92): at .72 a
+     product grid or hero behind the overlay still read through the columns and
+     fought the light text. At .92 the blur is only a faint hint of the page
+     underneath, which is all the glass look needs; legibility wins. */
+  background: rgba(30, 27, 75, 0.92);
+  /* Prefixed FIRST, standard LAST — not the usual cosmetic ordering. Next's CSS
+     minifier (lightningcss) treats the two as one property and keeps only the last
+     declaration, so with the standard one written first the build shipped
+     `-webkit-backdrop-filter` alone — which Blink doesn't implement. The blur was
+     silently gone in Chrome/Firefox from the Next migration onward, leaving the flat
+     tint as the panel's only ground. Keep this order. */
   -webkit-backdrop-filter: blur(28px);
+  backdrop-filter: blur(28px);
   display: flex;
   justify-content: center;
   align-items: flex-start;
