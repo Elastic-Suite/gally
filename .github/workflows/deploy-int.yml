@@ -97,26 +97,26 @@ jobs:
             docker compose run --rm php composer config repositories.gally-premium composer $PACKAGIST_URL &&
             docker compose run --rm -e COMPOSER_AUTH='$COMPOSER_AUTH' php composer require \"gally/gally-standard:${{ env.composer_version }} as ${{ inputs.last_published_version }}\" &&
             docker compose run --rm -e COMPOSER_AUTH='$COMPOSER_AUTH' php composer require \"gally/gally-premium:${{ env.composer_version }}\" &&
-            echo "Sample data value: ${{ env.add_sample_data }}" &&
-            if [ "${{ env.add_sample_data }}" = "true" ]; then
-              echo "Install sample data (catalog: ${{ env.sample_data_catalog }})";
+            echo \"Sample data value: ${{ env.add_sample_data }}\" &&
+            if [ \"${{ env.add_sample_data }}\" = \"true\" ]; then
+              echo \"Install sample data (catalog: ${{ env.sample_data_catalog }})\";
               docker compose run --rm php sed -i \"s/DoctrineFixturesBundle::class => \['dev' => true, 'test' => true]/DoctrineFixturesBundle::class => ['all' => true]/g\" config/bundles.php;
               docker compose run --rm php sed -i \"s/NelmioAliceBundle::class => \['dev' => true, 'test' => true]/NelmioAliceBundle::class => ['all' => true]/g\" config/bundles.php;
               docker compose run --rm php sed -i \"s/FidryAliceDataFixturesBundle::class => \['dev' => true, 'test' => true]/FidryAliceDataFixturesBundle::class => ['all' => true]/g\" config/bundles.php;
               docker compose run --rm php sed -i \"s/HautelookAliceBundle::class => \['dev' => true, 'test' => true]/HautelookAliceBundle::class => ['all' => true]/g\" config/bundles.php;
-              if [ "${{ env.sample_data_catalog }}" = "Default" ] || [ -z "${{ env.sample_data_catalog }}" ]; then
-                echo "Installing default sample data package";
+              if [ \"${{ env.sample_data_catalog }}\" = \"Default\" ] || [ -z \"${{ env.sample_data_catalog }}\" ]; then
+                echo \"Installing default sample data package\";
                 docker compose run --rm -e COMPOSER_AUTH='$COMPOSER_AUTH' php composer require \"gally/gally-sample-data:${{ env.composer_version }}\";
               else
-                echo "Installing catalog package for: ${{ env.sample_data_catalog }}";
+                echo \"Installing catalog package for: ${{ env.sample_data_catalog }}\";
                 docker compose run --rm -e COMPOSER_AUTH='$COMPOSER_AUTH' php composer require \"gally/gally-catalog:${{ env.composer_version }}\";
-                if [ "${{ env.sample_data_catalog }}" != "Cultura" ]; then
+                if [ \"${{ env.sample_data_catalog }}\" != \"Cultura\" ]; then
                   docker compose run --rm php sed -i \"s/Gally\\\\\\\\CulturaCatalog\\\\\\\\GallyCulturaCatalogBundle::class => \['all' => true]/\/\/ Gally\\\\\\\\CulturaCatalog\\\\\\\\GallyCulturaCatalogBundle::class => ['all' => true]/g\" config/bundles.php;
                 fi;
-                if [ "${{ env.sample_data_catalog }}" != "Snowleader" ]; then
+                if [ \"${{ env.sample_data_catalog }}\" != \"Snowleader\" ]; then
                   docker compose run --rm php sed -i \"s/Gally\\\\\\\\SnowleaderCatalog\\\\\\\\GallySnowleaderCatalogBundle::class => \['all' => true]/\/\/ Gally\\\\\\\\SnowleaderCatalog\\\\\\\\GallySnowleaderCatalogBundle::class => ['all' => true]/g\" config/bundles.php;
                 fi;
-                if [ "${{ env.sample_data_catalog }}" != "Synchro diffusion" ]; then
+                if [ \"${{ env.sample_data_catalog }}\" != \"Synchro diffusion\" ]; then
                   docker compose run --rm php sed -i \"s/Gally\\\\\\\\SynchroDiffusionCatalog\\\\\\\\GallySynchroDiffusionCatalogBundle::class => \['all' => true]/\/\/ Gally\\\\\\\\SynchroDiffusionCatalog\\\\\\\\GallySynchroDiffusionCatalogBundle::class => ['all' => true]/g\" config/bundles.php;
                 fi;
               fi;
