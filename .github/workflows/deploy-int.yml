@@ -109,7 +109,9 @@ jobs:
                 docker compose run --rm -e COMPOSER_AUTH='$COMPOSER_AUTH' php composer require \"gally/gally-sample-data:${{ env.composer_version }}\";
               else
                 echo \"Installing catalog package for: ${{ env.sample_data_catalog }}\";
-                docker compose run --rm -e COMPOSER_AUTH='$COMPOSER_AUTH' php composer require \"gally/gally-catalog:${{ env.composer_version }}\";
+                ([ -d api/packages/gally-catalogs ] || git clone git@github.com:Elastic-Suite/gally-catalogs.git api/packages/gally-catalogs) &&
+                docker compose run --rm php composer config --no-interaction --ansi repositories.gally-catalogs '{ \"type\": \"path\", \"url\": \"packages/gally-catalogs\", \"options\": { \"versions\": { \"gally/gally-catalogs\": \"dev-master\"}}}' &&
+                docker compose run --rm php composer require gally/gally-catalogs:dev-master;
                 if [ \"${{ env.sample_data_catalog }}\" != \"Cultura\" ]; then
                   docker compose run --rm php sed -i \"s/Gally\\\\\\\\CulturaCatalog\\\\\\\\GallyCulturaCatalogBundle::class => \['all' => true]/\/\/ Gally\\\\\\\\CulturaCatalog\\\\\\\\GallyCulturaCatalogBundle::class => ['all' => true]/g\" config/bundles.php;
                 fi;
