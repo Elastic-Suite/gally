@@ -1,10 +1,11 @@
 'use client';
 
 import { createContext, useContext, useCallback, ReactNode } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import {
     ICatalog, ILocalizedCatalog, ICategoryNode, LANGUAGES, DEFAULT_LANGUAGE,
 } from '../sdk/catalogs';
+import { useNavigate } from './NavigationContext';
 
 interface ICatalogContextType {
   catalogs: ICatalog[];
@@ -42,16 +43,19 @@ export function CatalogProvider({
   categories: ICategoryNode[];
   children: ReactNode;
 }) {
-  const router = useRouter();
   const pathname = usePathname();
+  // Not router.push: a catalog switch re-resolves the catalog list, the category tree AND the
+  // page's own data on the server, so it is the slowest navigation in the app — exactly the
+  // one that must not look like nothing happened. See src/contexts/NavigationContext.tsx.
+  const navigate = useNavigate();
 
   // Swap the locale segment while staying on the same page, so switching catalog from a
   // product page keeps you on that product rather than dumping you on the homepage.
   const goToLocalizedCatalog = useCallback((code: string) => {
     const segments = pathname.split('/');
     segments[1] = code;
-    router.push(segments.join('/') || '/');
-  }, [pathname, router]);
+    navigate(segments.join('/') || '/');
+  }, [pathname, navigate]);
 
   const setLocalizedCatalog = goToLocalizedCatalog;
 

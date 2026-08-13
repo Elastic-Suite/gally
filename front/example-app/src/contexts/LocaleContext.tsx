@@ -1,6 +1,7 @@
 'use client';
 
 import { createContext, useContext, ReactNode } from 'react';
+import { usePathname } from 'next/navigation';
 
 // The localized-catalog code that owns the current URL (`com_fr`, `en_en`, …).
 // It is resolved on the SERVER, in app/[locale]/layout.tsx, and handed down — that is
@@ -38,4 +39,23 @@ export function withLocale(locale: string, path: string): string {
 export function useLocaleHref(): (path: string) => string {
   const locale = useLocale();
   return (path: string) => withLocale(locale, path);
+}
+
+// The inverse of withLocale: strips the locale segment off a real pathname.
+// `usePathname()` returns the URL as routed — `/com_en/blog`, never `/blog` — so any
+// comparison against an app-internal path ('/explain', startsWith('/category')) is
+// silently false without this. Use useAppPathname() below rather than calling it
+// directly.
+export function withoutLocale(locale: string, pathname: string): string {
+  if (pathname === `/${locale}`) return '/';
+  if (pathname.startsWith(`/${locale}/`)) return pathname.slice(locale.length + 1);
+  return pathname;
+}
+
+// The current pathname in the same shape call sites write hrefs in: locale segment
+// removed, leading slash kept, '/' for the homepage. This is what to compare routes
+// against.
+export function useAppPathname(): string {
+  const locale = useLocale();
+  return withoutLocale(locale, usePathname());
 }

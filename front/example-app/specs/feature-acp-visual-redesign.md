@@ -3,10 +3,19 @@
 ## Status: implemented
 ## Page/Component: src/components/SearchBar.tsx, src/components/SearchOverlay.tsx, src/styles.css
 
-> **Superseded on two values:** the scrim's tint and blur are now `rgba(30,27,75,.72)` /
+> **Superseded on two values:** the scrim's tint and blur are now `rgba(30,27,75,.92)` /
 > `blur(28px)`, raised because this doc's own decision to strip the panel's background left the
 > scrim as the only ground the light text gets. See
-> `specs/feature-add-to-cart-feedback-everywhere.md`. Everything else here is current.
+> `specs/feature-add-to-cart-feedback-everywhere.md` for the first bump (`.55/20px → .72/28px`) and
+> `specs/bugfix-acp-scrim-blur-dropped.md` for the second (`.72 → .92`) — which also found that the
+> blur had not been reaching Chrome or Firefox at all since the Next migration, so read that one
+> before re-tuning either value.
+>
+> **Superseded on the Suggestions column:** its terms are the engine's `termSuggestions` now, not a
+> hardcoded per-locale array, and `getSuggestionMatches()` is gone. See
+> `specs/feature-acp-real-term-suggestions.md`.
+>
+> Everything else here is current.
 
 ## Context
 Follow-up to `specs/feature-search-header-redesign.md`, which shipped the original overlay. This spec
@@ -112,5 +121,6 @@ truth for what the ACP actually looks like.
 - Keyboard navigation logic, the flattened cross-column `highlightedIndex`, portal-to-`document.body`
   requirement, and the `ResizeObserver`-driven `--header-height` offset — all from the original spec,
   untouched by this visual pass.
-- `getSuggestionMatches`/`getCategoryMatches` matching logic — unchanged, only the DOM/CSS around their
-  output changed.
+- `getCategoryMatches` matching logic — unchanged, only the DOM/CSS around its output changed.
+  (`getSuggestionMatches` was protected here too; it has since been deleted on purpose — see the
+  superseded note at the top.)

@@ -2,9 +2,11 @@ import { ReactNode } from 'react';
 
 // Loading skeletons shared by two callers that must not drift apart:
 //
-//  1. each route's app/**/loading.tsx, shown while the SERVER fetches (Phase 3 moved
-//     that fetch off the client, and without a Suspense boundary a navigation simply
-//     freezes on the old page for a second or more with no feedback at all);
+//  1. RouteSkeleton.tsx, shown while a client-side navigation waits for the server. These
+//     used to be a `loading.tsx` per route, which is a Suspense boundary — and a boundary
+//     also defers the FIRST document, streaming the real page into a `<div hidden>` that a
+//     script moves into place, so the product list did not exist for a client with
+//     JavaScript off. See specs/bugfix-ssr-product-list-behind-suspense.md;
 //  2. the views' own `if (loading)` branches, still reached whenever the client
 //     refetches — sorting, filtering or paging a category.
 //
@@ -23,8 +25,9 @@ import { ReactNode } from 'react';
 // Deliberately uses only existing .skeleton / .skeleton-shimmer / .skeleton-card /
 // layout classes — no new CSS, no new visual primitive.
 //
-// These are Server Components (no 'use client'): a loading.tsx must render before any
-// client JavaScript exists, which is the entire point.
+// No 'use client' here, so this module can be pulled into either side: Facets.tsx and
+// RouteSkeleton.tsx import it from client components, and it stays renderable on the server
+// for anything that ever needs a skeleton before client JavaScript exists.
 
 // Category pages request pageSize 20, so a 6-card skeleton left the page ~14 cards
 // shorter than the content that replaced it — a large, avoidable shift.
@@ -69,9 +72,10 @@ export function FacetsSkeletonBody() {
   );
 }
 
-// Full sidebar including the shell, for the route-level loading.tsx, which renders before
+// Full sidebar including the shell, for RouteSkeleton, which renders before
 // Facets exists at all. `title` is a skeleton bar rather than the translated heading
-// because loading.tsx receives no params and so cannot know the locale; the bar is the
+// because the pending-navigation skeleton has no params and so cannot know the locale, and
+// picking one from the route being LEFT would be wrong; the bar is the
 // same height, so the swap does not move anything.
 export function FacetsSkeleton({ title, open }: { title?: ReactNode; open?: boolean }) {
   return (
@@ -139,8 +143,42 @@ export function BlogPostSkeleton() {
   );
 }
 
-// No nav skeleton: CategoryNav now renders in app/[locale]/category/layout.tsx, above
-// this Suspense boundary, so it stays on screen and must NOT be drawn again here.
+// SearchPage's shape, which differs from a category's in two ways that matter: its
+// .page-title is two lines (breadcrumb + h1, no count — the count lives in the switch),
+// and the products/articles switch sits between the title and the grid. Reserving the
+// switch row is the load-bearing part; it is ~2.5rem plus a 1.5rem margin, and without it
+// the whole listing jumps up when the real page arrives.
+export function SearchPageSkeleton() {
+  return (
+    <div>
+      <div className="page-title">
+        <div className="skeleton skeleton-text" style={{ width: '180px', height: '0.8rem' }} />
+        <div className="skeleton skeleton-text" style={{ width: '320px', height: '1.8rem', marginTop: '0.25rem' }} />
+      </div>
+
+      <div className="result-type-switch-row">
+        {/* The real control is a pill-shaped segmented switch; one bar of the same
+            height and radius stands in for it rather than two fake segments. */}
+        <div className="skeleton" style={{ width: '280px', height: '2.5rem', borderRadius: 'var(--radius-pill)' }} />
+      </div>
+
+      <div className="catalog-page">
+        <FacetsSkeleton />
+        <div>
+          <div className="products-header">
+            <span className="skeleton skeleton-text" style={{ display: 'block', width: '140px', height: '1rem' }} />
+            <div className="skeleton skeleton-text" style={{ width: '180px', height: '2.25rem' }} />
+          </div>
+          <ProductGridSkeleton />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// No nav skeleton here: RouteSkeleton draws CategoryNav itself, above this, because the
+// pending-navigation swap replaces everything inside <main> — including the category layout
+// the real nav lives in. Adding a second one here would double it.
 export function CategoryPageSkeleton() {
   return (
     <div>

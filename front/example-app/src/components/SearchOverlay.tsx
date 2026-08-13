@@ -1,6 +1,5 @@
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
-import i18n from '../i18n';
 import { useCatalog } from '../contexts/CatalogContext';
 import { useCart } from '../contexts/CartContext';
 import { useAddedFlash } from '../hooks/useAddedFlash';
@@ -8,15 +7,28 @@ import { useMounted } from '../hooks/useMounted';
 import { getProductFields } from './ProductCard';
 import { CmsPage, cmsPageUrl } from '../hooks/useCms';
 
-// getSuggestionMatches is a plain (non-hook) function shared with SearchBar.tsx's
-// keyboard-nav list, so it reads the active language straight off the i18next
-// singleton rather than via useTranslation().
-export function getSuggestionMatches(query: string): string[] {
-  if (query.length < 2) return [];
-  const suggestions = i18n.t('search:overlay.suggestions', { returnObjects: true }) as string[];
-  return suggestions.filter(s =>
-    s.toLowerCase().includes(query.toLowerCase()) && s.toLowerCase() !== query.toLowerCase()
-  ).slice(0, 3);
+// What `Response.getTermSuggestions()` returns, per entity type: the engine's own
+// popular-search terms, not a client-side filter of a hardcoded list.
+export interface TermSuggestion {
+  term: string;
+  resultCount: number;
+  popularity: number;
+}
+
+// The panel shows one merged "popular search terms" column, but products and blog
+// posts each return their own list — and a term like "dress" is popular in both, so
+// the merge has to dedupe. Product terms lead: they match the primary intent of the
+// search bar. A plain (non-hook) function so SearchBar.tsx can build its keyboard-nav
+// sequence from exactly the same list this column renders — the two lists diverging
+// is what broke arrow navigation.
+export function getTermSuggestions(
+  productTerms: TermSuggestion[], cmsPageTerms: TermSuggestion[],
+): string[] {
+  return [...new Set(
+    [...(productTerms ?? []), ...(cmsPageTerms ?? [])]
+      .map(suggestion => suggestion?.term)
+      .filter((term): term is string => Boolean(term))
+  )];
 }
 
 export interface AcpAttribute {
@@ -89,6 +101,9 @@ interface SearchOverlayProps {
   query: string;
   results: any[];
   aggregations: any[];
+  // Already merged and deduped by SearchBar (getTermSuggestions), because its
+  // keyboard-nav sequence has to be built from the very same list.
+  termSuggestions: string[];
   resultsLoading: boolean;
   categories: any[];
   categoriesLoading: boolean;
@@ -102,7 +117,7 @@ interface SearchOverlayProps {
 }
 
 export default function SearchOverlay({
-  open, query, results, aggregations, resultsLoading, categories, categoriesLoading,
+  open, query, results, aggregations, termSuggestions, resultsLoading, categories, categoriesLoading,
   cmsPages, cmsLoading, highlightedKey, navigate, setQuery, clear, close,
 }: SearchOverlayProps) {
   // createPortal targets document.body during render, which does not exist while
@@ -137,7 +152,7 @@ export default function SearchOverlay({
     <div className="search-overlay-scrim">
       <div className="search-overlay-panel">
         <div className="search-overlay-col">
-          <SuggestionsColumn query={query} highlightedKey={highlightedKey} onSelect={closeAndGo} />
+          <SuggestionsColumn termSuggestions={termSuggestions} highlightedKey={highlightedKey} onSelect={closeAndGo} />
           <AttributesSections
             query={query}
             aggregations={aggregations}
@@ -193,7 +208,7 @@ function SkeletonRows({ withThumb, count = 3 }: { withThumb?: boolean; count?: n
     <>
       {Array.from({ length: count }).map((_, i) => (
         <div className={`autocomplete-skeleton-item ${withThumb ? 'autocomplete-skeleton-product' : ''}`} key={i}>
-          {withThumb && <div className="autocomplete-skeleton-thumb skeleton-shimmer" />}
+          {withThumb ? <div className="autocomplete-skeleton-thumb skeleton-shimmer" /> : null}
           <div className="autocomplete-skeleton-lines">
             <div className="autocomplete-skeleton-line skeleton-shimmer" />
             <div className="autocomplete-skeleton-line skeleton-shimmer short" />
@@ -209,19 +224,18 @@ function EmptyNote({ text }: { text: string }) {
 }
 
 // Column: popular search term suggestions
-function SuggestionsColumn({ query, highlightedKey, onSelect }: {
-  query: string; highlightedKey: string | null; onSelect: (to: string) => void;
+function SuggestionsColumn({ termSuggestions, highlightedKey, onSelect }: {
+  termSuggestions: string[]; highlightedKey: string | null; onSelect: (to: string) => void;
 }) {
   const { t } = useTranslation('search');
-  const matches = getSuggestionMatches(query);
 
   return (
     <>
       <div className="autocomplete-section-title">{t('overlay.suggestionsTitle')}</div>
-      {matches.length === 0 ? (
+      {termSuggestions.length === 0 ? (
         <EmptyNote text={t('overlay.noSuggestions')} />
       ) : (
-        matches.map(term => {
+        termSuggestions.map(term => {
           const key = `suggestion-${term}`;
           return (
             <div
