@@ -2,6 +2,7 @@
 
 import { useTranslation } from 'react-i18next';
 import { guessColor, needsSwatchOutline } from './swatchColors';
+import { parseAxisCodes } from '../sdk/productFields';
 
 export interface VariantOption {
   label: string;
@@ -43,12 +44,15 @@ function isColorAxis(code: string): boolean {
 // Which attributes actually vary, and with which values. `configurable_attributes` is the only
 // field that says so — deriving axes from "every select attribute with more than one value"
 // would promote `fashion_material` and `fashion_style` into axes, which they are not.
+//
+// `source` is either the PDP's raw `_source` or a projected listing row; the two are the same
+// shape for this purpose. parseAxisCodes() absorbs the difference in how the codes arrive — a
+// real array on the PDP, a string from GraphQL — so this function works on both surfaces.
 export function getVariantAxes(source: Record<string, any> | undefined): VariantAxis[] {
-  const codes: unknown = source?.configurable_attributes;
-  if (!source || !Array.isArray(codes)) return [];
+  if (!source) return [];
+  const codes = parseAxisCodes(source.configurable_attributes);
 
   return codes
-    .filter((code): code is string => typeof code === 'string')
     .map(code => {
       const raw = source[code];
       const options: VariantOption[] = (Array.isArray(raw) ? raw : [])
@@ -72,9 +76,13 @@ interface Props {
   // implementation defaulted to the first colour, which claimed a choice nobody made.
   selected: Record<string, string>;
   onSelect: (code: string, value: string) => void;
+  // Drops the per-axis heading and tightens the rows, for the quick-add overlay on a 180px-tall
+  // product picture. The axis is still announced to screen readers through `aria-label` on the
+  // radiogroup, so losing the visible <h4> costs nothing but pixels.
+  compact?: boolean;
 }
 
-export default function VariantSelector({ axes, selected, onSelect }: Props) {
+export default function VariantSelector({ axes, selected, onSelect, compact = false }: Props) {
   const { t } = useTranslation('product');
 
   if (axes.length === 0) return null;
@@ -90,12 +98,14 @@ export default function VariantSelector({ axes, selected, onSelect }: Props) {
         const asSwatches = isColorAxis(axis.code);
 
         return (
-          <div className="product-variants" key={axis.code}>
-            <h4 id={`axis-${axis.code}`}>{heading}</h4>
+          <div className={`product-variants ${compact ? 'product-variants-compact' : ''}`} key={axis.code}>
+            {!compact && <h4 id={`axis-${axis.code}`}>{heading}</h4>}
             <div
               className={asSwatches ? 'facet-swatches' : 'variant-options'}
               role="radiogroup"
-              aria-labelledby={`axis-${axis.code}`}
+              {...(compact
+                ? { 'aria-label': heading }
+                : { 'aria-labelledby': `axis-${axis.code}` })}
             >
               {axis.options.map(opt => {
                 const value = String(opt.value);

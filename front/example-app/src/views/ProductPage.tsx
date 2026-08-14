@@ -10,6 +10,7 @@ import { useCart } from '../contexts/CartContext';
 import { useAddedFlash } from '../hooks/useAddedFlash';
 import ProductSlider from '../components/ProductSlider';
 import { getProductFields } from '../components/ProductCard';
+import { getProductBadges } from '../sdk/productFields';
 import { ProductPageSkeleton } from '../components/skeletons';
 import VariantSelector, { getVariantAxes } from '../components/VariantSelector';
 import { PRODUCT_DETAIL_FIELDS } from '../sdk/fields';
@@ -86,6 +87,7 @@ export default function ProductPage({ initialProduct }: { initialProduct?: any }
   // GraphQL Product type — so without it this page cannot tell a configurable from a simple.
   const source = products[0]?.source as Record<string, any> | undefined;
   const materials = (source?.fashion_material || []) as { label: string; value: any }[];
+  const badges = getProductBadges(p);
   const axes = getVariantAxes(source);
 
   // The labels behind the current selection, in axis order, for the cart line and its tracking
@@ -102,6 +104,19 @@ export default function ProductPage({ initialProduct }: { initialProduct?: any }
 
       <div className="product-detail">
         <div className="product-detail-image">
+          {/* The same overlay as the grid card, from the same rule — a visitor who followed a
+              "New" badge into the PDP should not find it gone. Here the fields come out of the
+              raw `source`, which carries `new`, `sale` and `fashion_material` just like the
+              projected collection row does. */}
+          {badges.length > 0 && (
+            <div className="product-card-badges">
+              {badges.map((badge) => (
+                <span key={badge.variant} className={`product-card-badge product-card-badge--${badge.variant}`}>
+                  {t(badge.key, badge.params)}
+                </span>
+              ))}
+            </div>
+          )}
           {p.image ? (
             <img src={p.image} alt={p.name} style={{ maxWidth: '100%', maxHeight: '400px', objectFit: 'contain' }} />
           ) : (

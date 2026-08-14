@@ -2,10 +2,10 @@ import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { useCatalog } from '../contexts/CatalogContext';
-import { useCart } from '../contexts/CartContext';
 import { useAddedFlash } from '../hooks/useAddedFlash';
 import { useMounted } from '../hooks/useMounted';
 import { getProductFields } from './ProductCard';
+import QuickAdd from './QuickAdd';
 import { CmsPage, cmsPageUrl } from '../hooks/useCms';
 
 // What `Response.getTermSuggestions()` returns, per entity type: the engine's own
@@ -361,17 +361,12 @@ function ProductsColumn({ results, loading, highlightedKey, onSelect }: {
 }) {
   const { t } = useTranslation(['search', 'product']);
   const { formatPrice } = useCatalog();
-  const { addToCart } = useCart();
 
   // The header (and its cart badge) is blurred and dimmed while the ACP is open,
   // so an add has to confirm itself in place: the card flashes green and the
   // button flips to "Added" for a moment before returning to its normal label.
   const { addedKey: addedSku, flash } = useAddedFlash();
 
-  const handleAdd = (item: { sku: string; name: string; price: number; image: string }) => {
-    addToCart({ ...item, childSku: item.sku });
-    flash(item.sku);
-  };
 
   return (
     <>
@@ -385,7 +380,7 @@ function ProductsColumn({ results, loading, highlightedKey, onSelect }: {
       ) : (
         <div className="autocomplete-products-grid">
           {results.map((item: any, idx: number) => {
-            const { name, sku, price, image, available } = getProductFields(item);
+            const { name, sku, price, image } = getProductFields(item);
             const key = `product-${sku}`;
             const justAdded = addedSku === sku;
             return (
@@ -402,26 +397,21 @@ function ProductsColumn({ results, loading, highlightedKey, onSelect }: {
                   <div className="name">{name}</div>
                   <div className="price">{formatPrice(price)}</div>
                 </div>
-                <button
-                  type="button"
-                  className={`btn btn-primary btn-sm autocomplete-add-to-cart ${justAdded ? 'added' : ''}`}
-                  disabled={!available}
-                  // The whole card navigates to the product; adding to cart must not.
-                  // preventDefault on mousedown keeps focus on the search input (the
-                  // click still fires), so the ACP stays open and you can add several
-                  // products in a row instead of it closing on the first blur.
-                  onMouseDown={e => e.preventDefault()}
-                  onClick={e => {
+                {/* Same component the grid card uses, so a configurable product cannot be added
+                    here without its combination either. The guard below is why QuickAdd takes an
+                    onInteract at all: the whole row navigates to the product on click, and adding
+                    (or picking a size) must not — while preventDefault on mousedown keeps focus on
+                    the search input, so the ACP stays open and you can add several products in a
+                    row instead of it closing on the first blur. */}
+                <QuickAdd
+                  product={item}
+                  onAdded={flash}
+                  buttonClassName="autocomplete-add-to-cart"
+                  onInteract={e => {
                     e.stopPropagation();
-                    handleAdd({ sku, name, price, image });
+                    if (e.type === 'mousedown') e.preventDefault();
                   }}
-                >
-                  {!available
-                    ? t('product:card.unavailable')
-                    : justAdded
-                      ? t('product:card.added')
-                      : t('product:card.addToCart')}
-                </button>
+                />
               </div>
             );
           })}

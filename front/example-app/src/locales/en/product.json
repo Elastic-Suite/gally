@@ -1,8 +1,11 @@
 {
   "card": {
     "new": "New",
+    "onSale": "On Sale",
+    "pureMaterial": "100% {{material}}",
     "outOfStock": "Out of Stock",
     "addToCart": "Add to cart",
+    "chooseOptions": "Choose options",
     "unavailable": "Unavailable",
     "added": "✓ Added"
   },
