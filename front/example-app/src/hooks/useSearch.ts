@@ -13,6 +13,11 @@ interface SearchOptions {
   pageSize?: number;
   currentPage?: number;
   isAutocomplete?: boolean;
+  // Overrides the field selection for callers that need more than the grid does — the PDP
+  // passes PRODUCT_DETAIL_FIELDS. Whoever overrides it MUST match the selection its server
+  // pre-fetch used, or the post-hydration refetch changes the page under the user; see
+  // ../sdk/fields.ts.
+  selectedFields?: string[];
   // Data already fetched on the server for this exact query (Phase 3). When present the
   // hook seeds itself from it and skips the mount fetch, so the page a crawler reads and
   // the page a user sees are produced by one request, not two — and the loading skeleton
@@ -103,7 +108,7 @@ export function useSearch(options: SearchOptions) {
         currentPage: optionsRef.current.currentPage ?? 1,
         pageSize: optionsRef.current.pageSize ?? 20,
         isAutocomplete: optionsRef.current.isAutocomplete ?? false,
-        selectedFields: PRODUCT_FIELDS,
+        selectedFields: optionsRef.current.selectedFields ?? PRODUCT_FIELDS,
         filters: optionsRef.current.filters ?? [],
         categoryId: optionsRef.current.categoryCode,
         sortField: optionsRef.current.sortField,

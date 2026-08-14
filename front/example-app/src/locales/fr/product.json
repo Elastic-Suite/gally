@@ -13,8 +13,14 @@
     },
     "sku": "Référence : {{sku}}",
     "material": "Matière :",
-    "color": "Couleur",
+    "axis": {
+      "fashion_color": "Couleur",
+      "fashion_size": "Taille",
+      "color": "Couleur",
+      "size": "Taille"
+    },
     "inStock": "✓ En stock ({{count}} disponible(s))",
+    "inStockNoCount": "✓ En stock",
     "outOfStockLong": "✕ Rupture de stock",
     "addToCart": "Ajouter au panier",
     "wishlist": "♡ Liste de souhaits",

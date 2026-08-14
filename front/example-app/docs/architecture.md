@@ -109,6 +109,10 @@ src/
 │   ├── CategoryNav.tsx     # Category tree with hover submenus
 │   ├── Facets.tsx          # Sidebar facets (checkbox/slider/boolean/swatch/category/search/
 │   │                       #   show-more) + active-filter chips
+│   ├── VariantSelector.tsx # PDP option axes from `configurable_attributes` — colour as facet
+│   │                       #   swatches, everything else as chips. Also exports getVariantAxes
+│   ├── swatchColors.ts     # Colour-label → hex approximation, shared with Facets.tsx. The one
+│   │                       #   place raw hex is allowed outside brand assets (it's product data)
 │   ├── ProductCard.tsx     # Image, price, discount, stock, add-to-cart
 │   ├── ProductSlider.tsx   # Horizontal carousel
 │   ├── BlogCard.tsx        # Article teaser for the blog listing
@@ -168,6 +172,7 @@ editing in either directory.
 | Facets, filter chips, show-more | `components/Facets.tsx` |
 | Category browse and nav | `views/CategoryPage.tsx`, `components/CategoryNav.tsx`, `app/[locale]/category/` |
 | Product detail | `views/ProductPage.tsx`, `sdk/productFields.ts` |
+| Configurable option selection (colour/size) | `components/VariantSelector.tsx`, `sdk/fields.ts` (`PRODUCT_DETAIL_FIELDS`) |
 | Cart / checkout | `contexts/CartContext.tsx`, `views/CartPage.tsx`, `views/CheckoutPage.tsx` |
 | Blog / CMS | `views/BlogPage.tsx`, `views/BlogPostPage.tsx`, `sdk/cmsFields.ts`, `hooks/useCms.ts` |
 | SEO, metadata, OG, JSON-LD | `sdk/seo.ts`, `components/JsonLd.tsx`, the route's `generateMetadata` |
