@@ -72,13 +72,50 @@ posts + 7 legacy buying guides). Everything below differs from the product path:
   and mapping are correct.
 - CMS `image` values are product media paths → prefix with `MEDIA_BASE_URL`, like a product image.
 
-## Product Data Shape (from search `source`)
-Products are wrapped: `{ id, source: { ... } }`. Key source fields:
+## Product Data Shape
+
+**Product collection items are FLAT, not wrapped.** The stitched fields you listed in
+`selectedFields` come back at the top level: `{ sku, name, price, stock, … }`. There is no `source`
+envelope unless you ask for one. This is the opposite of non-product entities, where `Response`
+projects `data._source` for you (see above) — and it is why `products[0].source.<x>` reads
+`undefined` and fails silently. `getProductFields` (`src/sdk/productFields.ts`) accepts either shape
+via `product.source || product`, which is what hid the difference.
+
+`source` **is** a real field on the GraphQL `Product` type, but you must select it, and it returns
+the entire raw `_source`. Only the PDP does (`PRODUCT_DETAIL_FIELDS` in `src/sdk/fields.ts`), because
+it is the only way to reach two things the stitching does not expose:
+
+- `type_id` — is this a configurable?
+- `configurable_attributes` — which attributes vary (`['fashion_color','fashion_size']`).
+
+Neither is a declared source field, so neither is stitched onto `Product`; introspecting the type
+returns 118 fields and both are absent. Don't add `source` to the shared `PRODUCT_FIELDS`: it is the
+whole document, and listings request 20 at a time. See
+`specs/feature-configurable-option-selection.md`.
+
+**Configurable children are not usable for variant resolution.** The parent document carries
+`children_ids` and `children.sku` (real child SKUs, e.g. `VSK12-RN-8`), but the other `children.*`
+keys are **deduplicated value sets, not per-child arrays** — `VSK12` has 20 skus and 1
+`children.url_key` — and no per-child attribute values are indexed at all, despite
+`children_attributes` listing `fashion_color`/`fashion_size`. There is therefore no
+(colour × size) → child SKU mapping to read. Nor can the typed GraphQL path help: a nested source
+field goes through `NestedAttribute`, whose `getSanitizedData()` calls `current($value)` on a list
+and returns only the first child.
+
+Key source fields:
 - `sku` (string), `name` (string[]), `image` (string path like `/v/a/file.jpg` — prefix with `MEDIA_BASE_URL`)
 - `price` (array of `{ price, original_price, is_discounted, group_id }`)
 - `description` (string[] with HTML), `type_id` (raw source only, not a GraphQL field)
 - `fashion_color` / `fashion_material` (array of `{ label, value }`) — require `{ label value }` sub-selection
-- `stock` (`{ qty, status }`), `visibility` (array of `{ label, value }`)
+- `stock` (`{ qty, status }`) — **the SDK auto-appends only `stock { status }`**, so `qty` is
+  `undefined` unless you select `source`. And on any product with children `qty` is genuinely `0`
+  while `status` is `true` (true for exactly the 72 `com` documents that have `children.sku`, and
+  none of the 13 that don't): a configurable's own stock item holds no quantity, and no child stock
+  is indexed to fall back on. **Read availability through `isAvailable()` / `getProductFields().available`
+  (`src/sdk/productFields.ts`), never `stock.status` directly** — it treats `status: true` + `qty: 0`
+  as out of stock, and distinguishes `qty === undefined` ("not requested", so `status` governs) from
+  `qty === 0`. See `specs/bugfix-stock-count-zero-on-parents.md`.
+- `visibility` (array of `{ label, value }`)
 - `new` (boolean), `url_key`, `cost`
 
 **Media URL:** product images are relative paths. Prefix with `MEDIA_BASE_URL`

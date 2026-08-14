@@ -15,8 +15,8 @@ export interface CartItem {
 interface CartContextType {
   items: CartItem[];
   addToCart: (item: Omit<CartItem, 'qty'>, qty?: number) => void;
-  removeFromCart: (sku: string) => void;
-  updateQty: (sku: string, qty: number) => void;
+  removeFromCart: (sku: string, variant?: string) => void;
+  updateQty: (sku: string, qty: number, variant?: string) => void;
   clearCart: () => void;
   total: number;
   itemCount: number;
@@ -58,17 +58,23 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }
   }, [selectedLocalizedCatalog]);
 
-  const removeFromCart = useCallback((sku: string) => {
-    setItems(prev => prev.filter(i => i.sku !== sku));
+  // A line is identified by sku AND variant — the same pair addToCart dedupes on above. Keying
+  // on the sku alone was invisible while nothing ever set `variant`; now that the product page
+  // has a working option selector, one parent can hold several lines ("Pluie / M" and
+  // "Menthe / L"), and removing one of them would have taken the others with it.
+  const removeFromCart = useCallback((sku: string, variant?: string) => {
+    setItems(prev => prev.filter(i => !(i.sku === sku && i.variant === variant)));
   }, []);
 
-  const updateQty = useCallback((sku: string, qty: number) => {
+  const updateQty = useCallback((sku: string, qty: number, variant?: string) => {
     if (qty <= 0) {
-      setItems(prev => prev.filter(i => i.sku !== sku));
+      removeFromCart(sku, variant);
     } else {
-      setItems(prev => prev.map(i => i.sku === sku ? { ...i, qty } : i));
+      setItems(prev => prev.map(i =>
+        i.sku === sku && i.variant === variant ? { ...i, qty } : i
+      ));
     }
-  }, []);
+  }, [removeFromCart]);
 
   const clearCart = useCallback(() => setItems([]), []);
 

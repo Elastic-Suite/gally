@@ -117,16 +117,16 @@ export default function CartPage() {
             {item.variant && <div className="variant">{item.variant}</div>}
           </div>
           <div className="cart-item-qty">
-            <button onClick={() => updateQty(item.sku, item.qty - 1)}>−</button>
+            <button onClick={() => updateQty(item.sku, item.qty - 1, item.variant)}>−</button>
             <span>{item.qty}</span>
-            <button onClick={() => updateQty(item.sku, item.qty + 1)}>+</button>
+            <button onClick={() => updateQty(item.sku, item.qty + 1, item.variant)}>+</button>
           </div>
           <div className="cart-item-price">
             {formatPrice(item.price * item.qty)}
           </div>
           <button
             className="btn btn-outline btn-sm"
-            onClick={() => removeFromCart(item.sku)}
+            onClick={() => removeFromCart(item.sku, item.variant)}
             style={{ color: 'var(--coral-500)' }}
           >
             ✕

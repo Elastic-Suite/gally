@@ -20,7 +20,9 @@ export default function ProductCard({ product }: Props) {
   // the header, too far from a card in a long grid to be noticed.
   const { addedKey, flash } = useAddedFlash();
 
-  const { name, sku, image, price, originalPrice, isDiscounted, isNew, stock } = getProductFields(product);
+  // `available`, not `stock.status` — one rule for the whole app (../sdk/productFields.ts). It is
+  // identical to `stock.status` here today, because listings don't request the quantity.
+  const { name, sku, image, price, originalPrice, isDiscounted, isNew, available } = getProductFields(product);
   const justAdded = addedKey === sku;
 
   return (
@@ -28,7 +30,7 @@ export default function ProductCard({ product }: Props) {
       <Link href={`/product/${encodeURIComponent(sku)}`}>
         <div className="product-card-image">
           {isNew && <span className="product-card-badge">{t('card.new')}</span>}
-          {!stock.status && <span className="product-card-badge" style={{ background: 'var(--gray-500)' }}>{t('card.outOfStock')}</span>}
+          {!available && <span className="product-card-badge" style={{ background: 'var(--gray-500)' }}>{t('card.outOfStock')}</span>}
           {image ? (
             <img src={image} alt={name} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
           ) : (
@@ -57,9 +59,9 @@ export default function ProductCard({ product }: Props) {
               addToCart({ sku, name, price, childSku: sku, image });
               flash(sku);
             }}
-            disabled={!stock.status}
+            disabled={!available}
           >
-            {!stock.status
+            {!available
               ? t('card.unavailable')
               : justAdded
                 ? t('card.added')

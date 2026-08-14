@@ -137,7 +137,7 @@ export default async function Page({ params }: Params) {
                     '@type': 'Offer',
                     price: p.price,
                     priceCurrency: resolved.localizedCatalog.currency,
-                    availability: p.stock?.status
+                    availability: p.available
                       ? 'https://schema.org/InStock'
                       : 'https://schema.org/OutOfStock',
                   },

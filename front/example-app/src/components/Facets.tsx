@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FacetsSkeletonBody } from './skeletons';
+// Shared with the PDP option selector, which draws the same swatches from the same labels.
+import { guessColor, needsSwatchOutline } from './swatchColors';
 
 interface FacetOption {
   label: string;
@@ -30,46 +32,6 @@ interface Props {
 
 // Facet fields to hide (not discriminant)
 const IGNORED_FACETS = ['name'];
-
-// Extended color map for label-to-hex approximation
-const SWATCH_COLORS: Record<string, string> = {
-  black: '#222', white: '#fff', red: '#e53935', blue: '#1e88e5',
-  green: '#43a047', yellow: '#fdd835', pink: '#ec407a', brown: '#6d4c41',
-  gray: '#9e9e9e', grey: '#9e9e9e', orange: '#ff9800', purple: '#7b1fa2',
-  gold: '#ffd700', silver: '#c0c0c0', beige: '#f5f5dc', navy: '#001f3f',
-  coral: '#ff6b6b', cream: '#fffdd0', ivory: '#fffff0', khaki: '#c3b091',
-  lavender: '#b57edc', lime: '#cddc39', magenta: '#e91e63', maroon: '#800000',
-  mint: '#98ff98', olive: '#808000', peach: '#ffcba4', plum: '#8e4585',
-  rose: '#ff007f', rust: '#b7410e', salmon: '#fa8072', teal: '#008080',
-  turquoise: '#40e0d0', violet: '#7f00ff', wine: '#722f37', tan: '#d2b48c',
-  charcoal: '#36454f', burgundy: '#800020', taupe: '#483c32', nude: '#f2d2bd',
-  aqua: '#00ffff', indigo: '#4b0082', chocolate: '#7b3f00', camel: '#c19a6b',
-  blush: '#de5d83', champagne: '#f7e7ce', copper: '#b87333', denim: '#1560bd',
-  emerald: '#50c878', fuchsia: '#ff00ff', garnet: '#733635', jade: '#00a86b',
-  lemon: '#fff44f', lilac: '#c8a2c8', mauve: '#e0b0ff', mustard: '#ffdb58',
-  opal: '#a8c3bc', pewter: '#8e9196', ruby: '#e0115f', sage: '#bcb88a',
-  sapphire: '#0f52ba', scarlet: '#ff2400', slate: '#708090', stone: '#928e85',
-  'off white': '#faf9f6', 'off-white': '#faf9f6', 'light blue': '#add8e6',
-  'light green': '#90ee90', 'light pink': '#ffb6c1', 'light gray': '#d3d3d3',
-  'dark blue': '#00008b', 'dark green': '#006400', 'dark red': '#8b0000',
-  'dark gray': '#a9a9a9', 'dark grey': '#a9a9a9',
-  multi: 'conic-gradient(red, yellow, lime, aqua, blue, magenta, red)',
-  multicolor: 'conic-gradient(red, yellow, lime, aqua, blue, magenta, red)',
-};
-
-function guessColor(label: string): string {
-  const lower = label.toLowerCase().trim();
-  // Direct match
-  if (SWATCH_COLORS[lower]) return SWATCH_COLORS[lower];
-  // Partial match — check if any key is contained in the label
-  for (const [key, val] of Object.entries(SWATCH_COLORS)) {
-    if (lower.includes(key)) return val;
-  }
-  // Fallback: use a hash-based hue
-  let hash = 0;
-  for (let i = 0; i < lower.length; i++) hash = lower.charCodeAt(i) + ((hash << 5) - hash);
-  return `hsl(${Math.abs(hash) % 360}, 55%, 55%)`;
-}
 
 export default function Facets({ aggregations, activeFilters, onFilterChange, loading, onLoadMore, open, resultCount }: Props) {
   const { t } = useTranslation('facets');
@@ -286,7 +248,7 @@ function FacetGroup({
               <div
                 key={opt.value}
                 className={`swatch ${isActive ? 'active' : ''}`}
-                style={{ background: color, ...(opt.label.toLowerCase() === 'white' ? { border: '2px solid var(--gray-300)' } : {}) }}
+                style={{ background: color, ...(needsSwatchOutline(opt.label) ? { border: '2px solid var(--gray-300)' } : {}) }}
                 title={t('swatchTitle', { label: opt.label, count: opt.count })}
                 onClick={() => {
                   const current = Array.isArray(active) ? active : [];

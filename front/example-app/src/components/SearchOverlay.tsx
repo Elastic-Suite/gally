@@ -317,7 +317,7 @@ function ProductsColumn({ results, loading, highlightedKey, onSelect }: {
       ) : (
         <div className="autocomplete-products-grid">
           {results.map((item: any, idx: number) => {
-            const { name, sku, price, image, stock } = getProductFields(item);
+            const { name, sku, price, image, available } = getProductFields(item);
             const key = `product-${sku}`;
             const justAdded = addedSku === sku;
             return (
@@ -337,7 +337,7 @@ function ProductsColumn({ results, loading, highlightedKey, onSelect }: {
                 <button
                   type="button"
                   className={`btn btn-primary btn-sm autocomplete-add-to-cart ${justAdded ? 'added' : ''}`}
-                  disabled={!stock.status}
+                  disabled={!available}
                   // The whole card navigates to the product; adding to cart must not.
                   // preventDefault on mousedown keeps focus on the search input (the
                   // click still fires), so the ACP stays open and you can add several
@@ -348,7 +348,7 @@ function ProductsColumn({ results, loading, highlightedKey, onSelect }: {
                     handleAdd({ sku, name, price, image });
                   }}
                 >
-                  {!stock.status
+                  {!available
                     ? t('product:card.unavailable')
                     : justAdded
                       ? t('product:card.added')
