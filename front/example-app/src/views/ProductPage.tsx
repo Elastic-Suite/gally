@@ -11,6 +11,8 @@ import { useAddedFlash } from '../hooks/useAddedFlash';
 import ProductSlider from '../components/ProductSlider';
 import { getProductFields } from '../components/ProductCard';
 import { ProductPageSkeleton } from '../components/skeletons';
+import VariantSelector, { getVariantAxes } from '../components/VariantSelector';
+import { PRODUCT_DETAIL_FIELDS } from '../sdk/fields';
 
 // `initialProduct` is the raw search document the Server Component already fetched for
 // this SKU. When it is present the page renders complete on the first pass — no
@@ -26,7 +28,10 @@ export default function ProductPage({ initialProduct }: { initialProduct?: any }
   // holding a success state is the whole feedback.
   const { addedKey, flash } = useAddedFlash();
   const { trackProductView } = useTracking();
-  const [selectedVariant, setSelectedVariant] = useState(0);
+  // Axis code → chosen option value. Starts empty: nothing is pre-selected, because the index
+  // holds no (colour × size) → child mapping, so a default would be a claim about a variant
+  // this app cannot actually resolve. See specs/feature-configurable-option-selection.md.
+  const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>({});
 
   // Look up this specific product by exact SKU match. searchQuery is still
   // passed (rather than left empty) purely to make useSearch pick product_search
@@ -36,6 +41,9 @@ export default function ProductPage({ initialProduct }: { initialProduct?: any }
     searchQuery: sku,
     filters: sku ? [{ sku: { eq: sku } }] : undefined,
     pageSize: 1,
+    // Must match what fetchProductBySku asked for, or this refetch would drop the raw `source`
+    // the server pass rendered the option axes from.
+    selectedFields: PRODUCT_DETAIL_FIELDS,
     initialData: initialProduct
       ? { products: [initialProduct], total: 1, pageCount: 1, aggregations: [] }
       : undefined,
@@ -73,9 +81,18 @@ export default function ProductPage({ initialProduct }: { initialProduct?: any }
     );
   }
 
-  const colors = (products[0]?.source?.fashion_color || []) as { label: string; value: any }[];
-  const materials = (products[0]?.source?.fashion_material || []) as { label: string; value: any }[];
-  const hasVariants = colors.length > 0;
+  // `source` is the raw _source, requested only on this route (PRODUCT_DETAIL_FIELDS). It is
+  // where `configurable_attributes` and `type_id` live — neither is a typed field on the
+  // GraphQL Product type — so without it this page cannot tell a configurable from a simple.
+  const source = products[0]?.source as Record<string, any> | undefined;
+  const materials = (source?.fashion_material || []) as { label: string; value: any }[];
+  const axes = getVariantAxes(source);
+
+  // The labels behind the current selection, in axis order, for the cart line and its tracking
+  // payload. Only what the user actually picked: no axis is pre-selected.
+  const selectedLabels = axes
+    .map(axis => axis.options.find(o => String(o.value) === selectedOptions[axis.code])?.label)
+    .filter(Boolean);
 
   return (
     <div>
@@ -122,26 +139,24 @@ export default function ProductPage({ initialProduct }: { initialProduct?: any }
             </div>
           )}
 
-          {hasVariants && (
-            <div className="product-variants">
-              <h4>{t('page.color')}</h4>
-              <div className="variant-options">
-                {colors.map((c, i) => (
-                  <div
-                    key={c.value}
-                    className={`variant-option ${i === selectedVariant ? 'selected' : ''}`}
-                    onClick={() => setSelectedVariant(i)}
-                  >
-                    {c.label}
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
+          <VariantSelector
+            axes={axes}
+            selected={selectedOptions}
+            onSelect={(code, value) => setSelectedOptions(prev => ({ ...prev, [code]: value }))}
+          />
+
 
           <div style={{ marginBottom: '1rem', fontSize: '0.85rem' }}>
-            {p.stock.status
-              ? <span style={{ color: 'var(--green-600, #43a047)' }}>{t('page.inStock', { count: p.stock.qty })}</span>
+            {/* Three states, all driven by `available` (see ../sdk/productFields.ts) so the line,
+                the button below and the JSON-LD offer cannot disagree: a real quantity gets the
+                count, an unknown quantity gets the status alone, and `status: true` with `qty: 0`
+                — what Gally reports for every product with children — reads as out of stock. */}
+            {p.available
+              ? <span style={{ color: 'var(--green-600, #43a047)' }}>
+                  {typeof p.stock.qty === 'number'
+                    ? t('page.inStock', { count: p.stock.qty })
+                    : t('page.inStockNoCount')}
+                </span>
               : <span style={{ color: 'var(--coral-500)' }}>{t('page.outOfStockLong')}</span>
             }
           </div>
@@ -149,20 +164,23 @@ export default function ProductPage({ initialProduct }: { initialProduct?: any }
           <div className="product-detail-actions">
             <button
               className={`btn btn-primary btn-lg ${addedKey === p.sku ? 'added' : ''}`}
-              disabled={!p.stock.status}
+              disabled={!p.available}
               onClick={() => {
                 addToCart({
                   sku: p.sku,
                   name: p.name,
                   price: p.price,
                   image: p.image,
-                  variant: hasVariants ? colors[selectedVariant]?.label : undefined,
-                  childSku: p.typeId === 'configurable' ? `${p.sku}-${selectedVariant}` : p.sku,
+                  variant: selectedLabels.length ? selectedLabels.join(' / ') : undefined,
+                  // No childSku. The index carries `children.sku` but no per-child attribute
+                  // values, so a chosen combination cannot be resolved to a real child — and
+                  // the parent SKU is the only honest thing to report. CartContext falls back
+                  // to `item.sku`, so the add_to_cart payload's child_sku is the parent.
                 });
                 flash(p.sku);
               }}
             >
-              {!p.stock.status
+              {!p.available
                 ? t('card.outOfStock')
                 : addedKey === p.sku
                   ? t('card.added')
