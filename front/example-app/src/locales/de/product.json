@@ -1,8 +1,11 @@
 {
   "card": {
     "new": "Neu",
+    "onSale": "Im Angebot",
+    "pureMaterial": "100 % {{material}}",
     "outOfStock": "Nicht auf Lager",
     "addToCart": "In den Warenkorb",
+    "chooseOptions": "Optionen wählen",
     "unavailable": "Nicht verfügbar",
     "added": "✓ Hinzugefügt"
   },
