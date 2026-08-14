@@ -113,6 +113,7 @@ jobs:
               else
                 echo \"Installing catalog package for: ${{ env.sample_data_catalog }}\";
                 ([ -d api/packages/gally-catalogs ] || git clone 'https://x-access-token:$GALLY_CATALOGS_TOKEN@github.com/Elastic-Suite/gally-catalogs.git' api/packages/gally-catalogs) &&
+                cd api/packages/gally-catalogs && git fetch origin master && git reset --hard origin/master && cd /home/ubuntu/gally &&
                 docker compose run --rm php composer config --no-interaction --ansi repositories.gally-catalogs '{ \"type\": \"path\", \"url\": \"packages/gally-catalogs\", \"options\": { \"versions\": { \"gally/gally-catalogs\": \"dev-master\"}}}' &&
                 docker compose run --rm -e COMPOSER_AUTH='$COMPOSER_AUTH' php composer require gally/gally-catalogs:dev-master;
                 if [ \"${{ env.sample_data_catalog }}\" != \"Cultura\" ]; then
