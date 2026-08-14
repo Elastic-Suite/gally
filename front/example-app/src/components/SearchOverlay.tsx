@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { useCatalog } from '../contexts/CatalogContext';
@@ -125,6 +126,73 @@ export default function SearchOverlay({
   // Gate the portal on a real mount. Must sit above the `open` early return so the
   // hook order stays stable.
   const mounted = useMounted();
+  const scrollFrame = useRef<number | null>(null);
+
+  // Reset the header offset whenever the popup closes or unmounts, and drop any frame
+  // still queued. Without this the header stays translated up after a close — invisible
+  // as a cause, since --acp-scroll only has an effect while .overlay-open matches, so it
+  // would resurface on the *next* open as a header already scrolled away.
+  useEffect(() => {
+    if (!open || !mounted) return;
+    return () => {
+      if (scrollFrame.current !== null) {
+        cancelAnimationFrame(scrollFrame.current);
+        scrollFrame.current = null;
+      }
+      document.documentElement.style.removeProperty('--acp-scroll');
+    };
+  }, [open, mounted]);
+
+  // Freeze the page while the popup is up. `overscroll-behavior: contain` on the scrim
+  // (styles.css) stops a scroll gesture from *chaining* out of it, but a gesture that
+  // never lands on a scrollable descendant — Space/PageDown, a trackpad flick on the
+  // panel's padding — still reaches the document. Both halves are needed.
+  //
+  // Locking `overflow` alone removes the scrollbar and reflows the page ~15px wider;
+  // the scrim hides most of that, but the header stays visible (blurred, not covered),
+  // so the shift would show. Compensating with the measured scrollbar width keeps it
+  // still. Restores the previous inline values rather than clearing them, and the
+  // cleanup runs on unmount too, so closing the overlay by navigating cannot leave the
+  // page unscrollable. Like `mounted`, this must sit above the early return.
+  useEffect(() => {
+    if (!open || !mounted) return;
+    const { body } = document;
+    const prevOverflow = body.style.overflow;
+    const prevPaddingRight = body.style.paddingRight;
+    const scrollbar = window.innerWidth - document.documentElement.clientWidth;
+    body.style.overflow = 'hidden';
+    if (scrollbar > 0) {
+      body.style.paddingRight = `${scrollbar}px`;
+    }
+    return () => {
+      body.style.overflow = prevOverflow;
+      body.style.paddingRight = prevPaddingRight;
+    };
+  }, [open, mounted]);
+
+  // Publish the scrim's scroll offset so the header can ride it — the search bar scrolls
+  // away with the popup instead of hovering over it, and comes back on scroll up. The
+  // header lives in the layout, not in this portal, so a CSS custom property on <html> is
+  // the seam: styles.css translates .header-sticky-group by -var(--acp-scroll) but only
+  // while .overlay-open matches, so nothing outside the popup is affected. Same channel
+  // Header already uses for --header-height.
+  //
+  // Clamped to the header's own height: past that the header is fully out of view and the
+  // panel should keep scrolling alone. rAF-coalesced because a wheel fires far more often
+  // than the compositor paints, and the cleanup clears the property so a closed popup
+  // never leaves the header displaced.
+  const onScrimScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const top = e.currentTarget.scrollTop;
+    if (scrollFrame.current !== null) return;
+    scrollFrame.current = requestAnimationFrame(() => {
+      scrollFrame.current = null;
+      const style = document.documentElement.style;
+      const headerHeight = parseFloat(
+        getComputedStyle(document.documentElement).getPropertyValue('--header-height')
+      ) || 0;
+      style.setProperty('--acp-scroll', `${Math.min(top, headerHeight)}px`);
+    });
+  };
 
   if (!open || !mounted) return null;
 
@@ -139,7 +207,7 @@ export default function SearchOverlay({
   // columns would only render three "no match" notes. Show the invitation instead.
   if (query.trim().length < 2) {
     return createPortal(
-      <div className="search-overlay-scrim">
+      <div className="search-overlay-scrim" onScroll={onScrimScroll}>
         <div className="search-overlay-panel search-overlay-panel-prompt">
           <SearchPrompt />
         </div>
@@ -149,7 +217,7 @@ export default function SearchOverlay({
   }
 
   return createPortal(
-    <div className="search-overlay-scrim">
+    <div className="search-overlay-scrim" onScroll={onScrimScroll}>
       <div className="search-overlay-panel">
         <div className="search-overlay-col">
           <SuggestionsColumn termSuggestions={termSuggestions} highlightedKey={highlightedKey} onSelect={closeAndGo} />
