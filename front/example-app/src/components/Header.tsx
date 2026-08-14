@@ -1,6 +1,6 @@
 'use client';
 
-import { useLayoutEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import Link from './LocaleLink';
 import { useTranslation } from 'react-i18next';
 import { useAppPathname } from '../contexts/LocaleContext';
@@ -20,6 +20,7 @@ export default function Header() {
   // test below is false. That is what had silently killed the nav's active state.
   const pathname = useAppPathname();
   const groupRef = useRef<HTMLDivElement | null>(null);
+  const navRef = useRef<HTMLElement | null>(null);
 
   const localizedCatalogs = selectedCatalog?.localizedCatalogs || [];
   const firstCategory = categories.length > 0 ? categories[0] : null;
@@ -35,23 +36,62 @@ export default function Header() {
       ? 'blog'
       : 'none';
 
-  // Expose the real rendered header height so the search overlay can offset
-  // itself exactly below it, instead of guessing a fixed padding value.
+  // Expose the real rendered heights so CSS can offset against them instead of guessing:
+  //  --header-height     the whole group — the search overlay's top padding.
+  //  --header-nav-height just the nav row — how far the group is pulled up when it sticks, so
+  //                      the nav scrolls out of view and the search band lands at the viewport
+  //                      top. See .header-sticky-group in styles.css.
+  // Both are measured, because both change with viewport width: the nav row wraps on mobile.
   useLayoutEffect(() => {
-    const el = groupRef.current;
-    if (!el) return;
-    const updateHeight = () => {
-      document.documentElement.style.setProperty('--header-height', `${el.offsetHeight}px`);
+    const group = groupRef.current;
+    const nav = navRef.current;
+    if (!group || !nav) return;
+    const updateHeights = () => {
+      const style = document.documentElement.style;
+      style.setProperty('--header-height', `${group.offsetHeight}px`);
+      style.setProperty('--header-nav-height', `${nav.offsetHeight}px`);
     };
-    updateHeight();
-    const observer = new ResizeObserver(updateHeight);
-    observer.observe(el);
+    updateHeights();
+    const observer = new ResizeObserver(updateHeights);
+    observer.observe(group);
+    observer.observe(nav);
     return () => observer.disconnect();
+  }, []);
+
+  // Flag "the page has scrolled" on the group. The blurred layer around the search bar keys off
+  // it (styles.css, .search-bar-wrapper::before): at rest the bar sits on the page background
+  // and has nothing to separate from. The threshold is the nav row's own height — the exact
+  // point at which the group has slid far enough that the band is the topmost row and content
+  // starts passing behind the bar.
+  //
+  // An attribute rather than a CSS variable: it is a binary state, and CSS can then add the
+  // :not(:has(.overlay-open)) condition itself instead of this component knowing about the ACP.
+  // Passive + rAF-coalesced, since scroll fires far more often than the compositor paints, and
+  // read once on mount because a back-navigation can restore a scrolled position without ever
+  // firing a scroll event.
+  useEffect(() => {
+    const group = groupRef.current;
+    const nav = navRef.current;
+    if (!group || !nav) return;
+    let frame: number | null = null;
+    const sync = () => {
+      frame = null;
+      group.toggleAttribute('data-scrolled', window.scrollY > nav.offsetHeight);
+    };
+    const onScroll = () => {
+      if (frame === null) frame = requestAnimationFrame(sync);
+    };
+    sync();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      if (frame !== null) cancelAnimationFrame(frame);
+    };
   }, []);
 
   return (
     <div className="header-sticky-group" ref={groupRef}>
-      <header className="header">
+      <header className="header" ref={navRef}>
         <div className="header-inner">
           {/* Mark + wordmark: the asset is the rabbit alone, so the "Gally example" type
               is set here. The words are a brand name, not copy — never translated. Both
