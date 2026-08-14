@@ -17,6 +17,10 @@
   --coral-400: #ff8a80;
   --coral-600: #e55353;
   --white: #ffffff;
+  /* Light scrim for an overlay that sits on top of imagery and must stay readable without
+     hiding what is underneath. Paired with a backdrop blur, never used flat — the blur is what
+     carries legibility, which is what lets the tint stay this light. */
+  --scrim-light: rgba(255, 255, 255, 0.55);
   --gray-50: #fafafa;
   --gray-100: #f5f5f5;
   --gray-200: #eeeeee;
@@ -943,12 +947,28 @@ a:hover {
   color: var(--gray-400);
   font-size: 0.75rem;
   position: relative;
+  /* The positioning context for the badges and the quick-add panel — and the clip that keeps
+     them inside the picture. `.product-card` clips at the CARD edge, which is why an overlay
+     that overflowed this box once ended up sitting on the name and price. */
+  overflow: hidden;
 }
 
-.product-card-badge {
+/* The badges are the wrapper's job, not each badge's: a product can be out of stock, new or
+   discounted, and single-material all at once, and three siblings each absolutely positioned
+   at the same top/left simply stack on top of each other. Positioning the column once and
+   letting flex space its children is what makes more than one badge possible. */
+.product-card-badges {
   position: absolute;
   top: 0.5rem;
   left: 0.5rem;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+}
+
+.product-card-badge {
   background: var(--coral-500);
   color: white;
   padding: 0.2rem 0.6rem;
@@ -956,6 +976,246 @@ a:hover {
   font-size: 0.7rem;
   font-weight: 600;
 }
+
+/* Coral is the marketing accent and indigo the classification one — the same split the blog
+   topic pill below makes. "New" and "Sale" promote; a material is a fact about the product. */
+.product-card-badge--sale { background: var(--coral-600); }
+.product-card-badge--material { background: var(--indigo-800); }
+
+/* The anchor wraps only the picture now, so the option chips beside it are not inside a link.
+   It has to carry the centring the image box used to do for its single child. */
+.product-card-image-link {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Quick add: the add-to-cart affordance, covering the whole picture on hover. It left the card
+   body so the resting card is just picture, name and price — and because a configurable needs
+   room for its option chips, which no card body has.
+   It fills the picture (`inset: 0`) rather than sliding up from the bottom edge. The earlier
+   version parked itself at `translateY(100%)` at rest, which put it *below* the picture — that
+   is, directly on top of the name and price, invisible but still swallowing their clicks at
+   `z-index: 2`. An overlay that is exactly its container can never escape it.
+   Translucent + blurred rather than opaque: the point is that you still see the product you are
+   configuring. The blur is what keeps the chips readable over arbitrary photography — a flat
+   tint legible over the placeholder gradient would not survive a dark garment. */
+.quick-add {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  overflow-y: auto;
+  background: var(--scrim-light);
+  /* `.product-card-image` sets `color: var(--gray-400)` for its "no image" placeholder text, and
+     every child of this panel inherited it — which is why the size labels read as pale grey on a
+     pale scrim. This panel is content, not a placeholder, so it resets the colour at its root and
+     anything added inside it starts legible. */
+  color: var(--gray-900);
+  /* Prefixed FIRST, standard LAST. lightningcss treats the pair as one property and keeps only
+     the last, so standard-first ships `-webkit-` alone and Blink drops the blur entirely. See
+     specs/bugfix-acp-scrim-blur-dropped.md. */
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  /* Rises from the bottom edge of the picture. The travel is a full 100% — one panel height —
+     which parks it entirely below the picture at rest, and `.product-card-image`'s
+     `overflow: hidden` is what clips it there.
+     This is the same transform that once put the panel on top of the name and price, so read
+     the three guards as a set: `overflow: hidden` on the picture clips it, `opacity: 0` hides
+     it, and `pointer-events: none` stops it swallowing clicks even if the other two are ever
+     undone. Any one of them alone would have prevented the original bug.
+     Opacity settles faster than the slide so the rise is what you actually see. */
+  opacity: 0;
+  transform: translateY(100%);
+  /* Not `visibility: hidden`: that would take the panel out of the tab order, and then
+     `:focus-within` could never fire to reveal it. `pointer-events` stops the clicks without
+     stopping the focus. */
+  pointer-events: none;
+  transition: transform 0.25s ease, opacity 0.15s ease;
+}
+
+/* `:focus-within` is not decoration here — it is the only way to reach the panel by keyboard,
+   since there is no hover to simulate. */
+.product-card:hover .quick-add,
+.product-card:focus-within .quick-add {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.quick-add-button {
+  width: 100%;
+}
+
+/* The button — and the "Unavailable" label, which is the same button — sits on the bottom edge
+   of every card, so the row of them lines up across the grid however many option rows a product
+   has above it. An `auto` margin rather than `justify-content: flex-end` on the panel: with the
+   panel scrollable, flex-end would make overflowing content unreachable off the top. */
+.product-card-image .quick-add-button {
+  margin-top: auto;
+}
+
+/* …and a second `auto` margin above the first option row centres the selector in the space over
+   that button. Two auto margins split the free space evenly between them, so the chips sit in
+   the middle of the picture rather than piling up against its top edge, while the button stays
+   pinned to the bottom. On the card only — an autocomplete row has no free space to centre in. */
+.product-card-image .quick-add > .product-variants:first-child {
+  margin-top: auto;
+}
+.quick-add-button:disabled {
+  background: var(--gray-400);
+  cursor: not-allowed;
+}
+
+/* An unavailable product's button must not answer the pointer. `.btn-primary:hover` is (0,2,0)
+   and declared further down the file than the rule above, so the greyed-out "Unavailable" lit up
+   indigo the moment the cursor reached it.
+   Fixed by matching harder here rather than adding `:not(:disabled)` to `.btn-primary:hover`
+   itself — that would lift the shared rule to (0,3,0), where it would start beating `.btn.added`
+   (0,2,0) and silently kill the add confirmation for as long as the pointer rested on the button
+   you just clicked. That is the exact failure the comment above `.btn.added` warns about.
+   `:not(.added)` is what keeps the confirmation winning here too: a configurable's button is
+   disabled again right after an add, while it is still showing "✓ Added" in green. */
+.quick-add-button:disabled:not(.added):hover {
+  background: var(--gray-400);
+}
+
+/* Compact axis rows: no heading, smaller chips, tighter gaps. A 2-axis product (colour + up to
+   six sizes) has to fit inside a 180px-tall picture. */
+/* Doubled class, (0,2,0), on purpose. The element carries BOTH classes, and plain
+   `.product-variants-compact` ties with `.product-variants { margin-bottom: 1.5rem }` at (0,1,0)
+   — which is declared ~10 000 characters further down the file and therefore won. Every axis row
+   in the panel was silently keeping a 24px bottom margin, which is what made the rows, and the
+   autocomplete items around them, so tall. Matching harder here makes it order-independent; do
+   not "simplify" it back to one class. The panel's own `gap` is the only spacing between rows. */
+.product-variants.product-variants-compact {
+  margin-bottom: 0;
+}
+.product-variants-compact .variant-options,
+.product-variants-compact .facet-swatches {
+  gap: 0.35rem;
+  justify-content: center;
+}
+/* Both chip kinds get their own opaque ground and a firmer edge. Against a translucent, blurred
+   backdrop the facet-sidebar styling reads as washed out — a swatch has to show its actual
+   colour, which is the entire information it carries. */
+.product-variants-compact .variant-option {
+  padding: 0.25rem 0.6rem;
+  font-size: 0.75rem;
+  /* Stated rather than inherited: a small label has little ink to spare, so it carries its own
+     colour and weight instead of trusting whatever the surrounding box happens to set. */
+  font-weight: 600;
+  color: var(--gray-900);
+  background: var(--white);
+  border-color: var(--gray-500);
+}
+/* 26px against the facet sidebar's 28px — near enough to read as the same control, small enough
+   that a six-colour product still fits one row inside a 220px card. */
+.product-variants-compact .swatch {
+  width: 26px;
+  height: 26px;
+  border-width: 2px;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Touch has no hover: without this the panel would be unreachable and add-to-cart would simply
+   not exist on a phone. It cannot stay a full-picture cover there — permanently blurring out the
+   product is not a resting state — so on coarse pointers it drops the blur, releases `top` and
+   sits at the bottom edge at its natural height, leaving the picture visible above it. */
+@media (hover: none) {
+  .quick-add {
+    top: auto;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+    background: var(--white);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .quick-add {
+    transition: none;
+  }
+}
+
+/* In the autocomplete the panel is not an overlay at all — it is the row's trailing control,
+   in flow beside the name and price. Only the add rule is shared, not the presentation. */
+.autocomplete-product .quick-add {
+  position: static;
+  inset: auto;
+  padding: 0;
+  overflow: visible;
+  background: transparent;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  flex-shrink: 0;
+  align-self: center;
+  max-width: 45%;
+  /* Same reveal-on-hover as the card, slid in from the right edge instead of faded over the
+     picture: the row keeps its space reserved (the panel stays in flow), so nothing reflows when
+     it appears. 0.75rem travel, which stays inside the row's 1rem right padding — a larger slide
+     would push a transformed box past the column and give the popup a horizontal scrollbar. */
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(0.75rem);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+/* The options are sized for a product card, where the panel has the full width of a 220px+
+   picture. An autocomplete row gives them 45% of a much shorter box, so the same chips wrap into
+   a tall stack and the row grows to fit it. Everything below is the same controls at the compact
+   end of their range — scoped to the ACP so the grid keeps its larger, more legible ones. */
+/* This gap is the row's height lever. `.autocomplete-item` is `align-items: center` and its
+   thumbnail is 80px, so the row only grows once the panel exceeds that — every vertical rem
+   removed between the option rows and the button below them comes straight off the row.
+   0.3rem rather than the 0.15rem it was squeezed to while `.product-variants`' stray 24px
+   bottom margin was still winning: with that gone there is room to breathe again. */
+.autocomplete-product .quick-add {
+  gap: 0.3rem;
+}
+.autocomplete-product .product-variants-compact .variant-options,
+.autocomplete-product .product-variants-compact .facet-swatches {
+  gap: 0.25rem;
+}
+.autocomplete-product .product-variants-compact .variant-option {
+  padding: 0.1rem 0.4rem;
+  font-size: 0.7rem;
+}
+.autocomplete-product .product-variants-compact .swatch {
+  width: 20px;
+  height: 20px;
+}
+
+/* `.highlighted` is not optional here: the popup is arrow-key navigable, and without it the
+   add button would exist only for people using a mouse. */
+.autocomplete-item.autocomplete-product:hover .quick-add,
+.autocomplete-item.autocomplete-product:focus-within .quick-add,
+.autocomplete-item.autocomplete-product.highlighted .quick-add {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(0);
+}
+
+/* Declared after the rule above, not with the card's reduced-motion block further up: media
+   queries add no specificity, so an earlier `.autocomplete-product .quick-add` would simply lose
+   to the later one. The slide is decoration; the fade still carries the reveal. */
+@media (prefers-reduced-motion: reduce) {
+  .autocomplete-product .quick-add {
+    transform: none;
+    transition: none;
+  }
+}
+/* The button itself keeps its `.autocomplete-add-to-cart` class, so every rule already written
+   against it — rest opacity, hover scale, disabled tint, and the confirmation override — still
+   applies untouched. Only the wrapper is new. */
 
 .product-card-body {
   padding: 1rem;
@@ -1419,6 +1679,8 @@ a:hover {
   align-items: center;
   justify-content: center;
   color: var(--gray-400);
+  /* Positioning context for .product-card-badges, which this page reuses verbatim. */
+  position: relative;
 }
 
 .product-detail-info h1 {

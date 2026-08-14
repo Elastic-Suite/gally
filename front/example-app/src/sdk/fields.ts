@@ -7,12 +7,32 @@
 // Fields to request from the API for product display.
 // Object/array types need sub-selections (e.g. fashion_color { label value }).
 // Note: price { price } and stock { status } are appended automatically by the SDK.
+// `new` and `sale` are plain booleans on the GraphQL Product type (not `is_new`, and not
+// `{ label value }` — they are boolean source fields, not selects). Both drive the badges
+// overlaid on the card picture; `fashion_material` drives the third one, so it earns its
+// place here twice over. See ../components/ProductCard.tsx and getProductBadges().
 export const PRODUCT_FIELDS = [
   'sku', 'name', 'image', 'description', 'url_key',
   'fashion_color { label value }',
   'fashion_material { label value }',
   'visibility { label value }',
-  'new', 'cost',
+  'new', 'sale', 'cost',
+  // What the quick-add overlay needs to offer a choice on a listing row, without `source`.
+  // `configurable_attributes` names the axes; the four fields below carry their options —
+  // `fashion_*` for the Venia catalogue, the bare pair for Luma. Asking for an axis a catalogue
+  // does not use costs nothing: the GraphQL Product type is global, so it simply returns null.
+  //
+  // Beware: `configurable_attributes` comes back as a STRING, not a list — see parseAxisCodes()
+  // in ./productFields.ts, which is the only place that copes with it.
+  'configurable_attributes',
+  'fashion_size { label value }',
+  'color { label value }',
+  'size { label value }',
+  // The SDK appends a bare `price { price }` of its own (graphql/Request.ts), so a listing row
+  // has never carried the two fields the discount UI needs — which is why the struck-through
+  // original price on the card was dead code until now. Asking for them here is safe: GraphQL
+  // merges two selections of the same field, so the query ends up with the union of both.
+  'price { original_price is_discounted }',
 ];
 
 // The product detail page needs two things no typed field exposes: `type_id` (is this a
