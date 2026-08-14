@@ -15,6 +15,17 @@ export const PRODUCT_FIELDS = [
   'new', 'cost',
 ];
 
+// The product detail page needs two things no typed field exposes: `type_id` (is this a
+// configurable?) and `configurable_attributes` (which attributes actually vary). Neither is a
+// declared source field, so neither is stitched onto the GraphQL `Product` type — introspect it
+// and they are absent among its 118 fields. `source` returns the whole raw `_source`, which is
+// the only way to reach them, and it carries the option lists along for free.
+//
+// Deliberately NOT merged into PRODUCT_FIELDS: `source` is the entire document (~3 KB for a
+// configurable like VSK12, description included), and the grid, the category listings and the
+// autocomplete all ask for 20 products at a time.
+export const PRODUCT_DETAIL_FIELDS = [...PRODUCT_FIELDS, 'source'];
+
 // The SDK routes any non-`product` metadata to the generic `documents(entityType:)`
 // query (see graphql/Request.ts:getEndpoint), so the whole cms_page section runs
 // through the same SearchManager as the catalog — no bespoke GraphQL here.

@@ -74,7 +74,9 @@ export default async function Page({ params }: Params) {
             '@type': 'Offer',
             price: p.price,
             priceCurrency: resolved.localizedCatalog.currency,
-            availability: p.stock?.status
+            // Same `available` the page body renders from. Structured data that claims InStock
+            // while the visible page says out of stock is a validator error, not a detail.
+            availability: p.available
               ? 'https://schema.org/InStock'
               : 'https://schema.org/OutOfStock',
             url: productUrl,

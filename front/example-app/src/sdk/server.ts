@@ -1,7 +1,7 @@
 import { cache } from 'react';
 import { getSearchManager } from './index';
 import { fetchCatalogs, findLocalizedCatalog, fetchCategoryTree } from './catalogs';
-import { PRODUCT_FIELDS, CMS_FIELDS, CMS_METADATA } from './fields';
+import { PRODUCT_FIELDS, PRODUCT_DETAIL_FIELDS, CMS_FIELDS, CMS_METADATA } from './fields';
 
 // Server-side data fetching for the three crawlable routes. These run in Server
 // Components, so `getSearchManager()` resolves to the internal base URI (see ./index) —
@@ -32,7 +32,9 @@ export const fetchProductBySku = cache(async (
       currentPage: 1,
       pageSize: 1,
       isAutocomplete: false,
-      selectedFields: PRODUCT_FIELDS,
+      // Not PRODUCT_FIELDS: the PDP reads type_id and configurable_attributes out of the raw
+      // `source`, and ProductPage's useSearch asks for the same list. See ./fields.ts.
+      selectedFields: PRODUCT_DETAIL_FIELDS,
     });
     return response.getCollection()[0] ?? null;
   } catch {
