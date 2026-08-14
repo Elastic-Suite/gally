@@ -68,3 +68,4 @@ jobs:
       MAILER_DSN: ${{ secrets.MAILER_DSN }}
       GALLY_DEFAULT_SENDER_NAME: ${{ secrets[format('GALLY_DEFAULT_SENDER_NAME_{0}', inputs.environment)] }}
       GALLY_DEFAULT_SENDER_EMAIL: ${{ secrets[format('GALLY_DEFAULT_SENDER_EMAIL_{0}', inputs.environment)] }}
+      GALLY_CATALOGS_TOKEN: ${{ secrets.GALLY_CATALOGS_TOKEN }}
