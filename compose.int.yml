@@ -18,6 +18,11 @@ services:
     environment:
       <<: *php-base-env
 
+  search:
+    environment:
+      # Fixture loads push the base 1g heap past OpenSearch's 85% circuit breaker, silently disabling any running Transform (see SessionTransformProvisioner).
+      - OPENSEARCH_JAVA_OPTS=-Xms2g -Xmx2g
+
   pwa:
     build:
       target: gally_pwa_int
