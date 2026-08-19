@@ -12,3 +12,9 @@ parameters:
         objectManagerLoader: tests/object-manager.php
     scanDirectories:
         - var/cache/dev/Symfony/Config
+    # symfony/config 7.4 made NodeBuilder generic (NodeBuilder<T>), which PHPStan 1.x
+    # (ceiling: 1.12.34, no newer 1.x release exists) cannot parse. Fixed by upgrading
+    # to phpstan/phpstan 2.x, deferred for now (too many new findings for a minor release).
+    ignoreErrors:
+        -
+            message: '#^Call to method \w+\(\) on an unknown class Symfony\\Component\\Config\\Definition\\Builder\\NodeBuilder#'
