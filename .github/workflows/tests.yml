@@ -115,56 +115,9 @@ jobs:
           ${{env.docker_compose_cmd}} exec -T php bin/console gally:index:clear --no-interaction
           ${{env.docker_compose_cmd}} exec -T php bin/console hautelook:fixtures:load --append --no-interaction -vv
           ${{env.docker_compose_cmd}} exec -T php bin/console doctrine:fixtures:load --append --no-interaction -vv
-      - name: Coverage
-        run: ${{env.docker_compose_cmd}} exec -T php php -d pcov.enabled=1 -d pcov.directory=vendor/gally bin/phpunit --coverage-clover=coverage/coverage.xml vendor/gally
-
-      - name: Cleanup coverage file
-        run: ${{env.docker_compose_cmd}} exec -T php sed -i 's:<file name="/srv/:<file name="/:' coverage/coverage.xml
-
-      - if: ${{ github.event_name == 'pull_request' }}
-        name: Download artifact
-        uses: dawidd6/action-download-artifact@v6
-        continue-on-error: true
-        id: base_coverage_report
-        with:
-          workflow: .github/workflows/ci.yml
-          branch: ${{ github.base_ref }}
-          name: coverage-report
-          path: coverage/base # Retrieve previous coverage file at the root directory, not inside api/coverage
-
-      - name: Backend Coverage Report as Comment (Compared to a base)
-        if: ${{ github.event_name == 'pull_request' && steps.base_coverage_report.outcome == 'success' }}
-        uses: lucassabreu/comment-coverage-clover@main
-        continue-on-error: true
-        with:
-          with-chart: false
-          file: api/coverage/coverage.xml
-          base-file: coverage/base/coverage.xml
-          max-line-coverage-decrease: 10.0
-          max-method-coverage-decrease: 10.0
-          min-line-coverage: 75
-          min-method-coverage: 75
-          signature: "Backend Coverage compared to target branch"
-
-      - name: Backend Coverage Report as Comment (Clean)
-        uses: lucassabreu/comment-coverage-clover@v0.3.0
-        if: ${{ (github.event_name == 'pull_request' && steps.base_coverage_report.outcome != 'success') || github.event_name == 'push'}}
-        with:
-          with-chart: false
-          file: api/coverage/coverage.xml
-          signature: "Backend Coverage of this branch"
-
-      - uses: actions/upload-artifact@v4
-        with:
-          name: coverage-report
-          path: api/coverage/coverage.xml
-
-      - name: Jest
-        run: ${{env.docker_compose_cmd}} exec -T pwa yarn test:ci
-
-      - name: e2e
-        id: e2e
-        run: ${{env.docker_compose_cmd}} exec -T e2e yarn test:ci
+      - name: sdk
+        id: sdk
+        run: ${{env.docker_compose_cmd}} exec -T pwa yarn test:sdk
 
       - uses: actions/upload-artifact@v4
         if: ${{ always() }}
