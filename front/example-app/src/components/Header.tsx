@@ -27,6 +27,9 @@ export default function Header() {
 
   const isActive = (path: string) => pathname === path ? 'active' : '';
 
+  // /vector-search is the one route that supplies its own search input. See the band below.
+  const hideSearchBand = pathname === '/vector-search';
+
   // Which segment of the header switch is on. 'none' is a real state: the homepage, the
   // cart and /explain are inside neither section, and the switch must then show no
   // selection at all rather than lying about one.
@@ -134,6 +137,21 @@ export default function Header() {
               </Link>
             </div>
             <Link href="/explain" className={`expert-only ${isActive('/explain')}`}>{t('nav.searchIntelligence')}</Link>
+            {/* Deliberately NOT `expert-only`, unlike /explain beside it: that class is
+                display:none under the default `direction` audience mode (see .mode-direction
+                .expert-only), which is why this link was invisible when it first shipped. The
+                comparison is the thing this demo is for, so it is always reachable.
+                Also deliberately outside .header-nav-switch: that switch is a two-way
+                Products/Articles control with a sliding thumb sized `1fr 1fr`, and this is not
+                a third storefront section. */}
+            <Link
+              href="/vector-search"
+              className={isActive('/vector-search')}
+              aria-current={pathname === '/vector-search' ? 'page' : undefined}
+            >
+              <span className="header-nav-icon" aria-hidden="true">✨</span>
+              {t('nav.vectorSearch')}
+            </Link>
           </nav>
 
           <div className="context-selectors">
@@ -164,11 +182,25 @@ export default function Header() {
         </div>
       </header>
 
-      <div className="header-search-band">
-        <div className="header-search-row">
-          <SearchBar categories={categories} categoriesLoading={loadingCatalogs} />
+      {/* The band is omitted on /vector-search ONLY. That page carries its own full-width
+          search box which IS the page, so the header's bar was a second search input above it
+          doing something different (it navigates to /search and abandons the comparison) —
+          confusing, and it cost ~90px of vertical space on the longest page in the app.
+          Route-scoped rather than CSS-hidden so the SearchBar and its overlay are not mounted
+          at all. Two things that would otherwise break, both checked:
+          - `--header-height` / `--header-nav-height` are MEASURED by the ResizeObserver above,
+            not constants, so they re-publish the shorter height on their own.
+          - `SearchBarProvider` lives in app/providers.tsx, so `useSearchBarRef()` still
+            resolves; only `ref.current` is null. Its one consumer outside SearchBar is
+            useStoryActions' `type_and_search`, which already guards with `if (!handle) return`
+            and navigates to its own startRoute first — so the guided story is unaffected. */}
+      {!hideSearchBand && (
+        <div className="header-search-band">
+          <div className="header-search-row">
+            <SearchBar categories={categories} categoriesLoading={loadingCatalogs} />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

@@ -2,7 +2,6 @@
   "name": "gally-features-example",
   "version": "1.0.0",
   "private": true,
-  "homepage": "/example",
   "dependencies": {
     "@elastic-suite/gally-sdk": "^2.2.2-alpha.0",
     "i18next": "^23.11.5",

@@ -3,7 +3,8 @@ const nextConfig = {
   // The CRA entry wrapped everything in <React.StrictMode>; keep that behaviour.
   reactStrictMode: true,
 
-  // Replaces CRA's `homepage: "/example"` + BrowserRouter basename="/example".
+  // The single source of the /example prefix. It took over from CRA's `homepage` field and
+  // BrowserRouter's `basename`, both since removed — do not reintroduce either.
   // Next prefixes both routes and /_next/* assets with this, which the router's
   // `location ~ ^/(example|ws)` block already proxies — no nginx change needed.
   basePath: '/example',
