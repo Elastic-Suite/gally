@@ -1,8 +1,23 @@
 # Architecture Map (regenerate-able — lower trust than sdk-reference.md)
 
-Next.js 16 App Router. Routes are thin server components in `app/`; the UI they render lives in
-`src/views/` — **not** `src/pages`, which Next would claim as the Pages Router. One `'use client'`
-boundary, in `app/providers.tsx`.
+Next.js 16 App Router. Routes are server components in `app/`, every `page.tsx` async; the UI they
+render lives in `src/views/` — **not** `src/pages`, which Next would claim as the Pages Router.
+
+The boundary runs between the two. Route shells fetch on the server through `src/sdk/server.ts`,
+where every fetcher is wrapped in React `cache()` so `generateMetadata` and the page body share one
+call. They resolve real 404s with `notFound()`, emit metadata and `JsonLd`, then hand the result to
+the view as `initialData` / `initialProduct` — currently on `search`, `category/[code]` and
+`product/[sku]`. 12 of 13 `page.tsx` import `src/sdk/server.ts`; the exception is `app/page.tsx`,
+which resolves the default catalog and redirects. `app/layout.tsx` and
+`app/[locale]/category/layout.tsx` are the only non-async server components.
+
+Every file in `src/views/` is `'use client'` and renders complete in server HTML, refetching only
+when the user sorts, filters or pages. `app/providers.tsx` is the client boundary of the layout, fed
+catalogs and categories already resolved in `app/[locale]/layout.tsx`.
+
+There are deliberately no `loading.tsx` / Suspense boundaries above these routes: a streamed
+`notFound()` can only paint 404 UI under a 200. See
+`specs/bugfix-ssr-product-list-behind-suspense.md`.
 
 For hard SDK constraints see `sdk-reference.md`; for tokens and component patterns see
 `design-system.md`. **Regenerate this file after structural refactors.**
@@ -24,7 +39,8 @@ app/
     ├── cart/page.tsx               # → CartPage          (NOINDEX)
     ├── checkout/page.tsx           # → CheckoutPage      (NOINDEX)
     ├── closing/page.tsx            # → ClosingPage       (NOINDEX)
-    ├── explain/page.tsx            # → VectorSearchPage  (NOINDEX) — note: route is /explain
+    ├── explain/page.tsx            # → ExplainPage       (NOINDEX)
+    ├── vector-search/page.tsx      # → VectorSearchPage  (NOINDEX)
     ├── cms/[slug]/page.tsx         # → CmsPage
     ├── category/
     │   ├── layout.tsx              # renders <CategoryNav> above every category route
@@ -145,7 +161,8 @@ src/
 │   │                       #   segment-bearing push is correct, so do NOT wrap it in withLocale
 │   ├── BlogPostPage.tsx    # Single article (accepts server-fetched initialPost)
 │   ├── CmsPage.tsx         # Static content pages
-│   ├── VectorSearchPage.tsx# Keyword vs vector search comparison (route: /explain)
+│   ├── ExplainPage.tsx     # Relevance/scoring explainer (route: /explain)
+│   ├── VectorSearchPage.tsx# Keyword vs vector search comparison (route: /vector-search)
 │   └── ClosingPage.tsx     # Demo wrap-up screen
 ├── i18n/
 │   ├── index.ts           # i18next init
