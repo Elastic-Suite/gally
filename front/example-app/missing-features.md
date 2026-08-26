@@ -66,13 +66,24 @@ Only needed if CMS search above is restored.
 - `src/components/Tabs/Tabs.tsx`, `TabPanel.tsx`, `a11yProps.tsx`
 
 ### Original vector-vs-fulltext comparison
-**Status: fully missing**
-A query fed into two parallel result panels — one full-text (`ProductRequestType.SEARCH`), one via
-`useVectorSearchDocuments` — gated behind the `VECTOR_SEARCH` bundle flag. The new `VectorSearchPage.tsx`
-reuses the route/name but does something else entirely (a relevance "explain" visualizer) — this is a real
-gap, not a rename.
-- `src/pages/VectorSearch/VectorSearch.tsx`
-- `src/components/VectorSearch/ProductList.tsx`
+**Status: ✅ implemented (2026-08-17)**
+Was fully missing. Now `/[locale]/vector-search` → `src/views/VectorSearchPage.tsx`: one query, two
+symmetric panels, both rendering the same `ResultRow` from the same `COMPARE_ROW_FIELDS`
+(`sku name image url_key score`). A row is one line — rank, thumbnail, name, score — not a
+`ProductCard`: cards showed €0.00 on every hit, because the SDK appends `price` and `stock` to the
+queries it builds and a hand-built vector query gets no such favour. 25 rows a side, each panel
+paginated independently. The vector side calls the premium `vectorSearchProducts` GraphQL query
+through a local raw fetcher (`src/sdk/vectorSearch.ts`) — the SDK has no vector support, and
+`VectorProduct` carries the same fields as `Product`, so the old app's
+`transformVectorSearchDocumentsIntoProducts` mapping layer is no longer needed. See
+`specs/feature-vector-search-comparison.md`.
+
+The name collision noted here is also resolved: the explain visualiser is now `src/views/ExplainPage.tsx`,
+matching its `/explain` route, and `VectorSearchPage.tsx` is the comparison. Not gated behind a bundle
+flag — the feature-flag system is still missing (§1) — the panel degrades to an "unavailable" message if
+the query fails.
+- `src/pages/VectorSearch/VectorSearch.tsx` (old, for reference)
+- `src/components/VectorSearch/ProductList.tsx` (old, for reference)
 
 ### Dynamic sort options + per-category default sort
 **Status: partial**
@@ -198,10 +209,11 @@ comparison, no code read for this section.
 
 ## 8. Only on the new branch — do NOT lose these
 
-- **`VectorSearchPage`** (`src/pages/VectorSearchPage.tsx`, `src/components/SearchExplain.tsx`) — search-relevance
+- **`ExplainPage`** (`src/views/ExplainPage.tsx`, `src/components/SearchExplain.tsx`) — search-relevance
   "explain" visualizer: calls the GraphQL `explain` query directly and renders per-product ranking cards with
-  boost badges and a per-field score-contribution breakdown. Not a keyword-vs-vector comparison (see §2).
-- **`ClosingPage`** (`src/pages/ClosingPage.tsx`) — sales-demo "bilan" page with a sequenced reveal (delay →
+  boost badges and a per-field score-contribution breakdown. Renamed from `VectorSearchPage.tsx` on
+  2026-08-17 to match its `/explain` route; it is not, and never was, a keyword-vs-vector comparison (see §2).
+- **`ClosingPage`** (`src/views/ClosingPage.tsx`) — sales-demo "bilan" page with a sequenced reveal (delay →
   cost → pricing plans) that closes the storytelling scenario; see `storytelling.md` Act 5.
 - **Storytelling/demo layer** (`DemoContext`, `StoryCompanion`, `IntroScreen`, `useStoryActions`) — the full
   5-act guided scenario, audience-mode toggle, and right-side story companion panel. Net new, no `main`

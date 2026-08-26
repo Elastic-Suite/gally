@@ -9,7 +9,8 @@
   "nav": {
     "products": "Produkte",
     "searchIntelligence": "Such-Intelligenz",
-    "cms": "Blog"
+    "cms": "Blog",
+    "vectorSearch": "Semantische Suche"
   },
   "cart": {
     "link": "Warenkorb"
@@ -23,6 +24,7 @@
     "checkout": "Kasse",
     "explain": "Such-Intelligenz",
     "closing": "Zusammenfassung",
-    "home": "Startseite"
+    "home": "Startseite",
+    "vectorSearch": "Semantische Suche"
   }
 }

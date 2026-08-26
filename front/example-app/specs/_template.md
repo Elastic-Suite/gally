@@ -1,7 +1,7 @@
 # Feature: <name>
 
 ## Status: draft | approved | implemented
-## Page/Component: src/pages/<X>.tsx
+## Page/Component: src/views/<X>.tsx (and/or app/[locale]/<route>/page.tsx)
 
 ## Behaviour (testable)
 - [ ] ...

@@ -109,9 +109,10 @@ Each stage revealed by clicking a button:
 | `src/contexts/DemoContext.tsx`      | Story state, audience mode, intro state, STORY_STEPS data |
 | `src/components/IntroScreen.tsx`    | Intro overlay with personas + audience toggle             |
 | `src/components/StoryCompanion.tsx` | Right side panel companion                                |
-| `src/pages/ClosingPage.tsx`         | Sequenced bilan (delay → cost → pricing)                  |
-| `src/pages/CartPage.tsx`            | Cart with bundle, FBT, shipping bar, animated total       |
-| `src/App.tsx`                       | Intro gate, audience class, companion + closing route     |
+| `src/views/ClosingPage.tsx`         | Sequenced bilan (delay → cost → pricing)                  |
+| `src/views/CartPage.tsx`            | Cart with bundle, FBT, shipping bar, animated total       |
+| `app/providers.tsx`                 | Intro gate, audience class, companion (was `src/App.tsx`) |
+| `app/[locale]/closing/page.tsx`     | The closing route itself                                  |
 
 ---
 

@@ -13,6 +13,28 @@ These facts were found the hard way. Never "simplify" them away.
 - **⚠️ Gotcha:** `product_catalog` requests **fail** if `currentCategoryId` is not provided. When browsing without a category, use `product_search` with an empty search string instead.
 - **⚠️ Gotcha:** Don't fake a `product_search` wildcard (`'*'`) just to get "some products" with no real query — `requestType` is purely a client-side declaration (the backend just validates it), so prefer a genuine `product_catalog` browse of the root/default category instead. It returns catalog/merchandising order, not relevance-scored noise against `'*'`. Only fall back to the wildcard when no category tree is available at all (e.g. transiently before `CatalogContext` finishes its first fetch). See `Homepage.tsx`'s "Trending Now" slider and `ProductPage.tsx`'s recommendations for the pattern, and `useSearch.ts`'s `doSearch` for the fallback.
 
+### The catalogs the demo data defines
+
+Three catalogs, six localized catalogs. The `[locale]` URL segment is the **localized** code (right
+column), which is what every SDK call wants — a parent catalog code is never a valid segment.
+
+| Catalog | Localized catalog | Locale | Currency | |
+|---|---|---|---|---|
+| `com` — COM Catalog | `com_fr` | fr_FR | EUR | **landing default** |
+| | `com_en` | en_US | EUR | |
+| `fr` — FR Catalog | `fr_fr` | fr_FR | EUR | |
+| | `fr_en` | en_US | EUR | |
+| `uk` — UK Catalog | `en_fr` | fr_FR | GBP | no documents indexed |
+| | `en_en` | en_US | GBP | no documents indexed |
+
+⚠️ **The `uk` catalog's localized codes start with `en_`, not `uk_`** — so `en_en` / `en_fr` are the
+*British* catalog, not an "English" one, and they are the two with **no indexed documents at all**:
+they render an empty storefront. Confirmed against
+`api/packages/gally-sample-data/src/DataFixtures/{catalogs,localized_catalogs}.yaml`.
+
+The app also ships German UI strings (`src/locales/de/`, mapped in `src/sdk/catalogs.ts`) even
+though no `de_DE` localized catalog exists — German is reachable only if one is added to the data.
+
 ## SDK Usage (`@elastic-suite/gally-sdk`)
 - `SearchManager` — wraps GraphQL product search. Accepts `SearchRequestOptions` with `localizedCatalog` (e.g. `"com_en"`), `metadata` (e.g. `"product"`), `categoryId`, `search`, etc.
 - **⚠️ `selectedFields` MUST NOT be empty.** The SDK skips the `collection` field entirely when `selectedFields` is `[]`, returning only pagination/aggregation metadata with **zero products**. Always pass a non-empty list.

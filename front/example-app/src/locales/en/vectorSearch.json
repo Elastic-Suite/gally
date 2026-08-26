@@ -1,0 +1,33 @@
+{
+  "breadcrumb": "Home / Semantic search",
+  "title": "Keyword search vs. semantic search",
+  "intro": "The same query, run twice against the same catalogue. On the left, the keyword engine matches words. On the right, semantic search matches meaning — it compares the embedding of your query with the embedding of every product, so it can answer a request whose words appear nowhere in the catalogue.",
+  "placeholder": "Describe what you are looking for…",
+  "submit": "Compare",
+  "tryLabel": "Try:",
+  "loading": "Searching…",
+  "languageNote": "⚠️ This catalogue is not in English. The deployed embedding model (all-MiniLM-L6-v2) only understands English, and the product names are English in every catalogue — so a query in another language will rank confidently but meaninglessly. Switch to an English catalogue to see the comparison work.",
+  "keyword": {
+    "title": "Keyword search",
+    "subtitle": "What this storefront ships today — BM25 over the indexed text fields.",
+    "count_one": "{{count}} result",
+    "count_other": "{{count}} results",
+    "emptyTitle": "No results for “{{query}}”",
+    "emptyBody": "Not one product contains these words. There is no spelling mistake to correct and no synonym configured, so the keyword engine has nothing to match on — the shopper hits a dead end.",
+    "scoreLabel": "BM25 score"
+  },
+  "vector": {
+    "title": "Semantic search",
+    "subtitle": "Vector similarity over the product embeddings, computed by OpenSearch kNN. It ranks the whole catalogue — it never filters, and never comes back empty.",
+    "count": "Top {{count}} of {{corpus}} products, by similarity",
+    "unavailableTitle": "Semantic search unavailable",
+    "unavailableBody": "The vector query returned nothing. Check that the premium GallyVectorSearchBundle is installed, that a model is deployed (make sf c=gally:vector-search:upload-model) and that the products carry embeddings.",
+    "scoreLabel": "Similarity",
+    "countAll": "All {{corpus}} products, ranked by similarity"
+  },
+  "footnote": "Note the asymmetry: vector search ranks rather than filters. It returns the whole catalogue ordered by similarity and never reports “no results” — which is its strength on a query like these, and why a production setup usually applies a minimum score, or runs it only as a fallback when keyword search finds nothing.",
+  "rows": {
+    "product": "Product"
+  },
+  "footnoteTitle": "Reading this comparison"
+}
