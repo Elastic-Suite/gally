@@ -1,0 +1,33 @@
+{
+  "breadcrumb": "Accueil / Recherche sémantique",
+  "title": "Recherche par mots-clés vs. recherche sémantique",
+  "intro": "La même requête, exécutée deux fois sur le même catalogue. À gauche, le moteur par mots-clés compare des mots. À droite, la recherche sémantique compare du sens — elle rapproche le vecteur de votre requête de celui de chaque produit, et peut donc répondre à une demande dont les mots n'apparaissent nulle part dans le catalogue.",
+  "placeholder": "Décrivez ce que vous cherchez…",
+  "submit": "Comparer",
+  "tryLabel": "Essayez :",
+  "loading": "Recherche…",
+  "languageNote": "⚠️ Ce catalogue n'est pas en anglais. Le modèle d'embedding déployé (all-MiniLM-L6-v2) ne comprend que l'anglais, et les noms de produits sont en anglais dans tous les catalogues — une requête dans une autre langue produira donc un classement assuré mais dénué de sens. Passez sur un catalogue anglais pour voir la comparaison fonctionner.",
+  "keyword": {
+    "title": "Recherche par mots-clés",
+    "subtitle": "Ce que cette boutique propose aujourd'hui — BM25 sur les champs texte indexés.",
+    "count_one": "{{count}} résultat",
+    "count_other": "{{count}} résultats",
+    "emptyTitle": "Aucun résultat pour « {{query}} »",
+    "emptyBody": "Aucun produit ne contient ces mots. Il n'y a ni faute d'orthographe à corriger ni synonyme configuré : le moteur par mots-clés n'a rien à comparer, et le client se retrouve dans une impasse.",
+    "scoreLabel": "Score BM25"
+  },
+  "vector": {
+    "title": "Recherche sémantique",
+    "subtitle": "Similarité vectorielle sur les embeddings produits, calculée par le kNN d'OpenSearch. Elle classe tout le catalogue — elle ne filtre jamais, et ne revient jamais vide.",
+    "count": "Top {{count}} sur {{corpus}} produits, par similarité",
+    "unavailableTitle": "Recherche sémantique indisponible",
+    "unavailableBody": "La requête vectorielle n'a rien renvoyé. Vérifiez que le module premium GallyVectorSearchBundle est installé, qu'un modèle est déployé (make sf c=gally:vector-search:upload-model) et que les produits portent bien des embeddings.",
+    "scoreLabel": "Similarité",
+    "countAll": "Les {{corpus}} produits, classés par similarité"
+  },
+  "footnote": "Notez l'asymétrie : la recherche vectorielle classe, elle ne filtre pas. Elle renvoie tout le catalogue ordonné par similarité et n'annonce jamais « aucun résultat » — c'est sa force sur ce type de requête, et la raison pour laquelle une mise en production applique généralement un score minimum, ou ne l'active qu'en repli lorsque la recherche par mots-clés ne trouve rien.",
+  "rows": {
+    "product": "Produit"
+  },
+  "footnoteTitle": "Comment lire cette comparaison"
+}

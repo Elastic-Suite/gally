@@ -1,0 +1,33 @@
+{
+  "breadcrumb": "Startseite / Semantische Suche",
+  "title": "Stichwortsuche vs. semantische Suche",
+  "intro": "Dieselbe Anfrage, zweimal auf demselben Katalog ausgeführt. Links vergleicht die Stichwortsuche Wörter. Rechts vergleicht die semantische Suche Bedeutung — sie stellt das Embedding Ihrer Anfrage dem Embedding jedes Produkts gegenüber und kann so eine Anfrage beantworten, deren Wörter im Katalog nirgends vorkommen.",
+  "placeholder": "Beschreiben Sie, wonach Sie suchen…",
+  "submit": "Vergleichen",
+  "tryLabel": "Ausprobieren:",
+  "loading": "Suche läuft…",
+  "languageNote": "⚠️ Dieser Katalog ist nicht auf Englisch. Das bereitgestellte Embedding-Modell (all-MiniLM-L6-v2) versteht nur Englisch, und die Produktnamen sind in allen Katalogen englisch — eine Anfrage in einer anderen Sprache liefert daher eine selbstbewusste, aber bedeutungslose Rangfolge. Wechseln Sie zu einem englischen Katalog, um den Vergleich funktionieren zu sehen.",
+  "keyword": {
+    "title": "Stichwortsuche",
+    "subtitle": "Was dieser Shop heute ausliefert — BM25 über die indexierten Textfelder.",
+    "count_one": "{{count}} Ergebnis",
+    "count_other": "{{count}} Ergebnisse",
+    "emptyTitle": "Keine Ergebnisse für „{{query}}“",
+    "emptyBody": "Kein einziges Produkt enthält diese Wörter. Es gibt keinen Tippfehler zu korrigieren und kein konfiguriertes Synonym — die Stichwortsuche hat nichts zum Abgleichen, und der Kunde landet in einer Sackgasse.",
+    "scoreLabel": "BM25-Score"
+  },
+  "vector": {
+    "title": "Semantische Suche",
+    "subtitle": "Vektorähnlichkeit über die Produkt-Embeddings, berechnet von OpenSearch kNN. Sie sortiert den gesamten Katalog — sie filtert nie und kommt nie leer zurück.",
+    "count": "Top {{count}} von {{corpus}} Produkten, nach Ähnlichkeit",
+    "unavailableTitle": "Semantische Suche nicht verfügbar",
+    "unavailableBody": "Die Vektorabfrage hat nichts zurückgegeben. Prüfen Sie, ob das Premium-Modul GallyVectorSearchBundle installiert ist, ob ein Modell bereitgestellt wurde (make sf c=gally:vector-search:upload-model) und ob die Produkte Embeddings tragen.",
+    "scoreLabel": "Ähnlichkeit",
+    "countAll": "Alle {{corpus}} Produkte, nach Ähnlichkeit sortiert"
+  },
+  "footnote": "Beachten Sie die Asymmetrie: Die Vektorsuche sortiert, sie filtert nicht. Sie gibt den gesamten Katalog nach Ähnlichkeit geordnet zurück und meldet nie „keine Ergebnisse“ — das ist ihre Stärke bei solchen Anfragen und der Grund, warum im Produktivbetrieb üblicherweise ein Mindestscore gesetzt wird oder sie nur als Rückfallebene läuft, wenn die Stichwortsuche nichts findet.",
+  "rows": {
+    "product": "Produkt"
+  },
+  "footnoteTitle": "So lesen Sie diesen Vergleich"
+}

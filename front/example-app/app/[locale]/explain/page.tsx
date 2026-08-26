@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { resolveLocale } from '../../../src/sdk/server';
 import { languageOf, NOINDEX } from '../../../src/sdk/seo';
 import { tServer } from '../../../src/sdk/serverI18n';
-import View from '../../../src/views/VectorSearchPage';
+import View from '../../../src/views/ExplainPage';
 
 type Params = { params: Promise<{ locale: string }> };
 

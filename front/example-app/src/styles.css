@@ -205,22 +205,51 @@ a:hover {
   overflow-x: auto;
 }
 
-/* Plain nav links (Search Intelligence). Scoped to direct children so the switch's
-   own tabs below, which are nested, never pick up this hover background — it would
-   fight the sliding thumb. */
+/* Plain nav links (Search Intelligence, Semantic search). Scoped to direct children so
+   the switch's own tabs below, which are nested, never pick up this hover background — it
+   would fight the sliding thumb.
+
+   The vertical padding is 0.7rem so these match the HEIGHT of the Products/Articles switch
+   beside them, and that number is derived, not tuned by eye: the switch's outer box is its
+   own 0.25rem track padding plus its tabs' 0.45rem, and 0.25 + 0.45 = 0.7. A plain link has
+   no track, so it has to carry both. Measured result: 44.1px for both, to the pixel.
+
+   inline-flex rather than the default inline for the same reason — it gives these the same
+   content-box height as .header-nav-tab, so the emoji (0.95rem, line-height 1) cannot push
+   the line box taller than the 0.85rem label the way it would in an inline context. `gap`
+   spaces the icon from the label, so the markup needs no whitespace between them. */
 .header-nav > a {
-  color: rgba(255, 255, 255, 0.8);
-  padding: 0.5rem 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  /* Colour, weight and track all match .header-nav-switch / .header-nav-tab exactly, so a
+     plain link and a switch segment are the same object to the eye. They used to differ on
+     all three — 0.8 alpha against 0.85, weight 500 against 600, and no track at all against
+     the switch's translucent well — which read as the Semantic search item being greyed out
+     or disabled next to Products/Articles. Any change to the switch's palette has to be
+     mirrored here. */
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.12);
+  padding: 0.7rem 0.9rem;
   border-radius: var(--radius-pill);
   font-size: 0.85rem;
-  font-weight: 500;
+  font-weight: 600;
   white-space: nowrap;
   transition: all 0.2s;
 }
-.header-nav > a:hover,
-.header-nav > a.active {
-  color: white;
-  background: rgba(255, 255, 255, 0.15);
+.header-nav > a:hover {
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.2);
+}
+/* The selected state copies the switch's sliding thumb — solid white, --indigo-800 text,
+   the same soft shadow — because that is what "selected" already looks like in this bar.
+   Declared after :hover at equal specificity so the current page keeps its treatment when
+   hovered, exactly as .header-nav-tab.active does. */
+.header-nav > a.active,
+.header-nav > a.active:hover {
+  color: var(--indigo-800);
+  background: var(--white);
+  box-shadow: var(--shadow-sm);
 }
 
 /* ─── Header nav switch (Products / Articles) ────────────── */
@@ -4076,5 +4105,330 @@ a:hover {
   }
   .blog-post-title {
     font-size: 1.75rem;
+  }
+}
+
+/* ─── Semantic search comparison (/vector-search) ─────────
+   Two panels, one query. The layout's whole job is to make the panels look
+   EQUAL — same width, same row, same score treatment — so the only visible
+   difference is the ranking. Any asymmetry here (a wider panel, a richer row
+   on one side) argues the point for the reader instead of showing it.
+   Results are ROWS, not product cards: this page trades merchandising detail
+   for depth, because what it compares is which products come back and in what
+   order. 30 rows a side fit where 8 cards used to. */
+.vector-page {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Everything above the panels applies to BOTH of them, so it is centred. Left-aligned,
+   the shared search box reads as belonging to the left-hand panel.
+   Its children are all full-bleed — no max-width caps in here. They span the same width as
+   the two panels below, so the header reads as the heading OF the comparison rather than as
+   a column floating over it. */
+.vector-head {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.vector-head .breadcrumb {
+  font-size: 0.8rem;
+  color: var(--gray-500);
+  margin-bottom: 0.25rem;
+}
+.vector-head h1 {
+  font-size: 1.8rem;
+}
+
+.vector-intro {
+  color: var(--gray-600);
+  line-height: 1.6;
+  margin: 0.75rem 0 1.5rem;
+}
+
+.vector-search-form {
+  display: flex;
+  gap: 0.5rem;
+  margin: 0 0 0.75rem;
+}
+
+.vector-search-input {
+  flex: 1;
+  padding: 0.75rem 1.25rem;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  color: var(--gray-900);
+  background: var(--white);
+  border: 2px solid var(--indigo-100);
+  border-radius: var(--radius-pill);
+}
+.vector-search-input:focus {
+  outline: none;
+  border-color: var(--indigo-500);
+}
+
+.vector-search-submit {
+  padding: 0.75rem 1.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--white);
+  background: var(--indigo-800);
+  border: none;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+}
+.vector-search-submit:hover {
+  background: var(--indigo-700);
+}
+
+.vector-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.vector-suggestions-label {
+  font-size: 0.8rem;
+  color: var(--gray-500);
+}
+/* Same shape as .filter-chip, but these SET the query rather than removing a
+   filter, so they are their own class rather than a borrowed one wearing a
+   different meaning. */
+.vector-suggestion {
+  padding: 0.3rem 0.85rem;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  color: var(--indigo-800);
+  background: var(--indigo-50);
+  border: 1px solid var(--indigo-100);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+}
+.vector-suggestion:hover {
+  background: var(--indigo-100);
+}
+.vector-suggestion.is-active {
+  color: var(--white);
+  background: var(--indigo-800);
+  border-color: var(--indigo-800);
+}
+
+.vector-language-note {
+  text-align: left;
+  padding: 0.85rem 1.1rem;
+  margin-top: 1.25rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--gray-800);
+  background: var(--gray-100);
+  border-left: 3px solid var(--warning);
+  border-radius: var(--radius-sm);
+}
+
+.vector-compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.vector-panel {
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: 1.25rem;
+  /* The accent is the only per-panel difference, and it is 3px of colour rather
+     than a whole visual treatment — enough to tell the panels apart at a glance,
+     not enough to flatter one of them. */
+  border-top: 3px solid var(--gray-400);
+}
+.vector-panel--vector {
+  border-top-color: var(--coral-500);
+}
+
+.vector-panel-head {
+  margin-bottom: 1rem;
+}
+.vector-panel-head h2 {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--gray-900);
+}
+.vector-panel-head p {
+  margin-top: 0.2rem;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: var(--gray-500);
+}
+.vector-panel-count {
+  display: inline-block;
+  margin-top: 0.6rem;
+  padding: 0.2rem 0.7rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--gray-700);
+  background: var(--gray-100);
+  border-radius: var(--radius-pill);
+}
+
+/* The shared .pagination idiom is written for SearchPage, where it sits BELOW a grid and
+   needs `margin-top: 2rem` to clear it. Here it sits above the list, so the margin is
+   flipped. Scoped to .vector-panel so SearchPage's own pagers are untouched. */
+.vector-panel .pagination {
+  margin: 0 0 0.9rem;
+}
+
+/* Names the score column. It carries the ONLY text that differs between the two
+   panels' lists — "BM25 score" vs "Similarity" — because the numbers underneath
+   are on unrelated scales and must never be read across the gutter. */
+.vector-list-legend {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0.5rem 0.4rem;
+  border-bottom: 1px solid var(--gray-200);
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--gray-500);
+}
+
+.vector-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Rank | thumb + name (the link) | score. The NAME is the flexible column — it is what
+   the visitor scans down and compares between the two lists — and the score column has a
+   fixed min-width so the numbers line up down the whole list. */
+.vector-row {
+  display: grid;
+  grid-template-columns: 1.6rem 1fr auto;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.35rem 0.5rem;
+  border-bottom: 1px solid var(--gray-100);
+}
+.vector-row:last-child {
+  border-bottom: none;
+}
+.vector-row:hover {
+  background: var(--indigo-50);
+}
+
+.vector-row-rank {
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--gray-400);
+  text-align: right;
+}
+
+.vector-row-link {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-width: 0;
+  text-decoration: none;
+  color: inherit;
+}
+
+.vector-row-thumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 34px;
+  height: 34px;
+  overflow: hidden;
+  background: var(--gray-50);
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+}
+.vector-row-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.vector-row-name {
+  font-size: 0.85rem;
+  color: var(--gray-800);
+  /* One line, always: a wrapped name would make rows different heights and the two
+     lists would stop being scannable against each other. */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.vector-row-link:hover .vector-row-name {
+  color: var(--indigo-700);
+}
+
+.vector-row-score {
+  min-width: 2.6rem;
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  color: var(--gray-600);
+}
+
+.vector-empty {
+  padding: 2.5rem 1rem;
+  text-align: center;
+  color: var(--gray-500);
+}
+.vector-empty-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+.vector-empty h3 {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  color: var(--gray-700);
+  margin-bottom: 0.5rem;
+}
+.vector-empty p {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  max-width: 40ch;
+  margin: 0 auto;
+}
+
+/* The interpretive key to the page, not small print — so it is a full-width callout rather
+   than a grey line of 0.8rem text under a rule, which is what it was and which nobody
+   scrolling past 85 result rows was ever going to read. Same callout family as
+   .vector-language-note (padding, tint, left accent rule, radius); indigo rather than amber
+   because this is the explanation, not a warning. Full-bleed, matching .vector-head and
+   .vector-compare — no max-width. */
+.vector-footnote {
+  margin-top: 2rem;
+  padding: 1.25rem 1.5rem;
+  background: var(--indigo-50);
+  border-left: 4px solid var(--indigo-500);
+  border-radius: var(--radius-md);
+}
+.vector-footnote-title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--indigo-900);
+  margin-bottom: 0.4rem;
+}
+.vector-footnote p {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--gray-800);
+}
+
+@media (max-width: 900px) {
+  /* Stacked, the panels stop being a comparison and become a sequence — so the
+     keyword panel (which comes first in the DOM, and is the "before" of the
+     story) reads first, which is the right order to fall back to. */
+  .vector-compare {
+    grid-template-columns: 1fr;
+  }
+  .vector-search-form {
+    flex-direction: column;
   }
 }
