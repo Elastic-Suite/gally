@@ -142,3 +142,16 @@ Key source fields:
 
 **Media URL:** product images are relative paths. Prefix with `MEDIA_BASE_URL`
 (`https://gally.localhost/media/catalog/product`) for full URLs. Exported from `sdk/index.ts`.
+### Unset booleans in raw `_source` are `[]`, not `false`
+
+An attribute a product does not carry is indexed as an **empty array**, not `false` and not
+absent. In `product_documents.json`, `new` is `true` on 112 documents and `[]` on 222; `sale` is
+`true` on 84 and `[]` on 240.
+
+`[]` is truthy in JavaScript, so `s.new || …` reads every non-new product as new. Test booleans
+from `_source` with `=== true`, never a truthy read.
+
+This only bites on the raw-`_source` path — the stitched GraphQL `Product` type returns plain
+booleans. The PDP is on that path because `PRODUCT_DETAIL_FIELDS` (`src/sdk/fields.ts:47`) asks
+for `source`, which is how the "New" badge came to render on all 222. See
+`specs/bugfix-new-badge-empty-array-truthy.md`.

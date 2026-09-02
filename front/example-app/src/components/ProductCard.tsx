@@ -24,8 +24,9 @@ export default function ProductCard({ product }: Props) {
   const { name, sku, image, price, originalPrice, isDiscounted } = fields;
   // Which badges apply is a property of the product, not of the card — the rule lives in
   // ../sdk/productFields.ts so the product page overlays the same set on its own picture.
-  // A card gets exactly ONE: the picture is 180px tall in a grid of them, and a stack of pills
-  // eats the product it is meant to sell. getProductBadges() is ordered by priority, so taking
+  // A card gets exactly ONE: it is one picture in a grid of them, and a stack of pills eats the
+  // product it is meant to sell. That holds at every card size — the listing picture is taller
+  // than it was (see specs/feature-larger-product-grid.md), which is not a reason to stack more. getProductBadges() is ordered by priority, so taking
   // the first is the whole selection rule — never re-sort here, or a card and its PDP would
   // disagree about which badge matters most.
   const badges = getProductBadges(fields).slice(0, 1);
