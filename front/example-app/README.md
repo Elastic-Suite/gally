@@ -1,46 +1,30 @@
-# Getting Started with Create React App
+# Gally example app
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Demo storefront for `@elastic-suite/gally-sdk`: Next.js 16 (App Router) + React 19 + TypeScript.
+Package name `gally-features-example`.
 
-## Available Scripts
+## Running it
 
-In the project directory, you can run:
+It runs as the `example` service of the monorepo Docker stack, in the dev profile only, and is
+served at **https://gally.localhost/example** (`basePath: '/example'`, port 3001 inside the
+container). From the repo root:
 
-### `npm start`
+```bash
+make start            # build + up
+make logs s=example   # follow this app's logs
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+**Do not run `npm run build` or `npm start` on the host.** Package resolution only works inside the
+`example` container — the SDK is a yarn-workspace symlink to `front/gally-admin/packages/sdk`.
+To type-check:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```bash
+docker compose exec example sh -c "cd /usr/src/front/example-app && npx tsc --noEmit"
+```
 
-### `npm test`
+There are no tests in this workspace (`npm test` prints "no tests").
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Working on it
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Read **[`AGENTS.md`](AGENTS.md)** first. It is the entry point and holds the routing table for
+`docs/`, `specs/` and the directory-level rules.
