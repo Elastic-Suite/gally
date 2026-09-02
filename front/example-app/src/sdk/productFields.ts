@@ -60,7 +60,10 @@ export function getProductFields(product: any) {
   const price = s.price?.[0]?.price ?? 0;
   const originalPrice = s.price?.[0]?.original_price ?? s.price?.[0]?.originalPrice;
   const isDiscounted = s.price?.[0]?.is_discounted ?? s.price?.[0]?.isDiscounted ?? false;
-  const isNew = s.new || s.is_new || false;
+  // `=== true` is load-bearing, not style. In the raw `_source` (which the PDP reads, because
+  // PRODUCT_DETAIL_FIELDS asks for `source`) an unset boolean attribute is `[]`, not `false` —
+  // and `[]` is truthy, so a `||` read badges every product as new. Same reason as `sale` below.
+  const isNew = s.new === true;
   // `sale` is the merchandising flag the catalogue sets; `is_discounted` is the arithmetic on
   // the price row. They describe the same products in the sample data on purpose, but reading
   // both means the badge is still right on a catalogue that only maintains one of them.

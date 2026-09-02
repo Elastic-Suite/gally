@@ -1,7 +1,7 @@
 # Bugfix: Blog cards, ACP rows and post page rendered empty — `selectedFields` projects `_source`
 
 ## Status: implemented
-## Page/Component: src/hooks/useCms.ts (consumed by src/components/BlogCard.tsx, src/pages/BlogPage.tsx, src/pages/BlogPostPage.tsx, src/components/SearchOverlay.tsx)
+## Page/Component: src/hooks/useCms.ts (consumed by src/components/BlogCard.tsx, src/views/BlogPage.tsx, src/views/BlogPostPage.tsx, src/components/SearchOverlay.tsx)
 
 ## Problem
 Every `cms_page` field rendered blank — blog cards with no title/image/author, ACP blog rows

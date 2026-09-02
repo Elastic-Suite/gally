@@ -1,7 +1,7 @@
 # Feature: Add-to-cart buttons switch from coral to indigo
 
 ## Status: implemented
-## Page/Component: src/components/ProductCard.tsx, src/pages/ProductPage.tsx, src/components/SearchOverlay.tsx, src/pages/CartPage.tsx, src/styles.css (comments only)
+## Page/Component: src/components/ProductCard.tsx, src/views/ProductPage.tsx, src/components/SearchOverlay.tsx, src/views/CartPage.tsx, src/styles.css (comments only)
 
 Every button whose action is "put this in the cart" is now `--indigo-800` instead of
 coral. Implemented as a class swap, `.btn-coral` → `.btn-primary`; `.btn-primary` was

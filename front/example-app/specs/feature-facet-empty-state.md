@@ -1,7 +1,7 @@
 # Feature: Message when the facet sidebar has nothing to show
 
 ## Status: implemented
-## Page/Component: src/components/Facets.tsx, src/styles.css, src/pages/SearchPage.tsx, src/pages/CategoryPage.tsx, src/locales/{en,fr,de}/facets.json
+## Page/Component: src/components/Facets.tsx, src/styles.css, src/views/SearchPage.tsx, src/views/CategoryPage.tsx, src/locales/{en,fr,de}/facets.json
 
 ## Problem
 `Facets` drops every aggregation with 0 or 1 option as non-discriminant

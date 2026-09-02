@@ -30,10 +30,15 @@ Style inspired by elasticsuite.io. Any visual change MUST comply, or reference a
   to `0`, and the logo vanishes with no console error. Validate with an XML parser after editing.
 
 ## Typography
-- **Geist everywhere** — titles and body alike, weights 400/500/600/700, loaded from Google Fonts in `public/index.html`. This matches elasticsuite.io, which sets its whole site in Geist with the stack `Geist, "Helvetica Neue", Helvetica, Arial, sans-serif`. No other font families.
+- **Geist everywhere** — titles and body alike, weights 400/500/600/700, loaded from Google Fonts in `app/layout.tsx`. This matches elasticsuite.io, which sets its whole site in Geist with the stack `Geist, "Helvetica Neue", Helvetica, Arial, sans-serif`. No other font families.
 - Two tokens, both currently Geist: `--font-display` (titles, 10 sites) and `--font-sans` (everything else). The split is kept so a distinct display face can return by editing one line. **`--font-serif` no longer exists** — it was renamed when the serif went away; older specs still mention it.
 - There is deliberately **no serif** any more. The previous Playfair Display / Inter pairing gave the storefront an editorial look; dropping it was an explicit decision to match the brand site. See `specs/feature-geist-typography.md`.
 - `font-family: monospace` in the debug/tracking panels is untouched — it is a generic keyword for code, not brand type. elasticsuite.io uses Geist Mono for that role; adopting it was considered and deferred.
+
+## Layout and card sizing
+- **One page width, `--layout-max-width` (1600px).** `.main-content`, `.header-inner` and `.header-search-row` all read it, so the nav row, the search band and the content underneath share the same left and right edge. A page that needs a narrower measure of its own sets its own cap and says why: `.vector-page` (1400px, so the two compared panels stay equal), `.blog-page` (1200px, reading width), `.search-overlay-panel` (1500px).
+- **The listing card's size lives on `.products-grid`, never on `.product-card`.** Five variables carry it — `--product-grid-column`, `--product-card-image-height`, `--product-card-body-padding`, `--product-card-name-size`, `--product-card-price-size`. `:root` holds the small values (220px column, 180px picture); `.products-grid` raises all five above a 1200px viewport (340px column, 300px picture), which gives three cards of ~392px per row beside the 280px facet sidebar. The home-page carousel and the autocomplete draw the same card at the small size, which is what putting the size on the grid buys. `.skeleton-card-image` and `.skeleton-card-body` read the same variables so the loading state cannot drift from the content. See `specs/feature-larger-product-grid.md`.
+- The grid column is `minmax(min(var(--product-grid-column), 100%), 1fr)`. The `min(…, 100%)` is what stops a track wider than the viewport from scrolling a phone sideways; do not simplify it away.
 
 ## Component patterns (do NOT re-style ad hoc)
 - Buttons: pill shape.

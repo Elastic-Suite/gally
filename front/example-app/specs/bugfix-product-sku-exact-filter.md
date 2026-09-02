@@ -1,7 +1,7 @@
 # Bugfix: Product page looked up SKU via full-text search, not an exact filter
 
 ## Status: implemented
-## Page/Component: src/pages/ProductPage.tsx
+## Page/Component: src/views/ProductPage.tsx
 
 ## Problem
 `ProductPage.tsx` found the product to display by calling `useSearch({ searchQuery: sku, pageSize: 5 })` — a
