@@ -1,7 +1,7 @@
 # Bugfix: Facets sidebar had a double border on the search results page
 
 ## Status: implemented
-## Page/Component: src/pages/SearchPage.tsx, src/components/Facets.tsx
+## Page/Component: src/views/SearchPage.tsx, src/components/Facets.tsx
 
 ## Problem
 `Facets.tsx` already renders its own root element as `<aside className="facets-sidebar">` (both in the loading

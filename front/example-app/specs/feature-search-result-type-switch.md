@@ -1,7 +1,7 @@
 # Feature: Search results type selector — centered segmented switch, "Products / Articles"
 
 ## Status: implemented
-## Page/Component: src/pages/SearchPage.tsx, src/styles.css, src/locales/{en,fr,de}/search.json
+## Page/Component: src/views/SearchPage.tsx, src/styles.css, src/locales/{en,fr,de}/search.json
 
 The selector that chooses which of the two indices a query's results come from was a
 left-aligned pair of underline tabs labelled "Products / Blog". It is now a centered

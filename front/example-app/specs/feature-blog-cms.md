@@ -1,7 +1,7 @@
 # Feature: Blog (cms_page) — ACP results + browsable index
 
 ## Status: implemented
-## Page/Component: src/pages/BlogPage.tsx, src/pages/BlogPostPage.tsx, src/components/SearchOverlay.tsx
+## Page/Component: src/views/BlogPage.tsx, src/views/BlogPostPage.tsx, src/components/SearchOverlay.tsx
 
 Renames the "CMS" top nav to "Blog" and turns it into a real, indexed content
 section backed by the `cms_page` entity (57 documents per locale: 50 editorial

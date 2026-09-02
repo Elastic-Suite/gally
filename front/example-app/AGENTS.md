@@ -12,7 +12,8 @@ Routes live in `app/[locale]/**/page.tsx` as thin re-exports; the components the
 metadata and JSON-LD, and hand the data down as `initialData` — see
 `specs/feature-rsc-shells-phase3.md`. Everything else still renders client-side behind the
 `'use client'` boundary in `app/providers.tsx`. Phase history:
-`specs/feature-nextjs-migration-phase1.md`, `-phase2.md`, `-phase3.md`, plan in `specs/plan-ssr-seo.md`.
+`specs/feature-nextjs-migration-phase1.md`, `specs/feature-locale-segment-phase2.md`,
+`specs/feature-rsc-shells-phase3.md`, plan in `specs/plan-ssr-seo.md`.
 
 **A Server Component cannot import from a module that imports React hooks** — it fails at request
 time, not at build. Data mappers shared by server shells and client hooks live in `src/sdk/`
@@ -29,15 +30,26 @@ exactly, or the server-rendered page and the hydrated one disagree.
   Node uses `http://router/api`, because `gally.localhost` is 127.0.0.1 inside the container and a
   server-side fetch to it dies with `ECONNREFUSED`.
 
-## Authoritative docs
+## Where to read what
 
-Single source of truth — read the relevant one before you code, and don't restate them here or
-anywhere else; duplicated rules drift.
+This is the only routing table for the app. `CLAUDE.md` and `.agent.md` beside this file are
+redirects here and carry no rules — don't copy anything back into them.
 
-- `docs/sdk-reference.md` — SDK/API facts and gotchas. **Wins over every other file, this one included.**
-- `docs/design-system.md` — tokens, palette, typography, component patterns.
-- `specs/feature-*.md` / `specs/bugfix-*.md` — the feature you're touching.
-- `docs/architecture.md` — code map (regenerate-able, lower trust).
+| You need | Read |
+|---|---|
+| SDK/API facts and gotchas, product data shape, demo catalogs | `docs/sdk-reference.md` |
+| Palette, typography, component patterns, tokens | `docs/design-system.md` |
+| Routes, source layout, feature → file | `docs/architecture.md` (regenerate-able, lower trust) |
+| The feature or bug you are touching | `specs/feature-*.md` / `specs/bugfix-*.md` |
+| What is deliberately not built yet | `missing-features.md` |
+| Running or scripting the guided demo | `DEMO.md` |
+| Installing and starting the app | `README.md` |
+| The wider monorepo — five git repos, Docker topology, backend | `../../AGENTS.md` |
+| Rules for the directory you are editing | `src/{components,views,sdk}/AGENTS.md` |
+
+**Precedence: `docs/sdk-reference.md` wins over every other file, this one included.** Its gotchas
+were found the hard way. Read the relevant doc before you code, and don't restate it here or
+anywhere else — duplicated rules drift.
 
 ## Golden rules
 
@@ -69,6 +81,3 @@ request time, not a build error.
 
 No new errors or warnings · tracking preserved · no new hardcoded hex/px/font-size · no new visual
 primitive · call sites of any changed prop checked · facets still responsive.
-
-> Claude Code: the directory-scoped **`gally-storefront`** skill (`.claude/skills/gally-storefront/`,
-> beside this file) adds a task router and an SDK-trap shortlist. It defers to this file and `docs/`.

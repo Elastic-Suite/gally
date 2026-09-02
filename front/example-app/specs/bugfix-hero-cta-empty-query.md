@@ -1,7 +1,7 @@
 # Bugfix: Homepage hero CTA linked to an empty search query
 
 ## Status: implemented
-## Page/Component: src/pages/Homepage.tsx, src/locales/{en,fr,de}/category.json
+## Page/Component: src/views/Homepage.tsx, src/locales/{en,fr,de}/category.json
 
 ## Problem
 The hero button reads "Shop dresses" / "Découvrir les robes" but linked to

@@ -28,3 +28,5 @@ plainly when something could not be checked.
 For a **bugfix** (`bugfix-<name>.md`), add a `## Problem` section above the checklist and record
 the **root cause**, not just the fix — the wrong belief, not only the wrong line.
 `bugfix-cms-selected-fields-projection.md` is the reference shape.
+Cross-references between `.md` files are the part that rots — the facts hold up, the pointers do
+not, and nothing warns. When renaming a directory, grep the `.md` files for the old name.

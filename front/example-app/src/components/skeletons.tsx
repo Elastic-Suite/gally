@@ -16,8 +16,14 @@ import { ReactNode } from 'react';
 // shift — it causes it. The load-bearing numbers, all read from styles.css:
 //
 //   .catalog-page       grid-template-columns: 280px 1fr   <- sidebar MUST be present
-//   .products-grid      repeat(auto-fill, minmax(220px, 1fr))
-//   .skeleton-card-image / .product-card-image   both 180px
+//   .products-grid      repeat(auto-fill, minmax(min(var(--product-grid-column), 100%), 1fr))
+//   .skeleton-card-image / .product-card-image   both var(--product-card-image-height)
+//   .skeleton-card-body / .product-card-body     both var(--product-card-body-padding)
+//
+// Those three variables are why this file needs no size of its own: .products-grid raises them
+// above a 1200px viewport (220->340px column, 180->300px picture) and the skeleton follows the
+// card automatically. Do not hardcode a height back in — see
+// specs/feature-larger-product-grid.md.
 //   .product-detail     grid-template-columns: 1fr 1fr
 //   .product-detail-image   aspect-ratio: 1
 //   .blog-post-hero     320px
