@@ -1,0 +1,37 @@
+{
+  "demoDress": {
+    "name": "Kleider-Journey — Camille",
+    "description": "Erleben Sie, wie Gally die Sucherfahrung im E-Commerce verwandelt — begleiten Sie Camille, eine Kundin auf der Suche nach dem perfekten Kleid.",
+    "personas": {
+      "customer": { "role": "Die Kundin" },
+      "merchant": { "name": "Der Händler", "role": "E-Commerce-Händler" }
+    },
+    "steps": {
+      "1": {
+        "title": "Die Ankunft",
+        "bubble": "Camille sucht nach <strong>„Trägerkleid“</strong> — eine vage Anfrage. Die Autovervollständigung versteht die Absicht und liefert dank Vektorsuche relevante Treffer.\n      <div class=\"story-tracking-hint\">📊 <strong>Tracking:</strong> Gally protokolliert ein <code>SEARCH</code>-Event mit Suchanfrage, Trefferzahl und Seite. Das bringt beliebte Suchen ans Licht, markiert Anfragen ohne Treffer und verbessert die Autovervollständigung.</div>",
+        "gain": "−40 % Seiten ohne Treffer"
+      },
+      "2": {
+        "title": "Die Erkundung",
+        "bubble": "Camille stöbert durch Sommerkleider. Facetten — <strong>Farbfelder</strong>, <strong>Preis-Slider</strong>, <strong>Suche innerhalb der Optionen</strong> — führen sie ohne Absprung genau zum gewünschten Produkt.\n      <div class=\"story-tracking-hint\">📊 <strong>Tracking:</strong> Gally protokolliert <code>VIEW:category</code> (Kategoriebesuch) und <code>DISPLAY</code> (eingeblendete Produkte mit ihrer Position). Das misst die Leistung der Kategorie und die Impression-Rate jedes Produkts.</div>",
+        "gain": "Geringere Absprungrate"
+      },
+      "3": {
+        "title": "Der Zweifel",
+        "bubble": "Der Händler zögert: Wie steuert man das Ranking ohne Entwicklerin oder Entwickler? Gallys <strong>Explain Query</strong> zeigt, wie jedes Produkt bewertet wird — <strong>Boosts</strong>, <strong>Textfelder</strong>, <strong>Relevanz-Score</strong> — alles ohne eine Zeile Code steuerbar.\n      <div class=\"story-tracking-hint\">📊 <strong>Tracking:</strong> Die laufend gesammelten <code>SEARCH</code>-, <code>DISPLAY</code>- und <code>ADD_TO_CART</code>-Daten erlauben Gally, pro Produkt einen Beliebtheitswert zu berechnen, der als Merchandising-Kriterium für Boosts dient.</div>",
+        "gain": "Merchandising in Ihrer Hand"
+      },
+      "4": {
+        "title": "Die Entscheidung",
+        "bubble": "Camille legt ein Kleid in den Warenkorb. Jetzt greifen die Hebel für den Bestellwert: <strong>−20 % Accessoire-Set</strong>, <strong>Schwelle für kostenlosen Versand</strong>, <strong>häufig zusammen gekauft</strong>.\n      <div class=\"story-tracking-hint\">📊 <strong>Tracking:</strong> Gally protokolliert <code>ADD_TO_CART</code> für jedes hinzugefügte Produkt — ein starkes Conversion-Signal, das das Produkt in den Ergebnissen hochstuft. <code>VIEW:product</code> und <code>ADD_TO_CART</code> zusammen speisen die Empfehlungen.</div>",
+        "gain": "+15 % durchschnittlicher Bestellwert"
+      },
+      "5": {
+        "title": "Das Fazit",
+        "bubble": "Wie sieht der geschäftliche Effekt aus? Wie viel Zeit und Budget braucht es dorthin? Sehen Sie die Bilanz <strong>Kosten/Zeit im Marktvergleich</strong>.\n      <div class=\"story-tracking-hint\">📊 <strong>Tracking:</strong> Das <code>ORDER</code>-Event schließt den Kreis: Gemeinsam gekaufte Produkte speisen die Empfehlungen „Häufig zusammen gekauft“, und der Umsatz pro Suchanfrage optimiert die Relevanz.</div>",
+        "gain": "+30 % Conversion"
+      }
+    }
+  }
+}

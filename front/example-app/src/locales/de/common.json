@@ -1,0 +1,32 @@
+{
+  "brand": {
+    "ariaLabel": "Gally example — zur Startseite"
+  },
+  "footer": {
+    "poweredBy": "Betrieben mit",
+    "tagline": "Funktionsdemo des Gally SDK"
+  },
+  "nav": {
+    "products": "Produkte",
+    "searchIntelligence": "Such-Intelligenz",
+    "cms": "Blog",
+    "vectorSearch": "Semantische Suche"
+  },
+  "cart": {
+    "link": "Warenkorb"
+  },
+  "actions": {
+    "filters": "Filter"
+  },
+  "meta": {
+    "search": "Suche",
+    "cart": "Warenkorb",
+    "checkout": "Kasse",
+    "explain": "Such-Intelligenz",
+    "closing": "Zusammenfassung",
+    "breadcrumb": "Navigationspfad",
+    "home": "Startseite",
+    "vectorSearch": "Semantische Suche",
+    "pagination": "Seitennummerierung"
+  }
+}

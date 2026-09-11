@@ -1,0 +1,33 @@
+{
+  "card": {
+    "new": "Nouveau",
+    "onSale": "En promo",
+    "pureMaterial": "100 % {{material}}",
+    "outOfStock": "Rupture de stock",
+    "addToCart": "Ajouter au panier",
+    "chooseOptions": "Choisir les options",
+    "unavailable": "Indisponible",
+    "added": "✓ Ajouté"
+  },
+  "page": {
+    "type": {
+      "configurable": "Configurable",
+      "simple": "Simple"
+    },
+    "sku": "Référence : {{sku}}",
+    "material": "Matière :",
+    "axis": {
+      "fashion_color": "Couleur",
+      "fashion_size": "Taille",
+      "color": "Couleur",
+      "size": "Taille"
+    },
+    "inStock": "✓ En stock ({{count}} disponible(s))",
+    "inStockNoCount": "✓ En stock",
+    "outOfStockLong": "✕ Rupture de stock",
+    "addToCart": "Ajouter au panier",
+    "wishlist": "♡ Liste de souhaits",
+    "notFound": "Produit introuvable",
+    "recommendations": "Vous aimerez aussi"
+  }
+}

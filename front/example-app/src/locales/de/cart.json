@@ -1,0 +1,70 @@
+{
+  "empty": {
+    "title": "Ihr Warenkorb",
+    "heading": "Ihr Warenkorb ist leer",
+    "body": "Stöbern Sie los, um Produkte hinzuzufügen.",
+    "browse": "Produkte entdecken"
+  },
+  "title_one": "Ihr Warenkorb ({{count}} Artikel)",
+  "title_other": "Ihr Warenkorb ({{count}} Artikel)",
+  "bundle": {
+    "heading": "🎁 Accessoire-Set −{{discount}}%",
+    "save": "Sie sparen",
+    "totalLabel": "Set-Gesamtpreis:",
+    "addButton": "Set hinzufügen",
+    "items": {
+      "clutch": "Passende Clutch",
+      "belt": "Stoffgürtel",
+      "scarf": "Leichter Schal"
+    }
+  },
+  "shipping": {
+    "unlocked": "✓ Versandkostenfrei freigeschaltet!",
+    "remainingPrefix": "Nur noch",
+    "remainingSuffix": "bis zum kostenlosen Versand",
+    "free": "Kostenlos"
+  },
+  "summary": {
+    "subtotal": "Zwischensumme",
+    "frequentlyBoughtTogether": "Häufig zusammen gekauft",
+    "shipping": "Versand",
+    "total": "Gesamt",
+    "checkout": "Zur Kasse"
+  },
+  "fbt": {
+    "items": {
+      "sandals": "Geflochtene Sandalen",
+      "hat": "Strohhut",
+      "earrings": "Goldene Ohrringe"
+    },
+    "selectedTotal": "Auswahl gesamt:",
+    "addToCart": "In den Warenkorb"
+  },
+  "recommendations": "Vervollständigen Sie Ihren Look",
+  "checkout": {
+    "steps": {
+      "cart": "Warenkorb",
+      "shipping": "Versand",
+      "payment": "Zahlung",
+      "confirmation": "Bestätigung"
+    },
+    "shippingInfo": "Versandinformationen",
+    "placeholders": {
+      "firstName": "Vorname",
+      "lastName": "Nachname",
+      "email": "E-Mail",
+      "address": "Adresse",
+      "city": "Stadt",
+      "zip": "PLZ",
+      "cardNumber": "Kartennummer",
+      "expiry": "MM/JJ",
+      "cvc": "Prüfziffer"
+    },
+    "continueToPayment": "Weiter zur Zahlung →",
+    "payment": "Zahlung",
+    "totalToPay": "Zu zahlender Betrag",
+    "placeOrder": "Kostenpflichtig bestellen — {{amount}}",
+    "orderConfirmed": "Bestellung bestätigt!",
+    "orderConfirmedBody": "Vielen Dank für Ihre Bestellung. Ein Tracking-Event wurde an Gally gesendet."
+  }
+}

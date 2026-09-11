@@ -1,0 +1,23 @@
+{
+  "title": "Filters",
+  "clearAll": "Clear all",
+  "loading": "Loading…",
+  "showMore": "+ Show more",
+  "showMoreCount": "+ Show more ({{count}})",
+  "showLess": "− Show less",
+  "yes": "Yes",
+  "searchPlaceholder": "Search {{label}}…",
+  "swatchTitle": "{{label}} ({{count}})",
+  "min": "Min: {{value}}",
+  "max": "Max: {{value}}",
+  "chip": {
+    "default": "{{label}}: {{value}}",
+    "range": "{{label}}: {{gte}}–{{lte}}"
+  },
+  "empty": {
+    "noResults": "No filters to show — nothing matched this search.",
+    "filteredOut": "No filters left. Remove one above to bring results back.",
+    "notDiscriminant_one": "Only one result, so there is nothing left to filter.",
+    "notDiscriminant_other": "All {{count}} results share the same characteristics, so there is nothing left to filter."
+  }
+}

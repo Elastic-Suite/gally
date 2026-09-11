@@ -1,0 +1,33 @@
+{
+  "category": {
+    "fallbackName": "Kategorie",
+    "countInCategory_one": "{{count}} Produkt in dieser Kategorie",
+    "countInCategory_other": "{{count}} Produkte in dieser Kategorie",
+    "count_one": "{{count}} Produkt",
+    "count_other": "{{count}} Produkte",
+    "sort": {
+      "placeholder": "Sortieren nach",
+      "relevance": "Relevanz",
+      "nameAsc": "Name A-Z",
+      "nameDesc": "Name Z-A",
+      "priceAsc": "Preis ↑",
+      "priceDesc": "Preis ↓"
+    },
+    "emptyTitle": "Keine Produkte gefunden",
+    "emptyBody": "Passen Sie Ihre Filter oder Ihren Suchbegriff an.",
+    "meta": {
+      "description": "Entdecken Sie unsere {{name}}-Auswahl: {{count}} Produkte verfügbar."
+    }
+  },
+  "homepage": {
+    "heroTitle": "Intelligente Suche für den E-Commerce",
+    "heroBody": "Erleben Sie, wie Gally die Produktfindung antreibt — mit KI-gestützter Suche, Facettennavigation und Empfehlungen in Echtzeit.",
+    "shopDresses": "Kleider entdecken",
+    "shopDressesQuery": "Kleid",
+    "trending": "Gerade im Trend",
+    "moreProducts": "Weitere Produkte",
+    "readyTitle": "Bereit, Ihr Sucherlebnis zu verwandeln?",
+    "readyBody": "Stöbern Sie durch Kategorien, testen Sie Suchfacetten und sehen Sie die Vektorsuche in Aktion.",
+    "tryVectorSearch": "Vektorsuche ausprobieren"
+  }
+}

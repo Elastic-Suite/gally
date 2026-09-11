@@ -1,0 +1,39 @@
+{
+  "bar": {
+    "placeholder": "Produkte suchen..."
+  },
+  "overlay": {
+    "suggestionsTitle": "🔍 Beliebte Suchbegriffe",
+    "productsTitle": "Produkte",
+    "categoryTitle": "📁 Kategorie",
+    "promptTitle": "Tippen Sie los und finden Sie Ihren nächsten Lieblingslook",
+    "promptSubtitle": "Produkte, Kategorien und Trendsuchen erscheinen beim Tippen — zwei Buchstaben genügen für den Anfang.",
+    "noSuggestions": "Keine passenden Suchbegriffe",
+    "noProducts": "Keine passenden Produkte",
+    "noCategories": "Keine passenden Kategorien",
+    "blogTitle": "📝 Blog",
+    "noBlog": "Keine passenden Artikel"
+  },
+  "page": {
+    "breadcrumb": "Startseite / Suche",
+    "typeProducts": "Produkte",
+    "typeBlog": "Artikel",
+    "noBlogTitle": "Kein Artikel passt zu dieser Suche",
+    "noBlogBody": "Dazu wurde noch nichts geschrieben — versuchen Sie den Reiter „Produkte“ oder stöbern Sie im Blog nach Thema.",
+    "allProducts": "Alle Produkte",
+    "resultsFor": "Ergebnisse für „{{query}}“",
+    "searching": "Wird gesucht…",
+    "resultCount_one": "{{count}} Ergebnis",
+    "resultCount_other": "{{count}} Ergebnisse",
+    "sort": {
+      "relevance": "Relevanz",
+      "nameAsc": "Name A→Z",
+      "priceAsc": "Preis: aufsteigend",
+      "priceDesc": "Preis: absteigend"
+    },
+    "emptyTitle": "Keine Ergebnisse gefunden",
+    "emptyBody": "Versuchen Sie einen anderen Suchbegriff oder passen Sie Ihre Filter an.",
+    "prev": "‹ Zurück",
+    "next": "Weiter ›"
+  }
+}

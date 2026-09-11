@@ -1,0 +1,4540 @@
+/* ═══════════════════════════════════════════════════════════════
+   Gally Features Demo — ElasticSuite-inspired Design System
+   Palette: Indigo deep + Coral accent, light airy background
+   Typography: Geist throughout (titles and body), matching elasticsuite.io
+   ═══════════════════════════════════════════════════════════════ */
+
+:root {
+  /* Colors */
+  --indigo-900: #1e1b4b;
+  --indigo-800: #283593;
+  --indigo-700: #303f9f;
+  --indigo-600: #3949ab;
+  --indigo-500: #3f51b5;
+  --indigo-100: #e8eaf6;
+  --indigo-50: #f5f5ff;
+  --coral-500: #ff6b6b;
+  --coral-400: #ff8a80;
+  --coral-600: #e55353;
+  --white: #ffffff;
+  /* Light scrim for an overlay that sits on top of imagery and must stay readable without
+     hiding what is underneath. Paired with a backdrop blur, never used flat — the blur is what
+     carries legibility, which is what lets the tint stay this light. */
+  --scrim-light: rgba(255, 255, 255, 0.55);
+  --gray-50: #fafafa;
+  --gray-100: #f5f5f5;
+  --gray-200: #eeeeee;
+  --gray-300: #e0e0e0;
+  --gray-400: #bdbdbd;
+  --gray-500: #9e9e9e;
+  --gray-600: #757575;
+  --gray-700: #616161;
+  --gray-800: #424242;
+  --gray-900: #212121;
+  --success: #4caf50;
+  --warning: #ff9800;
+
+  /* Typography — Geist, matching elasticsuite.io (same family and fallback stack).
+     The site sets everything in Geist, so display and body resolve to the same face.
+     They stay two tokens on purpose: the 10 display sites keep saying "this is a
+     title", so bringing back a distinct display face is a one-line change here.
+     Renamed from --font-serif: the value is a sans now, and a token called "serif"
+     holding Geist would mislead the next reader. */
+  --font-display: 'Geist', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-sans: 'Geist', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+  /* Spacing */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-pill: 50px;
+
+  /* Layout — the page cap, shared by the content column and both header rows so their left
+     and right edges line up. See specs/feature-larger-product-grid.md. */
+  --layout-max-width: 1600px;
+
+  /* Product card. These are the SMALL values, kept by the home-page carousel and by anything
+     else drawing a card outside a listing. `.products-grid` raises all five above a 1200px
+     viewport; below it the grid uses exactly these. Never move them onto `.product-card`
+     itself — see specs/feature-larger-product-grid.md. */
+  --product-grid-column: 220px;
+  --product-card-image-height: 180px;
+  --product-card-body-padding: 1rem;
+  --product-card-body-padding-y: 0.45rem;
+  --product-card-name-size: 0.9rem;
+  --product-card-sku-size: 0.75rem;
+  --product-card-price-size: 1rem;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(30, 27, 75, 0.08);
+  --shadow-md: 0 4px 12px rgba(30, 27, 75, 0.1);
+  --shadow-lg: 0 8px 30px rgba(30, 27, 75, 0.12);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--gray-50);
+  color: var(--gray-900);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+a {
+  color: var(--indigo-600);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+a:hover {
+  color: var(--coral-500);
+}
+
+/* ─── Layout ─────────────────────────────────────────────── */
+.app-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+  max-width: var(--layout-max-width);
+  margin: 0 auto;
+  padding: 2rem;
+  width: 100%;
+}
+
+/* ─── Header ─────────────────────────────────────────────── */
+/* Below .category-nav-submenu's z-index (50) so a scrolled-under category flyout
+   isn't covered by the sticky header/search bar. Raised back up only while the
+   search overlay (ACP) is open, so it can still sit above the rest of the page. */
+.header-sticky-group {
+  /* THE GROUP is the sticky element, not the search band inside it. A sticky element is
+     constrained to its containing block, and this group is only as tall as the nav row plus
+     the band — so a sticky band would unpin after ~64px of scrolling, which is exactly the
+     bug the old `position: sticky` on .header had. The group's own containing block is
+     .app-layout, which spans the page, so it can stay put indefinitely.
+     Pulling it up by the nav row's height scrolls the nav, brand and cart out of view and
+     leaves the search band flush against the viewport top — the nav is still painted, just
+     above the fold. Header publishes --header-nav-height with the same ResizeObserver it
+     already uses for --header-height; the 4rem fallback is 0.75rem padding × 2 + a 2.5rem
+     logo, i.e. what the row measures before hydration. */
+  position: sticky;
+  top: calc(-1 * var(--header-nav-height, 4rem));
+  z-index: 40;
+}
+.header-sticky-group:has(.search-bar-wrapper.overlay-open) {
+  z-index: 100;
+  /* Scrolling the popup takes the search bar with it, the way a collapsing header
+     behaves — the panel below is scrolled content, so both move at the same rate and
+     the space the header vacates is filled by the columns rising into it. SearchOverlay
+     publishes the scrim's scrollTop as --acp-scroll, already clamped to the header's own
+     height, and clears it on close. Outside the popup this rule does not apply and the
+     header keeps the positioning it always had. */
+  transform: translateY(calc(-1 * var(--acp-scroll, 0px)));
+}
+
+/* Deliberately NOT sticky. It used to be `sticky; top: 0`, which did almost nothing: sticky
+   is bounded by its containing block, and this row's parent (.header-sticky-group) is only as
+   tall as this row plus the search band, so it unpinned again after ~88px of scrolling. The
+   search band below is the row that pins now, and two elements competing for `top: 0` would
+   overlap. `z-index` went with the positioning — it is inert on a static block child, and
+   leaving it would imply a stacking order this row no longer participates in. */
+.header {
+  background: linear-gradient(135deg, var(--indigo-900) 0%, var(--indigo-700) 100%);
+  color: white;
+  padding: 0.75rem 2rem;
+}
+
+.header-inner {
+  max-width: var(--layout-max-width);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  transition: filter 0.2s ease, opacity 0.2s ease;
+}
+
+/* When the search overlay is open, the rest of the header recedes along
+   with the page behind it — only the search form itself stays crisp. */
+.header-sticky-group:has(.search-bar-wrapper.overlay-open) .header-inner {
+  filter: blur(3px);
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* Brand: the Gally rabbit as an asset, "Gally example" set here as type. The two
+   wordmark spans are targeted by their own classes — deliberately not a
+   `.header-logo span` catch-all, which previously forced the accent colour onto
+   every nested span. */
+.header-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-shrink: 0;
+}
+
+/* 2.5rem is the height the lockup was used at on elasticsuite.io (`h-10`). The
+   cropped asset's own 67:63 ratio fixes the width (~2.66rem), so it never needs
+   one set. */
+.header-logo-mark {
+  display: block;
+  height: 2.5rem;
+  width: auto;
+}
+
+/* The wordmark: two words on one line, coral picking up the mark's own colour the
+   way "solutions" did in the original lockup. */
+.header-logo-text {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.3rem;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+.header-logo-name {
+  color: var(--white);
+}
+.header-logo-accent {
+  color: var(--coral-500);
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+  overflow-x: auto;
+}
+
+/* Plain nav links (Search Intelligence, Semantic search). Scoped to direct children so
+   the switch's own tabs below, which are nested, never pick up this hover background — it
+   would fight the sliding thumb.
+
+   The vertical padding is 0.7rem so these match the HEIGHT of the Products/Articles switch
+   beside them, and that number is derived, not tuned by eye: the switch's outer box is its
+   own 0.25rem track padding plus its tabs' 0.45rem, and 0.25 + 0.45 = 0.7. A plain link has
+   no track, so it has to carry both. Measured result: 44.1px for both, to the pixel.
+
+   inline-flex rather than the default inline for the same reason — it gives these the same
+   content-box height as .header-nav-tab, so the emoji (0.95rem, line-height 1) cannot push
+   the line box taller than the 0.85rem label the way it would in an inline context. `gap`
+   spaces the icon from the label, so the markup needs no whitespace between them. */
+.header-nav > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  /* Colour, weight and track all match .header-nav-switch / .header-nav-tab exactly, so a
+     plain link and a switch segment are the same object to the eye. They used to differ on
+     all three — 0.8 alpha against 0.85, weight 500 against 600, and no track at all against
+     the switch's translucent well — which read as the Semantic search item being greyed out
+     or disabled next to Products/Articles. Any change to the switch's palette has to be
+     mirrored here. */
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.12);
+  padding: 0.7rem 0.9rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+.header-nav > a:hover {
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.2);
+}
+/* The selected state copies the switch's sliding thumb — solid white, --indigo-800 text,
+   the same soft shadow — because that is what "selected" already looks like in this bar.
+   Declared after :hover at equal specificity so the current page keeps its treatment when
+   hovered, exactly as .header-nav-tab.active does. */
+.header-nav > a.active,
+.header-nav > a.active:hover {
+  color: var(--indigo-800);
+  background: var(--white);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ─── Header nav switch (Products / Articles) ────────────── */
+/* The same segmented-switch idiom as the search results type switch
+   (.result-type-tabs), inverted for the dark header: the track is a translucent
+   white well instead of --gray-100, and the raised thumb is solid --white with
+   --indigo-800 text. Structure is identical on purpose — inline-grid with two 1fr
+   columns so both segments are the width of the wider one, which is what lets the
+   thumb slide by exactly one column with no JS measurement. */
+.header-nav-switch {
+  position: relative;
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.12);
+  flex-shrink: 0;
+}
+
+/* The sliding thumb: one pseudo-element behind both segments, so there is something
+   continuous to animate. Moved with `transform` only — compositor-only, and it can
+   never reflow the header row it sits in. Width = one grid column: the track minus
+   its 0.25rem padding either side and the 0.25rem gap, halved. */
+.header-nav-switch::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  top: 0.25rem;
+  bottom: 0.25rem;
+  left: 0.25rem;
+  width: calc((100% - 0.75rem) / 2);
+  border-radius: var(--radius-pill);
+  background: var(--white);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease;
+}
+/* 100% is the thumb's own width — one column — so this lands it on the second
+   column, gap included. */
+.header-nav-switch[data-active='blog']::before {
+  transform: translateX(calc(100% + 0.25rem));
+}
+/* Off both sections (homepage, cart, /explain): no selection to show. The thumb is
+   faded out rather than removed, so it can slide back in from where it left. */
+.header-nav-switch[data-active='none']::before {
+  opacity: 0;
+}
+
+.header-nav-tab {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.45rem 1rem;
+  border-radius: var(--radius-pill);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: color 0.15s;
+}
+.header-nav-tab:hover {
+  color: var(--white);
+}
+/* No background or shadow here — the thumb draws those. Declared after :hover, at
+   equal specificity, so the selected segment keeps its colour when hovered. */
+.header-nav-tab.active,
+.header-nav-tab.active:hover {
+  color: var(--indigo-800);
+}
+
+.header-nav-icon {
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+/* The slide is decoration; honour a reduced-motion preference by cutting it. */
+@media (prefers-reduced-motion: reduce) {
+  .header-nav-switch::before {
+    transition: none;
+  }
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* ─── Context Selectors ──────────────────────────────────── */
+.context-selectors {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.context-select {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: white;
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.8rem;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s;
+}
+.context-select:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+.context-select option {
+  background: var(--indigo-900);
+  color: white;
+}
+
+/* ─── Header Search Band ─────────────────────────────────── */
+/* The search bar is the one header control worth keeping within reach on a long page, so the
+   group pins with the nav row pulled above the fold (see .header-sticky-group) and this band
+   ends up flush with the viewport top. The band itself is deliberately NOT sticky: it cannot
+   be, its containing block is too short.
+   ---
+   The band paints nothing — the separation the pinned bar needs is a single blurred layer
+   around the input itself (.search-bar-wrapper::before below), not a surface across the whole
+   header. Three band-wide treatments were tried and rejected; see
+   specs/feature-sticky-search-band.md.
+   ---
+   `padding-bottom` exists because .main-content's 2rem supplied the gap under the bar at rest,
+   but once pinned the content scrolls right up to the band's edge. */
+.header-search-band {
+  padding: 2rem 2rem 0.75rem;
+  transition: background 0.2s ease, backdrop-filter 0.2s ease;
+}
+
+/* Restored: this rule was lost while removing an earlier experiment, which left the search bar
+   flush left instead of centred. It is what centres the bar in the band. */
+.header-search-row {
+  max-width: var(--layout-max-width);
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+.search-bar-wrapper {
+  position: relative;
+  width: 80%;
+  max-width: 1100px;
+  min-width: 320px;
+  z-index: 110;
+}
+
+/* One blurred layer around the input, so the pinned bar stays legible over whatever scrolls
+   behind it. Blur only, no tint: the page background stays visible through it, just unreadable
+   close to the bar.
+   ---
+   The mask is what stops this reading as a hard-edged plate — the previous attempts failed on
+   exactly that. `radial-gradient(closest-side, …)` fits the box, so the falloff radiates from
+   the input in *every* direction and fades to nothing at the edge, rather than ramping
+   top-to-bottom the way the band-wide version did.
+   ---
+   `inset` is negative so the layer extends past the input instead of shrinking it: no layout
+   shift, and nothing to undo if it is dropped. `z-index: -1` keeps it behind the input while
+   staying inside this wrapper's own stacking context (`position: relative; z-index: 110`), so it
+   cannot fall behind the band. Always rendered at `opacity: 0` because a pseudo-element that
+   exists in only one state cannot transition.
+   ---
+   PREFIXED FIRST, STANDARD LAST for backdrop-filter: lightningcss treats the pair as one
+   property and keeps the last, so standard-first ships `-webkit-` alone and Blink drops the
+   blur. (`mask-image` does NOT collapse the same way — both spellings survive. Do not assume
+   prefix pairs behave alike; check the built CSS.) See specs/bugfix-acp-scrim-blur-dropped.md. */
+.search-bar-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: -0.75rem;
+  z-index: -1;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  -webkit-mask-image: radial-gradient(closest-side, #000 45%, transparent 100%);
+  mask-image: radial-gradient(closest-side, #000 45%, transparent 100%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+/* Only once the page has actually scrolled — at rest the bar sits on the page background and has
+   nothing to separate from — and never while the ACP is open, which brings its own full-screen
+   scrim. Header sets data-scrolled at the point the band becomes the topmost row. */
+.header-sticky-group[data-scrolled]:not(:has(.search-bar-wrapper.overlay-open))
+  .search-bar-wrapper::before {
+  opacity: 1;
+}
+
+.search-bar-wrapper.expanded .search-bar {
+  box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.25);
+}
+
+.search-bar {
+  width: 100%;
+  padding: 0.85rem 1.5rem 0.85rem 3rem;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-pill);
+  background: var(--gray-100);
+  color: var(--gray-900);
+  font-size: 1.05rem;
+  font-family: var(--font-sans);
+  outline: none;
+  transition: all 0.2s;
+}
+.search-bar::placeholder {
+  color: var(--gray-500);
+}
+.search-bar:focus {
+  background: white;
+  border-color: var(--coral-400);
+}
+
+.search-icon {
+  position: absolute;
+  left: 1.1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.5;
+  font-size: 1.05rem;
+}
+
+/* The scrim alone owns the blur/tint. The panel below it is pure layout —
+   no background, border, or blur of its own — so it reads as one continuous
+   surface with the scrim rather than a card floating on top of it. */
+.search-overlay-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  /* The panel above owns no background of its own (see
+     specs/feature-acp-visual-redesign.md), so this is the only ground the
+     panel's light text ever gets — it has to hide the page behind it on its
+     own. Tuned up twice for that reason (.55/20px → .72/28px → .92): at .72 a
+     product grid or hero behind the overlay still read through the columns and
+     fought the light text. At .92 the blur is only a faint hint of the page
+     underneath, which is all the glass look needs; legibility wins. */
+  background: rgba(30, 27, 75, 0.92);
+  /* Prefixed FIRST, standard LAST — not the usual cosmetic ordering. Next's CSS
+     minifier (lightningcss) treats the two as one property and keeps only the last
+     declaration, so with the standard one written first the build shipped
+     `-webkit-backdrop-filter` alone — which Blink doesn't implement. The blur was
+     silently gone in Chrome/Firefox from the Next migration onward, leaving the flat
+     tint as the panel's only ground. Keep this order. */
+  -webkit-backdrop-filter: blur(28px);
+  backdrop-filter: blur(28px);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: calc(var(--header-height, 8.5rem) + 1rem) 2rem 2rem;
+  overflow-y: auto;
+  /* Stop scroll chaining. Without this, a wheel gesture that reaches the end of the
+     scrim (or of a column below) continues into the page behind the overlay, so the
+     content under a 0.92-opaque scrim slides around while the user is reading the
+     popup. `contain` keeps the gesture inside this scroller; SearchOverlay also locks
+     the body while it is open, because a gesture that never touches a scrollable
+     descendant would otherwise still reach the page. */
+  overscroll-behavior: contain;
+}
+
+.search-overlay-panel {
+  width: 100%;
+  max-width: 1500px;
+  min-height: 24rem;
+  /* No max-height. It used to be `calc(100vh - header - 3rem)`, which together with the
+     scrim's padding summed to exactly 100vh — so the scrim never scrolled and the columns
+     scrolled inside themselves. That is why nothing outside a column could react to the
+     gesture. The panel is now free to be taller than the viewport, the scrim scrolls it,
+     and the header rides that scroll (see .header-sticky-group below and SearchOverlay's
+     --acp-scroll). `min-height` stays: it is what stops the panel resizing between
+     keystrokes. */
+  padding: 1.5rem;
+  display: grid;
+  /* Suggestions and category are single-line text lists — they only need enough
+     room for one term, so they're floored at 12rem and products takes the rest. */
+  grid-template-columns: minmax(12rem, 0.45fr) 2.6fr minmax(12rem, 0.45fr);
+  gap: 1.5rem;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+/* Empty-query state: same panel envelope, single centered invitation. */
+.search-overlay-panel-prompt {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.search-prompt {
+  max-width: 34rem;
+}
+.search-prompt-icon {
+  font-size: 2.5rem;
+  opacity: 0.7;
+  margin-bottom: 1rem;
+}
+.search-prompt-title {
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: white;
+  line-height: 1.25;
+}
+.search-prompt-subtitle {
+  margin-top: 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.search-overlay-col {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  /* Deliberately NOT a scroller. Per-column `overflow-y: auto` meant the tallest column
+     scrolled while the other two and the search bar sat still, and a gesture inside it
+     could not move anything outside it. One scroller — the scrim — scrolls the whole
+     panel, so the columns keep their relative alignment and the header can follow. */
+}
+
+.autocomplete-item {
+  /* Tightened from 0.75rem. The attribute list is the tallest thing in the panel —
+     four flagged source fields × MAX_ACP_OPTIONS rows — so vertical padding here is
+     multiplied ~20 times over, and every row it saves is a row that no longer needs
+     scrolling. Horizontal padding is unchanged. */
+  padding: 0.45rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  transition: background 0.15s;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-sm);
+}
+.autocomplete-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+.autocomplete-item.highlighted {
+  background: rgba(255, 255, 255, 0.16);
+  box-shadow: inset 3px 0 0 var(--coral-400);
+}
+.autocomplete-item:last-child {
+  border-bottom: none;
+}
+
+/* Two cards per row instead of one wide row — the products column is now
+   wider (see .search-overlay-panel's grid-template-columns), so each card
+   gets roughly half that width while staying a normal horizontal row, which
+   alone brings it closer to square than a single full-width row would be. */
+.autocomplete-products-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.85rem;
+  margin: 0.75rem;
+}
+
+/* Product suggestions get their own opaque white card — everything else in the
+   panel sits directly on the blurred scrim, but cards need a solid surface to
+   stay readable, and the extra room lets them show bigger thumbs/text. Resets
+   `color` back to dark since the panel's own text color is now light (for the
+   text that sits directly on the blur), which would otherwise cascade in here
+   and make product text invisible against the white card. Stays horizontal
+   (thumb left, text right) — only the 2-per-row grid above and the bigger
+   thumb make it read closer to square, not a full vertical stack. */
+.autocomplete-item.autocomplete-product {
+  padding: 1rem;
+  gap: 0.85rem;
+  background: white;
+  border: none;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  color: var(--gray-900);
+}
+/* Hover reads as one motion: the card lifts off the blur, its shadow deepens,
+   the thumb pushes in slightly and the name takes the accent color. The generic
+   `.autocomplete-item` background transition is replaced here — a background
+   change is invisible on a card that's already opaque white. */
+.autocomplete-item.autocomplete-product {
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.autocomplete-item.autocomplete-product:hover {
+  background: white;
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+.autocomplete-item.autocomplete-product:hover .autocomplete-info .name {
+  color: var(--indigo-700);
+}
+.autocomplete-item.autocomplete-product .autocomplete-thumb img {
+  transition: transform 0.25s ease;
+}
+.autocomplete-item.autocomplete-product:hover .autocomplete-thumb img {
+  transform: scale(1.08);
+}
+/* The add button only fills in on card hover, so at rest the card stays calm and
+   the eye lands on the product, not on a grid of indigo pills. */
+.autocomplete-item.autocomplete-product .autocomplete-add-to-cart {
+  opacity: 0.75;
+  transition: opacity 0.18s ease, background 0.18s ease, transform 0.18s ease;
+}
+.autocomplete-item.autocomplete-product:hover .autocomplete-add-to-cart {
+  opacity: 1;
+}
+.autocomplete-add-to-cart:hover:not(:disabled) {
+  transform: scale(1.05);
+}
+/* Unlike the other columns' rows, product cards are already opaque white at
+   rest, so a background-only highlight (like the other columns use) has
+   nothing to contrast against — needs its own tint + a thicker ring to
+   actually read as "selected" rather than a barely-there hairline. */
+.autocomplete-item.autocomplete-product.highlighted {
+  background: var(--indigo-50);
+  box-shadow: var(--shadow-md), 0 0 0 3px var(--indigo-600);
+}
+
+.autocomplete-thumb {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-sm);
+  background: var(--gray-200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  color: var(--gray-500);
+  flex-shrink: 0;
+}
+.autocomplete-item.autocomplete-product .autocomplete-thumb {
+  width: 80px;
+  height: 80px;
+  /* Keeps the hover zoom inside the thumb's rounded box. */
+  overflow: hidden;
+}
+
+.autocomplete-info {
+  flex: 1;
+}
+.autocomplete-info .name {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+.autocomplete-info .price {
+  font-size: 1.05rem;
+  color: var(--coral-500);
+  font-weight: 600;
+  margin-top: 0.35rem;
+}
+
+/* Sits at the card's right edge, in the room the widened Products column freed
+   up (`.autocomplete-info` is flex: 1). Never shrinks or wraps — "Ajouter au
+   panier" is the longest label and must stay on one line. */
+.autocomplete-add-to-cart {
+  flex-shrink: 0;
+  white-space: nowrap;
+  align-self: center;
+}
+.autocomplete-add-to-cart:disabled {
+  background: var(--gray-400);
+  cursor: not-allowed;
+}
+
+/* Add confirmation, ~1.6s: the card reuses the same green `addedFlash` glow the
+   story mode already plays on `.product-card`. The button's green comes from the
+   shared `.btn.added` rule; what stays here are the two overrides only the ACP
+   needs — the card-hover fade-in below rest opacity, and the button's own hover
+   scale, both of which would otherwise keep animating under the confirmation.
+   The four-class selector (0,4,0) is what beats them. */
+.autocomplete-item.autocomplete-product.just-added {
+  animation: addedFlash 0.6s ease;
+}
+.autocomplete-item.autocomplete-product .autocomplete-add-to-cart.added {
+  opacity: 1;
+  transform: none;
+}
+
+.autocomplete-section-title {
+  padding: 0.45rem 1.1rem 0.25rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: rgba(255, 255, 255, 0.95);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.autocomplete-suggestion {
+  padding: 0.45rem 1.1rem;
+}
+.autocomplete-suggestion-text {
+  font-size: 1.05rem;
+  color: white;
+  font-weight: 600;
+}
+
+.autocomplete-category {
+  padding: 0.45rem 1.1rem;
+}
+.autocomplete-category-text {
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 600;
+}
+
+/* One block per source field flagged "Displayed in autocomplete", stacked under
+   the popular search terms in the same column. */
+.autocomplete-attribute-group {
+  margin-top: 0.6rem;
+}
+/* Deliberately smaller and lighter than .autocomplete-category-text, which it used to
+   share a rule with. An attribute value is a filter link, not a heading: it was set at
+   1.05rem/600, larger and heavier than the attribute name above it
+   (.autocomplete-section-title, 0.85rem uppercase), and four flagged attributes × five
+   options put up to 20 of those rows in one column. Categories keep the larger size —
+   one or two navigation rows in the third column, not a dense list. */
+.autocomplete-attribute-text {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 500;
+}
+.autocomplete-attribute-count {
+  margin-left: auto;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-variant-numeric: tabular-nums;
+}
+
+.autocomplete-empty {
+  padding: 1.1rem;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-style: italic;
+}
+
+.autocomplete-skeleton-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+}
+/* Non-product skeleton rows (suggestions/categories) sit directly on the
+   blurred scrim, so the shared light-gray shimmer (tuned for white cards)
+   would wash out — re-themed lighter here. Product rows keep the original
+   shimmer since their white card background is unchanged. */
+.autocomplete-skeleton-item:not(.autocomplete-skeleton-product) .skeleton-shimmer {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.15) 25%, rgba(255, 255, 255, 0.32) 50%, rgba(255, 255, 255, 0.15) 75%);
+  background-size: 200% 100%;
+}
+.autocomplete-skeleton-item.autocomplete-skeleton-product {
+  gap: 0.85rem;
+  padding: 1rem;
+  background: white;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+.autocomplete-skeleton-thumb {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+.autocomplete-skeleton-item.autocomplete-skeleton-product .autocomplete-skeleton-thumb {
+  width: 80px;
+  height: 80px;
+}
+.autocomplete-skeleton-lines {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.autocomplete-skeleton-line {
+  height: 10px;
+  border-radius: 4px;
+  width: 100%;
+}
+.autocomplete-skeleton-line.short {
+  width: 45%;
+}
+
+/* ─── Cart Badge ─────────────────────────────────────────── */
+.cart-badge {
+  position: relative;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.cart-badge:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+.cart-count {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: var(--coral-500);
+  color: white;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  font-size: 0.65rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ─── Hero Section ───────────────────────────────────────── */
+.hero {
+  background: linear-gradient(135deg, var(--indigo-900) 0%, var(--indigo-600) 60%, var(--coral-500) 100%);
+  color: white;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  margin: 0 -2rem 2rem;
+  border-radius: var(--radius-lg);
+}
+
+.hero h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  max-width: 600px;
+  margin: 0 auto 2rem;
+}
+
+/* ─── Stats Band ─────────────────────────────────────────── */
+.stats-band {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.stat-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: var(--radius-md);
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-200);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.stat-value {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--indigo-800);
+}
+.stat-value.coral {
+  color: var(--coral-500);
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: var(--gray-600);
+  margin-top: 0.25rem;
+}
+
+/* ─── Product Slider ─────────────────────────────────────── */
+.product-slider {
+  margin: 2.5rem 0;
+}
+
+.product-slider h2 {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.slider-track {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+  scroll-snap-type: x mandatory;
+}
+.slider-track::-webkit-scrollbar {
+  height: 6px;
+}
+.slider-track::-webkit-scrollbar-thumb {
+  background: var(--gray-300);
+  border-radius: 3px;
+}
+
+/* ─── Product Card ───────────────────────────────────────── */
+.product-card {
+  background: white;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-200);
+  transition: transform 0.2s, box-shadow 0.2s;
+  min-width: 220px;
+  scroll-snap-align: start;
+  cursor: pointer;
+}
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.product-card-image {
+  width: 100%;
+  height: var(--product-card-image-height);
+  background: linear-gradient(135deg, var(--indigo-50), var(--gray-100));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gray-400);
+  font-size: 0.75rem;
+  position: relative;
+  /* The positioning context for the badges and the quick-add panel — and the clip that keeps
+     them inside the picture. `.product-card` clips at the CARD edge, which is why an overlay
+     that overflowed this box once ended up sitting on the name and price.
+     This clip is load-bearing on its own since the panel became a bottom band: at rest the band
+     is parked a full band height BELOW this box, and it is no longer `inset: 0`, so nothing else
+     contains it. `opacity: 0` and `pointer-events: none` hide it and disarm it; only this line
+     keeps it off the name and the price. */
+  overflow: hidden;
+}
+
+/* The badges are the wrapper's job, not each badge's: a product can be out of stock, new or
+   discounted, and single-material all at once, and three siblings each absolutely positioned
+   at the same top/left simply stack on top of each other. Positioning the column once and
+   letting flex space its children is what makes more than one badge possible. */
+.product-card-badges {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+}
+
+.product-card-badge {
+  background: var(--coral-500);
+  color: white;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+/* Coral is the marketing accent and indigo the classification one — the same split the blog
+   topic pill below makes. "New" and "Sale" promote; a material is a fact about the product. */
+.product-card-badge--sale { background: var(--coral-600); }
+.product-card-badge--material { background: var(--indigo-800); }
+
+/* The anchor wraps only the picture now, so the option chips beside it are not inside a link.
+   It has to carry the centring the image box used to do for its single child. */
+.product-card-image-link {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Quick add: the add-to-cart affordance, a band across the bottom of the picture on hover. It
+   left the card body so the resting card is just picture, name and price — and because a
+   configurable needs room for its option chips, which no card body has.
+   It is bottom-anchored and only as tall as its content (`inset: auto 0 0 0`). It used to be
+   `inset: 0`, sized against a 180px picture that it genuinely filled; the listing picture is
+   300px now, and a full cover blurs out the merchandising the page exists to show at the exact
+   moment someone reaches for it. See specs/feature-quick-add-bottom-band.md.
+   That geometry was also a containment guard — an overlay that is exactly its container can
+   never escape it — and dropping it makes `.product-card-image`'s `overflow: hidden` the only
+   thing holding the parked band off the name and price. Read the note on that rule before
+   touching either.
+   Translucent + blurred rather than opaque: the point is that you still see the product you are
+   configuring. The blur is what keeps the chips readable over arbitrary photography — a flat
+   tint legible over the placeholder gradient would not survive a dark garment. */
+.quick-add {
+  position: absolute;
+  inset: auto 0 0 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  overflow-y: auto;
+  background: var(--scrim-light);
+  /* `.product-card-image` sets `color: var(--gray-400)` for its "no image" placeholder text, and
+     every child of this panel inherited it — which is why the size labels read as pale grey on a
+     pale scrim. This panel is content, not a placeholder, so it resets the colour at its root and
+     anything added inside it starts legible. */
+  color: var(--gray-900);
+  /* Prefixed FIRST, standard LAST. lightningcss treats the pair as one property and keeps only
+     the last, so standard-first ships `-webkit-` alone and Blink drops the blur entirely. See
+     specs/bugfix-acp-scrim-blur-dropped.md. */
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  /* Rises from the bottom edge of the picture. The travel is a full 100% — one panel height —
+     which parks it entirely below the picture at rest, and `.product-card-image`'s
+     `overflow: hidden` is what clips it there.
+     This is the same transform that once put the panel on top of the name and price, so read
+     the three guards as a set: `overflow: hidden` on the picture clips it, `opacity: 0` hides
+     it, and `pointer-events: none` stops it swallowing clicks even if the other two are ever
+     undone. Any one of them alone would have prevented the original bug.
+     Opacity settles faster than the slide so the rise is what you actually see. */
+  opacity: 0;
+  transform: translateY(100%);
+  /* Not `visibility: hidden`: that would take the panel out of the tab order, and then
+     `:focus-within` could never fire to reveal it. `pointer-events` stops the clicks without
+     stopping the focus. */
+  pointer-events: none;
+  transition: transform 0.25s ease, opacity 0.15s ease;
+}
+
+/* `:focus-within` is not decoration here — it is the only way to reach the panel by keyboard,
+   since there is no hover to simulate. */
+.product-card:hover .quick-add,
+.product-card:focus-within .quick-add {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.quick-add-button {
+  width: 100%;
+}
+
+/* The band grows upward from the bottom edge, so cap it at the picture. A two-axis configurable
+   in the 180px carousel would otherwise reach past the top of the image box; capped, the panel's
+   own `overflow-y: auto` scrolls it instead.
+   Card-scoped on purpose. On the base class this percentage would also land on the autocomplete's
+   in-flow panel, whose containing block is auto-height — do not tidy it up one level.
+   There were two `margin-top: auto` rules here, pushing the button to the bottom of a full-height
+   panel and centring the chips above it. A content-height panel has no free space to distribute,
+   so both were dead. What they bought — the add buttons lining up across a grid row — now comes
+   from the anchoring itself: every band's bottom edge is its own picture's bottom edge. */
+.product-card-image .quick-add {
+  max-height: 100%;
+}
+.quick-add-button:disabled {
+  background: var(--gray-400);
+  cursor: not-allowed;
+}
+
+/* An unavailable product's button must not answer the pointer. `.btn-primary:hover` is (0,2,0)
+   and declared further down the file than the rule above, so the greyed-out "Unavailable" lit up
+   indigo the moment the cursor reached it.
+   Fixed by matching harder here rather than adding `:not(:disabled)` to `.btn-primary:hover`
+   itself — that would lift the shared rule to (0,3,0), where it would start beating `.btn.added`
+   (0,2,0) and silently kill the add confirmation for as long as the pointer rested on the button
+   you just clicked. That is the exact failure the comment above `.btn.added` warns about.
+   `:not(.added)` is what keeps the confirmation winning here too: a configurable's button is
+   disabled again right after an add, while it is still showing "✓ Added" in green. */
+.quick-add-button:disabled:not(.added):hover {
+  background: var(--gray-400);
+}
+
+/* Compact axis rows: no heading, smaller chips, tighter gaps. A 2-axis product (colour + up to
+   six sizes) has to fit inside a 180px-tall picture. */
+/* Doubled class, (0,2,0), on purpose. The element carries BOTH classes, and plain
+   `.product-variants-compact` ties with `.product-variants { margin-bottom: 1.5rem }` at (0,1,0)
+   — which is declared ~10 000 characters further down the file and therefore won. Every axis row
+   in the panel was silently keeping a 24px bottom margin, which is what made the rows, and the
+   autocomplete items around them, so tall. Matching harder here makes it order-independent; do
+   not "simplify" it back to one class. The panel's own `gap` is the only spacing between rows. */
+.product-variants.product-variants-compact {
+  margin-bottom: 0;
+}
+.product-variants-compact .variant-options,
+.product-variants-compact .facet-swatches {
+  gap: 0.35rem;
+  justify-content: center;
+}
+/* Both chip kinds get their own opaque ground and a firmer edge. Against a translucent, blurred
+   backdrop the facet-sidebar styling reads as washed out — a swatch has to show its actual
+   colour, which is the entire information it carries. */
+.product-variants-compact .variant-option {
+  padding: 0.25rem 0.6rem;
+  font-size: 0.75rem;
+  /* Stated rather than inherited: a small label has little ink to spare, so it carries its own
+     colour and weight instead of trusting whatever the surrounding box happens to set. */
+  font-weight: 600;
+  color: var(--gray-900);
+  background: var(--white);
+  border-color: var(--gray-500);
+}
+/* 26px against the facet sidebar's 28px — near enough to read as the same control, small enough
+   that a six-colour product still fits one row inside a 220px card. */
+.product-variants-compact .swatch {
+  width: 26px;
+  height: 26px;
+  border-width: 2px;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Touch has no hover: without this the band would be unreachable and add-to-cart would simply not
+   exist on a phone. It is the same shape as on a desktop now — bottom edge, natural height — so
+   all this changes is that it rests open, and opaque: a permanent blur over the product is not a
+   resting state. (It also used to release `top`, which the base rule does itself now.) */
+@media (hover: none) {
+  .quick-add {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+    background: var(--white);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .quick-add {
+    transition: none;
+  }
+}
+
+/* In the autocomplete the panel is not an overlay at all — it is the row's trailing control,
+   in flow beside the name and price. Only the add rule is shared, not the presentation. */
+.autocomplete-product .quick-add {
+  position: static;
+  inset: auto;
+  padding: 0;
+  overflow: visible;
+  background: transparent;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  flex-shrink: 0;
+  align-self: center;
+  max-width: 45%;
+  /* Same reveal-on-hover as the card, slid in from the right edge instead of faded over the
+     picture: the row keeps its space reserved (the panel stays in flow), so nothing reflows when
+     it appears. 0.75rem travel, which stays inside the row's 1rem right padding — a larger slide
+     would push a transformed box past the column and give the popup a horizontal scrollbar. */
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(0.75rem);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+/* The options are sized for a product card, where the panel has the full width of a 220px+
+   picture. An autocomplete row gives them 45% of a much shorter box, so the same chips wrap into
+   a tall stack and the row grows to fit it. Everything below is the same controls at the compact
+   end of their range — scoped to the ACP so the grid keeps its larger, more legible ones. */
+/* This gap is the row's height lever. `.autocomplete-item` is `align-items: center` and its
+   thumbnail is 80px, so the row only grows once the panel exceeds that — every vertical rem
+   removed between the option rows and the button below them comes straight off the row.
+   0.3rem rather than the 0.15rem it was squeezed to while `.product-variants`' stray 24px
+   bottom margin was still winning: with that gone there is room to breathe again. */
+.autocomplete-product .quick-add {
+  gap: 0.3rem;
+}
+.autocomplete-product .product-variants-compact .variant-options,
+.autocomplete-product .product-variants-compact .facet-swatches {
+  gap: 0.25rem;
+}
+.autocomplete-product .product-variants-compact .variant-option {
+  padding: 0.1rem 0.4rem;
+  font-size: 0.7rem;
+}
+.autocomplete-product .product-variants-compact .swatch {
+  width: 20px;
+  height: 20px;
+}
+
+/* `.highlighted` is not optional here: the popup is arrow-key navigable, and without it the
+   add button would exist only for people using a mouse. */
+.autocomplete-item.autocomplete-product:hover .quick-add,
+.autocomplete-item.autocomplete-product:focus-within .quick-add,
+.autocomplete-item.autocomplete-product.highlighted .quick-add {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(0);
+}
+
+/* Declared after the rule above, not with the card's reduced-motion block further up: media
+   queries add no specificity, so an earlier `.autocomplete-product .quick-add` would simply lose
+   to the later one. The slide is decoration; the fade still carries the reveal. */
+@media (prefers-reduced-motion: reduce) {
+  .autocomplete-product .quick-add {
+    transform: none;
+    transition: none;
+  }
+}
+/* The button itself keeps its `.autocomplete-add-to-cart` class, so every rule already written
+   against it — rest opacity, hover scale, disabled tint, and the confirmation override — still
+   applies untouched. Only the wrapper is new. */
+
+.product-card-body {
+  /* Vertical padding is its own variable and is much tighter than the horizontal one: the SKU
+     line added a third row to this box, and the space for it came out of the padding so the card
+     kept its height. See specs/feature-listing-card-sku.md. */
+  padding: var(--product-card-body-padding-y) var(--product-card-body-padding);
+}
+
+.product-card-name {
+  font-weight: 500;
+  font-size: var(--product-card-name-size);
+  margin-bottom: 0.15rem;
+  color: var(--gray-800);
+}
+
+/* The card-scale version of the product page's `.product-detail-brand`: same muted grey, same
+   normal weight, smaller because the name above it is 0.9rem rather than a 2rem title. */
+.product-card-sku {
+  font-size: var(--product-card-sku-size);
+  line-height: 1.4;
+  color: var(--gray-500);
+  margin-bottom: 0.15rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.product-card-brand {
+  font-size: 0.75rem;
+  color: var(--gray-500);
+  margin-bottom: 0.5rem;
+}
+
+.product-card-price {
+  font-weight: 700;
+  color: var(--indigo-800);
+  font-size: var(--product-card-price-size);
+}
+
+.product-card-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+/* ─── Buttons ────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1.25rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: var(--indigo-800);
+  color: white;
+}
+.btn-primary:hover {
+  background: var(--indigo-700);
+  color: white;
+}
+
+.btn-coral {
+  background: var(--coral-500);
+  color: white;
+}
+.btn-coral:hover {
+  background: var(--coral-600);
+  color: white;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--gray-300);
+  color: var(--gray-700);
+}
+.btn-outline:hover {
+  border-color: var(--indigo-500);
+  color: var(--indigo-600);
+}
+
+.btn-sm {
+  padding: 0.4rem 0.75rem;
+  font-size: 0.8rem;
+}
+
+.btn-lg {
+  padding: 0.9rem 2rem;
+  font-size: 1rem;
+}
+
+/* The ~1.6s add-to-cart confirmation (see src/hooks/useAddedFlash.ts), shared by
+   the autocomplete, the product grid and the product detail page. Position in
+   the file is load-bearing: at (0,2,0) it only ties with `.btn-primary:hover`
+   above, so it has to be declared *after* it — otherwise the confirmation
+   vanishes for as long as the pointer stays on the button you just clicked. */
+.btn.added {
+  background: var(--success);
+  color: white;
+}
+
+/* ─── Category Page Layout ───────────────────────────────── */
+.catalog-page {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 2rem;
+}
+
+@media (max-width: 768px) {
+  .catalog-page {
+    grid-template-columns: 1fr;
+  }
+  .facets-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 300px;
+    height: 100vh;
+    z-index: 300;
+    background: white;
+    transform: translateX(-100%);
+    transition: transform 0.3s;
+    overflow-y: auto;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-lg);
+  }
+  .facets-sidebar.open {
+    transform: translateX(0);
+  }
+}
+
+/* ─── Facets ─────────────────────────────────────────────── */
+.facets-sidebar {
+  background: white;
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  border: none;
+  height: fit-content;
+  position: sticky;
+  /* Clears the pinned search band, whose height is --header-height minus the nav row that
+     gets pulled above the fold — both published by Header, so this follows a wrapping nav or
+     a resized input instead of guessing. Was a hardcoded 80px, chosen when nothing in the
+     header stayed put; the band's bottom edge now sits at ~100px, so the sidebar used to
+     slide under it. */
+  top: calc(var(--header-height, 8.5rem) - var(--header-nav-height, 4rem) + 1rem);
+}
+
+.facet-group {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--gray-100);
+}
+.facet-group:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.facet-title {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--gray-700);
+  margin-bottom: 0.75rem;
+}
+
+.facet-search {
+  width: 100%;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+  outline: none;
+  font-family: var(--font-sans);
+}
+.facet-search:focus {
+  border-color: var(--indigo-500);
+}
+
+.facet-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: var(--gray-700);
+  transition: color 0.15s;
+}
+.facet-option:hover {
+  color: var(--indigo-600);
+}
+
+.facet-option input[type="checkbox"] {
+  accent-color: var(--indigo-600);
+}
+
+.facet-option .count {
+  margin-left: auto;
+  font-size: 0.75rem;
+  color: var(--gray-400);
+}
+
+/* ─── Active Filter Chips ────────────────────────────────── */
+.active-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--indigo-100);
+  background: var(--indigo-50);
+  color: var(--indigo-700);
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.filter-chip:hover {
+  border-color: var(--coral-500);
+  color: var(--coral-600);
+}
+
+.filter-chip-clear {
+  background: transparent;
+  border-color: var(--gray-300);
+  color: var(--gray-600);
+}
+.filter-chip-clear:hover {
+  border-color: var(--gray-400);
+  color: var(--gray-800);
+}
+
+.facet-show-more {
+  font-size: 0.8rem;
+  color: var(--indigo-600);
+  cursor: pointer;
+  margin-top: 0.5rem;
+  font-weight: 500;
+}
+.facet-show-more:hover {
+  color: var(--coral-500);
+}
+
+/* ─── Swatch Facet ───────────────────────────────────────── */
+.facet-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.swatch {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--gray-200);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.swatch:hover {
+  transform: scale(1.15);
+}
+.swatch.active {
+  border-color: var(--indigo-600);
+  box-shadow: 0 0 0 2px var(--indigo-100);
+}
+
+/* ─── Price Slider ───────────────────────────────────────── */
+.price-slider {
+  padding: 0.5rem 0;
+  background: var(--gray-50);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem;
+}
+
+.price-slider-bounds {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.price-bound-label {
+  font-size: 0.68rem;
+  color: var(--gray-400);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.price-slider-track-container {
+  position: relative;
+  height: 20px;
+  margin: 0.5rem 0;
+}
+
+.price-slider-track-bg {
+  position: absolute;
+  top: 8px;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gray-200);
+  border-radius: 2px;
+}
+
+.price-slider-track-active {
+  position: absolute;
+  top: 8px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--indigo-600), var(--coral-500));
+  border-radius: 2px;
+}
+
+.price-slider input[type="range"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+  pointer-events: none;
+}
+.price-slider input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  background: var(--indigo-600);
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: var(--shadow-sm);
+  pointer-events: all;
+  cursor: grab;
+}
+.price-slider input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: var(--indigo-600);
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: var(--shadow-sm);
+  pointer-events: all;
+  cursor: grab;
+}
+
+.price-range-values {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.price-value-badge {
+  background: var(--indigo-50);
+  color: var(--indigo-700);
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: monospace;
+}
+
+.price-value-sep {
+  color: var(--gray-400);
+  font-size: 0.8rem;
+}
+
+/* ─── Product Grid ───────────────────────────────────────── */
+.products-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.products-count {
+  font-size: 0.9rem;
+  color: var(--gray-600);
+}
+
+.products-sort select {
+  padding: 0.4rem 0.75rem;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-pill);
+  font-size: 0.8rem;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  outline: none;
+}
+
+/* Shared by the search results and the category page, and by ProductGridSkeleton standing in
+   for either. `min(…, 100%)` is load-bearing: a bare minmax(340px, 1fr) makes the track 340px
+   wide inside a 320px phone and the page scrolls sideways. */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(var(--product-grid-column), 100%), 1fr));
+  gap: 1.5rem;
+}
+
+/* The listing card, at the size it takes when there is room for it: three columns of ~392px
+   inside the 1600px page, next to the 280px facet sidebar. Everything a card measures is set
+   here on the GRID, so the home-page carousel and the autocomplete keep the small card.
+   A min-width query where the rest of this file uses max-width, on purpose: the small values
+   are the base, so a viewport nobody measured gets the layout that was already proven rather
+   than an untested large one. 1200px is where the sidebar stops eating the row — below it,
+   340px columns would drop the grid to a single card. */
+@media (min-width: 1200px) {
+  .products-grid {
+    --product-grid-column: 340px;
+    --product-card-image-height: 300px;
+    --product-card-body-padding: 1.25rem;
+    --product-card-body-padding-y: 0.65rem;
+    --product-card-name-size: 1rem;
+    --product-card-sku-size: 0.8rem;
+    --product-card-price-size: 1.15rem;
+  }
+}
+
+/* ─── Pagination ─────────────────────────────────────────── */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.pagination button {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-sm);
+  background: white;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+.pagination button:hover {
+  border-color: var(--indigo-500);
+  color: var(--indigo-600);
+}
+.pagination button.active {
+  background: var(--indigo-600);
+  color: white;
+  border-color: var(--indigo-600);
+}
+.pagination button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* The gap marker between the sliding window and the first/last page button. Muted and not a
+   button, because it is a gap - the old pager drew it looking like a disabled control that
+   could not be clicked. See specs/bugfix-pagination-window-fixed-to-first-pages.md. */
+.pagination span {
+  color: var(--gray-500);
+}
+
+/* ─── Product Detail ─────────────────────────────────────── */
+.product-detail {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  background: white;
+  border-radius: var(--radius-md);
+  padding: 2rem;
+  box-shadow: var(--shadow-sm);
+}
+
+@media (max-width: 768px) {
+  .product-detail {
+    grid-template-columns: 1fr;
+  }
+}
+
+.product-detail-image {
+  aspect-ratio: 1;
+  background: linear-gradient(135deg, var(--indigo-50), var(--gray-100));
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gray-400);
+  /* Positioning context for .product-card-badges, which this page reuses verbatim. */
+  position: relative;
+}
+
+.product-detail-info h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.product-detail-brand {
+  color: var(--gray-500);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.product-detail-price {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--indigo-800);
+  margin-bottom: 1.5rem;
+}
+
+.product-variants {
+  margin-bottom: 1.5rem;
+}
+
+.product-variants h4 {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.variant-options {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.variant-option {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-pill);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.variant-option:hover,
+.variant-option.selected {
+  border-color: var(--indigo-600);
+  background: var(--indigo-50);
+  color: var(--indigo-700);
+}
+
+.product-detail-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+/* ─── Cart ───────────────────────────────────────────────── */
+.cart-page {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background: white;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 1rem;
+}
+
+.cart-item-image {
+  width: 80px;
+  height: 80px;
+  background: var(--gray-100);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gray-400);
+  font-size: 0.7rem;
+}
+
+.cart-item-info {
+  flex: 1;
+}
+.cart-item-info h4 {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+.cart-item-info .variant {
+  font-size: 0.8rem;
+  color: var(--gray-500);
+}
+
+.cart-item-qty {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.cart-item-qty button {
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--gray-300);
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+.cart-item-price {
+  font-weight: 700;
+  color: var(--indigo-800);
+  min-width: 80px;
+  text-align: right;
+}
+
+.cart-summary {
+  background: white;
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  margin-top: 2rem;
+}
+
+.cart-summary-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  font-size: 0.9rem;
+}
+.cart-summary-row.total {
+  border-top: 2px solid var(--gray-200);
+  margin-top: 0.5rem;
+  padding-top: 1rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+/* ─── CMS Page ───────────────────────────────────────────── */
+.cms-page {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.cms-page h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.cms-page p {
+  margin-bottom: 1rem;
+  color: var(--gray-700);
+  line-height: 1.8;
+}
+
+/* ─── Search Intelligence / Explain Page ─────────────────── */
+.explain-page {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.explain-results-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.explain-legends-banner {
+  background: linear-gradient(135deg, rgba(124, 77, 255, 0.04), rgba(63, 81, 181, 0.04));
+  border: 1px solid rgba(124, 77, 255, 0.15);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+}
+.explain-legends-banner h4 {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  margin-bottom: 0.75rem;
+  color: var(--gray-700);
+}
+
+.legends-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.5rem;
+}
+
+.legend-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  font-size: 0.72rem;
+  color: var(--gray-500);
+  line-height: 1.4;
+}
+.legend-card code {
+  background: rgba(124, 77, 255, 0.1);
+  color: #7c4dff;
+  padding: 0.1rem 0.4rem;
+  border-radius: 3px;
+  font-size: 0.68rem;
+  width: fit-content;
+}
+
+.explain-ranking {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.explain-rank-card {
+  background: white;
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-200);
+  transition: all 0.3s ease;
+}
+
+.explain-rank-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.explain-rank-position {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  min-width: 40px;
+}
+
+.rank-number {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #7c4dff;
+}
+
+.rank-score-bar {
+  width: 40px;
+  height: 4px;
+  background: var(--gray-200);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.rank-score-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #7c4dff, var(--coral-500));
+  border-radius: 2px;
+}
+
+.explain-rank-info {
+  flex: 1;
+}
+.explain-rank-info h3 {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+}
+.explain-rank-sku {
+  font-size: 0.75rem;
+  color: var(--gray-400);
+  font-family: monospace;
+}
+
+.explain-rank-score {
+  font-family: monospace;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #7c4dff;
+  background: rgba(124, 77, 255, 0.08);
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-sm);
+}
+
+.explain-boost-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  background: rgba(255, 107, 107, 0.06);
+  border-left: 3px solid var(--coral-500);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--coral-600);
+}
+.boost-icon { font-size: 1rem; }
+.boost-reason {
+  font-weight: 400;
+  color: var(--gray-500);
+  font-size: 0.72rem;
+  margin-left: 0.5rem;
+}
+
+.explain-field-matches {
+  margin-top: 0.75rem;
+}
+
+.field-matches-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: var(--gray-500);
+  margin-bottom: 0.5rem;
+}
+
+.field-matches-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.field-match-row {
+  display: grid;
+  grid-template-columns: 140px 70px 1fr 50px;
+  gap: 0.5rem;
+  align-items: center;
+  font-size: 0.75rem;
+}
+
+.field-match-name {
+  font-family: monospace;
+  font-weight: 500;
+  color: var(--gray-700);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.field-match-type {
+  color: var(--gray-400);
+  font-size: 0.65rem;
+}
+
+.field-match-bar-container {
+  height: 6px;
+  background: var(--gray-100);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.field-match-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #7c4dff, var(--indigo-500));
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+
+.field-match-value {
+  font-family: monospace;
+  font-weight: 600;
+  color: #7c4dff;
+  text-align: right;
+}
+
+.explain-rank-card.story-highlight {
+  border-color: var(--coral-500);
+  transform: scale(1.01);
+}
+
+@media (max-width: 768px) {
+  .field-match-row {
+    grid-template-columns: 1fr 50px;
+  }
+  .field-match-type, .field-match-bar-container {
+    display: none;
+  }
+}
+
+/* ─── Category Nav ───────────────────────────────────────── */
+.category-nav {
+  background: white;
+  border-radius: var(--radius-md);
+  padding: 1rem 0;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-200);
+}
+
+.category-nav-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  list-style: none;
+  /* Row gap only: the pills stay shoulder to shoulder on one line as before, but a bar that
+     wraps (twelve top-level categories do) gets air between the rows. */
+  gap: 0.25rem 0;
+  padding: 0 1rem;
+}
+
+/* Block, not inline. Vertical padding on an inline box does not grow the line box, so the
+   pill painted above and below its own row — invisible on a single line thanks to
+   .category-nav's block padding, but on two rows the row-1 pills overlapped the row-2 text.
+   See specs/feature-category-trail-nav-and-breadcrumb.md. */
+.category-nav-item a {
+  display: block;
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--gray-600);
+  border-radius: var(--radius-pill);
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+/* .in-trail is an ancestor of the category being viewed: same pill, so the section is
+   visible in the bar without hovering, and .active stays the stronger of the two. */
+.category-nav-item a:hover,
+.category-nav-item a.in-trail,
+.category-nav-item a.active {
+  background: var(--indigo-50);
+  color: var(--indigo-700);
+}
+.category-nav-item a.active {
+  font-weight: 600;
+}
+.category-nav-item {
+  position: relative;
+}
+.category-nav-submenu {
+  position: absolute;
+  /* Hangs off its own item, so the menu always reads as belonging to the category hovered.
+     On a wrapped bar it therefore covers part of the row underneath; dropping it below the
+     whole bar instead was tried and rejected — see the spec. */
+  top: 100%;
+  left: 0;
+  background: white;
+  box-shadow: var(--shadow-md);
+  border-radius: var(--radius-md);
+  padding: 0.5rem 0;
+  min-width: 200px;
+  z-index: 50;
+  list-style: none;
+}
+.category-nav-submenu li a {
+  display: block;
+  padding: 0.4rem 1rem;
+  font-size: 0.8rem;
+  color: var(--gray-600);
+  white-space: nowrap;
+}
+.category-nav-submenu li a:hover,
+.category-nav-submenu li a.in-trail,
+.category-nav-submenu li a.active {
+  background: var(--indigo-50);
+  color: var(--indigo-700);
+}
+.category-nav-submenu li a.active {
+  font-weight: 600;
+}
+
+/* ─── Recommendations ────────────────────────────────────── */
+.recommendations {
+  margin-top: 3rem;
+}
+
+.recommendations h2 {
+  margin-bottom: 1rem;
+}
+
+/* ─── Checkout Tunnel ────────────────────────────────────── */
+.checkout-steps {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.checkout-step {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--gray-500);
+}
+.checkout-step.active {
+  background: var(--indigo-50);
+  color: var(--indigo-700);
+}
+.checkout-step.completed {
+  color: var(--success);
+}
+.checkout-step-divider {
+  width: 30px;
+  height: 2px;
+  background: var(--gray-300);
+}
+
+/* ─── Loading / Empty States ─────────────────────────────── */
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem;
+  color: var(--gray-500);
+}
+
+.loading-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--gray-200);
+  border-top-color: var(--indigo-600);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-right: 1rem;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ─── Skeleton Placeholders ──────────────────────────────── */
+.skeleton {
+  background: var(--gray-200);
+  border-radius: var(--radius-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-text {
+  height: 14px;
+  display: block;
+}
+
+.skeleton-btn {
+  height: 36px;
+  border-radius: var(--radius-pill);
+  background: var(--gray-200);
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(90deg, var(--gray-100) 25%, var(--gray-200) 50%, var(--gray-100) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease infinite;
+}
+
+.skeleton-card {
+  background: white;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-200);
+  min-width: 220px;
+}
+
+/* Reads the same two variables as the real card, so it grows with it. They were both a
+   literal 180px/1rem, and a skeleton whose size differs from the content replacing it
+   causes the layout shift it exists to prevent. */
+.skeleton-card-image {
+  width: 100%;
+  height: var(--product-card-image-height);
+  background: linear-gradient(90deg, var(--gray-100) 25%, var(--gray-200) 50%, var(--gray-100) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease infinite;
+}
+
+.skeleton-card-body {
+  padding: var(--product-card-body-padding-y) var(--product-card-body-padding);
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Shown in the facet sidebar when there is no facet left to draw — see Facets.tsx.
+   Same muted italic note idiom as `.autocomplete-empty`, in the light sidebar's
+   palette rather than the dark panel's. Not a new primitive. */
+.facets-empty {
+  margin: 0;
+  font-size: 0.85rem;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--gray-500);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--gray-500);
+}
+.empty-state h3 {
+  font-family: var(--font-sans);
+  margin-bottom: 0.5rem;
+  color: var(--gray-600);
+}
+
+/* ─── Page Title ─────────────────────────────────────────── */
+.page-title {
+  margin-bottom: 1.5rem;
+}
+.page-title h1 {
+  font-size: 1.8rem;
+}
+.page-title .breadcrumb {
+  font-size: 0.8rem;
+  color: var(--gray-500);
+  margin-bottom: 0.25rem;
+}
+/* Keyed on the anchors and the separator, so every breadcrumb that is still a plain string
+   (search, blog, CMS, product, vector search) renders exactly as before. A breadcrumb link
+   inherits the grey rather than taking the global --indigo-600 link colour: a row of indigo
+   labels reads as buttons, not as a path. */
+.breadcrumb a {
+  color: inherit;
+}
+.breadcrumb a:hover {
+  color: var(--coral-500);
+  text-decoration: underline;
+}
+.breadcrumb [aria-current='page'] {
+  color: var(--gray-700);
+}
+.breadcrumb-sep {
+  margin: 0 0.35rem;
+  opacity: 0.6;
+}
+
+/* ─── Footer ─────────────────────────────────────────────── */
+.footer {
+  background: var(--indigo-900);
+  color: rgba(255, 255, 255, 0.7);
+  padding: 2rem;
+  text-align: center;
+  font-size: 0.85rem;
+  margin-top: 4rem;
+}
+.footer a {
+  color: var(--coral-400);
+}
+
+/* ─── Mobile Filter Toggle ───────────────────────────────── */
+.mobile-filter-toggle {
+  display: none;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .mobile-filter-toggle {
+    display: block;
+  }
+  .header-inner {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .header-search-row {
+    padding: 0 0.5rem;
+  }
+  .search-bar-wrapper {
+    width: 100%;
+  }
+  .search-overlay-scrim {
+    padding: calc(var(--header-height, 11.5rem) + 1rem) 1rem 1rem;
+  }
+  .search-overlay-panel {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+  .hero h1 {
+    font-size: 2rem;
+  }
+}
+
+/* ─── Event Log (Dev) ────────────────────────────────────── */
+.event-log {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  width: 320px;
+  max-height: 250px;
+  background: var(--gray-900);
+  color: #a5d6a7;
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  font-family: monospace;
+  font-size: 0.7rem;
+  overflow-y: auto;
+  z-index: 500;
+  box-shadow: var(--shadow-lg);
+}
+
+.event-log-title {
+  color: var(--coral-400);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  font-size: 0.75rem;
+}
+
+.event-log-entry {
+  padding: 0.2rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.event-log-toggle {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  background: var(--gray-900);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.75rem;
+  cursor: pointer;
+  z-index: 501;
+}
+
+/* ─── Tracking Insights Widget ───────────────────────────── */
+.tracking-insights-toggle {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+  background: var(--indigo-800);
+  color: white;
+  border: none;
+  padding: 0.6rem 1.25rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.8rem;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  cursor: pointer;
+  z-index: 501;
+  box-shadow: var(--shadow-md);
+  transition: all 0.2s;
+}
+.tracking-insights-toggle:hover {
+  background: var(--indigo-700);
+  transform: translateY(-1px);
+}
+
+.insights-badge {
+  background: var(--coral-500);
+  color: white;
+  padding: 0.1rem 0.4rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.65rem;
+  font-weight: 700;
+  margin-left: 0.4rem;
+}
+
+.tracking-insights-panel {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+  width: 380px;
+  max-height: 70vh;
+  background: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  z-index: 502;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: slideInRight 0.3s ease;
+}
+
+.insights-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--gray-100);
+  background: var(--indigo-50);
+}
+.insights-header h3 {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--indigo-800);
+}
+
+.insights-close {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  color: var(--gray-400);
+  cursor: pointer;
+  padding: 0.25rem;
+}
+.insights-close:hover {
+  color: var(--gray-700);
+}
+
+.insights-summary {
+  padding: 0.5rem 1.25rem;
+  font-size: 0.8rem;
+  color: var(--gray-500);
+  border-bottom: 1px solid var(--gray-100);
+}
+
+.insights-empty {
+  padding: 2rem 1.25rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--gray-400);
+}
+
+.insights-sections {
+  overflow-y: auto;
+  padding: 0.75rem 1.25rem;
+  flex: 1;
+}
+
+.insight-section {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--gray-100);
+}
+.insight-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.insight-section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.35rem;
+  font-size: 0.85rem;
+}
+
+.insight-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.insight-icon {
+  font-size: 0.9rem;
+}
+
+.insight-consequence {
+  font-size: 0.78rem;
+  color: var(--gray-500);
+  line-height: 1.5;
+  margin-bottom: 0.35rem;
+  padding-left: 1.75rem;
+}
+
+.insight-details {
+  padding-left: 1.75rem;
+}
+
+.insight-detail {
+  font-size: 0.72rem;
+  color: var(--gray-400);
+  padding: 0.15rem 0;
+  font-family: monospace;
+}
+
+@media (max-width: 768px) {
+  .tracking-insights-panel {
+    width: calc(100vw - 2rem);
+    left: 1rem;
+    right: 1rem;
+  }
+}
+
+/* ─── Search Explain Widget ──────────────────────────────── */
+.explain-toggle {
+  position: fixed;
+  bottom: 3.5rem;
+  left: 1rem;
+  background: #7c4dff;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.25rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.8rem;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  cursor: pointer;
+  z-index: 501;
+  box-shadow: var(--shadow-md);
+  transition: all 0.2s;
+}
+.explain-toggle:hover {
+  background: #651fff;
+  transform: translateY(-1px);
+}
+
+.explain-badge {
+  background: var(--coral-500);
+  color: white;
+  padding: 0.1rem 0.4rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.65rem;
+  font-weight: 700;
+  margin-left: 0.4rem;
+}
+
+.explain-panel {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+  width: 420px;
+  max-height: 75vh;
+  background: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  z-index: 502;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: slideInRight 0.3s ease;
+}
+
+.explain-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--gray-100);
+  background: linear-gradient(135deg, rgba(124, 77, 255, 0.05), rgba(63, 81, 181, 0.05));
+}
+.explain-header h3 {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--gray-800);
+}
+
+.explain-close {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  color: var(--gray-400);
+  cursor: pointer;
+}
+
+.explain-loading {
+  padding: 2rem;
+  text-align: center;
+  color: var(--gray-600);
+  font-size: 0.85rem;
+}
+
+.explain-error {
+  padding: 1rem 1.25rem;
+  color: var(--coral-500);
+  font-size: 0.8rem;
+}
+
+.explain-results {
+  overflow-y: auto;
+  padding: 0.75rem 1.25rem;
+  flex: 1;
+}
+
+.explain-product {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--gray-100);
+}
+.explain-product:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.explain-product-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.explain-rank {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #7c4dff;
+  width: 24px;
+}
+
+.explain-product-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.explain-product-info strong {
+  font-size: 0.85rem;
+}
+
+.explain-sku {
+  font-size: 0.7rem;
+  color: var(--gray-600);
+  font-family: monospace;
+}
+
+.explain-score {
+  font-family: monospace;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #7c4dff;
+  background: rgba(124, 77, 255, 0.08);
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-sm);
+}
+
+.explain-section {
+  margin-top: 0.4rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+}
+.explain-section.boost {
+  background: rgba(255, 107, 107, 0.06);
+  border-left: 3px solid var(--coral-500);
+}
+
+.explain-section-label {
+  font-weight: 600;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: var(--gray-700);
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+.explain-section-detail {
+  font-size: 0.72rem;
+  color: var(--gray-600);
+}
+
+.explain-matches {
+  margin-top: 0.5rem;
+}
+
+.explain-match {
+  display: grid;
+  grid-template-columns: 1fr auto auto 60px;
+  gap: 0.4rem;
+  align-items: center;
+  padding: 0.2rem 0;
+  font-size: 0.72rem;
+}
+
+.explain-match-field {
+  font-family: monospace;
+  font-weight: 500;
+  color: var(--gray-700);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.explain-match-analyzer {
+  color: var(--gray-600);
+  font-size: 0.65rem;
+}
+
+.explain-match-score {
+  font-family: monospace;
+  font-weight: 600;
+  color: #7c4dff;
+  text-align: right;
+}
+
+.explain-match-bar {
+  height: 4px;
+  background: var(--gray-200);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.explain-match-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #7c4dff, var(--coral-500));
+  border-radius: 2px;
+}
+
+.explain-legends {
+  margin-top: 0.75rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--gray-100);
+}
+
+.explain-legend-item {
+  font-size: 0.68rem;
+  color: var(--gray-700);
+  margin-bottom: 0.25rem;
+  line-height: 1.4;
+}
+.explain-legend-item code {
+  background: rgba(124, 77, 255, 0.08);
+  padding: 0.1rem 0.3rem;
+  border-radius: 3px;
+  font-size: 0.65rem;
+  color: #7c4dff;
+}
+
+@media (max-width: 768px) {
+  .explain-panel {
+    width: calc(100vw - 2rem);
+  }
+}
+
+/* ─── Audience Mode ──────────────────────────────────────── */
+.mode-direction .expert-only {
+  display: none !important;
+}
+
+/* ─── Intro Screen ───────────────────────────────────────── */
+.intro-overlay {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, var(--indigo-900) 0%, var(--indigo-700) 50%, var(--coral-500) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 2rem;
+}
+
+.intro-card {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 3rem;
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+}
+
+.intro-logo {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--indigo-900);
+  margin-bottom: 1.5rem;
+}
+.intro-logo span {
+  color: var(--coral-500);
+}
+
+.intro-card h1 {
+  font-size: 1.8rem;
+  color: var(--indigo-900);
+  margin-bottom: 0.75rem;
+}
+
+.intro-subtitle {
+  color: var(--gray-600);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.intro-personas {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.persona-card {
+  text-align: center;
+}
+
+.persona-avatar {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.persona-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--gray-800);
+}
+
+.persona-role {
+  font-size: 0.8rem;
+  color: var(--gray-500);
+}
+
+.intro-audience {
+  background: var(--gray-50);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.intro-audience-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--gray-700);
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+.audience-toggle {
+  display: flex;
+  gap: 0;
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  border: 1px solid var(--gray-300);
+  width: fit-content;
+  margin: 0 auto 0.75rem;
+}
+
+.audience-btn {
+  padding: 0.5rem 1.5rem;
+  border: none;
+  background: white;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--gray-600);
+  transition: all 0.2s;
+}
+.audience-btn.active {
+  background: var(--indigo-800);
+  color: white;
+}
+
+.audience-hint {
+  font-size: 0.8rem;
+  color: var(--gray-500);
+  margin: 0;
+}
+
+.intro-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+/* ─── Story Companion (side panel) ───────────────────────── */
+.story-dock {
+  position: fixed;
+  top: 70px;
+  right: 1rem;
+  width: 340px;
+  background: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  z-index: 400;
+  padding: 1.25rem;
+  animation: slideInRight 0.3s ease;
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.story-dock-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.story-progress {
+  display: flex;
+  gap: 4px;
+}
+
+.story-segment {
+  width: 40px;
+  height: 4px;
+  border-radius: 2px;
+  border: none;
+  background: var(--gray-200);
+  cursor: pointer;
+  transition: all 0.2s;
+  padding: 0;
+}
+.story-segment.active {
+  background: var(--coral-500);
+}
+.story-segment.done {
+  background: var(--indigo-600);
+}
+
+.story-close {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: var(--gray-400);
+  cursor: pointer;
+  padding: 0.25rem;
+}
+.story-close:hover {
+  color: var(--gray-700);
+}
+
+.story-act-label {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--indigo-800);
+  margin-bottom: 0.75rem;
+}
+
+.story-persona {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.story-persona-avatar {
+  font-size: 1.5rem;
+}
+
+.story-persona-name {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--gray-700);
+}
+
+.story-bubble {
+  background: var(--gray-50);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--gray-700);
+  margin-bottom: 0.75rem;
+}
+
+.story-gain {
+  display: inline-block;
+  background: rgba(255, 107, 107, 0.1);
+  color: var(--coral-600);
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.story-cta {
+  width: 100%;
+  margin-bottom: 0.75rem;
+}
+
+.story-nav {
+  display: flex;
+  justify-content: space-between;
+}
+
+.story-resume-pill {
+  position: fixed;
+  top: 80px;
+  right: 1rem;
+  background: var(--indigo-800);
+  color: white;
+  border: none;
+  padding: 0.6rem 1.25rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  z-index: 400;
+  box-shadow: var(--shadow-md);
+  transition: all 0.2s;
+}
+.story-resume-pill:hover {
+  background: var(--indigo-700);
+}
+
+/* ─── Closing / Bilan Page ───────────────────────────────── */
+.closing-page {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.closing-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.closing-stat {
+  background: white;
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-200);
+}
+
+.closing-stat-value {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--indigo-800);
+  display: block;
+}
+.closing-stat-value.coral {
+  color: var(--coral-500);
+}
+
+.closing-stat-label {
+  font-size: 0.85rem;
+  color: var(--gray-600);
+  margin-top: 0.25rem;
+}
+
+.closing-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.closing-card {
+  background: white;
+  border-radius: var(--radius-md);
+  padding: 2rem;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-200);
+}
+
+.closing-card h3 {
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.closing-compare {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.closing-compare-col {
+  flex: 1;
+  text-align: center;
+  padding: 1rem;
+  border-radius: var(--radius-md);
+}
+.closing-compare-col.market {
+  background: var(--gray-50);
+}
+.closing-compare-col.gally {
+  background: rgba(255, 107, 107, 0.05);
+  border: 1px solid rgba(255, 107, 107, 0.2);
+}
+
+.closing-compare-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--gray-500);
+  margin-bottom: 0.5rem;
+}
+
+.closing-compare-value {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--gray-800);
+}
+.closing-compare-col.gally .closing-compare-value {
+  color: var(--coral-600);
+}
+
+.closing-compare-note {
+  font-size: 0.75rem;
+  color: var(--gray-500);
+  margin-top: 0.5rem;
+}
+
+.closing-compare-vs {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--gray-400);
+}
+
+.closing-reveal-btn {
+  margin-top: 1.5rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.reveal-in {
+  animation: fadeSlideUp 0.4s ease;
+}
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Pricing cards */
+.pricing-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.pricing-card {
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  text-align: center;
+  position: relative;
+}
+.pricing-card.featured {
+  border-color: var(--coral-500);
+  box-shadow: 0 0 0 1px var(--coral-500);
+}
+
+.pricing-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--coral-500);
+  color: white;
+  padding: 0.15rem 0.75rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.pricing-card h4 {
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.pricing-price {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--indigo-800);
+  margin-bottom: 1rem;
+}
+.pricing-price span {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--gray-500);
+}
+
+.pricing-features {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+.pricing-features li {
+  padding: 0.35rem 0;
+  font-size: 0.85rem;
+  color: var(--gray-600);
+}
+.pricing-features li::before {
+  content: '✓ ';
+  color: var(--success);
+  font-weight: 700;
+}
+
+.closing-disclaimer {
+  font-size: 0.8rem;
+  color: var(--gray-500);
+  text-align: center;
+  font-style: italic;
+  max-width: 600px;
+  margin: 2rem auto;
+  line-height: 1.6;
+}
+
+/* ─── Tracking Journey Timeline ──────────────────────────── */
+.tracking-timeline {
+  position: relative;
+  padding-left: 2rem;
+  margin-bottom: 2rem;
+}
+.tracking-timeline::before {
+  content: '';
+  position: absolute;
+  left: 11px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--indigo-500), var(--coral-500));
+  border-radius: 1px;
+}
+
+.timeline-item {
+  position: relative;
+  padding-bottom: 1.5rem;
+  display: flex;
+  gap: 1rem;
+}
+.timeline-item:last-child {
+  padding-bottom: 0;
+}
+
+.timeline-dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-left: -2rem;
+  border: 3px solid white;
+  box-shadow: var(--shadow-sm);
+  z-index: 1;
+}
+.timeline-dot.search { background: var(--indigo-600); }
+.timeline-dot.display { background: var(--indigo-500); }
+.timeline-dot.view { background: #7c4dff; }
+.timeline-dot.cart { background: var(--coral-500); }
+.timeline-dot.order { background: var(--success); }
+
+.timeline-content {
+  flex: 1;
+  padding-bottom: 0.5rem;
+}
+
+.timeline-event {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--gray-800);
+  margin-bottom: 0.35rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.timeline-badge {
+  display: inline-block;
+  background: var(--indigo-50);
+  color: var(--indigo-700);
+  padding: 0.1rem 0.5rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.7rem;
+  font-weight: 700;
+  font-family: monospace;
+  letter-spacing: 0.3px;
+}
+
+.timeline-consequence {
+  font-size: 0.8rem;
+  color: var(--gray-500);
+  line-height: 1.5;
+  padding-left: 0.25rem;
+  border-left: 2px solid var(--gray-100);
+  margin-left: 0.25rem;
+  padding-top: 0.15rem;
+  padding-bottom: 0.15rem;
+}
+
+.timeline-summary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: var(--indigo-50);
+  border-radius: var(--radius-md);
+}
+
+.timeline-summary-item {
+  font-size: 0.8rem;
+  color: var(--gray-600);
+  padding: 0.5rem;
+}
+.timeline-summary-item strong {
+  color: var(--indigo-700);
+  display: block;
+  margin-bottom: 0.15rem;
+}
+
+@media (max-width: 768px) {
+  .timeline-summary {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .closing-stats {
+    grid-template-columns: 1fr;
+  }
+  .closing-compare {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .pricing-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ─── Cart Bundle ────────────────────────────────────────── */
+.cart-bundle {
+  background: linear-gradient(135deg, var(--indigo-50), rgba(255, 107, 107, 0.05));
+  border: 1px dashed var(--coral-400);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.cart-bundle-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.cart-bundle-header h3 {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.cart-bundle-badge {
+  background: var(--coral-500);
+  color: white;
+  padding: 0.2rem 0.75rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.cart-bundle-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.cart-bundle-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: var(--gray-700);
+}
+
+.cart-bundle-item-price s {
+  color: var(--gray-400);
+  margin-right: 0.25rem;
+}
+
+.cart-bundle-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--gray-200);
+  padding-top: 1rem;
+}
+
+.cart-bundle-total {
+  font-size: 0.9rem;
+}
+
+.cart-bundle-was {
+  color: var(--gray-400);
+  font-size: 0.85rem;
+}
+
+/* ─── Free Shipping Bar ──────────────────────────────────── */
+.shipping-bar {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--gray-100);
+}
+
+.shipping-bar-label {
+  font-size: 0.85rem;
+  color: var(--gray-600);
+  margin-bottom: 0.5rem;
+}
+
+.shipping-bar-track {
+  height: 6px;
+  background: var(--gray-200);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.shipping-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--indigo-600), var(--coral-500));
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+
+.shipping-bar-unlocked {
+  color: var(--success);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.free-shipping-text {
+  color: var(--success);
+  font-weight: 600;
+}
+
+/* ─── Animated Total ─────────────────────────────────────── */
+.total-animate span:last-child {
+  animation: totalFlash 0.4s ease;
+}
+
+@keyframes totalFlash {
+  0% { transform: scale(1); color: inherit; }
+  50% { transform: scale(1.15); color: var(--coral-500); }
+  100% { transform: scale(1); color: inherit; }
+}
+
+/* ─── Frequently Bought Together ─────────────────────────── */
+.fbt-section {
+  background: white;
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  margin-top: 1.5rem;
+}
+
+.fbt-section h3 {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.fbt-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.fbt-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: var(--gray-50);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.fbt-item:hover {
+  background: var(--indigo-50);
+}
+
+.fbt-item input[type="checkbox"] {
+  accent-color: var(--indigo-600);
+  width: 18px;
+  height: 18px;
+}
+
+.fbt-item-info {
+  display: flex;
+  justify-content: space-between;
+  flex: 1;
+}
+
+.fbt-item-name {
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.fbt-item-price {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--indigo-800);
+}
+
+.fbt-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--gray-200);
+  padding-top: 1rem;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+/* ─── Tracking Hints in Story Bubbles ────────────────────── */
+.story-tracking-hint {
+  margin-top: 0.75rem;
+  padding: 0.6rem 0.75rem;
+  background: rgba(63, 81, 181, 0.06);
+  border-left: 3px solid var(--indigo-500);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--gray-600);
+}
+.story-tracking-hint code {
+  background: rgba(63, 81, 181, 0.1);
+  padding: 0.1rem 0.35rem;
+  border-radius: 3px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--indigo-700);
+}
+
+/* ─── Event Log Meaning Line ─────────────────────────────── */
+.event-log-meaning {
+  color: #ffe082;
+  font-size: 0.65rem;
+  line-height: 1.4;
+  margin-top: 2px;
+  padding-left: 0.5rem;
+  border-left: 2px solid rgba(255, 224, 130, 0.3);
+}
+
+/* ─── Story Highlight (generic) ───────────────────────────── */
+.story-highlight {
+  outline: 3px solid var(--coral-500) !important;
+  outline-offset: 4px;
+  box-shadow: 0 0 20px rgba(255, 107, 107, 0.3) !important;
+  transition: all 0.4s ease;
+  z-index: 10;
+  position: relative;
+}
+
+.product-card.story-highlight {
+  transform: scale(1.03);
+}
+
+.facet-group.story-highlight {
+  border-radius: var(--radius-md);
+  padding: 0.75rem;
+  margin-left: -0.75rem;
+  margin-right: -0.75rem;
+}
+
+.facets-sidebar.story-highlight {
+  outline-offset: 6px;
+}
+
+.timeline-item.story-highlight {
+  background: rgba(255, 107, 107, 0.04);
+  border-radius: var(--radius-md);
+  padding: 0.75rem;
+  margin-left: -0.75rem;
+  margin-right: -0.75rem;
+}
+
+.timeline-item.story-highlight .timeline-dot {
+  transform: scale(1.3);
+  transition: transform 0.3s ease;
+}
+
+.tracking-timeline.story-highlight {
+  outline-offset: 8px;
+}
+
+.product-card.story-added {
+  animation: addedFlash 0.6s ease;
+}
+
+/* Same glow, played by a real click instead of the guided story — see
+   src/components/ProductCard.tsx. Being an animation, it outranks the
+   `.product-card:hover` box-shadow for its whole duration, so the flash still
+   reads with the pointer resting on the card. */
+.product-card.just-added {
+  animation: addedFlash 0.6s ease;
+}
+
+@keyframes addedFlash {
+  0% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.6); }
+  50% { box-shadow: 0 0 24px 8px rgba(76, 175, 80, 0.4); outline: 3px solid var(--success); }
+  100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); outline: none; }
+}
+
+/* ─── Story Button Highlight ─────────────────────────────── */
+.story-highlight-btn {
+  outline: 3px solid var(--coral-500) !important;
+  outline-offset: 4px;
+  box-shadow: 0 0 20px rgba(255, 107, 107, 0.4) !important;
+  animation: pulseBtn 0.8s ease infinite;
+  position: relative;
+  z-index: 10;
+}
+
+@keyframes pulseBtn {
+  0%, 100% { box-shadow: 0 0 12px rgba(255, 107, 107, 0.3); }
+  50% { box-shadow: 0 0 24px rgba(255, 107, 107, 0.6); }
+}
+
+/* ─── Story Add-to-Cart Toast ────────────────────────────── */
+.story-cart-toast {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  background: var(--success);
+  color: white;
+  padding: 1.25rem 2.5rem;
+  border-radius: var(--radius-lg);
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  font-weight: 600;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.25);
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+.story-cart-toast.visible {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* ─── Search result type switch ──────────────────────────── */
+/* One query hits two indices; this switches which result set is shown. A centered
+   segmented switch rather than underline tabs, so the pair reads as a single choice
+   instead of as navigation. Built from the existing pill idiom (--radius-pill track,
+   raised --white + --shadow-sm thumb) — not a new primitive. The thumb slides between
+   the two segments; see .result-type-tabs::before. */
+.result-type-switch-row {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+/* `inline-grid` with equal 1fr columns, not inline-flex: the thumb below slides by
+   exactly one column, so the two segments have to be the same width. 1fr columns in
+   a content-sized grid both take the width of the wider segment, which keeps the
+   slide correct in every locale without measuring anything in JS. */
+.result-type-tabs {
+  position: relative;
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  border-radius: var(--radius-pill);
+  background: var(--gray-100);
+}
+
+/* The sliding thumb. A single pseudo-element behind both segments rather than a
+   background on the selected one — that is what there is to animate. Moved with
+   `transform` only, so it animates on the compositor and never reflows the row.
+   Width = one grid column: the track minus its 0.25rem padding either side and the
+   0.25rem gap, halved. */
+.result-type-tabs::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  top: 0.25rem;
+  bottom: 0.25rem;
+  left: 0.25rem;
+  width: calc((100% - 0.75rem) / 2);
+  border-radius: var(--radius-pill);
+  background: var(--white);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+/* 100% here is the thumb's own width — one column — so this lands it exactly on the
+   second column, gap included. */
+.result-type-tabs[data-active='blog']::before {
+  transform: translateX(calc(100% + 0.25rem));
+}
+
+.result-type-tab {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1.1rem;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--gray-600);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+.result-type-tab:hover {
+  color: var(--indigo-700);
+}
+/* No background or shadow here — the thumb draws those. Declared after :hover, at
+   equal specificity, so the selected segment keeps its colour when hovered. */
+.result-type-tab.active {
+  color: var(--indigo-800);
+}
+
+/* The slide is decoration; honour a reduced-motion preference by cutting it. */
+@media (prefers-reduced-motion: reduce) {
+  .result-type-tabs::before {
+    transition: none;
+  }
+}
+
+.result-type-icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+/* --gray-200, not --gray-100: the track is --gray-100, so the inactive badge would
+   otherwise disappear into it. */
+.result-type-count {
+  padding: 0.05rem 0.45rem;
+  border-radius: var(--radius-pill);
+  background: var(--gray-200);
+  color: var(--gray-600);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.result-type-tab.active .result-type-count {
+  background: var(--indigo-50);
+  color: var(--indigo-700);
+}
+
+/* ─── Blog (cms_page) ────────────────────────────────────── */
+/* The blog reuses the catalog's card idiom rather than inventing a second one:
+   same white surface, same radius/shadow, same lift on hover as .product-card. */
+.blog-page {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.blog-intro {
+  margin-top: 0.5rem;
+  max-width: 46rem;
+  color: var(--gray-600);
+  line-height: 1.6;
+}
+
+/* Two browse axes stacked as label + chip row: content type first (coarse),
+   topic second. Both are rendered from the API's aggregations. */
+.blog-browse {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.blog-browse-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+}
+
+.blog-browse-label {
+  flex-shrink: 0;
+  min-width: 4rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--gray-500);
+}
+
+.blog-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* The browse chips ARE .filter-chip (see "Active Filter Chips") — same pill, same
+   tokens. Only the two states that idiom lacks are added here: a chip used as a
+   toggle needs a selected state, and a browse chip carries its facet count. */
+.filter-chip-selected,
+.filter-chip-selected:hover {
+  background: var(--indigo-800);
+  border-color: var(--indigo-800);
+  color: white;
+}
+.filter-chip-count {
+  margin-left: 0.35rem;
+  opacity: 0.6;
+}
+
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.blog-card {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.blog-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.blog-card-image {
+  position: relative;
+  height: 180px;
+  background: linear-gradient(135deg, var(--indigo-50), var(--gray-100));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.blog-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.blog-card-image-fallback {
+  font-size: 2rem;
+  color: var(--gray-400);
+}
+
+/* Same placement and pill as .product-card-badge, in indigo instead of coral:
+   a topic is a classification, not a promotion. */
+.blog-card-topic {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  background: var(--indigo-800);
+  color: white;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.blog-card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 1rem;
+}
+
+.blog-card-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--gray-900);
+  margin-bottom: 0.5rem;
+}
+
+/* Summaries are index-length (a full paragraph), so they're clamped to keep the
+   grid rows even. */
+.blog-card-summary {
+  flex: 1;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--gray-600);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.blog-card-meta {
+  margin-top: 0.75rem;
+  font-size: 0.75rem;
+  color: var(--gray-500);
+}
+
+/* ─── Blog post (detail) ─────────────────────────────────── */
+.blog-post {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.blog-post-hero {
+  height: 320px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--indigo-50), var(--gray-100));
+}
+.blog-post-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.blog-post-title {
+  margin-top: 1.5rem;
+  font-size: 2.5rem;
+  line-height: 1.15;
+}
+
+.blog-post-meta {
+  margin-top: 0.75rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--gray-500);
+}
+
+.blog-post-badge {
+  background: var(--indigo-100);
+  color: var(--indigo-800);
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.blog-post-summary {
+  margin-top: 1.25rem;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--gray-700);
+  border-left: 3px solid var(--coral-500);
+  padding-left: 1rem;
+}
+
+/* The content blob is editorial HTML from the index, so its tags are styled here
+   rather than by component markup. */
+.blog-post-content {
+  margin-top: 1.75rem;
+  color: var(--gray-700);
+  line-height: 1.8;
+}
+.blog-post-content h2 {
+  font-size: 1.35rem;
+  margin: 1.75rem 0 0.75rem;
+  color: var(--gray-900);
+}
+.blog-post-content h3 {
+  font-size: 1.1rem;
+  margin: 1.25rem 0 0.5rem;
+  color: var(--gray-900);
+}
+.blog-post-content p {
+  margin-bottom: 1rem;
+}
+.blog-post-content ul,
+.blog-post-content ol {
+  margin: 0 0 1rem 1.25rem;
+}
+.blog-post-content li {
+  margin-bottom: 0.4rem;
+}
+.blog-post-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+}
+
+.blog-post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+/* Tags on a post are labels, not controls — same pill, without the affordance. */
+.blog-post-tags .filter-chip {
+  cursor: default;
+}
+.blog-post-tags .filter-chip:hover {
+  border-color: var(--indigo-100);
+  color: var(--indigo-700);
+}
+
+.blog-post-back {
+  display: inline-block;
+  margin-top: 2rem;
+}
+
+/* ─── Blog rows in the autocomplete popup ────────────────── */
+/* Sits under the categories in the third column, on the blurred scrim like the
+   rest of the panel — only the products column gets an opaque card. */
+.autocomplete-blog-group {
+  margin-top: 1.25rem;
+}
+
+.autocomplete-item.autocomplete-blog {
+  align-items: flex-start;
+}
+
+.autocomplete-blog-body {
+  min-width: 0;
+}
+
+.autocomplete-blog-title {
+  font-size: 0.9rem;
+  line-height: 1.35;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.autocomplete-blog-meta {
+  margin-top: 0.2rem;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Marks the matched words inside a blog title — shows why the article came back
+   when the query isn't in the title verbatim. */
+.autocomplete-mark {
+  background: transparent;
+  color: var(--coral-400);
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .blog-browse-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+  }
+  .blog-post-hero {
+    height: 200px;
+  }
+  .blog-post-title {
+    font-size: 1.75rem;
+  }
+}
+
+/* ─── Semantic search comparison (/vector-search) ─────────
+   Two panels, one query. The layout's whole job is to make the panels look
+   EQUAL — same width, same row, same score treatment — so the only visible
+   difference is the ranking. Any asymmetry here (a wider panel, a richer row
+   on one side) argues the point for the reader instead of showing it.
+   Results are ROWS, not product cards: this page trades merchandising detail
+   for depth, because what it compares is which products come back and in what
+   order. 30 rows a side fit where 8 cards used to. */
+.vector-page {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Everything above the panels applies to BOTH of them, so it is centred. Left-aligned,
+   the shared search box reads as belonging to the left-hand panel.
+   Its children are all full-bleed — no max-width caps in here. They span the same width as
+   the two panels below, so the header reads as the heading OF the comparison rather than as
+   a column floating over it. */
+.vector-head {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.vector-head .breadcrumb {
+  font-size: 0.8rem;
+  color: var(--gray-500);
+  margin-bottom: 0.25rem;
+}
+.vector-head h1 {
+  font-size: 1.8rem;
+}
+
+.vector-intro {
+  color: var(--gray-600);
+  line-height: 1.6;
+  margin: 0.75rem 0 1.5rem;
+}
+
+.vector-search-form {
+  display: flex;
+  gap: 0.5rem;
+  margin: 0 0 0.75rem;
+}
+
+.vector-search-input {
+  flex: 1;
+  padding: 0.75rem 1.25rem;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  color: var(--gray-900);
+  background: var(--white);
+  border: 2px solid var(--indigo-100);
+  border-radius: var(--radius-pill);
+}
+.vector-search-input:focus {
+  outline: none;
+  border-color: var(--indigo-500);
+}
+
+.vector-search-submit {
+  padding: 0.75rem 1.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--white);
+  background: var(--indigo-800);
+  border: none;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+}
+.vector-search-submit:hover {
+  background: var(--indigo-700);
+}
+
+.vector-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.vector-suggestions-label {
+  font-size: 0.8rem;
+  color: var(--gray-500);
+}
+/* Same shape as .filter-chip, but these SET the query rather than removing a
+   filter, so they are their own class rather than a borrowed one wearing a
+   different meaning. */
+.vector-suggestion {
+  padding: 0.3rem 0.85rem;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  color: var(--indigo-800);
+  background: var(--indigo-50);
+  border: 1px solid var(--indigo-100);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+}
+.vector-suggestion:hover {
+  background: var(--indigo-100);
+}
+.vector-suggestion.is-active {
+  color: var(--white);
+  background: var(--indigo-800);
+  border-color: var(--indigo-800);
+}
+
+.vector-language-note {
+  text-align: left;
+  padding: 0.85rem 1.1rem;
+  margin-top: 1.25rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--gray-800);
+  background: var(--gray-100);
+  border-left: 3px solid var(--warning);
+  border-radius: var(--radius-sm);
+}
+
+.vector-compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.vector-panel {
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: 1.25rem;
+  /* The accent is the only per-panel difference, and it is 3px of colour rather
+     than a whole visual treatment — enough to tell the panels apart at a glance,
+     not enough to flatter one of them. */
+  border-top: 3px solid var(--gray-400);
+}
+.vector-panel--vector {
+  border-top-color: var(--coral-500);
+}
+
+.vector-panel-head {
+  margin-bottom: 1rem;
+}
+.vector-panel-head h2 {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--gray-900);
+}
+.vector-panel-head p {
+  margin-top: 0.2rem;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: var(--gray-500);
+}
+.vector-panel-count {
+  display: inline-block;
+  margin-top: 0.6rem;
+  padding: 0.2rem 0.7rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--gray-700);
+  background: var(--gray-100);
+  border-radius: var(--radius-pill);
+}
+
+/* The shared .pagination idiom is written for SearchPage, where it sits BELOW a grid and
+   needs `margin-top: 2rem` to clear it. Here it sits above the list, so the margin is
+   flipped. Scoped to .vector-panel so SearchPage's own pagers are untouched. */
+.vector-panel .pagination {
+  margin: 0 0 0.9rem;
+}
+
+/* Names the score column. It carries the ONLY text that differs between the two
+   panels' lists — "BM25 score" vs "Similarity" — because the numbers underneath
+   are on unrelated scales and must never be read across the gutter. */
+.vector-list-legend {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0.5rem 0.4rem;
+  border-bottom: 1px solid var(--gray-200);
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--gray-500);
+}
+
+.vector-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Rank | thumb + name (the link) | score. The NAME is the flexible column — it is what
+   the visitor scans down and compares between the two lists — and the score column has a
+   fixed min-width so the numbers line up down the whole list. */
+.vector-row {
+  display: grid;
+  grid-template-columns: 1.6rem 1fr auto;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.35rem 0.5rem;
+  border-bottom: 1px solid var(--gray-100);
+}
+.vector-row:last-child {
+  border-bottom: none;
+}
+.vector-row:hover {
+  background: var(--indigo-50);
+}
+
+.vector-row-rank {
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--gray-400);
+  text-align: right;
+}
+
+.vector-row-link {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-width: 0;
+  text-decoration: none;
+  color: inherit;
+}
+
+.vector-row-thumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 34px;
+  height: 34px;
+  overflow: hidden;
+  background: var(--gray-50);
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+}
+.vector-row-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.vector-row-name {
+  font-size: 0.85rem;
+  color: var(--gray-800);
+  /* One line, always: a wrapped name would make rows different heights and the two
+     lists would stop being scannable against each other. */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.vector-row-link:hover .vector-row-name {
+  color: var(--indigo-700);
+}
+
+.vector-row-score {
+  min-width: 2.6rem;
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  color: var(--gray-600);
+}
+
+.vector-empty {
+  padding: 2.5rem 1rem;
+  text-align: center;
+  color: var(--gray-500);
+}
+.vector-empty-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+.vector-empty h3 {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  color: var(--gray-700);
+  margin-bottom: 0.5rem;
+}
+.vector-empty p {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  max-width: 40ch;
+  margin: 0 auto;
+}
+
+/* The interpretive key to the page, not small print — so it is a full-width callout rather
+   than a grey line of 0.8rem text under a rule, which is what it was and which nobody
+   scrolling past 85 result rows was ever going to read. Same callout family as
+   .vector-language-note (padding, tint, left accent rule, radius); indigo rather than amber
+   because this is the explanation, not a warning. Full-bleed, matching .vector-head and
+   .vector-compare — no max-width. */
+.vector-footnote {
+  margin-top: 2rem;
+  padding: 1.25rem 1.5rem;
+  background: var(--indigo-50);
+  border-left: 4px solid var(--indigo-500);
+  border-radius: var(--radius-md);
+}
+.vector-footnote-title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--indigo-900);
+  margin-bottom: 0.4rem;
+}
+.vector-footnote p {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--gray-800);
+}
+
+@media (max-width: 900px) {
+  /* Stacked, the panels stop being a comparison and become a sequence — so the
+     keyword panel (which comes first in the DOM, and is the "before" of the
+     story) reads first, which is the right order to fall back to. */
+  .vector-compare {
+    grid-template-columns: 1fr;
+  }
+  .vector-search-form {
+    flex-direction: column;
+  }
+}
