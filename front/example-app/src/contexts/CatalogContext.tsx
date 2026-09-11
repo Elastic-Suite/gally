@@ -53,8 +53,16 @@ export function CatalogProvider({
   // product page keeps you on that product rather than dumping you on the homepage.
   const goToLocalizedCatalog = useCallback((code: string) => {
     const segments = pathname.split('/');
+    const previous = segments[1];
     segments[1] = code;
-    navigate(segments.join('/') || '/');
+    const target = segments.join('/') || '/';
+    // Category and product are the two routes whose URL names a per-catalog id, so they are the
+    // two that can miss in the target catalog and 404. The mark tells those routes that this was
+    // a catalog switch and not a junk URL, so they redirect to the new catalog's listing instead
+    // of leaving the visitor on a dead end — see src/sdk/catalogSwitch.ts. Everything else exists
+    // in every catalog and keeps a clean URL.
+    const canMiss = segments[2] === 'category' || segments[2] === 'product';
+    navigate(canMiss ? `${target}?from=${previous}` : target);
   }, [pathname, navigate]);
 
   const setLocalizedCatalog = goToLocalizedCatalog;

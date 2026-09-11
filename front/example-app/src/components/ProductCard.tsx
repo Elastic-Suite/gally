@@ -61,6 +61,10 @@ export default function ProductCard({ product }: Props) {
         <Link href={`/product/${encodeURIComponent(sku)}`}>
           <div className="product-card-name">{name}</div>
         </Link>
+        {/* Same string and same translation key as the product page's `.product-detail-brand`,
+            so a card and its PDP never word the SKU differently. Smaller than the PDP's 0.9rem
+            on purpose - see specs/feature-listing-card-sku.md. */}
+        <div className="product-card-sku">{t('page.sku', { sku })}</div>
         <div className="product-card-price">
           {isDiscounted && originalPrice && (
             <span style={{ textDecoration: 'line-through', color: 'var(--gray-400)', marginRight: '0.5rem', fontSize: '0.85em' }}>

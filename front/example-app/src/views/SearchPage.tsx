@@ -10,6 +10,7 @@ import Facets from '../components/Facets';
 import ProductCard from '../components/ProductCard';
 import BlogCard from '../components/BlogCard';
 import { ProductGridSkeleton } from '../components/skeletons';
+import Pagination from '../components/Pagination';
 
 // A query hits two indices at once. `product` is the default tab; `blog` shows the
 // cms_page documents the same query matched.
@@ -256,17 +257,14 @@ export default function SearchPage({
             </div>
           )}
 
-          {pageCount > 1 && (
-            <div className="pagination">
-              <button disabled={page <= 1} onClick={() => { setPage(p => p - 1); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>{t('page.prev')}</button>
-              {Array.from({ length: Math.min(pageCount, 7) }, (_, i) => i + 1).map(p => (
-                <button key={p} className={p === page ? 'active' : ''} onClick={() => { setPage(p); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
-                  {p}
-                </button>
-              ))}
-              <button disabled={page >= pageCount} onClick={() => { setPage(p => p + 1); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>{t('page.next')}</button>
-            </div>
-          )}
+          <Pagination
+            page={page}
+            pageCount={pageCount}
+            prevLabel={t('page.prev')}
+            nextLabel={t('page.next')}
+            ariaLabel={t('common:meta.pagination')}
+            onPage={p => { setPage(p); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+          />
         </div>
       </div>
       </>
@@ -317,17 +315,14 @@ function BlogResults({ pages, total, loading, page, pageCount, onPage, language 
         </div>
       )}
 
-      {pageCount > 1 && (
-        <div className="pagination">
-          <button disabled={page <= 1} onClick={() => onPage(page - 1)}>{t('search:page.prev')}</button>
-          {Array.from({ length: Math.min(pageCount, 7) }, (_, i) => i + 1).map(p => (
-            <button key={p} className={p === page ? 'active' : ''} onClick={() => onPage(p)}>
-              {p}
-            </button>
-          ))}
-          <button disabled={page >= pageCount} onClick={() => onPage(page + 1)}>{t('search:page.next')}</button>
-        </div>
-      )}
+      <Pagination
+        page={page}
+        pageCount={pageCount}
+        prevLabel={t('search:page.prev')}
+        nextLabel={t('search:page.next')}
+        ariaLabel={t('common:meta.pagination')}
+        onPage={onPage}
+      />
     </div>
   );
 }

@@ -5,6 +5,7 @@ import Link from './LocaleLink';
 import { useTranslation } from 'react-i18next';
 import { useAppPathname } from '../contexts/LocaleContext';
 import { useCatalog } from '../contexts/CatalogContext';
+import { defaultListingPath } from '../sdk/categoryTree';
 import { useCart } from '../contexts/CartContext';
 import brandMark from '../assets/gally-rabbit.svg';
 import SearchBar from './SearchBar';
@@ -23,7 +24,6 @@ export default function Header() {
   const navRef = useRef<HTMLElement | null>(null);
 
   const localizedCatalogs = selectedCatalog?.localizedCatalogs || [];
-  const firstCategory = categories.length > 0 ? categories[0] : null;
 
   const isActive = (path: string) => pathname === path ? 'active' : '';
 
@@ -120,7 +120,7 @@ export default function Header() {
                 the switch: it is an expert-mode tool, not a third storefront section. */}
             <div className="header-nav-switch" data-active={navSection}>
               <Link
-                href={firstCategory ? `/category/${firstCategory.id}` : '/'}
+                href={defaultListingPath(categories)}
                 className={`header-nav-tab ${navSection === 'products' ? 'active' : ''}`}
                 aria-current={navSection === 'products' ? 'page' : undefined}
               >

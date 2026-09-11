@@ -3,13 +3,20 @@ import { notFound } from 'next/navigation';
 import { resolveLocale, fetchCategoryProducts, cachedCategoryTree } from '../../../../src/sdk/server';
 import { ICategoryNode } from '../../../../src/sdk/catalogs';
 import { findTrail } from '../../../../src/sdk/categoryTree';
+import { missingInCatalog, RouteSearchParams } from '../../../../src/sdk/catalogSwitch';
 import { getProductFields } from '../../../../src/sdk/productFields';
 import { SITE, canonical, languageOf, openGraphBase } from '../../../../src/sdk/seo';
 import { tServer } from '../../../../src/sdk/serverI18n';
 import JsonLd from '../../../../src/components/JsonLd';
 import CategoryPage from '../../../../src/views/CategoryPage';
 
-type Params = { params: Promise<{ locale: string; code: string }> };
+type Params = {
+  params: Promise<{ locale: string; code: string }>;
+  // Only ever read for the catalog-switch marker. A layout cannot have this — Next does not
+  // give layouts search params, because a layout does not rerender on navigation — which is why
+  // the guard layout no longer decides what a missing category means.
+  searchParams: Promise<RouteSearchParams>;
+};
 
 // The category tree is the only place a category's display name lives — the product
 // search response carries no category entity — so metadata and breadcrumbs both read it.
@@ -22,20 +29,19 @@ async function categoryTrail(
   return findTrail(tree, code) ?? [];
 }
 
-export async function generateMetadata({ params }: Params): Promise<Metadata> {
+export async function generateMetadata({ params, searchParams }: Params): Promise<Metadata> {
   const { locale, code } = await params;
   const resolved = await resolveLocale(locale);
   if (!resolved) return {};
   const lang = languageOf(resolved.localizedCatalog);
 
   const trail = await categoryTrail(resolved.catalog.id, resolved.localizedCatalog.id, code);
-  // Kept alongside the layout guard rather than relying on the page body alone: metadata
-  // resolves before the response flushes, so this is the last point at which a real 404
-  // status is reachable if a Suspense boundary is ever reintroduced above this route (it
+  // Metadata resolves before the response flushes, so this is the last point at which a real
+  // 404 status is reachable if a Suspense boundary is ever reintroduced above this route (it
   // would make the page stream, and a streamed notFound() can only paint 404 UI under a
   // 200). The fetch is cache()d, so it costs nothing. See
   // specs/bugfix-ssr-product-list-behind-suspense.md.
-  if (trail.length === 0) notFound();
+  if (trail.length === 0) await missingInCatalog(locale, resolved, await searchParams);
 
   const category = trail[trail.length - 1];
   const title = category.name;
@@ -66,7 +72,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   };
 }
 
-export default async function Page({ params }: Params) {
+export default async function Page({ params, searchParams }: Params) {
   const { locale, code } = await params;
   const resolved = await resolveLocale(locale);
   if (!resolved) notFound();
@@ -79,8 +85,10 @@ export default async function Page({ params }: Params) {
   const trail = await categoryTrail(resolved.catalog.id, resolved.localizedCatalog.id, code);
 
   // An id that matches no category still returns an empty product list rather than an
-  // error, which would render an empty page under a 200 for any junk URL.
-  if (trail.length === 0) notFound();
+  // error, which would render an empty page under a 200 for any junk URL. Unless the visitor
+  // just switched catalog, in which case the id belonged to the previous one and they are sent
+  // to this catalog's listing instead.
+  if (trail.length === 0) await missingInCatalog(locale, resolved, await searchParams);
 
   const category = trail[trail.length - 1];
   const url = canonical(locale, `/category/${encodeURIComponent(code)}`);

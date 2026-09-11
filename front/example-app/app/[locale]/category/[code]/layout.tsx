@@ -1,13 +1,11 @@
 import { notFound } from 'next/navigation';
-import {
-  resolveLocale,
-  cachedCategoryTree,
-  fetchCategoryProducts,
-} from '../../../../src/sdk/server';
-import { findTrail } from '../../../../src/sdk/categoryTree';
+import { resolveLocale, fetchCategoryProducts } from '../../../../src/sdk/server';
 
-// See app/[locale]/product/[sku]/layout.tsx — the existence check lives in the layout so the
-// 404 status is set before anything of the page is produced.
+// The category existence check is NOT here. It moved to page.tsx and its generateMetadata,
+// because what a missing category means depends on the `?from=` switch marker and Next does not
+// give a layout its search params — a layout does not rerender on navigation, so they would be
+// stale. Both remaining callers still 404 before the response flushes, which is what the check
+// was in the layout for. See specs/feature-catalog-switch-missing-target.md.
 export default async function CategoryGuard({
   children,
   params,
@@ -18,8 +16,6 @@ export default async function CategoryGuard({
   const { locale, code } = await params;
   const resolved = await resolveLocale(locale);
   if (!resolved) notFound();
-  const tree = await cachedCategoryTree(resolved.catalog.id, resolved.localizedCatalog.id);
-  if (!findTrail(tree, code)) notFound();
 
   // Awaited HERE, and thrown away, on purpose: the listing is resolved before `children`
   // render, so the page component finds a cache() hit. Not a wasted request —
