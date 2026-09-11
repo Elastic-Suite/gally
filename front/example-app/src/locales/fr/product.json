@@ -28,7 +28,6 @@
     "addToCart": "Ajouter au panier",
     "wishlist": "♡ Liste de souhaits",
     "notFound": "Produit introuvable",
-    "recommendations": "Vous aimerez aussi",
-    "breadcrumb": "Accueil / Produits / {{name}}"
+    "recommendations": "Vous aimerez aussi"
   }
 }

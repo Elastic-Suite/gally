@@ -24,7 +24,9 @@
     "checkout": "Kasse",
     "explain": "Such-Intelligenz",
     "closing": "Zusammenfassung",
+    "breadcrumb": "Navigationspfad",
     "home": "Startseite",
-    "vectorSearch": "Semantische Suche"
+    "vectorSearch": "Semantische Suche",
+    "pagination": "Seitennummerierung"
   }
 }

@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useCmsSearch } from '../hooks/useCms';
 import { useTracking } from '../hooks/useTracking';
 import BlogCard from '../components/BlogCard';
+import Pagination from '../components/Pagination';
 
 const PAGE_SIZE = 10;
 
@@ -165,18 +166,15 @@ export default function BlogPage() {
         </div>
       )}
 
-      {pageCount > 1 && (
-        <div className="pagination">
-          <button disabled={page <= 1} onClick={() => setParams({ page: page - 1 })}>←</button>
-          {Array.from({ length: Math.min(pageCount, 5) }, (_, i) => i + 1).map(p => (
-            <button key={p} className={p === page ? 'active' : ''} onClick={() => setParams({ page: p })}>
-              {p}
-            </button>
-          ))}
-          {pageCount > 5 && <span>…</span>}
-          <button disabled={page >= pageCount} onClick={() => setParams({ page: page + 1 })}>→</button>
-        </div>
-      )}
+      <Pagination
+        page={page}
+        pageCount={pageCount}
+        windowSize={5}
+        prevLabel="←"
+        nextLabel="→"
+        ariaLabel={t('common:meta.pagination')}
+        onPage={p => setParams({ page: p })}
+      />
     </div>
   );
 }

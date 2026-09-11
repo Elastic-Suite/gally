@@ -93,6 +93,11 @@ pushed by `CartContext.addToCart`, with `child_sku` falling back to the parent S
 - No new primitive. The chips are the existing `.swatch` and `.variant-option`, reused through
   `VariantSelector`'s new `compact` prop; the button is the same `.btn-primary`.
 - Tokens only: `--white`, `--shadow-md`, `--gray-400`. No raw hex, px or font-size.
+- **Superseded on this point by `feature-quick-add-bottom-band.md`:** the panel is now a
+  bottom-anchored band of its content's height (`inset: auto 0 0 0`), because the listing picture
+  grew to 300px and a full cover hides the product. The rest of this spec still holds, but note
+  that the containment guard named below — "the panel is exactly its container" — is gone, and
+  `.product-card-image`'s `overflow: hidden` now carries it alone.
 - The panel **covers the whole picture** (`inset: 0`) and **rises from its bottom edge**:
   `translateY(100%)` → `translateY(0)` over 0.25s, with the opacity settling faster (0.15s) so
   the rise is what you actually see rather than a fade that happens to move.

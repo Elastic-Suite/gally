@@ -1,7 +1,6 @@
 {
   "category": {
     "fallbackName": "Catégorie",
-    "breadcrumb": "Accueil / Catégories / {{name}}",
     "countInCategory_one": "{{count}} produit dans cette catégorie",
     "countInCategory_other": "{{count}} produits dans cette catégorie",
     "count_one": "{{count}} produit",
