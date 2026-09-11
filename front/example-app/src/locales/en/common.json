@@ -24,7 +24,9 @@
     "checkout": "Checkout",
     "explain": "Search Intelligence",
     "closing": "Summary",
+    "breadcrumb": "Breadcrumb",
     "home": "Home",
-    "vectorSearch": "Semantic search"
+    "vectorSearch": "Semantic search",
+    "pagination": "Pagination"
   }
 }

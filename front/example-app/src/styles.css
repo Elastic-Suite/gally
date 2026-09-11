@@ -60,7 +60,9 @@
   --product-grid-column: 220px;
   --product-card-image-height: 180px;
   --product-card-body-padding: 1rem;
+  --product-card-body-padding-y: 0.45rem;
   --product-card-name-size: 0.9rem;
+  --product-card-sku-size: 0.75rem;
   --product-card-price-size: 1rem;
 
   /* Shadows */
@@ -992,7 +994,11 @@ a:hover {
   position: relative;
   /* The positioning context for the badges and the quick-add panel — and the clip that keeps
      them inside the picture. `.product-card` clips at the CARD edge, which is why an overlay
-     that overflowed this box once ended up sitting on the name and price. */
+     that overflowed this box once ended up sitting on the name and price.
+     This clip is load-bearing on its own since the panel became a bottom band: at rest the band
+     is parked a full band height BELOW this box, and it is no longer `inset: 0`, so nothing else
+     contains it. `opacity: 0` and `pointer-events: none` hide it and disarm it; only this line
+     keeps it off the name and the price. */
   overflow: hidden;
 }
 
@@ -1035,19 +1041,23 @@ a:hover {
   justify-content: center;
 }
 
-/* Quick add: the add-to-cart affordance, covering the whole picture on hover. It left the card
-   body so the resting card is just picture, name and price — and because a configurable needs
-   room for its option chips, which no card body has.
-   It fills the picture (`inset: 0`) rather than sliding up from the bottom edge. The earlier
-   version parked itself at `translateY(100%)` at rest, which put it *below* the picture — that
-   is, directly on top of the name and price, invisible but still swallowing their clicks at
-   `z-index: 2`. An overlay that is exactly its container can never escape it.
+/* Quick add: the add-to-cart affordance, a band across the bottom of the picture on hover. It
+   left the card body so the resting card is just picture, name and price — and because a
+   configurable needs room for its option chips, which no card body has.
+   It is bottom-anchored and only as tall as its content (`inset: auto 0 0 0`). It used to be
+   `inset: 0`, sized against a 180px picture that it genuinely filled; the listing picture is
+   300px now, and a full cover blurs out the merchandising the page exists to show at the exact
+   moment someone reaches for it. See specs/feature-quick-add-bottom-band.md.
+   That geometry was also a containment guard — an overlay that is exactly its container can
+   never escape it — and dropping it makes `.product-card-image`'s `overflow: hidden` the only
+   thing holding the parked band off the name and price. Read the note on that rule before
+   touching either.
    Translucent + blurred rather than opaque: the point is that you still see the product you are
    configuring. The blur is what keeps the chips readable over arbitrary photography — a flat
    tint legible over the placeholder gradient would not survive a dark garment. */
 .quick-add {
   position: absolute;
-  inset: 0;
+  inset: auto 0 0 0;
   z-index: 2;
   display: flex;
   flex-direction: column;
@@ -1096,20 +1106,17 @@ a:hover {
   width: 100%;
 }
 
-/* The button — and the "Unavailable" label, which is the same button — sits on the bottom edge
-   of every card, so the row of them lines up across the grid however many option rows a product
-   has above it. An `auto` margin rather than `justify-content: flex-end` on the panel: with the
-   panel scrollable, flex-end would make overflowing content unreachable off the top. */
-.product-card-image .quick-add-button {
-  margin-top: auto;
-}
-
-/* …and a second `auto` margin above the first option row centres the selector in the space over
-   that button. Two auto margins split the free space evenly between them, so the chips sit in
-   the middle of the picture rather than piling up against its top edge, while the button stays
-   pinned to the bottom. On the card only — an autocomplete row has no free space to centre in. */
-.product-card-image .quick-add > .product-variants:first-child {
-  margin-top: auto;
+/* The band grows upward from the bottom edge, so cap it at the picture. A two-axis configurable
+   in the 180px carousel would otherwise reach past the top of the image box; capped, the panel's
+   own `overflow-y: auto` scrolls it instead.
+   Card-scoped on purpose. On the base class this percentage would also land on the autocomplete's
+   in-flow panel, whose containing block is auto-height — do not tidy it up one level.
+   There were two `margin-top: auto` rules here, pushing the button to the bottom of a full-height
+   panel and centring the chips above it. A content-height panel has no free space to distribute,
+   so both were dead. What they bought — the add buttons lining up across a grid row — now comes
+   from the anchoring itself: every band's bottom edge is its own picture's bottom edge. */
+.product-card-image .quick-add {
+  max-height: 100%;
 }
 .quick-add-button:disabled {
   background: var(--gray-400);
@@ -1167,13 +1174,12 @@ a:hover {
   box-shadow: var(--shadow-sm);
 }
 
-/* Touch has no hover: without this the panel would be unreachable and add-to-cart would simply
-   not exist on a phone. It cannot stay a full-picture cover there — permanently blurring out the
-   product is not a resting state — so on coarse pointers it drops the blur, releases `top` and
-   sits at the bottom edge at its natural height, leaving the picture visible above it. */
+/* Touch has no hover: without this the band would be unreachable and add-to-cart would simply not
+   exist on a phone. It is the same shape as on a desktop now — bottom edge, natural height — so
+   all this changes is that it rests open, and opaque: a permanent blur over the product is not a
+   resting state. (It also used to release `top`, which the base rule does itself now.) */
 @media (hover: none) {
   .quick-add {
-    top: auto;
     opacity: 1;
     transform: none;
     pointer-events: auto;
@@ -1261,14 +1267,29 @@ a:hover {
    applies untouched. Only the wrapper is new. */
 
 .product-card-body {
-  padding: var(--product-card-body-padding);
+  /* Vertical padding is its own variable and is much tighter than the horizontal one: the SKU
+     line added a third row to this box, and the space for it came out of the padding so the card
+     kept its height. See specs/feature-listing-card-sku.md. */
+  padding: var(--product-card-body-padding-y) var(--product-card-body-padding);
 }
 
 .product-card-name {
   font-weight: 500;
   font-size: var(--product-card-name-size);
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.15rem;
   color: var(--gray-800);
+}
+
+/* The card-scale version of the product page's `.product-detail-brand`: same muted grey, same
+   normal weight, smaller because the name above it is 0.9rem rather than a 2rem title. */
+.product-card-sku {
+  font-size: var(--product-card-sku-size);
+  line-height: 1.4;
+  color: var(--gray-500);
+  margin-bottom: 0.15rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .product-card-brand {
@@ -1679,7 +1700,9 @@ a:hover {
     --product-grid-column: 340px;
     --product-card-image-height: 300px;
     --product-card-body-padding: 1.25rem;
+    --product-card-body-padding-y: 0.65rem;
     --product-card-name-size: 1rem;
+    --product-card-sku-size: 0.8rem;
     --product-card-price-size: 1.15rem;
   }
 }
@@ -1715,6 +1738,13 @@ a:hover {
 .pagination button:disabled {
   opacity: 0.4;
   cursor: not-allowed;
+}
+
+/* The gap marker between the sliding window and the first/last page button. Muted and not a
+   button, because it is a gap - the old pager drew it looking like a disabled control that
+   could not be clicked. See specs/bugfix-pagination-window-fixed-to-first-pages.md. */
+.pagination span {
+  color: var(--gray-500);
 }
 
 /* ─── Product Detail ─────────────────────────────────────── */
@@ -2140,12 +2170,20 @@ a:hover {
 .category-nav-list {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   list-style: none;
-  gap: 0;
+  /* Row gap only: the pills stay shoulder to shoulder on one line as before, but a bar that
+     wraps (twelve top-level categories do) gets air between the rows. */
+  gap: 0.25rem 0;
   padding: 0 1rem;
 }
 
+/* Block, not inline. Vertical padding on an inline box does not grow the line box, so the
+   pill painted above and below its own row — invisible on a single line thanks to
+   .category-nav's block padding, but on two rows the row-1 pills overlapped the row-2 text.
+   See specs/feature-category-trail-nav-and-breadcrumb.md. */
 .category-nav-item a {
+  display: block;
   padding: 0.5rem 1rem;
   font-size: 0.85rem;
   font-weight: 500;
@@ -2154,16 +2192,25 @@ a:hover {
   transition: all 0.2s;
   white-space: nowrap;
 }
+/* .in-trail is an ancestor of the category being viewed: same pill, so the section is
+   visible in the bar without hovering, and .active stays the stronger of the two. */
 .category-nav-item a:hover,
+.category-nav-item a.in-trail,
 .category-nav-item a.active {
   background: var(--indigo-50);
   color: var(--indigo-700);
+}
+.category-nav-item a.active {
+  font-weight: 600;
 }
 .category-nav-item {
   position: relative;
 }
 .category-nav-submenu {
   position: absolute;
+  /* Hangs off its own item, so the menu always reads as belonging to the category hovered.
+     On a wrapped bar it therefore covers part of the row underneath; dropping it below the
+     whole bar instead was tried and rejected — see the spec. */
   top: 100%;
   left: 0;
   background: white;
@@ -2182,9 +2229,13 @@ a:hover {
   white-space: nowrap;
 }
 .category-nav-submenu li a:hover,
+.category-nav-submenu li a.in-trail,
 .category-nav-submenu li a.active {
   background: var(--indigo-50);
   color: var(--indigo-700);
+}
+.category-nav-submenu li a.active {
+  font-weight: 600;
 }
 
 /* ─── Recommendations ────────────────────────────────────── */
@@ -2297,7 +2348,7 @@ a:hover {
 }
 
 .skeleton-card-body {
-  padding: var(--product-card-body-padding);
+  padding: var(--product-card-body-padding-y) var(--product-card-body-padding);
 }
 
 @keyframes shimmer {
@@ -2338,6 +2389,24 @@ a:hover {
   font-size: 0.8rem;
   color: var(--gray-500);
   margin-bottom: 0.25rem;
+}
+/* Keyed on the anchors and the separator, so every breadcrumb that is still a plain string
+   (search, blog, CMS, product, vector search) renders exactly as before. A breadcrumb link
+   inherits the grey rather than taking the global --indigo-600 link colour: a row of indigo
+   labels reads as buttons, not as a path. */
+.breadcrumb a {
+  color: inherit;
+}
+.breadcrumb a:hover {
+  color: var(--coral-500);
+  text-decoration: underline;
+}
+.breadcrumb [aria-current='page'] {
+  color: var(--gray-700);
+}
+.breadcrumb-sep {
+  margin: 0 0.35rem;
+  opacity: 0.6;
 }
 
 /* ─── Footer ─────────────────────────────────────────────── */

@@ -12,6 +12,8 @@ import ProductSlider from '../components/ProductSlider';
 import { getProductFields } from '../components/ProductCard';
 import { getProductBadges } from '../sdk/productFields';
 import { ProductPageSkeleton } from '../components/skeletons';
+import Breadcrumb from '../components/Breadcrumb';
+import { productCategoryTrail } from '../sdk/categoryTree';
 import VariantSelector, { getVariantAxes } from '../components/VariantSelector';
 import { PRODUCT_DETAIL_FIELDS } from '../sdk/fields';
 
@@ -51,6 +53,12 @@ export default function ProductPage({ initialProduct }: { initialProduct?: any }
   });
 
   const p = products[0] ? getProductFields(products[0]) : null;
+
+  // The generated catalogs ship square 600x600 images, so they fill the square frame exactly.
+  // The older Venia/Luma set is 161x200 - letting it fill only magnifies it - so those keep the
+  // 400px cap. Keyed on the media shard, which is the thing that actually differs.
+  const FULL_FRAME_SHARDS = ['/l/l/', '/t/b/', '/f/i/'];
+  const fillsFrame = FULL_FRAME_SHARDS.some((shard) => p?.image?.includes(shard));
 
   const trackedSkuRef = useRef('');
 
@@ -99,7 +107,19 @@ export default function ProductPage({ initialProduct }: { initialProduct?: any }
   return (
     <div>
       <div className="page-title">
-        <div className="breadcrumb">{t('page.breadcrumb', { name: p.name })}</div>
+        {/* The real path down to this product, not "Home / Products / <name>": there is no
+            products page to click, and the category the product sits in is the level a
+            visitor actually wants to go back up to. Deepest assignment wins — see
+            productCategoryTrail. Same trail the route's BreadcrumbList JSON-LD emits. */}
+        <Breadcrumb
+          parts={[
+            ...productCategoryTrail(categories, source).map(node => ({
+              name: node.name,
+              href: `/category/${node.id}`,
+            })),
+            { name: p.name },
+          ]}
+        />
       </div>
 
       <div className="product-detail">
@@ -118,7 +138,15 @@ export default function ProductPage({ initialProduct }: { initialProduct?: any }
             </div>
           )}
           {p.image ? (
-            <img src={p.image} alt={p.name} style={{ maxWidth: '100%', maxHeight: '400px', objectFit: 'contain' }} />
+            <img
+              src={p.image}
+              alt={p.name}
+              style={
+                fillsFrame
+                  ? { width: '100%', height: '100%', objectFit: 'contain' }
+                  : { maxWidth: '100%', maxHeight: '400px', objectFit: 'contain' }
+              }
+            />
           ) : (
             <span>📷 {p.name}</span>
           )}

@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Link from '../components/LocaleLink';
+import Pagination from '../components/Pagination';
 import { useCatalog } from '../contexts/CatalogContext';
 import { useTracking } from '../hooks/useTracking';
 import { getSearchManager, MEDIA_BASE_URL } from '../sdk';
@@ -98,12 +99,9 @@ function formatScore(score: number): string {
   return score >= 10 ? score.toFixed(0) : score.toFixed(2);
 }
 
-// The app's existing `.pagination` idiom (see SearchPage), reused verbatim rather than
-// reinvented — same markup, same classes, same `search:page.*` strings, so it needs no CSS of
-// its own. Each panel owns one: the two lists have unrelated lengths (7 keyword hits beside 85
-// ranked vector rows is the normal case), so a single shared pager would have to lie about one
-// of them. Renders nothing at all when there is only one page, which is what "if necessary"
-// means here.
+// The panel's pager: src/components/Pagination.tsx with this page's scrolling. Each panel owns
+// one, because the two lists have unrelated lengths (7 keyword hits beside 85 ranked vector rows
+// is the normal case) and a single shared pager would have to lie about one of them.
 //
 // Placed ABOVE the list, not below it as SearchPage does. A page is 25 rows, so a pager at the
 // foot is a pager you have to scroll a screenful to reach and another screenful back from — and
@@ -113,7 +111,8 @@ function formatScore(score: number): string {
 // It scrolls its own panel back into view rather than `window.scrollTo(0)` as SearchPage does:
 // with two side-by-side lists, jumping to the top of the document on every page change loses
 // the panel the visitor was reading. That pairs with the top placement — after changing page the
-// pager is still under the cursor.
+// pager is still under the cursor. The nav ref is how it finds its panel; the pager itself has
+// no idea what it is inside.
 function PanelPager({
   page,
   pageCount,
@@ -126,29 +125,24 @@ function PanelPager({
   label: string;
 }) {
   const { t } = useTranslation('vectorSearch');
-  if (pageCount <= 1) return null;
+  const navRef = useRef<HTMLElement>(null);
 
-  const go = (p: number, e: React.MouseEvent<HTMLButtonElement>) => {
+  const go = (p: number) => {
     onPage(p);
-    (e.currentTarget.closest('.vector-panel') as HTMLElement | null)
+    (navRef.current?.closest('.vector-panel') as HTMLElement | null)
       ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   return (
-    <nav className="pagination" aria-label={label}>
-      <button disabled={page <= 1} onClick={e => go(page - 1, e)}>{t('search:page.prev')}</button>
-      {Array.from({ length: Math.min(pageCount, 7) }, (_, i) => i + 1).map(p => (
-        <button
-          key={p}
-          className={p === page ? 'active' : ''}
-          aria-current={p === page ? 'page' : undefined}
-          onClick={e => go(p, e)}
-        >
-          {p}
-        </button>
-      ))}
-      <button disabled={page >= pageCount} onClick={e => go(page + 1, e)}>{t('search:page.next')}</button>
-    </nav>
+    <Pagination
+      ref={navRef}
+      page={page}
+      pageCount={pageCount}
+      prevLabel={t('search:page.prev')}
+      nextLabel={t('search:page.next')}
+      ariaLabel={label}
+      onPage={go}
+    />
   );
 }
 

@@ -24,7 +24,9 @@
     "checkout": "Commande",
     "explain": "Intelligence de recherche",
     "closing": "Synthèse",
+    "breadcrumb": "Fil d'Ariane",
     "home": "Accueil",
-    "vectorSearch": "Recherche sémantique"
+    "vectorSearch": "Recherche sémantique",
+    "pagination": "Pagination"
   }
 }

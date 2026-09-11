@@ -9,18 +9,9 @@ import { useCatalog } from '../contexts/CatalogContext';
 import ProductCard from '../components/ProductCard';
 import Facets from '../components/Facets';
 import { ProductGridSkeleton } from '../components/skeletons';
-import { ICategoryNode } from '../sdk/catalogs';
-
-function findCategory(categories: ICategoryNode[], id: string): ICategoryNode | null {
-  for (const cat of categories) {
-    if (cat.id === id) return cat;
-    if (cat.children) {
-      const found = findCategory(cat.children, id);
-      if (found) return found;
-    }
-  }
-  return null;
-}
+import Breadcrumb from '../components/Breadcrumb';
+import Pagination from '../components/Pagination';
+import { findTrail } from '../sdk/categoryTree';
 
 // `initialData` is the first page of this category, fetched by the Server Component.
 export default function CategoryPage({
@@ -38,7 +29,11 @@ export default function CategoryPage({
   const [filters, setFilters] = useState<Record<string, any>>({});
   const { trackCategoryView, trackDisplay } = useTracking();
 
-  const category = code ? findCategory(categories, code) : null;
+  // The ancestor chain, so the breadcrumb can name every level rather than jumping
+  // Home > Skirts. Same function the route guard and the JSON-LD breadcrumb use, over the
+  // tree CatalogProvider already holds.
+  const trail = useMemo(() => (code ? findTrail(categories, code) : null) ?? [], [categories, code]);
+  const category = trail.length > 0 ? trail[trail.length - 1] : null;
   const categoryName = category?.name || code || t('category.fallbackName');
 
   // Reset page when category changes
@@ -107,7 +102,16 @@ export default function CategoryPage({
   return (
     <div>
       <div className="page-title">
-        <div className="breadcrumb">{t('category.breadcrumb', { name: categoryName })}</div>
+        {/* An id that is not in the tree leaves the trail empty — only reachable
+            client-side, since the route guard 404s it — so fall back to naming the
+            current page. */}
+        <Breadcrumb
+          parts={
+            trail.length > 0
+              ? trail.map(node => ({ name: node.name, href: `/category/${node.id}` }))
+              : [{ name: categoryName }]
+          }
+        />
         <h1>{categoryName}</h1>
         {category && <span style={{ color: 'var(--gray-500)', fontSize: '0.9rem' }}>{t('category.countInCategory', { count: category.count })}</span>}
       </div>
@@ -156,18 +160,15 @@ export default function CategoryPage({
             </div>
           )}
 
-          {pageCount > 1 && (
-            <div className="pagination">
-              <button disabled={page <= 1} onClick={() => { setPage(p => p - 1); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>←</button>
-              {Array.from({ length: Math.min(pageCount, 5) }, (_, i) => i + 1).map(p => (
-                <button key={p} className={p === page ? 'active' : ''} onClick={() => { setPage(p); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
-                  {p}
-                </button>
-              ))}
-              {pageCount > 5 && <span>…</span>}
-              <button disabled={page >= pageCount} onClick={() => { setPage(p => p + 1); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>→</button>
-            </div>
-          )}
+          <Pagination
+            page={page}
+            pageCount={pageCount}
+            windowSize={5}
+            prevLabel="←"
+            nextLabel="→"
+            ariaLabel={t('common:meta.pagination')}
+            onPage={p => { setPage(p); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+          />
         </div>
       </div>
     </div>

@@ -18,9 +18,10 @@ import { ReactNode } from 'react';
 //   .catalog-page       grid-template-columns: 280px 1fr   <- sidebar MUST be present
 //   .products-grid      repeat(auto-fill, minmax(min(var(--product-grid-column), 100%), 1fr))
 //   .skeleton-card-image / .product-card-image   both var(--product-card-image-height)
-//   .skeleton-card-body / .product-card-body     both var(--product-card-body-padding)
+//   .skeleton-card-body / .product-card-body     both var(--product-card-body-padding-y)
+//                                                 + var(--product-card-body-padding)
 //
-// Those three variables are why this file needs no size of its own: .products-grid raises them
+// Those variables are why this file needs no size of its own: .products-grid raises them
 // above a 1200px viewport (220->340px column, 180->300px picture) and the skeleton follows the
 // card automatically. Do not hardcode a height back in — see
 // specs/feature-larger-product-grid.md.
