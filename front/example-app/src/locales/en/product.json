@@ -28,7 +28,6 @@
     "addToCart": "Add to Cart",
     "wishlist": "♡ Wishlist",
     "notFound": "Product not found",
-    "recommendations": "You May Also Like",
-    "breadcrumb": "Home / Products / {{name}}"
+    "recommendations": "You May Also Like"
   }
 }
