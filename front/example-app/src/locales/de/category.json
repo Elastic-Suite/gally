@@ -22,8 +22,35 @@
   "homepage": {
     "heroTitle": "Intelligente Suche für den E-Commerce",
     "heroBody": "Erleben Sie, wie Gally die Produktfindung antreibt — mit KI-gestützter Suche, Facettennavigation und Empfehlungen in Echtzeit.",
-    "shopDresses": "Kleider entdecken",
-    "shopDressesQuery": "Kleid",
+    "hero": {
+      "browse": "Alle Produkte ansehen",
+      "shops": {
+        "com": {
+          "cta": "Kleider entdecken",
+          "query": "Kleid"
+        },
+        "fr": {
+          "cta": "Kleider entdecken",
+          "query": "Kleid"
+        },
+        "uk": {
+          "cta": "Kleider entdecken",
+          "query": "Kleid"
+        },
+        "fashion": {
+          "cta": "Kleider entdecken",
+          "query": "Kleid"
+        },
+        "toolbox": {
+          "cta": "Akku-Bohrschrauber entdecken",
+          "query": "Akku-Bohrschrauber"
+        },
+        "papershop": {
+          "cta": "Füllhalter entdecken",
+          "query": "Füllhalter"
+        }
+      }
+    },
     "trending": "Gerade im Trend",
     "moreProducts": "Weitere Produkte",
     "readyTitle": "Bereit, Ihr Sucherlebnis zu verwandeln?",

@@ -47,5 +47,11 @@ its search terms this way: `search.json`'s `overlay.suggestions` is `dress…` i
 ## MUST NOT change
 - `encodeURIComponent` on the term — the key is translator-editable and a future locale
   may use a multi-word or accented term.
-- The `shopDresses` / `shopDressesQuery` pair must stay in sync. If the label stops
-  being about dresses, the query has to move with it in all three locales.
+- The label and the query must stay in sync. If the label stops being about dresses, the
+  query has to move with it in all three locales.
+
+**Superseded in part by `specs/feature-hero-cta-per-catalog.md`.** The keys named above,
+`homepage.shopDresses` and `homepage.shopDressesQuery`, no longer exist: there is now one
+label/query pair per catalogue under `homepage.hero.shops.<catalogCode>`. Everything else
+here still holds — the link is still `/search?q=<term>`, still `encodeURIComponent`'d, and
+the term is still localized rather than hardcoded English.

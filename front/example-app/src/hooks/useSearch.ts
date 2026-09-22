@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { getSearchManager } from '../sdk';
 import { useCatalog } from '../contexts/CatalogContext';
-import { PRODUCT_FIELDS } from '../sdk/fields';
+import { productFields } from '../sdk/fields';
 
 
 interface SearchOptions {
@@ -53,7 +53,7 @@ function searchKey(o: SearchOptions): string {
 }
 
 export function useSearch(options: SearchOptions) {
-  const { selectedLocalizedCatalog } = useCatalog();
+  const { selectedLocalizedCatalog, selectedCatalog } = useCatalog();
   const [result, setResult] = useState<SearchResult>(() => options.initialData ? {
     ...options.initialData,
     currentPage: options.currentPage ?? 1,
@@ -108,7 +108,7 @@ export function useSearch(options: SearchOptions) {
         currentPage: optionsRef.current.currentPage ?? 1,
         pageSize: optionsRef.current.pageSize ?? 20,
         isAutocomplete: optionsRef.current.isAutocomplete ?? false,
-        selectedFields: optionsRef.current.selectedFields ?? PRODUCT_FIELDS,
+        selectedFields: optionsRef.current.selectedFields ?? productFields(selectedCatalog?.code ?? ''),
         filters: optionsRef.current.filters ?? [],
         categoryId: optionsRef.current.categoryCode,
         sortField: optionsRef.current.sortField,
@@ -128,7 +128,7 @@ export function useSearch(options: SearchOptions) {
     } catch (e: any) {
       setResult(prev => ({ ...prev, loading: false, error: e.message || 'Search failed' }));
     }
-  }, [selectedLocalizedCatalog]);
+  }, [selectedLocalizedCatalog, selectedCatalog]);
 
   useEffect(() => {
     const key = searchKey(optionsRef.current);
@@ -192,13 +192,13 @@ export function useSearch(options: SearchOptions) {
     } catch {
       return [];
     }
-  }, [selectedLocalizedCatalog]);
+  }, [selectedLocalizedCatalog, selectedCatalog]);
 
   return { ...result, refetch: doSearch, viewMoreOptions };
 }
 
 export function useAutocomplete() {
-  const { selectedLocalizedCatalog } = useCatalog();
+  const { selectedLocalizedCatalog, selectedCatalog } = useCatalog();
   const [results, setResults] = useState<any[]>([]);
   // Aggregations on an autocomplete request are NOT the facet configuration —
   // the backend builds them from the source fields flagged "Displayed in
@@ -232,7 +232,7 @@ export function useAutocomplete() {
           isAutocomplete: true,
           pageSize: 8,
           currentPage: 1,
-          selectedFields: PRODUCT_FIELDS,
+          selectedFields: productFields(selectedCatalog?.code ?? ''),
           filters: [],
         });
         setResults(response.getCollection());
@@ -246,7 +246,7 @@ export function useAutocomplete() {
         setLoading(false);
       }
     }, 300);
-  }, [selectedLocalizedCatalog]);
+  }, [selectedLocalizedCatalog, selectedCatalog]);
 
   const clear = useCallback(() => {
     setResults([]);

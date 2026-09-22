@@ -8,6 +8,12 @@ Style inspired by elasticsuite.io. Any visual change MUST comply, or reference a
 | --color-indigo  | #1a1a2e   | headers, deep bg       |
 | --color-coral   | #ff6b6b   | primary accent / CTAs  |
 | --color-bg      | light     | airy backgrounds       |
+| --green-800     | #2e7d32   | the eco mark, and only it |
+
+`--green-800` is not a third accent. It exists because the eco mark is the one badge whose colour
+*is* the message, and because the only other green, `--success`, already means "added to cart" on
+the same component and fails AA under white text (2.78:1 against the 4.5:1 the badge needs).
+See `specs/feature-eco-badge.md`.
 
 ## Brand assets (the one exemption to the palette rule)
 - `src/assets/gally-rabbit.svg` — **the header brand mark**: the rabbit alone, cropped out of the

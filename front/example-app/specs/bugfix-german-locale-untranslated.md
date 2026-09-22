@@ -33,7 +33,9 @@ was that a locale being wired up and imported means it is exercised.
         because these are *queries* the ACP sends to `/search?q=`, not labels. Same call the French
         bundle makes (`robe`, `robe débardeur`).
       - `category.homepage.shopDressesQuery` — `"Kleid"`, for the same reason (`Homepage.tsx` puts it
-        straight into the hero CTA's query string).
+        straight into the hero CTA's query string). That key has since been replaced by one query per
+        catalogue under `category.homepage.hero.shops.<catalogCode>.query`; see
+        `specs/feature-hero-cta-per-catalog.md`. The rule below applies to all of them.
       - `cart.checkout.placeholders.expiry` — `MM/JJ`, since `YY` is `Jahr` in German.
       - Currency figures in `demo.closing` reformatted to German convention (`80.000 €`, not
         `€80,000`).
@@ -64,8 +66,8 @@ was that a locale being wired up and imported means it is exercised.
   indexed — deliberately not done here, since that changes fixture data rather than the app.
 
 ## MUST NOT change
-- `src/locales/de/search.json`'s `overlay.suggestions` and `category.json`'s `shopDressesQuery` must
-  stay *German search terms*, not translated labels. They are sent to the search engine; turning them
+- `src/locales/de/search.json`'s `overlay.suggestions` and `category.json`'s
+  `homepage.hero.shops.*.query` must stay *German search terms*, not translated labels. They are sent to the search engine; turning them
   back into English or into prose breaks the hero CTA and the ACP suggestion links (see
   `specs/bugfix-hero-cta-empty-query.md` for the shape of that failure).
 - Key parity with `en/`. A missing key renders as the raw key path (golden rule 5) — re-run the
