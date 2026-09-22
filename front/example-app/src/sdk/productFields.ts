@@ -74,6 +74,10 @@ export function getProductFields(product: any) {
   // ("Cashmere" on com_en, "Coton bio" on com_fr).
   const materials = Array.isArray(s.fashion_material) ? s.fashion_material : [];
   const pureMaterial = materials.length === 1 && materials[0]?.label ? String(materials[0].label) : null;
+  // Same `=== true` guard, same reason: an unset boolean is `[]` in the raw `_source`, and `[]`
+  // is truthy. Papershop writes an explicit false, but the guard is what makes this safe on a
+  // catalogue that simply omits the field.
+  const isEco = s.llv_is_eco === true;
   const typeId = s.type_id || 'simple';
   const description = Array.isArray(s.description) ? s.description[0] : s.description || '';
   // The fallback deliberately leaves `qty` out rather than setting it to 0: a document with no
@@ -81,7 +85,7 @@ export function getProductFields(product: any) {
   const stock = s.stock || { status: true };
   return {
     name, sku, image, price, originalPrice, isDiscounted, isNew, isOnSale, pureMaterial,
-    typeId, description, stock,
+    isEco, typeId, description, stock,
     available: isAvailable(stock),
     // The attribute bag this product was read from — `_source` on the PDP, the projected
     // collection row on a listing. getVariantAxes() needs it whole, because which keys matter

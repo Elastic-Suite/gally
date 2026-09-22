@@ -3,6 +3,8 @@
     "new": "Nouveau",
     "onSale": "En promo",
     "pureMaterial": "100 % {{material}}",
+    "eco": "Matières durables",
+    "ecoShort": "Éco",
     "outOfStock": "Rupture de stock",
     "addToCart": "Ajouter au panier",
     "chooseOptions": "Choisir les options",
@@ -16,12 +18,6 @@
     },
     "sku": "Référence : {{sku}}",
     "material": "Matière :",
-    "axis": {
-      "fashion_color": "Couleur",
-      "fashion_size": "Taille",
-      "color": "Couleur",
-      "size": "Taille"
-    },
     "inStock": "✓ En stock ({{count}} disponible(s))",
     "inStockNoCount": "✓ En stock",
     "outOfStockLong": "✕ Rupture de stock",

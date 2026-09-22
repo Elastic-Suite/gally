@@ -22,8 +22,35 @@
   "homepage": {
     "heroTitle": "Intelligent Search for E-commerce",
     "heroBody": "Discover how Gally powers product discovery with AI-driven search, faceted navigation, and real-time recommendations.",
-    "shopDresses": "Shop dresses",
-    "shopDressesQuery": "dress",
+    "hero": {
+      "browse": "Browse all products",
+      "shops": {
+        "com": {
+          "cta": "Shop dresses",
+          "query": "dress"
+        },
+        "fr": {
+          "cta": "Shop dresses",
+          "query": "dress"
+        },
+        "uk": {
+          "cta": "Shop dresses",
+          "query": "dress"
+        },
+        "fashion": {
+          "cta": "Shop dresses",
+          "query": "dress"
+        },
+        "toolbox": {
+          "cta": "Shop drills",
+          "query": "drill"
+        },
+        "papershop": {
+          "cta": "Shop fountain pens",
+          "query": "fountain pen"
+        }
+      }
+    },
     "trending": "Trending Now",
     "moreProducts": "More Products",
     "readyTitle": "Ready to transform your search experience?",

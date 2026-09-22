@@ -10,9 +10,9 @@ import CategoryNav from '../components/CategoryNav';
 import { useCatalog } from '../contexts/CatalogContext';
 
 export default function Homepage() {
-  const { t } = useTranslation('category');
+  const { t, i18n } = useTranslation('category');
   const { trackDisplay } = useTracking();
-  const { categories } = useCatalog();
+  const { categories, selectedCatalog } = useCatalog();
 
   // "Trending Now" is a plain catalog browse of the root category, not a search —
   // product_catalog requires a real currentCategoryId, so use the root rather than
@@ -26,6 +26,20 @@ export default function Homepage() {
     pageSize: 8,
     categoryCode: secondCategory?.id,
   });
+
+  // The hero button is picked per shop. It used to send every catalogue to "dress", which on the
+  // hardware and stationery shops returned nothing at all. Label and query are one pair in the
+  // locale files because the catalogue's language follows the locale segment: a French visitor
+  // must be sent to "robe", not "dress". A shop with no entry gets a plain browse link rather than
+  // another shop's query — see specs/feature-hero-cta-per-catalog.md.
+  const heroKey = `homepage.hero.shops.${selectedCatalog?.code ?? ''}`;
+  const hasHeroQuery = !!selectedCatalog && i18n.exists(`${heroKey}.query`, { ns: 'category' });
+  const heroHref = hasHeroQuery
+    ? `/search?q=${encodeURIComponent(t(`${heroKey}.query`))}`
+    : rootCategory
+      ? `/category/${rootCategory.id}`
+      : null;
+  const heroLabel = hasHeroQuery ? t(`${heroKey}.cta`) : t('homepage.hero.browse');
 
   const trackedDisplayRef = useRef('');
 
@@ -47,14 +61,11 @@ export default function Homepage() {
         <p>
           {t('homepage.heroBody')}
         </p>
-        {/* The query is localized alongside the label: the catalog language follows the
-            locale, so a French visitor must search "robe", not "dress". */}
-        <Link
-          href={`/search?q=${encodeURIComponent(t('homepage.shopDressesQuery'))}`}
-          className="btn btn-coral btn-lg"
-        >
-          {t('homepage.shopDresses')}
-        </Link>
+        {heroHref && (
+          <Link href={heroHref} className="btn btn-coral btn-lg">
+            {heroLabel}
+          </Link>
+        )}
       </section>
 
       {/* Category Navigation */}

@@ -22,8 +22,35 @@
   "homepage": {
     "heroTitle": "La recherche intelligente pour l'e-commerce",
     "heroBody": "Découvrez comment Gally propulse la découverte produit grâce à une recherche pilotée par l'IA, une navigation à facettes et des recommandations en temps réel.",
-    "shopDresses": "Découvrir les robes",
-    "shopDressesQuery": "robe",
+    "hero": {
+      "browse": "Voir tous les produits",
+      "shops": {
+        "com": {
+          "cta": "Découvrir les robes",
+          "query": "robe"
+        },
+        "fr": {
+          "cta": "Découvrir les robes",
+          "query": "robe"
+        },
+        "uk": {
+          "cta": "Découvrir les robes",
+          "query": "robe"
+        },
+        "fashion": {
+          "cta": "Découvrir les robes",
+          "query": "robe"
+        },
+        "toolbox": {
+          "cta": "Découvrir les perceuses",
+          "query": "perceuse"
+        },
+        "papershop": {
+          "cta": "Découvrir les stylos plume",
+          "query": "stylo plume"
+        }
+      }
+    },
     "trending": "Tendances du moment",
     "moreProducts": "Plus de produits",
     "readyTitle": "Prêt à transformer votre expérience de recherche ?",

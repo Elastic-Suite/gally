@@ -152,13 +152,55 @@ export async function fetchVectorSearchProducts(
 // to distrust it; with it the claim narrows to the true one — semantic search does not beat
 // keyword search everywhere, it covers the queries keyword search cannot answer at all.
 // Do not drop it to make the demo tidier.
-export const VECTOR_DEMO_QUERIES = [
-  'jewellery',
-  'wedding guest outfit',
-  'something to wear to the beach',
-  'gift for my wife',
-  'cardigan',
-];
+//
+// Keyed by localized catalog, because a suggestion is only worth offering in the catalogue it was
+// measured against. Four sample shops ship now, and one flat list meant the hardware shop invited
+// visitors to try "wedding guest outfit" — nothing comes back, at the exact moment the page is
+// meant to impress. See specs/feature-vector-demo-queries-per-catalog.md for every query's
+// measured keyword count and vector top hit.
+//
+// English keys only, for the reason above: the other localized catalogs get no suggestions rather
+// than suggestions the model cannot answer, which would contradict the warning below them.
+//
+// Each list ENDS WITH ITS CONTROL — `cardigan`, `drill`, `dress`, `fountain pen` — a literal
+// product noun keyword search answers perfectly well. The rule is per catalogue now, and the
+// reason has not changed: without it each list is rigged queries and an audience is right to
+// distrust the page.
+export const VECTOR_DEMO_QUERIES: Record<string, string[]> = {
+  com_en: [
+    'jewellery',
+    'wedding guest outfit',
+    'something to wear to the beach',
+    'gift for my wife',
+    'cardigan',
+  ],
+  // Intent a hardware catalogue never words the way a customer does: nobody writes "protect my
+  // eyes" on a pair of goggles.
+  toolbox_en: [
+    'protect my eyes while drilling',
+    'something to cut metal pipes',
+    'fix a shelf to a brick wall',
+    'drill',
+  ],
+  fashion_en: [
+    'something to wear to the beach',
+    'wedding guest outfit',
+    'gift for my wife',
+    'dress',
+  ],
+  // The first one is the best argument on this shop: it pulls the whole furniture range out of a
+  // catalogue that also sells pencils, on intent alone.
+  papershop_en: [
+    'furnish a home office',
+    'a present for a child',
+    'fountain pen',
+  ],
+};
+
+/** This catalogue's suggestions, or none. Never another catalogue's. */
+export function getVectorDemoQueries(localizedCatalog: string | undefined): string[] {
+  return (localizedCatalog && VECTOR_DEMO_QUERIES[localizedCatalog]) || [];
+}
 
 // Locales the deployed embedding model actually speaks.
 const ENGLISH_LOCALES = ['en_US', 'en_GB'];

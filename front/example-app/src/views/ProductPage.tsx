@@ -12,10 +12,11 @@ import ProductSlider from '../components/ProductSlider';
 import { getProductFields } from '../components/ProductCard';
 import { getProductBadges } from '../sdk/productFields';
 import { ProductPageSkeleton } from '../components/skeletons';
+import EcoMark from '../components/EcoMark';
 import Breadcrumb from '../components/Breadcrumb';
 import { productCategoryTrail } from '../sdk/categoryTree';
 import VariantSelector, { getVariantAxes } from '../components/VariantSelector';
-import { PRODUCT_DETAIL_FIELDS } from '../sdk/fields';
+import { productDetailFields } from '../sdk/fields';
 
 // `initialProduct` is the raw search document the Server Component already fetched for
 // this SKU. When it is present the page renders complete on the first pass — no
@@ -24,7 +25,7 @@ export default function ProductPage({ initialProduct }: { initialProduct?: any }
   const { t } = useTranslation('product');
   const params = useParams();
   const sku = Array.isArray(params.sku) ? params.sku[0] : params.sku;
-  const { formatPrice, selectedLocalizedCatalog, categories } = useCatalog();
+  const { formatPrice, selectedLocalizedCatalog, selectedCatalog, categories } = useCatalog();
   const { addToCart } = useCart();
   // Confirms in place like the grid card does. No `addedFlash` glow here — that
   // animation outlines a card, and there is no card on this layout; the button
@@ -46,7 +47,7 @@ export default function ProductPage({ initialProduct }: { initialProduct?: any }
     pageSize: 1,
     // Must match what fetchProductBySku asked for, or this refetch would drop the raw `source`
     // the server pass rendered the option axes from.
-    selectedFields: PRODUCT_DETAIL_FIELDS,
+    selectedFields: productDetailFields(selectedCatalog?.code ?? ''),
     initialData: initialProduct
       ? { products: [initialProduct], total: 1, pageCount: 1, aggregations: [] }
       : undefined,
@@ -137,6 +138,8 @@ export default function ProductPage({ initialProduct }: { initialProduct?: any }
               ))}
             </div>
           )}
+          {/* Same rule as the card, opposite corner. */}
+          {p.isEco && <EcoMark />}
           {p.image ? (
             <img
               src={p.image}
