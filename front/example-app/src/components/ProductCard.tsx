@@ -6,6 +6,7 @@ import { useCatalog } from '../contexts/CatalogContext';
 import { useAddedFlash } from '../hooks/useAddedFlash';
 import { getProductFields, getProductBadges } from '../sdk/productFields';
 import QuickAdd from './QuickAdd';
+import EcoMark from './EcoMark';
 
 interface Props {
   product: any;
@@ -48,6 +49,9 @@ export default function ProductCard({ product }: Props) {
             ))}
           </div>
         )}
+        {/* Opposite corner, outside the single-badge slot above, so an eco product that is also on
+            sale shows both. See specs/feature-eco-badge.md. */}
+        {fields.isEco && <EcoMark />}
         <Link href={`/product/${encodeURIComponent(sku)}`} className="product-card-image-link">
           {image ? (
             <img src={image} alt={name} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />

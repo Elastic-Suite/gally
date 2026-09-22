@@ -2,12 +2,13 @@
 
 ## Status: implemented
 ## Page/Component: `src/contexts/CatalogContext.tsx`, `src/sdk/catalogSwitch.ts`,
-## `app/[locale]/category/[code]/{layout,page}.tsx`, `app/[locale]/product/[sku]/{layout,page}.tsx`
+## `app/[locale]/category/[code]/{layout,page}.tsx`, `app/[locale]/product/[sku]/{layout,page}.tsx`,
+## `app/[locale]/blog/[id]/{layout,page}.tsx`
 
 Switching catalog keeps the visitor on the same page: `goToLocalizedCatalog()` replaces segment 1
-of the path and navigates, so `/com_fr/category/cat_2` becomes `/en_en/category/cat_2`. But a
-category id and a SKU belong to one catalog, so the target usually does not exist there and the
-route answered 404. That is the wrong answer to "show me the other catalog": the page did not
+of the path and navigates, so `/papershop_fr/category/cat_2` becomes `/fashion_fr/category/cat_2`.
+But a category id, a SKU and a blog article id each belong to one catalog, so the target usually
+does not exist there and the route answered 404. That is the wrong answer to "show me the other catalog": the page did not
 disappear, it moved.
 
 Now the switch marks its own navigation and the route redirects to the new catalog's default
@@ -23,22 +24,32 @@ listing. Everything else still gets a real 404.
 - [x] An invalid marker (`?from=not_a_catalog`) answers `404`, not a redirect.
 - [x] A category that does exist renders `200` whether or not the marker is present.
 - [x] An unknown locale segment (`/example/nope`) still answers `404`.
-- [ ] Clicking the catalog selector on a category and on a product page - the marker is built in
-      `CatalogContext` and type-checks, but the click path was NOT exercised in a browser. The
-      server half of it is covered by the curl checks above.
+- [x] A missing blog article with a valid marker answers **307** to `/{locale}/blog` - the blog
+      listing, not the product listing, because that is the section the visitor was in. Verified:
+      `GET /fashion_fr/blog/17?from=papershop_fr` -> `307` to `/example/fashion_fr/blog`
+      (papershop has 18 articles, fashion 15, so id 17 exists in one catalog only).
+- [x] `GET /fashion_fr/blog/17` without the marker still answers `404`.
+- [ ] Clicking the catalog selector on a category, a product and a blog article page - the marker
+      is built in `CatalogContext` and type-checks, but the click path was NOT exercised in a
+      browser. The server half of it is covered by the curl checks above.
 
 ## How the marker works
 `goToLocalizedCatalog()` appends `?from=<previous locale code>`, and only when the current path is
-`/category/...` or `/product/...` - the two routes whose URL names a per-catalog id. Home, blog,
-cart and search exist in every catalog and keep a clean URL.
+`/category/...`, `/product/...` or `/blog/<id>` - the three routes whose URL names a per-catalog
+id. The blog *listing* `/blog` is excluded along with home, cart and search: they exist in every
+catalog and keep a clean URL.
 
-`missingInCatalog()` in `src/sdk/catalogSwitch.ts` is the single decision point, called from both
-routes:
+`missingInCatalog()` in `src/sdk/catalogSwitch.ts` is the single decision point, called from all
+three routes:
 
 ```
-marked and valid -> redirect() to this catalog's default listing
+marked and valid -> redirect() to this catalog's fallback for that section
 anything else    -> notFound()
 ```
+
+The fallback is the route's own `fallbackPath` argument when it passes one - `/blog` for an
+article - and this catalog's default listing otherwise. The listing costs a category-tree fetch,
+so the blog route passing a literal path also saves that call.
 
 "Valid" means `from` names a localized catalog that really exists (`resolveLocale(from)`) and is
 not the current one. Without that check, appending `?from=whatever` to any junk URL would turn a
@@ -107,3 +118,8 @@ Stripping it would cost an extra navigation on every switch, which is the worse 
   `bugfix-ssr-product-list-behind-suspense.md` is about.
 - `defaultListingPath()` stays the one definition of the default listing, read by both the header
   tab and the redirect.
+- **A blog article redirects to `/blog`, not to the product listing.** Sending someone reading an
+  article into a product grid is a section change they did not ask for.
+- **Article ids overlapping between catalogs is knowingly left alone.** Ids run 1..N per catalog,
+  so a marked switch on `/blog/3` renders the target catalog's own article 3 rather than
+  redirecting. That is valid content in the right catalog; only a genuine miss redirects.

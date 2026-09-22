@@ -7,9 +7,11 @@ import { DemoProvider } from '../src/contexts/DemoContext';
 import { SearchBarProvider } from '../src/contexts/SearchBarContext';
 import { LocaleProvider } from '../src/contexts/LocaleContext';
 import { NavigationProvider } from '../src/contexts/NavigationContext';
+import { AxisLabelProvider } from '../src/contexts/AxisLabelContext';
 import I18nBridge from '../src/i18n/I18nBridge';
 import AppShell from '../src/components/AppShell';
 import { ICatalog, ILocalizedCatalog, ICategoryNode } from '../src/sdk/catalogs';
+import { AxisLabels } from '../src/sdk/axisLabels';
 import '../src/i18n';
 
 // The provider tree, in the order the CRA src/index.tsx used, with LocaleProvider added
@@ -22,6 +24,7 @@ export default function Providers({
   selectedCatalog,
   selectedLocalizedCatalog,
   categories,
+  axisLabels,
   children,
 }: {
   locale: string;
@@ -29,6 +32,7 @@ export default function Providers({
   selectedCatalog: ICatalog;
   selectedLocalizedCatalog: ILocalizedCatalog;
   categories: ICategoryNode[];
+  axisLabels: AxisLabels;
   children: React.ReactNode;
 }) {
   return (
@@ -42,15 +46,17 @@ export default function Providers({
           selectedLocalizedCatalog={selectedLocalizedCatalog}
           categories={categories}
         >
-          <I18nBridge>
-            <CartProvider>
-              <DemoProvider>
-                <SearchBarProvider>
-                  <AppShell>{children}</AppShell>
-                </SearchBarProvider>
-              </DemoProvider>
-            </CartProvider>
-          </I18nBridge>
+          <AxisLabelProvider labels={axisLabels}>
+            <I18nBridge>
+              <CartProvider>
+                <DemoProvider>
+                  <SearchBarProvider>
+                    <AppShell>{children}</AppShell>
+                  </SearchBarProvider>
+                </DemoProvider>
+              </CartProvider>
+            </I18nBridge>
+          </AxisLabelProvider>
         </CatalogProvider>
       </NavigationProvider>
     </LocaleProvider>
