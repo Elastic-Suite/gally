@@ -189,7 +189,16 @@ consume_messages: ## Consume messages from message provider, pass the parameter 
 	@$(eval r ?=)
 	@$(SYMFONY) messenger:consume $(if $(r),$(r),--all) -vv
 
-fixtures_load: ## Load fixtures (Delete DB and Elasticsearch data)
+
+# Load sample catalogs. Pass one, or several separated by commas with no spaces around them:
+#
+#   make fixtures_load                              # every catalog
+#   make fixtures_load catalogs=default             # just one
+#   make fixtures_load catalogs=default,01_fashion  # two of them
+#
+fixtures_load: ## Load fixtures (Delete DB and Elasticsearch data). "catalogs=" loads only some sample data catalogs, comma separated, no spaces: make fixtures_load catalogs=default,01_fashion
+	@$(eval catalogs ?=)
+	@$(eval SYMFONY_FIXTURES := $(DOCKER_COMP) exec $(if $(catalogs),-e GALLY_SAMPLE_DATA_CATALOGS=$(catalogs),) php php -d memory_limit=-1 bin/console)
 	@read -p "⚠️  This will ERASE your database. Are you sure? (y/N) " confirm; \
 	if [ "$$confirm" = "y" ] || [ "$$confirm" = "Y" ]; then \
 		$(SYMFONY) doctrine:database:drop --force; \
@@ -197,8 +206,9 @@ fixtures_load: ## Load fixtures (Delete DB and Elasticsearch data)
 		$(SYMFONY) doctrine:database:create; \
 		$(MAKE) migrate; \
 		$(SYMFONY) list gally --raw | grep gally:vector-search:upload-model && $(SYMFONY) gally:vector-search:upload-model || true; \
-		$(SYMFONY) hautelook:fixtures:load --no-interaction --append; \
-		$(SYMFONY) doctrine:fixtures:load --no-interaction --append; \
+		$(SYMFONY_FIXTURES) cache:clear; \
+		$(SYMFONY_FIXTURES) hautelook:fixtures:load --no-interaction --append; \
+		$(SYMFONY_FIXTURES) doctrine:fixtures:load --no-interaction --append; \
 		$(MAKE) varnish_flush; \
 	fi
 
