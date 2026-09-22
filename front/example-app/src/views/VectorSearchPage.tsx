@@ -11,7 +11,7 @@ import {
   COMPARE_ROW_FIELDS,
   fetchVectorSearchProducts,
   isModelLanguage,
-  VECTOR_DEMO_QUERIES,
+  getVectorDemoQueries,
   VECTOR_MAX_RESULTS,
   VectorSearchResult,
 } from '../sdk/vectorSearch';
@@ -151,12 +151,12 @@ export default function VectorSearchPage() {
   const { selectedLocalizedCatalog } = useCatalog();
   const { trackSearch, trackDisplay } = useTracking();
 
-  const [input, setInput] = useState(VECTOR_DEMO_QUERIES[0]);
+  const [input, setInput] = useState('');
   // Query and both page numbers live in ONE state object so a new query cannot be committed
   // without resetting the pages in the same update. Held as three useStates they drift: the
   // fetch effects see the new query with the old page for one render and briefly show page 4
   // of a result set that now has one page.
-  const [q, setQ] = useState({ text: VECTOR_DEMO_QUERIES[0], kwPage: 1, vecPage: 1 });
+  const [q, setQ] = useState({ text: '', kwPage: 1, vecPage: 1 });
   const query = q.text;
   const [keyword, setKeyword] = useState<PanelState>(EMPTY_PANEL);
   const [vector, setVector] = useState<VectorSearchResult>(EMPTY_VECTOR);
@@ -165,6 +165,18 @@ export default function VectorSearchPage() {
 
   const catalogCode = selectedLocalizedCatalog?.code;
   const modelSpeaksLocale = isModelLanguage(selectedLocalizedCatalog?.locale);
+  const demoQueries = getVectorDemoQueries(catalogCode);
+
+  // Seed the box with this shop's first suggestion, and reseed when the shop changes. Both are
+  // needed now that the suggestions are per catalogue: the catalogue arrives from context after
+  // the first render, and a switch used to carry the old query across — which would mean searching
+  // a hardware shop for "jewellery". Keyed on catalogCode alone on purpose; adding `query` here
+  // would make the effect fight the user's typing.
+  useEffect(() => {
+    const first = getVectorDemoQueries(catalogCode)[0] ?? '';
+    setInput(first);
+    setQ({ text: first, kwPage: 1, vecPage: 1 });
+  }, [catalogCode]);
 
   // The keyword side goes through the SDK exactly as SearchPage does — same metadata, same
   // request type, same _score sort. Only the PROJECTION differs (COMPARE_ROW_FIELDS instead
@@ -297,9 +309,10 @@ export default function VectorSearchPage() {
           <button type="submit" className="vector-search-submit">{t('submit')}</button>
         </form>
 
+        {demoQueries.length > 0 && (
         <div className="vector-suggestions">
           <span className="vector-suggestions-label">{t('tryLabel')}</span>
-          {VECTOR_DEMO_QUERIES.map(demo => (
+          {demoQueries.map(demo => (
             <button
               key={demo}
               type="button"
@@ -310,6 +323,7 @@ export default function VectorSearchPage() {
             </button>
           ))}
         </div>
+        )}
 
         {/* The model is monolingual English and so are the product names, in every
             catalogue. Saying so beats letting a French visitor type `bijoux`, get a skirt

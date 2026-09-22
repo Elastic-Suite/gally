@@ -1,7 +1,7 @@
 'use client';
 
-import { useTranslation } from 'react-i18next';
 import { guessColor, needsSwatchOutline } from './swatchColors';
+import { useAxisLabel } from '../contexts/AxisLabelContext';
 import { parseAxisCodes } from '../sdk/productFields';
 
 export interface VariantOption {
@@ -83,18 +83,24 @@ interface Props {
 }
 
 export default function VariantSelector({ axes, selected, onSelect, compact = false }: Props) {
-  const { t } = useTranslation('product');
+  const axisLabel = useAxisLabel();
 
   if (axes.length === 0) return null;
 
   return (
     <>
       {axes.map(axis => {
-        // Heading per attribute code, falling back to the code itself. Deliberately not taken
-        // from the matching aggregation's localized label: the PDP's server pre-fetch returns
-        // the document only, so the heading would be missing from the SSR HTML and appear on
-        // hydration. See specs/feature-configurable-option-selection.md.
-        const heading = t(`page.axis.${axis.code}`, { defaultValue: axis.code });
+        // Heading per attribute code, from the catalogue itself — `product_source_field_labels`
+        // for the current localized catalogue, fetched in app/[locale]/layout.tsx. It replaced a
+        // hardcoded `product:page.axis.<code>` key per axis, which only ever covered Venia and
+        // Luma and left every newer catalogue showing a raw code.
+        //
+        // The old comment here rejected the aggregation's localized label because the PDP's
+        // server pre-fetch returns the document only, so the heading would arrive on hydration.
+        // That objection does not apply to this source: the fetch is in the layout, which is
+        // already a server component, so the heading is in the SSR HTML.
+        // See specs/feature-axis-labels-from-api.md.
+        const heading = axisLabel(axis.code);
         const asSwatches = isColorAxis(axis.code);
 
         return (

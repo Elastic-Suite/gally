@@ -1,7 +1,7 @@
 import { cache } from 'react';
 import { getSearchManager } from './index';
 import { fetchCatalogs, findLocalizedCatalog, fetchCategoryTree } from './catalogs';
-import { PRODUCT_FIELDS, PRODUCT_DETAIL_FIELDS, CMS_FIELDS, CMS_METADATA } from './fields';
+import { productFields, productDetailFields, CMS_FIELDS, CMS_METADATA } from './fields';
 
 // Server-side data fetching for the three crawlable routes. These run in Server
 // Components, so `getSearchManager()` resolves to the internal base URI (see ./index) —
@@ -14,6 +14,15 @@ import { PRODUCT_FIELDS, PRODUCT_DETAIL_FIELDS, CMS_FIELDS, CMS_METADATA } from 
 //
 // They all swallow errors into null/empty rather than throwing. A failed fetch should
 // degrade to the client-side path that existed before Phase 3, not 500 the whole route.
+
+// The product selection depends on which catalogue the row belongs to (see ./fields.ts), and
+// these fetchers are handed a localized-catalog code. resolveLocale() is cache()d over the same
+// catalog list the route already resolved, so this is a map lookup, not another request.
+//
+// Falling back to '' yields the common fields alone: no variant axes and no catalogue badge,
+// which is the same degradation as an unknown catalogue and still renders.
+const catalogCodeOf = async (localizedCatalog: string): Promise<string> =>
+  (await resolveLocale(localizedCatalog))?.catalog.code ?? '';
 
 export const fetchProductBySku = cache(async (
   localizedCatalog: string,
@@ -34,7 +43,7 @@ export const fetchProductBySku = cache(async (
       isAutocomplete: false,
       // Not PRODUCT_FIELDS: the PDP reads type_id and configurable_attributes out of the raw
       // `source`, and ProductPage's useSearch asks for the same list. See ./fields.ts.
-      selectedFields: PRODUCT_DETAIL_FIELDS,
+      selectedFields: productDetailFields(await catalogCodeOf(localizedCatalog)),
     });
     return response.getCollection()[0] ?? null;
   } catch {
@@ -62,7 +71,7 @@ export const fetchCategoryProducts = cache(async (
       currentPage: 1,
       pageSize,
       isAutocomplete: false,
-      selectedFields: PRODUCT_FIELDS,
+      selectedFields: productFields(await catalogCodeOf(localizedCatalog)),
       filters: [],
     });
     return {
@@ -97,7 +106,7 @@ export const fetchSearchProducts = cache(async (
       currentPage: 1,
       pageSize,
       isAutocomplete: false,
-      selectedFields: PRODUCT_FIELDS,
+      selectedFields: productFields(await catalogCodeOf(localizedCatalog)),
       filters: [],
       sortField: '_score',
       sortDirection: 'desc',

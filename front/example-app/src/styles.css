@@ -32,6 +32,10 @@
   --gray-800: #424242;
   --gray-900: #212121;
   --success: #4caf50;
+  /* The eco mark's green, and deliberately NOT --success. Two reasons, either one sufficient:
+     --success already means "added to cart" on a product card, and white text on it reaches only
+     2.78:1, under the 4.5:1 AA needs for the badge's 0.7rem text. This one is 5.13:1. */
+  --green-800: #2e7d32;
   --warning: #ff9800;
 
   /* Typography — Geist, matching elasticsuite.io (same family and fallback stack).
@@ -1030,6 +1034,23 @@ a:hover {
    topic pill below makes. "New" and "Sale" promote; a material is a fact about the product. */
 .product-card-badge--sale { background: var(--coral-600); }
 .product-card-badge--material { background: var(--indigo-800); }
+
+/* The eco mark (specs/feature-eco-badge.md). Position only — this wrapper changes which corner
+   the pill anchors to and nothing else, so there is still one badge idiom rather than two.
+   It has to sit opposite the badge stack: a card draws exactly one badge, and an eco product that
+   is also on sale must be able to show both without them landing on each other. */
+.product-card-badges--corner {
+  left: auto;
+  right: 0.5rem;
+  align-items: flex-end;
+}
+
+/* Green rather than the coral/indigo split the other badges follow: this is the one badge whose
+   colour carries the meaning, and no amount of indigo says "sustainable". Everything else is the
+   base pill — a text-only chip, exactly like --sale, --new and --material. */
+.product-card-badge--eco {
+  background: var(--green-800);
+}
 
 /* The anchor wraps only the picture now, so the option chips beside it are not inside a link.
    It has to carry the centring the image box used to do for its single child. */
