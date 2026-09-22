@@ -11,6 +11,7 @@
 /public/bundles/
 /var/
 /vendor/
+/config/reference.php
 ###< symfony/framework-bundle ###
 
 ###> friendsofphp/php-cs-fixer ###

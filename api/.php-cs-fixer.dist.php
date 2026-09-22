@@ -34,6 +34,8 @@ return (new PhpCsFixer\Config())
             'comment_type' => 'phpdocs_like',
         ],
         'array_indentation' => true,
+        'declare_strict_types' => true,
+        'static_lambda' => false,
         'compact_nullable_typehint' => true,
         'concat_space' => [
             'spacing' => 'one',
