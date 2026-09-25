@@ -7,37 +7,22 @@ import { useTranslation } from 'react-i18next';
 import { useCart } from '../contexts/CartContext';
 import { useCatalog } from '../contexts/CatalogContext';
 import { useLocaleHref } from '../contexts/LocaleContext';
-import { useSearch } from '../hooks/useSearch';
+import { useRecommendations } from '../hooks/useRecommendations';
+import { defaultListingPath } from '../sdk/categoryTree';
 import ProductSlider from '../components/ProductSlider';
 import ProductImage from '../components/ProductImage';
 
 const FREE_SHIPPING_THRESHOLD = 180;
 
-// Accessory bundle items (simulated). nameKey resolves against cart.json's bundle.items.
-const BUNDLE_ITEMS = [
-  { sku: 'acc-clutch', nameKey: 'bundle.items.clutch', price: 29.90 },
-  { sku: 'acc-belt', nameKey: 'bundle.items.belt', price: 19.90 },
-  { sku: 'acc-scarf', nameKey: 'bundle.items.scarf', price: 24.90 },
-];
-const BUNDLE_DISCOUNT = 0.20;
-const BUNDLE_TOTAL = BUNDLE_ITEMS.reduce((s, i) => s + i.price, 0);
-const BUNDLE_PRICE = +(BUNDLE_TOTAL * (1 - BUNDLE_DISCOUNT)).toFixed(2);
-
-// FBT items (simulated). nameKey resolves against cart.json's fbt.items.
-const FBT_ITEMS = [
-  { sku: 'fbt-sandals', nameKey: 'fbt.items.sandals', price: 49.90 },
-  { sku: 'fbt-hat', nameKey: 'fbt.items.hat', price: 34.90 },
-  { sku: 'fbt-earrings', nameKey: 'fbt.items.earrings', price: 22.90 },
-];
-
 export default function CartPage() {
   const { t } = useTranslation('cart');
-  const { items, removeFromCart, updateQty, total, itemCount, addToCart } = useCart();
-  const { formatPrice } = useCatalog();
+  const { items, removeFromCart, updateQty, total, itemCount, ready } = useCart();
+  const { formatPrice, categories } = useCatalog();
   const router = useRouter();
   const localeHref = useLocaleHref();
-  const { products: recommendations } = useSearch({ pageSize: 4 });
-  const [fbtChecked, setFbtChecked] = useState<Record<string, boolean>>({});
+  // Cross-sell rules seeded with every product in the cart. Cart lines carry the parent SKU in
+  // `sku` (the variant is `childSku`), which is what the rules are written on.
+  const { products: recommendations } = useRecommendations(['cross-sell'], items.map(i => i.sku), 8);
   const [totalAnimating, setTotalAnimating] = useState(false);
   const prevTotalRef = useRef(total);
 
@@ -52,38 +37,14 @@ export default function CartPage() {
     prevTotalRef.current = total;
   }, [total]);
 
-  const fbtTotal = Object.entries(fbtChecked)
-    .filter(([, checked]) => checked)
-    .reduce((sum, [sku]) => {
-      const item = FBT_ITEMS.find(f => f.sku === sku);
-      return sum + (item?.price || 0);
-    }, 0);
+  const shippingProgress = Math.min((total / FREE_SHIPPING_THRESHOLD) * 100, 100);
+  const freeShipping = total >= FREE_SHIPPING_THRESHOLD;
+  const shippingRemaining = Math.max(FREE_SHIPPING_THRESHOLD - total, 0);
 
-  const grandTotal = total + fbtTotal;
-  const shippingProgress = Math.min((grandTotal / FREE_SHIPPING_THRESHOLD) * 100, 100);
-  const freeShipping = grandTotal >= FREE_SHIPPING_THRESHOLD;
-  const shippingRemaining = Math.max(FREE_SHIPPING_THRESHOLD - grandTotal, 0);
-
-  const handleAddBundle = () => {
-    BUNDLE_ITEMS.forEach((item, i) => {
-      addToCart({
-        sku: item.sku,
-        name: t(item.nameKey),
-        price: +(item.price * (1 - BUNDLE_DISCOUNT)).toFixed(2),
-      });
-    });
-  };
-
-  const handleToggleFbt = (sku: string) => {
-    setFbtChecked(prev => ({ ...prev, [sku]: !prev[sku] }));
-  };
-
-  const handleAddFbt = () => {
-    FBT_ITEMS.filter(f => fbtChecked[f.sku]).forEach(item => {
-      addToCart({ sku: item.sku, name: t(item.nameKey), price: item.price });
-    });
-    setFbtChecked({});
-  };
+  // Until the saved cart is read, "your cart is empty" would flash on every reload.
+  if (!ready) {
+    return <div className="cart-page" />;
+  }
 
   if (items.length === 0) {
     return (
@@ -92,7 +53,8 @@ export default function CartPage() {
         <div className="empty-state">
           <h3>{t('empty.heading')}</h3>
           <p>{t('empty.body')}</p>
-          <Link href="/search?q=" className="btn btn-primary" style={{ marginTop: '1rem' }}>
+          {/* The catalog's root category, like the header's Products tab - not an empty search. */}
+          <Link href={defaultListingPath(categories)} className="btn btn-primary" style={{ marginTop: '1rem' }}>
             {t('empty.browse')}
           </Link>
         </div>
@@ -132,36 +94,6 @@ export default function CartPage() {
         </div>
       ))}
 
-      {/* Accessory Bundle */}
-      <div className="cart-bundle">
-        <div className="cart-bundle-header">
-          <h3>{t('bundle.heading', { discount: BUNDLE_DISCOUNT * 100 })}</h3>
-          <span className="cart-bundle-badge">{t('bundle.save')} {formatPrice(BUNDLE_TOTAL - BUNDLE_PRICE)}</span>
-        </div>
-        <div className="cart-bundle-items">
-          {BUNDLE_ITEMS.map(item => (
-            <div key={item.sku} className="cart-bundle-item">
-              <span>{t(item.nameKey)}</span>
-              <span className="cart-bundle-item-price">
-                <s>{formatPrice(item.price)}</s>
-                {' '}
-                {formatPrice(item.price * (1 - BUNDLE_DISCOUNT))}
-              </span>
-            </div>
-          ))}
-        </div>
-        <div className="cart-bundle-footer">
-          <span className="cart-bundle-total">
-            {t('bundle.totalLabel')} <strong>{formatPrice(BUNDLE_PRICE)}</strong>
-            {' '}
-            <s className="cart-bundle-was">{formatPrice(BUNDLE_TOTAL)}</s>
-          </span>
-          <button className="btn btn-primary btn-sm" onClick={handleAddBundle}>
-            {t('bundle.addButton')}
-          </button>
-        </div>
-      </div>
-
       {/* Cart Summary with Free Shipping Bar */}
       <div className="cart-summary">
         {/* Free shipping bar */}
@@ -186,19 +118,13 @@ export default function CartPage() {
           <span>{t('summary.subtotal')}</span>
           <span>{formatPrice(total)}</span>
         </div>
-        {fbtTotal > 0 && (
-          <div className="cart-summary-row">
-            <span>{t('summary.frequentlyBoughtTogether')}</span>
-            <span>+{formatPrice(fbtTotal)}</span>
-          </div>
-        )}
         <div className="cart-summary-row">
           <span>{t('summary.shipping')}</span>
           <span className={freeShipping ? 'free-shipping-text' : ''}>{freeShipping ? t('shipping.free') : formatPrice(4.90)}</span>
         </div>
         <div className={`cart-summary-row total ${totalAnimating ? 'total-animate' : ''}`}>
           <span>{t('summary.total')}</span>
-          <span>{formatPrice(grandTotal + (freeShipping ? 0 : 4.90))}</span>
+          <span>{formatPrice(total + (freeShipping ? 0 : 4.90))}</span>
         </div>
         <button
           className="btn btn-coral btn-lg"
@@ -209,38 +135,12 @@ export default function CartPage() {
         </button>
       </div>
 
-      {/* Frequently Bought Together */}
-      <div className="fbt-section">
-        <h3>{t('summary.frequentlyBoughtTogether')}</h3>
-        <div className="fbt-items">
-          {FBT_ITEMS.map(item => (
-            <label key={item.sku} className="fbt-item">
-              <input
-                type="checkbox"
-                checked={!!fbtChecked[item.sku]}
-                onChange={() => handleToggleFbt(item.sku)}
-              />
-              <div className="fbt-item-info">
-                <span className="fbt-item-name">{t(item.nameKey)}</span>
-                <span className="fbt-item-price">{formatPrice(item.price)}</span>
-              </div>
-            </label>
-          ))}
-        </div>
-        {fbtTotal > 0 && (
-          <div className="fbt-footer">
-            <span>{t('fbt.selectedTotal')} <strong>{formatPrice(fbtTotal)}</strong></span>
-            <button className="btn btn-primary btn-sm" onClick={handleAddFbt}>
-              {t('fbt.addToCart')}
-            </button>
-          </div>
-        )}
-      </div>
-
       {/* Cart Recommendations */}
-      <section className="recommendations">
-        <ProductSlider title={t('recommendations')} products={recommendations.slice(0, 4)} />
-      </section>
+      {recommendations.length > 0 && (
+        <section className="recommendations">
+          <ProductSlider title={t('recommendations')} products={recommendations} />
+        </section>
+      )}
     </div>
   );
 }

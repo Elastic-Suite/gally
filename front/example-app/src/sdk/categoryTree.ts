@@ -34,7 +34,7 @@ export function productCategoryTrail(
 ): ICategoryNode[] {
   const assigned = Array.isArray(source?.category) ? source!.category : [];
   // fetchCategoryTree() returns the root first, as a childless entry — the same place the rest
-  // of the app looks for it (Homepage's "Trending Now", ProductPage's recommendations).
+  // of the app looks for it (the homepage's "Our selection" row).
   const rootId = nodes.length > 0 ? String(nodes[0].id) : null;
   let deepest: ICategoryNode[] = [];
   let rootOnly: ICategoryNode[] = [];

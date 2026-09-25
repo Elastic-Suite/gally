@@ -45,11 +45,11 @@
       },
       "addToCart": {
         "event": "Camille ajoute le produit au panier",
-        "consequence": "→ Signal fort de conversion : le produit est boosté dans les résultats. Combiné avec VIEW:product, il alimente les recommandations \"Fréquemment consultés ensemble\"."
+        "consequence": "→ Signal fort de conversion : le produit est boosté dans les résultats."
       },
       "order": {
         "event": "Commande finalisée",
-        "consequence": "→ Boucle complète : les produits achetés ensemble alimentent les recommandations \"Fréquemment achetés ensemble\". Le chiffre d'affaires par requête permet d'optimiser la pertinence en fonction du revenu généré."
+        "consequence": "→ Boucle complète : le chiffre d'affaires par requête permet d'optimiser la pertinence en fonction du revenu généré."
       },
       "summary": {
         "eventTypes": "6 types d'événements",
@@ -57,7 +57,7 @@
         "popularityScore": "Score de popularité",
         "popularityScoreSuffix": "recalculé en continu",
         "recommendations": "Recommandations",
-        "recommendationsSuffix": "enrichies à chaque session",
+        "recommendationsSuffix": "issues des règles de ventes croisées, montées en gamme et produits associés",
         "relevance": "Pertinence",
         "relevanceSuffix": "optimisée par le comportement réel"
       }
@@ -125,12 +125,12 @@
       "cart": {
         "title_one": "{{count}} ajout au panier",
         "title_other": "{{count}} ajouts au panier",
-        "consequence": "Signal fort de conversion : ces produits sont boostés dans les résultats et alimentent les recommandations."
+        "consequence": "Signal fort de conversion : ces produits sont boostés dans les résultats."
       },
       "order": {
         "title_one": "{{count}} commande",
         "title_other": "{{count}} commandes",
-        "consequence": "Boucle complète : alimente les recommandations \"Fréquemment achetés ensemble\" et l'optimisation par revenu."
+        "consequence": "Boucle complète : alimente l'optimisation par revenu."
       }
     }
   },
@@ -158,10 +158,10 @@
     "categoryView": "Gally enregistre la visite de la catégorie \"{{categoryCode}}\" — permet d'analyser quelles catégories attirent le plus de trafic et d'optimiser le merchandising.",
     "cmsDisplay": "Gally enregistre l'affichage de {{count}} articles avec leur position — cms_page est une entité indexée à part entière, le contenu éditorial génère donc les mêmes signaux comportementaux que les produits.",
     "cmsPageView": "Gally enregistre la lecture de l'article « {{title}} » — l'engagement sur le contenu alimente les mêmes signaux comportementaux que les vues produit.",
-    "productView": "Gally enregistre la consultation du produit \"{{sku}}\" — alimente le score de popularité et les recommandations personnalisées.",
+    "productView": "Gally enregistre la consultation du produit \"{{sku}}\" — alimente le score de popularité.",
     "search": "Gally enregistre la recherche \"{{query}}\" ({{count}} résultats) — améliore l'autocomplete, détecte les recherches sans résultat, et affine la pertinence.",
     "display": "Gally enregistre l'affichage de {{count}} produits avec leur position — mesure le taux d'impression et optimise le classement.",
     "addToCart": "Gally enregistre l'ajout au panier de \"{{sku}}\" (×{{qty}}) — signal fort de conversion utilisé pour booster ce produit dans les résultats.",
-    "order": "Gally enregistre la commande #{{orderId}} ({{total}}€, {{count}} article(s)) — boucle le cycle : les produits achetés ensemble alimentent les recommandations \"Fréquemment achetés ensemble\"."
+    "order": "Gally enregistre la commande #{{orderId}} ({{total}}€, {{count}} article(s)) — boucle le cycle."
   }
 }

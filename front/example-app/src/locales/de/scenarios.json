@@ -24,7 +24,7 @@
       },
       "4": {
         "title": "Die Entscheidung",
-        "bubble": "Camille legt ein Kleid in den Warenkorb. Jetzt greifen die Hebel für den Bestellwert: <strong>−20 % Accessoire-Set</strong>, <strong>Schwelle für kostenlosen Versand</strong>, <strong>häufig zusammen gekauft</strong>.\n      <div class=\"story-tracking-hint\">📊 <strong>Tracking:</strong> Gally protokolliert <code>ADD_TO_CART</code> für jedes hinzugefügte Produkt — ein starkes Conversion-Signal, das das Produkt in den Ergebnissen hochstuft. <code>VIEW:product</code> und <code>ADD_TO_CART</code> zusammen speisen die Empfehlungen.</div>",
+        "bubble": "Camille legt ein Kleid in den Warenkorb. Jetzt greifen die Hebel für den Bestellwert: <strong>Schwelle für kostenlosen Versand</strong> und <strong>Cross-Selling-Empfehlungen</strong>, die Gally anhand des Warenkorbs auswählt.\n      <div class=\"story-tracking-hint\">📊 <strong>Tracking:</strong> Gally protokolliert <code>ADD_TO_CART</code> für jedes hinzugefügte Produkt — ein starkes Conversion-Signal, das das Produkt in den Ergebnissen hochstuft.</div>",
         "gain": "+15 % durchschnittlicher Bestellwert"
       },
       "5": {

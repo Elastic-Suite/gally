@@ -7,17 +7,6 @@
   },
   "title_one": "Votre Panier ({{count}} article)",
   "title_other": "Votre Panier ({{count}} articles)",
-  "bundle": {
-    "heading": "🎁 Pack accessoires −{{discount}}%",
-    "save": "Économisez",
-    "totalLabel": "Total pack :",
-    "addButton": "Ajouter le pack",
-    "items": {
-      "clutch": "Pochette assortie",
-      "belt": "Ceinture tissu",
-      "scarf": "Foulard léger"
-    }
-  },
   "shipping": {
     "unlocked": "✓ Livraison offerte !",
     "remainingPrefix": "Plus que",
@@ -26,21 +15,11 @@
   },
   "summary": {
     "subtotal": "Sous-total",
-    "frequentlyBoughtTogether": "Fréquemment achetés ensemble",
     "shipping": "Livraison",
     "total": "Total",
     "checkout": "Passer la commande"
   },
-  "fbt": {
-    "items": {
-      "sandals": "Sandales tressées",
-      "hat": "Chapeau de paille",
-      "earrings": "Boucles d'oreilles dorées"
-    },
-    "selectedTotal": "Total sélectionné :",
-    "addToCart": "Ajouter au panier"
-  },
-  "recommendations": "Complétez votre look",
+  "recommendations": "Complète bien votre panier",
   "checkout": {
     "steps": {
       "cart": "Panier",
