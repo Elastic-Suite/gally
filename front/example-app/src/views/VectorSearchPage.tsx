@@ -10,11 +10,11 @@ import { getSearchManager, MEDIA_BASE_URL } from '../sdk';
 import {
   COMPARE_ROW_FIELDS,
   fetchVectorSearchProducts,
-  isModelLanguage,
   getVectorDemoQueries,
   VECTOR_MAX_RESULTS,
   VectorSearchResult,
 } from '../sdk/vectorSearch';
+import ProductImage from '../components/ProductImage';
 
 // Keyword vs vector, same query, side by side.
 //
@@ -83,12 +83,33 @@ function ResultRow({
       <span className="vector-row-rank">{rank}</span>
       <Link href={`/product/${encodeURIComponent(product.sku)}`} className="vector-row-link">
         <span className="vector-row-thumb">
-          {image ? <img src={image} alt="" loading="lazy" /> : <span aria-hidden="true">📷</span>}
+          <ProductImage src={image} alt="" loading="lazy" />
         </span>
         <span className="vector-row-name">{name}</span>
       </Link>
       <span className="vector-row-score">{score === undefined ? '—' : formatScore(score)}</span>
     </li>
+  );
+}
+
+// Placeholder rows while a panel has nothing to show yet. Same `.vector-row` grid and the same 34px
+// thumb box as ResultRow, so a placeholder row is exactly as tall as the row that replaces it and
+// the page does not jump when results land. Bar widths vary per row so the column does not read as
+// a solid block; they are derived from the index, not random, so server and client render alike.
+function RowsSkeleton({ count }: { count: number }) {
+  return (
+    <ol className="vector-list" aria-hidden="true">
+      {Array.from({ length: count }, (_, i) => (
+        <li key={i} className="vector-row vector-row--skeleton">
+          <span className="skeleton skeleton-text" style={{ width: '0.9rem' }} />
+          <span className="vector-row-link">
+            <span className="vector-row-thumb skeleton-shimmer" />
+            <span className="skeleton skeleton-text" style={{ width: `${45 + ((i * 17) % 40)}%` }} />
+          </span>
+          <span className="skeleton skeleton-text vector-row-score" style={{ width: '2.2rem' }} />
+        </li>
+      ))}
+    </ol>
   );
 }
 
@@ -160,11 +181,12 @@ export default function VectorSearchPage() {
   const query = q.text;
   const [keyword, setKeyword] = useState<PanelState>(EMPTY_PANEL);
   const [vector, setVector] = useState<VectorSearchResult>(EMPTY_VECTOR);
-  const [kwLoading, setKwLoading] = useState(false);
-  const [vecLoading, setVecLoading] = useState(false);
+  // Both start as loading: before the first request lands the panels are empty, and treating
+  // that as a real result would flash the "no results" and "unavailable" states on every visit.
+  const [kwLoading, setKwLoading] = useState(true);
+  const [vecLoading, setVecLoading] = useState(true);
 
   const catalogCode = selectedLocalizedCatalog?.code;
-  const modelSpeaksLocale = isModelLanguage(selectedLocalizedCatalog?.locale);
   const demoQueries = getVectorDemoQueries(catalogCode);
 
   // Seed the box with this shop's first suggestion, and reseed when the shop changes. Both are
@@ -214,7 +236,8 @@ export default function VectorSearchPage() {
   // visitor moved to page 2 of the keyword list would make the untouched panel flash. The
   // panels still land together on a NEW query, because both effects fire on the same change.
   useEffect(() => {
-    if (!catalogCode || !query.trim()) return;
+    if (!catalogCode) return;
+    if (!query.trim()) { setKwLoading(false); return; }
     let cancelled = false;
     setKwLoading(true);
     runKeyword(catalogCode, query, q.kwPage).then(k => {
@@ -226,7 +249,8 @@ export default function VectorSearchPage() {
   }, [catalogCode, query, q.kwPage, runKeyword]);
 
   useEffect(() => {
-    if (!catalogCode || !query.trim()) return;
+    if (!catalogCode) return;
+    if (!query.trim()) { setVecLoading(false); return; }
     let cancelled = false;
     setVecLoading(true);
     fetchVectorSearchProducts(catalogCode, query, PAGE_SIZE, q.vecPage).then(v => {
@@ -324,20 +348,12 @@ export default function VectorSearchPage() {
           ))}
         </div>
         )}
-
-        {/* The model is monolingual English and so are the product names, in every
-            catalogue. Saying so beats letting a French visitor type `bijoux`, get a skirt
-            ranked first with a confident 0.41, and conclude vector search does not work. */}
-        {!modelSpeaksLocale && (
-          <p className="vector-language-note">{t('languageNote')}</p>
-        )}
       </div>
 
       <div className="vector-compare">
         <section className="vector-panel vector-panel--keyword">
           <header className="vector-panel-head">
             <h2>{t('keyword.title')}</h2>
-            <p>{t('keyword.subtitle')}</p>
             <span className="vector-panel-count">
               {kwLoading ? t('loading') : t('keyword.count', { count: keyword.total })}
             </span>
@@ -349,6 +365,8 @@ export default function VectorSearchPage() {
               <h3>{t('keyword.emptyTitle', { query })}</h3>
               <p>{t('keyword.emptyBody')}</p>
             </div>
+          ) : kwLoading && keyword.products.length === 0 ? (
+            <RowsSkeleton count={PAGE_SIZE} />
           ) : (
             <>
               <PanelPager
@@ -361,7 +379,7 @@ export default function VectorSearchPage() {
                 <span>{t('rows.product')}</span>
                 <span>{t('keyword.scoreLabel')}</span>
               </div>
-              <ol className="vector-list">
+              <ol className={`vector-list${kwLoading ? ' is-stale' : ''}`}>
                 {keyword.products.map((p: any, i: number) => (
                   <ResultRow
                     key={p.sku}
@@ -378,7 +396,6 @@ export default function VectorSearchPage() {
         <section className="vector-panel vector-panel--vector">
           <header className="vector-panel-head">
             <h2>{t('vector.title')}</h2>
-            <p>{t('vector.subtitle')}</p>
             <span className="vector-panel-count">
               {/* Describes the whole RANKED SET, not the current page — paging moves a window
                   over one ranking, it does not run a new one. "All 85 products, ranked by
@@ -400,6 +417,8 @@ export default function VectorSearchPage() {
               <h3>{t('vector.unavailableTitle')}</h3>
               <p>{t('vector.unavailableBody')}</p>
             </div>
+          ) : vecLoading && vector.products.length === 0 ? (
+            <RowsSkeleton count={PAGE_SIZE} />
           ) : (
             <>
               <PanelPager
@@ -412,7 +431,7 @@ export default function VectorSearchPage() {
                 <span>{t('rows.product')}</span>
                 <span>{t('vector.scoreLabel')}</span>
               </div>
-              <ol className="vector-list">
+              <ol className={`vector-list${vecLoading ? ' is-stale' : ''}`}>
                 {vector.products.map((p: any, i: number) => (
                   <ResultRow
                     key={p.sku}

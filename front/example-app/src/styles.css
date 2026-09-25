@@ -4,6 +4,13 @@
    Typography: Geist throughout (titles and body), matching elasticsuite.io
    ═══════════════════════════════════════════════════════════════ */
 
+/* Registered so it can be transitioned: drives the search border sweep (.search-bar). */
+@property --search-border-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 90deg;
+}
+
 :root {
   /* Colors */
   --indigo-900: #1e1b4b;
@@ -83,7 +90,7 @@
 
 body {
   font-family: var(--font-sans);
-  background: var(--gray-50);
+  background: var(--white);
   color: var(--gray-900);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -155,24 +162,45 @@ a:hover {
    search band below is the row that pins now, and two elements competing for `top: 0` would
    overlap. `z-index` went with the positioning — it is inert on a static block child, and
    leaving it would imply a stacking order this row no longer participates in. */
+/* Light since specs/feature-header-light-two-row.md, and it holds two rows: .header-inner and the
+   category nav. The tint lives here and NOT on .header-sticky-group, whose pinned search band
+   must paint nothing (specs/feature-sticky-search-band.md). */
 .header {
-  background: linear-gradient(135deg, var(--indigo-900) 0%, var(--indigo-700) 100%);
-  color: white;
-  padding: 0.75rem 2rem;
+  background: linear-gradient(180deg, var(--indigo-50) 0%, var(--white) 100%);
+  color: var(--gray-900);
+  padding: 0 2rem;
+  border-bottom: 1px solid var(--gray-200);
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+/* ACP open: the rows drop their surface so the scrim's tint and blur cover the whole screen,
+   not only what lies below the search band. The group sits above the scrim (z-index 100 vs 90),
+   so anything it paints would otherwise hide the tint. */
+.header-sticky-group:has(.search-bar-wrapper.overlay-open) .header {
+  background: transparent;
+  border-color: transparent;
+}
+.header-sticky-group:has(.search-bar-wrapper.overlay-open) .category-nav {
+  border-color: transparent;
+}
+/* Their white fill would otherwise show as grey pills through the dimmed row. */
+.header-sticky-group:has(.search-bar-wrapper.overlay-open) .context-select {
+  background-color: transparent;
 }
 
 .header-inner {
   max-width: var(--layout-max-width);
   margin: 0 auto;
+  padding: 1.1rem 0;
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 2.5rem;
   transition: filter 0.2s ease, opacity 0.2s ease;
 }
 
 /* When the search overlay is open, the rest of the header recedes along
    with the page behind it — only the search form itself stays crisp. */
-.header-sticky-group:has(.search-bar-wrapper.overlay-open) .header-inner {
+.header-sticky-group:has(.search-bar-wrapper.overlay-open) .header-inner,
+.header-sticky-group:has(.search-bar-wrapper.overlay-open) .category-nav {
   filter: blur(3px);
   opacity: 0.45;
   pointer-events: none;
@@ -211,7 +239,7 @@ a:hover {
   white-space: nowrap;
 }
 .header-logo-name {
-  color: var(--white);
+  color: var(--indigo-900);
 }
 .header-logo-accent {
   color: var(--coral-500);
@@ -220,139 +248,36 @@ a:hover {
 .header-nav {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 1.75rem;
   flex: 1;
   overflow-x: auto;
 }
 
-/* Plain nav links (Search Intelligence, Semantic search). Scoped to direct children so
-   the switch's own tabs below, which are nested, never pick up this hover background — it
-   would fight the sliding thumb.
-
-   The vertical padding is 0.7rem so these match the HEIGHT of the Products/Articles switch
-   beside them, and that number is derived, not tuned by eye: the switch's outer box is its
-   own 0.25rem track padding plus its tabs' 0.45rem, and 0.25 + 0.45 = 0.7. A plain link has
-   no track, so it has to carry both. Measured result: 44.1px for both, to the pixel.
-
-   inline-flex rather than the default inline for the same reason — it gives these the same
-   content-box height as .header-nav-tab, so the emoji (0.95rem, line-height 1) cannot push
-   the line box taller than the 0.85rem label the way it would in an inline context. `gap`
-   spaces the icon from the label, so the markup needs no whitespace between them. */
-.header-nav > a {
+/* Plain text links on the light header (specs/feature-header-light-two-row.md), the current one
+   underlined, shared with the footer's copy of the same component (SectionLinks). Direct
+   children only: the four links are the nav's children, nothing is nested. */
+.header-nav > a,
+.footer-nav > a {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  /* Colour, weight and track all match .header-nav-switch / .header-nav-tab exactly, so a
-     plain link and a switch segment are the same object to the eye. They used to differ on
-     all three — 0.8 alpha against 0.85, weight 500 against 600, and no track at all against
-     the switch's translucent well — which read as the Semantic search item being greyed out
-     or disabled next to Products/Articles. Any change to the switch's palette has to be
-     mirrored here. */
-  color: rgba(255, 255, 255, 0.85);
-  background: rgba(255, 255, 255, 0.12);
-  padding: 0.7rem 0.9rem;
-  border-radius: var(--radius-pill);
+  padding: 0.4rem 0;
+  color: var(--gray-700);
   font-size: 0.85rem;
-  font-weight: 600;
+  font-weight: 500;
   white-space: nowrap;
-  transition: all 0.2s;
+  border-bottom: 0.125rem solid transparent;
+  transition: color 0.15s, border-color 0.15s;
 }
-.header-nav > a:hover {
-  color: var(--white);
-  background: rgba(255, 255, 255, 0.2);
+.header-nav > a:hover,
+.footer-nav > a:hover {
+  color: var(--indigo-700);
 }
-/* The selected state copies the switch's sliding thumb — solid white, --indigo-800 text,
-   the same soft shadow — because that is what "selected" already looks like in this bar.
-   Declared after :hover at equal specificity so the current page keeps its treatment when
-   hovered, exactly as .header-nav-tab.active does. */
 .header-nav > a.active,
-.header-nav > a.active:hover {
-  color: var(--indigo-800);
-  background: var(--white);
-  box-shadow: var(--shadow-sm);
-}
-
-/* ─── Header nav switch (Products / Articles) ────────────── */
-/* The same segmented-switch idiom as the search results type switch
-   (.result-type-tabs), inverted for the dark header: the track is a translucent
-   white well instead of --gray-100, and the raised thumb is solid --white with
-   --indigo-800 text. Structure is identical on purpose — inline-grid with two 1fr
-   columns so both segments are the width of the wider one, which is what lets the
-   thumb slide by exactly one column with no JS measurement. */
-.header-nav-switch {
-  position: relative;
-  display: inline-grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.25rem;
-  padding: 0.25rem;
-  border-radius: var(--radius-pill);
-  background: rgba(255, 255, 255, 0.12);
-  flex-shrink: 0;
-}
-
-/* The sliding thumb: one pseudo-element behind both segments, so there is something
-   continuous to animate. Moved with `transform` only — compositor-only, and it can
-   never reflow the header row it sits in. Width = one grid column: the track minus
-   its 0.25rem padding either side and the 0.25rem gap, halved. */
-.header-nav-switch::before {
-  content: '';
-  position: absolute;
-  z-index: 0;
-  top: 0.25rem;
-  bottom: 0.25rem;
-  left: 0.25rem;
-  width: calc((100% - 0.75rem) / 2);
-  border-radius: var(--radius-pill);
-  background: var(--white);
-  box-shadow: var(--shadow-sm);
-  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease;
-}
-/* 100% is the thumb's own width — one column — so this lands it on the second
-   column, gap included. */
-.header-nav-switch[data-active='blog']::before {
-  transform: translateX(calc(100% + 0.25rem));
-}
-/* Off both sections (homepage, cart, /explain): no selection to show. The thumb is
-   faded out rather than removed, so it can slide back in from where it left. */
-.header-nav-switch[data-active='none']::before {
-  opacity: 0;
-}
-
-.header-nav-tab {
-  position: relative;
-  z-index: 1;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
-  padding: 0.45rem 1rem;
-  border-radius: var(--radius-pill);
-  color: rgba(255, 255, 255, 0.85);
-  font-size: 0.85rem;
-  font-weight: 600;
-  white-space: nowrap;
-  transition: color 0.15s;
-}
-.header-nav-tab:hover {
-  color: var(--white);
-}
-/* No background or shadow here — the thumb draws those. Declared after :hover, at
-   equal specificity, so the selected segment keeps its colour when hovered. */
-.header-nav-tab.active,
-.header-nav-tab.active:hover {
-  color: var(--indigo-800);
-}
-
-.header-nav-icon {
-  font-size: 0.95rem;
-  line-height: 1;
-}
-
-/* The slide is decoration; honour a reduced-motion preference by cutting it. */
-@media (prefers-reduced-motion: reduce) {
-  .header-nav-switch::before {
-    transition: none;
-  }
+.header-nav > a.active:hover,
+.footer-nav > a.active,
+.footer-nav > a.active:hover {
+  color: var(--indigo-700);
+  border-bottom-color: var(--indigo-600);
 }
 
 .header-controls {
@@ -369,23 +294,38 @@ a:hover {
 }
 
 .context-select {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  color: white;
-  padding: 0.4rem 0.75rem;
+  /* The native arrow cannot be moved away from the pill's end, only replaced: this one is two
+     gradient triangles, so it follows the text colour and sits 0.9rem in. */
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: var(--white);
+  background-image:
+    linear-gradient(45deg, transparent 50%, currentColor 50%),
+    linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position: calc(100% - 1.2rem) 50%, calc(100% - 0.9rem) 50%;
+  background-size: 0.3rem 0.3rem;
+  background-repeat: no-repeat;
+  border: 1px solid var(--gray-300);
+  color: var(--gray-800);
+  padding: 0.4rem 2.4rem 0.4rem 0.9rem;
   border-radius: var(--radius-pill);
   font-size: 0.8rem;
+  font-weight: 500;
   font-family: var(--font-sans);
   cursor: pointer;
   outline: none;
   transition: all 0.2s;
 }
 .context-select:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background-color: var(--gray-50);
+  border-color: var(--gray-400);
+}
+.context-select:focus-visible {
+  border-color: var(--indigo-600);
 }
 .context-select option {
-  background: var(--indigo-900);
-  color: white;
+  background: var(--white);
+  color: var(--gray-900);
 }
 
 /* ─── Header Search Band ─────────────────────────────────── */
@@ -468,24 +408,38 @@ a:hover {
   box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.25);
 }
 
+/* Gradient border: a white padding-box over a linear gradient in the border-box, indigo on the
+   left and coral on the right at rest (90deg). On focus the gradient's direction turns a full
+   circle, so the colours travel around the pill's edge - left, top, right, bottom; on blur it
+   turns back to 90deg, which runs the other way. A conic gradient was tried first: from the
+   centre of a pill this wide it reads as flat purple with a notch top and bottom. Only possible because
+   --search-border-angle is registered with @property at the top of this file - an unregistered
+   custom property cannot be interpolated and would jump. See
+   specs/feature-header-light-two-row.md. */
 .search-bar {
   width: 100%;
   padding: 0.85rem 1.5rem 0.85rem 3rem;
-  border: 1px solid var(--gray-300);
+  border: 0.125rem solid transparent;
   border-radius: var(--radius-pill);
-  background: var(--gray-100);
+  background:
+    linear-gradient(var(--white), var(--white)) padding-box,
+    linear-gradient(var(--search-border-angle), var(--indigo-600), var(--coral-500)) border-box;
   color: var(--gray-900);
   font-size: 1.05rem;
   font-family: var(--font-sans);
   outline: none;
-  transition: all 0.2s;
+  transition: --search-border-angle 0.9s ease-in-out, box-shadow 0.2s;
 }
 .search-bar::placeholder {
   color: var(--gray-500);
 }
 .search-bar:focus {
-  background: white;
-  border-color: var(--coral-400);
+  --search-border-angle: 450deg;
+}
+@media (prefers-reduced-motion: reduce) {
+  .search-bar {
+    transition: box-shadow 0.2s;
+  }
 }
 
 .search-icon {
@@ -506,12 +460,14 @@ a:hover {
   z-index: 90;
   /* The panel above owns no background of its own (see
      specs/feature-acp-visual-redesign.md), so this is the only ground the
-     panel's light text ever gets — it has to hide the page behind it on its
-     own. Tuned up twice for that reason (.55/20px → .72/28px → .92): at .72 a
-     product grid or hero behind the overlay still read through the columns and
-     fought the light text. At .92 the blur is only a faint hint of the page
-     underneath, which is all the glass look needs; legibility wins. */
-  background: rgba(30, 27, 75, 0.92);
+     panel's text ever gets — it has to hide the page behind it on its own.
+     A light wash since specs/feature-acp-light-glass.md (it was a .92 dark indigo,
+     at odds with the light header): pale indigo-50 at the top to indigo-100 at the
+     bottom, 88% opaque, so the white product cards still have a ground to stand
+     out from. The panel text is dark to match. */
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--indigo-50) 88%, transparent) 0%,
+    color-mix(in srgb, var(--indigo-100) 88%, transparent) 100%);
   /* Prefixed FIRST, standard LAST — not the usual cosmetic ordering. Next's CSS
      minifier (lightningcss) treats the two as one property and keeps only the last
      declaration, so with the standard one written first the build shipped
@@ -527,7 +483,7 @@ a:hover {
   overflow-y: auto;
   /* Stop scroll chaining. Without this, a wheel gesture that reaches the end of the
      scrim (or of a column below) continues into the page behind the overlay, so the
-     content under a 0.92-opaque scrim slides around while the user is reading the
+     content under the near-opaque scrim slides around while the user is reading the
      popup. `contain` keeps the gesture inside this scroller; SearchOverlay also locks
      the body while it is open, because a gesture that never touches a scrollable
      descendant would otherwise still reach the page. */
@@ -551,7 +507,7 @@ a:hover {
      room for one term, so they're floored at 12rem and products takes the rest. */
   grid-template-columns: minmax(12rem, 0.45fr) 2.6fr minmax(12rem, 0.45fr);
   gap: 1.5rem;
-  color: rgba(255, 255, 255, 0.92);
+  color: var(--gray-900);
 }
 
 /* Empty-query state: same panel envelope, single centered invitation. */
@@ -574,14 +530,14 @@ a:hover {
   font-family: var(--font-display);
   font-size: 1.9rem;
   font-weight: 700;
-  color: white;
+  color: var(--indigo-900);
   line-height: 1.25;
 }
 .search-prompt-subtitle {
   margin-top: 0.75rem;
   font-size: 1rem;
   line-height: 1.5;
-  color: rgba(255, 255, 255, 0.75);
+  color: var(--gray-600);
 }
 
 .search-overlay-col {
@@ -605,14 +561,14 @@ a:hover {
   gap: 0.75rem;
   cursor: pointer;
   transition: background 0.15s;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  border-bottom: 1px solid var(--gray-200);
   border-radius: var(--radius-sm);
 }
 .autocomplete-item:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--indigo-50);
 }
 .autocomplete-item.highlighted {
-  background: rgba(255, 255, 255, 0.16);
+  background: var(--indigo-100);
   box-shadow: inset 3px 0 0 var(--coral-400);
 }
 .autocomplete-item:last-child {
@@ -632,10 +588,7 @@ a:hover {
 
 /* Product suggestions get their own opaque white card — everything else in the
    panel sits directly on the blurred scrim, but cards need a solid surface to
-   stay readable, and the extra room lets them show bigger thumbs/text. Resets
-   `color` back to dark since the panel's own text color is now light (for the
-   text that sits directly on the blur), which would otherwise cascade in here
-   and make product text invisible against the white card. Stays horizontal
+   stay readable, and the extra room lets them show bigger thumbs/text. Stays horizontal
    (thumb left, text right) — only the 2-per-row grid above and the bigger
    thumb make it read closer to square, not a full vertical stack. */
 .autocomplete-item.autocomplete-product {
@@ -645,7 +598,6 @@ a:hover {
   border: none;
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
-  color: var(--gray-900);
 }
 /* Hover reads as one motion: the card lifts off the blur, its shadow deepens,
    the thumb pushes in slightly and the name takes the accent color. The generic
@@ -685,7 +637,7 @@ a:hover {
    nothing to contrast against — needs its own tint + a thicker ring to
    actually read as "selected" rather than a barely-there hairline. */
 .autocomplete-item.autocomplete-product.highlighted {
-  background: var(--indigo-50);
+  background: var(--indigo-100);
   box-shadow: var(--shadow-md), 0 0 0 3px var(--indigo-600);
 }
 
@@ -755,8 +707,8 @@ a:hover {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.6px;
-  color: rgba(255, 255, 255, 0.95);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--indigo-900);
+  border-bottom: 1px solid var(--gray-200);
 }
 
 .autocomplete-suggestion {
@@ -764,7 +716,7 @@ a:hover {
 }
 .autocomplete-suggestion-text {
   font-size: 1.05rem;
-  color: white;
+  color: var(--gray-900);
   font-weight: 600;
 }
 
@@ -773,7 +725,7 @@ a:hover {
 }
 .autocomplete-category-text {
   font-size: 1.05rem;
-  color: rgba(255, 255, 255, 0.95);
+  color: var(--gray-900);
   font-weight: 600;
 }
 
@@ -790,20 +742,20 @@ a:hover {
    one or two navigation rows in the third column, not a dense list. */
 .autocomplete-attribute-text {
   font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.95);
+  color: var(--gray-800);
   font-weight: 500;
 }
 .autocomplete-attribute-count {
   margin-left: auto;
   font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--gray-600);
   font-variant-numeric: tabular-nums;
 }
 
 .autocomplete-empty {
   padding: 1.1rem;
   font-size: 0.95rem;
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--gray-600);
   font-style: italic;
 }
 
@@ -817,10 +769,6 @@ a:hover {
    blurred scrim, so the shared light-gray shimmer (tuned for white cards)
    would wash out — re-themed lighter here. Product rows keep the original
    shimmer since their white card background is unchanged. */
-.autocomplete-skeleton-item:not(.autocomplete-skeleton-product) .skeleton-shimmer {
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.15) 25%, rgba(255, 255, 255, 0.32) 50%, rgba(255, 255, 255, 0.15) 75%);
-  background-size: 200% 100%;
-}
 .autocomplete-skeleton-item.autocomplete-skeleton-product {
   gap: 0.85rem;
   padding: 1rem;
@@ -853,25 +801,30 @@ a:hover {
   width: 45%;
 }
 
-/* ─── Cart Badge ─────────────────────────────────────────── */
+/* ─── Cart Badge ─── */
+/* An icon on the light header; the label is visually hidden text in the link (Header.tsx). */
 .cart-badge {
   position: relative;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  color: white;
-  padding: 0.5rem 1rem;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4rem;
+  color: var(--gray-800);
   border-radius: var(--radius-pill);
-  font-size: 0.85rem;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: color 0.2s;
 }
 .cart-badge:hover {
-  background: rgba(255, 255, 255, 0.2);
+  color: var(--indigo-700);
+}
+.cart-icon {
+  display: block;
+  width: 1.375rem;
+  height: 1.375rem;
 }
 .cart-count {
   position: absolute;
-  top: -4px;
-  right: -4px;
+  top: -0.25rem;
+  right: -0.5rem;
   background: var(--coral-500);
   color: white;
   width: 18px;
@@ -884,24 +837,47 @@ a:hover {
   justify-content: center;
 }
 
-/* ─── Hero Section ───────────────────────────────────────── */
+/* Read by screen readers, not drawn. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ─── Hero Section ─── */
+/* Light and centred since specs/feature-header-light-two-row.md: the dark gradient block moved
+   into the title as text colour. Full bleed through the negative margin, as before. */
 .hero {
-  background: linear-gradient(135deg, var(--indigo-900) 0%, var(--indigo-600) 60%, var(--coral-500) 100%);
-  color: white;
-  padding: 2.5rem 2rem;
+  background: radial-gradient(ellipse at 50% 0%, var(--indigo-50) 0%, transparent 65%), var(--white);
+  color: var(--gray-900);
+  padding: 4rem 2rem 4.5rem;
   text-align: center;
   margin: 0 -2rem 2rem;
-  border-radius: var(--radius-lg);
+  border-bottom: 1px solid var(--gray-200);
 }
 
 .hero h1 {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
+  font-size: 3rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  max-width: 20ch;
+  margin: 0 auto 1.25rem;
+  background: linear-gradient(90deg, var(--indigo-900) 0%, var(--indigo-600) 55%, var(--coral-500) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .hero p {
-  font-size: 1.2rem;
-  opacity: 0.9;
+  font-size: 1.1rem;
+  color: var(--gray-600);
   max-width: 600px;
   margin: 0 auto 2rem;
 }
@@ -980,6 +956,9 @@ a:hover {
   min-width: 220px;
   scroll-snap-align: start;
   cursor: pointer;
+  /* A column, so the body can fill whatever height the grid row gives the card. */
+  display: flex;
+  flex-direction: column;
 }
 .product-card:hover {
   transform: translateY(-4px);
@@ -1060,6 +1039,23 @@ a:hover {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* Stands in for a product picture that is missing or fails to load (ProductImage.tsx). It fills
+   whatever frame it is given - card, PDP, cart row, autocomplete thumb - and keeps the icon small
+   and pale so it reads as "no photo" rather than as content. */
+.product-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gray-300);
+}
+.product-image-placeholder svg {
+  width: 40%;
+  max-width: 64px;
+  height: auto;
 }
 
 /* Quick add: the add-to-cart affordance, a band across the bottom of the picture on hover. It
@@ -1292,6 +1288,15 @@ a:hover {
      line added a third row to this box, and the space for it came out of the padding so the card
      kept its height. See specs/feature-listing-card-sku.md. */
   padding: var(--product-card-body-padding-y) var(--product-card-body-padding);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* The name takes the spare height, so reference and price always sit on the card's bottom edge,
+   level across a row whether the name wraps to two lines or not. */
+.product-card-name-link {
+  flex: 1;
 }
 
 .product-card-name {
@@ -1444,8 +1449,8 @@ a:hover {
 }
 
 .facet-group {
-  margin-bottom: 1.5rem;
-  padding-bottom: 1.5rem;
+  margin-bottom: 0.5rem;
+  padding-bottom: 1rem;
   border-bottom: 1px solid var(--gray-100);
 }
 .facet-group:last-child {
@@ -2178,51 +2183,64 @@ a:hover {
   }
 }
 
-/* ─── Category Nav ───────────────────────────────────────── */
+/* ─── Category Nav ─── */
+/* The header's second row since specs/feature-header-light-two-row.md: plain text links, no
+   card. The negative margin cancels .header's 2rem side padding so the rule above the row runs
+   full width; the list itself is capped like every other header row. */
 .category-nav {
-  background: white;
-  border-radius: var(--radius-md);
-  padding: 1rem 0;
-  margin-bottom: 1.5rem;
-  box-shadow: var(--shadow-sm);
-  border: 1px solid var(--gray-200);
+  margin: 0 -2rem;
+  padding: 0 2rem;
+  border-top: 1px solid var(--gray-200);
+  transition: filter 0.2s ease, opacity 0.2s ease;
 }
 
 .category-nav-list {
+  max-width: var(--layout-max-width);
+  margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   list-style: none;
-  /* Row gap only: the pills stay shoulder to shoulder on one line as before, but a bar that
-     wraps (twelve top-level categories do) gets air between the rows. */
-  gap: 0.25rem 0;
-  padding: 0 1rem;
+  gap: 0 2rem;
+  padding: 0;
 }
 
-/* Block, not inline. Vertical padding on an inline box does not grow the line box, so the
-   pill painted above and below its own row — invisible on a single line thanks to
-   .category-nav's block padding, but on two rows the row-1 pills overlapped the row-2 text.
-   See specs/feature-category-trail-nav-and-breadcrumb.md. */
-.category-nav-item a {
+/* Block, not inline: vertical padding on an inline box does not grow the line box, so on a
+   wrapped bar row 1 painted over row 2. See specs/feature-category-trail-nav-and-breadcrumb.md.
+   Child combinator: the submenu's links are descendants of the item too, and keep their own
+   rules below. */
+.category-nav-item > a {
   display: block;
-  padding: 0.5rem 1rem;
+  padding: 0.85rem 0;
   font-size: 0.85rem;
   font-weight: 500;
-  color: var(--gray-600);
-  border-radius: var(--radius-pill);
-  transition: all 0.2s;
+  color: var(--gray-800);
   white-space: nowrap;
+  border-bottom: 0.125rem solid transparent;
+  transition: color 0.15s, border-color 0.15s;
 }
-/* .in-trail is an ancestor of the category being viewed: same pill, so the section is
+/* .in-trail is an ancestor of the category being viewed: same underline, so the section is
    visible in the bar without hovering, and .active stays the stronger of the two. */
-.category-nav-item a:hover,
-.category-nav-item a.in-trail,
-.category-nav-item a.active {
-  background: var(--indigo-50);
+.category-nav-item > a:hover,
+.category-nav-item > a.in-trail,
+.category-nav-item > a.active {
   color: var(--indigo-700);
+  border-bottom-color: var(--indigo-600);
 }
-.category-nav-item a.active {
+.category-nav-item > a.active {
   font-weight: 600;
+}
+/* Chevron for items with a submenu, drawn from two borders so it follows the text colour. */
+.category-nav-item.has-children > a::after {
+  content: '';
+  display: inline-block;
+  width: 0.35em;
+  height: 0.35em;
+  margin-left: 0.45em;
+  margin-bottom: 0.2em;
+  border-right: 0.1rem solid currentColor;
+  border-bottom: 0.1rem solid currentColor;
+  transform: rotate(45deg);
 }
 .category-nav-item {
   position: relative;
@@ -2235,11 +2253,14 @@ a:hover {
   top: 100%;
   left: 0;
   background: white;
-  box-shadow: var(--shadow-md);
+  border: 1px solid var(--gray-200);
+  box-shadow: var(--shadow-lg);
   border-radius: var(--radius-md);
   padding: 0.5rem 0;
   min-width: 200px;
-  z-index: 50;
+  /* Above .search-bar-wrapper (110): both sit in .header-sticky-group's stacking context, and
+     at 50 the menu slid under the search bar right below the row. */
+  z-index: 120;
   list-style: none;
 }
 .category-nav-submenu li a {
@@ -2431,16 +2452,44 @@ a:hover {
 }
 
 /* ─── Footer ─────────────────────────────────────────────── */
+/* Mirrors the light header (specs/feature-footer-light.md): the header's tint turned upside
+   down, the same lockup and section links as row 1, the powered-by line under a full-width
+   rule as row 2. */
 .footer {
-  background: var(--indigo-900);
-  color: rgba(255, 255, 255, 0.7);
-  padding: 2rem;
-  text-align: center;
+  background: linear-gradient(0deg, var(--indigo-50) 0%, var(--white) 100%);
+  color: var(--gray-600);
+  border-top: 1px solid var(--gray-200);
+  padding: 0 2rem;
   font-size: 0.85rem;
   margin-top: 4rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0 2.5rem;
 }
-.footer a {
-  color: var(--coral-400);
+.footer > .header-logo {
+  padding: 1.5rem 0;
+}
+.footer-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 1.75rem;
+}
+/* The rule breaks out of the footer's side padding on both sides, so it runs full width.
+   Centred: the floating Insights button sits at the bottom left. */
+.footer > p {
+  flex: 0 0 calc(100% + 4rem);
+  margin: 0 -2rem;
+  padding: 1.1rem 2rem;
+  border-top: 1px solid var(--gray-200);
+  text-align: center;
+}
+/* Scoped to the line, never `.footer a`: that would recolour the section links above. */
+.footer p a {
+  color: var(--indigo-700);
+  font-weight: 500;
 }
 
 /* ─── Mobile Filter Toggle ───────────────────────────────── */
@@ -3910,11 +3959,6 @@ a:hover {
   }
 }
 
-.result-type-icon {
-  font-size: 1rem;
-  line-height: 1;
-}
-
 /* --gray-200, not --gray-100: the track is --gray-100, so the inactive badge would
    otherwise disappear into it. */
 .result-type-count {
@@ -4204,20 +4248,20 @@ a:hover {
 .autocomplete-blog-title {
   font-size: 0.9rem;
   line-height: 1.35;
-  color: rgba(255, 255, 255, 0.95);
+  color: var(--gray-900);
 }
 
 .autocomplete-blog-meta {
   margin-top: 0.2rem;
   font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--gray-600);
 }
 
 /* Marks the matched words inside a blog title — shows why the article came back
    when the query isn't in the title verbatim. */
 .autocomplete-mark {
   background: transparent;
-  color: var(--coral-400);
+  color: var(--coral-600);
   font-weight: 700;
 }
 
@@ -4341,18 +4385,6 @@ a:hover {
   border-color: var(--indigo-800);
 }
 
-.vector-language-note {
-  text-align: left;
-  padding: 0.85rem 1.1rem;
-  margin-top: 1.25rem;
-  font-size: 0.85rem;
-  line-height: 1.5;
-  color: var(--gray-800);
-  background: var(--gray-100);
-  border-left: 3px solid var(--warning);
-  border-radius: var(--radius-sm);
-}
-
 .vector-compare {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -4382,12 +4414,6 @@ a:hover {
   font-family: var(--font-display);
   font-size: 1.1rem;
   color: var(--gray-900);
-}
-.vector-panel-head p {
-  margin-top: 0.2rem;
-  font-size: 0.8rem;
-  line-height: 1.4;
-  color: var(--gray-500);
 }
 .vector-panel-count {
   display: inline-block;
@@ -4426,6 +4452,16 @@ a:hover {
   list-style: none;
   margin: 0;
   padding: 0;
+  transition: opacity 0.15s;
+}
+/* A new query or page is loading: the previous rows stay put, so the panel keeps its height, and
+   fade back so they do not read as the answer. */
+.vector-list.is-stale {
+  opacity: 0.45;
+}
+/* Placeholder rows (RowsSkeleton) are not results: no hover tint. */
+.vector-row.vector-row--skeleton:hover {
+  background: none;
 }
 
 /* Rank | thumb + name (the link) | score. The NAME is the flexible column — it is what
@@ -4525,9 +4561,8 @@ a:hover {
 
 /* The interpretive key to the page, not small print — so it is a full-width callout rather
    than a grey line of 0.8rem text under a rule, which is what it was and which nobody
-   scrolling past 85 result rows was ever going to read. Same callout family as
-   .vector-language-note (padding, tint, left accent rule, radius); indigo rather than amber
-   because this is the explanation, not a warning. Full-bleed, matching .vector-head and
+   scrolling past 85 result rows was ever going to read. Padding, tint, left accent rule and
+   radius make it a callout; indigo because this is the explanation. Full-bleed, matching .vector-head and
    .vector-compare — no max-width. */
 .vector-footnote {
   margin-top: 2rem;

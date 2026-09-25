@@ -1,6 +1,9 @@
 # Feature: vector demo queries per catalogue
 
 ## Status: implemented
+
+> **Superseded in part** by `feature-vector-search-demo-wording.md`: French and German catalogs now get
+> their own suggestions, picked by testing them against the live index.
 ## Page/Component
 `src/sdk/vectorSearch.ts`, `src/views/VectorSearchPage.tsx`.
 
@@ -60,10 +63,10 @@ rigged queries and an audience is right to distrust the whole demo. The claim th
 not that semantic search wins everywhere, it is that it answers what keyword search cannot answer
 at all.
 
-**English keys only.** The model is `all-MiniLM-L6-v2`, monolingual English, and a French or
-German query returns confident nonsense. A shop's French and German localized catalogs therefore
-get no entry: the page already warns there, and offering suggestions that cannot work would
-contradict the warning sitting directly beneath them.
+**French and German keys too.** They were left out at first, on the grounds that the model is English
+only. Tested against the live index, short phrases and synonyms in French and German do return relevant
+products where the names are translated, so each localized catalog now has its own list. See
+`feature-vector-search-demo-wording.md`.
 
 ## SDK contract used
 

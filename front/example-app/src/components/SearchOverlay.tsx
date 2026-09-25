@@ -7,6 +7,7 @@ import { useMounted } from '../hooks/useMounted';
 import { getProductFields } from './ProductCard';
 import QuickAdd from './QuickAdd';
 import { CmsPage, cmsPageUrl } from '../hooks/useCms';
+import ProductImage from './ProductImage';
 
 // What `Response.getTermSuggestions()` returns, per entity type: the engine's own
 // popular-search terms, not a client-side filter of a hardcoded list.
@@ -391,7 +392,7 @@ function ProductsColumn({ results, loading, highlightedKey, onSelect }: {
                 onClick={() => onSelect(`/product/${encodeURIComponent(sku)}`)}
               >
                 <div className="autocomplete-thumb">
-                  {image ? <img src={image} alt={name} style={{ width: 80, height: 80, objectFit: 'contain' }} /> : 'IMG'}
+                  <ProductImage src={image} alt={name} style={{ width: 80, height: 80, objectFit: 'contain' }} />
                 </div>
                 <div className="autocomplete-info">
                   <div className="name">{name}</div>

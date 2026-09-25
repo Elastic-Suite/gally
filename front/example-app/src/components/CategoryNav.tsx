@@ -7,9 +7,9 @@ import { useCatalog } from '../contexts/CatalogContext';
 import { ICategoryNode } from '../sdk/catalogs';
 import { findTrail } from '../sdk/categoryTree';
 
-// No activeCode prop: this renders from app/[locale]/category/layout.tsx, whose segment
-// has no [code], and from the homepage, which has no active category at all. Reading the
-// route directly keeps it correct in both places without threading a prop through.
+// No activeCode prop: this renders from the Header, in the app shell, above every route
+// segment - so no [code] reaches it as a prop. Reading the route directly keeps it correct on
+// every page, the ones with no active category included.
 export default function CategoryNav() {
   const { categories } = useCatalog();
   const params = useParams();
@@ -55,7 +55,7 @@ function CategoryItem({
   // underneath when the bar has wrapped — that is deliberate, see the spec.
   return (
     <li
-      className="category-nav-item"
+      className={`category-nav-item${hasChildren ? ' has-children' : ''}`}
       onMouseEnter={() => hasChildren && setOpen(true)}
       onMouseLeave={() => setOpen(false)}
     >
@@ -64,7 +64,9 @@ function CategoryItem({
         className={linkClass(cat.id, activeCode, trail)}
         aria-current={activeCode === cat.id ? 'page' : undefined}
       >
-        {cat.name} {cat.count > 0 && <span style={{ opacity: 0.5, fontSize: '0.8em' }}>({cat.count})</span>}
+        {/* No count on the top row: it reads as plain navigation in the header now. The
+            submenu below keeps its counts. */}
+        {cat.name}
       </Link>
       {hasChildren && open && (
         <ul className="category-nav-submenu">

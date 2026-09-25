@@ -1,5 +1,7 @@
 # Bugfix: the ACP scrim lost its blur in the Next build
 
+> **Superseded in part** by `feature-acp-light-glass.md`: the tint is a light indigo wash now, not the .92 indigo. The blur fix and every MUST NOT bullet here stand.
+
 ## Status: implemented
 ## Page/Component: src/styles.css (`.search-overlay-scrim`)
 

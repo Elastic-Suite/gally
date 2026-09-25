@@ -1,5 +1,7 @@
 # Bugfix: Homepage hero sat flush against the header search bar
 
+> **Superseded in part** by `feature-header-light-two-row.md`: the hero is light now; the "gradient background" it mentions is gone. The spacing fix stands.
+
 ## Status: implemented
 ## Page/Component: src/styles.css (`.hero`)
 

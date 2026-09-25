@@ -1,5 +1,7 @@
 # Feature: Autocomplete panel (ACP) visual redesign
 
+> **Superseded in part** by `feature-acp-light-glass.md`: the scrim is a light indigo wash and the panel text is dark. The layout, sizes and keyboard rules here stand.
+
 ## Status: implemented
 ## Page/Component: src/components/SearchBar.tsx, src/components/SearchOverlay.tsx, src/styles.css
 

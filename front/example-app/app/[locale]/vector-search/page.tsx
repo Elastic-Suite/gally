@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const resolved = await resolveLocale(locale);
   if (!resolved) return {};
   const lang = languageOf(resolved.localizedCatalog);
-  return { title: tServer(lang, 'common', 'meta.vectorSearch', 'Semantic search'), ...NOINDEX };
+  return { title: tServer(lang, 'common', 'meta.vectorSearch', 'Vector search'), ...NOINDEX };
 }
 
 // No server pre-fetch, unlike /search. The view is a console: it owns a query the
