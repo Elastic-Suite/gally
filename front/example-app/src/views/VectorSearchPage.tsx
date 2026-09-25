@@ -6,7 +6,8 @@ import Link from '../components/LocaleLink';
 import Pagination from '../components/Pagination';
 import { useCatalog } from '../contexts/CatalogContext';
 import { useTracking } from '../hooks/useTracking';
-import { getSearchManager, MEDIA_BASE_URL } from '../sdk';
+import { getSearchManager } from '../sdk';
+import { useMediaUrl } from '../contexts/ConfigContext';
 import {
   COMPARE_ROW_FIELDS,
   fetchVectorSearchProducts,
@@ -76,7 +77,8 @@ function ResultRow({
   score: number | undefined;
 }) {
   const name = Array.isArray(product.name) ? product.name[0] : product.name || product.sku;
-  const image = product.image ? `${MEDIA_BASE_URL}${product.image}` : '';
+  const toMediaUrl = useMediaUrl();
+  const image = toMediaUrl(product.image);
 
   return (
     <li className="vector-row">
@@ -445,16 +447,6 @@ export default function VectorSearchPage() {
           )}
         </section>
       </div>
-
-      {/* Not a footnote in the "small print" sense — this is the interpretive key to the whole
-          page, and the one thing a visitor must read before concluding that the right-hand engine
-          simply wins. It is styled as a callout for that reason. It stays BELOW the panels because
-          it opens with "note the asymmetry": it is an observation about results already seen, and
-          it does not read as anything before them. */}
-      <aside className="vector-footnote">
-        <h2 className="vector-footnote-title">{t('footnoteTitle')}</h2>
-        <p>{t('footnote')}</p>
-      </aside>
     </div>
   );
 }

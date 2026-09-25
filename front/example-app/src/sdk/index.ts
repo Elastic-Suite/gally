@@ -11,7 +11,6 @@ const INTERNAL_BASE_URI = process.env.GALLY_INTERNAL_API_URL || 'http://router/a
 
 const BASE_URI =
   typeof window === 'undefined' ? INTERNAL_BASE_URI : PUBLIC_BASE_URI;
-export const MEDIA_BASE_URL = 'https://gally.localhost/media/catalog/product';
 
 // Configuration singleton
 const config = new Configuration({ baseUri: BASE_URI });

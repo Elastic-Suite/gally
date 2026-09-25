@@ -2,6 +2,9 @@ x-base-php-env : &php-base-env
   APP_ENV: dev
   XDEBUG_MODE: off
   MAILER_DSN: ${MAILER_DSN:-smtp://mailer:1025}
+  # The e2e suite asserts on admin grids that hold every catalog at once, so CI loads the
+  # legacy catalog only and the assertions stay independent of which demo catalogs ship.
+  GALLY_SAMPLE_DATA_CATALOGS: default
 
 x-base-php: &php-base
   build:

@@ -83,6 +83,7 @@ Verified live against this stack, not assumed:
 - [x] The closing note is a **full-width callout** (`.vector-footnote`, 1336px — same as the panels),
       titled "Reading this comparison", indigo tint + left accent rule, 0.95rem body. It was a grey
       0.8rem line under a hairline rule, which at this page length nobody would read.
+      Superseded: the callout was removed on request (2026-09-25).
 - [x] Because that callout sits ~4587px down, its core claim is ALSO carried by the vector panel's
       subtitle, visible without scrolling: "It ranks the whole catalogue — it never filters, and
       never comes back empty."
@@ -215,7 +216,8 @@ storefront section.
   the embedded corpus, identical for a brilliant query and a nonsense one — kNN ranks, it does not
   filter. Rendering "85 results" beside the keyword panel's honest "0" is the single lie that would
   discredit the whole screen. The string is `vector.count` = "Top {{count}} of {{corpus}} products,
-  by similarity"; the footnote explains the asymmetry. Keep both.
+  by similarity". The footnote that explained the asymmetry was removed on request (2026-09-25),
+  so this string is now the only hint. Keep it.
 - **Keep `cardigan` in `VECTOR_DEMO_QUERIES`.** It is the control, not a fifth example: keyword
   returns 7 and both panels agree. Without it the page is four rigged queries and an audience is
   right to distrust it. It makes the claim the true one — semantic search does not beat keyword
@@ -241,10 +243,10 @@ storefront section.
   panel refetch and flash the other.
 - **Keep the per-panel score labels.** BM25 ~64 next to cosine ~0.56 with no labels invites the one
   reading the page must not produce: that the right-hand engine scores worse.
-- **Keep the ranks-not-filters claim in the closing callout.** The vector panel subtitle that also carried
-  it was removed on request (`feature-vector-search-demo-wording.md`), so the callout is now its only home.
-- **Keep `.vector-footnote` styled as a callout, not as small print.** It is the interpretive key to
-  the page, not a caveat to bury.
+- ~~Keep the ranks-not-filters claim in the closing callout~~ and ~~keep `.vector-footnote` styled as
+  a callout~~. Superseded: the closing callout ("Reading this comparison") was removed on request
+  (2026-09-25). The page no longer states the ranks-not-filters claim in words; only `vector.count`
+  hints at it. Do not re-add the callout without asking.
 - **Keep the header search-band suppression scoped to this one pathname.** Widening it, or
   switching it to a CSS `display:none`, breaks the reclaimed space or re-mounts a second search
   input the page does not want.

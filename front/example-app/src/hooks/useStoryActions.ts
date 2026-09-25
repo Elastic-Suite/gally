@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useLocaleHref } from '../contexts/LocaleContext';
 import { useTranslation } from 'react-i18next';
 import { useCatalog } from '../contexts/CatalogContext';
+import { useGallyConfig } from '../contexts/ConfigContext';
 import { useSearchBarRef } from '../contexts/SearchBarContext';
 import { useSearch } from './useSearch';
 import { getProductFields } from '../components/ProductCard';
@@ -41,6 +42,7 @@ export function useStoryActions({ step, active, minimized }: UseStoryActionsOpti
   const { categories } = useCatalog();
   const categoriesRef = useRef(categories);
   categoriesRef.current = categories;
+  const config = useGallyConfig();
 
   const searchBarRef = useSearchBarRef();
   const typingRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -181,7 +183,7 @@ export function useStoryActions({ step, active, minimized }: UseStoryActionsOpti
         if (match) sku = match[1];
       }
       if (!sku && products.length > 0) {
-        sku = getProductFields(products[0]).sku;
+        sku = getProductFields(products[0], config).sku;
       }
 
       actionTimerRef.current = setTimeout(() => {
@@ -214,7 +216,7 @@ export function useStoryActions({ step, active, minimized }: UseStoryActionsOpti
     };
     actionTimerRef.current = setTimeout(tryFlow, 500);
     return () => cleanup();
-  }, [resolveTarget, showToast, cleanup, t]);
+  }, [resolveTarget, showToast, cleanup, t, config]);
 
   // ── Effect: run action when step changes ─────────────────
 

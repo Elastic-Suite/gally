@@ -8,8 +8,8 @@ where every fetcher is wrapped in React `cache()` so `generateMetadata` and the 
 call. They resolve real 404s with `notFound()`, emit metadata and `JsonLd`, then hand the result to
 the view as `initialData` / `initialProduct` — currently on `search`, `category/[code]` and
 `product/[sku]`. 12 of 13 `page.tsx` import `src/sdk/server.ts`; the exception is `app/page.tsx`,
-which resolves the default catalog and redirects. `app/layout.tsx` and
-`app/[locale]/category/layout.tsx` are the only non-async server components.
+which resolves the default catalog and redirects. `app/layout.tsx` is the only non-async server
+component.
 
 Every file in `src/views/` is `'use client'` and renders complete in server HTML, refetching only
 when the user sorts, filters or pages. `app/providers.tsx` is the client boundary of the layout, fed
@@ -43,7 +43,6 @@ app/
     ├── vector-search/page.tsx      # → VectorSearchPage  (NOINDEX)
     ├── cms/[slug]/page.tsx         # → CmsPage
     ├── category/
-    │   ├── layout.tsx              # renders <CategoryNav> above every category route
     │   └── [code]/
     │       ├── layout.tsx          # guard: notFound() when the category trail doesn't resolve,
     │       │                       #   then warms the listing fetch so the page renders in one pass
@@ -78,7 +77,7 @@ refetching) and they keep the 404 guarantee from depending on whether a boundary
 ```
 src/
 ├── sdk/
-│   ├── index.ts          # Singletons: getClient(), getSearchManager(), getTracker(), MEDIA_BASE_URL.
+│   ├── index.ts          # Singletons: getClient(), getSearchManager(), getTracker(), BASE_URI.
 │   │                     #   Routes Node through http://router/api — NOT gally.localhost
 │   ├── server.ts         # React cache()-wrapped server fetches: fetchProductBySku,
 │   │                     #   fetchCategoryProducts, fetchSearchProducts, fetchCmsPageById,
@@ -122,7 +121,7 @@ src/
 │   ├── SearchOverlay.tsx   # Full-screen 3-col autocomplete popup (portaled). Also exports the
 │   │                       #   matching helpers: getSuggestionMatches, getAutocompleteAttributes,
 │   │                       #   attributeFilterUrl, highlightTerms, getCategoryMatches
-│   ├── CategoryNav.tsx     # Category tree with hover submenus
+│   ├── CategoryNav.tsx     # Category row with hover submenus, rendered inside Header
 │   ├── Facets.tsx          # Sidebar facets (checkbox/slider/boolean/swatch/category/search/
 │   │                       #   show-more) + active-filter chips
 │   ├── VariantSelector.tsx # PDP option axes from `configurable_attributes` — colour as facet
@@ -139,8 +138,7 @@ src/
 │   ├── skeletons.tsx       # ProductGridSkeleton, FacetsSkeleton(+Body), ProductPageSkeleton,
 │   │                       #   BlogPostSkeleton, CategoryPageSkeleton, SearchPageSkeleton —
 │   │                       #   consumed by RouteSkeleton and by the views' own loading branches
-│   ├── RouteSkeleton.tsx   # Picks the skeleton for a pending navigation from its target href;
-│   │                       #   also redraws CategoryNav, which the swap would otherwise remove
+│   ├── RouteSkeleton.tsx   # Picks the skeleton for a pending navigation from its target href
 │   ├── ScrollToTop.tsx     # Resets scroll on navigation
 │   ├── Footer.tsx
 │   └── — demo scaffolding, client-only, code-split out of the server payload —
