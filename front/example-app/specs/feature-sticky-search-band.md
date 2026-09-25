@@ -1,6 +1,6 @@
 # Feature: the search bar stays put while a page scrolls
 
-## Status: implemented
+## Status: replaced by specs/feature-header-scrolls-with-page.md (the header is no longer sticky, and the blurred layer is removed)
 ## Page/Component: src/styles.css (`.header-sticky-group`, `.header`, `.header-search-band`, `.facets-sidebar`), src/components/Header.tsx (`--header-nav-height`)
 
 ## Problem

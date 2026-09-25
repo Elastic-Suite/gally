@@ -3,6 +3,8 @@
 ## Status: implemented
 ## Page/Component: src/components/SearchOverlay.tsx (`onScrimScroll`, the `--acp-scroll` reset effect), src/styles.css (`.header-sticky-group:has(.overlay-open)`, `.search-overlay-panel`, `.search-overlay-col`)
 
+Note: since specs/feature-header-scrolls-with-page.md the header is not sticky. `--acp-scroll` is now clamped to the part of the header still on screen when the popup opened (`--acp-page-offset`).
+
 ## Problem
 
 With the popup open, the search bar hovered in place while the content scrolled underneath it. Two

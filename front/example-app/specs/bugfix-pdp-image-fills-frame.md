@@ -24,14 +24,15 @@ the full frame magnifies them and looks worse than the letterbox does.
 
 ## How the two cases are told apart
 
-On the media shard in the image URL - `/l/l/`, `/t/b/`, `/f/i/` are the generated catalogs. The
-shard is what actually correlates with the image resolution, which is the real reason for the
-difference. Catalog code would need a lookup and would be wrong if a catalog ever mixed sources.
+On the catalog's media folder in the image URL - `/papershop/`, `/toolbox/`, `/fashion/` are the
+generated catalogs. Each catalog ships its images in its own folder, so the URL carries it and no
+catalog lookup is needed. The folder is what actually correlates with the image resolution, which
+is the real reason for the difference.
 
 ## SDK contract used
 
 None changed. `getProductFields()` already returns `image` as a full URL
-(`src/sdk/productFields.ts:59`), which carries the shard.
+(`src/sdk/productFields.ts:59`), which carries the catalog's media folder.
 
 ## Tracking (required)
 

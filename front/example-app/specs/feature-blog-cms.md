@@ -44,7 +44,7 @@ blog posts + 7 legacy buying guides).
   **`url_key` is NOT filterable** (keyword-analyzed text, no `untouched` sub-field —
   the API 500s with "Unable to identify the field property to use for filtering").
   That is why the detail route keys off `id`, not the slug.
-- Images are product media paths (`/v/d/vd10-ly_main.jpg`) → prefix with `MEDIA_BASE_URL`.
+- Images are product media paths (`/v/d/vd10-ly_main.jpg`) → build the URL with `mediaUrl(config, path)` (`src/sdk/config.ts`).
 
 The two `selectedFields` bullets above originally documented the opposite behaviour, and the
 implementation was built against them — see `bugfix-cms-selected-fields-projection.md`.

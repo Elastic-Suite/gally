@@ -14,6 +14,8 @@ x-base-php-env : &php-base-env
   DATABASE_URL: postgresql://${POSTGRES_USER:-app}:${POSTGRES_PASSWORD:-!ChangeMe!}@database:5432/${POSTGRES_DB:-app}?serverVersion=${POSTGRES_VERSION:-16}&charset=${POSTGRES_CHARSET:-utf8}
   ELASTICSEARCH_URL: https://${SEARCH_USER:-admin}:${SEARCH_PASSWORD:-!ChangeMe0!}@${SEARCH_HOST:-search}:9200/
   ELASTICSEARCH_SSL_VERIFICATION: false
+  # Comma separated sample data catalog folders to load; empty loads every one of them.
+  GALLY_SAMPLE_DATA_CATALOGS: ${GALLY_SAMPLE_DATA_CATALOGS:-}
 
 x-base-php: &php-base
   build:
@@ -185,7 +187,8 @@ services:
       - cluster.name=os-docker-cluster       # Search cluster name
       - node.name=gally-search-node       # Name the node that will run in this container
       - discovery.type=single-node
-      - OPENSEARCH_JAVA_OPTS=-Xms1g -Xmx1g # Set min and max JVM heap sizes to at least 50% of system RAM
+      # Fixture loads push the base 1g heap past OpenSearch's 85% circuit breaker, silently disabling any running Transform (see SessionTransformProvisioner).
+      - OPENSEARCH_JAVA_OPTS=-Xms2g -Xmx2g  # Set min and max JVM heap sizes to at least 50% of system RAM
       - bootstrap.memory_lock=true           # Disable JVM heap memory swapping
       - cluster.routing.allocation.disk.threshold_enabled=false     # Avoid ES going read-only because low disk space availability
       - plugins.ml_commons.only_run_on_ml_node=false

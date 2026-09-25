@@ -23,8 +23,7 @@
   "checkout": {
     "steps": {
       "cart": "Cart",
-      "shipping": "Shipping",
-      "payment": "Payment",
+      "details": "Delivery & payment",
       "confirmation": "Confirmation"
     },
     "shippingInfo": "Shipping Information",
@@ -39,7 +38,6 @@
       "expiry": "MM/YY",
       "cvc": "CVC"
     },
-    "continueToPayment": "Continue to Payment →",
     "payment": "Payment",
     "totalToPay": "Total to Pay",
     "placeOrder": "Place Order — {{amount}}",

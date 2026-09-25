@@ -92,7 +92,7 @@ posts + 7 legacy buying guides). Everything below differs from the product path:
   `bin/console cache:pool:clear --all` — from the host, `make sf c="cache:pool:clear --all"`.
   Otherwise the new facets silently never appear in `aggregations`, even though the documents
   and mapping are correct.
-- CMS `image` values are product media paths → prefix with `MEDIA_BASE_URL`, like a product image.
+- CMS `image` values are product media paths → build the URL with `mediaUrl(config, path)`, like a product image.
 
 ## Product Data Shape
 
@@ -125,7 +125,7 @@ field goes through `NestedAttribute`, whose `getSanitizedData()` calls `current(
 and returns only the first child.
 
 Key source fields:
-- `sku` (string), `name` (string[]), `image` (string path like `/v/a/file.jpg` — prefix with `MEDIA_BASE_URL`)
+- `sku` (string), `name` (string[]), `image` (string path like `/v/a/file.jpg` — build the URL with `mediaUrl(config, path)`)
 - `price` (array of `{ price, original_price, is_discounted, group_id }`)
 - `description` (string[] with HTML), `type_id` (raw source only, not a GraphQL field)
 - `fashion_color` / `fashion_material` (array of `{ label, value }`) — require `{ label value }` sub-selection
@@ -140,8 +140,12 @@ Key source fields:
 - `visibility` (array of `{ label, value }`)
 - `new` (boolean), `url_key`, `cost`
 
-**Media URL:** product images are relative paths. Prefix with `MEDIA_BASE_URL`
-(`https://gally.localhost/media/catalog/product`) for full URLs. Exported from `sdk/index.ts`.
+**Media URL:** product images are relative paths. The base is the Gally setting
+`gally.base_url.media`, read from `public_configurations` once per render by
+`fetchPublicConfiguration()` (`sdk/server.ts`), scoped to the localized catalog. Build full URLs
+with `mediaUrl(config, path)` (`sdk/config.ts`): on the server with the awaited config, in client
+components with `useGallyConfig()` or `useMediaUrl()` (`contexts/ConfigContext.tsx`). Never
+hardcode the host. See `specs/feature-public-configuration.md`.
 ### Unset booleans in raw `_source` are `[]`, not `false`
 
 An attribute a product does not carry is indexed as an **empty array**, not `false` and not
