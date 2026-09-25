@@ -1,7 +1,6 @@
 'use client';
 
 import { ReactElement } from 'react';
-import CategoryNav from './CategoryNav';
 import {
   BlogPostSkeleton, CategoryPageSkeleton, ProductPageSkeleton, SearchPageSkeleton,
 } from './skeletons';
@@ -20,20 +19,9 @@ export default function RouteSkeleton({ href }: { href: string }): ReactElement 
   // on the rest keeps this independent of how many catalogs exist.
   const path = `/${href.replace(/^\/+/, '').split('/').slice(1).join('/')}`;
 
-  if (path.startsWith('/category/')) {
-    // CategoryNav lives in app/[locale]/category/layout.tsx, which is inside the children
-    // AppShell swaps out — so without drawing it here the shared nav bar would blink out on
-    // every category click, the exact regression
-    // specs/feature-persist-shared-ui-across-navigation.md fixed. It renders from
-    // CatalogContext, so it costs nothing and looks identical; only CategoryItem's hover
-    // state is lost, and the pointer has just left the link anyway.
-    return (
-      <>
-        <CategoryNav />
-        <CategoryPageSkeleton />
-      </>
-    );
-  }
+  // No CategoryNav here any more: it lives in the header, outside the children AppShell swaps
+  // out, so it stays on screen by itself (specs/feature-header-light-two-row.md).
+  if (path.startsWith('/category/')) return <CategoryPageSkeleton />;
   if (path.startsWith('/product/')) return <ProductPageSkeleton />;
   // The blog LIST is client-fetched and renders its own loading state; only an article has
   // a server fetch to wait on.

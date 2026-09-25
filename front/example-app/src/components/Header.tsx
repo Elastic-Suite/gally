@@ -5,10 +5,11 @@ import Link from './LocaleLink';
 import { useTranslation } from 'react-i18next';
 import { useAppPathname } from '../contexts/LocaleContext';
 import { useCatalog } from '../contexts/CatalogContext';
-import { defaultListingPath } from '../sdk/categoryTree';
 import { useCart } from '../contexts/CartContext';
-import brandMark from '../assets/gally-rabbit.svg';
 import SearchBar from './SearchBar';
+import CategoryNav from './CategoryNav';
+import BrandLockup from './BrandLockup';
+import SectionLinks from './SectionLinks';
 
 export default function Header() {
   const { t } = useTranslation('common');
@@ -17,34 +18,24 @@ export default function Header() {
     setCatalog, setLocalizedCatalog, catalogs, categories, loadingCatalogs,
   } = useCatalog();
   const { itemCount } = useCart();
-  // Locale-free: usePathname() would return `/com_en/blog`, against which every route
-  // test below is false. That is what had silently killed the nav's active state.
+  // Locale-free: usePathname() would return `/com_en/blog`. The section links' active state
+  // lives in SectionLinks now; this one only picks the route without a search band.
   const pathname = useAppPathname();
   const groupRef = useRef<HTMLDivElement | null>(null);
   const navRef = useRef<HTMLElement | null>(null);
 
   const localizedCatalogs = selectedCatalog?.localizedCatalogs || [];
 
-  const isActive = (path: string) => pathname === path ? 'active' : '';
-
   // /vector-search is the one route that supplies its own search input. See the band below.
   const hideSearchBand = pathname === '/vector-search';
 
-  // Which segment of the header switch is on. 'none' is a real state: the homepage, the
-  // cart and /explain are inside neither section, and the switch must then show no
-  // selection at all rather than lying about one.
-  const navSection = pathname.startsWith('/category')
-    ? 'products'
-    : pathname.startsWith('/blog')
-      ? 'blog'
-      : 'none';
 
   // Expose the real rendered heights so CSS can offset against them instead of guessing:
   //  --header-height     the whole group — the search overlay's top padding.
-  //  --header-nav-height just the nav row — how far the group is pulled up when it sticks, so
-  //                      the nav scrolls out of view and the search band lands at the viewport
-  //                      top. See .header-sticky-group in styles.css.
-  // Both are measured, because both change with viewport width: the nav row wraps on mobile.
+  //  --header-nav-height the <header> — logo row AND category row — which is how far the group
+  //                      is pulled up when it sticks, so both rows scroll out of view and the
+  //                      search band lands at the viewport top. See .header-sticky-group.
+  // Both are measured, because both change with viewport width: both rows wrap on mobile.
   useLayoutEffect(() => {
     const group = groupRef.current;
     const nav = navRef.current;
@@ -63,7 +54,7 @@ export default function Header() {
 
   // Flag "the page has scrolled" on the group. The blurred layer around the search bar keys off
   // it (styles.css, .search-bar-wrapper::before): at rest the bar sits on the page background
-  // and has nothing to separate from. The threshold is the nav row's own height — the exact
+  // and has nothing to separate from. The threshold is the <header>'s own height — the exact
   // point at which the group has slid far enough that the band is the topmost row and content
   // starts passing behind the bar.
   //
@@ -96,63 +87,8 @@ export default function Header() {
     <div className="header-sticky-group" ref={groupRef}>
       <header className="header" ref={navRef}>
         <div className="header-inner">
-          {/* Mark + wordmark: the asset is the rabbit alone, so the "Gally example" type
-              is set here. The words are a brand name, not copy — never translated. Both
-              spans are aria-hidden with the accessible name on the link, so the lockup is
-              announced once rather than as mark + two words. */}
-          <Link href="/" className="header-logo" aria-label={t('brand.ariaLabel')}>
-            {/* CRA resolved an SVG import to a URL string; Next resolves it to a
-                StaticImageData object, so the URL now lives on .src */}
-            <img src={brandMark.src} alt="" className="header-logo-mark" />
-            <span className="header-logo-text" aria-hidden="true">
-              <span className="header-logo-name">Gally</span>
-              <span className="header-logo-accent">example</span>
-            </span>
-          </Link>
-
-          {/* No Home item — the brand lockup above is the link to `/`. */}
-          <nav className="header-nav">
-            {/* Products and Articles are the two storefront destinations, so they read as
-                one segmented switch — the same idiom as the search results type switch,
-                inverted for the dark bar. data-active drives the sliding thumb in CSS;
-                'none' parks it and fades it out on every other route. See
-                .header-nav-switch::before. Search Intelligence stays a plain link outside
-                the switch: it is an expert-mode tool, not a third storefront section. */}
-            <div className="header-nav-switch" data-active={navSection}>
-              <Link
-                href={defaultListingPath(categories)}
-                className={`header-nav-tab ${navSection === 'products' ? 'active' : ''}`}
-                aria-current={navSection === 'products' ? 'page' : undefined}
-              >
-                <span className="header-nav-icon" aria-hidden="true">🛍️</span>
-                {t('nav.products')}
-              </Link>
-              <Link
-                href="/blog"
-                className={`header-nav-tab ${navSection === 'blog' ? 'active' : ''}`}
-                aria-current={navSection === 'blog' ? 'page' : undefined}
-              >
-                <span className="header-nav-icon" aria-hidden="true">📰</span>
-                {t('nav.cms')}
-              </Link>
-            </div>
-            <Link href="/explain" className={`expert-only ${isActive('/explain')}`}>{t('nav.searchIntelligence')}</Link>
-            {/* Deliberately NOT `expert-only`, unlike /explain beside it: that class is
-                display:none under the default `direction` audience mode (see .mode-direction
-                .expert-only), which is why this link was invisible when it first shipped. The
-                comparison is the thing this demo is for, so it is always reachable.
-                Also deliberately outside .header-nav-switch: that switch is a two-way
-                Products/Articles control with a sliding thumb sized `1fr 1fr`, and this is not
-                a third storefront section. */}
-            <Link
-              href="/vector-search"
-              className={isActive('/vector-search')}
-              aria-current={pathname === '/vector-search' ? 'page' : undefined}
-            >
-              <span className="header-nav-icon" aria-hidden="true">✨</span>
-              {t('nav.vectorSearch')}
-            </Link>
-          </nav>
+          <BrandLockup />
+          <SectionLinks className="header-nav" />
 
           <div className="context-selectors">
             <select
@@ -175,11 +111,24 @@ export default function Header() {
             </select>
           </div>
 
+          {/* Icon only on screen; the label stays in the accessible name as visually hidden
+              text rather than aria-label, so the count after it is announced too. */}
           <Link href="/cart" className="cart-badge">
-            🛒 {t('cart.link')}
+            <svg className="cart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <circle cx="9" cy="20" r="1.4" />
+              <circle cx="18" cy="20" r="1.4" />
+              <path d="M2.5 3h2.2l2.4 11.2a1.5 1.5 0 0 0 1.5 1.2h8.9a1.5 1.5 0 0 0 1.5-1.1L21 7H6" />
+            </svg>
+            <span className="visually-hidden">{t('cart.link')}</span>
             {itemCount > 0 && <span className="cart-count">{itemCount}</span>}
           </Link>
         </div>
+
+        {/* The category row is part of the header since specs/feature-header-light-two-row.md:
+            here in the app shell it is outside <main>, so no navigation ever swaps it out. It is
+            inside <header> on purpose — navRef measures both rows, so the sticky group pulls both
+            above the fold and the search band still lands at the viewport top. */}
+        <CategoryNav />
       </header>
 
       {/* The band is omitted on /vector-search ONLY. That page carries its own full-width

@@ -9,6 +9,7 @@ import { useCatalog } from '../contexts/CatalogContext';
 import { useLocaleHref } from '../contexts/LocaleContext';
 import { useSearch } from '../hooks/useSearch';
 import ProductSlider from '../components/ProductSlider';
+import ProductImage from '../components/ProductImage';
 
 const FREE_SHIPPING_THRESHOLD = 180;
 
@@ -107,10 +108,7 @@ export default function CartPage() {
       {items.map(item => (
         <div key={`${item.sku}-${item.variant}`} className="cart-item">
           <div className="cart-item-image">
-            {item.image
-              ? <img src={item.image} alt={item.name} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-              : '👗'
-            }
+            <ProductImage src={item.image} alt={item.name} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
           </div>
           <div className="cart-item-info">
             <h4>{item.name}</h4>

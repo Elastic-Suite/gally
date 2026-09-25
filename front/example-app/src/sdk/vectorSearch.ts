@@ -167,6 +167,15 @@ export async function fetchVectorSearchProducts(
 // reason has not changed: without it each list is rigged queries and an audience is right to
 // distrust the page.
 export const VECTOR_DEMO_QUERIES: Record<string, string[]> = {
+  // The French and German lists were picked by running each candidate against the live index and
+  // keeping those whose top vector hits are relevant, preferring ones the keyword side misses
+  // (0 results): short phrases and synonyms work, long intent sentences mostly do not. The model
+  // is English-first, so these are best effort. com's product names are English in every locale.
+  com_fr: [
+    'pantalon large',
+    'tenue pour un mariage',
+    'bracelet',
+  ],
   com_en: [
     'jewellery',
     'wedding guest outfit',
@@ -182,11 +191,35 @@ export const VECTOR_DEMO_QUERIES: Record<string, string[]> = {
     'fix a shelf to a brick wall',
     'drill',
   ],
+  toolbox_fr: [
+    'lunettes de protection',
+    'couper un tuyau en métal',
+    'souder',
+    'perceuse',
+  ],
+  toolbox_de: [
+    'Akkuschrauber',
+    'Wand streichen',
+    'Schutzbrille',
+    'Bohrmaschine',
+  ],
   fashion_en: [
     'something to wear to the beach',
     'wedding guest outfit',
     'gift for my wife',
     'dress',
+  ],
+  fashion_fr: [
+    'tenue de soirée',
+    "pull chaud pour l'hiver",
+    'cadeau pour ma femme',
+    'robe',
+  ],
+  fashion_de: [
+    'etwas für den Strand',
+    'warmer Pullover für den Winter',
+    'Abendkleid',
+    'Kleid',
   ],
   // The first one is the best argument on this shop: it pulls the whole furniture range out of a
   // catalogue that also sells pencils, on intent alone.
@@ -195,16 +228,22 @@ export const VECTOR_DEMO_QUERIES: Record<string, string[]> = {
     'a present for a child',
     'fountain pen',
   ],
+  papershop_fr: [
+    'siège de bureau',
+    'carnet de notes',
+    'aménager un bureau à la maison',
+    'stylo plume',
+  ],
+  // "Füllfederhalter" is the showcase: no product uses the word, so keyword search finds nothing,
+  // and vector search returns every "Füllhalter".
+  papershop_de: [
+    'Füllfederhalter',
+    'Notizbuch',
+    'Märchen',
+  ],
 };
 
 /** This catalogue's suggestions, or none. Never another catalogue's. */
 export function getVectorDemoQueries(localizedCatalog: string | undefined): string[] {
   return (localizedCatalog && VECTOR_DEMO_QUERIES[localizedCatalog]) || [];
-}
-
-// Locales the deployed embedding model actually speaks.
-const ENGLISH_LOCALES = ['en_US', 'en_GB'];
-
-export function isModelLanguage(locale: string | undefined): boolean {
-  return !!locale && ENGLISH_LOCALES.includes(locale);
 }

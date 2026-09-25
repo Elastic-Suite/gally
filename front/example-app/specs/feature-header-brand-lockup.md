@@ -1,5 +1,7 @@
 # Feature: Header brand lockup — official "elasticsuite solutions" SVG
 
+> **Superseded in part** by `feature-header-light-two-row.md`: the "dark surface" point no longer holds; the header is light.
+
 ## Status: SUPERSEDED by specs/feature-logo-gally-example.md
 > The header no longer renders this lockup. The rabbit was cropped out of the asset and
 > "Gally example" is now set as type beside it — which is the reversal this spec's own
