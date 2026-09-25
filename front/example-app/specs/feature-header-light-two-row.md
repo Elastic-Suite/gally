@@ -35,7 +35,7 @@ Supersedes, each on the point named:
 - [~] Cart: an icon; the count badge shows when the cart is not empty; the label "Panier" / "Cart" /
       "Warenkorb" is still read by screen readers (visually hidden text).
 - [~] Search input: 2px gradient border (indigo to coral) on white. On focus the colours sweep once
-      around the pill's edge (0.9s). On blur they sweep back the other way. No motion under
+      around the pill's edge (1.4s, slowed from 0.9s). On blur they sweep back the other way. No motion under
       `prefers-reduced-motion`.
 - [x] With the ACP open, the blue tint and blur of the scrim cover the whole screen, header rows
       included. Only the search input stays sharp, and the header rows dim as before.
