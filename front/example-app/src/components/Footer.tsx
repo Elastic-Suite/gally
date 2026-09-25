@@ -5,16 +5,16 @@ import SectionLinks from './SectionLinks';
 export default function Footer() {
   const { t } = useTranslation('common');
   return (
-    // Mirrors the header (specs/feature-footer-light.md): the same lockup and section links
-    // as a first row, the powered-by line under a full-width rule.
+    // One row (specs/feature-footer-single-row.md): the header's lockup on the left, the
+    // powered-by line in the centre, the header's section links on the right.
     <footer className="footer">
       <BrandLockup />
-      <SectionLinks className="footer-nav" />
       <p>
         {/* Gally's own product page on the vendor site. Not gally.io — that domain belongs
             to an unrelated product. */}
-        {t('footer.poweredBy')} <a href="https://elasticsuite.io/products/gally/" target="_blank" rel="noreferrer">Gally</a> &mdash; {t('footer.tagline')}
+        {t('footer.poweredBy')} <a href="https://elasticsuite.io/products/gally/" target="_blank" rel="noreferrer">Gally</a>
       </p>
+      <SectionLinks className="footer-nav" />
     </footer>
   );
 }

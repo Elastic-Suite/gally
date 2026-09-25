@@ -3,8 +3,7 @@
     "ariaLabel": "Gally example — aller à l'accueil"
   },
   "footer": {
-    "poweredBy": "Propulsé par",
-    "tagline": "Démo des fonctionnalités du SDK Gally"
+    "poweredBy": "Propulsé par"
   },
   "nav": {
     "products": "Produits",
