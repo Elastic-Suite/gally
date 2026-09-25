@@ -1,0 +1,180 @@
+import { cache } from 'react';
+import { BASE_URI, getSearchManager } from './index';
+import { GallyConfig } from './config';
+import { fetchCatalogs, findLocalizedCatalog, fetchCategoryTree } from './catalogs';
+import { productFields, productDetailFields, CMS_FIELDS, CMS_METADATA } from './fields';
+
+// Server-side data fetching for the three crawlable routes. These run in Server
+// Components, so `getSearchManager()` resolves to the internal base URI (see ./index) —
+// the public gally.localhost host is unreachable from inside the container.
+//
+// Each of these deliberately mirrors the corresponding client hook's request shape
+// exactly: same metadata, same selectedFields, same filter syntax. If they drift, the
+// page rendered on the server and the page the hook refetches after hydration disagree,
+// and the content visibly changes under the user.
+//
+// They all swallow errors into null/empty rather than throwing. A failed fetch should
+// degrade to the client-side path that existed before Phase 3, not 500 the whole route.
+
+// The product selection depends on which catalogue the row belongs to (see ./fields.ts), and
+// these fetchers are handed a localized-catalog code. resolveLocale() is cache()d over the same
+// catalog list the route already resolved, so this is a map lookup, not another request.
+//
+// Falling back to '' yields the common fields alone: no variant axes and no catalogue badge,
+// which is the same degradation as an unknown catalogue and still renders.
+const catalogCodeOf = async (localizedCatalog: string): Promise<string> =>
+  (await resolveLocale(localizedCatalog))?.catalog.code ?? '';
+
+export const fetchProductBySku = cache(async (
+  localizedCatalog: string,
+  sku: string
+): Promise<any | null> => {
+  try {
+    // searchQuery is passed (rather than left empty) purely to make the SDK pick
+    // product_search over product_catalog, which 400s without a currentCategoryId — the
+    // equal filter is what actually guarantees this exact product. Same reasoning, and
+    // the same shape, as ProductPage's useSearch call.
+    const response = await getSearchManager().search({
+      localizedCatalog,
+      metadata: 'product',
+      searchQuery: sku,
+      filters: [{ sku: { eq: sku } }],
+      currentPage: 1,
+      pageSize: 1,
+      isAutocomplete: false,
+      // Not PRODUCT_FIELDS: the PDP reads type_id and configurable_attributes out of the raw
+      // `source`, and ProductPage's useSearch asks for the same list. See ./fields.ts.
+      selectedFields: productDetailFields(await catalogCodeOf(localizedCatalog)),
+    });
+    return response.getCollection()[0] ?? null;
+  } catch {
+    return null;
+  }
+});
+
+export interface ServerSearchResult {
+  products: any[];
+  total: number;
+  pageCount: number;
+  aggregations: any[];
+}
+
+export const fetchCategoryProducts = cache(async (
+  localizedCatalog: string,
+  categoryId: string,
+  pageSize = 20
+): Promise<ServerSearchResult> => {
+  try {
+    const response = await getSearchManager().search({
+      localizedCatalog,
+      metadata: 'product',
+      categoryId,
+      currentPage: 1,
+      pageSize,
+      isAutocomplete: false,
+      selectedFields: productFields(await catalogCodeOf(localizedCatalog)),
+      filters: [],
+    });
+    return {
+      products: response.getCollection(),
+      total: response.getTotalCount(),
+      pageCount: response.getLastPage(),
+      aggregations: response.getAggregations(),
+    };
+  } catch {
+    return { products: [], total: 0, pageCount: 0, aggregations: [] };
+  }
+});
+
+// The /search listing. `sortField: '_score'` and `sortDirection: 'desc'` are not defaults
+// picked here — they are what SearchPage passes on its first render, and the seeded state
+// is only reused while the hook's option key still matches, so a drift in either value
+// silently turns into a client refetch and the skeleton this exists to avoid.
+//
+// An empty query browses everything: the SDK needs a non-empty searchQuery to pick
+// product_search over product_catalog (which 400s without a category), and '*' is what
+// useSearch sends for the same case.
+export const fetchSearchProducts = cache(async (
+  localizedCatalog: string,
+  searchQuery: string,
+  pageSize = 20
+): Promise<ServerSearchResult> => {
+  try {
+    const response = await getSearchManager().search({
+      localizedCatalog,
+      metadata: 'product',
+      searchQuery: searchQuery || '*',
+      currentPage: 1,
+      pageSize,
+      isAutocomplete: false,
+      selectedFields: productFields(await catalogCodeOf(localizedCatalog)),
+      filters: [],
+      sortField: '_score',
+      sortDirection: 'desc',
+    });
+    return {
+      products: response.getCollection(),
+      total: response.getTotalCount(),
+      pageCount: response.getLastPage(),
+      aggregations: response.getAggregations(),
+    };
+  } catch {
+    return { products: [], total: 0, pageCount: 0, aggregations: [] };
+  }
+});
+
+export const fetchCmsPageById = cache(async (
+  localizedCatalog: string,
+  id: string
+): Promise<any | null> => {
+  try {
+    // Fetched by `id`, not by slug: url_key is keyword-analyzed text with no `untouched`
+    // sub-field, so it cannot be filtered on exactly. Mirrors BlogPostPage's filter.
+    const response = await getSearchManager().search({
+      localizedCatalog,
+      metadata: CMS_METADATA,
+      filters: [{ equalFilter: { field: 'id', eq: id } }],
+      currentPage: 1,
+      pageSize: 1,
+      isAutocomplete: false,
+      selectedFields: CMS_FIELDS,
+    });
+    return response.getCollection()[0] ?? null;
+  } catch {
+    return null;
+  }
+});
+
+// generateMetadata() and the page component both need the resolved catalog, and each
+// route re-resolves it independently of the layout. cache() collapses all of that into
+// one request per render pass.
+export const resolveLocale = cache(async (locale: string) => {
+  const catalogs = await fetchCatalogs();
+  return findLocalizedCatalog(catalogs, locale);
+});
+
+
+// Gally's public settings (today only gally.base_url.media), read by the layout, every page body
+// and every generateMetadata() that maps a product or a CMS page. cache() makes that one request
+// per render pass. Scoped: a value overridden for this localized catalog wins over the general
+// one (the API reads localizedCatalogCode). `public_configurations` needs no token.
+export const fetchPublicConfiguration = cache(async (localizedCatalog: string): Promise<GallyConfig> => {
+  try {
+    const params = new URLSearchParams({ localizedCatalogCode: localizedCatalog });
+    const res = await fetch(`${BASE_URI}/public_configurations?${params}`, {
+      headers: { Accept: 'application/ld+json' },
+    });
+    const data = await res.json();
+    return Object.fromEntries(
+      (data['hydra:member'] || []).map((c: any) => [c.path, c.value]),
+    );
+  } catch {
+    return {};
+  }
+});
+
+// The category tree is now read three times per request — the route guard, its
+// generateMetadata and the page body. Uncached that is three identical GraphQL calls.
+export const cachedCategoryTree = cache(async (catalogId: number, localizedCatalogId: number) =>
+  fetchCategoryTree(catalogId, localizedCatalogId)
+);

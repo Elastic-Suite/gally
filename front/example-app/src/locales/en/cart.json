@@ -1,0 +1,47 @@
+{
+  "empty": {
+    "title": "Your Cart",
+    "heading": "Your cart is empty",
+    "body": "Start shopping to add products.",
+    "browse": "Browse products"
+  },
+  "title_one": "Your Cart ({{count}} item)",
+  "title_other": "Your Cart ({{count}} items)",
+  "shipping": {
+    "unlocked": "✓ Free shipping unlocked!",
+    "remainingPrefix": "Only",
+    "remainingSuffix": "left for free shipping",
+    "free": "Free"
+  },
+  "summary": {
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "total": "Total",
+    "checkout": "Checkout"
+  },
+  "recommendations": "Goes well with your cart",
+  "checkout": {
+    "steps": {
+      "cart": "Cart",
+      "details": "Delivery & payment",
+      "confirmation": "Confirmation"
+    },
+    "shippingInfo": "Shipping Information",
+    "placeholders": {
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "address": "Address",
+      "city": "City",
+      "zip": "ZIP Code",
+      "cardNumber": "Card Number",
+      "expiry": "MM/YY",
+      "cvc": "CVC"
+    },
+    "payment": "Payment",
+    "totalToPay": "Total to Pay",
+    "placeOrder": "Place Order — {{amount}}",
+    "orderConfirmed": "Order Confirmed!",
+    "orderConfirmedBody": "Thank you for your order. A tracking event has been sent to Gally."
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "brand": {
+    "ariaLabel": "Gally example — zur Startseite"
+  },
+  "footer": {
+    "poweredBy": "Betrieben mit"
+  },
+  "nav": {
+    "products": "Produkte",
+    "searchIntelligence": "Such-Intelligenz",
+    "cms": "Blog",
+    "vectorSearch": "Vektorsuche"
+  },
+  "cart": {
+    "link": "Warenkorb"
+  },
+  "actions": {
+    "filters": "Filter"
+  },
+  "meta": {
+    "search": "Suche",
+    "cart": "Warenkorb",
+    "checkout": "Kasse",
+    "explain": "Such-Intelligenz",
+    "closing": "Zusammenfassung",
+    "breadcrumb": "Navigationspfad",
+    "home": "Startseite",
+    "vectorSearch": "Vektorsuche",
+    "pagination": "Seitennummerierung"
+  }
+}

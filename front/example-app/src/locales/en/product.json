@@ -1,0 +1,29 @@
+{
+  "card": {
+    "new": "New",
+    "onSale": "On Sale",
+    "pureMaterial": "100% {{material}}",
+    "eco": "Sustainable materials",
+    "ecoShort": "Eco",
+    "outOfStock": "Out of Stock",
+    "addToCart": "Add to cart",
+    "chooseOptions": "Choose options",
+    "unavailable": "Unavailable",
+    "added": "✓ Added"
+  },
+  "page": {
+    "type": {
+      "configurable": "Configurable",
+      "simple": "Simple"
+    },
+    "sku": "SKU: {{sku}}",
+    "material": "Material:",
+    "inStock": "✓ In Stock ({{count}} available)",
+    "inStockNoCount": "✓ In Stock",
+    "outOfStockLong": "✕ Out of Stock",
+    "addToCart": "Add to Cart",
+    "wishlist": "♡ Wishlist",
+    "notFound": "Product not found",
+    "recommendations": "You May Also Like"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "breadcrumb": "Home / Vector search",
+  "title": "Keyword search vs. vector search",
+  "intro": "The same query, run twice against the same catalogue. On the left, the keyword engine matches words. On the right, vector search matches meaning — it compares the embedding of your query with the embedding of every product, so it can answer a request whose words appear nowhere in the catalogue.",
+  "placeholder": "Describe what you are looking for…",
+  "submit": "Compare",
+  "tryLabel": "Try:",
+  "loading": "Searching…",
+  "keyword": {
+    "title": "Keyword search",
+    "count_one": "{{count}} result",
+    "count_other": "{{count}} results",
+    "emptyTitle": "No results for “{{query}}”",
+    "emptyBody": "Not one product contains these words. There is no spelling mistake to correct and no synonym configured, so the keyword engine has nothing to match on — the shopper hits a dead end.",
+    "scoreLabel": "BM25 score"
+  },
+  "vector": {
+    "title": "Vector search",
+    "count": "Top {{count}} of {{corpus}} products, by similarity",
+    "unavailableTitle": "Vector search unavailable",
+    "unavailableBody": "Vector search returned no results for this query. Try again in a moment, or pick another suggestion.",
+    "scoreLabel": "Similarity",
+    "countAll": "All {{corpus}} products, ranked by similarity"
+  },
+  "rows": {
+    "product": "Product"
+  }
+}

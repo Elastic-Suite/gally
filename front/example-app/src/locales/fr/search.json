@@ -1,0 +1,39 @@
+{
+  "bar": {
+    "placeholder": "Rechercher des produits..."
+  },
+  "overlay": {
+    "suggestionsTitle": "🔍 Recherches populaires",
+    "productsTitle": "Produits",
+    "categoryTitle": "📁 Catégorie",
+    "promptTitle": "Commencez à taper pour trouver votre prochain coup de cœur",
+    "promptSubtitle": "Produits, catégories et recherches tendance apparaissent au fil de la frappe — deux lettres suffisent pour démarrer.",
+    "noSuggestions": "Aucun terme de recherche correspondant",
+    "noProducts": "Aucun produit correspondant",
+    "noCategories": "Aucune catégorie correspondante",
+    "blogTitle": "📝 Blog",
+    "noBlog": "Aucun article correspondant"
+  },
+  "page": {
+    "breadcrumb": "Accueil / Recherche",
+    "typeProducts": "Produits",
+    "typeBlog": "Articles",
+    "noBlogTitle": "Aucun article ne correspond à cette recherche",
+    "noBlogBody": "Rien n'a encore été écrit à ce sujet — essayez l'onglet Produits, ou parcourez le blog par thème.",
+    "allProducts": "Tous les produits",
+    "resultsFor": "Résultats pour « {{query}} »",
+    "searching": "Recherche en cours…",
+    "resultCount_one": "{{count}} résultat",
+    "resultCount_other": "{{count}} résultats",
+    "sort": {
+      "relevance": "Pertinence",
+      "nameAsc": "Nom A→Z",
+      "priceAsc": "Prix : croissant",
+      "priceDesc": "Prix : décroissant"
+    },
+    "emptyTitle": "Aucun résultat trouvé",
+    "emptyBody": "Essayez un autre terme de recherche ou ajustez vos filtres.",
+    "prev": "‹ Précédent",
+    "next": "Suivant ›"
+  }
+}

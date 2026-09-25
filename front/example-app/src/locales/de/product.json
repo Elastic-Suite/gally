@@ -1,0 +1,29 @@
+{
+  "card": {
+    "new": "Neu",
+    "onSale": "Im Angebot",
+    "pureMaterial": "100 % {{material}}",
+    "eco": "Nachhaltige Materialien",
+    "ecoShort": "Öko",
+    "outOfStock": "Nicht auf Lager",
+    "addToCart": "In den Warenkorb",
+    "chooseOptions": "Optionen wählen",
+    "unavailable": "Nicht verfügbar",
+    "added": "✓ Hinzugefügt"
+  },
+  "page": {
+    "type": {
+      "configurable": "Konfigurierbar",
+      "simple": "Einfach"
+    },
+    "sku": "Artikelnummer: {{sku}}",
+    "material": "Material:",
+    "inStock": "✓ Auf Lager ({{count}} verfügbar)",
+    "inStockNoCount": "✓ Auf Lager",
+    "outOfStockLong": "✕ Nicht auf Lager",
+    "addToCart": "In den Warenkorb",
+    "wishlist": "♡ Merkliste",
+    "notFound": "Produkt nicht gefunden",
+    "recommendations": "Das könnte Ihnen auch gefallen"
+  }
+}

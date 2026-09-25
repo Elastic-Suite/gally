@@ -1,0 +1,31 @@
+{
+  "brand": {
+    "ariaLabel": "Gally example — aller à l'accueil"
+  },
+  "footer": {
+    "poweredBy": "Propulsé par"
+  },
+  "nav": {
+    "products": "Produits",
+    "searchIntelligence": "Intelligence de recherche",
+    "cms": "Blog",
+    "vectorSearch": "Recherche vectorielle"
+  },
+  "cart": {
+    "link": "Panier"
+  },
+  "actions": {
+    "filters": "Filtres"
+  },
+  "meta": {
+    "search": "Recherche",
+    "cart": "Panier",
+    "checkout": "Commande",
+    "explain": "Intelligence de recherche",
+    "closing": "Synthèse",
+    "breadcrumb": "Fil d'Ariane",
+    "home": "Accueil",
+    "vectorSearch": "Recherche vectorielle",
+    "pagination": "Pagination"
+  }
+}

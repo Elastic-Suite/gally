@@ -1,0 +1,28 @@
+{
+  "breadcrumb": "Accueil / Recherche vectorielle",
+  "title": "Recherche par mots-clés vs. recherche vectorielle",
+  "intro": "La même requête, exécutée deux fois sur le même catalogue. À gauche, le moteur par mots-clés compare des mots. À droite, la recherche vectorielle compare du sens — elle rapproche le vecteur de votre requête de celui de chaque produit, et peut donc répondre à une demande dont les mots n'apparaissent nulle part dans le catalogue.",
+  "placeholder": "Décrivez ce que vous cherchez…",
+  "submit": "Comparer",
+  "tryLabel": "Essayez :",
+  "loading": "Recherche…",
+  "keyword": {
+    "title": "Recherche par mots-clés",
+    "count_one": "{{count}} résultat",
+    "count_other": "{{count}} résultats",
+    "emptyTitle": "Aucun résultat pour « {{query}} »",
+    "emptyBody": "Aucun produit ne contient ces mots. Il n'y a ni faute d'orthographe à corriger ni synonyme configuré : le moteur par mots-clés n'a rien à comparer, et le client se retrouve dans une impasse.",
+    "scoreLabel": "Score BM25"
+  },
+  "vector": {
+    "title": "Recherche vectorielle",
+    "count": "Top {{count}} sur {{corpus}} produits, par similarité",
+    "unavailableTitle": "Recherche vectorielle indisponible",
+    "unavailableBody": "La recherche vectorielle n'a renvoyé aucun résultat pour cette requête. Réessayez dans un instant ou choisissez une autre suggestion.",
+    "scoreLabel": "Similarité",
+    "countAll": "Les {{corpus}} produits, classés par similarité"
+  },
+  "rows": {
+    "product": "Produit"
+  }
+}

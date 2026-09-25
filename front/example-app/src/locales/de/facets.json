@@ -1,0 +1,23 @@
+{
+  "title": "Filter",
+  "clearAll": "Alle zurücksetzen",
+  "loading": "Wird geladen…",
+  "showMore": "+ Mehr anzeigen",
+  "showMoreCount": "+ Mehr anzeigen ({{count}})",
+  "showLess": "− Weniger anzeigen",
+  "yes": "Ja",
+  "searchPlaceholder": "{{label}} durchsuchen…",
+  "swatchTitle": "{{label}} ({{count}})",
+  "min": "Min.: {{value}}",
+  "max": "Max.: {{value}}",
+  "chip": {
+    "default": "{{label}}: {{value}}",
+    "range": "{{label}}: {{gte}}–{{lte}}"
+  },
+  "empty": {
+    "noResults": "Keine Filter verfügbar — diese Suche lieferte keine Treffer.",
+    "filteredOut": "Keine Filter mehr übrig. Entfernen Sie oben einen, um wieder Treffer zu erhalten.",
+    "notDiscriminant_one": "Nur ein Treffer — es gibt nichts mehr zu filtern.",
+    "notDiscriminant_other": "Alle {{count}} Treffer haben dieselben Eigenschaften — es gibt nichts mehr zu filtern."
+  }
+}

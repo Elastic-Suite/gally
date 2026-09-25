@@ -1,0 +1,19 @@
+{
+  "breadcrumb": "Startseite / Blog",
+  "title": "Blog",
+  "intro": "Stilratgeber, Materialkunde und Pflegetipps — alle als cms_page-Dokumente in Gally indexiert, durchsuchbar und facettierbar genau wie der Katalog.",
+  "count_one": "{{count}} Artikel",
+  "count_other": "{{count}} Artikel",
+  "readingTime_one": "{{count}} Min. Lesezeit",
+  "readingTime_other": "{{count}} Min. Lesezeit",
+  "browse": {
+    "type": "Typ",
+    "topic": "Thema",
+    "all": "Alle"
+  },
+  "emptyTitle": "Kein Artikel passt zu diesen Filtern",
+  "emptyBody": "Versuchen Sie ein anderes Thema oder entfernen Sie den Typfilter, um alles zu sehen.",
+  "notFoundTitle": "Artikel nicht gefunden",
+  "notFoundBody": "Dieser Artikel wurde möglicherweise depubliziert oder unter einer anderen ID neu indexiert.",
+  "backToList": "← Zurück zum Blog"
+}

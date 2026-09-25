@@ -1,0 +1,109 @@
+'use client';
+
+import { useEffect, useRef } from 'react';
+import Link from '../components/LocaleLink';
+import { useTranslation } from 'react-i18next';
+import { useSearch } from '../hooks/useSearch';
+import { useTracking } from '../hooks/useTracking';
+import ProductSlider from '../components/ProductSlider';
+import { useCatalog } from '../contexts/CatalogContext';
+
+export default function Homepage() {
+  const { t, i18n } = useTranslation('category');
+  const { trackDisplay } = useTracking();
+  const { categories, selectedCatalog } = useCatalog();
+
+  // "Our selection" is a plain catalog browse of the root category, not a search and not a
+  // recommendation: Gally has no product popularity data, so it is not titled "trending" —
+  // product_catalog requires a real currentCategoryId, so use the root rather than
+  // faking a product_search with a wildcard query.
+  const rootCategory = categories.length > 0 ? categories[0] : null;
+  const { products, loading } = useSearch({ pageSize: 8, categoryCode: rootCategory?.id });
+
+  // Second row: the first top-level category, titled with its own name. A category listing, not
+  // "new arrivals" - there is no date sort behind it.
+  const secondCategory = categories.length > 1 ? categories[1] : null;
+  const categoryRow = useSearch({
+    pageSize: 8,
+    categoryCode: secondCategory?.id,
+  });
+
+  // The hero button is picked per shop. It used to send every catalogue to "dress", which on the
+  // hardware and stationery shops returned nothing at all. Label and query are one pair in the
+  // locale files because the catalogue's language follows the locale segment: a French visitor
+  // must be sent to "robe", not "dress". A shop with no entry gets a plain browse link rather than
+  // another shop's query — see specs/feature-hero-cta-per-catalog.md.
+  const heroKey = `homepage.hero.shops.${selectedCatalog?.code ?? ''}`;
+  const hasHeroQuery = !!selectedCatalog && i18n.exists(`${heroKey}.query`, { ns: 'category' });
+  const heroHref = hasHeroQuery
+    ? `/search?q=${encodeURIComponent(t(`${heroKey}.query`))}`
+    : rootCategory
+      ? `/category/${rootCategory.id}`
+      : null;
+  const heroLabel = hasHeroQuery ? t(`${heroKey}.cta`) : t('homepage.hero.browse');
+
+  const trackedDisplayRef = useRef('');
+
+  useEffect(() => {
+    if (products.length > 0) {
+      const key = products.map((p: any) => p.source?.sku || p.sku).join(',');
+      if (trackedDisplayRef.current !== key) {
+        trackedDisplayRef.current = key;
+        trackDisplay(products.map((p: any, i: number) => ({ sku: p.source?.sku || p.sku, position: i })));
+      }
+    }
+  }, [products, trackDisplay]);
+
+  return (
+    <div>
+      {/* Hero */}
+      <section className="hero">
+        <h1>{t('homepage.heroTitle')}</h1>
+        <p>
+          {t('homepage.heroBody')}
+        </p>
+        {heroHref && (
+          <Link href={heroHref} className="btn btn-coral btn-lg">
+            {heroLabel}
+          </Link>
+        )}
+      </section>
+
+
+      {/* Product Sliders */}
+      {loading ? (
+        <div className="product-slider">
+          <div className="skeleton skeleton-text" style={{ width: '200px', height: '1.5rem', marginBottom: '1rem' }} />
+          <div className="slider-track">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <div key={i} className="skeleton-card">
+                <div className="skeleton-card-image skeleton-shimmer" />
+                <div className="skeleton-card-body">
+                  <div className="skeleton skeleton-text" style={{ width: '80%' }} />
+                  <div className="skeleton skeleton-text" style={{ width: '50%', marginTop: '0.5rem' }} />
+                  <div className="skeleton skeleton-btn" style={{ width: '100px', marginTop: '0.75rem' }} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <>
+          <ProductSlider products={products.slice(0, 8)} title={t('homepage.trending')} />
+          {categoryRow.products.length > 0 && (
+            <ProductSlider products={categoryRow.products.slice(0, 8)} title={secondCategory ? secondCategory.name : t('homepage.moreProducts')} />
+          )}
+        </>
+      )}
+
+      {/* CTA Section */}
+      <section style={{ textAlign: 'center', margin: '3rem 0' }}>
+        <h2>{t('homepage.readyTitle')}</h2>
+        <p style={{ color: 'var(--gray-600)', marginBottom: '1.5rem' }}>
+          {t('homepage.readyBody')}
+        </p>
+        <Link href="/vector-search" className="btn btn-primary btn-lg">{t('homepage.tryVectorSearch')}</Link>
+      </section>
+    </div>
+  );
+}
