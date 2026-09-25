@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from 'react';
 import { useParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { useSearch } from '../hooks/useSearch';
+import { useRecommendations } from '../hooks/useRecommendations';
 import { useTracking } from '../hooks/useTracking';
 import { useCatalog } from '../contexts/CatalogContext';
 import { useCart } from '../contexts/CartContext';
@@ -73,11 +74,10 @@ export default function ProductPage({ initialProduct }: { initialProduct?: any }
     }
   }, [sku, selectedLocalizedCatalog, trackProductView]);
 
-  // Recommendations — a plain catalog browse of the root category, not a search.
-  // Still a placeholder for the dedicated productRecommendations GraphQL query
-  // (see .agent.md's "What's Left / TODO" section) — not real recs yet.
-  const rootCategory = categories.length > 0 ? categories[0] : null;
-  const { products: recommendations } = useSearch({ pageSize: 8, categoryCode: rootCategory?.id });
+  // Real recommendations from Gally's rule-based Recommender, seeded with this product: related
+  // products first, cross-sell when a catalogue has no related rule for it (papershop has none).
+  // The seed SKU never comes back, so there is nothing to filter out.
+  const { products: recommendations } = useRecommendations(['related_product', 'cross-sell'], sku ? [sku] : [], 6);
 
   if (loading) {
     return <ProductPageSkeleton />;
@@ -239,7 +239,7 @@ export default function ProductPage({ initialProduct }: { initialProduct?: any }
         <section className="recommendations">
           <ProductSlider
             title={t('page.recommendations')}
-            products={recommendations.filter((r: any) => (r.source?.sku || r.sku) !== sku).slice(0, 6)}
+            products={recommendations}
           />
         </section>
       )}

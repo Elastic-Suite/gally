@@ -24,7 +24,7 @@
       },
       "4": {
         "title": "The decision",
-        "bubble": "Camille adds a dress to her cart. Average-order-value levers kick in: <strong>−20% accessory pack</strong>, <strong>free-shipping threshold</strong>, <strong>frequently bought together</strong>.\n      <div class=\"story-tracking-hint\">📊 <strong>Tracking:</strong> Gally logs <code>ADD_TO_CART</code> for every product added — a strong conversion signal that boosts the product in results. <code>VIEW:product</code> and <code>ADD_TO_CART</code> combined feed the recommendations.</div>",
+        "bubble": "Camille adds a dress to her cart. Average-order-value levers kick in: <strong>free-shipping threshold</strong> and <strong>cross-sell recommendations</strong> picked by Gally from the cart.\n      <div class=\"story-tracking-hint\">📊 <strong>Tracking:</strong> Gally logs <code>ADD_TO_CART</code> for every product added — a strong conversion signal that boosts the product in results.</div>",
         "gain": "+15% average order value"
       },
       "5": {

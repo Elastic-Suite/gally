@@ -45,11 +45,11 @@
       },
       "addToCart": {
         "event": "Camille adds the product to her cart",
-        "consequence": "→ Strong conversion signal: the product gets boosted in results. Combined with VIEW:product, it feeds the \"Frequently viewed together\" recommendations."
+        "consequence": "→ Strong conversion signal: the product gets boosted in results."
       },
       "order": {
         "event": "Order placed",
-        "consequence": "→ Full loop: products bought together feed the \"Frequently bought together\" recommendations. Revenue per query lets relevance be optimized by generated revenue."
+        "consequence": "→ Full loop: revenue per query lets relevance be optimized by generated revenue."
       },
       "summary": {
         "eventTypes": "6 event types",
@@ -57,7 +57,7 @@
         "popularityScore": "Popularity score",
         "popularityScoreSuffix": "recalculated continuously",
         "recommendations": "Recommendations",
-        "recommendationsSuffix": "enriched every session",
+        "recommendationsSuffix": "from cross-sell, upsell and related-product rules",
         "relevance": "Relevance",
         "relevanceSuffix": "optimized by real behavior"
       }
@@ -125,12 +125,12 @@
       "cart": {
         "title_one": "{{count}} item added to cart",
         "title_other": "{{count}} items added to cart",
-        "consequence": "Strong conversion signal: these products are boosted in results and feed the recommendations."
+        "consequence": "Strong conversion signal: these products are boosted in results."
       },
       "order": {
         "title_one": "{{count}} order",
         "title_other": "{{count}} orders",
-        "consequence": "Full loop: feeds the \"Frequently bought together\" recommendations and revenue optimization."
+        "consequence": "Full loop: feeds revenue optimization."
       }
     }
   },
@@ -158,10 +158,10 @@
     "categoryView": "Gally logs the visit to category \"{{categoryCode}}\" — helps analyze which categories draw the most traffic and optimize merchandising.",
     "cmsDisplay": "Gally logs the impression of {{count}} articles with their position — cms_page is a first-class indexed entity, so editorial content earns the same behavioural signals as products.",
     "cmsPageView": "Gally logs the article view for “{{title}}” — content engagement feeds the same behavioural signals as product views.",
-    "productView": "Gally logs the product view for \"{{sku}}\" — feeds the popularity score and personalized recommendations.",
+    "productView": "Gally logs the product view for \"{{sku}}\" — feeds the popularity score.",
     "search": "Gally logs the search \"{{query}}\" ({{count}} results) — improves autocomplete, detects zero-result searches, and refines relevance.",
     "display": "Gally logs the display of {{count}} products with their position — measures impression rate and optimizes ranking.",
     "addToCart": "Gally logs the cart addition of \"{{sku}}\" (×{{qty}}) — strong conversion signal used to boost this product in results.",
-    "order": "Gally logs order #{{orderId}} ({{total}}€, {{count}} item(s)) — completes the loop: products bought together feed the \"Frequently bought together\" recommendations."
+    "order": "Gally logs order #{{orderId}} ({{total}}€, {{count}} item(s)) — completes the loop."
   }
 }

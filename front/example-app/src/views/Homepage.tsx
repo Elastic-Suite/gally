@@ -13,15 +13,17 @@ export default function Homepage() {
   const { trackDisplay } = useTracking();
   const { categories, selectedCatalog } = useCatalog();
 
-  // "Trending Now" is a plain catalog browse of the root category, not a search —
+  // "Our selection" is a plain catalog browse of the root category, not a search and not a
+  // recommendation: Gally has no product popularity data, so it is not titled "trending" —
   // product_catalog requires a real currentCategoryId, so use the root rather than
   // faking a product_search with a wildcard query.
   const rootCategory = categories.length > 0 ? categories[0] : null;
   const { products, loading } = useSearch({ pageSize: 8, categoryCode: rootCategory?.id });
 
-  // Get second set of products for "New Arrivals" — use a different category if available
+  // Second row: the first top-level category, titled with its own name. A category listing, not
+  // "new arrivals" - there is no date sort behind it.
   const secondCategory = categories.length > 1 ? categories[1] : null;
-  const newArrivals = useSearch({
+  const categoryRow = useSearch({
     pageSize: 8,
     categoryCode: secondCategory?.id,
   });
@@ -88,8 +90,8 @@ export default function Homepage() {
       ) : (
         <>
           <ProductSlider products={products.slice(0, 8)} title={t('homepage.trending')} />
-          {newArrivals.products.length > 0 && (
-            <ProductSlider products={newArrivals.products.slice(0, 8)} title={secondCategory ? secondCategory.name : t('homepage.moreProducts')} />
+          {categoryRow.products.length > 0 && (
+            <ProductSlider products={categoryRow.products.slice(0, 8)} title={secondCategory ? secondCategory.name : t('homepage.moreProducts')} />
           )}
         </>
       )}

@@ -45,11 +45,11 @@
       },
       "addToCart": {
         "event": "Camille legt das Produkt in den Warenkorb",
-        "consequence": "→ Starkes Conversion-Signal: Das Produkt wird in den Ergebnissen hochgestuft. Zusammen mit VIEW:product speist es die Empfehlungen „Häufig zusammen angesehen“."
+        "consequence": "→ Starkes Conversion-Signal: Das Produkt wird in den Ergebnissen hochgestuft."
       },
       "order": {
         "event": "Bestellung aufgegeben",
-        "consequence": "→ Der Kreis schließt sich: Gemeinsam gekaufte Produkte speisen die Empfehlungen „Häufig zusammen gekauft“. Der Umsatz pro Suchanfrage erlaubt es, die Relevanz nach erzieltem Umsatz zu optimieren."
+        "consequence": "→ Der Kreis schließt sich: Der Umsatz pro Suchanfrage erlaubt es, die Relevanz nach erzieltem Umsatz zu optimieren."
       },
       "summary": {
         "eventTypes": "6 Event-Typen",
@@ -57,7 +57,7 @@
         "popularityScore": "Beliebtheitswert",
         "popularityScoreSuffix": "laufend neu berechnet",
         "recommendations": "Empfehlungen",
-        "recommendationsSuffix": "mit jeder Sitzung angereichert",
+        "recommendationsSuffix": "aus Cross-Selling-, Upselling- und Zubehör-Regeln",
         "relevance": "Relevanz",
         "relevanceSuffix": "durch echtes Verhalten optimiert"
       }
@@ -125,12 +125,12 @@
       "cart": {
         "title_one": "{{count}} Artikel in den Warenkorb gelegt",
         "title_other": "{{count}} Artikel in den Warenkorb gelegt",
-        "consequence": "Starkes Conversion-Signal: Diese Produkte werden in den Ergebnissen hochgestuft und speisen die Empfehlungen."
+        "consequence": "Starkes Conversion-Signal: Diese Produkte werden in den Ergebnissen hochgestuft."
       },
       "order": {
         "title_one": "{{count}} Bestellung",
         "title_other": "{{count}} Bestellungen",
-        "consequence": "Der Kreis schließt sich: speist die Empfehlungen „Häufig zusammen gekauft“ und die Umsatzoptimierung."
+        "consequence": "Der Kreis schließt sich: speist die Umsatzoptimierung."
       }
     }
   },
@@ -158,10 +158,10 @@
     "categoryView": "Gally protokolliert den Besuch der Kategorie „{{categoryCode}}“ — hilft zu analysieren, welche Kategorien den meisten Traffic bringen, und das Merchandising zu optimieren.",
     "cmsDisplay": "Gally protokolliert die Impression von {{count}} Artikeln mit ihrer Position — cms_page ist eine vollwertige indexierte Entität, redaktionelle Inhalte liefern also dieselben Verhaltenssignale wie Produkte.",
     "cmsPageView": "Gally protokolliert die Artikelansicht für „{{title}}“ — Content-Engagement speist dieselben Verhaltenssignale wie Produktansichten.",
-    "productView": "Gally protokolliert die Produktansicht für „{{sku}}“ — speist den Beliebtheitswert und personalisierte Empfehlungen.",
+    "productView": "Gally protokolliert die Produktansicht für „{{sku}}“ — speist den Beliebtheitswert.",
     "search": "Gally protokolliert die Suche „{{query}}“ ({{count}} Treffer) — verbessert die Autovervollständigung, erkennt Suchen ohne Treffer und verfeinert die Relevanz.",
     "display": "Gally protokolliert die Einblendung von {{count}} Produkten mit ihrer Position — misst die Impression-Rate und optimiert das Ranking.",
     "addToCart": "Gally protokolliert das Hinzufügen von „{{sku}}“ (×{{qty}}) zum Warenkorb — starkes Conversion-Signal, mit dem dieses Produkt in den Ergebnissen hochgestuft wird.",
-    "order": "Gally protokolliert Bestellung #{{orderId}} ({{total}} €, {{count}} Artikel) — schließt den Kreis: Gemeinsam gekaufte Produkte speisen die Empfehlungen „Häufig zusammen gekauft“."
+    "order": "Gally protokolliert Bestellung #{{orderId}} ({{total}} €, {{count}} Artikel) — schließt den Kreis."
   }
 }
