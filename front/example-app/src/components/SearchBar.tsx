@@ -2,7 +2,7 @@
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocaleHref } from '../contexts/LocaleContext';
+import { useAppPathname, useLocaleHref } from '../contexts/LocaleContext';
 import { useNavigate } from '../contexts/NavigationContext';
 import { useSearchBarRef } from '../contexts/SearchBarContext';
 import { useAutocomplete } from '../hooks/useSearch';
@@ -90,6 +90,16 @@ export default function SearchBar({ categories, categoriesLoading }: SearchBarPr
   useEffect(() => {
     setHighlightedIndex(-1);
   }, [query]);
+
+  // The header outlives page changes, so the term would follow the shopper off the results page.
+  // Keep it only on /search, where it labels what the results are for.
+  const pathname = useAppPathname();
+  useEffect(() => {
+    if (pathname !== '/search') {
+      setQuery('');
+      clearAll();
+    }
+  }, [pathname]);
 
   // Keep the highlighted item visible if its column is scrolled.
   useEffect(() => {

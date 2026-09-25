@@ -1,5 +1,7 @@
 # Feature: keep shared UI mounted across same-type navigation
 
+> **Superseded in part** by `feature-header-light-two-row.md`: CategoryNav moved from `app/[locale]/category/layout.tsx` (now deleted) into the Header, in the app shell, so no navigation swaps it out and RouteSkeleton no longer redraws it. The goal of this spec - the bar never flashes - is kept.
+
 ## Status: implemented
 ## Page/Component: `app/[locale]/category/layout.tsx`, `src/components/CategoryNav.tsx`
 

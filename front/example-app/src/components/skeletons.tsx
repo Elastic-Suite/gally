@@ -183,9 +183,8 @@ export function SearchPageSkeleton() {
   );
 }
 
-// No nav skeleton here: RouteSkeleton draws CategoryNav itself, above this, because the
-// pending-navigation swap replaces everything inside <main> — including the category layout
-// the real nav lives in. Adding a second one here would double it.
+// No nav skeleton here: CategoryNav lives in the header, outside <main>, so the
+// pending-navigation swap never removes it. Adding one here would double it.
 export function CategoryPageSkeleton() {
   return (
     <div>

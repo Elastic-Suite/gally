@@ -3,6 +3,10 @@
 ## Status: implemented (2026-08-17)
 ## Page/Component: `src/views/VectorSearchPage.tsx`, route `app/[locale]/vector-search/page.tsx`, fetcher `src/sdk/vectorSearch.ts`
 
+> **Superseded in part** by `feature-vector-search-demo-wording.md`: the non-English warning and both panel
+> subtitles are gone, the empty state no longer names console commands, and the page says "Vector search",
+> not "Semantic search".
+
 Restores the keyword-vs-vector comparison that `missing-features.md` §2 recorded as
 **"Original vector-vs-fulltext comparison — fully missing"**. The old CRA app had it at
 `src/pages/VectorSearch/VectorSearch.tsx`; the Next migration dropped it and the name
@@ -93,7 +97,7 @@ Verified live against this stack, not assumed:
       `rgba(255,255,255,0.85)` / weight 600 / `rgba(255,255,255,0.12)`, matching `.header-nav-tab`
       on the switch's well; selected it computes `rgb(40,53,147)` on solid white with
       `--shadow-sm`, byte-identical to the switch's sliding thumb.
-- [x] The non-English warning shows on `com_fr` and is absent on `com_en`.
+- [x] ~~The non-English warning shows on `com_fr` and is absent on `com_en`.~~ Removed, see the note at the top.
 - [x] `npx tsc --noEmit` clean in the `example` container; no `⨯` lines in `make logs s=example`.
 - [x] Route returns HTTP 200 with `<title>Semantic search · Gally</title>` and `NOINDEX`.
 
@@ -216,10 +220,8 @@ storefront section.
   returns 7 and both panels agree. Without it the page is four rigged queries and an audience is
   right to distrust it. It makes the claim the true one — semantic search does not beat keyword
   search everywhere, it covers what keyword search cannot answer at all.
-- **Keep the non-English warning.** all-MiniLM-L6-v2 is monolingual English and the product names
-  are English in *every* catalogue including `com_fr`, so a French query ranks confidently and
-  meaninglessly (`bijoux` puts a skirt first at 0.41). Removing the warning turns a known
-  limitation into an apparent bug in the product.
+- ~~Keep the non-English warning.~~ Removed on request, see `feature-vector-search-demo-wording.md`. Its
+  premise was also out of date: fashion, toolbox and papershop product names are translated.
 - **Keep the keyword panel on the SDK path with `product_search` and `_score` desc.** Tuning its
   ranking to look better or worse than it really is falsifies the comparison. `selectedFields` is
   free to change; everything that feeds the ranking is not.
@@ -239,10 +241,8 @@ storefront section.
   panel refetch and flash the other.
 - **Keep the per-panel score labels.** BM25 ~64 next to cosine ~0.56 with no labels invites the one
   reading the page must not produce: that the right-hand engine scores worse.
-- **Keep the ranks-not-filters claim in BOTH places** — the vector panel subtitle and the closing
-  callout. The callout is the full argument but is thousands of pixels down the page; the subtitle
-  is what a visitor who never scrolls actually reads. Deleting either as "duplication" removes the
-  only guard against the page's central misreading.
+- **Keep the ranks-not-filters claim in the closing callout.** The vector panel subtitle that also carried
+  it was removed on request (`feature-vector-search-demo-wording.md`), so the callout is now its only home.
 - **Keep `.vector-footnote` styled as a callout, not as small print.** It is the interpretive key to
   the page, not a caveat to bury.
 - **Keep the header search-band suppression scoped to this one pathname.** Widening it, or

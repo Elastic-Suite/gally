@@ -1,15 +1,13 @@
 {
-  "breadcrumb": "Accueil / Recherche sémantique",
-  "title": "Recherche par mots-clés vs. recherche sémantique",
-  "intro": "La même requête, exécutée deux fois sur le même catalogue. À gauche, le moteur par mots-clés compare des mots. À droite, la recherche sémantique compare du sens — elle rapproche le vecteur de votre requête de celui de chaque produit, et peut donc répondre à une demande dont les mots n'apparaissent nulle part dans le catalogue.",
+  "breadcrumb": "Accueil / Recherche vectorielle",
+  "title": "Recherche par mots-clés vs. recherche vectorielle",
+  "intro": "La même requête, exécutée deux fois sur le même catalogue. À gauche, le moteur par mots-clés compare des mots. À droite, la recherche vectorielle compare du sens — elle rapproche le vecteur de votre requête de celui de chaque produit, et peut donc répondre à une demande dont les mots n'apparaissent nulle part dans le catalogue.",
   "placeholder": "Décrivez ce que vous cherchez…",
   "submit": "Comparer",
   "tryLabel": "Essayez :",
   "loading": "Recherche…",
-  "languageNote": "⚠️ Ce catalogue n'est pas en anglais. Le modèle d'embedding déployé (all-MiniLM-L6-v2) ne comprend que l'anglais, et les noms de produits sont en anglais dans tous les catalogues — une requête dans une autre langue produira donc un classement assuré mais dénué de sens. Passez sur un catalogue anglais pour voir la comparaison fonctionner.",
   "keyword": {
     "title": "Recherche par mots-clés",
-    "subtitle": "Ce que cette boutique propose aujourd'hui — BM25 sur les champs texte indexés.",
     "count_one": "{{count}} résultat",
     "count_other": "{{count}} résultats",
     "emptyTitle": "Aucun résultat pour « {{query}} »",
@@ -17,11 +15,10 @@
     "scoreLabel": "Score BM25"
   },
   "vector": {
-    "title": "Recherche sémantique",
-    "subtitle": "Similarité vectorielle sur les embeddings produits, calculée par le kNN d'OpenSearch. Elle classe tout le catalogue — elle ne filtre jamais, et ne revient jamais vide.",
+    "title": "Recherche vectorielle",
     "count": "Top {{count}} sur {{corpus}} produits, par similarité",
-    "unavailableTitle": "Recherche sémantique indisponible",
-    "unavailableBody": "La requête vectorielle n'a rien renvoyé. Vérifiez que le module premium GallyVectorSearchBundle est installé, qu'un modèle est déployé (make sf c=gally:vector-search:upload-model) et que les produits portent bien des embeddings.",
+    "unavailableTitle": "Recherche vectorielle indisponible",
+    "unavailableBody": "La recherche vectorielle n'a renvoyé aucun résultat pour cette requête. Réessayez dans un instant ou choisissez une autre suggestion.",
     "scoreLabel": "Similarité",
     "countAll": "Les {{corpus}} produits, classés par similarité"
   },

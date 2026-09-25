@@ -1,5 +1,7 @@
 # Feature: Header nav — Products / Articles as a segmented switch
 
+> **Superseded in part** by `feature-header-light-two-row.md`: the header no longer has a segmented switch. Products, Articles, Search Intelligence and Semantic search are plain text links. The result-type switch on the search page is unaffected.
+
 ## Status: implemented
 ## Page/Component: src/components/Header.tsx, src/styles.css
 

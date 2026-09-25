@@ -1,15 +1,13 @@
 {
-  "breadcrumb": "Home / Semantic search",
-  "title": "Keyword search vs. semantic search",
-  "intro": "The same query, run twice against the same catalogue. On the left, the keyword engine matches words. On the right, semantic search matches meaning — it compares the embedding of your query with the embedding of every product, so it can answer a request whose words appear nowhere in the catalogue.",
+  "breadcrumb": "Home / Vector search",
+  "title": "Keyword search vs. vector search",
+  "intro": "The same query, run twice against the same catalogue. On the left, the keyword engine matches words. On the right, vector search matches meaning — it compares the embedding of your query with the embedding of every product, so it can answer a request whose words appear nowhere in the catalogue.",
   "placeholder": "Describe what you are looking for…",
   "submit": "Compare",
   "tryLabel": "Try:",
   "loading": "Searching…",
-  "languageNote": "⚠️ This catalogue is not in English. The deployed embedding model (all-MiniLM-L6-v2) only understands English, and the product names are English in every catalogue — so a query in another language will rank confidently but meaninglessly. Switch to an English catalogue to see the comparison work.",
   "keyword": {
     "title": "Keyword search",
-    "subtitle": "What this storefront ships today — BM25 over the indexed text fields.",
     "count_one": "{{count}} result",
     "count_other": "{{count}} results",
     "emptyTitle": "No results for “{{query}}”",
@@ -17,11 +15,10 @@
     "scoreLabel": "BM25 score"
   },
   "vector": {
-    "title": "Semantic search",
-    "subtitle": "Vector similarity over the product embeddings, computed by OpenSearch kNN. It ranks the whole catalogue — it never filters, and never comes back empty.",
+    "title": "Vector search",
     "count": "Top {{count}} of {{corpus}} products, by similarity",
-    "unavailableTitle": "Semantic search unavailable",
-    "unavailableBody": "The vector query returned nothing. Check that the premium GallyVectorSearchBundle is installed, that a model is deployed (make sf c=gally:vector-search:upload-model) and that the products carry embeddings.",
+    "unavailableTitle": "Vector search unavailable",
+    "unavailableBody": "Vector search returned no results for this query. Try again in a moment, or pick another suggestion.",
     "scoreLabel": "Similarity",
     "countAll": "All {{corpus}} products, ranked by similarity"
   },

@@ -1,5 +1,7 @@
 # Bugfix: autocomplete attribute values were set larger than the attribute name
 
+> **Superseded in part** by `feature-acp-light-glass.md`: attribute values are `--gray-800` on the light wash now; the typography rules stand.
+
 ## Status: implemented
 ## Page/Component: src/styles.css (`.autocomplete-attribute-text`, split from `.autocomplete-category-text`)
 

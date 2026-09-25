@@ -14,9 +14,9 @@ segmented switch with icons, labelled "Products / Articles".
       transparent with `--gray-600` text.
 - [x] **The thumb slides between the two segments** (280ms,
       `cubic-bezier(0.4, 0, 0.2, 1)`) instead of appearing instantly.
-- [x] Each segment carries an icon — 🛍️ Products, 📰 Articles — following the app's
-      existing emoji idiom (🛒 ☰ 🔍 ✎ are already in use). Icons are
-      `aria-hidden`, so the accessible name stays the label alone.
+- [x] No icons: each segment is its label and its count. The 🛍️ / 📰 emoji were removed
+      with the light header (`feature-header-light-two-row.md`), which dropped the emoji idiom
+      from the navigation.
 - [x] Labels are "Products" / "Articles" in all three locales (`page.typeProducts`,
       `page.typeBlog`).
 - [x] The count badge stays on both segments, including a `0` — see MUST NOT change.

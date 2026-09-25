@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next';
 import { useSearch } from '../hooks/useSearch';
 import { useTracking } from '../hooks/useTracking';
 import ProductSlider from '../components/ProductSlider';
-import CategoryNav from '../components/CategoryNav';
 import { useCatalog } from '../contexts/CatalogContext';
 
 export default function Homepage() {
@@ -68,8 +67,6 @@ export default function Homepage() {
         )}
       </section>
 
-      {/* Category Navigation */}
-      <CategoryNav />
 
       {/* Product Sliders */}
       {loading ? (

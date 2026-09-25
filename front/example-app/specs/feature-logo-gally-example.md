@@ -1,5 +1,7 @@
 # Feature: Header logo — Gally rabbit + "Gally example" wordmark, and the ElasticSuite → Gally rename
 
+> **Superseded in part** by `feature-header-light-two-row.md`: the header is light, so "Gally" is `--indigo-900` and the "needs a dark surface" rule no longer holds. The other MUST NOT bullets stand.
+
 ## Status: implemented
 ## Page/Component: src/components/Header.tsx, src/components/Footer.tsx, src/components/IntroScreen.tsx, src/assets/gally-rabbit.svg, src/styles.css, app/layout.tsx, src/locales/{en,fr,de}/{common,category,cms}.json
 

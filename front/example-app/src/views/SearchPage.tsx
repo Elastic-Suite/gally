@@ -173,7 +173,6 @@ export default function SearchPage({
             className={`result-type-tab ${resultType === 'product' ? 'active' : ''}`}
             onClick={() => setResultType('product')}
           >
-            <span className="result-type-icon" aria-hidden="true">🛍️</span>
             {t('page.typeProducts')}
             <span className="result-type-count">{loading ? '…' : total}</span>
           </button>
@@ -184,7 +183,6 @@ export default function SearchPage({
             className={`result-type-tab ${resultType === 'blog' ? 'active' : ''}`}
             onClick={() => setResultType('blog')}
           >
-            <span className="result-type-icon" aria-hidden="true">📰</span>
             {t('page.typeBlog')}
             <span className="result-type-count">{cmsLoading ? '…' : cmsTotal}</span>
           </button>

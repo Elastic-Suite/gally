@@ -1,5 +1,7 @@
 # Feature: Search bar & autocomplete overlay redesign
 
+> **Superseded in part** by `feature-header-light-two-row.md`: `CategoryNav` is part of the header now (second row of `<header>`), not rendered per page.
+
 ## Status: implemented
 ## Page/Component: src/components/Header.tsx, src/components/SearchBar.tsx, src/components/SearchOverlay.tsx
 
