@@ -24,7 +24,7 @@
       },
       "4": {
         "title": "La décision",
-        "bubble": "Camille ajoute une robe au panier. Les leviers de panier moyen entrent en jeu : <strong>pack accessoires −20%</strong>, <strong>seuil livraison offerte</strong>, <strong>fréquemment achetés ensemble</strong>.\n      <div class=\"story-tracking-hint\">📊 <strong>Tracking :</strong> Gally enregistre <code>ADD_TO_CART</code> pour chaque produit ajouté — un signal fort de conversion qui booste le produit dans les résultats. Les événements <code>VIEW:product</code> et <code>ADD_TO_CART</code> combinés alimentent les recommandations.</div>",
+        "bubble": "Camille ajoute une robe au panier. Les leviers de panier moyen entrent en jeu : <strong>seuil livraison offerte</strong> et <strong>recommandations de ventes croisées</strong> choisies par Gally à partir du panier.\n      <div class=\"story-tracking-hint\">📊 <strong>Tracking :</strong> Gally enregistre <code>ADD_TO_CART</code> pour chaque produit ajouté — un signal fort de conversion qui booste le produit dans les résultats.</div>",
         "gain": "+15% panier moyen"
       },
       "5": {
