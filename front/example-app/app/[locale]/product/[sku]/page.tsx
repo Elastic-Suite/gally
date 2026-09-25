@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { resolveLocale, fetchProductBySku, cachedCategoryTree } from '../../../../src/sdk/server';
+import { resolveLocale, fetchProductBySku, cachedCategoryTree, fetchPublicConfiguration } from '../../../../src/sdk/server';
 import { getProductFields } from '../../../../src/sdk/productFields';
 import { productCategoryTrail } from '../../../../src/sdk/categoryTree';
 import { missingInCatalog, RouteSearchParams } from '../../../../src/sdk/catalogSwitch';
@@ -31,7 +31,8 @@ export async function generateMetadata({ params, searchParams }: Params): Promis
   // specs/bugfix-ssr-product-list-behind-suspense.md.
   if (!doc) await missingInCatalog(locale, resolved, await searchParams);
 
-  const p = getProductFields(doc);
+  const config = await fetchPublicConfiguration(resolved.localizedCatalog.code);
+  const p = getProductFields(doc, config);
   const description =
     toMetaDescription(p.description) ||
     `${p.name} — available in the Gally demo storefront.`;
@@ -63,7 +64,8 @@ export default async function Page({ params, searchParams }: Params) {
   // A catalog switch is the one exception — the SKU belongs to the catalog just left.
   if (!doc) await missingInCatalog(locale, resolved, await searchParams);
 
-  const p = getProductFields(doc);
+  const config = await fetchPublicConfiguration(resolved.localizedCatalog.code);
+  const p = getProductFields(doc, config);
   const productUrl = `${SITE}/${locale}/product/${encodeURIComponent(p.sku)}`;
 
   const tree = await cachedCategoryTree(resolved.catalog.id, resolved.localizedCatalog.id);

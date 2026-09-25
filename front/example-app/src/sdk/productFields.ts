@@ -1,4 +1,4 @@
-import { MEDIA_BASE_URL } from './index';
+import { GallyConfig, mediaUrl } from './config';
 
 // Lives outside ProductCard.tsx because that file is a Client Component: importing a
 // plain function out of a 'use client' module into a Server Component gives you a
@@ -51,12 +51,12 @@ export function parseAxisCodes(value: unknown): string[] {
   return [value];
 }
 
-export function getProductFields(product: any) {
+export function getProductFields(product: any, config: GallyConfig) {
   // Products from search API come with a `source` wrapper
   const s = product.source || product;
   const name = Array.isArray(s.name) ? s.name[0] : s.name || 'Product';
   const sku = s.sku || product.sku || 'unknown';
-  const image = s.image ? `${MEDIA_BASE_URL}${s.image}` : '';
+  const image = mediaUrl(config, s.image);
   const price = s.price?.[0]?.price ?? 0;
   const originalPrice = s.price?.[0]?.original_price ?? s.price?.[0]?.originalPrice;
   const isDiscounted = s.price?.[0]?.is_discounted ?? s.price?.[0]?.isDiscounted ?? false;

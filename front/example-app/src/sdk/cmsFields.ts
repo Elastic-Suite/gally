@@ -1,4 +1,4 @@
-import { MEDIA_BASE_URL } from './index';
+import { GallyConfig, mediaUrl } from './config';
 
 // Extracted from ../hooks/useCms.ts for the same reason getProductFields moved here:
 // that module imports React hooks, so importing anything out of it into a Server
@@ -30,7 +30,7 @@ export interface CmsPage {
 // getCollection() hands back the _source already flattened and projected to CMS_FIELDS
 // — no { data: { _source } } envelope survives, and `_id`/`_score` are not reachable.
 // The document's own `id` attribute is indexed, so it comes through CMS_FIELDS instead.
-export function getCmsFields(doc: any): CmsPage {
+export function getCmsFields(doc: any, config: GallyConfig): CmsPage {
   const src = doc ?? {};
   return {
     id: String(src.id ?? ''),
@@ -40,7 +40,7 @@ export function getCmsFields(doc: any): CmsPage {
     urlKey: src.url_key ?? '',
     // CMS illustrations are product media paths, so they need the same prefixing
     // as a product image.
-    image: src.image ? `${MEDIA_BASE_URL}${src.image}` : '',
+    image: mediaUrl(config, src.image),
     contentType: src.content_type ?? null,
     topic: src.topic ?? null,
     author: src.author ?? null,

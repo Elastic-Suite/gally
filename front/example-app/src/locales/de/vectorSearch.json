@@ -22,9 +22,7 @@
     "scoreLabel": "Ähnlichkeit",
     "countAll": "Alle {{corpus}} Produkte, nach Ähnlichkeit sortiert"
   },
-  "footnote": "Beachten Sie die Asymmetrie: Die Vektorsuche sortiert, sie filtert nicht. Sie gibt den gesamten Katalog nach Ähnlichkeit geordnet zurück und meldet nie „keine Ergebnisse“ — das ist ihre Stärke bei solchen Anfragen und der Grund, warum im Produktivbetrieb üblicherweise ein Mindestscore gesetzt wird oder sie nur als Rückfallebene läuft, wenn die Stichwortsuche nichts findet.",
   "rows": {
     "product": "Produkt"
-  },
-  "footnoteTitle": "So lesen Sie diesen Vergleich"
+  }
 }

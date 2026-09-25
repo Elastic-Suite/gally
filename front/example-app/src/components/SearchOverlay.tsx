@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { useCatalog } from '../contexts/CatalogContext';
+import { useGallyConfig } from '../contexts/ConfigContext';
 import { useAddedFlash } from '../hooks/useAddedFlash';
 import { useMounted } from '../hooks/useMounted';
 import { getProductFields } from './ProductCard';
@@ -118,6 +119,12 @@ interface SearchOverlayProps {
   close: () => void;
 }
 
+function readHeaderHeight(): number {
+  return parseFloat(
+    getComputedStyle(document.documentElement).getPropertyValue('--header-height')
+  ) || 0;
+}
+
 export default function SearchOverlay({
   open, query, results, aggregations, termSuggestions, resultsLoading, categories, categoriesLoading,
   cmsPages, cmsLoading, highlightedKey, navigate, setQuery, clear, close,
@@ -133,14 +140,22 @@ export default function SearchOverlay({
   // still queued. Without this the header stays translated up after a close — invisible
   // as a cause, since --acp-scroll only has an effect while .overlay-open matches, so it
   // would resurface on the *next* open as a header already scrolled away.
+  //
+  // Also record how far the page was already scrolled when the popup opened, as
+  // --acp-page-offset. The header scrolls with the page, so it may already sit partly above
+  // the viewport; the scrim subtracts this from --header-height so the panel starts right
+  // under the bar. Capped at the header height: past that the bar is off screen anyway.
   useEffect(() => {
     if (!open || !mounted) return;
+    const style = document.documentElement.style;
+    style.setProperty('--acp-page-offset', `${Math.min(window.scrollY, readHeaderHeight())}px`);
     return () => {
       if (scrollFrame.current !== null) {
         cancelAnimationFrame(scrollFrame.current);
         scrollFrame.current = null;
       }
-      document.documentElement.style.removeProperty('--acp-scroll');
+      style.removeProperty('--acp-scroll');
+      style.removeProperty('--acp-page-offset');
     };
   }, [open, mounted]);
 
@@ -178,8 +193,8 @@ export default function SearchOverlay({
   // while .overlay-open matches, so nothing outside the popup is affected. Same channel
   // Header already uses for --header-height.
   //
-  // Clamped to the header's own height: past that the header is fully out of view and the
-  // panel should keep scrolling alone. rAF-coalesced because a wheel fires far more often
+  // Clamped to the part of the header still on screen when the popup opened: past that the
+  // header is fully out of view and the panel should keep scrolling alone. rAF-coalesced because a wheel fires far more often
   // than the compositor paints, and the cleanup clears the property so a closed popup
   // never leaves the header displaced.
   const onScrimScroll = (e: React.UIEvent<HTMLDivElement>) => {
@@ -188,10 +203,8 @@ export default function SearchOverlay({
     scrollFrame.current = requestAnimationFrame(() => {
       scrollFrame.current = null;
       const style = document.documentElement.style;
-      const headerHeight = parseFloat(
-        getComputedStyle(document.documentElement).getPropertyValue('--header-height')
-      ) || 0;
-      style.setProperty('--acp-scroll', `${Math.min(top, headerHeight)}px`);
+      const pageOffset = parseFloat(style.getPropertyValue('--acp-page-offset')) || 0;
+      style.setProperty('--acp-scroll', `${Math.min(top, readHeaderHeight() - pageOffset)}px`);
     });
   };
 
@@ -362,6 +375,7 @@ function ProductsColumn({ results, loading, highlightedKey, onSelect }: {
 }) {
   const { t } = useTranslation(['search', 'product']);
   const { formatPrice } = useCatalog();
+  const config = useGallyConfig();
 
   // The header (and its cart badge) is blurred and dimmed while the ACP is open,
   // so an add has to confirm itself in place: the card flashes green and the
@@ -381,7 +395,7 @@ function ProductsColumn({ results, loading, highlightedKey, onSelect }: {
       ) : (
         <div className="autocomplete-products-grid">
           {results.map((item: any, idx: number) => {
-            const { name, sku, price, image } = getProductFields(item);
+            const { name, sku, price, image } = getProductFields(item, config);
             const key = `product-${sku}`;
             const justAdded = addedSku === sku;
             return (

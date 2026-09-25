@@ -23,8 +23,7 @@
   "checkout": {
     "steps": {
       "cart": "Panier",
-      "shipping": "Livraison",
-      "payment": "Paiement",
+      "details": "Livraison et paiement",
       "confirmation": "Confirmation"
     },
     "shippingInfo": "Informations de livraison",
@@ -39,7 +38,6 @@
       "expiry": "MM/AA",
       "cvc": "CVC"
     },
-    "continueToPayment": "Continuer vers le paiement →",
     "payment": "Paiement",
     "totalToPay": "Total à payer",
     "placeOrder": "Passer la commande — {{amount}}",

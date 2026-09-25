@@ -6,6 +6,7 @@ import {
   findLocalizedCatalog,
 } from '../../src/sdk/catalogs';
 import { fetchAxisLabels } from '../../src/sdk/axisLabels';
+import { fetchPublicConfiguration } from '../../src/sdk/server';
 
 // THE point of Phase 2: the catalog is resolved here, on the server, from the URL
 // segment — before a single component renders. The SPA used to mount with no catalog,
@@ -33,9 +34,12 @@ export default async function LocaleLayout({
   // Both depend only on the resolved catalog, so they go out together rather than in series.
   // The axis labels are what a configurable product's headings are rendered from; fetching them
   // here is what puts them in the SSR HTML instead of appearing on hydration.
-  const [categories, axisLabels] = await Promise.all([
+  // The public configuration is scoped to the localized catalog too. It is cache()d, so the pages
+  // below that map products read the same response.
+  const [categories, axisLabels, config] = await Promise.all([
     fetchCategoryTree(resolved.catalog.id, resolved.localizedCatalog.id),
     fetchAxisLabels(resolved.localizedCatalog.code, resolved.catalog.code),
+    fetchPublicConfiguration(resolved.localizedCatalog.code),
   ]);
 
   return (
@@ -46,6 +50,7 @@ export default async function LocaleLayout({
       selectedLocalizedCatalog={resolved.localizedCatalog}
       categories={categories}
       axisLabels={axisLabels}
+      config={config}
     >
       {children}
     </Providers>

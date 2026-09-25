@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { getSearchManager } from '../sdk';
 import { useCatalog } from '../contexts/CatalogContext';
+import { useGallyConfig } from '../contexts/ConfigContext';
 import { CMS_FIELDS, CMS_METADATA } from '../sdk/fields';
 import { CmsPage, getCmsFields } from '../sdk/cmsFields';
 
@@ -43,6 +44,7 @@ function cmsKey(o: CmsSearchOptions): string {
 
 export function useCmsSearch(options: CmsSearchOptions) {
   const { selectedLocalizedCatalog } = useCatalog();
+  const config = useGallyConfig();
   const [result, setResult] = useState<CmsSearchResult>(() => options.initialPages ? {
     pages: options.initialPages,
     total: options.initialPages.length,
@@ -91,7 +93,7 @@ export function useCmsSearch(options: CmsSearchOptions) {
         sortDirection: optionsRef.current.sortDirection,
       });
       setResult({
-        pages: response.getCollection().map(getCmsFields),
+        pages: response.getCollection().map((doc) => getCmsFields(doc, config)),
         total: response.getTotalCount(),
         pageCount: response.getLastPage(),
         aggregations: response.getAggregations(),
@@ -101,7 +103,7 @@ export function useCmsSearch(options: CmsSearchOptions) {
     } catch (e: any) {
       setResult(prev => ({ ...prev, loading: false, error: e.message || 'CMS search failed' }));
     }
-  }, [selectedLocalizedCatalog]);
+  }, [selectedLocalizedCatalog, config]);
 
   useEffect(() => {
     if (serverFetchedKey.current !== null) {
@@ -131,6 +133,7 @@ const ACP_CMS_PAGE_SIZE = 4;
 
 export function useCmsAutocomplete() {
   const { selectedLocalizedCatalog } = useCatalog();
+  const config = useGallyConfig();
   const [pages, setPages] = useState<CmsPage[]>([]);
   const [termSuggestions, setTermSuggestions] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
@@ -159,7 +162,7 @@ export function useCmsAutocomplete() {
           selectedFields: CMS_FIELDS,
           filters: [],
         });
-        setPages(response.getCollection().map(getCmsFields));
+        setPages(response.getCollection().map((doc) => getCmsFields(doc, config)));
         setTermSuggestions(response.getTermSuggestions());
       } catch {
         setPages([]);
@@ -168,7 +171,7 @@ export function useCmsAutocomplete() {
         setLoading(false);
       }
     }, 300);
-  }, [selectedLocalizedCatalog]);
+  }, [selectedLocalizedCatalog, config]);
 
   // Both, or picking a result leaves the blog terms behind in the merged
   // suggestions column (SearchBar clears the two autocomplete hooks together).

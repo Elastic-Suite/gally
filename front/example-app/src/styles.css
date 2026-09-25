@@ -131,18 +131,10 @@ a:hover {
    isn't covered by the sticky header/search bar. Raised back up only while the
    search overlay (ACP) is open, so it can still sit above the rest of the page. */
 .header-sticky-group {
-  /* THE GROUP is the sticky element, not the search band inside it. A sticky element is
-     constrained to its containing block, and this group is only as tall as the nav row plus
-     the band — so a sticky band would unpin after ~64px of scrolling, which is exactly the
-     bug the old `position: sticky` on .header had. The group's own containing block is
-     .app-layout, which spans the page, so it can stay put indefinitely.
-     Pulling it up by the nav row's height scrolls the nav, brand and cart out of view and
-     leaves the search band flush against the viewport top — the nav is still painted, just
-     above the fold. Header publishes --header-nav-height with the same ResizeObserver it
-     already uses for --header-height; the 4rem fallback is 0.75rem padding × 2 + a 2.5rem
-     logo, i.e. what the row measures before hydration. */
-  position: sticky;
-  top: calc(-1 * var(--header-nav-height, 4rem));
+  /* Not sticky since specs/feature-header-scrolls-with-page.md: the whole header, search band
+     included, scrolls away with the page. `position: relative` stays only so the z-index
+     applies - the popup rule below raises the group above the scrim. */
+  position: relative;
   z-index: 40;
 }
 .header-sticky-group:has(.search-bar-wrapper.overlay-open) {
@@ -159,12 +151,12 @@ a:hover {
 /* Deliberately NOT sticky. It used to be `sticky; top: 0`, which did almost nothing: sticky
    is bounded by its containing block, and this row's parent (.header-sticky-group) is only as
    tall as this row plus the search band, so it unpinned again after ~88px of scrolling. The
-   search band below is the row that pins now, and two elements competing for `top: 0` would
-   overlap. `z-index` went with the positioning — it is inert on a static block child, and
+   whole group scrolls with the page now (specs/feature-header-scrolls-with-page.md). `z-index`
+   went with the positioning — it is inert on a static block child, and
    leaving it would imply a stacking order this row no longer participates in. */
 /* Light since specs/feature-header-light-two-row.md, and it holds two rows: .header-inner and the
-   category nav. The tint lives here and NOT on .header-sticky-group, whose pinned search band
-   must paint nothing (specs/feature-sticky-search-band.md). */
+   category nav. The tint lives here and NOT on .header-sticky-group: the search band paints
+   nothing (specs/feature-sticky-search-band.md). */
 .header {
   background: linear-gradient(180deg, var(--indigo-50) 0%, var(--white) 100%);
   color: var(--gray-900);
@@ -329,18 +321,9 @@ a:hover {
 }
 
 /* ─── Header Search Band ─────────────────────────────────── */
-/* The search bar is the one header control worth keeping within reach on a long page, so the
-   group pins with the nav row pulled above the fold (see .header-sticky-group) and this band
-   ends up flush with the viewport top. The band itself is deliberately NOT sticky: it cannot
-   be, its containing block is too short.
-   ---
-   The band paints nothing — the separation the pinned bar needs is a single blurred layer
-   around the input itself (.search-bar-wrapper::before below), not a surface across the whole
-   header. Three band-wide treatments were tried and rejected; see
-   specs/feature-sticky-search-band.md.
-   ---
-   `padding-bottom` exists because .main-content's 2rem supplied the gap under the bar at rest,
-   but once pinned the content scrolls right up to the band's edge. */
+/* The band paints nothing: it sits on the page background. It used to pin to the viewport top
+   (specs/feature-sticky-search-band.md); since specs/feature-header-scrolls-with-page.md it
+   scrolls away with the rest of the header. */
 .header-search-band {
   padding: 2rem 2rem 0.75rem;
   transition: background 0.2s ease, backdrop-filter 0.2s ease;
@@ -361,47 +344,6 @@ a:hover {
   max-width: 1100px;
   min-width: 320px;
   z-index: 110;
-}
-
-/* One blurred layer around the input, so the pinned bar stays legible over whatever scrolls
-   behind it. Blur only, no tint: the page background stays visible through it, just unreadable
-   close to the bar.
-   ---
-   The mask is what stops this reading as a hard-edged plate — the previous attempts failed on
-   exactly that. `radial-gradient(closest-side, …)` fits the box, so the falloff radiates from
-   the input in *every* direction and fades to nothing at the edge, rather than ramping
-   top-to-bottom the way the band-wide version did.
-   ---
-   `inset` is negative so the layer extends past the input instead of shrinking it: no layout
-   shift, and nothing to undo if it is dropped. `z-index: -1` keeps it behind the input while
-   staying inside this wrapper's own stacking context (`position: relative; z-index: 110`), so it
-   cannot fall behind the band. Always rendered at `opacity: 0` because a pseudo-element that
-   exists in only one state cannot transition.
-   ---
-   PREFIXED FIRST, STANDARD LAST for backdrop-filter: lightningcss treats the pair as one
-   property and keeps the last, so standard-first ships `-webkit-` alone and Blink drops the
-   blur. (`mask-image` does NOT collapse the same way — both spellings survive. Do not assume
-   prefix pairs behave alike; check the built CSS.) See specs/bugfix-acp-scrim-blur-dropped.md. */
-.search-bar-wrapper::before {
-  content: '';
-  position: absolute;
-  inset: -0.75rem;
-  z-index: -1;
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
-  -webkit-mask-image: radial-gradient(closest-side, #000 45%, transparent 100%);
-  mask-image: radial-gradient(closest-side, #000 45%, transparent 100%);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s ease;
-}
-
-/* Only once the page has actually scrolled — at rest the bar sits on the page background and has
-   nothing to separate from — and never while the ACP is open, which brings its own full-screen
-   scrim. Header sets data-scrolled at the point the band becomes the topmost row. */
-.header-sticky-group[data-scrolled]:not(:has(.search-bar-wrapper.overlay-open))
-  .search-bar-wrapper::before {
-  opacity: 1;
 }
 
 .search-bar-wrapper.expanded .search-bar {
@@ -479,7 +421,7 @@ a:hover {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: calc(var(--header-height, 8.5rem) + 1rem) 2rem 2rem;
+  padding: calc(var(--header-height, 8.5rem) - var(--acp-page-offset, 0px) + 1rem) 2rem 2rem;
   overflow-y: auto;
   /* Stop scroll chaining. Without this, a wheel gesture that reaches the end of the
      scrim (or of a column below) continues into the page behind the overlay, so the
@@ -1440,12 +1382,9 @@ a:hover {
   border: none;
   height: fit-content;
   position: sticky;
-  /* Clears the pinned search band, whose height is --header-height minus the nav row that
-     gets pulled above the fold — both published by Header, so this follows a wrapping nav or
-     a resized input instead of guessing. Was a hardcoded 80px, chosen when nothing in the
-     header stayed put; the band's bottom edge now sits at ~100px, so the sidebar used to
-     slide under it. */
-  top: calc(var(--header-height, 8.5rem) - var(--header-nav-height, 4rem) + 1rem);
+  /* Nothing in the header stays on screen (specs/feature-header-scrolls-with-page.md), so the
+     sidebar only needs a small gap from the viewport top. */
+  top: 1rem;
 }
 
 .facet-group {
@@ -1918,11 +1857,30 @@ a:hover {
   font-size: 1rem;
 }
 
+/* Same hover as .btn-outline, so the stepper answers the pointer like the remove button beside it. */
+.cart-item-qty button:hover {
+  border-color: var(--indigo-500);
+  color: var(--indigo-600);
+}
+
 .cart-item-price {
   font-weight: 700;
   color: var(--indigo-800);
   min-width: 80px;
   text-align: right;
+}
+
+/* .btn-sm pads more on the sides than on top, which turns a one-glyph pill into an oval.
+   A fixed square with no padding makes it a true circle. */
+.cart-item-remove {
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--coral-500);
 }
 
 .cart-summary {
@@ -1945,6 +1903,35 @@ a:hover {
   padding-top: 1rem;
   font-size: 1.1rem;
   font-weight: 700;
+}
+
+/* Lines on the left, the totals recap on the right, level with the first line. Not sticky on
+   purpose (specs/feature-cart-summary-side-column.md). The layout lives on the wrapper because
+   CheckoutPage reuses .cart-summary on its own. */
+.cart-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 20rem;
+  gap: 2rem;
+  align-items: start;
+}
+.cart-layout > .cart-summary {
+  margin-top: 0;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+/* Wider than the 900px .cart-page, so the lines keep their width next to the recap. Scoped with
+   :has because CheckoutPage uses .cart-page too. */
+.cart-page:has(.cart-layout) {
+  max-width: 1100px;
+}
+
+@media (max-width: 900px) {
+  .cart-layout {
+    display: block;
+  }
+  .cart-layout > .cart-summary {
+    margin-top: 2rem;
+  }
 }
 
 /* ─── CMS Page ───────────────────────────────────────────── */
@@ -2526,7 +2513,7 @@ a:hover {
     width: 100%;
   }
   .search-overlay-scrim {
-    padding: calc(var(--header-height, 11.5rem) + 1rem) 1rem 1rem;
+    padding: calc(var(--header-height, 11.5rem) - var(--acp-page-offset, 0px) + 1rem) 1rem 1rem;
   }
   .search-overlay-panel {
     grid-template-columns: 1fr;
@@ -4433,30 +4420,6 @@ a:hover {
   line-height: 1.5;
   max-width: 40ch;
   margin: 0 auto;
-}
-
-/* The interpretive key to the page, not small print — so it is a full-width callout rather
-   than a grey line of 0.8rem text under a rule, which is what it was and which nobody
-   scrolling past 85 result rows was ever going to read. Padding, tint, left accent rule and
-   radius make it a callout; indigo because this is the explanation. Full-bleed, matching .vector-head and
-   .vector-compare — no max-width. */
-.vector-footnote {
-  margin-top: 2rem;
-  padding: 1.25rem 1.5rem;
-  background: var(--indigo-50);
-  border-left: 4px solid var(--indigo-500);
-  border-radius: var(--radius-md);
-}
-.vector-footnote-title {
-  font-family: var(--font-display);
-  font-size: 1rem;
-  color: var(--indigo-900);
-  margin-bottom: 0.4rem;
-}
-.vector-footnote p {
-  font-size: 0.95rem;
-  line-height: 1.65;
-  color: var(--gray-800);
 }
 
 @media (max-width: 900px) {

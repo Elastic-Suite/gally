@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { resolveLocale, fetchCategoryProducts, cachedCategoryTree } from '../../../../src/sdk/server';
+import { resolveLocale, fetchCategoryProducts, cachedCategoryTree, fetchPublicConfiguration } from '../../../../src/sdk/server';
 import { ICategoryNode } from '../../../../src/sdk/catalogs';
 import { findTrail } from '../../../../src/sdk/categoryTree';
 import { missingInCatalog, RouteSearchParams } from '../../../../src/sdk/catalogSwitch';
@@ -55,7 +55,8 @@ export async function generateMetadata({ params, searchParams }: Params): Promis
     'Browse our {{name}} selection: {{count}} products available.',
     { name: title, count: total }
   );
-  const firstImage = products[0] ? getProductFields(products[0]).image : '';
+  const config = await fetchPublicConfiguration(resolved.localizedCatalog.code);
+  const firstImage = products[0] ? getProductFields(products[0], config).image : '';
 
   return {
     title,
@@ -92,6 +93,7 @@ export default async function Page({ params, searchParams }: Params) {
 
   const category = trail[trail.length - 1];
   const url = canonical(locale, `/category/${encodeURIComponent(code)}`);
+  const config = await fetchPublicConfiguration(resolved.localizedCatalog.code);
 
   const breadcrumb = [
     {
@@ -131,7 +133,7 @@ export default async function Page({ params, searchParams }: Params) {
             '@type': 'ItemList',
             numberOfItems: initialData.products.length,
             itemListElement: initialData.products.map((doc: any, i: number) => {
-              const p = getProductFields(doc);
+              const p = getProductFields(doc, config);
               return {
                 '@type': 'ListItem',
                 position: i + 1,
