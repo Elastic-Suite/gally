@@ -7,17 +7,6 @@
   },
   "title_one": "Ihr Warenkorb ({{count}} Artikel)",
   "title_other": "Ihr Warenkorb ({{count}} Artikel)",
-  "bundle": {
-    "heading": "🎁 Accessoire-Set −{{discount}}%",
-    "save": "Sie sparen",
-    "totalLabel": "Set-Gesamtpreis:",
-    "addButton": "Set hinzufügen",
-    "items": {
-      "clutch": "Passende Clutch",
-      "belt": "Stoffgürtel",
-      "scarf": "Leichter Schal"
-    }
-  },
   "shipping": {
     "unlocked": "✓ Versandkostenfrei freigeschaltet!",
     "remainingPrefix": "Nur noch",
@@ -26,21 +15,11 @@
   },
   "summary": {
     "subtotal": "Zwischensumme",
-    "frequentlyBoughtTogether": "Häufig zusammen gekauft",
     "shipping": "Versand",
     "total": "Gesamt",
     "checkout": "Zur Kasse"
   },
-  "fbt": {
-    "items": {
-      "sandals": "Geflochtene Sandalen",
-      "hat": "Strohhut",
-      "earrings": "Goldene Ohrringe"
-    },
-    "selectedTotal": "Auswahl gesamt:",
-    "addToCart": "In den Warenkorb"
-  },
-  "recommendations": "Vervollständigen Sie Ihren Look",
+  "recommendations": "Passt zu Ihrem Warenkorb",
   "checkout": {
     "steps": {
       "cart": "Warenkorb",
