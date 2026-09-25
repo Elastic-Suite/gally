@@ -1918,11 +1918,30 @@ a:hover {
   font-size: 1rem;
 }
 
+/* Same hover as .btn-outline, so the stepper answers the pointer like the remove button beside it. */
+.cart-item-qty button:hover {
+  border-color: var(--indigo-500);
+  color: var(--indigo-600);
+}
+
 .cart-item-price {
   font-weight: 700;
   color: var(--indigo-800);
   min-width: 80px;
   text-align: right;
+}
+
+/* .btn-sm pads more on the sides than on top, which turns a one-glyph pill into an oval.
+   A fixed square with no padding makes it a true circle. */
+.cart-item-remove {
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--coral-500);
 }
 
 .cart-summary {
@@ -1945,6 +1964,35 @@ a:hover {
   padding-top: 1rem;
   font-size: 1.1rem;
   font-weight: 700;
+}
+
+/* Lines on the left, the totals recap on the right, level with the first line. Not sticky on
+   purpose (specs/feature-cart-summary-side-column.md). The layout lives on the wrapper because
+   CheckoutPage reuses .cart-summary on its own. */
+.cart-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 20rem;
+  gap: 2rem;
+  align-items: start;
+}
+.cart-layout > .cart-summary {
+  margin-top: 0;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+/* Wider than the 900px .cart-page, so the lines keep their width next to the recap. Scoped with
+   :has because CheckoutPage uses .cart-page too. */
+.cart-page:has(.cart-layout) {
+  max-width: 1100px;
+}
+
+@media (max-width: 900px) {
+  .cart-layout {
+    display: block;
+  }
+  .cart-layout > .cart-summary {
+    margin-top: 2rem;
+  }
 }
 
 /* ─── CMS Page ───────────────────────────────────────────── */
@@ -4433,30 +4481,6 @@ a:hover {
   line-height: 1.5;
   max-width: 40ch;
   margin: 0 auto;
-}
-
-/* The interpretive key to the page, not small print — so it is a full-width callout rather
-   than a grey line of 0.8rem text under a rule, which is what it was and which nobody
-   scrolling past 85 result rows was ever going to read. Padding, tint, left accent rule and
-   radius make it a callout; indigo because this is the explanation. Full-bleed, matching .vector-head and
-   .vector-compare — no max-width. */
-.vector-footnote {
-  margin-top: 2rem;
-  padding: 1.25rem 1.5rem;
-  background: var(--indigo-50);
-  border-left: 4px solid var(--indigo-500);
-  border-radius: var(--radius-md);
-}
-.vector-footnote-title {
-  font-family: var(--font-display);
-  font-size: 1rem;
-  color: var(--indigo-900);
-  margin-bottom: 0.4rem;
-}
-.vector-footnote p {
-  font-size: 0.95rem;
-  line-height: 1.65;
-  color: var(--gray-800);
 }
 
 @media (max-width: 900px) {

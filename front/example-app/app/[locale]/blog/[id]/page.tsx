@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { resolveLocale, fetchCmsPageById } from '../../../../src/sdk/server';
+import { resolveLocale, fetchCmsPageById, fetchPublicConfiguration } from '../../../../src/sdk/server';
 import { missingInCatalog, RouteSearchParams } from '../../../../src/sdk/catalogSwitch';
 import { getCmsFields } from '../../../../src/sdk/cmsFields';
 import { SITE, toMetaDescription, openGraphBase } from '../../../../src/sdk/seo';
@@ -31,7 +31,8 @@ export async function generateMetadata({ params, searchParams }: Params): Promis
   // is cache()d, so it costs nothing. See specs/bugfix-ssr-product-list-behind-suspense.md.
   if (!doc) await missingInCatalog(locale, resolved, await searchParams, BLOG_FALLBACK);
 
-  const post = getCmsFields(doc);
+  const config = await fetchPublicConfiguration(resolved.localizedCatalog.code);
+  const post = getCmsFields(doc, config);
   const url = `${SITE}/${locale}/blog/${encodeURIComponent(post.id)}`;
 
   return {
@@ -61,7 +62,8 @@ export default async function Page({ params, searchParams }: Params) {
   // the catalog just left. See specs/feature-catalog-switch-missing-target.md.
   if (!doc) await missingInCatalog(locale, resolved, await searchParams, BLOG_FALLBACK);
 
-  const post = getCmsFields(doc);
+  const config = await fetchPublicConfiguration(resolved.localizedCatalog.code);
+  const post = getCmsFields(doc, config);
   const url = `${SITE}/${locale}/blog/${encodeURIComponent(post.id)}`;
 
   return (

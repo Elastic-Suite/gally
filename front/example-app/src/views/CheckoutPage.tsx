@@ -6,14 +6,27 @@ import { useCart } from '../contexts/CartContext';
 import { useCatalog } from '../contexts/CatalogContext';
 import { useTracking } from '../hooks/useTracking';
 
-const STEP_KEYS = ['cart', 'shipping', 'payment', 'confirmation'];
+const STEP_KEYS = ['cart', 'details', 'confirmation'];
+
+// Demo customer, so the order can be placed without typing anything.
+const DEMO_CUSTOMER = {
+  firstName: 'John',
+  lastName: 'Doe',
+  email: 'john.doe@example.com',
+  address: '1 Main Street',
+  city: 'Springfield',
+  zip: '12345',
+  cardNumber: '4242 4242 4242 4242',
+  expiry: '12/30',
+  cvc: '123',
+};
 
 export default function CheckoutPage() {
   const { t } = useTranslation('cart');
   const { items, total, clearCart } = useCart();
   const { formatPrice } = useCatalog();
   const { trackOrder } = useTracking();
-  const [step, setStep] = useState(1); // 0=cart (already done), 1=shipping, 2=payment, 3=confirmation
+  const [step, setStep] = useState(1); // 0=cart (already done), 1=delivery and payment, 2=confirmation
 
   const handlePlaceOrder = () => {
     const orderId = `ORD-${Date.now().toString(36).toUpperCase()}`;
@@ -22,7 +35,7 @@ export default function CheckoutPage() {
       total,
       items.map(i => ({ sku: i.sku, childSku: i.childSku, price: i.price, qty: i.qty }))
     );
-    setStep(3);
+    setStep(2);
     clearCart();
   };
 
@@ -44,27 +57,20 @@ export default function CheckoutPage() {
         <div style={{ background: 'white', borderRadius: 'var(--radius-md)', padding: '2rem', boxShadow: 'var(--shadow-sm)' }}>
           <h2 style={{ marginBottom: '1.5rem' }}>{t('checkout.shippingInfo')}</h2>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-            <input className="facet-search" placeholder={t('checkout.placeholders.firstName')} style={{ padding: '0.75rem' }} />
-            <input className="facet-search" placeholder={t('checkout.placeholders.lastName')} style={{ padding: '0.75rem' }} />
-            <input className="facet-search" placeholder={t('checkout.placeholders.email')} style={{ gridColumn: '1/-1', padding: '0.75rem' }} />
-            <input className="facet-search" placeholder={t('checkout.placeholders.address')} style={{ gridColumn: '1/-1', padding: '0.75rem' }} />
-            <input className="facet-search" placeholder={t('checkout.placeholders.city')} style={{ padding: '0.75rem' }} />
-            <input className="facet-search" placeholder={t('checkout.placeholders.zip')} style={{ padding: '0.75rem' }} />
+            <input className="facet-search" defaultValue={DEMO_CUSTOMER.firstName} placeholder={t('checkout.placeholders.firstName')} style={{ padding: '0.75rem' }} />
+            <input className="facet-search" defaultValue={DEMO_CUSTOMER.lastName} placeholder={t('checkout.placeholders.lastName')} style={{ padding: '0.75rem' }} />
+            <input className="facet-search" type="email" defaultValue={DEMO_CUSTOMER.email} placeholder={t('checkout.placeholders.email')} style={{ gridColumn: '1/-1', padding: '0.75rem' }} />
+            <input className="facet-search" defaultValue={DEMO_CUSTOMER.address} placeholder={t('checkout.placeholders.address')} style={{ gridColumn: '1/-1', padding: '0.75rem' }} />
+            <input className="facet-search" defaultValue={DEMO_CUSTOMER.city} placeholder={t('checkout.placeholders.city')} style={{ padding: '0.75rem' }} />
+            <input className="facet-search" defaultValue={DEMO_CUSTOMER.zip} placeholder={t('checkout.placeholders.zip')} style={{ padding: '0.75rem' }} />
           </div>
-          <button className="btn btn-primary btn-lg" style={{ marginTop: '1.5rem' }} onClick={() => setStep(2)}>
-            {t('checkout.continueToPayment')}
-          </button>
-        </div>
-      )}
 
-      {step === 2 && (
-        <div style={{ background: 'white', borderRadius: 'var(--radius-md)', padding: '2rem', boxShadow: 'var(--shadow-sm)' }}>
-          <h2 style={{ marginBottom: '1.5rem' }}>{t('checkout.payment')}</h2>
+          <h2 style={{ margin: '2rem 0 1.5rem' }}>{t('checkout.payment')}</h2>
           <div style={{ display: 'grid', gap: '1rem' }}>
-            <input className="facet-search" placeholder={t('checkout.placeholders.cardNumber')} style={{ padding: '0.75rem' }} />
+            <input className="facet-search" defaultValue={DEMO_CUSTOMER.cardNumber} placeholder={t('checkout.placeholders.cardNumber')} style={{ padding: '0.75rem' }} />
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-              <input className="facet-search" placeholder={t('checkout.placeholders.expiry')} style={{ padding: '0.75rem' }} />
-              <input className="facet-search" placeholder={t('checkout.placeholders.cvc')} style={{ padding: '0.75rem' }} />
+              <input className="facet-search" defaultValue={DEMO_CUSTOMER.expiry} placeholder={t('checkout.placeholders.expiry')} style={{ padding: '0.75rem' }} />
+              <input className="facet-search" defaultValue={DEMO_CUSTOMER.cvc} placeholder={t('checkout.placeholders.cvc')} style={{ padding: '0.75rem' }} />
             </div>
           </div>
           <div className="cart-summary" style={{ marginTop: '1.5rem' }}>
@@ -79,7 +85,7 @@ export default function CheckoutPage() {
         </div>
       )}
 
-      {step === 3 && (
+      {step === 2 && (
         <div style={{ textAlign: 'center', background: 'white', borderRadius: 'var(--radius-md)', padding: '3rem', boxShadow: 'var(--shadow-sm)' }}>
           <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>✓</div>
           <h2>{t('checkout.orderConfirmed')}</h2>

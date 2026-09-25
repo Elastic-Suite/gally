@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useCart } from '../contexts/CartContext';
+import { useGallyConfig } from '../contexts/ConfigContext';
 import { useAddedFlash } from '../hooks/useAddedFlash';
 import VariantSelector, { getVariantAxes } from './VariantSelector';
 import { getProductFields } from '../sdk/productFields';
@@ -38,8 +39,9 @@ export default function QuickAdd({ product, onInteract, onAdded, buttonClassName
   const { addToCart } = useCart();
   const { addedKey, flash } = useAddedFlash();
   const [selected, setSelected] = useState<Record<string, string>>({});
+  const config = useGallyConfig();
 
-  const { name, sku, image, price, available, attributes } = getProductFields(product);
+  const { name, sku, image, price, available, attributes } = getProductFields(product, config);
   const axes = getVariantAxes(attributes);
   const justAdded = addedKey === sku;
 

@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { useCatalog } from '../contexts/CatalogContext';
+import { useGallyConfig } from '../contexts/ConfigContext';
 import { useAddedFlash } from '../hooks/useAddedFlash';
 import { useMounted } from '../hooks/useMounted';
 import { getProductFields } from './ProductCard';
@@ -362,6 +363,7 @@ function ProductsColumn({ results, loading, highlightedKey, onSelect }: {
 }) {
   const { t } = useTranslation(['search', 'product']);
   const { formatPrice } = useCatalog();
+  const config = useGallyConfig();
 
   // The header (and its cart badge) is blurred and dimmed while the ACP is open,
   // so an add has to confirm itself in place: the card flashes green and the
@@ -381,7 +383,7 @@ function ProductsColumn({ results, loading, highlightedKey, onSelect }: {
       ) : (
         <div className="autocomplete-products-grid">
           {results.map((item: any, idx: number) => {
-            const { name, sku, price, image } = getProductFields(item);
+            const { name, sku, price, image } = getProductFields(item, config);
             const key = `product-${sku}`;
             const justAdded = addedSku === sku;
             return (

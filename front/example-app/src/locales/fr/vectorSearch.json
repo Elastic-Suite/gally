@@ -22,9 +22,7 @@
     "scoreLabel": "Similarité",
     "countAll": "Les {{corpus}} produits, classés par similarité"
   },
-  "footnote": "Notez l'asymétrie : la recherche vectorielle classe, elle ne filtre pas. Elle renvoie tout le catalogue ordonné par similarité et n'annonce jamais « aucun résultat » — c'est sa force sur ce type de requête, et la raison pour laquelle une mise en production applique généralement un score minimum, ou ne l'active qu'en repli lorsque la recherche par mots-clés ne trouve rien.",
   "rows": {
     "product": "Produit"
-  },
-  "footnoteTitle": "Comment lire cette comparaison"
+  }
 }

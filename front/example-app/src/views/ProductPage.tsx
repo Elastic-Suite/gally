@@ -7,6 +7,7 @@ import { useSearch } from '../hooks/useSearch';
 import { useRecommendations } from '../hooks/useRecommendations';
 import { useTracking } from '../hooks/useTracking';
 import { useCatalog } from '../contexts/CatalogContext';
+import { useGallyConfig } from '../contexts/ConfigContext';
 import { useCart } from '../contexts/CartContext';
 import { useAddedFlash } from '../hooks/useAddedFlash';
 import ProductSlider from '../components/ProductSlider';
@@ -28,6 +29,7 @@ export default function ProductPage({ initialProduct }: { initialProduct?: any }
   const params = useParams();
   const sku = Array.isArray(params.sku) ? params.sku[0] : params.sku;
   const { formatPrice, selectedLocalizedCatalog, selectedCatalog, categories } = useCatalog();
+  const config = useGallyConfig();
   const { addToCart } = useCart();
   // Confirms in place like the grid card does. No `addedFlash` glow here — that
   // animation outlines a card, and there is no card on this layout; the button
@@ -55,7 +57,7 @@ export default function ProductPage({ initialProduct }: { initialProduct?: any }
       : undefined,
   });
 
-  const p = products[0] ? getProductFields(products[0]) : null;
+  const p = products[0] ? getProductFields(products[0], config) : null;
 
   // The generated catalogs ship square 600x600 images, so they fill the square frame exactly.
   // The older Venia/Luma set is 161x200 - letting it fill only magnifies it - so those keep the

@@ -37,5 +37,6 @@ returned 0 results for it. Findings:
 The model is English-first, so the lists are best effort. Retest them when the model or the data changes.
 
 ## MUST NOT change
-- The ranks-not-filters explanation stays in the closing callout (`.vector-footnote`), now its only place.
+- ~~The ranks-not-filters explanation stays in the closing callout (`.vector-footnote`).~~ Superseded:
+  the callout was removed on request (2026-09-25). See `feature-vector-search-comparison.md`.
 - The per-panel score labels, the result counts and both search requests are unchanged.
