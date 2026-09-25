@@ -3,6 +3,9 @@
 ## Status: implemented
 ## Page/Component: src/components/Footer.tsx, src/components/BrandLockup.tsx, src/components/SectionLinks.tsx, src/components/Header.tsx, src/styles.css
 
+> **Superseded in part** by `feature-footer-single-row.md`: the two rows are now one (lockup, powered-by
+> line, section links), the full-width rule is gone, and the line reads only "Powered by Gally".
+
 Chosen from a mockup study (`gally-mockup` skill, variant "F2"): the footer matches the light
 header (`feature-header-light-two-row.md`) instead of the old dark indigo bar. Row 1 repeats the
 brand lockup and the section links; row 2 is the unchanged "powered by" line, centred under a

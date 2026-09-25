@@ -428,7 +428,7 @@ a:hover {
   font-size: 1.05rem;
   font-family: var(--font-sans);
   outline: none;
-  transition: --search-border-angle 0.9s ease-in-out, box-shadow 0.2s;
+  transition: --search-border-angle 1.4s ease-in-out, box-shadow 0.2s;
 }
 .search-bar::placeholder {
   color: var(--gray-500);
@@ -2462,29 +2462,42 @@ a:hover {
   padding: 0 2rem;
   font-size: 0.85rem;
   margin-top: 4rem;
-  display: flex;
-  flex-wrap: wrap;
+  /* One row: lockup | powered-by | section links. Equal outer columns keep the middle line
+     centred on the page whatever the widths of the lockup and the links. */
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
   gap: 0 2.5rem;
 }
 .footer > .header-logo {
   padding: 1.5rem 0;
+  justify-self: start;
+}
+.footer > p {
+  margin: 0;
+  text-align: center;
 }
 .footer-nav {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: flex-end;
   gap: 0 1.75rem;
 }
-/* The rule breaks out of the footer's side padding on both sides, so it runs full width.
-   Centred: the floating Insights button sits at the bottom left. */
-.footer > p {
-  flex: 0 0 calc(100% + 4rem);
-  margin: 0 -2rem;
-  padding: 1.1rem 2rem;
-  border-top: 1px solid var(--gray-200);
-  text-align: center;
+/* Narrow screens: the three parts stack, centred. */
+@media (max-width: 768px) {
+  .footer {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    padding-bottom: 1.25rem;
+  }
+  .footer > .header-logo {
+    justify-self: center;
+    padding-bottom: 0.75rem;
+  }
+  .footer-nav {
+    justify-content: center;
+  }
 }
 /* Scoped to the line, never `.footer a`: that would recolour the section links above. */
 .footer p a {

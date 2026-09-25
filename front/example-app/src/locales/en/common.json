@@ -3,8 +3,7 @@
     "ariaLabel": "Gally example — go to homepage"
   },
   "footer": {
-    "poweredBy": "Powered by",
-    "tagline": "Gally SDK Features Demo"
+    "poweredBy": "Powered by"
   },
   "nav": {
     "products": "Products",
