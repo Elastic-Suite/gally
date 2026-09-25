@@ -7,6 +7,7 @@ import { useAddedFlash } from '../hooks/useAddedFlash';
 import { getProductFields, getProductBadges } from '../sdk/productFields';
 import QuickAdd from './QuickAdd';
 import EcoMark from './EcoMark';
+import ProductImage from './ProductImage';
 
 interface Props {
   product: any;
@@ -53,16 +54,12 @@ export default function ProductCard({ product }: Props) {
             sale shows both. See specs/feature-eco-badge.md. */}
         {fields.isEco && <EcoMark />}
         <Link href={`/product/${encodeURIComponent(sku)}`} className="product-card-image-link">
-          {image ? (
-            <img src={image} alt={name} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
-          ) : (
-            <span>📷 {name.substring(0, 20)}</span>
-          )}
+          <ProductImage src={image} alt={name} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
         </Link>
         <QuickAdd product={product} onAdded={flash} />
       </div>
       <div className="product-card-body">
-        <Link href={`/product/${encodeURIComponent(sku)}`}>
+        <Link href={`/product/${encodeURIComponent(sku)}`} className="product-card-name-link">
           <div className="product-card-name">{name}</div>
         </Link>
         {/* Same string and same translation key as the product page's `.product-detail-brand`,

@@ -17,6 +17,7 @@ import Breadcrumb from '../components/Breadcrumb';
 import { productCategoryTrail } from '../sdk/categoryTree';
 import VariantSelector, { getVariantAxes } from '../components/VariantSelector';
 import { productDetailFields } from '../sdk/fields';
+import ProductImage from '../components/ProductImage';
 
 // `initialProduct` is the raw search document the Server Component already fetched for
 // this SKU. When it is present the page renders complete on the first pass — no
@@ -140,19 +141,15 @@ export default function ProductPage({ initialProduct }: { initialProduct?: any }
           )}
           {/* Same rule as the card, opposite corner. */}
           {p.isEco && <EcoMark />}
-          {p.image ? (
-            <img
-              src={p.image}
-              alt={p.name}
-              style={
-                fillsFrame
-                  ? { width: '100%', height: '100%', objectFit: 'contain' }
-                  : { maxWidth: '100%', maxHeight: '400px', objectFit: 'contain' }
-              }
-            />
-          ) : (
-            <span>📷 {p.name}</span>
-          )}
+          <ProductImage
+            src={p.image}
+            alt={p.name}
+            style={
+              fillsFrame
+                ? { width: '100%', height: '100%', objectFit: 'contain' }
+                : { maxWidth: '100%', maxHeight: '400px', objectFit: 'contain' }
+            }
+          />
         </div>
 
         <div className="product-detail-info">

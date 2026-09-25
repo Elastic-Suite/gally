@@ -1,5 +1,7 @@
 # Bugfix: the page scrolled behind the autocomplete popup, and the popup was too tall
 
+> **Superseded in part** by `feature-acp-light-glass.md`: the scrim colour quoted here is the old dark one; the scroll rules stand.
+
 ## Status: implemented
 ## Page/Component: src/components/SearchOverlay.tsx (body scroll lock), src/styles.css (`.search-overlay-scrim`, `.search-overlay-col`, `.autocomplete-item`, `.autocomplete-section-title`, `.autocomplete-suggestion`, `.autocomplete-category`, `.autocomplete-attribute-group`)
 

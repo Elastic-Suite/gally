@@ -10,7 +10,7 @@
     "products": "Produits",
     "searchIntelligence": "Intelligence de recherche",
     "cms": "Blog",
-    "vectorSearch": "Recherche sémantique"
+    "vectorSearch": "Recherche vectorielle"
   },
   "cart": {
     "link": "Panier"
@@ -26,7 +26,7 @@
     "closing": "Synthèse",
     "breadcrumb": "Fil d'Ariane",
     "home": "Accueil",
-    "vectorSearch": "Recherche sémantique",
+    "vectorSearch": "Recherche vectorielle",
     "pagination": "Pagination"
   }
 }

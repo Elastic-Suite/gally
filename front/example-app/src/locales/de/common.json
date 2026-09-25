@@ -10,7 +10,7 @@
     "products": "Produkte",
     "searchIntelligence": "Such-Intelligenz",
     "cms": "Blog",
-    "vectorSearch": "Semantische Suche"
+    "vectorSearch": "Vektorsuche"
   },
   "cart": {
     "link": "Warenkorb"
@@ -26,7 +26,7 @@
     "closing": "Zusammenfassung",
     "breadcrumb": "Navigationspfad",
     "home": "Startseite",
-    "vectorSearch": "Semantische Suche",
+    "vectorSearch": "Vektorsuche",
     "pagination": "Seitennummerierung"
   }
 }
