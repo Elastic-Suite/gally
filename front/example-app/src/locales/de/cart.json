@@ -23,8 +23,7 @@
   "checkout": {
     "steps": {
       "cart": "Warenkorb",
-      "shipping": "Versand",
-      "payment": "Zahlung",
+      "details": "Versand und Zahlung",
       "confirmation": "Bestätigung"
     },
     "shippingInfo": "Versandinformationen",
@@ -39,7 +38,6 @@
       "expiry": "MM/JJ",
       "cvc": "Prüfziffer"
     },
-    "continueToPayment": "Weiter zur Zahlung →",
     "payment": "Zahlung",
     "totalToPay": "Zu zahlender Betrag",
     "placeOrder": "Kostenpflichtig bestellen — {{amount}}",

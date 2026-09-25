@@ -23,3 +23,6 @@ services:
       target: gally_pwa_int
       args:
         - public_url=https://${SERVER_NAME}/example
+    volumes:
+      # Demo product images ship with gally-sample-data, installed by composer before `up`.
+      - ./api/vendor/gally/gally-sample-data/media/catalog/product:/usr/src/front/pwa/public/media/catalog/product:ro

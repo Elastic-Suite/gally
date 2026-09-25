@@ -14,6 +14,8 @@ x-base-php-env : &php-base-env
   DATABASE_URL: postgresql://${POSTGRES_USER:-app}:${POSTGRES_PASSWORD:-!ChangeMe!}@database:5432/${POSTGRES_DB:-app}?serverVersion=${POSTGRES_VERSION:-16}&charset=${POSTGRES_CHARSET:-utf8}
   ELASTICSEARCH_URL: https://${SEARCH_USER:-admin}:${SEARCH_PASSWORD:-!ChangeMe0!}@${SEARCH_HOST:-search}:9200/
   ELASTICSEARCH_SSL_VERIFICATION: false
+  # Comma separated sample data catalog folders to load; empty loads every one of them.
+  GALLY_SAMPLE_DATA_CATALOGS: ${GALLY_SAMPLE_DATA_CATALOGS:-}
 
 x-base-php: &php-base
   build:

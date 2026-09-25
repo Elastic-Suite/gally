@@ -3,6 +3,7 @@
 import Link from './LocaleLink';
 import { useTranslation } from 'react-i18next';
 import { useCatalog } from '../contexts/CatalogContext';
+import { useGallyConfig } from '../contexts/ConfigContext';
 import { useAddedFlash } from '../hooks/useAddedFlash';
 import { getProductFields, getProductBadges } from '../sdk/productFields';
 import QuickAdd from './QuickAdd';
@@ -21,8 +22,9 @@ export default function ProductCard({ product }: Props) {
   // the header, too far from a card in a long grid to be noticed. QuickAdd owns the button's
   // own confirmation; this instance only drives the card's green flash around it.
   const { addedKey, flash } = useAddedFlash();
+  const config = useGallyConfig();
 
-  const fields = getProductFields(product);
+  const fields = getProductFields(product, config);
   const { name, sku, image, price, originalPrice, isDiscounted } = fields;
   // Which badges apply is a property of the product, not of the card — the rule lives in
   // ../sdk/productFields.ts so the product page overlays the same set on its own picture.

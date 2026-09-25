@@ -49,7 +49,7 @@ services:
       <<: *php-base-env
       TRUSTED_HOSTS: ${TRUSTED_HOSTS:-^${SERVER_NAME:-|gally.localhost}|localhost|${E2E_SERVER_NAME:-gally.e2e}|php$$}
       # See https://xdebug.org/docs/all_settings#mode
-      XDEBUG_MODE: ${XDEBUG_MODE:-off}
+      XDEBUG_MODE: ${XDEBUG_MODE:-debug}
       PHP_IDE_CONFIG: serverName=gally
       BLACKFIRE_CLIENT_ID: ${BLACKFIRE_CLIENT_ID:-}
       BLACKFIRE_CLIENT_TOKEN: ${BLACKFIRE_CLIENT_TOKEN:-}
@@ -71,6 +71,9 @@ services:
         - REACT_APP_API_URL=
     volumes:
       - ./front:/usr/src/front:rw,cached,z
+      # Demo product images ship with gally-sample-data; pwa serves them at /media/catalog/product.
+      # Through vendor/, like int, so the images match the installed package (a link to packages/ here).
+      - ./api/vendor/gally/gally-sample-data/media/catalog/product:/usr/src/front/pwa/public/media/catalog/product:ro,z
     environment:
       - SKIP_YARN_INSTALL=${SKIP_YARN_INSTALL:-false}
       # On Linux, you may want to comment the following line for improved performance

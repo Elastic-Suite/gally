@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useAppPathname, useLocaleHref } from '../contexts/LocaleContext';
 import { useNavigate } from '../contexts/NavigationContext';
 import { useSearchBarRef } from '../contexts/SearchBarContext';
+import { useGallyConfig } from '../contexts/ConfigContext';
 import { useAutocomplete } from '../hooks/useSearch';
 import { cmsPageUrl, useCmsAutocomplete } from '../hooks/useCms';
 import SearchOverlay, {
@@ -24,6 +25,7 @@ export default function SearchBar({ categories, categoriesLoading }: SearchBarPr
   // the header would sit on the previous page with no feedback. See NavigationContext.
   const navigate = useNavigate();
   const localeHref = useLocaleHref();
+  const config = useGallyConfig();
   const [query, setQuery] = useState('');
   const [focused, setFocused] = useState(false);
   const { results, aggregations, termSuggestions: productsTermSuggestions, loading, search, clear } = useAutocomplete();
@@ -73,7 +75,7 @@ export default function SearchBar({ categories, categoriesLoading }: SearchBarPr
       });
     });
     results.forEach((item: any) => {
-      const { sku } = getProductFields(item);
+      const { sku } = getProductFields(item, config);
       items.push({ key: `product-${sku}`, to: `/product/${encodeURIComponent(sku)}` });
     });
     getCategoryMatches(query, categories).forEach(cat => {
@@ -85,7 +87,7 @@ export default function SearchBar({ categories, categoriesLoading }: SearchBarPr
       items.push({ key: `blog-${page.id}`, to: cmsPageUrl(page.id) });
     });
     return items;
-  }, [query, termSuggestions, results, aggregations, categories, cmsPages]);
+  }, [query, termSuggestions, results, aggregations, categories, cmsPages, config]);
 
   useEffect(() => {
     setHighlightedIndex(-1);

@@ -22,9 +22,7 @@
     "scoreLabel": "Similarity",
     "countAll": "All {{corpus}} products, ranked by similarity"
   },
-  "footnote": "Note the asymmetry: vector search ranks rather than filters. It returns the whole catalogue ordered by similarity and never reports “no results” — which is its strength on a query like these, and why a production setup usually applies a minimum score, or runs it only as a fallback when keyword search finds nothing.",
   "rows": {
     "product": "Product"
-  },
-  "footnoteTitle": "Reading this comparison"
+  }
 }

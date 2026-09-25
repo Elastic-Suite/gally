@@ -1,5 +1,6 @@
 import { cache } from 'react';
-import { getSearchManager } from './index';
+import { BASE_URI, getSearchManager } from './index';
+import { GallyConfig } from './config';
 import { fetchCatalogs, findLocalizedCatalog, fetchCategoryTree } from './catalogs';
 import { productFields, productDetailFields, CMS_FIELDS, CMS_METADATA } from './fields';
 
@@ -152,6 +153,25 @@ export const resolveLocale = cache(async (locale: string) => {
   return findLocalizedCatalog(catalogs, locale);
 });
 
+
+// Gally's public settings (today only gally.base_url.media), read by the layout, every page body
+// and every generateMetadata() that maps a product or a CMS page. cache() makes that one request
+// per render pass. Scoped: a value overridden for this localized catalog wins over the general
+// one (the API reads localizedCatalogCode). `public_configurations` needs no token.
+export const fetchPublicConfiguration = cache(async (localizedCatalog: string): Promise<GallyConfig> => {
+  try {
+    const params = new URLSearchParams({ localizedCatalogCode: localizedCatalog });
+    const res = await fetch(`${BASE_URI}/public_configurations?${params}`, {
+      headers: { Accept: 'application/ld+json' },
+    });
+    const data = await res.json();
+    return Object.fromEntries(
+      (data['hydra:member'] || []).map((c: any) => [c.path, c.value]),
+    );
+  } catch {
+    return {};
+  }
+});
 
 // The category tree is now read three times per request — the route guard, its
 // generateMetadata and the page body. Uncached that is three identical GraphQL calls.
