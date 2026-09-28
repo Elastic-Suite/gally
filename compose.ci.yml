@@ -52,6 +52,7 @@ services:
       - NEXT_PUBLIC_ENTRYPOINT=
       - NEXT_PUBLIC_API_URL=
       - REACT_APP_API_URL=
+      - SDK_API_URL=https://${SERVER_NAME:-gally.localhost}/${API_ROUTE_PREFIX:-api}
   example:
     build:
       context: ./docker/front
