@@ -154,7 +154,7 @@ src/
 │   ├── SearchPage.tsx      # Full-text search: facets, sort, pagination
 │   ├── ProductPage.tsx     # Detail: image, price, description, variants, stock, recommendations
 │   ├── CartPage.tsx        # Cart items + recommendations
-│   ├── CheckoutPage.tsx    # Multi-step tunnel (shipping → payment → confirmation) + ORDER tracking
+│   ├── CheckoutPage.tsx    # One prefilled step (delivery + payment) → confirmation, + ORDER tracking
 │   ├── BlogPage.tsx        # CMS article listing. Pushes `pathname` — the one place a raw
 │   │                       #   segment-bearing push is correct, so do NOT wrap it in withLocale
 │   ├── BlogPostPage.tsx    # Single article (accepts server-fetched initialPost)
@@ -166,12 +166,12 @@ src/
 │   ├── index.ts           # i18next init
 │   └── I18nBridge.tsx     # Syncs i18next's language with the [locale] segment
 ├── locales/{de,en,fr}/    # blog, cart, category, cms, common, demo, facets, product,
-│                          #   scenarios, search — 10 namespaces per language
+│                          #   scenarios, search, vectorSearch — 11 namespaces per language
 ├── scenarios/
 │   ├── types.ts           # Scenario / ScenarioStep, incl. the action descriptors
 │   └── demo-dress.ts      # The scripted guided demo
 ├── assets/
-└── styles.css             # Single source of visual truth — ~80KB / 3.6k lines. High-risk:
+└── styles.css             # Single source of visual truth — ~4.7k lines. High-risk:
                            #   changing it triggers the plan-first rule in AGENTS.md
 ```
 
@@ -195,7 +195,7 @@ editing in either directory.
 | Translations | `src/locales/<lang>/<ns>.json`; server side via `sdk/serverI18n.ts` |
 | Tracking / analytics | `hooks/useTracking.ts`, `contexts/EventLogContext.tsx` |
 | Loading states | `components/skeletons.tsx` + `components/RouteSkeleton.tsx` + `contexts/NavigationContext.tsx` |
-| Guided demo, intro, audience modes | `contexts/DemoContext.tsx`, `src/scenarios/`, `components/StoryCompanion.tsx` |
+| Guided demo, intro, audience modes (paused - see `specs/feature-guided-demo-rebuild.md`) | `contexts/DemoContext.tsx`, `src/scenarios/`, `components/StoryCompanion.tsx` |
 | Anything visual | `src/styles.css` + `docs/design-system.md` |
 
 Faster than this table for anything already built: `ls specs/` — the filenames are feature names, and
