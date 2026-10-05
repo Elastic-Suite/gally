@@ -4,10 +4,9 @@
 ## Page/Component: src/styles.css (ACP rules), src/components/SearchOverlay.tsx (unchanged)
 
 The dark indigo scrim (`rgba(30, 27, 75, 0.92)`) with light panel text clashed with the light
-header (`feature-header-light-two-row.md`). Chosen from a mockup study (`gally-mockup` skill,
-variant "G3 - indigo wash" out of white glass / pale indigo glass / indigo wash): a light wash,
+header (`feature-header-light-two-row.md`). It is now a light wash,
 pale `--indigo-50` at the top to `--indigo-100` at the bottom, 88% opaque, with the same 28px
-blur, and the whole panel in dark text. The wash was picked over plain white because the white
+blur, and the whole panel in dark text. The wash is used rather than plain white because the white
 product cards need a ground to separate from.
 
 Supersedes the colour values in `feature-acp-visual-redesign.md`, `bugfix-acp-scrim-blur-dropped.md`
@@ -27,7 +26,7 @@ Supersedes the colour values in `feature-acp-visual-redesign.md`, `bugfix-acp-sc
 - [ ] Skeleton rows use the global gray shimmer. (Not seen: skeletons only show while results load, and the capture waited past them.)
 - [x] Legible over a busy page (a category grid behind the overlay).
 
-Verified 2026-09-24 by a capture of the running app (`mockups/acp-footer-implemented/`, 1440px, footer also at 390px), compared with the picked mockup variant.
+Verified 2026-09-24 on screenshots of the running app at 1440px.
 
 ## SDK contract used
 - None changed.

@@ -40,7 +40,7 @@ Verified live against this stack, not assumed:
 ## Behaviour (testable)
 
 - [x] `/[locale]/vector-search` renders two equal panels, keyword left, vector right, under a
-      **centred, full-bleed** header block (breadcrumb, title, intro, search form, suggestion chips,
+      **centred, full-bleed** header block (breadcrumb, title, search form, suggestion chips,
       warning). Everything above the panels applies to both, so centring stops it reading as the
       left panel's. No child of `.vector-head` carries a `max-width`: measured, all of them span the
       same 1336px as `.vector-compare` below, so the header reads as the heading OF the comparison
@@ -209,6 +209,13 @@ feature first shipped. `/explain` beside it stays expert-only; this one does not
 comparison is what the demo is for. It is also deliberately outside `.header-nav-switch` — that is
 a two-way Products/Articles control with a sliding thumb sized `1fr 1fr`, and this is not a third
 storefront section.
+
+## Intro paragraph removed (2026-10-02)
+
+The paragraph under the title ("La même requête, exécutée deux fois sur le même catalogue...")
+is gone, with its `intro` key in the three locale files and the `.vector-intro` rule. The
+comparison is explained by the presenter during the demo. The title keeps the paragraph's
+1.5rem bottom margin so the search form does not move up against it.
 
 ## MUST NOT change
 

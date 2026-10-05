@@ -1,7 +1,6 @@
 {
   "breadcrumb": "Home / Vector search",
   "title": "Keyword search vs. vector search",
-  "intro": "The same query, run twice against the same catalogue. On the left, the keyword engine matches words. On the right, vector search matches meaning — it compares the embedding of your query with the embedding of every product, so it can answer a request whose words appear nowhere in the catalogue.",
   "placeholder": "Describe what you are looking for…",
   "submit": "Compare",
   "tryLabel": "Try:",

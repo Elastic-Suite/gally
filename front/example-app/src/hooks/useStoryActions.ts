@@ -10,6 +10,7 @@ import { useSearchBarRef } from '../contexts/SearchBarContext';
 import { useSearch } from './useSearch';
 import { getProductFields } from '../components/ProductCard';
 import { ScenarioStep, StepAction } from '../scenarios/types';
+import { createIconElement, type IconName } from '../components/Icon';
 
 interface UseStoryActionsOptions {
   step: ScenarioStep | null;
@@ -65,10 +66,11 @@ export function useStoryActions({ step, active, minimized }: UseStoryActionsOpti
   }, []);
 
   // Toast helper
-  const showToast = useCallback((message: string) => {
+  const showToast = useCallback((message: string, icon?: IconName) => {
     const toast = document.createElement('div');
     toast.className = 'story-cart-toast';
     toast.innerHTML = message;
+    if (icon) toast.prepend(createIconElement(icon));
     document.body.appendChild(toast);
     requestAnimationFrame(() => toast.classList.add('visible'));
     setTimeout(() => {
@@ -207,7 +209,7 @@ export function useStoryActions({ step, active, minimized }: UseStoryActionsOpti
           actionTimerRef.current = setTimeout(() => {
             btn.click();
             btn.classList.remove('story-highlight-btn');
-            showToast(t('toast.addedToCart'));
+            showToast(t('toast.addedToCart'), 'checkmark');
             actionTimerRef.current = setTimeout(() => pushLocale('/cart'), 1500);
           }, 1000);
         };

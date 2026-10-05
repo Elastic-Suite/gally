@@ -12,6 +12,7 @@ import { ProductGridSkeleton } from '../components/skeletons';
 import Breadcrumb from '../components/Breadcrumb';
 import Pagination from '../components/Pagination';
 import { findTrail } from '../sdk/categoryTree';
+import Icon from '../components/Icon';
 
 // `initialData` is the first page of this category, fetched by the Server Component.
 export default function CategoryPage({
@@ -117,7 +118,7 @@ export default function CategoryPage({
       </div>
 
       <button className="btn btn-outline btn-sm mobile-filter-toggle">
-        ☰ {t('common:actions.filters')}
+        <Icon name="options" />{t('common:actions.filters')}
       </button>
 
       <div className="catalog-page">
@@ -164,8 +165,8 @@ export default function CategoryPage({
             page={page}
             pageCount={pageCount}
             windowSize={5}
-            prevLabel="←"
-            nextLabel="→"
+            prevLabel={t('search:page.prev')}
+            nextLabel={t('search:page.next')}
             ariaLabel={t('common:meta.pagination')}
             onPage={p => { setPage(p); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
           />

@@ -10,7 +10,7 @@ import brandMark from '../assets/gally-rabbit.svg';
 export default function BrandLockup() {
   const { t } = useTranslation('common');
   return (
-    // Mark + wordmark: the asset is the rabbit alone, so the "Gally example" type is set
+    // Mark + wordmark: the asset is the rabbit alone, so the "Gally Shop" type is set
     // here. The words are a brand name, not copy — never translated. Both spans are
     // aria-hidden with the accessible name on the link, so the lockup is announced once
     // rather than as mark + two words.
@@ -20,7 +20,7 @@ export default function BrandLockup() {
       <img src={brandMark.src} alt="" className="header-logo-mark" />
       <span className="header-logo-text" aria-hidden="true">
         <span className="header-logo-name">Gally</span>
-        <span className="header-logo-accent">example</span>
+        <span className="header-logo-accent">Shop</span>
       </span>
     </Link>
   );

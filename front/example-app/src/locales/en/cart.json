@@ -8,7 +8,7 @@
   "title_one": "Your Cart ({{count}} item)",
   "title_other": "Your Cart ({{count}} items)",
   "shipping": {
-    "unlocked": "✓ Free shipping unlocked!",
+    "unlocked": "Free shipping unlocked!",
     "remainingPrefix": "Only",
     "remainingSuffix": "left for free shipping",
     "free": "Free"

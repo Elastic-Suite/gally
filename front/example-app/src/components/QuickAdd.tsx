@@ -7,6 +7,7 @@ import { useGallyConfig } from '../contexts/ConfigContext';
 import { useAddedFlash } from '../hooks/useAddedFlash';
 import VariantSelector, { getVariantAxes } from './VariantSelector';
 import { getProductFields } from '../sdk/productFields';
+import Icon from './Icon';
 
 // The add-to-cart affordance shared by the grid card and the autocomplete row, so the two cannot
 // drift apart on the one rule that matters here: **a configurable product is never added without
@@ -53,7 +54,7 @@ export default function QuickAdd({ product, onInteract, onAdded, buttonClassName
 
   const label = () => {
     if (!available) return t('card.unavailable');
-    if (justAdded) return t('card.added');
+    if (justAdded) return <><Icon name="checkmark" />{t('card.added')}</>;
     if (!isComplete) return t('card.chooseOptions');
     return t('card.addToCart');
   };

@@ -1,5 +1,7 @@
 # Feature: hero CTA per catalogue
 
+> **Superseded in part** by `feature-homepage-blocks.md`: on `fashion`, `toolbox` and `papershop` the button sits in the new wide hero and is `.btn-dark`, not coral. Its label and query, and every rule below about them, stand.
+
 ## Status: implemented
 ## Page/Component
 `src/views/Homepage.tsx`, `src/locales/{en,fr,de}/category.json`.

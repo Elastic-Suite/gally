@@ -28,9 +28,20 @@ export function getClient(): Client {
 // Search Manager singleton
 let searchManagerInstance: SearchManager | null = null;
 
+// The bundles installed on the API, fetched on the server (see ./bundles.ts) and handed over by
+// app/providers.tsx. The SearchManager reads them to decide which optional fields it may request,
+// such as `termSuggestions`. A different list drops the singleton so the next call rebuilds it.
+let bundles: string[] = [];
+
+export function setBundles(next: string[]): void {
+  if (next.join() === bundles.join()) return;
+  bundles = next;
+  searchManagerInstance = null;
+}
+
 export function getSearchManager(): SearchManager {
   if (!searchManagerInstance) {
-    searchManagerInstance = new SearchManager({ baseUri: BASE_URI });
+    searchManagerInstance = new SearchManager({ baseUri: BASE_URI, bundles });
   }
   return searchManagerInstance;
 }

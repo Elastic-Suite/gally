@@ -10,6 +10,7 @@ import SearchBar from './SearchBar';
 import CategoryNav from './CategoryNav';
 import BrandLockup from './BrandLockup';
 import SectionLinks from './SectionLinks';
+import Icon from './Icon';
 
 export default function Header() {
   const { t } = useTranslation('common');
@@ -22,25 +23,49 @@ export default function Header() {
   // lives in SectionLinks now; this one only picks the route without a search band.
   const pathname = useAppPathname();
   const groupRef = useRef<HTMLDivElement | null>(null);
+  const slotRef = useRef<HTMLDivElement | null>(null);
 
   const localizedCatalogs = selectedCatalog?.localizedCatalogs || [];
 
-  // /vector-search is the one route that supplies its own search input. See the band below.
-  const hideSearchBand = pathname === '/vector-search';
+  // /vector-search is the one route that supplies its own search input. See the slot below.
+  const hideSearchBar = pathname === '/vector-search';
 
 
   // Expose the real rendered height of the whole group as --header-height, so CSS can offset
   // against it instead of guessing: it is the search overlay's top padding. Measured, because
   // it changes with viewport width: both header rows wrap on mobile.
+  // The same observer publishes the search slot's box relative to the group. On focus the bar
+  // leaves the slot for a place below the header, and back; CSS can only animate that between
+  // two known boxes, and the slot's depends on the links and selects of each catalog and
+  // language. data-search-slot tells the CSS the variables exist. See
+  // specs/feature-header-search-drop.md.
   useLayoutEffect(() => {
     const group = groupRef.current;
     if (!group) return;
-    const updateHeight = () => {
+    const update = () => {
       document.documentElement.style.setProperty('--header-height', `${group.offsetHeight}px`);
+      const slot = slotRef.current;
+      if (!slot) return;
+      const g = group.getBoundingClientRect();
+      const r = slot.getBoundingClientRect();
+      // Only opening and closing animate. A new measurement must jump: the first one switches
+      // the bar from the slot's flow to absolute, where its `width: 100%` would resolve against
+      // the whole group and shrink from there on page load; later ones (resize) would make the
+      // bar trail the slot. data-search-measuring turns the transition off, and the forced
+      // layout applies the new box before it is turned back on.
+      group.dataset.searchMeasuring = '';
+      group.style.setProperty('--search-slot-x', `${r.left - g.left}px`);
+      group.style.setProperty('--search-slot-y', `${r.top - g.top}px`);
+      group.style.setProperty('--search-slot-w', `${r.width}px`);
+      group.style.setProperty('--search-slot-h', `${r.height}px`);
+      group.dataset.searchSlot = '';
+      void group.offsetWidth;
+      delete group.dataset.searchMeasuring;
     };
-    updateHeight();
-    const observer = new ResizeObserver(updateHeight);
+    update();
+    const observer = new ResizeObserver(update);
     observer.observe(group);
+    if (slotRef.current) observer.observe(slotRef.current);
     return () => observer.disconnect();
   }, []);
 
@@ -50,6 +75,19 @@ export default function Header() {
         <div className="header-inner">
           <BrandLockup />
           <SectionLinks className="header-nav" />
+
+          {/* The search fills the gap between the links and the selects. On /vector-search ONLY
+              the slot stays empty: that page carries its own full-width search box which IS the
+              page, so the header's bar was a second search input above it doing something
+              different (it navigates to /search and abandons the comparison). Not rendered
+              rather than CSS-hidden, so the SearchBar and its overlay are not mounted at all.
+              The empty slot keeps the row from shifting. `SearchBarProvider` lives in
+              app/providers.tsx, so `useSearchBarRef()` still resolves with a null `ref.current`;
+              its one consumer outside SearchBar, useStoryActions' `type_and_search`, already
+              guards with `if (!handle) return`. */}
+          <div className="header-search-slot" ref={slotRef}>
+            {!hideSearchBar && <SearchBar categories={categories} categoriesLoading={loadingCatalogs} />}
+          </div>
 
           <div className="context-selectors">
             <select
@@ -75,11 +113,7 @@ export default function Header() {
           {/* Icon only on screen; the label stays in the accessible name as visually hidden
               text rather than aria-label, so the count after it is announced too. */}
           <Link href="/cart" className="cart-badge">
-            <svg className="cart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <circle cx="9" cy="20" r="1.4" />
-              <circle cx="18" cy="20" r="1.4" />
-              <path d="M2.5 3h2.2l2.4 11.2a1.5 1.5 0 0 0 1.5 1.2h8.9a1.5 1.5 0 0 0 1.5-1.1L21 7H6" />
-            </svg>
+            <Icon name="cart" standalone className="cart-icon" />
             <span className="visually-hidden">{t('cart.link')}</span>
             {itemCount > 0 && <span className="cart-count">{itemCount}</span>}
           </Link>
@@ -91,25 +125,6 @@ export default function Header() {
         <CategoryNav />
       </header>
 
-      {/* The band is omitted on /vector-search ONLY. That page carries its own full-width
-          search box which IS the page, so the header's bar was a second search input above it
-          doing something different (it navigates to /search and abandons the comparison) —
-          confusing, and it cost ~90px of vertical space on the longest page in the app.
-          Route-scoped rather than CSS-hidden so the SearchBar and its overlay are not mounted
-          at all. Two things that would otherwise break, both checked:
-          - `--header-height` is MEASURED by the ResizeObserver above, not a constant, so it
-            re-publishes the shorter height on its own.
-          - `SearchBarProvider` lives in app/providers.tsx, so `useSearchBarRef()` still
-            resolves; only `ref.current` is null. Its one consumer outside SearchBar is
-            useStoryActions' `type_and_search`, which already guards with `if (!handle) return`
-            and navigates to its own startRoute first — so the guided story is unaffected. */}
-      {!hideSearchBand && (
-        <div className="header-search-band">
-          <div className="header-search-row">
-            <SearchBar categories={categories} categoriesLoading={loadingCatalogs} />
-          </div>
-        </div>
-      )}
     </div>
   );
 }

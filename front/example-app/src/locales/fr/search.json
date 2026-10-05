@@ -3,15 +3,15 @@
     "placeholder": "Rechercher des produits..."
   },
   "overlay": {
-    "suggestionsTitle": "🔍 Recherches populaires",
+    "suggestionsTitle": "Recherches populaires",
     "productsTitle": "Produits",
-    "categoryTitle": "📁 Catégorie",
+    "categoryTitle": "Catégorie",
     "promptTitle": "Commencez à taper pour trouver votre prochain coup de cœur",
     "promptSubtitle": "Produits, catégories et recherches tendance apparaissent au fil de la frappe — deux lettres suffisent pour démarrer.",
     "noSuggestions": "Aucun terme de recherche correspondant",
     "noProducts": "Aucun produit correspondant",
     "noCategories": "Aucune catégorie correspondante",
-    "blogTitle": "📝 Blog",
+    "blogTitle": "Blog",
     "noBlog": "Aucun article correspondant"
   },
   "page": {
@@ -33,7 +33,7 @@
     },
     "emptyTitle": "Aucun résultat trouvé",
     "emptyBody": "Essayez un autre terme de recherche ou ajustez vos filtres.",
-    "prev": "‹ Précédent",
-    "next": "Suivant ›"
+    "prev": "Précédent",
+    "next": "Suivant"
   }
 }

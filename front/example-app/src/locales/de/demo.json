@@ -10,7 +10,7 @@
     "exploreFreely": "Frei erkunden"
   },
   "story": {
-    "resumePill": "📖 Story fortsetzen",
+    "resumePill": "Story fortsetzen",
     "actLabel": "Akt {{num}}",
     "close": "Schließen",
     "actTitle": "Akt {{act}} — {{title}}",
@@ -25,31 +25,31 @@
       "aov": "Durchschnittlicher Bestellwert"
     },
     "timeline": {
-      "heading": "📊 Was Gally während der Journey gelernt hat",
+      "heading": "Was Gally während der Journey gelernt hat",
       "intro": "Jede einzelne Interaktion von Camille wurde erfasst. So verbessern diese Daten das Erlebnis für künftige Besucherinnen und Besucher.",
       "search": {
         "eventPrefix": "Camille sucht nach",
-        "consequence": "→ Gally protokolliert die Suchanfrage und die Trefferzahl. Beliebte Begriffe steigen in der Autovervollständigung auf. Anfragen ohne Treffer werden markiert, um den Katalog anzureichern."
+        "consequence": "Gally protokolliert die Suchanfrage und die Trefferzahl. Beliebte Begriffe steigen in der Autovervollständigung auf. Anfragen ohne Treffer werden markiert, um den Katalog anzureichern."
       },
       "display": {
         "event": "{{count}} Produkte mit ihrer Position eingeblendet",
-        "consequence": "→ Gally misst die Impression-Rate jedes Produkts. Produkte, die gesehen, aber nie angeklickt werden, werden für eine Anpassung des Rankings markiert."
+        "consequence": "Gally misst die Impression-Rate jedes Produkts. Produkte, die gesehen, aber nie angeklickt werden, werden für eine Anpassung des Rankings markiert."
       },
       "viewCategory": {
         "event": "Camille besucht die Kategorie „Kleider“",
-        "consequence": "→ Der Kontext „Kategorie“ wird für die Sitzung gemerkt. Jede folgende Aktion wird ihm automatisch zugeordnet."
+        "consequence": "Der Kontext „Kategorie“ wird für die Sitzung gemerkt. Jede folgende Aktion wird ihm automatisch zugeordnet."
       },
       "viewProduct": {
         "event": "Camille sieht sich eine Produktseite an",
-        "consequence": "→ Der Beliebtheitswert des Produkts steigt. Gally nutzt dieses Signal, um es bei ähnlichen Suchanfragen weiter oben zu platzieren."
+        "consequence": "Der Beliebtheitswert des Produkts steigt. Gally nutzt dieses Signal, um es bei ähnlichen Suchanfragen weiter oben zu platzieren."
       },
       "addToCart": {
         "event": "Camille legt das Produkt in den Warenkorb",
-        "consequence": "→ Starkes Conversion-Signal: Das Produkt wird in den Ergebnissen hochgestuft."
+        "consequence": "Starkes Conversion-Signal: Das Produkt wird in den Ergebnissen hochgestuft."
       },
       "order": {
         "event": "Bestellung aufgegeben",
-        "consequence": "→ Der Kreis schließt sich: Der Umsatz pro Suchanfrage erlaubt es, die Relevanz nach erzieltem Umsatz zu optimieren."
+        "consequence": "Der Kreis schließt sich: Der Umsatz pro Suchanfrage erlaubt es, die Relevanz nach erzieltem Umsatz zu optimieren."
       },
       "summary": {
         "eventTypes": "6 Event-Typen",
@@ -64,20 +64,20 @@
     },
     "market": "Der Markt",
     "delay": {
-      "heading": "⏱ Zeit bis zum Livegang",
+      "heading": "Zeit bis zum Livegang",
       "marketValue": "6 bis 12 Monate",
       "gallyValue": "Wenige Tage",
       "ctaBudget": "Und das Budget? →"
     },
     "cost": {
-      "heading": "💰 Kosten im ersten Jahr",
+      "heading": "Kosten im ersten Jahr",
       "marketValue": "80.000 € — 100.000 €",
       "gallyValue": "Ab ca. 12.000 €",
       "gallyNote": "Pauschalpreis, unabhängig von Katalogumfang und Anfragevolumen",
       "ctaPricing": "Unsere Pakete ansehen →"
     },
     "pricing": {
-      "heading": "📋 Unsere Angebote",
+      "heading": "Unsere Angebote",
       "popular": "Beliebt",
       "business": "Business",
       "businessPrice": "999 €",
@@ -97,8 +97,8 @@
     "disclaimer": "Größenordnungen aus vergleichbaren E-Commerce-Suchprojekten — ohne interne Kosten. Im Einzelfall zu präzisieren."
   },
   "insights": {
-    "toggle": "📊 Gally Insights",
-    "heading": "📊 Was Gally weiß",
+    "toggle": "Gally Insights",
+    "heading": "Was Gally weiß",
     "summary": "{{count}} Events erfasst",
     "empty": "Stöbern Sie durch die Website und sehen Sie, wie Gally aus Ihren Interaktionen lernt.",
     "sections": {
@@ -135,24 +135,24 @@
     }
   },
   "explain": {
-    "toggle": "🧠 Erklären",
+    "toggle": "Erklären",
     "analyzing": "Wird analysiert...",
     "explainFailed": "Erklärung fehlgeschlagen",
-    "headerPrefix": "🧠 Erklärung —",
+    "headerPrefix": "Erklärung —",
     "category": "Kategorie",
-    "boostPrefix": "🚀 Boost ×",
+    "boostPrefix": "Boost ×",
     "modePrefix": "Modus:",
-    "fieldMatches": "📐 Feldtreffer",
-    "legend": "📖 Legende"
+    "fieldMatches": "Feldtreffer",
+    "legend": "Legende"
   },
   "eventLog": {
-    "toggleShow": "📊 Events ({{count}})",
-    "close": "✕ Schließen",
-    "title": "🔴 Tracking-Events (live)",
+    "toggleShow": "Events ({{count}})",
+    "close": "Schließen",
+    "title": "Tracking-Events (live)",
     "empty": "Noch keine Events…"
   },
   "toast": {
-    "addedToCart": "✓ Produkt in den Warenkorb gelegt"
+    "addedToCart": "Produkt in den Warenkorb gelegt"
   },
   "trackingMeaning": {
     "categoryView": "Gally protokolliert den Besuch der Kategorie „{{categoryCode}}“ — hilft zu analysieren, welche Kategorien den meisten Traffic bringen, und das Merchandising zu optimieren.",

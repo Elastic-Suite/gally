@@ -55,6 +55,54 @@
     "moreProducts": "More Products",
     "readyTitle": "Ready to transform your search experience?",
     "readyBody": "Browse categories, test search facets, and see vector search in action.",
-    "tryVectorSearch": "Try Vector Search"
+    "tryVectorSearch": "Try Vector Search",
+    "eyebrowSelection": "Selection",
+    "eyebrowCategory": "Category",
+    "seeAll": "See all",
+    "blocks": {
+      "discover": "Discover",
+      "fashion": {
+        "heroTitle": "The autumn collection",
+        "heroBody": "Dresses, knitwear and evening pieces for the season.",
+        "cards": {
+          "bags": {
+            "title": "Bags & leather goods",
+            "body": "From a weekend away to a trip around the world."
+          },
+          "shoes": {
+            "title": "Mules and clogs",
+            "body": "Comfort, leather and Scandinavian style."
+          }
+        }
+      },
+      "toolbox": {
+        "heroTitle": "The power tool workshop",
+        "heroBody": "Sanders, drills and drivers, corded or 18V.",
+        "cards": {
+          "handTools": {
+            "title": "Hand tools",
+            "body": "Spanners, screwdrivers and bits for every screw."
+          },
+          "smartHome": {
+            "title": "The connected home",
+            "body": "Wi-Fi thermostat, alarm and lighting."
+          }
+        }
+      },
+      "papershop": {
+        "heroTitle": "The writing desk",
+        "heroBody": "Fountain pens, inks and notebooks for writing by hand.",
+        "cards": {
+          "artBooks": {
+            "title": "Art books",
+            "body": "Fine books and illustrated editions."
+          },
+          "deskLamps": {
+            "title": "Desk lamps",
+            "body": "The right light for reading and writing."
+          }
+        }
+      }
+    }
   }
 }

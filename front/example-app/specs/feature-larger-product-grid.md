@@ -75,7 +75,7 @@ from a comment.
 - **The `:root` fallbacks are the pre-existing mobile layout.** Changing them changes phones and
   tablets, which this spec did not touch and did not verify.
 - `.catalog-page`'s 280px sidebar, its 768px collapse to a drawer, and the facet responsiveness.
-- `.vector-page` (1400px), `.blog-page` (1200px) and `.search-overlay-panel` (1500px) keep their own
-  caps. They are set against their own content, not against the page.
+- `.search-overlay-panel` (1500px) keeps its own cap. (`.vector-page` and `.blog-page` lost theirs in
+  `feature-page-width-breadcrumb.md`.) It is set against its own content, not against the page.
 - A card still shows exactly one badge (`getProductBadges(...).slice(0, 1)` in ProductCard.tsx).
   The picture got taller, but the reason for one badge is that a stack of pills covers the product.

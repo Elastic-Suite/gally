@@ -9,7 +9,7 @@
     "addToCart": "In den Warenkorb",
     "chooseOptions": "Optionen wählen",
     "unavailable": "Nicht verfügbar",
-    "added": "✓ Hinzugefügt"
+    "added": "Hinzugefügt"
   },
   "page": {
     "type": {
@@ -18,11 +18,11 @@
     },
     "sku": "Artikelnummer: {{sku}}",
     "material": "Material:",
-    "inStock": "✓ Auf Lager ({{count}} verfügbar)",
-    "inStockNoCount": "✓ Auf Lager",
-    "outOfStockLong": "✕ Nicht auf Lager",
+    "inStock": "Auf Lager ({{count}} verfügbar)",
+    "inStockNoCount": "Auf Lager",
+    "outOfStockLong": "Nicht auf Lager",
     "addToCart": "In den Warenkorb",
-    "wishlist": "♡ Merkliste",
+    "wishlist": "Merkliste",
     "notFound": "Produkt nicht gefunden",
     "recommendations": "Das könnte Ihnen auch gefallen"
   }

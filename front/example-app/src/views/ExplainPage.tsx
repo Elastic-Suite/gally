@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useCatalog } from '../contexts/CatalogContext';
+import Icon from '../components/Icon';
 
 const BASE_URI = 'https://gally.localhost/api';
 const AUTH_EMAIL = 'admin@example.com';
@@ -95,7 +96,7 @@ export default function ExplainPage() {
     <div className="explain-page">
       <div className="page-title">
         <div className="breadcrumb">Home / Search Intelligence</div>
-        <h1>🧠 Comment Gally classe vos produits</h1>
+        <h1><Icon name="bulb" />Comment Gally classe vos produits</h1>
       </div>
 
       <p style={{ color: 'var(--gray-600)', marginBottom: '1.5rem', maxWidth: '700px' }}>
@@ -128,7 +129,7 @@ export default function ExplainPage() {
           {/* Legends banner */}
           {results[0]?.legends && (
             <div className="explain-legends-banner">
-              <h4>📖 Comment lire les résultats</h4>
+              <h4><Icon name="book" />Comment lire les résultats</h4>
               <div className="legends-grid">
                 {Object.entries(results[0].legends).slice(0, 5).map(([key, val]) => (
                   <div key={key} className="legend-card">
@@ -162,7 +163,7 @@ export default function ExplainPage() {
                 {/* Boost badge */}
                 {product.boosts && product.boosts.weight > 1 && (
                   <div className="explain-boost-badge">
-                    <span className="boost-icon">🚀</span>
+                    <span className="boost-icon"><Icon name="rocket" standalone /></span>
                     <span>Boost ×{product.boosts.weight}</span>
                     {product.boosts.details?.[0]?.details?.[0]?.description && (
                       <span className="boost-reason">{product.boosts.details[0].details[0].description}</span>

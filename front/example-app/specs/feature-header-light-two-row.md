@@ -1,11 +1,12 @@
 # Feature: light two-row header, category row in the header, animated search border
 
+> **Superseded in part** by `feature-header-search-drop.md`: the search band under the header is gone; the bar sits in the top row and drops below the header on focus. The overlay now dims `.header-inner`'s items one by one, not `.header-inner` itself.
+
 ## Status: implemented
 ## Page/Component: src/components/Header.tsx, src/components/CategoryNav.tsx, src/views/Homepage.tsx, src/styles.css
 
-Chosen from a mockup study (variant "B2", made with the `gally-mockup` skill): the top layout of
-a reference storefront - logo row, then a row of categories as plain text - on a light surface
-instead of the dark indigo bar. The search band stays where it was. The hero goes light too.
+The header is a logo row, then a row of categories as plain text, on a light surface instead of
+the dark indigo bar. The search band stays where it was. The hero goes light too.
 
 Supersedes, each on the point named:
 - `feature-header-nav-switch.md` - the header's Products/Articles segmented switch is gone.
@@ -42,8 +43,7 @@ Supersedes, each on the point named:
 - [x] Homepage hero: light, centred, large title in the brand gradient, grey body text, coral CTA.
 - [x] Page background is white.
 
-Verified 2026-09-24 by a capture of the running app (`gally-mockup` skill, study
-`mockups/header-implemented/`): every `[x]` above, at 1440px, plus a 390px capture (both rows wrap,
+Verified 2026-09-24 on screenshots of the running app: every `[x]` above, at 1440px, plus a 390px capture (both rows wrap,
 the section links scroll sideways inside `.header-nav` as before). Not verified, hence `[~]`:
 - the cart count badge with a non-empty cart (no add-to-cart in the capture), and screen-reader
   output for the cart label;

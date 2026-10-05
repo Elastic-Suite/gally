@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { useDemo } from '../contexts/DemoContext';
 import { useStoryActions } from '../hooks/useStoryActions';
+import Icon from './Icon';
 
 export default function StoryCompanion() {
   const { t } = useTranslation(['demo', 'scenarios']);
@@ -24,7 +25,7 @@ export default function StoryCompanion() {
   if (storyMinimized) {
     return (
       <button className="story-resume-pill" onClick={resumeStory}>
-        {t('story.resumePill')}
+        <Icon name="book" />{t('story.resumePill')}
       </button>
     );
   }
@@ -52,7 +53,10 @@ export default function StoryCompanion() {
             />
           ))}
         </div>
-        <button className="story-close" onClick={skipStory} title={t('story.close')}>✕</button>
+        <button className="story-close" onClick={skipStory} title={t('story.close')}>
+          <span className="visually-hidden">{t('story.close')}</span>
+          <Icon name="close" standalone />
+        </button>
       </div>
 
       <div className="story-act-label">

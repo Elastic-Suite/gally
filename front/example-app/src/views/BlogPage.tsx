@@ -170,8 +170,8 @@ export default function BlogPage() {
         page={page}
         pageCount={pageCount}
         windowSize={5}
-        prevLabel="←"
-        nextLabel="→"
+        prevLabel={t('search:page.prev')}
+        nextLabel={t('search:page.next')}
         ariaLabel={t('common:meta.pagination')}
         onPage={p => setParams({ page: p })}
       />

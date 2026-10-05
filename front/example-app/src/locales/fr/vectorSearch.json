@@ -1,7 +1,6 @@
 {
   "breadcrumb": "Accueil / Recherche vectorielle",
   "title": "Recherche par mots-clés vs. recherche vectorielle",
-  "intro": "La même requête, exécutée deux fois sur le même catalogue. À gauche, le moteur par mots-clés compare des mots. À droite, la recherche vectorielle compare du sens — elle rapproche le vecteur de votre requête de celui de chaque produit, et peut donc répondre à une demande dont les mots n'apparaissent nulle part dans le catalogue.",
   "placeholder": "Décrivez ce que vous cherchez…",
   "submit": "Comparer",
   "tryLabel": "Essayez :",

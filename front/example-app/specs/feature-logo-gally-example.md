@@ -1,5 +1,11 @@
 # Feature: Header logo — Gally rabbit + "Gally example" wordmark, and the ElasticSuite → Gally rename
 
+> **Renamed (2026-10-02):** the wordmark now reads **"Gally Shop"**, not "Gally example" -
+> "Shop" takes the accent span (`.header-logo-accent`) that "example" had. `brand.ariaLabel`
+> follows in all three locales ("Gally Shop - go to homepage" and equivalents). The root
+> metadata `default` title in `app/layout.tsx` is now "Gally Shop — Features Demo". "Gally example" below
+> describes the original state.
+>
 > **Superseded in part** by `feature-header-light-two-row.md`: the header is light, so "Gally" is `--indigo-900` and the "needs a dark surface" rule no longer holds. The other MUST NOT bullets stand.
 
 ## Status: implemented

@@ -36,7 +36,9 @@ export default async function Page({ params, searchParams }: Params) {
   // seeds those into state on its first render and the server result would not match —
   // SearchPage passes initialData through only while the view still matches this request.
   const hasUrlFilters = Object.keys(sp).some(key => key.startsWith('f_'));
-  const initialData = hasUrlFilters
+  // Also skipped with no query: the server fetcher searches for '*' then, which returns
+  // nothing, and the view browses the root category instead.
+  const initialData = hasUrlFilters || !q
     ? undefined
     : await fetchSearchProducts(resolved.localizedCatalog.code, q);
 

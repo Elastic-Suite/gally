@@ -8,7 +8,7 @@
   "title_one": "Ihr Warenkorb ({{count}} Artikel)",
   "title_other": "Ihr Warenkorb ({{count}} Artikel)",
   "shipping": {
-    "unlocked": "✓ Versandkostenfrei freigeschaltet!",
+    "unlocked": "Versandkostenfrei freigeschaltet!",
     "remainingPrefix": "Nur noch",
     "remainingSuffix": "bis zum kostenlosen Versand",
     "free": "Kostenlos"

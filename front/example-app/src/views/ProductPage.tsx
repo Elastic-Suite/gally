@@ -20,6 +20,7 @@ import { productCategoryTrail } from '../sdk/categoryTree';
 import VariantSelector, { getVariantAxes } from '../components/VariantSelector';
 import { productDetailFields } from '../sdk/fields';
 import ProductImage from '../components/ProductImage';
+import Icon from '../components/Icon';
 
 // `initialProduct` is the raw search document the Server Component already fetched for
 // this SKU. When it is present the page renders complete on the first pass — no
@@ -198,11 +199,12 @@ export default function ProductPage({ initialProduct }: { initialProduct?: any }
                 — what Gally reports for every product with children — reads as out of stock. */}
             {p.available
               ? <span style={{ color: 'var(--green-600, #43a047)' }}>
+                  <Icon name="checkmark" />
                   {typeof p.stock.qty === 'number'
                     ? t('page.inStock', { count: p.stock.qty })
                     : t('page.inStockNoCount')}
                 </span>
-              : <span style={{ color: 'var(--coral-500)' }}>{t('page.outOfStockLong')}</span>
+              : <span style={{ color: 'var(--coral-500)' }}><Icon name="close" />{t('page.outOfStockLong')}</span>
             }
           </div>
 
@@ -228,10 +230,10 @@ export default function ProductPage({ initialProduct }: { initialProduct?: any }
               {!p.available
                 ? t('card.outOfStock')
                 : addedKey === p.sku
-                  ? t('card.added')
+                  ? <><Icon name="checkmark" />{t('card.added')}</>
                   : t('page.addToCart')}
             </button>
-            <button className="btn btn-outline btn-lg">{t('page.wishlist')}</button>
+            <button className="btn btn-outline btn-lg"><Icon name="heart" />{t('page.wishlist')}</button>
           </div>
         </div>
       </div>

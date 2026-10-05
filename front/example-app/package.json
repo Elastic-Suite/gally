@@ -5,6 +5,7 @@
   "dependencies": {
     "@elastic-suite/gally-sdk": "^2.2.2-alpha.0",
     "i18next": "^23.11.5",
+    "ionicons": "6.0.3",
     "next": "^16.3.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

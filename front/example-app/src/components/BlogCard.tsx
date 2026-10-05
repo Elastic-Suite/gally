@@ -3,6 +3,7 @@
 import Link from './LocaleLink';
 import { useTranslation } from 'react-i18next';
 import { CmsPage, cmsPageUrl, formatCmsDate } from '../hooks/useCms';
+import Icon from './Icon';
 
 // The blog counterpart of ProductCard, shared by the blog index and the blog tab of
 // the search results page. Same card idiom as ProductCard (see styles.css) — this is
@@ -14,7 +15,7 @@ export default function BlogCard({ post, language }: { post: CmsPage; language: 
       <div className="blog-card-image">
         {post.image
           ? <img src={post.image} alt={post.title} loading="lazy" />
-          : <span className="blog-card-image-fallback">✎</span>}
+          : <span className="blog-card-image-fallback"><Icon name="create" standalone /></span>}
         {post.topic && <span className="blog-card-topic">{post.topic.label}</span>}
       </div>
       <div className="blog-card-body">
