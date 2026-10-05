@@ -20,7 +20,7 @@ The page is shown in demos, but parts of it read like a developer tool:
 - [x] The empty vector panel says, in plain words, that vector search returned no results for this query and
       suggests trying again or picking another suggestion. It names no command, bundle or model.
 - [x] "Semantic search" is "Vector search" / "Recherche vectorielle" / "Vektorsuche" everywhere the app names
-      the feature: breadcrumb, page title, intro, panel title, empty state, header nav and `<title>`.
+      the feature: breadcrumb, page title, intro (removed since, see `feature-vector-search-comparison.md`), panel title, empty state, header nav and `<title>`.
       Blog articles that explain vector search in terms of meaning are content and stay as they are.
 - [x] Every localized catalog of `com`, `toolbox`, `fashion` and `papershop` has its own suggestions in
       `VECTOR_DEMO_QUERIES`.

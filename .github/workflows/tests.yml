@@ -40,6 +40,7 @@ jobs:
       ref: ${{ inputs.use_default_github_ref == false && inputs.version || '' }}
       composer_version: ${{ inputs.version == 'main' && 'dev-main' || (contains(inputs.version, 'x') && format('{0}-dev', inputs.version) || inputs.version) }}
       docker_compose_cmd: docker compose -f compose.yml -f compose.ci.yml ${{ inputs.search_engine != 'opensearch' && format('-f compose.{0}.yml', inputs.search_engine) || '' }}
+      GALLY_SAMPLE_DATA_CATALOGS: default # We load only default sample catalog for e2e tests
 
     steps:
       - name: Disk cleanup

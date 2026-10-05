@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useSearchParams, usePathname } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { useCatalog } from '../contexts/CatalogContext';
+import Icon from './Icon';
 
 const BASE_URI = 'https://gally.localhost/api';
 const AUTH_EMAIL = 'admin@example.com';
@@ -135,7 +136,7 @@ export default function SearchExplain() {
   if (!open) {
     return (
       <button className="explain-toggle" onClick={() => setOpen(true)}>
-        {t('explain.toggle')} {results.length > 0 && <span className="explain-badge">{results.length}</span>}
+        <Icon name="bulb" />{t('explain.toggle')} {results.length > 0 && <span className="explain-badge">{results.length}</span>}
       </button>
     );
   }
@@ -143,12 +144,15 @@ export default function SearchExplain() {
   return (
     <div className="explain-panel">
       <div className="explain-header">
-        <h3>{t('explain.headerPrefix')} {contextLabel}</h3>
-        <button className="explain-close" onClick={() => setOpen(false)}>✕</button>
+        <h3><Icon name="bulb" />{t('explain.headerPrefix')} {contextLabel}</h3>
+        <button className="explain-close" onClick={() => setOpen(false)}>
+          <span className="visually-hidden">{t('common:actions.close')}</span>
+          <Icon name="close" standalone />
+        </button>
       </div>
 
       {loading && <div className="explain-loading">{t('explain.analyzing')}</div>}
-      {error && <div className="explain-error">⚠ {error}</div>}
+      {error && <div className="explain-error"><Icon name="warning" />{error}</div>}
 
       {results.length > 0 && (
         <div className="explain-results">
@@ -166,7 +170,7 @@ export default function SearchExplain() {
               {/* Boosts */}
               {product.boosts && product.boosts.weight > 1 && (
                 <div className="explain-section boost">
-                  <span className="explain-section-label">{t('explain.boostPrefix')}{product.boosts.weight}</span>
+                  <span className="explain-section-label"><Icon name="rocket" />{t('explain.boostPrefix')}{product.boosts.weight}</span>
                   <span className="explain-section-detail">
                     {t('explain.modePrefix')} {product.boosts.boost_mode}
                     {product.boosts.details?.[0]?.details?.[0]?.description && (
@@ -179,7 +183,7 @@ export default function SearchExplain() {
               {/* Top matches */}
               {product.matches && product.matches.length > 0 && (
                 <div className="explain-matches">
-                  <span className="explain-section-label">{t('explain.fieldMatches')}</span>
+                  <span className="explain-section-label"><Icon name="git-compare" />{t('explain.fieldMatches')}</span>
                   {product.matches
                     .sort((a, b) => b.score - a.score)
                     .slice(0, 5)
@@ -202,7 +206,7 @@ export default function SearchExplain() {
               {/* Legends (show once for first product) */}
               {idx === 0 && product.legends && Object.keys(product.legends).length > 0 && (
                 <div className="explain-legends">
-                  <span className="explain-section-label">{t('explain.legend')}</span>
+                  <span className="explain-section-label"><Icon name="book" />{t('explain.legend')}</span>
                   {Object.entries(product.legends).slice(0, 4).map(([key, val]) => (
                     <div key={key} className="explain-legend-item">
                       <code>{val.field}</code> — {val.legend}

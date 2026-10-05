@@ -55,6 +55,54 @@
     "moreProducts": "Plus de produits",
     "readyTitle": "Prêt à transformer votre expérience de recherche ?",
     "readyBody": "Parcourez les catégories, testez les facettes de recherche et découvrez la recherche vectorielle en action.",
-    "tryVectorSearch": "Essayer la recherche vectorielle"
+    "tryVectorSearch": "Essayer la recherche vectorielle",
+    "eyebrowSelection": "Sélection",
+    "eyebrowCategory": "Univers",
+    "seeAll": "Voir tout",
+    "blocks": {
+      "discover": "Découvrir",
+      "fashion": {
+        "heroTitle": "La collection automne",
+        "heroBody": "Robes, mailles et pièces de soirée pour la saison.",
+        "cards": {
+          "bags": {
+            "title": "Sacs & maroquinerie",
+            "body": "Du week-end au tour du monde."
+          },
+          "shoes": {
+            "title": "Mules et sabots",
+            "body": "Confort, cuir et style scandinave."
+          }
+        }
+      },
+      "toolbox": {
+        "heroTitle": "L'atelier électroportatif",
+        "heroBody": "Ponceuses, perceuses et visseuses, filaires ou en 18V.",
+        "cards": {
+          "handTools": {
+            "title": "Outillage à main",
+            "body": "Clés, tournevis et embouts pour chaque vis."
+          },
+          "smartHome": {
+            "title": "La maison connectée",
+            "body": "Thermostat, alarme et éclairage en Wi-Fi."
+          }
+        }
+      },
+      "papershop": {
+        "heroTitle": "L'atelier d'écriture",
+        "heroBody": "Stylos plume, encres et carnets pour écrire à la main.",
+        "cards": {
+          "artBooks": {
+            "title": "Livres d'art",
+            "body": "Beaux livres et éditions illustrées."
+          },
+          "deskLamps": {
+            "title": "Lampes de bureau",
+            "body": "Une lumière juste pour lire et écrire."
+          }
+        }
+      }
+    }
   }
 }

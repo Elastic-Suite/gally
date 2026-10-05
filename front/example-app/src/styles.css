@@ -184,21 +184,27 @@ a:hover {
   margin: 0 auto;
   padding: 1.1rem 0;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 2.5rem;
+  gap: 0.75rem 2.5rem;
+}
+.header-inner > *,
+.category-nav {
   transition: filter 0.2s ease, opacity 0.2s ease;
 }
 
 /* When the search overlay is open, the rest of the header recedes along
-   with the page behind it — only the search form itself stays crisp. */
-.header-sticky-group:has(.search-bar-wrapper.overlay-open) .header-inner,
+   with the page behind it — only the search form itself stays crisp. The items are dimmed one by
+   one, not .header-inner as a whole: a filter on an ancestor of the search bar would blur it and
+   become its containing block (specs/feature-header-search-drop.md). */
+.header-sticky-group:has(.search-bar-wrapper.overlay-open) .header-inner > :not(.header-search-slot),
 .header-sticky-group:has(.search-bar-wrapper.overlay-open) .category-nav {
   filter: blur(3px);
   opacity: 0.45;
   pointer-events: none;
 }
 
-/* Brand: the Gally rabbit as an asset, "Gally example" set here as type. The two
+/* Brand: the Gally rabbit as an asset, "Gally Shop" set here as type. The two
    wordmark spans are targeted by their own classes — deliberately not a
    `.header-logo span` catch-all, which previously forced the accent colour onto
    every nested span. */
@@ -320,30 +326,74 @@ a:hover {
   color: var(--gray-900);
 }
 
-/* ─── Header Search Band ─────────────────────────────────── */
-/* The band paints nothing: it sits on the page background. It used to pin to the viewport top
-   (specs/feature-sticky-search-band.md); since specs/feature-header-scrolls-with-page.md it
-   scrolls away with the rest of the header. */
-.header-search-band {
-  padding: 2rem 2rem 0.75rem;
-  transition: background 0.2s ease, backdrop-filter 0.2s ease;
-}
-
-/* Restored: this rule was lost while removing an earlier experiment, which left the search bar
-   flush left instead of centred. It is what centres the bar in the band. */
-.header-search-row {
-  max-width: var(--layout-max-width);
-  margin: 0 auto;
+/* ─── Header Search ──────────────────────────────────────── */
+/* The search sits in the top row, filling the gap between the section links and the selects; it
+   used to have its own band under the header. On focus it moves below the header into the place
+   the band had, widening as it goes, and the overlay opens under it. specs/feature-header-search-drop.md.
+   The slot is a fixed height so the row does not change when the bar leaves it. It paints
+   nothing, and must not be positioned: the bar is placed against .header-sticky-group. */
+.header-search-slot {
+  flex: 1 1 14rem;
+  min-width: 0;
+  height: 2.75rem;
   display: flex;
-  justify-content: center;
+  align-items: center;
 }
 
 .search-bar-wrapper {
   position: relative;
-  width: 80%;
-  max-width: 1100px;
-  min-width: 320px;
+  width: 100%;
   z-index: 110;
+}
+
+/* Desktop, once Header.tsx has measured the slot: the bar is absolute in the group in both
+   states, so left/top/width are lengths that transition. At rest they repeat the slot's box;
+   open (focused, or the overlay still open after focus moved into it) they centre the bar
+   below the header. One motion both ways: it moves and resizes at the same time. Before the
+   measurement the bar stays in the slot's flow, which looks the same at rest. */
+@media (min-width: 769px) {
+  /* The links keep their own width, so the search slot gets all the free space in the row and
+     the row wraps before a link is clipped. With `flex: 1` and `overflow-x: auto` the links
+     grew alongside the slot, then shrank under their content at narrower widths. */
+  .header-nav {
+    flex: 0 0 auto;
+  }
+  /* Right-aligned also when the row wraps them onto a second line. */
+  .context-selectors {
+    margin-left: auto;
+  }
+  :root:has(.header-sticky-group[data-search-slot]) {
+    /* The dropped bar and the gaps around it, which --header-height does not include. */
+    --search-drop: 6.3rem;
+  }
+  .header-sticky-group[data-search-slot] .search-bar-wrapper {
+    position: absolute;
+    left: var(--search-slot-x);
+    top: calc(var(--search-slot-y) + var(--search-slot-h) / 2);
+    width: var(--search-slot-w);
+    transform: translateY(-50%);
+    transition-property: top, left, width;
+    transition-duration: 0.45s;
+    transition-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .header-sticky-group[data-search-slot] .search-bar-wrapper:is(.expanded, .overlay-open) {
+    --search-open-width: min(1100px, 100% - 4rem);
+    left: calc((100% - var(--search-open-width)) / 2);
+    /* Bar centre: 1.5rem below the header, plus half the full-size bar. */
+    top: calc(100% + 1.5rem + 1.65rem);
+    width: var(--search-open-width);
+  }
+}
+/* Header.tsx sets this for the instant it publishes a new slot measurement: a measurement jumps,
+   only opening and closing animate. */
+.header-sticky-group[data-search-slot][data-search-measuring] .search-bar-wrapper {
+  transition: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .header-sticky-group[data-search-slot] .search-bar-wrapper,
+  .header-sticky-group[data-search-slot] .search-bar-wrapper:is(.expanded, .overlay-open) {
+    transition: none;
+  }
 }
 
 .search-bar-wrapper.expanded .search-bar {
@@ -360,17 +410,22 @@ a:hover {
    specs/feature-header-light-two-row.md. */
 .search-bar {
   width: 100%;
-  padding: 0.85rem 1.5rem 0.85rem 3rem;
+  /* Slim at rest, to fit the top row; full size once open. */
+  padding: 0.6rem 1.25rem 0.6rem 2.6rem;
   border: 0.125rem solid transparent;
   border-radius: var(--radius-pill);
   background:
     linear-gradient(var(--white), var(--white)) padding-box,
     linear-gradient(var(--search-border-angle), var(--indigo-600), var(--coral-500)) border-box;
   color: var(--gray-900);
-  font-size: 1.05rem;
+  font-size: 0.95rem;
   font-family: var(--font-sans);
   outline: none;
-  transition: --search-border-angle 1.4s ease-in-out, box-shadow 0.2s;
+  transition: --search-border-angle 1.4s ease-in-out, box-shadow 0.2s, padding 0.45s ease, font-size 0.45s ease;
+}
+.search-bar-wrapper:is(.expanded, .overlay-open) .search-bar {
+  padding: 0.85rem 1.5rem 0.85rem 3rem;
+  font-size: 1.05rem;
 }
 .search-bar::placeholder {
   color: var(--gray-500);
@@ -386,10 +441,15 @@ a:hover {
 
 .search-icon {
   position: absolute;
-  left: 1.1rem;
+  left: 1rem;
   top: 50%;
   transform: translateY(-50%);
   opacity: 0.5;
+  font-size: 0.95rem;
+  transition: left 0.45s ease, font-size 0.45s ease;
+}
+.search-bar-wrapper:is(.expanded, .overlay-open) .search-icon {
+  left: 1.1rem;
   font-size: 1.05rem;
 }
 
@@ -421,7 +481,8 @@ a:hover {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: calc(var(--header-height, 8.5rem) - var(--acp-page-offset, 0px) + 1rem) 2rem 2rem;
+  /* --search-drop: the bar drops below the header on desktop (specs/feature-header-search-drop.md). */
+  padding: calc(var(--header-height, 8.5rem) - var(--acp-page-offset, 0px) + 1rem + var(--search-drop, 0px)) 2rem 2rem;
   overflow-y: auto;
   /* Stop scroll chaining. Without this, a wheel gesture that reaches the end of the
      scrim (or of a column below) continues into the page behind the overlay, so the
@@ -758,7 +819,8 @@ a:hover {
 .cart-badge:hover {
   color: var(--indigo-700);
 }
-.cart-icon {
+/* Two classes: .icon, defined further down, would otherwise win and shrink it to 1em. */
+.cart-badge .cart-icon {
   display: block;
   width: 1.375rem;
   height: 1.375rem;
@@ -790,6 +852,24 @@ a:hover {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+/* Icon.tsx: an ionicons outline SVG drawn as a mask, so it takes the text's colour and size.
+   An icon is followed by text unless it says otherwise: CSS cannot see a text node, so an icon
+   alone in its element (a close button) is marked `standalone` instead. */
+.icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+  vertical-align: -0.125em;
+  background-color: currentColor;
+  -webkit-mask: var(--icon) center / contain no-repeat;
+  mask: var(--icon) center / contain no-repeat;
+  margin-right: 0.35em;
+}
+.icon-standalone {
+  margin-right: 0;
 }
 
 /* ─── Hero Section ─── */
@@ -885,6 +965,183 @@ a:hover {
 .slider-track::-webkit-scrollbar-thumb {
   background: var(--gray-300);
   border-radius: 3px;
+}
+
+/* ─── Homepage blocks ────────────────────────────────────── */
+/* The sample shops' homepage: wide hero, a panel slider, two promo cards, a mirrored panel slider,
+   with one 3rem gap between the four. See specs/feature-homepage-blocks.md.
+   The hero and the two panels share one surface. The border is what separates them from the
+   white page; the light ground alone blended into it. */
+.home-hero,
+.product-slider--panel {
+  background: linear-gradient(110deg, var(--gray-100) 0%, var(--indigo-50) 100%);
+  border: 1px solid var(--gray-300);
+  box-shadow: var(--shadow-md);
+}
+
+.home-hero {
+  position: relative;
+  height: 22rem;
+  margin: 0 0 3rem;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.home-hero-media {
+  position: absolute;
+  inset: 0 2rem 0 44%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+.home-hero-media img {
+  /* Sized by width so three always fit the column: by height they overflow under the copy. */
+  width: 37%;
+  height: auto;
+  max-height: 100%;
+  object-fit: contain;
+  margin-left: -2.5rem;
+  /* The photos are cut-outs on an off-white square: multiply drops the white into the panel,
+     and the mask fades the square's edges so no box shows. */
+  mix-blend-mode: multiply;
+  -webkit-mask-image: radial-gradient(closest-side, black 72%, transparent);
+  mask-image: radial-gradient(closest-side, black 72%, transparent);
+}
+.home-hero-media img:first-child { margin-left: 0; }
+.home-hero-copy {
+  position: absolute;
+  left: 2.5rem;
+  bottom: 2.25rem;
+  max-width: 40%;
+  z-index: 1;
+}
+.home-hero-copy h1 {
+  margin: 0 0 0.9rem;
+  font-size: 2.6rem;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--gray-900);
+}
+.home-hero-copy p {
+  margin: 0 0 1.4rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--gray-800);
+}
+
+.home-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 3rem 0;
+}
+.home-card {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  min-height: 16rem;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--gray-300);
+  box-shadow: var(--shadow-md);
+}
+.home-card-media {
+  display: grid;
+  place-items: center;
+  background: var(--gray-100);
+}
+.home-card-media img {
+  width: 90%;
+  height: 15rem;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+  -webkit-mask-image: radial-gradient(closest-side, black 72%, transparent);
+  mask-image: radial-gradient(closest-side, black 72%, transparent);
+}
+.home-card-panel {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  background: var(--gray-900);
+  color: var(--white);
+}
+.home-card-panel h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.3rem;
+  font-weight: 800;
+  line-height: 1.15;
+  text-transform: uppercase;
+  color: var(--white);
+}
+.home-card-panel p {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--gray-200);
+}
+.home-card-panel .btn { margin-top: auto; align-self: flex-start; }
+
+/* Panel slider (ProductSlider's `panel` prop): a title column beside 3 products, no scroll. The
+   --end modifier puts the title on the right, so the second row does not repeat the first. */
+.product-slider--panel {
+  display: grid;
+  grid-template-columns: 15rem minmax(0, 1fr);
+  gap: 2rem;
+  align-items: center;
+  margin: 3rem 0;
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+}
+.product-slider--end { grid-template-columns: minmax(0, 1fr) 15rem; }
+.product-slider--end .product-slider-aside { order: 2; }
+.product-slider-eyebrow {
+  display: block;
+  margin-bottom: 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--coral-500);
+}
+.product-slider--panel h2 {
+  margin: 0 0 1.25rem;
+  font-size: 1.9rem;
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--indigo-900);
+}
+.product-slider--panel .slider-track {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+  overflow: visible;
+  padding: 0;
+}
+.product-slider--panel .product-card,
+.product-slider--panel .skeleton-card {
+  min-width: 0;
+  border-color: transparent;
+  box-shadow: var(--shadow-md);
+}
+
+@media (max-width: 768px) {
+  /* Photos above, copy below, in normal flow: stacked absolutely, a three-line headline ran
+     over the photos. */
+  .home-hero { height: auto; display: flex; flex-direction: column; padding-bottom: 1.5rem; }
+  .home-hero-media { position: static; height: 15rem; padding: 1rem 1rem 0; justify-content: center; }
+  .home-hero-media img { width: 38%; margin-left: -1.5rem; }
+  .home-hero-copy { position: static; max-width: none; padding: 0.5rem 1.25rem 0; }
+  .home-hero-copy h1 { font-size: 1.7rem; }
+  .home-cards { grid-template-columns: 1fr; }
+  .home-card { grid-template-columns: 1fr 1fr; min-height: 13rem; }
+  .home-card-media img { height: 11rem; }
+  .product-slider--panel,
+  .product-slider--end { grid-template-columns: minmax(0, 1fr); gap: 1.25rem; padding: 1.25rem; }
+  .product-slider--end .product-slider-aside { order: 0; }
+  .product-slider--panel h2 { font-size: 1.5rem; }
+  .product-slider--panel .slider-track { display: flex; overflow-x: auto; padding-bottom: 0.5rem; }
+  .product-slider--panel .product-card,
+  .product-slider--panel .skeleton-card { min-width: 70%; }
 }
 
 /* ─── Product Card ───────────────────────────────────────── */
@@ -994,10 +1251,11 @@ a:hover {
   justify-content: center;
   color: var(--gray-300);
 }
-.product-image-placeholder svg {
+.product-image-placeholder .icon {
   width: 40%;
   max-width: 64px;
   height: auto;
+  aspect-ratio: 1;
 }
 
 /* Quick add: the add-to-cart affordance, a band across the bottom of the picture on hover. It
@@ -1321,6 +1579,25 @@ a:hover {
 .btn-outline:hover {
   border-color: var(--indigo-500);
   color: var(--indigo-600);
+}
+
+/* Dark and light marketing buttons of the homepage blocks: dark on the light hero and panels,
+   light on the dark promo-card panels. See specs/feature-homepage-blocks.md. */
+.btn-dark {
+  background: var(--gray-900);
+  color: var(--white);
+}
+.btn-dark:hover {
+  background: var(--gray-800);
+  color: var(--white);
+}
+.btn-light {
+  background: var(--white);
+  color: var(--gray-900);
+}
+.btn-light:hover {
+  background: var(--gray-200);
+  color: var(--gray-900);
 }
 
 .btn-sm {
@@ -1881,6 +2158,7 @@ a:hover {
   align-items: center;
   justify-content: center;
   color: var(--coral-500);
+  font-size: 1rem;
 }
 
 .cart-summary {
@@ -2506,11 +2784,10 @@ a:hover {
     flex-wrap: wrap;
     gap: 0.75rem;
   }
-  .header-search-row {
-    padding: 0 0.5rem;
-  }
-  .search-bar-wrapper {
-    width: 100%;
+  /* Its own full-width line at the bottom of the top row; it does not move on focus. */
+  .header-search-slot {
+    order: 10;
+    flex-basis: 100%;
   }
   .search-overlay-scrim {
     padding: calc(var(--header-height, 11.5rem) - var(--acp-page-offset, 0px) + 1rem) 1rem 1rem;
@@ -3423,10 +3700,8 @@ a:hover {
   font-size: 0.85rem;
   color: var(--gray-600);
 }
-.pricing-features li::before {
-  content: '✓ ';
+.pricing-features .icon {
   color: var(--success);
-  font-weight: 700;
 }
 
 .closing-disclaimer {
@@ -3840,9 +4115,10 @@ a:hover {
 /* ─── Blog (cms_page) ────────────────────────────────────── */
 /* The blog reuses the catalog's card idiom rather than inventing a second one:
    same white surface, same radius/shadow, same lift on hover as .product-card. */
+/* Full content width, like the product pages, so the breadcrumb sits in the same place
+   (specs/feature-page-width-breadcrumb.md). */
 .blog-page {
-  max-width: 1200px;
-  margin: 0 auto;
+  margin: 0;
 }
 
 .blog-intro {
@@ -3989,9 +4265,17 @@ a:hover {
 }
 
 /* ─── Blog post (detail) ─────────────────────────────────── */
+/* The page is full width so the breadcrumb, hero and title line up with every other page; only
+   the running text keeps a reading measure (specs/feature-page-width-breadcrumb.md). */
 .blog-post {
+  margin: 0;
+}
+/* The hero too: its picture is a product cut-out cropped with object-fit: cover, and at the
+   full width it showed only a slice of it. */
+.blog-post-hero,
+.blog-post-summary,
+.blog-post-content {
   max-width: 800px;
-  margin: 0 auto;
 }
 
 .blog-post-hero {
@@ -4151,8 +4435,9 @@ a:hover {
    for depth, because what it compares is which products come back and in what
    order. 30 rows a side fit where 8 cards used to. */
 .vector-page {
-  max-width: 1400px;
-  margin: 0 auto;
+  /* No cap of its own: one would centre it, and its breadcrumb with it, on a wide screen
+     (specs/feature-page-width-breadcrumb.md). The panels stay equal at any width. */
+  margin: 0;
 }
 
 /* Everything above the panels applies to BOTH of them, so it is centred. Left-aligned,
@@ -4165,18 +4450,17 @@ a:hover {
   margin-bottom: 2rem;
 }
 .vector-head .breadcrumb {
+  /* Left, where every other page has it; the rest of the head stays centred. */
+  text-align: left;
   font-size: 0.8rem;
   color: var(--gray-500);
   margin-bottom: 0.25rem;
 }
 .vector-head h1 {
   font-size: 1.8rem;
-}
-
-.vector-intro {
-  color: var(--gray-600);
-  line-height: 1.6;
-  margin: 0.75rem 0 1.5rem;
+  /* The gap the intro paragraph used to give; the intro is now said during the demo
+     (specs/feature-vector-search-comparison.md). */
+  margin-bottom: 1.5rem;
 }
 
 .vector-search-form {

@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { useEventLog } from '../contexts/EventLogContext';
+import Icon from './Icon';
 
 export default function EventLog() {
   const { t } = useTranslation('demo');
@@ -8,7 +9,7 @@ export default function EventLog() {
   if (!visible) {
     return (
       <button className="event-log-toggle" onClick={toggleVisible}>
-        {t('eventLog.toggleShow', { count: entries.length })}
+        <Icon name="stats-chart" />{t('eventLog.toggleShow', { count: entries.length })}
       </button>
     );
   }
@@ -16,10 +17,10 @@ export default function EventLog() {
   return (
     <>
       <button className="event-log-toggle" onClick={toggleVisible} style={{ bottom: '270px' }}>
-        {t('eventLog.close')}
+        <Icon name="close" />{t('eventLog.close')}
       </button>
       <div className="event-log">
-        <div className="event-log-title">{t('eventLog.title')}</div>
+        <div className="event-log-title"><Icon name="radio-button-on" />{t('eventLog.title')}</div>
         {entries.length === 0 && <div style={{ opacity: 0.5 }}>{t('eventLog.empty')}</div>}
         {entries.map(e => (
           <div key={e.id} className="event-log-entry">
@@ -27,7 +28,7 @@ export default function EventLog() {
             <span style={{ color: '#80cbc4' }}>[{e.type}]</span>{' '}
             {e.detail}
             {e.meaning && (
-              <div className="event-log-meaning">💡 {e.meaning}</div>
+              <div className="event-log-meaning"><Icon name="bulb" />{e.meaning}</div>
             )}
           </div>
         ))}

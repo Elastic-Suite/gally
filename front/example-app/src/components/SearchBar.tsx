@@ -12,6 +12,7 @@ import SearchOverlay, {
   attributeFilterUrl, getAutocompleteAttributes, getCategoryMatches, getTermSuggestions,
 } from './SearchOverlay';
 import { getProductFields } from './ProductCard';
+import Icon from './Icon';
 
 interface SearchBarProps {
   categories: any[];
@@ -70,7 +71,7 @@ export default function SearchBar({ categories, categoriesLoading }: SearchBarPr
       attr.options.forEach(opt => {
         items.push({
           key: `attribute-${attr.field}-${opt.value}`,
-          to: attributeFilterUrl(query, attr.field, opt.value),
+          to: attributeFilterUrl(attr.field, opt.value),
         });
       });
     });
@@ -192,7 +193,7 @@ export default function SearchBar({ categories, categoriesLoading }: SearchBarPr
 
   return (
     <form onSubmit={handleSearch} className={`search-bar-wrapper ${focused ? 'expanded' : ''} ${isOverlayOpen ? 'overlay-open' : ''}`}>
-      <span className="search-icon">🔍</span>
+      <span className="search-icon"><Icon name="search" standalone /></span>
       <input
         ref={inputRef}
         type="text"

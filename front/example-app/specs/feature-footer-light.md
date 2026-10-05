@@ -6,7 +6,7 @@
 > **Superseded in part** by `feature-footer-single-row.md`: the two rows are now one (lockup, powered-by
 > line, section links), the full-width rule is gone, and the line reads only "Powered by Gally".
 
-Chosen from a mockup study (`gally-mockup` skill, variant "F2"): the footer matches the light
+The footer matches the light
 header (`feature-header-light-two-row.md`) instead of the old dark indigo bar. Row 1 repeats the
 brand lockup and the section links; row 2 is the unchanged "powered by" line, centred under a
 full-width `--gray-200` rule. The surface is the header's tint mirrored: `--indigo-50` rising from
@@ -22,7 +22,7 @@ The lockup and the links are not copied markup: they were extracted from `Header
 - [x] The header looks and behaves exactly as before the extraction.
 - [x] The footer's active link follows the route (Produits underlined on a category page).
 
-Verified 2026-09-24 by a capture of the running app (`mockups/acp-footer-implemented/`, 1440px, footer also at 390px), compared with the picked mockup variant.
+Verified 2026-09-24 on screenshots of the running app at 1440px and 390px.
 
 ## SDK contract used
 - None.

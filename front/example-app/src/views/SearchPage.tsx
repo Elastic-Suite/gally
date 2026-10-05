@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { useSearch } from '../hooks/useSearch';
+import { useCatalog } from '../contexts/CatalogContext';
 import { useCmsSearch } from '../hooks/useCms';
 import { useTracking } from '../hooks/useTracking';
 import Facets from '../components/Facets';
@@ -11,6 +12,7 @@ import ProductCard from '../components/ProductCard';
 import BlogCard from '../components/BlogCard';
 import { ProductGridSkeleton } from '../components/skeletons';
 import Pagination from '../components/Pagination';
+import Icon from '../components/Icon';
 
 // A query hits two indices at once. `product` is the default tab; `blog` shows the
 // cms_page documents the same query matched.
@@ -89,8 +91,15 @@ export default function SearchPage({
   // wording as CategoryPage.
   const isServerFetchedView = page === 1 && !sortField && filters.length === 0;
 
+  // With no query (an ACP attribute hand-off, or a bare /search), browse the root category
+  // instead. useSearch would otherwise send a '*' search, which the API answers with zero
+  // results. Same pattern as Homepage.tsx, see docs/sdk-reference.md.
+  const { categories } = useCatalog();
+  const rootCategory = categories.length > 0 ? categories[0] : null;
+
   const { products, total, pageCount, aggregations, loading, viewMoreOptions } = useSearch({
     searchQuery: query,
+    categoryCode: query ? undefined : rootCategory?.id,
     currentPage: page,
     pageSize: 20,
     sortField: sortField || '_score',
@@ -202,7 +211,7 @@ export default function SearchPage({
       ) : (
       <>
       <button className="btn btn-outline mobile-filter-toggle" onClick={() => setFacetsOpen(!facetsOpen)}>
-        ☰ {t('common:actions.filters')}
+        <Icon name="options" />{t('common:actions.filters')}
       </button>
 
       <div className="catalog-page">

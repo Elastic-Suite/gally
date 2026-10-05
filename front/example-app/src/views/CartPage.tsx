@@ -11,6 +11,7 @@ import { useRecommendations } from '../hooks/useRecommendations';
 import { defaultListingPath } from '../sdk/categoryTree';
 import ProductSlider from '../components/ProductSlider';
 import ProductImage from '../components/ProductImage';
+import Icon from '../components/Icon';
 
 const FREE_SHIPPING_THRESHOLD = 180;
 
@@ -79,9 +80,15 @@ export default function CartPage() {
                 {item.variant && <div className="variant">{item.variant}</div>}
               </div>
               <div className="cart-item-qty">
-                <button onClick={() => updateQty(item.sku, item.qty - 1, item.variant)}>−</button>
+                <button onClick={() => updateQty(item.sku, item.qty - 1, item.variant)}>
+                  <span className="visually-hidden">{t('common:actions.decrease')}</span>
+                  <Icon name="remove" standalone />
+                </button>
                 <span>{item.qty}</span>
-                <button onClick={() => updateQty(item.sku, item.qty + 1, item.variant)}>+</button>
+                <button onClick={() => updateQty(item.sku, item.qty + 1, item.variant)}>
+                  <span className="visually-hidden">{t('common:actions.increase')}</span>
+                  <Icon name="add" standalone />
+                </button>
               </div>
               <div className="cart-item-price">
                 {formatPrice(item.price * item.qty)}
@@ -90,7 +97,8 @@ export default function CartPage() {
                 className="btn btn-outline btn-sm cart-item-remove"
                 onClick={() => removeFromCart(item.sku, item.variant)}
               >
-                ✕
+                <span className="visually-hidden">{t('common:actions.remove')}</span>
+                <Icon name="close" standalone />
               </button>
             </div>
           ))}
@@ -102,7 +110,7 @@ export default function CartPage() {
           <div className="shipping-bar">
             {freeShipping ? (
               <div className="shipping-bar-unlocked">
-                {t('shipping.unlocked')}
+                <Icon name="checkmark" />{t('shipping.unlocked')}
               </div>
             ) : (
               <>

@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useCmsSearch, formatCmsDate } from '../hooks/useCms';
 import { BlogPostSkeleton } from '../components/skeletons';
 import { useTracking } from '../hooks/useTracking';
+import Icon from '../components/Icon';
 
 // `initialPost` is the CmsPage the Server Component already fetched for this id.
 export default function BlogPostPage({ initialPost }: { initialPost?: any } = {}) {
@@ -50,7 +51,7 @@ export default function BlogPostPage({ initialPost }: { initialPost?: any } = {}
         <div className="empty-state">
           <h3>{t('blog:notFoundTitle')}</h3>
           <p>{t('blog:notFoundBody')}</p>
-          <Link href="/blog" className="btn btn-outline btn-sm">{t('blog:backToList')}</Link>
+          <Link href="/blog" className="btn btn-outline btn-sm"><Icon name="arrow-back" />{t('blog:backToList')}</Link>
         </div>
       </div>
     );
@@ -95,7 +96,7 @@ export default function BlogPostPage({ initialPost }: { initialPost?: any } = {}
         </div>
       )}
 
-      <Link href="/blog" className="btn btn-outline btn-sm blog-post-back">{t('blog:backToList')}</Link>
+      <Link href="/blog" className="btn btn-outline btn-sm blog-post-back"><Icon name="arrow-back" />{t('blog:backToList')}</Link>
     </div>
   );
 }

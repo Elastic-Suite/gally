@@ -1,7 +1,6 @@
 {
   "breadcrumb": "Startseite / Vektorsuche",
   "title": "Stichwortsuche vs. Vektorsuche",
-  "intro": "Dieselbe Anfrage, zweimal auf demselben Katalog ausgeführt. Links vergleicht die Stichwortsuche Wörter. Rechts vergleicht die Vektorsuche Bedeutung — sie stellt das Embedding Ihrer Anfrage dem Embedding jedes Produkts gegenüber und kann so eine Anfrage beantworten, deren Wörter im Katalog nirgends vorkommen.",
   "placeholder": "Beschreiben Sie, wonach Sie suchen…",
   "submit": "Vergleichen",
   "tryLabel": "Ausprobieren:",

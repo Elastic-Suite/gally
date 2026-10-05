@@ -26,7 +26,7 @@
     "start": "yarn --cwd pwa start",
     "start:pwa": "yarn --cwd pwa start",
     "start:example": "yarn --cwd example-app start",
-    "test": "yarn --cwd pwa test && yarn --cwd example-app test",
+    "test": "yarn --cwd pwa test && yarn --cwd example-app test && (([ -d gally-admin ] && yarn --cwd gally-admin test) || true)",
     "test:sdk": "yarn --cwd gally-admin/packages test:sdk",
     "test:ci": "yarn --cwd pwa test:ci && yarn --cwd example-app test:ci",
     "test:sdk:ci": "yarn --cwd gally-admin/packages test:sdk:ci",
