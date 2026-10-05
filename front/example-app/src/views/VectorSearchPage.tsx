@@ -16,6 +16,7 @@ import {
   VectorSearchResult,
 } from '../sdk/vectorSearch';
 import ProductImage from '../components/ProductImage';
+import Icon from '../components/Icon';
 
 // Keyword vs vector, same query, side by side.
 //
@@ -321,7 +322,6 @@ export default function VectorSearchPage() {
       <div className="vector-head">
         <div className="breadcrumb">{t('breadcrumb')}</div>
         <h1>{t('title')}</h1>
-        <p className="vector-intro">{t('intro')}</p>
 
         <form className="vector-search-form" onSubmit={submit}>
           <input
@@ -363,7 +363,7 @@ export default function VectorSearchPage() {
 
           {keywordEmpty ? (
             <div className="vector-empty">
-              <div className="vector-empty-icon" aria-hidden="true">🔍</div>
+              <div className="vector-empty-icon"><Icon name="search" standalone /></div>
               <h3>{t('keyword.emptyTitle', { query })}</h3>
               <p>{t('keyword.emptyBody')}</p>
             </div>
@@ -415,7 +415,7 @@ export default function VectorSearchPage() {
 
           {!vecLoading && vector.products.length === 0 ? (
             <div className="vector-empty">
-              <div className="vector-empty-icon" aria-hidden="true">⚠️</div>
+              <div className="vector-empty-icon"><Icon name="warning" standalone /></div>
               <h3>{t('vector.unavailableTitle')}</h3>
               <p>{t('vector.unavailableBody')}</p>
             </div>

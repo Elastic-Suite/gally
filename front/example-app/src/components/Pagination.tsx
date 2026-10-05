@@ -1,10 +1,14 @@
 'use client';
 
-import { ReactNode, Ref } from 'react';
+import { Ref } from 'react';
+import Icon from './Icon';
 
 // The one pager. It replaced five hand-copied ones, each of which built its page numbers as
 // `Array.from({ length: Math.min(pageCount, N) }, (_, i) => i + 1)` — always the first N pages,
 // whatever page you were on. See specs/bugfix-pagination-window-fixed-to-first-pages.md.
+//
+// The arrows are chevron icons drawn here; the labels a call site passes are their accessible
+// names, read by screen readers and not drawn.
 //
 // What a call site keeps for itself: its labels, its window size, and what scrolling means to
 // it. Those three genuinely differ per page — the vector search scrolls its own panel rather
@@ -16,8 +20,8 @@ interface Props {
   onPage: (page: number) => void;
   // Number of page buttons in the sliding window, before the first/last jumps are added.
   windowSize?: number;
-  prevLabel: ReactNode;
-  nextLabel: ReactNode;
+  prevLabel: string;
+  nextLabel: string;
   ariaLabel?: string;
   // React 19 takes `ref` as a plain prop. VectorSearchPage needs the DOM node to find the panel
   // it belongs to; nothing else uses it.
@@ -57,7 +61,10 @@ export default function Pagination({
 
   return (
     <nav className="pagination" aria-label={ariaLabel} ref={ref}>
-      <button disabled={page <= 1} onClick={() => onPage(page - 1)}>{prevLabel}</button>
+      <button disabled={page <= 1} onClick={() => onPage(page - 1)}>
+        <span className="visually-hidden">{prevLabel}</span>
+        <Icon name="chevron-back" standalone />
+      </button>
       {/* First and last stay one click away. Reaching page 12 used to mean eleven clicks on the
           arrow. The gap marker is a plain span: it is a gap, not a button that does nothing. */}
       {first > 1 && pageButton(1)}
@@ -65,7 +72,10 @@ export default function Pagination({
       {pages.map(pageButton)}
       {last < pageCount - 1 && <span aria-hidden="true">…</span>}
       {last < pageCount && pageButton(pageCount)}
-      <button disabled={page >= pageCount} onClick={() => onPage(page + 1)}>{nextLabel}</button>
+      <button disabled={page >= pageCount} onClick={() => onPage(page + 1)}>
+        <span className="visually-hidden">{nextLabel}</span>
+        <Icon name="chevron-forward" standalone />
+      </button>
     </nav>
   );
 }

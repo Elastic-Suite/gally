@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useCart } from '../contexts/CartContext';
 import { useCatalog } from '../contexts/CatalogContext';
 import { useTracking } from '../hooks/useTracking';
+import Icon from '../components/Icon';
 
 const STEP_KEYS = ['cart', 'details', 'confirmation'];
 
@@ -47,7 +48,7 @@ export default function CheckoutPage() {
           <React.Fragment key={s}>
             {i > 0 && <div className="checkout-step-divider" />}
             <div className={`checkout-step ${i < step ? 'completed' : ''} ${i === step ? 'active' : ''}`}>
-              {i < step ? '✓' : i + 1}. {t(`checkout.steps.${s}`)}
+              {i < step ? <Icon name="checkmark" /> : `${i + 1}. `}{t(`checkout.steps.${s}`)}
             </div>
           </React.Fragment>
         ))}
@@ -87,7 +88,7 @@ export default function CheckoutPage() {
 
       {step === 2 && (
         <div style={{ textAlign: 'center', background: 'white', borderRadius: 'var(--radius-md)', padding: '3rem', boxShadow: 'var(--shadow-sm)' }}>
-          <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>✓</div>
+          <div style={{ fontSize: '3rem', marginBottom: '1rem' }}><Icon name="checkmark" standalone /></div>
           <h2>{t('checkout.orderConfirmed')}</h2>
           <p style={{ color: 'var(--gray-600)', marginTop: '0.5rem' }}>
             {t('checkout.orderConfirmedBody')}

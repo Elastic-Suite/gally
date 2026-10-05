@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { FacetsSkeletonBody } from './skeletons';
 // Shared with the PDP option selector, which draws the same swatches from the same labels.
 import { guessColor, needsSwatchOutline } from './swatchColors';
+import Icon from './Icon';
 
 interface FacetOption {
   label: string;
@@ -159,7 +160,7 @@ function ActiveFilterChips({
     <div className="active-filters">
       {chips.map(chip => (
         <button key={chip.key} className="filter-chip" onClick={chip.onRemove}>
-          {chip.text} <span aria-hidden="true">✕</span>
+          {chip.text} <Icon name="close" standalone />
         </button>
       ))}
       {chips.length > 1 && (
@@ -300,14 +301,14 @@ function FacetGroup({
         <div className="facet-show-more" onClick={handleShowMore}>
           {loadingMore
             ? t('loading')
-            : canFetchFromServer
+            : <><Icon name="add" />{canFetchFromServer
               ? t('showMore')
-              : t('showMoreCount', { count: filteredOptions.length - 5 })}
+              : t('showMoreCount', { count: filteredOptions.length - 5 })}</>}
         </div>
       )}
       {expanded && filteredOptions.length > 5 && (
         <div className="facet-show-more" onClick={() => setExpanded(false)}>
-          {t('showLess')}
+          <Icon name="remove" />{t('showLess')}
         </div>
       )}
     </div>

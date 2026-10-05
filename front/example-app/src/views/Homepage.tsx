@@ -6,7 +6,36 @@ import { useTranslation } from 'react-i18next';
 import { useSearch } from '../hooks/useSearch';
 import { useTracking } from '../hooks/useTracking';
 import ProductSlider from '../components/ProductSlider';
+import HomeHero from '../components/HomeHero';
+import HomePromoCards from '../components/HomePromoCards';
 import { useCatalog } from '../contexts/CatalogContext';
+import { HOMEPAGE_BLOCKS } from '../sdk/homepageBlocks';
+
+// Each row shows 3 products and fetches only 3: cards hidden with CSS would still be reported by
+// trackDisplay as displayed. See specs/feature-homepage-blocks.md.
+const ROW_SIZE = 3;
+
+// Panel-shaped placeholder, so the page does not jump when the products arrive.
+function SliderSkeleton({ end }: { end?: boolean }) {
+  return (
+    <div className={`product-slider product-slider--panel${end ? ' product-slider--end' : ''}`}>
+      <div className="product-slider-aside">
+        <div className="skeleton skeleton-text" style={{ width: '60%', height: '1.75rem' }} />
+      </div>
+      <div className="slider-track">
+        {Array.from({ length: ROW_SIZE }).map((_, i) => (
+          <div key={i} className="skeleton-card">
+            <div className="skeleton-card-image skeleton-shimmer" />
+            <div className="skeleton-card-body">
+              <div className="skeleton skeleton-text" style={{ width: '80%' }} />
+              <div className="skeleton skeleton-text" style={{ width: '50%', marginTop: '0.5rem' }} />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export default function Homepage() {
   const { t, i18n } = useTranslation('category');
@@ -18,13 +47,15 @@ export default function Homepage() {
   // product_catalog requires a real currentCategoryId, so use the root rather than
   // faking a product_search with a wildcard query.
   const rootCategory = categories.length > 0 ? categories[0] : null;
-  const { products, loading } = useSearch({ pageSize: 8, categoryCode: rootCategory?.id });
+  const { products, loading } = useSearch({ pageSize: ROW_SIZE, categoryCode: rootCategory?.id });
 
-  // Second row: the first top-level category, titled with its own name. A category listing, not
-  // "new arrivals" - there is no date sort behind it.
-  const secondCategory = categories.length > 1 ? categories[1] : null;
+  // Second row: a top-level category, titled with its own name. A category listing, not
+  // "new arrivals" - there is no date sort behind it. `categories` is the root then its children,
+  // and the root's top products all come from the first child, so categories[1] repeated the first
+  // row. categories[2] is measured not to, on all three sample shops.
+  const secondCategory = categories[2] ?? categories[1] ?? null;
   const categoryRow = useSearch({
-    pageSize: 8,
+    pageSize: ROW_SIZE,
     categoryCode: secondCategory?.id,
   });
 
@@ -42,6 +73,11 @@ export default function Homepage() {
       : null;
   const heroLabel = hasHeroQuery ? t(`${heroKey}.cta`) : t('homepage.hero.browse');
 
+  // Sample shops get the wide hero and the promo cards; any other catalog keeps the text hero.
+  const shopCode = selectedCatalog?.code ?? '';
+  const blocks = HOMEPAGE_BLOCKS[shopCode];
+  const blocksKey = `homepage.blocks.${shopCode}`;
+
   const trackedDisplayRef = useRef('');
 
   useEffect(() => {
@@ -56,44 +92,68 @@ export default function Homepage() {
 
   return (
     <div>
-      {/* Hero */}
-      <section className="hero">
-        <h1>{t('homepage.heroTitle')}</h1>
-        <p>
-          {t('homepage.heroBody')}
-        </p>
-        {heroHref && (
-          <Link href={heroHref} className="btn btn-coral btn-lg">
-            {heroLabel}
-          </Link>
-        )}
-      </section>
-
-
-      {/* Product Sliders */}
-      {loading ? (
-        <div className="product-slider">
-          <div className="skeleton skeleton-text" style={{ width: '200px', height: '1.5rem', marginBottom: '1rem' }} />
-          <div className="slider-track">
-            {Array.from({ length: 4 }).map((_, i) => (
-              <div key={i} className="skeleton-card">
-                <div className="skeleton-card-image skeleton-shimmer" />
-                <div className="skeleton-card-body">
-                  <div className="skeleton skeleton-text" style={{ width: '80%' }} />
-                  <div className="skeleton skeleton-text" style={{ width: '50%', marginTop: '0.5rem' }} />
-                  <div className="skeleton skeleton-btn" style={{ width: '100px', marginTop: '0.75rem' }} />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+      {blocks ? (
+        <HomeHero
+          title={t(`${blocksKey}.heroTitle`)}
+          body={t(`${blocksKey}.heroBody`)}
+          images={blocks.heroImages}
+          ctaHref={heroHref}
+          ctaLabel={heroLabel}
+        />
       ) : (
-        <>
-          <ProductSlider products={products.slice(0, 8)} title={t('homepage.trending')} />
-          {categoryRow.products.length > 0 && (
-            <ProductSlider products={categoryRow.products.slice(0, 8)} title={secondCategory ? secondCategory.name : t('homepage.moreProducts')} />
+        <section className="hero">
+          <h1>{t('homepage.heroTitle')}</h1>
+          <p>
+            {t('homepage.heroBody')}
+          </p>
+          {heroHref && (
+            <Link href={heroHref} className="btn btn-coral btn-lg">
+              {heroLabel}
+            </Link>
           )}
-        </>
+        </section>
+      )}
+
+      {loading ? (
+        <SliderSkeleton />
+      ) : (
+        <ProductSlider
+          products={products.slice(0, ROW_SIZE)}
+          title={t('homepage.trending')}
+          panel={{
+            eyebrow: t('homepage.eyebrowSelection'),
+            seeAllHref: rootCategory ? `/category/${rootCategory.id}` : null,
+            seeAllLabel: t('homepage.seeAll'),
+          }}
+        />
+      )}
+
+      {blocks && (
+        <HomePromoCards
+          ctaLabel={t('homepage.blocks.discover')}
+          cards={blocks.cards.map((card) => ({
+            key: card.key,
+            title: t(`${blocksKey}.cards.${card.key}.title`),
+            body: t(`${blocksKey}.cards.${card.key}.body`),
+            image: card.image,
+            href: `/category/${card.categoryId}`,
+          }))}
+        />
+      )}
+
+      {categoryRow.loading ? (
+        <SliderSkeleton end />
+      ) : categoryRow.products.length > 0 && (
+        <ProductSlider
+          products={categoryRow.products.slice(0, ROW_SIZE)}
+          title={secondCategory ? secondCategory.name : t('homepage.moreProducts')}
+          panel={{
+            eyebrow: t('homepage.eyebrowCategory'),
+            seeAllHref: secondCategory ? `/category/${secondCategory.id}` : null,
+            seeAllLabel: t('homepage.seeAll'),
+            side: 'end',
+          }}
+        />
       )}
 
       {/* CTA Section */}

@@ -8,7 +8,7 @@
   "title_one": "Votre Panier ({{count}} article)",
   "title_other": "Votre Panier ({{count}} articles)",
   "shipping": {
-    "unlocked": "✓ Livraison offerte !",
+    "unlocked": "Livraison offerte !",
     "remainingPrefix": "Plus que",
     "remainingSuffix": "pour la livraison offerte",
     "free": "Offerte"

@@ -14,6 +14,7 @@ import AppShell from '../src/components/AppShell';
 import { ICatalog, ILocalizedCatalog, ICategoryNode } from '../src/sdk/catalogs';
 import { AxisLabels } from '../src/sdk/axisLabels';
 import { GallyConfig } from '../src/sdk/config';
+import { setBundles } from '../src/sdk';
 import '../src/i18n';
 
 // The provider tree, in the order the CRA src/index.tsx used, with LocaleProvider added
@@ -28,6 +29,7 @@ export default function Providers({
   categories,
   axisLabels,
   config,
+  bundles,
   children,
 }: {
   locale: string;
@@ -37,8 +39,14 @@ export default function Providers({
   categories: ICategoryNode[];
   axisLabels: AxisLabels;
   config: GallyConfig;
+  bundles: string[];
   children: React.ReactNode;
 }) {
+  // During render, not in an effect: child effects run before a parent's, so an effect here would
+  // let the search bar build its SearchManager without the bundles. setBundles() does nothing when
+  // the list is unchanged, so running it on every render is safe.
+  setBundles(bundles);
+
   return (
     <LocaleProvider locale={locale}>
       <ConfigProvider config={config}>

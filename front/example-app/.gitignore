@@ -29,6 +29,7 @@ yarn-error.log*
 # tsc-files
 *.tsbuildinfo
 tsconfig.*.json
+next-env.d.ts
 
 # storybook
 !.storybook

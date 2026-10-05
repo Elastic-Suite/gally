@@ -9,6 +9,7 @@ import { getProductFields } from './ProductCard';
 import QuickAdd from './QuickAdd';
 import { CmsPage, cmsPageUrl } from '../hooks/useCms';
 import ProductImage from './ProductImage';
+import Icon from './Icon';
 
 // What `Response.getTermSuggestions()` returns, per entity type: the engine's own
 // popular-search terms, not a client-side filter of a hardcoded list.
@@ -65,8 +66,10 @@ export function getAutocompleteAttributes(aggregations: any[]): AcpAttribute[] {
 // Filters travel to the search page as repeatable `f_<field>=<value>` params —
 // SearchPage seeds its activeFilters from them (arrays, so the facet sidebar shows
 // the value as checked and the active-filter chip renders).
-export function attributeFilterUrl(query: string, field: string, value: string): string {
-  return `/search?q=${encodeURIComponent(query.trim())}&f_${encodeURIComponent(field)}=${encodeURIComponent(value)}`;
+// No `q`: picking a brand means "show me this brand", not "search what I was typing,
+// filtered by it". The typed text was never submitted, so it is not carried over.
+export function attributeFilterUrl(field: string, value: string): string {
+  return `/search?f_${encodeURIComponent(field)}=${encodeURIComponent(value)}`;
 }
 
 // Wraps every occurrence of a query word in <mark> so a blog hit shows *why* it
@@ -236,7 +239,6 @@ export default function SearchOverlay({
         <div className="search-overlay-col">
           <SuggestionsColumn termSuggestions={termSuggestions} highlightedKey={highlightedKey} onSelect={closeAndGo} />
           <AttributesSections
-            query={query}
             aggregations={aggregations}
             highlightedKey={highlightedKey}
             onSelect={closeAndGo}
@@ -278,7 +280,7 @@ function SearchPrompt() {
   const { t } = useTranslation('search');
   return (
     <div className="search-prompt">
-      <div className="search-prompt-icon">🔍</div>
+      <div className="search-prompt-icon"><Icon name="search" standalone /></div>
       <div className="search-prompt-title">{t('overlay.promptTitle')}</div>
       <div className="search-prompt-subtitle">{t('overlay.promptSubtitle')}</div>
     </div>
@@ -313,7 +315,7 @@ function SuggestionsColumn({ termSuggestions, highlightedKey, onSelect }: {
 
   return (
     <>
-      <div className="autocomplete-section-title">{t('overlay.suggestionsTitle')}</div>
+      <div className="autocomplete-section-title"><Icon name="search" />{t('overlay.suggestionsTitle')}</div>
       {termSuggestions.length === 0 ? (
         <EmptyNote text={t('overlay.noSuggestions')} />
       ) : (
@@ -338,8 +340,8 @@ function SuggestionsColumn({ termSuggestions, highlightedKey, onSelect }: {
 // Stacked under the popular search terms, in the same column: one section per
 // attribute the merchandiser flagged "Displayed in autocomplete". Section titles
 // are the API's own localized `label`, so nothing here needs translating.
-function AttributesSections({ query, aggregations, highlightedKey, onSelect }: {
-  query: string; aggregations: any[]; highlightedKey: string | null; onSelect: (to: string) => void;
+function AttributesSections({ aggregations, highlightedKey, onSelect }: {
+  aggregations: any[]; highlightedKey: string | null; onSelect: (to: string) => void;
 }) {
   const attributes = getAutocompleteAttributes(aggregations);
   if (attributes.length === 0) return null;
@@ -356,7 +358,7 @@ function AttributesSections({ query, aggregations, highlightedKey, onSelect }: {
                 key={opt.value}
                 data-item-key={key}
                 className={`autocomplete-item autocomplete-attribute ${key === highlightedKey ? 'highlighted' : ''}`}
-                onClick={() => onSelect(attributeFilterUrl(query, attr.field, opt.value))}
+                onClick={() => onSelect(attributeFilterUrl(attr.field, opt.value))}
               >
                 <span className="autocomplete-attribute-text">{opt.label}</span>
                 <span className="autocomplete-attribute-count">{opt.count}</span>
@@ -445,7 +447,7 @@ function CategoriesColumn({ query, categories, loading, highlightedKey, onSelect
 
   return (
     <>
-      <div className="autocomplete-section-title">{t('overlay.categoryTitle')}</div>
+      <div className="autocomplete-section-title"><Icon name="folder-open" />{t('overlay.categoryTitle')}</div>
       {loading ? (
         <SkeletonRows />
       ) : matches.length === 0 ? (
@@ -481,7 +483,7 @@ function BlogSection({ query, pages, loading, highlightedKey, onSelect }: {
 
   return (
     <div className="autocomplete-blog-group">
-      <div className="autocomplete-section-title">{t('search:overlay.blogTitle')}</div>
+      <div className="autocomplete-section-title"><Icon name="document-text" />{t('search:overlay.blogTitle')}</div>
       {loading ? (
         <SkeletonRows count={2} />
       ) : pages.length === 0 ? (

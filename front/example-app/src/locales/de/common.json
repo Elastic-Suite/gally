@@ -1,6 +1,6 @@
 {
   "brand": {
-    "ariaLabel": "Gally example — zur Startseite"
+    "ariaLabel": "Gally Shop — zur Startseite"
   },
   "footer": {
     "poweredBy": "Betrieben mit"
@@ -15,7 +15,11 @@
     "link": "Warenkorb"
   },
   "actions": {
-    "filters": "Filter"
+    "filters": "Filter",
+    "close": "Schließen",
+    "remove": "Entfernen",
+    "decrease": "Menge verringern",
+    "increase": "Menge erhöhen"
   },
   "meta": {
     "search": "Suche",

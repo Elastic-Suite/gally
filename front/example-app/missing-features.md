@@ -218,7 +218,7 @@ comparison, no code read for this section.
 - **Storytelling/demo layer** (`DemoContext`, `StoryCompanion`, `IntroScreen`, `useStoryActions`) — the full
   5-act guided scenario, audience-mode toggle, and right-side story companion panel. Net new, no `main`
   equivalent at all.
-- **`CheckoutPage`** — multi-step checkout tunnel (shipping → payment → confirmation) with `ORDER` tracking.
+- **`CheckoutPage`** — checkout tunnel (delivery and payment on one prefilled step → confirmation) with `ORDER` tracking.
   Net new.
 - **Cart AOV boosters** (`CartPage`) — bundle upsell, free-shipping progress bar, frequently-bought-together,
   animated total. Net new, see `storytelling.md` Act 4.
