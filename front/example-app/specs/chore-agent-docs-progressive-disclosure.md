@@ -5,10 +5,9 @@
 
 ## Problem
 
-The app's agent instructions had the same routing table in three always-loaded files
-(`CLAUDE.md`, `.agent.md`, `AGENTS.md`), the host-build warning in three, and the design-token
-rule in four. `.agent.md` itself explained that this duplication had already caused a stale-file
-bug, and then reproduced the table anyway. Two pointers were wrong: `AGENTS.md` named
+The app's agent instructions had the same routing table in both always-loaded files
+(`CLAUDE.md`, `AGENTS.md`), the host-build warning in three, and the design-token rule in four.
+Two pointers were wrong: `AGENTS.md` named
 `specs/feature-nextjs-migration-phase2.md` and `-phase3.md`, neither of which exists, and
 `src/views/AGENTS.md` was still headed `# Pages` after the rename to `views`. `README.md` was
 still the Create React App boilerplate.
@@ -19,8 +18,8 @@ tool reads first.
 
 ## Behaviour (testable)
 - [x] `AGENTS.md` is the entry point and holds the only routing table for this app.
-- [x] `CLAUDE.md` (11 lines) and `.agent.md` (13 lines) name `AGENTS.md` in their first lines and
-      contain no routing table and no rules. `CLAUDE.md` keeps only Claude-specific content: the
+- [x] `CLAUDE.md` (11 lines) names `AGENTS.md` in its first lines and contains no routing table
+      and no rules. `CLAUDE.md` keeps only Claude-specific content: the
       two directory-scoped skills in `.claude/skills/`.
 - [x] Each rule has one home: host build in `AGENTS.md` "Definition of done"; tokens in
       `docs/design-system.md`, enforced at the point of use by `src/{components,views}/AGENTS.md`;
@@ -46,8 +45,8 @@ Not applicable — no rendered output changed.
 ## MUST NOT change
 - **`docs/sdk-reference.md` stays authoritative** and wins over `AGENTS.md` and over any skill.
   The precedence statement in `AGENTS.md` is a rule, not routing; do not drop it when trimming.
-- **Do not copy the routing table back into `CLAUDE.md` or `.agent.md`.** That is the exact
-  regression this change undoes, and it has already happened once.
+- **Do not copy the routing table back into `CLAUDE.md`.** That is the exact regression this
+  change undoes, and it has already happened once.
 - The two SDK traps kept in `src/sdk/AGENTS.md` (`selectedFields` must be non-empty;
   `product_search` when there is no category) are restated on purpose because they fail with no
   error. Do not "de-duplicate" them away.
@@ -62,8 +61,8 @@ Documentation only, so no build or test run applies. What was checked:
 
 ```bash
 ../../tools/check-agent-docs.py          # all pointers resolve
-wc -l CLAUDE.md .agent.md AGENTS.md src/*/AGENTS.md   # 121 lines total, was 141
-grep -c '^| ' CLAUDE.md .agent.md        # 0 routing rows in both
+wc -l CLAUDE.md AGENTS.md src/*/AGENTS.md   # the routers stay short
+grep -c '^| ' CLAUDE.md                  # 0 routing rows
 ```
 
 Part of a repo-wide pass; the monorepo side is recorded in the root `AGENTS.md` §9 and
@@ -106,3 +105,4 @@ under the 500-line guidance.
   instructions, and linking them would spend context on every invocation. Same file records the
   exemption so a reachability audit does not flag them.
 - The step order in the `specs/` checklist is the point of it. Step 2 (spec) before step 3 (code).
+
