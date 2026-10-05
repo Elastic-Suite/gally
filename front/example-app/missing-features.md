@@ -217,11 +217,11 @@ comparison, no code read for this section.
   cost → pricing plans) that closes the storytelling scenario; see `storytelling.md` Act 5.
 - **Storytelling/demo layer** (`DemoContext`, `StoryCompanion`, `IntroScreen`, `useStoryActions`) — the full
   5-act guided scenario, audience-mode toggle, and right-side story companion panel. Net new, no `main`
-  equivalent at all.
+  equivalent at all. **Paused and currently unreachable** - see `specs/feature-guided-demo-rebuild.md`.
 - **`CheckoutPage`** — checkout tunnel (delivery and payment on one prefilled step → confirmation) with `ORDER` tracking.
   Net new.
-- **Cart AOV boosters** (`CartPage`) — bundle upsell, free-shipping progress bar, frequently-bought-together,
-  animated total. Net new, see `storytelling.md` Act 4.
+- **Cart AOV boosters** (`CartPage`) — free-shipping progress bar, real cross-sell recommendations,
+  animated total. Net new.
 - **Live tracking panel** (`EventLogContext`, `EventLog`, `TrackingInsights`) — floating panel showing SDK
   tracking events in real time, for demo/debug purposes. Net new.
 - **Color swatch facet type** in `Facets.tsx` — not present in the old app's facet set.

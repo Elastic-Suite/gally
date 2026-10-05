@@ -32,8 +32,8 @@ exactly, or the server-rendered page and the hydrated one disagree.
 
 ## Where to read what
 
-This is the only routing table for the app. `CLAUDE.md` and `.agent.md` beside this file are
-redirects here and carry no rules — don't copy anything back into them.
+This is the only routing table for the app. `CLAUDE.md` beside this file is a redirect here and
+carries no rules — don't copy anything back into it.
 
 | You need | Read |
 |---|---|
@@ -42,7 +42,8 @@ redirects here and carry no rules — don't copy anything back into them.
 | Routes, source layout, feature → file | `docs/architecture.md` (regenerate-able, lower trust) |
 | The feature or bug you are touching | `specs/feature-*.md` / `specs/bugfix-*.md` |
 | What is deliberately not built yet | `missing-features.md` |
-| Running or scripting the guided demo | `DEMO.md` |
+| Running the demo by hand | `DEMO.md` |
+| The paused guided demo (story, intro, audience modes) | `specs/feature-guided-demo-rebuild.md` |
 | Installing and starting the app | `README.md` |
 | The wider monorepo — five git repos, Docker topology, backend | `../../AGENTS.md` |
 | Rules for the directory you are editing | `src/{components,views,sdk}/AGENTS.md` |
