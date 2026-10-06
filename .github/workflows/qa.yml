@@ -52,7 +52,7 @@ jobs:
         run: yarn --frozen-lockfile
       - name: Yarn build
         working-directory: front/gally-admin
-        run: yarn build
+        run: yarn build && yarn build:sdk
       - name: Typescript
         working-directory: front
         run: yarn typescript:ci
