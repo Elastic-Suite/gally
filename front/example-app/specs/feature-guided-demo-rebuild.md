@@ -1,8 +1,8 @@
 # Feature: rebuild the guided demo (story, intro, audience modes)
 
-## Status: paused - not started
+## Status: planning - entry point decided (2026-10-06), not started
 
-## Page/Component: src/contexts/DemoContext.tsx, src/hooks/useStoryActions.ts, src/scenarios/, src/components/{IntroScreen,StoryCompanion,AppShell}.tsx, src/views/ClosingPage.tsx, src/locales/\*/{demo,scenarios}.json, src/styles.css
+## Page/Component: src/contexts/DemoContext.tsx, src/hooks/useStoryActions.ts, src/scenarios/, src/components/{StoryCompanion,AppShell}.tsx, new src/components/GuidedToggle.tsx, src/views/ClosingPage.tsx, src/locales/\*/{demo,scenarios}.json, src/styles.css. `src/components/IntroScreen.tsx` is deleted.
 
 ## Why this file exists
 
@@ -84,15 +84,85 @@ run). `ClosingPage.tsx:58` also hardcodes `count: 12`.
 - Locale parity is complete: `demo.json` and `scenarios.json` have the same keys in en, fr
   and de, and every `intro.*`, `story.*`, `toast.*` and `closing.*` key is used.
 
-## Decisions to take before rebuilding
+## Entry point and panel (decided 2026-10-06)
 
-1. **Entry point.** Intro screen, URL parameter, header control, or several. Persisting
-   `introSeen` and `audience` (localStorage or cookie) must not cause a hydration mismatch -
-   see `specs/plan-ssr-seo.md:317-323`.
-2. **Audience mode.** Keep the direction/marketing split or drop it. Today it only hides the
-   EventLog and the `/explain` link.
-3. **Catalog awareness.** Take the story queries and the closing timeline text from the
-   active catalog instead of "tank dress".
+No intro screen. Guided mode is switched on and off by one toggle fixed to the right edge of
+the page. When it is on, the panel shows the steps.
+
+### Where the toggle sits
+
+The right edge at mid-height is the only free spot. The others are taken:
+
+- bottom-right: EventLog toggle (`styles.css:2949-2960`);
+- bottom-left: TrackingInsights (`styles.css:2964-2977`) and the explain toggle
+  (`styles.css:3119-3121`);
+- top-right: the story dock itself (`styles.css:3499-3507`).
+
+```
++--------------------------------------------------+
+| header (two rows, --header-height)               |
++--------------------------------------------------+
+|                                     +-----------+|
+|   page                              | Act 2 / 5 ||
+|                                     | 1 Search v||
+|                                    [| 2 Facets *||
+|                                    G| 3 ...     ||
+|                                    u| 4 ...     ||
+|                                    i| 5 ...     ||
+|                                    d|-----------||
+|                                    e| bubble    ||
+|                                    ]| < Prev Next>|
+|                                     +-----------+|
+| [insights]                            [eventlog] |
++--------------------------------------------------+
+  toggle = vertical tab on the right edge; panel opens to its left
+```
+
+### Behaviour
+
+- **Off (default).** Only the tab shows, labelled "Guided demo". The app is the normal app.
+- **Switching on.** Starts the story at act 1 (`startStory`) and opens the panel. The tab
+  stays visible and shows "Act n / 5".
+- **Panel content.** The list of the five acts, with done / current / to-come states. A click
+  on an act jumps to it (`jumpStep`, already there). Under the list: the current act's bubble
+  and Prev / Next. This replaces the five unlabelled progress segments
+  (`StoryCompanion.tsx:62-72`).
+- **Collapse.** Clicking the tab while the panel is open hides the panel but keeps guided mode
+  on (`minimizeStory`, today never called). The tab then stands in for the resume pill, so the
+  pill and its CSS (`StoryCompanion.tsx:34-40`, `styles.css:3620-3633`) go.
+- **Switching off.** A close control in the panel calls `skipStory`. The tab goes back to
+  "Guided demo".
+- **Position.** The panel top follows `var(--header-height)` instead of the fixed `70px`
+  (`styles.css:3501`).
+- **Small screens.** Below the mobile breakpoint the panel becomes a bottom sheet and the tab
+  stays on the right edge (to confirm in a mockup).
+
+### Persistence and hydration
+
+- Guided mode on/off and the current act live in `sessionStorage`, so a reload keeps the
+  demo where it was, and a new tab starts with guided mode off.
+- Read it in an effect after mount, never in a `useState` initialiser. The toggle and panel
+  already render only inside the `mounted &&` block (`AppShell.tsx:71-80`), so the server
+  HTML is the same whatever is stored. See `specs/plan-ssr-seo.md:317-323`.
+- Optional: a `?guided=1` URL parameter switches it on, for a link sent before a demo call.
+  Not required.
+
+### What goes with the intro screen
+
+- `src/components/IntroScreen.tsx`, the `introSeen` / `setIntroSeen` state
+  (`DemoContext.tsx:46`), the gate and its comment (`AppShell.tsx:44-52`), and the
+  `intro.*` keys in `src/locales/*/demo.json`, plus their CSS.
+
+## Decisions still open
+
+1. ~~**Entry point.**~~ Decided above.
+2. **Audience mode.** The intro was its only control, so with the intro gone it can never
+   change. Proposal: drop it. That removes `audience`, `mode-*` and `.expert-only`, and makes
+   the EventLog and the `/explain` link visible again. Keeping it would need a second control
+   in the panel.
+3. **Catalog awareness.** Planned in `specs/feature-guided-tour-per-catalog.md`: one tour per
+   catalog, played from its demo guide in `gally-sample-data/guides/`. That plan also reshapes
+   decisions 4, 5 and 8 below (the five acts become each guide's six steps).
 4. **Act 3 target.** `/explain` (admin auth, French strings) or `/vector-search`, which is now
    a real keyword-vs-vector comparison (`src/views/VectorSearchPage.tsx`) and closer to what
    the story wants to show.
@@ -102,8 +172,9 @@ run). `ClosingPage.tsx:58` also hardcodes `count: 12`.
 6. **Stable targets.** Use `data-story-target="..."` attributes instead of CSS classes, as
    proposed in `plan-ssr-seo.md`. That removes the class of breakage behind act 4. Design for
    streaming (target not there yet) and hydration (button there but not interactive yet).
-7. **Panel behaviour.** Minimize and resume, position under the two-row header, and how it
-   behaves when the search overlay is open.
+7. **Panel and search overlay.** Minimize, resume and position are decided above. Still
+   open: what the panel does when act 1 opens the search overlay - stay on top, or collapse
+   to the tab until the results page loads.
 8. **Closing page.** Keep or drop the hardcoded figures and pricing, and wire or remove the
    "Talk to sales" buttons.
 9. **Cleanup.** Remove or reuse every item under "Dead code" above.
@@ -123,7 +194,12 @@ run). `ClosingPage.tsx:58` also hardcodes `count: 12`.
 
 ## Acceptance criteria (for the rebuild)
 
-- [ ] The story can be started from at least one entry point, with no hydration warning.
+- [ ] A tab on the right edge switches guided mode on and off, with no hydration warning.
+- [ ] With guided mode on, the panel lists the five acts and a click on one jumps to it.
+- [ ] Clicking the tab with the panel open collapses it, guided mode stays on, and the tab
+      shows the current act.
+- [ ] A reload keeps guided mode and the current act; a new tab starts with it off.
+- [ ] `IntroScreen`, `introSeen` and the `intro.*` keys are gone.
 - [ ] All five acts run to the end on every catalog, in en, fr and de.
 - [ ] Every engine target is a `data-story-target` attribute, not a CSS class.
 - [ ] EventLog and the `/explain` link are visible in the normal app, whatever audience mode

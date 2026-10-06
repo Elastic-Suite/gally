@@ -144,6 +144,11 @@ export default async function Page({ params, searchParams }: Params) {
     })),
   ]
 
+  // Picks the banner photos. Drawn per request (the route is dynamic: it reads searchParams), so
+  // they change on each load; the client hydrates the same pick from this one number.
+  // eslint-disable-next-line react-hooks/purity -- a Server Component renders once per request, so there is no re-render for the value to drift across
+  const heroSeed = Math.floor(Math.random() * 2 ** 31)
+
   return (
     <>
       <JsonLd
@@ -194,7 +199,7 @@ export default async function Page({ params, searchParams }: Params) {
           },
         }}
       />
-      <CategoryPage initialData={initialData} />
+      <CategoryPage initialData={initialData} heroSeed={heroSeed} />
     </>
   )
 }

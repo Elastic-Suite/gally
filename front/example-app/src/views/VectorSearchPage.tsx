@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import Link from '../components/LocaleLink'
 import Pagination from '../components/Pagination'
@@ -199,16 +200,23 @@ export default function VectorSearchPage() {
   const { trackSearch, trackDisplay } = useTracking()
 
   const catalogCode = selectedLocalizedCatalog?.code
-  // Seed the box with this shop's first suggestion, and reseed when the shop changes (below).
-  const [input, setInput] = useState(
-    () => getVectorDemoQueries(catalogCode)[0] ?? ''
+  // Seed the box with ?q= when a link sent one (the homepage example cards), else with this
+  // shop's first suggestion. Read once, as the starting value only: the reseed on a shop change
+  // (below) still wins, and a shop switch drops the query string anyway.
+  const searchParams = useSearchParams()
+  const [seed] = useState(
+    () =>
+      searchParams.get('q')?.trim() ||
+      getVectorDemoQueries(catalogCode)[0] ||
+      ''
   )
+  const [input, setInput] = useState(seed)
   // Query and both page numbers live in ONE state object so a new query cannot be committed
   // without resetting the pages in the same update. Held as three useStates they drift: the
   // fetch effects see the new query with the old page for one render and briefly show page 4
   // of a result set that now has one page.
   const [q, setQ] = useState(() => ({
-    text: getVectorDemoQueries(catalogCode)[0] ?? '',
+    text: seed,
     kwPage: 1,
     vecPage: 1,
   }))

@@ -10,6 +10,8 @@ import HomeHero from '../components/HomeHero'
 import HomePromoCards from '../components/HomePromoCards'
 import { useCatalog } from '../contexts/CatalogContext'
 import { HOMEPAGE_BLOCKS } from '../sdk/homepageBlocks'
+import { getVectorDemoQueries } from '../sdk/vectorSearch'
+import Icon from '../components/Icon'
 
 // Each row shows 3 products and fetches only 3: cards hidden with CSS would still be reported by
 // trackDisplay as displayed. See specs/feature-homepage-blocks.md.
@@ -53,7 +55,7 @@ function SliderSkeleton({ end }: { end?: boolean }) {
 export default function Homepage() {
   const { t, i18n } = useTranslation('category')
   const { trackDisplay } = useTracking()
-  const { categories, selectedCatalog } = useCatalog()
+  const { categories, selectedCatalog, selectedLocalizedCatalog } = useCatalog()
 
   // "Our selection" is a plain catalog browse of the root category, not a search and not a
   // recommendation: Gally has no product popularity data, so it is not titled "trending" —
@@ -96,6 +98,9 @@ export default function Homepage() {
   const shopCode = selectedCatalog?.code ?? ''
   const blocks = HOMEPAGE_BLOCKS[shopCode]
   const blocksKey = `homepage.blocks.${shopCode}`
+  const vectorExamples = getVectorDemoQueries(selectedLocalizedCatalog?.code)
+    .slice(0, -1)
+    .slice(0, 3)
 
   const trackedDisplayRef = useRef('')
 
@@ -184,14 +189,37 @@ export default function Homepage() {
         )
       )}
 
-      {/* CTA Section */}
-      <section style={{ textAlign: 'center', margin: '3rem 0' }}>
-        <h2>{t('homepage.readyTitle')}</h2>
-        <p style={{ color: 'var(--gray-600)', marginBottom: '1.5rem' }}>
-          {t('homepage.readyBody')}
-        </p>
-        <Link href="/vector-search" className="btn btn-primary btn-lg">
-          {t('homepage.tryVectorSearch')}
+      {/* Vector search: what it is for, with this shop's measured requests as examples. The last
+          entry of each list is its control (a request keyword search answers well), so it stays
+          off the cards. See specs/feature-home-vector-block.md. */}
+      <section className="home-vector">
+        <span className="home-vector-eyebrow">
+          <Icon name="sparkles" />
+          {t('homepage.vectorBlock.eyebrow')}
+        </span>
+        <h2 className="home-vector-title">{t('homepage.vectorBlock.title')}</h2>
+        <p className="home-vector-body">{t('homepage.vectorBlock.body')}</p>
+        {vectorExamples.length > 0 && (
+          <ul className="home-vector-cases">
+            {vectorExamples.map((example) => (
+              <li key={example}>
+                <Link
+                  href={`/vector-search?q=${encodeURIComponent(example)}`}
+                  className="home-vector-case"
+                >
+                  <span className="home-vector-quote">
+                    {t('homepage.vectorBlock.quote', { query: example })}
+                  </span>
+                  <span className="home-vector-go">
+                    {t('homepage.vectorBlock.seeResults')}
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+        <Link href="/vector-search" className="btn btn-dark btn-lg">
+          {t('homepage.vectorBlock.cta')}
         </Link>
       </section>
     </div>
