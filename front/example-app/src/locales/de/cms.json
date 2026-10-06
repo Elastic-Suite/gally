@@ -1,0 +1,30 @@
+{
+  "breadcrumbPrefix": "Startseite / Seiten / {{title}}",
+  "about": {
+    "title": "Über Gally",
+    "content": [
+      "Gally ist die führende Open-Source-Searchandising-Lösung für den E-Commerce und treibt hunderte Onlineshops weltweit an.",
+      "Aufgebaut auf modernster KI- und Elasticsearch-Technologie liefert unsere Plattform intelligente Suche, dynamische Facettierung und personalisierte Produktempfehlungen, die die Conversion steigern.",
+      "Von der kleinen Boutique bis zum Großhändler passt sich Gally Ihrem Katalog und dem Verhalten Ihrer Kundschaft an — es lernt und optimiert kontinuierlich, um das bestmögliche Einkaufserlebnis zu bieten.",
+      "Die Vektorsuche von Gally versteht Bedeutung, nicht nur Stichwörter: Wer nach „Sommerkleid“ sucht, findet genau das Richtige — auch wenn das Produkt „geblümter Midirock“ heißt."
+    ]
+  },
+  "shippingReturns": {
+    "title": "Versand & Rückgabe",
+    "content": [
+      "Ab einem Bestellwert von 50 € liefern wir standardmäßig versandkostenfrei. Expressversand ist an der Kasse wählbar.",
+      "Standardversand: 3–5 Werktage. Express: 1–2 Werktage.",
+      "Rückgaben sind innerhalb von 30 Tagen nach Lieferung möglich. Die Artikel müssen ungetragen und originalverpackt sein.",
+      "Um eine Rückgabe zu starten, wenden Sie sich an unseren Kundenservice oder nutzen Sie das Retourenportal in Ihrem Kundenkonto."
+    ]
+  },
+  "faq": {
+    "title": "Häufig gestellte Fragen",
+    "content": [
+      "Wie verbessert Gally die Suche? — Unsere KI analysiert das Verhalten der Kundschaft und hebt die relevantesten Ergebnisse hervor. Das reduziert Seiten ohne Treffer um bis zu 40 %.",
+      "Was ist Vektorsuche? — Die Vektorsuche nutzt KI-Embeddings, um die Bedeutung hinter einer Suchanfrage zu verstehen, statt nur Stichwörter abzugleichen. So wird eine semantische Suche möglich, die die Absicht erfasst.",
+      "Kann ich Facetten anpassen? — Ja! Gally unterstützt Slider-Facetten für Preise, Farbfelder, Ja/Nein-Schalter und hierarchische Kategoriebäume — alles pro Katalog konfigurierbar.",
+      "Wie funktioniert das Event-Tracking? — Das SDK erfasst automatisch Seitenaufrufe, Suchanfragen, Produktansichten, Warenkorb-Ereignisse und Bestellungen, um die Suchrelevanz mit der Zeit zu optimieren."
+    ]
+  }
+}

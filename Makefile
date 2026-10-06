@@ -86,6 +86,7 @@ init-dev-env: .env ## Initialize current environment with dev repositories
 	[ -d front/gally-admin ] || git clone git@github.com:Elastic-Suite/gally-admin.git front/gally-admin
 	$(MAKE) start
 	$(MAKE) switch-dev-env
+	$(DOCKER_COMP) restart pwa # Remount the sample-data media, which only exists in vendor/ once switch-dev-env has run
 	cd front && yarn install --frozen-lockfile --network-timeout 120000 && cd -
 	sh ./hooks/initHooksPath.sh
 
@@ -192,7 +193,13 @@ consume_messages: ## Consume messages from message provider, pass the parameter 
 	@$(eval r ?=)
 	@$(SYMFONY) messenger:consume $(if $(r),$(r),--all) -vv
 
-fixtures_load: ## Load fixtures (Delete DB and Elasticsearch data)
+# Without catalogs=, the GALLY_SAMPLE_DATA_CATALOGS value of the running php container applies
+fixtures_load: ## Load fixtures (Delete DB and Elasticsearch data). "catalogs=" loads only some sample data catalogs, comma separated, no spaces: make fixtures_load catalogs=default,01_fashion
+	@$(eval catalogs ?=)
+	@$(eval SYMFONY_FIXTURES := $(DOCKER_COMP) exec $(if $(catalogs),-e GALLY_SAMPLE_DATA_CATALOGS=$(catalogs),) php php -d memory_limit=384M bin/console)
+	@CATALOGS="$(catalogs)"; \
+	if [ -z "$$CATALOGS" ]; then CATALOGS=$$($(DOCKER_COMP_EXEC) exec -T php printenv GALLY_SAMPLE_DATA_CATALOGS 2>/dev/null || true); fi; \
+	echo "📦 Following catalogs will be deployed: $${CATALOGS:-all}"
 	@read -p "⚠️  This will ERASE your database. Are you sure? (y/N) " confirm; \
 	if [ "$$confirm" = "y" ] || [ "$$confirm" = "Y" ]; then \
 		$(SYMFONY) doctrine:database:drop --force; \
@@ -200,8 +207,9 @@ fixtures_load: ## Load fixtures (Delete DB and Elasticsearch data)
 		$(SYMFONY) doctrine:database:create; \
 		$(MAKE) migrate; \
 		$(SYMFONY) list gally --raw | grep gally:vector-search:upload-model && $(SYMFONY) gally:vector-search:upload-model || true; \
-		$(SYMFONY) hautelook:fixtures:load --no-interaction --append; \
-		$(SYMFONY) doctrine:fixtures:load --no-interaction --append; \
+		$(SYMFONY_FIXTURES) cache:clear; \
+		$(SYMFONY_FIXTURES) hautelook:fixtures:load --no-interaction --append; \
+		$(SYMFONY_FIXTURES) doctrine:fixtures:load --no-interaction --append; \
 		$(MAKE) varnish_flush; \
 	fi
 

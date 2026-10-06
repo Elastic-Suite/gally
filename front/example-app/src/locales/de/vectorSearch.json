@@ -1,0 +1,27 @@
+{
+  "breadcrumb": "Startseite / Vektorsuche",
+  "title": "Stichwortsuche vs. Vektorsuche",
+  "placeholder": "Beschreiben Sie, wonach Sie suchen…",
+  "submit": "Vergleichen",
+  "tryLabel": "Ausprobieren:",
+  "loading": "Suche läuft…",
+  "keyword": {
+    "title": "Stichwortsuche",
+    "count_one": "{{count}} Ergebnis",
+    "count_other": "{{count}} Ergebnisse",
+    "emptyTitle": "Keine Ergebnisse für „{{query}}“",
+    "emptyBody": "Kein einziges Produkt enthält diese Wörter. Es gibt keinen Tippfehler zu korrigieren und kein konfiguriertes Synonym — die Stichwortsuche hat nichts zum Abgleichen, und der Kunde landet in einer Sackgasse.",
+    "scoreLabel": "BM25-Score"
+  },
+  "vector": {
+    "title": "Vektorsuche",
+    "count": "Top {{count}} von {{corpus}} Produkten, nach Ähnlichkeit",
+    "unavailableTitle": "Vektorsuche nicht verfügbar",
+    "unavailableBody": "Die Vektorsuche hat für diese Anfrage keine Ergebnisse geliefert. Versuchen Sie es gleich noch einmal oder wählen Sie einen anderen Vorschlag.",
+    "scoreLabel": "Ähnlichkeit",
+    "countAll": "Alle {{corpus}} Produkte, nach Ähnlichkeit sortiert"
+  },
+  "rows": {
+    "product": "Produkt"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "brand": {
+    "ariaLabel": "Gally Shop — zur Startseite"
+  },
+  "footer": {
+    "poweredBy": "Betrieben mit"
+  },
+  "nav": {
+    "products": "Produkte",
+    "searchIntelligence": "Such-Intelligenz",
+    "cms": "Blog",
+    "vectorSearch": "Vektorsuche"
+  },
+  "cart": {
+    "link": "Warenkorb"
+  },
+  "actions": {
+    "filters": "Filter",
+    "close": "Schließen",
+    "remove": "Entfernen",
+    "decrease": "Menge verringern",
+    "increase": "Menge erhöhen"
+  },
+  "meta": {
+    "search": "Suche",
+    "cart": "Warenkorb",
+    "checkout": "Kasse",
+    "explain": "Such-Intelligenz",
+    "closing": "Zusammenfassung",
+    "breadcrumb": "Navigationspfad",
+    "home": "Startseite",
+    "vectorSearch": "Vektorsuche",
+    "pagination": "Seitennummerierung"
+  }
+}

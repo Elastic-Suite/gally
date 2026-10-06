@@ -1,0 +1,114 @@
+{
+  "category": {
+    "fallbackName": "Kategorie",
+    "countInCategory_one": "{{count}} Produkt in dieser Kategorie",
+    "countInCategory_other": "{{count}} Produkte in dieser Kategorie",
+    "subcategories": "Unterkategorien",
+    "count_one": "{{count}} Produkt",
+    "count_other": "{{count}} Produkte",
+    "sort": {
+      "placeholder": "Sortieren nach",
+      "relevance": "Relevanz",
+      "nameAsc": "Name A-Z",
+      "nameDesc": "Name Z-A",
+      "priceAsc": "Preis ↑",
+      "priceDesc": "Preis ↓"
+    },
+    "emptyTitle": "Keine Produkte gefunden",
+    "emptyBody": "Passen Sie Ihre Filter oder Ihren Suchbegriff an.",
+    "meta": {
+      "description": "Entdecken Sie unsere {{name}}-Auswahl: {{count}} Produkte verfügbar."
+    }
+  },
+  "homepage": {
+    "heroTitle": "Intelligente Suche für den E-Commerce",
+    "heroBody": "Erleben Sie, wie Gally die Produktfindung antreibt — mit KI-gestützter Suche, Facettennavigation und Empfehlungen in Echtzeit.",
+    "hero": {
+      "browse": "Alle Produkte ansehen",
+      "shops": {
+        "com": {
+          "cta": "Kleider entdecken",
+          "query": "Kleid"
+        },
+        "fr": {
+          "cta": "Kleider entdecken",
+          "query": "Kleid"
+        },
+        "uk": {
+          "cta": "Kleider entdecken",
+          "query": "Kleid"
+        },
+        "fashion": {
+          "cta": "Kleider entdecken",
+          "query": "Kleid"
+        },
+        "toolbox": {
+          "cta": "Akku-Bohrschrauber entdecken",
+          "query": "Akku-Bohrschrauber"
+        },
+        "papershop": {
+          "cta": "Füllhalter entdecken",
+          "query": "Füllhalter"
+        }
+      }
+    },
+    "trending": "Unsere Auswahl",
+    "moreProducts": "Weitere Produkte",
+    "vectorBlock": {
+      "eyebrow": "Vektorsuche",
+      "title": "Sagen Sie, was Sie wollen, nicht das richtige Suchwort",
+      "body": "Beschreiben Sie, was Sie suchen, wie Sie es einem Verkäufer sagen würden: ein Anlass, ein Zweck, ein Wunsch. Die Vektorsuche versteht die Absicht und findet passende Produkte, auch wenn keines Ihrer Wörter in der Produktbeschreibung vorkommt.",
+      "quote": "\"{{query}}\"",
+      "seeResults": "Ergebnisse ansehen →",
+      "cta": "Suche beschreiben"
+    },
+    "eyebrowSelection": "Auswahl",
+    "eyebrowCategory": "Kategorie",
+    "seeAll": "Alle ansehen",
+    "blocks": {
+      "discover": "Entdecken",
+      "fashion": {
+        "heroTitle": "Die Herbstkollektion",
+        "heroBody": "Kleider, Strick und Abendmode für die Saison.",
+        "cards": {
+          "bags": {
+            "title": "Taschen & Lederwaren",
+            "body": "Vom Wochenende bis zur Weltreise."
+          },
+          "shoes": {
+            "title": "Pantoletten und Clogs",
+            "body": "Komfort, Leder und skandinavischer Stil."
+          }
+        }
+      },
+      "toolbox": {
+        "heroTitle": "Die Elektrowerkzeug-Werkstatt",
+        "heroBody": "Schleifer, Bohrmaschinen und Schrauber, mit Kabel oder 18 V.",
+        "cards": {
+          "handTools": {
+            "title": "Handwerkzeug",
+            "body": "Schlüssel, Schraubendreher und Bits für jede Schraube."
+          },
+          "smartHome": {
+            "title": "Das vernetzte Zuhause",
+            "body": "Thermostat, Alarmanlage und Beleuchtung per WLAN."
+          }
+        }
+      },
+      "papershop": {
+        "heroTitle": "Die Schreibwerkstatt",
+        "heroBody": "Füllhalter, Tinten und Notizbücher zum Schreiben mit der Hand.",
+        "cards": {
+          "artBooks": {
+            "title": "Kunstbücher",
+            "body": "Bildbände und illustrierte Ausgaben."
+          },
+          "deskLamps": {
+            "title": "Schreibtischlampen",
+            "body": "Das richtige Licht zum Lesen und Schreiben."
+          }
+        }
+      }
+    }
+  }
+}

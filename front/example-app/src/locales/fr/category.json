@@ -1,0 +1,114 @@
+{
+  "category": {
+    "fallbackName": "Catégorie",
+    "countInCategory_one": "{{count}} produit dans cette catégorie",
+    "countInCategory_other": "{{count}} produits dans cette catégorie",
+    "subcategories": "Sous-catégories",
+    "count_one": "{{count}} produit",
+    "count_other": "{{count}} produits",
+    "sort": {
+      "placeholder": "Trier par",
+      "relevance": "Pertinence",
+      "nameAsc": "Nom A-Z",
+      "nameDesc": "Nom Z-A",
+      "priceAsc": "Prix ↑",
+      "priceDesc": "Prix ↓"
+    },
+    "emptyTitle": "Aucun produit trouvé",
+    "emptyBody": "Essayez d'ajuster vos filtres ou votre recherche.",
+    "meta": {
+      "description": "Découvrez notre sélection {{name}} : {{count}} produits disponibles."
+    }
+  },
+  "homepage": {
+    "heroTitle": "La recherche intelligente pour l'e-commerce",
+    "heroBody": "Découvrez comment Gally propulse la découverte produit grâce à une recherche pilotée par l'IA, une navigation à facettes et des recommandations en temps réel.",
+    "hero": {
+      "browse": "Voir tous les produits",
+      "shops": {
+        "com": {
+          "cta": "Découvrir les robes",
+          "query": "robe"
+        },
+        "fr": {
+          "cta": "Découvrir les robes",
+          "query": "robe"
+        },
+        "uk": {
+          "cta": "Découvrir les robes",
+          "query": "robe"
+        },
+        "fashion": {
+          "cta": "Découvrir les robes",
+          "query": "robe"
+        },
+        "toolbox": {
+          "cta": "Découvrir les perceuses",
+          "query": "perceuse"
+        },
+        "papershop": {
+          "cta": "Découvrir les stylos plume",
+          "query": "stylo plume"
+        }
+      }
+    },
+    "trending": "Notre sélection",
+    "moreProducts": "Plus de produits",
+    "vectorBlock": {
+      "eyebrow": "Recherche vectorielle",
+      "title": "Dites ce que vous voulez, pas le bon mot-clé",
+      "body": "Décrivez ce que vous cherchez comme vous le diriez à un vendeur : une occasion, un usage, une envie. La recherche vectorielle comprend l'intention et trouve les produits qui y répondent, même quand aucun de vos mots n'apparaît dans leur fiche.",
+      "quote": "« {{query}} »",
+      "seeResults": "Voir ce que ça donne →",
+      "cta": "Décrire ma recherche"
+    },
+    "eyebrowSelection": "Sélection",
+    "eyebrowCategory": "Univers",
+    "seeAll": "Voir tout",
+    "blocks": {
+      "discover": "Découvrir",
+      "fashion": {
+        "heroTitle": "La collection automne",
+        "heroBody": "Robes, mailles et pièces de soirée pour la saison.",
+        "cards": {
+          "bags": {
+            "title": "Sacs & maroquinerie",
+            "body": "Du week-end au tour du monde."
+          },
+          "shoes": {
+            "title": "Mules et sabots",
+            "body": "Confort, cuir et style scandinave."
+          }
+        }
+      },
+      "toolbox": {
+        "heroTitle": "L'atelier électroportatif",
+        "heroBody": "Ponceuses, perceuses et visseuses, filaires ou en 18V.",
+        "cards": {
+          "handTools": {
+            "title": "Outillage à main",
+            "body": "Clés, tournevis et embouts pour chaque vis."
+          },
+          "smartHome": {
+            "title": "La maison connectée",
+            "body": "Thermostat, alarme et éclairage en Wi-Fi."
+          }
+        }
+      },
+      "papershop": {
+        "heroTitle": "L'atelier d'écriture",
+        "heroBody": "Stylos plume, encres et carnets pour écrire à la main.",
+        "cards": {
+          "artBooks": {
+            "title": "Livres d'art",
+            "body": "Beaux livres et éditions illustrées."
+          },
+          "deskLamps": {
+            "title": "Lampes de bureau",
+            "body": "Une lumière juste pour lire et écrire."
+          }
+        }
+      }
+    }
+  }
+}

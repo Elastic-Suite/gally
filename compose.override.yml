@@ -71,6 +71,9 @@ services:
         - REACT_APP_API_URL=
     volumes:
       - ./front:/usr/src/front:rw,cached,z
+      # Demo product images ship with gally-sample-data; pwa serves them at /media/catalog/product.
+      # Through vendor/, like int, so the images match the installed package (a link to packages/ here).
+      - ./api/vendor/gally/gally-sample-data/media/catalog/product:/usr/src/front/pwa/public/media/catalog/product:ro,z
     environment:
       - SKIP_YARN_INSTALL=${SKIP_YARN_INSTALL:-false}
       # On Linux, you may want to comment the following line for improved performance

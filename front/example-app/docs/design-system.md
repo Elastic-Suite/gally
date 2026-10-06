@@ -1,0 +1,96 @@
+# Design System — Graphic Contract
+
+Style inspired by elasticsuite.io. Any visual change MUST comply, or reference an approved spec.
+
+## Palette (fixed)
+
+| Token          | Value   | Use                       |
+| -------------- | ------- | ------------------------- |
+| --color-indigo | #1a1a2e | headers, deep bg          |
+| --color-coral  | #ff6b6b | primary accent / CTAs     |
+| --color-bg     | light   | airy backgrounds          |
+| --green-800    | #2e7d32 | the eco mark, and only it |
+
+`--green-800` is not a third accent. It exists because the eco mark is the one badge whose colour
+_is_ the message, and because the only other green, `--success`, already means "added to cart" on
+the same component and fails AA under white text (2.78:1 against the 4.5:1 the badge needs).
+See `specs/feature-eco-badge.md`.
+
+## Brand assets (the one exemption to the palette rule)
+
+- `src/assets/gally-rabbit.svg` — **the header brand mark**: the rabbit alone, cropped out of the
+  official lockup below (third path only, viewBox narrowed `0 0 219 63` → `0 0 67 63`). The wordmark
+  beside it, "Gally" in `--white` + "example" in `--coral-500`, is set as type in the header, not
+  drawn in the asset. See `specs/feature-logo-gally-example.md`.
+- `src/assets/elasticsuite-solutions.svg` — the official "elasticsuite solutions" lockup (mark +
+  both wordmarks), taken verbatim from the sprite on elasticsuite.io. **No longer rendered
+  anywhere**; kept as the provenance source of the crop above and as the only copy of the official
+  wordmarks. Do not put it back in the header — removing it was an explicit request.
+- Both keep their **brand** colours `#F56553` and `white`, deliberately _not_ tokens, and must not be
+  "corrected" to `--coral-500`. Brand assets are the only place raw hex is allowed, and only inside
+  the asset file — never in TSX or CSS.
+- The header is light (`specs/feature-header-light-two-row.md`), so the lockup's "Gally" is
+  `--indigo-900` and "example" stays `--coral-500`. The mark itself is coral and works on either
+  surface. The old "lockup needs a dark surface" rule went with the dark bar.
+- Editing an SVG asset? **An XML comment may not contain `--`.** A provenance comment mentioning a
+  sprite id like `…multi--caption`, or a token name like `--color-indigo`, silently makes the file
+  undecodable: the browser reports `complete: true` with `naturalWidth: 0`, `width: auto` collapses
+  to `0`, and the logo vanishes with no console error. Validate with an XML parser after editing.
+
+## Typography
+
+- **Geist everywhere** — titles and body alike, weights 400/500/600/700, loaded from Google Fonts in `app/layout.tsx`. This matches elasticsuite.io, which sets its whole site in Geist with the stack `Geist, "Helvetica Neue", Helvetica, Arial, sans-serif`. No other font families.
+- Two tokens, both currently Geist: `--font-display` (titles, 10 sites) and `--font-sans` (everything else). The split is kept so a distinct display face can return by editing one line. **`--font-serif` no longer exists** — it was renamed when the serif went away; older specs still mention it.
+- There is deliberately **no serif** any more. The previous Playfair Display / Inter pairing gave the storefront an editorial look; dropping it was an explicit decision to match the brand site. See `specs/feature-geist-typography.md`.
+- `font-family: monospace` in the debug/tracking panels is untouched — it is a generic keyword for code, not brand type. elasticsuite.io uses Geist Mono for that role; adopting it was considered and deferred.
+
+## Layout and card sizing
+
+- **One page width, `--layout-max-width` (1600px).** `.main-content` and `.header-inner` both read it, so the header rows and the content underneath share the same left and right edge. A page does not cap its own wrapper: that centres it and moves the breadcrumb. A narrower measure goes on the content that needs it - the blog post's article column, centred (900px), `.search-overlay-panel` (1500px). The breadcrumb's left edge is the same on every page (`specs/feature-page-width-breadcrumb.md`).
+- **The listing card's size lives on `.products-grid`, never on `.product-card`.** Seven variables carry it — `--product-grid-column`, `--product-card-image-height`, `--product-card-body-padding`, `--product-card-body-padding-y`, `--product-card-name-size`, `--product-card-sku-size`, `--product-card-price-size`. The body's vertical padding is separate from its horizontal one because the SKU line under the name is paid for out of it (`specs/feature-listing-card-sku.md`). `:root` holds the small values (220px column, 180px picture); `.products-grid` raises all seven above a 1200px viewport (340px column, 300px picture), which gives three cards of ~392px per row beside the 280px facet sidebar. The home-page carousel and the autocomplete draw the same card at the small size, which is what putting the size on the grid buys. `.skeleton-card-image` and `.skeleton-card-body` read the same variables so the loading state cannot drift from the content. See `specs/feature-larger-product-grid.md`.
+- The grid column is `minmax(min(var(--product-grid-column), 100%), 1fr)`. The `min(…, 100%)` is what stops a track wider than the viewport from scrolling a phone sideways; do not simplify it away.
+
+## Component patterns (do NOT re-style ad hoc)
+
+- Buttons: pill shape.
+- **Add to cart is `--indigo-800` (`.btn-primary`), not coral** — everywhere it appears: product card, product page, autocomplete row. Coral (`.btn-coral`) stays for marketing CTAs such as the text hero. The sample shops' homepage blocks use `.btn-dark` and `.btn-light` instead (`specs/feature-homepage-blocks.md`). So "coral = CTA" in the palette table above means the _marketing_ CTA; the transactional one is indigo. See `specs/feature-add-to-cart-indigo.md`.
+- Homepage of the sample shops (`fashion`, `toolbox`, `papershop`): a wide hero (uppercase headline, copy and a **dark** `.btn-dark` CTA bottom-left, three product photos on the right), a panel slider, two promo cards (photo left, `--gray-900` panel right with a `.btn-light` button), a mirrored panel slider. The hero and both panels share one surface: `--gray-100` to `--indigo-50` gradient, `--gray-300` border, `--shadow-md`. Panel sliders are `ProductSlider`'s opt-in `panel` prop and show 3 products; the cart and product page rows stay plain. See `specs/feature-homepage-blocks.md`.
+- Category page title: the breadcrumb, then a small banner (`.category-hero`) - `--indigo-100` to `--indigo-50` to `--white` gradient, `--indigo-100` border, `--radius-lg`. Title and count on the left, then one `.filter-chip` per subcategory (with `.filter-chip-count`), then three product photos fanned on the right (a random pick from the page on screen, seeded by the server so hydration agrees), hidden at 768px and below. The photos unfold from their top edge, 120ms apart, onto their fan tilt (`--fan`) each time a new pick mounts; off under reduced motion. The product grid does not animate. The chips are links from the category tree, not facet toggles. See `specs/feature-category-hero-banner.md`.
+- Homepage closing block (every catalog): the vector search block, `.home-vector`. Centred eyebrow, title and body on an `--indigo-50` to white surface (lighter than the hero and panels, with their `--gray-300` border and `--shadow-md`), then one card per measured example request (the catalog's `getVectorDemoQueries()` list minus its control, at most 3), then a `.btn-dark` button. The cards reuse the product card's look; each opens `/vector-search?q=`. See `specs/feature-home-vector-block.md`.
+- Hero of any other catalog: light and centred, the brand gradient used as the title's text colour (`background-clip: text`), grey body copy, coral CTA. See `specs/feature-header-light-two-row.md`.
+- Stats band below hero.
+- Facet sidebar: price slider, checkbox (with search-in-options + show-more, server-backed via `viewMoreProductFilterOption` when `aggregation.hasMore`), color swatches, boolean toggles, category facet (single-select), active-filter chip row above the facet list ("Clear all" pill included).
+- A facet with 0 or 1 possible value is never rendered (non-discriminant — see `specs/feature-facet-hide-single-value.md`), regardless of type.
+- When that leaves **no** facet at all, the sidebar shows a `.facets-empty` italic note instead of a bare "Filters" heading on an empty card — three messages, because the causes differ: nothing matched / filters removed everything (actionable) / results too uniform to filter. See `specs/feature-facet-empty-state.md`.
+- Header: a light `<header>` (`--indigo-50` fading to white, on `.header` only) holding two rows - logo / section links / **search** / selectors / cart icon, then the category row (`CategoryNav`, plain text links, current one underlined, chevron on items with children, submenus open downward). There is no search band under the header any more: the search bar fills the gap between the section links and the selects (`.header-search-slot`, slimmer at rest). **On focus it moves below the header and widens in one movement** into the place the band had, at full size, and the full-screen overlay opens under it; closing plays it backwards. The motion needs the slot's box, which `Header.tsx` measures (`--search-slot-x/y/w/h`, `data-search-slot`) with the same ResizeObserver as `--header-height`; no ancestor of the bar inside the group may take a `filter`, `transform` or position, which is why the overlay dims the row's items one by one. Below 768px the bar has its own line and does not move. See `specs/feature-header-search-drop.md`. The whole header scrolls with the page (`specs/feature-header-scrolls-with-page.md`). The search input's focus affordance is the border: a 2px indigo-to-coral linear gradient (indigo left, coral right at rest) whose direction (`@property --search-border-angle`, 90deg to 450deg) turns a full circle on focus and back on blur, plus the coral glow while the popup is open. The section links (Products, Articles, Search Intelligence, Semantic search) are plain text links with an underline on the current one. See `specs/feature-header-light-two-row.md`.
+- Footer: mirrors the header - the same `BrandLockup` and `SectionLinks` components as row 1, the powered-by line centred under a full-width `--gray-200` rule as row 2, on the header's tint turned upside down. See `specs/feature-footer-light.md`.
+- Autocomplete popup: full-screen `backdrop-filter: blur()` overlay on a light wash (`--indigo-50` to `--indigo-100` at 88% through `color-mix()`, dark panel text; `specs/feature-acp-light-glass.md`) portaled to `document.body` (never nested inside the sticky header — it would be trapped in the header's own stacking context). Always 3 columns (popular terms + attributes / products / category + blog), each **section** always showing its title plus exactly one of: shimmer skeleton, italic "No matching …" note, or results. The popular terms are the engine's own `termSuggestions` (products + blog, merged and deduped), never a hardcoded list — see `specs/feature-acp-real-term-suggestions.md`. Fixed `min-height` so the panel doesn't jump size between keystrokes. Keyboard-navigable (arrows + Enter + Escape), in visual order — see `specs/feature-search-header-redesign.md`. **Row typography carries the hierarchy:** popular terms and category rows at 1.05rem/600 (each the point of its column), attribute values at 0.9rem/500 — a value is a filter link, subordinate to the uppercase section title naming its attribute, and there are up to 20 of them in one column. `.autocomplete-attribute-text` and `.autocomplete-category-text` are separate rules for exactly this reason; do not re-merge them (`specs/bugfix-acp-attribute-value-typography.md`). **The popup owns the scroll while it is open, and the scrim is the only scroller:** the panel has no `max-height` and the columns no `overflow-y`, so the whole panel scrolls as one and the header rides it — `SearchOverlay` publishes the scrim's `scrollTop` as `--acp-scroll` and the header group translates by `-var(--acp-scroll)` _only_ under `:has(.overlay-open)`, so the search bar scrolls away with the popup and behaves normally everywhere else. Restoring a panel `max-height` or a per-column `overflow-y` silently kills that. Scroll stays inside the popup via `overscroll-behavior: contain` on the scrim plus a body `overflow: hidden` lock (with scrollbar-width `padding-right` compensation); both halves are required. See `specs/feature-acp-header-rides-scroll.md` and `specs/bugfix-acp-background-scroll-and-density.md`, the latter recording why the panel still exceeds one screen and what the remaining levers are.
+- Blog rows in the popup mark their matched query words with `.autocomplete-mark` (coral, no background) — the only place text highlighting is used, because a `cms_page` hit often matches on body copy the row doesn't show. See `specs/feature-blog-cms.md`.
+- Segmented switch: centered pill track (`--gray-100`) holding equal-width pill segments, with a single raised `--white` + `--shadow-sm` thumb that **slides** between them (`transform` only, 280ms, cut under `prefers-reduced-motion`). Used in one place: the search results Products/Articles selector (the header's dark-surface version went with the dark bar, `specs/feature-header-light-two-row.md`). Segments are equal-width (`grid-template-columns: 1fr 1fr`) because the slide is a one-column translate — that is a requirement of the effect, not a free choice. It reuses the pill idiom rather than adding a third tab/chip primitive — the underline-tab style it replaced is gone from page content. (The header's section and category links use a text underline for the current page: that is navigation, not a tab switch.) See `specs/feature-search-result-type-switch.md`.
+- Category nav: one horizontal bar of pills, the root category first, subcategories in a hover flyout. It **wraps** to a second row rather than scrolling (a scrolling ancestor clips the flyout — `specs/feature-category-nav-root.md`), so two rules hold for a wrapped bar: the pill link is a **block** box with a row gap, because vertical padding on an inline box does not grow the line box and the rows overlapped without it; and the flyout hangs off its own item (`top: 100%`), which means it covers part of the row underneath — dropping it below the whole bar instead was built and rejected, because the menu then reads as belonging to the bar rather than to the category hovered. The category being viewed carries `.active` (pill + weight 600) and its ancestors `.in-trail` (same pill), both derived from `findTrail()`. See `specs/feature-category-trail-nav-and-breadcrumb.md`.
+- Breadcrumb: `.breadcrumb` at `0.8rem` in `--gray-500`, parts separated by `.breadcrumb-sep`. Links inherit that grey instead of the global `--indigo-600` link colour and underline on hover, so the line reads as a path rather than a row of buttons; the last part is not a link and carries `aria-current="page"`. `src/components/Breadcrumb.tsx` is the one implementation, used by the category listing and the PDP — the two pages that can name a real path, both from `findTrail()`/`productCategoryTrail()`. Search, blog, CMS and vector search have no path to build and keep a single translated string in a `<div className="breadcrumb">`. See `specs/feature-pdp-breadcrumb-trail.md`.
+- Blog cards reuse the `.product-card` idiom (white surface, same radius/shadow, same hover lift); browse chips reuse `.filter-chip` with a `.filter-chip-selected` state. No second card or chip primitive.
+- **Swatch colours are data, not design tokens.** `src/components/swatchColors.ts` maps a colour attribute's _option label_ to an approximate hex, and is the second exemption from the no-raw-hex rule after brand assets: a "Pluie" chip has to be that colour, so it can be neither a token nor a palette entry. Shared by the colour facet and the PDP option selector, which must keep drawing the same colour for the same label. The map is label-keyed and therefore language-dependent, so **an option label added to the sample data needs its entry in every catalogue language** — the demo catalogue's French labels were missing, which is why the facet swatches showed hash-derived hues on `com_fr`, the catalogue the app lands on. An unknown label still renders: `guessColor()` falls back to a hue hashed from the label, stable across server and client. See `specs/feature-configurable-option-selection.md`.
+- The PDP option selector adds **no** primitive: colour axes reuse `.facet-swatches`/`.swatch` from the facet sidebar, every other axis reuses `.variant-option`. The chips are the only place a `.variant-option` is used now that the dead hardcoded-colour block is gone.
+
+## Icons
+
+- **One set: ionicons outline**, through `src/components/Icon.tsx` only (`<Icon name="cart" />`). It draws the SVG as a mask over `currentColor`, sized `1em`, so an icon takes the colour and size of its text. To add an icon, import its `...Outline` export from `ionicons/icons` into the `ICONS` map.
+- **No emoji, text glyph (✕ ✓ ← ☰) or hand-written SVG as an icon**, in TSX, CSS `content` or translations. A translation string holds text only; the component puts the `<Icon>` before it.
+- An icon is followed by a gap. An icon that is the whole visible content of its element takes `standalone` (no gap), and the button gets its name from a `.visually-hidden` label (`common:actions.close` / `remove` / `decrease` / `increase`).
+- DOM built by hand (the story toast) uses `createIconElement()` from the same file.
+- Kept as text on purpose: arrows in `<select>` options (`Prix ↑`), the `−40%` stat, trailing arrows on links. See `specs/feature-ionicons-outline.md`.
+
+## Rules for agents
+
+- Reference CSS variables only — never hardcode hex, px, or font-size in TSX or new CSS.
+- Facets must stay responsive (collapse on mobile, grid adapts).
+- Adding a color/spacing value? Add a token here first, then use it.
+- All visual rules live in one `src/styles.css` (~80KB) — treat changes to it as high-risk.
+- **Vendor-prefixed properties: standard spelling LAST.** Next minifies with lightningcss, which
+  treats `foo` and `-webkit-foo` as one declaration and keeps only the last — so the CRA-era
+  prefixed-last convention silently _deletes_ the standard property. Better still, declare only the
+  standard one and let the browserslist targets add prefixes. Either way, verify on the served
+  `/example/_next/static/chunks/…styles….css`, never on the source: this cost the ACP its
+  `backdrop-filter` blur in Chrome and Firefox for the whole Next migration
+  (`specs/bugfix-acp-scrim-blur-dropped.md`).
