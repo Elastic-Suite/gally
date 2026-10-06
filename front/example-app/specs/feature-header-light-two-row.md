@@ -3,12 +3,14 @@
 > **Superseded in part** by `feature-header-search-drop.md`: the search band under the header is gone; the bar sits in the top row and drops below the header on focus. The overlay now dims `.header-inner`'s items one by one, not `.header-inner` itself.
 
 ## Status: implemented
+
 ## Page/Component: src/components/Header.tsx, src/components/CategoryNav.tsx, src/views/Homepage.tsx, src/styles.css
 
 The header is a logo row, then a row of categories as plain text, on a light surface instead of
 the dark indigo bar. The search band stays where it was. The hero goes light too.
 
 Supersedes, each on the point named:
+
 - `feature-header-nav-switch.md` - the header's Products/Articles segmented switch is gone.
 - `feature-logo-gally-example.md` and `feature-header-brand-lockup.md` - "the lockup needs a dark
   surface". The wordmark's "Gally" is now `--indigo-900` on a light header.
@@ -18,6 +20,7 @@ Supersedes, each on the point named:
 - `bugfix-hero-spacing.md` - "gradient background" of the hero.
 
 ## Behaviour (testable)
+
 - [x] Row 1 (`.header-inner`): logo, then Produits / Blog / (Search Intelligence, expert mode) /
       Recherche sémantique as plain text links, then the two catalog selects, then a cart icon.
       The active link is indigo with an underline.
@@ -34,10 +37,10 @@ Supersedes, each on the point named:
 - [x] The catalog selects are light outlined pills with a drawn chevron and room before the
       pill's end.
 - [~] Cart: an icon; the count badge shows when the cart is not empty; the label "Panier" / "Cart" /
-      "Warenkorb" is still read by screen readers (visually hidden text).
+  "Warenkorb" is still read by screen readers (visually hidden text).
 - [~] Search input: 2px gradient border (indigo to coral) on white. On focus the colours sweep once
-      around the pill's edge (1.4s, slowed from 0.9s). On blur they sweep back the other way. No motion under
-      `prefers-reduced-motion`.
+  around the pill's edge (1.4s, slowed from 0.9s). On blur they sweep back the other way. No motion under
+  `prefers-reduced-motion`.
 - [x] With the ACP open, the blue tint and blur of the scrim cover the whole screen, header rows
       included. Only the search input stays sharp, and the header rows dim as before.
 - [x] Homepage hero: light, centred, large title in the brand gradient, grey body text, coral CTA.
@@ -45,18 +48,22 @@ Supersedes, each on the point named:
 
 Verified 2026-09-24 on screenshots of the running app: every `[x]` above, at 1440px, plus a 390px capture (both rows wrap,
 the section links scroll sideways inside `.header-nav` as before). Not verified, hence `[~]`:
+
 - the cart count badge with a non-empty cart (no add-to-cart in the capture), and screen-reader
   output for the cart label;
 - the blur sweep caught mid-way (the capture landed near the end of it), and the
   reduced-motion case.
 
 ## SDK contract used
+
 - None changed. `CategoryNav` still renders from `CatalogContext` categories.
 
 ## Tracking (required)
+
 - None changed. No tracking call lives in the header, the nav or the hero.
 
 ## UI constraints
+
 - Tokens only, rem units except 1px hairlines (as everywhere else in the file), no new colour. One new utility, `.visually-hidden`, for the cart label.
 - The one `@property` (`--search-border-angle`) is what lets the gradient angle transition. It is
   registered at the top of `styles.css`, initial `90deg`; focus sets `450deg`. Browsers without it
@@ -67,6 +74,7 @@ the section links scroll sideways inside `.header-nav` as before). Not verified,
   second row. They only apply before hydration measures the real values, so they were left alone.
 
 ## MUST NOT change
+
 - `.header-sticky-group` stays the sticky element, pulled up by the MEASURED
   `--header-nav-height`. `navRef` is on `<header>`, which now holds both rows, so the measurement
   includes the category row. Do not measure `.header-inner` alone: the band would then pin under

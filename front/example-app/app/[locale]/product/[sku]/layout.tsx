@@ -1,5 +1,5 @@
-import { notFound } from 'next/navigation';
-import { resolveLocale, fetchProductBySku } from '../../../../src/sdk/server';
+import { notFound } from 'next/navigation'
+import { resolveLocale, fetchProductBySku } from '../../../../src/sdk/server'
 
 // The product existence check is NOT here. It moved to page.tsx and its generateMetadata, which
 // can read the `?from=` catalog-switch marker; a layout cannot, because Next does not give it
@@ -12,12 +12,12 @@ export default async function ProductGuard({
   children,
   params,
 }: {
-  children: React.ReactNode;
-  params: Promise<{ locale: string; sku: string }>;
+  children: React.ReactNode
+  params: Promise<{ locale: string; sku: string }>
 }) {
-  const { locale, sku } = await params;
-  const resolved = await resolveLocale(locale);
-  if (!resolved) notFound();
-  await fetchProductBySku(resolved.localizedCatalog.code, sku);
-  return <>{children}</>;
+  const { locale, sku } = await params
+  const resolved = await resolveLocale(locale)
+  if (!resolved) notFound()
+  await fetchProductBySku(resolved.localizedCatalog.code, sku)
+  return <>{children}</>
 }

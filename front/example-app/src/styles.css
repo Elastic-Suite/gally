@@ -96,7 +96,10 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   font-family: var(--font-display);
   font-weight: 600;
   line-height: 1.3;
@@ -197,7 +200,9 @@ a:hover {
    with the page behind it — only the search form itself stays crisp. The items are dimmed one by
    one, not .header-inner as a whole: a filter on an ancestor of the search bar would blur it and
    become its containing block (specs/feature-header-search-drop.md). */
-.header-sticky-group:has(.search-bar-wrapper.overlay-open) .header-inner > :not(.header-search-slot),
+.header-sticky-group:has(.search-bar-wrapper.overlay-open)
+  .header-inner
+  > :not(.header-search-slot),
 .header-sticky-group:has(.search-bar-wrapper.overlay-open) .category-nav {
   filter: blur(3px);
   opacity: 0.45;
@@ -297,8 +302,7 @@ a:hover {
   -webkit-appearance: none;
   appearance: none;
   background-color: var(--white);
-  background-image:
-    linear-gradient(45deg, transparent 50%, currentColor 50%),
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%),
     linear-gradient(135deg, currentColor 50%, transparent 50%);
   background-position: calc(100% - 1.2rem) 50%, calc(100% - 0.9rem) 50%;
   background-size: 0.3rem 0.3rem;
@@ -376,7 +380,8 @@ a:hover {
     transition-duration: 0.45s;
     transition-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
   }
-  .header-sticky-group[data-search-slot] .search-bar-wrapper:is(.expanded, .overlay-open) {
+  .header-sticky-group[data-search-slot]
+    .search-bar-wrapper:is(.expanded, .overlay-open) {
     --search-open-width: min(1100px, 100% - 4rem);
     left: calc((100% - var(--search-open-width)) / 2);
     /* Bar centre: 1.5rem below the header, plus half the full-size bar. */
@@ -386,12 +391,14 @@ a:hover {
 }
 /* Header.tsx sets this for the instant it publishes a new slot measurement: a measurement jumps,
    only opening and closing animate. */
-.header-sticky-group[data-search-slot][data-search-measuring] .search-bar-wrapper {
+.header-sticky-group[data-search-slot][data-search-measuring]
+  .search-bar-wrapper {
   transition: none;
 }
 @media (prefers-reduced-motion: reduce) {
   .header-sticky-group[data-search-slot] .search-bar-wrapper,
-  .header-sticky-group[data-search-slot] .search-bar-wrapper:is(.expanded, .overlay-open) {
+  .header-sticky-group[data-search-slot]
+    .search-bar-wrapper:is(.expanded, .overlay-open) {
     transition: none;
   }
 }
@@ -414,14 +421,19 @@ a:hover {
   padding: 0.6rem 1.25rem 0.6rem 2.6rem;
   border: 0.125rem solid transparent;
   border-radius: var(--radius-pill);
-  background:
-    linear-gradient(var(--white), var(--white)) padding-box,
-    linear-gradient(var(--search-border-angle), var(--indigo-600), var(--coral-500)) border-box;
+  background: linear-gradient(var(--white), var(--white)) padding-box,
+    linear-gradient(
+        var(--search-border-angle),
+        var(--indigo-600),
+        var(--coral-500)
+      )
+      border-box;
   color: var(--gray-900);
   font-size: 0.95rem;
   font-family: var(--font-sans);
   outline: none;
-  transition: --search-border-angle 1.4s ease-in-out, box-shadow 0.2s, padding 0.45s ease, font-size 0.45s ease;
+  transition: --search-border-angle 1.4s ease-in-out, box-shadow 0.2s,
+    padding 0.45s ease, font-size 0.45s ease;
 }
 .search-bar-wrapper:is(.expanded, .overlay-open) .search-bar {
   padding: 0.85rem 1.5rem 0.85rem 3rem;
@@ -467,9 +479,11 @@ a:hover {
      at odds with the light header): pale indigo-50 at the top to indigo-100 at the
      bottom, 88% opaque, so the white product cards still have a ground to stand
      out from. The panel text is dark to match. */
-  background: linear-gradient(180deg,
+  background: linear-gradient(
+    180deg,
     color-mix(in srgb, var(--indigo-50) 88%, transparent) 0%,
-    color-mix(in srgb, var(--indigo-100) 88%, transparent) 100%);
+    color-mix(in srgb, var(--indigo-100) 88%, transparent) 100%
+  );
   /* Prefixed FIRST, standard LAST — not the usual cosmetic ordering. Next's CSS
      minifier (lightningcss) treats the two as one property and keeps only the last
      declaration, so with the standard one written first the build shipped
@@ -482,7 +496,11 @@ a:hover {
   justify-content: center;
   align-items: flex-start;
   /* --search-drop: the bar drops below the header on desktop (specs/feature-header-search-drop.md). */
-  padding: calc(var(--header-height, 8.5rem) - var(--acp-page-offset, 0px) + 1rem + var(--search-drop, 0px)) 2rem 2rem;
+  padding: calc(
+      var(--header-height, 8.5rem) - var(--acp-page-offset, 0px) + 1rem +
+        var(--search-drop, 0px)
+    )
+    2rem 2rem;
   overflow-y: auto;
   /* Stop scroll chaining. Without this, a wheel gesture that reaches the end of the
      scrim (or of a column below) continues into the page behind the overlay, so the
@@ -785,7 +803,8 @@ a:hover {
   border-radius: var(--radius-sm);
   flex-shrink: 0;
 }
-.autocomplete-skeleton-item.autocomplete-skeleton-product .autocomplete-skeleton-thumb {
+.autocomplete-skeleton-item.autocomplete-skeleton-product
+  .autocomplete-skeleton-thumb {
   width: 80px;
   height: 80px;
 }
@@ -876,7 +895,12 @@ a:hover {
 /* Light and centred since specs/feature-header-light-two-row.md: the dark gradient block moved
    into the title as text colour. Full bleed through the negative margin, as before. */
 .hero {
-  background: radial-gradient(ellipse at 50% 0%, var(--indigo-50) 0%, transparent 65%), var(--white);
+  background: radial-gradient(
+      ellipse at 50% 0%,
+      var(--indigo-50) 0%,
+      transparent 65%
+    ),
+    var(--white);
   color: var(--gray-900);
   padding: 4rem 2rem 4.5rem;
   text-align: center;
@@ -891,7 +915,12 @@ a:hover {
   line-height: 1.15;
   max-width: 20ch;
   margin: 0 auto 1.25rem;
-  background: linear-gradient(90deg, var(--indigo-900) 0%, var(--indigo-600) 55%, var(--coral-500) 100%);
+  background: linear-gradient(
+    90deg,
+    var(--indigo-900) 0%,
+    var(--indigo-600) 55%,
+    var(--coral-500) 100%
+  );
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -974,7 +1003,11 @@ a:hover {
    white page; the light ground alone blended into it. */
 .home-hero,
 .product-slider--panel {
-  background: linear-gradient(110deg, var(--gray-100) 0%, var(--indigo-50) 100%);
+  background: linear-gradient(
+    110deg,
+    var(--gray-100) 0%,
+    var(--indigo-50) 100%
+  );
   border: 1px solid var(--gray-300);
   box-shadow: var(--shadow-md);
 }
@@ -1006,7 +1039,9 @@ a:hover {
   -webkit-mask-image: radial-gradient(closest-side, black 72%, transparent);
   mask-image: radial-gradient(closest-side, black 72%, transparent);
 }
-.home-hero-media img:first-child { margin-left: 0; }
+.home-hero-media img:first-child {
+  margin-left: 0;
+}
 .home-hero-copy {
   position: absolute;
   left: 2.5rem;
@@ -1079,7 +1114,10 @@ a:hover {
   font-weight: 600;
   color: var(--gray-200);
 }
-.home-card-panel .btn { margin-top: auto; align-self: flex-start; }
+.home-card-panel .btn {
+  margin-top: auto;
+  align-self: flex-start;
+}
 
 /* Panel slider (ProductSlider's `panel` prop): a title column beside 3 products, no scroll. The
    --end modifier puts the title on the right, so the second row does not repeat the first. */
@@ -1092,8 +1130,12 @@ a:hover {
   padding: 2rem;
   border-radius: var(--radius-lg);
 }
-.product-slider--end { grid-template-columns: minmax(0, 1fr) 15rem; }
-.product-slider--end .product-slider-aside { order: 2; }
+.product-slider--end {
+  grid-template-columns: minmax(0, 1fr) 15rem;
+}
+.product-slider--end .product-slider-aside {
+  order: 2;
+}
 .product-slider-eyebrow {
   display: block;
   margin-bottom: 0.6rem;
@@ -1127,21 +1169,61 @@ a:hover {
 @media (max-width: 768px) {
   /* Photos above, copy below, in normal flow: stacked absolutely, a three-line headline ran
      over the photos. */
-  .home-hero { height: auto; display: flex; flex-direction: column; padding-bottom: 1.5rem; }
-  .home-hero-media { position: static; height: 15rem; padding: 1rem 1rem 0; justify-content: center; }
-  .home-hero-media img { width: 38%; margin-left: -1.5rem; }
-  .home-hero-copy { position: static; max-width: none; padding: 0.5rem 1.25rem 0; }
-  .home-hero-copy h1 { font-size: 1.7rem; }
-  .home-cards { grid-template-columns: 1fr; }
-  .home-card { grid-template-columns: 1fr 1fr; min-height: 13rem; }
-  .home-card-media img { height: 11rem; }
+  .home-hero {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 1.5rem;
+  }
+  .home-hero-media {
+    position: static;
+    height: 15rem;
+    padding: 1rem 1rem 0;
+    justify-content: center;
+  }
+  .home-hero-media img {
+    width: 38%;
+    margin-left: -1.5rem;
+  }
+  .home-hero-copy {
+    position: static;
+    max-width: none;
+    padding: 0.5rem 1.25rem 0;
+  }
+  .home-hero-copy h1 {
+    font-size: 1.7rem;
+  }
+  .home-cards {
+    grid-template-columns: 1fr;
+  }
+  .home-card {
+    grid-template-columns: 1fr 1fr;
+    min-height: 13rem;
+  }
+  .home-card-media img {
+    height: 11rem;
+  }
   .product-slider--panel,
-  .product-slider--end { grid-template-columns: minmax(0, 1fr); gap: 1.25rem; padding: 1.25rem; }
-  .product-slider--end .product-slider-aside { order: 0; }
-  .product-slider--panel h2 { font-size: 1.5rem; }
-  .product-slider--panel .slider-track { display: flex; overflow-x: auto; padding-bottom: 0.5rem; }
+  .product-slider--end {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.25rem;
+    padding: 1.25rem;
+  }
+  .product-slider--end .product-slider-aside {
+    order: 0;
+  }
+  .product-slider--panel h2 {
+    font-size: 1.5rem;
+  }
+  .product-slider--panel .slider-track {
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+  }
   .product-slider--panel .product-card,
-  .product-slider--panel .skeleton-card { min-width: 70%; }
+  .product-slider--panel .skeleton-card {
+    min-width: 70%;
+  }
 }
 
 /* ─── Product Card ───────────────────────────────────────── */
@@ -1210,8 +1292,12 @@ a:hover {
 
 /* Coral is the marketing accent and indigo the classification one — the same split the blog
    topic pill below makes. "New" and "Sale" promote; a material is a fact about the product. */
-.product-card-badge--sale { background: var(--coral-600); }
-.product-card-badge--material { background: var(--indigo-800); }
+.product-card-badge--sale {
+  background: var(--coral-600);
+}
+.product-card-badge--material {
+  background: var(--indigo-800);
+}
 
 /* The eco mark (specs/feature-eco-badge.md). Position only — this wrapper changes which corner
    the pill anchors to and nothing else, so there is still one badge idiom rather than two.
@@ -1713,7 +1799,7 @@ a:hover {
   color: var(--indigo-600);
 }
 
-.facet-option input[type="checkbox"] {
+.facet-option input[type='checkbox'] {
   accent-color: var(--indigo-600);
 }
 
@@ -1839,7 +1925,7 @@ a:hover {
   border-radius: 2px;
 }
 
-.price-slider input[type="range"] {
+.price-slider input[type='range'] {
   position: absolute;
   top: 0;
   left: 0;
@@ -1851,7 +1937,7 @@ a:hover {
   cursor: pointer;
   pointer-events: none;
 }
-.price-slider input[type="range"]::-webkit-slider-thumb {
+.price-slider input[type='range']::-webkit-slider-thumb {
   -webkit-appearance: none;
   width: 18px;
   height: 18px;
@@ -1862,7 +1948,7 @@ a:hover {
   pointer-events: all;
   cursor: grab;
 }
-.price-slider input[type="range"]::-moz-range-thumb {
+.price-slider input[type='range']::-moz-range-thumb {
   width: 18px;
   height: 18px;
   background: var(--indigo-600);
@@ -1926,7 +2012,10 @@ a:hover {
    wide inside a 320px phone and the page scrolls sideways. */
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(var(--product-grid-column), 100%), 1fr));
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(min(var(--product-grid-column), 100%), 1fr)
+  );
   gap: 1.5rem;
 }
 
@@ -2242,7 +2331,11 @@ a:hover {
 }
 
 .explain-legends-banner {
-  background: linear-gradient(135deg, rgba(124, 77, 255, 0.04), rgba(63, 81, 181, 0.04));
+  background: linear-gradient(
+    135deg,
+    rgba(124, 77, 255, 0.04),
+    rgba(63, 81, 181, 0.04)
+  );
   border: 1px solid rgba(124, 77, 255, 0.15);
   border-radius: var(--radius-md);
   padding: 1.25rem;
@@ -2364,7 +2457,9 @@ a:hover {
   font-weight: 600;
   color: var(--coral-600);
 }
-.boost-icon { font-size: 1rem; }
+.boost-icon {
+  font-size: 1rem;
+}
 .boost-reason {
   font-weight: 400;
   color: var(--gray-500);
@@ -2443,7 +2538,8 @@ a:hover {
   .field-match-row {
     grid-template-columns: 1fr 50px;
   }
-  .field-match-type, .field-match-bar-container {
+  .field-match-type,
+  .field-match-bar-container {
     display: none;
   }
 }
@@ -2606,7 +2702,9 @@ a:hover {
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* ─── Skeleton Placeholders ──────────────────────────────── */
@@ -2629,7 +2727,12 @@ a:hover {
 }
 
 .skeleton-shimmer {
-  background: linear-gradient(90deg, var(--gray-100) 25%, var(--gray-200) 50%, var(--gray-100) 75%);
+  background: linear-gradient(
+    90deg,
+    var(--gray-100) 25%,
+    var(--gray-200) 50%,
+    var(--gray-100) 75%
+  );
   background-size: 200% 100%;
   animation: shimmer 1.5s ease infinite;
 }
@@ -2649,7 +2752,12 @@ a:hover {
 .skeleton-card-image {
   width: 100%;
   height: var(--product-card-image-height);
-  background: linear-gradient(90deg, var(--gray-100) 25%, var(--gray-200) 50%, var(--gray-100) 75%);
+  background: linear-gradient(
+    90deg,
+    var(--gray-100) 25%,
+    var(--gray-200) 50%,
+    var(--gray-100) 75%
+  );
   background-size: 200% 100%;
   animation: shimmer 1.5s ease infinite;
 }
@@ -2659,8 +2767,12 @@ a:hover {
 }
 
 @keyframes shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }
 
 /* Shown in the facet sidebar when there is no facet left to draw — see Facets.tsx.
@@ -2790,7 +2902,10 @@ a:hover {
     flex-basis: 100%;
   }
   .search-overlay-scrim {
-    padding: calc(var(--header-height, 11.5rem) - var(--acp-page-offset, 0px) + 1rem) 1rem 1rem;
+    padding: calc(
+        var(--header-height, 11.5rem) - var(--acp-page-offset, 0px) + 1rem
+      )
+      1rem 1rem;
   }
   .search-overlay-panel {
     grid-template-columns: 1fr;
@@ -3054,7 +3169,11 @@ a:hover {
   justify-content: space-between;
   padding: 1rem 1.25rem;
   border-bottom: 1px solid var(--gray-100);
-  background: linear-gradient(135deg, rgba(124, 77, 255, 0.05), rgba(63, 81, 181, 0.05));
+  background: linear-gradient(
+    135deg,
+    rgba(124, 77, 255, 0.05),
+    rgba(63, 81, 181, 0.05)
+  );
 }
 .explain-header h3 {
   font-family: var(--font-sans);
@@ -3248,7 +3367,12 @@ a:hover {
 .intro-overlay {
   position: fixed;
   inset: 0;
-  background: linear-gradient(135deg, var(--indigo-900) 0%, var(--indigo-700) 50%, var(--coral-500) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--indigo-900) 0%,
+    var(--indigo-700) 50%,
+    var(--coral-500) 100%
+  );
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3386,8 +3510,14 @@ a:hover {
 }
 
 @keyframes slideInRight {
-  from { transform: translateX(100%); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 .story-dock-header {
@@ -3633,8 +3763,14 @@ a:hover {
 }
 
 @keyframes fadeSlideUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Pricing cards */
@@ -3751,11 +3887,21 @@ a:hover {
   box-shadow: var(--shadow-sm);
   z-index: 1;
 }
-.timeline-dot.search { background: var(--indigo-600); }
-.timeline-dot.display { background: var(--indigo-500); }
-.timeline-dot.view { background: #7c4dff; }
-.timeline-dot.cart { background: var(--coral-500); }
-.timeline-dot.order { background: var(--success); }
+.timeline-dot.search {
+  background: var(--indigo-600);
+}
+.timeline-dot.display {
+  background: var(--indigo-500);
+}
+.timeline-dot.view {
+  background: #7c4dff;
+}
+.timeline-dot.cart {
+  background: var(--coral-500);
+}
+.timeline-dot.order {
+  background: var(--success);
+}
 
 .timeline-content {
   flex: 1;
@@ -3879,9 +4025,18 @@ a:hover {
 }
 
 @keyframes totalFlash {
-  0% { transform: scale(1); color: inherit; }
-  50% { transform: scale(1.15); color: var(--coral-500); }
-  100% { transform: scale(1); color: inherit; }
+  0% {
+    transform: scale(1);
+    color: inherit;
+  }
+  50% {
+    transform: scale(1.15);
+    color: var(--coral-500);
+  }
+  100% {
+    transform: scale(1);
+    color: inherit;
+  }
 }
 
 /* ─── Tracking Hints in Story Bubbles ────────────────────── */
@@ -3969,9 +4124,17 @@ a:hover {
 }
 
 @keyframes addedFlash {
-  0% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.6); }
-  50% { box-shadow: 0 0 24px 8px rgba(76, 175, 80, 0.4); outline: 3px solid var(--success); }
-  100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); outline: none; }
+  0% {
+    box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 24px 8px rgba(76, 175, 80, 0.4);
+    outline: 3px solid var(--success);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+    outline: none;
+  }
 }
 
 /* ─── Story Button Highlight ─────────────────────────────── */
@@ -3985,8 +4148,13 @@ a:hover {
 }
 
 @keyframes pulseBtn {
-  0%, 100% { box-shadow: 0 0 12px rgba(255, 107, 107, 0.3); }
-  50% { box-shadow: 0 0 24px rgba(255, 107, 107, 0.6); }
+  0%,
+  100% {
+    box-shadow: 0 0 12px rgba(255, 107, 107, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 24px rgba(255, 107, 107, 0.6);
+  }
 }
 
 /* ─── Story Add-to-Cart Toast ────────────────────────────── */
@@ -4265,17 +4433,16 @@ a:hover {
 }
 
 /* ─── Blog post (detail) ─────────────────────────────────── */
-/* The page is full width so the breadcrumb, hero and title line up with every other page; only
-   the running text keeps a reading measure (specs/feature-page-width-breadcrumb.md). */
+/* The page is full width so the breadcrumb lines up with every other page. The article below
+   it is one centred column with a reading measure (specs/feature-page-width-breadcrumb.md). The
+   hero is inside it too: its picture is a product cut-out cropped with object-fit: cover, and
+   at the full width it showed only a slice of it. */
 .blog-post {
   margin: 0;
 }
-/* The hero too: its picture is a product cut-out cropped with object-fit: cover, and at the
-   full width it showed only a slice of it. */
-.blog-post-hero,
-.blog-post-summary,
-.blog-post-content {
-  max-width: 800px;
+.blog-post-body {
+  max-width: 900px;
+  margin-inline: auto;
 }
 
 .blog-post-hero {

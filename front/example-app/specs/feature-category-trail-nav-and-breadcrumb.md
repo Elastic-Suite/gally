@@ -1,6 +1,7 @@
 # Feature: Category trail — wrapped nav layout, ancestor highlight, clickable breadcrumb
 
 ## Status: implemented
+
 ## Page/Component: src/components/CategoryNav.tsx, src/views/CategoryPage.tsx, src/styles.css (`.category-nav-*`, `.breadcrumb`), src/locales/{en,fr,de}/{common,category}.json
 
 The breadcrumb markup written here was extracted to `src/components/Breadcrumb.tsx` when the PDP
@@ -21,7 +22,7 @@ twelve top-level categories and therefore the first one whose nav bar wraps to t
    with two rows the row-1 pills overlapped the row-2 text, and hover backgrounds bled across
    rows. `gap: 0` left no room either. The wrong belief was that the flex item's height accounted
    for the link's padding.
-   The same wrap made the hover flyout open *inside* the bar: `top: 100%` of its own `<li>` puts
+   The same wrap made the hover flyout open _inside_ the bar: `top: 100%` of its own `<li>` puts
    it just under a first-row pill, on top of the second row's category names.
 2. **No ancestor highlight.** `CategoryNav` compared `activeCode === cat.id` per item, which only
    ever matches the top-level item itself. Browsing `Power Tools > Drills & Drivers` lit up
@@ -37,6 +38,7 @@ route guard, `generateMetadata` and the JSON-LD. All three fixes here reuse it, 
 breadcrumb, the nav highlight and the structured data now derive from one function.
 
 ## Behaviour (testable)
+
 - [x] The nav bar wrapped over two (or more) rows draws one clear row per line: no pill overlaps a
       neighbouring row, and hovering an item in row 1 does not paint over row 2.
 - [x] A flyout hangs directly off the item hovered (`top: 100%` of its `<li>`), on both rows. On a
@@ -60,15 +62,18 @@ breadcrumb, the nav highlight and the structured data now derive from one functi
       guard 404s otherwise) still renders `Home / <name-or-id>` rather than a bare "Home".
 
 ## SDK contract used
+
 - No new SDK or GraphQL call. `findTrail(categories, code)` over the `ICategoryNode[]` that
   `CatalogProvider` already holds — the same array `CategoryNav` renders from. `CategoryPage`'s
   private `findCategory()` helper is gone: the trail's last entry is that node.
 
 ## Tracking (required)
+
 - Unchanged. `trackCategoryView` still fires from `CategoryPage`'s effect on `code`, and every
   breadcrumb/nav link is a normal navigation to `/category/<id>`, which fires it on arrival.
 
 ## UI constraints
+
 - Tokens only: `--indigo-50`, `--indigo-700`, `--coral-500`, `--gray-500`, `--gray-700`,
   `--radius-pill`. No new hex, px or font-size.
 - No new visual primitive. The ancestor state reuses the existing active pill; the breadcrumb
@@ -77,6 +82,7 @@ breadcrumb, the nav highlight and the structured data now derive from one functi
   `.breadcrumb-sep`.
 
 ## MUST NOT change
+
 - `.category-nav`, `.category-nav-list` and `.category-nav-item` must keep `overflow` unset on
   both axes and the list must keep wrapping instead of scrolling — any non-`visible` axis on an
   ancestor re-clips the hover submenu (`feature-category-nav-root.md`, still the reason the bar

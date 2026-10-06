@@ -1,6 +1,7 @@
 # Feature: the search bar stays put while a page scrolls
 
 ## Status: replaced by specs/feature-header-scrolls-with-page.md (the header is no longer sticky, and the blurred layer is removed)
+
 ## Page/Component: src/styles.css (`.header-sticky-group`, `.header`, `.header-search-band`, `.facets-sidebar`), src/components/Header.tsx (`--header-nav-height`)
 
 ## Problem
@@ -43,7 +44,7 @@ page.
 - [x] **A radial mask feathers it in every direction** —
       `radial-gradient(closest-side, #000 45%, transparent 100%)`. This is the part the earlier
       attempts got wrong: without a mask the layer reads as a hard-edged plate, and with a
-      *vertical* ramp the effect only appears above the bar. `closest-side` fits the box, so the
+      _vertical_ ramp the effect only appears above the bar. `closest-side` fits the box, so the
       falloff radiates from the input outward.
 - [x] `z-index: -1` keeps it behind the input while staying inside the wrapper's own stacking
       context (`position: relative; z-index: 110`), so it cannot fall behind the band. Negative
@@ -70,15 +71,14 @@ Implemented, looked at, removed. Recorded so they are not re-proposed as obvious
   too little for any falloff.
 - **A progressive blur** across the band: two stacked masked layers (16px and 6px) ramping from the
   top edge down. Technically the real "blur gradient", but judged ugly — and because the ramp was
-  vertical it only showed *above* the bar, never around it. **The axis was the mistake**, which is
+  vertical it only showed _above_ the bar, never around it. **The axis was the mistake**, which is
   why the surviving version masks radially around the input instead.
 - `--gray-50-rgb`, added for the flat band, was removed with it: no tint remains anywhere.
 
 ### Regression introduced and fixed while iterating
 
 Removing the progressive-blur experiment by slicing between two file offsets also deleted
-`.header-search-row`'s declarations (`max-width: 1400px; margin: 0 auto; display: flex;
-justify-content: center`), which sat between the block being removed and the next rule. **The search
+`.header-search-row`'s declarations (`max-width: 1400px; margin: 0 auto; display: flex; justify-content: center`), which sat between the block being removed and the next rule. **The search
 bar rendered flush left** until it was restored. A selector-set diff against `HEAD` (401 selectors,
 both sides) now confirms nothing else was lost. Lesson: remove CSS by matching the exact rule text,
 never by cutting between offsets.
@@ -90,7 +90,7 @@ never by cutting between offsets.
       `calc(var(--header-height) - var(--header-nav-height) + 1rem)` — the band's height, derived
       from the two published values. It was a hardcoded `top: 80px` from when nothing in the header
       stayed put; the band's bottom edge now sits at ~100px, so the sidebar would have slid under it.
-- [x] The group's `z-index: 40` is now *effective* (sticky is positioned, so it creates a stacking
+- [x] The group's `z-index: 40` is now _effective_ (sticky is positioned, so it creates a stacking
       context). That is the value the existing comment already intended: **below**
       `.category-nav-submenu`'s `50`, so a scrolled-under category flyout is not covered by the
       header. Previously inert, since the group was static.
@@ -132,7 +132,7 @@ None — no interaction changed.
 - **The band itself must paint nothing.** Three band-wide treatments were built and rejected; the
   separation belongs on the bar, not across the header.
 - **Keep the mask.** Without it the layer is a hard-edged plate — the failure mode of two earlier
-  attempts. And keep it *radial*: a vertical ramp puts the effect above the bar instead of around it.
+  attempts. And keep it _radial_: a vertical ramp puts the effect above the bar instead of around it.
 - **Keep it to one layer and no tint.** Stacked layers were tried and rejected; a tint re-introduces
   the colour that was explicitly removed from the band.
 - **Keep both gate conditions.** Unconditional, it shows at scroll-top where there is nothing to

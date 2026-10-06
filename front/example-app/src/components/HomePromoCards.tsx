@@ -1,23 +1,23 @@
-import Link from './LocaleLink';
-import { useMediaUrl } from '../contexts/ConfigContext';
+import Link from './LocaleLink'
+import { useMediaUrl } from '../contexts/ConfigContext'
 
 interface Card {
-  key: string;
-  title: string;
-  body: string;
-  image: string;
-  href: string;
+  key: string
+  title: string
+  body: string
+  image: string
+  href: string
 }
 
 interface Props {
-  cards: Card[];
-  ctaLabel: string;
+  cards: Card[]
+  ctaLabel: string
 }
 
 // Two promo cards between the homepage sliders: product photo left, dark panel right with a
 // button to the category.
 export default function HomePromoCards({ cards, ctaLabel }: Props) {
-  const media = useMediaUrl();
+  const media = useMediaUrl()
   return (
     <section className="home-cards">
       {cards.map((card) => (
@@ -35,5 +35,5 @@ export default function HomePromoCards({ cards, ctaLabel }: Props) {
         </article>
       ))}
     </section>
-  );
+  )
 }

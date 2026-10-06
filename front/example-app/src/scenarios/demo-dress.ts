@@ -1,4 +1,4 @@
-import { Scenario } from './types';
+import { Scenario } from './types'
 
 const demoDress: Scenario = {
   id: 'demo-dress',
@@ -22,7 +22,13 @@ const demoDress: Scenario = {
       persona: 'camille',
       target: '/category/__first__',
       spotlight: '.facets-sidebar',
-      action: { type: 'highlight_sequence', selector: '.facets-sidebar', childSelector: '.facet-group', maxItems: 4, interval: 1500 },
+      action: {
+        type: 'highlight_sequence',
+        selector: '.facets-sidebar',
+        childSelector: '.facet-group',
+        maxItems: 4,
+        interval: 1500,
+      },
     },
     {
       act: 3,
@@ -30,7 +36,13 @@ const demoDress: Scenario = {
       persona: 'merchant',
       target: '/explain',
       spotlight: '.explain-ranking',
-      action: { type: 'highlight_sequence', selector: '.explain-results-page', childSelector: '.explain-rank-card', maxItems: 3, interval: 2500 },
+      action: {
+        type: 'highlight_sequence',
+        selector: '.explain-results-page',
+        childSelector: '.explain-rank-card',
+        maxItems: 3,
+        interval: 2500,
+      },
     },
     {
       act: 4,
@@ -45,9 +57,15 @@ const demoDress: Scenario = {
       i18nKey: 'steps.5',
       persona: 'merchant',
       target: '/closing',
-      action: { type: 'highlight_sequence', selector: '.tracking-timeline', childSelector: '.timeline-item', maxItems: 6, interval: 2000 },
+      action: {
+        type: 'highlight_sequence',
+        selector: '.tracking-timeline',
+        childSelector: '.timeline-item',
+        maxItems: 6,
+        interval: 2000,
+      },
     },
   ],
-};
+}
 
-export default demoDress;
+export default demoDress

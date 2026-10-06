@@ -14,5 +14,5 @@ export default function JsonLd({ data }: { data: Record<string, unknown> }) {
         __html: JSON.stringify(data).replace(/</g, '\\u003c'),
       }}
     />
-  );
+  )
 }

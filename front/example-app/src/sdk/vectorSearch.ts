@@ -1,4 +1,5 @@
-import { BASE_URI } from './index';
+import { BASE_URI } from './index'
+import type { SearchDocument } from './fields'
 
 // Vector (semantic) search — the one query in this app the SDK cannot make.
 //
@@ -31,7 +32,7 @@ import { BASE_URI } from './index';
 // but the two are NOT on the same scale — BM25 returns ~64 for a good keyword hit, cosine
 // similarity returns ~0.56 — so each panel formats and labels its own, and the numbers are never
 // compared across the gutter. See scoreLabel/formatScore in the view.
-export const COMPARE_ROW_FIELDS = ['sku', 'name', 'image', 'url_key', 'score'];
+export const COMPARE_ROW_FIELDS = ['sku', 'name', 'image', 'url_key', 'score']
 
 // The backend's kNN `k`: `gally_vector_search.search_config.k_value`, default 100
 // (gally-premium/VectorSearch/src/Resources/config/gally_vector_search.yaml).
@@ -41,19 +42,24 @@ export const COMPARE_ROW_FIELDS = ['sku', 'name', 'image', 'url_key', 'score'];
 // catalogue the API would advertise `lastPage: 48` at 25 a page while only the first 100 rows
 // exist — pages 5 and beyond would come back empty with a pager still offering them. Mirrored
 // here so the pager can be clamped. If k_value is raised server-side, raise this to match.
-export const VECTOR_MAX_RESULTS = 100;
+export const VECTOR_MAX_RESULTS = 100
 
 export interface VectorSearchResult {
-  products: any[];
+  products: SearchDocument[]
   /** Similarity per SKU, 0..1 — cosine-ish, from OpenSearch kNN. Not on the product row. */
-  scores: Record<string, number>;
+  scores: Record<string, number>
   /** What the engine ranked. See the note in fetchVectorSearchProducts. */
-  corpusSize: number;
+  corpusSize: number
   /** Pages actually reachable — already clamped to VECTOR_MAX_RESULTS. */
-  pageCount: number;
+  pageCount: number
 }
 
-const EMPTY: VectorSearchResult = { products: [], scores: {}, corpusSize: 0, pageCount: 0 };
+const EMPTY: VectorSearchResult = {
+  products: [],
+  scores: {},
+  corpusSize: 0,
+  pageCount: 0,
+}
 
 /**
  * Rank the catalogue against `search` by embedding similarity.
@@ -68,7 +74,7 @@ export async function fetchVectorSearchProducts(
   pageSize = 25,
   currentPage = 1
 ): Promise<VectorSearchResult> {
-  if (!search.trim()) return EMPTY;
+  if (!search.trim()) return EMPTY
 
   const query = `query vectorSearch($localizedCatalog: String!, $search: String, $pageSize: Int, $currentPage: Int) {
     vectorSearchProducts(
@@ -81,23 +87,26 @@ export async function fetchVectorSearchProducts(
       paginationInfo { totalCount lastPage }
       collection { ... on VectorProduct { ${COMPARE_ROW_FIELDS.join(' ')} } }
     }
-  }`;
+  }`
 
   try {
     const res = await fetch(`${BASE_URI}/graphql`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query, variables: { localizedCatalog, search, pageSize, currentPage } }),
-    });
-    const json = await res.json();
-    const payload = json?.data?.vectorSearchProducts;
-    if (!payload) return EMPTY;
+      body: JSON.stringify({
+        query,
+        variables: { localizedCatalog, search, pageSize, currentPage },
+      }),
+    })
+    const json = await res.json()
+    const payload = json?.data?.vectorSearchProducts
+    if (!payload) return EMPTY
 
-    const products = payload.collection || [];
-    const corpusSize = payload.paginationInfo?.totalCount ?? products.length;
-    const scores: Record<string, number> = {};
+    const products = payload.collection || []
+    const corpusSize = payload.paginationInfo?.totalCount ?? products.length
+    const scores: Record<string, number> = {}
     for (const p of products) {
-      if (p?.sku) scores[p.sku] = Number(p.score) || 0;
+      if (p?.sku) scores[p.sku] = Number(p.score) || 0
     }
     return {
       products,
@@ -115,12 +124,12 @@ export async function fetchVectorSearchProducts(
         payload.paginationInfo?.lastPage ?? 1,
         Math.ceil(Math.min(corpusSize, VECTOR_MAX_RESULTS) / pageSize)
       ),
-    };
+    }
   } catch {
     // Same contract as the fetchers in ./server.ts: degrade to empty, never throw. The
     // bundle is premium and optional — an instance without it 400s on this query, and
     // the page must still render its keyword panel and say so.
-    return EMPTY;
+    return EMPTY
   }
 }
 
@@ -171,11 +180,7 @@ export const VECTOR_DEMO_QUERIES: Record<string, string[]> = {
   // keeping those whose top vector hits are relevant, preferring ones the keyword side misses
   // (0 results): short phrases and synonyms work, long intent sentences mostly do not. The model
   // is English-first, so these are best effort. com's product names are English in every locale.
-  com_fr: [
-    'pantalon large',
-    'tenue pour un mariage',
-    'bracelet',
-  ],
+  com_fr: ['pantalon large', 'tenue pour un mariage', 'bracelet'],
   com_en: [
     'jewellery',
     'wedding guest outfit',
@@ -236,14 +241,12 @@ export const VECTOR_DEMO_QUERIES: Record<string, string[]> = {
   ],
   // "Füllfederhalter" is the showcase: no product uses the word, so keyword search finds nothing,
   // and vector search returns every "Füllhalter".
-  papershop_de: [
-    'Füllfederhalter',
-    'Notizbuch',
-    'Märchen',
-  ],
-};
+  papershop_de: ['Füllfederhalter', 'Notizbuch', 'Märchen'],
+}
 
 /** This catalogue's suggestions, or none. Never another catalogue's. */
-export function getVectorDemoQueries(localizedCatalog: string | undefined): string[] {
-  return (localizedCatalog && VECTOR_DEMO_QUERIES[localizedCatalog]) || [];
+export function getVectorDemoQueries(
+  localizedCatalog: string | undefined
+): string[] {
+  return (localizedCatalog && VECTOR_DEMO_QUERIES[localizedCatalog]) || []
 }

@@ -1,6 +1,7 @@
 # Feature: metadata on every route, and product-page metadata fixes
 
 ## Status: implemented
+
 ## Page/Component: every `app/[locale]/**/page.tsx`, `src/sdk/seo.ts`, `src/sdk/serverI18n.ts`
 
 ## Problem
@@ -16,13 +17,13 @@ left the most obvious "does this site have SEO" check failing on the product lis
 
 ## What was added
 
-| Route | Title source | Indexable |
-|---|---|---|
-| `/[locale]` | `category.homepage.heroTitle` | yes, + description + canonical |
-| `/[locale]/blog` | `blog.title` | yes, + description + canonical |
-| `/[locale]/cms/[slug]` | `cms.<key>.title` | yes, + description from the first paragraph |
-| `/[locale]/search` | `common.meta.search` | **noindex** |
-| `/[locale]/cart` `/checkout` `/explain` `/closing` | `common.meta.*` | **noindex** |
+| Route                                              | Title source                  | Indexable                                   |
+| -------------------------------------------------- | ----------------------------- | ------------------------------------------- |
+| `/[locale]`                                        | `category.homepage.heroTitle` | yes, + description + canonical              |
+| `/[locale]/blog`                                   | `blog.title`                  | yes, + description + canonical              |
+| `/[locale]/cms/[slug]`                             | `cms.<key>.title`             | yes, + description from the first paragraph |
+| `/[locale]/search`                                 | `common.meta.search`          | **noindex**                                 |
+| `/[locale]/cart` `/checkout` `/explain` `/closing` | `common.meta.*`               | **noindex**                                 |
 
 `noindex` pages get a `<title>` but **no canonical**: a page that should not be indexed has no
 business nominating itself as the canonical version of anything. Search is excluded because its
@@ -40,7 +41,7 @@ every page reads as part of a site instead of a bare string.
    embedded markup. Now stripped (at a longer limit than the meta tag, since JSON-LD has no
    snippet-length constraint).
 2. **`og:site_name` was silently missing from every page that set a title.** Next merges
-   `openGraph` **shallowly** — a page-level `openGraph` object *replaces* the parent layout's rather
+   `openGraph` **shallowly** — a page-level `openGraph` object _replaces_ the parent layout's rather
    than extending it — so declaring `siteName` once in the root layout did nothing for the routes
    that mattered. `openGraphBase()` now supplies `siteName` and `og:locale`, and is spread into
    every page's `openGraph`.
@@ -50,6 +51,7 @@ that disagrees between routes is worse than none, so it now lives once in `src/s
 `NEXT_PUBLIC_SITE_ORIGIN` with the local stack as the default.
 
 ## i18n
+
 Five new user-visible strings (the noindex page titles) were added to `common.meta.*` in **all three
 locales** per `AGENTS.md` rule 5 — including German, which is currently an untranslated stub
 elsewhere in `common.json` and unreachable in this dataset (no catalog uses `de_DE`).
@@ -60,11 +62,12 @@ the last render set. `src/sdk/serverI18n.ts` statically imports the locale JSON 
 metadata reads and does a dotted-path lookup with the same `fallbackLng: 'en'` behaviour.
 
 ## Behaviour (testable) — verified by curl, no JavaScript
+
 - [x] All 11 routes return 200 and carry a real `<title>`, suffixed `· Gally`
 - [x] Indexable routes carry description + canonical; the five noindex routes carry
       `<meta name="robots" content="noindex, follow">` and no canonical
-- [x] French works throughout: `/com_fr` → *"La recherche intelligente pour l'e-commerce"*,
-      `/com_fr/cart` → *"Panier"*, `/com_fr/cms/about` → *"À propos d'ElasticSuite"*
+- [x] French works throughout: `/com_fr` → _"La recherche intelligente pour l'e-commerce"_,
+      `/com_fr/cart` → _"Panier"_, `/com_fr/cms/about` → _"À propos d'ElasticSuite"_
 - [x] `og:site_name` present exactly once per page; `og:locale` correct per catalog
       (`en_US` / `fr_FR`)
 - [x] `Product` JSON-LD description contains no HTML tags
@@ -72,6 +75,7 @@ metadata reads and does a dotted-path lookup with the same `fallbackLng: 'en'` b
 - [x] No hydration mismatches; `npx tsc --noEmit` clean
 
 ## Still missing — genuinely Phase 4, not overlooked
+
 - **`hreflang`.** No route emits `alternates.languages`, so the six locale variants of each page are
   not linked to each other. This is the single biggest remaining SEO gap and the whole reason the
   locale went into the URL in Phase 2.
@@ -79,6 +83,7 @@ metadata reads and does a dotted-path lookup with the same `fallbackLng: 'en'` b
 - `<html lang="en">` is still hardcoded in the root layout and wrong for every `*_fr` URL.
 
 ## MUST NOT change
+
 - **Do not rely on inheriting `openGraph` from the root layout** — Next replaces it wholesale.
   Spread `openGraphBase()` into every page that sets any `openGraph` field.
 - **Keep `noindex` routes canonical-free**, and keep `search` in that set.
@@ -103,11 +108,12 @@ page only**, matching the canonical URL and what is actually server-rendered —
 that are not on the page would be a mismatch.
 
 Three further fixes to the same route:
+
 - **The description was hardcoded English** (`Browse ${title} in the Gally demo storefront.`), so
   French users got an English description. Now `category.category.meta.description` in all three
   locales, interpolated with the real product count — `tServer` gained `{{var}}` support.
-  Verified: `/com_fr/category/cat_12` → *"Découvrez notre sélection Pantalons & Shorts : 12 produits
-  disponibles."*
+  Verified: `/com_fr/category/cat_12` → _"Découvrez notre sélection Pantalons & Shorts : 12 produits
+  disponibles."_
 - **The breadcrumb skipped ancestors.** `findTrail()` now returns the whole chain, so a nested
   category reads `Home > Bottoms > Pants & Shorts` instead of `Home > Pants & Shorts`. "Home" is
   translated (`common.meta.home`).
@@ -133,6 +139,7 @@ of content on the category route. Verified 404s: `/product/NOPE`, `/blog/99999`,
 `/category/cat_9999`, `/cms/nonsense`, `/nope_locale`.
 
 ## MUST NOT change (additions)
+
 - **Never rely on `notFound()` in a page or in `generateMetadata` for a route that has a
   `loading.tsx`.** It renders the right UI under the wrong status, and nothing warns you. The check
   belongs in that route's `layout.tsx`. Deleting one of those guards silently reintroduces soft-404s

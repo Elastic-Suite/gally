@@ -1,22 +1,30 @@
-import type { Metadata } from 'next';
-import { notFound } from 'next/navigation';
-import { resolveLocale, fetchCategoryProducts, cachedCategoryTree, fetchPublicConfiguration } from '../../../../src/sdk/server';
-import { ICategoryNode } from '../../../../src/sdk/catalogs';
-import { findTrail } from '../../../../src/sdk/categoryTree';
-import { missingInCatalog, RouteSearchParams } from '../../../../src/sdk/catalogSwitch';
-import { getProductFields } from '../../../../src/sdk/productFields';
-import { SITE, canonical, languageOf, openGraphBase } from '../../../../src/sdk/seo';
-import { tServer } from '../../../../src/sdk/serverI18n';
-import JsonLd from '../../../../src/components/JsonLd';
-import CategoryPage from '../../../../src/views/CategoryPage';
+import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
+import {
+  resolveLocale,
+  fetchCategoryProducts,
+  cachedCategoryTree,
+  fetchPublicConfiguration,
+} from '../../../../src/sdk/server'
+import { ICategoryNode } from '../../../../src/sdk/catalogs'
+import { findTrail } from '../../../../src/sdk/categoryTree'
+import {
+  missingInCatalog,
+  RouteSearchParams,
+} from '../../../../src/sdk/catalogSwitch'
+import { getProductFields } from '../../../../src/sdk/productFields'
+import { canonical, languageOf, openGraphBase } from '../../../../src/sdk/seo'
+import { tServer } from '../../../../src/sdk/serverI18n'
+import JsonLd from '../../../../src/components/JsonLd'
+import CategoryPage from '../../../../src/views/CategoryPage'
 
 type Params = {
-  params: Promise<{ locale: string; code: string }>;
+  params: Promise<{ locale: string; code: string }>
   // Only ever read for the catalog-switch marker. A layout cannot have this — Next does not
   // give layouts search params, because a layout does not rerender on navigation — which is why
   // the guard layout no longer decides what a missing category means.
-  searchParams: Promise<RouteSearchParams>;
-};
+  searchParams: Promise<RouteSearchParams>
+}
 
 // The category tree is the only place a category's display name lives — the product
 // search response carries no category entity — so metadata and breadcrumbs both read it.
@@ -25,38 +33,53 @@ async function categoryTrail(
   localizedCatalogId: number,
   code: string
 ): Promise<ICategoryNode[]> {
-  const tree = await cachedCategoryTree(catalogId, localizedCatalogId);
-  return findTrail(tree, code) ?? [];
+  const tree = await cachedCategoryTree(catalogId, localizedCatalogId)
+  return findTrail(tree, code) ?? []
 }
 
-export async function generateMetadata({ params, searchParams }: Params): Promise<Metadata> {
-  const { locale, code } = await params;
-  const resolved = await resolveLocale(locale);
-  if (!resolved) return {};
-  const lang = languageOf(resolved.localizedCatalog);
+export async function generateMetadata({
+  params,
+  searchParams,
+}: Params): Promise<Metadata> {
+  const { locale, code } = await params
+  const resolved = await resolveLocale(locale)
+  if (!resolved) return {}
+  const lang = languageOf(resolved.localizedCatalog)
 
-  const trail = await categoryTrail(resolved.catalog.id, resolved.localizedCatalog.id, code);
+  const trail = await categoryTrail(
+    resolved.catalog.id,
+    resolved.localizedCatalog.id,
+    code
+  )
   // Metadata resolves before the response flushes, so this is the last point at which a real
   // 404 status is reachable if a Suspense boundary is ever reintroduced above this route (it
   // would make the page stream, and a streamed notFound() can only paint 404 UI under a
   // 200). The fetch is cache()d, so it costs nothing. See
   // specs/bugfix-ssr-product-list-behind-suspense.md.
-  if (trail.length === 0) await missingInCatalog(locale, resolved, await searchParams);
+  if (trail.length === 0)
+    await missingInCatalog(locale, resolved, await searchParams)
 
-  const category = trail[trail.length - 1];
-  const title = category.name;
-  const url = canonical(locale, `/category/${encodeURIComponent(code)}`);
+  const category = trail[trail.length - 1]
+  const title = category.name
+  const url = canonical(locale, `/category/${encodeURIComponent(code)}`)
 
   // The count comes from the same cache()d fetch the page body uses, so this costs
   // nothing extra and the description states something true rather than boilerplate.
-  const { total, products } = await fetchCategoryProducts(resolved.localizedCatalog.code, code);
+  const { total, products } = await fetchCategoryProducts(
+    resolved.localizedCatalog.code,
+    code
+  )
   const description = tServer(
-    lang, 'category', 'category.meta.description',
+    lang,
+    'category',
+    'category.meta.description',
     'Browse our {{name}} selection: {{count}} products available.',
     { name: title, count: total }
-  );
-  const config = await fetchPublicConfiguration(resolved.localizedCatalog.code);
-  const firstImage = products[0] ? getProductFields(products[0], config).image : '';
+  )
+  const config = await fetchPublicConfiguration(resolved.localizedCatalog.code)
+  const firstImage = products[0]
+    ? getProductFields(products[0], config).image
+    : ''
 
   return {
     title,
@@ -70,30 +93,38 @@ export async function generateMetadata({ params, searchParams }: Params): Promis
       url,
       images: firstImage ? [firstImage] : undefined,
     },
-  };
+  }
 }
 
 export default async function Page({ params, searchParams }: Params) {
-  const { locale, code } = await params;
-  const resolved = await resolveLocale(locale);
-  if (!resolved) notFound();
-  const lang = languageOf(resolved.localizedCatalog);
+  const { locale, code } = await params
+  const resolved = await resolveLocale(locale)
+  if (!resolved) notFound()
+  const lang = languageOf(resolved.localizedCatalog)
 
   // Only the first page, unsorted and unfiltered — that is the URL a crawler sees.
   // CategoryPage itself decides whether the current view still matches this and
   // refetches when the user sorts, filters or pages.
-  const initialData = await fetchCategoryProducts(resolved.localizedCatalog.code, code);
-  const trail = await categoryTrail(resolved.catalog.id, resolved.localizedCatalog.id, code);
+  const initialData = await fetchCategoryProducts(
+    resolved.localizedCatalog.code,
+    code
+  )
+  const trail = await categoryTrail(
+    resolved.catalog.id,
+    resolved.localizedCatalog.id,
+    code
+  )
 
   // An id that matches no category still returns an empty product list rather than an
   // error, which would render an empty page under a 200 for any junk URL. Unless the visitor
   // just switched catalog, in which case the id belonged to the previous one and they are sent
   // to this catalog's listing instead.
-  if (trail.length === 0) await missingInCatalog(locale, resolved, await searchParams);
+  if (trail.length === 0)
+    await missingInCatalog(locale, resolved, await searchParams)
 
-  const category = trail[trail.length - 1];
-  const url = canonical(locale, `/category/${encodeURIComponent(code)}`);
-  const config = await fetchPublicConfiguration(resolved.localizedCatalog.code);
+  const category = trail[trail.length - 1]
+  const url = canonical(locale, `/category/${encodeURIComponent(code)}`)
+  const config = await fetchPublicConfiguration(resolved.localizedCatalog.code)
 
   const breadcrumb = [
     {
@@ -106,9 +137,12 @@ export default async function Page({ params, searchParams }: Params) {
       '@type': 'ListItem',
       position: i + 2,
       name: node.name,
-      item: canonical(locale, `/category/${encodeURIComponent(String(node.id))}`),
+      item: canonical(
+        locale,
+        `/category/${encodeURIComponent(String(node.id))}`
+      ),
     })),
-  ];
+  ]
 
   return (
     <>
@@ -132,8 +166,8 @@ export default async function Page({ params, searchParams }: Params) {
           mainEntity: {
             '@type': 'ItemList',
             numberOfItems: initialData.products.length,
-            itemListElement: initialData.products.map((doc: any, i: number) => {
-              const p = getProductFields(doc, config);
+            itemListElement: initialData.products.map((doc, i) => {
+              const p = getProductFields(doc, config)
               return {
                 '@type': 'ListItem',
                 position: i + 1,
@@ -142,7 +176,10 @@ export default async function Page({ params, searchParams }: Params) {
                   name: p.name,
                   sku: p.sku,
                   image: p.image || undefined,
-                  url: canonical(locale, `/product/${encodeURIComponent(p.sku)}`),
+                  url: canonical(
+                    locale,
+                    `/product/${encodeURIComponent(p.sku)}`
+                  ),
                   offers: {
                     '@type': 'Offer',
                     price: p.price,
@@ -152,12 +189,12 @@ export default async function Page({ params, searchParams }: Params) {
                       : 'https://schema.org/OutOfStock',
                   },
                 },
-              };
+              }
             }),
           },
         }}
       />
       <CategoryPage initialData={initialData} />
     </>
-  );
+  )
 }

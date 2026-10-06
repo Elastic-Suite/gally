@@ -1,6 +1,7 @@
 # Feature: light footer mirroring the header
 
 ## Status: implemented
+
 ## Page/Component: src/components/Footer.tsx, src/components/BrandLockup.tsx, src/components/SectionLinks.tsx, src/components/Header.tsx, src/styles.css
 
 > **Superseded in part** by `feature-footer-single-row.md`: the two rows are now one (lockup, powered-by
@@ -16,6 +17,7 @@ The lockup and the links are not copied markup: they were extracted from `Header
 `BrandLockup` and `SectionLinks`, and both places render the same components.
 
 ## Behaviour (testable)
+
 - [x] Footer row 1: the lockup on the left, Produits / Blog / (Search Intelligence, expert mode) /
       Recherche sémantique on the right, grey, the current section underlined in indigo.
 - [x] Row 2: "Propulsé par Gally - …" centred, the Gally link in indigo.
@@ -25,19 +27,24 @@ The lockup and the links are not copied markup: they were extracted from `Header
 Verified 2026-09-24 on screenshots of the running app at 1440px and 390px.
 
 ## SDK contract used
+
 - None.
 
 ## Tracking (required)
+
 - None changed.
 
 ## UI constraints
+
 - Tokens only. The link rules are shared by `.header-nav > a` and `.footer-nav > a`.
 
 ## Known, out of scope
+
 - On narrow screens the floating Insights button (bottom left) covers part of the powered-by line.
   It did so on the dark footer too.
 
 ## MUST NOT change
+
 - `BrandLockup` keeps `href="/"`, `aria-label={t('brand.ariaLabel')}` and the `aria-hidden` words
   (`feature-logo-gally-example.md`).
 - `SectionLinks` keeps the header's rules: active state from `useAppPathname()`, `expert-only` on

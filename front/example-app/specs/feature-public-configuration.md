@@ -1,9 +1,11 @@
 # Feature: Gally public configuration, fetched in SSR
 
 ## Status: implemented
+
 ## Page/Component: app/[locale]/layout.tsx, src/sdk/server.ts, src/sdk/config.ts, src/contexts/ConfigContext.tsx
 
 ## Why
+
 The media host was hardcoded (`MEDIA_BASE_URL = 'https://gally.localhost/media/catalog/product'` in
 `src/sdk/index.ts`) and concatenated with no slash handling. The admin reads the same value from the
 Gally setting `gally.base_url.media`, which comes from `GALLY_CATALOG_MEDIA_URL` and can be
@@ -11,6 +13,7 @@ overridden per localized catalog. The storefront now reads Gally's public config
 way, so a different host, or a per-catalog override, needs no code change.
 
 ## Behaviour (testable)
+
 - [x] `fetchPublicConfiguration(localizedCatalogCode)` (`src/sdk/server.ts`) calls
       `GET /public_configurations?localizedCatalogCode=<code>` and returns a `path -> value` map. It
       is `cache()`d, so the layout, the page body and `generateMetadata` share one request per render.
@@ -34,17 +37,21 @@ slash, image returns 200). Not verified: a per-catalog override in the admin, th
 endpoint fails, the one-request-per-render count, and an array-valued `image`.
 
 ## SDK contract used
+
 - No SDK call: a plain `fetch` to the public, token-free `public_configurations` endpoint, with
   `Accept: application/ld+json`, the same way `src/sdk/catalogs.ts` fetches catalogs. The response
   is `hydra:member: [{ path, value, scopeType }]`.
 
 ## Tracking (required)
+
 - None added or changed.
 
 ## UI constraints
+
 - No visual change. Image URLs only.
 
 ## MUST NOT change
+
 - No hardcoded media host anywhere in `src/` or `app/`.
 - `getProductFields` and `getCmsFields` stay pure and take `config` as an argument, so server pages
   and client components call the same function. Do not read context inside them.

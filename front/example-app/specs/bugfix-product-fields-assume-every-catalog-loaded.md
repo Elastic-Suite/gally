@@ -1,7 +1,9 @@
 # Bugfix: the product selection assumes every catalogue is loaded
 
 ## Status: implemented
+
 ## Page/Component
+
 `src/sdk/fields.ts`. Call sites updated in `src/sdk/server.ts`, `src/sdk/axisLabels.ts`,
 `src/hooks/useSearch.ts`, `src/views/ProductPage.tsx` and `app/[locale]/layout.tsx`.
 
@@ -53,14 +55,14 @@ a page that renders.
 The axis map was derived from the fixtures rather than guessed, by reading
 `configurable_attributes` out of every `product_documents.json`:
 
-| catalogue | axes | extra |
-|---|---|---|
-| `com` (Venia) | `fashion_color`, `fashion_size` | `fashion_material` |
-| `fr` (Luma) | `color`, `size` | — |
-| `uk` | none (no indexed products) | — |
-| `toolbox` | none (no configurables) | — |
-| `fashion` (Fiora) | 8 × `fio_*` | — |
-| `papershop` | `llv_color`, `llv_format`, `llv_material` | `llv_is_eco` |
+| catalogue         | axes                                      | extra              |
+| ----------------- | ----------------------------------------- | ------------------ |
+| `com` (Venia)     | `fashion_color`, `fashion_size`           | `fashion_material` |
+| `fr` (Luma)       | `color`, `size`                           | —                  |
+| `uk`              | none (no indexed products)                | —                  |
+| `toolbox`         | none (no configurables)                   | —                  |
+| `fashion` (Fiora) | 8 × `fio_*`                               | —                  |
+| `papershop`       | `llv_color`, `llv_format`, `llv_material` | `llv_is_eco`       |
 
 Server and client must keep asking for the same shape, or the page changes under the user after
 hydration. Both now derive it from the catalogue: `server.ts` resolves the catalogue from the

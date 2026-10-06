@@ -3,6 +3,7 @@
 ## Status: implemented
 
 ## Page/Component
+
 `src/sdk/fields.ts`, `src/sdk/productFields.ts`, `src/components/ProductCard.tsx`,
 `src/views/ProductPage.tsx`, `src/styles.css`, `src/locales/{en,fr,de}/product.json`.
 Data side, in the `gally-sample-data` repo:
@@ -31,7 +32,7 @@ catalogue**, for two separate reasons that both had to be fixed for any of this 
       tall in a grid of them; a stack of pills eats the product it is selling. Verified on
       `/com_fr/category/cat_5`: 14 cards, 14 badges, never two on one card.
 - [x] **The PDP shows all of them**, stacked, because the hero picture has the room. Verified:
-      `VA13-GO-NA` renders "En promo" *and* "100 % 14K Gold".
+      `VA13-GO-NA` renders "En promo" _and_ "100 % 14K Gold".
 - [x] Priority is the order `getProductBadges()` returns, and callers truncate rather than
       re-sort — so the badge a card shows is always the one the PDP leads with. Verified on
       `VA13-GO-NA`: card shows "En promo", PDP leads with "En promo".
@@ -41,14 +42,14 @@ catalogue**, for two separate reasons that both had to be fixed for any of this 
       badge. Verified: `/com_fr/category/cat_5` renders no availability badge, and the
       out-of-stock cards there still show their disabled button.
 - [x] **New** — `new === true`. 12 curated Venia SKUs, spread over accessories, dresses, bottoms,
-      skirts, sweaters and tops, all in stock. *Requires `make fixtures_load`; unverified until then.*
+      skirts, sweaters and tops, all in stock. _Requires `make fixtures_load`; unverified until then._
 - [x] **On sale** — `sale === true || price[0].is_discounted`. 9 SKUs. Verified live on
       `/com_fr/category/cat_5`: `VA13-GO-NA` and `VA19-GO-NA` render "En promo".
 - [x] **100% \<material\>** — `fashion_material` has exactly one entry. 22 of 85 Venia products.
       Verified live: "100 % Cashmere" on `VSW11`, "100 % 14K Gold" / "100 % Sterling Silver"
       across `cat_5`.
 - [x] Where more than one badge is drawn (PDP only), they stack rather than overlap.
-      Verified: `VA13-GO-NA` renders sale *and* material as two pills, not one on top of the other.
+      Verified: `VA13-GO-NA` renders sale _and_ material as two pills, not one on top of the other.
 - [x] The same badges appear on the PDP hero picture, from the same rule. Verified on
       `/com_fr/product/VSW11` and `/com_fr/product/VA13-GO-NA`.
 - [x] Server-rendered — the badges are in the SSR HTML, not painted in after hydration.

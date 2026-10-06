@@ -23,6 +23,7 @@ exactly, or the server-rendered page and the hydrated one disagree.
 
 **The URL's first segment is the localized-catalog code** (`com_fr`, `com_en`, `fr_fr`, `fr_en`,
 `en_fr`, `en_en`) and it is resolved on the server in `app/[locale]/layout.tsx`. Two rules follow:
+
 - Link with `src/components/LocaleLink.tsx` (import it as `Link`), never `next/link` directly, and
   use `useLocaleHref()` for `router.push`. A raw link drops the segment and resets the visitor to
   the default catalog.
@@ -35,18 +36,18 @@ exactly, or the server-rendered page and the hydrated one disagree.
 This is the only routing table for the app. `CLAUDE.md` beside this file is a redirect here and
 carries no rules — don't copy anything back into it.
 
-| You need | Read |
-|---|---|
-| SDK/API facts and gotchas, product data shape, demo catalogs | `docs/sdk-reference.md` |
-| Palette, typography, component patterns, tokens | `docs/design-system.md` |
-| Routes, source layout, feature → file | `docs/architecture.md` (regenerate-able, lower trust) |
-| The feature or bug you are touching | `specs/feature-*.md` / `specs/bugfix-*.md` |
-| What is deliberately not built yet | `missing-features.md` |
-| Running the demo by hand | `DEMO.md` |
-| The paused guided demo (story, intro, audience modes) | `specs/feature-guided-demo-rebuild.md` |
-| Installing and starting the app | `README.md` |
-| The wider monorepo — five git repos, Docker topology, backend | `../../AGENTS.md` |
-| Rules for the directory you are editing | `src/{components,views,sdk}/AGENTS.md` |
+| You need                                                      | Read                                                  |
+| ------------------------------------------------------------- | ----------------------------------------------------- |
+| SDK/API facts and gotchas, product data shape, demo catalogs  | `docs/sdk-reference.md`                               |
+| Palette, typography, component patterns, tokens               | `docs/design-system.md`                               |
+| Routes, source layout, feature → file                         | `docs/architecture.md` (regenerate-able, lower trust) |
+| The feature or bug you are touching                           | `specs/feature-*.md` / `specs/bugfix-*.md`            |
+| What is deliberately not built yet                            | `missing-features.md`                                 |
+| Running the demo by hand                                      | `DEMO.md`                                             |
+| The paused guided demo (story, intro, audience modes)         | `specs/feature-guided-demo-rebuild.md`                |
+| Installing and starting the app                               | `README.md`                                           |
+| The wider monorepo — five git repos, Docker topology, backend | `../../AGENTS.md`                                     |
+| Rules for the directory you are editing                       | `src/{components,views,sdk}/AGENTS.md`                |
 
 **Precedence: `docs/sdk-reference.md` wins over every other file, this one included.** Its gotchas
 were found the hard way. Read the relevant doc before you code, and don't restate it here or

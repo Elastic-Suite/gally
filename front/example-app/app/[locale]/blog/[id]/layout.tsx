@@ -1,5 +1,5 @@
-import { notFound } from 'next/navigation';
-import { resolveLocale, fetchCmsPageById } from '../../../../src/sdk/server';
+import { notFound } from 'next/navigation'
+import { resolveLocale, fetchCmsPageById } from '../../../../src/sdk/server'
 
 // The article existence check is NOT here. It moved to page.tsx and its generateMetadata, which
 // can read the `?from=` catalog-switch marker; a layout cannot, because Next does not give it
@@ -12,12 +12,12 @@ export default async function ArticleGuard({
   children,
   params,
 }: {
-  children: React.ReactNode;
-  params: Promise<{ locale: string; id: string }>;
+  children: React.ReactNode
+  params: Promise<{ locale: string; id: string }>
 }) {
-  const { locale, id } = await params;
-  const resolved = await resolveLocale(locale);
-  if (!resolved) notFound();
-  await fetchCmsPageById(resolved.localizedCatalog.code, id);
-  return <>{children}</>;
+  const { locale, id } = await params
+  const resolved = await resolveLocale(locale)
+  if (!resolved) notFound()
+  await fetchCmsPageById(resolved.localizedCatalog.code, id)
+  return <>{children}</>
 }

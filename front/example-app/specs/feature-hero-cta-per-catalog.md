@@ -3,7 +3,9 @@
 > **Superseded in part** by `feature-homepage-blocks.md`: on `fashion`, `toolbox` and `papershop` the button sits in the new wide hero and is `.btn-dark`, not coral. Its label and query, and every rule below about them, stand.
 
 ## Status: implemented
+
 ## Page/Component
+
 `src/views/Homepage.tsx`, `src/locales/{en,fr,de}/category.json`.
 
 ## Why
@@ -26,20 +28,20 @@ in the locale files, keyed by catalogue.
 Every query below was measured with keyword search in its own localized catalogue against the
 running instance on 2026-09-22. The count is the total hits of `product_search`.
 
-| Catalogue | Language | Label | Query | Hits |
-|---|---|---|---|---|
-| `com`, `fr`, `uk` | en | Shop dresses | `dress` | 18 † |
-| | fr | Découvrir les robes | `robe` | 17 † |
-| | de | Kleider entdecken | `Kleid` | not measurable † |
-| `fashion` | en | Shop dresses | `dress` | 43 |
-| | fr | Découvrir les robes | `robe` | 44 |
-| | de | Kleider entdecken | `Kleid` | 22 |
-| `toolbox` | en | Shop drills | `drill` | 46 |
-| | fr | Découvrir les perceuses | `perceuse` | 17 |
-| | de | Akku-Bohrschrauber entdecken | `Akku-Bohrschrauber` | 6 |
-| `papershop` | en | Shop fountain pens | `fountain pen` | 15 |
-| | fr | Découvrir les stylos plume | `stylo plume` | 15 |
-| | de | Füllhalter entdecken | `Füllhalter` | 8 |
+| Catalogue         | Language | Label                        | Query                | Hits             |
+| ----------------- | -------- | ---------------------------- | -------------------- | ---------------- |
+| `com`, `fr`, `uk` | en       | Shop dresses                 | `dress`              | 18 †             |
+|                   | fr       | Découvrir les robes          | `robe`               | 17 †             |
+|                   | de       | Kleider entdecken            | `Kleid`              | not measurable † |
+| `fashion`         | en       | Shop dresses                 | `dress`              | 43               |
+|                   | fr       | Découvrir les robes          | `robe`               | 44               |
+|                   | de       | Kleider entdecken            | `Kleid`              | 22               |
+| `toolbox`         | en       | Shop drills                  | `drill`              | 46               |
+|                   | fr       | Découvrir les perceuses      | `perceuse`           | 17               |
+|                   | de       | Akku-Bohrschrauber entdecken | `Akku-Bohrschrauber` | 6                |
+| `papershop`       | en       | Shop fountain pens           | `fountain pen`       | 15               |
+|                   | fr       | Découvrir les stylos plume   | `stylo plume`        | 15               |
+|                   | de       | Füllhalter entdecken         | `Füllhalter`         | 8                |
 
 **† The three legacy catalogues keep the dress pair, unchanged, and their numbers are carried over
 rather than re-measured.** `com`, `fr` and `uk` are the original sample set — `com_fr`, `com_en`,

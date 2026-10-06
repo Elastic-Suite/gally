@@ -1,5 +1,5 @@
 /** Persona speaking in a story step */
-export type Persona = 'camille' | 'merchant';
+export type Persona = 'camille' | 'merchant'
 
 /**
  * Action descriptors — each type has its own params.
@@ -7,34 +7,40 @@ export type Persona = 'camille' | 'merchant';
  */
 export type StepAction =
   | { type: 'type_and_search'; query: string; startRoute: string }
-  | { type: 'highlight_sequence'; selector: string; childSelector: string; maxItems: number; interval: number }
+  | {
+      type: 'highlight_sequence'
+      selector: string
+      childSelector: string
+      maxItems: number
+      interval: number
+    }
   | { type: 'add_to_cart_flow'; searchQuery: string }
-  | { type: 'navigate_only' };
+  | { type: 'navigate_only' }
 
 /** A single step in a demo scenario */
 export interface ScenarioStep {
-  act: number;
+  act: number
   /** Key path within scenarios.json's `<scenario.i18nKey>` block, e.g. "steps.1" — resolves title/bubble/gain. */
-  i18nKey: string;
-  persona: Persona;
+  i18nKey: string
+  persona: Persona
   /** Route to navigate to when this step activates. Use __first__ as placeholder for first category. */
-  target: string;
+  target: string
   /** CSS selector to spotlight (visual hint in the companion) */
-  spotlight?: string;
+  spotlight?: string
   /** Action to auto-play when this step activates */
-  action: StepAction;
+  action: StepAction
 }
 
 /** Full scenario definition */
 export interface Scenario {
-  id: string;
+  id: string
   /** Top-level key in scenarios.json — resolves name/description/personas/steps.*. */
-  i18nKey: string;
+  i18nKey: string
   /** Persona display data for the intro screen. `name` is a literal (proper noun), not translated;
    *  role/merchant-name text lives in scenarios.json under personas.customer/merchant. */
   personas: {
-    customer: { name: string; emoji: string };
-    merchant: { emoji: string };
-  };
-  steps: ScenarioStep[];
+    customer: { name: string; emoji: string }
+    merchant: { emoji: string }
+  }
+  steps: ScenarioStep[]
 }

@@ -1,6 +1,7 @@
 # Bugfix: removing one variant of a product removed every line of that product
 
 ## Status: implemented
+
 ## Page/Component: src/contexts/CartContext.tsx (`removeFromCart`, `updateQty`), src/views/CartPage.tsx
 
 ## Problem
@@ -10,11 +11,11 @@ A cart line is identified by **sku + variant** — `addToCart` has always dedupe
 `${item.sku}-${item.variant}`. But the two mutations keyed on the SKU alone:
 
 ```ts
-setItems(prev => prev.filter(i => i.sku !== sku));            // removeFromCart
-setItems(prev => prev.map(i => i.sku === sku ? {...i, qty} : i));  // updateQty
+setItems((prev) => prev.filter((i) => i.sku !== sku)) // removeFromCart
+setItems((prev) => prev.map((i) => (i.sku === sku ? { ...i, qty } : i))) // updateQty
 ```
 
-So one identity was used to *create* lines and a coarser one to *change* them. Removing "Pluie / M"
+So one identity was used to _create_ lines and a coarser one to _change_ them. Removing "Pluie / M"
 deleted "Menthe / L" with it, and `+`/`−` moved the quantity of every line sharing the parent SKU at
 once.
 

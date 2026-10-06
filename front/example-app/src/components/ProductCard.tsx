@@ -1,31 +1,31 @@
-'use client';
+'use client'
 
-import Link from './LocaleLink';
-import { useTranslation } from 'react-i18next';
-import { useCatalog } from '../contexts/CatalogContext';
-import { useGallyConfig } from '../contexts/ConfigContext';
-import { useAddedFlash } from '../hooks/useAddedFlash';
-import { getProductFields, getProductBadges } from '../sdk/productFields';
-import QuickAdd from './QuickAdd';
-import EcoMark from './EcoMark';
-import ProductImage from './ProductImage';
+import Link from './LocaleLink'
+import { useTranslation } from 'react-i18next'
+import { useCatalog } from '../contexts/CatalogContext'
+import { useGallyConfig } from '../contexts/ConfigContext'
+import { useAddedFlash } from '../hooks/useAddedFlash'
+import { getProductFields, getProductBadges } from '../sdk/productFields'
+import type { SearchDocument } from '../sdk/fields'
+import QuickAdd from './QuickAdd'
+import EcoMark from './EcoMark'
+import ProductImage from './ProductImage'
 
 interface Props {
-  product: any;
+  product: SearchDocument
 }
 
-
 export default function ProductCard({ product }: Props) {
-  const { t } = useTranslation('product');
-  const { formatPrice } = useCatalog();
+  const { t } = useTranslation('product')
+  const { formatPrice } = useCatalog()
   // Same in-place confirmation the autocomplete uses — the cart badge is up in
   // the header, too far from a card in a long grid to be noticed. QuickAdd owns the button's
   // own confirmation; this instance only drives the card's green flash around it.
-  const { addedKey, flash } = useAddedFlash();
-  const config = useGallyConfig();
+  const { addedKey, flash } = useAddedFlash()
+  const config = useGallyConfig()
 
-  const fields = getProductFields(product, config);
-  const { name, sku, image, price, originalPrice, isDiscounted } = fields;
+  const fields = getProductFields(product, config)
+  const { name, sku, image, price, originalPrice, isDiscounted } = fields
   // Which badges apply is a property of the product, not of the card — the rule lives in
   // ../sdk/productFields.ts so the product page overlays the same set on its own picture.
   // A card gets exactly ONE: it is one picture in a grid of them, and a stack of pills eats the
@@ -33,8 +33,8 @@ export default function ProductCard({ product }: Props) {
   // than it was (see specs/feature-larger-product-grid.md), which is not a reason to stack more. getProductBadges() is ordered by priority, so taking
   // the first is the whole selection rule — never re-sort here, or a card and its PDP would
   // disagree about which badge matters most.
-  const badges = getProductBadges(fields).slice(0, 1);
-  const justAdded = addedKey === sku;
+  const badges = getProductBadges(fields).slice(0, 1)
+  const justAdded = addedKey === sku
 
   return (
     <div className={`product-card ${justAdded ? 'just-added' : ''}`}>
@@ -46,7 +46,10 @@ export default function ProductCard({ product }: Props) {
         {badges.length > 0 && (
           <div className="product-card-badges">
             {badges.map((badge) => (
-              <span key={badge.variant} className={`product-card-badge product-card-badge--${badge.variant}`}>
+              <span
+                key={badge.variant}
+                className={`product-card-badge product-card-badge--${badge.variant}`}
+              >
                 {t(badge.key, badge.params)}
               </span>
             ))}
@@ -55,13 +58,27 @@ export default function ProductCard({ product }: Props) {
         {/* Opposite corner, outside the single-badge slot above, so an eco product that is also on
             sale shows both. See specs/feature-eco-badge.md. */}
         {fields.isEco && <EcoMark />}
-        <Link href={`/product/${encodeURIComponent(sku)}`} className="product-card-image-link">
-          <ProductImage src={image} alt={name} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
+        <Link
+          href={`/product/${encodeURIComponent(sku)}`}
+          className="product-card-image-link"
+        >
+          <ProductImage
+            src={image}
+            alt={name}
+            style={{
+              maxWidth: '100%',
+              maxHeight: '100%',
+              objectFit: 'contain',
+            }}
+          />
         </Link>
         <QuickAdd product={product} onAdded={flash} />
       </div>
       <div className="product-card-body">
-        <Link href={`/product/${encodeURIComponent(sku)}`} className="product-card-name-link">
+        <Link
+          href={`/product/${encodeURIComponent(sku)}`}
+          className="product-card-name-link"
+        >
           <div className="product-card-name">{name}</div>
         </Link>
         {/* Same string and same translation key as the product page's `.product-detail-brand`,
@@ -70,17 +87,28 @@ export default function ProductCard({ product }: Props) {
         <div className="product-card-sku">{t('page.sku', { sku })}</div>
         <div className="product-card-price">
           {isDiscounted && originalPrice && (
-            <span style={{ textDecoration: 'line-through', color: 'var(--gray-400)', marginRight: '0.5rem', fontSize: '0.85em' }}>
+            <span
+              style={{
+                textDecoration: 'line-through',
+                color: 'var(--gray-400)',
+                marginRight: '0.5rem',
+                fontSize: '0.85em',
+              }}
+            >
               {formatPrice(originalPrice)}
             </span>
           )}
-          <span style={isDiscounted ? { color: 'var(--coral-500)', fontWeight: 600 } : {}}>
+          <span
+            style={
+              isDiscounted ? { color: 'var(--coral-500)', fontWeight: 600 } : {}
+            }
+          >
             {formatPrice(price)}
           </span>
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export { getProductFields };
+export { getProductFields }

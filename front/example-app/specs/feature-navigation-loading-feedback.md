@@ -1,6 +1,7 @@
 # Feature: navigation feedback for server-rendered routes
 
 ## Status: implemented
+
 ## Page/Component: `app/[locale]/{product,blog,category}/**/loading.tsx`, `src/components/skeletons.tsx`
 
 ## Problem
@@ -37,7 +38,7 @@ Phase 3's `initialData` handoff used a one-shot `skipMountFetch` ref. That is wr
 1. **React StrictMode double-invokes effects in dev** (`reactStrictMode: true`). The first pass
    consumed the flag, the second pass refetched — putting a skeleton back over data the server had
    already delivered. This was a direct contributor to the un-smooth feeling.
-2. A one-shot flag says nothing about *which* query the seed belongs to.
+2. A one-shot flag says nothing about _which_ query the seed belongs to.
 
 Replaced with `serverFetchedKey`: a ref holding a serialized key of the options the server-supplied
 data corresponds to. The effect skips only while the current options still match that key, and
@@ -55,9 +56,10 @@ redisplaying stale seeded results. Idempotent under repeated effect invocation.
 > also a description of the bug. Read the two specs together.
 
 ## Behaviour (testable)
+
 - [x] `loading.tsx` exists for product, blog post and category; the skeleton is **streamed first**
       in the HTML response, proving the Suspense boundary is in place
-      — *no longer true, and the streaming it demonstrated is the bug the successor spec fixes*
+      — _no longer true, and the streaming it demonstrated is the bug the successor spec fixes_
 - [x] SEO payload unaffected by streaming — title, `<h1>` and all JSON-LD still present in the
       same response on all three routes
 - [x] **TTFB improved**, because the shell no longer waits on the data fetch:
@@ -73,7 +75,7 @@ redisplaying stale seeded results. Idempotent under repeated effect invocation.
 
 ## Follow-up: skeletons rewritten to hold the real layout (CLS)
 
-The first version gave feedback but did not hold the page's *shape*, so the skeleton itself caused
+The first version gave feedback but did not hold the page's _shape_, so the skeleton itself caused
 the layout shift it was meant to prevent. Each skeleton now mirrors the structure and the measured
 dimensions of the view it stands in for.
 
@@ -97,7 +99,7 @@ drawer state carried over from the branch it replaced is not lost.
 
 **`ProductPageSkeleton` deliberately does not reserve space for the recommendations slider** — that
 slider renders only when its separate client-side query returns rows, so reserving space would
-*introduce* a shift on every product with no recommendations.
+_introduce_ a shift on every product with no recommendations.
 
 Verified: the streamed fallback now contains `category-nav`, `catalog-page`, `facets-sidebar`,
 `products-header`, `facet-group` and 20 skeleton cards; zero visible skeletons remain after
@@ -109,10 +111,11 @@ the improvement is verified structurally (the fallback and the content now produ
 model) rather than numerically. Lighthouse or the Performance panel would give the real figure.
 
 ## MUST NOT change
+
 - ~~**Do not delete the `loading.tsx` files.**~~ **Reversed** by
   `bugfix-ssr-product-list-behind-suspense.md`: they must NOT exist, because the boundary is what
   makes the server-rendered page script-gated. The underlying rule survives in a different form —
-  *never leave a server-fetched navigation with no feedback*. That is now
+  _never leave a server-fetched navigation with no feedback_. That is now
   `src/contexts/NavigationContext.tsx`, and breaking it is just as silent: if
   `LinkPendingReporter` stops being rendered inside a `<Link>`, `useLinkStatus()` reports nothing
   for ever and every click looks frozen again, with nothing failing.

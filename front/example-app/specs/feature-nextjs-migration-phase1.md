@@ -1,6 +1,7 @@
 # Feature: Next.js 16 App Router migration — Phase 1 (framework swap only)
 
 ## Status: implemented (one item unverified — see Tracking)
+
 ## Page/Component: whole app — `app/**`, `src/index.tsx` + `src/App.tsx` removed
 
 Phase 1 of the four-phase plan in `plan-ssr-seo.md`. **This phase delivers no SEO.** It swaps
@@ -9,6 +10,7 @@ still sees a near-empty shell afterwards. Its value is that it isolates nearly a
 migration's risk into one reviewable, behaviour-identical change.
 
 ## Why Next 16 and not `front/pwa`'s Next 13
+
 Pages Router has no React Server Components, which is the entire point of Phases 2–4. Next 16.3.0's
 peer range is `react ^18.2.0 || ^19.0.0` and this app already runs React 19.2.4, so **no React
 upgrade was needed**. `engines.node >=20.9.0` against the container's 20.20.2. `example-app` nests
@@ -16,6 +18,7 @@ its own `react` and `typescript` alongside the workspace-hoisted React 18 / TS 4
 here forces `pwa` off its versions.
 
 ## Behaviour (testable)
+
 - [x] All 11 routes return 200: `/`, `/category/:code`, `/search`, `/product/:sku`, `/cart`,
       `/checkout`, `/blog`, `/blog/:id`, `/cms/:slug`, `/explain`, `/closing`
 - [x] Client JS hydrates and the SDK fetches: `/product/VD10` renders `<h1>Claudia Crochet Dress</h1>`
@@ -32,22 +35,25 @@ here forces `pwa` off its versions.
 - [ ] **Tracking `VIEW` / `SEARCH` / `ADD_TO_CART`** — NOT verified, see below
 
 ## Second hydration bug found and fixed: `Facets.tsx` skeleton widths
+
 Not predicted by `plan-ssr-seo.md` (which expected `formatCmsDate`'s locale formatting to be the
 mismatch — that one did not fire). The real one: the loading skeleton used
 `width: ${60 + Math.random() * 30}%`. The server rendered `62.6221%`, the client `70.56%`, and React
-reported *"A tree hydrated but some attributes of the server rendered HTML didn't match"* and
+reported _"A tree hydrated but some attributes of the server rendered HTML didn't match"_ and
 abandoned patching that subtree. Replaced with a deterministic `((i * 7 + j * 13) % 31)`.
 **Same class of bug, same fix, anywhere else a render reads `Math.random()`, `Date.now()` or a
 locale.** `useStoryActions.ts:89` also calls `Math.random()` but inside a `setTimeout` callback, so
 it never runs during render and is safe.
 
 ## SDK contract used
+
 Unchanged. `src/sdk/index.ts` still imports from the `@elastic-suite/gally-sdk` main entry, and all
 three singletons (`Client`, `SearchManager`, `TrackingEventManager`) stay lazily constructed, so
 nothing touches browser storage at module scope. Switching to the `./browser` subpath — and the
 server/client entry split the SDK actually offers — is Phase 3 work, not this phase's.
 
 ## Tracking (required) — NOT YET VERIFIED
+
 No tracking code was touched: `useTracking.ts`, `src/sdk/index.ts` and the provider wiring are
 byte-identical, and `TrackingEventManager` is still constructed lazily on the client. So the risk is
 low — but low is not verified, and this is `AGENTS.md`'s golden rule.
@@ -62,6 +68,7 @@ done.** Load a product page, run a search, add to cart, and confirm `VIEW` / `SE
 `ADD_TO_CART` appear.
 
 ## UI constraints
+
 No visual change whatsoever. `src/styles.css` (3,567 lines) moves as one global import in
 `app/layout.tsx`; not a line of it was edited. The Geist `<link>` tags and their explanatory comment
 are ported verbatim from the deleted `public/index.html`.
@@ -69,6 +76,7 @@ are ported verbatim from the deleted `public/index.html`.
 ## What changed
 
 **Entry / shell**
+
 - `src/index.tsx` → `app/layout.tsx` (server: `<html>`, `<head>`, global CSS, static title) +
   `app/providers.tsx` (`'use client'`, the provider tree in the same order).
 - `src/App.tsx` → `src/components/AppShell.tsx` — identical, minus its `<Routes>` block, which
@@ -88,14 +96,16 @@ layout. Pushing it downward to enable server components is Phase 3. Doing it her
 "provably identical behaviour" property that makes this phase reviewable.
 
 ## Root cause of the one certain breakage
+
 `SearchOverlay.tsx` called `createPortal(…, document.body)` **during render, unguarded** (two call
-sites). The wrong belief this encodes: *"a client component only runs in the browser."* It does not
+sites). The wrong belief this encodes: _"a client component only runs in the browser."_ It does not
 — Next pre-renders client components on the server too, where `document` is undefined. Fixed with a
 `mounted` state gate, placed **above** the `if (!open) return null` early return so hook order stays
 stable. Everything else in the app was already safe: no `window`/`document`/`localStorage` at module
 scope, and every `sessionStorage` read and `window.scrollTo` sits inside a callback or effect.
 
 ## Known breakage, accepted and deferred
+
 `compose.int.yml:23` builds target `gally_pwa_int`, which runs
 `yarn build:example; mv example-app/build pwa/public/example` (`docker/front/Dockerfile:117-118`).
 **Next emits `.next/`, never `build/`, so this target now fails.** Deliberately not fixed here: no
@@ -104,22 +114,40 @@ server-rendered app anyway — fixing it now means doing it twice. This is a kno
 mystery.
 
 Two smaller consequences of dropping `react-scripts`, noted rather than expanded into scope:
+
 - `"test": "react-scripts test"` → `echo "no tests"`. There are zero test files in this app.
 - `.eslintrc.js` lost `extends: ['react-app']` with `eslint-config-react-app`. Its replacement
   `next/core-web-vitals` needs eslint ≥ 9 and flat config, but this monorepo runs eslint 8.23.1 —
   so the config keeps only its rule overrides. `eslint-config-next` is installed but **cannot
   currently be used**; nothing runs eslint in this workspace anyway.
+  **Superseded 2026-10-06:** the app now has its own `eslint` ^9.39.0 and `eslint.config.mjs`
+  (flat config, `next/core-web-vitals` + `next/typescript`). `.eslintrc.js` and `.eslintignore`
+  are gone. pwa stays on eslint 8.23.1 with the shared `front/.eslintrc.js`. eslint 10 is not an
+  option yet: `eslint-plugin-react` 7.37.5, pulled in by `eslint-config-next`, accepts eslint up to 9.
 
 ## Pre-existing gap, explicitly left alone
+
 Root `front/package.json` calls `yarn --cwd example-app` for `test:ci`, `eslint`, `eslint:ci`,
 `prettier`, `prettier:ci`, `typescript` and `typescript:ci`. **None of those scripts has ever
 existed here** — those aggregate commands already failed before this migration. Out of scope by
 decision; do not go looking for scripts to preserve.
 
+**Closed 2026-10-06.** The claim above was wrong: on `main` the CRA app had all of them. They are
+back, adapted to Next:
+
+- `typescript` / `typescript:ci`: `next typegen && tsc --noEmit`. `next typegen` writes
+  `next-env.d.ts`, which is gitignored, so `tsc` can run before any build.
+- `prettier` / `prettier:ci`: the shared `front/.prettierrc` style, no semicolons. The app
+  declares `prettier` 2.7.1 itself. Without that, its bin falls through to the root
+  `node_modules/.bin/prettier`, which yarn links to Storybook's nested 2.3.0. That version
+  cannot parse inline `import { x, type Y }`.
+- `eslint` / `eslint:ci`: `eslint --fix .` / `eslint .`, using the flat config above.
+- `test:ci`: `echo "no tests"`, like `test`.
+
 ## MUST NOT change
+
 - **Tracking.** `VIEW` / `SEARCH` / `ADD_TO_CART` firing after hydration is the golden rule.
-- **The provider order** `CatalogProvider › I18nBridge › CartProvider › DemoProvider ›
-  SearchBarProvider`. `I18nBridge` sits inside `CatalogProvider` because it reacts to the selected
+- **The provider order** `CatalogProvider › I18nBridge › CartProvider › DemoProvider › SearchBarProvider`. `I18nBridge` sits inside `CatalogProvider` because it reacts to the selected
   localized catalog's locale; reordering silently breaks UI language switching.
 - **The `app-layout mode-${audience}` wrapper class**, which drives the `.expert-only` CSS.
 - **No `/example` prefix in any `href`.** `basePath` adds it, exactly as `basename` did. Hard-coding

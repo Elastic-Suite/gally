@@ -1,6 +1,7 @@
 # Feature: light glass autocomplete overlay (ACP)
 
 ## Status: implemented
+
 ## Page/Component: src/styles.css (ACP rules), src/components/SearchOverlay.tsx (unchanged)
 
 The dark indigo scrim (`rgba(30, 27, 75, 0.92)`) with light panel text clashed with the light
@@ -14,8 +15,8 @@ Supersedes the colour values in `feature-acp-visual-redesign.md`, `bugfix-acp-sc
 `bugfix-acp-attribute-value-typography.md`. Their layout, scroll and blur rules all stand.
 
 ## Behaviour (testable)
-- [x] Scrim: `linear-gradient(180deg, color-mix(in srgb, var(--indigo-50) 88%, transparent),
-      color-mix(in srgb, var(--indigo-100) 88%, transparent))` + `blur(28px)`.
+
+- [x] Scrim: `linear-gradient(180deg, color-mix(in srgb, var(--indigo-50) 88%, transparent), color-mix(in srgb, var(--indigo-100) 88%, transparent))` + `blur(28px)`.
 - [x] Panel text dark: section titles `--indigo-900` over a `--gray-200` rule; terms and categories
       `--gray-900`; attribute values `--gray-800` with `--gray-600` counts; blog titles `--gray-900`
       with `--gray-600` meta; empty notes `--gray-600`; the focus prompt title `--indigo-900` and
@@ -29,15 +30,19 @@ Supersedes the colour values in `feature-acp-visual-redesign.md`, `bugfix-acp-sc
 Verified 2026-09-24 on screenshots of the running app at 1440px.
 
 ## SDK contract used
+
 - None changed.
 
 ## Tracking (required)
+
 - None changed.
 
 ## UI constraints
+
 - Tokens only; the translucency is `color-mix()` of tokens, no new rgba value.
 
 ## MUST NOT change
+
 - The scrim alone owns the tint and the blur; the panel stays background-less
   (`bugfix-acp-scrim-blur-dropped.md`).
 - The standard `backdrop-filter` stays LAST in every prefixed pair.

@@ -1,13 +1,16 @@
 # Feature: Cart kept in localStorage
 
 ## Status: implemented
+
 ## Page/Component: src/contexts/CartContext.tsx, src/views/CartPage.tsx
 
 ## Problem
+
 The cart lived only in React state. A full page reload, a typed URL or a new tab emptied it, which in a
 live demo loses the story halfway through.
 
 ## Behaviour (testable)
+
 - [x] Each catalog has its own cart, saved to `localStorage` under `gally-example-cart:<catalog code>` on
       every change. The French, English and German stores of one catalog share it.
 - [x] It is read back in an effect, after mount and on each catalog switch. Not in `useState`'s initializer: the provider also
@@ -24,5 +27,6 @@ live demo loses the story halfway through.
 - [x] If storage is unavailable (private mode, full quota), the cart still works for the current page view.
 
 ## MUST NOT change
+
 - The add-to-cart tracking event fires as before, and only from `addToCart`. Loading the saved cart sends
   no event.

@@ -1,6 +1,7 @@
 # Feature: vector-search comparison screen
 
 ## Status: implemented (2026-08-17)
+
 ## Page/Component: `src/views/VectorSearchPage.tsx`, route `app/[locale]/vector-search/page.tsx`, fetcher `src/sdk/vectorSearch.ts`
 
 > **Superseded in part** by `feature-vector-search-demo-wording.md`: the non-English warning and both panel
@@ -10,13 +11,13 @@
 Restores the keyword-vs-vector comparison that `missing-features.md` §2 recorded as
 **"Original vector-vs-fulltext comparison — fully missing"**. The old CRA app had it at
 `src/pages/VectorSearch/VectorSearch.tsx`; the Next migration dropped it and the name
-`VectorSearchPage.tsx` was left on the *explain* view, which is a different feature.
+`VectorSearchPage.tsx` was left on the _explain_ view, which is a different feature.
 
 ## Naming, fixed as part of this change
 
 `src/views/VectorSearchPage.tsx` used to be the relevance-**explain** visualiser mounted at
 `/explain`. It is now `src/views/ExplainPage.tsx`, matching its route, and
-`VectorSearchPage.tsx` is this comparison, matching *its* route. `app/[locale]/explain/page.tsx`
+`VectorSearchPage.tsx` is this comparison, matching _its_ route. `app/[locale]/explain/page.tsx`
 imports the renamed file; nothing else referenced it. Two features had one name between them and
 `docs/architecture.md` described the explain page as "keyword vs vector search comparison" — a
 sentence that was true of neither file.
@@ -69,15 +70,9 @@ Verified live against this stack, not assumed:
       A page is 25 rows, so a pager at the foot is a screenful away in whichever column you are
       not reading. `.vector-panel .pagination` flips the shared idiom's `margin-top: 2rem` to a
       bottom margin; the override is scoped so SearchPage's own pagers are untouched.
-- [x] **Both lists paginate independently, and only when needed.** Measured:
-      - `jewellery`: keyword 0 results → **no pager**; vector 4 pages (85 rows).
-      - `a`: keyword 58 results → 3 pages; page 3 shows ranks **51–58** (8-row remainder),
-        BM25 descending 1.42 → 0.94. Vector 4 pages.
-      - `cardigan`: keyword 7 results → **no pager**.
-      - Paging the keyword panel to page 3 leaves the vector panel on page 1 — two effects, not
-        one `Promise.all`, so one panel never refetches because the other moved.
-      - A new query resets **both** pages to 1 (verified from kw 3 / vec 3 → 1 / 1).
-      - Ranks are offset by page and continue across pages; scores stay monotonically descending.
+- [x] **Both lists paginate independently, and only when needed.** Measured: - `jewellery`: keyword 0 results → **no pager**; vector 4 pages (85 rows). - `a`: keyword 58 results → 3 pages; page 3 shows ranks **51–58** (8-row remainder),
+      BM25 descending 1.42 → 0.94. Vector 4 pages. - `cardigan`: keyword 7 results → **no pager**. - Paging the keyword panel to page 3 leaves the vector panel on page 1 — two effects, not
+      one `Promise.all`, so one panel never refetches because the other moved. - A new query resets **both** pages to 1 (verified from kw 3 / vec 3 → 1 / 1). - Ranks are offset by page and continue across pages; scores stay monotonically descending.
 - [x] Tail scores 0.38–0.39 on the vector list's last page (visibly noise, the honest
       illustration of why a production setup applies a minimum score).
 - [x] The closing note is a **full-width callout** (`.vector-footnote`, 1336px — same as the panels),
@@ -115,7 +110,7 @@ alters what each hit carries, never which hits come back or in what order — an
 rows a side affordable. This page does not seed `initialData` from `src/sdk/server.ts`, so the
 usual "server and hook must request the same shape" rule does not apply here.
 
-**Vector panel** — *not* the SDK. `SearchManager` only knows `products` / `documents`; the premium
+**Vector panel** — _not_ the SDK. `SearchManager` only knows `products` / `documents`; the premium
 bundle's `vectorSearchProducts` is unreachable through it. `src/sdk/vectorSearch.ts` posts raw
 GraphQL to `/api/graphql`, the same pattern as `fetchCategoryTree()` in `src/sdk/catalogs.ts`.
 
@@ -145,7 +140,7 @@ plus `DISPLAY` for its rows when non-empty — same shape as `SearchPage`, guard
 
 The vector panel is deliberately **not** tracked as a second SEARCH. It is one query the visitor
 made, not two, and double-counting would inflate the zero-result report this page exists to point
-at. A zero-result query here *should* land in search analytics as zero-result: that is the same
+at. A zero-result query here _should_ land in search analytics as zero-result: that is the same
 signal a merchandiser would use to find the gap being demonstrated.
 
 ## UI constraints

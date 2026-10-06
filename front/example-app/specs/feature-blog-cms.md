@@ -1,6 +1,7 @@
 # Feature: Blog (cms_page) — ACP results + browsable index
 
 ## Status: implemented
+
 ## Page/Component: src/views/BlogPage.tsx, src/views/BlogPostPage.tsx, src/components/SearchOverlay.tsx
 
 Renames the "CMS" top nav to "Blog" and turns it into a real, indexed content
@@ -8,6 +9,7 @@ section backed by the `cms_page` entity (57 documents per locale: 50 editorial
 blog posts + 7 legacy buying guides).
 
 ## Behaviour (testable)
+
 - [ ] Header nav item reads "Blog" and points at `/blog` (active on any `/blog*` path).
 - [ ] `/blog` lists the **10 latest** posts, sorted `published_at desc`, 10 per page.
 - [ ] Browsable by **content type** (Blog Post / Buying Guide) — a top-level toggle —
@@ -26,6 +28,7 @@ blog posts + 7 legacy buying guides).
 - [ ] Query terms are highlighted (`<mark>`) inside ACP blog titles.
 
 ## SDK contract used
+
 - `SearchManager.search({ metadata: 'cms_page', ... })`. The SDK routes any non-`product`
   metadata to the generic `documents(entityType: ...)` GraphQL query — see
   `graphql/Request.ts:getEndpoint()`. No `requestType` is sent (or accepted) for
@@ -50,6 +53,7 @@ The two `selectedFields` bullets above originally documented the opposite behavi
 implementation was built against them — see `bugfix-cms-selected-fields-projection.md`.
 
 ## Tracking (required)
+
 - `/blog` list view → `TrackingEventType.VIEW`, `metadataCode: 'cms_page'`, with the
   usual `product_list` payload (item count / page / page count) so the event log reads
   the same as a category listing.
@@ -57,11 +61,13 @@ implementation was built against them — see `bugfix-cms-selected-fields-projec
 - Product tracking elsewhere is untouched.
 
 ## UI constraints
+
 - Tokens only, from ../docs/design-system.md. No new hex/px/font-size literals.
 - No new visual primitives: the chips reuse the facet/active-filter idiom, the
   pagination block is the existing `.pagination`, the ACP rows are `.autocomplete-item`.
 
 ## MUST NOT change
+
 - The product ACP columns (suggestions, attributes, products, categories) and their
   keyboard order — blog rows are appended after categories, nothing is reordered.
 - `useAutocomplete()`'s product behaviour; the CMS lookup is a separate hook so a slow

@@ -83,15 +83,22 @@
       "businessPrice": "999 €",
       "perMonth": "/Monat",
       "businessFeatures": [
-        "Intelligente Suche", "Erweiterte Facetten", "Vektorsuche",
-        "Visuelles Merchandising", "Empfehlungen", "Priorisierter Support"
+        "Intelligente Suche",
+        "Erweiterte Facetten",
+        "Vektorsuche",
+        "Visuelles Merchandising",
+        "Empfehlungen",
+        "Priorisierter Support"
       ],
       "talkToSales": "Vertrieb kontaktieren",
       "enterprise": "Enterprise",
       "enterprisePrice": "Individuelles Angebot",
       "enterpriseFeatures": [
-        "Alles aus Business +", "Unbegrenzte Multi-Shop-Fähigkeit", "Dediziertes SLA",
-        "Individuelle Integration", "Persönliche Betreuung"
+        "Alles aus Business +",
+        "Unbegrenzte Multi-Shop-Fähigkeit",
+        "Dediziertes SLA",
+        "Individuelle Integration",
+        "Persönliche Betreuung"
       ]
     },
     "disclaimer": "Größenordnungen aus vergleichbaren E-Commerce-Suchprojekten — ohne interne Kosten. Im Einzelfall zu präzisieren."

@@ -1,57 +1,78 @@
-import { useState, useRef, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { FacetsSkeletonBody } from './skeletons';
+import { useState, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
+import { FacetsSkeletonBody } from './skeletons'
 // Shared with the PDP option selector, which draws the same swatches from the same labels.
-import { guessColor, needsSwatchOutline } from './swatchColors';
-import Icon from './Icon';
+import { guessColor, needsSwatchOutline } from './swatchColors'
+import Icon from './Icon'
 
 interface FacetOption {
-  label: string;
-  count: number;
-  value: string;
+  label: string
+  count: number
+  value: string
 }
 
 interface Aggregation {
-  field: string;
-  label: string;
-  type: string;
-  options: FacetOption[];
-  hasMore?: boolean;
+  field: string
+  label: string
+  type: string
+  options: FacetOption[]
+  hasMore?: boolean
 }
 
+// What one facet holds in the page's filter state: the picked option values of a checkbox
+// facet, a price range from the slider, `true` from a boolean facet, or the one value of a
+// category facet. `undefined` means the facet is cleared.
+export interface RangeFilterValue {
+  gte?: number
+  lte?: number
+}
+export type FilterValue = string | boolean | string[] | RangeFilterValue
+export type ActiveFilters = Record<string, FilterValue | undefined>
+
 interface Props {
-  aggregations: Aggregation[];
-  activeFilters: Record<string, any>;
-  onFilterChange: (field: string, value: any) => void;
-  loading?: boolean;
-  onLoadMore?: (field: string) => Promise<FacetOption[]>;
-  open?: boolean;
+  aggregations: Aggregation[]
+  activeFilters: ActiveFilters
+  onFilterChange: (field: string, value: FilterValue | undefined) => void
+  loading?: boolean
+  onLoadMore?: (field: string) => Promise<FacetOption[]>
+  open?: boolean
   // Required, not optional: it picks which "no filters" message to show, and a wrong
   // default would state something false about the result set.
-  resultCount: number;
+  resultCount: number
 }
 
 // Facet fields to hide (not discriminant)
-const IGNORED_FACETS = ['name'];
+const IGNORED_FACETS = ['name']
 
-export default function Facets({ aggregations, activeFilters, onFilterChange, loading, onLoadMore, open, resultCount }: Props) {
-  const { t } = useTranslation('facets');
+export default function Facets({
+  aggregations,
+  activeFilters,
+  onFilterChange,
+  loading,
+  onLoadMore,
+  open,
+  resultCount,
+}: Props) {
+  const { t } = useTranslation('facets')
 
   // A facet with 0 or 1 possible value can't narrow anything — every matching
   // product already shares it — so it's noise, not a useful filter. Applies
   // uniformly across all facet types (checkbox/boolean/swatch/slider/category).
   const visibleAggregations = aggregations.filter(
-    agg => !IGNORED_FACETS.includes(agg.field) && (agg.options?.length ?? 0) > 1
-  );
+    (agg) =>
+      !IGNORED_FACETS.includes(agg.field) && (agg.options?.length ?? 0) > 1
+  )
 
   // Skeleton whenever a request is in flight and there is nothing to draw. Keyed on
   // visibleAggregations, not raw `aggregations`: a reload whose stale aggregations all
   // turn out non-discriminant would otherwise fall through and flash the "no filters"
   // message mid-request. This flag is also what guarantees that message only ever
   // renders on a settled result.
-  const showSkeleton = loading && visibleAggregations.length === 0;
+  const showSkeleton = loading && visibleAggregations.length === 0
 
-  const hasActiveFilters = Object.values(activeFilters).some(v => v !== undefined);
+  const hasActiveFilters = Object.values(activeFilters).some(
+    (v) => v !== undefined
+  )
 
   return (
     // The <aside> and its heading are rendered unconditionally: the sidebar's shell —
@@ -59,48 +80,58 @@ export default function Facets({ aggregations, activeFilters, onFilterChange, lo
     // returning a different <aside> while loading made the whole container unmount and
     // remount on every filter change. Only the rows below swap now.
     <aside className={`facets-sidebar ${open ? 'open' : ''}`}>
-      <h3 style={{ fontFamily: 'var(--font-sans)', fontSize: '1rem', marginBottom: '1rem' }}>{t('title')}</h3>
+      <h3
+        style={{
+          fontFamily: 'var(--font-sans)',
+          fontSize: '1rem',
+          marginBottom: '1rem',
+        }}
+      >
+        {t('title')}
+      </h3>
       {showSkeleton ? (
         <FacetsSkeletonBody />
       ) : (
         <>
-        <ActiveFilterChips
-          aggregations={visibleAggregations}
-          activeFilters={activeFilters}
-          onFilterChange={onFilterChange}
-        />
-        {visibleAggregations.length === 0 ? (
-          /* Nothing left to render: either the API returned no aggregations (it returns
+          <ActiveFilterChips
+            aggregations={visibleAggregations}
+            activeFilters={activeFilters}
+            onFilterChange={onFilterChange}
+          />
+          {visibleAggregations.length === 0 ? (
+            /* Nothing left to render: either the API returned no aggregations (it returns
              none at all for a zero-result query) or every one was dropped just above as
              non-discriminant. Without this the sidebar is a bare "Filters" heading on an
              empty card, which reads as a loading bug rather than an answer. The three
              cases are genuinely different, and only one of them is actionable. */
-          <p className="facets-empty">
-            {resultCount === 0
-              ? (hasActiveFilters ? t('empty.filteredOut') : t('empty.noResults'))
-              : t('empty.notDiscriminant', { count: resultCount })}
-          </p>
-        ) : (
-          visibleAggregations.map(agg => (
-            <FacetGroup
-              key={agg.field}
-              aggregation={agg}
-              active={activeFilters[agg.field]}
-              onChange={(val) => onFilterChange(agg.field, val)}
-              onLoadMore={onLoadMore}
-            />
-          ))
-        )}
+            <p className="facets-empty">
+              {resultCount === 0
+                ? hasActiveFilters
+                  ? t('empty.filteredOut')
+                  : t('empty.noResults')
+                : t('empty.notDiscriminant', { count: resultCount })}
+            </p>
+          ) : (
+            visibleAggregations.map((agg) => (
+              <FacetGroup
+                key={agg.field}
+                aggregation={agg}
+                active={activeFilters[agg.field]}
+                onChange={(val) => onFilterChange(agg.field, val)}
+                onLoadMore={onLoadMore}
+              />
+            ))
+          )}
         </>
       )}
     </aside>
-  );
+  )
 }
 
 interface FilterChip {
-  key: string;
-  text: string;
-  onRemove: () => void;
+  key: string
+  text: string
+  onRemove: () => void
 }
 
 function ActiveFilterChips({
@@ -108,57 +139,67 @@ function ActiveFilterChips({
   activeFilters,
   onFilterChange,
 }: {
-  aggregations: Aggregation[];
-  activeFilters: Record<string, any>;
-  onFilterChange: (field: string, value: any) => void;
+  aggregations: Aggregation[]
+  activeFilters: ActiveFilters
+  onFilterChange: (field: string, value: FilterValue | undefined) => void
 }) {
-  const { t } = useTranslation('facets');
-  const chips: FilterChip[] = [];
+  const { t } = useTranslation('facets')
+  const chips: FilterChip[] = []
 
   for (const [field, value] of Object.entries(activeFilters)) {
-    if (value === undefined) continue;
-    const agg = aggregations.find(a => a.field === field);
-    const fieldLabel = agg?.label || field;
+    if (value === undefined) continue
+    const agg = aggregations.find((a) => a.field === field)
+    const fieldLabel = agg?.label || field
 
     if (Array.isArray(value)) {
       value.forEach((v: string) => {
-        const opt = agg?.options?.find(o => o.value === v);
+        const opt = agg?.options?.find((o) => o.value === v)
         chips.push({
           key: `${field}:${v}`,
-          text: t('chip.default', { label: fieldLabel, value: opt?.label || v }),
+          text: t('chip.default', {
+            label: fieldLabel,
+            value: opt?.label || v,
+          }),
           onRemove: () => {
-            const next = value.filter((x: string) => x !== v);
-            onFilterChange(field, next.length ? next : undefined);
+            const next = value.filter((x: string) => x !== v)
+            onFilterChange(field, next.length ? next : undefined)
           },
-        });
-      });
+        })
+      })
     } else if (typeof value === 'object' && value.gte !== undefined) {
       chips.push({
         key: field,
-        text: t('chip.range', { label: fieldLabel, gte: value.gte, lte: value.lte }),
+        text: t('chip.range', {
+          label: fieldLabel,
+          gte: value.gte,
+          lte: value.lte,
+        }),
         onRemove: () => onFilterChange(field, undefined),
-      });
+      })
     } else if (typeof value === 'boolean') {
       chips.push({
         key: field,
         text: fieldLabel,
         onRemove: () => onFilterChange(field, undefined),
-      });
+      })
     } else {
-      const opt = agg?.options?.find(o => o.value === value);
+      const opt = agg?.options?.find((o) => o.value === value)
       chips.push({
         key: field,
-        text: t('chip.default', { label: fieldLabel, value: opt?.label || value }),
+        text: t('chip.default', {
+          label: fieldLabel,
+          value: opt?.label || value,
+        }),
         onRemove: () => onFilterChange(field, undefined),
-      });
+      })
     }
   }
 
-  if (chips.length === 0) return null;
+  if (chips.length === 0) return null
 
   return (
     <div className="active-filters">
-      {chips.map(chip => (
+      {chips.map((chip) => (
         <button key={chip.key} className="filter-chip" onClick={chip.onRemove}>
           {chip.text} <Icon name="close" standalone />
         </button>
@@ -170,15 +211,15 @@ function ActiveFilterChips({
             // Clear each active field once — calling every chip's onRemove would
             // race for multi-value fields (each closes over the pre-clear array).
             Object.entries(activeFilters).forEach(([field, value]) => {
-              if (value !== undefined) onFilterChange(field, undefined);
-            });
+              if (value !== undefined) onFilterChange(field, undefined)
+            })
           }}
         >
           {t('clearAll')}
         </button>
       )}
     </div>
-  );
+  )
 }
 
 function FacetGroup({
@@ -187,83 +228,110 @@ function FacetGroup({
   onChange,
   onLoadMore,
 }: {
-  aggregation: Aggregation;
-  active: any;
-  onChange: (val: any) => void;
-  onLoadMore?: (field: string) => Promise<FacetOption[]>;
+  aggregation: Aggregation
+  active: FilterValue | undefined
+  onChange: (val: FilterValue | undefined) => void
+  onLoadMore?: (field: string) => Promise<FacetOption[]>
 }) {
-  const { t } = useTranslation('facets');
-  const [expanded, setExpanded] = useState(false);
-  const [search, setSearch] = useState('');
-  const [extraOptions, setExtraOptions] = useState<FacetOption[] | null>(null);
-  const [loadingMore, setLoadingMore] = useState(false);
+  const { t } = useTranslation('facets')
+  const [expanded, setExpanded] = useState(false)
+  const [search, setSearch] = useState('')
+  const [extraOptions, setExtraOptions] = useState<FacetOption[] | null>(null)
+  const [loadingMore, setLoadingMore] = useState(false)
 
   if (aggregation.type === 'slider') {
-    return <SliderFacet aggregation={aggregation} active={active} onChange={onChange} />;
+    return (
+      <SliderFacet
+        aggregation={aggregation}
+        // A slider facet only ever stores the range it set itself.
+        active={active as RangeFilterValue | undefined}
+        onChange={onChange}
+      />
+    )
   }
 
   if (aggregation.type === 'boolean') {
-    return <BooleanFacet aggregation={aggregation} active={active} onChange={onChange} />;
+    return (
+      <BooleanFacet
+        aggregation={aggregation}
+        active={active}
+        onChange={onChange}
+      />
+    )
   }
 
   if (aggregation.type === 'category') {
-    return <CategoryFacet aggregation={aggregation} active={active} onChange={onChange} />;
+    return (
+      <CategoryFacet
+        aggregation={aggregation}
+        active={active}
+        onChange={onChange}
+      />
+    )
   }
 
   // Check if it's a color swatch
-  const isColor = aggregation.field.toLowerCase().includes('color');
+  const isColor = aggregation.field.toLowerCase().includes('color')
 
-  const baseOptions = extraOptions ?? aggregation.options ?? [];
-  const filteredOptions = baseOptions.filter(o =>
+  const baseOptions = extraOptions ?? aggregation.options ?? []
+  const filteredOptions = baseOptions.filter((o) =>
     o.label.toLowerCase().includes(search.toLowerCase())
-  );
+  )
 
-  const displayOptions = expanded ? filteredOptions : filteredOptions.slice(0, 5);
-  const hasMoreLocally = filteredOptions.length > 5;
+  const displayOptions = expanded
+    ? filteredOptions
+    : filteredOptions.slice(0, 5)
+  const hasMoreLocally = filteredOptions.length > 5
   // Backend truncates each aggregation's option list (~10); hasMore signals
   // there are more values on the server than were returned with the search.
-  const canFetchFromServer = !!aggregation.hasMore && !extraOptions && !!onLoadMore;
+  const canFetchFromServer =
+    !!aggregation.hasMore && !extraOptions && !!onLoadMore
 
   const handleShowMore = async () => {
     if (canFetchFromServer) {
-      setLoadingMore(true);
+      setLoadingMore(true)
       try {
-        const fetched = await onLoadMore!(aggregation.field);
-        if (fetched.length > 0) setExtraOptions(fetched);
+        const fetched = await onLoadMore!(aggregation.field)
+        if (fetched.length > 0) setExtraOptions(fetched)
       } finally {
-        setLoadingMore(false);
+        setLoadingMore(false)
       }
     }
-    setExpanded(true);
-  };
+    setExpanded(true)
+  }
 
   if (isColor) {
     return (
       <div className="facet-group">
         <div className="facet-title">{aggregation.label}</div>
         <div className="facet-swatches">
-          {filteredOptions.map(opt => {
-            const color = guessColor(opt.label);
-            const isActive = Array.isArray(active) && active.includes(opt.value);
+          {filteredOptions.map((opt) => {
+            const color = guessColor(opt.label)
+            const isActive = Array.isArray(active) && active.includes(opt.value)
             return (
               <div
                 key={opt.value}
                 className={`swatch ${isActive ? 'active' : ''}`}
-                style={{ background: color, ...(needsSwatchOutline(opt.label) ? { border: '2px solid var(--gray-300)' } : {}) }}
+                style={{
+                  background: color,
+                  ...(needsSwatchOutline(opt.label)
+                    ? { border: '2px solid var(--gray-300)' }
+                    : {}),
+                }}
                 title={t('swatchTitle', { label: opt.label, count: opt.count })}
                 onClick={() => {
-                  const current = Array.isArray(active) ? active : [];
+                  const current = Array.isArray(active) ? active : []
                   const next = isActive
                     ? current.filter((v: string) => v !== opt.value)
-                    : [...current, opt.value];
-                  onChange(next.length ? next : undefined);
+                    : [...current, opt.value]
+                  onChange(next.length ? next : undefined)
                 }}
               />
-            );
+            )
           })}
         </div>
       </div>
-    );
+    )
   }
 
   return (
@@ -272,55 +340,71 @@ function FacetGroup({
       {(baseOptions.length > 5 || canFetchFromServer) && (
         <input
           className="facet-search"
-          placeholder={t('searchPlaceholder', { label: aggregation.label.toLowerCase() })}
+          placeholder={t('searchPlaceholder', {
+            label: aggregation.label.toLowerCase(),
+          })}
           value={search}
-          onChange={e => setSearch(e.target.value)}
+          onChange={(e) => setSearch(e.target.value)}
         />
       )}
-      {displayOptions.map(opt => {
-        const isChecked = Array.isArray(active) && active.includes(opt.value);
+      {displayOptions.map((opt) => {
+        const isChecked = Array.isArray(active) && active.includes(opt.value)
         return (
           <label key={opt.value} className="facet-option">
             <input
               type="checkbox"
               checked={isChecked}
               onChange={() => {
-                const current = Array.isArray(active) ? active : [];
+                const current = Array.isArray(active) ? active : []
                 const next = isChecked
                   ? current.filter((v: string) => v !== opt.value)
-                  : [...current, opt.value];
-                onChange(next.length ? next : undefined);
+                  : [...current, opt.value]
+                onChange(next.length ? next : undefined)
               }}
             />
             <span>{opt.label}</span>
             <span className="count">{opt.count}</span>
           </label>
-        );
+        )
       })}
       {(hasMoreLocally || canFetchFromServer) && !expanded && (
         <div className="facet-show-more" onClick={handleShowMore}>
-          {loadingMore
-            ? t('loading')
-            : <><Icon name="add" />{canFetchFromServer
-              ? t('showMore')
-              : t('showMoreCount', { count: filteredOptions.length - 5 })}</>}
+          {loadingMore ? (
+            t('loading')
+          ) : (
+            <>
+              <Icon name="add" />
+              {canFetchFromServer
+                ? t('showMore')
+                : t('showMoreCount', { count: filteredOptions.length - 5 })}
+            </>
+          )}
         </div>
       )}
       {expanded && filteredOptions.length > 5 && (
         <div className="facet-show-more" onClick={() => setExpanded(false)}>
-          <Icon name="remove" />{t('showLess')}
+          <Icon name="remove" />
+          {t('showLess')}
         </div>
       )}
     </div>
-  );
+  )
 }
 
-function CategoryFacet({ aggregation, active, onChange }: { aggregation: Aggregation; active: any; onChange: (val: any) => void }) {
+function CategoryFacet({
+  aggregation,
+  active,
+  onChange,
+}: {
+  aggregation: Aggregation
+  active: FilterValue | undefined
+  onChange: (val: FilterValue | undefined) => void
+}) {
   return (
     <div className="facet-group">
       <div className="facet-title">{aggregation.label}</div>
-      {(aggregation.options || []).map(opt => {
-        const isActive = active === opt.value;
+      {(aggregation.options || []).map((opt) => {
+        const isActive = active === opt.value
         return (
           <label key={opt.value} className="facet-option">
             <input
@@ -331,39 +415,54 @@ function CategoryFacet({ aggregation, active, onChange }: { aggregation: Aggrega
             <span>{opt.label}</span>
             <span className="count">{opt.count}</span>
           </label>
-        );
+        )
       })}
     </div>
-  );
+  )
 }
 
-function SliderFacet({ aggregation, active, onChange }: { aggregation: Aggregation; active: any; onChange: (val: any) => void }) {
-  const { t } = useTranslation('facets');
-  const options = aggregation.options || [];
-  const min = options.length > 0 ? parseFloat(options[0].value) : 0;
-  const max = options.length > 0 ? parseFloat(options[options.length - 1].value) : 1000;
-  const [localMin, setLocalMin] = useState(active?.gte ?? min);
-  const [localMax, setLocalMax] = useState(active?.lte ?? max);
-  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+function SliderFacet({
+  aggregation,
+  active,
+  onChange,
+}: {
+  aggregation: Aggregation
+  active: RangeFilterValue | undefined
+  onChange: (val: FilterValue | undefined) => void
+}) {
+  const { t } = useTranslation('facets')
+  const options = aggregation.options || []
+  const min = options.length > 0 ? parseFloat(options[0].value) : 0
+  const max =
+    options.length > 0 ? parseFloat(options[options.length - 1].value) : 1000
+  const clamp = (v: number) => Math.min(Math.max(v, min), max)
+  const [localMin, setLocalMin] = useState(() => clamp(active?.gte ?? min))
+  const [localMax, setLocalMax] = useState(() => clamp(active?.lte ?? max))
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   // Re-sync whenever the aggregation's bounds shift (a new search response narrows or
   // widens the price range — e.g. another filter changed, or this filter was cleared).
   // Without this, a stale localMin/localMax outside the new [min, max] produces
   // leftPct/rightPct outside 0–100%, and the track visually overflows its container.
-  useEffect(() => {
-    const clamp = (v: number) => Math.min(Math.max(v, min), max);
-    setLocalMin(clamp(active?.gte ?? min));
-    setLocalMax(clamp(active?.lte ?? max));
-  }, [min, max, active?.gte, active?.lte]);
+  // Done during render by comparing with the previous inputs, so the stale values never
+  // get painted. A string key rather than a tuple: parseFloat can yield NaN, and NaN never
+  // equals itself, so a tuple comparison would re-render for ever.
+  const syncKey = `${min}|${max}|${active?.gte}|${active?.lte}`
+  const [prevSyncKey, setPrevSyncKey] = useState(syncKey)
+  if (syncKey !== prevSyncKey) {
+    setPrevSyncKey(syncKey)
+    setLocalMin(clamp(active?.gte ?? min))
+    setLocalMax(clamp(active?.lte ?? max))
+  }
 
   const debouncedOnChange = (gte: number, lte: number) => {
-    if (debounceRef.current) clearTimeout(debounceRef.current);
-    debounceRef.current = setTimeout(() => onChange({ gte, lte }), 400);
-  };
+    if (debounceRef.current) clearTimeout(debounceRef.current)
+    debounceRef.current = setTimeout(() => onChange({ gte, lte }), 400)
+  }
 
-  const range = max - min;
-  const leftPct = range > 0 ? ((localMin - min) / range) * 100 : 0;
-  const rightPct = range > 0 ? ((localMax - min) / range) * 100 : 100;
+  const range = max - min
+  const leftPct = range > 0 ? ((localMin - min) / range) * 100 : 0
+  const rightPct = range > 0 ? ((localMax - min) / range) * 100 : 100
 
   return (
     <div className="facet-group">
@@ -375,16 +474,19 @@ function SliderFacet({ aggregation, active, onChange }: { aggregation: Aggregati
         </div>
         <div className="price-slider-track-container">
           <div className="price-slider-track-bg" />
-          <div className="price-slider-track-active" style={{ left: `${leftPct}%`, width: `${rightPct - leftPct}%` }} />
+          <div
+            className="price-slider-track-active"
+            style={{ left: `${leftPct}%`, width: `${rightPct - leftPct}%` }}
+          />
           <input
             type="range"
             min={min}
             max={max}
             value={localMin}
-            onChange={e => {
-              const v = Math.min(parseFloat(e.target.value), localMax - 1);
-              setLocalMin(v);
-              debouncedOnChange(v, localMax);
+            onChange={(e) => {
+              const v = Math.min(parseFloat(e.target.value), localMax - 1)
+              setLocalMin(v)
+              debouncedOnChange(v, localMax)
             }}
           />
           <input
@@ -392,10 +494,10 @@ function SliderFacet({ aggregation, active, onChange }: { aggregation: Aggregati
             min={min}
             max={max}
             value={localMax}
-            onChange={e => {
-              const v = Math.max(parseFloat(e.target.value), localMin + 1);
-              setLocalMax(v);
-              debouncedOnChange(localMin, v);
+            onChange={(e) => {
+              const v = Math.max(parseFloat(e.target.value), localMin + 1)
+              setLocalMax(v)
+              debouncedOnChange(localMin, v)
             }}
           />
         </div>
@@ -406,11 +508,19 @@ function SliderFacet({ aggregation, active, onChange }: { aggregation: Aggregati
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-function BooleanFacet({ aggregation, active, onChange }: { aggregation: Aggregation; active: any; onChange: (val: any) => void }) {
-  const { t } = useTranslation('facets');
+function BooleanFacet({
+  aggregation,
+  active,
+  onChange,
+}: {
+  aggregation: Aggregation
+  active: FilterValue | undefined
+  onChange: (val: FilterValue | undefined) => void
+}) {
+  const { t } = useTranslation('facets')
   return (
     <div className="facet-group">
       <div className="facet-title">{aggregation.label}</div>
@@ -423,5 +533,5 @@ function BooleanFacet({ aggregation, active, onChange }: { aggregation: Aggregat
         <span>{t('yes')}</span>
       </label>
     </div>
-  );
+  )
 }

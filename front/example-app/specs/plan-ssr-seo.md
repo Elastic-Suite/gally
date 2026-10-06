@@ -19,11 +19,11 @@ do SSR or React Server Components at all** — so this is a framework migration,
 
 Decisions taken:
 
-| Question | Answer |
-|---|---|
-| Purpose | **Showcase** Gally's SSR/SEO story — a credible, visible demonstration, not production ranking |
-| Migration | **Rewrite `front/example-app` in place** on Next.js App Router |
-| Locale | **In the URL path**, so the server can resolve the catalog before render |
+| Question  | Answer                                                                                         |
+| --------- | ---------------------------------------------------------------------------------------------- |
+| Purpose   | **Showcase** Gally's SSR/SEO story — a credible, visible demonstration, not production ranking |
+| Migration | **Rewrite `front/example-app` in place** on Next.js App Router                                 |
+| Locale    | **In the URL path**, so the server can resolve the catalog before render                       |
 
 Nothing is implemented now. This is the plan.
 
@@ -32,27 +32,27 @@ Nothing is implemented now. This is the plan.
 ## What makes this tractable
 
 **The SDK is already server-capable.** `@elastic-suite/gally-sdk` exposes a Node main entry and a
-separate `./browser` subpath — its own header says *"For server-side usage, import from the main
-entry point instead."* `SearchManager` runs fine in a Server Component. Tracking does not:
+separate `./browser` subpath — its own header says _"For server-side usage, import from the main
+entry point instead."_ `SearchManager` runs fine in a Server Component. Tracking does not:
 `TrackingEventManager` is built on `localStorage` / `sessionStorage` / cookie storages.
 
 That gives a clean rule: **data fetching can move to the server; tracking stays on the client.**
 
-Today the app imports the *full* SDK in the browser — the console warns about it on every load.
+Today the app imports the _full_ SDK in the browser — the console warns about it on every load.
 The migration fixes that as a side effect.
 
 ## What limits it — read this before promising "server components everywhere"
 
 `useState` / `useEffect` / `createContext` / `onClick` appear in **31 of 35** source files:
 
-| Directory | Needs client |
-|---|---|
-| `src/components` | 12 / 15 |
-| `src/pages` | 10 / 11 |
-| `src/contexts` | 5 / 5 |
-| `src/hooks` | 4 / 4 |
+| Directory        | Needs client |
+| ---------------- | ------------ |
+| `src/components` | 12 / 15      |
+| `src/pages`      | 10 / 11      |
+| `src/contexts`   | 5 / 5        |
+| `src/hooks`      | 4 / 4        |
 
-This is a *demo* whose point is interactivity — autocomplete, facets, the event log, the story
+This is a _demo_ whose point is interactivity — autocomplete, facets, the event log, the story
 companion. So the realistic split is **3 server route shells + metadata, with client islands
 below**, not a wholesale conversion. That is enough to deliver the entire SEO story, because
 what a crawler reads is exactly the shell.
@@ -63,13 +63,13 @@ what a crawler reads is exactly the shell.
 
 Checked against the registry and this stack rather than assumed:
 
-| Fact | Value |
-|---|---|
-| Latest `next` | **16.3.0** |
-| Its peers | `react ^18.2.0 \|\| ^19.0.0`, `react-dom` same |
-| Its `engines.node` | `>=20.9.0` |
-| Node in the `example` container | **20.20.2** — clears it, no base-image change |
-| React already in `example-app` | **19.2.4** (declared `^19.1.0`) |
+| Fact                            | Value                                          |
+| ------------------------------- | ---------------------------------------------- |
+| Latest `next`                   | **16.3.0**                                     |
+| Its peers                       | `react ^18.2.0 \|\| ^19.0.0`, `react-dom` same |
+| Its `engines.node`              | `>=20.9.0`                                     |
+| Node in the `example` container | **20.20.2** — clears it, no base-image change  |
+| React already in `example-app`  | **19.2.4** (declared `^19.1.0`)                |
 
 Three reasons latest is the low-friction choice here, not the risky one:
 
@@ -97,6 +97,7 @@ React 19, no plan changes.
 ## Target architecture
 
 ### Server Components (new)
+
 Per-route shells that fetch with the SDK main entry and render crawlable HTML:
 
 - `/[locale]/product/[sku]` — name, description, price, image, breadcrumb + `Product` +
@@ -108,11 +109,13 @@ Per-route shells that fetch with the SDK main entry and render crawlable HTML:
 Each exports `generateMetadata()` → `title`, `description`, `canonical`, `openGraph`, `hreflang`.
 
 ### Client islands (unchanged behaviour)
+
 `'use client'` on: all five contexts, `SearchBar` / `SearchOverlay`, `Facets`, the
 Products/Articles switch, `ProductCard`'s add-to-cart, cart/checkout, `EventLog`,
 `TrackingInsights`, `StoryCompanion`, `IntroScreen`.
 
 ### The pattern that preserves reactivity
+
 Server component fetches initial data → passes it to the client island as `initialData` →
 the existing hook seeds state from it and only refetches on interaction.
 
@@ -121,13 +124,14 @@ request when it is present. This also removes the first-paint loading flash by c
 the same class of bug just fixed in `useSearch`'s initial `loading` state.
 
 ### Locale in the URL
+
 Route group `app/[locale]/…` where the segment is the **localized catalog code** (`com_en`,
 `com_fr`, `fr_fr`, …). One segment resolves both catalog and language server-side, which is
 what `CatalogContext` currently does in a `useEffect` after mount.
 
 `CatalogContext` stops owning selection: the selector becomes a `<Link>`/`router.push` that
 navigates to the same route under a different locale segment. It keeps serving the catalog
-*list* to the selector UI.
+_list_ to the selector UI.
 
 Bare `/` redirects to a default localized catalog.
 
@@ -160,6 +164,7 @@ break, and SSR/SEO are unaffected. If it bites, it is two `proxy_set_header` lin
 ## Phases
 
 ### Phase 1 — Framework swap, zero behaviour change
+
 The de-risking step: get Next App Router running with **everything still a client component**
 (a `'use client'` at the top of the existing tree). Mechanical and reviewable; no RSC yet.
 
@@ -178,20 +183,20 @@ The de-risking step: get Next App Router running with **everything still a clien
   CRA. Next static import yields `StaticImageData` — use `logo.src` or `next/image`.
 - `example-app` is already a yarn workspace (`front/package.json`), so no workspace change.
 
-**Exit criteria:** every route renders identically, tracking still fires, `docker compose logs
-example` clean. No SEO yet.
+**Exit criteria:** every route renders identically, tracking still fires, `docker compose logs example` clean. No SEO yet.
 
 #### Phase 1 — exact modifications
 
 **Dependencies — React is already current, so this is a Next-only migration**
 
-| | |
-|---|---|
+|                       |                                                                                                                                       |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
 | `react` / `react-dom` | latest is **19.2.8**; app declares `^19.1.0`, has 19.2.4 → satisfied by the existing range, a `yarn up`. **No React migration work.** |
-| add | `next@16`, `eslint-config-next` |
-| remove | `react-scripts`, `react-router-dom`, `scripts/patch-fork-ts.js` + its `prestart` hook |
+| add                   | `next@16`, `eslint-config-next`                                                                                                       |
+| remove                | `react-scripts`, `react-router-dom`, `scripts/patch-fork-ts.js` + its `prestart` hook                                                 |
 
 **Scripts** (`front/example-app/package.json`)
+
 - `start`: `react-scripts start` → `next dev -p 3001` (port unchanged, so nginx/compose untouched)
 - `build`: `next build`
 - `test` / `test:ci`: **must keep existing** — root `front/package.json`'s `test:ci` calls
@@ -200,6 +205,7 @@ example` clean. No SEO yet.
 - keep `eslint` / `prettier` / `typescript` script names — the root aggregates them.
 
 **Entry and shell**
+
 - `src/index.tsx` (30 lines: `StrictMode` › `BrowserRouter basename="/example"` › `CatalogProvider`
   › `I18nBridge` › `CartProvider` › `DemoProvider` › `SearchBarProvider` › `App`) →
   `app/layout.tsx` plus a `'use client'` `<Providers>` wrapper holding the same tree.
@@ -210,14 +216,14 @@ example` clean. No SEO yet.
 
 **Routing — 18 files, a small and mechanical surface**
 
-| From `react-router-dom` | To | Files |
-|---|---|---|
-| `Link` (`to=` → `href=`) | `next/link` | 7 |
-| `useParams` | `next/navigation` | 4 |
-| `useSearchParams` (read-only — already used read-only) | `next/navigation` | 3 |
-| `useNavigate()` | `useRouter().push` | 3 |
-| `useLocation()` | `usePathname()` | 3 |
-| `BrowserRouter` / `Routes` / `Route` | deleted | 1 each |
+| From `react-router-dom`                                | To                 | Files  |
+| ------------------------------------------------------ | ------------------ | ------ |
+| `Link` (`to=` → `href=`)                               | `next/link`        | 7      |
+| `useParams`                                            | `next/navigation`  | 4      |
+| `useSearchParams` (read-only — already used read-only) | `next/navigation`  | 3      |
+| `useNavigate()`                                        | `useRouter().push` | 3      |
+| `useLocation()`                                        | `usePathname()`    | 3      |
+| `BrowserRouter` / `Routes` / `Route`                   | deleted            | 1 each |
 
 The 11 `<Route>` entries in `App.tsx` map 1:1 onto `app/**/page.tsx`.
 
@@ -225,6 +231,7 @@ The 11 `<Route>` entries in `App.tsx` map 1:1 onto `app/**/page.tsx`.
 boundary just below the layout, so behaviour is provably identical; Phase 3 pushes it downward.
 
 **SSR-safety — the one certain breakage**
+
 - `src/components/SearchOverlay.tsx:119,129` calls `createPortal(…, document.body)` **during
   render, unguarded**. That throws `document is not defined` as soon as the server renders it.
   Needs a mount guard. This will be the first thing that fails.
@@ -235,15 +242,18 @@ boundary just below the layout, so behaviour is provably identical; Phase 3 push
 static import yields `StaticImageData`, so use `logo.src` or `next/image`.
 
 ### Phase 2 — Locale segment + server-side catalog resolution
+
 Introduce `app/[locale]/…`, resolve the localized catalog server-side, redirect `/`.
 Rework the catalog selector to navigate. Wire `i18n` off the route segment instead of
 `I18nBridge` reacting to `CatalogContext`.
 
 ### Phase 3 — Server-render the three shells
+
 Convert product / category / blog-post pages to Server Components with the `initialData`
 handoff above. Add `generateMetadata()` and JSON-LD.
 
 ### Phase 4 — SEO surface
+
 `app/sitemap.ts` (generated from the index), `app/robots.ts`, canonical + `hreflang` across the
 three locales, `noindex` on `/search`, `/cart`, `/checkout`. Keep the demo scaffolding
 (`EventLog`, `StoryCompanion`, `TrackingInsights`) but exclude it from crawlable output.
@@ -253,19 +263,19 @@ three locales, `noindex` on `/search`, `/cart`, `/checkout`. Keep the demo scaff
 ## Effort and cost
 
 Scale being migrated: **5,336 lines** of TS/TSX across 35 files, **11 routes**, 9 locale files
-(1,395 lines). `styles.css` is 3,567 lines / 80K but is *imported*, not rewritten — high volume,
+(1,395 lines). `styles.css` is 3,567 lines / 80K but is _imported_, not rewritten — high volume,
 near-zero risk. Cost centres are the big interactive components: `Facets.tsx` (467),
 `SearchOverlay.tsx` (422), `SearchPage.tsx` (328).
 
-| Phase | Engineer-days | Agent sessions | Tokens (order of magnitude) |
-|---|---|---|---|
-| 1 — Framework swap, behaviour-identical | 1.5–3 | 1–2 | 300k–700k |
-| 2 — Locale segment + server catalog resolution | 1–2 | ~1 | 200k–400k |
-| 3 — RSC shells for 3 routes + metadata + JSON-LD | 1–2 | ~1 | 200k–400k |
-| 4 — sitemap / robots / canonical / hreflang / noindex | 0.5–1 | ~0.5 | 100k–200k |
-| Demo scaffolding: `ssr:false` wrapping only (no repair) | ~0.25 | — | 40k–80k |
-| Docs, specs, skill update | 0.5 | ~0.3 | 60k–120k |
-| **Total** | **4.75–9.25 days** | **4–6** | **~0.9–1.9M** |
+| Phase                                                   | Engineer-days      | Agent sessions | Tokens (order of magnitude) |
+| ------------------------------------------------------- | ------------------ | -------------- | --------------------------- |
+| 1 — Framework swap, behaviour-identical                 | 1.5–3              | 1–2            | 300k–700k                   |
+| 2 — Locale segment + server catalog resolution          | 1–2                | ~1             | 200k–400k                   |
+| 3 — RSC shells for 3 routes + metadata + JSON-LD        | 1–2                | ~1             | 200k–400k                   |
+| 4 — sitemap / robots / canonical / hreflang / noindex   | 0.5–1              | ~0.5           | 100k–200k                   |
+| Demo scaffolding: `ssr:false` wrapping only (no repair) | ~0.25              | —              | 40k–80k                     |
+| Docs, specs, skill update                               | 0.5                | ~0.3           | 60k–120k                    |
+| **Total**                                               | **4.75–9.25 days** | **4–6**        | **~0.9–1.9M**               |
 
 Phase 1 carries nearly all the risk; Phases 2–4 are additive and individually shippable.
 
@@ -301,7 +311,7 @@ order of magnitude, not a budget.
 
 ## Preserving the demo features under SSR
 
-The demo *is* the product here, so this is a first-class requirement, not an afterthought.
+The demo _is_ the product here, so this is a first-class requirement, not an afterthought.
 
 ### Most of it is free: `ssr: false`
 
@@ -319,7 +329,7 @@ Tracking is unchanged — a client provider, firing after hydration, exactly as 
 `.expert-only` CSS. If the server renders one value and the client another, React reports a
 hydration mismatch. Keep the server default authoritative and switch only after mount, or carry
 `audience` in a cookie so both sides agree. Same reasoning for `introSeen` — it is currently
-`useState(true)` with no persistence, which is *why* it is safe today; persisting it to
+`useState(true)` with no persistence, which is _why_ it is safe today; persisting it to
 `localStorage` later would introduce exactly this mismatch.
 
 ### The guided story actions — carry them across, do NOT repair them
@@ -327,7 +337,7 @@ hydration mismatch. Keep the server default authoritative and switch only after 
 **Decision: the guided demo is preserved as-is and will be reconstructed later. Repairing or
 hardening it is explicitly out of scope for this migration.**
 
-So the only obligation is: *do not make it worse, and do not spend time on it.* Move
+So the only obligation is: _do not make it worse, and do not spend time on it._ Move
 `useStoryActions.ts` and `src/scenarios/` across unchanged, wrap the demo components in
 `ssr: false`, and stop there.
 
@@ -347,8 +357,8 @@ childSelector: '.facet-group' / '.explain-rank-card' / '.timeline-item'
   `.btn-coral` to `.btn-primary`, so `.product-detail-actions` contains no `.btn-coral`; that step
   retries 20 × 300ms and gives up in silence. Left as-is per the decision above.
 - **SSR does not break the selectors** — the server emits the same markup. It adds two failure
-  modes the rebuild should design for: *streaming* (a target may not exist yet — the existing
-  retry-with-timeout already absorbs this) and *hydration* (clicking a button that is in the DOM
+  modes the rebuild should design for: _streaming_ (a target may not exist yet — the existing
+  retry-with-timeout already absorbs this) and _hydration_ (clicking a button that is in the DOM
   but not yet hydrated does nothing).
 - When it is rebuilt, coupling actions to stable `data-story-target="…"` attributes instead of CSS
   class names removes this entire failure class. Noted for that work, not for this.
@@ -371,7 +381,7 @@ for a showcase; `/product/[sku]` and `/blog/[id]` demo the SSR story perfectly w
 
 ## Verification
 
-The showcase *is* the verification — all of it must hold with JavaScript disabled:
+The showcase _is_ the verification — all of it must hold with JavaScript disabled:
 
 1. `curl -sk https://gally.localhost/example/com_en/product/VD10 | grep -E '<title>|og:|application/ld\+json'`
    — real content in the HTML payload, not an empty `#root`.
@@ -387,8 +397,8 @@ The showcase *is* the verification — all of it must hold with JavaScript disab
 
 ## Docs to update — currently all assume CRA
 
-- `front/example-app/AGENTS.md` — the Definition of done says *"never `npm run build` on the
-  host"* and `docker compose exec example yarn build`; the commands change.
+- `front/example-app/AGENTS.md` — the Definition of done says _"never `npm run build` on the
+  host"_ and `docker compose exec example yarn build`; the commands change.
 - `.claude/skills/gally-storefront/SKILL.md` — same verification section.
 - `docs/architecture.md` — the `src/` map gains `app/` and a server/client split.
 - `docs/sdk-reference.md` — record the main-vs-`./browser` entry rule, which becomes load-bearing.

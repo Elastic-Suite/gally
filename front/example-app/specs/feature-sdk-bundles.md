@@ -1,9 +1,11 @@
 # Feature: pass the installed Gally bundles to the SDK
 
 ## Status: implemented
+
 ## Page/Component: src/sdk/bundles.ts, src/sdk/index.ts, app/[locale]/layout.tsx, app/providers.tsx
 
 ## Behaviour (testable)
+
 - [x] The locale layout fetches the bundle list on the server with `{ extraBundles { name } }`.
       This query is public, so no token is needed.
 - [ ] The list is fetched once per Node process and kept in memory until the Next server restarts.
@@ -17,6 +19,7 @@
       instead of the query failing.
 
 ## SDK contract used
+
 - `Configuration` option `bundles?: string[]` (gally-sdk, added after 2.3.0). The SDK adds
   `termSuggestions` to the query only when `isAutocomplete` is true and
   `GallyTermSuggestionBundle` is in `bundles`. This is the same rule as the PHP SDK.
@@ -24,12 +27,15 @@
   `front/node_modules`, so no release is needed for this app.
 
 ## Tracking (required)
+
 - None. This changes no tracking event.
 
 ## UI constraints
+
 - No UI change.
 
 ## MUST NOT change
+
 - Server-side fetches keep going through `INTERNAL_BASE_URI` (`http://router/api`), never
   `gally.localhost`.
 - Server-side searches in `src/sdk/server.ts` are never autocomplete, so they do not depend on the

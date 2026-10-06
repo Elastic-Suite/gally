@@ -1,6 +1,7 @@
 # Feature: Search results type selector — centered segmented switch, "Products / Articles"
 
 ## Status: implemented
+
 ## Page/Component: src/views/SearchPage.tsx, src/styles.css, src/locales/{en,fr,de}/search.json
 
 The selector that chooses which of the two indices a query's results come from was a
@@ -8,6 +9,7 @@ left-aligned pair of underline tabs labelled "Products / Blog". It is now a cent
 segmented switch with icons, labelled "Products / Articles".
 
 ## Behaviour (testable)
+
 - [x] Centered above the results, via a `.result-type-switch-row` flex wrapper.
 - [x] Reads as a switch: pill track in `--gray-100`, selected segment raised as a
       `--white` pill with `--shadow-sm` and `--indigo-800` text; unselected is
@@ -29,6 +31,7 @@ segmented switch with icons, labelled "Products / Articles".
       selected, Articles not).
 
 ## The slide
+
 - The moving part is a single `.result-type-tabs::before` pseudo-element behind both
   segments. The selected segment deliberately paints **no** background or shadow of its
   own — with a background per segment there is nothing continuous to animate, only two
@@ -50,28 +53,32 @@ segmented switch with icons, labelled "Products / Articles".
   reported `transition-duration: 0s`. The Articles side rendered 10 blog cards.
 
 ## i18n
+
 - Only `page.typeBlog` changed value: "Blog" → "Articles" in en, fr and de.
 - **French is deliberately "Articles"** even though it can read as merchandise next to
-  "Produits". Chosen over "Actualités" and over keeping "Blog": *article de blog* is the
+  "Produits". Chosen over "Actualités" and over keeping "Blog": _article de blog_ is the
   standard French term, and it is literally what the index returns —
   `content_type.label` is "Article de blog" in the fr catalog.
 - `de` mirrors English per the placeholder-locale convention
   (see `feature-nav-products-label.md`).
 - Not touched, and still saying "Blog": the ACP section title `overlay.blogTitle`
-  ("📝 Blog") and the `/blog` nav item. Those are the blog *section*; this switch names
-  a *result set*. Worth revisiting together if the section is ever renamed.
+  ("📝 Blog") and the `/blog` nav item. Those are the blog _section_; this switch names
+  a _result set_. Worth revisiting together if the section is ever renamed.
 
 ## SDK contract used
+
 - None changed. Both result sets were already fetched on every query — `useSearch` for
   products and `useCmsSearch` for `cms_page` — because the switch shows both counts and
   therefore needs both totals before either side is opened. This change is presentation
   only.
 
 ## Tracking (required)
+
 - No change. Switching segments fires no event; the `SEARCH` event fires from the query
   itself, and both index queries already ran regardless of which segment is selected.
 
 ## UI constraints
+
 - Tokens only: `--gray-100`, `--gray-200`, `--gray-600`, `--white`, `--indigo-50`,
   `--indigo-700`, `--indigo-800`, `--radius-pill`, `--shadow-sm`, `--font-sans`.
   No new hex, no new token.
@@ -80,6 +87,7 @@ segmented switch with icons, labelled "Products / Articles".
   more. Recorded under "Component patterns" in ../docs/design-system.md.
 
 ## MUST NOT change
+
 - **Both segments always render, including a zero count.** A `0` on Articles is
   information ("nothing written about this"), not a reason to hide the segment. This
   predates the redesign and is the reason both totals are always fetched.
@@ -88,7 +96,7 @@ segmented switch with icons, labelled "Products / Articles".
   on them.
 - Resetting to the Products segment on a new query (`setResultType('product')` in the
   query effect) — it avoids landing on an empty Articles side.
-- The count badges. They are the only place the *other* index's result count is
+- The count badges. They are the only place the _other_ index's result count is
   visible, so removing them hides that a query matched editorial content at all.
 - **Do not give `.result-type-tab.active` a background or box-shadow again.** It would
   sit on top of the thumb and the slide would read as a flicker instead of a movement.

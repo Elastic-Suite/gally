@@ -83,15 +83,22 @@
       "businessPrice": "999 €",
       "perMonth": "/mois",
       "businessFeatures": [
-        "Recherche intelligente", "Facettes avancées", "Recherche vectorielle",
-        "Merchandising visuel", "Recommandations", "Support prioritaire"
+        "Recherche intelligente",
+        "Facettes avancées",
+        "Recherche vectorielle",
+        "Merchandising visuel",
+        "Recommandations",
+        "Support prioritaire"
       ],
       "talkToSales": "Parler à un commercial",
       "enterprise": "Enterprise",
       "enterprisePrice": "Sur devis",
       "enterpriseFeatures": [
-        "Tout Business +", "Multi-store illimité", "SLA dédié",
-        "Intégration sur-mesure", "Account manager"
+        "Tout Business +",
+        "Multi-store illimité",
+        "SLA dédié",
+        "Intégration sur-mesure",
+        "Account manager"
       ]
     },
     "disclaimer": "Ordres de grandeur observés sur des projets de search e-commerce comparables — hors coûts internes. À affiner selon le contexte du prospect."

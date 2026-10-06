@@ -1,7 +1,7 @@
-'use client';
+'use client'
 
-import { Ref } from 'react';
-import Icon from './Icon';
+import { Ref } from 'react'
+import Icon from './Icon'
 
 // The one pager. It replaced five hand-copied ones, each of which built its page numbers as
 // `Array.from({ length: Math.min(pageCount, N) }, (_, i) => i + 1)` — always the first N pages,
@@ -15,17 +15,17 @@ import Icon from './Icon';
 // than the window — so this component only reports which page was asked for.
 
 interface Props {
-  page: number;
-  pageCount: number;
-  onPage: (page: number) => void;
+  page: number
+  pageCount: number
+  onPage: (page: number) => void
   // Number of page buttons in the sliding window, before the first/last jumps are added.
-  windowSize?: number;
-  prevLabel: string;
-  nextLabel: string;
-  ariaLabel?: string;
+  windowSize?: number
+  prevLabel: string
+  nextLabel: string
+  ariaLabel?: string
   // React 19 takes `ref` as a plain prop. VectorSearchPage needs the DOM node to find the panel
   // it belongs to; nothing else uses it.
-  ref?: Ref<HTMLElement>;
+  ref?: Ref<HTMLElement>
 }
 
 export default function Pagination({
@@ -38,15 +38,18 @@ export default function Pagination({
   ariaLabel,
   ref,
 }: Props) {
-  if (pageCount <= 1) return null;
+  if (pageCount <= 1) return null
 
   // The window slides with the current page and stops at either end rather than running past
   // it: page 6 of 12 with a window of 5 is 4-8, page 1 is 1-5, page 12 is 8-12.
-  const size = Math.min(windowSize, pageCount);
-  const start = Math.min(Math.max(page - Math.floor(size / 2), 1), pageCount - size + 1);
-  const pages = Array.from({ length: size }, (_, i) => start + i);
-  const first = pages[0];
-  const last = pages[pages.length - 1];
+  const size = Math.min(windowSize, pageCount)
+  const start = Math.min(
+    Math.max(page - Math.floor(size / 2), 1),
+    pageCount - size + 1
+  )
+  const pages = Array.from({ length: size }, (_, i) => start + i)
+  const first = pages[0]
+  const last = pages[pages.length - 1]
 
   const pageButton = (p: number) => (
     <button
@@ -57,7 +60,7 @@ export default function Pagination({
     >
       {p}
     </button>
-  );
+  )
 
   return (
     <nav className="pagination" aria-label={ariaLabel} ref={ref}>
@@ -77,5 +80,5 @@ export default function Pagination({
         <Icon name="chevron-forward" standalone />
       </button>
     </nav>
-  );
+  )
 }

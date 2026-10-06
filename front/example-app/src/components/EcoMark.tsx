@@ -1,6 +1,6 @@
-'use client';
+'use client'
 
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next'
 
 // The sustainability mark for `llv_is_eco` products — see specs/feature-eco-badge.md.
 //
@@ -16,15 +16,18 @@ import { useTranslation } from 'react-i18next';
 // Shared by the card and the product page on purpose: two copies of this is how the two surfaces
 // start disagreeing about what an eco product looks like.
 export default function EcoMark() {
-  const { t } = useTranslation('product');
+  const { t } = useTranslation('product')
 
   return (
     <div className="product-card-badges product-card-badges--corner">
       {/* The visible word is the accessible name; `title` only elaborates on it. No aria-label —
           one that disagreed with the text would be worse than none. */}
-      <span className="product-card-badge product-card-badge--eco" title={t('card.eco')}>
+      <span
+        className="product-card-badge product-card-badge--eco"
+        title={t('card.eco')}
+      >
         {t('card.ecoShort')}
       </span>
     </div>
-  );
+  )
 }

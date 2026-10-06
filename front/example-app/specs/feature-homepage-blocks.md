@@ -1,7 +1,9 @@
 # Feature: homepage blocks - wide hero, promo cards, panel sliders
 
 ## Status: implemented
+
 ## Page/Component
+
 `src/views/Homepage.tsx`, `src/components/HomeHero.tsx`, `src/components/HomePromoCards.tsx`,
 `src/components/ProductSlider.tsx`, `src/sdk/homepageBlocks.ts`, `src/styles.css`,
 `src/locales/{en,fr,de}/category.json`.
@@ -55,11 +57,11 @@ a row is cut to 3.
 
 Measured on 2026-10-02 (`product_catalog`, default order, first 3 SKUs of each row):
 
-| Shop | Row 1 (root) | `categories[1]` | `categories[2]` |
-|---|---|---|---|
-| fashion | FIO-FRO-RS-003, -002, -001 | Femme: same 3 | Homme: FIO-HOM-SH-007, -006, -005 |
-| toolbox | TBX-ELP-PO-004, -003, -002 | Outillage électroportatif: same 3 | Batteries & Chargeurs: TBX-BAT-CH-009, -008, -007 |
-| papershop | LLV-PAP-CRA-001, LLV-PAP-BIL-008, -007 | Papeterie: same 3 | Livres: LLV-LIV-VOY-005, -004, -003 |
+| Shop      | Row 1 (root)                           | `categories[1]`                   | `categories[2]`                                   |
+| --------- | -------------------------------------- | --------------------------------- | ------------------------------------------------- |
+| fashion   | FIO-FRO-RS-003, -002, -001             | Femme: same 3                     | Homme: FIO-HOM-SH-007, -006, -005                 |
+| toolbox   | TBX-ELP-PO-004, -003, -002             | Outillage électroportatif: same 3 | Batteries & Chargeurs: TBX-BAT-CH-009, -008, -007 |
+| papershop | LLV-PAP-CRA-001, LLV-PAP-BIL-008, -007 | Papeterie: same 3                 | Livres: LLV-LIV-VOY-005, -004, -003               |
 
 `fashion_en` gives the same ids and SKUs. "The last category" was rejected: on papershop it is
 "Sélection éco-responsable", which shares two of row 1's three products.
@@ -76,6 +78,7 @@ On 2026-10-02, on screenshots of the running stack:
   new error line in the `example` log.
 
 **Not verified, and why:**
+
 - The legacy fallback (`com`, `fr`, `uk`): those fixtures are not loaded in the running instance.
   It rests on reading the code - no `HOMEPAGE_BLOCKS` entry renders the old `.hero` and no cards.
 - Cart and product page rows: the cart shot was an empty cart, with no row to compare. They rest

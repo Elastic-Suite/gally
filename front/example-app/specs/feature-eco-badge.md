@@ -1,7 +1,9 @@
 # Feature: eco badge
 
 ## Status: implemented
+
 ## Page/Component
+
 `src/sdk/fields.ts`, `src/sdk/productFields.ts`, `src/components/EcoMark.tsx` (new),
 `src/components/ProductCard.tsx`, `src/views/ProductPage.tsx`, `src/styles.css`,
 `src/locales/{en,fr,de}/product.json`.
@@ -139,5 +141,4 @@ all fire exactly as before.
   one more field in `PRODUCT_FIELDS` and one more condition, no new CSS.
 - No facet or filter was added for `llv_is_eco`. The attribute is already `isFilterable`, so it
   can surface as a facet on its own once coverage rules allow; that is data and admin, not app.
-- The virtual category's own product count reads 0 in `getCategoryTree` while the listing returns
-  104. That is a backend gap recorded in the catalog guide, unrelated to this feature.
+- The virtual category's own product count reads 0 in `getCategoryTree` while the listing returns 104. That is a backend gap recorded in the catalog guide, unrelated to this feature.

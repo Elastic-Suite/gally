@@ -1,7 +1,7 @@
-import { notFound, redirect } from 'next/navigation';
-import { IResolvedCatalog } from './catalogs';
-import { defaultListingPath } from './categoryTree';
-import { resolveLocale, cachedCategoryTree } from './server';
+import { notFound, redirect } from 'next/navigation'
+import { IResolvedCatalog } from './catalogs'
+import { defaultListingPath } from './categoryTree'
+import { resolveLocale, cachedCategoryTree } from './server'
 
 // Server-only. What to do when a category id, a SKU or a blog article id names nothing in this
 // catalog.
@@ -23,9 +23,9 @@ import { resolveLocale, cachedCategoryTree } from './server';
 // See specs/feature-catalog-switch-missing-target.md, which also records why this is not a
 // not-found.tsx boundary.
 
-export const SWITCH_PARAM = 'from';
+export const SWITCH_PARAM = 'from'
 
-export type RouteSearchParams = Record<string, string | string[] | undefined>;
+export type RouteSearchParams = Record<string, string | string[] | undefined>
 
 export async function missingInCatalog(
   locale: string,
@@ -36,16 +36,19 @@ export async function missingInCatalog(
   // article into a product grid changes section on them. Passing it also skips the tree fetch.
   fallbackPath?: string
 ): Promise<never> {
-  const raw = searchParams?.[SWITCH_PARAM];
-  const from = Array.isArray(raw) ? raw[0] : raw;
+  const raw = searchParams?.[SWITCH_PARAM]
+  const from = Array.isArray(raw) ? raw[0] : raw
 
   // resolveLocale is cache()d and the catalog list is already in memory for this request, so
   // checking the mark costs no extra call.
   if (from && from !== locale && (await resolveLocale(from))) {
-    if (fallbackPath) redirect(`/${locale}${fallbackPath}`);
-    const tree = await cachedCategoryTree(resolved.catalog.id, resolved.localizedCatalog.id);
-    redirect(`/${locale}${defaultListingPath(tree)}`);
+    if (fallbackPath) redirect(`/${locale}${fallbackPath}`)
+    const tree = await cachedCategoryTree(
+      resolved.catalog.id,
+      resolved.localizedCatalog.id
+    )
+    redirect(`/${locale}${defaultListingPath(tree)}`)
   }
 
-  notFound();
+  notFound()
 }

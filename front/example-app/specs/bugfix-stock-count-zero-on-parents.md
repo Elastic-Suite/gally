@@ -1,6 +1,7 @@
 # Bugfix: "In stock (0 available)" — one availability rule, and qty 0 now means out of stock
 
 ## Status: implemented
+
 ## Page/Component: src/sdk/productFields.ts (`isAvailable`, `getProductFields.available`), src/views/ProductPage.tsx, src/components/ProductCard.tsx, src/components/SearchOverlay.tsx, app/[locale]/product/[sku]/page.tsx, app/[locale]/category/[code]/page.tsx, src/locales/{en,fr,de}/product.json
 
 ## Problem
@@ -11,7 +12,7 @@ enabled add-to-cart button beside it. Two separate causes:
 1. **The count was never fetched.** `t('page.inStock', { count: p.stock.qty })` was fed
    `p.stock.qty`, but the SDK auto-appends only `stock { status }` to every product query
    (`graphql/Request.ts`), and `PRODUCT_FIELDS` never asked for `qty`. So `qty` was `undefined` on
-   *every* product and i18next rendered the count as `0` — a simple product with 100 units said "0
+   _every_ product and i18next rendered the count as `0` — a simple product with 100 units said "0
    available" too. Requesting the raw `source` for the PDP
    (`feature-configurable-option-selection.md`) fixed that: simples now show their real quantity.
 2. **For a product with children the quantity really is 0.** Verified against the running instance

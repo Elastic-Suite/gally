@@ -1,6 +1,7 @@
 # Feature: configurable axis labels from the API
 
 ## Status: implemented
+
 ## Page/Component: src/components/VariantSelector.tsx, src/contexts/AxisLabelContext.tsx, app/[locale]/layout.tsx
 
 ## Why
@@ -40,9 +41,9 @@ the string is in the server-rendered HTML.
 - [x] An axis the API has no label for renders `Ucfirst_code`, never blank — `fr_fr` renders
       `color` → Color and `size` → Size, which is that path.
 - [~] The quick-add overlay announces the same label. **Verified indirectly**: the labels for the
-      right locale are serialized into the listing page's payload (`Taille vêtement` on
-      `fashion_fr`, `Kleidergröße` on `fashion_de`), and the overlay reads the same context. The
-      overlay itself was not opened in a browser.
+  right locale are serialized into the listing page's payload (`Taille vêtement` on
+  `fashion_fr`, `Kleidergröße` on `fashion_de`), and the overlay reads the same context. The
+  overlay itself was not opened in a browser.
 
 ## SDK contract used
 
@@ -88,12 +89,12 @@ Dropping `page.axis.*` makes the catalogue the single source of truth, which is 
 demo dataset four catalogues have no label rows for their axes, so the endpoint returns
 `ucfirst(code)` and those headings get worse than the hardcoded keys they replace:
 
-| Axis | Catalogue | Before | After |
-|---|---|---|---|
+| Axis            | Catalogue                          | Before          | After         |
+| --------------- | ---------------------------------- | --------------- | ------------- |
 | `fashion_color` | `fr_fr`, `fr_en`, `en_fr`, `en_en` | Color / Couleur | Fashion_color |
-| `fashion_size` | same four | Size / Taille | Fashion_size |
-| `color` | `com_fr` and every `*_fr` | Couleur | Color |
-| `size` | same | Taille | Size |
+| `fashion_size`  | same four                          | Size / Taille   | Fashion_size  |
+| `color`         | `com_fr` and every `*_fr`          | Couleur         | Color         |
+| `size`          | same                               | Taille          | Size          |
 
 The fix is data, not code: add `SourceFieldLabel` rows for those codes in
 `api/packages/gally-sample-data`. Doing it in the app would re-introduce the hardcoded list this

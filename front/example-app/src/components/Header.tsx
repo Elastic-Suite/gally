@@ -1,35 +1,39 @@
-'use client';
+'use client'
 
-import { useLayoutEffect, useRef } from 'react';
-import Link from './LocaleLink';
-import { useTranslation } from 'react-i18next';
-import { useAppPathname } from '../contexts/LocaleContext';
-import { useCatalog } from '../contexts/CatalogContext';
-import { useCart } from '../contexts/CartContext';
-import SearchBar from './SearchBar';
-import CategoryNav from './CategoryNav';
-import BrandLockup from './BrandLockup';
-import SectionLinks from './SectionLinks';
-import Icon from './Icon';
+import { useLayoutEffect, useRef } from 'react'
+import Link from './LocaleLink'
+import { useTranslation } from 'react-i18next'
+import { useAppPathname } from '../contexts/LocaleContext'
+import { useCatalog } from '../contexts/CatalogContext'
+import { useCart } from '../contexts/CartContext'
+import SearchBar from './SearchBar'
+import CategoryNav from './CategoryNav'
+import BrandLockup from './BrandLockup'
+import SectionLinks from './SectionLinks'
+import Icon from './Icon'
 
 export default function Header() {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation('common')
   const {
-    selectedCatalog, selectedLocalizedCatalog,
-    setCatalog, setLocalizedCatalog, catalogs, categories, loadingCatalogs,
-  } = useCatalog();
-  const { itemCount } = useCart();
+    selectedCatalog,
+    selectedLocalizedCatalog,
+    setCatalog,
+    setLocalizedCatalog,
+    catalogs,
+    categories,
+    loadingCatalogs,
+  } = useCatalog()
+  const { itemCount } = useCart()
   // Locale-free: usePathname() would return `/com_en/blog`. The section links' active state
   // lives in SectionLinks now; this one only picks the route without a search band.
-  const pathname = useAppPathname();
-  const groupRef = useRef<HTMLDivElement | null>(null);
-  const slotRef = useRef<HTMLDivElement | null>(null);
+  const pathname = useAppPathname()
+  const groupRef = useRef<HTMLDivElement | null>(null)
+  const slotRef = useRef<HTMLDivElement | null>(null)
 
-  const localizedCatalogs = selectedCatalog?.localizedCatalogs || [];
+  const localizedCatalogs = selectedCatalog?.localizedCatalogs || []
 
   // /vector-search is the one route that supplies its own search input. See the slot below.
-  const hideSearchBar = pathname === '/vector-search';
-
+  const hideSearchBar = pathname === '/vector-search'
 
   // Expose the real rendered height of the whole group as --header-height, so CSS can offset
   // against it instead of guessing: it is the search overlay's top padding. Measured, because
@@ -40,34 +44,37 @@ export default function Header() {
   // language. data-search-slot tells the CSS the variables exist. See
   // specs/feature-header-search-drop.md.
   useLayoutEffect(() => {
-    const group = groupRef.current;
-    if (!group) return;
+    const group = groupRef.current
+    if (!group) return
     const update = () => {
-      document.documentElement.style.setProperty('--header-height', `${group.offsetHeight}px`);
-      const slot = slotRef.current;
-      if (!slot) return;
-      const g = group.getBoundingClientRect();
-      const r = slot.getBoundingClientRect();
+      document.documentElement.style.setProperty(
+        '--header-height',
+        `${group.offsetHeight}px`
+      )
+      const slot = slotRef.current
+      if (!slot) return
+      const g = group.getBoundingClientRect()
+      const r = slot.getBoundingClientRect()
       // Only opening and closing animate. A new measurement must jump: the first one switches
       // the bar from the slot's flow to absolute, where its `width: 100%` would resolve against
       // the whole group and shrink from there on page load; later ones (resize) would make the
       // bar trail the slot. data-search-measuring turns the transition off, and the forced
       // layout applies the new box before it is turned back on.
-      group.dataset.searchMeasuring = '';
-      group.style.setProperty('--search-slot-x', `${r.left - g.left}px`);
-      group.style.setProperty('--search-slot-y', `${r.top - g.top}px`);
-      group.style.setProperty('--search-slot-w', `${r.width}px`);
-      group.style.setProperty('--search-slot-h', `${r.height}px`);
-      group.dataset.searchSlot = '';
-      void group.offsetWidth;
-      delete group.dataset.searchMeasuring;
-    };
-    update();
-    const observer = new ResizeObserver(update);
-    observer.observe(group);
-    if (slotRef.current) observer.observe(slotRef.current);
-    return () => observer.disconnect();
-  }, []);
+      group.dataset.searchMeasuring = ''
+      group.style.setProperty('--search-slot-x', `${r.left - g.left}px`)
+      group.style.setProperty('--search-slot-y', `${r.top - g.top}px`)
+      group.style.setProperty('--search-slot-w', `${r.width}px`)
+      group.style.setProperty('--search-slot-h', `${r.height}px`)
+      group.dataset.searchSlot = ''
+      void group.offsetWidth
+      delete group.dataset.searchMeasuring
+    }
+    update()
+    const observer = new ResizeObserver(update)
+    observer.observe(group)
+    if (slotRef.current) observer.observe(slotRef.current)
+    return () => observer.disconnect()
+  }, [])
 
   return (
     <div className="header-sticky-group" ref={groupRef}>
@@ -86,26 +93,35 @@ export default function Header() {
               its one consumer outside SearchBar, useStoryActions' `type_and_search`, already
               guards with `if (!handle) return`. */}
           <div className="header-search-slot" ref={slotRef}>
-            {!hideSearchBar && <SearchBar categories={categories} categoriesLoading={loadingCatalogs} />}
+            {!hideSearchBar && (
+              <SearchBar
+                categories={categories}
+                categoriesLoading={loadingCatalogs}
+              />
+            )}
           </div>
 
           <div className="context-selectors">
             <select
               className="context-select"
               value={selectedCatalog?.code || ''}
-              onChange={e => setCatalog(e.target.value)}
+              onChange={(e) => setCatalog(e.target.value)}
             >
-              {catalogs.map(c => (
-                <option key={c.code} value={c.code}>{c.name}</option>
+              {catalogs.map((c) => (
+                <option key={c.code} value={c.code}>
+                  {c.name}
+                </option>
               ))}
             </select>
             <select
               className="context-select"
               value={selectedLocalizedCatalog?.code || ''}
-              onChange={e => setLocalizedCatalog(e.target.value)}
+              onChange={(e) => setLocalizedCatalog(e.target.value)}
             >
-              {localizedCatalogs.map(l => (
-                <option key={l.code} value={l.code}>{l.name}</option>
+              {localizedCatalogs.map((l) => (
+                <option key={l.code} value={l.code}>
+                  {l.name}
+                </option>
               ))}
             </select>
           </div>
@@ -124,7 +140,6 @@ export default function Header() {
             inside <header> on purpose, so the two rows share one surface. */}
         <CategoryNav />
       </header>
-
     </div>
-  );
+  )
 }

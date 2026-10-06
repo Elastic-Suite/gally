@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react'
 
 // `false` on the server and on the very first client render, `true` from the
 // first effect on. That ordering is the whole point: both sides render the same
@@ -10,7 +10,8 @@ import { useEffect, useState } from 'react';
 // same intent by *throwing* `BailoutToCSR` during the server render; see
 // specs/bugfix-dynamic-ssr-false-bailout.md for why that mattered here.
 export function useMounted(): boolean {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-  return mounted;
+  const [mounted, setMounted] = useState(false)
+  // eslint-disable-next-line react-hooks/set-state-in-effect -- flag flips after hydration; the server render must match the first client render
+  useEffect(() => setMounted(true), [])
+  return mounted
 }

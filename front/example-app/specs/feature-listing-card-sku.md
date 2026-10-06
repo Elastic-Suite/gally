@@ -1,6 +1,7 @@
 # Feature: product SKU on the listing card
 
 ## Status: implemented
+
 ## Page/Component: src/components/ProductCard.tsx, src/styles.css
 
 Every product card now names its SKU, so a listing can be read against the catalogue without
@@ -8,6 +9,7 @@ opening each product page. The card body keeps the height it had before: the lin
 vertical padding, not by a taller card.
 
 ## Behaviour (testable)
+
 - [ ] The SKU appears in the card body, directly under the product name and above the price.
 - [ ] It uses the same wording and the same translation key as the product page,
       `product:page.sku` - "SKU: 24-MB01" / "Référence : 24-MB01" / "Artikelnummer: 24-MB01".
@@ -27,6 +29,7 @@ vertical padding, not by a taller card.
       second card idiom (golden rule 3).
 
 ## Verified
+
 - `npx tsc --noEmit` inside the `example` container: no errors.
 - `docker compose logs --timestamps example`: three `✓ Compiled` events after the change, each
   followed by a 200, no `⨯` after them. The `⨯` lines in the buffer predate the change.
@@ -35,14 +38,17 @@ vertical padding, not by a taller card.
   0.75rem/0.8rem SKU at 1.4, padding 0.45rem/0.65rem per side), not measured in a rendered page.
 
 ## SDK contract used
+
 No request change. `sku` was already read from `getProductFields(product)` in `ProductCard` and
 used to build the product link.
 
 ## Tracking (required)
+
 None added or changed. `trackDisplay` in `src/views/CategoryPage.tsx` and the add-to-cart events
 from `QuickAdd` are untouched.
 
 ## UI constraints
+
 - Two new tokens in `:root`, both raised on `.products-grid` like the five that were already
   there: `--product-card-sku-size` and `--product-card-body-padding-y`.
 - No new hex, no new font stack, no new visual primitive. `.product-card-sku` is the card-scale
@@ -51,6 +57,7 @@ from `QuickAdd` are untouched.
   shrinks with the card. Its three shimmer rows already match name + SKU + price.
 
 ## MUST NOT change
+
 - **Horizontal padding of the card body stays `--product-card-body-padding`** (1rem / 1.25rem).
   Only the vertical padding was reduced. Collapsing the two back into one shorthand value would
   either re-inflate the card or pull the text to its edges.

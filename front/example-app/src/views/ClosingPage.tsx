@@ -1,12 +1,12 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import Icon from '../components/Icon';
+import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import Icon from '../components/Icon'
 
 export default function ClosingPage() {
-  const { t } = useTranslation('demo');
-  const [revealStage, setRevealStage] = useState(0); // 0=delay, 1=cost, 2=pricing
+  const { t } = useTranslation('demo')
+  const [revealStage, setRevealStage] = useState(0) // 0=delay, 1=cost, 2=pricing
 
   return (
     <div className="closing-page">
@@ -18,11 +18,15 @@ export default function ClosingPage() {
       <div className="closing-stats">
         <div className="closing-stat">
           <span className="closing-stat-value coral">−40%</span>
-          <span className="closing-stat-label">{t('closing.stats.noResults')}</span>
+          <span className="closing-stat-label">
+            {t('closing.stats.noResults')}
+          </span>
         </div>
         <div className="closing-stat">
           <span className="closing-stat-value">+30%</span>
-          <span className="closing-stat-label">{t('closing.stats.conversion')}</span>
+          <span className="closing-stat-label">
+            {t('closing.stats.conversion')}
+          </span>
         </div>
         <div className="closing-stat">
           <span className="closing-stat-value">+15%</span>
@@ -32,8 +36,17 @@ export default function ClosingPage() {
 
       {/* Tracking Journey Timeline */}
       <div className="closing-card" style={{ marginBottom: '2rem' }}>
-        <h3><Icon name="stats-chart" />{t('closing.timeline.heading')}</h3>
-        <p style={{ fontSize: '0.85rem', color: 'var(--gray-500)', marginBottom: '1.5rem' }}>
+        <h3>
+          <Icon name="stats-chart" />
+          {t('closing.timeline.heading')}
+        </h3>
+        <p
+          style={{
+            fontSize: '0.85rem',
+            color: 'var(--gray-500)',
+            marginBottom: '1.5rem',
+          }}
+        >
           {t('closing.timeline.intro')}
         </p>
         <div className="tracking-timeline">
@@ -42,10 +55,12 @@ export default function ClosingPage() {
             <div className="timeline-content">
               <div className="timeline-event">
                 <span className="timeline-badge">SEARCH</span>
-                {t('closing.timeline.search.eventPrefix')} <strong>"tank dress"</strong>
+                {t('closing.timeline.search.eventPrefix')}{' '}
+                <strong>"tank dress"</strong>
               </div>
               <div className="timeline-consequence">
-                <Icon name="arrow-forward" />{t('closing.timeline.search.consequence')}
+                <Icon name="arrow-forward" />
+                {t('closing.timeline.search.consequence')}
               </div>
             </div>
           </div>
@@ -58,7 +73,8 @@ export default function ClosingPage() {
                 {t('closing.timeline.display.event', { count: 12 })}
               </div>
               <div className="timeline-consequence">
-                <Icon name="arrow-forward" />{t('closing.timeline.display.consequence')}
+                <Icon name="arrow-forward" />
+                {t('closing.timeline.display.consequence')}
               </div>
             </div>
           </div>
@@ -71,7 +87,8 @@ export default function ClosingPage() {
                 {t('closing.timeline.viewCategory.event')}
               </div>
               <div className="timeline-consequence">
-                <Icon name="arrow-forward" />{t('closing.timeline.viewCategory.consequence')}
+                <Icon name="arrow-forward" />
+                {t('closing.timeline.viewCategory.consequence')}
               </div>
             </div>
           </div>
@@ -84,7 +101,8 @@ export default function ClosingPage() {
                 {t('closing.timeline.viewProduct.event')}
               </div>
               <div className="timeline-consequence">
-                <Icon name="arrow-forward" />{t('closing.timeline.viewProduct.consequence')}
+                <Icon name="arrow-forward" />
+                {t('closing.timeline.viewProduct.consequence')}
               </div>
             </div>
           </div>
@@ -97,7 +115,8 @@ export default function ClosingPage() {
                 {t('closing.timeline.addToCart.event')}
               </div>
               <div className="timeline-consequence">
-                <Icon name="arrow-forward" />{t('closing.timeline.addToCart.consequence')}
+                <Icon name="arrow-forward" />
+                {t('closing.timeline.addToCart.consequence')}
               </div>
             </div>
           </div>
@@ -110,7 +129,8 @@ export default function ClosingPage() {
                 {t('closing.timeline.order.event')}
               </div>
               <div className="timeline-consequence">
-                <Icon name="arrow-forward" />{t('closing.timeline.order.consequence')}
+                <Icon name="arrow-forward" />
+                {t('closing.timeline.order.consequence')}
               </div>
             </div>
           </div>
@@ -118,16 +138,20 @@ export default function ClosingPage() {
 
         <div className="timeline-summary">
           <div className="timeline-summary-item">
-            <strong>{t('closing.timeline.summary.eventTypes')}</strong> {t('closing.timeline.summary.eventTypesSuffix')}
+            <strong>{t('closing.timeline.summary.eventTypes')}</strong>{' '}
+            {t('closing.timeline.summary.eventTypesSuffix')}
           </div>
           <div className="timeline-summary-item">
-            <strong>{t('closing.timeline.summary.popularityScore')}</strong> {t('closing.timeline.summary.popularityScoreSuffix')}
+            <strong>{t('closing.timeline.summary.popularityScore')}</strong>{' '}
+            {t('closing.timeline.summary.popularityScoreSuffix')}
           </div>
           <div className="timeline-summary-item">
-            <strong>{t('closing.timeline.summary.recommendations')}</strong> {t('closing.timeline.summary.recommendationsSuffix')}
+            <strong>{t('closing.timeline.summary.recommendations')}</strong>{' '}
+            {t('closing.timeline.summary.recommendationsSuffix')}
           </div>
           <div className="timeline-summary-item">
-            <strong>{t('closing.timeline.summary.relevance')}</strong> {t('closing.timeline.summary.relevanceSuffix')}
+            <strong>{t('closing.timeline.summary.relevance')}</strong>{' '}
+            {t('closing.timeline.summary.relevanceSuffix')}
           </div>
         </div>
       </div>
@@ -136,20 +160,30 @@ export default function ClosingPage() {
       <div className="closing-cards">
         {/* Stage 0: Delay — always visible */}
         <div className="closing-card">
-          <h3><Icon name="time" />{t('closing.delay.heading')}</h3>
+          <h3>
+            <Icon name="time" />
+            {t('closing.delay.heading')}
+          </h3>
           <div className="closing-compare">
             <div className="closing-compare-col market">
               <div className="closing-compare-label">{t('closing.market')}</div>
-              <div className="closing-compare-value">{t('closing.delay.marketValue')}</div>
+              <div className="closing-compare-value">
+                {t('closing.delay.marketValue')}
+              </div>
             </div>
             <div className="closing-compare-vs">vs</div>
             <div className="closing-compare-col gally">
               <div className="closing-compare-label">Gally</div>
-              <div className="closing-compare-value">{t('closing.delay.gallyValue')}</div>
+              <div className="closing-compare-value">
+                {t('closing.delay.gallyValue')}
+              </div>
             </div>
           </div>
           {revealStage === 0 && (
-            <button className="btn btn-primary closing-reveal-btn" onClick={() => setRevealStage(1)}>
+            <button
+              className="btn btn-primary closing-reveal-btn"
+              onClick={() => setRevealStage(1)}
+            >
               {t('closing.delay.ctaBudget')}
             </button>
           )}
@@ -158,21 +192,35 @@ export default function ClosingPage() {
         {/* Stage 1: Cost */}
         {revealStage >= 1 && (
           <div className="closing-card reveal-in">
-            <h3><Icon name="wallet" />{t('closing.cost.heading')}</h3>
+            <h3>
+              <Icon name="wallet" />
+              {t('closing.cost.heading')}
+            </h3>
             <div className="closing-compare">
               <div className="closing-compare-col market">
-                <div className="closing-compare-label">{t('closing.market')}</div>
-                <div className="closing-compare-value">{t('closing.cost.marketValue')}</div>
+                <div className="closing-compare-label">
+                  {t('closing.market')}
+                </div>
+                <div className="closing-compare-value">
+                  {t('closing.cost.marketValue')}
+                </div>
               </div>
               <div className="closing-compare-vs">vs</div>
               <div className="closing-compare-col gally">
                 <div className="closing-compare-label">Gally</div>
-                <div className="closing-compare-value">{t('closing.cost.gallyValue')}</div>
-                <div className="closing-compare-note">{t('closing.cost.gallyNote')}</div>
+                <div className="closing-compare-value">
+                  {t('closing.cost.gallyValue')}
+                </div>
+                <div className="closing-compare-note">
+                  {t('closing.cost.gallyNote')}
+                </div>
               </div>
             </div>
             {revealStage === 1 && (
-              <button className="btn btn-primary closing-reveal-btn" onClick={() => setRevealStage(2)}>
+              <button
+                className="btn btn-primary closing-reveal-btn"
+                onClick={() => setRevealStage(2)}
+              >
                 {t('closing.cost.ctaPricing')}
               </button>
             )}
@@ -182,15 +230,30 @@ export default function ClosingPage() {
         {/* Stage 2: Pricing */}
         {revealStage >= 2 && (
           <div className="closing-card reveal-in">
-            <h3><Icon name="list" />{t('closing.pricing.heading')}</h3>
+            <h3>
+              <Icon name="list" />
+              {t('closing.pricing.heading')}
+            </h3>
             <div className="pricing-cards">
               <div className="pricing-card featured">
-                <div className="pricing-badge">{t('closing.pricing.popular')}</div>
+                <div className="pricing-badge">
+                  {t('closing.pricing.popular')}
+                </div>
                 <h4>{t('closing.pricing.business')}</h4>
-                <div className="pricing-price">{t('closing.pricing.businessPrice')}<span>{t('closing.pricing.perMonth')}</span></div>
+                <div className="pricing-price">
+                  {t('closing.pricing.businessPrice')}
+                  <span>{t('closing.pricing.perMonth')}</span>
+                </div>
                 <ul className="pricing-features">
-                  {(t('closing.pricing.businessFeatures', { returnObjects: true }) as string[]).map((f) => (
-                    <li key={f}><Icon name="checkmark" />{f}</li>
+                  {(
+                    t('closing.pricing.businessFeatures', {
+                      returnObjects: true,
+                    }) as string[]
+                  ).map((f) => (
+                    <li key={f}>
+                      <Icon name="checkmark" />
+                      {f}
+                    </li>
                   ))}
                 </ul>
                 <button className="btn btn-coral" style={{ width: '100%' }}>
@@ -199,10 +262,19 @@ export default function ClosingPage() {
               </div>
               <div className="pricing-card">
                 <h4>{t('closing.pricing.enterprise')}</h4>
-                <div className="pricing-price">{t('closing.pricing.enterprisePrice')}</div>
+                <div className="pricing-price">
+                  {t('closing.pricing.enterprisePrice')}
+                </div>
                 <ul className="pricing-features">
-                  {(t('closing.pricing.enterpriseFeatures', { returnObjects: true }) as string[]).map((f) => (
-                    <li key={f}><Icon name="checkmark" />{f}</li>
+                  {(
+                    t('closing.pricing.enterpriseFeatures', {
+                      returnObjects: true,
+                    }) as string[]
+                  ).map((f) => (
+                    <li key={f}>
+                      <Icon name="checkmark" />
+                      {f}
+                    </li>
                   ))}
                 </ul>
                 <button className="btn btn-outline" style={{ width: '100%' }}>
@@ -215,9 +287,7 @@ export default function ClosingPage() {
       </div>
 
       {/* Disclaimer */}
-      <p className="closing-disclaimer">
-        {t('closing.disclaimer')}
-      </p>
+      <p className="closing-disclaimer">{t('closing.disclaimer')}</p>
     </div>
-  );
+  )
 }

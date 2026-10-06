@@ -1,6 +1,7 @@
 # Feature: checkout in one step, prefilled with a demo customer
 
 ## Status: implemented
+
 ## Page/Component: src/views/CheckoutPage.tsx
 
 The checkout tunnel had two form steps - shipping, then payment - before the confirmation. For a
@@ -9,6 +10,7 @@ on one step, and every field is prefilled with a demo customer, John Doe, so the
 placed in one click.
 
 ## Behaviour (testable)
+
 - [ ] The stepper shows three steps: Cart (done), Delivery & payment (active), Confirmation.
 - [ ] The one form step holds the shipping fields, then the payment fields, then the total and the
       place-order button.
@@ -20,18 +22,22 @@ placed in one click.
 - [ ] The step label is translated in en, fr and de (`cart.checkout.steps.details`).
 
 ## SDK contract used
+
 - None. The page does not query Gally.
 
 ## Tracking (required)
+
 - `trackOrder` fires once on place order, with the order id, the total and the cart lines - as
   before.
 
 ## UI constraints
+
 - Same card, input and button idioms as before (`facet-search`, `btn-coral`, `cart-summary`). No
   new token, no new primitive.
 - The demo values are not translated: they are data, not interface text.
 
 ## MUST NOT change
+
 - The `trackOrder` call and its payload.
 - `clearCart()` after the order is placed.
 - The coral place-order button (`specs/feature-add-to-cart-indigo.md`).

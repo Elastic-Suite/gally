@@ -1,6 +1,7 @@
 # Feature: the header and search bar scroll away with the page
 
 ## Status: implemented
+
 ## Page/Component: src/styles.css (`.header-sticky-group`, `.facets-sidebar`, `.search-overlay-scrim`), src/components/Header.tsx (`--header-height`), src/components/SearchOverlay.tsx (`--acp-page-offset`)
 
 ## Problem

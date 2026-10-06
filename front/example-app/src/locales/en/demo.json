@@ -83,15 +83,22 @@
       "businessPrice": "€999",
       "perMonth": "/month",
       "businessFeatures": [
-        "Intelligent search", "Advanced facets", "Vector search",
-        "Visual merchandising", "Recommendations", "Priority support"
+        "Intelligent search",
+        "Advanced facets",
+        "Vector search",
+        "Visual merchandising",
+        "Recommendations",
+        "Priority support"
       ],
       "talkToSales": "Talk to sales",
       "enterprise": "Enterprise",
       "enterprisePrice": "Custom quote",
       "enterpriseFeatures": [
-        "Everything in Business +", "Unlimited multi-store", "Dedicated SLA",
-        "Custom integration", "Account manager"
+        "Everything in Business +",
+        "Unlimited multi-store",
+        "Dedicated SLA",
+        "Custom integration",
+        "Account manager"
       ]
     },
     "disclaimer": "Order-of-magnitude figures observed on comparable e-commerce search projects — excluding internal costs. To be refined based on the prospect's context."

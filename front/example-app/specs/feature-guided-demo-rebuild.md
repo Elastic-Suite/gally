@@ -1,7 +1,8 @@
 # Feature: rebuild the guided demo (story, intro, audience modes)
 
 ## Status: paused - not started
-## Page/Component: src/contexts/DemoContext.tsx, src/hooks/useStoryActions.ts, src/scenarios/, src/components/{IntroScreen,StoryCompanion,AppShell}.tsx, src/views/ClosingPage.tsx, src/locales/*/{demo,scenarios}.json, src/styles.css
+
+## Page/Component: src/contexts/DemoContext.tsx, src/hooks/useStoryActions.ts, src/scenarios/, src/components/{IntroScreen,StoryCompanion,AppShell}.tsx, src/views/ClosingPage.tsx, src/locales/\*/{demo,scenarios}.json, src/styles.css
 
 ## Why this file exists
 
@@ -43,13 +44,13 @@ Scenario: `src/scenarios/demo-dress.ts`. Engine: `src/hooks/useStoryActions.ts`.
 navigation goes through `pushLocale` (`useStoryActions.ts:39-41`), so the `[locale]` prefix is
 handled.
 
-| Act | Action | Route | Targets | Status |
-|---|---|---|---|---|
-| 1 | `type_and_search` "tank dress" (`demo-dress.ts:17`) | `/` then `/search?q=` | `.search-bar-wrapper` (`src/components/SearchBar.tsx:195`) | Target exists. Not checked since the header search redesign: typing may open the search overlay over the page (guess). |
-| 2 | `highlight_sequence` (`demo-dress.ts:25`) | `/category/__first__`, resolved at `useStoryActions.ts:61-66` | `.facets-sidebar` (`Facets.tsx:61`), `.facet-group` (`Facets.tsx:242`) | Works. The first-category logic duplicates `defaultListingPath` (`src/sdk/categoryTree.ts:21`). |
-| 3 | `highlight_sequence` (`demo-dress.ts:33`) | `/explain` | `.explain-results-page`, `.explain-rank-card` (`src/views/ExplainPage.tsx:128,145,147`) | Targets exist. The page hardcodes the API URL and admin credentials (`ExplainPage.tsx:7-9`) and has French-only strings (`:117,124`). |
-| 4 | `add_to_cart_flow` (`demo-dress.ts:41`) | search, first `.product-card`, product page | `.product-detail-actions .btn-coral` (`useStoryActions.ts:198`) | **Broken.** The button is now `btn btn-primary btn-lg` (`src/views/ProductPage.tsx:211-213`). The step retries, then falls back to `/cart` after 6 s. |
-| 5 | `highlight_sequence` (`demo-dress.ts:48`) | `/closing` | `.tracking-timeline`, `.timeline-item` (`src/views/ClosingPage.tsx:39-40`) | Works. |
+| Act | Action                                              | Route                                                         | Targets                                                                                 | Status                                                                                                                                                |
+| --- | --------------------------------------------------- | ------------------------------------------------------------- | --------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | `type_and_search` "tank dress" (`demo-dress.ts:17`) | `/` then `/search?q=`                                         | `.search-bar-wrapper` (`src/components/SearchBar.tsx:195`)                              | Target exists. Not checked since the header search redesign: typing may open the search overlay over the page (guess).                                |
+| 2   | `highlight_sequence` (`demo-dress.ts:25`)           | `/category/__first__`, resolved at `useStoryActions.ts:61-66` | `.facets-sidebar` (`Facets.tsx:61`), `.facet-group` (`Facets.tsx:242`)                  | Works. The first-category logic duplicates `defaultListingPath` (`src/sdk/categoryTree.ts:21`).                                                       |
+| 3   | `highlight_sequence` (`demo-dress.ts:33`)           | `/explain`                                                    | `.explain-results-page`, `.explain-rank-card` (`src/views/ExplainPage.tsx:128,145,147`) | Targets exist. The page hardcodes the API URL and admin credentials (`ExplainPage.tsx:7-9`) and has French-only strings (`:117,124`).                 |
+| 4   | `add_to_cart_flow` (`demo-dress.ts:41`)             | search, first `.product-card`, product page                   | `.product-detail-actions .btn-coral` (`useStoryActions.ts:198`)                         | **Broken.** The button is now `btn btn-primary btn-lg` (`src/views/ProductPage.tsx:211-213`). The step retries, then falls back to `/cart` after 6 s. |
+| 5   | `highlight_sequence` (`demo-dress.ts:48`)           | `/closing`                                                    | `.tracking-timeline`, `.timeline-item` (`src/views/ClosingPage.tsx:39-40`)              | Works.                                                                                                                                                |
 
 ### Hardcoded to one catalog
 

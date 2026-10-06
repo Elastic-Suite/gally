@@ -3,6 +3,7 @@
 These facts were found the hard way. Never "simplify" them away.
 
 ## Gally API
+
 - **Base URL:** `https://gally.localhost/api`
 - **REST endpoints:** `/api/catalogs`, `/api/localized_catalogs`, `/api/categories`, `/api/category_configurations`
 - **GraphQL endpoint:** `/api/graphql` (no auth required for public queries)
@@ -18,17 +19,17 @@ These facts were found the hard way. Never "simplify" them away.
 Three catalogs, six localized catalogs. The `[locale]` URL segment is the **localized** code (right
 column), which is what every SDK call wants — a parent catalog code is never a valid segment.
 
-| Catalog | Localized catalog | Locale | Currency | |
-|---|---|---|---|---|
-| `com` — COM Catalog | `com_fr` | fr_FR | EUR | **landing default** |
-| | `com_en` | en_US | EUR | |
-| `fr` — FR Catalog | `fr_fr` | fr_FR | EUR | |
-| | `fr_en` | en_US | EUR | |
-| `uk` — UK Catalog | `en_fr` | fr_FR | GBP | no documents indexed |
-| | `en_en` | en_US | GBP | no documents indexed |
+| Catalog             | Localized catalog | Locale | Currency |                      |
+| ------------------- | ----------------- | ------ | -------- | -------------------- |
+| `com` — COM Catalog | `com_fr`          | fr_FR  | EUR      | **landing default**  |
+|                     | `com_en`          | en_US  | EUR      |                      |
+| `fr` — FR Catalog   | `fr_fr`           | fr_FR  | EUR      |                      |
+|                     | `fr_en`           | en_US  | EUR      |                      |
+| `uk` — UK Catalog   | `en_fr`           | fr_FR  | GBP      | no documents indexed |
+|                     | `en_en`           | en_US  | GBP      | no documents indexed |
 
 ⚠️ **The `uk` catalog's localized codes start with `en_`, not `uk_`** — so `en_en` / `en_fr` are the
-*British* catalog, not an "English" one, and they are the two with **no indexed documents at all**:
+_British_ catalog, not an "English" one, and they are the two with **no indexed documents at all**:
 they render an empty storefront. Confirmed against
 `api/packages/gally-sample-data/src/DataFixtures/{catalogs,localized_catalogs}.yaml`.
 
@@ -36,6 +37,7 @@ The app also ships German UI strings (`src/locales/de/`, mapped in `src/sdk/cata
 though no `de_DE` localized catalog exists — German is reachable only if one is added to the data.
 
 ## SDK Usage (`@elastic-suite/gally-sdk`)
+
 - `SearchManager` — wraps GraphQL product search. Accepts `SearchRequestOptions` with `localizedCatalog` (e.g. `"com_en"`), `metadata` (e.g. `"product"`), `categoryId`, `search`, etc.
 - **⚠️ `selectedFields` MUST NOT be empty.** The SDK skips the `collection` field entirely when `selectedFields` is `[]`, returning only pagination/aggregation metadata with **zero products**. Always pass a non-empty list.
 - **GraphQL field syntax for `selectedFields`:** object/array-typed fields require sub-selections (e.g. `fashion_color { label value }`, not `fashion_color`). Scalar fields are plain names.
@@ -48,6 +50,7 @@ though no `de_DE` localized catalog exists — German is reachable only if one i
 - `Client` + `Configuration` — low-level HTTP/GraphQL client for direct API calls.
 
 ## Non-product entities (`cms_page` — the blog)
+
 `SearchManager` is not product-only. Any `metadata` other than `'product'` is routed by
 the SDK to the generic `documents(entityType: ...)` GraphQL query (`graphql/Request.ts:getEndpoint()`).
 `cms_page` is the entity the Blog section runs on (57 documents per locale: 50 blog
@@ -74,12 +77,12 @@ posts + 7 legacy buying guides). Everything below differs from the product path:
   in `selectedFields`); the collection item's GraphQL `id` was the IRI
   (`/api/documents/18`) anyway, not the id.
 - **⚠️ Filters use a different input type.** Products take `{ field: { eq: v } }`;
-  `documents` takes `FieldFilterInput`, which names the field *inside* the filter:
+  `documents` takes `FieldFilterInput`, which names the field _inside_ the filter:
   `{ equalFilter: { field: 'topic__value', eq: 'materials' } }`. Also available:
   `matchFilter`, `rangeFilter`, `boolFilter`, `existFilter`.
 - **⚠️ Not every field is filterable.** `url_key` is keyword-analyzed text with no `untouched`
-  sub-field, so filtering on it 500s with *"Unable to identify the field property to use for
-  filtering on \"url_key\", possible invalid mapping"*. `id` **is** filterable
+  sub-field, so filtering on it 500s with _"Unable to identify the field property to use for
+  filtering on \"url_key\", possible invalid mapping"_. `id` **is** filterable
   (`equalFilter` on `id`) — that's why `/blog/:id` keys off the id, not the slug.
 - Sort variable shape differs (`{ field, direction }` vs the product `{ [field]: direction }`),
   but `sortField`/`sortDirection` are the same SDK options — the Request builds the right one.
@@ -125,6 +128,7 @@ field goes through `NestedAttribute`, whose `getSanitizedData()` calls `current(
 and returns only the first child.
 
 Key source fields:
+
 - `sku` (string), `name` (string[]), `image` (string path like `/v/a/file.jpg` — build the URL with `mediaUrl(config, path)`)
 - `price` (array of `{ price, original_price, is_discounted, group_id }`)
 - `description` (string[] with HTML), `type_id` (raw source only, not a GraphQL field)
@@ -146,6 +150,7 @@ Key source fields:
 with `mediaUrl(config, path)` (`sdk/config.ts`): on the server with the awaited config, in client
 components with `useGallyConfig()` or `useMediaUrl()` (`contexts/ConfigContext.tsx`). Never
 hardcode the host. See `specs/feature-public-configuration.md`.
+
 ### Unset booleans in raw `_source` are `[]`, not `false`
 
 An attribute a product does not carry is indexed as an **empty array**, not `false` and not

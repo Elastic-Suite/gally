@@ -1,6 +1,7 @@
 # Feature: PDP breadcrumb — the product's real category path, clickable
 
 ## Status: implemented
+
 ## Page/Component: src/views/ProductPage.tsx, src/components/Breadcrumb.tsx (new), src/sdk/categoryTree.ts (`productCategoryTrail`), app/[locale]/product/[sku]/page.tsx (BreadcrumbList), src/locales/{en,fr,de}/product.json
 
 Follows `feature-category-trail-nav-and-breadcrumb.md`, which made the category page's
@@ -11,6 +12,7 @@ page that does not exist — the header's Products tab goes to the first categor
 hardcoded in English.
 
 ## Behaviour (testable)
+
 - [x] The PDP breadcrumb reads `Home / <category path> / <product name>`, e.g.
       `Home / Accessories & Consumables / Drill Bits / HSS step drill bit 4-32 mm`.
 - [x] Home and every category part is a link; the product name is not, and carries
@@ -26,6 +28,7 @@ hardcoded in English.
       `Accueil / Robes / …` on `com_fr`.
 
 ## Which category, when a product has several
+
 `productCategoryTrail()` picks the **deepest** assignment — the one with the longest ancestor
 chain — because `source.category` lists every category a product is in, ancestors included, in
 index order.
@@ -39,6 +42,7 @@ order, and a dress assigned to both read "Home / Default Category / Claudia Croc
 category in the tree.
 
 ## SDK contract used
+
 - No new SDK or GraphQL call. `source.category` comes from the raw `_source`, which this route
   already requests via `PRODUCT_DETAIL_FIELDS` (both `fetchProductBySku` and `ProductPage`'s
   `useSearch`) for `type_id` and `configurable_attributes`. Anywhere `source` is absent the
@@ -47,10 +51,12 @@ category in the tree.
   has already made, so the PDP costs no extra request.
 
 ## Tracking (required)
+
 - Unchanged. `trackProductView` still fires from `ProductPage`'s effect on the sku; breadcrumb
   parts are ordinary navigations to `/category/<id>`, which fire `trackCategoryView` on arrival.
 
 ## UI constraints
+
 - No new visual primitive and no new CSS: the same `.breadcrumb` / `.breadcrumb-sep` rules the
   category page uses.
 - `src/components/Breadcrumb.tsx` is the shared component both pages now render — the second
@@ -58,6 +64,7 @@ category in the tree.
   itself, since every path starts there, and takes the rest as `{ name, href? }` parts.
 
 ## MUST NOT change
+
 - `Breadcrumb` renders the **last** part as plain text even when it carries an `href`. Both call
   sites rely on it: `CategoryPage` maps its whole trail to links and lets the component drop the
   last one.

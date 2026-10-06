@@ -14,7 +14,14 @@
   "scripts": {
     "start": "next dev -p 3001",
     "build": "next build",
-    "test": "echo \"no tests\""
+    "test": "echo \"no tests\"",
+    "test:ci": "echo \"no tests\"",
+    "eslint": "eslint --fix .",
+    "eslint:ci": "eslint .",
+    "prettier": "prettier --write --ignore-unknown --ignore-path .gitignore .",
+    "prettier:ci": "prettier --check --ignore-unknown --ignore-path .gitignore .",
+    "typescript": "next typegen && tsc --noEmit",
+    "typescript:ci": "next typegen && tsc --noEmit"
   },
   "browserslist": {
     "production": [
@@ -32,7 +39,9 @@
     "@types/node": "^22.15.0",
     "@types/react": "^19.1.0",
     "@types/react-dom": "^19.1.0",
+    "eslint": "^9.39.0",
     "eslint-config-next": "^16.3.0",
+    "prettier": "2.7.1",
     "typescript": "^5.9.0"
   }
 }
