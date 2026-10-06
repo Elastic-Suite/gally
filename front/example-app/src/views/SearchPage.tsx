@@ -1,171 +1,197 @@
-'use client';
+'use client'
 
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
-import { useTranslation } from 'react-i18next';
-import { useSearch } from '../hooks/useSearch';
-import { useCatalog } from '../contexts/CatalogContext';
-import { useCmsSearch } from '../hooks/useCms';
-import { useTracking } from '../hooks/useTracking';
-import Facets from '../components/Facets';
-import ProductCard from '../components/ProductCard';
-import BlogCard from '../components/BlogCard';
-import { ProductGridSkeleton } from '../components/skeletons';
-import Pagination from '../components/Pagination';
-import Icon from '../components/Icon';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { useTranslation } from 'react-i18next'
+import { useSearch } from '../hooks/useSearch'
+import { useCatalog } from '../contexts/CatalogContext'
+import { useCmsSearch, CmsPage } from '../hooks/useCms'
+import { useTracking } from '../hooks/useTracking'
+import Facets, { ActiveFilters, FilterValue } from '../components/Facets'
+import ProductCard from '../components/ProductCard'
+import BlogCard from '../components/BlogCard'
+import { ProductGridSkeleton } from '../components/skeletons'
+import Pagination from '../components/Pagination'
+import Icon from '../components/Icon'
+import type { ServerSearchResult } from '../sdk/server'
 
 // A query hits two indices at once. `product` is the default tab; `blog` shows the
 // cms_page documents the same query matched.
-type ResultType = 'product' | 'blog';
-const CMS_PAGE_SIZE = 10;
+type ResultType = 'product' | 'blog'
+const CMS_PAGE_SIZE = 10
 
 // `initialData` is the first page of results for `?q=`, fetched by the Server Component.
 export default function SearchPage({
   initialData,
 }: {
-  initialData?: { products: any[]; total: number; pageCount: number; aggregations: any[] };
+  initialData?: ServerSearchResult
 } = {}) {
-  const { t, i18n } = useTranslation(['search', 'common', 'blog']);
-  const searchParams = useSearchParams();
-  const query = searchParams.get('q') || '';
-  const [page, setPage] = useState(1);
-  const [cmsPage, setCmsPage] = useState(1);
-  const [resultType, setResultType] = useState<ResultType>('product');
-  const [sortField, setSortField] = useState('');
-  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
-  const [facetsOpen, setFacetsOpen] = useState(false);
+  const { t, i18n } = useTranslation(['search', 'common', 'blog'])
+  const searchParams = useSearchParams()
+  const query = searchParams.get('q') || ''
+  const [page, setPage] = useState(1)
+  const [cmsPage, setCmsPage] = useState(1)
+  const [resultType, setResultType] = useState<ResultType>('product')
+  const [sortField, setSortField] = useState('')
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc')
+  const [facetsOpen, setFacetsOpen] = useState(false)
 
   // Filters can arrive pre-applied in the URL as repeatable `f_<field>=<value>`
   // params — that's how the autocomplete panel hands over an attribute option
   // (see SearchOverlay's attributeFilterUrl). Values are always arrays because
   // that's the shape the checkbox/swatch facets treat as "checked".
   const urlFilters = useMemo(() => {
-    const out: Record<string, string[]> = {};
+    const out: Record<string, string[]> = {}
     searchParams.forEach((value, key) => {
-      if (!key.startsWith('f_')) return;
-      const field = key.slice(2);
-      out[field] = [...(out[field] ?? []), value];
-    });
-    return out;
-  }, [searchParams]);
+      if (!key.startsWith('f_')) return
+      const field = key.slice(2)
+      out[field] = [...(out[field] ?? []), value]
+    })
+    return out
+  }, [searchParams])
 
-  const [activeFilters, setActiveFilters] = useState<Record<string, any>>(urlFilters);
+  const [activeFilters, setActiveFilters] = useState<ActiveFilters>(urlFilters)
 
   // Re-seed on any URL change, not just `q`: arriving from the ACP with a filter
   // on the SAME query doesn't remount the page, so without this the incoming
   // filter would be dropped. Sidebar toggles don't touch the URL, so they don't
   // trigger this and aren't clobbered.
-  const searchKey = searchParams.toString();
-  const prevSearchRef = useRef(searchKey);
+  const searchKey = searchParams.toString()
+  const prevSearchRef = useRef(searchKey)
   useEffect(() => {
     if (prevSearchRef.current !== searchKey) {
-      prevSearchRef.current = searchKey;
-      setPage(1);
-      setCmsPage(1);
+      prevSearchRef.current = searchKey
+      setPage(1)
+      setCmsPage(1)
       // A new query is a new pair of result sets — going back to the default segment
       // avoids landing on an empty Articles side for a query with no editorial match.
-      setResultType('product');
-      setActiveFilters(urlFilters);
+      setResultType('product')
+      setActiveFilters(urlFilters)
     }
-  }, [searchKey, urlFilters]);
+  }, [searchKey, urlFilters])
 
-  const filters = useMemo(() => Object.entries(activeFilters)
-    .filter(([, val]) => val !== undefined)
-    .map(([field, val]) => {
-      if (typeof val === 'object' && val.gte !== undefined) {
-        return { [field]: { gte: val.gte, lte: val.lte } };
-      }
-      if (typeof val === 'boolean') {
-        return { [field]: { eq: val } };
-      }
-      if (Array.isArray(val)) {
-        return { [field]: { in: val } };
-      }
-      return { [field]: { eq: val } };
-    }), [activeFilters]);
+  const filters = useMemo(
+    () =>
+      Object.entries(activeFilters)
+        .filter(([, val]) => val !== undefined)
+        .map(([field, val]) => {
+          if (
+            typeof val === 'object' &&
+            !Array.isArray(val) &&
+            val.gte !== undefined
+          ) {
+            return { [field]: { gte: val.gte, lte: val.lte } }
+          }
+          if (typeof val === 'boolean') {
+            return { [field]: { eq: val } }
+          }
+          if (Array.isArray(val)) {
+            return { [field]: { in: val } }
+          }
+          return { [field]: { eq: val } }
+        }),
+    [activeFilters]
+  )
 
   // The server fetched the first page of this query only, relevance-sorted and unfiltered
   // — exactly the state this component starts in. Handing the seed to the hook in any
   // other state would show results that do not match the controls, so it is passed through
   // only while the view still matches what the server actually requested. Same rule, same
   // wording as CategoryPage.
-  const isServerFetchedView = page === 1 && !sortField && filters.length === 0;
+  const isServerFetchedView = page === 1 && !sortField && filters.length === 0
 
   // With no query (an ACP attribute hand-off, or a bare /search), browse the root category
   // instead. useSearch would otherwise send a '*' search, which the API answers with zero
   // results. Same pattern as Homepage.tsx, see docs/sdk-reference.md.
-  const { categories } = useCatalog();
-  const rootCategory = categories.length > 0 ? categories[0] : null;
+  const { categories } = useCatalog()
+  const rootCategory = categories.length > 0 ? categories[0] : null
 
-  const { products, total, pageCount, aggregations, loading, viewMoreOptions } = useSearch({
-    searchQuery: query,
-    categoryCode: query ? undefined : rootCategory?.id,
-    currentPage: page,
-    pageSize: 20,
-    sortField: sortField || '_score',
-    sortDirection,
-    filters: filters.length > 0 ? filters : undefined,
-    initialData: initialData && isServerFetchedView ? initialData : undefined,
-  });
+  const { products, total, pageCount, aggregations, loading, viewMoreOptions } =
+    useSearch({
+      searchQuery: query,
+      categoryCode: query ? undefined : rootCategory?.id,
+      currentPage: page,
+      pageSize: 20,
+      sortField: sortField || '_score',
+      sortDirection,
+      filters: filters.length > 0 ? filters : undefined,
+      initialData: initialData && isServerFetchedView ? initialData : undefined,
+    })
 
   // Always fetched, whichever segment is active: the switch shows the count on both
   // sides, so it has to be known before that side is opened.
   const {
-    pages: cmsPages, total: cmsTotal, pageCount: cmsPageCount, loading: cmsLoading,
+    pages: cmsPages,
+    total: cmsTotal,
+    pageCount: cmsPageCount,
+    loading: cmsLoading,
   } = useCmsSearch({
     searchQuery: query,
     pageSize: CMS_PAGE_SIZE,
     currentPage: cmsPage,
     skip: !query,
-  });
+  })
 
-  const { trackSearch, trackDisplay, trackCmsDisplay } = useTracking();
-  const trackedRef = useRef('');
+  const { trackSearch, trackDisplay, trackCmsDisplay } = useTracking()
+  const trackedRef = useRef('')
 
   useEffect(() => {
-    const key = `${query}|${page}|${total}`;
+    const key = `${query}|${page}|${total}`
     if (query && total > 0 && trackedRef.current !== key) {
-      trackedRef.current = key;
-      trackSearch(query, total, page, pageCount);
+      trackedRef.current = key
+      trackSearch(query, total, page, pageCount)
     }
-  }, [query, total, page, pageCount, trackSearch]);
+  }, [query, total, page, pageCount, trackSearch])
 
-  const trackedDisplayRef = useRef('');
+  const trackedDisplayRef = useRef('')
 
   useEffect(() => {
     if (products.length > 0 && !loading) {
-      const key = products.map((p: any) => p.sku).join(',');
+      const key = products.map((p) => p.sku).join(',')
       if (trackedDisplayRef.current !== key) {
-        trackedDisplayRef.current = key;
-        trackDisplay(products.map((p: any, i: number) => ({ sku: p.sku, position: (page - 1) * 20 + i })));
+        trackedDisplayRef.current = key
+        trackDisplay(
+          products.map((p, i) => ({
+            sku: p.sku,
+            position: (page - 1) * 20 + i,
+          }))
+        )
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [products, loading]);
+  }, [products, loading])
 
-  const trackedCmsDisplayRef = useRef('');
+  const trackedCmsDisplayRef = useRef('')
 
   useEffect(() => {
-    if (resultType !== 'blog' || cmsLoading || cmsPages.length === 0) return;
-    const key = cmsPages.map(p => p.id).join(',');
-    if (trackedCmsDisplayRef.current === key) return;
-    trackedCmsDisplayRef.current = key;
-    trackCmsDisplay(cmsPages.map((p, i) => ({
-      id: p.id, position: (cmsPage - 1) * CMS_PAGE_SIZE + i,
-    })));
-  }, [resultType, cmsPages, cmsLoading, cmsPage, trackCmsDisplay]);
+    if (resultType !== 'blog' || cmsLoading || cmsPages.length === 0) return
+    const key = cmsPages.map((p) => p.id).join(',')
+    if (trackedCmsDisplayRef.current === key) return
+    trackedCmsDisplayRef.current = key
+    trackCmsDisplay(
+      cmsPages.map((p, i) => ({
+        id: p.id,
+        position: (cmsPage - 1) * CMS_PAGE_SIZE + i,
+      }))
+    )
+  }, [resultType, cmsPages, cmsLoading, cmsPage, trackCmsDisplay])
 
-  const handleFilterChange = useCallback((field: string, value: any) => {
-    setActiveFilters(prev => ({ ...prev, [field]: value }));
-    setPage(1);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, []);
+  const handleFilterChange = useCallback(
+    (field: string, value: FilterValue | undefined) => {
+      setActiveFilters((prev) => ({ ...prev, [field]: value }))
+      setPage(1)
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    },
+    []
+  )
 
   return (
     <div>
       <div className="page-title">
         <div className="breadcrumb">{t('page.breadcrumb')}</div>
-        <h1>{query ? t('page.resultsFor', { query }) : t('page.allProducts')}</h1>
+        <h1>
+          {query ? t('page.resultsFor', { query }) : t('page.allProducts')}
+        </h1>
       </div>
 
       {/* One query, two indices. Both segments are always shown — a zero on the
@@ -174,12 +200,18 @@ export default function SearchPage({
           one choice rather than as navigation; still a tablist for assistive tech. */}
       <div className="result-type-switch-row">
         {/* data-active drives the sliding thumb in CSS — see .result-type-tabs::before */}
-        <div className="result-type-tabs" role="tablist" data-active={resultType}>
+        <div
+          className="result-type-tabs"
+          role="tablist"
+          data-active={resultType}
+        >
           <button
             type="button"
             role="tab"
             aria-selected={resultType === 'product'}
-            className={`result-type-tab ${resultType === 'product' ? 'active' : ''}`}
+            className={`result-type-tab ${
+              resultType === 'product' ? 'active' : ''
+            }`}
             onClick={() => setResultType('product')}
           >
             {t('page.typeProducts')}
@@ -189,11 +221,15 @@ export default function SearchPage({
             type="button"
             role="tab"
             aria-selected={resultType === 'blog'}
-            className={`result-type-tab ${resultType === 'blog' ? 'active' : ''}`}
+            className={`result-type-tab ${
+              resultType === 'blog' ? 'active' : ''
+            }`}
             onClick={() => setResultType('blog')}
           >
             {t('page.typeBlog')}
-            <span className="result-type-count">{cmsLoading ? '…' : cmsTotal}</span>
+            <span className="result-type-count">
+              {cmsLoading ? '…' : cmsTotal}
+            </span>
           </button>
         </div>
       </div>
@@ -205,95 +241,128 @@ export default function SearchPage({
           loading={cmsLoading}
           page={cmsPage}
           pageCount={cmsPageCount}
-          onPage={p => { setCmsPage(p); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+          onPage={(p) => {
+            setCmsPage(p)
+            window.scrollTo({ top: 0, behavior: 'smooth' })
+          }}
           language={i18n.language}
         />
       ) : (
-      <>
-      <button className="btn btn-outline mobile-filter-toggle" onClick={() => setFacetsOpen(!facetsOpen)}>
-        <Icon name="options" />{t('common:actions.filters')}
-      </button>
+        <>
+          <button
+            className="btn btn-outline mobile-filter-toggle"
+            onClick={() => setFacetsOpen(!facetsOpen)}
+          >
+            <Icon name="options" />
+            {t('common:actions.filters')}
+          </button>
 
-      <div className="catalog-page">
-        <Facets
-          aggregations={aggregations}
-          activeFilters={activeFilters}
-          onFilterChange={handleFilterChange}
-          loading={loading}
-          onLoadMore={viewMoreOptions}
-          open={facetsOpen}
-          resultCount={total}
-        />
+          <div className="catalog-page">
+            <Facets
+              aggregations={aggregations}
+              activeFilters={activeFilters}
+              onFilterChange={handleFilterChange}
+              loading={loading}
+              onLoadMore={viewMoreOptions}
+              open={facetsOpen}
+              resultCount={total}
+            />
 
-        <div>
-          <div className="products-header">
-            <div className="products-count">
-              {loading ? t('page.searching') : t('page.resultCount', { count: total })}
-            </div>
-            <div className="products-sort">
-              <select
-                value={`${sortField}:${sortDirection}`}
-                onChange={e => {
-                  const [f, d] = e.target.value.split(':');
-                  setSortField(f);
-                  setSortDirection(d as 'asc' | 'desc');
-                }}
-              >
-                <option value="_score:desc">{t('page.sort.relevance')}</option>
-                <option value="name:asc">{t('page.sort.nameAsc')}</option>
-                <option value="price__price:asc">{t('page.sort.priceAsc')}</option>
-                <option value="price__price:desc">{t('page.sort.priceDesc')}</option>
-              </select>
-            </div>
-          </div>
+            <div>
+              <div className="products-header">
+                <div className="products-count">
+                  {loading
+                    ? t('page.searching')
+                    : t('page.resultCount', { count: total })}
+                </div>
+                <div className="products-sort">
+                  <select
+                    value={`${sortField}:${sortDirection}`}
+                    onChange={(e) => {
+                      const [f, d] = e.target.value.split(':')
+                      setSortField(f)
+                      setSortDirection(d as 'asc' | 'desc')
+                    }}
+                  >
+                    <option value="_score:desc">
+                      {t('page.sort.relevance')}
+                    </option>
+                    <option value="name:asc">{t('page.sort.nameAsc')}</option>
+                    <option value="price__price:asc">
+                      {t('page.sort.priceAsc')}
+                    </option>
+                    <option value="price__price:desc">
+                      {t('page.sort.priceDesc')}
+                    </option>
+                  </select>
+                </div>
+              </div>
 
-          {/* The shared skeleton, not a local copy of it: this markup was duplicated from
+              {/* The shared skeleton, not a local copy of it: this markup was duplicated from
               skeletons.tsx and had already drifted to 6 cards against a pageSize of 20. */}
-          {loading ? <ProductGridSkeleton /> : null}
+              {loading ? <ProductGridSkeleton /> : null}
 
-          <div className="products-grid">
-            {products.map((p: any, i: number) => (
-              <ProductCard key={p.sku || i} product={p} />
-            ))}
-          </div>
+              <div className="products-grid">
+                {products.map((p, i) => (
+                  <ProductCard key={p.sku || i} product={p} />
+                ))}
+              </div>
 
-          {!loading && products.length === 0 && (
-            <div className="empty-state">
-              <h3>{t('page.emptyTitle')}</h3>
-              <p>{t('page.emptyBody')}</p>
+              {!loading && products.length === 0 && (
+                <div className="empty-state">
+                  <h3>{t('page.emptyTitle')}</h3>
+                  <p>{t('page.emptyBody')}</p>
+                </div>
+              )}
+
+              <Pagination
+                page={page}
+                pageCount={pageCount}
+                prevLabel={t('page.prev')}
+                nextLabel={t('page.next')}
+                ariaLabel={t('common:meta.pagination')}
+                onPage={(p) => {
+                  setPage(p)
+                  window.scrollTo({ top: 0, behavior: 'smooth' })
+                }}
+              />
             </div>
-          )}
-
-          <Pagination
-            page={page}
-            pageCount={pageCount}
-            prevLabel={t('page.prev')}
-            nextLabel={t('page.next')}
-            ariaLabel={t('common:meta.pagination')}
-            onPage={p => { setPage(p); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-          />
-        </div>
-      </div>
-      </>
+          </div>
+        </>
       )}
     </div>
-  );
+  )
 }
 
 // The Articles side: no facet sidebar (product facets don't apply to cms_page) and no sort
 // control — editorial results are relevance-ranked, which is the only order that means
 // anything for a query. Browsing by type/topic is what /blog is for.
-function BlogResults({ pages, total, loading, page, pageCount, onPage, language }: {
-  pages: any[]; total: number; loading: boolean; page: number; pageCount: number;
-  onPage: (p: number) => void; language: string;
+function BlogResults({
+  pages,
+  total,
+  loading,
+  page,
+  pageCount,
+  onPage,
+  language,
+}: {
+  pages: CmsPage[]
+  total: number
+  loading: boolean
+  page: number
+  pageCount: number
+  onPage: (p: number) => void
+  language: string
 }) {
-  const { t } = useTranslation(['search', 'blog']);
+  const { t } = useTranslation(['search', 'blog'])
 
   return (
     <div className="search-blog-results">
       <div className="products-header">
         <div className="products-count">
-          {loading ? t('search:page.searching') : t('blog:count', { count: total })}
+          {loading
+            ? t('search:page.searching')
+            : t('blog:count', { count: total })}
         </div>
       </div>
 
@@ -303,8 +372,14 @@ function BlogResults({ pages, total, loading, page, pageCount, onPage, language 
             <div key={i} className="skeleton-card">
               <div className="skeleton-card-image skeleton-shimmer" />
               <div className="skeleton-card-body">
-                <div className="skeleton skeleton-text" style={{ width: '80%' }} />
-                <div className="skeleton skeleton-text" style={{ width: '50%', marginTop: '0.5rem' }} />
+                <div
+                  className="skeleton skeleton-text"
+                  style={{ width: '80%' }}
+                />
+                <div
+                  className="skeleton skeleton-text"
+                  style={{ width: '50%', marginTop: '0.5rem' }}
+                />
               </div>
             </div>
           ))}
@@ -316,7 +391,7 @@ function BlogResults({ pages, total, loading, page, pageCount, onPage, language 
         </div>
       ) : (
         <div className="blog-grid">
-          {pages.map(post => (
+          {pages.map((post) => (
             <BlogCard key={post.id} post={post} language={language} />
           ))}
         </div>
@@ -331,5 +406,5 @@ function BlogResults({ pages, total, loading, page, pageCount, onPage, language 
         onPage={onPage}
       />
     </div>
-  );
+  )
 }

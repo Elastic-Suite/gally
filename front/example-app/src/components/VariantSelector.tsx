@@ -1,18 +1,19 @@
-'use client';
+'use client'
 
-import { guessColor, needsSwatchOutline } from './swatchColors';
-import { useAxisLabel } from '../contexts/AxisLabelContext';
-import { parseAxisCodes } from '../sdk/productFields';
+import { guessColor, needsSwatchOutline } from './swatchColors'
+import { useAxisLabel } from '../contexts/AxisLabelContext'
+import { parseAxisCodes } from '../sdk/productFields'
+import type { SearchDocument } from '../sdk/fields'
 
 export interface VariantOption {
-  label: string;
-  value: string | number;
+  label: string
+  value: string | number
 }
 
 export interface VariantAxis {
   // Source-field code, e.g. `fashion_color` on Venia or `color` on Luma.
-  code: string;
-  options: VariantOption[];
+  code: string
+  options: VariantOption[]
 }
 
 // Neither source of options is ordered usefully: the raw `_source.fashion_size` comes back in
@@ -24,21 +25,24 @@ export interface VariantAxis {
 // (XS…XXL) — so a single scale cannot hold both. Numerics sort first among themselves, then the
 // alpha scale in wearing order, then anything unrecognised, which keeps its incoming order
 // (Array#sort is stable).
-const ALPHA_SIZES = ['xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl', 'xxxl'];
-const ALPHA_BASE = 1000;
+const ALPHA_SIZES = ['xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl', 'xxxl']
+const ALPHA_BASE = 1000
 
 function sizeRank(label: string): number {
-  const lower = label.toLowerCase().trim();
-  const alpha = ALPHA_SIZES.indexOf(lower);
-  if (alpha !== -1) return ALPHA_BASE + alpha;
-  const numeric = Number(lower);
-  if (lower !== '' && !Number.isNaN(numeric)) return numeric;
-  return Number.MAX_SAFE_INTEGER;
+  const lower = label.toLowerCase().trim()
+  const alpha = ALPHA_SIZES.indexOf(lower)
+  if (alpha !== -1) return ALPHA_BASE + alpha
+  const numeric = Number(lower)
+  if (lower !== '' && !Number.isNaN(numeric)) return numeric
+  return Number.MAX_SAFE_INTEGER
 }
 
 function isColorAxis(code: string): boolean {
   // Same test the colour facet applies to its field name (see Facets.tsx).
-  return code.toLowerCase().includes('color') || code.toLowerCase().includes('colour');
+  return (
+    code.toLowerCase().includes('color') ||
+    code.toLowerCase().includes('colour')
+  )
 }
 
 // Which attributes actually vary, and with which values. `configurable_attributes` is the only
@@ -48,48 +52,55 @@ function isColorAxis(code: string): boolean {
 // `source` is either the PDP's raw `_source` or a projected listing row; the two are the same
 // shape for this purpose. parseAxisCodes() absorbs the difference in how the codes arrive — a
 // real array on the PDP, a string from GraphQL — so this function works on both surfaces.
-export function getVariantAxes(source: Record<string, any> | undefined): VariantAxis[] {
-  if (!source) return [];
-  const codes = parseAxisCodes(source.configurable_attributes);
+export function getVariantAxes(
+  source: SearchDocument | undefined
+): VariantAxis[] {
+  if (!source) return []
+  const codes = parseAxisCodes(source.configurable_attributes)
 
   return codes
-    .map(code => {
-      const raw = source[code];
+    .map((code) => {
+      const raw = source[code]
       const options: VariantOption[] = (Array.isArray(raw) ? raw : [])
-        .filter(o => o && typeof o === 'object' && 'label' in o)
-        .map(o => ({ label: String(o.label), value: o.value }));
+        .filter((o) => o && typeof o === 'object' && 'label' in o)
+        .map((o) => ({ label: String(o.label), value: o.value }))
 
       if (isColorAxis(code)) {
-        options.sort((a, b) => a.label.localeCompare(b.label));
+        options.sort((a, b) => a.label.localeCompare(b.label))
       } else {
-        options.sort((a, b) => sizeRank(a.label) - sizeRank(b.label));
+        options.sort((a, b) => sizeRank(a.label) - sizeRank(b.label))
       }
 
-      return { code, options };
+      return { code, options }
     })
-    .filter(axis => axis.options.length > 0);
+    .filter((axis) => axis.options.length > 0)
 }
 
 interface Props {
-  axes: VariantAxis[];
+  axes: VariantAxis[]
   // Axis code → selected option value, as a string. Empty until the user picks: the previous
   // implementation defaulted to the first colour, which claimed a choice nobody made.
-  selected: Record<string, string>;
-  onSelect: (code: string, value: string) => void;
+  selected: Record<string, string>
+  onSelect: (code: string, value: string) => void
   // Drops the per-axis heading and tightens the rows, for the quick-add overlay on a 180px-tall
   // product picture. The axis is still announced to screen readers through `aria-label` on the
   // radiogroup, so losing the visible <h4> costs nothing but pixels.
-  compact?: boolean;
+  compact?: boolean
 }
 
-export default function VariantSelector({ axes, selected, onSelect, compact = false }: Props) {
-  const axisLabel = useAxisLabel();
+export default function VariantSelector({
+  axes,
+  selected,
+  onSelect,
+  compact = false,
+}: Props) {
+  const axisLabel = useAxisLabel()
 
-  if (axes.length === 0) return null;
+  if (axes.length === 0) return null
 
   return (
     <>
-      {axes.map(axis => {
+      {axes.map((axis) => {
         // Heading per attribute code, from the catalogue itself — `product_source_field_labels`
         // for the current localized catalogue, fetched in app/[locale]/layout.tsx. It replaced a
         // hardcoded `product:page.axis.<code>` key per axis, which only ever covered Venia and
@@ -100,11 +111,16 @@ export default function VariantSelector({ axes, selected, onSelect, compact = fa
         // That objection does not apply to this source: the fetch is in the layout, which is
         // already a server component, so the heading is in the SSR HTML.
         // See specs/feature-axis-labels-from-api.md.
-        const heading = axisLabel(axis.code);
-        const asSwatches = isColorAxis(axis.code);
+        const heading = axisLabel(axis.code)
+        const asSwatches = isColorAxis(axis.code)
 
         return (
-          <div className={`product-variants ${compact ? 'product-variants-compact' : ''}`} key={axis.code}>
+          <div
+            className={`product-variants ${
+              compact ? 'product-variants-compact' : ''
+            }`}
+            key={axis.code}
+          >
             {!compact && <h4 id={`axis-${axis.code}`}>{heading}</h4>}
             <div
               className={asSwatches ? 'facet-swatches' : 'variant-options'}
@@ -113,9 +129,9 @@ export default function VariantSelector({ axes, selected, onSelect, compact = fa
                 ? { 'aria-label': heading }
                 : { 'aria-labelledby': `axis-${axis.code}` })}
             >
-              {axis.options.map(opt => {
-                const value = String(opt.value);
-                const isSelected = selected[axis.code] === value;
+              {axis.options.map((opt) => {
+                const value = String(opt.value)
+                const isSelected = selected[axis.code] === value
                 return (
                   <div
                     key={value}
@@ -140,21 +156,21 @@ export default function VariantSelector({ axes, selected, onSelect, compact = fa
                         : undefined
                     }
                     onClick={() => onSelect(axis.code, value)}
-                    onKeyDown={e => {
+                    onKeyDown={(e) => {
                       if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        onSelect(axis.code, value);
+                        e.preventDefault()
+                        onSelect(axis.code, value)
                       }
                     }}
                   >
                     {asSwatches ? null : opt.label}
                   </div>
-                );
+                )
               })}
             </div>
           </div>
-        );
+        )
       })}
     </>
-  );
+  )
 }

@@ -1,6 +1,7 @@
 # Bugfix: `next/dynamic` `ssr: false` floods every dev response with BailoutToCSR traces
 
 ## Status: implemented
+
 ## Page/Component: src/components/AppShell.tsx, src/hooks/useMounted.ts (new), src/components/SearchOverlay.tsx
 
 ## Problem
@@ -15,22 +16,20 @@ Error: Bail out to client-side rendering: next/dynamic
 `AppShell.tsx` loaded the five demo components with `dynamic(..., { ssr: false })`. **That is not a
 declarative flag — it is implemented by throwing.** During the server render the lazy component
 throws `BailoutToCSR`; `next/dynamic` wraps each component in its own `<Suspense>`, which catches
-it and renders the fallback. The served HTML proves the containment: `at BailoutToCSR … at Suspense
-(<anonymous>)`, and the wrapper element came through as `<div class="expert-only"><!--$!--><template
-data-dgst="BAILOUT_TO_CLIENT_SIDE_RENDERING" …>`.
+it and renders the fallback. The served HTML proves the containment: `at BailoutToCSR … at Suspense (<anonymous>)`, and the wrapper element came through as `<div class="expert-only"><!--$!--><template data-dgst="BAILOUT_TO_CLIENT_SIDE_RENDERING" …>`.
 
 **Nothing was broken** — SSR of the storefront was intact throughout, `<main>` content and all four
 JSON-LD blocks included. The cost was the trace Next serializes into the HTML so its dev overlay can
 show the error:
 
-| | server HTML | bailout `<template>`s | their bytes |
-|---|---|---|---|
-| before | 80,017 B | 4 | 47,530 B (**59% of the document**) |
-| after | 32,711 B | 0 | 0 |
+|        | server HTML | bailout `<template>`s | their bytes                        |
+| ------ | ----------- | --------------------- | ---------------------------------- |
+| before | 80,017 B    | 4                     | 47,530 B (**59% of the document**) |
+| after  | 32,711 B    | 0                     | 0                                  |
 
 Measured on `/example/com_fr/product/VP01`.
 
-The wrong belief worth recording: that `ssr: false` *skips* the server render. It does not — it
+The wrong belief worth recording: that `ssr: false` _skips_ the server render. It does not — it
 performs one, throws, and relies on a boundary to catch it. Anything that expresses "not on the
 server" without throwing is strictly cheaper.
 
@@ -52,11 +51,12 @@ before the try/catch) does not apply here.
   uses the hook. Two call sites, one implementation (golden rule 3).
 
 ## Behaviour (testable)
+
 - [x] Zero `BailoutToCSR` templates in the server HTML; response for the same URL fell 80,017 → 32,711 B.
 - [x] Storefront server output **unchanged** — `product-detail-actions` ×1, `application/ld+json` ×4,
       `Ajouter au panier` ×1, byte-for-byte the same content, before and after.
 - [x] Demo scaffolding still absent from the server HTML: `.event-log-toggle` ×0 both before and
-      after. The `<div class="expert-only">` wrapper that *used* to be emitted (holding the bailout
+      after. The `<div class="expert-only">` wrapper that _used_ to be emitted (holding the bailout
       template) is now gone too. The remaining `expert-only` hit in the HTML is the header nav link,
       which is unrelated and always server-rendered.
 - [x] `npx tsc --noEmit` clean in the `example` container; `✓ Compiled`, no `⨯`.
@@ -82,19 +82,22 @@ Verifying client behaviour in this stack needs a browser on the **host**, where 
 resolves through the proxy normally.
 
 ## SDK contract used
+
 - None.
 
 ## Tracking (required)
-- Unchanged. `EventLog` and `TrackingInsights` only *display* tracked events; the events themselves
+
+- Unchanged. `EventLog` and `TrackingInsights` only _display_ tracked events; the events themselves
   fire from `useTracking()` in the storefront components, which this change does not touch. They now
   mount one tick later than the surrounding layout — which is already what happened, since the
   `ssr: false` chunks also only arrived after hydration.
 
 ## Side findings (not fixed)
+
 - **`IntroScreen` is unreachable.** `DemoContext.tsx:39` initialises `introSeen` to `true`, and
   nothing anywhere calls `setIntroSeen(false)` — so `AppShell`'s `if (!introSeen)` branch never runs
   and the guided-demo intro cannot be shown. Looks like migration fallout rather than a decision.
-  The `mounted &&` guard was added to that branch anyway: the intro replaces the *entire* layout, so
+  The `mounted &&` guard was added to that branch anyway: the intro replaces the _entire_ layout, so
   without it the server would emit an empty document for every route the moment it is re-enabled.
 - **The old comment's SSR-safety justification was stale.** It claimed `ssr: false` spared the
   scaffolding from "browser-only assumptions"; none of the five components reference `window`,
@@ -102,6 +105,7 @@ resolves through the proxy normally.
   and the `mounted` gate preserves it.
 
 ## MUST NOT change
+
 - **Do not reintroduce `ssr: false` here.** It reads as the more explicit spelling and is the obvious
   "fix" for a future reader who wants the scaffolding kept off the server — but it is what produced
   47KB of stack traces per dev response. The `mounted` gate is the intent; `ssr: false` was the cost.

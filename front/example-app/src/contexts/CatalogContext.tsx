@@ -1,25 +1,29 @@
-'use client';
+'use client'
 
-import { createContext, useContext, useCallback, ReactNode } from 'react';
-import { usePathname } from 'next/navigation';
+import { createContext, useContext, useCallback, ReactNode } from 'react'
+import { usePathname } from 'next/navigation'
 import {
-    ICatalog, ILocalizedCatalog, ICategoryNode, LANGUAGES, DEFAULT_LANGUAGE,
-} from '../sdk/catalogs';
-import { useNavigate } from './NavigationContext';
+  ICatalog,
+  ILocalizedCatalog,
+  ICategoryNode,
+  LANGUAGES,
+  DEFAULT_LANGUAGE,
+} from '../sdk/catalogs'
+import { useNavigate } from './NavigationContext'
 
 interface ICatalogContextType {
-  catalogs: ICatalog[];
-  selectedCatalog: ICatalog | null;
-  selectedLocalizedCatalog: ILocalizedCatalog | null;
-  setCatalog: (code: string) => void;
-  setLocalizedCatalog: (code: string) => void;
-  formatPrice: (amount: number) => string;
-  activeLanguage: string;
-  categories: ICategoryNode[];
-  loadingCatalogs: boolean;
+  catalogs: ICatalog[]
+  selectedCatalog: ICatalog | null
+  selectedLocalizedCatalog: ILocalizedCatalog | null
+  setCatalog: (code: string) => void
+  setLocalizedCatalog: (code: string) => void
+  formatPrice: (amount: number) => string
+  activeLanguage: string
+  categories: ICategoryNode[]
+  loadingCatalogs: boolean
 }
 
-const CatalogContext = createContext<ICatalogContextType | null>(null);
+const CatalogContext = createContext<ICatalogContextType | null>(null)
 
 // Phase 2 inverted this provider. It used to OWN the selection: mount with nothing,
 // fetch the catalog list in a useEffect, pick a default, hold it in useState. Now the
@@ -37,77 +41,96 @@ export function CatalogProvider({
   categories,
   children,
 }: {
-  catalogs: ICatalog[];
-  selectedCatalog: ICatalog;
-  selectedLocalizedCatalog: ILocalizedCatalog;
-  categories: ICategoryNode[];
-  children: ReactNode;
+  catalogs: ICatalog[]
+  selectedCatalog: ICatalog
+  selectedLocalizedCatalog: ILocalizedCatalog
+  categories: ICategoryNode[]
+  children: ReactNode
 }) {
-  const pathname = usePathname();
+  const pathname = usePathname()
   // Not router.push: a catalog switch re-resolves the catalog list, the category tree AND the
   // page's own data on the server, so it is the slowest navigation in the app — exactly the
   // one that must not look like nothing happened. See src/contexts/NavigationContext.tsx.
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   // Swap the locale segment while staying on the same page, so switching catalog from a
   // product page keeps you on that product rather than dumping you on the homepage.
-  const goToLocalizedCatalog = useCallback((code: string) => {
-    const segments = pathname.split('/');
-    const previous = segments[1];
-    segments[1] = code;
-    const target = segments.join('/') || '/';
-    // Category, product and a single blog article are the routes whose URL names a per-catalog
-    // id, so they are the ones that can miss in the target catalog and 404. The mark tells those
-    // routes that this was a catalog switch and not a junk URL, so they redirect instead of
-    // leaving the visitor on a dead end — see src/sdk/catalogSwitch.ts. Everything else exists in
-    // every catalog and keeps a clean URL, the blog listing at /blog included: it is segment 2
-    // with nothing after it, which is why the article check reads segment 3.
-    const section = segments[2];
-    const canMiss =
-      section === 'category' || section === 'product' || (section === 'blog' && !!segments[3]);
-    navigate(canMiss ? `${target}?from=${previous}` : target);
-  }, [pathname, navigate]);
+  const goToLocalizedCatalog = useCallback(
+    (code: string) => {
+      const segments = pathname.split('/')
+      const previous = segments[1]
+      segments[1] = code
+      const target = segments.join('/') || '/'
+      // Category, product and a single blog article are the routes whose URL names a per-catalog
+      // id, so they are the ones that can miss in the target catalog and 404. The mark tells those
+      // routes that this was a catalog switch and not a junk URL, so they redirect instead of
+      // leaving the visitor on a dead end — see src/sdk/catalogSwitch.ts. Everything else exists in
+      // every catalog and keeps a clean URL, the blog listing at /blog included: it is segment 2
+      // with nothing after it, which is why the article check reads segment 3.
+      const section = segments[2]
+      const canMiss =
+        section === 'category' ||
+        section === 'product' ||
+        (section === 'blog' && !!segments[3])
+      navigate(canMiss ? `${target}?from=${previous}` : target)
+    },
+    [pathname, navigate]
+  )
 
-  const setLocalizedCatalog = goToLocalizedCatalog;
+  const setLocalizedCatalog = goToLocalizedCatalog
 
-  const setCatalog = useCallback((code: string) => {
-    const cat = catalogs.find(c => c.code === code);
-    if (!cat) return;
-    const defaultLC = cat.localizedCatalogs.find(lc => lc.isDefault) || cat.localizedCatalogs[0];
-    if (defaultLC) goToLocalizedCatalog(defaultLC.code);
-  }, [catalogs, goToLocalizedCatalog]);
+  const setCatalog = useCallback(
+    (code: string) => {
+      const cat = catalogs.find((c) => c.code === code)
+      if (!cat) return
+      const defaultLC =
+        cat.localizedCatalogs.find((lc) => lc.isDefault) ||
+        cat.localizedCatalogs[0]
+      if (defaultLC) goToLocalizedCatalog(defaultLC.code)
+    },
+    [catalogs, goToLocalizedCatalog]
+  )
 
-  const activeLanguage = LANGUAGES[selectedLocalizedCatalog.locale] || DEFAULT_LANGUAGE;
+  const activeLanguage =
+    LANGUAGES[selectedLocalizedCatalog.locale] || DEFAULT_LANGUAGE
 
-  const formatPrice = useCallback((amount: number) => {
-    return new Intl.NumberFormat(selectedLocalizedCatalog.locale.replace('_', '-'), {
-      style: 'currency',
-      currency: selectedLocalizedCatalog.currency,
-    }).format(amount);
-  }, [selectedLocalizedCatalog]);
+  const formatPrice = useCallback(
+    (amount: number) => {
+      return new Intl.NumberFormat(
+        selectedLocalizedCatalog.locale.replace('_', '-'),
+        {
+          style: 'currency',
+          currency: selectedLocalizedCatalog.currency,
+        }
+      ).format(amount)
+    },
+    [selectedLocalizedCatalog]
+  )
 
   return (
-    <CatalogContext.Provider value={{
-      catalogs,
-      selectedCatalog,
-      selectedLocalizedCatalog,
-      setCatalog,
-      setLocalizedCatalog,
-      formatPrice,
-      activeLanguage,
-      categories,
-      // The catalog list is resolved before render now, so consumers that used this to
-      // show a spinner simply never see a loading state. Kept so their call sites and
-      // their empty-state branches stay untouched.
-      loadingCatalogs: false,
-    }}>
+    <CatalogContext.Provider
+      value={{
+        catalogs,
+        selectedCatalog,
+        selectedLocalizedCatalog,
+        setCatalog,
+        setLocalizedCatalog,
+        formatPrice,
+        activeLanguage,
+        categories,
+        // The catalog list is resolved before render now, so consumers that used this to
+        // show a spinner simply never see a loading state. Kept so their call sites and
+        // their empty-state branches stay untouched.
+        loadingCatalogs: false,
+      }}
+    >
       {children}
     </CatalogContext.Provider>
-  );
+  )
 }
 
 export function useCatalog() {
-  const ctx = useContext(CatalogContext);
-  if (!ctx) throw new Error('useCatalog must be used inside CatalogProvider');
-  return ctx;
+  const ctx = useContext(CatalogContext)
+  if (!ctx) throw new Error('useCatalog must be used inside CatalogProvider')
+  return ctx
 }

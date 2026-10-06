@@ -1,8 +1,8 @@
-'use client';
+'use client'
 
-import { ReactNode } from 'react';
-import i18n from './index';
-import { useCatalog } from '../contexts/CatalogContext';
+import { ReactNode } from 'react'
+import i18n from './index'
+import { useCatalog } from '../contexts/CatalogContext'
 
 // Translates the catalog's declarative `activeLanguage` into i18next's imperative
 // changeLanguage() call — i18next itself isn't a React context, so nothing else
@@ -20,11 +20,11 @@ import { useCatalog } from '../contexts/CatalogContext';
 // same moment could interleave. Acceptable for a demo; a per-request i18next instance
 // is the real fix if this ever serves meaningful traffic.
 export default function I18nBridge({ children }: { children: ReactNode }) {
-  const { activeLanguage } = useCatalog();
+  const { activeLanguage } = useCatalog()
 
   if (i18n.language !== activeLanguage) {
-    i18n.changeLanguage(activeLanguage);
+    i18n.changeLanguage(activeLanguage)
   }
 
-  return <>{children}</>;
+  return <>{children}</>
 }

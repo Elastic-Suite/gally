@@ -1,7 +1,9 @@
 # Feature: the quick-add panel is a bottom band, not a full cover
 
 ## Status: implemented
+
 ## Page/Component: src/styles.css only — `.quick-add` and its card-scoped rules.
+
 Rendered by src/components/QuickAdd.tsx inside src/components/ProductCard.tsx, which are both
 unchanged. Supersedes the full-cover geometry set by `feature-quick-add-overlay.md`; everything
 else in that spec still holds.
@@ -69,7 +71,7 @@ parent SKU and the chosen labels as `variant`. No event added, removed or moved.
 - **`.product-card-image` must keep `overflow: hidden`.** `feature-quick-add-overlay.md` named two
   independent guards against the panel landing on the name and price: the panel being exactly its
   container, and this clip. **This change removes the first one.** The band is parked a full band
-  height *below* the picture at rest, and the clip is now the only thing containing it.
+  height _below_ the picture at rest, and the clip is now the only thing containing it.
   `opacity: 0` and `pointer-events: none` remain as the second and third defences, but they hide
   and disarm it — they do not contain it.
 - **`pointer-events: none` at rest, never `visibility: hidden`** — the latter takes the panel out

@@ -1,6 +1,7 @@
 # Feature: the search bar scrolls with the autocomplete popup
 
 ## Status: implemented
+
 ## Page/Component: src/components/SearchOverlay.tsx (`onScrimScroll`, the `--acp-scroll` reset effect), src/styles.css (`.header-sticky-group:has(.overlay-open)`, `.search-overlay-panel`, `.search-overlay-col`)
 
 Note: since specs/feature-header-scrolls-with-page.md the header is not sticky. `--acp-scroll` is now clamped to the part of the header still on screen when the popup opened (`--acp-page-offset`).
@@ -15,7 +16,7 @@ findings, and the second is the one that mattered:
    after roughly one search-band height of scrolling; `.header-search-band` is static and scrolls
    away with the page. `docs/design-system.md` described "two sticky rows", which overstated it —
    the whole stylesheet contains exactly two sticky elements, `.header` and the facet sidebar. What
-   *had* made the bar appear to scroll with the popup was the scroll-chaining bug:
+   _had_ made the bar appear to scroll with the popup was the scroll-chaining bug:
    `bugfix-acp-background-scroll-and-density.md` fixed the chaining, and with the page frozen the bar
    could no longer move at all.
 2. **The popup had no outer scroller to ride.** `.search-overlay-panel` carried
@@ -45,7 +46,7 @@ findings, and the second is the one that mattered:
       collapse.
 - [x] `--acp-scroll` is **removed** when the popup closes or unmounts, and any queued frame is
       cancelled. A leak here is invisible at the time (the transform only applies while
-      `.overlay-open` matches) and would resurface on the *next* open as a header already scrolled
+      `.overlay-open` matches) and would resurface on the _next_ open as a header already scrolled
       away.
 - [x] Writes are rAF-coalesced — a wheel fires far more often than the compositor paints.
 - [x] Both scrim renders (the three-column panel and the sub-2-character `SearchPrompt`) carry the

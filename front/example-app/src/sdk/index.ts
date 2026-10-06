@@ -1,4 +1,10 @@
-import { Client, Configuration, SearchManager, TrackingEventManager, TrackingEventType } from '@elastic-suite/gally-sdk/browser';
+import {
+  Client,
+  Configuration,
+  SearchManager,
+  TrackingEventManager,
+  TrackingEventType,
+} from '@elastic-suite/gally-sdk/browser'
 
 // The browser reaches the API through the public proxy. Node cannot: inside the
 // `example` container `gally.localhost` resolves to 127.0.0.1, where nothing listens,
@@ -6,55 +12,56 @@ import { Client, Configuration, SearchManager, TrackingEventManager, TrackingEve
 // container serves the same API over plain HTTP, which is what server components use.
 // Overridable so this is not pinned to the local stack, but the default keeps docker
 // and compose untouched.
-const PUBLIC_BASE_URI = 'https://gally.localhost/api';
-const INTERNAL_BASE_URI = process.env.GALLY_INTERNAL_API_URL || 'http://router/api';
+const PUBLIC_BASE_URI = 'https://gally.localhost/api'
+const INTERNAL_BASE_URI =
+  process.env.GALLY_INTERNAL_API_URL || 'http://router/api'
 
 const BASE_URI =
-  typeof window === 'undefined' ? INTERNAL_BASE_URI : PUBLIC_BASE_URI;
+  typeof window === 'undefined' ? INTERNAL_BASE_URI : PUBLIC_BASE_URI
 
 // Configuration singleton
-const config = new Configuration({ baseUri: BASE_URI });
+const config = new Configuration({ baseUri: BASE_URI })
 
 // Client singleton (for direct GraphQL/REST calls)
-let clientInstance: Client | null = null;
+let clientInstance: Client | null = null
 
 export function getClient(): Client {
   if (!clientInstance) {
-    clientInstance = new Client(config);
+    clientInstance = new Client(config)
   }
-  return clientInstance;
+  return clientInstance
 }
 
 // Search Manager singleton
-let searchManagerInstance: SearchManager | null = null;
+let searchManagerInstance: SearchManager | null = null
 
 // The bundles installed on the API, fetched on the server (see ./bundles.ts) and handed over by
 // app/providers.tsx. The SearchManager reads them to decide which optional fields it may request,
 // such as `termSuggestions`. A different list drops the singleton so the next call rebuilds it.
-let bundles: string[] = [];
+let bundles: string[] = []
 
 export function setBundles(next: string[]): void {
-  if (next.join() === bundles.join()) return;
-  bundles = next;
-  searchManagerInstance = null;
+  if (next.join() === bundles.join()) return
+  bundles = next
+  searchManagerInstance = null
 }
 
 export function getSearchManager(): SearchManager {
   if (!searchManagerInstance) {
-    searchManagerInstance = new SearchManager({ baseUri: BASE_URI, bundles });
+    searchManagerInstance = new SearchManager({ baseUri: BASE_URI, bundles })
   }
-  return searchManagerInstance;
+  return searchManagerInstance
 }
 
 // Tracking Manager singleton
-let trackerInstance: ReturnType<typeof TrackingEventManager.init> | null = null;
+let trackerInstance: ReturnType<typeof TrackingEventManager.init> | null = null
 
 export function getTracker(): TrackingEventManager {
   if (!trackerInstance) {
-    trackerInstance = TrackingEventManager.init({ baseUri: BASE_URI });
+    trackerInstance = TrackingEventManager.init({ baseUri: BASE_URI })
   }
-  return trackerInstance;
+  return trackerInstance
 }
 
-export { TrackingEventType };
-export { BASE_URI };
+export { TrackingEventType }
+export { BASE_URI }

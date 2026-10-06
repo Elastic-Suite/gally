@@ -1,44 +1,57 @@
-import { useTranslation } from 'react-i18next';
-import { useDemo } from '../contexts/DemoContext';
-import { useStoryActions } from '../hooks/useStoryActions';
-import Icon from './Icon';
+import { useTranslation } from 'react-i18next'
+import { useDemo } from '../contexts/DemoContext'
+import { useStoryActions } from '../hooks/useStoryActions'
+import Icon from './Icon'
 
 export default function StoryCompanion() {
-  const { t } = useTranslation(['demo', 'scenarios']);
+  const { t } = useTranslation(['demo', 'scenarios'])
   const {
-    scenario, storyActive, storyStep, storyMinimized, currentStory,
-    nextStep, prevStep, jumpStep, resumeStory, skipStory,
-  } = useDemo();
+    scenario,
+    storyActive,
+    storyStep,
+    storyMinimized,
+    currentStory,
+    nextStep,
+    prevStep,
+    jumpStep,
+    resumeStory,
+    skipStory,
+  } = useDemo()
 
-  const steps = scenario.steps;
+  const steps = scenario.steps
 
   // Delegate all action execution to the generic engine
   useStoryActions({
     step: currentStory,
     active: storyActive,
     minimized: storyMinimized,
-  });
+  })
 
-  if (!storyActive) return null;
+  if (!storyActive) return null
 
   // Minimized pill
   if (storyMinimized) {
     return (
       <button className="story-resume-pill" onClick={resumeStory}>
-        <Icon name="book" />{t('story.resumePill')}
+        <Icon name="book" />
+        {t('story.resumePill')}
       </button>
-    );
+    )
   }
 
-  if (!currentStory) return null;
+  if (!currentStory) return null
 
-  const isFirst = storyStep === 0;
-  const isLast = storyStep === steps.length - 1;
-  const persona = currentStory.persona === 'camille' ? scenario.personas.customer : scenario.personas.merchant;
-  const stepBase = `scenarios:${scenario.i18nKey}.${currentStory.i18nKey}`;
-  const personaName = currentStory.persona === 'camille'
-    ? scenario.personas.customer.name
-    : t(`scenarios:${scenario.i18nKey}.personas.merchant.name`);
+  const isFirst = storyStep === 0
+  const isLast = storyStep === steps.length - 1
+  const persona =
+    currentStory.persona === 'camille'
+      ? scenario.personas.customer
+      : scenario.personas.merchant
+  const stepBase = `scenarios:${scenario.i18nKey}.${currentStory.i18nKey}`
+  const personaName =
+    currentStory.persona === 'camille'
+      ? scenario.personas.customer.name
+      : t(`scenarios:${scenario.i18nKey}.personas.merchant.name`)
 
   return (
     <div className="story-dock">
@@ -47,20 +60,29 @@ export default function StoryCompanion() {
           {steps.map((_, i) => (
             <button
               key={i}
-              className={`story-segment ${i === storyStep ? 'active' : ''} ${i < storyStep ? 'done' : ''}`}
+              className={`story-segment ${i === storyStep ? 'active' : ''} ${
+                i < storyStep ? 'done' : ''
+              }`}
               onClick={() => jumpStep(i)}
               title={t('story.actLabel', { num: i + 1 })}
             />
           ))}
         </div>
-        <button className="story-close" onClick={skipStory} title={t('story.close')}>
+        <button
+          className="story-close"
+          onClick={skipStory}
+          title={t('story.close')}
+        >
           <span className="visually-hidden">{t('story.close')}</span>
           <Icon name="close" standalone />
         </button>
       </div>
 
       <div className="story-act-label">
-        {t('story.actTitle', { act: currentStory.act, title: t(`${stepBase}.title`) })}
+        {t('story.actTitle', {
+          act: currentStory.act,
+          title: t(`${stepBase}.title`),
+        })}
       </div>
 
       <div className="story-persona">
@@ -92,5 +114,5 @@ export default function StoryCompanion() {
         </button>
       </div>
     </div>
-  );
+  )
 }

@@ -1,10 +1,13 @@
 # Bugfix: the pager always showed the first pages
 
 ## Status: implemented
+
 ## Page/Component: `src/components/Pagination.tsx` (new), `src/views/CategoryPage.tsx`,
+
 ## `src/views/SearchPage.tsx`, `src/views/BlogPage.tsx`, `src/views/VectorSearchPage.tsx`
 
 ## Problem
+
 On page 6 of 12 the pager still read `1 2 3 4 5 …`, with no button highlighted. The window never
 moved, so every page past the fifth was unreachable except by clicking the arrow once per page, and
 the last page was unreachable in practice. The trailing `…` was a plain `<span>` that looked like a
@@ -26,6 +29,7 @@ It was copied **five** times: `CategoryPage`, `BlogPage`, two pagers in `SearchP
 verbatim" - which is how a bug in a snippet becomes a bug in five places.
 
 ## Behaviour (testable)
+
 - [x] The window slides with the current page and clamps at both ends: page 6 of 12 with a window
       of 5 gives `1 … 4 5 [6] 7 8 … 12`, page 1 gives `[1] 2 3 4 5 … 12`, page 12 gives
       `1 … 8 9 10 11 [12]`. Checked against the shipped expression for ten page/count/window
@@ -45,6 +49,7 @@ verbatim" - which is how a bug in a snippet becomes a bug in five places.
       returns `null`), not re-tested.
 
 ## The fix
+
 One component, `src/components/Pagination.tsx`, replacing all five copies - golden rule 3, and the
 only way the sixth copy does not get written next time.
 
@@ -59,23 +64,26 @@ Props are `page`, `pageCount`, `onPage`, `windowSize`, `prevLabel`, `nextLabel`,
 `SearchPage` scroll the window to the top, `VectorSearchPage` scrolls its own panel back into view
 because its two panels sit side by side. The component only reports which page was asked for.
 
-The markup is `VectorSearchPage`'s version, the best of the five: `<nav className="pagination"
-aria-label>` with `aria-current="page"` on the active button. Adopting it in the other four is an
+The markup is `VectorSearchPage`'s version, the best of the five: `<nav className="pagination" aria-label>` with `aria-current="page"` on the active button. Adopting it in the other four is an
 accessibility gain with no visual change.
 
 ## SDK contract used
+
 None. Pagination is client-side over `pageCount`, which every view already had.
 
 ## Tracking (required)
+
 Unchanged. `CategoryPage`'s display tracking still fires on the product list it renders, whichever
 page that is.
 
 ## UI constraints
+
 `.pagination` and `.pagination button` in `src/styles.css` already style everything; the only
 addition is `.pagination span` in `--gray-500` so the ellipsis reads as a gap rather than a
 disabled button. A token, not a new primitive.
 
 ## MUST NOT change
+
 - **No call site goes back to building its own page numbers.** That is the whole bug.
 - Each call site keeps its own scroll behaviour, its own labels and its own window size - the
   differences are deliberate and documented where they are.

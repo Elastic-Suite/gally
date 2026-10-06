@@ -1,14 +1,14 @@
-'use client';
+'use client'
 
-import React from 'react';
-import { useTranslation } from 'react-i18next';
-import Link from './LocaleLink';
+import React from 'react'
+import { useTranslation } from 'react-i18next'
+import Link from './LocaleLink'
 
 export interface BreadcrumbPart {
-  name: string;
+  name: string
   // Omitted for a part with nowhere to go. The last part is rendered as text whether it
   // carries one or not — it is the page already open.
-  href?: string;
+  href?: string
 }
 
 // The one clickable breadcrumb, shared by the pages that can name their real path: the
@@ -17,7 +17,7 @@ export interface BreadcrumbPart {
 // The pages that still show a single translated string (search, blog, CMS, vector search)
 // have no path to build from and keep their `<div className="breadcrumb">`.
 export default function Breadcrumb({ parts }: { parts: BreadcrumbPart[] }) {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation('common')
 
   return (
     <nav className="breadcrumb" aria-label={t('meta.breadcrumb')}>
@@ -28,10 +28,12 @@ export default function Breadcrumb({ parts }: { parts: BreadcrumbPart[] }) {
           {part.href && i < parts.length - 1 ? (
             <Link href={part.href}>{part.name}</Link>
           ) : (
-            <span aria-current={i === parts.length - 1 ? 'page' : undefined}>{part.name}</span>
+            <span aria-current={i === parts.length - 1 ? 'page' : undefined}>
+              {part.name}
+            </span>
           )}
         </React.Fragment>
       ))}
     </nav>
-  );
+  )
 }

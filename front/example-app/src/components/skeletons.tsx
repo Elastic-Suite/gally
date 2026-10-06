@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode } from 'react'
 
 // Loading skeletons shared by two callers that must not drift apart:
 //
@@ -38,9 +38,13 @@ import { ReactNode } from 'react';
 
 // Category pages request pageSize 20, so a 6-card skeleton left the page ~14 cards
 // shorter than the content that replaced it — a large, avoidable shift.
-const CATEGORY_PAGE_SIZE = 20;
+const CATEGORY_PAGE_SIZE = 20
 
-export function ProductGridSkeleton({ count = CATEGORY_PAGE_SIZE }: { count?: number }) {
+export function ProductGridSkeleton({
+  count = CATEGORY_PAGE_SIZE,
+}: {
+  count?: number
+}) {
   return (
     <div className="products-grid">
       {Array.from({ length: count }).map((_, i) => (
@@ -48,13 +52,19 @@ export function ProductGridSkeleton({ count = CATEGORY_PAGE_SIZE }: { count?: nu
           <div className="skeleton-card-image skeleton-shimmer" />
           <div className="skeleton-card-body">
             <div className="skeleton skeleton-text" style={{ width: '80%' }} />
-            <div className="skeleton skeleton-text" style={{ width: '50%', marginTop: '0.5rem' }} />
-            <div className="skeleton skeleton-btn" style={{ width: '100px', marginTop: '0.75rem' }} />
+            <div
+              className="skeleton skeleton-text"
+              style={{ width: '50%', marginTop: '0.5rem' }}
+            />
+            <div
+              className="skeleton skeleton-btn"
+              style={{ width: '100px', marginTop: '0.75rem' }}
+            />
           </div>
         </div>
       ))}
     </div>
-  );
+  )
 }
 
 // Body only — the rows inside the sidebar. Facets.tsx renders this INSIDE its own
@@ -66,17 +76,28 @@ export function FacetsSkeletonBody() {
     <>
       {Array.from({ length: 4 }).map((_, i) => (
         <div key={i} className="facet-group">
-          <div className="skeleton skeleton-text" style={{ width: '100px', height: '12px', marginBottom: '0.75rem' }} />
+          <div
+            className="skeleton skeleton-text"
+            style={{ width: '100px', height: '12px', marginBottom: '0.75rem' }}
+          />
           {Array.from({ length: 4 }).map((_, j) => (
             // Deterministic, NOT Math.random(): the server and the client each render
             // this skeleton and must agree, or React reports a hydration mismatch and
             // abandons the subtree. The formula only needs to look irregular.
-            <div key={j} className="skeleton skeleton-text" style={{ width: `${60 + ((i * 7 + j * 13) % 31)}%`, height: '14px', marginBottom: '0.5rem' }} />
+            <div
+              key={j}
+              className="skeleton skeleton-text"
+              style={{
+                width: `${60 + ((i * 7 + j * 13) % 31)}%`,
+                height: '14px',
+                marginBottom: '0.5rem',
+              }}
+            />
           ))}
         </div>
       ))}
     </>
-  );
+  )
 }
 
 // Full sidebar including the shell, for RouteSkeleton, which renders before
@@ -84,17 +105,34 @@ export function FacetsSkeletonBody() {
 // because the pending-navigation skeleton has no params and so cannot know the locale, and
 // picking one from the route being LEFT would be wrong; the bar is the
 // same height, so the swap does not move anything.
-export function FacetsSkeleton({ title, open }: { title?: ReactNode; open?: boolean }) {
+export function FacetsSkeleton({
+  title,
+  open,
+}: {
+  title?: ReactNode
+  open?: boolean
+}) {
   return (
     // `open` is the mobile drawer state, carried over from the branch this replaced —
     // without it the skeleton would render off-canvas while the real sidebar is open.
     <aside className={`facets-sidebar ${open ? 'open' : ''}`}>
-      <h3 style={{ fontFamily: 'var(--font-sans)', fontSize: '1rem', marginBottom: '1rem' }}>
-        {title ?? <span className="skeleton skeleton-text" style={{ display: 'block', width: '90px', height: '1rem' }} />}
+      <h3
+        style={{
+          fontFamily: 'var(--font-sans)',
+          fontSize: '1rem',
+          marginBottom: '1rem',
+        }}
+      >
+        {title ?? (
+          <span
+            className="skeleton skeleton-text"
+            style={{ display: 'block', width: '90px', height: '1rem' }}
+          />
+        )}
       </h3>
       <FacetsSkeletonBody />
     </aside>
-  );
+  )
 }
 
 export function ProductPageSkeleton() {
@@ -107,11 +145,26 @@ export function ProductPageSkeleton() {
       <div className="product-detail">
         <div className="product-detail-image skeleton-shimmer" />
         <div className="product-detail-info">
-          <div className="skeleton skeleton-text" style={{ width: '80px', height: '20px' }} />
-          <div className="skeleton skeleton-text" style={{ width: '60%', height: '2rem', marginTop: '0.5rem' }} />
-          <div className="skeleton skeleton-text" style={{ width: '120px', height: '14px', marginTop: '0.5rem' }} />
-          <div className="skeleton skeleton-text" style={{ width: '150px', height: '1.8rem', marginTop: '1rem' }} />
-          <div className="skeleton skeleton-text" style={{ width: '100%', height: '60px', marginTop: '1.5rem' }} />
+          <div
+            className="skeleton skeleton-text"
+            style={{ width: '80px', height: '20px' }}
+          />
+          <div
+            className="skeleton skeleton-text"
+            style={{ width: '60%', height: '2rem', marginTop: '0.5rem' }}
+          />
+          <div
+            className="skeleton skeleton-text"
+            style={{ width: '120px', height: '14px', marginTop: '0.5rem' }}
+          />
+          <div
+            className="skeleton skeleton-text"
+            style={{ width: '150px', height: '1.8rem', marginTop: '1rem' }}
+          />
+          <div
+            className="skeleton skeleton-text"
+            style={{ width: '100%', height: '60px', marginTop: '1.5rem' }}
+          />
           <div style={{ display: 'flex', gap: '1rem', marginTop: '1.5rem' }}>
             <div className="skeleton skeleton-btn" style={{ width: '160px' }} />
             <div className="skeleton skeleton-btn" style={{ width: '120px' }} />
@@ -122,32 +175,61 @@ export function ProductPageSkeleton() {
           (separate, client-side) recommendations query returns rows, so reserving space
           for it would introduce a shift on every product that has none. */}
     </div>
-  );
+  )
 }
 
 export function BlogPostSkeleton() {
   return (
     <div className="blog-post">
       <div className="page-title">
-        <div className="skeleton skeleton-text" style={{ width: '180px', height: '0.8rem' }} />
+        <div
+          className="skeleton skeleton-text"
+          style={{ width: '180px', height: '0.8rem' }}
+        />
       </div>
       <div className="blog-post-hero skeleton-shimmer" />
       {/* .blog-post-title, then meta row, summary, and body copy — the article was
           previously represented by three lines, so the page grew substantially once the
           real content arrived. */}
-      <div className="skeleton skeleton-text" style={{ width: '70%', height: '2.2rem', marginTop: '1.5rem' }} />
+      <div
+        className="skeleton skeleton-text"
+        style={{ width: '70%', height: '2.2rem', marginTop: '1.5rem' }}
+      />
       <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1rem' }}>
-        <div className="skeleton skeleton-text" style={{ width: '90px', height: '1.25rem' }} />
-        <div className="skeleton skeleton-text" style={{ width: '120px', height: '1.25rem' }} />
-        <div className="skeleton skeleton-text" style={{ width: '80px', height: '1.25rem' }} />
+        <div
+          className="skeleton skeleton-text"
+          style={{ width: '90px', height: '1.25rem' }}
+        />
+        <div
+          className="skeleton skeleton-text"
+          style={{ width: '120px', height: '1.25rem' }}
+        />
+        <div
+          className="skeleton skeleton-text"
+          style={{ width: '80px', height: '1.25rem' }}
+        />
       </div>
-      <div className="skeleton skeleton-text" style={{ width: '95%', height: '1.2rem', marginTop: '1.5rem' }} />
-      <div className="skeleton skeleton-text" style={{ width: '88%', height: '1.2rem', marginTop: '0.5rem' }} />
+      <div
+        className="skeleton skeleton-text"
+        style={{ width: '95%', height: '1.2rem', marginTop: '1.5rem' }}
+      />
+      <div
+        className="skeleton skeleton-text"
+        style={{ width: '88%', height: '1.2rem', marginTop: '0.5rem' }}
+      />
       {[97, 93, 99, 90, 96, 85, 94, 78].map((w, i) => (
-        <div key={i} className="skeleton skeleton-text" style={{ width: `${w}%`, height: '1rem', marginTop: i === 0 ? '1.5rem' : '0.6rem' }} />
+        <div
+          key={i}
+          className="skeleton skeleton-text"
+          style={{
+            width: `${w}%`,
+            height: '1rem',
+            marginTop: i === 0 ? '1.5rem' : '0.6rem',
+          }}
+        />
       ))}
     </div>
-  );
+  )
 }
 
 // SearchPage's shape, which differs from a category's in two ways that matter: its
@@ -159,28 +241,47 @@ export function SearchPageSkeleton() {
   return (
     <div>
       <div className="page-title">
-        <div className="skeleton skeleton-text" style={{ width: '180px', height: '0.8rem' }} />
-        <div className="skeleton skeleton-text" style={{ width: '320px', height: '1.8rem', marginTop: '0.25rem' }} />
+        <div
+          className="skeleton skeleton-text"
+          style={{ width: '180px', height: '0.8rem' }}
+        />
+        <div
+          className="skeleton skeleton-text"
+          style={{ width: '320px', height: '1.8rem', marginTop: '0.25rem' }}
+        />
       </div>
 
       <div className="result-type-switch-row">
         {/* The real control is a pill-shaped segmented switch; one bar of the same
             height and radius stands in for it rather than two fake segments. */}
-        <div className="skeleton" style={{ width: '280px', height: '2.5rem', borderRadius: 'var(--radius-pill)' }} />
+        <div
+          className="skeleton"
+          style={{
+            width: '280px',
+            height: '2.5rem',
+            borderRadius: 'var(--radius-pill)',
+          }}
+        />
       </div>
 
       <div className="catalog-page">
         <FacetsSkeleton />
         <div>
           <div className="products-header">
-            <span className="skeleton skeleton-text" style={{ display: 'block', width: '140px', height: '1rem' }} />
-            <div className="skeleton skeleton-text" style={{ width: '180px', height: '2.25rem' }} />
+            <span
+              className="skeleton skeleton-text"
+              style={{ display: 'block', width: '140px', height: '1rem' }}
+            />
+            <div
+              className="skeleton skeleton-text"
+              style={{ width: '180px', height: '2.25rem' }}
+            />
           </div>
           <ProductGridSkeleton />
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 // No nav skeleton here: CategoryNav lives in the header, outside <main>, so the
@@ -190,9 +291,18 @@ export function CategoryPageSkeleton() {
     <div>
       {/* Three lines: breadcrumb, h1 (1.8rem), and the item count. */}
       <div className="page-title">
-        <div className="skeleton skeleton-text" style={{ width: '220px', height: '0.8rem' }} />
-        <div className="skeleton skeleton-text" style={{ width: '260px', height: '1.8rem', marginTop: '0.25rem' }} />
-        <div className="skeleton skeleton-text" style={{ width: '140px', height: '0.9rem', marginTop: '0.5rem' }} />
+        <div
+          className="skeleton skeleton-text"
+          style={{ width: '220px', height: '0.8rem' }}
+        />
+        <div
+          className="skeleton skeleton-text"
+          style={{ width: '260px', height: '1.8rem', marginTop: '0.25rem' }}
+        />
+        <div
+          className="skeleton skeleton-text"
+          style={{ width: '140px', height: '0.9rem', marginTop: '0.5rem' }}
+        />
       </div>
 
       {/* The single most important line in this file: without the .catalog-page grid and
@@ -202,12 +312,18 @@ export function CategoryPageSkeleton() {
         <FacetsSkeleton />
         <div>
           <div className="products-header">
-            <span className="skeleton skeleton-text" style={{ display: 'block', width: '120px', height: '1rem' }} />
-            <div className="skeleton skeleton-text" style={{ width: '180px', height: '2.25rem' }} />
+            <span
+              className="skeleton skeleton-text"
+              style={{ display: 'block', width: '120px', height: '1rem' }}
+            />
+            <div
+              className="skeleton skeleton-text"
+              style={{ width: '180px', height: '2.25rem' }}
+            />
           </div>
           <ProductGridSkeleton />
         </div>
       </div>
     </div>
-  );
+  )
 }

@@ -1,5 +1,8 @@
-import { notFound } from 'next/navigation';
-import { resolveLocale, fetchCategoryProducts } from '../../../../src/sdk/server';
+import { notFound } from 'next/navigation'
+import {
+  resolveLocale,
+  fetchCategoryProducts,
+} from '../../../../src/sdk/server'
 
 // The category existence check is NOT here. It moved to page.tsx and its generateMetadata,
 // because what a missing category means depends on the `?from=` switch marker and Next does not
@@ -10,12 +13,12 @@ export default async function CategoryGuard({
   children,
   params,
 }: {
-  children: React.ReactNode;
-  params: Promise<{ locale: string; code: string }>;
+  children: React.ReactNode
+  params: Promise<{ locale: string; code: string }>
 }) {
-  const { locale, code } = await params;
-  const resolved = await resolveLocale(locale);
-  if (!resolved) notFound();
+  const { locale, code } = await params
+  const resolved = await resolveLocale(locale)
+  if (!resolved) notFound()
 
   // Awaited HERE, and thrown away, on purpose: the listing is resolved before `children`
   // render, so the page component finds a cache() hit. Not a wasted request —
@@ -24,7 +27,7 @@ export default async function CategoryGuard({
   //
   // Keep the arguments identical to page.tsx's call: a different pageSize is a different
   // cache key, which turns this into a second HTTP request rather than a warm-up.
-  await fetchCategoryProducts(resolved.localizedCatalog.code, code);
+  await fetchCategoryProducts(resolved.localizedCatalog.code, code)
 
-  return <>{children}</>;
+  return <>{children}</>
 }

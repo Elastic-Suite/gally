@@ -1,7 +1,9 @@
 # Bugfix: quick-add ignores variants in the newer catalogues
 
 ## Status: implemented
+
 ## Page/Component
+
 `src/sdk/fields.ts`. Behaviour visible in `src/components/ProductCard.tsx` and
 `src/components/QuickAdd.tsx`, neither of which changed.
 
@@ -53,13 +55,13 @@ that arrived later.
 Measured from the fixtures, by reading every distinct `configurable_attributes` value per
 catalogue:
 
-| Catalogue | Axes | Already asked for? |
-|---|---|---|
-| `default` (Venia) | `fashion_color`, `fashion_size` | yes |
-| `default` (Luma) | `color`, `size` | yes |
-| `01_fashion` | `fio_color` plus one of `fio_clothing_size`, `fio_bottom_size`, `fio_men_size`, `fio_outerwear_size`, `fio_shoe_size`, `fio_lingerie_size`, `fio_sport_size` | **no** |
-| `02_papershop` | `llv_color`, `llv_format`, `llv_material` | **no** |
-| `00_toolbox` | none | n/a |
+| Catalogue         | Axes                                                                                                                                                         | Already asked for? |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------ |
+| `default` (Venia) | `fashion_color`, `fashion_size`                                                                                                                              | yes                |
+| `default` (Luma)  | `color`, `size`                                                                                                                                              | yes                |
+| `01_fashion`      | `fio_color` plus one of `fio_clothing_size`, `fio_bottom_size`, `fio_men_size`, `fio_outerwear_size`, `fio_shoe_size`, `fio_lingerie_size`, `fio_sport_size` | **no**             |
+| `02_papershop`    | `llv_color`, `llv_format`, `llv_material`                                                                                                                    | **no**             |
+| `00_toolbox`      | none                                                                                                                                                         | n/a                |
 
 Eleven fields added. Fiora varies size by garment family, which is why it needs seven size axes
 rather than one.
@@ -72,7 +74,7 @@ already there, and they return null in catalogues that do not use them.
 
 ## Tracking (required)
 
-Unchanged. This fixes what the add-to-cart button does *before* it adds; the add itself, and the
+Unchanged. This fixes what the add-to-cart button does _before_ it adds; the add itself, and the
 `trackAddToCart` call behind it, are the same code.
 
 ## UI constraints

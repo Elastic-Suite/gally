@@ -4,7 +4,9 @@
 
 > **Superseded in part** by `feature-vector-search-demo-wording.md`: French and German catalogs now get
 > their own suggestions, picked by testing them against the live index.
+
 ## Page/Component
+
 `src/sdk/vectorSearch.ts`, `src/views/VectorSearchPage.tsx`.
 
 ## Why
@@ -21,7 +23,7 @@ moment it is meant to impress.
 
 The queries are also the one part of this page that cannot be derived: they have to be picked
 per catalogue and measured, because their whole value is that keyword search returns zero for
-them *in that catalogue*.
+them _in that catalogue_.
 
 So the constant becomes a map keyed by localized catalog, and the page reads its own.
 
@@ -42,20 +44,20 @@ So the constant becomes a map keyed by localized catalog, and the page reads its
 Every non-control query below returns **0** from keyword search in its own catalogue, measured
 against the running instance on 2026-09-14. The vector scores quoted are the top hit.
 
-| Catalogue | Query | Keyword | What vector search returns |
-|---|---|---|---|
-| `com_en` | the five original Venia queries, unchanged | 0 / 0 / 0 / 0 / 7 | see the comment above them |
-| `toolbox_en` | `protect my eyes while drilling` | 0 | safety goggles, face visor, safety glasses (0.43) |
-| | `something to cut metal pipes` | 0 | copper tube cutter, plumber's kit (0.46) |
-| | `fix a shelf to a brick wall` | 0 | hollow wall anchors, tool board (0.40) |
-| | `drill` — **control** | 46 | the same drills keyword search finds (0.50) |
-| `fashion_en` | `something to wear to the beach` | 0 | beach poncho, swim shorts (0.47) |
-| | `wedding guest outfit` | 0 | evening gown, pleated satin midi dress (0.51) |
-| | `gift for my wife` | 0 | slingback shoe, gold pendant (0.44) |
-| | `dress` — **control** | 43 | the same dresses keyword search finds (0.50) |
-| `papershop_en` | `furnish a home office` | 0 | desk, desk chair, desk lamp (0.41) |
-| | `a present for a child` | 0 | three young-readers editions (0.45) |
-| | `fountain pen` — **control** | 15 | the same fountain pens keyword search finds (0.70) |
+| Catalogue      | Query                                      | Keyword           | What vector search returns                         |
+| -------------- | ------------------------------------------ | ----------------- | -------------------------------------------------- |
+| `com_en`       | the five original Venia queries, unchanged | 0 / 0 / 0 / 0 / 7 | see the comment above them                         |
+| `toolbox_en`   | `protect my eyes while drilling`           | 0                 | safety goggles, face visor, safety glasses (0.43)  |
+|                | `something to cut metal pipes`             | 0                 | copper tube cutter, plumber's kit (0.46)           |
+|                | `fix a shelf to a brick wall`              | 0                 | hollow wall anchors, tool board (0.40)             |
+|                | `drill` — **control**                      | 46                | the same drills keyword search finds (0.50)        |
+| `fashion_en`   | `something to wear to the beach`           | 0                 | beach poncho, swim shorts (0.47)                   |
+|                | `wedding guest outfit`                     | 0                 | evening gown, pleated satin midi dress (0.51)      |
+|                | `gift for my wife`                         | 0                 | slingback shoe, gold pendant (0.44)                |
+|                | `dress` — **control**                      | 43                | the same dresses keyword search finds (0.50)       |
+| `papershop_en` | `furnish a home office`                    | 0                 | desk, desk chair, desk lamp (0.41)                 |
+|                | `a present for a child`                    | 0                 | three young-readers editions (0.45)                |
+|                | `fountain pen` — **control**               | 15                | the same fountain pens keyword search finds (0.70) |
 
 **Every list ends with a control**, matching the rule the original list already documented: a
 literal product noun that keyword search answers perfectly well. Without it the page is a row of

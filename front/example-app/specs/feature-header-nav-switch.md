@@ -3,6 +3,7 @@
 > **Superseded in part** by `feature-header-light-two-row.md`: the header no longer has a segmented switch. Products, Articles, Search Intelligence and Semantic search are plain text links. The result-type switch on the search page is unaffected.
 
 ## Status: implemented
+
 ## Page/Component: src/components/Header.tsx, src/styles.css
 
 The header nav was three flat pill links (Products · Search Intelligence · Blog) whose only
@@ -14,6 +15,7 @@ stays a plain link outside the switch: it is an expert-mode tool, not a third st
 section.
 
 ## Behaviour (testable)
+
 - [x] Products and Articles sit in one `.header-nav-switch` track: translucent white well
       (`rgba(255,255,255,0.12)`), pill radius, both segments the width of the wider one.
 - [x] The selected segment is a raised solid `--white` pill with `--shadow-sm` and
@@ -21,7 +23,7 @@ section.
       transparent with `rgba(255,255,255,0.85)` text, white on hover.
 - [x] **The thumb slides between the two segments** (280ms, `cubic-bezier(0.4, 0, 0.2, 1)`),
       exactly as on the results switch.
-- [x] Each segment carries the *same* icon as its counterpart on the results switch — 🛍️
+- [x] Each segment carries the _same_ icon as its counterpart on the results switch — 🛍️
       Products, 📰 Articles — so the two switches read as the same pair of destinations.
       Icons are `aria-hidden`; the accessible name stays the label alone.
 - [x] Labels come from the existing `nav.products` / `nav.cms` keys — no new i18n key, all
@@ -42,6 +44,7 @@ section.
       frame when it landed.
 
 ## The three-state thumb
+
 `data-active` is `'products' | 'blog' | 'none'`, computed from the locale-free pathname.
 `'none'` is a real state and the reason this could not be a straight copy of the results
 switch: the homepage, the cart and `/explain` are inside neither section, and a switch that
@@ -54,13 +57,16 @@ both as the only moving part, `transform: translateX(calc(100% + 0.25rem))` wher
 the thumb's own width. Compositor-only, so it can never reflow the sticky header row.
 
 ## SDK contract used
+
 - None. Presentation only.
 
 ## Tracking (required)
+
 - No change. Both segments are plain `LocaleLink`s; no event fires from the nav itself.
   Navigation-triggered tracking still comes from the destination pages.
 
 ## UI constraints
+
 - No new visual primitive: this is the existing segmented-switch idiom re-skinned for a dark
   surface. If a third top-bar switch ever appears, factor the two into one before adding it.
 - Tokens for every colour that has one (`--white`, `--indigo-800`, `--shadow-sm`,
@@ -68,6 +74,7 @@ the thumb's own width. Compositor-only, so it can never reflow the sticky header
   for translucent-on-indigo — `.context-select` and the plain nav links already use them.
 
 ## MUST NOT change
+
 - **`.header-nav > a` must stay a child selector.** The plain-link rules (padding, hover
   background) are scoped to direct children so the switch's nested tabs never pick up that
   hover background — it would fight the thumb. Widening it back to `.header-nav a` puts two

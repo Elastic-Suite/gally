@@ -1,21 +1,27 @@
 # Feature: <name>
 
 ## Status: draft | approved | implemented
+
 ## Page/Component: src/views/<X>.tsx (and/or app/[locale]/<route>/page.tsx)
 
 ## Behaviour (testable)
+
 - [ ] ...
 
 ## SDK contract used
+
 - Which SearchManager options / requestType / selectedFields. See ../docs/sdk-reference.md.
 
 ## Tracking (required)
+
 - Which TrackingEventType fires and when.
 
 ## UI constraints
+
 - Uses only design-system tokens + existing components (../docs/design-system.md).
 
 ## MUST NOT change
+
 - Existing behaviour/props/tracking that must stay intact during refactor.
 - The most valuable section: it is what stops a later refactor undoing this one.
 

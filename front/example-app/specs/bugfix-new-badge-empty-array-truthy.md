@@ -1,6 +1,7 @@
 # Bugfix: "New" badge rendered on every product on the PDP
 
 ## Status: implemented
+
 ## Page/Component: src/sdk/productFields.ts (badges consumed by src/components/ProductCard + PDP)
 
 ## Problem
@@ -15,7 +16,7 @@ is `true` on 112 documents and `[]` on 222; `sale` is `true` on 84 and `[]` on 2
 `[]` is truthy in JavaScript. So the read
 
 ```ts
-const isNew = s.new || s.is_new || false;   // returns []  →  truthy
+const isNew = s.new || s.is_new || false // returns []  →  truthy
 ```
 
 evaluated to `[]` for every non-new product, and `productFields.ts:124` pushed the badge.

@@ -1,6 +1,7 @@
 # Feature: Top-nav "Categories" item renamed to "Products"
 
 ## Status: implemented
+
 ## Page/Component: src/components/Header.tsx, src/locales/{en,fr,de}/common.json
 
 The second item in the header nav — the one that jumps into the catalog at the first
@@ -8,6 +9,7 @@ root category — now reads "Products". Only the label changes: the link target,
 active-state rule and the category tree behind it are untouched.
 
 ## Behaviour (testable)
+
 - [x] The nav item renders "Products" (en), "Produits" (fr), "Products" (de).
 - [x] It still links to `/category/{firstCategory.id}` (or `/` before `CatalogContext`
       resolves the tree) and still shows `active` on any `/category*` path.
@@ -17,6 +19,7 @@ active-state rule and the category tree behind it are untouched.
       i18next falls back to the key, not to the old value.
 
 ## i18n
+
 - All three locales updated in the same commit; `common.json` is a static import in
   `i18n/index.ts`, so a missing key is a runtime label bug, not a build error.
 - **German is a placeholder locale**: `de/*` is currently a verbatim copy of `en/*`
@@ -28,16 +31,19 @@ active-state rule and the category tree behind it are untouched.
   category strings, and the `demo.json`/`scenarios.json` tracking copy.
 
 ## SDK contract used
+
 - None. Presentation-only change; no `SearchManager` call touched.
 
 ## Tracking (required)
-- No change. Category views still fire `TrackingEventType.VIEW` with `metadataCode:
-  'category'` from `CategoryPage.tsx` — the nav label is not part of any payload.
+
+- No change. Category views still fire `TrackingEventType.VIEW` with `metadataCode: 'category'` from `CategoryPage.tsx` — the nav label is not part of any payload.
 
 ## UI constraints
+
 - No markup, class or token change — same `<Link>` in the same `.header-nav`.
 
 ## MUST NOT change
+
 - The link target and active-path rule (`/category*`), so deep links and the
   subcategory navbar keep working.
 - The sibling nav items. In particular `nav.cms` keeps its key while rendering "Blog"
