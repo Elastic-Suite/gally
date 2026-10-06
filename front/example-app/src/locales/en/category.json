@@ -3,6 +3,7 @@
     "fallbackName": "Category",
     "countInCategory_one": "{{count}} product in this category",
     "countInCategory_other": "{{count}} products in this category",
+    "subcategories": "Subcategories",
     "count_one": "{{count}} product",
     "count_other": "{{count}} products",
     "sort": {
@@ -53,9 +54,14 @@
     },
     "trending": "Our selection",
     "moreProducts": "More Products",
-    "readyTitle": "Ready to transform your search experience?",
-    "readyBody": "Browse categories, test search facets, and see vector search in action.",
-    "tryVectorSearch": "Try Vector Search",
+    "vectorBlock": {
+      "eyebrow": "Vector search",
+      "title": "Say what you want, not the right keyword",
+      "body": "Describe what you are looking for the way you would tell a shop assistant: an occasion, a use, a wish. Vector search understands the intent and finds the products that answer it, even when none of your words appear in their description.",
+      "quote": "\"{{query}}\"",
+      "seeResults": "See the results →",
+      "cta": "Describe what you want"
+    },
     "eyebrowSelection": "Selection",
     "eyebrowCategory": "Category",
     "seeAll": "See all",

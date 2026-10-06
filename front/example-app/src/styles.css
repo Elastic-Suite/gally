@@ -1226,6 +1226,118 @@ a:hover {
   }
 }
 
+/* ─── Homepage vector search block ───────────────────────── */
+/* The page's closing block: what vector search is for, with this shop's measured requests as
+   cards. Its surface is lighter than the hero and panels on purpose, so it reads as the closing
+   note rather than a fourth panel. The cards use the product card's look and hover lift.
+   See specs/feature-home-vector-block.md. */
+.home-vector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin: 3rem 0;
+  padding: 3.5rem 2rem;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, var(--indigo-50), var(--white));
+  border: 1px solid var(--gray-300);
+  box-shadow: var(--shadow-md);
+}
+
+.home-vector-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--coral-600);
+}
+
+.home-vector-eyebrow .icon {
+  margin-right: 0;
+}
+
+.home-vector-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.15;
+  font-size: clamp(1.6rem, 2.6vw, 2.3rem);
+  margin: 0.6rem 0 0.9rem;
+  color: var(--gray-900);
+}
+
+.home-vector-body {
+  max-width: 42rem;
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--gray-700);
+}
+
+/* A catalog with no example requests has no cards: the button follows the body directly. */
+.home-vector-body + .btn {
+  margin-top: 2rem;
+}
+
+.home-vector-cases {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr));
+  gap: 1.25rem;
+  width: 100%;
+  max-width: 68rem;
+  margin: 2.25rem 0;
+  padding: 0;
+  list-style: none;
+}
+
+.home-vector-case {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  height: 100%;
+  padding: 1.5rem;
+  text-align: left;
+  border-radius: var(--radius-md);
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  box-shadow: var(--shadow-sm);
+  color: var(--gray-900);
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.home-vector-case:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.home-vector-quote {
+  flex: 1;
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.35;
+  /* Keeps a closing quote mark from wrapping alone onto the last line. */
+  text-wrap: balance;
+}
+
+.home-vector-go {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--coral-600);
+}
+
+@media (max-width: 768px) {
+  .home-vector {
+    padding: 2.25rem 1.25rem;
+  }
+
+  .home-vector-cases {
+    margin: 1.5rem 0;
+  }
+}
+
 /* ─── Product Card ───────────────────────────────────────── */
 .product-card {
   background: white;
@@ -2826,6 +2938,122 @@ a:hover {
 .breadcrumb-sep {
   margin: 0 0.35rem;
   opacity: 0.6;
+}
+
+/* Category pages only: under the breadcrumb, the title block is a small banner - title, count
+   and the subcategory chips on the left, three product photos fanned on the right. Scoped to
+   .category-hero so every other .page-title is untouched (specs/feature-category-hero-banner.md).
+   The right padding keeps the chips clear of the photos. */
+.category-hero {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 10.5rem;
+  margin-top: 0.5rem;
+  padding: 1.75rem calc(15.75rem + 5rem) 1.75rem 2.5rem;
+  border: 1px solid var(--indigo-100);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(
+    120deg,
+    var(--indigo-100) 0%,
+    var(--indigo-50) 55%,
+    var(--white) 100%
+  );
+}
+.category-hero h1 {
+  font-size: 2.4rem;
+  color: var(--indigo-900);
+}
+.category-hero-count {
+  font-size: 0.9rem;
+  color: var(--gray-500);
+}
+.category-hero-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+.category-hero-chips .filter-chip {
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.category-hero-media {
+  perspective: 40rem;
+  position: absolute;
+  top: 50%;
+  right: 3rem;
+  width: 15.75rem;
+  height: 7.75rem;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+/* Each photo's fan tilt lives in --fan so the unfold below can end exactly on it. The photos
+   unfold from their top edge, 120ms apart, whenever a new pick mounts (category load, new page,
+   sort or filter). Fill mode `backwards`: holding the last keyframe is not needed, --fan is the
+   resting transform. */
+.category-hero-media > * {
+  transform: var(--fan);
+  transform-origin: top center;
+  animation: heroPhotoUnfold 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+  position: absolute;
+  top: 0;
+  width: 5.75rem;
+  height: 7.75rem;
+  object-fit: cover;
+  border: 3px solid var(--white);
+  border-radius: var(--radius-md);
+  background: var(--white);
+  box-shadow: var(--shadow-lg);
+}
+.category-hero-media > :nth-child(1) {
+  left: 0;
+  --fan: rotate(-8deg) translateY(0.25rem);
+}
+.category-hero-media > :nth-child(2) {
+  left: 5rem;
+  z-index: 1;
+  --fan: rotate(0deg);
+  animation-delay: 120ms;
+}
+.category-hero-media > :nth-child(3) {
+  left: 10rem;
+  --fan: rotate(8deg) translateY(0.25rem);
+  animation-delay: 240ms;
+}
+@keyframes heroPhotoUnfold {
+  from {
+    opacity: 0;
+    transform: var(--fan) rotateX(-80deg);
+  }
+  to {
+    opacity: 1;
+    transform: var(--fan);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .category-hero-media > * {
+    animation: none;
+  }
+}
+@media (max-width: 768px) {
+  .category-hero {
+    min-height: 0;
+    padding: 1.25rem;
+  }
+  .category-hero h1 {
+    font-size: 1.8rem;
+  }
+  .category-hero-chips {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
+  }
+  .category-hero-media {
+    display: none;
+  }
 }
 
 /* ─── Footer ─────────────────────────────────────────────── */

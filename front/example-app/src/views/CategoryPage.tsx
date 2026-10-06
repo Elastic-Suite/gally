@@ -6,20 +6,47 @@ import { useTranslation } from 'react-i18next'
 import { useSearch } from '../hooks/useSearch'
 import { useTracking } from '../hooks/useTracking'
 import { useCatalog } from '../contexts/CatalogContext'
+import { useGallyConfig } from '../contexts/ConfigContext'
+import Link from '../components/LocaleLink'
+import ProductImage from '../components/ProductImage'
 import ProductCard from '../components/ProductCard'
 import Facets, { ActiveFilters, FilterValue } from '../components/Facets'
 import { ProductGridSkeleton } from '../components/skeletons'
 import Breadcrumb from '../components/Breadcrumb'
 import Pagination from '../components/Pagination'
 import { findTrail } from '../sdk/categoryTree'
+import { getProductFields } from '../sdk/productFields'
 import Icon from '../components/Icon'
 import type { ServerSearchResult } from '../sdk/server'
 
+// Picks `count` items in a random order that depends only on `seed` (mulberry32 PRNG feeding a
+// partial Fisher-Yates), so the server and the browser draw the same ones and hydration agrees.
+function seededPick<T>(items: T[], seed: number, count: number): T[] {
+  let a = seed >>> 0
+  const next = () => {
+    a = (a + 0x6d2b79f5) >>> 0
+    let t = a
+    t = Math.imul(t ^ (t >>> 15), t | 1)
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61)
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296
+  }
+  const pool = [...items]
+  const n = Math.min(count, pool.length)
+  for (let i = 0; i < n; i++) {
+    const j = i + Math.floor(next() * (pool.length - i))
+    ;[pool[i], pool[j]] = [pool[j], pool[i]]
+  }
+  return pool.slice(0, n)
+}
+
 // `initialData` is the first page of this category, fetched by the Server Component.
+// `heroSeed` is drawn there per request and picks the banner photos.
 export default function CategoryPage({
   initialData,
+  heroSeed = 0,
 }: {
   initialData?: ServerSearchResult
+  heroSeed?: number
 } = {}) {
   const { t } = useTranslation(['category', 'common'])
   const params = useParams()
@@ -30,6 +57,7 @@ export default function CategoryPage({
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc')
   const [filters, setFilters] = useState<ActiveFilters>({})
   const { trackCategoryView, trackDisplay } = useTracking()
+  const config = useGallyConfig()
 
   // The ancestor chain, so the breadcrumb can name every level rather than jumping
   // Home > Skirts. Same function the route guard and the JSON-LD breadcrumb use, over the
@@ -112,6 +140,20 @@ export default function CategoryPage({
     []
   )
 
+  // The banner's chips: subcategories from the tree, so filters and sorting never change them.
+  const subcategories = (category?.children ?? []).filter((c) => c.count > 0)
+
+  // The banner's photos: three products of the page on screen, picked at random by the seed.
+  // useSearch keeps the previous products while a new page loads, so they do not blink. Keyed
+  // by SKU, so a new pick mounts new images and their unfold animation plays again.
+  const heroImages = useMemo(
+    () =>
+      seededPick(products, heroSeed, 3).map((doc) =>
+        getProductFields(doc, config)
+      ),
+    [products, heroSeed, config]
+  )
+
   const handleSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const [field, dir] = e.target.value.split(':')
     setSortField(field)
@@ -135,12 +177,39 @@ export default function CategoryPage({
               : [{ name: categoryName }]
           }
         />
-        <h1>{categoryName}</h1>
-        {category && (
-          <span style={{ color: 'var(--gray-500)', fontSize: '0.9rem' }}>
-            {t('category.countInCategory', { count: category.count })}
-          </span>
-        )}
+        {/* The breadcrumb stays above the banner, where every other page has it. */}
+        <div className="category-hero">
+          <h1>{categoryName}</h1>
+          {category && (
+            <span className="category-hero-count">
+              {t('category.countInCategory', { count: category.count })}
+            </span>
+          )}
+          {subcategories.length > 0 && (
+            <nav
+              className="category-hero-chips"
+              aria-label={t('category.subcategories')}
+            >
+              {subcategories.map((sub) => (
+                <Link
+                  key={sub.id}
+                  href={`/category/${sub.id}`}
+                  className="filter-chip"
+                >
+                  {sub.name}
+                  <span className="filter-chip-count">{sub.count}</span>
+                </Link>
+              ))}
+            </nav>
+          )}
+          {heroImages.length > 0 && (
+            <div className="category-hero-media" aria-hidden="true">
+              {heroImages.map((p) => (
+                <ProductImage key={p.sku} src={p.image} alt="" />
+              ))}
+            </div>
+          )}
+        </div>
       </div>
 
       <button className="btn btn-outline btn-sm mobile-filter-toggle">
