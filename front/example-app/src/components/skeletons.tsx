@@ -289,20 +289,42 @@ export function SearchPageSkeleton() {
 export function CategoryPageSkeleton() {
   return (
     <div>
-      {/* Three lines: breadcrumb, h1 (1.8rem), and the item count. */}
+      {/* The breadcrumb, then the banner of specs/feature-category-hero-banner.md: h1
+          (2.4rem), the item count and a chip row. A category with no subcategories loses the
+          chip row on arrival - the skeleton cannot know. The photos are left out: they are
+          decoration. */}
       <div className="page-title">
         <div
           className="skeleton skeleton-text"
-          style={{ width: '220px', height: '0.8rem' }}
+          style={{
+            width: '220px',
+            height: '0.8rem',
+            margin: '0.2rem 0 0.8rem',
+          }}
         />
-        <div
-          className="skeleton skeleton-text"
-          style={{ width: '260px', height: '1.8rem', marginTop: '0.25rem' }}
-        />
-        <div
-          className="skeleton skeleton-text"
-          style={{ width: '140px', height: '0.9rem', marginTop: '0.5rem' }}
-        />
+        <div className="category-hero">
+          <div
+            className="skeleton skeleton-text"
+            style={{ width: '260px', height: '2.4rem', margin: '0.25rem 0' }}
+          />
+          <div
+            className="skeleton skeleton-text"
+            style={{ width: '140px', height: '0.9rem', margin: '0.35rem 0' }}
+          />
+          <div className="category-hero-chips">
+            {[140, 120, 100, 110].map((w, i) => (
+              <div
+                key={i}
+                className="skeleton skeleton-text"
+                style={{
+                  width: `${w}px`,
+                  height: '1.9rem',
+                  borderRadius: 'var(--radius-pill)',
+                }}
+              />
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* The single most important line in this file: without the .catalog-page grid and
