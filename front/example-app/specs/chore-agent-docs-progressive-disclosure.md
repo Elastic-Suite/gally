@@ -1,6 +1,7 @@
 # Chore: agent docs follow progressive disclosure
 
 ## Status: implemented
+
 ## Page/Component: none — documentation only. No `.tsx`, `.ts` or `.css` file was touched.
 
 ## Problem
@@ -17,6 +18,7 @@ free insurance. It is not — the copies drift, and the stale one wins depending
 tool reads first.
 
 ## Behaviour (testable)
+
 - [x] `AGENTS.md` is the entry point and holds the only routing table for this app.
 - [x] `CLAUDE.md` (11 lines) names `AGENTS.md` in its first lines and contains no routing table
       and no rules. `CLAUDE.md` keeps only Claude-specific content: the
@@ -34,15 +36,19 @@ tool reads first.
 - [x] `tools/check-agent-docs.py` at the repo root reports no broken pointers.
 
 ## SDK contract used
+
 None. No query, no `selectedFields`, no `requestType` changed.
 
 ## Tracking (required)
+
 Unchanged. No tracking call was added, removed or moved.
 
 ## UI constraints
+
 Not applicable — no rendered output changed.
 
 ## MUST NOT change
+
 - **`docs/sdk-reference.md` stays authoritative** and wins over `AGENTS.md` and over any skill.
   The precedence statement in `AGENTS.md` is a rule, not routing; do not drop it when trimming.
 - **Do not copy the routing table back into `CLAUDE.md`.** That is the exact regression this
@@ -79,6 +85,7 @@ when in third person and sit well under the 1,024-character limit, and both SKIL
 under the 500-line guidance.
 
 ### Behaviour (testable)
+
 - [x] **No time-sensitive content.** `nextjs-react-docs` no longer pins patch versions
       (`16.3.0`, `19.2.4`, `19.2.17`) or quotes token estimates. It keeps the **major** versions,
       because "this app is Next 16, not the Next 13 in `front/node_modules`" is the entire point of
@@ -96,6 +103,7 @@ under the 500-line guidance.
       storefront skill.
 
 ## MUST NOT change (additions)
+
 - **The major versions stay in `nextjs-react-docs`.** They are the discriminator between the two
   `node_modules` trees, and reading the wrong one gives React 18 semantics with no error at all.
   Strip the patch numbers if they reappear; do not strip the majors.
@@ -105,4 +113,3 @@ under the 500-line guidance.
   instructions, and linking them would spend context on every invocation. Same file records the
   exemption so a reachability audit does not flag them.
 - The step order in the `specs/` checklist is the point of it. Step 2 (spec) before step 3 (code).
-

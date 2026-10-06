@@ -4,6 +4,18 @@
 // the hook that later refetches would make the page change under the user after
 // hydration. The comments below are load-bearing — see ../../docs/sdk-reference.md.
 
+import type { RequestOptions, Response } from '@elastic-suite/gally-sdk'
+
+// One row of a search response, typed exactly as the SDK types it. Its keys are the selected
+// fields, so which ones exist is decided by the catalogue's data, not by the code.
+export type SearchDocument = ReturnType<Response['getCollection']>[number]
+
+// One entry of the `filters` option of a search request.
+export type SearchFilter = RequestOptions['filters'][number]
+
+// One popular-search term, as the SDK returns it.
+export type TermSuggestion = ReturnType<Response['getTermSuggestions']>[number]
+
 // Fields to request from the API for product display.
 // Object/array types need sub-selections (e.g. fashion_color { label value }).
 // Note: price { price } and stock { status } are appended automatically by the SDK.
@@ -55,7 +67,7 @@ export const CATALOG_AXIS_CODES: Record<string, string[]> = {
   ],
   // Le livre & le lièvre
   papershop: ['llv_color', 'llv_format', 'llv_material'],
-};
+}
 
 // Non-axis fields a single catalogue owns. Both drive a badge and neither varies a variant, so
 // they are not in CATALOG_AXIS_CODES: `fashion_material` feeds the material pill on Venia and
@@ -63,18 +75,24 @@ export const CATALOG_AXIS_CODES: Record<string, string[]> = {
 export const CATALOG_EXTRA_FIELDS: Record<string, string[]> = {
   com: ['fashion_material { label value }'],
   papershop: ['llv_is_eco'],
-};
+}
 
 /** Variant axes for one catalogue, empty for a catalogue that has none or is unknown. */
 export function axisCodes(catalogCode: string): string[] {
-  return CATALOG_AXIS_CODES[catalogCode] ?? [];
+  return CATALOG_AXIS_CODES[catalogCode] ?? []
 }
 
 // Declared by common/ in the sample data, so present whatever the selection.
 const COMMON_PRODUCT_FIELDS = [
-  'sku', 'name', 'image', 'description', 'url_key',
+  'sku',
+  'name',
+  'image',
+  'description',
+  'url_key',
   'visibility { label value }',
-  'new', 'sale', 'cost',
+  'new',
+  'sale',
+  'cost',
   // What the quick-add overlay needs to offer a choice on a listing row, without `source`.
   // `configurable_attributes` names the axes; the per-catalogue fields carry their options.
   //
@@ -93,15 +111,15 @@ const COMMON_PRODUCT_FIELDS = [
   // original price on the card was dead code until now. Asking for them here is safe: GraphQL
   // merges two selections of the same field, so the query ends up with the union of both.
   'price { original_price is_discounted }',
-];
+]
 
 /** The listing selection for one catalogue: the common fields plus whatever it owns. */
 export function productFields(catalogCode: string): string[] {
   return [
     ...COMMON_PRODUCT_FIELDS,
     ...(CATALOG_EXTRA_FIELDS[catalogCode] ?? []),
-    ...axisCodes(catalogCode).map(code => `${code} { label value }`),
-  ];
+    ...axisCodes(catalogCode).map((code) => `${code} { label value }`),
+  ]
 }
 
 // The product detail page needs two things no typed field exposes: `type_id` (is this a
@@ -114,13 +132,13 @@ export function productFields(catalogCode: string): string[] {
 // configurable like VSK12, description included), and the grid, the category listings and the
 // autocomplete all ask for 20 products at a time.
 export function productDetailFields(catalogCode: string): string[] {
-  return [...productFields(catalogCode), 'source'];
+  return [...productFields(catalogCode), 'source']
 }
 
 // The SDK routes any non-`product` metadata to the generic `documents(entityType:)`
 // query (see graphql/Request.ts:getEndpoint), so the whole cms_page section runs
 // through the same SearchManager as the catalog — no bespoke GraphQL here.
-export const CMS_METADATA = 'cms_page';
+export const CMS_METADATA = 'cms_page'
 
 // For non-product entities selectedFields never reaches the query — the SDK hardcodes
 // the selection to `id data` — but it is NOT ignored: Response projects `data._source`
@@ -145,4 +163,4 @@ export const CMS_FIELDS = [
   'reading_time',
   'is_featured',
   'tags',
-];
+]

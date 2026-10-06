@@ -1,7 +1,9 @@
 # Feature: Larger product cards, three per row
 
 ## Status: implemented
+
 ## Page/Component: src/views/SearchPage.tsx, src/views/CategoryPage.tsx (both via `.catalog-page` +
+
 `.products-grid` in src/styles.css), src/components/ProductCard.tsx, src/components/skeletons.tsx
 
 Search results and category listings showed four cards of about 244px per row inside a 1400px page.
@@ -9,6 +11,7 @@ The picture was 180px tall, which is small for the merchandising these two pages
 widens the page to 1600px and makes the grid three columns of about 392px on a desktop screen.
 
 ## Behaviour (testable)
+
 - [x] `.main-content`, `.header-inner` and `.header-search-row` all cap at `--layout-max-width`
       (1600px). They move together, so the brand/nav row and the search band stay aligned with the
       page content underneath.
@@ -31,6 +34,7 @@ widens the page to 1600px and makes the grid three columns of about 392px on a d
       `.products-grid` and nothing else was touched, but the category route was not looked at.
 
 ### How it was verified
+
 `docker compose exec example npx tsc --noEmit` clean, container log shows `✓ Compiled` with no `⨯`.
 Headless Chrome against `https://gally.localhost/example/com_en/search?q=top` at 1680px (three cards
 per row, 392px wide), and at 560px and 390px (two cards and one card, no sideways scroll). The same
@@ -40,22 +44,24 @@ change out as the cause of the pre-existing bug below.
 **Pre-existing, not caused here and not fixed here:** at 768px and below, the results start roughly
 900px down the page, below an empty gap. Reproduced with this change stashed, so it is older than it.
 Cause, found while verifying: the mobile drawer rules are at `src/styles.css:1368`, inside
-`@media (max-width: 768px)`, and the base `.facets-sidebar` rule is at `src/styles.css:1387`, *after*
+`@media (max-width: 768px)`, and the base `.facets-sidebar` rule is at `src/styles.css:1387`, _after_
 it. Both are `(0,1,0)`; a media query adds no specificity, so the later rule wins and the drawer
-keeps `position: sticky` and `height: fit-content` on a phone. It still gets `transform:
-translateX(-100%)` and `width: 300px`, which the base rule does not set — so it slides off-canvas as
+keeps `position: sticky` and `height: fit-content` on a phone. It still gets `transform: translateX(-100%)` and `width: 300px`, which the base rule does not set — so it slides off-canvas as
 intended while staying **in flow**, occupying the first row of `.catalog-page` and pushing the grid
 below it. Moving the media block after the base rule is the fix. Needs its own bugfix spec.
 
 ## SDK contract used
+
 None. This is a stylesheet and comment change only — no query, no `selectedFields`, no page size.
 Category pages still request 20 products, which is now 6 rows and a bit instead of 5.
 
 ## Tracking (required)
+
 Unchanged. No tracking call is added, removed or moved; `ProductCard`'s markup is untouched apart
 from a comment.
 
 ## UI constraints
+
 - Six new tokens in `:root`, documented in ../docs/design-system.md: `--layout-max-width`,
   `--product-grid-column`, `--product-card-image-height`, `--product-card-body-padding`,
   `--product-card-name-size`, `--product-card-price-size`. No raw px or font-size outside `:root`.
@@ -65,6 +71,7 @@ from a comment.
   proven layout rather than an untested large one.
 
 ## MUST NOT change
+
 - **`.product-card` itself carries no size.** Put the picture height or the body padding back on
   `.product-card` and the home-page carousel and the autocomplete inherit it — the carousel becomes
   a wall of 300px pictures. The variables are set on `.products-grid` for this reason alone.

@@ -1,13 +1,14 @@
 # Bugfix: the server-rendered product list was invisible without JavaScript
 
 ## Status: implemented
+
 ## Page/Component: `app/[locale]/{category/[code],product/[sku],blog/[id],search}/**`, `src/contexts/NavigationContext.tsx`, `src/components/{RouteSkeleton,LocaleLink,AppShell,skeletons}.tsx`, `src/views/SearchPage.tsx`, `src/hooks/useSearch.ts`, `src/sdk/server.ts`, `app/providers.tsx`, `src/contexts/CatalogContext.tsx`
 
 ## Problem
 
 Two reports, one cause.
 
-**First:** on a category page the product-list skeleton was visible on the *initial* render — a
+**First:** on a category page the product-list skeleton was visible on the _initial_ render — a
 cold page load, not a navigation — even though Phase 3 fetches that list on the server. Measured
 warm on `/com_fr/category/cat_11`: `ttfb=0.470s`, `total=0.612s`, one response carrying 504
 `skeleton` substring hits from byte 6k and 120 `product-card` hits from byte 105k, with React's
@@ -20,7 +21,7 @@ execution, no products. A crawler that does not run JS saw a page with a title, 
 `<h1>`, JSON-LD describing 20 products — and no products.
 
 **Root cause — the wrong belief:** that `loading.tsx` is navigation feedback. It is a Suspense
-boundary, and a Suspense boundary changes how the *document* is produced: React flushes the shell
+boundary, and a Suspense boundary changes how the _document_ is produced: React flushes the shell
 with the fallback in place, streams the real subtree to the end of the response, and swaps the two
 with `$RC`/`$RS`. That is exactly what
 `specs/feature-navigation-loading-feedback.md` verified as proof the boundary existed — "the
@@ -49,7 +50,7 @@ the boundaries removes what made a click responsive, and that regression was the
 - `useNavigate()` covers imperative navigation, which no link can report on. The `startTransition`
   around `router.push` is what makes the wait exist as state at all. Used by `SearchBar` (a header
   search waits on `/search`'s server fetch) and by `CatalogContext` (a catalog switch re-resolves
-  catalogs, tree *and* page data — the slowest navigation in the app).
+  catalogs, tree _and_ page data — the slowest navigation in the app).
 - `AppShell` swaps `<main>`'s children for `RouteSkeleton` while a navigation is pending, and marks
   the element `data-navigating` so this is testable from outside.
 - `RouteSkeleton` picks the skeleton from the destination href, because there is no per-route file
@@ -65,7 +66,7 @@ the boundaries removes what made a click responsive, and that regression was the
 The first version cleared the pending state from the reporter's effect cleanup, which looked
 obviously right and was obviously wrong: **most links live inside the page area the placeholder
 replaces**, so the clicked link unmounts the instant the placeholder appears. The cleanup then
-cancelled the navigation state one frame later and AppShell put the *outgoing* page back on screen
+cancelled the navigation state one frame later and AppShell put the _outgoing_ page back on screen
 until the real navigation committed. Reported as "the category content flashes to the same content,
 with a list loading placeholder in between, then Next indicates it is rendering, then the real new
 content appears" — the placeholder was being removed far too early, and what came back was the page
@@ -78,7 +79,7 @@ page:Bas (0ms) → PLACEHOLDER (225ms) → page:Bas (308ms) → page:Robes (590m
 ```
 
 A link only knows two things, so it now reports only those: a navigation started, and a navigation
-it started settled *while it was still mounted* (an aborted click, typically onto the URL already
+it started settled _while it was still mounted_ (an aborted click, typically onto the URL already
 open). Deciding a navigation **finished** belongs to the provider, which compares the current
 `usePathname()` against the pathname the click started from. That comparison is derived during
 render rather than in an effect, so the placeholder and the ready page never both get a frame.
@@ -135,7 +136,9 @@ crawler case, a `MutationObserver` on `[data-navigating]` for the navigation cas
       and therefore instant — if that stops being true, this is where to look
 
 ## Still client-rendered, so still invisible without JavaScript
+
 Not in this change's scope, but worth knowing before claiming the app is crawlable:
+
 - the **homepage** product sliders (42 skeleton hits server-side, 0 product cards) — `Homepage.tsx`
   fetches them in the browser;
 - the **blog listing** `/blog` (48 skeleton hits, no articles);
@@ -145,11 +148,13 @@ Each needs the same treatment the other four routes got: a server fetch handed d
 `initialData`.
 
 ## SDK contract used
+
 `fetchSearchProducts` — `metadata: 'product'`, `selectedFields: PRODUCT_FIELDS` (never empty, see
 `../docs/sdk-reference.md`), `sortField: '_score'`, `sortDirection: 'desc'`, `currentPage: 1`,
 `pageSize: 20`, `filters: []`.
 
 ## Tracking (required)
+
 Unchanged, and deliberately so: `SearchPage`'s `trackSearch` / `trackDisplay` / `trackCmsDisplay`
 and `CategoryPage`'s `trackCategoryView` / `trackDisplay` key off `products` and `loading`, not off
 where the data came from, so a server-seeded first page still emits SEARCH and DISPLAY. The pending
@@ -157,6 +162,7 @@ skeleton **replaces** the outgoing page rather than covering it, so the page bei
 firing tracking for a route the user is no longer on.
 
 ## UI constraints
+
 No new CSS, no `styles.css` change, no new token, no new visual primitive. `SearchPageSkeleton`
 composes the existing `FacetsSkeleton` and `ProductGridSkeleton` inside `.page-title` /
 `.result-type-switch-row` / `.catalog-page`. `SearchPage`'s inline 6-card loading grid was replaced
@@ -185,13 +191,14 @@ the navigation, so the first render pairs the new code with the old page number,
 correctly withheld, and the reset then triggers a request.
 
 ## MUST NOT change
+
 - **Do not add a `loading.tsx` back to any of these routes.** It is the single change that makes the
   product list script-gated again: the page moves into `<div hidden>` at the end of the response and
   a JS-less client renders the fallback for ever. Nothing in the build, the types or `tsc` will
   complain, and with JS on it looks fine. If a route needs a boundary, it must be one that no
   crawlable content sits behind.
 - **A gated or empty fallback is not a substitute.** Rendering the skeleton only on the client (tried
-  first, as `RouteFallback`) removes the *skeleton* from the initial HTML but keeps the hidden-div
+  first, as `RouteFallback`) removes the _skeleton_ from the initial HTML but keeps the hidden-div
   swap, so the product list is still invisible without JavaScript. Verified: the spacer was in
   `<main>` and the grid was still at byte 22256.
 - **`LinkPendingReporter` must stay inside `<Link>`.** `useLinkStatus()` reads a context Link
@@ -214,7 +221,7 @@ correctly withheld, and the reset then triggers a request.
 - **Keep passing `initialData` only while the view matches it** (`isServerFetchedView` in both
   `CategoryPage` and `SearchPage`); `useSearch` now trusts the caller on this.
 - **Do not prefetch `/search` when the URL carries `f_<field>` params.**
-- **Existence checks stay in each route's `layout.tsx`.** They are no longer the *only* way to get a
+- **Existence checks stay in each route's `layout.tsx`.** They are no longer the _only_ way to get a
   real 404 — nothing streams now, so `notFound()` in a page body would also work — but they are
   cheap (`cache()`d), they are what the 404 verification in `feature-metadata-all-routes.md` rests
   on, and they keep the guarantee independent of whether a boundary is ever reintroduced.

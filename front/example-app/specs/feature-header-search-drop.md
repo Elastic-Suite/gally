@@ -1,7 +1,9 @@
 # Feature: header search drops into full-screen mode
 
 ## Status: implemented
+
 ## Page/Component
+
 `src/components/Header.tsx`, `src/styles.css`.
 
 The idle bar fills the whole gap in the top row, not a narrow pill. On focus it moves in one
@@ -56,6 +58,7 @@ On 2026-10-02 against the running stack, with screenshots and a headless positio
   261px within 30ms. Opening still animates (868px at 120ms).
 
 **Not verified:**
+
 - `prefers-reduced-motion`: not emulated. It rests on the CSS rule setting `transition: none`.
 - The ACP scrolled with the header riding it (`feature-acp-header-rides-scroll.md`): the capture
   script cannot scroll the scrim. The bar is inside the translated group, so it should move with

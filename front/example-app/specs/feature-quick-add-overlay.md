@@ -3,6 +3,7 @@
 ## Status: implemented
 
 ## Page/Component
+
 `src/components/QuickAdd.tsx` (new), `src/components/ProductCard.tsx`,
 `src/components/SearchOverlay.tsx`, `src/components/VariantSelector.tsx`, `src/sdk/fields.ts`,
 `src/sdk/productFields.ts`, `src/styles.css`, `src/locales/{en,fr,de}/product.json`.
@@ -27,7 +28,7 @@ missing field.
 `feature-configurable-option-selection.md` records that the index carries `children.sku` but **no
 per-child attribute values**, so a chosen combination still cannot resolve to a real child SKU.
 This feature keeps the product page's honest behaviour: send the **parent** SKU with the chosen
-labels as `variant`. The selection is now *stated* rather than *guessed* — it is not resolved.
+labels as `variant`. The selection is now _stated_ rather than _guessed_ — it is not resolved.
 
 ## Behaviour (testable)
 
@@ -55,7 +56,7 @@ labels as `variant`. The selection is now *stated* rather than *guessed* — it 
 - [x] `npx tsc --noEmit` clean in the `example` container; dev server compiles with no `⨯`.
 - [ ] **Not verified interactively** — no browser was available this session. The gating, the
       hover reveal, the cart line's variant string and the ACP staying open on add were reasoned
-      through and are correct by construction, but nobody has clicked them. See *Manual checks*.
+      through and are correct by construction, but nobody has clicked them. See _Manual checks_.
 
 ## SDK contract used
 
@@ -68,17 +69,17 @@ costs nothing — the GraphQL `Product` type is global, so it returns null.
 Declaring the source field is what puts it on the GraphQL type. Once there, it arrives in **four
 shapes**, all measured on `com_fr` after a fixtures load:
 
-| Shape | When | Count |
-|---|---|---|
-| `["fashion_color","fashion_size"]` (real array) | the raw `_source`, on the PDP | — |
-| `"[\"fashion_color\",\"fashion_size\"]"` (JSON in a string) | GraphQL, 2+ axes | 66 |
-| `"fashion_size"` (bare string) | GraphQL, 1 axis | 4 |
-| `null` | GraphQL, 0 axes | 15 |
+| Shape                                                       | When                          | Count |
+| ----------------------------------------------------------- | ----------------------------- | ----- |
+| `["fashion_color","fashion_size"]` (real array)             | the raw `_source`, on the PDP | —     |
+| `"[\"fashion_color\",\"fashion_size\"]"` (JSON in a string) | GraphQL, 2+ axes              | 66    |
+| `"fashion_size"` (bare string)                              | GraphQL, 1 axis               | 4     |
+| `null`                                                      | GraphQL, 0 axes               | 15    |
 
 This is Gally's doing, not ours: `SourceFieldAttributeMapping` maps both `keyword` and `text` to
 `TextAttribute`, whose `getSanitizedData()` returns `current($value)` for a one-element array and
 `json_encode($value)` for anything longer, and whose GraphQL type is `String`. **No source-field
-type emits a list of scalars** — `listOf` appears only in filter *input* types — so there is no
+type emits a list of scalars** — `listOf` appears only in filter _input_ types — so there is no
 cleaner field to ask for. `parseAxisCodes()` in `src/sdk/productFields.ts` absorbs all four and is
 the only place that knows.
 
@@ -101,7 +102,7 @@ pushed by `CartContext.addToCart`, with `child_sku` falling back to the parent S
 - The panel **covers the whole picture** (`inset: 0`) and **rises from its bottom edge**:
   `translateY(100%)` → `translateY(0)` over 0.25s, with the opacity settling faster (0.15s) so
   the rise is what you actually see rather than a fade that happens to move.
-- **Unavailable buttons do not react to hover.** See *The disabled-hover trap* below.
+- **Unavailable buttons do not react to hover.** See _The disabled-hover trap_ below.
 - It is **translucent + blurred**, not opaque: you keep seeing the product you are configuring.
   `--scrim-light` (a new token, `rgba(255,255,255,0.55)`) over `backdrop-filter: blur(6px)`. The
   blur is what carries legibility over arbitrary photography — a flat tint that reads over the
@@ -128,7 +129,7 @@ pushed by `CartContext.addToCart`, with `child_sku` falling back to the parent S
 The first implementation parked the panel at `transform: translateY(100%)` at rest. That does not
 hide it — it moves it **below the picture**, which is to say directly on top of the name and the
 price, invisible but still swallowing their clicks at `z-index: 2`. `.product-card` has
-`overflow: hidden`, but it clips at the *card* edge, not the picture edge, so nothing caught it.
+`overflow: hidden`, but it clips at the _card_ edge, not the picture edge, so nothing caught it.
 
 Two independent guards now:
 
@@ -139,14 +140,14 @@ And at rest it is `opacity: 0` + **`pointer-events: none`** — deliberately not
 which would drop the panel out of the tab order and make `:focus-within` unable to ever reveal it.
 
 The bottom-to-top animation reintroduces the same `translateY(100%)` the original bug used. That is
-safe *only* because all three guards are now in place at once — the clip contains it, the opacity
+safe _only_ because all three guards are now in place at once — the clip contains it, the opacity
 hides it, and `pointer-events` disarms it. Treat them as one mechanism, not three optional niceties.
 
 ## The disabled-hover trap
 
 An unavailable product's button was lighting up indigo under the cursor. The cause is ordering, not
 a missing rule: `.quick-add-button:disabled` sets the grey, but `.btn-primary:hover` is declared
-*further down the file* at the same (0,2,0) specificity, so hovering simply overrode it.
+_further down the file_ at the same (0,2,0) specificity, so hovering simply overrode it.
 
 **The obvious fix is wrong.** Adding `:not(:disabled)` to `.btn-primary:hover` lifts that shared
 rule to (0,3,0) — where it starts beating `.btn.added` (0,2,0), and the add confirmation silently
@@ -192,13 +193,12 @@ present in all 85 Venia documents. Labels added for `com_en` and `com_fr`.
   guards; keep all three.
 - **`.quick-add-button:disabled:not(.added):hover` must keep both its `:disabled` and its
   `:not(.added)`.** It exists at (0,4,0) to out-rank `.btn-primary:hover` (0,2,0) without
-  touching that shared rule — see *The disabled-hover trap* below.
+  touching that shared rule — see _The disabled-hover trap_ below.
 - **At rest it is `pointer-events: none`, never `visibility: hidden`** — the latter breaks the
   keyboard path entirely, on both the card and the ACP row.
 - **The ACP reveal must keep its `.highlighted` selector**, or the add button disappears for
   keyboard users while looking perfectly fine to whoever tests it with a mouse.
-- **The ACP's reduced-motion override must stay declared *after* `.autocomplete-product
-  .quick-add`.** Media queries add no specificity, so moving it up beside the card's block
+- **The ACP's reduced-motion override must stay declared _after_ `.autocomplete-product .quick-add`.** Media queries add no specificity, so moving it up beside the card's block
   silently loses to the later rule and the slide keeps playing.
 - **The scrim alpha and the blur are a pair.** Dropping `backdrop-filter` while keeping a 0.55
   tint leaves the chips floating unreadably over photography.

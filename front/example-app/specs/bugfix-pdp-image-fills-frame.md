@@ -1,6 +1,7 @@
 # Bugfix: the product image does not fill the product page frame
 
 ## Status: implemented
+
 ## Page/Component: src/views/ProductPage.tsx
 
 ## The problem

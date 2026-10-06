@@ -1,13 +1,13 @@
-import { notFound } from 'next/navigation';
-import Providers from '../providers';
+import { notFound } from 'next/navigation'
+import Providers from '../providers'
 import {
   fetchCatalogs,
   fetchCategoryTree,
   findLocalizedCatalog,
-} from '../../src/sdk/catalogs';
-import { fetchAxisLabels } from '../../src/sdk/axisLabels';
-import { fetchPublicConfiguration } from '../../src/sdk/server';
-import { fetchBundles } from '../../src/sdk/bundles';
+} from '../../src/sdk/catalogs'
+import { fetchAxisLabels } from '../../src/sdk/axisLabels'
+import { fetchPublicConfiguration } from '../../src/sdk/server'
+import { fetchBundles } from '../../src/sdk/bundles'
 
 // THE point of Phase 2: the catalog is resolved here, on the server, from the URL
 // segment — before a single component renders. The SPA used to mount with no catalog,
@@ -18,19 +18,19 @@ export default async function LocaleLayout({
   children,
   params,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
   // Async in Next 15+ — must be awaited.
-  params: Promise<{ locale: string }>;
+  params: Promise<{ locale: string }>
 }) {
-  const { locale } = await params;
+  const { locale } = await params
 
-  const catalogs = await fetchCatalogs();
-  const resolved = findLocalizedCatalog(catalogs, locale);
+  const catalogs = await fetchCatalogs()
+  const resolved = findLocalizedCatalog(catalogs, locale)
 
   // An unknown segment is a genuine 404, not a silent fallback to the default catalog:
   // quietly serving different content under a wrong URL is how duplicate-content and
   // soft-404 problems get baked in before the SEO phases even start.
-  if (!resolved) notFound();
+  if (!resolved) notFound()
 
   // Both depend only on the resolved catalog, so they go out together rather than in series.
   // The axis labels are what a configurable product's headings are rendered from; fetching them
@@ -44,7 +44,7 @@ export default async function LocaleLayout({
     fetchAxisLabels(resolved.localizedCatalog.code, resolved.catalog.code),
     fetchPublicConfiguration(resolved.localizedCatalog.code),
     fetchBundles(),
-  ]);
+  ])
 
   return (
     <Providers
@@ -59,5 +59,5 @@ export default async function LocaleLayout({
     >
       {children}
     </Providers>
-  );
+  )
 }

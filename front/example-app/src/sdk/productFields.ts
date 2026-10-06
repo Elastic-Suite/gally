@@ -1,4 +1,5 @@
-import { GallyConfig, mediaUrl } from './config';
+import { GallyConfig, mediaUrl } from './config'
+import type { SearchDocument } from './fields'
 
 // Lives outside ProductCard.tsx because that file is a Client Component: importing a
 // plain function out of a 'use client' module into a Server Component gives you a
@@ -18,9 +19,11 @@ import { GallyConfig, mediaUrl } from './config';
 // `qty === undefined` means *not requested* — the SDK auto-appends only `stock { status }`, so
 // only the PDP (which requests `source`) knows the quantity. Absent knowledge, `status` governs;
 // otherwise every listing card would read as unavailable.
-export function isAvailable(stock: { status?: boolean; qty?: number } | undefined): boolean {
-  if (!stock?.status) return false;
-  return typeof stock.qty !== 'number' || stock.qty > 0;
+export function isAvailable(
+  stock: { status?: boolean; qty?: number } | undefined
+): boolean {
+  if (!stock?.status) return false
+  return typeof stock.qty !== 'number' || stock.qty > 0
 }
 
 // `configurable_attributes` names the axes a product varies on. It reaches us in FOUR shapes, and
@@ -38,71 +41,92 @@ export function isAvailable(stock: { status?: boolean; qty?: number } | undefine
 // json_encode($value) for anything longer, and its GraphQL type is String. No source-field type
 // emits a list of scalars, so there is no cleaner field to ask for.
 export function parseAxisCodes(value: unknown): string[] {
-  if (Array.isArray(value)) return value.filter((c): c is string => typeof c === 'string');
-  if (typeof value !== 'string' || value === '') return [];
+  if (Array.isArray(value))
+    return value.filter((c): c is string => typeof c === 'string')
+  if (typeof value !== 'string' || value === '') return []
   if (value.startsWith('[')) {
     try {
-      const parsed = JSON.parse(value);
-      return Array.isArray(parsed) ? parsed.filter((c): c is string => typeof c === 'string') : [];
+      const parsed = JSON.parse(value)
+      return Array.isArray(parsed)
+        ? parsed.filter((c): c is string => typeof c === 'string')
+        : []
     } catch {
-      return [];
+      return []
     }
   }
-  return [value];
+  return [value]
 }
 
-export function getProductFields(product: any, config: GallyConfig) {
+export function getProductFields(product: SearchDocument, config: GallyConfig) {
   // Products from search API come with a `source` wrapper
-  const s = product.source || product;
-  const name = Array.isArray(s.name) ? s.name[0] : s.name || 'Product';
-  const sku = s.sku || product.sku || 'unknown';
-  const image = mediaUrl(config, s.image);
-  const price = s.price?.[0]?.price ?? 0;
-  const originalPrice = s.price?.[0]?.original_price ?? s.price?.[0]?.originalPrice;
-  const isDiscounted = s.price?.[0]?.is_discounted ?? s.price?.[0]?.isDiscounted ?? false;
+  const s = product.source || product
+  const name = Array.isArray(s.name) ? s.name[0] : s.name || 'Product'
+  const sku = s.sku || product.sku || 'unknown'
+  const image = mediaUrl(config, s.image)
+  const price = s.price?.[0]?.price ?? 0
+  const originalPrice =
+    s.price?.[0]?.original_price ?? s.price?.[0]?.originalPrice
+  const isDiscounted =
+    s.price?.[0]?.is_discounted ?? s.price?.[0]?.isDiscounted ?? false
   // `=== true` is load-bearing, not style. In the raw `_source` (which the PDP reads, because
   // PRODUCT_DETAIL_FIELDS asks for `source`) an unset boolean attribute is `[]`, not `false` —
   // and `[]` is truthy, so a `||` read badges every product as new. Same reason as `sale` below.
-  const isNew = s.new === true;
+  const isNew = s.new === true
   // `sale` is the merchandising flag the catalogue sets; `is_discounted` is the arithmetic on
   // the price row. They describe the same products in the sample data on purpose, but reading
   // both means the badge is still right on a catalogue that only maintains one of them.
-  const isOnSale = s.sale === true || isDiscounted;
+  const isOnSale = s.sale === true || isDiscounted
   // "Pure" is not an attribute — it is what a SINGLE entry in fashion_material means. Derived
   // rather than flagged so it needs no data of its own and no hardcoded list of material codes
   // in the storefront, and so the label arrives already translated by the catalogue
   // ("Cashmere" on com_en, "Coton bio" on com_fr).
-  const materials = Array.isArray(s.fashion_material) ? s.fashion_material : [];
-  const pureMaterial = materials.length === 1 && materials[0]?.label ? String(materials[0].label) : null;
+  const materials = Array.isArray(s.fashion_material) ? s.fashion_material : []
+  const pureMaterial =
+    materials.length === 1 && materials[0]?.label
+      ? String(materials[0].label)
+      : null
   // Same `=== true` guard, same reason: an unset boolean is `[]` in the raw `_source`, and `[]`
   // is truthy. Papershop writes an explicit false, but the guard is what makes this safe on a
   // catalogue that simply omits the field.
-  const isEco = s.llv_is_eco === true;
-  const typeId = s.type_id || 'simple';
-  const description = Array.isArray(s.description) ? s.description[0] : s.description || '';
+  const isEco = s.llv_is_eco === true
+  const typeId = s.type_id || 'simple'
+  const description = Array.isArray(s.description)
+    ? s.description[0]
+    : s.description || ''
   // The fallback deliberately leaves `qty` out rather than setting it to 0: a document with no
   // stock object at all is "unknown", not "zero units", and isAvailable() treats those apart.
-  const stock = s.stock || { status: true };
+  const stock = s.stock || { status: true }
   return {
-    name, sku, image, price, originalPrice, isDiscounted, isNew, isOnSale, pureMaterial,
-    isEco, typeId, description, stock,
+    name,
+    sku,
+    image,
+    price,
+    originalPrice,
+    isDiscounted,
+    isNew,
+    isOnSale,
+    pureMaterial,
+    isEco,
+    typeId,
+    description,
+    stock,
     available: isAvailable(stock),
     // The attribute bag this product was read from — `_source` on the PDP, the projected
     // collection row on a listing. getVariantAxes() needs it whole, because which keys matter
     // is itself data (`configurable_attributes` names them). The two shapes are interchangeable
     // for that purpose: a row projected with `fashion_color { label value }` looks exactly like
     // the `_source` it came from.
-    attributes: s as Record<string, any>,
-  };
+    attributes: s as SearchDocument,
+  }
 }
 
 export interface ProductBadge {
   /** Key in the `product` i18n namespace. */
-  key: string;
+  key: string
   /** Modifier suffix on `.product-card-badge`; also the React key. */
-  variant: 'new' | 'sale' | 'material';
+  variant: 'new' | 'sale' | 'material'
   /** Interpolation values for the i18n key. */
-  params?: Record<string, string>;
+  params?: Record<string, string>
 }
 
 // The badges overlaid on a product picture, **most important first**. It takes the already-derived
@@ -125,12 +149,18 @@ export interface ProductBadge {
 // next — still a reason to click, but it says nothing about the offer. Material is last: it is a
 // fact about the product rather than a reason to hurry, and it is the badge most products qualify
 // for, so letting it win a slot would drown out the two that are actually merchandised.
-export function getProductBadges(fields: ReturnType<typeof getProductFields>): ProductBadge[] {
-  const badges: ProductBadge[] = [];
-  if (fields.isOnSale) badges.push({ key: 'card.onSale', variant: 'sale' });
-  if (fields.isNew) badges.push({ key: 'card.new', variant: 'new' });
+export function getProductBadges(
+  fields: ReturnType<typeof getProductFields>
+): ProductBadge[] {
+  const badges: ProductBadge[] = []
+  if (fields.isOnSale) badges.push({ key: 'card.onSale', variant: 'sale' })
+  if (fields.isNew) badges.push({ key: 'card.new', variant: 'new' })
   if (fields.pureMaterial) {
-    badges.push({ key: 'card.pureMaterial', variant: 'material', params: { material: fields.pureMaterial } });
+    badges.push({
+      key: 'card.pureMaterial',
+      variant: 'material',
+      params: { material: fields.pureMaterial },
+    })
   }
-  return badges;
+  return badges
 }

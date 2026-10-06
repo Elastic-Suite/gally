@@ -3,6 +3,7 @@
 > **Superseded in part** by `feature-header-light-two-row.md`: CategoryNav moved from `app/[locale]/category/layout.tsx` (now deleted) into the Header, in the app shell, so no navigation swaps it out and RouteSkeleton no longer redraws it. The goal of this spec - the bar never flashes - is kept.
 
 ## Status: implemented
+
 ## Page/Component: `app/[locale]/category/layout.tsx`, `src/components/CategoryNav.tsx`
 
 ## Problem
@@ -13,7 +14,7 @@ page-level component is torn down and rebuilt on every category → category cli
 
 1. `CategoryItem`'s `useState(open)` (the submenu) was destroyed on every navigation.
 2. The bar re-rendered even though its data (`categories`, from `CatalogContext`) had not changed.
-3. Worse after `loading.tsx` landed: the nav sat *inside* the Suspense boundary, so it was replaced
+3. Worse after `loading.tsx` landed: the nav sat _inside_ the Suspense boundary, so it was replaced
    by a skeleton on every navigation — the shared chrome visibly blinked out and back.
 
 ## Fix
@@ -38,9 +39,10 @@ segment does not contain `[code]`. That also keeps the homepage's `<CategoryNav 
 prop and no active item.
 
 `CategoryNavSkeleton` was deleted from `CategoryPageSkeleton`: drawing a skeleton for a component
-that no longer unmounts would be a *second* nav appearing below the real one.
+that no longer unmounts would be a _second_ nav appearing below the real one.
 
 ## Behaviour (testable)
+
 - [x] Exactly one `<nav class="category-nav">` per page, server-rendered
 - [x] The nav streams **before** the Suspense fallback, i.e. it is outside the boundary
 - [x] The fallback region contains the 7 real nav items, not skeleton bars, and still contains the
@@ -54,12 +56,14 @@ that no longer unmounts would be a *second* nav appearing below the real one.
       or opening a submenu and clicking another category in a real browser.
 
 ## Already correct, checked while here
+
 `Header` and `Footer` live in `AppShell`, which is rendered from `app/[locale]/layout.tsx` — already
 a layout, so they were never re-mounting per page. `Facets` legitimately re-renders: its
 aggregations change with the query. Nothing else was shared across sibling routes; the homepage's
 `CategoryNav` is on a different segment and cannot share this layout.
 
 ## MUST NOT change
+
 - **Do not move `CategoryNav` back into a page component.** It looks equivalent and is not: it
   remounts per navigation, discards submenu state, and re-enters the Suspense boundary so it blinks
   out behind the skeleton.
@@ -95,6 +99,7 @@ The early-return's reasoning was preserved, not dropped: `showSkeleton` is still
 flashing mid-request on a reload whose stale aggregations all turn out non-discriminant.
 
 ### Checked and deliberately left alone
+
 - **`SearchPage` was already correct** — its `products-header` (count + sort) renders
   unconditionally and only the count text and the grid swap. It was the model for this change.
 - **The product / blog grids are already stable.** `ProductGridSkeleton` and the real branch both
@@ -108,6 +113,7 @@ flashing mid-request on a reload whose stale aggregations all turn out non-discr
   change its entity without a navigation, revisit this.**
 
 ### Verified
+
 Post-hydration: exactly one `<aside class="facets-sidebar">`, one `<nav class="category-nav">`,
 12 product cards, 0 leftover skeletons, no hydration mismatch. All routes still 200,
 `/category/cat_9999` still 404, `tsc --noEmit` clean.
@@ -116,6 +122,7 @@ Post-hydration: exactly one `<aside class="facets-sidebar">`, one `<nav class="c
 React DevTools or the eye, same limitation as the rest of the client-transition work here.
 
 ### MUST NOT change (additions)
+
 - **Do not restore an early `return` from `Facets` for the loading state.** It reads as simpler and
   silently remounts the whole sidebar on every filter interaction.
 - `FacetsSkeleton` and `Facets` must keep rendering the **same** `<aside>`/`<h3>` shell; if one

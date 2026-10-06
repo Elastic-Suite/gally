@@ -1,30 +1,30 @@
-import { BASE_URI } from './index';
+import { BASE_URI } from './index'
 
 export interface ICatalog {
-  id: number;
-  code: string;
-  name: string;
-  localizedCatalogs: ILocalizedCatalog[];
+  id: number
+  code: string
+  name: string
+  localizedCatalogs: ILocalizedCatalog[]
 }
 
 export interface ILocalizedCatalog {
-  id: number;
-  code: string;
-  name: string;
-  locale: string;
-  currency: string;
-  isDefault: boolean;
-  catalogId: number;
+  id: number
+  code: string
+  name: string
+  locale: string
+  currency: string
+  isDefault: boolean
+  catalogId: number
 }
 
 export interface ICategoryNode {
-  id: string;
-  name: string;
-  level: number;
-  path: string;
-  isVirtual: boolean;
-  count: number;
-  children?: ICategoryNode[];
+  id: string
+  name: string
+  level: number
+  path: string
+  isVirtual: boolean
+  count: number
+  children?: ICategoryNode[]
 }
 
 // Maps ILocalizedCatalog.locale (e.g. "fr_FR") to the app's i18next language code.
@@ -32,9 +32,9 @@ export const LANGUAGES: Record<string, string> = {
   fr_FR: 'fr',
   en_US: 'en',
   de_DE: 'de',
-};
+}
 
-export const DEFAULT_LANGUAGE = 'en';
+export const DEFAULT_LANGUAGE = 'en'
 
 // --- Locale-segment resolution (Phase 2) ---------------------------------------
 // The URL's first segment IS a localized-catalog code (`com_fr`, `en_en`, …), so one
@@ -43,8 +43,8 @@ export const DEFAULT_LANGUAGE = 'en';
 // from the client without a second round trip.
 
 export interface IResolvedCatalog {
-  catalog: ICatalog;
-  localizedCatalog: ILocalizedCatalog;
+  catalog: ICatalog
+  localizedCatalog: ILocalizedCatalog
 }
 
 export function findLocalizedCatalog(
@@ -52,33 +52,43 @@ export function findLocalizedCatalog(
   code: string
 ): IResolvedCatalog | null {
   for (const catalog of catalogs) {
-    const localizedCatalog = catalog.localizedCatalogs.find(lc => lc.code === code);
-    if (localizedCatalog) return { catalog, localizedCatalog };
+    const localizedCatalog = catalog.localizedCatalogs.find(
+      (lc) => lc.code === code
+    )
+    if (localizedCatalog) return { catalog, localizedCatalog }
   }
-  return null;
+  return null
 }
 
 // Mirrors what CatalogContext used to pick on mount: the first catalog, then its
 // isDefault localized catalog (falling back to its first). Keeping the rule identical
 // means bare `/` lands where the SPA used to land.
-export function defaultLocalizedCatalog(catalogs: ICatalog[]): IResolvedCatalog | null {
-  const catalog = catalogs[0];
-  if (!catalog) return null;
+export function defaultLocalizedCatalog(
+  catalogs: ICatalog[]
+): IResolvedCatalog | null {
+  const catalog = catalogs[0]
+  if (!catalog) return null
   const localizedCatalog =
-    catalog.localizedCatalogs.find(lc => lc.isDefault) || catalog.localizedCatalogs[0];
-  return localizedCatalog ? { catalog, localizedCatalog } : null;
+    catalog.localizedCatalogs.find((lc) => lc.isDefault) ||
+    catalog.localizedCatalogs[0]
+  return localizedCatalog ? { catalog, localizedCatalog } : null
+}
+
+// A catalog as `/catalogs` returns it, as far as fetchCatalogs() reads it.
+type ApiCatalog = Omit<ICatalog, 'localizedCatalogs'> & {
+  localizedCatalogs?: Omit<ILocalizedCatalog, 'catalogId'>[]
 }
 
 export async function fetchCatalogs(): Promise<ICatalog[]> {
   const res = await fetch(`${BASE_URI}/catalogs`, {
     headers: { Accept: 'application/ld+json' },
-  });
-  const data = await res.json();
-  return (data['hydra:member'] || []).map((c: any) => ({
+  })
+  const data = await res.json()
+  return (data['hydra:member'] || []).map((c: ApiCatalog) => ({
     id: c.id,
     code: c.code,
     name: c.name,
-    localizedCatalogs: (c.localizedCatalogs || []).map((lc: any) => ({
+    localizedCatalogs: (c.localizedCatalogs || []).map((lc) => ({
       id: lc.id,
       code: lc.code,
       name: lc.name,
@@ -87,25 +97,28 @@ export async function fetchCatalogs(): Promise<ICatalog[]> {
       isDefault: lc.isDefault,
       catalogId: c.id,
     })),
-  }));
+  }))
 }
 
-export async function fetchCategoryTree(catalogId: number, localizedCatalogId: number): Promise<ICategoryNode[]> {
-  const query = `{ getCategoryTree(catalogId: ${catalogId}, localizedCatalogId: ${localizedCatalogId}) { categories } }`;
+export async function fetchCategoryTree(
+  catalogId: number,
+  localizedCatalogId: number
+): Promise<ICategoryNode[]> {
+  const query = `{ getCategoryTree(catalogId: ${catalogId}, localizedCatalogId: ${localizedCatalogId}) { categories } }`
   const res = await fetch(`${BASE_URI}/graphql`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ query }),
-  });
-  const data = await res.json();
-  const root = data?.data?.getCategoryTree?.categories || [];
+  })
+  const data = await res.json()
+  const root = data?.data?.getCategoryTree?.categories || []
   // The root is usually a single "Default Category" node wrapping the real top-level
   // categories as children. Keep it as its own (childless) leading entry — it's the
   // "browse everything" link the nav bar should show first — followed by its children
   // as the actual top-level categories.
   if (root.length === 1 && root[0].children) {
-    const { children, ...defaultCategory } = root[0];
-    return [defaultCategory, ...children];
+    const { children, ...defaultCategory } = root[0]
+    return [defaultCategory, ...children]
   }
-  return root;
+  return root
 }

@@ -3,6 +3,7 @@
 > **Superseded in part** by `feature-acp-light-glass.md`: the scrim colour quoted here is the old dark one; the scroll rules stand.
 
 ## Status: implemented
+
 ## Page/Component: src/components/SearchOverlay.tsx (body scroll lock), src/styles.css (`.search-overlay-scrim`, `.search-overlay-col`, `.autocomplete-item`, `.autocomplete-section-title`, `.autocomplete-suggestion`, `.autocomplete-category`, `.autocomplete-attribute-group`)
 
 ## Problem
@@ -14,7 +15,7 @@ either alone leaves the bug reachable:
    the time `.search-overlay-col` scrolled too. Neither set `overscroll-behavior`, so a wheel
    gesture that reached the end of a column or of the scrim **chained** into the document behind it
    — the browser default. The scrim is `rgba(30, 27, 75, 0.92)` with a 28px blur, so the page does
-   not *appear* fully hidden: content visibly slid around under the columns.
+   not _appear_ fully hidden: content visibly slid around under the columns.
 2. **There was no body scroll lock anywhere in the app** (grep for `document.body.style`, a body
    `overflow: hidden`, or any scroll-lock helper: no hits). So a gesture that never lands on a
    scrollable descendant — the wheel over a short column, Space/PageDown, a flick on the panel's
@@ -25,12 +26,12 @@ the CSS (16px root, `body { line-height: 1.6 }`): the attribute list dominates, 
 `MAX_ACP_OPTIONS = 5` across the four `isUsedInAutocomplete` source fields puts 20 rows plus 4
 section titles in one column.
 
-| | before | after |
-|---|---|---|
-| Attribute row | 48px | **38px** |
-| One attribute group (title + 5 rows + margin) | 299px | **236px** |
-| Column 1 (4 groups + 3 popular terms) | **1381px** | **1104px** |
-| Available at 1080p (`100vh` − 8.5rem header − 3rem − 1.5rem×2 panel padding) | 848px | 848px |
+|                                                                              | before     | after      |
+| ---------------------------------------------------------------------------- | ---------- | ---------- |
+| Attribute row                                                                | 48px       | **38px**   |
+| One attribute group (title + 5 rows + margin)                                | 299px      | **236px**  |
+| Column 1 (4 groups + 3 popular terms)                                        | **1381px** | **1104px** |
+| Available at 1080p (`100vh` − 8.5rem header − 3rem − 1.5rem×2 panel padding) | 848px      | 848px      |
 
 ## Behaviour (testable)
 
@@ -69,7 +70,7 @@ cannot close the rest; the remaining levers are structural and none is applied h
   changes the markup and so the keyboard-navigation-in-visual-order guarantee in
   `feature-search-header-redesign.md`.
 - `.search-overlay-panel`'s own `1.5rem` padding is a further ~48px, deliberately untouched: the
-  request was the *items*' padding, and the panel envelope is part of the redesign in
+  request was the _items_' padding, and the panel envelope is part of the redesign in
   `feature-acp-visual-redesign.md`.
 
 Because scrolling is now contained, exceeding one screen degrades to "the popup scrolls" instead of

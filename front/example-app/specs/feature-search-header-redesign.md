@@ -3,6 +3,7 @@
 > **Superseded in part** by `feature-header-light-two-row.md`: `CategoryNav` is part of the header now (second row of `<header>`), not rendered per page.
 
 ## Status: implemented
+
 ## Page/Component: src/components/Header.tsx, src/components/SearchBar.tsx, src/components/SearchOverlay.tsx
 
 > **Note:** exact visual values below (blur amount, panel background, search-bar size, grid column ratios)
@@ -11,6 +12,7 @@
 > state preservation) are still accurate as-is.
 
 ## Behaviour (testable)
+
 - [x] Header is split into two sticky rows inside `.header-sticky-group` (`position: sticky` moved here from
       `.header`): row 1 (`.header`/`.header-inner`) keeps logo, nav links, catalog/locale selectors, cart —
       unchanged. Row 2 (`.header-search-band`) holds only the search form, background matches the app body
@@ -26,8 +28,7 @@
       (`position: sticky`), so a nested fixed overlay would be trapped inside it and could never render above
       unrelated siblings like `.main-content`.
 - [x] While the overlay is open, the ENTIRE header also dims — not just the page below it:
-      `.header-sticky-group:has(.search-bar-wrapper.overlay-open) .header-inner` gets `filter: blur(3px);
-      opacity: .45; pointer-events: none`, and `.header-search-band:has(...)` swaps its background to a dark
+      `.header-sticky-group:has(.search-bar-wrapper.overlay-open) .header-inner` gets `filter: blur(3px); opacity: .45; pointer-events: none`, and `.header-search-band:has(...)` swaps its background to a dark
       tint matching the scrim (`rgba(30, 27, 75, .92)`). The input itself keeps its normal light background
       (`.search-bar:focus { background: white }`) so it stays legible against the now-dark band.
 - [x] Overlay panel is a 3-column grid (`grid-template-columns: repeat(3, 1fr)`, 1 column on mobile ≤768px):
@@ -68,7 +69,7 @@
       alone (empty query shows a prompt state). The `results`-preservation half of this bugfix still stands.
 - [x] **Bugfix — search bar painted over the sticky top nav on scroll:** `.header-search-band` (containing
       `.search-bar-wrapper`, `z-index: 110`) is a normal in-flow row, not itself sticky — only `.header`
-      (`position: sticky`) is. `.header` was `z-index: 100`, i.e. *lower* than the search bar, so as the page
+      (`position: sticky`) is. `.header` was `z-index: 100`, i.e. _lower_ than the search bar, so as the page
       scrolled and the search band passed under the pinned `.header`, it rendered on top of it instead of
       disappearing behind it. Fixed by raising `.header` to `z-index: 120`. Also corrected
       `.header-sticky-group` (the flex item wrapping both rows, whose own z-index governs how the whole header
@@ -78,17 +79,20 @@
       ACP is open, so it still sits above the rest of the page then.
 
 ## SDK contract used
+
 - No new SDK calls. Reuses `useAutocomplete()` (`src/hooks/useSearch.ts`) for the Products column exactly as
-  before — this spec only newly *consumes* its pre-existing `loading` flag (was previously destructured away).
+  before — this spec only newly _consumes_ its pre-existing `loading` flag (was previously destructured away).
 - Reuses `CatalogContext`'s pre-existing `categories` and `loadingCatalogs` for the Category column.
 
 ## Tracking (required)
+
 - No new tracking event and no change to existing ones. Selecting any overlay item or submitting the form
   navigates to an existing route (`/search?q=...`, `/product/:sku`, `/category/:id`); the destination page's own
   effect fires tracking exactly as it does when reached any other way (e.g. `SearchPage.tsx` calls
   `trackSearch`/`trackDisplay` on mount/query-change regardless of entry point).
 
 ## UI constraints
+
 - New rgba tints (`rgba(30, 27, 75, .45|.92)` for the scrim/dark band, `rgba(255, 107, 107, .25)` for the
   focus-ring) are the same indigo-900/coral-500 token values already used inline elsewhere in `styles.css`
   (e.g. `--shadow-*` and other coral-glow rules) — no new colors introduced, just the existing "hex token → raw
@@ -99,6 +103,7 @@
   `useStoryActions.ts`) is registered from `SearchBar.tsx` with the exact same shape as before the split.
 
 ## MUST NOT change
+
 - Nav links/`isActive`/`expert-only` logic, catalog/locale `<select>` behavior, cart badge + count — all remain
   in `Header.tsx`'s `.header-inner`, untouched by the search work.
 - `CategoryNav.tsx` — still rendered per-page (`Homepage.tsx`, `CategoryPage.tsx`), not part of the header;

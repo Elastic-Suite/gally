@@ -1,46 +1,54 @@
-'use client';
+'use client'
 
-import { useEffect, useState, useRef } from 'react';
-import { useParams } from 'next/navigation';
-import { useTranslation } from 'react-i18next';
-import { useSearch } from '../hooks/useSearch';
-import { useRecommendations } from '../hooks/useRecommendations';
-import { useTracking } from '../hooks/useTracking';
-import { useCatalog } from '../contexts/CatalogContext';
-import { useGallyConfig } from '../contexts/ConfigContext';
-import { useCart } from '../contexts/CartContext';
-import { useAddedFlash } from '../hooks/useAddedFlash';
-import ProductSlider from '../components/ProductSlider';
-import { getProductFields } from '../components/ProductCard';
-import { getProductBadges } from '../sdk/productFields';
-import { ProductPageSkeleton } from '../components/skeletons';
-import EcoMark from '../components/EcoMark';
-import Breadcrumb from '../components/Breadcrumb';
-import { productCategoryTrail } from '../sdk/categoryTree';
-import VariantSelector, { getVariantAxes } from '../components/VariantSelector';
-import { productDetailFields } from '../sdk/fields';
-import ProductImage from '../components/ProductImage';
-import Icon from '../components/Icon';
+import { useEffect, useState, useRef } from 'react'
+import { useParams } from 'next/navigation'
+import { useTranslation } from 'react-i18next'
+import { useSearch } from '../hooks/useSearch'
+import { useRecommendations } from '../hooks/useRecommendations'
+import { useTracking } from '../hooks/useTracking'
+import { useCatalog } from '../contexts/CatalogContext'
+import { useGallyConfig } from '../contexts/ConfigContext'
+import { useCart } from '../contexts/CartContext'
+import { useAddedFlash } from '../hooks/useAddedFlash'
+import ProductSlider from '../components/ProductSlider'
+import { getProductFields } from '../components/ProductCard'
+import { getProductBadges } from '../sdk/productFields'
+import { ProductPageSkeleton } from '../components/skeletons'
+import EcoMark from '../components/EcoMark'
+import Breadcrumb from '../components/Breadcrumb'
+import { productCategoryTrail } from '../sdk/categoryTree'
+import VariantSelector, {
+  getVariantAxes,
+  VariantOption,
+} from '../components/VariantSelector'
+import { productDetailFields, SearchDocument } from '../sdk/fields'
+import ProductImage from '../components/ProductImage'
+import Icon from '../components/Icon'
 
 // `initialProduct` is the raw search document the Server Component already fetched for
 // this SKU. When it is present the page renders complete on the first pass — no
 // skeleton, no post-hydration refetch — which is what makes the HTML crawlable.
-export default function ProductPage({ initialProduct }: { initialProduct?: any } = {}) {
-  const { t } = useTranslation('product');
-  const params = useParams();
-  const sku = Array.isArray(params.sku) ? params.sku[0] : params.sku;
-  const { formatPrice, selectedLocalizedCatalog, selectedCatalog, categories } = useCatalog();
-  const config = useGallyConfig();
-  const { addToCart } = useCart();
+export default function ProductPage({
+  initialProduct,
+}: { initialProduct?: SearchDocument } = {}) {
+  const { t } = useTranslation('product')
+  const params = useParams()
+  const sku = Array.isArray(params.sku) ? params.sku[0] : params.sku
+  const { formatPrice, selectedLocalizedCatalog, selectedCatalog, categories } =
+    useCatalog()
+  const config = useGallyConfig()
+  const { addToCart } = useCart()
   // Confirms in place like the grid card does. No `addedFlash` glow here — that
   // animation outlines a card, and there is no card on this layout; the button
   // holding a success state is the whole feedback.
-  const { addedKey, flash } = useAddedFlash();
-  const { trackProductView } = useTracking();
+  const { addedKey, flash } = useAddedFlash()
+  const { trackProductView } = useTracking()
   // Axis code → chosen option value. Starts empty: nothing is pre-selected, because the index
   // holds no (colour × size) → child mapping, so a default would be a claim about a variant
   // this app cannot actually resolve. See specs/feature-configurable-option-selection.md.
-  const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>({});
+  const [selectedOptions, setSelectedOptions] = useState<
+    Record<string, string>
+  >({})
 
   // Look up this specific product by exact SKU match. searchQuery is still
   // passed (rather than left empty) purely to make useSearch pick product_search
@@ -56,34 +64,40 @@ export default function ProductPage({ initialProduct }: { initialProduct?: any }
     initialData: initialProduct
       ? { products: [initialProduct], total: 1, pageCount: 1, aggregations: [] }
       : undefined,
-  });
+  })
 
-  const p = products[0] ? getProductFields(products[0], config) : null;
+  const p = products[0] ? getProductFields(products[0], config) : null
 
   // The generated catalogs ship square 600x600 images, so they fill the square frame exactly.
   // The older Venia/Luma set is 161x200 - letting it fill only magnifies it - so those keep the
   // 400px cap. Keyed on the catalog's media folder, which is the thing that actually differs.
-  const FULL_FRAME_FOLDERS = ['/papershop/', '/toolbox/', '/fashion/'];
-  const fillsFrame = FULL_FRAME_FOLDERS.some((folder) => p?.image?.includes(folder));
+  const FULL_FRAME_FOLDERS = ['/papershop/', '/toolbox/', '/fashion/']
+  const fillsFrame = FULL_FRAME_FOLDERS.some((folder) =>
+    p?.image?.includes(folder)
+  )
 
-  const trackedSkuRef = useRef('');
+  const trackedSkuRef = useRef('')
 
   useEffect(() => {
     // Wait for the catalog to load — the tracker rejects VIEW events fired
     // before selectedLocalizedCatalog is set (no localizedCatalogCode yet).
     if (sku && selectedLocalizedCatalog && trackedSkuRef.current !== sku) {
-      trackedSkuRef.current = sku;
-      trackProductView(sku);
+      trackedSkuRef.current = sku
+      trackProductView(sku)
     }
-  }, [sku, selectedLocalizedCatalog, trackProductView]);
+  }, [sku, selectedLocalizedCatalog, trackProductView])
 
   // Real recommendations from Gally's rule-based Recommender, seeded with this product: related
   // products first, cross-sell when a catalogue has no related rule for it (papershop has none).
   // The seed SKU never comes back, so there is nothing to filter out.
-  const { products: recommendations } = useRecommendations(['related_product', 'cross-sell'], sku ? [sku] : [], 6);
+  const { products: recommendations } = useRecommendations(
+    ['related_product', 'cross-sell'],
+    sku ? [sku] : [],
+    6
+  )
 
   if (loading) {
-    return <ProductPageSkeleton />;
+    return <ProductPageSkeleton />
   }
 
   if (!p) {
@@ -92,22 +106,26 @@ export default function ProductPage({ initialProduct }: { initialProduct?: any }
         <h3>{t('page.notFound')}</h3>
         <p>{t('page.sku', { sku })}</p>
       </div>
-    );
+    )
   }
 
   // `source` is the raw _source, requested only on this route (PRODUCT_DETAIL_FIELDS). It is
   // where `configurable_attributes` and `type_id` live — neither is a typed field on the
   // GraphQL Product type — so without it this page cannot tell a configurable from a simple.
-  const source = products[0]?.source as Record<string, any> | undefined;
-  const materials = (source?.fashion_material || []) as { label: string; value: any }[];
-  const badges = getProductBadges(p);
-  const axes = getVariantAxes(source);
+  const source = products[0]?.source as SearchDocument | undefined
+  const materials = (source?.fashion_material || []) as VariantOption[]
+  const badges = getProductBadges(p)
+  const axes = getVariantAxes(source)
 
   // The labels behind the current selection, in axis order, for the cart line and its tracking
   // payload. Only what the user actually picked: no axis is pre-selected.
   const selectedLabels = axes
-    .map(axis => axis.options.find(o => String(o.value) === selectedOptions[axis.code])?.label)
-    .filter(Boolean);
+    .map(
+      (axis) =>
+        axis.options.find((o) => String(o.value) === selectedOptions[axis.code])
+          ?.label
+    )
+    .filter(Boolean)
 
   return (
     <div>
@@ -118,7 +136,7 @@ export default function ProductPage({ initialProduct }: { initialProduct?: any }
             productCategoryTrail. Same trail the route's BreadcrumbList JSON-LD emits. */}
         <Breadcrumb
           parts={[
-            ...productCategoryTrail(categories, source).map(node => ({
+            ...productCategoryTrail(categories, source).map((node) => ({
               name: node.name,
               href: `/category/${node.id}`,
             })),
@@ -136,7 +154,10 @@ export default function ProductPage({ initialProduct }: { initialProduct?: any }
           {badges.length > 0 && (
             <div className="product-card-badges">
               {badges.map((badge) => (
-                <span key={badge.variant} className={`product-card-badge product-card-badge--${badge.variant}`}>
+                <span
+                  key={badge.variant}
+                  className={`product-card-badge product-card-badge--${badge.variant}`}
+                >
                   {t(badge.key, badge.params)}
                 </span>
               ))}
@@ -156,14 +177,33 @@ export default function ProductPage({ initialProduct }: { initialProduct?: any }
         </div>
 
         <div className="product-detail-info">
-          <span style={{ fontSize: '0.75rem', background: 'var(--indigo-50)', padding: '0.25rem 0.75rem', borderRadius: 'var(--radius-pill)', color: 'var(--indigo-700)' }}>
-            {p.typeId === 'configurable' ? t('page.type.configurable') : t('page.type.simple')}
+          <span
+            style={{
+              fontSize: '0.75rem',
+              background: 'var(--indigo-50)',
+              padding: '0.25rem 0.75rem',
+              borderRadius: 'var(--radius-pill)',
+              color: 'var(--indigo-700)',
+            }}
+          >
+            {p.typeId === 'configurable'
+              ? t('page.type.configurable')
+              : t('page.type.simple')}
           </span>
           <h1>{p.name}</h1>
-          <div className="product-detail-brand">{t('page.sku', { sku: p.sku })}</div>
+          <div className="product-detail-brand">
+            {t('page.sku', { sku: p.sku })}
+          </div>
           <div className="product-detail-price">
             {p.isDiscounted && p.originalPrice && (
-              <span style={{ textDecoration: 'line-through', color: 'var(--gray-400)', marginRight: '0.75rem', fontSize: '0.9em' }}>
+              <span
+                style={{
+                  textDecoration: 'line-through',
+                  color: 'var(--gray-400)',
+                  marginRight: '0.75rem',
+                  fontSize: '0.9em',
+                }}
+              >
                 {formatPrice(p.originalPrice)}
               </span>
             )}
@@ -174,43 +214,55 @@ export default function ProductPage({ initialProduct }: { initialProduct?: any }
 
           {p.description && (
             <div
-              style={{ color: 'var(--gray-600)', marginBottom: '1.5rem', lineHeight: 1.7 }}
+              style={{
+                color: 'var(--gray-600)',
+                marginBottom: '1.5rem',
+                lineHeight: 1.7,
+              }}
               dangerouslySetInnerHTML={{ __html: p.description }}
             />
           )}
 
           {materials.length > 0 && (
             <div style={{ marginBottom: '1rem' }}>
-              <strong>{t('page.material')}</strong> {materials.map(m => m.label).join(', ')}
+              <strong>{t('page.material')}</strong>{' '}
+              {materials.map((m) => m.label).join(', ')}
             </div>
           )}
 
           <VariantSelector
             axes={axes}
             selected={selectedOptions}
-            onSelect={(code, value) => setSelectedOptions(prev => ({ ...prev, [code]: value }))}
+            onSelect={(code, value) =>
+              setSelectedOptions((prev) => ({ ...prev, [code]: value }))
+            }
           />
-
 
           <div style={{ marginBottom: '1rem', fontSize: '0.85rem' }}>
             {/* Three states, all driven by `available` (see ../sdk/productFields.ts) so the line,
                 the button below and the JSON-LD offer cannot disagree: a real quantity gets the
                 count, an unknown quantity gets the status alone, and `status: true` with `qty: 0`
                 — what Gally reports for every product with children — reads as out of stock. */}
-            {p.available
-              ? <span style={{ color: 'var(--green-600, #43a047)' }}>
-                  <Icon name="checkmark" />
-                  {typeof p.stock.qty === 'number'
-                    ? t('page.inStock', { count: p.stock.qty })
-                    : t('page.inStockNoCount')}
-                </span>
-              : <span style={{ color: 'var(--coral-500)' }}><Icon name="close" />{t('page.outOfStockLong')}</span>
-            }
+            {p.available ? (
+              <span style={{ color: 'var(--green-600, #43a047)' }}>
+                <Icon name="checkmark" />
+                {typeof p.stock.qty === 'number'
+                  ? t('page.inStock', { count: p.stock.qty })
+                  : t('page.inStockNoCount')}
+              </span>
+            ) : (
+              <span style={{ color: 'var(--coral-500)' }}>
+                <Icon name="close" />
+                {t('page.outOfStockLong')}
+              </span>
+            )}
           </div>
 
           <div className="product-detail-actions">
             <button
-              className={`btn btn-primary btn-lg ${addedKey === p.sku ? 'added' : ''}`}
+              className={`btn btn-primary btn-lg ${
+                addedKey === p.sku ? 'added' : ''
+              }`}
               disabled={!p.available}
               onClick={() => {
                 addToCart({
@@ -218,22 +270,32 @@ export default function ProductPage({ initialProduct }: { initialProduct?: any }
                   name: p.name,
                   price: p.price,
                   image: p.image,
-                  variant: selectedLabels.length ? selectedLabels.join(' / ') : undefined,
+                  variant: selectedLabels.length
+                    ? selectedLabels.join(' / ')
+                    : undefined,
                   // No childSku. The index carries `children.sku` but no per-child attribute
                   // values, so a chosen combination cannot be resolved to a real child — and
                   // the parent SKU is the only honest thing to report. CartContext falls back
                   // to `item.sku`, so the add_to_cart payload's child_sku is the parent.
-                });
-                flash(p.sku);
+                })
+                flash(p.sku)
               }}
             >
-              {!p.available
-                ? t('card.outOfStock')
-                : addedKey === p.sku
-                  ? <><Icon name="checkmark" />{t('card.added')}</>
-                  : t('page.addToCart')}
+              {!p.available ? (
+                t('card.outOfStock')
+              ) : addedKey === p.sku ? (
+                <>
+                  <Icon name="checkmark" />
+                  {t('card.added')}
+                </>
+              ) : (
+                t('page.addToCart')
+              )}
             </button>
-            <button className="btn btn-outline btn-lg"><Icon name="heart" />{t('page.wishlist')}</button>
+            <button className="btn btn-outline btn-lg">
+              <Icon name="heart" />
+              {t('page.wishlist')}
+            </button>
           </div>
         </div>
       </div>
@@ -248,5 +310,5 @@ export default function ProductPage({ initialProduct }: { initialProduct?: any }
         </section>
       )}
     </div>
-  );
+  )
 }

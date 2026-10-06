@@ -3,6 +3,7 @@
 > **Superseded in part** by `feature-acp-light-glass.md`: attribute values are `--gray-800` on the light wash now; the typography rules stand.
 
 ## Status: implemented
+
 ## Page/Component: src/styles.css (`.autocomplete-attribute-text`, split from `.autocomplete-category-text`)
 
 ## Problem
@@ -10,10 +11,10 @@
 In the autocomplete popup, each attribute **value** was typeset larger and heavier than the
 attribute **name** it sits under — the hierarchy inverted:
 
-| Element | Rule | Was |
-|---|---|---|
-| Attribute name ("Couleur") | `.autocomplete-section-title` | 0.85rem, 700, uppercase |
-| Attribute value ("Pluie") | `.autocomplete-attribute-text` | **1.05rem, 600** |
+| Element                    | Rule                           | Was                     |
+| -------------------------- | ------------------------------ | ----------------------- |
+| Attribute name ("Couleur") | `.autocomplete-section-title`  | 0.85rem, 700, uppercase |
+| Attribute value ("Pluie")  | `.autocomplete-attribute-text` | **1.05rem, 600**        |
 
 A value is a filter link — clicking it navigates to `/search?q=…&f_<field>=<value>`
 (`attributeFilterUrl`) — not a heading, so it should read as subordinate to its own label.
@@ -34,14 +35,12 @@ The root cause of it going unnoticed: `.autocomplete-attribute-text` shared its 
       (`.autocomplete-blog-title`), so no new value enters the type scale.
 - [x] The shared declaration is split. `.autocomplete-category-text` keeps **1.05rem / 600**:
       one or two navigation rows in the third column, not a dense filter list.
-- [x] Confirmed in the **served** CSS bundle, not just the source — `.autocomplete-attribute-text
-      { font-size: .9rem; font-weight: 500 }` and `.autocomplete-category-text { font-size: 1.05rem;
-      font-weight: 600 }` both present in `_next/static/chunks/example-app_src_styles_*.css`.
+- [x] Confirmed in the **served** CSS bundle, not just the source — `.autocomplete-attribute-text { font-size: .9rem; font-weight: 500 }` and `.autocomplete-category-text { font-size: 1.05rem; font-weight: 600 }` both present in `_next/static/chunks/example-app_src_styles_*.css`.
 - [x] Nothing else in the popup moved: popular terms stay 1.05rem/600 (the headline feature of that
       column), the section title stays 0.85rem/700 uppercase, `.autocomplete-attribute-count` stays
       0.85rem, blog rows stay 0.9rem/0.75rem.
 - [ ] Not visually confirmed in a browser — no browser tooling was available in this session. The
-      evidence is the served CSS, so the numbers are certain but the *look* is unreviewed.
+      evidence is the served CSS, so the numbers are certain but the _look_ is unreviewed.
 
 ## SDK contract used
 

@@ -1,6 +1,7 @@
 # Feature: server-rendered shells + metadata + JSON-LD — Phase 3
 
 ## Status: implemented (interactive + build checks pending — see Not done)
+
 ## Page/Component: `app/[locale]/{product/[sku],blog/[id],category/[code]}/page.tsx`, `src/sdk/server.ts`
 
 Phase 3 of `plan-ssr-seo.md`. This is the phase that actually delivers the SEO story: the three
@@ -8,12 +9,13 @@ crawlable routes now render real content, real metadata and JSON-LD **on the ser
 interactive components below them are seeded with that same data instead of refetching on mount.
 
 ## Behaviour (testable) — all verified with plain `curl`, no JavaScript
+
 - [x] `/com_en/product/VD10` → `<title>Claudia Crochet Dress</title>`, meta description (tags
       stripped), canonical, `og:title`/`description`/`url`/`image`, `<h1>Claudia Crochet Dress</h1>`
 - [x] JSON-LD: **Product + Offer** (price, currency from the localized catalog, availability from
       stock) and **BreadcrumbList**
 - [x] `/com_en/blog/13` → **BlogPosting + Person + BreadcrumbList**, title, description, `og:article`
-- [x] `/com_fr/blog/13` → *"Les tendances printemps-été qui comptent vraiment"* — server-rendered in
+- [x] `/com_fr/blog/13` → _"Les tendances printemps-été qui comptent vraiment"_ — server-rendered in
       French. Localized metadata falls out of Phase 2's segment for free.
 - [x] `/com_en/category/cat_14` → `<title>Dresses</title>`, BreadcrumbList, first page of products
       in the HTML
@@ -22,6 +24,7 @@ interactive components below them are seeded with that same data instead of refe
 - [x] No hydration mismatches; all 11 routes still 200; `npx tsc --noEmit` clean
 
 ## SDK contract used
+
 `src/sdk/server.ts` — `fetchProductBySku`, `fetchCategoryProducts`, `fetchCmsPageById`, plus a
 cached `resolveLocale`. Each **mirrors the corresponding client hook's request exactly** (same
 metadata, same `selectedFields`, same filter syntax). That is not tidiness: if they drift, the page
@@ -35,15 +38,17 @@ request per render pass instead of doubling every fetch. They swallow errors to 
 failed fetch degrades to the pre-Phase-3 client path rather than 500-ing the route.
 
 ## Tracking (required) — STILL NOT VERIFIED
+
 Unchanged again — `useTracking` is untouched and still fires after hydration. The gap from Phases 1
 and 2 stands and is now three phases old. Worth checking that seeding `initialData` did not stop
 `ProductPage`'s `VIEW` effect firing: that effect keys off `sku` and `selectedLocalizedCatalog`, not
 off the fetch completing, so it should be unaffected — **but that reasoning is not a test.**
 
 ## The trap this phase hit twice
+
 **A Server Component cannot import anything out of a module that imports React hooks.** It fails at
-request time with *"You're importing a module that depends on `useEffect` into a React Server
-Component"*, not at build time. Hit once for `getProductFields` (in `ProductCard.tsx`, a
+request time with _"You're importing a module that depends on `useEffect` into a React Server
+Component"_, not at build time. Hit once for `getProductFields` (in `ProductCard.tsx`, a
 `'use client'` module) and again for `getCmsFields` (in `useCms.ts`, which imports hooks even though
 it carries no directive).
 
@@ -53,6 +58,7 @@ Fix both times: move the plain data mapper into a React-free module — `src/sdk
 `src/components/`.**
 
 ## The `initialData` handoff
+
 `useSearch` gained `initialData` and `useCmsSearch` gained `initialPages`. Both seed `useState` via
 a lazy initializer and set a `skipMountFetch` ref, so the mount fetch is skipped exactly once; every
 later option change refetches normally.
@@ -64,14 +70,16 @@ API. Handing the seed over unconditionally would render stale results the moment
 facet.
 
 ## `force-dynamic` removed
+
 Phase 1's `export const dynamic = 'force-dynamic'` is gone from `app/layout.tsx`. **This is the one
 change here with unproven risk:** it re-enables static prerendering at build time, and this stack
 only ever runs `next dev`, so the `useSearchParams`-needs-Suspense errors that switch was papering
 over have not been re-tested under a real `next build`. See below.
 
 ## Not done in this phase, deliberately
+
 - **`gally_pwa_int` is still broken** (`mv example-app/build`, `docker/front/Dockerfile:117-118`).
-  Phase 1 deferred it here on the assumption Phase 3 would resolve it, but the answer got *harder*,
+  Phase 1 deferred it here on the assumption Phase 3 would resolve it, but the answer got _harder_,
   not easier: with server components and per-request fetches the example app can no longer be
   statically exported into `pwa/public/example` at all. The int image has to run it as a server, or
   stop shipping it. That is a docker/compose design decision, not a frontend one.
@@ -84,6 +92,7 @@ over have not been re-tested under a real `next build`. See below.
   deliver the whole SEO story without it.
 
 ## MUST NOT change
+
 - **Server fetchers must keep mirroring the client hooks' request shape.** Divergence is invisible
   in review and shows up as content flickering after hydration.
 - **`selectedFields` must never be emptied** in `src/sdk/fields.ts` — the SDK silently drops the

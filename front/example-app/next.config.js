@@ -12,7 +12,6 @@ const nextConfig = {
   // The app is reached through the proxy at https://gally.localhost/example, not
   // directly at localhost:3001, so dev-server requests arrive cross-origin.
   allowedDevOrigins: ['gally.localhost'],
+}
 
-};
-
-module.exports = nextConfig;
+module.exports = nextConfig

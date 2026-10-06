@@ -1,6 +1,7 @@
 # Feature: Configurable option selection on the product page
 
 ## Status: implemented
+
 ## Page/Component: src/components/VariantSelector.tsx (new), src/views/ProductPage.tsx, src/sdk/fields.ts, src/sdk/server.ts, src/hooks/useSearch.ts, src/components/swatchColors.ts (new, extracted from src/components/Facets.tsx)
 
 ## Problem
@@ -13,7 +14,7 @@ option selector. The block at `ProductPage.tsx:125-140` looked like one and coul
    item carries a `source` wrapper by default — it does not. GraphQL `Product` **does** expose a
    `source` field (verified by introspection); the app simply never selected it, and the SDK returns
    product collection items with the stitched fields flat at the top level, no envelope. Note this
-   is the *opposite* shape from non-product entities, where `Response` projects `data._source` into
+   is the _opposite_ shape from non-product entities, where `Response` projects `data._source` into
    a flat object — see `bugfix-cms-selected-fields-projection.md`.
 2. `type_id` was not requested either, so `p.typeId` was `undefined` and the type badge read
    "Simple" for every product, configurables included. `type_id` and `configurable_attributes` are
@@ -21,7 +22,7 @@ option selector. The block at `ProductPage.tsx:125-140` looked like one and coul
    adds them (introspection returns 118 fields; neither is among them). `source` is the only way to
    reach them.
 3. Consequently `p.typeId === 'configurable'` was never true, and the invented child SKU on line 160
-   — `` `${p.sku}-${selectedVariant}` ``, an *array index*, giving `VSK12-0` — never actually
+   — `` `${p.sku}-${selectedVariant}` ``, an _array index_, giving `VSK12-0` — never actually
    reached the cart. It was a live landmine, not a live bug: fixing (2) alone would have started
    emitting non-existent child SKUs into the `add_to_cart` and order tracking payloads.
 4. The one axis it did try to render was hardcoded to `fashion_color`, so the four size-only

@@ -1,6 +1,6 @@
-import type { Metadata, Viewport } from 'next';
-import { SITE, SITE_NAME } from '../src/sdk/seo';
-import '../src/styles.css';
+import type { Metadata, Viewport } from 'next'
+import { SITE, SITE_NAME } from '../src/sdk/seo'
+import '../src/styles.css'
 
 export const metadata: Metadata = {
   // `template` suffixes every page that sets its own title, so a product tab reads
@@ -15,23 +15,27 @@ export const metadata: Metadata = {
   // relative, which crawlers cannot follow.
   metadataBase: new URL(SITE),
   openGraph: { siteName: SITE_NAME },
-};
+}
 
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-};
+}
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <html lang="en">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin=""
+        />
         {/* Geist 400/500/600/700 — the four weights elasticsuite.io ships, and exactly the
             four this stylesheet uses. Their site self-hosts woff2; Google Fonts serves the
             same family, so the app keeps a single <link> instead of vendored font files. */}
@@ -47,5 +51,5 @@ export default function RootLayout({
         {children}
       </body>
     </html>
-  );
+  )
 }
