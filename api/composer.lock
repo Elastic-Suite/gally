@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fb21574a058fe3f8ddc955f3a01fba62",
+    "content-hash": "75bd59584df122369eed01b0d7ef3276",
     "packages": [
         {
             "name": "api-platform/doctrine-common",
@@ -2964,16 +2964,16 @@
         },
         {
             "name": "gally/gally-standard",
-            "version": "2.3.x-dev",
+            "version": "v2.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Elastic-Suite/gally-standard.git",
-                "reference": "d1756896383f4ca61f3f090e999e6e08cd156282"
+                "reference": "3e010e9270ba94d69d9f7e1929343d1209acb4c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Elastic-Suite/gally-standard/zipball/d1756896383f4ca61f3f090e999e6e08cd156282",
-                "reference": "d1756896383f4ca61f3f090e999e6e08cd156282",
+                "url": "https://api.github.com/repos/Elastic-Suite/gally-standard/zipball/3e010e9270ba94d69d9f7e1929343d1209acb4c1",
+                "reference": "3e010e9270ba94d69d9f7e1929343d1209acb4c1",
                 "shasum": ""
             },
             "require": {
@@ -3049,9 +3049,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Elastic-Suite/gally-standard/issues",
-                "source": "https://github.com/Elastic-Suite/gally-standard/tree/2.3.x"
+                "source": "https://github.com/Elastic-Suite/gally-standard/tree/v2.3.1"
             },
-            "time": "2026-08-28T13:49:05+00:00"
+            "time": "2026-10-12T17:00:28+00:00"
         },
         {
             "name": "gedmo/doctrine-extensions",
@@ -15604,9 +15604,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "gally/gally-standard": 20
-    },
+    "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
