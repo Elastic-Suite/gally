@@ -76,6 +76,9 @@ truth for what the ACP actually looks like.
       narrow desktop widths, where a pure `0.45fr` would squeeze terms into wrapping; the mobile
       single-column override is unaffected.
 
+      > Superseded in part by `feature-mobile-header-and-acp-tabs.md` (768px and below): the single
+      > column is split into three tabs.
+
 ### Product cards: bigger, closer to square, but still horizontal
 
 - [x] Products render into a new `.autocomplete-products-grid` (2-column CSS grid, `gap: 0.85rem`) instead

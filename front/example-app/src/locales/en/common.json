@@ -31,5 +31,18 @@
     "home": "Home",
     "vectorSearch": "Vector search",
     "pagination": "Pagination"
+  },
+  "sort": {
+    "label": "Sort by",
+    "default": "Default",
+    "ascending": "Ascending",
+    "descending": "Descending",
+    "directionLabel": "Sort direction: {{direction}}",
+    "fields": {
+      "_score": "Relevance",
+      "category__position": "Position",
+      "price__price": "Price",
+      "stock__status": "Availability"
+    }
   }
 }

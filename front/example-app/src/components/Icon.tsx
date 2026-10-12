@@ -2,7 +2,9 @@ import type { CSSProperties } from 'react'
 import {
   addOutline,
   arrowBackOutline,
+  arrowDownOutline,
   arrowForwardOutline,
+  arrowUpOutline,
   bookOutline,
   bulbOutline,
   cartOutline,
@@ -36,7 +38,9 @@ import {
 const ICONS = {
   add: addOutline,
   'arrow-back': arrowBackOutline,
+  'arrow-down': arrowDownOutline,
   'arrow-forward': arrowForwardOutline,
+  'arrow-up': arrowUpOutline,
   book: bookOutline,
   bulb: bulbOutline,
   cart: cartOutline,

@@ -27,9 +27,17 @@ of before: the bar moves to where the band was and the overlay opens under it.
 - [x] The ACP panel starts below the dropped bar, not under it.
 - [x] While the overlay is open, the logo, links, selects, cart and category row dim and blur; the
       bar stays sharp.
+
+      > Superseded in part by `feature-mobile-header-and-acp-tabs.md` (768px and below): they are
+      > hidden instead, so the search sits at the top.
+
 - [x] When the gap is narrower than 14rem, the top row wraps and the bar takes its own line. The
       drop still starts from wherever the bar is.
 - [x] Below 768px: the bar is on its own line in the header and does not move on focus.
+
+      > Superseded in part by `feature-mobile-header-and-acp-tabs.md` (768px and below): the bar
+      > stays in its slot but the rows above it fold away, with a Cancel button beside it.
+
 - [ ] With `prefers-reduced-motion: reduce`, the bar moves without a transition.
 - [x] `/vector-search` keeps an empty slot (it has its own input), so its top row does not shift.
 - [x] `npx tsc --noEmit` clean inside the `example` container.

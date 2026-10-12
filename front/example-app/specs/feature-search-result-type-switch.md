@@ -86,6 +86,9 @@ segmented switch with icons, labelled "Products / Articles".
   it replaced was used nowhere else, so the app now has one fewer visual idiom, not one
   more. Recorded under "Component patterns" in ../docs/design-system.md.
 
+  > Superseded in part by `feature-mobile-header-and-acp-tabs.md` (768px and below): the same pill
+  > track is reused by the phone section links and the search overlay tabs.
+
 ## MUST NOT change
 
 - **Both segments always render, including a zero count.** A `0` on Articles is

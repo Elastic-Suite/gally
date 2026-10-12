@@ -24,7 +24,7 @@ and could not take the text colour.
 ← `arrow-back` · → `arrow-forward` · − `remove` · + `add` · 📖 `book` · 📊 `stats-chart` ·
 ⏱ `time` · 💰 `wallet` · 📋 `list` · 🧠 `bulb` · 🚀 `rocket` · 📐 `git-compare` · 🔴 `radio-button-on` ·
 🛒 `cart` · ☰ `options` · 👁 `eye` · 💡 `bulb` · ✎ `create` · ⚠ `warning` · pagination `chevron-back` / `chevron-forward` ·
-image placeholder `image`.
+image placeholder `image` · sort direction `arrow-up` / `arrow-down`.
 
 ## Traps found while implementing
 

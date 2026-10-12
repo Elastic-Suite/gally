@@ -50,6 +50,8 @@ keeps `position: sticky` and `height: fit-content` on a phone. It still gets `tr
 intended while staying **in flow**, occupying the first row of `.catalog-page` and pushing the grid
 below it. Moving the media block after the base rule is the fix. Needs its own bugfix spec.
 
+> Fixed by `bugfix-facets-drawer-in-flow.md`.
+
 ## SDK contract used
 
 None. This is a stylesheet and comment change only — no query, no `selectedFields`, no page size.

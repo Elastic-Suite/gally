@@ -118,10 +118,10 @@ src/
 │   │                       #   mounted-gated demo scaffolding (EventLog, StoryCompanion, …)
 │   ├── Header.tsx          # Two-row sticky header: nav/selectors/cart, then the search band
 │   ├── SearchBar.tsx       # Input + keyboard nav (arrows/Enter/Escape), driven via SearchBarContext
-│   ├── SearchOverlay.tsx   # Full-screen 3-col autocomplete popup (portaled). Also exports the
+│   ├── SearchOverlay.tsx   # Full-screen autocomplete popup (portaled): 3 columns, tabs at <=768px. Also exports the
 │   │                       #   matching helpers: getSuggestionMatches, getAutocompleteAttributes,
 │   │                       #   attributeFilterUrl, highlightTerms, getCategoryMatches
-│   ├── CategoryNav.tsx     # Category row with hover submenus, rendered inside Header
+│   ├── CategoryNav.tsx     # Category row (hover submenus; one scrolling row without them at <=768px), inside Header
 │   ├── Facets.tsx          # Sidebar facets (checkbox/slider/boolean/swatch/category/search/
 │   │                       #   show-more) + active-filter chips
 │   ├── VariantSelector.tsx # PDP option axes from `configurable_attributes` — colour as facet

@@ -1,9 +1,8 @@
-import { BASE_URI } from './index'
+import { getRecommenderManager } from './index'
 import { productFields, SearchDocument } from './fields'
 
-// Product recommendations from Gally's premium Recommender module - the second query in this app
-// the SDK cannot make (the first is vector search), so it is a raw GraphQL call like
-// fetchVectorSearchProducts.
+// Product recommendations from Gally's premium Recommender module, through the SDK's
+// RecommenderManager (the same call as the PHP SDK's RecommenderManager).
 //
 // The recommender is rule-based, not behavioural: each rule matches seed SKUs and names the
 // products to offer for them. Nothing reads tracking events. See
@@ -25,33 +24,21 @@ export async function fetchProductRecommendations(
   if (seeds.length === 0) return []
 
   // `price { price }` and `stock { status }` are not in productFields(): the SDK appends them to
-  // every search on its own (see fields.ts). A raw query has to ask for them, or every card
-  // shows 0,00 €. GraphQL merges them with the `price { ... }` selection already in the list.
+  // every search on its own (see fields.ts), but not to recommendations. Ask for them here, or every
+  // card shows 0,00 €. GraphQL merges them with the `price { ... }` selection already in the list.
   const selection = [
     ...productFields(catalogCode),
     'price { price }',
     'stock { status }',
   ]
-  const query = `query productRecommendations($type: String!, $localizedCatalog: String!, $skus: [String!]!, $count: Int) {
-    productRecommendations(
-      recommendationType: $type,
-      localizedCatalog: $localizedCatalog,
-      productSkus: $skus,
-      productCount: $count
-    ) { ${selection.join(' ')} }
-  }`
-
   try {
-    const res = await fetch(`${BASE_URI}/graphql`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        query,
-        variables: { type, localizedCatalog, skus: seeds, count },
-      }),
-    })
-    const json = await res.json()
-    return json?.data?.productRecommendations ?? []
+    return (await getRecommenderManager().getProductRecommendations(
+      type,
+      localizedCatalog,
+      seeds,
+      count,
+      selection
+    )) as SearchDocument[]
   } catch {
     // A missing block is better than a broken page: callers hide the section on [].
     return []

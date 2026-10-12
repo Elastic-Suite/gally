@@ -49,6 +49,10 @@ labels as `variant`. The selection is now _stated_ rather than _guessed_ — it 
       control rather than covering anything, and **reveals on hover by sliding in from the right**
       (0.75rem, inside the row's 1rem right padding so no transformed box escapes the column).
       Because the panel keeps its space reserved, nothing reflows when it appears.
+
+      > Superseded in part by `feature-mobile-header-and-acp-tabs.md` (768px and below): the
+      > controls sit on their own line under name and price and are always visible.
+
 - [x] That ACP reveal also fires on `.highlighted` — the popup is arrow-key navigable, and
       without it the add button would exist only for people using a mouse.
 - [x] The product page is unchanged: full axis headings, no compact rows. Verified on `VSK12`

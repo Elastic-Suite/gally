@@ -1,6 +1,7 @@
 import {
   Client,
   Configuration,
+  RecommenderManager,
   SearchManager,
   TrackingEventManager,
   TrackingEventType,
@@ -51,6 +52,16 @@ export function getSearchManager(): SearchManager {
     searchManagerInstance = new SearchManager({ baseUri: BASE_URI, bundles })
   }
   return searchManagerInstance
+}
+
+// Recommender Manager singleton (premium Recommender module)
+let recommenderManagerInstance: RecommenderManager | null = null
+
+export function getRecommenderManager(): RecommenderManager {
+  if (!recommenderManagerInstance) {
+    recommenderManagerInstance = new RecommenderManager({ baseUri: BASE_URI })
+  }
+  return recommenderManagerInstance
 }
 
 // Tracking Manager singleton

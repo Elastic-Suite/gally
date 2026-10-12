@@ -87,6 +87,10 @@ breadcrumb, the nav highlight and the structured data now derive from one functi
   both axes and the list must keep wrapping instead of scrolling — any non-`visible` axis on an
   ancestor re-clips the hover submenu (`feature-category-nav-root.md`, still the reason the bar
   wraps at all).
+
+  > Superseded in part by `feature-mobile-header-and-acp-tabs.md` (768px and below): the list
+  > scrolls sideways and the submenu is hidden; desktop unchanged.
+
 - The flat horizontal top-level bar, one `<CategoryItem>` per top-level entry, root category
   first as a childless link.
 - Submenu rendering stays gated on `cat.children?.length > 0`, and stays hover-driven and closed

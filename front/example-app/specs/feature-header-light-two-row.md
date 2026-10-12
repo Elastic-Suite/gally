@@ -24,6 +24,10 @@ Supersedes, each on the point named:
 - [x] Row 1 (`.header-inner`): logo, then Produits / Blog / (Search Intelligence, expert mode) /
       Recherche sémantique as plain text links, then the two catalog selects, then a cart icon.
       The active link is indigo with an underline.
+
+      > Superseded in part by `feature-mobile-header-and-acp-tabs.md` (600px and below): the
+      > header's section links are a pill track, the active one in a white pill.
+
 - [x] Row 2 (`.category-nav`, inside `<header>`): top-level categories as plain text, a chevron on
       items with children, no card and no count. Hovering an item with children opens its
       submenu, which paints above the search bar.
@@ -43,6 +47,10 @@ Supersedes, each on the point named:
   `prefers-reduced-motion`.
 - [x] With the ACP open, the blue tint and blur of the scrim cover the whole screen, header rows
       included. Only the search input stays sharp, and the header rows dim as before.
+
+      > Superseded in part by `feature-mobile-header-and-acp-tabs.md` (768px and below): the rows
+      > above the search are hidden while the overlay is open.
+
 - [x] Homepage hero: light, centred, large title in the brand gradient, grey body text, coral CTA.
 - [x] Page background is white.
 
@@ -53,6 +61,9 @@ the section links scroll sideways inside `.header-nav` as before). Not verified,
   output for the cart label;
 - the blur sweep caught mid-way (the capture landed near the end of it), and the
   reduced-motion case.
+
+> Superseded in part by `feature-mobile-header-and-acp-tabs.md` (600px and below): they become a
+> full-width pill track; between 601 and 768px they scroll with a fade.
 
 ## SDK contract used
 
@@ -83,6 +94,10 @@ the section links scroll sideways inside `.header-nav` as before). Not verified,
   never on `.header-sticky-group` or `.header-search-band`.
 - No ancestor of `.category-nav-submenu` may set a non-visible `overflow`: `.header` must not
   clip. `.header-nav`'s own `overflow-x: auto` is fine, because the category row is not inside it.
+
+  > Superseded in part by `feature-mobile-header-and-acp-tabs.md` (768px and below): the category
+  > row scrolls and the submenu is hidden.
+
 - The submenu's `z-index` stays above `.search-bar-wrapper`'s 110.
 - Section links' active state reads `useAppPathname()`, never `usePathname()`
   (`bugfix-nav-active-locale-pathname.md`).

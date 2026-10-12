@@ -31,5 +31,18 @@
     "home": "Startseite",
     "vectorSearch": "Vektorsuche",
     "pagination": "Seitennummerierung"
+  },
+  "sort": {
+    "label": "Sortieren nach",
+    "default": "Standard",
+    "ascending": "Aufsteigend",
+    "descending": "Absteigend",
+    "directionLabel": "Sortierrichtung: {{direction}}",
+    "fields": {
+      "_score": "Relevanz",
+      "category__position": "Position",
+      "price__price": "Preis",
+      "stock__status": "Verfügbarkeit"
+    }
   }
 }

@@ -23,6 +23,10 @@ blog posts + 7 legacy buying guides).
 - [ ] The ACP shows a **Blog** section (right column, under Categories) with up to 4
       matching CMS pages for the current query. Searching "dress" surfaces blog posts
       alongside products.
+
+      > Superseded in part by `feature-mobile-header-and-acp-tabs.md` (768px and below): the blog
+      > rows have their own Blog tab.
+
 - [ ] ACP blog rows join the existing arrow-key sequence (last, after categories) and
       accept the same `highlighted` treatment as every other row.
 - [ ] Query terms are highlighted (`<mark>`) inside ACP blog titles.

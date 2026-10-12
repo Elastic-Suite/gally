@@ -34,6 +34,10 @@
 - [x] Overlay panel is a 3-column grid (`grid-template-columns: repeat(3, 1fr)`, 1 column on mobile ≤768px):
       "🔍 Popular search terms" (static `SEARCH_SUGGESTIONS` list, client-filtered), "Products" (real
       `useAutocomplete()` API results), "📁 Category" (client-filtered flattened `categories` tree).
+
+      > Superseded in part by `feature-mobile-header-and-acp-tabs.md` (768px and below): the three
+      > columns are tabs: Products, Blog, Suggestions.
+
 - [x] All 3 columns always render their title, even with zero matches. Each column shows exactly one of:
       shimmer skeleton rows (loading), an italic empty note ("No matching …"), or the item list. Products shows
       a skeleton while `useAutocomplete()`'s `loading` is true; Category shows a skeleton while
@@ -43,6 +47,10 @@
       between keystrokes as match counts change (verified: stays at 320px whether 0 or all columns are
       populated). Mobile drops the min-height (`min-height: 0`) since columns stack into one scrollable track
       there instead of sitting side by side.
+
+      > Superseded in part by `feature-mobile-header-and-acp-tabs.md` (768px and below): the three
+      > columns are tabs: Products, Blog, Suggestions.
+
 - [x] Overlay vertical offset is NOT a hardcoded guess: `Header.tsx` measures `.header-sticky-group`'s real
       rendered height with a `ResizeObserver` and writes it to `--header-height` on `document.documentElement`.
       `.search-overlay-scrim` uses `padding-top: calc(var(--header-height) + 1rem)` (desktop) — this keeps the

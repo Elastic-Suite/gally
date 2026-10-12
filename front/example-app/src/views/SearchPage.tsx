@@ -12,6 +12,7 @@ import ProductCard from '../components/ProductCard'
 import BlogCard from '../components/BlogCard'
 import { ProductGridSkeleton } from '../components/skeletons'
 import Pagination from '../components/Pagination'
+import SortSelect from '../components/SortSelect'
 import Icon from '../components/Icon'
 import type { ServerSearchResult } from '../sdk/server'
 
@@ -34,6 +35,14 @@ export default function SearchPage({
   const [resultType, setResultType] = useState<ResultType>('product')
   const [sortField, setSortField] = useState('')
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc')
+
+  // A new order starts from page 1, as on the category page.
+  const handleSort = (field: string, direction: 'asc' | 'desc') => {
+    setSortField(field)
+    setSortDirection(direction)
+    setPage(1)
+  }
+
   const [facetsOpen, setFacetsOpen] = useState(false)
 
   // Filters can arrive pre-applied in the URL as repeatable `f_<field>=<value>`
@@ -106,17 +115,24 @@ export default function SearchPage({
   const { categories } = useCatalog()
   const rootCategory = categories.length > 0 ? categories[0] : null
 
-  const { products, total, pageCount, aggregations, loading, viewMoreOptions } =
-    useSearch({
-      searchQuery: query,
-      categoryCode: query ? undefined : rootCategory?.id,
-      currentPage: page,
-      pageSize: 20,
-      sortField: sortField || '_score',
-      sortDirection,
-      filters: filters.length > 0 ? filters : undefined,
-      initialData: initialData && isServerFetchedView ? initialData : undefined,
-    })
+  const {
+    products,
+    total,
+    pageCount,
+    aggregations,
+    loading,
+    viewMoreOptions,
+    appliedSort,
+  } = useSearch({
+    searchQuery: query,
+    categoryCode: query ? undefined : rootCategory?.id,
+    currentPage: page,
+    pageSize: 20,
+    sortField: sortField || '_score',
+    sortDirection,
+    filters: filters.length > 0 ? filters : undefined,
+    initialData: initialData && isServerFetchedView ? initialData : undefined,
+  })
 
   // Always fetched, whichever segment is active: the switch shows the count on both
   // sides, so it has to be known before that side is opened.
@@ -265,8 +281,18 @@ export default function SearchPage({
               loading={loading}
               onLoadMore={viewMoreOptions}
               open={facetsOpen}
+              onClose={() => setFacetsOpen(false)}
               resultCount={total}
             />
+            {facetsOpen && (
+              // Tapping beside the drawer closes it. The close button inside the drawer is
+              // the keyboard and screen-reader path, so this one stays out of both.
+              <div
+                className="facets-drawer-backdrop"
+                aria-hidden="true"
+                onClick={() => setFacetsOpen(false)}
+              />
+            )}
 
             <div>
               <div className="products-header">
@@ -275,27 +301,14 @@ export default function SearchPage({
                     ? t('page.searching')
                     : t('page.resultCount', { count: total })}
                 </div>
-                <div className="products-sort">
-                  <select
-                    value={`${sortField}:${sortDirection}`}
-                    onChange={(e) => {
-                      const [f, d] = e.target.value.split(':')
-                      setSortField(f)
-                      setSortDirection(d as 'asc' | 'desc')
-                    }}
-                  >
-                    <option value="_score:desc">
-                      {t('page.sort.relevance')}
-                    </option>
-                    <option value="name:asc">{t('page.sort.nameAsc')}</option>
-                    <option value="price__price:asc">
-                      {t('page.sort.priceAsc')}
-                    </option>
-                    <option value="price__price:desc">
-                      {t('page.sort.priceDesc')}
-                    </option>
-                  </select>
-                </div>
+                <SortSelect
+                  context="search"
+                  field={sortField}
+                  direction={sortDirection}
+                  appliedField={appliedSort?.field}
+                  appliedDirection={appliedSort?.direction}
+                  onChange={handleSort}
+                />
               </div>
 
               {/* The shared skeleton, not a local copy of it: this markup was duplicated from
