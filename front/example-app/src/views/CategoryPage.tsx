@@ -14,6 +14,7 @@ import Facets, { ActiveFilters, FilterValue } from '../components/Facets'
 import { ProductGridSkeleton } from '../components/skeletons'
 import Breadcrumb from '../components/Breadcrumb'
 import Pagination from '../components/Pagination'
+import SortSelect from '../components/SortSelect'
 import { findTrail } from '../sdk/categoryTree'
 import { getProductFields } from '../sdk/productFields'
 import Icon from '../components/Icon'
@@ -53,6 +54,8 @@ export default function CategoryPage({
   const code = Array.isArray(params.code) ? params.code[0] : params.code
   const { categories } = useCatalog()
   const [page, setPage] = useState(1)
+  // The phone drawer (specs/bugfix-facets-drawer-in-flow.md). Desktop shows the sidebar always.
+  const [facetsOpen, setFacetsOpen] = useState(false)
   const [sortField, setSortField] = useState('')
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc')
   const [filters, setFilters] = useState<ActiveFilters>({})
@@ -99,16 +102,23 @@ export default function CategoryPage({
   const isServerFetchedView =
     page === 1 && !sortField && filterArray.length === 0
 
-  const { products, total, pageCount, aggregations, loading, viewMoreOptions } =
-    useSearch({
-      categoryCode: code,
-      currentPage: page,
-      sortField: sortField || undefined,
-      sortDirection,
-      filters: filterArray.length ? filterArray : undefined,
-      pageSize: 20,
-      initialData: initialData && isServerFetchedView ? initialData : undefined,
-    })
+  const {
+    products,
+    total,
+    pageCount,
+    aggregations,
+    loading,
+    viewMoreOptions,
+    appliedSort,
+  } = useSearch({
+    categoryCode: code,
+    currentPage: page,
+    sortField: sortField || undefined,
+    sortDirection,
+    filters: filterArray.length ? filterArray : undefined,
+    pageSize: 20,
+    initialData: initialData && isServerFetchedView ? initialData : undefined,
+  })
 
   const trackedCatRef = useRef('')
   const trackedDisplayRef = useRef('')
@@ -141,7 +151,33 @@ export default function CategoryPage({
   )
 
   // The banner's chips: subcategories from the tree, so filters and sorting never change them.
-  const subcategories = (category?.children ?? []).filter((c) => c.count > 0)
+  // A virtual category is kept whatever its count: the tree's count is always 0 for one, see
+  // the hero count below.
+  const subcategories = (category?.children ?? []).filter(
+    (c) => c.isVirtual || c.count > 0
+  )
+
+  // The tree's `count` comes from products assigned to the category, so a virtual category
+  // (products picked by rule) always reads 0 - an API limitation, see missing-features.md.
+  // For one, the hero shows the listing's own total instead, remembered from the unfiltered
+  // result so that filtering the grid does not change "N products in this category".
+  const [unfilteredTotal, setUnfilteredTotal] = useState<{
+    code: string
+    total: number
+  } | null>(null)
+  if (
+    code &&
+    filterArray.length === 0 &&
+    !loading &&
+    (unfilteredTotal?.code !== code || unfilteredTotal?.total !== total)
+  ) {
+    setUnfilteredTotal({ code, total })
+  }
+  const virtualTotal =
+    unfilteredTotal && unfilteredTotal.code === code
+      ? unfilteredTotal.total
+      : null
+  const heroCount = category?.isVirtual ? virtualTotal : category?.count ?? null
 
   // The banner's photos: three products of the page on screen, picked at random by the seed.
   // useSearch keeps the previous products while a new page loads, so they do not blink. Keyed
@@ -154,10 +190,9 @@ export default function CategoryPage({
     [products, heroSeed, config]
   )
 
-  const handleSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const [field, dir] = e.target.value.split(':')
+  const handleSort = (field: string, direction: 'asc' | 'desc') => {
     setSortField(field)
-    setSortDirection(dir as 'asc' | 'desc')
+    setSortDirection(direction)
     setPage(1)
   }
 
@@ -180,9 +215,9 @@ export default function CategoryPage({
         {/* The breadcrumb stays above the banner, where every other page has it. */}
         <div className="category-hero">
           <h1>{categoryName}</h1>
-          {category && (
+          {heroCount !== null && (
             <span className="category-hero-count">
-              {t('category.countInCategory', { count: category.count })}
+              {t('category.countInCategory', { count: heroCount })}
             </span>
           )}
           {subcategories.length > 0 && (
@@ -197,7 +232,9 @@ export default function CategoryPage({
                   className="filter-chip"
                 >
                   {sub.name}
-                  <span className="filter-chip-count">{sub.count}</span>
+                  {!sub.isVirtual && (
+                    <span className="filter-chip-count">{sub.count}</span>
+                  )}
                 </Link>
               ))}
             </nav>
@@ -212,7 +249,10 @@ export default function CategoryPage({
         </div>
       </div>
 
-      <button className="btn btn-outline btn-sm mobile-filter-toggle">
+      <button
+        className="btn btn-outline btn-sm mobile-filter-toggle"
+        onClick={() => setFacetsOpen(!facetsOpen)}
+      >
         <Icon name="options" />
         {t('common:actions.filters')}
       </button>
@@ -224,33 +264,33 @@ export default function CategoryPage({
           onFilterChange={handleFilterChange}
           loading={loading}
           onLoadMore={viewMoreOptions}
+          open={facetsOpen}
+          onClose={() => setFacetsOpen(false)}
           resultCount={total}
         />
+        {facetsOpen && (
+          // Tapping beside the drawer closes it. The close button inside the drawer is the
+          // keyboard and screen-reader path, so this one stays out of both.
+          <div
+            className="facets-drawer-backdrop"
+            aria-hidden="true"
+            onClick={() => setFacetsOpen(false)}
+          />
+        )}
 
         <div>
           <div className="products-header">
             <span className="products-count">
               {t('category.count', { count: total })}
             </span>
-            <div className="products-sort">
-              <select
-                onChange={handleSort}
-                value={`${sortField}:${sortDirection}`}
-              >
-                <option value=":asc">{t('category.sort.placeholder')}</option>
-                <option value="_score:desc">
-                  {t('category.sort.relevance')}
-                </option>
-                <option value="name:asc">{t('category.sort.nameAsc')}</option>
-                <option value="name:desc">{t('category.sort.nameDesc')}</option>
-                <option value="price__price:asc">
-                  {t('category.sort.priceAsc')}
-                </option>
-                <option value="price__price:desc">
-                  {t('category.sort.priceDesc')}
-                </option>
-              </select>
-            </div>
+            <SortSelect
+              context="category"
+              field={sortField}
+              direction={sortDirection}
+              appliedField={appliedSort?.field}
+              appliedDirection={appliedSort?.direction}
+              onChange={handleSort}
+            />
           </div>
 
           {loading ? (

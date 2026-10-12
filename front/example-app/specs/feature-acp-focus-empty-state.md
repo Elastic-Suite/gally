@@ -29,6 +29,10 @@ search journey starts the instant the user clicks the bar. Everything else in th
       (`useSearch.ts`) and also the `getSuggestionMatches`/`getCategoryMatches` minimum, so a 1-char query
       can only ever render three "No matching…" notes — an error-looking state for someone who has simply
       started typing.
+
+      > Superseded in part by `feature-mobile-header-and-acp-tabs.md` (768px and below): the tabs
+      > are not shown in this state either.
+
 - [x] Copy is i18n'd as `search:overlay.promptTitle` / `search:overlay.promptSubtitle`, marketing-voiced
       ("start your search journey"), EN: _"Start typing to find your next favorite look"_ /
       _"Products, categories and trending searches appear as you type — two letters are all it takes to get

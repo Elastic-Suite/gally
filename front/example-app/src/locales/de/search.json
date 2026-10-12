@@ -1,9 +1,12 @@
 {
   "bar": {
-    "placeholder": "Produkte suchen..."
+    "placeholder": "Produkte suchen...",
+    "cancel": "Abbrechen"
   },
   "overlay": {
     "suggestionsTitle": "Beliebte Suchbegriffe",
+    "suggestionsTab": "Vorschläge",
+    "tabsLabel": "Suchergebnisse",
     "productsTitle": "Produkte",
     "categoryTitle": "Kategorie",
     "promptTitle": "Tippen Sie los und finden Sie Ihren nächsten Lieblingslook",
@@ -25,12 +28,6 @@
     "searching": "Wird gesucht…",
     "resultCount_one": "{{count}} Ergebnis",
     "resultCount_other": "{{count}} Ergebnisse",
-    "sort": {
-      "relevance": "Relevanz",
-      "nameAsc": "Name A→Z",
-      "priceAsc": "Preis: aufsteigend",
-      "priceDesc": "Preis: absteigend"
-    },
     "emptyTitle": "Keine Ergebnisse gefunden",
     "emptyBody": "Versuchen Sie einen anderen Suchbegriff oder passen Sie Ihre Filter an.",
     "prev": "Zurück",

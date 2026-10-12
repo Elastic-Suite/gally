@@ -31,5 +31,18 @@
     "home": "Accueil",
     "vectorSearch": "Recherche vectorielle",
     "pagination": "Pagination"
+  },
+  "sort": {
+    "label": "Trier par",
+    "default": "Par défaut",
+    "ascending": "Croissant",
+    "descending": "Décroissant",
+    "directionLabel": "Ordre de tri : {{direction}}",
+    "fields": {
+      "_score": "Pertinence",
+      "category__position": "Position",
+      "price__price": "Prix",
+      "stock__status": "Disponibilité"
+    }
   }
 }

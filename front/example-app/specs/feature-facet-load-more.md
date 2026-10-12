@@ -15,6 +15,14 @@
       facet's working option set (`extraOptions`) with it, then expands.
 - [x] Once fetched, the existing client-side search-within-facet input filters over the fuller set — no
       further server round-trips per keystroke.
+- [x] Before the full list is fetched (`hasMore` true, no `extraOptions`), typing in the search input asks
+      the server instead: after a 300 ms debounce it calls `onLoadMore(aggregation.field, searchTerm)`, which
+      sends `optionSearch` to `viewMoreProductFacetOptions`. The server keeps only options whose label
+      contains the text (case-insensitive), so a value outside the first batch can be found without
+      clicking "Show more". The matches (`searchMatches`) replace the facet's option set while the term is
+      non-empty; the local label filter still runs over them, so stale matches disappear while the next
+      request is in flight. A response for an older term is discarded. Clearing the input goes back to the
+      search response's options.
 - [x] When `aggregation.hasMore` is false, "Show more" behaves exactly as before (purely local expand of
       already-loaded options).
 - [x] The search input itself must stay mounted regardless of how many options the current search term
@@ -22,8 +30,8 @@
 
 ## SDK contract used
 
-- `useSearch.ts` exposes `viewMoreOptions(field: string)`, calling the SDK's previously-unused
-  `SearchManager.viewMoreProductFilterOption(request, field)` with the same `localizedCatalog`,
+- `useSearch.ts` exposes `viewMoreOptions(field: string, optionSearch?: string)`, calling the SDK's
+  `SearchManager.viewMoreProductFilterOption(request, field, optionSearch)` with the same `localizedCatalog`,
   `searchQuery` (using the same root-category/wildcard rules as the main search — see
   `docs/sdk-reference.md`), `filters`, and `categoryId` as the current search. Returns
   `{ label, value, count }[]`.

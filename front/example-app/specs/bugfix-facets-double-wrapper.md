@@ -31,5 +31,9 @@ never had this problem.
 ## MUST NOT change
 
 - `CategoryPage.tsx`'s `<Facets>` usage — already correct, untouched.
+
+  > Superseded in part by `bugfix-facets-drawer-in-flow.md` (phones): the category page's Filters
+  > button had no onClick and the drawer had no way to close; Facets gained an optional onClose.
+
 - `Facets.tsx`'s internal structure/behavior (facet groups, active-filter chips, show-more) — only the root
   element's className gained the `open` prop, nothing else.

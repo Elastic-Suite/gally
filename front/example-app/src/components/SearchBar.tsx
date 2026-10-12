@@ -263,6 +263,18 @@ export default function SearchBar({
         }}
         onKeyDown={handleKeyDown}
       />
+      {/* Phones only (styles.css): the header rows fold away while the overlay is open, so this
+          is the visible way out. mousedown is swallowed so the field keeps focus until the
+          click closes the overlay itself. */}
+      <button
+        type="button"
+        className="search-cancel"
+        tabIndex={-1}
+        onMouseDown={(e) => e.preventDefault()}
+        onClick={closeOverlay}
+      >
+        {t('bar.cancel')}
+      </button>
       <SearchOverlay
         open={isOverlayOpen}
         query={query}

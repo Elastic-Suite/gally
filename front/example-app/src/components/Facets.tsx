@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FacetsSkeletonBody } from './skeletons'
 // Shared with the PDP option selector, which draws the same swatches from the same labels.
@@ -34,8 +34,10 @@ interface Props {
   activeFilters: ActiveFilters
   onFilterChange: (field: string, value: FilterValue | undefined) => void
   loading?: boolean
-  onLoadMore?: (field: string) => Promise<FacetOption[]>
+  onLoadMore?: (field: string, optionSearch?: string) => Promise<FacetOption[]>
   open?: boolean
+  // Closes the phone drawer. Without it no close button is drawn (the desktop sidebar has none).
+  onClose?: () => void
   // Required, not optional: it picks which "no filters" message to show, and a wrong
   // default would state something false about the result set.
   resultCount: number
@@ -51,6 +53,7 @@ export default function Facets({
   loading,
   onLoadMore,
   open,
+  onClose,
   resultCount,
 }: Props) {
   const { t } = useTranslation('facets')
@@ -80,6 +83,13 @@ export default function Facets({
     // returning a different <aside> while loading made the whole container unmount and
     // remount on every filter change. Only the rows below swap now.
     <aside className={`facets-sidebar ${open ? 'open' : ''}`}>
+      {onClose && (
+        // Shown only at 768px and below, where the sidebar is a drawer (styles.css).
+        <button type="button" className="facets-drawer-close" onClick={onClose}>
+          <span className="visually-hidden">{t('common:actions.close')}</span>
+          <Icon name="close" standalone />
+        </button>
+      )}
       <h3
         style={{
           fontFamily: 'var(--font-sans)',
@@ -231,13 +241,32 @@ function FacetGroup({
   aggregation: Aggregation
   active: FilterValue | undefined
   onChange: (val: FilterValue | undefined) => void
-  onLoadMore?: (field: string) => Promise<FacetOption[]>
+  onLoadMore?: (field: string, optionSearch?: string) => Promise<FacetOption[]>
 }) {
   const { t } = useTranslation('facets')
   const [expanded, setExpanded] = useState(false)
   const [search, setSearch] = useState('')
   const [extraOptions, setExtraOptions] = useState<FacetOption[] | null>(null)
   const [loadingMore, setLoadingMore] = useState(false)
+  // Server-side matches for the search box, used while the option list is
+  // still partial (hasMore): a value outside the first batch can only be
+  // found by asking the server.
+  const [searchMatches, setSearchMatches] = useState<FacetOption[] | null>(null)
+  const searchesServer = !!aggregation.hasMore && !extraOptions && !!onLoadMore
+  const searchTerm = search.trim()
+
+  useEffect(() => {
+    if (!searchesServer || !searchTerm) return
+    let stale = false
+    const timer = setTimeout(async () => {
+      const fetched = await onLoadMore!(aggregation.field, searchTerm)
+      if (!stale) setSearchMatches(fetched)
+    }, 300)
+    return () => {
+      stale = true
+      clearTimeout(timer)
+    }
+  }, [searchesServer, searchTerm, aggregation, onLoadMore])
 
   if (aggregation.type === 'slider') {
     return (
@@ -273,7 +302,12 @@ function FacetGroup({
   // Check if it's a color swatch
   const isColor = aggregation.field.toLowerCase().includes('color')
 
-  const baseOptions = extraOptions ?? aggregation.options ?? []
+  // The local filter still runs over server matches: it hides results that
+  // no longer fit while the next debounced request is in flight.
+  // Old matches are ignored once the input is cleared or the full list is
+  // loaded, so the effect never has to reset them.
+  const activeMatches = searchesServer && searchTerm ? searchMatches : null
+  const baseOptions = activeMatches ?? extraOptions ?? aggregation.options ?? []
   const filteredOptions = baseOptions.filter((o) =>
     o.label.toLowerCase().includes(search.toLowerCase())
   )
@@ -284,8 +318,7 @@ function FacetGroup({
   const hasMoreLocally = filteredOptions.length > 5
   // Backend truncates each aggregation's option list (~10); hasMore signals
   // there are more values on the server than were returned with the search.
-  const canFetchFromServer =
-    !!aggregation.hasMore && !extraOptions && !!onLoadMore
+  const canFetchFromServer = searchesServer
 
   const handleShowMore = async () => {
     if (canFetchFromServer) {

@@ -6,14 +6,6 @@
     "subcategories": "Subcategories",
     "count_one": "{{count}} product",
     "count_other": "{{count}} products",
-    "sort": {
-      "placeholder": "Sort by",
-      "relevance": "Relevance",
-      "nameAsc": "Name A-Z",
-      "nameDesc": "Name Z-A",
-      "priceAsc": "Price ↑",
-      "priceDesc": "Price ↓"
-    },
     "emptyTitle": "No products found",
     "emptyBody": "Try adjusting your filters or search term.",
     "meta": {

@@ -6,14 +6,6 @@
     "subcategories": "Unterkategorien",
     "count_one": "{{count}} Produkt",
     "count_other": "{{count}} Produkte",
-    "sort": {
-      "placeholder": "Sortieren nach",
-      "relevance": "Relevanz",
-      "nameAsc": "Name A-Z",
-      "nameDesc": "Name Z-A",
-      "priceAsc": "Preis ↑",
-      "priceDesc": "Preis ↓"
-    },
     "emptyTitle": "Keine Produkte gefunden",
     "emptyBody": "Passen Sie Ihre Filter oder Ihren Suchbegriff an.",
     "meta": {

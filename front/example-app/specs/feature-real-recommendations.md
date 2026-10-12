@@ -34,10 +34,11 @@ productRecommendations(recommendationType: String!, localizedCatalog: String!, p
 - Seed SKUs are never returned.
 - Types: `cross-sell`, `upsell`, `related_product`. Rules are fixed SKU-to-SKU lists in the fixtures.
   Papershop has no `related_product` rules.
-- The SDK has no method for it, so `fetchProductRecommendations` calls it with a raw `fetch`, like vector
-  search does.
-- The raw query must add `price { price }` and `stock { status }` itself. The SDK appends them to every
-  search, so `productFields()` leaves them out. Without them every recommended card showed 0,00 €.
+- `fetchProductRecommendations` calls it through the SDK's `RecommenderManager.getProductRecommendations`
+  (added 2026-10-09, see "Follow-up" below). It first used a raw `fetch`, like vector search does.
+- The caller must add `price { price }` and `stock { status }` itself. The SDK appends them to every
+  search, but not to recommendations, so `productFields()` leaves them out. Without them every recommended
+  card showed 0,00 €.
 
 ## Behaviour (testable)
 
@@ -51,6 +52,16 @@ productRecommendations(recommendationType: String!, localizedCatalog: String!, p
 - [x] The demo and story texts no longer say that tracking or orders feed recommendations. The closing
       timeline says recommendations come from cross-sell, upsell and related-product rules.
 - [x] Any API error returns `[]`, which hides the block rather than breaking the page.
+
+## Follow-up 2026-10-09: the SDK makes the call
+
+The SDK (`front/gally-admin/packages/sdk`) now ports the PHP SDK's recommender functions (branch `2.3.x`):
+`RecommenderManager.getProductRecommendations(type, localizedCatalog, skus, count?, fields)`. It selects
+`sku` plus the given fields and nothing else, as the PHP SDK does, so this app still adds price and stock.
+
+- [x] `src/sdk/recommendations.ts` calls `getRecommenderManager().getProductRecommendations` instead of `fetch`.
+- [ ] The PDP and cart blocks show the same products, with prices, as before the switch.
+- [ ] An API error still returns `[]` and hides the block.
 
 ## MUST NOT change
 

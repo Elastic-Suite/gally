@@ -1825,29 +1825,6 @@ a:hover {
   gap: 2rem;
 }
 
-@media (max-width: 768px) {
-  .catalog-page {
-    grid-template-columns: 1fr;
-  }
-  .facets-sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 300px;
-    height: 100vh;
-    z-index: 300;
-    background: white;
-    transform: translateX(-100%);
-    transition: transform 0.3s;
-    overflow-y: auto;
-    padding: 1.5rem;
-    box-shadow: var(--shadow-lg);
-  }
-  .facets-sidebar.open {
-    transform: translateX(0);
-  }
-}
-
 /* ─── Facets ─────────────────────────────────────────────── */
 .facets-sidebar {
   background: white;
@@ -1860,6 +1837,59 @@ a:hover {
   /* Nothing in the header stays on screen (specs/feature-header-scrolls-with-page.md), so the
      sidebar only needs a small gap from the viewport top. */
   top: 1rem;
+}
+
+/* Phones and tablets: the sidebar becomes an off-canvas drawer. This block must come after the base
+   rule above - same specificity, so the later one wins. Placed before it, the base rule set
+   `position: sticky` back and the hidden drawer kept its full height in the page
+   (specs/bugfix-facets-drawer-in-flow.md). */
+.facets-drawer-backdrop,
+.facets-drawer-close {
+  display: none;
+}
+@media (max-width: 768px) {
+  .catalog-page {
+    /* minmax(0, ...): a plain 1fr cannot shrink below its widest content. */
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .facets-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: min(300px, 85vw);
+    height: 100dvh;
+    z-index: 300;
+    background: var(--white);
+    border-radius: 0;
+    transform: translateX(-100%);
+    transition: transform 0.3s;
+    overflow-y: auto;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-lg);
+  }
+  .facets-sidebar.open {
+    transform: translateX(0);
+  }
+  .facets-drawer-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 299;
+    border: none;
+    padding: 0;
+    background: var(--scrim-light);
+  }
+  .facets-drawer-close {
+    display: inline-flex;
+    position: absolute;
+    top: 1.25rem;
+    right: 1rem;
+    padding: 0.25rem;
+    border: none;
+    background: none;
+    color: var(--gray-600);
+    cursor: pointer;
+  }
 }
 
 .facet-group {
@@ -2109,14 +2139,38 @@ a:hover {
   color: var(--gray-600);
 }
 
-.products-sort select {
+.products-sort {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* The direction button wears the select's pill so the two read as one control. */
+.products-sort select,
+.products-sort-direction {
   padding: 0.4rem 0.75rem;
   border: 1px solid var(--gray-300);
   border-radius: var(--radius-pill);
+  background: var(--white);
+  color: var(--gray-800);
   font-size: 0.8rem;
   font-family: var(--font-sans);
   cursor: pointer;
   outline: none;
+}
+/* Icon only: narrower side padding keeps the pill close to square. */
+.products-sort-direction {
+  display: inline-flex;
+  align-items: center;
+  padding-inline: 0.55rem;
+}
+.products-sort select:hover,
+.products-sort-direction:hover {
+  border-color: var(--gray-400);
+}
+.products-sort select:focus-visible,
+.products-sort-direction:focus-visible {
+  border-color: var(--indigo-600);
 }
 
 /* Shared by the search results and the category page, and by ProductGridSkeleton standing in
@@ -5110,5 +5164,196 @@ a:hover {
   }
   .vector-search-form {
     flex-direction: column;
+  }
+}
+
+/* ─── Phone header and search overlay tabs ───────────────── */
+/* specs/feature-mobile-header-and-acp-tabs.md. Everything that changes layout sits under
+   max-width, so desktop (769px and up) is untouched. At the end of the file on purpose: it
+   follows the header, category menu, quick-add and overlay rules it adjusts, and wins over
+   them by source order at equal specificity. */
+.search-cancel,
+.search-overlay-tabs {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  /* Section links and category menu: one row each that scrolls sideways. The fade at the end
+     shows there is more; the mask colour only matters for its alpha. */
+  .header-nav {
+    scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(
+      to right,
+      black calc(100% - 2rem),
+      transparent
+    );
+    mask-image: linear-gradient(to right, black calc(100% - 2rem), transparent);
+  }
+  .header-nav > a {
+    flex: none;
+  }
+  .category-nav-list {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(
+      to right,
+      black calc(100% - 2.5rem),
+      transparent
+    );
+    mask-image: linear-gradient(
+      to right,
+      black calc(100% - 2.5rem),
+      transparent
+    );
+  }
+  .category-nav-item {
+    flex: none;
+  }
+  /* No flyouts here: a hover menu does not work on touch, and the scrolling row would clip it.
+     A tap opens the category page, which lists its subcategories. */
+  .category-nav-submenu {
+    display: none;
+  }
+  .category-nav-item.has-children > a::after {
+    display: none;
+  }
+
+  /* While the overlay is open, the rows above the search fold away and the search sits at the
+     top. display: none on the rows themselves - nothing positioned or transformed around the
+     search form (specs/feature-header-search-drop.md). */
+  .header-sticky-group:has(.search-bar-wrapper.overlay-open)
+    .header-inner
+    > :not(.header-search-slot),
+  .header-sticky-group:has(.search-bar-wrapper.overlay-open) .category-nav {
+    display: none;
+  }
+  .header-sticky-group:has(.search-bar-wrapper.overlay-open) .header-inner {
+    padding: 0.75rem 0;
+  }
+  .search-bar-wrapper.overlay-open {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .search-bar-wrapper.overlay-open .search-bar {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  .search-bar-wrapper.overlay-open .search-cancel {
+    display: block;
+    flex: none;
+    padding: 0.5rem 0.25rem;
+    border: none;
+    background: none;
+    color: var(--indigo-700);
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  /* Overlay tabs, pinned while the scrim scrolls. Same track and pill as the search results
+     type switch. The panel itself stays background-less (feature-acp-light-glass.md). */
+  .search-overlay-tabs {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    gap: 0.25rem;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    margin-bottom: 0.75rem;
+    padding: 0.25rem;
+    border-radius: var(--radius-pill);
+    background: var(--gray-100);
+  }
+  .search-overlay-tab {
+    padding: 0.5rem 0.25rem;
+    border: none;
+    border-radius: var(--radius-pill);
+    background: transparent;
+    color: var(--gray-600);
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+  .search-overlay-tab.active {
+    background: var(--white);
+    color: var(--indigo-700);
+    box-shadow: var(--shadow-sm);
+  }
+  .search-overlay-panel[data-tab='products'] .search-overlay-col-suggestions,
+  .search-overlay-panel[data-tab='products'] .search-overlay-col-more,
+  .search-overlay-panel[data-tab='blog'] .search-overlay-col-suggestions,
+  .search-overlay-panel[data-tab='blog'] .search-overlay-col-products,
+  .search-overlay-panel[data-tab='blog']
+    .search-overlay-col-more
+    > :not(.autocomplete-blog-group),
+  .search-overlay-panel[data-tab='suggestions'] .search-overlay-col-products,
+  .search-overlay-panel[data-tab='suggestions'] .autocomplete-blog-group {
+    display: none;
+  }
+
+  /* Product rows: one column that cannot outgrow the panel, and the add-to-cart controls on
+     their own line, always visible - a phone has no hover to reveal them. A separate block
+     after the desktop .autocomplete-product .quick-add rules, which stay as they are. */
+  .autocomplete-products-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .autocomplete-item.autocomplete-product {
+    flex-wrap: wrap;
+    min-width: 0;
+  }
+  .autocomplete-item.autocomplete-product .quick-add {
+    flex-basis: 100%;
+    max-width: none;
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+  }
+}
+
+/* Phones: the section links become a full-width pill track under the logo, the cart joins the
+   logo row and the catalog selects get a row of their own. Links stay links with
+   aria-current; the footer's copy of SectionLinks keeps its underline. */
+@media (max-width: 600px) {
+  .cart-badge {
+    margin-left: auto;
+  }
+  .header-nav {
+    order: 1;
+    flex: 1 0 100%;
+    gap: 0;
+    padding: 0.25rem;
+    overflow: visible;
+    -webkit-mask-image: none;
+    mask-image: none;
+    border-radius: var(--radius-pill);
+    background: var(--gray-100);
+  }
+  .header-nav > a {
+    flex: 1 1 0;
+    justify-content: center;
+    padding: 0.45rem 0.25rem;
+    border-bottom: none;
+    border-radius: var(--radius-pill);
+  }
+  .header-nav > a.active,
+  .header-nav > a.active:hover {
+    background: var(--white);
+    box-shadow: var(--shadow-sm);
+  }
+  .context-selectors {
+    order: 2;
+    flex: 1 0 100%;
+    /* Without it the row keeps the selects' natural width and overflows at 360px. */
+    min-width: 0;
+  }
+  .context-select {
+    flex: 1 1 0;
+    min-width: 0;
   }
 }

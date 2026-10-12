@@ -7,7 +7,7 @@ import {
   SearchFilter,
   TermSuggestion,
 } from '../sdk/fields'
-import type { ServerSearchResult } from '../sdk/server'
+import type { AppliedSort, ServerSearchResult } from '../sdk/server'
 import type { Aggregation } from '@elastic-suite/gally-sdk'
 
 interface SearchOptions {
@@ -40,6 +40,7 @@ interface SearchResult {
   pageCount: number
   aggregations: Aggregation[]
   termSuggestions?: TermSuggestion[]
+  appliedSort?: AppliedSort
   loading: boolean
   error: string | null
 }
@@ -134,6 +135,10 @@ export function useSearch(options: SearchOptions) {
         pageCount: response.getLastPage(),
         aggregations: response.getAggregations(),
         termSuggestions: response.getTermSuggestions(),
+        appliedSort: {
+          field: response.getSortField(),
+          direction: response.getSortDirection(),
+        },
         loading: false,
         error: null,
       })
@@ -183,9 +188,10 @@ export function useSearch(options: SearchOptions) {
 
   // Fetches the full option list for one facet field, bypassing the backend's
   // default ~10-option truncation (aggregation.hasMore). Used by the facet
-  // sidebar's "Show more" action.
+  // sidebar's "Show more" action, and by its search box: optionSearch keeps
+  // only the options whose label contains that text (matched server-side).
   const viewMoreOptions = useCallback(
-    async (field: string) => {
+    async (field: string, optionSearch?: string) => {
       if (!selectedLocalizedCatalog) return []
       const sm = getSearchManager()
       const hasCategory = Boolean(optionsRef.current.categoryCode)
@@ -207,7 +213,8 @@ export function useSearch(options: SearchOptions) {
             currentPage: 1,
             pageSize: 1,
           },
-          field
+          field,
+          optionSearch
         )
       } catch {
         return []

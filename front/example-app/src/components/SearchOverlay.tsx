@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useTranslation } from 'react-i18next'
 import { useCatalog } from '../contexts/CatalogContext'
@@ -147,6 +147,19 @@ interface SearchOverlayProps {
   close: () => void
 }
 
+// Phones show the three columns as tabs (specs/feature-mobile-header-and-acp-tabs.md); desktop
+// keeps all three side by side and never shows the tab bar.
+type OverlayTab = 'products' | 'blog' | 'suggestions'
+
+// Which tab holds a keyboard-highlighted row. Keys come from SearchBar's flatItems:
+// suggestion-, attribute- and category- rows all live in the Suggestions tab.
+function tabOfKey(key: string | null): OverlayTab | null {
+  if (!key) return null
+  if (key.startsWith('product-')) return 'products'
+  if (key.startsWith('blog-')) return 'blog'
+  return 'suggestions'
+}
+
 function readHeaderHeight(): number {
   return (
     parseFloat(
@@ -180,6 +193,19 @@ export default function SearchOverlay({
   // hook order stays stable.
   const mounted = useMounted()
   const scrollFrame = useRef<number | null>(null)
+  const { t } = useTranslation('search')
+
+  // Products is selected each time the popup opens. The arrow keys keep walking every row in
+  // flatItems' order; when the highlight lands in another group, the tab follows it. Set during
+  // render, not in an effect, so the row is already visible when SearchBar scrolls it into view.
+  const [tab, setTab] = useState<OverlayTab>('products')
+  const [seen, setSeen] = useState({ open, highlightedKey })
+  if (seen.open !== open || seen.highlightedKey !== highlightedKey) {
+    setSeen({ open, highlightedKey })
+    const followed = tabOfKey(highlightedKey)
+    if (followed && highlightedKey !== seen.highlightedKey) setTab(followed)
+    else if (open && !seen.open) setTab('products')
+  }
 
   // Reset the header offset whenever the popup closes or unmounts, and drop any frame
   // still queued. Without this the header stays translated up after a close — invisible
@@ -190,12 +216,22 @@ export default function SearchOverlay({
   // --acp-page-offset. The header scrolls with the page, so it may already sit partly above
   // the viewport; the scrim subtracts this from --header-height so the panel starts right
   // under the bar. Capped at the header height: past that the bar is off screen anyway.
+  //
+  // Phones (768px and below) fold the header rows above the search away while the popup is
+  // open (specs/feature-mobile-header-and-acp-tabs.md). The header then shrinks under a page
+  // that does not move, so an offset recorded here would no longer match it, and a page
+  // scrolled even slightly would leave the search above the screen. So on phones the page
+  // goes to the top for the popup's lifetime, the offset is 0, and the scroll comes back on
+  // close.
   useEffect(() => {
     if (!open || !mounted) return
     const style = document.documentElement.style
+    const phone = window.matchMedia('(max-width: 768px)').matches
+    const pageY = window.scrollY
+    if (phone) window.scrollTo(0, 0)
     style.setProperty(
       '--acp-page-offset',
-      `${Math.min(window.scrollY, readHeaderHeight())}px`
+      phone ? '0px' : `${Math.min(pageY, readHeaderHeight())}px`
     )
     return () => {
       if (scrollFrame.current !== null) {
@@ -204,6 +240,7 @@ export default function SearchOverlay({
       }
       style.removeProperty('--acp-scroll')
       style.removeProperty('--acp-page-offset')
+      if (phone) window.scrollTo(0, pageY)
     }
   }, [open, mounted])
 
@@ -284,8 +321,36 @@ export default function SearchOverlay({
 
   return createPortal(
     <div className="search-overlay-scrim" onScroll={onScrimScroll}>
-      <div className="search-overlay-panel">
-        <div className="search-overlay-col">
+      <div className="search-overlay-panel" data-tab={tab}>
+        {/* Shown at 768px and below only. The buttons never take focus: the popup closes 200ms
+            after the search field loses it. */}
+        <div
+          className="search-overlay-tabs"
+          role="tablist"
+          aria-label={t('overlay.tabsLabel')}
+        >
+          {(
+            [
+              ['products', t('overlay.productsTitle')],
+              ['blog', t('overlay.blogTitle')],
+              ['suggestions', t('overlay.suggestionsTab')],
+            ] as const
+          ).map(([key, label]) => (
+            <button
+              key={key}
+              type="button"
+              role="tab"
+              aria-selected={tab === key}
+              tabIndex={-1}
+              className={`search-overlay-tab ${tab === key ? 'active' : ''}`}
+              onMouseDown={(e) => e.preventDefault()}
+              onClick={() => setTab(key)}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+        <div className="search-overlay-col search-overlay-col-suggestions">
           <SuggestionsColumn
             termSuggestions={termSuggestions}
             highlightedKey={highlightedKey}
@@ -297,7 +362,7 @@ export default function SearchOverlay({
             onSelect={closeAndGo}
           />
         </div>
-        <div className="search-overlay-col">
+        <div className="search-overlay-col search-overlay-col-products">
           <ProductsColumn
             results={results}
             loading={resultsLoading}
@@ -305,7 +370,7 @@ export default function SearchOverlay({
             onSelect={closeAndGo}
           />
         </div>
-        <div className="search-overlay-col">
+        <div className="search-overlay-col search-overlay-col-more">
           <CategoriesColumn
             query={query}
             categories={categories}

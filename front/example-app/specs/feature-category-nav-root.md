@@ -21,6 +21,10 @@
 - [x] Every subcategory in an open submenu is fully visible on hover, not just the first line — the submenu
       must never be truncated by a scrolling/clipping ancestor, regardless of how many top-level categories
       are in the nav bar or how narrow the viewport is.
+
+      > Superseded in part by `feature-mobile-header-and-acp-tabs.md` (768px and below): the
+      > category row scrolls sideways and has no flyouts; a tap opens the category page.
+
 - [x] `Homepage.tsx`'s "Trending Now" (`categories[0]`) and `ProductPage.tsx`'s recommendations
       (`categories[0]`) now browse the _true_ root category rather than whatever first real subcategory
       happened to be at index 0 before this fix — no code change needed there, this was an intended side
@@ -60,6 +64,9 @@ would still have clipped it, so removing the scroll behavior (rather than reloca
   uses `flex-wrap: wrap` (not `overflow-x: auto`/scroll) so an overflowing row of categories wraps to a second
   line instead of scrolling.
 
+  > Superseded in part by `feature-mobile-header-and-acp-tabs.md` (768px and below): the category
+  > row scrolls sideways and has no flyouts; a tap opens the category page.
+
 ## MUST NOT change
 
 - The flat horizontal top-level nav bar layout (not reverting to a single collapsible root menu item, which
@@ -68,3 +75,6 @@ would still have clipped it, so removing the scroll behavior (rather than reloca
 - No ancestor of `.category-nav-submenu` (`.category-nav`, `.category-nav-list`, `.category-nav-item`) may
   set `overflow-x`/`overflow-y` to anything other than `visible` — any non-`visible` axis on an ancestor
   re-clips the hover submenu, regardless of which element it's declared on.
+
+  > Superseded in part by `feature-mobile-header-and-acp-tabs.md` (768px and below): the row
+  > scrolls, which is why the submenu is hidden there; from 769px up this rule still holds.

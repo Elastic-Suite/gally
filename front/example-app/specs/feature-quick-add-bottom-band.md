@@ -81,6 +81,11 @@ parent SKU and the chosen labels as `variant`. No event added, removed or moved.
   (`bugfix-acp-scrim-blur-dropped.md`).
 - **`.autocomplete-product .quick-add` is untouched.** It sets `position: static` / `inset: auto`
   and never reads the card geometry; keep it that way.
+
+  > Superseded in part by `feature-mobile-header-and-acp-tabs.md` (768px and below): a separate
+  > phone block after these rules shows the controls on their own line; the desktop rules are
+  > untouched.
+
 - **`.quick-add-button:disabled` stays declared before `.btn.added`**, and
   `.quick-add-button:disabled:not(.added):hover` keeps both pseudo-classes — see the
   disabled-hover trap in `feature-quick-add-overlay.md`.

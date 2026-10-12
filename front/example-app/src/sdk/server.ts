@@ -72,6 +72,14 @@ export interface ServerSearchResult {
   total: number
   pageCount: number
   aggregations: Aggregation[]
+  // The sort the API actually used. On a category page with no sort chosen, that is the
+  // category's configured default, which only the response can tell.
+  appliedSort?: AppliedSort
+}
+
+export interface AppliedSort {
+  field: string
+  direction: string
 }
 
 export const fetchCategoryProducts = cache(
@@ -96,6 +104,10 @@ export const fetchCategoryProducts = cache(
         total: response.getTotalCount(),
         pageCount: response.getLastPage(),
         aggregations: response.getAggregations(),
+        appliedSort: {
+          field: response.getSortField(),
+          direction: response.getSortDirection(),
+        },
       }
     } catch {
       return { products: [], total: 0, pageCount: 0, aggregations: [] }
@@ -135,6 +147,10 @@ export const fetchSearchProducts = cache(
         total: response.getTotalCount(),
         pageCount: response.getLastPage(),
         aggregations: response.getAggregations(),
+        appliedSort: {
+          field: response.getSortField(),
+          direction: response.getSortDirection(),
+        },
       }
     } catch {
       return { products: [], total: 0, pageCount: 0, aggregations: [] }

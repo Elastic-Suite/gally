@@ -97,10 +97,16 @@ function CategoryItem({
                 className={linkClass(child.id, activeCode, trail)}
                 aria-current={activeCode === child.id ? 'page' : undefined}
               >
-                {child.name}{' '}
-                <span style={{ opacity: 0.5, fontSize: '0.8em' }}>
-                  ({child.count})
-                </span>
+                {child.name}
+                {/* No count for a virtual category: the tree's count is always 0 for one. */}
+                {!child.isVirtual && (
+                  <>
+                    {' '}
+                    <span style={{ opacity: 0.5, fontSize: '0.8em' }}>
+                      ({child.count})
+                    </span>
+                  </>
+                )}
               </Link>
             </li>
           ))}

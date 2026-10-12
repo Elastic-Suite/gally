@@ -2,6 +2,9 @@
 
 > **Superseded in part** by `feature-header-light-two-row.md`: the header no longer has a segmented switch. Products, Articles, Search Intelligence and Semantic search are plain text links. The result-type switch on the search page is unaffected.
 
+> Superseded in part by `feature-mobile-header-and-acp-tabs.md` (600px and below): the header's
+> section links look like a segmented pill track again, but stay links with aria-current.
+
 ## Status: implemented
 
 ## Page/Component: src/components/Header.tsx, src/styles.css
