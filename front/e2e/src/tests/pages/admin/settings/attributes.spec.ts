@@ -155,11 +155,16 @@ test('Pages > Settings > Tab > Attributes', {tag: ['@premium', '@standard']}, as
     })
 
     let term = 'Category'
+    // Default label of the category attribute, i.e. its label in the default catalog (com_fr).
+    // The new sample data (#1379782, not merged yet) gives it a French label, so it reads
+    // 'Catégorie'; the old fixtures have no label, so it falls back to 'Category'.
+    // Accept both until those fixtures are merged, then keep only 'Catégorie'.
+    const categoryDefaultLabels = ['Category', 'Catégorie']
     await test.step(`Search in the grid '${term}'`, async () => {
       await grid.expectRowsAfterSearchToBe(
         filter,
         term,
-        [{columnName: GridLabelsAndFilters.defaultLabel.gridLabel, value: term}],
+        [{columnName: GridLabelsAndFilters.defaultLabel.gridLabel, value: categoryDefaultLabels}],
         2
       )
       await grid.expectAllFiltersRemoved(filter, defaultRowCount)
