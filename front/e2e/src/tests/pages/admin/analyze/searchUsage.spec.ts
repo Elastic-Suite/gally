@@ -26,21 +26,13 @@ const kpisTestIds = kpis.reduce((acc: Record<string, string>, v) => {
 }, {})
 
 // Each widget's test ids end with its kind and its place in the dashboard
-// layout (card id, then widget id), as SearchUsage.tsx builds them. The same
-// widget placed twice gets different ids.
+// layout (the ids of its layout nodes, from the top), as SearchUsage.tsx
+// builds them. The same widget placed twice gets different ids.
 const widgetIds = {
-  zeroResult: joinItemIds('zeroResult', 'sessionsAndZeroResult', 'zeroResult'),
-  sessions: joinItemIds('sessions', 'sessionsAndZeroResult', 'sessions'),
-  popularSearchTerms: joinItemIds(
-    'popularSearchTerms',
-    'popularSearchTermsAndConversionRate',
-    'popularSearchTerms'
-  ),
-  conversionRate: joinItemIds(
-    'conversionRate',
-    'popularSearchTermsAndConversionRate',
-    'conversionRate'
-  ),
+  popularSearchTerms: joinItemIds('popularSearchTerms', 'popularSearchTerms'),
+  zeroResult: joinItemIds('zeroResult', 'zeroResult'),
+  sessions: joinItemIds('sessions', 'charts', 'sessions'),
+  conversionRate: joinItemIds('conversionRate', 'charts', 'conversionRate'),
 }
 
 interface TermsTableTestIds {
@@ -49,6 +41,7 @@ interface TermsTableTestIds {
   seeAllButton: string
   allTermsTable: string
   allTermsCloseButton: string
+  noData: string
 }
 
 function getTermsTableTestIds(widgetId: string): TermsTableTestIds {
@@ -63,6 +56,7 @@ function getTermsTableTestIds(widgetId: string): TermsTableTestIds {
       widgetId,
       'all'
     ),
+    noData: generateTestId(TestId.NO_DATA, widgetId),
   }
 }
 
@@ -87,8 +81,10 @@ const testIds = {
   kpiGroup: generateTestId(TestId.KPI_GROUP),
   kpis: kpisTestIds,
   layoutCards: [
-    generateTestId(TestId.KPI_LAYOUT_CARD, 'sessionsAndZeroResult'),
-    generateTestId(TestId.KPI_LAYOUT_CARD, 'popularSearchTermsAndConversionRate'),
+    generateTestId(TestId.KPI_LAYOUT_CARD, 'popularSearchTerms'),
+    generateTestId(TestId.KPI_LAYOUT_CARD, 'zeroResult'),
+    generateTestId(TestId.KPI_LAYOUT_CARD, 'charts', 'sessions'),
+    generateTestId(TestId.KPI_LAYOUT_CARD, 'charts', 'conversionRate'),
   ],
   charts: {
     sessions: generateTestId(TestId.CHART, widgetIds.sessions),
@@ -185,7 +181,7 @@ const texts = {
     sessions: {
       title: 'Sessions with and without search',
       // Same data as the "Sessions with search" KPI above.
-      values: ['56.67 %', '43.33 %'],
+      values: ['72.92 %', '27.08 %'],
       legend: ['Sessions with search', 'Sessions without search'],
     },
     conversionRate: {
@@ -195,13 +191,24 @@ const texts = {
       legend: ['Global', 'With search', 'Without search'],
     },
   },
-  // The back office simulates the term lists until the API serves them
-  // (gally-admin, shared/src/services/kpiSimulation.ts): 15 terms each,
-  // whatever the filters. Update these when the real endpoints ship.
+  // Row counts with no filter: the page shows the first 10 terms, the popup
+  // shows them all. Terms are sorted by sessions, highest first, then by term.
   termsTables: {
     zeroResult: {
       title: '0 result search terms',
       columns: ['Term', 'Sessions', 'Unique visitors'],
+      rowCount: 6,
+      allTermsRowCount: 6,
+      // Term, sessions, unique visitors.
+      rows: [
+        ['walkman', '5', '4'],
+        ['baladeur', '2', '2'],
+        ['chromecast', '2', '2'],
+        ['hoverboard', '2', '2'],
+        ['smartwatch', '2', '2'],
+        ['tablette', '1', '1'],
+      ],
+      noData: 'No data yet for these filters.',
     },
     popularSearchTerms: {
       title: 'Popular search terms',
@@ -212,9 +219,9 @@ const texts = {
         'Nb results (avg.)',
         'Conv. rate',
       ],
+      rowCount: 10,
+      allTermsRowCount: 52,
     },
-    rowCount: 10,
-    allTermsRowCount: 15,
   },
   thesaurusUrl: '/admin/search/thesaurus/grid',
   catalogCom: 'COM Catalog',
@@ -291,7 +298,11 @@ async function checkChart(
 async function checkTermsTable(
   page: Page,
   tableTestIds: TermsTableTestIds,
-  { title, columns }: { title: string; columns: readonly string[] }
+  {
+    title,
+    columns,
+    rowCount,
+  }: { title: string; columns: readonly string[]; rowCount: number }
 ): Promise<void> {
   await expect(page.getByTestId(tableTestIds.container)).toContainText(title)
   const table = page.getByTestId(tableTestIds.table)
@@ -299,20 +310,45 @@ async function checkTermsTable(
     // eslint-disable-next-line no-await-in-loop
     await expect(table).toContainText(columns[i])
   }
-  await expect(table.locator('tbody tr')).toHaveCount(
-    texts.termsTables.rowCount
-  )
+  await expect(table.locator('tbody tr')).toHaveCount(rowCount)
   await expect(page.getByTestId(tableTestIds.seeAllButton)).toBeVisible()
+}
+
+async function checkTermsRows(
+  page: Page,
+  tableTestIds: TermsTableTestIds,
+  rows: readonly (readonly string[])[]
+): Promise<void> {
+  const tableRows = page.getByTestId(tableTestIds.table).locator('tbody tr')
+  for (let i = 0; i < rows.length; i++) {
+    const cells = tableRows.nth(i).locator('td')
+    for (let j = 0; j < rows[i].length; j++) {
+      // eslint-disable-next-line no-await-in-loop
+      await expect(cells.nth(j)).toHaveText(rows[i][j])
+    }
+  }
+}
+
+async function checkEmptyTermsTable(
+  page: Page,
+  tableTestIds: TermsTableTestIds,
+  { title, noData }: { title: string; noData: string }
+): Promise<void> {
+  await expect(page.getByTestId(tableTestIds.container)).toContainText(title)
+  await expect(page.getByTestId(tableTestIds.noData)).toHaveText(noData)
+  await expect(page.getByTestId(tableTestIds.table)).toBeHidden()
+  await expect(page.getByTestId(tableTestIds.seeAllButton)).toBeHidden()
 }
 
 async function checkAllTermsPopIn(
   page: Page,
-  tableTestIds: TermsTableTestIds
+  tableTestIds: TermsTableTestIds,
+  allTermsRowCount: number
 ): Promise<void> {
   await page.getByTestId(tableTestIds.seeAllButton).click()
   const allTermsTable = page.getByTestId(tableTestIds.allTermsTable)
   await expect(allTermsTable.locator('tbody tr')).toHaveCount(
-    texts.termsTables.allTermsRowCount
+    allTermsRowCount
   )
   await page.getByTestId(tableTestIds.allTermsCloseButton).click()
   await expect(allTermsTable).toBeHidden()
@@ -380,6 +416,11 @@ test(
         testIds.termsTables.zeroResult,
         texts.termsTables.zeroResult
       )
+      await checkTermsRows(
+        page,
+        testIds.termsTables.zeroResult,
+        texts.termsTables.zeroResult.rows
+      )
       await checkTermsTable(
         page,
         testIds.termsTables.popularSearchTerms,
@@ -388,9 +429,17 @@ test(
       await expect(page.getByTestId(testIds.createThesaurusButton)).toBeVisible()
     })
 
-    await test.step('Open and close the full list of each terms table', async () => {
-      await checkAllTermsPopIn(page, testIds.termsTables.zeroResult)
-      await checkAllTermsPopIn(page, testIds.termsTables.popularSearchTerms)
+    await test.step('Open and close the full lists of search terms', async () => {
+      await checkAllTermsPopIn(
+        page,
+        testIds.termsTables.zeroResult,
+        texts.termsTables.zeroResult.allTermsRowCount
+      )
+      await checkAllTermsPopIn(
+        page,
+        testIds.termsTables.popularSearchTerms,
+        texts.termsTables.popularSearchTerms.allTermsRowCount
+      )
     })
 
     await test.step('Add catalog COM FR filter and check KPIs update', async () => {
@@ -451,6 +500,11 @@ test(
           texts.futureDateFilteredKpis[kpis[i]]
         )
       }
+      await checkEmptyTermsTable(
+        page,
+        testIds.termsTables.zeroResult,
+        texts.termsTables.zeroResult
+      )
     })
 
     await test.step('Reset all filters and check KPIs have the starting value', async () => {
