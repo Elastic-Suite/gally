@@ -5,7 +5,8 @@ import {Filter, FilterType, FilterValues} from "./filter";
 
 interface GridCondition {
   columnName: string
-  value: string
+  // The expected cell text, or a list of accepted texts: the cell must match one of them.
+  value: string | readonly string[]
 }
 
 /**
@@ -192,8 +193,9 @@ export class Grid {
             const cell = row.locator(
               `td:nth-child(${columnIndices[index] + 1})`
             )
-            const cellText = await cell.innerText()
-            return cellText.trim() === value.trim()
+            const cellText = (await cell.innerText()).trim()
+            const acceptedValues = typeof value === 'string' ? [value] : value
+            return acceptedValues.some((accepted) => cellText === accepted.trim())
           })
         )
         if (matchesAllConditions.every(Boolean)) {

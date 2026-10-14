@@ -47,6 +47,11 @@ const texts = {
     isSpannable: true,
     defaultSearchAnalyzer: ['standard', 'reference'],
     searchTermCategory: 'Category',
+    // Default label of the category attribute, i.e. its label in the default catalog (com_fr).
+    // The new sample data (#1379782, not merged yet) gives it a French label, so it reads
+    // 'Catégorie'; the old fixtures have no label, so it falls back to 'Category'.
+    // Accept both until those fixtures are merged, then keep only 'Catégorie'.
+    categoryDefaultLabels: ['Category', 'Catégorie'],
   }
 } as const
 
@@ -130,7 +135,7 @@ test('Pages > Search > Configurations > Attributes', {tag: ['@premium', '@standa
         [
           {
             columnName: texts.gridHeaders.defaultLabel,
-            value: texts.filtersToApply.searchTermCategory,
+            value: texts.filtersToApply.categoryDefaultLabels,
           },
         ]
       )
