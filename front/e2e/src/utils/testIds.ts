@@ -131,6 +131,7 @@ export enum TestId {
   KPI_CREATE_THESAURUS_BUTTON = 'kpiCreateThesaurusButton',
   KPI_ALL_TERMS_LOADER = 'kpiAllTermsLoader',
   CHART = 'chart',
+  NO_DATA = 'noData',
   INFO_TOOLTIP = 'infoTooltip',
 }
 
