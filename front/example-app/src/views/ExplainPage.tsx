@@ -2,11 +2,10 @@
 
 import { useState, useEffect } from 'react'
 import { useCatalog } from '../contexts/CatalogContext'
+import { useTranslation } from 'react-i18next'
+import { getBaseUri } from '../sdk'
+import { EXPLAIN_ENABLED, getExplainToken } from '../sdk/explain'
 import Icon from '../components/Icon'
-
-const BASE_URI = 'https://gally.localhost/api'
-const AUTH_EMAIL = 'admin@example.com'
-const AUTH_PASSWORD = 'apassword'
 
 interface ExplainMatch {
   field: string
@@ -40,35 +39,12 @@ interface ExplainProduct {
   legends: Record<string, { field: string; legend: string }>
 }
 
-async function getToken(): Promise<string> {
-  const cached = sessionStorage.getItem('gally_explain_token')
-  if (cached) {
-    try {
-      const payload = JSON.parse(atob(cached.split('.')[1]))
-      if (payload.exp * 1000 > Date.now()) return cached
-    } catch {
-      /* refresh */
-    }
-  }
-  const res = await fetch(`${BASE_URI}/authentication_token`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email: AUTH_EMAIL, password: AUTH_PASSWORD }),
-  })
-  const data = await res.json()
-  if (data.token) {
-    sessionStorage.setItem('gally_explain_token', data.token)
-    return data.token
-  }
-  throw new Error('Auth failed')
-}
-
 async function fetchExplain(
   localizedCatalog: string,
   query: string,
   pageSize = 6
 ): Promise<ExplainProduct[]> {
-  const token = await getToken()
+  const token = await getExplainToken()
   const gql = `{
     explain(
       localizedCatalog: "${localizedCatalog}",
@@ -79,7 +55,7 @@ async function fetchExplain(
       collection { id sku name score boosts matches legends }
     }
   }`
-  const res = await fetch(`${BASE_URI}/graphql`, {
+  const res = await fetch(`${getBaseUri()}/graphql`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -96,9 +72,10 @@ export default function ExplainPage() {
   const [results, setResults] = useState<ExplainProduct[]>([])
   const [loading, setLoading] = useState(false)
   const { selectedLocalizedCatalog } = useCatalog()
+  const { t } = useTranslation('demo')
 
   useEffect(() => {
-    if (!selectedLocalizedCatalog || !query.trim()) return
+    if (!EXPLAIN_ENABLED || !selectedLocalizedCatalog || !query.trim()) return
     // eslint-disable-next-line react-hooks/set-state-in-effect -- loading flag of the debounced fetch this effect starts
     setLoading(true)
     const timeout = setTimeout(() => {
@@ -267,7 +244,13 @@ export default function ExplainPage() {
         </div>
       )}
 
-      {!loading && results.length === 0 && query.trim() && (
+      {!EXPLAIN_ENABLED && (
+        <div className="empty-state">
+          <p>{t('explain.disabled')}</p>
+        </div>
+      )}
+
+      {EXPLAIN_ENABLED && !loading && results.length === 0 && query.trim() && (
         <div className="empty-state">
           <h3>Aucun résultat</h3>
           <p>Essayez une autre requête.</p>

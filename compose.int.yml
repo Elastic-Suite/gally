@@ -8,7 +8,7 @@ services:
     build:
       context: ./docker/router
     environment:
-      - EXAMPLE_UPSTREAM=pwa:3000
+      - EXAMPLE_UPSTREAM=pwa:3001
 
   php:
     environment:

@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { useAppPathname } from '../contexts/LocaleContext'
 import { useCatalog } from '../contexts/CatalogContext'
 import { defaultListingPath } from '../sdk/categoryTree'
+import { EXPLAIN_ENABLED } from '../sdk/explain'
 
 // The section links, shared by the header (`header-nav`) and the footer (`footer-nav`), so
 // both always agree on what is current (specs/feature-footer-light.md).
@@ -46,9 +47,11 @@ export default function SectionLinks({ className }: { className: string }) {
       >
         {t('nav.cms')}
       </Link>
-      <Link href="/explain" className={`expert-only ${isActive('/explain')}`}>
-        {t('nav.searchIntelligence')}
-      </Link>
+      {EXPLAIN_ENABLED && (
+        <Link href="/explain" className={`expert-only ${isActive('/explain')}`}>
+          {t('nav.searchIntelligence')}
+        </Link>
+      )}
       {/* Deliberately NOT `expert-only`, unlike /explain beside it: that class is
           display:none under the default `direction` audience mode (see .mode-direction
           .expert-only), which is why this link was invisible when it first shipped. The

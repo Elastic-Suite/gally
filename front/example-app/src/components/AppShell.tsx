@@ -10,6 +10,7 @@ import Header from './Header'
 import Footer from './Footer'
 import RouteSkeleton from './RouteSkeleton'
 import ScrollToTop from './ScrollToTop'
+import { EXPLAIN_ENABLED } from '../sdk/explain'
 
 // The demo scaffolding is kept out of the server payload deliberately: it has zero SEO
 // value and is pure client behaviour, so a crawler reads a page containing only the
@@ -75,7 +76,8 @@ function AppShell({ children }: { children: React.ReactNode }) {
               <EventLog />
             </div>
             <TrackingInsights />
-            <SearchExplain />
+            {/* Off until the explain token comes from the server, see ../sdk/explain */}
+            {EXPLAIN_ENABLED && <SearchExplain />}
             <StoryCompanion />
           </>
         )}

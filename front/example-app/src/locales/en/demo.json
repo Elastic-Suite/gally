@@ -142,6 +142,7 @@
     }
   },
   "explain": {
+    "disabled": "Explain is turned off for now: it needs an admin token, and the storefront no longer holds admin credentials.",
     "toggle": "Explain",
     "analyzing": "Analyzing...",
     "explainFailed": "Explain failed",

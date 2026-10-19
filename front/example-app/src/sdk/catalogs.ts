@@ -1,4 +1,4 @@
-import { BASE_URI } from './index'
+import { getBaseUri } from './index'
 
 export interface ICatalog {
   id: number
@@ -80,7 +80,7 @@ type ApiCatalog = Omit<ICatalog, 'localizedCatalogs'> & {
 }
 
 export async function fetchCatalogs(): Promise<ICatalog[]> {
-  const res = await fetch(`${BASE_URI}/catalogs`, {
+  const res = await fetch(`${getBaseUri()}/catalogs`, {
     headers: { Accept: 'application/ld+json' },
   })
   const data = await res.json()
@@ -105,7 +105,7 @@ export async function fetchCategoryTree(
   localizedCatalogId: number
 ): Promise<ICategoryNode[]> {
   const query = `{ getCategoryTree(catalogId: ${catalogId}, localizedCatalogId: ${localizedCatalogId}) { categories } }`
-  const res = await fetch(`${BASE_URI}/graphql`, {
+  const res = await fetch(`${getBaseUri()}/graphql`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ query }),

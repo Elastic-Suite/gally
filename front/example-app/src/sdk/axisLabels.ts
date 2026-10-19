@@ -1,4 +1,4 @@
-import { BASE_URI } from './index'
+import { getBaseUri } from './index'
 import { axisCodes } from './fields'
 
 // Translated headings for the configurable axes, straight from the catalogue.
@@ -28,7 +28,7 @@ export async function fetchAxisLabels(
 
   try {
     const res = await fetch(
-      `${BASE_URI}/product_source_field_labels?${params}`,
+      `${getBaseUri()}/product_source_field_labels?${params}`,
       {
         headers: { Accept: 'application/ld+json' },
       }
