@@ -114,10 +114,11 @@ ENV PUBLIC_URL $public_url
 
 RUN set -eux; \
 	yarn build; \
-	yarn build:example; \
-	mv example-app/build pwa/public/example
+	yarn build:sdk; \
+	yarn build:example
 
-CMD ["yarn", "start"]
+# The admin on 3000 and the example app on 3001, see start:int in front/package.json.
+CMD ["yarn", "start:int"]
 
 
 

@@ -48,7 +48,9 @@ every page reads as part of a site instead of a bare string.
 
 Also fixed: the `SITE` origin constant had been copy-pasted into three route files. A canonical URL
 that disagrees between routes is worse than none, so it now lives once in `src/sdk/seo.ts` and reads
-`NEXT_PUBLIC_SITE_ORIGIN` with the local stack as the default.
+`PUBLIC_URL` (the full public URL, `/example` included) with the local stack as the default. It is
+read on the server at startup, not inlined at build, so the same image works on any host (see
+`feature-api-url-from-env.md`).
 
 ## i18n
 

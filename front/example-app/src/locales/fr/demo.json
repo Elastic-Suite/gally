@@ -142,6 +142,7 @@
     }
   },
   "explain": {
+    "disabled": "Explain est désactivé pour le moment : il demande un jeton administrateur, et la vitrine ne contient plus d'identifiants administrateur.",
     "toggle": "Explain",
     "analyzing": "Analyse en cours...",
     "explainFailed": "Échec de l'explication",

@@ -142,6 +142,7 @@
     }
   },
   "explain": {
+    "disabled": "Explain ist vorerst deaktiviert: Es braucht ein Admin-Token, und der Shop enthält keine Admin-Zugangsdaten mehr.",
     "toggle": "Erklären",
     "analyzing": "Wird analysiert...",
     "explainFailed": "Erklärung fehlgeschlagen",

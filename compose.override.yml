@@ -1,5 +1,5 @@
 # Development environment override
-x-base-php-env : &php-base-env
+x-base-php-env: &php-base-env
   APP_ENV: ${APP_ENV:-dev}
   MAILER_DSN: ${MAILER_DSN:-smtp://mailer:1025}
 
@@ -15,7 +15,6 @@ x-base-php: &php-base
     # Ensure that host.docker.internal is correctly defined on Linux
     - host.docker.internal:host-gateway
   tty: true
-
 
 services:
   proxy:
@@ -47,7 +46,7 @@ services:
     <<: *php-base
     environment:
       <<: *php-base-env
-      TRUSTED_HOSTS: ${TRUSTED_HOSTS:-^${SERVER_NAME:-|gally.localhost}|localhost|${E2E_SERVER_NAME:-gally.e2e}|php$$}
+      TRUSTED_HOSTS: ${TRUSTED_HOSTS:-^${SERVER_NAME:-|gally.localhost}|localhost|router|${E2E_SERVER_NAME:-gally.e2e}|php$$}
       # See https://xdebug.org/docs/all_settings#mode
       XDEBUG_MODE: ${XDEBUG_MODE:-off}
       PHP_IDE_CONFIG: serverName=gally
@@ -96,6 +95,8 @@ services:
       - ./front:/usr/src/front:rw,cached,z
     environment:
       - PUBLIC_URL=https://${SERVER_NAME:-gally.localhost}/example
+      - SERVER_NAME=${SERVER_NAME:-gally.localhost}
+      - GALLY_INTERNAL_API_URL=${GALLY_INTERNAL_API_URL:-http://router/api}
       - SKIP_YARN_INSTALL=${SKIP_YARN_INSTALL:-false}
 
   e2e:

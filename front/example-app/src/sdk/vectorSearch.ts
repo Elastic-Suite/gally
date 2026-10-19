@@ -1,4 +1,4 @@
-import { BASE_URI } from './index'
+import { getBaseUri } from './index'
 import type { SearchDocument } from './fields'
 
 // Vector (semantic) search — the one query in this app the SDK cannot make.
@@ -90,7 +90,7 @@ export async function fetchVectorSearchProducts(
   }`
 
   try {
-    const res = await fetch(`${BASE_URI}/graphql`, {
+    const res = await fetch(`${getBaseUri()}/graphql`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

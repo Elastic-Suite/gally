@@ -86,7 +86,6 @@ init-dev-env: .env ## Initialize current environment with dev repositories
 	[ -d front/gally-admin ] || git clone git@github.com:Elastic-Suite/gally-admin.git front/gally-admin
 	$(MAKE) start
 	$(MAKE) switch-dev-env
-	$(DOCKER_COMP) restart pwa # Remount the sample-data media, which only exists in vendor/ once switch-dev-env has run
 	cd front && yarn install --frozen-lockfile --network-timeout 120000 && cd -
 	sh ./hooks/initHooksPath.sh
 
@@ -100,6 +99,7 @@ switch-dev-env: ## Switch current environment with dev repositories on a compose
 	$(COMPOSER) require gally/gally-standard $(v) --no-scripts
 	$(COMPOSER) require gally/gally-premium $(v) --no-scripts
 	$(COMPOSER) require gally/gally-sample-data $(v)
+	$(DOCKER_COMP) restart pwa router # Remount the sample-data media, which only exists in vendor/ once switch-dev-env has run; router looks up pwa's IP again
 
 phpcsfixer: ## Run php cs fixer, pass the parameter "o=" to pass options, make phpcsfixer o="--dry-run"
 	@$(eval o ?=)

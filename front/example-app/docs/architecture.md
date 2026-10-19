@@ -89,7 +89,7 @@ src/
 │   │                     #   Empty selectedFields silently returns zero rows; see sdk-reference.md
 │   ├── productFields.ts  # getProductFields(doc) → product view model
 │   ├── cmsFields.ts      # CmsPage type, getCmsFields(doc), cmsPageUrl(), formatCmsDate()
-│   ├── seo.ts            # SITE/SITE_ORIGIN/SITE_NAME, canonical(), languageOf(),
+│   ├── seo.ts            # SITE/SITE_NAME, canonical(), languageOf(),
 │   │                     #   toMetaDescription(), openGraphBase(), NOINDEX
 │   └── serverI18n.ts     # tServer(), tServerFirst() — translation in server components,
 │                         #   where react-i18next hooks are unavailable

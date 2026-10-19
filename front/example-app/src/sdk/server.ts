@@ -1,6 +1,6 @@
 import { cache } from 'react'
 import type { Aggregation } from '@elastic-suite/gally-sdk'
-import { BASE_URI, getSearchManager } from './index'
+import { getBaseUri, getSearchManager } from './index'
 import { GallyConfig } from './config'
 import {
   fetchCatalogs,
@@ -206,9 +206,12 @@ export const fetchPublicConfiguration = cache(
       const params = new URLSearchParams({
         localizedCatalogCode: localizedCatalog,
       })
-      const res = await fetch(`${BASE_URI}/public_configurations?${params}`, {
-        headers: { Accept: 'application/ld+json' },
-      })
+      const res = await fetch(
+        `${getBaseUri()}/public_configurations?${params}`,
+        {
+          headers: { Accept: 'application/ld+json' },
+        }
+      )
       const data = await res.json()
       return Object.fromEntries(
         (data['hydra:member'] || []).map((c: PublicConfigurationEntry) => [

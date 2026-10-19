@@ -3,9 +3,10 @@ import { ILocalizedCatalog, LANGUAGES, DEFAULT_LANGUAGE } from './catalogs'
 // One definition of the public origin. It was copy-pasted into three route files during
 // Phase 3; a canonical URL that disagrees between routes is worse than none at all,
 // because it tells a crawler two different things about the same site.
-export const SITE_ORIGIN =
-  process.env.NEXT_PUBLIC_SITE_ORIGIN || 'https://gally.localhost'
-export const SITE = `${SITE_ORIGIN}/example`
+//
+// PUBLIC_URL is the full public URL, basePath included: set by compose in dev and from the
+// public_url build arg in int. Server-only - in the browser it is undefined.
+export const SITE = process.env.PUBLIC_URL || 'https://gally.localhost/example'
 
 export const SITE_NAME = 'Gally'
 

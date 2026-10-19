@@ -1,4 +1,4 @@
-import { BASE_URI } from './index'
+import { getBaseUri } from './index'
 
 // The extra bundles installed on the Gally API, such as GallyTermSuggestionBundle. The SDK
 // needs them to know which optional fields it may ask for: requesting `termSuggestions` from an
@@ -20,7 +20,7 @@ export function fetchBundles(): Promise<string[]> {
 }
 
 async function requestBundles(): Promise<string[]> {
-  const res = await fetch(`${BASE_URI}/graphql`, {
+  const res = await fetch(`${getBaseUri()}/graphql`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ query: '{ extraBundles { name } }' }),
