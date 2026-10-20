@@ -27,9 +27,10 @@ exactly, or the server-rendered page and the hydrated one disagree.
 - Link with `src/components/LocaleLink.tsx` (import it as `Link`), never `next/link` directly, and
   use `useLocaleHref()` for `router.push`. A raw link drops the segment and resets the visitor to
   the default catalog.
-- `src/sdk/index.ts` picks its base URI by environment. The browser uses `https://gally.localhost/api`;
-  Node uses `http://router/api`, because `gally.localhost` is 127.0.0.1 inside the container and a
-  server-side fetch to it dies with `ECONNREFUSED`.
+- `src/sdk/index.ts` `getBaseUri()`: the browser uses the public URL `NEXT_PUBLIC_API_URL`; Node uses
+  `SSR_API_URL` when set, else the public URL. Locally `SSR_API_URL` is `http://router/api`, because
+  `gally.localhost` is 127.0.0.1 inside the container and a server fetch to it dies with
+  `ECONNREFUSED`. Images and page URLs always stay public. See `specs/feature-api-url-from-env.md`.
 
 ## Where to read what
 

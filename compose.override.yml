@@ -96,8 +96,11 @@ services:
     environment:
       - PUBLIC_URL=https://${SERVER_NAME:-gally.localhost}/example
       - SERVER_NAME=${SERVER_NAME:-gally.localhost}
-      - GALLY_INTERNAL_API_URL=${GALLY_INTERNAL_API_URL:-http://router/api}
       - SKIP_YARN_INSTALL=${SKIP_YARN_INSTALL:-false}
+      # Public API URL, used by the browser.
+      - NEXT_PUBLIC_API_URL=https://${SERVER_NAME:-gally.localhost}/${API_ROUTE_PREFIX:-api}
+      # Server-side calls only: inside the container gally.localhost is 127.0.0.1, so go through the router
+      - SSR_API_URL=http://router/${API_ROUTE_PREFIX:-api}
 
   e2e:
     extends:

@@ -36,8 +36,8 @@
 
 ## MUST NOT change
 
-- Server-side fetches keep going through `INTERNAL_BASE_URI` (`http://router/api`), never
-  `gally.localhost`.
+- Server-side fetches go through `getBaseUri()`, like every other call: `SSR_API_URL`
+  (`http://router/api` locally), never `gally.localhost`. See `feature-api-url-from-env.md`.
 - Server-side searches in `src/sdk/server.ts` are never autocomplete, so they do not depend on the
   bundles. Do not make them wait on `fetchBundles()`.
 - `getClient()` and `getTracker()` are unchanged.

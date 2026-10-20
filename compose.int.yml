@@ -23,6 +23,10 @@ services:
       target: gally_pwa_int
       args:
         - public_url=https://${SERVER_NAME}/example
+    # The example app calls the API on its public host from the server too (NEXT_PUBLIC_API_URL,
+    # set in compose.yml): send that host to the proxy on the Docker host, not to public DNS.
+    extra_hosts:
+      - ${SERVER_NAME}:host-gateway
     volumes:
       # Demo product images ship with gally-sample-data, installed by composer before `up`.
       - ./api/vendor/gally/gally-sample-data/media/catalog/product:/usr/src/front/pwa/public/media/catalog/product:ro
