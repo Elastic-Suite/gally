@@ -39,7 +39,8 @@ resolves to 127.0.0.1, where nothing listens, so a server-side `fetch` dies with
 `https://gally.localhost/api`; Node uses `http://router/api` (the router container serves the same
 API over the compose network), overridable via `GALLY_INTERNAL_API_URL`. **This was measured, not
 assumed** — `http://php` is refused; `router` and `varnish` both work. The default is hardcoded so
-no compose or docker file had to change.
+no compose or docker file had to change. _Since then the override is `SSR_API_URL` (set to
+`http://router/api` in `compose.override.yml`); see `feature-api-url-from-env.md`._
 
 `src/sdk/catalogs.ts` gains `findLocalizedCatalog(catalogs, code)` and
 `defaultLocalizedCatalog(catalogs)` — plain functions over an already-fetched list, so the same code
@@ -104,5 +105,6 @@ request header. Phase 4 owns `hreflang` and canonical URLs, and `lang` belongs w
   content under a wrong URL bakes in duplicate-content and soft-404 problems before the SEO phases
   even start.
 - **Do not reintroduce `useState` into `CatalogProvider`** for the selected catalog — see above.
-- The server/browser base-URI split in `src/sdk/index.ts` is load-bearing; collapsing it back to one
-  URI breaks all server rendering with `ECONNREFUSED`.
+- The server/browser base-URI split in `src/sdk/index.ts` is load-bearing (now `SSR_API_URL` vs
+  `NEXT_PUBLIC_API_URL`); removing `SSR_API_URL` locally breaks all server rendering with
+  `ECONNREFUSED`.

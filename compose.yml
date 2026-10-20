@@ -4,7 +4,7 @@ x-base-php-env : &php-base-env
   SERVER_NAME: ${SERVER_NAME:-gally.localhost}, php:80
   API_ROUTE_PREFIX: ${API_ROUTE_PREFIX:-api}
   TRUSTED_PROXIES: ${TRUSTED_PROXIES:-127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16}
-  TRUSTED_HOSTS: ${TRUSTED_HOSTS:-^${SERVER_NAME:-|gally.localhost}|localhost|router|php$$}
+  TRUSTED_HOSTS: ${TRUSTED_HOSTS:-^${SERVER_NAME:-|gally.localhost}|localhost|php$$}
   CORS_ALLOW_ORIGIN: ${CORS_ALLOW_ORIGIN:-^https?://${SERVER_NAME:-gally.localhost}$}
   GALLY_CATALOG_MEDIA_URL: ${GALLY_CATALOG_MEDIA_URL:-https://${SERVER_NAME:-gally.localhost}/media/catalog/product/}
   GALLY_FRONT_URL: ${GALLY_FRONT_URL:-https://${SERVER_NAME:-gally.localhost}}

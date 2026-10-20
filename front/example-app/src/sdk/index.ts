@@ -7,22 +7,21 @@ import {
   TrackingEventType,
 } from '@elastic-suite/gally-sdk/browser'
 
-// The browser reaches the API through the public proxy. Node cannot: inside the
-// `example` container `gally.localhost` resolves to 127.0.0.1, where nothing listens,
-// so a server-side fetch dies with ECONNREFUSED. On the compose network the router
-// container serves the same API over plain HTTP, which is what server components use.
+// The API URL for fetching. Media and page URLs never come from here: images use the media base
+// from the public configuration, pages use SITE in ./seo.
 //
-// Server side, the URL is read from the container env on each call. Browser side, the app
-// and the API share the same proxy, so the page's own origin is the default.
-// NEXT_PUBLIC_GALLY_API_URL overrides it when the API lives elsewhere, but Next writes it
-// into the bundle at build time (at `next dev` start in dev), so it must stay literal here.
+// NEXT_PUBLIC_API_URL is the public URL, used by the browser. Next writes it into the bundles
+// when it builds (at `next dev` start in dev), so it must stay literal here.
+// SSR_API_URL is an optional URL for server-side calls only, read at runtime. Locally it is
+// http://router/api, because gally.localhost is 127.0.0.1 inside the container. Without it the
+// server calls the public URL too (int reaches it through extra_hosts).
 export function getBaseUri(): string {
+  const publicUri =
+    process.env.NEXT_PUBLIC_API_URL || 'https://gally.localhost/api'
   if (typeof window === 'undefined') {
-    return process.env.GALLY_INTERNAL_API_URL || 'http://router/api'
+    return process.env.SSR_API_URL || publicUri
   }
-  return (
-    process.env.NEXT_PUBLIC_GALLY_API_URL || `${window.location.origin}/api`
-  )
+  return publicUri
 }
 
 // Client singleton (for direct GraphQL/REST calls)
@@ -32,6 +31,7 @@ export function getClient(): Client {
   if (!clientInstance) {
     clientInstance = new Client(new Configuration({ baseUri: getBaseUri() }))
   }
+
   return clientInstance
 }
 

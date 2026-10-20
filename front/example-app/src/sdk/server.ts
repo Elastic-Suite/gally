@@ -16,8 +16,7 @@ import {
 } from './fields'
 
 // Server-side data fetching for the three crawlable routes. These run in Server
-// Components, so `getSearchManager()` resolves to the internal base URI (see ./index) —
-// the public gally.localhost host is unreachable from inside the container.
+// Components, so getBaseUri() (./index) returns SSR_API_URL when set, else the public URL.
 //
 // Each of these deliberately mirrors the corresponding client hook's request shape
 // exactly: same metadata, same selectedFields, same filter syntax. If they drift, the

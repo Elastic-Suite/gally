@@ -32,7 +32,7 @@ services:
       start_period: 60s
     environment:
       <<: *php-base-env
-      TRUSTED_HOSTS: ${TRUSTED_HOSTS:-^${SERVER_NAME:-|gally.localhost}|localhost|router|${E2E_SERVER_NAME:-gally.e2e}|php$$}
+      TRUSTED_HOSTS: ${TRUSTED_HOSTS:-^${SERVER_NAME:-|gally.localhost}|localhost|${E2E_SERVER_NAME:-gally.e2e}|php$$}
 
   cron:
     <<: *php-base

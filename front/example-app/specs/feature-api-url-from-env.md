@@ -17,19 +17,31 @@ never supported runtime config, even in Next 15.
 
 - [x] `getBaseUri()` in `src/sdk/index.ts` is the only source of the API URL. Nothing builds a
       URL from a module-level constant: every caller asks at request time.
-- [x] Server side (no `window`): `process.env.GALLY_INTERNAL_API_URL`, default
-      `http://router/api`. Read on each call, so it follows the container env with no rebuild.
-      Verified: category page HTML arrives with its product cards rendered.
-- [ ] Browser side: `process.env.NEXT_PUBLIC_GALLY_API_URL`, default
-      `${window.location.origin}/api`. The app and the API share the same proxy, so the default
-      follows the host the page is served from. Not checked in a browser yet.
+- [x] Browser: `process.env.NEXT_PUBLIC_API_URL`, the public API URL, default
+      `https://gally.localhost/api`. Next writes it into the bundles when it builds (at
+      `next dev` start in dev). Verified in a headless browser: every API call goes to
+      `https://gally.localhost/api/graphql`, none over `http:` or to `router`.
+- [x] Server: `process.env.SSR_API_URL` when set, read at runtime, else the public URL.
+- [x] Dev sets `SSR_API_URL=http://router/api`: `gally.localhost` is 127.0.0.1 inside the
+      container, so the server goes through the router on the compose network. Verified: the
+      category page arrives from the server (`curl`, no JavaScript) with 20 cards.
+- [x] Int does not set `SSR_API_URL`: the server calls the public URL, which
+      `extra_hosts: ${SERVER_NAME}:host-gateway` on `pwa` sends to the proxy on the Docker host
+      (certbot certificate, so the TLS check stays on). Verified only locally, see below.
+- [x] Images and page URLs stay public: images use the media base from the API's public
+      configuration (`mediaUrl(config)`), pages use `SITE` in `seo.ts`. Verified: image origin
+      `https://gally.localhost`.
 - [x] The SDK `Configuration` is built lazily in `getClient()`, not at module load.
-- [x] `compose.override.yml` passes `SERVER_NAME` and `GALLY_INTERNAL_API_URL` to the `example`
-      service. `next.config.js` uses `SERVER_NAME` for `allowedDevOrigins`.
-- [x] Server-side calls send `Host: router`, so `router` is in Symfony's `TRUSTED_HOSTS` in
-      `compose.yml` (base, used by int), `compose.ci.yml` and `compose.override.yml`. Without it
-      Symfony rejects the call, `src/sdk/server.ts` swallows the error, and pages silently fall
-      back to loading in the browser.
+- [x] `compose.override.yml` passes `SERVER_NAME`, `NEXT_PUBLIC_API_URL` and `SSR_API_URL` to
+      the `example` service. `next.config.js` uses `SERVER_NAME` for `allowedDevOrigins`. In int,
+      `compose.yml` already passes `NEXT_PUBLIC_API_URL=https://${SERVER_NAME}/api` to `pwa`, as a
+      build arg and as env.
+- [x] Server calls through the router send `Host: router`, so `router` is in Symfony's
+      `TRUSTED_HOSTS` in `compose.override.yml` only: only dev sets `SSR_API_URL` to the
+      router. Add it back wherever another environment does the same. Without it Symfony
+      rejects the call, `src/sdk/server.ts` swallows the error, and pages silently fall back to
+      loading in the browser. (In dev the pattern starts with a bare `^` when `SERVER_NAME` is
+      unset, which already accepts every host; the entry is there for when it is set.)
 - [x] `app/page.tsx` (the `/` redirect to the default catalog) calls `await connection()` from
       `next/server` before fetching. `next build` then leaves it out of prerendering: the API is
       not reachable during a docker build, and the redirect must follow the live catalogs.
@@ -46,15 +58,24 @@ never supported runtime config, even in Next 15.
   sends `/example` to `pwa:3001`. `--kill-others` stops the container when either app dies, so
   Docker restarts both instead of leaving one running.
   - [x] Int image builds and both servers start (local `docker build` of `gally_pwa_int`, no
-        API attached): admin 200 on 3000; example app listening on 3001 (500, `ENOTFOUND router`, expected without the stack). Killing the example server exits the container
-        within 2 s. In the build's route table only `/_not-found` is static; `/` is dynamic.
+        API attached): admin 200 on 3000, example app listening on 3001. Killing the example
+        server exits the container within 2 s. In the build's route table only `/_not-found`
+        is static; `/` is dynamic.
+  - [x] Int image against the local stack, built with
+        `NEXT_PUBLIC_API_URL=https://gally.e2e:4430/api` and run under the `example` network
+        alias with `--add-host gally.e2e:host-gateway`: server and browser both call that URL.
+        Checked with a temporary log in `getBaseUri()` (removed since), 20 cards in the server
+        HTML, and the browser calling only `https://gally.e2e:4430/api/graphql`. This run also needed
+        `-e NODE_TLS_REJECT_UNAUTHORIZED=0`, only because the local proxy certificate is
+        self-signed for `gally.localhost`; int has a valid certificate.
   - [ ] Real int deploy: only checkable on the int server.
 - **CI** (`compose.yml` + `compose.ci.yml`): an `example` container runs `next dev`, but the
   router still sends `/example` to `pwa:3000`. Nothing in CI tests the example app for now, so
   this is left as is on purpose.
 
-The int stage used to copy a static CRA build into the admin (`mv example-app/build pwa/public/example`). That cannot work any more: `next build` writes `.next/`, and the pages
-fetch from the API per request.
+The int stage used to copy a static CRA build into the admin
+(`mv example-app/build pwa/public/example`). That cannot work any more: `next build` writes
+`.next/`, and the pages fetch from the API per request.
 
 ## SDK contract used
 
@@ -72,24 +93,27 @@ fetch from the API per request.
 ## MUST NOT change
 
 - Do not bring back `next/config` / runtime config: it no longer exists in Next 16.
-- Keep `process.env.NEXT_PUBLIC_GALLY_API_URL` written literally. Next replaces that exact
-  expression in the browser bundle; destructuring `process.env` leaves it `undefined`. It is
-  fixed when the bundle is built (at `next dev` start in dev), so it is for a deployment where
-  the API lives on another host, not for per-request values.
+- Keep `process.env.NEXT_PUBLIC_API_URL` written literally. Next replaces that exact expression
+  in the bundles; destructuring `process.env` leaves it `undefined`. It is fixed when the app is
+  built (at `next dev` start in dev), so changing it needs a rebuild, not just a restart.
 - Env URLs carry their scheme (`http://...`). A protocol-relative `//host/api` fails in Node
   `fetch` on the server.
-- The server must not use the public host: inside the container `gally.localhost` resolves to
-  127.0.0.1 and the fetch dies with ECONNREFUSED.
+- `SSR_API_URL` stays server-only: no `NEXT_PUBLIC_` prefix, so it never reaches the browser
+  bundle. Locally it must be set: without it the server calls `gally.localhost`, which is
+  127.0.0.1 inside the container, and every server fetch dies with ECONNREFUSED.
+- Where `SSR_API_URL` is not set (int), keep `extra_hosts: ${SERVER_NAME}:host-gateway` on the
+  service that runs the example app, so the public host reaches the proxy on the Docker host.
+- Keep `router` in `TRUSTED_HOSTS` wherever the server goes through it.
+- Never disable the TLS check (`NODE_TLS_REJECT_UNAUTHORIZED=0`) to make server calls work.
 - `getBaseUri()` is for fetching only. Never write a URL built from it into HTML (image `src`,
-  link): on the server it is `http://router/api`, which the browser cannot reach. Image URLs come
-  from `mediaUrl(config)`.
+  link): it is the API, not the storefront, and it can point at another host than the
+  storefront. Image URLs come from `mediaUrl(config)`, page URLs from `SITE` in `seo.ts`.
 - No API call may run during `next build`. A server page that fetches outside a dynamic
   `[locale]` segment must call `await connection()` first. Prefer it to
   `export const dynamic = 'force-dynamic'`, which Next 16 turns into a build error once
   `cacheComponents` is enabled.
-- `connection()` does not check that the API is up. If `router` does not answer at request time,
+- `connection()` does not check that the API is up. If the API does not answer at request time,
   `fetchCatalogs()` throws and `/example` returns an error page, as before.
-- Keep `router` in `TRUSTED_HOSTS` in every compose file that sets it.
 - `src/sdk/seo.ts` reads `PUBLIC_URL` (dev: compose env; int: the `public_url` build arg) and
   stays server-only: in the browser the variable is undefined. `PUBLIC_URL` already ends with
   `/example`, so never append it again.

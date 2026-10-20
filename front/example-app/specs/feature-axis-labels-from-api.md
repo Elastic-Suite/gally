@@ -48,8 +48,9 @@ the string is in the server-rendered HTML.
 ## SDK contract used
 
 - Plain REST, not GraphQL, following `fetchCatalogs()` in `src/sdk/catalogs.ts`: `fetch` against
-  `BASE_URI` with `Accept: application/ld+json`, reading `hydra:member`. `BASE_URI` already routes
-  Node through `http://router/api` and the browser through `https://gally.localhost/api`.
+  `BASE_URI` with `Accept: application/ld+json`, reading `hydra:member`. `BASE_URI` (now
+  `getBaseUri()`: `SSR_API_URL` on the server, the public URL in the browser; see
+  `feature-api-url-from-env.md`).
 - The code list sent is `AXIS_CODES`, newly exported from `src/sdk/fields.ts`. That file already had
   to name every catalogue's axes for the GraphQL selection; it is now the one list behind both the
   selection and the label request, so the two cannot drift.

@@ -77,8 +77,8 @@ refetching) and they keep the 404 guarantee from depending on whether a boundary
 ```
 src/
 ├── sdk/
-│   ├── index.ts          # Singletons: getClient(), getSearchManager(), getTracker(), BASE_URI.
-│   │                     #   Routes Node through http://router/api — NOT gally.localhost
+│   ├── index.ts          # Singletons: getClient(), getSearchManager(), getTracker(), getBaseUri().
+│   │                     #   Browser: NEXT_PUBLIC_API_URL; Node: SSR_API_URL if set (router locally)
 │   ├── server.ts         # React cache()-wrapped server fetches: fetchProductBySku,
 │   │                     #   fetchCategoryProducts, fetchSearchProducts, fetchCmsPageById,
 │   │                     #   resolveLocale, cachedCategoryTree
