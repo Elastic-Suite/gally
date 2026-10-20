@@ -55,7 +55,7 @@ const texts = {
   kpis: {
     searchCount: {
       label: 'Searches',
-      value: 51,
+      value: 74,
     },
     categoryViewCount: {
       label: 'Category views',
@@ -75,25 +75,25 @@ const texts = {
     },
     sessionCount: {
       label: 'Sessions',
-      value: 30,
+      value: 48,
     },
     visitorCount: {
       label: 'Unique visitors',
-      value: 15,
+      value: 32,
     },
     sessionsWithSearchPercentage: {
       label: 'Sessions with search',
-      value: '56.67%',
+      value: '72.92%',
     },
     averageSearchesPerSession: {
       label: 'Searches per session',
-      value: 3.06,
+      value: 2.11,
     },
   },
   catalogComFrFilteredKpis: {
     searchCount: {
       label: 'Searches',
-      value: 4,
+      value: 8,
     },
     categoryViewCount: {
       label: 'Category views',
@@ -113,7 +113,7 @@ const texts = {
   validDateIntervalFilteredKpis: {
     searchCount: {
       label: 'Searches',
-      value: 9,
+      value: 18,
     },
     categoryViewCount: {
       label: 'Category views',
