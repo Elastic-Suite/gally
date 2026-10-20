@@ -19,23 +19,23 @@ listing. Everything else still gets a real 404.
 
 ## Behaviour (testable)
 
-- [x] A missing category with a valid switch marker answers **307** to
-      `/{locale}/category/{first root category}` - verified:
-      `GET /com_fr/category/cat_9999?from=com_en` -> `307` to `/example/com_fr/category/cat_2`.
-- [x] A missing SKU with a valid marker does the same - `GET /com_fr/product/NOPE-SKU?from=com_en`
-      -> `307` to the same listing.
-- [x] The same URLs **without** the marker still answer `404`.
-- [x] An invalid marker (`?from=not_a_catalog`) answers `404`, not a redirect.
-- [x] A category that does exist renders `200` whether or not the marker is present.
-- [x] An unknown locale segment (`/example/nope`) still answers `404`.
-- [x] A missing blog article with a valid marker answers **307** to `/{locale}/blog` - the blog
-      listing, not the product listing, because that is the section the visitor was in. Verified:
-      `GET /fashion_fr/blog/17?from=papershop_fr` -> `307` to `/example/fashion_fr/blog`
-      (papershop has 18 articles, fashion 15, so id 17 exists in one catalog only).
-- [x] `GET /fashion_fr/blog/17` without the marker still answers `404`.
-- [ ] Clicking the catalog selector on a category, a product and a blog article page - the marker
-      is built in `CatalogContext` and type-checks, but the click path was NOT exercised in a
-      browser. The server half of it is covered by the curl checks above.
+-   [x] A missing category with a valid switch marker answers **307** to
+        `/{locale}/category/{first root category}` - verified:
+        `GET /com_fr/category/cat_9999?from=com_en` -> `307` to `/example/com_fr/category/cat_2`.
+-   [x] A missing SKU with a valid marker does the same - `GET /com_fr/product/NOPE-SKU?from=com_en`
+        -> `307` to the same listing.
+-   [x] The same URLs **without** the marker still answer `404`.
+-   [x] An invalid marker (`?from=not_a_catalog`) answers `404`, not a redirect.
+-   [x] A category that does exist renders `200` whether or not the marker is present.
+-   [x] An unknown locale segment (`/example/nope`) still answers `404`.
+-   [x] A missing blog article with a valid marker answers **307** to `/{locale}/blog` - the blog
+        listing, not the product listing, because that is the section the visitor was in. Verified:
+        `GET /fashion_fr/blog/17?from=papershop_fr` -> `307` to `/example/fashion_fr/blog`
+        (papershop has 18 articles, fashion 15, so id 17 exists in one catalog only).
+-   [x] `GET /fashion_fr/blog/17` without the marker still answers `404`.
+-   [ ] Clicking the catalog selector on a category, a product and a blog article page - the marker
+        is built in `CatalogContext` and type-checks, but the click path was NOT exercised in a
+        browser. The server half of it is covered by the curl checks above.
 
 ## How the marker works
 
@@ -117,21 +117,21 @@ Stripping it would cost an extra navigation on every switch, which is the worse 
 
 ## MUST NOT change
 
-- **The marker stays validated against the catalog list.** An unchecked `?from=` is a soft-404
-  generator, and the whole point of marking is that a _direct_ visit to a junk URL still 404s.
-- **Do not move the existence check back into either guard layout.** A layout cannot read the
-  marker, so the check there would 404 before the redirect could happen - the exact bug this
-  fixes.
-- Both `page.tsx` and its `generateMetadata` must keep calling `missingInCatalog`. They are
-  reached in different orders depending on streaming, and disagreeing would mean a redirect in one
-  and a 404 in the other.
-- **Do not add `loading.tsx` or a Suspense boundary above these routes** without re-checking the
-  status codes: a streamed response cannot set 404 after the fact, which is what
-  `bugfix-ssr-product-list-behind-suspense.md` is about.
-- `defaultListingPath()` stays the one definition of the default listing, read by both the header
-  tab and the redirect.
-- **A blog article redirects to `/blog`, not to the product listing.** Sending someone reading an
-  article into a product grid is a section change they did not ask for.
-- **Article ids overlapping between catalogs is knowingly left alone.** Ids run 1..N per catalog,
-  so a marked switch on `/blog/3` renders the target catalog's own article 3 rather than
-  redirecting. That is valid content in the right catalog; only a genuine miss redirects.
+-   **The marker stays validated against the catalog list.** An unchecked `?from=` is a soft-404
+    generator, and the whole point of marking is that a _direct_ visit to a junk URL still 404s.
+-   **Do not move the existence check back into either guard layout.** A layout cannot read the
+    marker, so the check there would 404 before the redirect could happen - the exact bug this
+    fixes.
+-   Both `page.tsx` and its `generateMetadata` must keep calling `missingInCatalog`. They are
+    reached in different orders depending on streaming, and disagreeing would mean a redirect in one
+    and a 404 in the other.
+-   **Do not add `loading.tsx` or a Suspense boundary above these routes** without re-checking the
+    status codes: a streamed response cannot set 404 after the fact, which is what
+    `bugfix-ssr-product-list-behind-suspense.md` is about.
+-   `defaultListingPath()` stays the one definition of the default listing, read by both the header
+    tab and the redirect.
+-   **A blog article redirects to `/blog`, not to the product listing.** Sending someone reading an
+    article into a product grid is a section change they did not ask for.
+-   **Article ids overlapping between catalogs is knowingly left alone.** Ids run 1..N per catalog,
+    so a marked switch on `/blog/3` renders the target catalog's own article 3 rather than
+    redirecting. That is valid content in the right catalog; only a genuine miss redirects.

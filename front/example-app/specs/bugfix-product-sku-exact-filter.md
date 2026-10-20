@@ -15,29 +15,29 @@ silently show the wrong product or none at all.
 
 ## Behaviour (testable)
 
-- [x] The lookup now uses a server-side exact filter: `filters: [{ sku: { eq: sku } }]`, `pageSize: 1`. This
-      mirrors the pattern `CategoryPage.tsx` already uses for facet filtering (`{ field: { eq: value } }`).
-      Confirmed via GraphQL introspection that `sku` is a valid field on `ProductFieldFilterInput`, and via a
-      live query that `search: "VD08"` + `filter: [{sku:{eq:"VD08"}}]` returns exactly that product.
-- [x] `searchQuery: sku` is still passed alongside the filter — not for relevance, but because `useSearch`'s
-      `requestType` is picked purely by whether `searchQuery` is truthy (`product_search` if truthy, else
-      `product_catalog`, which 400s without a `currentCategoryId`). An empty/absent `searchQuery` would flip
-      the request back to `product_catalog` and break the no-category product-detail lookup. The `equalFilter`,
-      not the query text, is what now guarantees the exact product.
-- [x] The client-side `.find()`/fallback-to-`products[0]` logic is gone — `products[0]` is always the correct
-      product now, since the filter can only ever match one SKU.
+-   [x] The lookup now uses a server-side exact filter: `filters: [{ sku: { eq: sku } }]`, `pageSize: 1`. This
+        mirrors the pattern `CategoryPage.tsx` already uses for facet filtering (`{ field: { eq: value } }`).
+        Confirmed via GraphQL introspection that `sku` is a valid field on `ProductFieldFilterInput`, and via a
+        live query that `search: "VD08"` + `filter: [{sku:{eq:"VD08"}}]` returns exactly that product.
+-   [x] `searchQuery: sku` is still passed alongside the filter — not for relevance, but because `useSearch`'s
+        `requestType` is picked purely by whether `searchQuery` is truthy (`product_search` if truthy, else
+        `product_catalog`, which 400s without a `currentCategoryId`). An empty/absent `searchQuery` would flip
+        the request back to `product_catalog` and break the no-category product-detail lookup. The `equalFilter`,
+        not the query text, is what now guarantees the exact product.
+-   [x] The client-side `.find()`/fallback-to-`products[0]` logic is gone — `products[0]` is always the correct
+        product now, since the filter can only ever match one SKU.
 
 ## SDK contract used
 
-- `useSearch.ts`'s existing `filters` option, passed through to `SearchManager.search()`'s `filters` param —
-  no SDK/hook changes needed, this was already supported and used elsewhere (`CategoryPage.tsx`).
+-   `useSearch.ts`'s existing `filters` option, passed through to `SearchManager.search()`'s `filters` param —
+    no SDK/hook changes needed, this was already supported and used elsewhere (`CategoryPage.tsx`).
 
 ## Tracking (required)
 
-- No change — `trackProductView(sku)` still fires from the same `useEffect`, unaffected by how the product
-  data itself is fetched.
+-   No change — `trackProductView(sku)` still fires from the same `useEffect`, unaffected by how the product
+    data itself is fetched.
 
 ## MUST NOT change
 
-- The recommendations query lower in `ProductPage.tsx` (`useSearch({ pageSize: 8, categoryCode: rootCategory?.id })`)
-  — a separate, legitimate category browse, not touched by this fix.
+-   The recommendations query lower in `ProductPage.tsx` (`useSearch({ pageSize: 8, categoryCode: rootCategory?.id })`)
+    — a separate, legitimate category browse, not touched by this fix.

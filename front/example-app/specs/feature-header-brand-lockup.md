@@ -21,7 +21,7 @@ beside it — the asset is the whole lockup.
 
 1. Originally `Elastic` + coral `Suite`, set in the header's own type.
 2. Then a composed lockup: the Gally rabbit (cropped out of `api/public/gally-logo.svg`)
-   - serif "Gally" + a translated "by ElasticSuite solutions" baseline.
+    - serif "Gally" + a translated "by ElasticSuite solutions" baseline.
 3. Now the official ElasticSuite asset, replacing all of that.
 
 **Step 3 removes the word "Gally" from the header**, which reverses the brand-visibility
@@ -32,27 +32,27 @@ so cropping is the only clean split).
 
 ## The asset
 
-- Source: the inline SVG sprite on https://elasticsuite.io/ , symbol id
-  `brand__elasticsuite-solutions-multi--caption`, `viewBox="0 0 219 63"`, 3 paths.
-- **The supplied snippet could not be used as given.** It was
-  `<svg viewBox="0 0 219 63"><use xlink:href="#brand__elasticsuite-solutions-multi--caption"/></svg>`
-  — a reference into that sprite, carrying no artwork. Dropped into this app it renders
-  nothing, because the sprite is not on our page. The symbol was extracted and its
-  wrapper converted to an `<svg>` root so the file stands alone. Paths are verbatim.
-- The snippet's `class="max-lg:hidden h-10"` is Tailwind, which this app does not use.
-  `h-10` is carried over as `height: 2.5rem`; `max-lg:hidden` is not needed — the lockup
-  renders 139×40 CSS px, narrow enough to keep on the first header row at 420px.
-- Brand colours `#F56553` / `white`; see the palette exemption in ../docs/design-system.md.
+-   Source: the inline SVG sprite on https://elasticsuite.io/ , symbol id
+    `brand__elasticsuite-solutions-multi--caption`, `viewBox="0 0 219 63"`, 3 paths.
+-   **The supplied snippet could not be used as given.** It was
+    `<svg viewBox="0 0 219 63"><use xlink:href="#brand__elasticsuite-solutions-multi--caption"/></svg>`
+    — a reference into that sprite, carrying no artwork. Dropped into this app it renders
+    nothing, because the sprite is not on our page. The symbol was extracted and its
+    wrapper converted to an `<svg>` root so the file stands alone. Paths are verbatim.
+-   The snippet's `class="max-lg:hidden h-10"` is Tailwind, which this app does not use.
+    `h-10` is carried over as `height: 2.5rem`; `max-lg:hidden` is not needed — the lockup
+    renders 139×40 CSS px, narrow enough to keep on the first header row at 420px.
+-   Brand colours `#F56553` / `white`; see the palette exemption in ../docs/design-system.md.
 
 ## Behaviour (testable)
 
-- [x] Top-left renders the lockup at 139×40 CSS px, intrinsic 219×63, inside a
-      `<Link to="/">`.
-- [x] Accessible name on the link (`brand.ariaLabel`), `alt=""` on the `<img>`, so the
-      lockup is announced once rather than twice. Updated to "ElasticSuite Solutions —
-      go to homepage" / "… aller à l'accueil" so it matches what is now visible.
-- [x] Verified in a real browser at 1400px and 420px: `naturalWidth` 219 (asset decodes),
-      rendered 139×40, header still one row at 420px.
+-   [x] Top-left renders the lockup at 139×40 CSS px, intrinsic 219×63, inside a
+        `<Link to="/">`.
+-   [x] Accessible name on the link (`brand.ariaLabel`), `alt=""` on the `<img>`, so the
+        lockup is announced once rather than twice. Updated to "ElasticSuite Solutions —
+        go to homepage" / "… aller à l'accueil" so it matches what is now visible.
+-   [x] Verified in a real browser at 1400px and 420px: `naturalWidth` 219 (asset decodes),
+        rendered 139×40, header still one row at 420px.
 
 ## Trap this cost real time
 
@@ -66,31 +66,31 @@ XML parser after editing; the comment now avoids `--` and points here for the id
 
 ## Removed with this change
 
-- `src/assets/gally-mark.svg` (no longer referenced).
-- `.header-logo-mark` / `-text` / `-name` / `-baseline` / `-accent` rules, and the
-  mobile rule that hid the baseline under 768px.
-- The `brand.baseline` i18n key and the app's only `<Trans>` usage — the accent span it
-  existed to interpolate is now part of the artwork.
+-   `src/assets/gally-mark.svg` (no longer referenced).
+-   `.header-logo-mark` / `-text` / `-name` / `-baseline` / `-accent` rules, and the
+    mobile rule that hid the baseline under 768px.
+-   The `brand.baseline` i18n key and the app's only `<Trans>` usage — the accent span it
+    existed to interpolate is now part of the artwork.
 
 ## SDK contract used
 
-- None. Presentation only.
+-   None. Presentation only.
 
 ## Tracking (required)
 
-- No change. The lockup is a plain router `<Link>`; no event fires from it.
+-   No change. The lockup is a plain router `<Link>`; no event fires from it.
 
 ## UI constraints
 
-- No colour or font set in CSS for the lockup; two rules only (`.header-logo`,
-  `.header-logo-img`). No new token.
+-   No colour or font set in CSS for the lockup; two rules only (`.header-logo`,
+    `.header-logo-img`). No new token.
 
 ## MUST NOT change
 
-- **The `<img>` must keep an explicit `height` with `width: auto`.** Both come from the
-  asset's intrinsic ratio; hard-coding a width would distort it.
-- The link's `to="/"` and `brand.ariaLabel`. With the Home nav item gone
-  (`feature-nav-remove-home.md`), this is the only header route to the homepage.
-- The asset stays on a dark surface — the wordmark is white and disappears on light.
-- Do not reintroduce a `.header-logo span { … }` catch-all; nothing needs it now, and it
-  is what previously forced the accent colour onto every nested span.
+-   **The `<img>` must keep an explicit `height` with `width: auto`.** Both come from the
+    asset's intrinsic ratio; hard-coding a width would distort it.
+-   The link's `to="/"` and `brand.ariaLabel`. With the Home nav item gone
+    (`feature-nav-remove-home.md`), this is the only header route to the homepage.
+-   The asset stays on a dark surface — the wordmark is white and disappears on light.
+-   Do not reintroduce a `.header-logo span { … }` catch-all; nothing needs it now, and it
+    is what previously forced the accent colour onto every nested span.

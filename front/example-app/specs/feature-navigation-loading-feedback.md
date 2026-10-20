@@ -57,21 +57,21 @@ redisplaying stale seeded results. Idempotent under repeated effect invocation.
 
 ## Behaviour (testable)
 
-- [x] `loading.tsx` exists for product, blog post and category; the skeleton is **streamed first**
-      in the HTML response, proving the Suspense boundary is in place
-      — _no longer true, and the streaming it demonstrated is the bug the successor spec fixes_
-- [x] SEO payload unaffected by streaming — title, `<h1>` and all JSON-LD still present in the
-      same response on all three routes
-- [x] **TTFB improved**, because the shell no longer waits on the data fetch:
-      product 2.34 s → 1.21 s, category 3.03 s → 1.56 s
-- [x] After hydration there are **zero visible skeleton elements** in the DOM on all three routes,
-      and content is fully rendered
-- [x] No hydration mismatches; `npx tsc --noEmit` clean
-- [ ] **The perceived click→feedback improvement is not machine-verified.** Headless rendering
-      cannot exercise a client-side route transition. Click through in a browser to confirm.
-- [ ] **The duplicate-request claim is not isolated.** A blog post page issues 12 client-side
-      GraphQL POSTs; those were not attributed per component, so "the mount refetch no longer
-      fires" is argued from the code, not measured. Check the Network tab.
+-   [x] `loading.tsx` exists for product, blog post and category; the skeleton is **streamed first**
+        in the HTML response, proving the Suspense boundary is in place
+        — _no longer true, and the streaming it demonstrated is the bug the successor spec fixes_
+-   [x] SEO payload unaffected by streaming — title, `<h1>` and all JSON-LD still present in the
+        same response on all three routes
+-   [x] **TTFB improved**, because the shell no longer waits on the data fetch:
+        product 2.34 s → 1.21 s, category 3.03 s → 1.56 s
+-   [x] After hydration there are **zero visible skeleton elements** in the DOM on all three routes,
+        and content is fully rendered
+-   [x] No hydration mismatches; `npx tsc --noEmit` clean
+-   [ ] **The perceived click→feedback improvement is not machine-verified.** Headless rendering
+        cannot exercise a client-side route transition. Click through in a browser to confirm.
+-   [ ] **The duplicate-request claim is not isolated.** A blog post page issues 12 client-side
+        GraphQL POSTs; those were not attributed per component, so "the mount refetch no longer
+        fires" is argued from the code, not measured. Check the Network tab.
 
 ## Follow-up: skeletons rewritten to hold the real layout (CLS)
 
@@ -112,22 +112,22 @@ model) rather than numerically. Lighthouse or the Performance panel would give t
 
 ## MUST NOT change
 
-- ~~**Do not delete the `loading.tsx` files.**~~ **Reversed** by
-  `bugfix-ssr-product-list-behind-suspense.md`: they must NOT exist, because the boundary is what
-  makes the server-rendered page script-gated. The underlying rule survives in a different form —
-  _never leave a server-fetched navigation with no feedback_. That is now
-  `src/contexts/NavigationContext.tsx`, and breaking it is just as silent: if
-  `LinkPendingReporter` stops being rendered inside a `<Link>`, `useLinkStatus()` reports nothing
-  for ever and every click looks frozen again, with nothing failing.
-- **Keep the route skeleton and the view's loading branch rendering the same component.** They were
-  duplicated markup before; that is how the `products-grid` / `product-grid` class mismatch nearly
-  shipped a broken-layout skeleton.
-- **Do not revert `serverFetchedKey` to a one-shot boolean** — StrictMode defeats it.
-- `searchKey()` / `cmsKey()` must cover **every** option the fetch effect keys off. Miss one and a
-  changed query is mistaken for the server-fetched one, so the page silently shows the wrong results.
-- **`CategoryPageSkeleton` must keep the `.catalog-page` wrapper and a sidebar in it.** Dropping
-  either turns the fallback back into a one-column layout and reintroduces the worst shift on the
-  site. Same for keeping `ProductGridSkeleton`'s count aligned with the view's `pageSize`.
-- The dimension comments at the top of `skeletons.tsx` are copied from `styles.css`. **If a layout
-  rule there changes — the 280px sidebar, the 180px card image, the 320px hero — the skeleton must
-  change with it**, and nothing will fail if it does not; the only symptom is a page that jumps.
+-   ~~**Do not delete the `loading.tsx` files.**~~ **Reversed** by
+    `bugfix-ssr-product-list-behind-suspense.md`: they must NOT exist, because the boundary is what
+    makes the server-rendered page script-gated. The underlying rule survives in a different form —
+    _never leave a server-fetched navigation with no feedback_. That is now
+    `src/contexts/NavigationContext.tsx`, and breaking it is just as silent: if
+    `LinkPendingReporter` stops being rendered inside a `<Link>`, `useLinkStatus()` reports nothing
+    for ever and every click looks frozen again, with nothing failing.
+-   **Keep the route skeleton and the view's loading branch rendering the same component.** They were
+    duplicated markup before; that is how the `products-grid` / `product-grid` class mismatch nearly
+    shipped a broken-layout skeleton.
+-   **Do not revert `serverFetchedKey` to a one-shot boolean** — StrictMode defeats it.
+-   `searchKey()` / `cmsKey()` must cover **every** option the fetch effect keys off. Miss one and a
+    changed query is mistaken for the server-fetched one, so the page silently shows the wrong results.
+-   **`CategoryPageSkeleton` must keep the `.catalog-page` wrapper and a sidebar in it.** Dropping
+    either turns the fallback back into a one-column layout and reintroduces the worst shift on the
+    site. Same for keeping `ProductGridSkeleton`'s count aligned with the view's `pageSize`.
+-   The dimension comments at the top of `skeletons.tsx` are copied from `styles.css`. **If a layout
+    rule there changes — the 280px sidebar, the 180px card image, the 320px hero — the skeleton must
+    change with it**, and nothing will fail if it does not; the only symptom is a page that jumps.

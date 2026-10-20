@@ -29,15 +29,15 @@ So the constant becomes a map keyed by localized catalog, and the page reads its
 
 ## Behaviour (testable)
 
-- [x] Each English shop offers suggestions written for its own catalogue.
-- [x] A shop with no entry offers none, and the suggestion row does not render at all rather than
-      rendering an empty "Try:" label.
-- [x] The box is seeded with the current shop's first suggestion, and **reseeded when the shop
-      changes**. Previously a catalogue switch carried the old query across, which after this
-      change would mean searching a hardware shop for "jewellery".
-- [x] A shop with no suggestions starts with an empty box and runs no query. Both fetch effects
-      already guard on `!query.trim()`, so this needs no new guard.
-- [x] `npx tsc --noEmit` clean inside the `example` container.
+-   [x] Each English shop offers suggestions written for its own catalogue.
+-   [x] A shop with no entry offers none, and the suggestion row does not render at all rather than
+        rendering an empty "Try:" label.
+-   [x] The box is seeded with the current shop's first suggestion, and **reseeded when the shop
+        changes**. Previously a catalogue switch carried the old query across, which after this
+        change would mean searching a hardware shop for "jewellery".
+-   [x] A shop with no suggestions starts with an empty box and runs no query. Both fetch effects
+        already guard on `!query.trim()`, so this needs no new guard.
+-   [x] `npx tsc --noEmit` clean inside the `example` container.
 
 ## The queries, and why each one
 
@@ -88,15 +88,15 @@ rather than always rendered.
 
 ## MUST NOT change
 
-- **Every catalogue's list must keep a control as its last entry.** It is the entry that makes the
-  other three honest. This was already a `MUST NOT` in spirit in the original comment ("Do not drop
-  it to make the demo tidier"); it now applies per catalogue.
-- **Do not add entries for French or German localized catalogs.** They would be suggestions the
-  model cannot answer, sitting above a warning that says so.
-- **Do not fall back to Venia's list for an unknown catalogue.** Returning `[]` is the point: a
-  wrong suggestion is worse than none, and silently showing clothes in a hardware shop is the bug
-  this spec fixes.
-- **A new query needs measuring before it is added**, in its own catalogue: keyword count and the
-  vector top hit. The value of these queries is a measured fact, not an opinion.
-- The seeding effect must stay keyed on `catalogCode` alone. Adding `query` to its dependencies
-  makes it fight the user's typing.
+-   **Every catalogue's list must keep a control as its last entry.** It is the entry that makes the
+    other three honest. This was already a `MUST NOT` in spirit in the original comment ("Do not drop
+    it to make the demo tidier"); it now applies per catalogue.
+-   **Do not add entries for French or German localized catalogs.** They would be suggestions the
+    model cannot answer, sitting above a warning that says so.
+-   **Do not fall back to Venia's list for an unknown catalogue.** Returning `[]` is the point: a
+    wrong suggestion is worse than none, and silently showing clothes in a hardware shop is the bug
+    this spec fixes.
+-   **A new query needs measuring before it is added**, in its own catalogue: keyword count and the
+    vector top hit. The value of these queries is a measured fact, not an opinion.
+-   The seeding effect must stay keyed on `catalogCode` alone. Adding `query` to its dependencies
+    makes it fight the user's typing.

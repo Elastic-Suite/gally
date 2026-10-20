@@ -43,17 +43,17 @@ that no longer unmounts would be a _second_ nav appearing below the real one.
 
 ## Behaviour (testable)
 
-- [x] Exactly one `<nav class="category-nav">` per page, server-rendered
-- [x] The nav streams **before** the Suspense fallback, i.e. it is outside the boundary
-- [x] The fallback region contains the 7 real nav items, not skeleton bars, and still contains the
-      card grid and facets sidebar
-- [x] Active highlight still correct via `useParams()`: `/category/cat_14` → `cat_14`,
-      `/category/cat_11` → `cat_11`, `/com_fr/category/cat_14` → the `com_fr` URL, homepage → none
-- [x] After hydration: 1 nav, 12 products, 0 leftover skeletons, no hydration mismatch
-- [x] `/category/cat_9999` still 404s (the `[code]/layout.tsx` guard is unaffected)
-- [ ] **The "no longer re-renders / submenu state survives" claim is not machine-verified.** It
-      follows from where the component now sits in the tree, but confirming it needs React DevTools
-      or opening a submenu and clicking another category in a real browser.
+-   [x] Exactly one `<nav class="category-nav">` per page, server-rendered
+-   [x] The nav streams **before** the Suspense fallback, i.e. it is outside the boundary
+-   [x] The fallback region contains the 7 real nav items, not skeleton bars, and still contains the
+        card grid and facets sidebar
+-   [x] Active highlight still correct via `useParams()`: `/category/cat_14` → `cat_14`,
+        `/category/cat_11` → `cat_11`, `/com_fr/category/cat_14` → the `com_fr` URL, homepage → none
+-   [x] After hydration: 1 nav, 12 products, 0 leftover skeletons, no hydration mismatch
+-   [x] `/category/cat_9999` still 404s (the `[code]/layout.tsx` guard is unaffected)
+-   [ ] **The "no longer re-renders / submenu state survives" claim is not machine-verified.** It
+        follows from where the component now sits in the tree, but confirming it needs React DevTools
+        or opening a submenu and clicking another category in a real browser.
 
 ## Already correct, checked while here
 
@@ -64,13 +64,13 @@ aggregations change with the query. Nothing else was shared across sibling route
 
 ## MUST NOT change
 
-- **Do not move `CategoryNav` back into a page component.** It looks equivalent and is not: it
-  remounts per navigation, discards submenu state, and re-enters the Suspense boundary so it blinks
-  out behind the skeleton.
-- **Do not re-add a nav skeleton to `CategoryPageSkeleton`** — the nav is above the boundary and
-  stays visible, so a skeleton there renders a duplicate bar.
-- Keep `CategoryNav` prop-less. Reintroducing `activeCode` would force the layout to know `[code]`,
-  which its segment does not have.
+-   **Do not move `CategoryNav` back into a page component.** It looks equivalent and is not: it
+    remounts per navigation, discards submenu state, and re-enters the Suspense boundary so it blinks
+    out behind the skeleton.
+-   **Do not re-add a nav skeleton to `CategoryPageSkeleton`** — the nav is above the boundary and
+    stays visible, so a skeleton there renders a duplicate bar.
+-   Keep `CategoryNav` prop-less. Reintroducing `activeCode` would force the layout to know `[code]`,
+    which its segment does not have.
 
 ---
 
@@ -100,17 +100,17 @@ flashing mid-request on a reload whose stale aggregations all turn out non-discr
 
 ### Checked and deliberately left alone
 
-- **`SearchPage` was already correct** — its `products-header` (count + sort) renders
-  unconditionally and only the count text and the grid swap. It was the model for this change.
-- **The product / blog grids are already stable.** `ProductGridSkeleton` and the real branch both
-  render `<div className="products-grid">` at the same position, so React reconciles the container
-  and replaces only its children. Same for `blog-grid`.
-- **`ProductPage` and `BlogPostPage` keep their whole-page `if (loading)` early return.** Their
-  shells are stable too, but since Phase 3 those branches are close to dead code: `sku` and `id`
-  come from route params, so navigating between products is a route change served by the server
-  with a pending-navigation skeleton, not a client refetch. Restructuring a 175-line component for a branch that
-  rarely runs is not worth the regression risk. **If either page ever gains a client-side way to
-  change its entity without a navigation, revisit this.**
+-   **`SearchPage` was already correct** — its `products-header` (count + sort) renders
+    unconditionally and only the count text and the grid swap. It was the model for this change.
+-   **The product / blog grids are already stable.** `ProductGridSkeleton` and the real branch both
+    render `<div className="products-grid">` at the same position, so React reconciles the container
+    and replaces only its children. Same for `blog-grid`.
+-   **`ProductPage` and `BlogPostPage` keep their whole-page `if (loading)` early return.** Their
+    shells are stable too, but since Phase 3 those branches are close to dead code: `sku` and `id`
+    come from route params, so navigating between products is a route change served by the server
+    with a pending-navigation skeleton, not a client refetch. Restructuring a 175-line component for a branch that
+    rarely runs is not worth the regression risk. **If either page ever gains a client-side way to
+    change its entity without a navigation, revisit this.**
 
 ### Verified
 
@@ -123,8 +123,8 @@ React DevTools or the eye, same limitation as the rest of the client-transition 
 
 ### MUST NOT change (additions)
 
-- **Do not restore an early `return` from `Facets` for the loading state.** It reads as simpler and
-  silently remounts the whole sidebar on every filter interaction.
-- `FacetsSkeleton` and `Facets` must keep rendering the **same** `<aside>`/`<h3>` shell; if one
-  gains a wrapper the other must too, or the route fallback and the component state will differ in
-  height.
+-   **Do not restore an early `return` from `Facets` for the loading state.** It reads as simpler and
+    silently remounts the whole sidebar on every filter interaction.
+-   `FacetsSkeleton` and `Facets` must keep rendering the **same** `<aside>`/`<h3>` shell; if one
+    gains a wrapper the other must too, or the route fallback and the component state will differ in
+    height.

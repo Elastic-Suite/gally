@@ -25,28 +25,28 @@ are a third-party vendor's fonts, not brand typography.
 
 ## Behaviour (testable)
 
-- [x] `public/index.html` loads `Geist:wght@400;500;600;700` from Google Fonts.
-      Those are the four weights elasticsuite.io ships **and** exactly the four this
-      stylesheet uses (audited: 400×2, 500×15, 600×39, 700×23; no 300, so Inter's 300
-      was dropped rather than carried over).
-- [x] Verified in a real browser: `document.fonts` reports **only** `Geist` — Playfair
-      and Inter are gone, not merely overridden. `document.fonts.check('700 2rem Geist')`
-      is `true`, so the face really rendered and did not silently fall back to Helvetica.
-      Computed `font-family` is Geist on the hero h1, body, buttons and nav links.
-- [x] One `.woff2` is fetched — Google serves Geist as a variable font, so all four
-      weights come from a single file. The previous pairing pulled two families.
+-   [x] `public/index.html` loads `Geist:wght@400;500;600;700` from Google Fonts.
+        Those are the four weights elasticsuite.io ships **and** exactly the four this
+        stylesheet uses (audited: 400×2, 500×15, 600×39, 700×23; no 300, so Inter's 300
+        was dropped rather than carried over).
+-   [x] Verified in a real browser: `document.fonts` reports **only** `Geist` — Playfair
+        and Inter are gone, not merely overridden. `document.fonts.check('700 2rem Geist')`
+        is `true`, so the face really rendered and did not silently fall back to Helvetica.
+        Computed `font-family` is Geist on the hero h1, body, buttons and nav links.
+-   [x] One `.woff2` is fetched — Google serves Geist as a variable font, so all four
+        weights come from a single file. The previous pairing pulled two families.
 
 ## Token rename
 
-- `--font-serif` → **`--font-display`** (10 use sites). The value is a sans now; a token
-  called "serif" holding Geist would mislead the next reader.
-- `--font-sans` keeps its name — still accurate.
-- Both resolve to the same Geist stack today. They stay **two** tokens deliberately: the
-  10 display sites still record "this is a title", so restoring a distinct display face
-  is a one-line change in `:root`.
-- Older specs (e.g. `feature-acp-focus-empty-state.md`) still refer to `--font-serif`.
-  They are historical records and were not rewritten; `docs/design-system.md` notes the
-  rename.
+-   `--font-serif` → **`--font-display`** (10 use sites). The value is a sans now; a token
+    called "serif" holding Geist would mislead the next reader.
+-   `--font-sans` keeps its name — still accurate.
+-   Both resolve to the same Geist stack today. They stay **two** tokens deliberately: the
+    10 display sites still record "this is a title", so restoring a distinct display face
+    is a one-line change in `:root`.
+-   Older specs (e.g. `feature-acp-focus-empty-state.md`) still refer to `--font-serif`.
+    They are historical records and were not rewritten; `docs/design-system.md` notes the
+    rename.
 
 ## Accepted consequence
 
@@ -65,23 +65,23 @@ panels are untouched — a generic keyword for code, not brand type.
 
 ## SDK contract used
 
-- None.
+-   None.
 
 ## Tracking (required)
 
-- No change.
+-   No change.
 
 ## UI constraints
 
-- No new hex, no new spacing. Two typography tokens changed value; one renamed.
-- No component markup changed — this is entirely `:root` plus the font `<link>`.
+-   No new hex, no new spacing. Two typography tokens changed value; one renamed.
+-   No component markup changed — this is entirely `:root` plus the font `<link>`.
 
 ## MUST NOT change
 
-- **Keep the weight list in `index.html` in sync with the stylesheet.** Using a weight
-  that is not requested makes the browser synthesise it (faux bold), which looks subtly
-  wrong rather than broken. Today: 400/500/600/700.
-- The `"Helvetica Neue", Helvetica, Arial` fallback chain — it is elasticsuite.io's own,
-  and it is what shows during `font-display: swap`.
-- Do not re-point `--font-display` at a serif without an approved spec; the palette and
-  the all-sans typography are now a matched pair.
+-   **Keep the weight list in `index.html` in sync with the stylesheet.** Using a weight
+    that is not requested makes the browser synthesise it (faux bold), which looks subtly
+    wrong rather than broken. Today: 400/500/600/700.
+-   The `"Helvetica Neue", Helvetica, Arial` fallback chain — it is elasticsuite.io's own,
+    and it is what shows during `font-display: swap`.
+-   Do not re-point `--font-display` at a serif without an approved spec; the palette and
+    the all-sans typography are now a matched pair.

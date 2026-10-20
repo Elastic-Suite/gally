@@ -27,16 +27,16 @@ the defect reachable, which is why it is fixed in the same change rather than le
 
 ## Behaviour (testable)
 
-- [x] `removeFromCart(sku, variant?)` and `updateQty(sku, qty, variant?)` take the variant and match
-      on the same pair `addToCart` dedupes on. `updateQty` at `qty <= 0` delegates to
-      `removeFromCart` rather than repeating the filter.
-- [x] All three call sites in `CartPage.tsx` pass `item.variant` (`:120`, `:122`, `:129`); a repo-wide
-      grep confirms there are no others (golden rule 1).
-- [x] `variant` stays optional, so `addToCart({...})` without one still produces a single line and
-      the pre-existing single-line behaviour is unchanged.
-- [ ] Two lines of the same parent (`VSK12` as "Pluie / M" and "Menthe / L") remove and re-quantify
-      independently in the browser. **Not verified — browser interaction was unavailable in this
-      session.** Verified only by reading the state transitions and by `tsc --noEmit`.
+-   [x] `removeFromCart(sku, variant?)` and `updateQty(sku, qty, variant?)` take the variant and match
+        on the same pair `addToCart` dedupes on. `updateQty` at `qty <= 0` delegates to
+        `removeFromCart` rather than repeating the filter.
+-   [x] All three call sites in `CartPage.tsx` pass `item.variant` (`:120`, `:122`, `:129`); a repo-wide
+        grep confirms there are no others (golden rule 1).
+-   [x] `variant` stays optional, so `addToCart({...})` without one still produces a single line and
+        the pre-existing single-line behaviour is unchanged.
+-   [ ] Two lines of the same parent (`VSK12` as "Pluie / M" and "Menthe / L") remove and re-quantify
+        independently in the browser. **Not verified — browser interaction was unavailable in this
+        session.** Verified only by reading the state transitions and by `tsc --noEmit`.
 
 ## SDK contract used
 
@@ -53,8 +53,8 @@ No visual change, no CSS.
 
 ## MUST NOT change
 
-- **The mutation identity must stay sku + variant, matching `addToCart`'s dedupe key and
-  `CartPage`'s row key.** All three must agree; if a future change adds a fourth notion of line
-  identity (a child SKU, a line id), it has to replace all three at once, not one of them.
-- `variant` must stay optional in both signatures — `ProductCard` and `SearchOverlay` add to cart
-  without one.
+-   **The mutation identity must stay sku + variant, matching `addToCart`'s dedupe key and
+    `CartPage`'s row key.** All three must agree; if a future change adds a fourth notion of line
+    identity (a child SKU, a line id), it has to replace all three at once, not one of them.
+-   `variant` must stay optional in both signatures — `ProductCard` and `SearchOverlay` add to cart
+    without one.

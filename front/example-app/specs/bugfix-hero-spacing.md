@@ -15,11 +15,11 @@ sat flush against it with no breathing room.
 
 ## Behaviour (testable)
 
-- [x] Changed `.hero`'s margin to `0 -2rem 2rem` — keeps the horizontal full-bleed background, restores the
-      natural `2rem` gap above the hero.
-- [x] `border-radius` switched from bottom-corners-only (`0 0 var(--radius-lg) var(--radius-lg)`, meant for a
-      hero flush against the header above it) to all corners, since the hero no longer touches the header.
+-   [x] Changed `.hero`'s margin to `0 -2rem 2rem` — keeps the horizontal full-bleed background, restores the
+        natural `2rem` gap above the hero.
+-   [x] `border-radius` switched from bottom-corners-only (`0 0 var(--radius-lg) var(--radius-lg)`, meant for a
+        hero flush against the header above it) to all corners, since the hero no longer touches the header.
 
 ## MUST NOT change
 
-- Horizontal full-bleed effect and gradient background — unaffected, only the top margin/radius changed.
+-   Horizontal full-bleed effect and gradient background — unaffected, only the top margin/radius changed.

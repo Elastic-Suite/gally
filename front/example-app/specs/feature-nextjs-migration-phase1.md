@@ -19,20 +19,20 @@ here forces `pwa` off its versions.
 
 ## Behaviour (testable)
 
-- [x] All 11 routes return 200: `/`, `/category/:code`, `/search`, `/product/:sku`, `/cart`,
-      `/checkout`, `/blog`, `/blog/:id`, `/cms/:slug`, `/explain`, `/closing`
-- [x] Client JS hydrates and the SDK fetches: `/product/VD10` renders `<h1>Claudia Crochet Dress</h1>`
-      and the `.btn-primary` add-to-cart after JS runs (headless Chrome `--dump-dom`)
-- [x] `/search?q=dress` renders product cards after hydration
-- [x] No hydration mismatch in the console (after the Facets fix below)
-- [x] i18n still follows the catalog: console shows `languageChanged en` → `languageChanged fr`
-- [x] `basePath` correct — assets at `/example/_next/static`, links at `/example/blog`, no doubling
-- [x] `npx tsc --noEmit` clean under TypeScript 5.9
-- [x] HMR works through the proxy — `[HMR] connected`, no nginx change needed
-- [ ] **Autocomplete overlay** (the portal fix) — needs a real interactive browser; NOT verified
-- [ ] **Facets / Products-Articles switch / add-to-cart / pagination** — NOT verified interactively
-- [ ] **Demo scaffolding**: IntroScreen gate, StoryCompanion, TrackingInsights, EventLog — NOT verified
-- [ ] **Tracking `VIEW` / `SEARCH` / `ADD_TO_CART`** — NOT verified, see below
+-   [x] All 11 routes return 200: `/`, `/category/:code`, `/search`, `/product/:sku`, `/cart`,
+        `/checkout`, `/blog`, `/blog/:id`, `/cms/:slug`, `/explain`, `/closing`
+-   [x] Client JS hydrates and the SDK fetches: `/product/VD10` renders `<h1>Claudia Crochet Dress</h1>`
+        and the `.btn-primary` add-to-cart after JS runs (headless Chrome `--dump-dom`)
+-   [x] `/search?q=dress` renders product cards after hydration
+-   [x] No hydration mismatch in the console (after the Facets fix below)
+-   [x] i18n still follows the catalog: console shows `languageChanged en` → `languageChanged fr`
+-   [x] `basePath` correct — assets at `/example/_next/static`, links at `/example/blog`, no doubling
+-   [x] `npx tsc --noEmit` clean under TypeScript 5.9
+-   [x] HMR works through the proxy — `[HMR] connected`, no nginx change needed
+-   [ ] **Autocomplete overlay** (the portal fix) — needs a real interactive browser; NOT verified
+-   [ ] **Facets / Products-Articles switch / add-to-cart / pagination** — NOT verified interactively
+-   [ ] **Demo scaffolding**: IntroScreen gate, StoryCompanion, TrackingInsights, EventLog — NOT verified
+-   [ ] **Tracking `VIEW` / `SEARCH` / `ADD_TO_CART`** — NOT verified, see below
 
 ## Second hydration bug found and fixed: `Facets.tsx` skeleton widths
 
@@ -77,14 +77,14 @@ are ported verbatim from the deleted `public/index.html`.
 
 **Entry / shell**
 
-- `src/index.tsx` → `app/layout.tsx` (server: `<html>`, `<head>`, global CSS, static title) +
-  `app/providers.tsx` (`'use client'`, the provider tree in the same order).
-- `src/App.tsx` → `src/components/AppShell.tsx` — identical, minus its `<Routes>` block, which
-  becomes `{children}`.
-- `public/index.html`, `src/react-app-env.d.ts`, `scripts/patch-fork-ts.js` (+ its `prestart` hook)
-  deleted. The patch script existed to work around a `fork-ts-checker-webpack-plugin` crash under
-  TS 5 — a CRA-only concern that left with `react-scripts`.
-- `basename="/example"` → `basePath: '/example'`. Port stays 3001, so compose and nginx are untouched.
+-   `src/index.tsx` → `app/layout.tsx` (server: `<html>`, `<head>`, global CSS, static title) +
+    `app/providers.tsx` (`'use client'`, the provider tree in the same order).
+-   `src/App.tsx` → `src/components/AppShell.tsx` — identical, minus its `<Routes>` block, which
+    becomes `{children}`.
+-   `public/index.html`, `src/react-app-env.d.ts`, `scripts/patch-fork-ts.js` (+ its `prestart` hook)
+    deleted. The patch script existed to work around a `fork-ts-checker-webpack-plugin` crash under
+    TS 5 — a CRA-only concern that left with `react-scripts`.
+-   `basename="/example"` → `basePath: '/example'`. Port stays 3001, so compose and nginx are untouched.
 
 **Routing** — 18 files across 6 API kinds, all mechanical:
 `Link`→`next/link` with `to`→`href` · `useParams`/`useSearchParams`→`next/navigation` (note
@@ -115,15 +115,15 @@ mystery.
 
 Two smaller consequences of dropping `react-scripts`, noted rather than expanded into scope:
 
-- `"test": "react-scripts test"` → `echo "no tests"`. There are zero test files in this app.
-- `.eslintrc.js` lost `extends: ['react-app']` with `eslint-config-react-app`. Its replacement
-  `next/core-web-vitals` needs eslint ≥ 9 and flat config, but this monorepo runs eslint 8.23.1 —
-  so the config keeps only its rule overrides. `eslint-config-next` is installed but **cannot
-  currently be used**; nothing runs eslint in this workspace anyway.
-  **Superseded 2026-10-06:** the app now has its own `eslint` ^9.39.0 and `eslint.config.mjs`
-  (flat config, `next/core-web-vitals` + `next/typescript`). `.eslintrc.js` and `.eslintignore`
-  are gone. pwa stays on eslint 8.23.1 with the shared `front/.eslintrc.js`. eslint 10 is not an
-  option yet: `eslint-plugin-react` 7.37.5, pulled in by `eslint-config-next`, accepts eslint up to 9.
+-   `"test": "react-scripts test"` → `echo "no tests"`. There are zero test files in this app.
+-   `.eslintrc.js` lost `extends: ['react-app']` with `eslint-config-react-app`. Its replacement
+    `next/core-web-vitals` needs eslint ≥ 9 and flat config, but this monorepo runs eslint 8.23.1 —
+    so the config keeps only its rule overrides. `eslint-config-next` is installed but **cannot
+    currently be used**; nothing runs eslint in this workspace anyway.
+    **Superseded 2026-10-06:** the app now has its own `eslint` ^9.39.0 and `eslint.config.mjs`
+    (flat config, `next/core-web-vitals` + `next/typescript`). `.eslintrc.js` and `.eslintignore`
+    are gone. pwa stays on eslint 8.23.1 with the shared `front/.eslintrc.js`. eslint 10 is not an
+    option yet: `eslint-plugin-react` 7.37.5, pulled in by `eslint-config-next`, accepts eslint up to 9.
 
 ## Pre-existing gap, explicitly left alone
 
@@ -135,24 +135,24 @@ decision; do not go looking for scripts to preserve.
 **Closed 2026-10-06.** The claim above was wrong: on `main` the CRA app had all of them. They are
 back, adapted to Next:
 
-- `typescript` / `typescript:ci`: `next typegen && tsc --noEmit`. `next typegen` writes
-  `next-env.d.ts`, which is gitignored, so `tsc` can run before any build.
-- `prettier` / `prettier:ci`: the shared `front/.prettierrc` style, no semicolons. The app
-  declares `prettier` 2.7.1 itself. Without that, its bin falls through to the root
-  `node_modules/.bin/prettier`, which yarn links to Storybook's nested 2.3.0. That version
-  cannot parse inline `import { x, type Y }`.
-- `eslint` / `eslint:ci`: `eslint --fix .` / `eslint .`, using the flat config above.
-- `test:ci`: `echo "no tests"`, like `test`.
+-   `typescript` / `typescript:ci`: `next typegen && tsc --noEmit`. `next typegen` writes
+    `next-env.d.ts`, which is gitignored, so `tsc` can run before any build.
+-   `prettier` / `prettier:ci`: the shared `front/.prettierrc` style, no semicolons. The app
+    declares `prettier` 2.7.1 itself. Without that, its bin falls through to the root
+    `node_modules/.bin/prettier`, which yarn links to Storybook's nested 2.3.0. That version
+    cannot parse inline `import { x, type Y }`.
+-   `eslint` / `eslint:ci`: `eslint --fix .` / `eslint .`, using the flat config above.
+-   `test:ci`: `echo "no tests"`, like `test`.
 
 ## MUST NOT change
 
-- **Tracking.** `VIEW` / `SEARCH` / `ADD_TO_CART` firing after hydration is the golden rule.
-- **The provider order** `CatalogProvider › I18nBridge › CartProvider › DemoProvider › SearchBarProvider`. `I18nBridge` sits inside `CatalogProvider` because it reacts to the selected
-  localized catalog's locale; reordering silently breaks UI language switching.
-- **The `app-layout mode-${audience}` wrapper class**, which drives the `.expert-only` CSS.
-- **No `/example` prefix in any `href`.** `basePath` adds it, exactly as `basename` did. Hard-coding
-  it produces `/example/example/...`.
-- **Zero visual change.** Any styling difference in this phase is a bug, not an improvement.
-- Guided-story steps are NOT repaired here. `useStoryActions.ts` targets
-  `.product-detail-actions .btn-coral`, which was **already stale before this migration** (the button
-  moved to `.btn-primary`). Per `plan-ssr-seo.md` that is accepted, not a regression to chase.
+-   **Tracking.** `VIEW` / `SEARCH` / `ADD_TO_CART` firing after hydration is the golden rule.
+-   **The provider order** `CatalogProvider › I18nBridge › CartProvider › DemoProvider › SearchBarProvider`. `I18nBridge` sits inside `CatalogProvider` because it reacts to the selected
+    localized catalog's locale; reordering silently breaks UI language switching.
+-   **The `app-layout mode-${audience}` wrapper class**, which drives the `.expert-only` CSS.
+-   **No `/example` prefix in any `href`.** `basePath` adds it, exactly as `basename` did. Hard-coding
+    it produces `/example/example/...`.
+-   **Zero visual change.** Any styling difference in this phase is a bug, not an improvement.
+-   Guided-story steps are NOT repaired here. `useStoryActions.ts` targets
+    `.product-detail-actions .btn-coral`, which was **already stale before this migration** (the button
+    moved to `.btn-primary`). Per `plan-ssr-seo.md` that is accepted, not a regression to chase.

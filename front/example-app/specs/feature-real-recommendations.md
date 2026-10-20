@@ -29,29 +29,29 @@ Premium GraphQL query:
 productRecommendations(recommendationType: String!, localizedCatalog: String!, productSkus: [String!]!, productCount: Int)
 ```
 
-- It returns a flat list of `Product`, the same type as search, so `productFields(catalogCode)` works as
-  the selection and `ProductCard` renders the results unchanged.
-- Seed SKUs are never returned.
-- Types: `cross-sell`, `upsell`, `related_product`. Rules are fixed SKU-to-SKU lists in the fixtures.
-  Papershop has no `related_product` rules.
-- `fetchProductRecommendations` calls it through the SDK's `RecommenderManager.getProductRecommendations`
-  (added 2026-10-09, see "Follow-up" below). It first used a raw `fetch`, like vector search does.
-- The caller must add `price { price }` and `stock { status }` itself. The SDK appends them to every
-  search, but not to recommendations, so `productFields()` leaves them out. Without them every recommended
-  card showed 0,00 €.
+-   It returns a flat list of `Product`, the same type as search, so `productFields(catalogCode)` works as
+    the selection and `ProductCard` renders the results unchanged.
+-   Seed SKUs are never returned.
+-   Types: `cross-sell`, `upsell`, `related_product`. Rules are fixed SKU-to-SKU lists in the fixtures.
+    Papershop has no `related_product` rules.
+-   `fetchProductRecommendations` calls it through the SDK's `RecommenderManager.getProductRecommendations`
+    (added 2026-10-09, see "Follow-up" below). It first used a raw `fetch`, like vector search does.
+-   The caller must add `price { price }` and `stock { status }` itself. The SDK appends them to every
+    search, but not to recommendations, so `productFields()` leaves them out. Without them every recommended
+    card showed 0,00 €.
 
 ## Behaviour (testable)
 
-- [x] The PDP asks for `related_product` seeded with its SKU, then `cross-sell` if that is empty, up to 6
-      products. The block is hidden when both are empty.
-- [x] The cart asks for `cross-sell` seeded with the parent SKU of every line (`CartItem.sku`, not
-      `childSku`), up to 8 products. The block is hidden when empty.
-- [x] The accessory pack and the "frequently bought together" block are gone, with their constants, state,
-      summary row, locale keys (`bundle.*`, `fbt.*`, `summary.frequentlyBoughtTogether`) and CSS
-      (`.cart-bundle*`, `.fbt-*`). The cart total is the item subtotal plus shipping.
-- [x] The demo and story texts no longer say that tracking or orders feed recommendations. The closing
-      timeline says recommendations come from cross-sell, upsell and related-product rules.
-- [x] Any API error returns `[]`, which hides the block rather than breaking the page.
+-   [x] The PDP asks for `related_product` seeded with its SKU, then `cross-sell` if that is empty, up to 6
+        products. The block is hidden when both are empty.
+-   [x] The cart asks for `cross-sell` seeded with the parent SKU of every line (`CartItem.sku`, not
+        `childSku`), up to 8 products. The block is hidden when empty.
+-   [x] The accessory pack and the "frequently bought together" block are gone, with their constants, state,
+        summary row, locale keys (`bundle.*`, `fbt.*`, `summary.frequentlyBoughtTogether`) and CSS
+        (`.cart-bundle*`, `.fbt-*`). The cart total is the item subtotal plus shipping.
+-   [x] The demo and story texts no longer say that tracking or orders feed recommendations. The closing
+        timeline says recommendations come from cross-sell, upsell and related-product rules.
+-   [x] Any API error returns `[]`, which hides the block rather than breaking the page.
 
 ## Follow-up 2026-10-09: the SDK makes the call
 
@@ -59,12 +59,12 @@ The SDK (`front/gally-admin/packages/sdk`) now ports the PHP SDK's recommender f
 `RecommenderManager.getProductRecommendations(type, localizedCatalog, skus, count?, fields)`. It selects
 `sku` plus the given fields and nothing else, as the PHP SDK does, so this app still adds price and stock.
 
-- [x] `src/sdk/recommendations.ts` calls `getRecommenderManager().getProductRecommendations` instead of `fetch`.
-- [ ] The PDP and cart blocks show the same products, with prices, as before the switch.
-- [ ] An API error still returns `[]` and hides the block.
+-   [x] `src/sdk/recommendations.ts` calls `getRecommenderManager().getProductRecommendations` instead of `fetch`.
+-   [ ] The PDP and cart blocks show the same products, with prices, as before the switch.
+-   [ ] An API error still returns `[]` and hides the block.
 
 ## MUST NOT change
 
-- Recommended cards add to the cart through `ProductCard`/`QuickAdd`, so add-to-cart tracking is unchanged.
-- The free-shipping bar and threshold are unchanged.
-- The homepage rows are still plain listings. They are not presented as recommendations.
+-   Recommended cards add to the cart through `ProductCard`/`QuickAdd`, so add-to-cart tracking is unchanged.
+-   The free-shipping bar and threshold are unchanged.
+-   The homepage rows are still plain listings. They are not presented as recommendations.

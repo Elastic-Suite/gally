@@ -84,12 +84,12 @@ Three reasons latest is the low-friction choice here, not the risky one:
 
 Version-specific work to budget for:
 
-- **`params` and `searchParams` are async** in Next 15+. Every dynamic route (`[locale]`,
-  `[sku]`, `[code]`, `[id]`) must `await` them. Mechanical, but it touches every page.
-- Caching defaults changed from the Next 14 era — fetch results are no longer cached by default;
-  be explicit rather than relying on remembered behaviour.
-- **`next-i18next` is Pages-Router only** — do not reach for it because `pwa` uses it. Keep
-  `react-i18next` for the client islands and resolve server-side strings from the locale segment.
+-   **`params` and `searchParams` are async** in Next 15+. Every dynamic route (`[locale]`,
+    `[sku]`, `[code]`, `[id]`) must `await` them. Mechanical, but it touches every page.
+-   Caching defaults changed from the Next 14 era — fetch results are no longer cached by default;
+    be explicit rather than relying on remembered behaviour.
+-   **`next-i18next` is Pages-Router only** — do not reach for it because `pwa` uses it. Keep
+    `react-i18next` for the client islands and resolve server-side strings from the locale segment.
 
 Conservative fallback if 16.x churn bites during Phase 1: **15.3.9**, same architecture, same
 React 19, no plan changes.
@@ -100,11 +100,11 @@ React 19, no plan changes.
 
 Per-route shells that fetch with the SDK main entry and render crawlable HTML:
 
-- `/[locale]/product/[sku]` — name, description, price, image, breadcrumb + `Product` +
-  `BreadcrumbList` JSON-LD
-- `/[locale]/category/[code]` — first page of products + facet aggregations, `BreadcrumbList`
-- `/[locale]/blog/[id]` — the best candidate: `cms_page` content is editorial HTML, nearly
-  static, ideal for RSC. `BlogPosting` JSON-LD
+-   `/[locale]/product/[sku]` — name, description, price, image, breadcrumb + `Product` +
+    `BreadcrumbList` JSON-LD
+-   `/[locale]/category/[code]` — first page of products + facet aggregations, `BreadcrumbList`
+-   `/[locale]/blog/[id]` — the best candidate: `cms_page` content is editorial HTML, nearly
+    static, ideal for RSC. `BlogPosting` JSON-LD
 
 Each exports `generateMetadata()` → `title`, `description`, `canonical`, `openGraph`, `hreflang`.
 
@@ -141,18 +141,18 @@ Bare `/` redirects to a default localized catalog.
 
 Verified, because the preference is not to touch it:
 
-- The container's `CMD` is `yarn start:example` → `yarn --cwd example-app start`
-  (`docker/front/Dockerfile:82`, `front/package.json`). **The run command lives in
-  `package.json`, not in docker.** `react-scripts start` → `next dev -p 3001` is a one-line
-  change inside the workspace; the Dockerfile keeps working untouched.
-- Port stays 3001, so `EXAMPLE_UPSTREAM=example:3001` is unchanged.
-- nginx `location ~ ^/(example|ws)` already matches everything Next serves under
-  `basePath: '/example'`, including `/example/_next/*`. No router change for routing or assets.
-- There is **no `gally_example_prod` target** — only `_ci` and `_dev`. The example app only ever
-  runs in dev mode in this stack, and `next dev` performs real SSR, so the entire SEO
-  verification below works without building a production image.
-- `PUBLIC_URL` (compose) and `ENV WDS_SOCKET_PORT 443` (Dockerfile) become dead CRA leftovers.
-  Harmless — leave them, clean up whenever docker is next touched for another reason.
+-   The container's `CMD` is `yarn start:example` → `yarn --cwd example-app start`
+    (`docker/front/Dockerfile:82`, `front/package.json`). **The run command lives in
+    `package.json`, not in docker.** `react-scripts start` → `next dev -p 3001` is a one-line
+    change inside the workspace; the Dockerfile keeps working untouched.
+-   Port stays 3001, so `EXAMPLE_UPSTREAM=example:3001` is unchanged.
+-   nginx `location ~ ^/(example|ws)` already matches everything Next serves under
+    `basePath: '/example'`, including `/example/_next/*`. No router change for routing or assets.
+-   There is **no `gally_example_prod` target** — only `_ci` and `_dev`. The example app only ever
+    runs in dev mode in this stack, and `next dev` performs real SSR, so the entire SEO
+    verification below works without building a production image.
+-   `PUBLIC_URL` (compose) and `ENV WDS_SOCKET_PORT 443` (Dockerfile) become dead CRA leftovers.
+    Harmless — leave them, clean up whenever docker is next touched for another reason.
 
 **The one thing that could force a docker touch, and the fallback.** The `^/(example|ws)` block
 sets no websocket upgrade headers (`proxy_set_header Upgrade / Connection`); CRA sidesteps that
@@ -168,20 +168,20 @@ break, and SSR/SEO are unaffected. If it bites, it is two `proxy_set_header` lin
 The de-risking step: get Next App Router running with **everything still a client component**
 (a `'use client'` at the top of the existing tree). Mechanical and reviewable; no RSC yet.
 
-- Replace `react-scripts` with `next@16`; delete `scripts/patch-fork-ts.js` (a CRA/fork-ts-checker
-  hack, dead here) and its `prestart` hook. React stays at 19 — no change.
-- `await` `params` / `searchParams` in every dynamic route (Next 15+ made them async).
-- `public/index.html` → `app/layout.tsx`. Keep the Geist `<link>` (or move to `next/font`).
-  Import `src/styles.css` in the root layout — one global stylesheet still works.
-- `react-router-dom` → App Router file routes; `Link` from `next/link`;
-  `useSearchParams`/`useParams`/`useRouter` from `next/navigation`. `App.tsx`'s `<Routes>` maps
-  1:1 onto `app/**/page.tsx`.
-- `PUBLIC_URL=/example` → `basePath: '/example'` + `assetPrefix` in `next.config.js`.
-- `example-app`'s own `start` script: `react-scripts start` → `next dev -p 3001`.
-  **This is the only place the run command needs to change** — see below.
-- SVG imports: `src/assets/elasticsuite-solutions.svg` currently resolves to a URL string via
-  CRA. Next static import yields `StaticImageData` — use `logo.src` or `next/image`.
-- `example-app` is already a yarn workspace (`front/package.json`), so no workspace change.
+-   Replace `react-scripts` with `next@16`; delete `scripts/patch-fork-ts.js` (a CRA/fork-ts-checker
+    hack, dead here) and its `prestart` hook. React stays at 19 — no change.
+-   `await` `params` / `searchParams` in every dynamic route (Next 15+ made them async).
+-   `public/index.html` → `app/layout.tsx`. Keep the Geist `<link>` (or move to `next/font`).
+    Import `src/styles.css` in the root layout — one global stylesheet still works.
+-   `react-router-dom` → App Router file routes; `Link` from `next/link`;
+    `useSearchParams`/`useParams`/`useRouter` from `next/navigation`. `App.tsx`'s `<Routes>` maps
+    1:1 onto `app/**/page.tsx`.
+-   `PUBLIC_URL=/example` → `basePath: '/example'` + `assetPrefix` in `next.config.js`.
+-   `example-app`'s own `start` script: `react-scripts start` → `next dev -p 3001`.
+    **This is the only place the run command needs to change** — see below.
+-   SVG imports: `src/assets/elasticsuite-solutions.svg` currently resolves to a URL string via
+    CRA. Next static import yields `StaticImageData` — use `logo.src` or `next/image`.
+-   `example-app` is already a yarn workspace (`front/package.json`), so no workspace change.
 
 **Exit criteria:** every route renders identically, tracking still fires, `docker compose logs example` clean. No SEO yet.
 
@@ -197,22 +197,22 @@ The de-risking step: get Next App Router running with **everything still a clien
 
 **Scripts** (`front/example-app/package.json`)
 
-- `start`: `react-scripts start` → `next dev -p 3001` (port unchanged, so nginx/compose untouched)
-- `build`: `next build`
-- `test` / `test:ci`: **must keep existing** — root `front/package.json`'s `test:ci` calls
-  `yarn --cwd example-app test:ci`, so removing it breaks CI. **There are no test files at all**
-  (`find src -name '*.test.*'` → empty), so mirror `pwa`'s `jest --passWithNoTests`. No tests to port.
-- keep `eslint` / `prettier` / `typescript` script names — the root aggregates them.
+-   `start`: `react-scripts start` → `next dev -p 3001` (port unchanged, so nginx/compose untouched)
+-   `build`: `next build`
+-   `test` / `test:ci`: **must keep existing** — root `front/package.json`'s `test:ci` calls
+    `yarn --cwd example-app test:ci`, so removing it breaks CI. **There are no test files at all**
+    (`find src -name '*.test.*'` → empty), so mirror `pwa`'s `jest --passWithNoTests`. No tests to port.
+-   keep `eslint` / `prettier` / `typescript` script names — the root aggregates them.
 
 **Entry and shell**
 
-- `src/index.tsx` (30 lines: `StrictMode` › `BrowserRouter basename="/example"` › `CatalogProvider`
-  › `I18nBridge` › `CartProvider` › `DemoProvider` › `SearchBarProvider` › `App`) →
-  `app/layout.tsx` plus a `'use client'` `<Providers>` wrapper holding the same tree.
-  `basename` → `basePath: '/example'`.
-- `public/index.html` → `app/layout.tsx` (Geist `<link>`, viewport, `noscript`, title).
-- `src/react-app-env.d.ts` → `next-env.d.ts`; `.eslintrc.js` `extends: ['react-app']` →
-  `['next/core-web-vitals']`.
+-   `src/index.tsx` (30 lines: `StrictMode` › `BrowserRouter basename="/example"` › `CatalogProvider`
+    › `I18nBridge` › `CartProvider` › `DemoProvider` › `SearchBarProvider` › `App`) →
+    `app/layout.tsx` plus a `'use client'` `<Providers>` wrapper holding the same tree.
+    `basename` → `basePath: '/example'`.
+-   `public/index.html` → `app/layout.tsx` (Geist `<link>`, viewport, `noscript`, title).
+-   `src/react-app-env.d.ts` → `next-env.d.ts`; `.eslintrc.js` `extends: ['react-app']` →
+    `['next/core-web-vitals']`.
 
 **Routing — 18 files, a small and mechanical surface**
 
@@ -232,11 +232,11 @@ boundary just below the layout, so behaviour is provably identical; Phase 3 push
 
 **SSR-safety — the one certain breakage**
 
-- `src/components/SearchOverlay.tsx:119,129` calls `createPortal(…, document.body)` **during
-  render, unguarded**. That throws `document is not defined` as soon as the server renders it.
-  Needs a mount guard. This will be the first thing that fails.
-- `src/hooks/useStoryActions.ts` touches `document` in 6 places, but all inside callbacks — safe.
-- No `localStorage` / `window` at module scope anywhere — checked. Good.
+-   `src/components/SearchOverlay.tsx:119,129` calls `createPortal(…, document.body)` **during
+    render, unguarded**. That throws `document is not defined` as soon as the server renders it.
+    Needs a mount guard. This will be the first thing that fails.
+-   `src/hooks/useStoryActions.ts` touches `document` in 6 places, but all inside callbacks — safe.
+-   No `localStorage` / `window` at module scope anywhere — checked. Good.
 
 **Assets** — `src/assets/elasticsuite-solutions.svg` resolves to a URL string under CRA; a Next
 static import yields `StaticImageData`, so use `logo.src` or `next/image`.
@@ -290,24 +290,24 @@ order of magnitude, not a budget.
 
 ### What would blow the estimate
 
-- **Hydration mismatches.** The concrete one already in the code: `formatCmsDate()` in
-  `src/hooks/useCms.ts` calls `toLocaleDateString(language)`, and Node's ICU can format
-  differently from the browser's — a classic server/client mismatch. Same class of risk anywhere
-  rendering depends on locale or time.
-- **The demo scaffolding is deeply client-side and wraps everything.** `App.tsx` gates on
-  `useDemo()`, and `useStoryActions.ts` (229 lines) drives guided flows that manipulate
-  navigation. Getting `'use client'` boundaries right around this is fiddlier than around the
-  storefront pages themselves.
-- **Install-time resolution**: yarn classic, nested React 19 in `example-app` alongside hoisted
-  React 18, plus Next 16. It should work — the React split already does — but a bad resolve here
-  stalls Phase 1 before any code is written.
+-   **Hydration mismatches.** The concrete one already in the code: `formatCmsDate()` in
+    `src/hooks/useCms.ts` calls `toLocaleDateString(language)`, and Node's ICU can format
+    differently from the browser's — a classic server/client mismatch. Same class of risk anywhere
+    rendering depends on locale or time.
+-   **The demo scaffolding is deeply client-side and wraps everything.** `App.tsx` gates on
+    `useDemo()`, and `useStoryActions.ts` (229 lines) drives guided flows that manipulate
+    navigation. Getting `'use client'` boundaries right around this is fiddlier than around the
+    storefront pages themselves.
+-   **Install-time resolution**: yarn classic, nested React 19 in `example-app` alongside hoisted
+    React 18, plus Next 16. It should work — the React split already does — but a bad resolve here
+    stalls Phase 1 before any code is written.
 
 ### What would shrink it
 
-- Dropping Phase 2 (locale in URL) roughly halves the remaining work — but it is what makes the
-  server able to resolve the catalog, so the SSR story gets much weaker.
-- Doing Phase 3 on **one** route (blog post — nearly static content, fewest client islands)
-  instead of three still demonstrates the whole story.
+-   Dropping Phase 2 (locale in URL) roughly halves the remaining work — but it is what makes the
+    server able to resolve the catalog, so the SSR story gets much weaker.
+-   Doing Phase 3 on **one** route (blog post — nearly static content, fewest client islands)
+    instead of three still demonstrates the whole story.
 
 ## Preserving the demo features under SSR
 
@@ -353,15 +353,15 @@ selector: '.facets-sidebar' / '.tracking-timeline' / '.explain-results-page'
 childSelector: '.facet-group' / '.explain-rank-card' / '.timeline-item'
 ```
 
-- **One step is already broken, before any SSR work.** The add-to-cart button moved from
-  `.btn-coral` to `.btn-primary`, so `.product-detail-actions` contains no `.btn-coral`; that step
-  retries 20 × 300ms and gives up in silence. Left as-is per the decision above.
-- **SSR does not break the selectors** — the server emits the same markup. It adds two failure
-  modes the rebuild should design for: _streaming_ (a target may not exist yet — the existing
-  retry-with-timeout already absorbs this) and _hydration_ (clicking a button that is in the DOM
-  but not yet hydrated does nothing).
-- When it is rebuilt, coupling actions to stable `data-story-target="…"` attributes instead of CSS
-  class names removes this entire failure class. Noted for that work, not for this.
+-   **One step is already broken, before any SSR work.** The add-to-cart button moved from
+    `.btn-coral` to `.btn-primary`, so `.product-detail-actions` contains no `.btn-coral`; that step
+    retries 20 × 300ms and gives up in silence. Left as-is per the decision above.
+-   **SSR does not break the selectors** — the server emits the same markup. It adds two failure
+    modes the rebuild should design for: _streaming_ (a target may not exist yet — the existing
+    retry-with-timeout already absorbs this) and _hydration_ (clicking a button that is in the DOM
+    but not yet hydrated does nothing).
+-   When it is rebuilt, coupling actions to stable `data-story-target="…"` attributes instead of CSS
+    class names removes this entire failure class. Noted for that work, not for this.
 
 Expect some guided steps to be broken after the migration. That is accepted, not a regression to
 chase.
@@ -397,9 +397,9 @@ The showcase _is_ the verification — all of it must hold with JavaScript disab
 
 ## Docs to update — currently all assume CRA
 
-- `front/example-app/AGENTS.md` — the Definition of done says _"never `npm run build` on the
-  host"_ and `docker compose exec example yarn build`; the commands change.
-- `.claude/skills/gally-storefront/SKILL.md` — same verification section.
-- `docs/architecture.md` — the `src/` map gains `app/` and a server/client split.
-- `docs/sdk-reference.md` — record the main-vs-`./browser` entry rule, which becomes load-bearing.
-- A spec per phase in `specs/`, per the existing ritual.
+-   `front/example-app/AGENTS.md` — the Definition of done says _"never `npm run build` on the
+    host"_ and `docker compose exec example yarn build`; the commands change.
+-   `.claude/skills/gally-storefront/SKILL.md` — same verification section.
+-   `docs/architecture.md` — the `src/` map gains `app/` and a server/client split.
+-   `docs/sdk-reference.md` — record the main-vs-`./browser` entry rule, which becomes load-bearing.
+-   A spec per phase in `specs/`, per the existing ritual.

@@ -12,9 +12,9 @@ import {
 //
 // NEXT_PUBLIC_API_URL is the public URL, used by the browser. Next writes it into the bundles
 // when it builds (at `next dev` start in dev), so it must stay literal here.
-// SSR_API_URL is an optional URL for server-side calls only, read at runtime. Locally it is
-// http://router/api, because gally.localhost is 127.0.0.1 inside the container. Without it the
-// server calls the public URL too (int reaches it through extra_hosts).
+// SSR_API_URL is an optional URL for server-side calls only, read at runtime.
+// Locally it is http://router/api, because gally.localhost is 127.0.0.1 inside the container.
+// Without it the server calls the public URL too.
 export function getBaseUri(): string {
   const publicUri =
     process.env.NEXT_PUBLIC_API_URL || 'https://gally.localhost/api'

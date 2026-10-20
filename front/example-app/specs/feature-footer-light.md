@@ -18,37 +18,37 @@ The lockup and the links are not copied markup: they were extracted from `Header
 
 ## Behaviour (testable)
 
-- [x] Footer row 1: the lockup on the left, Produits / Blog / (Search Intelligence, expert mode) /
-      Recherche sémantique on the right, grey, the current section underlined in indigo.
-- [x] Row 2: "Propulsé par Gally - …" centred, the Gally link in indigo.
-- [x] The header looks and behaves exactly as before the extraction.
-- [x] The footer's active link follows the route (Produits underlined on a category page).
+-   [x] Footer row 1: the lockup on the left, Produits / Blog / (Search Intelligence, expert mode) /
+        Recherche sémantique on the right, grey, the current section underlined in indigo.
+-   [x] Row 2: "Propulsé par Gally - …" centred, the Gally link in indigo.
+-   [x] The header looks and behaves exactly as before the extraction.
+-   [x] The footer's active link follows the route (Produits underlined on a category page).
 
 Verified 2026-09-24 on screenshots of the running app at 1440px and 390px.
 
 ## SDK contract used
 
-- None.
+-   None.
 
 ## Tracking (required)
 
-- None changed.
+-   None changed.
 
 ## UI constraints
 
-- Tokens only. The link rules are shared by `.header-nav > a` and `.footer-nav > a`.
+-   Tokens only. The link rules are shared by `.header-nav > a` and `.footer-nav > a`.
 
 ## Known, out of scope
 
-- On narrow screens the floating Insights button (bottom left) covers part of the powered-by line.
-  It did so on the dark footer too.
+-   On narrow screens the floating Insights button (bottom left) covers part of the powered-by line.
+    It did so on the dark footer too.
 
 ## MUST NOT change
 
-- `BrandLockup` keeps `href="/"`, `aria-label={t('brand.ariaLabel')}` and the `aria-hidden` words
-  (`feature-logo-gally-example.md`).
-- `SectionLinks` keeps the header's rules: active state from `useAppPathname()`, `expert-only` on
-  Search Intelligence only, the Vector search link always visible.
-- The powered-by link targets the vendor product page, not gally.io (see the comment in Footer.tsx).
-- `.footer p a` is the only coloured footer link rule: a plain `.footer a` would recolour the
-  section links.
+-   `BrandLockup` keeps `href="/"`, `aria-label={t('brand.ariaLabel')}` and the `aria-hidden` words
+    (`feature-logo-gally-example.md`).
+-   `SectionLinks` keeps the header's rules: active state from `useAppPathname()`, `expert-only` on
+    Search Intelligence only, the Vector search link always visible.
+-   The powered-by link targets the vendor product page, not gally.io (see the comment in Footer.tsx).
+-   `.footer p a` is the only coloured footer link rule: a plain `.footer a` would recolour the
+    section links.

@@ -6,46 +6,46 @@
 
 ## Behaviour (testable)
 
-- [x] The backend truncates each aggregation's option list to ~10 and signals more exist via
-      `aggregation.hasMore`. Previously "Show more" only revealed already-loaded options past index 5 —
-      it could never surface values 11+ that the backend never sent.
-- [x] When `aggregation.hasMore` is true and the facet hasn't fetched the full list yet, clicking
-      "Show more" calls `onLoadMore(aggregation.field)` (wired from the page via `useSearch`'s
-      `viewMoreOptions`), which fetches the **complete** option list for that field and replaces the
-      facet's working option set (`extraOptions`) with it, then expands.
-- [x] Once fetched, the existing client-side search-within-facet input filters over the fuller set — no
-      further server round-trips per keystroke.
-- [x] Before the full list is fetched (`hasMore` true, no `extraOptions`), typing in the search input asks
-      the server instead: after a 300 ms debounce it calls `onLoadMore(aggregation.field, searchTerm)`, which
-      sends `optionSearch` to `viewMoreProductFacetOptions`. The server keeps only options whose label
-      contains the text (case-insensitive), so a value outside the first batch can be found without
-      clicking "Show more". The matches (`searchMatches`) replace the facet's option set while the term is
-      non-empty; the local label filter still runs over them, so stale matches disappear while the next
-      request is in flight. A response for an older term is discarded. Clearing the input goes back to the
-      search response's options.
-- [x] When `aggregation.hasMore` is false, "Show more" behaves exactly as before (purely local expand of
-      already-loaded options).
-- [x] The search input itself must stay mounted regardless of how many options the current search term
-      matches (see the "facet search input disappearing" bugfix — condition is `baseOptions.length > 5 || canFetchFromServer`, not `filteredOptions.length`).
+-   [x] The backend truncates each aggregation's option list to ~10 and signals more exist via
+        `aggregation.hasMore`. Previously "Show more" only revealed already-loaded options past index 5 —
+        it could never surface values 11+ that the backend never sent.
+-   [x] When `aggregation.hasMore` is true and the facet hasn't fetched the full list yet, clicking
+        "Show more" calls `onLoadMore(aggregation.field)` (wired from the page via `useSearch`'s
+        `viewMoreOptions`), which fetches the **complete** option list for that field and replaces the
+        facet's working option set (`extraOptions`) with it, then expands.
+-   [x] Once fetched, the existing client-side search-within-facet input filters over the fuller set — no
+        further server round-trips per keystroke.
+-   [x] Before the full list is fetched (`hasMore` true, no `extraOptions`), typing in the search input asks
+        the server instead: after a 300 ms debounce it calls `onLoadMore(aggregation.field, searchTerm)`, which
+        sends `optionSearch` to `viewMoreProductFacetOptions`. The server keeps only options whose label
+        contains the text (case-insensitive), so a value outside the first batch can be found without
+        clicking "Show more". The matches (`searchMatches`) replace the facet's option set while the term is
+        non-empty; the local label filter still runs over them, so stale matches disappear while the next
+        request is in flight. A response for an older term is discarded. Clearing the input goes back to the
+        search response's options.
+-   [x] When `aggregation.hasMore` is false, "Show more" behaves exactly as before (purely local expand of
+        already-loaded options).
+-   [x] The search input itself must stay mounted regardless of how many options the current search term
+        matches (see the "facet search input disappearing" bugfix — condition is `baseOptions.length > 5 || canFetchFromServer`, not `filteredOptions.length`).
 
 ## SDK contract used
 
-- `useSearch.ts` exposes `viewMoreOptions(field: string, optionSearch?: string)`, calling the SDK's
-  `SearchManager.viewMoreProductFilterOption(request, field, optionSearch)` with the same `localizedCatalog`,
-  `searchQuery` (using the same root-category/wildcard rules as the main search — see
-  `docs/sdk-reference.md`), `filters`, and `categoryId` as the current search. Returns
-  `{ label, value, count }[]`.
-- Pages must pass `onLoadMore={viewMoreOptions}` to `<Facets>` (done in `CategoryPage.tsx`/`SearchPage.tsx`).
+-   `useSearch.ts` exposes `viewMoreOptions(field: string, optionSearch?: string)`, calling the SDK's
+    `SearchManager.viewMoreProductFilterOption(request, field, optionSearch)` with the same `localizedCatalog`,
+    `searchQuery` (using the same root-category/wildcard rules as the main search — see
+    `docs/sdk-reference.md`), `filters`, and `categoryId` as the current search. Returns
+    `{ label, value, count }[]`.
+-   Pages must pass `onLoadMore={viewMoreOptions}` to `<Facets>` (done in `CategoryPage.tsx`/`SearchPage.tsx`).
 
 ## Tracking (required)
 
-- No new tracking event — this only affects which facet options are visible, not search/filter/view events.
+-   No new tracking event — this only affects which facet options are visible, not search/filter/view events.
 
 ## UI constraints
 
-- No new CSS — reuses `.facet-search`/`.facet-show-more`.
+-   No new CSS — reuses `.facet-search`/`.facet-show-more`.
 
 ## MUST NOT change
 
-- Local-only "show more" behaviour for facets where `hasMore` is false (e.g. price slider bounds, boolean,
-  and any checkbox facet whose full option list already fit under the backend's truncation limit).
+-   Local-only "show more" behaviour for facets where `hasMore` is false (e.g. price slider bounds, boolean,
+    and any checkbox facet whose full option list already fit under the backend's truncation limit).

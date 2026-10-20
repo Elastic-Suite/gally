@@ -32,12 +32,12 @@ already have open. `Header.tsx` reads `useAppPathname()`.
 
 ## Behaviour (testable)
 
-- [x] `useAppPathname()` returns `/blog` on `/com_en/blog`, `/` on `/com_en`, and leaves a
-      pathname that carries no known locale segment untouched.
-- [x] Server-rendered check on the running stack: `data-active="products"` on
-      `/com_en/category/cat_2`, `"blog"` on `/com_en/blog` **and** `/fr_fr/blog` (so the fix
-      is not hard-coded to one catalog), `"none"` on `/com_en` and `/com_en/cart`.
-- [x] `tsc --noEmit` clean; no new dev-server errors on `com_en`, `com_fr`, `fr_fr`, `en_en`.
+-   [x] `useAppPathname()` returns `/blog` on `/com_en/blog`, `/` on `/com_en`, and leaves a
+        pathname that carries no known locale segment untouched.
+-   [x] Server-rendered check on the running stack: `data-active="products"` on
+        `/com_en/category/cat_2`, `"blog"` on `/com_en/blog` **and** `/fr_fr/blog` (so the fix
+        is not hard-coded to one catalog), `"none"` on `/com_en` and `/com_en/cart`.
+-   [x] `tsc --noEmit` clean; no new dev-server errors on `com_en`, `com_fr`, `fr_fr`, `en_en`.
 
 ## Same bug, still present elsewhere (deliberately not fixed here)
 
@@ -54,16 +54,16 @@ segment 1 and so needs the raw pathname, `ScrollToTop` only uses it as a change 
 
 ## SDK contract used
 
-- None.
+-   None.
 
 ## Tracking (required)
 
-- No change.
+-   No change.
 
 ## MUST NOT change
 
-- **Never compare a raw `usePathname()` against an app-internal path.** Go through
-  `useAppPathname()`. This is the exact mistake, and it fails silently.
-- `withoutLocale` stays the strict inverse of `withLocale` — leaves non-matching pathnames
-  alone rather than stripping the first segment blindly, which would eat `/blog` itself if
-  the app were ever mounted without the locale segment.
+-   **Never compare a raw `usePathname()` against an app-internal path.** Go through
+    `useAppPathname()`. This is the exact mistake, and it fails silently.
+-   `withoutLocale` stays the strict inverse of `withLocale` — leaves non-matching pathnames
+    alone rather than stripping the first segment blindly, which would eat `/blog` itself if
+    the app were ever mounted without the locale segment.

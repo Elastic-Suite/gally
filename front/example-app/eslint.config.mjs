@@ -7,34 +7,34 @@ import nextVitals from 'eslint-config-next/core-web-vitals'
 import nextTs from 'eslint-config-next/typescript'
 
 export default defineConfig([
-  ...nextVitals,
-  ...nextTs,
-  {
-    rules: {
-      'react/no-unescaped-entities': 'off',
-      // Product, CMS and banner images come from Gally media and are sized by CSS.
-      // next/image would need explicit sizes and the media host configured.
-      '@next/next/no-img-element': 'off',
-      // Written for the pages/ router. Here the font <link> sits in the root
-      // app/layout.tsx, so it loads on every page.
-      '@next/next/no-page-custom-font': 'off',
+    ...nextVitals,
+    ...nextTs,
+    {
+        rules: {
+            'react/no-unescaped-entities': 'off',
+            // Product, CMS and banner images come from Gally media and are sized by CSS.
+            // next/image would need explicit sizes and the media host configured.
+            '@next/next/no-img-element': 'off',
+            // Written for the pages/ router. Here the font <link> sits in the root
+            // app/layout.tsx, so it loads on every page.
+            '@next/next/no-page-custom-font': 'off',
+        },
     },
-  },
-  {
-    // Root config files such as .prettierrc.js are CommonJS: Prettier 2 loads
-    // them with require().
-    files: ['*.js'],
-    rules: {
-      '@typescript-eslint/no-require-imports': 'off',
+    {
+        // Root config files such as .prettierrc.js are CommonJS: Prettier 2 loads
+        // them with require().
+        files: ['*.js'],
+        rules: {
+            '@typescript-eslint/no-require-imports': 'off',
+        },
     },
-  },
-  globalIgnores([
-    '.next/**',
-    'out/**',
-    'build/**',
-    'dist/**',
-    'coverage/**',
-    'storybook-static/**',
-    'next-env.d.ts',
-  ]),
+    globalIgnores([
+        '.next/**',
+        'out/**',
+        'build/**',
+        'dist/**',
+        'coverage/**',
+        'storybook-static/**',
+        'next-env.d.ts',
+    ]),
 ])

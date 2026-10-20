@@ -17,16 +17,16 @@ enabled add-to-cart button beside it. Two separate causes:
    (`feature-configurable-option-selection.md`) fixed that: simples now show their real quantity.
 2. **For a product with children the quantity really is 0.** Verified against the running instance
    and the committed documents, not inferred:
-   - `VSK12` is `stock: {qty: 0, status: true}` — both in `_source` and through a typed
-     `stock { status qty }` selection.
-   - `qty == 0` holds for exactly the 72 `com` documents that have `children.sku`, and for none of
-     the 13 that don't. The correlation is total.
-   - It is faithful to the source platform: a configurable's own stock item carries no quantity, the
-     salable quantity lives on its children — and **Gally indexes no child stock**. The instance
-     declares 112 product source fields with no children field; `stock` is a single
-     `{status, qty}` object (`StockAttribute::getFields()`, `isList() === false`); children are not
-     documents (an `equalFilter` on `VSK12-RN-8` returns 0 rows, as does `id: "400"`, a
-     `children_ids` entry).
+    - `VSK12` is `stock: {qty: 0, status: true}` — both in `_source` and through a typed
+      `stock { status qty }` selection.
+    - `qty == 0` holds for exactly the 72 `com` documents that have `children.sku`, and for none of
+      the 13 that don't. The correlation is total.
+    - It is faithful to the source platform: a configurable's own stock item carries no quantity, the
+      salable quantity lives on its children — and **Gally indexes no child stock**. The instance
+      declares 112 product source fields with no children field; `stock` is a single
+      `{status, qty}` object (`StockAttribute::getFields()`, `isList() === false`); children are not
+      documents (an `equalFilter` on `VSK12-RN-8` returns 0 rows, as does `id: "400"`, a
+      `children_ids` entry).
 
 ## The decision
 
@@ -47,19 +47,19 @@ listing would read as unavailable.
 
 ## Behaviour (testable)
 
-- [x] `status && qty > 0` → counted string. `VA11-GO-NA` → "En stock (100 disponible(s))",
-      `VVP01` → 1000.
-- [x] `status && qty === 0` → `page.outOfStockLong`, add-to-cart **disabled** and labelled
-      `card.outOfStock`, JSON-LD `OutOfStock`. Verified in the served HTML for `VSK12` (all three
-      agree), `VA07` and `VA24` (bundle).
-- [x] `!status` → unchanged out-of-stock branch. `VT05` (both `com` locales since the data fix; it was
-      `com_en` only when this was written).
-- [x] `status && qty === undefined` → `page.inStockNoCount` (status without a count). This is the
-      listing path; it is also why the missing-stock fallback in `getProductFields` sets only
-      `{status: true}` and deliberately omits `qty`.
-- [x] Listings are unchanged by this: `/search?q=robe` still renders 0 unavailable badges and the
-      category JSON-LD still emits 12 × `InStock`, because `PRODUCT_FIELDS` does not request `qty`.
-- [x] New key `page.inStockNoCount` in all three locales (golden rule 5), checked on `com_fr`.
+-   [x] `status && qty > 0` → counted string. `VA11-GO-NA` → "En stock (100 disponible(s))",
+        `VVP01` → 1000.
+-   [x] `status && qty === 0` → `page.outOfStockLong`, add-to-cart **disabled** and labelled
+        `card.outOfStock`, JSON-LD `OutOfStock`. Verified in the served HTML for `VSK12` (all three
+        agree), `VA07` and `VA24` (bundle).
+-   [x] `!status` → unchanged out-of-stock branch. `VT05` (both `com` locales since the data fix; it was
+        `com_en` only when this was written).
+-   [x] `status && qty === undefined` → `page.inStockNoCount` (status without a count). This is the
+        listing path; it is also why the missing-stock fallback in `getProductFields` sets only
+        `{status: true}` and deliberately omits `qty`.
+-   [x] Listings are unchanged by this: `/search?q=robe` still renders 0 unavailable badges and the
+        category JSON-LD still emits 12 × `InStock`, because `PRODUCT_FIELDS` does not request `qty`.
+-   [x] New key `page.inStockNoCount` in all three locales (golden rule 5), checked on `com_fr`.
 
 ## Resolved: the sample data was fixed
 
@@ -96,16 +96,16 @@ No CSS, no new colour, no new component. Same `--green-600` / `--coral-500` span
 
 ## MUST NOT change
 
-- **`isAvailable` stays the only availability rule.** Anything that shows stock, disables a cart
-  button or emits a schema.org `availability` reads `available` — never `stock.status` directly.
-  Four call sites were converted precisely so they cannot drift apart.
-- **Keep the `qty === undefined` ≠ `qty === 0` distinction.** Collapsing them (for instance by
-  restoring `{status: true, qty: 0}` as the missing-stock fallback) marks every listing card
-  unavailable.
-- **Do not special-case by `type_id`.** The rule keys on the quantity, which is why it self-corrected
-  the moment the sample data was fixed, with no code change — and bundles/grouped products carried the
-  same 0.
-- **Do not sum or synthesise child quantities.** There is no per-child stock indexed to sum.
-- Note for demos: `VT05` is out of stock in **both** `com` locales now. It used to be `status: false`
-  in `com_en` only — the dataset's single locale-parity violation — which made the out-of-stock path
-  unreachable in the default `com_fr` demo. 21 other products join it; `GUIDE.md` §3 lists the counts.
+-   **`isAvailable` stays the only availability rule.** Anything that shows stock, disables a cart
+    button or emits a schema.org `availability` reads `available` — never `stock.status` directly.
+    Four call sites were converted precisely so they cannot drift apart.
+-   **Keep the `qty === undefined` ≠ `qty === 0` distinction.** Collapsing them (for instance by
+    restoring `{status: true, qty: 0}` as the missing-stock fallback) marks every listing card
+    unavailable.
+-   **Do not special-case by `type_id`.** The rule keys on the quantity, which is why it self-corrected
+    the moment the sample data was fixed, with no code change — and bundles/grouped products carried the
+    same 0.
+-   **Do not sum or synthesise child quantities.** There is no per-child stock indexed to sum.
+-   Note for demos: `VT05` is out of stock in **both** `com` locales now. It used to be `status: false`
+    in `com_en` only — the dataset's single locale-parity violation — which made the out-of-stock path
+    unreachable in the default `com_fr` demo. 21 other products join it; `GUIDE.md` §3 lists the counts.

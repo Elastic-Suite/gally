@@ -40,12 +40,12 @@ catalogue is added.
 Split the selection the same way the fixtures are split: a common set, plus one group per
 catalogue.
 
-- `CATALOG_AXIS_CODES` — variant axes keyed by catalogue code (`com`, `fr`, `uk`, `toolbox`,
-  `fashion`, `papershop`).
-- `CATALOG_EXTRA_FIELDS` — the non-axis fields one catalogue owns: `fashion_material` on Venia,
-  `llv_is_eco` on the paper shop.
-- `productFields(catalogCode)` / `productDetailFields(catalogCode)` / `axisCodes(catalogCode)`
-  replace the `PRODUCT_FIELDS`, `PRODUCT_DETAIL_FIELDS` and `AXIS_CODES` constants.
+-   `CATALOG_AXIS_CODES` — variant axes keyed by catalogue code (`com`, `fr`, `uk`, `toolbox`,
+    `fashion`, `papershop`).
+-   `CATALOG_EXTRA_FIELDS` — the non-axis fields one catalogue owns: `fashion_material` on Venia,
+    `llv_is_eco` on the paper shop.
+-   `productFields(catalogCode)` / `productDetailFields(catalogCode)` / `axisCodes(catalogCode)`
+    replace the `PRODUCT_FIELDS`, `PRODUCT_DETAIL_FIELDS` and `AXIS_CODES` constants.
 
 A catalogue now asks only for the fields its own fixtures declare, and you can only browse a
 catalogue that is loaded — so the mismatch is impossible by construction rather than something
@@ -77,9 +77,9 @@ catalogue that has no axes.
 Against an instance loaded with `make fixtures_load catalogs=default`, so the `fio_*` and
 `llv_*` source fields genuinely do not exist:
 
-- `npx tsc --noEmit` clean.
-- `/example/com_fr/search?q=dress` renders 140 product cards, zero GraphQL errors.
-- `/example/fr_fr/search?q=bag` renders 59 product cards, zero GraphQL errors.
+-   `npx tsc --noEmit` clean.
+-   `/example/com_fr/search?q=dress` renders 140 product cards, zero GraphQL errors.
+-   `/example/fr_fr/search?q=bag` renders 59 product cards, zero GraphQL errors.
 
 Before the fix the same requests produced zero cards and
 `Cannot query field "llv_is_eco" on type "Product"`.

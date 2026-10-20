@@ -23,14 +23,14 @@ evaluated to `[]` for every non-new product, and `productFields.ts:124` pushed t
 
 Two things kept it hidden:
 
-- **It only bites on the raw-`_source` path.** The stitched GraphQL `Product` type returns plain
-  booleans, so listings built from `PRODUCT_FIELDS` were correct. The PDP is on the other path
-  because `PRODUCT_DETAIL_FIELDS` (`src/sdk/fields.ts:47`) asks for `source` — added for
-  `type_id` and `configurable_attributes`, with the boolean side effect unnoticed.
-- **`s.is_new` in the same line implied the shape was uncertain**, which read as deliberate
-  defensiveness. It was not: `is_new` exists nowhere — not in the fixtures, not in the source-field
-  YAML, not in the SDK, and not among the 118 stitched GraphQL fields. It was dead, and it
-  disguised the real defect as a considered choice.
+-   **It only bites on the raw-`_source` path.** The stitched GraphQL `Product` type returns plain
+    booleans, so listings built from `PRODUCT_FIELDS` were correct. The PDP is on the other path
+    because `PRODUCT_DETAIL_FIELDS` (`src/sdk/fields.ts:47`) asks for `source` — added for
+    `type_id` and `configurable_attributes`, with the boolean side effect unnoticed.
+-   **`s.is_new` in the same line implied the shape was uncertain**, which read as deliberate
+    defensiveness. It was not: `is_new` exists nowhere — not in the fixtures, not in the source-field
+    YAML, not in the SDK, and not among the 118 stitched GraphQL fields. It was dead, and it
+    disguised the real defect as a considered choice.
 
 `isOnSale` on the next line was already written `s.sale === true` and was therefore correct. The
 two lines disagreed about the same data shape, and the wrong one carried no comment while the
@@ -43,10 +43,10 @@ strict compare is load-bearing. The dead `s.is_new` read is gone.
 
 ## Behaviour (testable)
 
-- [x] `new: []` in `_source` yields `isNew === false`; `new: true` yields `true`.
-- [x] `sale` is unaffected — it already used `=== true`.
-- [ ] Visual check on the PDP: the "New" badge appears on a known-new SKU and not on others.
-      Not run; needs the stack up.
+-   [x] `new: []` in `_source` yields `isNew === false`; `new: true` yields `true`.
+-   [x] `sale` is unaffected — it already used `=== true`.
+-   [ ] Visual check on the PDP: the "New" badge appears on a known-new SKU and not on others.
+        Not run; needs the stack up.
 
 ## SDK contract used
 
@@ -64,7 +64,7 @@ None changed; no styling touched.
 
 ## MUST NOT change
 
-- Do not go back to a truthy read (`s.new || …`) on anything from `_source` — that is the bug.
-- Do not reintroduce `s.is_new`. It does not exist in this API.
-- Any **new** boolean read from `_source` needs `=== true` for the same reason. `pureMaterial`
-  and the other derived flags in this file read arrays deliberately and are not affected.
+-   Do not go back to a truthy read (`s.new || …`) on anything from `_source` — that is the bug.
+-   Do not reintroduce `s.is_new`. It does not exist in this API.
+-   Any **new** boolean read from `_source` needs `=== true` for the same reason. `pureMaterial`
+    and the other derived flags in this file read arrays deliberately and are not affected.

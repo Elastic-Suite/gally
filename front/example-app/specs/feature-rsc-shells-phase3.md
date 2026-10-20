@@ -10,18 +10,18 @@ interactive components below them are seeded with that same data instead of refe
 
 ## Behaviour (testable) — all verified with plain `curl`, no JavaScript
 
-- [x] `/com_en/product/VD10` → `<title>Claudia Crochet Dress</title>`, meta description (tags
-      stripped), canonical, `og:title`/`description`/`url`/`image`, `<h1>Claudia Crochet Dress</h1>`
-- [x] JSON-LD: **Product + Offer** (price, currency from the localized catalog, availability from
-      stock) and **BreadcrumbList**
-- [x] `/com_en/blog/13` → **BlogPosting + Person + BreadcrumbList**, title, description, `og:article`
-- [x] `/com_fr/blog/13` → _"Les tendances printemps-été qui comptent vraiment"_ — server-rendered in
-      French. Localized metadata falls out of Phase 2's segment for free.
-- [x] `/com_en/category/cat_14` → `<title>Dresses</title>`, BreadcrumbList, first page of products
-      in the HTML
-- [x] Unknown entities are **hard 404s**: `/product/NOPE`, `/blog/99999`
-- [x] Demo scaffolding is **absent from the server HTML and present after JS** on all three routes
-- [x] No hydration mismatches; all 11 routes still 200; `npx tsc --noEmit` clean
+-   [x] `/com_en/product/VD10` → `<title>Claudia Crochet Dress</title>`, meta description (tags
+        stripped), canonical, `og:title`/`description`/`url`/`image`, `<h1>Claudia Crochet Dress</h1>`
+-   [x] JSON-LD: **Product + Offer** (price, currency from the localized catalog, availability from
+        stock) and **BreadcrumbList**
+-   [x] `/com_en/blog/13` → **BlogPosting + Person + BreadcrumbList**, title, description, `og:article`
+-   [x] `/com_fr/blog/13` → _"Les tendances printemps-été qui comptent vraiment"_ — server-rendered in
+        French. Localized metadata falls out of Phase 2's segment for free.
+-   [x] `/com_en/category/cat_14` → `<title>Dresses</title>`, BreadcrumbList, first page of products
+        in the HTML
+-   [x] Unknown entities are **hard 404s**: `/product/NOPE`, `/blog/99999`
+-   [x] Demo scaffolding is **absent from the server HTML and present after JS** on all three routes
+-   [x] No hydration mismatches; all 11 routes still 200; `npx tsc --noEmit` clean
 
 ## SDK contract used
 
@@ -78,29 +78,29 @@ over have not been re-tested under a real `next build`. See below.
 
 ## Not done in this phase, deliberately
 
-- **`gally_pwa_int` is still broken** (`mv example-app/build`, `docker/front/Dockerfile:117-118`).
-  Phase 1 deferred it here on the assumption Phase 3 would resolve it, but the answer got _harder_,
-  not easier: with server components and per-request fetches the example app can no longer be
-  statically exported into `pwa/public/example` at all. The int image has to run it as a server, or
-  stop shipping it. That is a docker/compose design decision, not a frontend one.
-- **The SDK still imports its full entry in the browser** (the console warns on every load).
-  Splitting it needs `src/sdk/index.ts` to resolve `@elastic-suite/gally-sdk` on the server and
-  `/browser` on the client, which static imports cannot express in one module — it needs a real
-  module split, not a ternary like the base-URI one.
-- **`next build` has never been run.** Do it before trusting the `force-dynamic` removal.
-- Pushing `'use client'` further down inside `Header`/`Facets`/`SearchBar` — the three routes already
-  deliver the whole SEO story without it.
+-   **`gally_pwa_int` is still broken** (`mv example-app/build`, `docker/front/Dockerfile:117-118`).
+    Phase 1 deferred it here on the assumption Phase 3 would resolve it, but the answer got _harder_,
+    not easier: with server components and per-request fetches the example app can no longer be
+    statically exported into `pwa/public/example` at all. The int image has to run it as a server, or
+    stop shipping it. That is a docker/compose design decision, not a frontend one.
+-   **The SDK still imports its full entry in the browser** (the console warns on every load).
+    Splitting it needs `src/sdk/index.ts` to resolve `@elastic-suite/gally-sdk` on the server and
+    `/browser` on the client, which static imports cannot express in one module — it needs a real
+    module split, not a ternary like the base-URI one.
+-   **`next build` has never been run.** Do it before trusting the `force-dynamic` removal.
+-   Pushing `'use client'` further down inside `Header`/`Facets`/`SearchBar` — the three routes already
+    deliver the whole SEO story without it.
 
 ## MUST NOT change
 
-- **Server fetchers must keep mirroring the client hooks' request shape.** Divergence is invisible
-  in review and shows up as content flickering after hydration.
-- **`selectedFields` must never be emptied** in `src/sdk/fields.ts` — the SDK silently drops the
-  `collection` block and returns zero rows. Now a single edit can break both sides at once.
-- **Keep `notFound()` for missing entities.** Rendering the client "not found" state under a 200 is
-  a soft-404, exactly what an SEO demo must not ship.
-- **Do not pass `CategoryPage`'s `initialData` unconditionally** — see above.
-- **Keep the demo scaffolding behind `ssr: false`** in `AppShell`. It is what keeps the crawlable
-  HTML free of demo chrome and lets the scaffolding stay browser-only.
-- `JsonLd`'s `dangerouslySetInnerHTML` with the `<` escape is deliberate: React would entity-escape
-  a normal text child and structured-data parsers would fail to read it.
+-   **Server fetchers must keep mirroring the client hooks' request shape.** Divergence is invisible
+    in review and shows up as content flickering after hydration.
+-   **`selectedFields` must never be emptied** in `src/sdk/fields.ts` — the SDK silently drops the
+    `collection` block and returns zero rows. Now a single edit can break both sides at once.
+-   **Keep `notFound()` for missing entities.** Rendering the client "not found" state under a 200 is
+    a soft-404, exactly what an SEO demo must not ship.
+-   **Do not pass `CategoryPage`'s `initialData` unconditionally** — see above.
+-   **Keep the demo scaffolding behind `ssr: false`** in `AppShell`. It is what keeps the crawlable
+    HTML free of demo chrome and lets the scaffolding stay browser-only.
+-   `JsonLd`'s `dangerouslySetInnerHTML` with the `<` escape is deliberate: React would entity-escape
+    a normal text child and structured-data parsers would fail to read it.

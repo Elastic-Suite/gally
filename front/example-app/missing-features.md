@@ -19,12 +19,12 @@ Legend: **fully missing** = no trace in the new app · **partial** = some capabi
 Email+password login gating routes via a `withAuth` HOC, JWT against `/authentication_token`, redirect back to
 the originally-requested path after login.
 
-- `src/pages/Login/Login.tsx`
-- `src/hocs/withAuth.tsx`
-- `src/components/Providers/UserProvider/UserProvider.tsx`
-- `src/hooks/useUser.ts`
-- `src/contexts/user.ts`
-- `src/components/Providers/RequestedPathProvider/RequestedPathProvider.tsx`
+-   `src/pages/Login/Login.tsx`
+-   `src/hocs/withAuth.tsx`
+-   `src/components/Providers/UserProvider/UserProvider.tsx`
+-   `src/hooks/useUser.ts`
+-   `src/contexts/user.ts`
+-   `src/components/Providers/RequestedPathProvider/RequestedPathProvider.tsx`
 
 ### Feature-flag system
 
@@ -34,18 +34,18 @@ vector-search page was gated behind a `Bundle.VECTOR_SEARCH` flag.
 
 Both are fetched again now, but nothing is shown or hidden based on them:
 
-- `/public_configurations` is read in SSR for the media host (`src/sdk/server.ts`, `src/contexts/ConfigContext.tsx`,
-  `specs/feature-public-configuration.md`).
-- `{ extraBundles { name } }` is passed to the SDK's `SearchManager` (`src/sdk/bundles.ts`,
-  `specs/feature-sdk-bundles.md`).
-- Still missing: hiding a page or block when its bundle is absent. The vector search page is not gated.
+-   `/public_configurations` is read in SSR for the media host (`src/sdk/server.ts`, `src/contexts/ConfigContext.tsx`,
+    `specs/feature-public-configuration.md`).
+-   `{ extraBundles { name } }` is passed to the SDK's `SearchManager` (`src/sdk/bundles.ts`,
+    `specs/feature-sdk-bundles.md`).
+-   Still missing: hiding a page or block when its bundle is absent. The vector search page is not gated.
 
 Old files, for reference:
 
-- `src/components/Providers/ConfigurationsProvider/ConfigurationsProvider.tsx`
-- `src/components/Providers/ExtraBundlesProvider/ExtraBundlesProvider.tsx`
-- `src/contexts/configurations.ts`
-- `src/contexts/extraBundles.ts`
+-   `src/components/Providers/ConfigurationsProvider/ConfigurationsProvider.tsx`
+-   `src/components/Providers/ExtraBundlesProvider/ExtraBundlesProvider.tsx`
+-   `src/contexts/configurations.ts`
+-   `src/contexts/extraBundles.ts`
 
 ### Geolocation-aware search
 
@@ -53,9 +53,9 @@ Old files, for reference:
 Settings popup to set latitude/longitude, sent as a `reference-location` header to bias/rank product results
 by distance.
 
-- `src/components/Settings/Settings.tsx`
-- `src/components/Providers/SettingsProvider/SettingsProvider.tsx`
-- `src/contexts/settings.ts`
+-   `src/components/Settings/Settings.tsx`
+-   `src/components/Providers/SettingsProvider/SettingsProvider.tsx`
+-   `src/contexts/settings.ts`
 
 ---
 
@@ -72,10 +72,10 @@ See `specs/feature-blog-cms.md` and `specs/feature-search-result-type-switch.md`
 
 Old files, for reference:
 
-- `src/hooks/useDocuments.ts`
-- `src/services/document.ts`
-- `src/pages/Search/CmsSearch.tsx`
-- `src/components/Cms/Pages.tsx`
+-   `src/hooks/useDocuments.ts`
+-   `src/services/document.ts`
+-   `src/pages/Search/CmsSearch.tsx`
+-   `src/components/Cms/Pages.tsx`
 
 ### Semantic/vector search over CMS documents
 
@@ -83,8 +83,8 @@ Old files, for reference:
 `vectorSearchDocuments` GraphQL query rendering embeddings-based document search results as a product-like
 grid. **Do not confuse with `VectorSearchPage.tsx` on this branch** — that's a different feature (see §6).
 
-- `src/hooks/useVectorSearchDocuments.ts`
-- `src/services/vectorSearchDocuments.ts`
+-   `src/hooks/useVectorSearchDocuments.ts`
+-   `src/services/vectorSearchDocuments.ts`
 
 ### Tabbed search UI
 
@@ -94,7 +94,7 @@ lazy-mounted panels. Replaced by a centered "Products / Articles" segmented swit
 (`src/views/SearchPage.tsx`, still a tablist for assistive tech). See
 `specs/feature-search-result-type-switch.md`. No generic `Tabs` component was ported.
 
-- `src/components/Tabs/Tabs.tsx`, `TabPanel.tsx`, `a11yProps.tsx`
+-   `src/components/Tabs/Tabs.tsx`, `TabPanel.tsx`, `a11yProps.tsx`
 
 ### Original vector-vs-fulltext comparison
 
@@ -115,8 +115,8 @@ matching its `/explain` route, and `VectorSearchPage.tsx` is the comparison. Not
 flag — the feature-flag system is still missing (§1) — the panel degrades to an "unavailable" message if
 the query fails.
 
-- `src/pages/VectorSearch/VectorSearch.tsx` (old, for reference)
-- `src/components/VectorSearch/ProductList.tsx` (old, for reference)
+-   `src/pages/VectorSearch/VectorSearch.tsx` (old, for reference)
+-   `src/components/VectorSearch/ProductList.tsx` (old, for reference)
 
 ### Dynamic sort options + per-category default sort
 
@@ -128,8 +128,8 @@ select from `productSortingOptions`, with labels in the catalog's language, thro
 category's configured default, and the entry names the field it used. See
 `specs/feature-dynamic-sort-options.md`.
 
-- `src/hooks/useProductSort.ts`
-- `src/services/product.ts`
+-   `src/hooks/useProductSort.ts`
+-   `src/services/product.ts`
 
 ### Sort labels the API cannot translate - storefront override
 
@@ -147,11 +147,11 @@ with its own translations (`src/hooks/useSortOptions.ts`, `common.json` `sort.fi
 So a merchant's own label for price or stock never reaches the sort list, here or in any other
 storefront. The real fix is in the API:
 
-- The three providers' `getSimplifiedLabel()` should return
-  `$sourceField->getLabel($localizedCatalog->getId())`, as `ScalarSortOrderProvider` does, and keep
-  the English string only as a fallback.
-- "Relevance" should be translated by the catalog's locale.
-- Once done, delete the override list in `useSortOptions.ts`.
+-   The three providers' `getSimplifiedLabel()` should return
+    `$sourceField->getLabel($localizedCatalog->getId())`, as `ScalarSortOrderProvider` does, and keep
+    the English string only as a fallback.
+-   "Relevance" should be translated by the catalog's locale.
+-   Once done, delete the override list in `useSortOptions.ts`.
 
 Second shortcut, same file: **other shops' fields are hidden by prefix.** Sortable is a plain
 setting on the field (`api/packages/gally-standard/src/Metadata/Entity/SourceField.php:266`), with
@@ -163,10 +163,10 @@ diameter" on the paper shop). `useSortOptions.ts` drops any field carrying anoth
 (`SHOP_FIELD_PREFIXES`: toolbox `tbx_`, fashion `fio_`, paper shop `llv_`); unprefixed fields are
 shared and kept. A new demo shop needs its prefix added there.
 
-- Real fix, if wanted: a per-catalog sortable setting in the API, or hiding fields that have no
-  value in the catalog. Then delete `SHOP_FIELD_PREFIXES`.
-- A real install usually shares one product model across its catalogs, so this mostly matters for
-  the demo.
+-   Real fix, if wanted: a per-catalog sortable setting in the API, or hiding fields that have no
+    value in the catalog. Then delete `SHOP_FIELD_PREFIXES`.
+-   A real install usually shares one product model across its catalogs, so this mostly matters for
+    the demo.
 
 See `specs/feature-dynamic-sort-options.md`.
 
@@ -182,7 +182,7 @@ Was fully missing. Now a `CategoryFacet` in `src/components/Facets.tsx`, dispatc
 `ResponseFilterType.CATEGORY`). Single-select, `eq` filter on `category__id` — reuses the existing
 checkbox-row styling, no new CSS. See `specs/feature-facet-category.md`.
 
-- `src/components/Facets/FacetCategory.tsx` (old, for reference)
+-   `src/components/Facets/FacetCategory.tsx` (old, for reference)
 
 ### Server-side "load more" / search-within-facet
 
@@ -194,7 +194,7 @@ set (not a per-keystroke server round trip). Before that full list is loaded, th
 server with the API's `optionSearch` argument (debounced), so values outside the first batch are found
 too. See `specs/feature-facet-load-more.md`.
 
-- `src/components/Facets/FacetLoadMore.tsx` (old, for reference)
+-   `src/components/Facets/FacetLoadMore.tsx` (old, for reference)
 
 ### Active-filter chip row
 
@@ -204,7 +204,7 @@ removable pills per active filter (checkbox/slider/boolean/category) + "Clear al
 `.active-filters`/`.filter-chip`/`.filter-chip-clear` in `styles.css`, built only from existing tokens.
 See `specs/feature-facet-active-filters.md`.
 
-- `src/components/Facets/Facets.tsx` (old, for reference)
+-   `src/components/Facets/Facets.tsx` (old, for reference)
 
 ### Facet/attribute-value autocomplete
 
@@ -216,7 +216,7 @@ value opens the search page filtered by that value, without the typed text (`spe
 The "Popular search terms" group now comes from the engine's `termSuggestions`, not a hardcoded list
 (`specs/feature-acp-real-term-suggestions.md`).
 
-- `src/components/SearchBar/SearchBar.tsx`
+-   `src/components/SearchBar/SearchBar.tsx`
 
 ---
 
@@ -233,7 +233,7 @@ leading entry ahead of its former children — see `specs/feature-category-nav-r
 a second, unrelated bug found in the same component: the hover submenu was invisible due to an
 `overflow-x`/`overflow-y` CSS clipping issue (not a z-index/stacking problem, despite how it looked).
 
-- `src/contexts/category.ts`, `src/components/Providers/CategoryProvider/CategoryProvider.tsx` (old, for reference)
+-   `src/contexts/category.ts`, `src/components/Providers/CategoryProvider/CategoryProvider.tsx` (old, for reference)
 
 ### Product count of virtual categories
 
@@ -245,9 +245,9 @@ products assigned to the category, while a virtual category picks its products b
 
 The storefront works around it:
 
-- the hero of a virtual category shows the listing's own unfiltered total (`src/views/CategoryPage.tsx`);
-- the subcategory chips keep virtual categories and show no count for them;
-- the nav flyout shows no count for them (`src/components/CategoryNav.tsx`).
+-   the hero of a virtual category shows the listing's own unfiltered total (`src/views/CategoryPage.tsx`);
+-   the subcategory chips keep virtual categories and show no count for them;
+-   the nav flyout shows no count for them (`src/components/CategoryNav.tsx`).
 
 Real fix in the API: count a virtual category with its rule when building the tree. Then remove the
 workaround. See `specs/bugfix-virtual-category-count.md`.
@@ -258,12 +258,12 @@ workaround. See `specs/bugfix-virtual-category-count.md`.
 Hamburger-triggered drawer listing the full nested category tree with expand/collapse. The new app has
 no drawer:
 
-- Desktop: `src/components/CategoryNav.tsx` shows the top level, with a hover flyout one level deep.
-- 768px and below: the category menu is one row that scrolls sideways. It has no flyouts, so a tap
-  opens the top-level category page (`specs/feature-mobile-header-and-acp-tabs.md`).
-- Still missing: reaching a subcategory from the nav on a phone, and any level below the second.
+-   Desktop: `src/components/CategoryNav.tsx` shows the top level, with a hover flyout one level deep.
+-   768px and below: the category menu is one row that scrolls sideways. It has no flyouts, so a tap
+    opens the top-level category page (`specs/feature-mobile-header-and-acp-tabs.md`).
+-   Still missing: reaching a subcategory from the nav on a phone, and any level below the second.
 
-- `src/components/Menu/Menu.tsx`, `MenuItem.tsx`, `MenuList.tsx`
+-   `src/components/Menu/Menu.tsx`, `MenuItem.tsx`, `MenuList.tsx`
 
 ---
 
@@ -275,18 +275,18 @@ no drawer:
 Jest setup, RTL provider wrapper, `__mocks__` for the shared package, and every `*.test.ts(x)` file.
 Confirmed: `find src -name "*.test.ts*"` returns 0 files on this branch.
 
-- `src/setupTests.ts`, `src/utils/TestProvider.tsx`, `src/utils/tests.tsx`
-- `src/mocks/*`, `src/__mocks__/@elastic-suite/gally-admin-shared.ts`
-- All `useApi`/`useDocuments`/`useDocumentSort`/`useGraphql`/`useLog`/`useProductSort`/`useProducts`/
-  `useResource`/`useUser`/`useVectorSearchDocuments` test files, `Header.test.tsx`
+-   `src/setupTests.ts`, `src/utils/TestProvider.tsx`, `src/utils/tests.tsx`
+-   `src/mocks/*`, `src/__mocks__/@elastic-suite/gally-admin-shared.ts`
+-   All `useApi`/`useDocuments`/`useDocumentSort`/`useGraphql`/`useLog`/`useProductSort`/`useProducts`/
+    `useResource`/`useUser`/`useVectorSearchDocuments` test files, `Header.test.tsx`
 
 ### CRA PWA/analytics boilerplate
 
 **Status: fully missing**
 App manifest, icons, robots.txt, web-vitals reporting. Likely intentional cleanup — flagged for completeness.
 
-- `public/manifest.json`, `favicon.ico`, `logo192.png`, `logo512.png`, `robots.txt`
-- `src/reportWebVitals.ts`
+-   `public/manifest.json`, `favicon.ico`, `logo192.png`, `logo512.png`, `robots.txt`
+-   `src/reportWebVitals.ts`
 
 ---
 
@@ -313,43 +313,43 @@ comparison, no code read for this section.
 
 ### Worth a second look — plausibly storefront-facing, undocumented in either version
 
-- **Facet Sorting Options** (descending/natural ordering, v2.2.0) — no facet sort-order control is mentioned
-  in `docs/design-system.md`'s facet patterns or anywhere else for either app version. If this is meant to be
-  demonstrable in a showcase, neither version shows it.
-- **Thesaurus / synonym expansion** (v1.2.0) — affects search results transparently; no doc for either version
-  calls out a way to demo it (e.g. a "search 'jumper' and see 'sweater' results" callout). Low priority since
-  it needs no dedicated UI to function, only to be _shown_.
+-   **Facet Sorting Options** (descending/natural ordering, v2.2.0) — no facet sort-order control is mentioned
+    in `docs/design-system.md`'s facet patterns or anywhere else for either app version. If this is meant to be
+    demonstrable in a showcase, neither version shows it.
+-   **Thesaurus / synonym expansion** (v1.2.0) — affects search results transparently; no doc for either version
+    calls out a way to demo it (e.g. a "search 'jumper' and see 'sweater' results" callout). Low priority since
+    it needs no dedicated UI to function, only to be _shown_.
 
 ### Ambiguous — can't confirm from docs alone
 
-- **Product Category Count Request** (v2.1.0) — covered on this branch: the category tree carries a
-  `count` field (`src/sdk/catalogs.ts`), shown next to each subcategory in the nav flyout
-  (`src/components/CategoryNav.tsx`). Old-app status is unverified without reading `main`'s code.
+-   **Product Category Count Request** (v2.1.0) — covered on this branch: the category tree carries a
+    `count` field (`src/sdk/catalogs.ts`), shown next to each subcategory in the nav flyout
+    (`src/components/CategoryNav.tsx`). Old-app status is unverified without reading `main`'s code.
 
 ---
 
 ## 8. Only on the new branch — do NOT lose these
 
-- **`ExplainPage`** (`src/views/ExplainPage.tsx`, `src/components/SearchExplain.tsx`) — search-relevance
-  "explain" visualizer: calls the GraphQL `explain` query directly and renders per-product ranking cards with
-  boost badges and a per-field score-contribution breakdown. Renamed from `VectorSearchPage.tsx` on
-  2026-08-17 to match its `/explain` route; it is not, and never was, a keyword-vs-vector comparison (see §2).
-- **`ClosingPage`** (`src/views/ClosingPage.tsx`) — sales-demo "bilan" page with a sequenced reveal (delay →
-  cost → pricing plans) that closes the storytelling scenario; see `storytelling.md` Act 5.
-- **Storytelling/demo layer** (`DemoContext`, `StoryCompanion`, `IntroScreen`, `useStoryActions`) — the full
-  5-act guided scenario, audience-mode toggle, and right-side story companion panel. Net new, no `main`
-  equivalent at all. **Paused and currently unreachable** - see `specs/feature-guided-demo-rebuild.md`.
-  A rebuild with one tour per sample catalog is planned in `specs/feature-guided-tour-per-catalog.md`.
-- **`CheckoutPage`** — checkout tunnel (delivery and payment on one prefilled step → confirmation) with `ORDER` tracking.
-  Net new.
-- **Cart AOV boosters** (`CartPage`) — free-shipping progress bar, real cross-sell recommendations,
-  animated total. Net new.
-- **Live tracking panel** (`EventLogContext`, `EventLog`, `TrackingInsights`) — floating panel showing SDK
-  tracking events in real time, for demo/debug purposes. Net new.
-- **Color swatch facet type** in `Facets.tsx` — not present in the old app's facet set.
-- **Blog** (`src/views/BlogPage.tsx`, `src/views/BlogPostPage.tsx`) - browsable `cms_page` index with type and
-  topic filters. See `specs/feature-blog-cms.md`.
-- **Eco badge** on product cards and the product page (`src/components/EcoMark.tsx`). See `specs/feature-eco-badge.md`.
-- **Category hero banner** on category pages. See `specs/feature-category-hero-banner.md`.
-- **Real recommendations** from the API. See `specs/feature-real-recommendations.md`.
-- **Vector search block** on the home page. See `specs/feature-home-vector-block.md`.
+-   **`ExplainPage`** (`src/views/ExplainPage.tsx`, `src/components/SearchExplain.tsx`) — search-relevance
+    "explain" visualizer: calls the GraphQL `explain` query directly and renders per-product ranking cards with
+    boost badges and a per-field score-contribution breakdown. Renamed from `VectorSearchPage.tsx` on
+    2026-08-17 to match its `/explain` route; it is not, and never was, a keyword-vs-vector comparison (see §2).
+-   **`ClosingPage`** (`src/views/ClosingPage.tsx`) — sales-demo "bilan" page with a sequenced reveal (delay →
+    cost → pricing plans) that closes the storytelling scenario; see `storytelling.md` Act 5.
+-   **Storytelling/demo layer** (`DemoContext`, `StoryCompanion`, `IntroScreen`, `useStoryActions`) — the full
+    5-act guided scenario, audience-mode toggle, and right-side story companion panel. Net new, no `main`
+    equivalent at all. **Paused and currently unreachable** - see `specs/feature-guided-demo-rebuild.md`.
+    A rebuild with one tour per sample catalog is planned in `specs/feature-guided-tour-per-catalog.md`.
+-   **`CheckoutPage`** — checkout tunnel (delivery and payment on one prefilled step → confirmation) with `ORDER` tracking.
+    Net new.
+-   **Cart AOV boosters** (`CartPage`) — free-shipping progress bar, real cross-sell recommendations,
+    animated total. Net new.
+-   **Live tracking panel** (`EventLogContext`, `EventLog`, `TrackingInsights`) — floating panel showing SDK
+    tracking events in real time, for demo/debug purposes. Net new.
+-   **Color swatch facet type** in `Facets.tsx` — not present in the old app's facet set.
+-   **Blog** (`src/views/BlogPage.tsx`, `src/views/BlogPostPage.tsx`) - browsable `cms_page` index with type and
+    topic filters. See `specs/feature-blog-cms.md`.
+-   **Eco badge** on product cards and the product page (`src/components/EcoMark.tsx`). See `specs/feature-eco-badge.md`.
+-   **Category hero banner** on category pages. See `specs/feature-category-hero-banner.md`.
+-   **Real recommendations** from the API. See `specs/feature-real-recommendations.md`.
+-   **Vector search block** on the home page. See `specs/feature-home-vector-block.md`.

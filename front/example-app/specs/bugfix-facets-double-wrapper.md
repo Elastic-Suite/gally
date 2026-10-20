@@ -16,24 +16,24 @@ never had this problem.
 
 ## Behaviour (testable)
 
-- [x] `SearchPage.tsx` no longer wraps `<Facets>` in an extra `.facets-sidebar` div — it renders `<Facets>`
-      directly, matching `CategoryPage.tsx`.
-- [x] The mobile off-canvas toggle (`facetsOpen` state, was applying the `.open` class to the now-removed
-      wrapper div) is passed through a new `open` prop on `Facets`, which applies `open ? 'open' : ''` to the
-      actual `<aside className="facets-sidebar">` element in both its render paths (loading skeleton and main
-      return) — so `.facets-sidebar.open`'s mobile slide-in transform still works.
+-   [x] `SearchPage.tsx` no longer wraps `<Facets>` in an extra `.facets-sidebar` div — it renders `<Facets>`
+        directly, matching `CategoryPage.tsx`.
+-   [x] The mobile off-canvas toggle (`facetsOpen` state, was applying the `.open` class to the now-removed
+        wrapper div) is passed through a new `open` prop on `Facets`, which applies `open ? 'open' : ''` to the
+        actual `<aside className="facets-sidebar">` element in both its render paths (loading skeleton and main
+        return) — so `.facets-sidebar.open`'s mobile slide-in transform still works.
 
 ## UI constraints
 
-- No new CSS — reuses the existing `.facets-sidebar`/`.facets-sidebar.open` rules exactly as before, just
-  applied to one element instead of two nested ones.
+-   No new CSS — reuses the existing `.facets-sidebar`/`.facets-sidebar.open` rules exactly as before, just
+    applied to one element instead of two nested ones.
 
 ## MUST NOT change
 
-- `CategoryPage.tsx`'s `<Facets>` usage — already correct, untouched.
+-   `CategoryPage.tsx`'s `<Facets>` usage — already correct, untouched.
 
-  > Superseded in part by `bugfix-facets-drawer-in-flow.md` (phones): the category page's Filters
-  > button had no onClick and the drawer had no way to close; Facets gained an optional onClose.
+    > Superseded in part by `bugfix-facets-drawer-in-flow.md` (phones): the category page's Filters
+    > button had no onClick and the drawer had no way to close; Facets gained an optional onClose.
 
-- `Facets.tsx`'s internal structure/behavior (facet groups, active-filter chips, show-more) — only the root
-  element's className gained the `open` prop, nothing else.
+-   `Facets.tsx`'s internal structure/behavior (facet groups, active-filter chips, show-more) — only the root
+    element's className gained the `open` prop, nothing else.

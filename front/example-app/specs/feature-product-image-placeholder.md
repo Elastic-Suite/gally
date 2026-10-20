@@ -13,19 +13,19 @@ different fallback on each page ("📷 name" on the card, "IMG" in autocomplete,
 
 ## Behaviour (testable)
 
-- [x] Every product picture is drawn by `ProductImage`: the card, the product page, the autocomplete
-      thumbnails, the cart rows and the vector search rows.
-- [x] When the URL is empty, or the image fails to load (404, broken file), it shows
-      `.product-image-placeholder`: a pale picture icon centred in the image frame.
-- [x] A failure that happens before React hydrates is caught too: on mount, an image that is `complete`
-      with `naturalWidth === 0` switches to the placeholder.
-- [x] The placeholder has `role="img"` and the product name as `aria-label`, like the image it replaces.
-- [x] A new `src` resets the failed state, so a reused component shows the new product's image.
+-   [x] Every product picture is drawn by `ProductImage`: the card, the product page, the autocomplete
+        thumbnails, the cart rows and the vector search rows.
+-   [x] When the URL is empty, or the image fails to load (404, broken file), it shows
+        `.product-image-placeholder`: a pale picture icon centred in the image frame.
+-   [x] A failure that happens before React hydrates is caught too: on mount, an image that is `complete`
+        with `naturalWidth === 0` switches to the placeholder.
+-   [x] The placeholder has `role="img"` and the product name as `aria-label`, like the image it replaces.
+-   [x] A new `src` resets the failed state, so a reused component shows the new product's image.
 
 ## MUST NOT change
 
-- Working images render exactly as before: same `<img>`, same inline styles, same `loading`.
-- Blog images and the brand logo are not product pictures and keep their own markup.
+-   Working images render exactly as before: same `<img>`, same inline styles, same `loading`.
+-   Blog images and the brand logo are not product pictures and keep their own markup.
 
 ## Follow-up
 

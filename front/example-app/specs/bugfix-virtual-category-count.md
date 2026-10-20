@@ -22,30 +22,30 @@ affected: it is computed at search time.
 
 ## Behaviour (testable)
 
-- [x] A virtual category's hero shows the listing's own total ("104 produits dans cette
-      catégorie"), not 0.
-- [x] Applying a filter changes the grid count, not the hero count.
-- [ ] A virtual subcategory stays in its parent's chips, without a count.
-- [ ] A virtual subcategory has no count in the nav flyout.
-- [x] Physical categories keep the tree count, unchanged.
+-   [x] A virtual category's hero shows the listing's own total ("104 produits dans cette
+        catégorie"), not 0.
+-   [x] Applying a filter changes the grid count, not the hero count.
+-   [ ] A virtual subcategory stays in its parent's chips, without a count.
+-   [ ] A virtual subcategory has no count in the nav flyout.
+-   [x] Physical categories keep the tree count, unchanged.
 
 ## SDK contract used
 
-- `isVirtual` and `count` from `getCategoryTree` (`src/sdk/catalogs.ts`). The listing total comes
-  from `useSearch`, as before.
+-   `isVirtual` and `count` from `getCategoryTree` (`src/sdk/catalogs.ts`). The listing total comes
+    from `useSearch`, as before.
 
 ## Tracking (required)
 
-- None added or removed.
+-   None added or removed.
 
 ## UI constraints
 
-- No new markup or CSS: the count elements are omitted, not restyled.
+-   No new markup or CSS: the count elements are omitted, not restyled.
 
 ## MUST NOT change
 
-- The hero count of a physical category stays the tree count, so it is right on the first
-  server-rendered paint.
-- The hero count must not follow filters: it says "in this category". The virtual total is taken
-  only from an unfiltered result and remembered per category code.
-- Remove this workaround once the API counts virtual categories (`missing-features.md`).
+-   The hero count of a physical category stays the tree count, so it is right on the first
+    server-rendered paint.
+-   The hero count must not follow filters: it says "in this category". The virtual total is taken
+    only from an unfiltered result and remembered per category code.
+-   Remove this workaround once the API counts virtual categories (`missing-features.md`).

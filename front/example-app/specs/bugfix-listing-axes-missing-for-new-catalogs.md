@@ -40,15 +40,15 @@ that arrived later.
 
 ## Behaviour (testable)
 
-- [x] On a Fiora listing, a configurable product opens the quick-add overlay with its axes and
-      does not add to the basket until every axis is answered. Verified on `FIO-FRO-RL-008`:
-      3 colours and 4 sizes.
-- [x] The same holds in Le livre & le lièvre, whose axes are `llv_color`, `llv_format` and
-      `llv_material`.
-- [x] Venia and Luma are unchanged — their axes were already in the list.
-- [x] Toolbox Bricolage is unaffected: it has no configurable products at all.
-- [x] A simple product still adds in one click, in every catalogue.
-- [x] `npx tsc --noEmit` clean inside the `example` container.
+-   [x] On a Fiora listing, a configurable product opens the quick-add overlay with its axes and
+        does not add to the basket until every axis is answered. Verified on `FIO-FRO-RL-008`:
+        3 colours and 4 sizes.
+-   [x] The same holds in Le livre & le lièvre, whose axes are `llv_color`, `llv_format` and
+        `llv_material`.
+-   [x] Venia and Luma are unchanged — their axes were already in the list.
+-   [x] Toolbox Bricolage is unaffected: it has no configurable products at all.
+-   [x] A simple product still adds in one click, in every catalogue.
+-   [x] `npx tsc --noEmit` clean inside the `example` container.
 
 ## The complete axis set
 
@@ -84,32 +84,32 @@ specified in `feature-quick-add-overlay.md`; it simply never had data to work wi
 
 ## MUST NOT change
 
-- **A catalogue that introduces a variant axis must add that axis to `PRODUCT_FIELDS` in the same
-  change.** This is the coupling that broke: the data was correct and complete, and the listing
-  still behaved as though the product were simple, silently. There is no error to catch it.
-- **Do not reach for `source` to avoid maintaining this list.** `PRODUCT_DETAIL_FIELDS` exists for
-  that and is deliberately kept off listings — `source` is the whole document, about 3 KB for a
-  configurable, twenty rows at a time. The standing rule from
-  `feature-configurable-option-selection.md` still holds.
-- **Do not "tidy" the list by dropping axes that return null.** Null in one catalogue is the axis
-  another catalogue depends on; that is the whole design of a global Product type.
-- `getVariantAxes()`'s final `.filter(axis => axis.options.length > 0)` must stay. It is correct —
-  an axis with no options cannot be offered — it was just hiding a projection gap. Removing it
-  would render empty radio groups instead.
+-   **A catalogue that introduces a variant axis must add that axis to `PRODUCT_FIELDS` in the same
+    change.** This is the coupling that broke: the data was correct and complete, and the listing
+    still behaved as though the product were simple, silently. There is no error to catch it.
+-   **Do not reach for `source` to avoid maintaining this list.** `PRODUCT_DETAIL_FIELDS` exists for
+    that and is deliberately kept off listings — `source` is the whole document, about 3 KB for a
+    configurable, twenty rows at a time. The standing rule from
+    `feature-configurable-option-selection.md` still holds.
+-   **Do not "tidy" the list by dropping axes that return null.** Null in one catalogue is the axis
+    another catalogue depends on; that is the whole design of a global Product type.
+-   `getVariantAxes()`'s final `.filter(axis => axis.options.length > 0)` must stay. It is correct —
+    an axis with no options cannot be offered — it was just hiding a projection gap. Removing it
+    would render empty radio groups instead.
 
 ## Notes / not done
 
-- **The axis heading still falls back to the raw attribute code.** `VariantSelector` reads
-  `t('page.axis.<code>')` with the code as its default, and `src/locales/*/product.json` carries
-  keys for Venia's and Luma's four axes only. The eleven new ones have no key.
-  Measured after this fix: a Venia listing announces "Couleur" and "Taille", a Fiora listing
-  announces `fio_color` and `fio_clothing_size`.
-  The compact overlay does not render the visible `<h4>`, so nothing looks wrong on screen — but it
-  passes the same string to `aria-label` on the radiogroup, so **a screen reader on a Fiora or
-  Le livre listing hears the raw attribute code**. Sighted users see the correct behaviour; this is
-  an accessibility gap, not a cosmetic one, and it is worth fixing sooner than "some time".
-  Separate change: the labels exist, translated, in the search response's `aggregations`.
-- Gally does hold these labels, translated, and returns them publicly in the search response's
-  `aggregations` (`fio_color` → Colour / Couleur / Farbe). The admin endpoints that also hold them,
-  `/api/source_field_labels` and `/api/source_fields`, require authentication and the storefront
-  has none. That is the material for the label fix, not for this one.
+-   **The axis heading still falls back to the raw attribute code.** `VariantSelector` reads
+    `t('page.axis.<code>')` with the code as its default, and `src/locales/*/product.json` carries
+    keys for Venia's and Luma's four axes only. The eleven new ones have no key.
+    Measured after this fix: a Venia listing announces "Couleur" and "Taille", a Fiora listing
+    announces `fio_color` and `fio_clothing_size`.
+    The compact overlay does not render the visible `<h4>`, so nothing looks wrong on screen — but it
+    passes the same string to `aria-label` on the radiogroup, so **a screen reader on a Fiora or
+    Le livre listing hears the raw attribute code**. Sighted users see the correct behaviour; this is
+    an accessibility gap, not a cosmetic one, and it is worth fixing sooner than "some time".
+    Separate change: the labels exist, translated, in the search response's `aggregations`.
+-   Gally does hold these labels, translated, and returns them publicly in the search response's
+    `aggregations` (`fio_color` → Colour / Couleur / Farbe). The admin endpoints that also hold them,
+    `/api/source_field_labels` and `/api/source_fields`, require authentication and the storefront
+    has none. That is the material for the label fix, not for this one.
