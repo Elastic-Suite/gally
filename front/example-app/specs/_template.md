@@ -6,24 +6,24 @@
 
 ## Behaviour (testable)
 
-- [ ] ...
+-   [ ] ...
 
 ## SDK contract used
 
-- Which SearchManager options / requestType / selectedFields. See ../docs/sdk-reference.md.
+-   Which SearchManager options / requestType / selectedFields. See ../docs/sdk-reference.md.
 
 ## Tracking (required)
 
-- Which TrackingEventType fires and when.
+-   Which TrackingEventType fires and when.
 
 ## UI constraints
 
-- Uses only design-system tokens + existing components (../docs/design-system.md).
+-   Uses only design-system tokens + existing components (../docs/design-system.md).
 
 ## MUST NOT change
 
-- Existing behaviour/props/tracking that must stay intact during refactor.
-- The most valuable section: it is what stops a later refactor undoing this one.
+-   Existing behaviour/props/tracking that must stay intact during refactor.
+-   The most valuable section: it is what stops a later refactor undoing this one.
 
 ---
 

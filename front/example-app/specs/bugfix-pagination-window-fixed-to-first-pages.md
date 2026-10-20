@@ -30,23 +30,23 @@ verbatim" - which is how a bug in a snippet becomes a bug in five places.
 
 ## Behaviour (testable)
 
-- [x] The window slides with the current page and clamps at both ends: page 6 of 12 with a window
-      of 5 gives `1 … 4 5 [6] 7 8 … 12`, page 1 gives `[1] 2 3 4 5 … 12`, page 12 gives
-      `1 … 8 9 10 11 [12]`. Checked against the shipped expression for ten page/count/window
-      combinations, including both ends and both window sizes.
-- [x] `pageCount <= windowSize` renders the plain run of numbers with no ellipsis and no
-      duplicated first/last button - `page 3 of 5` gives `1 2 [3] 4 5`.
-- [x] Page 2 and page 11 of 12 give `1 [2] 3 4 5 … 12` and `1 … 8 9 10 [11] 12`: no `…` between
-      `1` and `2`, because there is nothing hidden there.
-- [x] Server-rendered markup on a real listing is the new one:
-      `<nav class="pagination" aria-label="Pagination">` with `class="active" aria-current="page"`
-      on the current page.
-- [x] A listing whose page count equals the window renders no ellipsis (`cat_2`, 5 pages,
-      window 5).
-- [ ] Clicking through pages in a browser, and the vector search page's two independent pagers -
-      NOT exercised interactively. The arithmetic and the markup are checked; the click is not.
-- [ ] A single page renders no pager at all. Unchanged from before by construction (the component
-      returns `null`), not re-tested.
+-   [x] The window slides with the current page and clamps at both ends: page 6 of 12 with a window
+        of 5 gives `1 … 4 5 [6] 7 8 … 12`, page 1 gives `[1] 2 3 4 5 … 12`, page 12 gives
+        `1 … 8 9 10 11 [12]`. Checked against the shipped expression for ten page/count/window
+        combinations, including both ends and both window sizes.
+-   [x] `pageCount <= windowSize` renders the plain run of numbers with no ellipsis and no
+        duplicated first/last button - `page 3 of 5` gives `1 2 [3] 4 5`.
+-   [x] Page 2 and page 11 of 12 give `1 [2] 3 4 5 … 12` and `1 … 8 9 10 [11] 12`: no `…` between
+        `1` and `2`, because there is nothing hidden there.
+-   [x] Server-rendered markup on a real listing is the new one:
+        `<nav class="pagination" aria-label="Pagination">` with `class="active" aria-current="page"`
+        on the current page.
+-   [x] A listing whose page count equals the window renders no ellipsis (`cat_2`, 5 pages,
+        window 5).
+-   [ ] Clicking through pages in a browser, and the vector search page's two independent pagers -
+        NOT exercised interactively. The arithmetic and the markup are checked; the click is not.
+-   [ ] A single page renders no pager at all. Unchanged from before by construction (the component
+        returns `null`), not re-tested.
 
 ## The fix
 
@@ -84,9 +84,9 @@ disabled button. A token, not a new primitive.
 
 ## MUST NOT change
 
-- **No call site goes back to building its own page numbers.** That is the whole bug.
-- Each call site keeps its own scroll behaviour, its own labels and its own window size - the
-  differences are deliberate and documented where they are.
-- `VectorSearchPage`'s pager stays **above** its list; `src/views/VectorSearchPage.tsx` explains
-  why, and the component must not force a position.
-- The pager still renders nothing when there is one page or fewer.
+-   **No call site goes back to building its own page numbers.** That is the whole bug.
+-   Each call site keeps its own scroll behaviour, its own labels and its own window size - the
+    differences are deliberate and documented where they are.
+-   `VectorSearchPage`'s pager stays **above** its list; `src/views/VectorSearchPage.tsx` explains
+    why, and the component must not force a position.
+-   The pager still renders nothing when there is one page or fewer.

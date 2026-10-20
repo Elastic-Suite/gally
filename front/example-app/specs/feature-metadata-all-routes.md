@@ -65,35 +65,35 @@ metadata reads and does a dotted-path lookup with the same `fallbackLng: 'en'` b
 
 ## Behaviour (testable) — verified by curl, no JavaScript
 
-- [x] All 11 routes return 200 and carry a real `<title>`, suffixed `· Gally`
-- [x] Indexable routes carry description + canonical; the five noindex routes carry
-      `<meta name="robots" content="noindex, follow">` and no canonical
-- [x] French works throughout: `/com_fr` → _"La recherche intelligente pour l'e-commerce"_,
-      `/com_fr/cart` → _"Panier"_, `/com_fr/cms/about` → _"À propos d'ElasticSuite"_
-- [x] `og:site_name` present exactly once per page; `og:locale` correct per catalog
-      (`en_US` / `fr_FR`)
-- [x] `Product` JSON-LD description contains no HTML tags
-- [x] `/cms/about` now has a description drawn from its first paragraph
-- [x] No hydration mismatches; `npx tsc --noEmit` clean
+-   [x] All 11 routes return 200 and carry a real `<title>`, suffixed `· Gally`
+-   [x] Indexable routes carry description + canonical; the five noindex routes carry
+        `<meta name="robots" content="noindex, follow">` and no canonical
+-   [x] French works throughout: `/com_fr` → _"La recherche intelligente pour l'e-commerce"_,
+        `/com_fr/cart` → _"Panier"_, `/com_fr/cms/about` → _"À propos d'ElasticSuite"_
+-   [x] `og:site_name` present exactly once per page; `og:locale` correct per catalog
+        (`en_US` / `fr_FR`)
+-   [x] `Product` JSON-LD description contains no HTML tags
+-   [x] `/cms/about` now has a description drawn from its first paragraph
+-   [x] No hydration mismatches; `npx tsc --noEmit` clean
 
 ## Still missing — genuinely Phase 4, not overlooked
 
-- **`hreflang`.** No route emits `alternates.languages`, so the six locale variants of each page are
-  not linked to each other. This is the single biggest remaining SEO gap and the whole reason the
-  locale went into the URL in Phase 2.
-- `app/sitemap.ts` and `app/robots.ts`.
-- `<html lang="en">` is still hardcoded in the root layout and wrong for every `*_fr` URL.
+-   **`hreflang`.** No route emits `alternates.languages`, so the six locale variants of each page are
+    not linked to each other. This is the single biggest remaining SEO gap and the whole reason the
+    locale went into the URL in Phase 2.
+-   `app/sitemap.ts` and `app/robots.ts`.
+-   `<html lang="en">` is still hardcoded in the root layout and wrong for every `*_fr` URL.
 
 ## MUST NOT change
 
-- **Do not rely on inheriting `openGraph` from the root layout** — Next replaces it wholesale.
-  Spread `openGraphBase()` into every page that sets any `openGraph` field.
-- **Keep `noindex` routes canonical-free**, and keep `search` in that set.
-- **Do not reintroduce a local `SITE` constant** in a route file.
-- `generateMetadata()` must not import from `src/i18n` — use `src/sdk/serverI18n.ts`.
-- `CMS_PAGE_KEYS` is duplicated in `src/views/CmsPage.tsx` and the route's `page.tsx`; the route
-  `notFound()`s on an unmapped slug, which is what stops every unknown `/cms/*` URL from rendering
-  the About page as duplicate content. Keep the two lists in step.
+-   **Do not rely on inheriting `openGraph` from the root layout** — Next replaces it wholesale.
+    Spread `openGraphBase()` into every page that sets any `openGraph` field.
+-   **Keep `noindex` routes canonical-free**, and keep `search` in that set.
+-   **Do not reintroduce a local `SITE` constant** in a route file.
+-   `generateMetadata()` must not import from `src/i18n` — use `src/sdk/serverI18n.ts`.
+-   `CMS_PAGE_KEYS` is duplicated in `src/views/CmsPage.tsx` and the route's `page.tsx`; the route
+    `notFound()`s on an unmapped slug, which is what stops every unknown `/cms/*` URL from rendering
+    the About page as duplicate content. Keep the two lists in step.
 
 ---
 
@@ -111,15 +111,15 @@ that are not on the page would be a mismatch.
 
 Three further fixes to the same route:
 
-- **The description was hardcoded English** (`Browse ${title} in the Gally demo storefront.`), so
-  French users got an English description. Now `category.category.meta.description` in all three
-  locales, interpolated with the real product count — `tServer` gained `{{var}}` support.
-  Verified: `/com_fr/category/cat_12` → _"Découvrez notre sélection Pantalons & Shorts : 12 produits
-  disponibles."_
-- **The breadcrumb skipped ancestors.** `findTrail()` now returns the whole chain, so a nested
-  category reads `Home > Bottoms > Pants & Shorts` instead of `Home > Pants & Shorts`. "Home" is
-  translated (`common.meta.home`).
-- `og:image` now uses the first product's image.
+-   **The description was hardcoded English** (`Browse ${title} in the Gally demo storefront.`), so
+    French users got an English description. Now `category.category.meta.description` in all three
+    locales, interpolated with the real product count — `tServer` gained `{{var}}` support.
+    Verified: `/com_fr/category/cat_12` → _"Découvrez notre sélection Pantalons & Shorts : 12 produits
+    disponibles."_
+-   **The breadcrumb skipped ancestors.** `findTrail()` now returns the whole chain, so a nested
+    category reads `Home > Bottoms > Pants & Shorts` instead of `Home > Pants & Shorts`. "Home" is
+    translated (`common.meta.home`).
+-   `og:image` now uses the first product's image.
 
 ## The soft-404 regression that `loading.tsx` introduced — and the fix
 
@@ -142,13 +142,13 @@ of content on the category route. Verified 404s: `/product/NOPE`, `/blog/99999`,
 
 ## MUST NOT change (additions)
 
-- **Never rely on `notFound()` in a page or in `generateMetadata` for a route that has a
-  `loading.tsx`.** It renders the right UI under the wrong status, and nothing warns you. The check
-  belongs in that route's `layout.tsx`. Deleting one of those guards silently reintroduces soft-404s
-  on an unbounded set of URLs. (The `loading.tsx` files were later deleted for an unrelated reason —
-  `bugfix-ssr-product-list-behind-suspense.md` — so nothing streams today and the page-body checks
-  would also work. The layout guards stay, and the 404s verified above are still verified against
-  them; the rule stands for the moment any boundary is reintroduced.)
-- `findTrail()` in `src/sdk/categoryTree.ts` is shared by the category guard and the category route
-  so that "does this category exist" is answered identically in both. Do not fork it.
-- `ItemList` must keep describing **only the first page** — the same rows the canonical URL renders.
+-   **Never rely on `notFound()` in a page or in `generateMetadata` for a route that has a
+    `loading.tsx`.** It renders the right UI under the wrong status, and nothing warns you. The check
+    belongs in that route's `layout.tsx`. Deleting one of those guards silently reintroduces soft-404s
+    on an unbounded set of URLs. (The `loading.tsx` files were later deleted for an unrelated reason —
+    `bugfix-ssr-product-list-behind-suspense.md` — so nothing streams today and the page-body checks
+    would also work. The layout guards stay, and the 404s verified above are still verified against
+    them; the rule stands for the moment any boundary is reintroduced.)
+-   `findTrail()` in `src/sdk/categoryTree.ts` is shared by the category guard and the category route
+    so that "does this category exist" is answered identically in both. Do not fork it.
+-   `ItemList` must keep describing **only the first page** — the same rows the canonical URL renders.

@@ -32,21 +32,21 @@ without it the light ground blends into the background.
 
 ## Behaviour (testable)
 
-- [x] On `fashion`, `toolbox` and `papershop`, the hero shows that shop's headline, copy and three
-      product photos, and two promo cards each link to a category of that shop.
-- [x] Hero and card text is translated in `en`, `fr` and `de`.
-- [x] The hero button is still the measured per-catalog search of
-      `feature-hero-cta-per-catalog.md` (label and query unchanged), only restyled dark.
-- [ ] A catalog with no blocks entry (`com`, `fr`, `uk`) keeps the old centred text hero and shows
-      no promo cards. Its sliders still use the panel layout.
-- [x] Each slider shows 3 products, not 8, on every catalog.
-- [x] The two sliders do not show the same products. The second row lists `categories[2]`, the
-      second top-level category, falling back to `categories[1]` when a catalog has only one.
-- [ ] Each panel has a "see all" link to the category it lists.
-- [x] Below 768px: the hero stacks photos over copy, the cards stack, and each panel puts its
-      title above a horizontally scrolling row.
-- [ ] The cart and product page sliders look exactly as before.
-- [x] `npx tsc --noEmit` clean inside the `example` container.
+-   [x] On `fashion`, `toolbox` and `papershop`, the hero shows that shop's headline, copy and three
+        product photos, and two promo cards each link to a category of that shop.
+-   [x] Hero and card text is translated in `en`, `fr` and `de`.
+-   [x] The hero button is still the measured per-catalog search of
+        `feature-hero-cta-per-catalog.md` (label and query unchanged), only restyled dark.
+-   [ ] A catalog with no blocks entry (`com`, `fr`, `uk`) keeps the old centred text hero and shows
+        no promo cards. Its sliders still use the panel layout.
+-   [x] Each slider shows 3 products, not 8, on every catalog.
+-   [x] The two sliders do not show the same products. The second row lists `categories[2]`, the
+        second top-level category, falling back to `categories[1]` when a catalog has only one.
+-   [ ] Each panel has a "see all" link to the category it lists.
+-   [x] Below 768px: the hero stacks photos over copy, the cards stack, and each panel puts its
+        title above a horizontally scrolling row.
+-   [ ] The cart and product page sliders look exactly as before.
+-   [x] `npx tsc --noEmit` clean inside the `example` container.
 
 ## Which category the second row lists
 
@@ -70,20 +70,20 @@ Measured on 2026-10-02 (`product_catalog`, default order, first 3 SKUs of each r
 
 On 2026-10-02, on screenshots of the running stack:
 
-- Full-page shots of `fashion_fr`, `toolbox_fr`, `papershop_fr` and `papershop_de`, and
-  `papershop_fr` at 390px. Each shows the shop's hero, 3 products per row, the two cards and a
-  second row from `categories[2]` (Homme, Batteries & Chargeurs, Livres / Bücher).
-- Hero buttons read "Découvrir les robes", "Découvrir les perceuses", "Füllhalter entdecken".
-- Key parity across the three `category.json` files. `tsc --noEmit` exit 0, `✓ Compiled` with no
-  new error line in the `example` log.
+-   Full-page shots of `fashion_fr`, `toolbox_fr`, `papershop_fr` and `papershop_de`, and
+    `papershop_fr` at 390px. Each shows the shop's hero, 3 products per row, the two cards and a
+    second row from `categories[2]` (Homme, Batteries & Chargeurs, Livres / Bücher).
+-   Hero buttons read "Découvrir les robes", "Découvrir les perceuses", "Füllhalter entdecken".
+-   Key parity across the three `category.json` files. `tsc --noEmit` exit 0, `✓ Compiled` with no
+    new error line in the `example` log.
 
 **Not verified, and why:**
 
-- The legacy fallback (`com`, `fr`, `uk`): those fixtures are not loaded in the running instance.
-  It rests on reading the code - no `HOMEPAGE_BLOCKS` entry renders the old `.hero` and no cards.
-- Cart and product page rows: the cart shot was an empty cart, with no row to compare. They rest
-  on reading the code - without `panel`, `ProductSlider` renders the same markup as before.
-- The "see all" link targets were not clicked; they are `/category/<id>` like `CategoryNav`'s.
+-   The legacy fallback (`com`, `fr`, `uk`): those fixtures are not loaded in the running instance.
+    It rests on reading the code - no `HOMEPAGE_BLOCKS` entry renders the old `.hero` and no cards.
+-   Cart and product page rows: the cart shot was an empty cart, with no row to compare. They rest
+    on reading the code - without `panel`, `ProductSlider` renders the same markup as before.
+-   The "see all" link targets were not clicked; they are `/category/<id>` like `CategoryNav`'s.
 
 ## Known issue
 
@@ -115,22 +115,22 @@ pages they open fire their own tracking.
 
 ## UI constraints
 
-- New button variants `.btn-dark` (`--gray-900`) and `.btn-light` (`--white`), pill-shaped like
-  every `.btn`. The dark one is the hero CTA; the light one sits on the dark card panels.
-- Tokens only. The cut-out photos are blended into the panel with `mix-blend-mode: multiply` and a
-  radial mask, because they sit on an off-white square that would otherwise show as a box.
-- No carousel arrows, dots or terms link. There is one slide and no terms page, and controls that do nothing look broken in a demo.
+-   New button variants `.btn-dark` (`--gray-900`) and `.btn-light` (`--white`), pill-shaped like
+    every `.btn`. The dark one is the hero CTA; the light one sits on the dark card panels.
+-   Tokens only. The cut-out photos are blended into the panel with `mix-blend-mode: multiply` and a
+    radial mask, because they sit on an off-white square that would otherwise show as a box.
+-   No carousel arrows, dots or terms link. There is one slide and no terms page, and controls that do nothing look broken in a demo.
 
 ## MUST NOT change
 
-- **The hero button's label and query stay the measured pair per catalog and language**
-  (`feature-hero-cta-per-catalog.md`). This change restyles the button; it does not turn it into a
-  category link.
-- **The panel layout is opt-in through `ProductSlider`'s `panel` prop.** Cart and product page call
-  `ProductSlider` without it and must keep the plain scrolling row.
-- **The rows fetch 3 products; do not fetch more and hide the rest.** See Tracking.
-- **The hero and the two panels share one surface.** Changing one ground without the others breaks
-  the reason the page reads as one set of blocks.
-- A catalog without a blocks entry falls back to the old hero, not to another shop's photos.
-- **The second row is not `categories[1]`.** It repeats row 1 on every sample shop. A different
-  rule needs re-measuring on all three shops first.
+-   **The hero button's label and query stay the measured pair per catalog and language**
+    (`feature-hero-cta-per-catalog.md`). This change restyles the button; it does not turn it into a
+    category link.
+-   **The panel layout is opt-in through `ProductSlider`'s `panel` prop.** Cart and product page call
+    `ProductSlider` without it and must keep the plain scrolling row.
+-   **The rows fetch 3 products; do not fetch more and hide the rest.** See Tracking.
+-   **The hero and the two panels share one surface.** Changing one ground without the others breaks
+    the reason the page reads as one set of blocks.
+-   A catalog without a blocks entry falls back to the old hero, not to another shop's photos.
+-   **The second row is not `categories[1]`.** It repeats row 1 on every sample shop. A different
+    rule needs re-measuring on all three shops first.

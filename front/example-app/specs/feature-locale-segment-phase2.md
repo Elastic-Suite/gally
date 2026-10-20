@@ -14,20 +14,20 @@ them possible: a crawler now receives a page that already knows its catalog, cur
 
 ## Behaviour (testable)
 
-- [x] `/example` → 307 to `/example/com_fr` (the default localized catalog, the same one the SPA
-      used to pick on mount: first catalog → its `isDefault` localized catalog)
-- [x] All routes work under every locale: `/com_fr`, `/com_en`, `/com_fr/search?q=dress`,
-      `/com_fr/cart`, `/com_fr/blog`, `/com_en/product/VD10`, `/com_fr/category/2`, `/en_en/product/VD10`
-- [x] **An unknown segment 404s** (`/example/nope`) rather than silently falling back
-- [x] **Language is resolved server-side, verified with JS disabled** — plain `curl` of
-      `/com_fr/cart` returns `<h1>Votre Panier</h1>`, `/com_en/cart` returns `<h1>Your Cart</h1>`
-- [x] Every in-app link carries the segment: `href="/example/com_fr/product/..."`, and
-      `/example/_next/static` is untouched
-- [x] No hydration mismatch; `npx tsc --noEmit` clean
-- [ ] Catalog/localized-catalog selectors switch catalog **and stay on the current page** — wired
-      and type-checked, NOT clicked in a real browser
-- [ ] Guided demo navigation under the locale segment — NOT verified interactively
-- [ ] Tracking still fires — NOT verified (inherited gap from Phase 1)
+-   [x] `/example` → 307 to `/example/com_fr` (the default localized catalog, the same one the SPA
+        used to pick on mount: first catalog → its `isDefault` localized catalog)
+-   [x] All routes work under every locale: `/com_fr`, `/com_en`, `/com_fr/search?q=dress`,
+        `/com_fr/cart`, `/com_fr/blog`, `/com_en/product/VD10`, `/com_fr/category/2`, `/en_en/product/VD10`
+-   [x] **An unknown segment 404s** (`/example/nope`) rather than silently falling back
+-   [x] **Language is resolved server-side, verified with JS disabled** — plain `curl` of
+        `/com_fr/cart` returns `<h1>Votre Panier</h1>`, `/com_en/cart` returns `<h1>Your Cart</h1>`
+-   [x] Every in-app link carries the segment: `href="/example/com_fr/product/..."`, and
+        `/example/_next/static` is untouched
+-   [x] No hydration mismatch; `npx tsc --noEmit` clean
+-   [ ] Catalog/localized-catalog selectors switch catalog **and stay on the current page** — wired
+        and type-checked, NOT clicked in a real browser
+-   [ ] Guided demo navigation under the locale segment — NOT verified interactively
+-   [ ] Tracking still fires — NOT verified (inherited gap from Phase 1)
 
 ## SDK contract used
 
@@ -93,18 +93,18 @@ request header. Phase 4 owns `hreflang` and canonical URLs, and `lang` belongs w
 
 ## MUST NOT change
 
-- **Never `import Link from 'next/link'` in a page or component.** Use
-  `src/components/LocaleLink.tsx` (imported as `Link`, so JSX is unchanged). A raw `next/link` drops
-  the locale segment and silently resets the visitor to the default catalog.
-- For imperative navigation use `useLocaleHref()` from `src/contexts/LocaleContext.tsx`.
-  **One exception:** `src/views/BlogPage.tsx` pushes `` `${pathname}?${params}` `` and `pathname`
-  already contains the segment — prefixing it again would produce `/com_fr/com_fr/...`.
-- **`withLocale()` must stay idempotent.** It is applied in more than one layer; making it blindly
-  prepend would double the segment.
-- **Unknown locale must keep 404-ing**, not fall back to the default. Silently serving different
-  content under a wrong URL bakes in duplicate-content and soft-404 problems before the SEO phases
-  even start.
-- **Do not reintroduce `useState` into `CatalogProvider`** for the selected catalog — see above.
-- The server/browser base-URI split in `src/sdk/index.ts` is load-bearing (now `SSR_API_URL` vs
-  `NEXT_PUBLIC_API_URL`); removing `SSR_API_URL` locally breaks all server rendering with
-  `ECONNREFUSED`.
+-   **Never `import Link from 'next/link'` in a page or component.** Use
+    `src/components/LocaleLink.tsx` (imported as `Link`, so JSX is unchanged). A raw `next/link` drops
+    the locale segment and silently resets the visitor to the default catalog.
+-   For imperative navigation use `useLocaleHref()` from `src/contexts/LocaleContext.tsx`.
+    **One exception:** `src/views/BlogPage.tsx` pushes `` `${pathname}?${params}` `` and `pathname`
+    already contains the segment — prefixing it again would produce `/com_fr/com_fr/...`.
+-   **`withLocale()` must stay idempotent.** It is applied in more than one layer; making it blindly
+    prepend would double the segment.
+-   **Unknown locale must keep 404-ing**, not fall back to the default. Silently serving different
+    content under a wrong URL bakes in duplicate-content and soft-404 problems before the SEO phases
+    even start.
+-   **Do not reintroduce `useState` into `CatalogProvider`** for the selected catalog — see above.
+-   The server/browser base-URI split in `src/sdk/index.ts` is load-bearing (now `SSR_API_URL` vs
+    `NEXT_PUBLIC_API_URL`); removing `SSR_API_URL` locally breaks all server rendering with
+    `ECONNREFUSED`.

@@ -64,15 +64,15 @@ words that land on the product the button promises.
 
 ## Behaviour (testable)
 
-- [x] Each shop's hero button names a product range that shop actually sells, in the visitor's
-      language, and the search it opens returns products.
-- [x] Switching catalogue changes the button, because the catalogue comes from the URL segment
-      through `CatalogContext` and the component re-renders with it.
-- [ ] A catalogue with no entry falls back to a neutral "browse all products" button pointing at
-      the root category, not to another shop's query. See `MUST NOT change`.
-- [ ] A catalogue with no entry **and** no category tree renders no button at all, rather than a
-      link to `/category/undefined`.
-- [x] `npx tsc --noEmit` clean inside the `example` container.
+-   [x] Each shop's hero button names a product range that shop actually sells, in the visitor's
+        language, and the search it opens returns products.
+-   [x] Switching catalogue changes the button, because the catalogue comes from the URL segment
+        through `CatalogContext` and the component re-renders with it.
+-   [ ] A catalogue with no entry falls back to a neutral "browse all products" button pointing at
+        the root category, not to another shop's query. See `MUST NOT change`.
+-   [ ] A catalogue with no entry **and** no category tree renders no button at all, rather than a
+        link to `/category/undefined`.
+-   [x] `npx tsc --noEmit` clean inside the `example` container.
 
 **The two unticked boxes are the fallback path, and they could not be checked.** All three sample
 shops have an entry, so there is no URL that reaches the fallback without adding a fourth catalogue
@@ -85,12 +85,12 @@ sample shop lands.
 
 Against the running instance on 2026-09-22, all nine localized catalogues:
 
-- The rendered homepage carries the right label and the right `href`, with the locale segment
-  intact and the query percent-encoded — `/example/papershop_de/search?q=F%C3%BCllhalter`,
-  `Füllhalter entdecken`, and the eight others.
-- The search pages those buttons open render products rather than an empty result.
-- Key parity across `en`/`fr`/`de` `category.json`: no missing key, no extra key.
-- `npx tsc --noEmit` clean, and `✓ Compiled` with no error lines in the `example` container log.
+-   The rendered homepage carries the right label and the right `href`, with the locale segment
+    intact and the query percent-encoded — `/example/papershop_de/search?q=F%C3%BCllhalter`,
+    `Füllhalter entdecken`, and the eight others.
+-   The search pages those buttons open render products rather than an empty result.
+-   Key parity across `en`/`fr`/`de` `category.json`: no missing key, no extra key.
+-   `npx tsc --noEmit` clean, and `✓ Compiled` with no error lines in the `example` container log.
 
 ## SDK contract used
 
@@ -110,20 +110,20 @@ No new tokens, no new primitives, no styling change. The button keeps `btn btn-c
 
 ## MUST NOT change
 
-- **Do not fall back to another shop's query.** Sending a hardware shop to `dress` is the bug this
-  spec fixes. An unknown catalogue gets the neutral browse button, which is right for every shop
-  because it asks the catalogue what it contains instead of assuming.
-- **The label and the query stay one pair per language.** Splitting the query into a shared
-  constant re-creates the original bug in a new shape: an English query under a French label.
-- **A new query needs measuring in its own catalogue before it is added**, in all three languages.
-  A word that reads correctly can still return nothing, or the wrong products — `Füller` returns
-  novels. The value of these queries is a measured fact, not a translation.
-- **A new sample shop needs an entry in all three locale files or none.** A partial set silently
-  falls through i18next's `fallbackLng: 'en'` and puts an English query under a German label.
-- **Do not delete the `com`, `fr` and `uk` entries because the running instance does not serve
-  them.** The legacy catalogues are still in use and are not being retired yet; a missing entry
-  would drop their hero button to the neutral browse link, which is a regression against behaviour
-  that worked. The same applies to `com_en` in `VECTOR_DEMO_QUERIES`
-  (`src/sdk/vectorSearch.ts`).
-- Keep the button inside `.hero`. `docs/design-system.md` owns that block, and the hero is the one
-  place on the homepage with a coral CTA.
+-   **Do not fall back to another shop's query.** Sending a hardware shop to `dress` is the bug this
+    spec fixes. An unknown catalogue gets the neutral browse button, which is right for every shop
+    because it asks the catalogue what it contains instead of assuming.
+-   **The label and the query stay one pair per language.** Splitting the query into a shared
+    constant re-creates the original bug in a new shape: an English query under a French label.
+-   **A new query needs measuring in its own catalogue before it is added**, in all three languages.
+    A word that reads correctly can still return nothing, or the wrong products — `Füller` returns
+    novels. The value of these queries is a measured fact, not a translation.
+-   **A new sample shop needs an entry in all three locale files or none.** A partial set silently
+    falls through i18next's `fallbackLng: 'en'` and puts an English query under a German label.
+-   **Do not delete the `com`, `fr` and `uk` entries because the running instance does not serve
+    them.** The legacy catalogues are still in use and are not being retired yet; a missing entry
+    would drop their hero button to the neutral browse link, which is a regression against behaviour
+    that worked. The same applies to `com_en` in `VECTOR_DEMO_QUERIES`
+    (`src/sdk/vectorSearch.ts`).
+-   Keep the button inside `.hero`. `docs/design-system.md` owns that block, and the hero is the one
+    place on the homepage with a coral CTA.

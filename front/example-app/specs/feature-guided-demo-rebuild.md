@@ -20,21 +20,21 @@ State checked on 2026-10-05, at commit `cb97225b`.
 
 ### It cannot be started
 
-- `StoryCompanion` is mounted (`src/components/AppShell.tsx:74`), but renders nothing unless
-  `storyActive` is true (`src/components/StoryCompanion.tsx:22`).
-- The only caller of `startStory()` is `IntroScreen` (`src/components/IntroScreen.tsx:11`).
-- The intro never shows. `introSeen` starts at `true` (`src/contexts/DemoContext.tsx:39`) and
-  nothing calls `setIntroSeen(false)`. The gate is `AppShell.tsx:47-50`.
-- There is no other entry point: no URL parameter, no header control, no resume pill.
+-   `StoryCompanion` is mounted (`src/components/AppShell.tsx:74`), but renders nothing unless
+    `storyActive` is true (`src/components/StoryCompanion.tsx:22`).
+-   The only caller of `startStory()` is `IntroScreen` (`src/components/IntroScreen.tsx:11`).
+-   The intro never shows. `introSeen` starts at `true` (`src/contexts/DemoContext.tsx:39`) and
+    nothing calls `setIntroSeen(false)`. The gate is `AppShell.tsx:47-50`.
+-   There is no other entry point: no URL parameter, no header control, no resume pill.
 
 ### Side effect on the live app (not fixed, by decision)
 
 `audience` starts at `'direction'` (`DemoContext.tsx:40`), and only `IntroScreen` can change it.
 `.mode-direction .expert-only` hides elements (`src/styles.css:3243`), so in the normal app:
 
-- the live EventLog panel never shows (`AppShell.tsx:69`);
-- the `/explain` footer link never shows (`src/components/SectionLinks.tsx:48`). The page is
-  only reachable by typing its URL.
+-   the live EventLog panel never shows (`AppShell.tsx:69`);
+-   the `/explain` footer link never shows (`src/components/SectionLinks.tsx:48`). The page is
+    only reachable by typing its URL.
 
 The rebuild must decide what audience mode does, or this stays hidden.
 
@@ -62,27 +62,27 @@ run). `ClosingPage.tsx:58` also hardcodes `count: 12`.
 
 ### Dead code
 
-- `spotlight` (`src/scenarios/types.ts:23`) is set on every step but never read. On act 4 it
-  names `.products-grid`, while the engine targets `.product-card`.
-- `minimizeStory` (`DemoContext.tsx:68`) is never called, so the resume pill
-  (`StoryCompanion.tsx:25-31`, CSS `styles.css:3490-3509`) never renders.
-- `.story-cta` (`styles.css:3480`) and `.product-card.story-added` (`styles.css`, near 3960)
-  match no element.
-- `scenarios.demoDress.name` (`src/locales/en/scenarios.json:3`) is never read.
-- The "Talk to sales" buttons on the closing page have no `onClick` and still use `btn-coral`
-  (`ClosingPage.tsx:196,208`).
+-   `spotlight` (`src/scenarios/types.ts:23`) is set on every step but never read. On act 4 it
+    names `.products-grid`, while the engine targets `.product-card`.
+-   `minimizeStory` (`DemoContext.tsx:68`) is never called, so the resume pill
+    (`StoryCompanion.tsx:25-31`, CSS `styles.css:3490-3509`) never renders.
+-   `.story-cta` (`styles.css:3480`) and `.product-card.story-added` (`styles.css`, near 3960)
+    match no element.
+-   `scenarios.demoDress.name` (`src/locales/en/scenarios.json:3`) is never read.
+-   The "Talk to sales" buttons on the closing page have no `onClick` and still use `btn-coral`
+    (`ClosingPage.tsx:196,208`).
 
 ### Other notes for whoever rebuilds it
 
-- The story panel offsets (`top: 70px` / `80px`, `styles.css:3377,3492`) predate the two-row
-  header (`--header-height` 8.5rem, `styles.css:485`). The panel probably overlaps the header
-  (guess).
-- The toast builds HTML from a translation with `innerHTML` (`useStoryActions.ts:72`). The
-  scenario bubbles in `scenarios.json` also carry markup.
-- The product link regex `/\/product\/(.+)/` (`useStoryActions.ts:184`) would also capture a
-  query string after the SKU.
-- Locale parity is complete: `demo.json` and `scenarios.json` have the same keys in en, fr
-  and de, and every `intro.*`, `story.*`, `toast.*` and `closing.*` key is used.
+-   The story panel offsets (`top: 70px` / `80px`, `styles.css:3377,3492`) predate the two-row
+    header (`--header-height` 8.5rem, `styles.css:485`). The panel probably overlaps the header
+    (guess).
+-   The toast builds HTML from a translation with `innerHTML` (`useStoryActions.ts:72`). The
+    scenario bubbles in `scenarios.json` also carry markup.
+-   The product link regex `/\/product\/(.+)/` (`useStoryActions.ts:184`) would also capture a
+    query string after the SKU.
+-   Locale parity is complete: `demo.json` and `scenarios.json` have the same keys in en, fr
+    and de, and every `intro.*`, `story.*`, `toast.*` and `closing.*` key is used.
 
 ## Entry point and panel (decided 2026-10-06)
 
@@ -93,10 +93,10 @@ the page. When it is on, the panel shows the steps.
 
 The right edge at mid-height is the only free spot. The others are taken:
 
-- bottom-right: EventLog toggle (`styles.css:2949-2960`);
-- bottom-left: TrackingInsights (`styles.css:2964-2977`) and the explain toggle
-  (`styles.css:3119-3121`);
-- top-right: the story dock itself (`styles.css:3499-3507`).
+-   bottom-right: EventLog toggle (`styles.css:2949-2960`);
+-   bottom-left: TrackingInsights (`styles.css:2964-2977`) and the explain toggle
+    (`styles.css:3119-3121`);
+-   top-right: the story dock itself (`styles.css:3499-3507`).
 
 ```
 +--------------------------------------------------+
@@ -120,38 +120,38 @@ The right edge at mid-height is the only free spot. The others are taken:
 
 ### Behaviour
 
-- **Off (default).** Only the tab shows, labelled "Guided demo". The app is the normal app.
-- **Switching on.** Starts the story at act 1 (`startStory`) and opens the panel. The tab
-  stays visible and shows "Act n / 5".
-- **Panel content.** The list of the five acts, with done / current / to-come states. A click
-  on an act jumps to it (`jumpStep`, already there). Under the list: the current act's bubble
-  and Prev / Next. This replaces the five unlabelled progress segments
-  (`StoryCompanion.tsx:62-72`).
-- **Collapse.** Clicking the tab while the panel is open hides the panel but keeps guided mode
-  on (`minimizeStory`, today never called). The tab then stands in for the resume pill, so the
-  pill and its CSS (`StoryCompanion.tsx:34-40`, `styles.css:3620-3633`) go.
-- **Switching off.** A close control in the panel calls `skipStory`. The tab goes back to
-  "Guided demo".
-- **Position.** The panel top follows `var(--header-height)` instead of the fixed `70px`
-  (`styles.css:3501`).
-- **Small screens.** Below the mobile breakpoint the panel becomes a bottom sheet and the tab
-  stays on the right edge (to confirm in a mockup).
+-   **Off (default).** Only the tab shows, labelled "Guided demo". The app is the normal app.
+-   **Switching on.** Starts the story at act 1 (`startStory`) and opens the panel. The tab
+    stays visible and shows "Act n / 5".
+-   **Panel content.** The list of the five acts, with done / current / to-come states. A click
+    on an act jumps to it (`jumpStep`, already there). Under the list: the current act's bubble
+    and Prev / Next. This replaces the five unlabelled progress segments
+    (`StoryCompanion.tsx:62-72`).
+-   **Collapse.** Clicking the tab while the panel is open hides the panel but keeps guided mode
+    on (`minimizeStory`, today never called). The tab then stands in for the resume pill, so the
+    pill and its CSS (`StoryCompanion.tsx:34-40`, `styles.css:3620-3633`) go.
+-   **Switching off.** A close control in the panel calls `skipStory`. The tab goes back to
+    "Guided demo".
+-   **Position.** The panel top follows `var(--header-height)` instead of the fixed `70px`
+    (`styles.css:3501`).
+-   **Small screens.** Below the mobile breakpoint the panel becomes a bottom sheet and the tab
+    stays on the right edge (to confirm in a mockup).
 
 ### Persistence and hydration
 
-- Guided mode on/off and the current act live in `sessionStorage`, so a reload keeps the
-  demo where it was, and a new tab starts with guided mode off.
-- Read it in an effect after mount, never in a `useState` initialiser. The toggle and panel
-  already render only inside the `mounted &&` block (`AppShell.tsx:71-80`), so the server
-  HTML is the same whatever is stored. See `specs/plan-ssr-seo.md:317-323`.
-- Optional: a `?guided=1` URL parameter switches it on, for a link sent before a demo call.
-  Not required.
+-   Guided mode on/off and the current act live in `sessionStorage`, so a reload keeps the
+    demo where it was, and a new tab starts with guided mode off.
+-   Read it in an effect after mount, never in a `useState` initialiser. The toggle and panel
+    already render only inside the `mounted &&` block (`AppShell.tsx:71-80`), so the server
+    HTML is the same whatever is stored. See `specs/plan-ssr-seo.md:317-323`.
+-   Optional: a `?guided=1` URL parameter switches it on, for a link sent before a demo call.
+    Not required.
 
 ### What goes with the intro screen
 
-- `src/components/IntroScreen.tsx`, the `introSeen` / `setIntroSeen` state
-  (`DemoContext.tsx:46`), the gate and its comment (`AppShell.tsx:44-52`), and the
-  `intro.*` keys in `src/locales/*/demo.json`, plus their CSS.
+-   `src/components/IntroScreen.tsx`, the `introSeen` / `setIntroSeen` state
+    (`DemoContext.tsx:46`), the gate and its comment (`AppShell.tsx:44-52`), and the
+    `intro.*` keys in `src/locales/*/demo.json`, plus their CSS.
 
 ## Decisions still open
 
@@ -181,33 +181,33 @@ The right edge at mid-height is the only free spot. The others are taken:
 
 ## Related specs
 
-- `specs/plan-ssr-seo.md:325-356` - the pause decision and the stale selector
-- `specs/bugfix-dynamic-ssr-false-bailout.md:94-96` - intro unreachable
-- `specs/feature-nextjs-migration-phase1.md:128` - steps not repaired during migration
-- `specs/feature-locale-segment-phase2.md:27` - story navigation under `[locale]` not checked
-- `specs/feature-search-header-redesign.md` - search overlay that act 1 now types into
-- `specs/feature-vector-search-comparison.md:185-187` - `/vector-search` and the story
-- `specs/feature-real-recommendations.md` - current cart content for act 4
-- `specs/bugfix-german-locale-untranslated.md:42-50,75` - markup inside scenario strings
-- `specs/feature-add-to-cart-indigo.md` - the add-to-cart button restyle
-- `specs/feature-quick-add-overlay.md:232` - records the same broken act 4 selector
+-   `specs/plan-ssr-seo.md:325-356` - the pause decision and the stale selector
+-   `specs/bugfix-dynamic-ssr-false-bailout.md:94-96` - intro unreachable
+-   `specs/feature-nextjs-migration-phase1.md:128` - steps not repaired during migration
+-   `specs/feature-locale-segment-phase2.md:27` - story navigation under `[locale]` not checked
+-   `specs/feature-search-header-redesign.md` - search overlay that act 1 now types into
+-   `specs/feature-vector-search-comparison.md:185-187` - `/vector-search` and the story
+-   `specs/feature-real-recommendations.md` - current cart content for act 4
+-   `specs/bugfix-german-locale-untranslated.md:42-50,75` - markup inside scenario strings
+-   `specs/feature-add-to-cart-indigo.md` - the add-to-cart button restyle
+-   `specs/feature-quick-add-overlay.md:232` - records the same broken act 4 selector
 
 ## Acceptance criteria (for the rebuild)
 
-- [ ] A tab on the right edge switches guided mode on and off, with no hydration warning.
-- [ ] With guided mode on, the panel lists the five acts and a click on one jumps to it.
-- [ ] Clicking the tab with the panel open collapses it, guided mode stays on, and the tab
-      shows the current act.
-- [ ] A reload keeps guided mode and the current act; a new tab starts with it off.
-- [ ] `IntroScreen`, `introSeen` and the `intro.*` keys are gone.
-- [ ] All five acts run to the end on every catalog, in en, fr and de.
-- [ ] Every engine target is a `data-story-target` attribute, not a CSS class.
-- [ ] EventLog and the `/explain` link are visible in the normal app, whatever audience mode
-      becomes.
-- [ ] No dead code from the list above remains.
-- [ ] `storytelling.md` is replaced or brought up to date.
+-   [ ] A tab on the right edge switches guided mode on and off, with no hydration warning.
+-   [ ] With guided mode on, the panel lists the five acts and a click on one jumps to it.
+-   [ ] Clicking the tab with the panel open collapses it, guided mode stays on, and the tab
+        shows the current act.
+-   [ ] A reload keeps guided mode and the current act; a new tab starts with it off.
+-   [ ] `IntroScreen`, `introSeen` and the `intro.*` keys are gone.
+-   [ ] All five acts run to the end on every catalog, in en, fr and de.
+-   [ ] Every engine target is a `data-story-target` attribute, not a CSS class.
+-   [ ] EventLog and the `/explain` link are visible in the normal app, whatever audience mode
+        becomes.
+-   [ ] No dead code from the list above remains.
+-   [ ] `storytelling.md` is replaced or brought up to date.
 
 ## Tracking (required)
 
-- The story fires no tracking itself. Acts 1 and 4 must trigger the normal `SEARCH`, `VIEW`
-  and `ADD_TO_CART` events through the storefront components, as a visitor's clicks would.
+-   The story fires no tracking itself. Acts 1 and 4 must trigger the normal `SEARCH`, `VIEW`
+    and `ADD_TO_CART` events through the storefront components, as a visitor's clicks would.

@@ -4,15 +4,15 @@ These facts were found the hard way. Never "simplify" them away.
 
 ## Gally API
 
-- **Base URL:** `https://gally.localhost/api`
-- **REST endpoints:** `/api/catalogs`, `/api/localized_catalogs`, `/api/categories`, `/api/category_configurations`
-- **GraphQL endpoint:** `/api/graphql` (no auth required for public queries)
-- **Search:** `products(localizedCatalog, requestType, currentPage, pageSize, search, currentCategoryId, sort, filter)`
-- **Category tree:** `getCategoryTree(catalogId, localizedCatalogId) { categories }` — nested `{ id, name, level, path, isVirtual, count, children }`
-- **Tracking:** `createTrackingEvent` mutation via `TrackingEventManager`
-- **RequestType enum:** `product_catalog` (requires `currentCategoryId`), `product_search` (works without category), `product_autocomplete`
-- **⚠️ Gotcha:** `product_catalog` requests **fail** if `currentCategoryId` is not provided. When browsing without a category, use `product_search` with an empty search string instead.
-- **⚠️ Gotcha:** Don't fake a `product_search` wildcard (`'*'`) just to get "some products" with no real query — `requestType` is purely a client-side declaration (the backend just validates it), so prefer a genuine `product_catalog` browse of the root/default category instead. It returns catalog/merchandising order, not relevance-scored noise against `'*'`. Only fall back to the wildcard when no category tree is available at all (e.g. transiently before `CatalogContext` finishes its first fetch). See `Homepage.tsx`'s product rows for the pattern, and `useSearch.ts`'s `doSearch` for the fallback.
+-   **Base URL:** `https://gally.localhost/api`
+-   **REST endpoints:** `/api/catalogs`, `/api/localized_catalogs`, `/api/categories`, `/api/category_configurations`
+-   **GraphQL endpoint:** `/api/graphql` (no auth required for public queries)
+-   **Search:** `products(localizedCatalog, requestType, currentPage, pageSize, search, currentCategoryId, sort, filter)`
+-   **Category tree:** `getCategoryTree(catalogId, localizedCatalogId) { categories }` — nested `{ id, name, level, path, isVirtual, count, children }`
+-   **Tracking:** `createTrackingEvent` mutation via `TrackingEventManager`
+-   **RequestType enum:** `product_catalog` (requires `currentCategoryId`), `product_search` (works without category), `product_autocomplete`
+-   **⚠️ Gotcha:** `product_catalog` requests **fail** if `currentCategoryId` is not provided. When browsing without a category, use `product_search` with an empty search string instead.
+-   **⚠️ Gotcha:** Don't fake a `product_search` wildcard (`'*'`) just to get "some products" with no real query — `requestType` is purely a client-side declaration (the backend just validates it), so prefer a genuine `product_catalog` browse of the root/default category instead. It returns catalog/merchandising order, not relevance-scored noise against `'*'`. Only fall back to the wildcard when no category tree is available at all (e.g. transiently before `CatalogContext` finishes its first fetch). See `Homepage.tsx`'s product rows for the pattern, and `useSearch.ts`'s `doSearch` for the fallback.
 
 ### The catalogs the demo data defines
 
@@ -38,19 +38,19 @@ though no `de_DE` localized catalog exists — German is reachable only if one i
 
 ## SDK Usage (`@elastic-suite/gally-sdk`)
 
-- `SearchManager` — wraps GraphQL product search. Accepts `SearchRequestOptions` with `localizedCatalog` (e.g. `"com_en"`), `metadata` (e.g. `"product"`), `categoryId`, `search`, etc.
-- **⚠️ `selectedFields` MUST NOT be empty.** The SDK skips the `collection` field entirely when `selectedFields` is `[]`, returning only pagination/aggregation metadata with **zero products**. Always pass a non-empty list.
-- **GraphQL field syntax for `selectedFields`:** object/array-typed fields require sub-selections (e.g. `fashion_color { label value }`, not `fashion_color`). Scalar fields are plain names.
-- **⚠️ Field name differences:** the GraphQL field is `new` (NOT `is_new`). There is no `type_id` GraphQL field (it exists only in the raw `source` blob from REST).
-- `Response` — `getCollection()` returns product objects with `source` wrapper; `getAggregations()` returns facets; `getTotalCount()`, `getLastPage()`.
-- **Aggregations** carry a `type` (`checkbox`, `slider`, `boolean`, `category`, plus others like `date_histogram` that fall through to the generic checkbox rendering) and a `hasMore` boolean — `hasMore: true` means the backend truncated that facet's option list (~10 max) and more values exist server-side.
-- `SearchManager.viewMoreProductFilterOption(request, aggregationField, optionSearch?)` — fetches the **complete** option list for one facet field, bypassing the `hasMore` truncation. Takes the same request shape as `.search()` (metadata, localizedCatalog, searchQuery, filters, categoryId) plus the field name; returns `{ label, value, count }[]`. With `optionSearch`, the server keeps only the options whose label contains that text (case-insensitive substring, applied after the aggregation, so counts still follow the current filters).
-- `SearchManager.getProductSortingOptions(localizedCatalog?)` - the sortable product fields as `SourceField`s (`getCode()`, `getDefaultLabel()`, `getType()`), including `_score` (Relevance) and `category__position` (Position). Labels are in the catalog's language only when `localizedCatalog` is passed. Cached per catalog for the life of the `SearchManager`. No direction comes with an option; the app picks one. Used by `src/hooks/useSortOptions.ts`.
-- **Default sort:** a product search with an empty `sortField` sends no `sort`, and the API then applies the category's configured default sort (on `product_catalog`). `Response.getSortField()` / `getSortDirection()` report the sort actually applied.
-- `RecommenderManager.getProductRecommendations(type, localizedCatalog, productSkus, productCount?, fields)` - premium Recommender module (`cross-sell`, `upsell`, `related_product`). Returns raw `Product` objects (no `source` wrapper), `sku` plus `fields` and nothing else: unlike search it does **not** add `price { price }` / `stock { status }`, so ask for them. Empty SKUs return `[]` without a call; `productCount` defaults to the API maximum, 20. Used by `src/sdk/recommendations.ts`.
-- `TrackingEventManager.init({ baseUri })` — singleton tracker. `.push({ eventType, metadataCode, localizedCatalogCode, entityCode?, payload? })`
-- `TrackingEventType` — `VIEW`, `DISPLAY`, `SEARCH`, `ADD_TO_CART`, `ORDER`
-- `Client` + `Configuration` — low-level HTTP/GraphQL client for direct API calls.
+-   `SearchManager` — wraps GraphQL product search. Accepts `SearchRequestOptions` with `localizedCatalog` (e.g. `"com_en"`), `metadata` (e.g. `"product"`), `categoryId`, `search`, etc.
+-   **⚠️ `selectedFields` MUST NOT be empty.** The SDK skips the `collection` field entirely when `selectedFields` is `[]`, returning only pagination/aggregation metadata with **zero products**. Always pass a non-empty list.
+-   **GraphQL field syntax for `selectedFields`:** object/array-typed fields require sub-selections (e.g. `fashion_color { label value }`, not `fashion_color`). Scalar fields are plain names.
+-   **⚠️ Field name differences:** the GraphQL field is `new` (NOT `is_new`). There is no `type_id` GraphQL field (it exists only in the raw `source` blob from REST).
+-   `Response` — `getCollection()` returns product objects with `source` wrapper; `getAggregations()` returns facets; `getTotalCount()`, `getLastPage()`.
+-   **Aggregations** carry a `type` (`checkbox`, `slider`, `boolean`, `category`, plus others like `date_histogram` that fall through to the generic checkbox rendering) and a `hasMore` boolean — `hasMore: true` means the backend truncated that facet's option list (~10 max) and more values exist server-side.
+-   `SearchManager.viewMoreProductFilterOption(request, aggregationField, optionSearch?)` — fetches the **complete** option list for one facet field, bypassing the `hasMore` truncation. Takes the same request shape as `.search()` (metadata, localizedCatalog, searchQuery, filters, categoryId) plus the field name; returns `{ label, value, count }[]`. With `optionSearch`, the server keeps only the options whose label contains that text (case-insensitive substring, applied after the aggregation, so counts still follow the current filters).
+-   `SearchManager.getProductSortingOptions(localizedCatalog?)` - the sortable product fields as `SourceField`s (`getCode()`, `getDefaultLabel()`, `getType()`), including `_score` (Relevance) and `category__position` (Position). Labels are in the catalog's language only when `localizedCatalog` is passed. Cached per catalog for the life of the `SearchManager`. No direction comes with an option; the app picks one. Used by `src/hooks/useSortOptions.ts`.
+-   **Default sort:** a product search with an empty `sortField` sends no `sort`, and the API then applies the category's configured default sort (on `product_catalog`). `Response.getSortField()` / `getSortDirection()` report the sort actually applied.
+-   `RecommenderManager.getProductRecommendations(type, localizedCatalog, productSkus, productCount?, fields)` - premium Recommender module (`cross-sell`, `upsell`, `related_product`). Returns raw `Product` objects (no `source` wrapper), `sku` plus `fields` and nothing else: unlike search it does **not** add `price { price }` / `stock { status }`, so ask for them. Empty SKUs return `[]` without a call; `productCount` defaults to the API maximum, 20. Used by `src/sdk/recommendations.ts`.
+-   `TrackingEventManager.init({ baseUri })` — singleton tracker. `.push({ eventType, metadataCode, localizedCatalogCode, entityCode?, payload? })`
+-   `TrackingEventType` — `VIEW`, `DISPLAY`, `SEARCH`, `ADD_TO_CART`, `ORDER`
+-   `Client` + `Configuration` — low-level HTTP/GraphQL client for direct API calls.
 
 ## Non-product entities (`cms_page` — the blog)
 
@@ -59,46 +59,46 @@ the SDK to the generic `documents(entityType: ...)` GraphQL query (`graphql/Requ
 `cms_page` is the entity the Blog section runs on (57 documents per locale: 50 blog
 posts + 7 legacy buying guides). Everything below differs from the product path:
 
-- **No `requestType`.** `getRequestType()` returns `undefined` for non-product entities and
-  the variable is stripped. `documents` doesn't take a product request type at all.
-- **⚠️ `selectedFields` never reaches the query, but it is NOT ignored — it projects the
-  result.** The SDK hardcodes the GraphQL selection to `id data` for non-product entities,
-  so the server always returns the whole document; `Response` then filters `data._source`
-  down to exactly the keys you listed (`graphql/Response.ts`). List **raw `_source`
-  attribute names** (`content_heading`, `published_at`, `content_type`, …) — not GraphQL
-  field syntax, not the camelCase names of your own view model. Any key you omit is
-  silently dropped from every document; any key you list that isn't in `_source` is just
-  absent. An empty array still drops the whole `collection` block from the query — zero
-  documents, pagination only. Same trap as products.
-- **`isAutocomplete` is required by the TS option type** and inert here (it only ever feeds
-  `requestType`). Pass `false`.
-- **⚠️ Documents come back flattened, not wrapped.** After that projection
-  `getCollection()` returns plain `{ <source attr>: value }` objects — the
-  `{ id, data: { _id, _score, _source } }` envelope of the raw GraphQL response does
-  **not** survive, so `_id` and `_score` are unreachable and there is no `source` wrapper
-  like products have. Read the document id from the indexed `id` attribute (include `id`
-  in `selectedFields`); the collection item's GraphQL `id` was the IRI
-  (`/api/documents/18`) anyway, not the id.
-- **⚠️ Filters use a different input type.** Products take `{ field: { eq: v } }`;
-  `documents` takes `FieldFilterInput`, which names the field _inside_ the filter:
-  `{ equalFilter: { field: 'topic__value', eq: 'materials' } }`. Also available:
-  `matchFilter`, `rangeFilter`, `boolFilter`, `existFilter`.
-- **⚠️ Not every field is filterable.** `url_key` is keyword-analyzed text with no `untouched`
-  sub-field, so filtering on it 500s with _"Unable to identify the field property to use for
-  filtering on \"url_key\", possible invalid mapping"_. `id` **is** filterable
-  (`equalFilter` on `id`) — that's why `/blog/:id` keys off the id, not the slug.
-- Sort variable shape differs (`{ field, direction }` vs the product `{ [field]: direction }`),
-  but `sortField`/`sortDirection` are the same SDK options — the Request builds the right one.
-- Select fields aggregate under a `__value` suffix: `content_type__value`, `topic__value`,
-  `author__value`, `tags__value`. A facet **excludes its own active filter** from its own
-  aggregation (picking a content type keeps both content types listed) while narrowing the
-  others — so browse chips can be rendered straight from the response.
-- **⚠️ Source-field changes need a cache flush, not just a reindex.** The filterable-field list
-  is cached per entity (`MetadataSourceFieldProviderCache`). After loading new source fields,
-  `bin/console cache:pool:clear --all` — from the host, `make sf c="cache:pool:clear --all"`.
-  Otherwise the new facets silently never appear in `aggregations`, even though the documents
-  and mapping are correct.
-- CMS `image` values are product media paths → build the URL with `mediaUrl(config, path)`, like a product image.
+-   **No `requestType`.** `getRequestType()` returns `undefined` for non-product entities and
+    the variable is stripped. `documents` doesn't take a product request type at all.
+-   **⚠️ `selectedFields` never reaches the query, but it is NOT ignored — it projects the
+    result.** The SDK hardcodes the GraphQL selection to `id data` for non-product entities,
+    so the server always returns the whole document; `Response` then filters `data._source`
+    down to exactly the keys you listed (`graphql/Response.ts`). List **raw `_source`
+    attribute names** (`content_heading`, `published_at`, `content_type`, …) — not GraphQL
+    field syntax, not the camelCase names of your own view model. Any key you omit is
+    silently dropped from every document; any key you list that isn't in `_source` is just
+    absent. An empty array still drops the whole `collection` block from the query — zero
+    documents, pagination only. Same trap as products.
+-   **`isAutocomplete` is required by the TS option type** and inert here (it only ever feeds
+    `requestType`). Pass `false`.
+-   **⚠️ Documents come back flattened, not wrapped.** After that projection
+    `getCollection()` returns plain `{ <source attr>: value }` objects — the
+    `{ id, data: { _id, _score, _source } }` envelope of the raw GraphQL response does
+    **not** survive, so `_id` and `_score` are unreachable and there is no `source` wrapper
+    like products have. Read the document id from the indexed `id` attribute (include `id`
+    in `selectedFields`); the collection item's GraphQL `id` was the IRI
+    (`/api/documents/18`) anyway, not the id.
+-   **⚠️ Filters use a different input type.** Products take `{ field: { eq: v } }`;
+    `documents` takes `FieldFilterInput`, which names the field _inside_ the filter:
+    `{ equalFilter: { field: 'topic__value', eq: 'materials' } }`. Also available:
+    `matchFilter`, `rangeFilter`, `boolFilter`, `existFilter`.
+-   **⚠️ Not every field is filterable.** `url_key` is keyword-analyzed text with no `untouched`
+    sub-field, so filtering on it 500s with _"Unable to identify the field property to use for
+    filtering on \"url_key\", possible invalid mapping"_. `id` **is** filterable
+    (`equalFilter` on `id`) — that's why `/blog/:id` keys off the id, not the slug.
+-   Sort variable shape differs (`{ field, direction }` vs the product `{ [field]: direction }`),
+    but `sortField`/`sortDirection` are the same SDK options — the Request builds the right one.
+-   Select fields aggregate under a `__value` suffix: `content_type__value`, `topic__value`,
+    `author__value`, `tags__value`. A facet **excludes its own active filter** from its own
+    aggregation (picking a content type keeps both content types listed) while narrowing the
+    others — so browse chips can be rendered straight from the response.
+-   **⚠️ Source-field changes need a cache flush, not just a reindex.** The filterable-field list
+    is cached per entity (`MetadataSourceFieldProviderCache`). After loading new source fields,
+    `bin/console cache:pool:clear --all` — from the host, `make sf c="cache:pool:clear --all"`.
+    Otherwise the new facets silently never appear in `aggregations`, even though the documents
+    and mapping are correct.
+-   CMS `image` values are product media paths → build the URL with `mediaUrl(config, path)`, like a product image.
 
 ## Product Data Shape
 
@@ -113,8 +113,8 @@ via `product.source || product`, which is what hid the difference.
 the entire raw `_source`. Only the PDP does (`PRODUCT_DETAIL_FIELDS` in `src/sdk/fields.ts`), because
 it is the only way to reach two things the stitching does not expose:
 
-- `type_id` — is this a configurable?
-- `configurable_attributes` — which attributes vary (`['fashion_color','fashion_size']`).
+-   `type_id` — is this a configurable?
+-   `configurable_attributes` — which attributes vary (`['fashion_color','fashion_size']`).
 
 Neither is a declared source field, so neither is stitched onto `Product`; introspecting the type
 returns 118 fields and both are absent. Don't add `source` to the shared `PRODUCT_FIELDS`: it is the
@@ -132,20 +132,20 @@ and returns only the first child.
 
 Key source fields:
 
-- `sku` (string), `name` (string[]), `image` (string path like `/v/a/file.jpg` — build the URL with `mediaUrl(config, path)`)
-- `price` (array of `{ price, original_price, is_discounted, group_id }`)
-- `description` (string[] with HTML), `type_id` (raw source only, not a GraphQL field)
-- `fashion_color` / `fashion_material` (array of `{ label, value }`) — require `{ label value }` sub-selection
-- `stock` (`{ qty, status }`) — **the SDK auto-appends only `stock { status }`**, so `qty` is
-  `undefined` unless you select `source`. And on any product with children `qty` is genuinely `0`
-  while `status` is `true` (true for exactly the 72 `com` documents that have `children.sku`, and
-  none of the 13 that don't): a configurable's own stock item holds no quantity, and no child stock
-  is indexed to fall back on. **Read availability through `isAvailable()` / `getProductFields().available`
-  (`src/sdk/productFields.ts`), never `stock.status` directly** — it treats `status: true` + `qty: 0`
-  as out of stock, and distinguishes `qty === undefined` ("not requested", so `status` governs) from
-  `qty === 0`. See `specs/bugfix-stock-count-zero-on-parents.md`.
-- `visibility` (array of `{ label, value }`)
-- `new` (boolean), `url_key`, `cost`
+-   `sku` (string), `name` (string[]), `image` (string path like `/v/a/file.jpg` — build the URL with `mediaUrl(config, path)`)
+-   `price` (array of `{ price, original_price, is_discounted, group_id }`)
+-   `description` (string[] with HTML), `type_id` (raw source only, not a GraphQL field)
+-   `fashion_color` / `fashion_material` (array of `{ label, value }`) — require `{ label value }` sub-selection
+-   `stock` (`{ qty, status }`) — **the SDK auto-appends only `stock { status }`**, so `qty` is
+    `undefined` unless you select `source`. And on any product with children `qty` is genuinely `0`
+    while `status` is `true` (true for exactly the 72 `com` documents that have `children.sku`, and
+    none of the 13 that don't): a configurable's own stock item holds no quantity, and no child stock
+    is indexed to fall back on. **Read availability through `isAvailable()` / `getProductFields().available`
+    (`src/sdk/productFields.ts`), never `stock.status` directly** — it treats `status: true` + `qty: 0`
+    as out of stock, and distinguishes `qty === undefined` ("not requested", so `status` governs) from
+    `qty === 0`. See `specs/bugfix-stock-count-zero-on-parents.md`.
+-   `visibility` (array of `{ label, value }`)
+-   `new` (boolean), `url_key`, `cost`
 
 **Media URL:** product images are relative paths. The base is the Gally setting
 `gally.base_url.media`, read from `public_configurations` once per render by

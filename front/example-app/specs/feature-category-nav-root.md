@@ -6,29 +6,29 @@
 
 ## Behaviour (testable)
 
-- [x] The nav bar's leading item is the catalog's root/default category (e.g. "Default Category", whatever
-      `getCategoryTree`'s single root node is named) — a plain link to `/category/<rootId>`, no submenu
-      (the root's own children are surfaced as the _following_ nav items, not nested under it — see below).
-- [x] `fetchCategoryTree()` no longer discards the API's root node. When the tree is the usual single-root
-      shape (`[{ ...root, children: [...] }]`), it now returns `[rootWithoutChildren, ...rootChildren]` — the
-      root as its own childless entry, followed by its former children as siblings. This matches the flat
-      top-level nav bar this app already renders (`CategoryNav` maps one `<CategoryItem>` per top-level
-      entry) while still exposing the root as a browsable link, unlike `main`'s app which nested everything
-      under a single collapsible root menu item (different nav paradigm — see the sidebar-drawer vs
-      horizontal-bar difference already tracked in `missing-features.md` §4).
-- [x] Hovering any nav item that still has real children (e.g. Bottoms, Accessories, Tops, Shop The Look)
-      shows its submenu fully — previously the dropdown was invisible/clipped on hover.
-- [x] Every subcategory in an open submenu is fully visible on hover, not just the first line — the submenu
-      must never be truncated by a scrolling/clipping ancestor, regardless of how many top-level categories
-      are in the nav bar or how narrow the viewport is.
+-   [x] The nav bar's leading item is the catalog's root/default category (e.g. "Default Category", whatever
+        `getCategoryTree`'s single root node is named) — a plain link to `/category/<rootId>`, no submenu
+        (the root's own children are surfaced as the _following_ nav items, not nested under it — see below).
+-   [x] `fetchCategoryTree()` no longer discards the API's root node. When the tree is the usual single-root
+        shape (`[{ ...root, children: [...] }]`), it now returns `[rootWithoutChildren, ...rootChildren]` — the
+        root as its own childless entry, followed by its former children as siblings. This matches the flat
+        top-level nav bar this app already renders (`CategoryNav` maps one `<CategoryItem>` per top-level
+        entry) while still exposing the root as a browsable link, unlike `main`'s app which nested everything
+        under a single collapsible root menu item (different nav paradigm — see the sidebar-drawer vs
+        horizontal-bar difference already tracked in `missing-features.md` §4).
+-   [x] Hovering any nav item that still has real children (e.g. Bottoms, Accessories, Tops, Shop The Look)
+        shows its submenu fully — previously the dropdown was invisible/clipped on hover.
+-   [x] Every subcategory in an open submenu is fully visible on hover, not just the first line — the submenu
+        must never be truncated by a scrolling/clipping ancestor, regardless of how many top-level categories
+        are in the nav bar or how narrow the viewport is.
 
-      > Superseded in part by `feature-mobile-header-and-acp-tabs.md` (768px and below): the
-      > category row scrolls sideways and has no flyouts; a tap opens the category page.
+        > Superseded in part by `feature-mobile-header-and-acp-tabs.md` (768px and below): the
+        > category row scrolls sideways and has no flyouts; a tap opens the category page.
 
-- [x] `Homepage.tsx`'s "Trending Now" (`categories[0]`) and `ProductPage.tsx`'s recommendations
-      (`categories[0]`) now browse the _true_ root category rather than whatever first real subcategory
-      happened to be at index 0 before this fix — no code change needed there, this was an intended side
-      effect of restoring the root to the array (see `docs/sdk-reference.md`'s root-category-browse gotcha).
+-   [x] `Homepage.tsx`'s "Trending Now" (`categories[0]`) and `ProductPage.tsx`'s recommendations
+        (`categories[0]`) now browse the _true_ root category rather than whatever first real subcategory
+        happened to be at index 0 before this fix — no code change needed there, this was an intended side
+        effect of restoring the root to the array (see `docs/sdk-reference.md`'s root-category-browse gotcha).
 
 ## Root cause (submenu hidden)
 
@@ -50,31 +50,31 @@ would still have clipped it, so removing the scroll behavior (rather than reloca
 
 ## SDK contract used
 
-- No new SDK/GraphQL calls. `getCategoryTree(catalogId, localizedCatalogId)` response shape is unchanged;
-  only how `fetchCategoryTree()` maps it changed.
+-   No new SDK/GraphQL calls. `getCategoryTree(catalogId, localizedCatalogId)` response shape is unchanged;
+    only how `fetchCategoryTree()` maps it changed.
 
 ## Tracking (required)
 
-- No new tracking event. Clicking the root category link navigates to `/category/<rootId>`, which fires the
-  existing `trackCategoryView` on `CategoryPage.tsx` exactly like any other category.
+-   No new tracking event. Clicking the root category link navigates to `/category/<rootId>`, which fires the
+    existing `trackCategoryView` on `CategoryPage.tsx` exactly like any other category.
 
 ## UI constraints
 
-- No new CSS classes. `.category-nav` carries no `overflow` declaration on either axis. `.category-nav-list`
-  uses `flex-wrap: wrap` (not `overflow-x: auto`/scroll) so an overflowing row of categories wraps to a second
-  line instead of scrolling.
+-   No new CSS classes. `.category-nav` carries no `overflow` declaration on either axis. `.category-nav-list`
+    uses `flex-wrap: wrap` (not `overflow-x: auto`/scroll) so an overflowing row of categories wraps to a second
+    line instead of scrolling.
 
-  > Superseded in part by `feature-mobile-header-and-acp-tabs.md` (768px and below): the category
-  > row scrolls sideways and has no flyouts; a tap opens the category page.
+    > Superseded in part by `feature-mobile-header-and-acp-tabs.md` (768px and below): the category
+    > row scrolls sideways and has no flyouts; a tap opens the category page.
 
 ## MUST NOT change
 
-- The flat horizontal top-level nav bar layout (not reverting to a single collapsible root menu item, which
-  was `main`'s different, sidebar-drawer-based paradigm).
-- Submenu rendering for categories that have real children — still gated on `cat.children?.length > 0`.
-- No ancestor of `.category-nav-submenu` (`.category-nav`, `.category-nav-list`, `.category-nav-item`) may
-  set `overflow-x`/`overflow-y` to anything other than `visible` — any non-`visible` axis on an ancestor
-  re-clips the hover submenu, regardless of which element it's declared on.
+-   The flat horizontal top-level nav bar layout (not reverting to a single collapsible root menu item, which
+    was `main`'s different, sidebar-drawer-based paradigm).
+-   Submenu rendering for categories that have real children — still gated on `cat.children?.length > 0`.
+-   No ancestor of `.category-nav-submenu` (`.category-nav`, `.category-nav-list`, `.category-nav-item`) may
+    set `overflow-x`/`overflow-y` to anything other than `visible` — any non-`visible` axis on an ancestor
+    re-clips the hover submenu, regardless of which element it's declared on.
 
-  > Superseded in part by `feature-mobile-header-and-acp-tabs.md` (768px and below): the row
-  > scrolls, which is why the submenu is hidden there; from 769px up this rule still holds.
+    > Superseded in part by `feature-mobile-header-and-acp-tabs.md` (768px and below): the row
+    > scrolls, which is why the submenu is hidden there; from 769px up this rule still holds.

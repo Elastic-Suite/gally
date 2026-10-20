@@ -12,10 +12,10 @@ with a search.
 
 ## Behaviour (testable)
 
-- [x] The button links to `defaultListingPath(categories)` (`src/sdk/categoryTree.ts`): the current
-      catalog's root category, the same place as the header's Products tab. With no categories it links
-      to the homepage.
+-   [x] The button links to `defaultListingPath(categories)` (`src/sdk/categoryTree.ts`): the current
+        catalog's root category, the same place as the header's Products tab. With no categories it links
+        to the homepage.
 
 ## MUST NOT change
 
-- The button's label, style and placement.
+-   The button's label, style and placement.

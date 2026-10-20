@@ -14,32 +14,32 @@ fetched from the browser.
 
 ## Behaviour (testable)
 
-- [x] No credentials in `src/` or `app/`. The token comes from `getExplainToken()` in
-      `src/sdk/explain.ts`, which rejects for now.
-- [x] `EXPLAIN_ENABLED = false` in `src/sdk/explain.ts` switches the feature off:
-  - [x] the "Search Intelligence" nav link is hidden (`SectionLinks.tsx`)
-  - [x] the Explain panel is not mounted (`AppShell.tsx`)
-  - [x] `/explain` still renders, skips the fetch and shows `demo:explain.disabled` (en, fr, de)
-- [x] Typecheck and eslint pass. `/example/com_en/explain` returns 200 with the notice.
-- [ ] Guided tour act 3 (`src/scenarios/demo-dress.ts`) still targets `/explain`. Its highlight
-      finds no rank cards, retries 20 times and moves on (`useStoryActions.ts`). Not run in a
-      browser.
+-   [x] No credentials in `src/` or `app/`. The token comes from `getExplainToken()` in
+        `src/sdk/explain.ts`, which rejects for now.
+-   [x] `EXPLAIN_ENABLED = false` in `src/sdk/explain.ts` switches the feature off:
+    -   [x] the "Search Intelligence" nav link is hidden (`SectionLinks.tsx`)
+    -   [x] the Explain panel is not mounted (`AppShell.tsx`)
+    -   [x] `/explain` still renders, skips the fetch and shows `demo:explain.disabled` (en, fr, de)
+-   [x] Typecheck and eslint pass. `/example/com_en/explain` returns 200 with the notice.
+-   [ ] Guided tour act 3 (`src/scenarios/demo-dress.ts`) still targets `/explain`. Its highlight
+        finds no rank cards, retries 20 times and moves on (`useStoryActions.ts`). Not run in a
+        browser.
 
 ## SDK contract used
 
-- None. The explain query is a raw GraphQL call, unchanged.
+-   None. The explain query is a raw GraphQL call, unchanged.
 
 ## Tracking (required)
 
-- No change.
+-   No change.
 
 ## UI constraints
 
-- The notice reuses the existing `.empty-state` block.
+-   The notice reuses the existing `.empty-state` block.
 
 ## MUST NOT change
 
-- Never put API credentials in client code again. To turn explain back on, get the token on the
-  server (for example a route handler reading credentials from the env) and return only the
-  token, then set `EXPLAIN_ENABLED` to true.
-- Keep `ExplainPage.tsx` and `SearchExplain.tsx`: the feature is switched off, not deleted.
+-   Never put API credentials in client code again. To turn explain back on, get the token on the
+    server (for example a route handler reading credentials from the env) and return only the
+    token, then set `EXPLAIN_ENABLED` to true.
+-   Keep `ExplainPage.tsx` and `SearchExplain.tsx`: the feature is switched off, not deleted.

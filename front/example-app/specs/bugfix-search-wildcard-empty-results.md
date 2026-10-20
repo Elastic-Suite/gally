@@ -36,22 +36,22 @@ do that independent of `searchQuery`'s truthiness.
 
 ## Behaviour (testable)
 
-- [ ] Any `useSearch()` call with no `categoryCode` and no real `searchQuery` currently returns zero products
-      silently (no error, no loading-forever — just an empty list), which reads as "no products" rather than
-      the intended "browse everything."
-- [ ] Fix must preserve `product_search` mode without a category (still required — `product_catalog` 400s
-      without `currentCategoryId`).
-- [ ] Fix must not literally send `search: "*"` (or any other non-empty placeholder the backend will treat as
-      real query text) to the API.
+-   [ ] Any `useSearch()` call with no `categoryCode` and no real `searchQuery` currently returns zero products
+        silently (no error, no loading-forever — just an empty list), which reads as "no products" rather than
+        the intended "browse everything."
+-   [ ] Fix must preserve `product_search` mode without a category (still required — `product_catalog` 400s
+        without `currentCategoryId`).
+-   [ ] Fix must not literally send `search: "*"` (or any other non-empty placeholder the backend will treat as
+        real query text) to the API.
 
 ## Where this bites today
 
-- `useSearch.ts`'s two `'*'` fallback sites (`doSearch` line ~64, `viewMoreOptions` line ~117).
-- `ProductPage.tsx`'s SKU lookup avoided this entirely by always passing a real `searchQuery` (the SKU
-  itself) — see `feat-new-example` history / current code, which pairs `searchQuery: sku` with an
-  `equalFilter` (`filters: [{ sku: { eq: sku } }]`) instead of relying on the wildcard.
-- Not yet confirmed which other call sites (if any) hit the no-category/no-query branch at runtime — needs a
-  pass over `Homepage.tsx`, `SearchPage.tsx`, `VectorSearchPage.tsx` call sites to `useSearch`/`useAutocomplete`.
+-   `useSearch.ts`'s two `'*'` fallback sites (`doSearch` line ~64, `viewMoreOptions` line ~117).
+-   `ProductPage.tsx`'s SKU lookup avoided this entirely by always passing a real `searchQuery` (the SKU
+    itself) — see `feat-new-example` history / current code, which pairs `searchQuery: sku` with an
+    `equalFilter` (`filters: [{ sku: { eq: sku } }]`) instead of relying on the wildcard.
+-   Not yet confirmed which other call sites (if any) hit the no-category/no-query branch at runtime — needs a
+    pass over `Homepage.tsx`, `SearchPage.tsx`, `VectorSearchPage.tsx` call sites to `useSearch`/`useAutocomplete`.
 
 ## Candidate fix
 
@@ -65,13 +65,13 @@ Options worth comparing before implementing:
 
 ## SDK contract used
 
-- `SearchManager.search()` / `getRequestType()` — see `docs/sdk-reference.md`.
+-   `SearchManager.search()` / `getRequestType()` — see `docs/sdk-reference.md`.
 
 ## Tracking (required)
 
-- N/A — no tracking event involved, this only affects which products come back.
+-   N/A — no tracking event involved, this only affects which products come back.
 
 ## MUST NOT change
 
-- `ProductPage.tsx`'s SKU lookup, which already sidesteps this bug by pairing a real `searchQuery` with an
-  `equalFilter` rather than using the `'*'` fallback.
+-   `ProductPage.tsx`'s SKU lookup, which already sidesteps this bug by pairing a real `searchQuery` with an
+    `equalFilter` rather than using the `'*'` fallback.

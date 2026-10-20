@@ -44,22 +44,22 @@ and rejected.
 the boundaries removes what made a click responsive, and that regression was the whole point of
 `feature-navigation-loading-feedback.md`, so it is replaced rather than dropped:
 
-- `LinkPendingReporter` calls Next's `useLinkStatus()` and reports into the context. It renders no
-  DOM but **must** sit inside a `<Link>`, which is the only place that hook can see a navigation —
-  `LocaleLink` puts one in every link in the app.
-- `useNavigate()` covers imperative navigation, which no link can report on. The `startTransition`
-  around `router.push` is what makes the wait exist as state at all. Used by `SearchBar` (a header
-  search waits on `/search`'s server fetch) and by `CatalogContext` (a catalog switch re-resolves
-  catalogs, tree _and_ page data — the slowest navigation in the app).
-- `AppShell` swaps `<main>`'s children for `RouteSkeleton` while a navigation is pending, and marks
-  the element `data-navigating` so this is testable from outside.
-- `RouteSkeleton` picks the skeleton from the destination href, because there is no per-route file
-  to hold it any more. It draws `CategoryNav` above `CategoryPageSkeleton` for category targets:
-  that nav lives in `app/[locale]/category/layout.tsx`, inside the children being swapped, so
-  without it the shared nav bar would blink out on every category click — the regression
-  `feature-persist-shared-ui-across-navigation.md` fixed.
-- `SHOW_AFTER_MS = 150` gates it. Fast navigations must show nothing at all; a placeholder that
-  appears for two frames reads as a glitch.
+-   `LinkPendingReporter` calls Next's `useLinkStatus()` and reports into the context. It renders no
+    DOM but **must** sit inside a `<Link>`, which is the only place that hook can see a navigation —
+    `LocaleLink` puts one in every link in the app.
+-   `useNavigate()` covers imperative navigation, which no link can report on. The `startTransition`
+    around `router.push` is what makes the wait exist as state at all. Used by `SearchBar` (a header
+    search waits on `/search`'s server fetch) and by `CatalogContext` (a catalog switch re-resolves
+    catalogs, tree _and_ page data — the slowest navigation in the app).
+-   `AppShell` swaps `<main>`'s children for `RouteSkeleton` while a navigation is pending, and marks
+    the element `data-navigating` so this is testable from outside.
+-   `RouteSkeleton` picks the skeleton from the destination href, because there is no per-route file
+    to hold it any more. It draws `CategoryNav` above `CategoryPageSkeleton` for category targets:
+    that nav lives in `app/[locale]/category/layout.tsx`, inside the children being swapped, so
+    without it the shared nav bar would blink out on every category click — the regression
+    `feature-persist-shared-ui-across-navigation.md` fixed.
+-   `SHOW_AFTER_MS = 150` gates it. Fast navigations must show nothing at all; a placeholder that
+    appears for two frames reads as a glitch.
 
 ### The placeholder must be cleared by the ROUTE, not by the link
 
@@ -110,39 +110,39 @@ unmounts, so the `useState` initializer cannot pick it up. The effect previously
 Verified in a real Chromium via the `e2e` container's Playwright (`javaScriptEnabled: false` for the
 crawler case, a `MutationObserver` on `[data-navigating]` for the navigation case).
 
-- [x] **JavaScript disabled**: `/com_fr/category/cat_11` renders **20 visible** product cards,
-      **0 hidden**, 0 visible skeletons, `h1="Bas"`. `/com_fr/search?q=robe` renders 17 visible
-      cards (previously 0 — no server fetch existed). `/com_en/category/cat_8` renders 20.
-      `/com_fr/product/VD10` and `/com_fr/blog/13` render their `h1` and body
-- [x] **Zero `skeleton` bytes in the initial HTML** of all four routes, versus 504 (category) and
-      100 (search) before
-- [x] No `<div hidden>` and no `$RC` in any of the four responses; the grid is inside `<main>`
-- [x] Client-side navigation still gives feedback, measured click → skeleton → content:
-      category → category **253 ms** visible, category → product **124 ms**, header search submit
-      **1591 ms**, catalog switch shown until the page changed
-- [x] **The outgoing page never comes back after the placeholder.** Every transition goes
-      `old page → PLACEHOLDER → new page`, in that order and once each, on all four navigation
-      types. The check is a `MutationObserver` recording each distinct state of `<main>`; it was
-      validated by restoring the cleanup that caused the bug and confirming it reports
-      `YES — BUG`, so it fails when it should
-- [x] The category nav bar stays on screen for the whole of a category → category transition
-      (110/110 sampled frames contained `nav.category-nav`)
-- [x] 404s unaffected: `/category/cat_9999`, `/product/NOPE`, `/blog/99999`, `/nope_locale`
-- [x] `npx tsc --noEmit` clean; no new dev-server or browser-console errors
-- [ ] **Not measured: CLS.** Swapping content for a skeleton and back is two layout changes;
-      the skeletons are built to hold the page's shape, but no number was taken
-- [ ] **Not covered: browser back/forward.** Suspense used to cover it; `useLinkStatus` cannot see
-      a popstate navigation, so back/forward has no feedback. Normally served from the router cache
-      and therefore instant — if that stops being true, this is where to look
+-   [x] **JavaScript disabled**: `/com_fr/category/cat_11` renders **20 visible** product cards,
+        **0 hidden**, 0 visible skeletons, `h1="Bas"`. `/com_fr/search?q=robe` renders 17 visible
+        cards (previously 0 — no server fetch existed). `/com_en/category/cat_8` renders 20.
+        `/com_fr/product/VD10` and `/com_fr/blog/13` render their `h1` and body
+-   [x] **Zero `skeleton` bytes in the initial HTML** of all four routes, versus 504 (category) and
+        100 (search) before
+-   [x] No `<div hidden>` and no `$RC` in any of the four responses; the grid is inside `<main>`
+-   [x] Client-side navigation still gives feedback, measured click → skeleton → content:
+        category → category **253 ms** visible, category → product **124 ms**, header search submit
+        **1591 ms**, catalog switch shown until the page changed
+-   [x] **The outgoing page never comes back after the placeholder.** Every transition goes
+        `old page → PLACEHOLDER → new page`, in that order and once each, on all four navigation
+        types. The check is a `MutationObserver` recording each distinct state of `<main>`; it was
+        validated by restoring the cleanup that caused the bug and confirming it reports
+        `YES — BUG`, so it fails when it should
+-   [x] The category nav bar stays on screen for the whole of a category → category transition
+        (110/110 sampled frames contained `nav.category-nav`)
+-   [x] 404s unaffected: `/category/cat_9999`, `/product/NOPE`, `/blog/99999`, `/nope_locale`
+-   [x] `npx tsc --noEmit` clean; no new dev-server or browser-console errors
+-   [ ] **Not measured: CLS.** Swapping content for a skeleton and back is two layout changes;
+        the skeletons are built to hold the page's shape, but no number was taken
+-   [ ] **Not covered: browser back/forward.** Suspense used to cover it; `useLinkStatus` cannot see
+        a popstate navigation, so back/forward has no feedback. Normally served from the router cache
+        and therefore instant — if that stops being true, this is where to look
 
 ## Still client-rendered, so still invisible without JavaScript
 
 Not in this change's scope, but worth knowing before claiming the app is crawlable:
 
-- the **homepage** product sliders (42 skeleton hits server-side, 0 product cards) — `Homepage.tsx`
-  fetches them in the browser;
-- the **blog listing** `/blog` (48 skeleton hits, no articles);
-- `/search?q=…&f_<field>=…`, the autocomplete's attribute hand-off, for the reason in Fix 4.
+-   the **homepage** product sliders (42 skeleton hits server-side, 0 product cards) — `Homepage.tsx`
+    fetches them in the browser;
+-   the **blog listing** `/blog` (48 skeleton hits, no articles);
+-   `/search?q=…&f_<field>=…`, the autocomplete's attribute hand-off, for the reason in Fix 4.
 
 Each needs the same treatment the other four routes got: a server fetch handed down as
 `initialData`.
@@ -192,36 +192,36 @@ correctly withheld, and the reset then triggers a request.
 
 ## MUST NOT change
 
-- **Do not add a `loading.tsx` back to any of these routes.** It is the single change that makes the
-  product list script-gated again: the page moves into `<div hidden>` at the end of the response and
-  a JS-less client renders the fallback for ever. Nothing in the build, the types or `tsc` will
-  complain, and with JS on it looks fine. If a route needs a boundary, it must be one that no
-  crawlable content sits behind.
-- **A gated or empty fallback is not a substitute.** Rendering the skeleton only on the client (tried
-  first, as `RouteFallback`) removes the _skeleton_ from the initial HTML but keeps the hidden-div
-  swap, so the product list is still invisible without JavaScript. Verified: the spacer was in
-  `<main>` and the grid was still at byte 22256.
-- **`LinkPendingReporter` must stay inside `<Link>`.** `useLinkStatus()` reads a context Link
-  provides; anywhere else it reports `pending: false` for ever, silently, and every navigation loses
-  its feedback with nothing failing.
-- **`LinkPendingReporter` must NOT clear on unmount.** The clicked link is inside the area the
-  placeholder replaces, so an unmount cleanup cancels the navigation state one frame after showing
-  it and flashes the outgoing page back. Clearing is the provider's job, from the route.
-- **`useNavigate`'s `startTransition` is load-bearing.** `router.push` returns immediately; without
-  the transition there is no pending state to report and the header search goes back to looking
-  frozen.
-- **`RouteSkeleton` must keep drawing `CategoryNav` for category targets.** AppShell swaps out the
-  whole of `<main>`, which contains `app/[locale]/category/layout.tsx` and therefore the nav bar.
-- **Do not lower `SHOW_AFTER_MS` to "show something sooner".** Below ~150 ms the skeleton appears
-  for a frame or two on navigations that were never slow, which is a glitch rather than feedback.
-- **The category guard's `fetchCategoryProducts` call must keep page.tsx's exact arguments** — a
-  different `pageSize` is a different `cache()` key, so the page refetches instead of reusing it.
-- **`fetchSearchProducts` must keep mirroring `SearchPage`'s first-render `useSearch` options.** Any
-  drift and the seed is discarded, the page refetches in the browser, and the skeleton is back.
-- **Keep passing `initialData` only while the view matches it** (`isServerFetchedView` in both
-  `CategoryPage` and `SearchPage`); `useSearch` now trusts the caller on this.
-- **Do not prefetch `/search` when the URL carries `f_<field>` params.**
-- **Existence checks stay in each route's `layout.tsx`.** They are no longer the _only_ way to get a
-  real 404 — nothing streams now, so `notFound()` in a page body would also work — but they are
-  cheap (`cache()`d), they are what the 404 verification in `feature-metadata-all-routes.md` rests
-  on, and they keep the guarantee independent of whether a boundary is ever reintroduced.
+-   **Do not add a `loading.tsx` back to any of these routes.** It is the single change that makes the
+    product list script-gated again: the page moves into `<div hidden>` at the end of the response and
+    a JS-less client renders the fallback for ever. Nothing in the build, the types or `tsc` will
+    complain, and with JS on it looks fine. If a route needs a boundary, it must be one that no
+    crawlable content sits behind.
+-   **A gated or empty fallback is not a substitute.** Rendering the skeleton only on the client (tried
+    first, as `RouteFallback`) removes the _skeleton_ from the initial HTML but keeps the hidden-div
+    swap, so the product list is still invisible without JavaScript. Verified: the spacer was in
+    `<main>` and the grid was still at byte 22256.
+-   **`LinkPendingReporter` must stay inside `<Link>`.** `useLinkStatus()` reads a context Link
+    provides; anywhere else it reports `pending: false` for ever, silently, and every navigation loses
+    its feedback with nothing failing.
+-   **`LinkPendingReporter` must NOT clear on unmount.** The clicked link is inside the area the
+    placeholder replaces, so an unmount cleanup cancels the navigation state one frame after showing
+    it and flashes the outgoing page back. Clearing is the provider's job, from the route.
+-   **`useNavigate`'s `startTransition` is load-bearing.** `router.push` returns immediately; without
+    the transition there is no pending state to report and the header search goes back to looking
+    frozen.
+-   **`RouteSkeleton` must keep drawing `CategoryNav` for category targets.** AppShell swaps out the
+    whole of `<main>`, which contains `app/[locale]/category/layout.tsx` and therefore the nav bar.
+-   **Do not lower `SHOW_AFTER_MS` to "show something sooner".** Below ~150 ms the skeleton appears
+    for a frame or two on navigations that were never slow, which is a glitch rather than feedback.
+-   **The category guard's `fetchCategoryProducts` call must keep page.tsx's exact arguments** — a
+    different `pageSize` is a different `cache()` key, so the page refetches instead of reusing it.
+-   **`fetchSearchProducts` must keep mirroring `SearchPage`'s first-render `useSearch` options.** Any
+    drift and the seed is discarded, the page refetches in the browser, and the skeleton is back.
+-   **Keep passing `initialData` only while the view matches it** (`isServerFetchedView` in both
+    `CategoryPage` and `SearchPage`); `useSearch` now trusts the caller on this.
+-   **Do not prefetch `/search` when the URL carries `f_<field>` params.**
+-   **Existence checks stay in each route's `layout.tsx`.** They are no longer the _only_ way to get a
+    real 404 — nothing streams now, so `notFound()` in a page body would also work — but they are
+    cheap (`cache()`d), they are what the 404 verification in `feature-metadata-all-routes.md` rests
+    on, and they keep the guarantee independent of whether a boundary is ever reintroduced.

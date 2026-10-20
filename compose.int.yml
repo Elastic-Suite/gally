@@ -1,9 +1,8 @@
-x-base-php-env : &php-base-env
+x-base-php-env: &php-base-env
   APP_SECRET: ${APP_SECRET}
   XDEBUG_MODE: off
 
 services:
-
   router:
     build:
       context: ./docker/router
@@ -23,10 +22,10 @@ services:
       target: gally_pwa_int
       args:
         - public_url=https://${SERVER_NAME}/example
-    # The example app calls the API on its public host from the server too (NEXT_PUBLIC_API_URL,
-    # set in compose.yml): send that host to the proxy on the Docker host, not to public DNS.
-    extra_hosts:
-      - ${SERVER_NAME}:host-gateway
+    environment:
+      # Server-side calls from the example app go to the public API URL; skip the certificate check.
+      # Applies to every outgoing HTTPS call from this container, the admin's included.
+      - NODE_TLS_REJECT_UNAUTHORIZED=0
     volumes:
       # Demo product images ship with gally-sample-data, installed by composer before `up`.
       - ./api/vendor/gally/gally-sample-data/media/catalog/product:/usr/src/front/pwa/public/media/catalog/product:ro

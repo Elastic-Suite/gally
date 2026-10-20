@@ -17,11 +17,11 @@ the full frame magnifies them and looks worse than the letterbox does.
 
 ## Behaviour (testable)
 
-- [x] A papershop, toolbox or fashion product fills the square frame, no gradient border.
-- [x] A Venia/Luma product keeps the 400px cap and the gradient around it.
-- [x] `objectFit: contain` throughout, so nothing is ever cropped - a non-square image letterboxes
-      rather than losing its edges.
-- [x] A product with no image still renders the camera placeholder.
+-   [x] A papershop, toolbox or fashion product fills the square frame, no gradient border.
+-   [x] A Venia/Luma product keeps the 400px cap and the gradient around it.
+-   [x] `objectFit: contain` throughout, so nothing is ever cropped - a non-square image letterboxes
+        rather than losing its edges.
+-   [x] A product with no image still renders the camera placeholder.
 
 ## How the two cases are told apart
 
@@ -41,10 +41,10 @@ Untouched. The product-view event still fires from the same effect.
 
 ## MUST NOT change
 
-- The Venia/Luma cap. Removing it is not a cleanup, it is a regression - those images are 161x200.
-- `objectFit: contain`. Switching to `cover` would fill the frame for every catalog but crop the
-  product, which is wrong for a packshot.
-- The badge overlay above the image, which shares its rule with the grid card.
+-   The Venia/Luma cap. Removing it is not a cleanup, it is a regression - those images are 161x200.
+-   `objectFit: contain`. Switching to `cover` would fill the frame for every catalog but crop the
+    product, which is wrong for a packshot.
+-   The badge overlay above the image, which shares its rule with the grid card.
 
 ## Not done here
 
