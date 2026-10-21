@@ -47,6 +47,8 @@ const texts = {
     isSpannable: true,
     defaultSearchAnalyzer: ['standard', 'reference'],
     searchTermCategory: 'Category',
+    // Default label of the category attribute, i.e. its label in the default (French) catalog.
+    categoryDefaultLabel: 'Catégorie',
   }
 } as const
 
@@ -130,7 +132,7 @@ test('Pages > Search > Configurations > Attributes', {tag: ['@premium', '@standa
         [
           {
             columnName: texts.gridHeaders.defaultLabel,
-            value: texts.filtersToApply.searchTermCategory,
+            value: texts.filtersToApply.categoryDefaultLabel,
           },
         ]
       )
