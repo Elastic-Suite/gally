@@ -32,6 +32,7 @@ RUN set -xe; \
 
 FROM gally_pwa_common AS gally_pwa_ci
 
+# These folders contained the legacy example app test coverage file for CI, the new example app does not have any tests. 
 RUN mkdir -p ./example-app/coverage ./pwa/coverage
 RUN set -xe; \
 	apk add --no-cache curl; \

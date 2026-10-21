@@ -25,7 +25,19 @@ app, so the front CI jobs stopped with "command not found". See the dated notes 
     (`next/core-web-vitals` + `next/typescript`), owned by this app only. pwa stays on ESLint
     8.23.1. ESLint 10 is blocked: `eslint-plugin-react`, `eslint-plugin-jsx-a11y` and
     `eslint-plugin-import`, all pulled in by `eslint-config-next`, accept ESLint up to 9.
--   `test:ci`: `echo "no tests"`.
+-   `test` / `test:ci`: `jest --passWithNoTests`, the same command and Jest version (29.0.3) as
+    pwa. There are no test files yet, so it runs nothing and exits 0. It is there so the
+    workspace's `yarn test:ci` calls a real test runner. The app declares `jest` in its own
+    devDependencies rather than relying on the root link from pwa.
+    -   Jest 29.0.3 is a placeholder, not a choice for real tests. Its sibling packages in pwa
+        (`@testing-library/react` 13, `babel-jest` with `next/babel`) target React 18 and Next 13.
+        When the first test arrives, move to a current Jest with `next/jest` and
+        `@testing-library/react` 16 (React 19), or to Vitest as the SDK uses.
+    -   2026-10-21: the "Frontend Coverage Report" CI step (`5monkeys/cobertura-action`) was
+        removed from `.github/workflows/tests.yml`. It read
+        `example-app/coverage/cobertura-coverage.xml`, which nothing writes since the Next
+        migration, and failed with ENOENT. If tests and coverage come back, add the step back
+        with the matching `--coverage` flags.
 
 Rules turned off, each with its reason in `eslint.config.mjs`: `react/no-unescaped-entities`,
 `@next/next/no-img-element` (Gally media at CSS sizes; `BrandLockup` does use `next/image`),
