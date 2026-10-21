@@ -15,8 +15,8 @@
     "start": "next dev -p 3001",
     "build": "next build",
     "serve": "next start -p 3001",
-    "test": "echo \"no tests\"",
-    "test:ci": "echo \"no tests\"",
+    "test": "jest --passWithNoTests",
+    "test:ci": "jest --passWithNoTests",
     "eslint": "eslint --fix .",
     "eslint:ci": "eslint .",
     "prettier": "prettier --write --ignore-unknown --ignore-path .gitignore .",
@@ -42,6 +42,7 @@
     "@types/react-dom": "^19.1.0",
     "eslint": "^9.39.0",
     "eslint-config-next": "^16.3.0",
+    "jest": "29.0.3",
     "prettier": "2.7.1",
     "typescript": "^5.9.0"
   }
