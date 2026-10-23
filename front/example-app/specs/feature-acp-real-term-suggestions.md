@@ -90,6 +90,17 @@ This change wires the column to it and deletes the fake.
     (COLOR, MATERIAL…) below the fold of `.search-overlay-col`, which scrolls. Left as-is deliberately:
     the cap belongs to the backend (`gally.autocomplete_settings`), not to a `slice()` in the front.
 
+## Decisions (2026-10-23)
+
+-   **No blog term suggestions.** `useCmsAutocomplete` asks with `isAutocomplete: false`, and the SDK
+    requests `termSuggestions` only when it is true, so the blog terms are always empty - the line
+    above that ticks them as working described the intent, not the result. Decided: blog suggestions
+    are not wanted in this column, so the flag stays false and the column shows product terms only.
+    The merge code still accepts blog terms; it simply receives none.
+-   **No blog SEARCH events.** `trackSearch` always sends `metadataCode: 'product'`; `/search` does not
+    report article searches to Gally. Decided: keep it that way. Blog term suggestions, which are built
+    from such events, therefore only ever come from sample data.
+
 ## MUST NOT change
 
 -   The merged list must stay computed in **one** place and flow down as a prop. Deriving it a second

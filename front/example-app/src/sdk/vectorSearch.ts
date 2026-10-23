@@ -11,14 +11,14 @@ import type { SearchDocument } from './fields'
 //
 // The payoff for using vectorSearchProducts rather than the older, generic
 // vectorSearchDocuments(entityType:"product"): its collection is a `VectorProduct`, which
-// carries the SAME fields as `Product` — measured, including the whole of PRODUCT_FIELDS.
+// carries the SAME fields as `Product` — measured, including the whole of productFields().
 // So the same field list and the same row component serve both panels, with no mapping
 // layer (the old app needed transformVectorSearchDocumentsIntoProducts). That is what makes
 // the two panels genuinely comparable rather than one grid of cards next to a table of SKUs.
 
 // What ONE ROW of the comparison needs, and nothing else.
 //
-// Deliberately not PRODUCT_FIELDS. That list is built for `<ProductCard>` — badges, colour and
+// Deliberately not productFields(). That list is built for `<ProductCard>` — badges, colour and
 // size axes, discount arithmetic, `configurable_attributes` — and this page draws none of it: a
 // row is a thumbnail, a name and a score. Asking for the full card selection to render a row
 // costs ~15 extra fields per hit at 100 hits a panel, twice per query, for pixels nobody sees.

@@ -217,7 +217,10 @@ correctly withheld, and the reset then triggers a request.
 -   **The category guard's `fetchCategoryProducts` call must keep page.tsx's exact arguments** — a
     different `pageSize` is a different `cache()` key, so the page refetches instead of reusing it.
 -   **`fetchSearchProducts` must keep mirroring `SearchPage`'s first-render `useSearch` options.** Any
-    drift and the seed is discarded, the page refetches in the browser, and the skeleton is back.
+    drift is not detected: `useSearch` keys the seed from the options it is given and trusts the caller
+    (next line), so a server result fetched with other options - another page size, sort or field list -
+    is shown as if it matched them. Corrected 2026-10-23; the old wording said the seed was discarded and
+    refetched, which the code never did (`test-plan-search-engine.md`, decision 2).
 -   **Keep passing `initialData` only while the view matches it** (`isServerFetchedView` in both
     `CategoryPage` and `SearchPage`); `useSearch` now trusts the caller on this.
 -   **Do not prefetch `/search` when the URL carries `f_<field>` params.**

@@ -7,6 +7,7 @@ import Link from '../components/LocaleLink'
 import Pagination from '../components/Pagination'
 import { useCatalog } from '../contexts/CatalogContext'
 import { useTracking } from '../hooks/useTracking'
+import { useTrackSearch } from '../hooks/useTrackSearch'
 import { getSearchManager } from '../sdk'
 import { useMediaUrl } from '../contexts/ConfigContext'
 import {
@@ -56,9 +57,19 @@ interface PanelState {
   products: SearchDocument[]
   total: number
   pageCount: number
+  /** The query this panel was fetched for, so tracking can tell it from a leftover result. */
+  query: string
+  /** The request failed: an empty panel that is not a zero-result search. */
+  failed: boolean
 }
 
-const EMPTY_PANEL: PanelState = { products: [], total: 0, pageCount: 0 }
+const EMPTY_PANEL: PanelState = {
+  products: [],
+  total: 0,
+  pageCount: 0,
+  query: '',
+  failed: false,
+}
 const EMPTY_VECTOR: VectorSearchResult = {
   products: [],
   scores: {},
@@ -181,6 +192,18 @@ function PanelPager({
     )?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
+  // One page: Pagination renders nothing, which would lift this list above the other panel's.
+  // An invisible pager row keeps the slot, at the real pager's height by construction.
+  if (pageCount <= 1) {
+    return (
+      <div className="pagination vector-pager-spacer" aria-hidden="true">
+        <button type="button" tabIndex={-1} disabled>
+          1
+        </button>
+      </div>
+    )
+  }
+
   return (
     <Pagination
       ref={navRef}
@@ -197,7 +220,7 @@ function PanelPager({
 export default function VectorSearchPage() {
   const { t } = useTranslation('vectorSearch')
   const { selectedLocalizedCatalog } = useCatalog()
-  const { trackSearch, trackDisplay } = useTracking()
+  const { trackDisplay } = useTracking()
 
   const catalogCode = selectedLocalizedCatalog?.code
   // Seed the box with ?q= when a link sent one (the homepage example cards), else with this
@@ -246,7 +269,7 @@ export default function VectorSearchPage() {
 
   // The keyword side goes through the SDK exactly as SearchPage does — same metadata, same
   // request type, same _score sort. Only the PROJECTION differs (COMPARE_ROW_FIELDS instead
-  // of PRODUCT_FIELDS), which changes what each hit carries, never which hits come back or
+  // of productFields()), which changes what each hit carries, never which hits come back or
   // in what order. Anything that touched the ranking would stop this being the search this
   // storefront actually ships, which is the only reason the comparison means anything.
   const runKeyword = useCallback(
@@ -268,9 +291,11 @@ export default function VectorSearchPage() {
           products: response.getCollection(),
           total: response.getTotalCount(),
           pageCount: response.getLastPage(),
+          query: search,
+          failed: false,
         }
       } catch {
-        return EMPTY_PANEL
+        return { ...EMPTY_PANEL, query: search, failed: true }
       }
     },
     []
@@ -331,15 +356,22 @@ export default function VectorSearchPage() {
   // SEARCH fires once per (catalog, query) — NOT per page. Paging is not a new search, and
   // counting it as one would inflate the very zero-result report this page exists to point at.
   // DISPLAY fires per page, with positions offset by the page, because each page really is a
-  // different set of products being shown. Same split SearchPage makes.
-  const trackedRef = useRef('')
-  useEffect(() => {
-    if (kwLoading || !query.trim()) return
-    const key = `${catalogCode}|${query}`
-    if (trackedRef.current === key) return
-    trackedRef.current = key
-    trackSearch(query, keyword.total, q.kwPage, keyword.pageCount)
-  }, [kwLoading, query, catalogCode, keyword, q.kwPage, trackSearch])
+  // different set of products being shown. SearchPage counts differently on purpose: one SEARCH
+  // per page and per total. Both go through useTrackSearch, which waits for a settled result,
+  // sends zero results, and skips failed requests (specs/bugfix-search-zero-result-tracking.md).
+  useTrackSearch({
+    query,
+    // Settled: loaded, not failed, and the panel's own query.
+    settled: !kwLoading && !keyword.failed && keyword.query === query,
+    total: keyword.total,
+    page: q.kwPage,
+    pageCount: keyword.pageCount,
+    // runKeyword always searches by relevance.
+    sort: { field: '_score', direction: 'desc' },
+    // No facets on this page.
+    filters: [],
+    dedupeKey: `${catalogCode}|${query}`,
+  })
 
   const trackedDisplayRef = useRef('')
   useEffect(() => {

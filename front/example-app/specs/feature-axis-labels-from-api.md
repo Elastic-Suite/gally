@@ -51,7 +51,8 @@ the string is in the server-rendered HTML.
     `BASE_URI` with `Accept: application/ld+json`, reading `hydra:member`. `BASE_URI` (now
     `getBaseUri()`: `SSR_API_URL` on the server, the public URL in the browser; see
     `feature-api-url-from-env.md`).
--   The code list sent is `AXIS_CODES`, newly exported from `src/sdk/fields.ts`. That file already had
+-   The code list sent is `axisCodes(catalogCode)` from `src/sdk/fields.ts` (first written as an
+    `AXIS_CODES` constant; it became per catalogue in `bugfix-product-fields-assume-every-catalog-loaded.md`). That file already had
     to name every catalogue's axes for the GraphQL selection; it is now the one list behind both the
     selection and the label request, so the two cannot drift.
 -   No `selectedFields`, no SearchManager — this endpoint is outside the search path.

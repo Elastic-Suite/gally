@@ -82,11 +82,23 @@ export function useCmsSearch(options: CmsSearchOptions) {
 
   const optionsRef = useRef(options)
   optionsRef.current = options
+  // Only the latest request may write the result (specs/bugfix-search-out-of-order-responses.md).
+  const latestRequest = useRef(0)
 
   const doSearch = useCallback(async () => {
     if (!selectedLocalizedCatalog) return
+    const requestId = ++latestRequest.current
     if (optionsRef.current.skip) {
-      setResult((prev) => ({ ...prev, loading: false }))
+      // Empty, not the previous query's articles: /search shows the count on its Articles tab
+      // even without a query (specs/bugfix-search-stale-articles-without-query.md).
+      setResult({
+        pages: [],
+        total: 0,
+        pageCount: 0,
+        aggregations: [],
+        loading: false,
+        error: null,
+      })
       return
     }
     setResult((prev) => ({ ...prev, loading: true, error: null }))
@@ -105,6 +117,8 @@ export function useCmsSearch(options: CmsSearchOptions) {
         sortField: optionsRef.current.sortField,
         sortDirection: optionsRef.current.sortDirection,
       })
+      // Stale when a newer request (or a seed, a skip, a clear) came after it: drop it.
+      if (requestId !== latestRequest.current) return
       setResult({
         pages: response.getCollection().map((doc) => getCmsFields(doc, config)),
         total: response.getTotalCount(),
@@ -114,6 +128,7 @@ export function useCmsSearch(options: CmsSearchOptions) {
         error: null,
       })
     } catch (e: unknown) {
+      if (requestId !== latestRequest.current) return
       setResult((prev) => ({
         ...prev,
         loading: false,
@@ -157,14 +172,19 @@ export function useCmsAutocomplete() {
   const debounceRef = useRef<ReturnType<typeof setTimeout> | undefined>(
     undefined
   )
+  // The debounce only cancels a request not yet sent; this drops answers to requests that were
+  // superseded after they left (specs/bugfix-search-out-of-order-responses.md).
+  const latestRequest = useRef(0)
 
   const search = useCallback(
     (query: string) => {
       if (debounceRef.current) clearTimeout(debounceRef.current)
+      const requestId = ++latestRequest.current
 
       if (!query || query.length < 2 || !selectedLocalizedCatalog) {
         setPages([])
         setTermSuggestions([])
+        setLoading(false)
         return
       }
 
@@ -182,15 +202,19 @@ export function useCmsAutocomplete() {
             selectedFields: CMS_FIELDS,
             filters: [],
           })
+          // Stale when a newer request (or a seed, a skip, a clear) came after it: drop it.
+          if (requestId !== latestRequest.current) return
           setPages(
             response.getCollection().map((doc) => getCmsFields(doc, config))
           )
           setTermSuggestions(response.getTermSuggestions())
         } catch {
+          if (requestId !== latestRequest.current) return
           setPages([])
           setTermSuggestions([])
         } finally {
-          setLoading(false)
+          // Only the latest request ends the loading state; a newer one is still running.
+          if (requestId === latestRequest.current) setLoading(false)
         }
       }, 300)
     },
@@ -200,6 +224,8 @@ export function useCmsAutocomplete() {
   // Both, or picking a result leaves the blog terms behind in the merged
   // suggestions column (SearchBar clears the two autocomplete hooks together).
   const clear = useCallback(() => {
+    latestRequest.current++
+    setLoading(false)
     setPages([])
     setTermSuggestions([])
   }, [])

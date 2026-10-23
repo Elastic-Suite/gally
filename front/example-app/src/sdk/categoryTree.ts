@@ -30,7 +30,7 @@ export function defaultListingPath(categories: ICategoryNode[]): string {
 // root), so "which one is the page's parent" has to be decided here: the deepest one, i.e. the
 // assignment with the longest ancestor chain. Ties keep the first, which is the order the index
 // returns.
-// `source` is the raw _source, so it only exists where PRODUCT_DETAIL_FIELDS was requested —
+// `source` is the raw _source, so it only exists where productDetailFields() was requested —
 // the PDP on both the server and the client pass. Anywhere else this correctly returns [].
 export function productCategoryTrail(
   nodes: ICategoryNode[],

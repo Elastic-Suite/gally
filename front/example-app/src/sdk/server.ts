@@ -53,7 +53,7 @@ export const fetchProductBySku = cache(
         currentPage: 1,
         pageSize: 1,
         isAutocomplete: false,
-        // Not PRODUCT_FIELDS: the PDP reads type_id and configurable_attributes out of the raw
+        // Not productFields(): the PDP reads type_id and configurable_attributes out of the raw
         // `source`, and ProductPage's useSearch asks for the same list. See ./fields.ts.
         selectedFields: productDetailFields(
           await catalogCodeOf(localizedCatalog)
@@ -119,9 +119,10 @@ export const fetchCategoryProducts = cache(
 // is only reused while the hook's option key still matches, so a drift in either value
 // silently turns into a client refetch and the skeleton this exists to avoid.
 //
-// An empty query browses everything: the SDK needs a non-empty searchQuery to pick
-// product_search over product_catalog (which 400s without a category), and '*' is what
-// useSearch sends for the same case.
+// The search route does not call this without a query (app/[locale]/search/page.tsx): the view
+// browses the root category instead. The '*' below is only a safety net for another caller - the
+// SDK needs a non-empty searchQuery to pick product_search over product_catalog (which 400s
+// without a category), and docs/sdk-reference.md allows '*' only as that kind of fallback.
 export const fetchSearchProducts = cache(
   async (
     localizedCatalog: string,

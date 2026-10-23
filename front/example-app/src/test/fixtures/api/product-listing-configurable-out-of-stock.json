@@ -1,0 +1,81 @@
+{
+  "sku": "VT10",
+  "name": "Vitalia Top",
+  "image": "/default/v/t/vt10-ly_main.jpg",
+  "description": "<p>The Vitalia Top is all about mixing it up. An interesting mix of cotton &amp; rayon materials makes this top hard to pin down. Wear it casual or dress it up. There are no rules here. </p><p>Features:</p><ul><li>V-neck</li><li>Capped sleeve</li><li>Sits on the hips</li><li>Faux wrap detail</li><li>Dry clean recommended</li></ul>",
+  "url_key": "vitalia-top",
+  "visibility": [
+    {
+      "label": "Catalog, Search",
+      "value": "4"
+    }
+  ],
+  "new": null,
+  "sale": null,
+  "cost": 23.31,
+  "configurable_attributes": "[\"fashion_color\",\"fashion_size\"]",
+  "price": [
+    {
+      "original_price": 98,
+      "is_discounted": false,
+      "price": 98
+    }
+  ],
+  "fashion_material": [
+    {
+      "label": "Cotton",
+      "value": "47"
+    },
+    {
+      "label": "Rayon",
+      "value": "53"
+    }
+  ],
+  "fashion_color": [
+    {
+      "label": "Gold",
+      "value": "5"
+    },
+    {
+      "label": "Peach",
+      "value": "22"
+    },
+    {
+      "label": "Lily",
+      "value": "27"
+    },
+    {
+      "label": "Latte",
+      "value": "28"
+    },
+    {
+      "label": "Khaki",
+      "value": "23"
+    }
+  ],
+  "fashion_size": [
+    {
+      "label": "XL",
+      "value": "33"
+    },
+    {
+      "label": "XS",
+      "value": "37"
+    },
+    {
+      "label": "S",
+      "value": "36"
+    },
+    {
+      "label": "M",
+      "value": "35"
+    },
+    {
+      "label": "L",
+      "value": "34"
+    }
+  ],
+  "stock": {
+    "status": false
+  }
+}

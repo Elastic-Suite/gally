@@ -2,7 +2,6 @@
 
 import React from 'react'
 import dynamic from 'next/dynamic'
-import { EventLogProvider } from '../contexts/EventLogContext'
 import { useDemo } from '../contexts/DemoContext'
 import { useNavigationPending } from '../contexts/NavigationContext'
 import { useMounted } from '../hooks/useMounted'
@@ -55,7 +54,7 @@ function AppShell({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <EventLogProvider>
+    <>
       <ScrollToTop />
       <div className={`app-layout mode-${audience}`}>
         <Header />
@@ -82,7 +81,7 @@ function AppShell({ children }: { children: React.ReactNode }) {
           </>
         )}
       </div>
-    </EventLogProvider>
+    </>
   )
 }
 

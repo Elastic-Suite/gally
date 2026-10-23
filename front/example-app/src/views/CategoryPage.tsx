@@ -4,7 +4,11 @@ import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react'
 import { useParams } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { useSearch } from '../hooks/useSearch'
-import { useTracking } from '../hooks/useTracking'
+import {
+  categoryTrackedSort,
+  trackingFilters,
+  useTracking,
+} from '../hooks/useTracking'
 import { useCatalog } from '../contexts/CatalogContext'
 import { useGallyConfig } from '../contexts/ConfigContext'
 import Link from '../components/LocaleLink'
@@ -108,6 +112,7 @@ export default function CategoryPage({
     pageCount,
     aggregations,
     loading,
+    settled,
     viewMoreOptions,
     appliedSort,
   } = useSearch({
@@ -123,13 +128,41 @@ export default function CategoryPage({
   const trackedCatRef = useRef('')
   const trackedDisplayRef = useRef('')
 
+  // A sort change is a new VIEW event. See specs/feature-tracking-sort.md.
+  // The applied facets; any change is a new VIEW (specs/feature-tracking-filters.md).
+  const trackedFilters = useMemo(() => trackingFilters(filters), [filters])
+  const trackedFiltersKey = JSON.stringify(trackedFilters)
+  const { field: trackedSortField, direction: trackedSortDirection } =
+    categoryTrackedSort(sortField, sortDirection, appliedSort)
+
   useEffect(() => {
-    const key = `${code}|${page}|${total}`
-    if (code && total > 0 && trackedCatRef.current !== key) {
+    const key = `${code}|${page}|${total}|${trackedSortField}|${trackedSortDirection}|${trackedFiltersKey}`
+    // Settled only: the result answers exactly this category, page, sort and facets - not the one
+    // left over from the previous options (specs/bugfix-category-view-stale-count.md,
+    // bugfix-tracking-stale-count-after-facet.md).
+    if (code && settled && total > 0 && trackedCatRef.current !== key) {
       trackedCatRef.current = key
-      trackCategoryView(code, total, page, pageCount)
+      trackCategoryView(
+        code,
+        total,
+        page,
+        pageCount,
+        { field: trackedSortField, direction: trackedSortDirection },
+        trackedFilters
+      )
     }
-  }, [code, total, page, pageCount, trackCategoryView])
+  }, [
+    code,
+    total,
+    page,
+    pageCount,
+    trackedSortField,
+    trackedSortDirection,
+    trackedFilters,
+    trackedFiltersKey,
+    settled,
+    trackCategoryView,
+  ])
 
   useEffect(() => {
     if (products.length > 0 && !loading) {

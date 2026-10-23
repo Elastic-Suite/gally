@@ -69,7 +69,7 @@ export function getProductFields(product: SearchDocument, config: GallyConfig) {
   const isDiscounted =
     s.price?.[0]?.is_discounted ?? s.price?.[0]?.isDiscounted ?? false
   // `=== true` is load-bearing, not style. In the raw `_source` (which the PDP reads, because
-  // PRODUCT_DETAIL_FIELDS asks for `source`) an unset boolean attribute is `[]`, not `false` —
+  // productDetailFields() asks for `source`) an unset boolean attribute is `[]`, not `false` —
   // and `[]` is truthy, so a `||` read badges every product as new. Same reason as `sale` below.
   const isNew = s.new === true
   // `sale` is the merchandising flag the catalogue sets; `is_discounted` is the arithmetic on

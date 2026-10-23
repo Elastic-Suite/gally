@@ -7,6 +7,8 @@ import { useSearch } from '../hooks/useSearch'
 import { useCatalog } from '../contexts/CatalogContext'
 import { useCmsSearch, CmsPage } from '../hooks/useCms'
 import { useTracking } from '../hooks/useTracking'
+import { useTrackSearch } from '../hooks/useTrackSearch'
+import { trackingFilters } from '../hooks/useTracking'
 import Facets, { ActiveFilters, FilterValue } from '../components/Facets'
 import ProductCard from '../components/ProductCard'
 import BlogCard from '../components/BlogCard'
@@ -121,6 +123,7 @@ export default function SearchPage({
     pageCount,
     aggregations,
     loading,
+    settled,
     viewMoreOptions,
     appliedSort,
   } = useSearch({
@@ -148,16 +151,28 @@ export default function SearchPage({
     skip: !query,
   })
 
-  const { trackSearch, trackDisplay, trackCmsDisplay } = useTracking()
-  const trackedRef = useRef('')
+  const { trackDisplay, trackCmsDisplay } = useTracking()
 
-  useEffect(() => {
-    const key = `${query}|${page}|${total}`
-    if (query && total > 0 && trackedRef.current !== key) {
-      trackedRef.current = key
-      trackSearch(query, total, page, pageCount)
-    }
-  }, [query, total, page, pageCount, trackSearch])
+  // One SEARCH per (query, page, total, sort), zero results included, once the result is settled.
+  // The sort is the one requested: the visitor's pick, or relevance. See
+  // specs/bugfix-search-zero-result-tracking.md and specs/feature-tracking-sort.md.
+  const trackedSortField = sortField || '_score'
+  // The applied facets; any change is a new SEARCH (specs/feature-tracking-filters.md).
+  const trackedFilters = useMemo(
+    () => trackingFilters(activeFilters),
+    [activeFilters]
+  )
+  const trackedFiltersKey = JSON.stringify(trackedFilters)
+  useTrackSearch({
+    query,
+    settled,
+    total,
+    page,
+    pageCount,
+    sort: { field: trackedSortField, direction: sortDirection },
+    filters: trackedFilters,
+    dedupeKey: `${query}|${page}|${total}|${trackedSortField}|${sortDirection}|${trackedFiltersKey}`,
+  })
 
   const trackedDisplayRef = useRef('')
 
@@ -198,7 +213,8 @@ export default function SearchPage({
       setPage(1)
       window.scrollTo({ top: 0, behavior: 'smooth' })
     },
-    []
+    // setPage never changes; listed because the React Compiler infers it and refuses an empty list.
+    [setPage]
   )
 
   return (

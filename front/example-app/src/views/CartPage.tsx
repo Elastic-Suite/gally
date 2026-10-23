@@ -1,25 +1,23 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import Link from '../components/LocaleLink'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { useCart } from '../contexts/CartContext'
 import { useCatalog } from '../contexts/CatalogContext'
 import { useLocaleHref } from '../contexts/LocaleContext'
 import { useRecommendations } from '../hooks/useRecommendations'
-import { defaultListingPath } from '../sdk/categoryTree'
+import { cartShipping } from '../contexts/shipping'
+import CartEmptyState from '../components/CartEmptyState'
 import ProductSlider from '../components/ProductSlider'
 import ProductImage from '../components/ProductImage'
 import Icon from '../components/Icon'
-
-const FREE_SHIPPING_THRESHOLD = 180
 
 export default function CartPage() {
   const { t } = useTranslation('cart')
   const { items, removeFromCart, updateQty, total, itemCount, ready } =
     useCart()
-  const { formatPrice, categories } = useCatalog()
+  const { formatPrice } = useCatalog()
   const router = useRouter()
   const localeHref = useLocaleHref()
   // Cross-sell rules seeded with every product in the cart. Cart lines carry the parent SKU in
@@ -43,12 +41,8 @@ export default function CartPage() {
     prevTotalRef.current = total
   }, [total])
 
-  const shippingProgress = Math.min(
-    (total / FREE_SHIPPING_THRESHOLD) * 100,
-    100
-  )
-  const freeShipping = total >= FREE_SHIPPING_THRESHOLD
-  const shippingRemaining = Math.max(FREE_SHIPPING_THRESHOLD - total, 0)
+  const shipping = cartShipping(total)
+  const freeShipping = shipping.free
 
   // Until the saved cart is read, "your cart is empty" would flash on every reload.
   if (!ready) {
@@ -56,25 +50,7 @@ export default function CartPage() {
   }
 
   if (items.length === 0) {
-    return (
-      <div className="cart-page">
-        <div className="page-title">
-          <h1>{t('empty.title')}</h1>
-        </div>
-        <div className="empty-state">
-          <h3>{t('empty.heading')}</h3>
-          <p>{t('empty.body')}</p>
-          {/* The catalog's root category, like the header's Products tab - not an empty search. */}
-          <Link
-            href={defaultListingPath(categories)}
-            className="btn btn-primary"
-            style={{ marginTop: '1rem' }}
-          >
-            {t('empty.browse')}
-          </Link>
-        </div>
-      </div>
-    )
+    return <CartEmptyState />
   }
 
   return (
@@ -155,13 +131,13 @@ export default function CartPage() {
               <>
                 <div className="shipping-bar-label">
                   {t('shipping.remainingPrefix')}{' '}
-                  <strong>{formatPrice(shippingRemaining)}</strong>{' '}
+                  <strong>{formatPrice(shipping.remaining)}</strong>{' '}
                   {t('shipping.remainingSuffix')}
                 </div>
                 <div className="shipping-bar-track">
                   <div
                     className="shipping-bar-fill"
-                    style={{ width: `${shippingProgress}%` }}
+                    style={{ width: `${shipping.progress}%` }}
                   />
                 </div>
               </>
@@ -175,7 +151,7 @@ export default function CartPage() {
           <div className="cart-summary-row">
             <span>{t('summary.shipping')}</span>
             <span className={freeShipping ? 'free-shipping-text' : ''}>
-              {freeShipping ? t('shipping.free') : formatPrice(4.9)}
+              {freeShipping ? t('shipping.free') : formatPrice(shipping.fee)}
             </span>
           </div>
           <div
@@ -184,7 +160,7 @@ export default function CartPage() {
             }`}
           >
             <span>{t('summary.total')}</span>
-            <span>{formatPrice(total + (freeShipping ? 0 : 4.9))}</span>
+            <span>{formatPrice(shipping.total)}</span>
           </div>
           <button
             className="btn btn-coral btn-lg"

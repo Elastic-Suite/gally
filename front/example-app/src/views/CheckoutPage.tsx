@@ -5,6 +5,8 @@ import { useTranslation } from 'react-i18next'
 import { useCart } from '../contexts/CartContext'
 import { useCatalog } from '../contexts/CatalogContext'
 import { useTracking } from '../hooks/useTracking'
+import { cartShipping } from '../contexts/shipping'
+import CartEmptyState from '../components/CartEmptyState'
 import Icon from '../components/Icon'
 
 const STEP_KEYS = ['cart', 'details', 'confirmation']
@@ -22,18 +24,25 @@ const DEMO_CUSTOMER = {
   cvc: '123',
 }
 
+// Called from the click handler only; kept outside the component so render stays pure.
+function newOrderId() {
+  return `ORD-${Date.now().toString(36).toUpperCase()}`
+}
+
 export default function CheckoutPage() {
   const { t } = useTranslation('cart')
-  const { items, total, clearCart } = useCart()
+  const { items, total, clearCart, ready } = useCart()
   const { formatPrice } = useCatalog()
   const { trackOrder } = useTracking()
   const [step, setStep] = useState(1) // 0=cart (already done), 1=delivery and payment, 2=confirmation
+  // Shipping included: the amount paid, the same as the cart's total.
+  const shipping = cartShipping(total)
 
   const handlePlaceOrder = () => {
-    const orderId = `ORD-${Date.now().toString(36).toUpperCase()}`
+    const orderId = newOrderId()
     trackOrder(
       orderId,
-      total,
+      shipping.total,
       items.map((i) => ({
         sku: i.sku,
         childSku: i.childSku,
@@ -43,6 +52,16 @@ export default function CheckoutPage() {
     )
     setStep(2)
     clearCart()
+  }
+
+  // Until the saved cart is read, the form would show a 0 total for a moment.
+  if (!ready) {
+    return <div className="cart-page" />
+  }
+
+  // Nothing to order (direct visit, or back after an order) - but the confirmation still shows.
+  if (step === 1 && items.length === 0) {
+    return <CartEmptyState />
   }
 
   return (
@@ -56,6 +75,7 @@ export default function CheckoutPage() {
               className={`checkout-step ${i < step ? 'completed' : ''} ${
                 i === step ? 'active' : ''
               }`}
+              aria-current={i === step ? 'step' : undefined}
             >
               {i < step ? <Icon name="checkmark" /> : `${i + 1}. `}
               {t(`checkout.steps.${s}`)}
@@ -87,12 +107,14 @@ export default function CheckoutPage() {
               className="facet-search"
               defaultValue={DEMO_CUSTOMER.firstName}
               placeholder={t('checkout.placeholders.firstName')}
+              aria-label={t('checkout.placeholders.firstName')}
               style={{ padding: '0.75rem' }}
             />
             <input
               className="facet-search"
               defaultValue={DEMO_CUSTOMER.lastName}
               placeholder={t('checkout.placeholders.lastName')}
+              aria-label={t('checkout.placeholders.lastName')}
               style={{ padding: '0.75rem' }}
             />
             <input
@@ -100,24 +122,28 @@ export default function CheckoutPage() {
               type="email"
               defaultValue={DEMO_CUSTOMER.email}
               placeholder={t('checkout.placeholders.email')}
+              aria-label={t('checkout.placeholders.email')}
               style={{ gridColumn: '1/-1', padding: '0.75rem' }}
             />
             <input
               className="facet-search"
               defaultValue={DEMO_CUSTOMER.address}
               placeholder={t('checkout.placeholders.address')}
+              aria-label={t('checkout.placeholders.address')}
               style={{ gridColumn: '1/-1', padding: '0.75rem' }}
             />
             <input
               className="facet-search"
               defaultValue={DEMO_CUSTOMER.city}
               placeholder={t('checkout.placeholders.city')}
+              aria-label={t('checkout.placeholders.city')}
               style={{ padding: '0.75rem' }}
             />
             <input
               className="facet-search"
               defaultValue={DEMO_CUSTOMER.zip}
               placeholder={t('checkout.placeholders.zip')}
+              aria-label={t('checkout.placeholders.zip')}
               style={{ padding: '0.75rem' }}
             />
           </div>
@@ -128,6 +154,7 @@ export default function CheckoutPage() {
               className="facet-search"
               defaultValue={DEMO_CUSTOMER.cardNumber}
               placeholder={t('checkout.placeholders.cardNumber')}
+              aria-label={t('checkout.placeholders.cardNumber')}
               style={{ padding: '0.75rem' }}
             />
             <div
@@ -141,20 +168,32 @@ export default function CheckoutPage() {
                 className="facet-search"
                 defaultValue={DEMO_CUSTOMER.expiry}
                 placeholder={t('checkout.placeholders.expiry')}
+                aria-label={t('checkout.placeholders.expiry')}
                 style={{ padding: '0.75rem' }}
               />
               <input
                 className="facet-search"
                 defaultValue={DEMO_CUSTOMER.cvc}
                 placeholder={t('checkout.placeholders.cvc')}
+                aria-label={t('checkout.placeholders.cvc')}
                 style={{ padding: '0.75rem' }}
               />
             </div>
           </div>
           <div className="cart-summary" style={{ marginTop: '1.5rem' }}>
+            <div className="cart-summary-row">
+              <span>{t('summary.subtotal')}</span>
+              <span>{formatPrice(total)}</span>
+            </div>
+            <div className="cart-summary-row">
+              <span>{t('summary.shipping')}</span>
+              <span className={shipping.free ? 'free-shipping-text' : ''}>
+                {shipping.free ? t('shipping.free') : formatPrice(shipping.fee)}
+              </span>
+            </div>
             <div className="cart-summary-row total">
               <span>{t('checkout.totalToPay')}</span>
-              <span>{formatPrice(total)}</span>
+              <span>{formatPrice(shipping.total)}</span>
             </div>
           </div>
           <button
@@ -162,7 +201,7 @@ export default function CheckoutPage() {
             style={{ width: '100%', marginTop: '1rem' }}
             onClick={handlePlaceOrder}
           >
-            {t('checkout.placeOrder', { amount: formatPrice(total) })}
+            {t('checkout.placeOrder', { amount: formatPrice(shipping.total) })}
           </button>
         </div>
       )}

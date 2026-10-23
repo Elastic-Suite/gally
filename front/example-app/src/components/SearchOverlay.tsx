@@ -28,6 +28,18 @@ export interface TermSuggestion {
 // search bar. A plain (non-hook) function so SearchBar.tsx can build its keyboard-nav
 // sequence from exactly the same list this column renders — the two lists diverging
 // is what broke arrow navigation.
+
+// The combobox wiring shared with SearchBar (specs/bugfix-autocomplete-screen-reader.md): one id per
+// row, from the same item key that drives the highlight, and one listbox per column.
+export function acpOptionId(key: string): string {
+  return `acp-option-${encodeURIComponent(key)}`
+}
+export const ACP_LISTBOX_IDS = [
+  'acp-listbox-suggestions',
+  'acp-listbox-products',
+  'acp-listbox-more',
+]
+
 export function getTermSuggestions(
   productTerms: TermSuggestion[],
   cmsPageTerms: TermSuggestion[]
@@ -350,7 +362,12 @@ export default function SearchOverlay({
             </button>
           ))}
         </div>
-        <div className="search-overlay-col search-overlay-col-suggestions">
+        <div
+          className="search-overlay-col search-overlay-col-suggestions"
+          id={ACP_LISTBOX_IDS[0]}
+          role="listbox"
+          aria-label={t('overlay.suggestionsTab')}
+        >
           <SuggestionsColumn
             termSuggestions={termSuggestions}
             highlightedKey={highlightedKey}
@@ -362,7 +379,12 @@ export default function SearchOverlay({
             onSelect={closeAndGo}
           />
         </div>
-        <div className="search-overlay-col search-overlay-col-products">
+        <div
+          className="search-overlay-col search-overlay-col-products"
+          id={ACP_LISTBOX_IDS[1]}
+          role="listbox"
+          aria-label={t('overlay.productsTitle')}
+        >
           <ProductsColumn
             results={results}
             loading={resultsLoading}
@@ -370,7 +392,12 @@ export default function SearchOverlay({
             onSelect={closeAndGo}
           />
         </div>
-        <div className="search-overlay-col search-overlay-col-more">
+        <div
+          className="search-overlay-col search-overlay-col-more"
+          id={ACP_LISTBOX_IDS[2]}
+          role="listbox"
+          aria-label={t('overlay.blogTitle')}
+        >
           <CategoriesColumn
             query={query}
             categories={categories}
@@ -469,6 +496,9 @@ function SuggestionsColumn({
             <div
               key={term}
               data-item-key={key}
+              id={acpOptionId(key)}
+              role="option"
+              aria-selected={key === highlightedKey}
               className={`autocomplete-item autocomplete-suggestion ${
                 key === highlightedKey ? 'highlighted' : ''
               }`}
@@ -509,6 +539,10 @@ function AttributesSections({
               <div
                 key={opt.value}
                 data-item-key={key}
+                id={acpOptionId(key)}
+                role="option"
+                aria-label={`${attr.label}: ${opt.label}`}
+                aria-selected={key === highlightedKey}
                 className={`autocomplete-item autocomplete-attribute ${
                   key === highlightedKey ? 'highlighted' : ''
                 }`}
@@ -571,6 +605,10 @@ function ProductsColumn({
               <div
                 key={idx}
                 data-item-key={key}
+                id={acpOptionId(key)}
+                role="option"
+                aria-label={name}
+                aria-selected={key === highlightedKey}
                 className={`autocomplete-item autocomplete-product ${
                   key === highlightedKey ? 'highlighted' : ''
                 } ${justAdded ? 'just-added' : ''}`}
@@ -645,6 +683,9 @@ function CategoriesColumn({
             <div
               key={cat.id}
               data-item-key={key}
+              id={acpOptionId(key)}
+              role="option"
+              aria-selected={key === highlightedKey}
               className={`autocomplete-item autocomplete-category ${
                 key === highlightedKey ? 'highlighted' : ''
               }`}
@@ -696,6 +737,9 @@ function BlogSection({
             <div
               key={page.id}
               data-item-key={key}
+              id={acpOptionId(key)}
+              role="option"
+              aria-selected={key === highlightedKey}
               className={`autocomplete-item autocomplete-blog ${
                 key === highlightedKey ? 'highlighted' : ''
               }`}

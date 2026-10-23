@@ -1,0 +1,36 @@
+{
+  "sku": "LLV-LIV-ALB-001",
+  "name": "Snow White - illustrated picture book",
+  "image": "/papershop/l/l/llv-liv-alb-001.jpg",
+  "description": "A large-format picture book after Brothers Grimm, text of 1812. 32 board pages, hardcover. A full-page illustration on every spread.",
+  "url_key": "snow-white-illustrated-picture-book",
+  "visibility": [
+    {
+      "label": "Catalog, Search",
+      "value": "4"
+    }
+  ],
+  "new": false,
+  "sale": true,
+  "cost": 7.81,
+  "configurable_attributes": null,
+  "price": [
+    {
+      "original_price": 17.38,
+      "is_discounted": true,
+      "price": 13.9
+    }
+  ],
+  "llv_is_eco": null,
+  "llv_color": null,
+  "llv_format": [
+    {
+      "label": "15 x 15 cm",
+      "value": "carre-15"
+    }
+  ],
+  "llv_material": null,
+  "stock": {
+    "status": true
+  }
+}

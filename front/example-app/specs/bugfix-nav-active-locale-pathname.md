@@ -60,6 +60,14 @@ segment 1 and so needs the raw pathname, `ScrollToTop` only uses it as a change 
 
 -   No change.
 
+## Follow-up (2026-10-22)
+
+-   [ ] `src/components/SearchExplain.tsx` made the same mistake: it compared the raw pathname with
+        `'/search'` and `'/category/'`, so `isSearchPage` and `isCategoryPage` were always false and
+        the explain panel never had a context label. It now uses `useAppPathname()`. Found while
+        planning the routing tests (`test-plan-routing.md`); the architecture test now limits raw
+        `usePathname()` to an explicit list of files.
+
 ## MUST NOT change
 
 -   **Never compare a raw `usePathname()` against an app-internal path.** Go through

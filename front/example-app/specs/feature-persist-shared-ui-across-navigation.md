@@ -4,7 +4,7 @@
 
 ## Status: implemented
 
-## Page/Component: `app/[locale]/category/layout.tsx`, `src/components/CategoryNav.tsx`
+## Page/Component: `src/components/CategoryNav.tsx` (`app/[locale]/category/layout.tsx` is deleted - see the note above)
 
 ## Problem
 

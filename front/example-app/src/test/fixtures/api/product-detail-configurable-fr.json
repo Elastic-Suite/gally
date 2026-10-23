@@ -1,0 +1,281 @@
+{
+  "sku": "VA02",
+  "name": "Carola Infinity Scarf",
+  "image": "/default/v/a/va02-pe_main.jpg",
+  "description": "<p>Made of super soft pima cotton, this lightweight scarf is laid out in a chic, continuous loop. Double it or drape it to create the perfect embellishment to any ensemble.</p><ul><li>58\" L x 32\" W</li><li>Cotton/Viscose blend</li></ul>",
+  "url_key": "carola-infinity-scarf",
+  "visibility": [
+    {
+      "label": "Catalog, Search",
+      "value": "4"
+    }
+  ],
+  "new": null,
+  "sale": null,
+  "cost": 12.75,
+  "configurable_attributes": "[\"fashion_color\",\"fashion_size\"]",
+  "price": [
+    {
+      "original_price": 48,
+      "is_discounted": false,
+      "price": 48
+    }
+  ],
+  "fashion_material": [
+    {
+      "label": "Coton bio",
+      "value": "51"
+    },
+    {
+      "label": "Spandex",
+      "value": "55"
+    }
+  ],
+  "fashion_color": [
+    {
+      "label": "Doré",
+      "value": "5"
+    },
+    {
+      "label": "Pluie",
+      "value": "25"
+    },
+    {
+      "label": "Pêche",
+      "value": "22"
+    },
+    {
+      "label": "Lila",
+      "value": "24"
+    },
+    {
+      "label": "Kaki",
+      "value": "23"
+    }
+  ],
+  "fashion_size": [
+    {
+      "label": "XL",
+      "value": "33"
+    },
+    {
+      "label": "XS",
+      "value": "37"
+    },
+    {
+      "label": "S",
+      "value": "36"
+    },
+    {
+      "label": "M",
+      "value": "35"
+    },
+    {
+      "label": "L",
+      "value": "34"
+    }
+  ],
+  "source": {
+    "date_of_manufacture": "2023-08-02",
+    "created_at": "2022-09-07 14:57:19",
+    "description": [
+      "<p>Made of super soft pima cotton, this lightweight scarf is laid out in a chic, continuous loop. Double it or drape it to create the perfect embellishment to any ensemble.</p><ul><li>58\" L x 32\" W</li><li>Cotton/Viscose blend</li></ul>"
+    ],
+    "has_video": [],
+    "indexed_attributes": [
+      "price",
+      "name",
+      "url_key",
+      "description",
+      "fashion_material",
+      "status",
+      "tax_class_id",
+      "fashion_color",
+      "fashion_size",
+      "has_video"
+    ],
+    "children_ids": [
+      1064, 1065, 1066, 1067, 1068, 1069, 1070, 1071, 1072, 1073, 1074, 1075,
+      1076, 1077, 1078, 1079
+    ],
+    "attribute_set_id": "9",
+    "updated_at": "2022-09-07 14:57:19",
+    "price": [
+      {
+        "original_price": 48,
+        "group_id": 0,
+        "price": 48,
+        "is_discounted": false
+      },
+      {
+        "original_price": 48,
+        "group_id": 1,
+        "price": 48,
+        "is_discounted": false
+      },
+      {
+        "original_price": 48,
+        "group_id": 2,
+        "price": 48,
+        "is_discounted": false
+      },
+      {
+        "original_price": 48,
+        "group_id": 3,
+        "price": 48,
+        "is_discounted": false
+      }
+    ],
+    "manufacture_location": "47.2030827,-1.5532463",
+    "id": 1164,
+    "sku": "VA02",
+    "stock": {
+      "qty": 70,
+      "status": true
+    },
+    "children.url_key": ["carola-infinity-scarf"],
+    "configurable_attributes": ["fashion_color", "fashion_size"],
+    "image": "/default/v/a/va02-pe_main.jpg",
+    "cost": 12.75,
+    "visibility": {
+      "label": "Catalog, Search",
+      "value": "4"
+    },
+    "fashion_material": [
+      {
+        "label": "Coton bio",
+        "value": "51"
+      },
+      {
+        "label": "Spandex",
+        "value": "55"
+      }
+    ],
+    "type_id": "configurable",
+    "children.description": [
+      "<p>Made of super soft pima cotton, this lightweight scarf is laid out in a chic, continuous loop. Double it or drape it to create the perfect embellishment to any ensemble.</p><ul><li>58\" L x 32\" W</li><li>Cotton/Viscose blend</li></ul>"
+    ],
+    "fashion_color": [
+      {
+        "label": "Doré",
+        "value": 5
+      },
+      {
+        "label": "Pluie",
+        "value": 25
+      },
+      {
+        "label": "Pêche",
+        "value": 22
+      },
+      {
+        "label": "Lila",
+        "value": 24
+      },
+      {
+        "label": "Kaki",
+        "value": 23
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": 33
+      },
+      {
+        "label": "XS",
+        "value": 37
+      },
+      {
+        "label": "S",
+        "value": 36
+      },
+      {
+        "label": "M",
+        "value": 35
+      },
+      {
+        "label": "L",
+        "value": 34
+      }
+    ],
+    "tax_class_id": [
+      {
+        "label": "Taxable Goods",
+        "value": 2
+      }
+    ],
+    "has_options": false,
+    "entity_id": "1164",
+    "url_key": ["carola-infinity-scarf"],
+    "required_options": false,
+    "children.indexed_attributes": [
+      "name",
+      "url_key",
+      "description",
+      "fashion_material",
+      "status",
+      "tax_class_id",
+      "fashion_color",
+      "fashion_size",
+      "has_video"
+    ],
+    "name": ["Carola Infinity Scarf"],
+    "category": [
+      {
+        "is_virtual": "false",
+        "category_uid": "Mg==",
+        "id": "cat_2"
+      },
+      {
+        "is_virtual": "false",
+        "category_uid": "Mw==",
+        "name": "Accessoires",
+        "id": "cat_3"
+      },
+      {
+        "is_virtual": "false",
+        "category_uid": "Ng==",
+        "name": "Écharpes",
+        "id": "cat_6",
+        "is_parent": true
+      }
+    ],
+    "children.sku": [
+      "VA02-RN-XS",
+      "VA02-RN-S",
+      "VA02-RN-M",
+      "VA02-RN-L",
+      "VA02-PE-XS",
+      "VA02-PE-S",
+      "VA02-PE-M",
+      "VA02-PE-L",
+      "VA02-LL-XS",
+      "VA02-LL-S",
+      "VA02-LL-M",
+      "VA02-LL-L",
+      "VA02-KH-XS",
+      "VA02-KH-S",
+      "VA02-KH-M",
+      "VA02-KH-L"
+    ],
+    "children_attributes": [
+      "indexed_attributes",
+      "url_key",
+      "description",
+      "fashion_material",
+      "fashion_color",
+      "fashion_size",
+      "has_video"
+    ],
+    "status": [
+      {
+        "label": "Enabled",
+        "value": 1
+      }
+    ]
+  },
+  "stock": {
+    "status": true
+  }
+}

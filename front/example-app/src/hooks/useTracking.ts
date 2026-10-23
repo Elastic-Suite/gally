@@ -3,6 +3,70 @@ import { useTranslation } from 'react-i18next'
 import { getTracker, TrackingEventType } from '../sdk'
 import { useCatalog } from '../contexts/CatalogContext'
 import { useEventLog } from '../contexts/EventLogContext'
+import type { ActiveFilters } from '../components/Facets'
+
+/** The sort a listing was produced with, as the search API names it. */
+export interface TrackedSort {
+  field: string
+  direction: string
+}
+
+const DEFAULT_SEARCH_SORT: TrackedSort = { field: '_score', direction: 'desc' }
+const DEFAULT_CATEGORY_SORT: TrackedSort = {
+  field: 'category__position',
+  direction: 'asc',
+}
+
+// Gally stores product_list.sort_order as a free keyword. The two default sorts keep the words the
+// events already in Gally (and the sample data) use; any other sort is sent as its field code.
+// See specs/feature-tracking-sort.md.
+export function trackingSortOrder(field: string): string {
+  if (field === '_score') return 'relevance'
+  if (field === 'category__position') return 'position'
+  return field
+}
+
+/** One applied facet value, as Gally stores it in product_list.filters. */
+export interface TrackedFilter {
+  name: string
+  value: string
+}
+
+// The page's facet state as Gally's product_list.filters: one { name, value } pair per selected
+// value, name being the facet's field code, value always a string. A range is one pair, MIN-MAX,
+// MIN- or -MAX. Sorted, so the same facets always give the same list.
+// See specs/feature-tracking-filters.md.
+export function trackingFilters(active: ActiveFilters): TrackedFilter[] {
+  const pairs: TrackedFilter[] = []
+  for (const [name, value] of Object.entries(active)) {
+    if (value === undefined) continue
+    if (Array.isArray(value)) {
+      for (const v of value) pairs.push({ name, value: String(v) })
+    } else if (typeof value === 'object') {
+      if (value.gte === undefined && value.lte === undefined) continue
+      pairs.push({ name, value: `${value.gte ?? ''}-${value.lte ?? ''}` })
+    } else {
+      pairs.push({ name, value: String(value) })
+    }
+  }
+  return pairs.sort(
+    (a, b) => a.name.localeCompare(b.name) || a.value.localeCompare(b.value)
+  )
+}
+
+// The sort a category listing was produced with: the visitor's pick, else the one the API reports
+// it applied (a category can have its own default), else position.
+export function categoryTrackedSort(
+  sortField: string,
+  sortDirection: string,
+  applied: TrackedSort | undefined
+): TrackedSort {
+  if (sortField) return { field: sortField, direction: sortDirection }
+  return {
+    field: applied?.field || DEFAULT_CATEGORY_SORT.field,
+    direction: applied?.direction || DEFAULT_CATEGORY_SORT.direction,
+  }
+}
 
 export function useTracking() {
   const { t } = useTranslation('demo')
@@ -23,7 +87,9 @@ export function useTracking() {
       categoryCode: string,
       itemCount: number,
       page: number,
-      pageCount: number
+      pageCount: number,
+      sort: TrackedSort = DEFAULT_CATEGORY_SORT,
+      filters: TrackedFilter[] = []
     ) => {
       logRef.current(
         'VIEW:category',
@@ -41,9 +107,9 @@ export function useTracking() {
               item_count: itemCount,
               current_page: page,
               page_count: pageCount,
-              sort_order: 'position',
-              sort_direction: 'asc',
-              filters: [],
+              sort_order: trackingSortOrder(sort.field),
+              sort_direction: sort.direction,
+              filters,
             },
           }),
         })
@@ -133,7 +199,14 @@ export function useTracking() {
   )
 
   const trackSearch = useCallback(
-    (query: string, itemCount: number, page: number, pageCount: number) => {
+    (
+      query: string,
+      itemCount: number,
+      page: number,
+      pageCount: number,
+      sort: TrackedSort = DEFAULT_SEARCH_SORT,
+      filters: TrackedFilter[] = []
+    ) => {
       logRef.current(
         'SEARCH',
         query,
@@ -150,9 +223,9 @@ export function useTracking() {
               item_count: itemCount,
               current_page: page,
               page_count: pageCount,
-              sort_order: 'relevance',
-              sort_direction: 'desc',
-              filters: [],
+              sort_order: trackingSortOrder(sort.field),
+              sort_direction: sort.direction,
+              filters,
             },
           }),
         })

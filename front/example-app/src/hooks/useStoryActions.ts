@@ -53,9 +53,14 @@ export function useStoryActions({
   // Pre-fetch products for add_to_cart_flow actions
   const searchQuery =
     step?.action.type === 'add_to_cart_flow' ? step.action.searchQuery : ''
+  // Off for now: the story companion sends no request at all
+  // (specs/bugfix-story-companion-requests.md). Without it, the add_to_cart_flow step waits for
+  // products and then falls back to the cart. To turn the prefetch back on, pass
+  // `skip: !searchQuery` - never an unconditional call, which sends an empty '*' search per page.
   const { products: prefetchedProducts } = useSearch({
     searchQuery: searchQuery || undefined,
     pageSize: searchQuery ? 4 : 0,
+    skip: true,
   })
   const productsRef = useRef(prefetchedProducts)
 

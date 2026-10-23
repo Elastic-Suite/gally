@@ -147,7 +147,7 @@ export const CMS_METADATA = 'cms_page'
 // names of CmsPage nor invented ones: any key not listed here is dropped, and any key
 // listed that the document doesn't have is simply absent.
 // It must also not be EMPTY, or the SDK drops the `collection` block from the query
-// and zero documents come back. Same trap as PRODUCT_FIELDS.
+// and zero documents come back. Same trap as productFields().
 export const CMS_FIELDS = [
   'id',
   'title',

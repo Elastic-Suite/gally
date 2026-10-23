@@ -1,9 +1,10 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import { useSearchParams, usePathname } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { useCatalog } from '../contexts/CatalogContext'
+import { useAppPathname } from '../contexts/LocaleContext'
 import { getBaseUri } from '../sdk'
 import { getExplainToken } from '../sdk/explain'
 import Icon from './Icon'
@@ -82,7 +83,8 @@ export default function SearchExplain() {
   const [error, setError] = useState('')
   const { selectedLocalizedCatalog } = useCatalog()
   const searchParams = useSearchParams()
-  const pathname = usePathname()
+  // Locale segment removed: the raw pathname is /com_fr/search, never /search.
+  const pathname = useAppPathname()
   const lastKeyRef = useRef('')
 
   const query = searchParams.get('q') || ''

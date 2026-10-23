@@ -100,11 +100,18 @@ export default function BlogPage() {
 
       <div className="blog-browse">
         <div className="blog-browse-row">
-          <span className="blog-browse-label">{t('blog:browse.type')}</span>
-          <div className="blog-chips">
+          <span className="blog-browse-label" id="blog-browse-type">
+            {t('blog:browse.type')}
+          </span>
+          <div
+            className="blog-chips"
+            role="group"
+            aria-labelledby="blog-browse-type"
+          >
             <button
               type="button"
               className={`filter-chip ${!type ? 'filter-chip-selected' : ''}`}
+              aria-pressed={!type}
               onClick={() => setParams({ type: '' })}
             >
               {t('blog:browse.all')}
@@ -116,6 +123,7 @@ export default function BlogPage() {
                 className={`filter-chip ${
                   type === opt.value ? 'filter-chip-selected' : ''
                 }`}
+                aria-pressed={type === opt.value}
                 onClick={() =>
                   setParams({ type: type === opt.value ? '' : opt.value })
                 }
@@ -128,11 +136,18 @@ export default function BlogPage() {
         </div>
 
         <div className="blog-browse-row">
-          <span className="blog-browse-label">{t('blog:browse.topic')}</span>
-          <div className="blog-chips">
+          <span className="blog-browse-label" id="blog-browse-topic">
+            {t('blog:browse.topic')}
+          </span>
+          <div
+            className="blog-chips"
+            role="group"
+            aria-labelledby="blog-browse-topic"
+          >
             <button
               type="button"
               className={`filter-chip ${!topic ? 'filter-chip-selected' : ''}`}
+              aria-pressed={!topic}
               onClick={() => setParams({ topic: '' })}
             >
               {t('blog:browse.all')}
@@ -144,6 +159,7 @@ export default function BlogPage() {
                 className={`filter-chip ${
                   topic === opt.value ? 'filter-chip-selected' : ''
                 }`}
+                aria-pressed={topic === opt.value}
                 onClick={() =>
                   setParams({ topic: topic === opt.value ? '' : opt.value })
                 }

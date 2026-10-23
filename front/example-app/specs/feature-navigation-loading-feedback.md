@@ -2,7 +2,7 @@
 
 ## Status: implemented
 
-## Page/Component: `app/[locale]/{product,blog,category}/**/loading.tsx`, `src/components/skeletons.tsx`
+## Page/Component: `src/components/skeletons.tsx` (the `app/[locale]/**/loading.tsx` files it introduced are deleted - see below)
 
 ## Problem
 

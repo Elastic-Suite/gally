@@ -72,10 +72,12 @@ typed GraphQL path would not help either: nested source fields go through `Neste
 -   [x] Colour options are sorted by label (`localeCompare`) for the same reason — neither source
         carries the source field's `position`.
 -   [x] Nothing is pre-selected. `selectedOptions` starts `{}`; the previous `useState(0)` claimed a
-        colour choice the user never made. Add-to-cart stays enabled, since the SKU sent is the same
-        either way.
--   [x] The cart line's `variant` is the selected labels joined `" / "`, or `undefined` when nothing
-        is selected. `childSku` is no longer passed at all; `CartContext` already falls back to
+        colour choice the user never made.
+-   [x] Add-to-cart waits for every axis: disabled and labelled "Choose options" until each one has a
+        choice, like the quick-add. Changed by `bugfix-pdp-add-without-options.md`; it used to stay
+        enabled, on the grounds that the SKU sent is the same either way.
+-   [x] The cart line's `variant` is the selected labels joined `" / "`, or `undefined` for a product
+        with no axis. `childSku` is no longer passed at all; `CartContext` already falls back to
         `item.sku`, so the `add_to_cart` payload's `child_sku` is the parent SKU.
 -   [x] Every axis renders in the **server** HTML, not after hydration: `curl` of
         `/example/com_fr/product/VSK12` contains both `role="radiogroup"` blocks with all 11 options.
@@ -89,7 +91,8 @@ typed GraphQL path would not help either: nested source fields go through `Neste
 
 ## SDK contract used
 
--   New `PRODUCT_DETAIL_FIELDS = [...PRODUCT_FIELDS, 'source']` in `src/sdk/fields.ts`, used by
+-   New `productDetailFields(catalogCode)` = `[...productFields(catalogCode), 'source']` in
+    `src/sdk/fields.ts` (first written as the constants `PRODUCT_DETAIL_FIELDS` / `PRODUCT_FIELDS`), used by
     **both** PDP callers — `fetchProductBySku` (`src/sdk/server.ts`) and `ProductPage`'s `useSearch`.
     They must stay identical or the post-hydration refetch drops the `source` the server pass
     rendered the axes from; that is the trap the file header already warned about.

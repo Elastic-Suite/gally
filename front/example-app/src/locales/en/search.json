@@ -1,5 +1,6 @@
 {
   "bar": {
+    "label": "Search the shop",
     "placeholder": "Search products...",
     "cancel": "Cancel"
   },

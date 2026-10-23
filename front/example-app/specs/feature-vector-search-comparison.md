@@ -70,6 +70,12 @@ Verified live against this stack, not assumed:
         A page is 25 rows, so a pager at the foot is a screenful away in whichever column you are
         not reading. `.vector-panel .pagination` flips the shared idiom's `margin-top: 2rem` to a
         bottom margin; the override is scoped so SearchPage's own pagers are untouched.
+-   [x] **The two lists start at the same height.** A panel with a single page keeps an invisible
+        pager in the pager's place (`.vector-pager-spacer`: a `.pagination` row with one disabled
+        button, `visibility: hidden`, `aria-hidden`), so its legend and first row line up with the
+        paginated panel beside it. Same height as the real pager by construction - no measured
+        number to drift. Not focusable, not announced. Loading skeletons and empty states are not
+        aligned.
 -   [x] **Both lists paginate independently, and only when needed.** Measured: - `jewellery`: keyword 0 results → **no pager**; vector 4 pages (85 rows). - `a`: keyword 58 results → 3 pages; page 3 shows ranks **51–58** (8-row remainder),
         BM25 descending 1.42 → 0.94. Vector 4 pages. - `cardigan`: keyword 7 results → **no pager**. - Paging the keyword panel to page 3 leaves the vector panel on page 1 — two effects, not
         one `Promise.all`, so one panel never refetches because the other moved. - A new query resets **both** pages to 1 (verified from kw 3 / vec 3 → 1 / 1). - Ranks are offset by page and continue across pages; scores stay monotonically descending.

@@ -52,7 +52,8 @@ endpoint fails, the one-request-per-render count, and an array-valued `image`.
 
 ## MUST NOT change
 
--   No hardcoded media host anywhere in `src/` or `app/`.
+-   No hardcoded media host anywhere in `src/` or `app/`, except `MEDIA_FALLBACK` in `src/sdk/config.ts`,
+    which is used only when the endpoint is unreachable (see the fallback line above).
 -   `getProductFields` and `getCmsFields` stay pure and take `config` as an argument, so server pages
     and client components call the same function. Do not read context inside them.
 -   `.map(getCmsFields)` must not come back point-free: `map` would pass the array index as `config`.

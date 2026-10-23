@@ -1,7 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // The CRA entry wrapped everything in <React.StrictMode>; keep that behaviour.
-  reactStrictMode: true,
+  // Off in the dev server: strict mode mounts every component twice in development, which doubled
+  // every unseeded request and made the network panel and the tracking hard to read. Its check -
+  // effects that survive a remount - runs in the tests instead, on the parts that need it
+  // (src/test/remount*.test.tsx). See specs/chore-strict-mode-in-tests.md.
+  reactStrictMode: false,
 
   // The single source of the /example prefix. It took over from CRA's `homepage` field and
   // BrowserRouter's `basename`, both since removed — do not reintroduce either.

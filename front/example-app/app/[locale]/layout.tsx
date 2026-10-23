@@ -1,12 +1,11 @@
 import { notFound } from 'next/navigation'
 import Providers from '../providers'
-import {
-  fetchCatalogs,
-  fetchCategoryTree,
-  findLocalizedCatalog,
-} from '../../src/sdk/catalogs'
+import { fetchCatalogs, findLocalizedCatalog } from '../../src/sdk/catalogs'
 import { fetchAxisLabels } from '../../src/sdk/axisLabels'
-import { fetchPublicConfiguration } from '../../src/sdk/server'
+import {
+  cachedCategoryTree,
+  fetchPublicConfiguration,
+} from '../../src/sdk/server'
 import { fetchBundles } from '../../src/sdk/bundles'
 
 // THE point of Phase 2: the catalog is resolved here, on the server, from the URL
@@ -40,7 +39,9 @@ export default async function LocaleLayout({
   // The bundle list does not depend on the catalog. It is kept in memory for the life of the Node
   // process, so after the first request this costs nothing.
   const [categories, axisLabels, config, bundles] = await Promise.all([
-    fetchCategoryTree(resolved.catalog.id, resolved.localizedCatalog.id),
+    // The cached one: the category and product pages ask for the same tree in the same render
+    // (specs/bugfix-category-tree-fetched-twice.md).
+    cachedCategoryTree(resolved.catalog.id, resolved.localizedCatalog.id),
     fetchAxisLabels(resolved.localizedCatalog.code, resolved.catalog.code),
     fetchPublicConfiguration(resolved.localizedCatalog.code),
     fetchBundles(),

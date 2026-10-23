@@ -34,6 +34,24 @@ query { products(localizedCatalog:"com_fr", requestType: product_search, current
 validates — so `product_search` can be forced explicitly without an SDK API that currently exposes a way to
 do that independent of `searchQuery`'s truthiness.
 
+## Reach today (checked 2026-10-23, corrected the same day)
+
+Two callers reach the `'*'` branch:
+
+-   **The guided demo, on every page - stopped the same day** by `bugfix-story-companion-requests.md`
+    (the companion now sends no request). What it did: `src/hooks/useStoryActions.ts:56-59` prefetches products for
+    an `add_to_cart_flow` step, and calls `useSearch` with no query and `pageSize: 0` for every other
+    step. `StoryCompanion` mounts it in `AppShell`, so every page load sends one `products` request
+    with `search: "*"` and `pageSize: 0` (two in development, where strict mode runs effects twice).
+    Nothing reads its result, so nothing is visibly wrong - it is a wasted request. Found with a
+    browser trace of the GraphQL calls. A first check of the callers covered `.tsx` files only and
+    missed this `.ts` hook, which is why this section first said the case was nearly unreachable.
+-   **A catalog with no category** (`uk`: `en_fr`, `en_en`), on its homepage rows and on `/search`
+    without a query. `uk` has no indexed products, so zero products is the right answer there.
+
+The request is pinned as it is by `src/test/search-engine.test.tsx` (`test-plan-search-engine.md`,
+decision 3); a fix updates that test on purpose.
+
 ## Behaviour (testable)
 
 -   [ ] Any `useSearch()` call with no `categoryCode` and no real `searchQuery` currently returns zero products

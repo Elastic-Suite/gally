@@ -1,5 +1,6 @@
 {
   "bar": {
+    "label": "Rechercher dans la boutique",
     "placeholder": "Rechercher des produits...",
     "cancel": "Annuler"
   },

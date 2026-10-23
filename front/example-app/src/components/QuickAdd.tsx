@@ -55,9 +55,8 @@ export default function QuickAdd({
   const axes = getVariantAxes(attributes)
   const justAdded = addedKey === sku
 
-  // Every axis must be answered. This is the whole point of the overlay, so unlike the product
-  // page — which deliberately does not gate, because there the parent SKU goes either way — an
-  // incomplete selection here means there is nothing worth recording yet.
+  // Every axis must be answered, as on the product page (specs/bugfix-pdp-add-without-options.md):
+  // an incomplete selection means there is nothing worth recording yet.
   const chosen = axes.filter((axis) => selected[axis.code])
   const isComplete = chosen.length === axes.length
 

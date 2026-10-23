@@ -11,15 +11,18 @@ placed in one click.
 
 ## Behaviour (testable)
 
--   [ ] The stepper shows three steps: Cart (done), Delivery & payment (active), Confirmation.
+-   [x] The stepper shows three steps: Cart (done), Delivery & payment (active), Confirmation.
 -   [ ] The one form step holds the shipping fields, then the payment fields, then the total and the
         place-order button.
--   [ ] Every field is prefilled: John / Doe / john.doe@example.com / 1 Main Street / Springfield /
+-   [x] Every field is prefilled: John / Doe / john.doe@example.com / 1 Main Street / Springfield /
         12345 / 4242 4242 4242 4242 / 12/30 / 123. The values stay editable (`defaultValue`, not
         `value`).
 -   [ ] The placeholders still show when a field is cleared.
--   [ ] Place order moves to the confirmation step and empties the cart.
+-   [x] Place order moves to the confirmation step and empties the cart.
 -   [ ] The step label is translated in en, fr and de (`cart.checkout.steps.details`).
+
+Ticked lines checked by `src/test/cart-checkout.test.tsx`; the field order, the cleared-field
+placeholder and the fr / de step label are not.
 
 ## SDK contract used
 
@@ -28,7 +31,7 @@ placed in one click.
 ## Tracking (required)
 
 -   `trackOrder` fires once on place order, with the order id, the total and the cart lines - as
-    before.
+    before. Since `bugfix-checkout-total-without-shipping.md` the total includes shipping.
 
 ## UI constraints
 
@@ -38,7 +41,8 @@ placed in one click.
 
 ## MUST NOT change
 
--   The `trackOrder` call and its payload.
+-   The `trackOrder` call and its payload (the total includes shipping, see
+    `bugfix-checkout-total-without-shipping.md`).
 -   `clearCart()` after the order is placed.
 -   The coral place-order button (`specs/feature-add-to-cart-indigo.md`).
 -   The German `MM/JJ` expiry placeholder (`specs/bugfix-german-locale-untranslated.md`).

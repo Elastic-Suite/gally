@@ -1,5 +1,6 @@
 {
   "bar": {
+    "label": "Im Shop suchen",
     "placeholder": "Produkte suchen...",
     "cancel": "Abbrechen"
   },

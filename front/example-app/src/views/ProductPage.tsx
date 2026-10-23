@@ -109,7 +109,7 @@ export default function ProductPage({
     )
   }
 
-  // `source` is the raw _source, requested only on this route (PRODUCT_DETAIL_FIELDS). It is
+  // `source` is the raw _source, requested only on this route (productDetailFields()). It is
   // where `configurable_attributes` and `type_id` live — neither is a typed field on the
   // GraphQL Product type — so without it this page cannot tell a configurable from a simple.
   const source = products[0]?.source as SearchDocument | undefined
@@ -126,6 +126,9 @@ export default function ProductPage({
           ?.label
     )
     .filter(Boolean)
+  // Every axis must be answered before adding, like the quick-add
+  // (specs/bugfix-pdp-add-without-options.md).
+  const isComplete = selectedLabels.length === axes.length
 
   return (
     <div>
@@ -263,7 +266,7 @@ export default function ProductPage({
               className={`btn btn-primary btn-lg ${
                 addedKey === p.sku ? 'added' : ''
               }`}
-              disabled={!p.available}
+              disabled={!p.available || !isComplete}
               onClick={() => {
                 addToCart({
                   sku: p.sku,
@@ -288,13 +291,11 @@ export default function ProductPage({
                   <Icon name="checkmark" />
                   {t('card.added')}
                 </>
+              ) : !isComplete ? (
+                t('card.chooseOptions')
               ) : (
                 t('page.addToCart')
               )}
-            </button>
-            <button className="btn btn-outline btn-lg">
-              <Icon name="heart" />
-              {t('page.wishlist')}
             </button>
           </div>
         </div>

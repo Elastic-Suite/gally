@@ -1989,6 +1989,13 @@ a:hover {
 }
 
 .facet-show-more {
+  /* A <button> (specs/bugfix-facet-show-more-and-slider-names.md): no default box, same text link. */
+  display: block;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  text-align: left;
   font-size: 0.8rem;
   color: var(--indigo-600);
   cursor: pointer;
@@ -1997,6 +2004,10 @@ a:hover {
 }
 .facet-show-more:hover {
   color: var(--coral-500);
+}
+.facet-show-more:focus-visible {
+  outline: 2px solid var(--indigo-600);
+  outline-offset: 2px;
 }
 
 /* ─── Swatch Facet ───────────────────────────────────────── */
@@ -2009,10 +2020,17 @@ a:hover {
 .swatch {
   width: 28px;
   height: 28px;
+  /* A <button> (specs/bugfix-facet-swatches-keyboard.md): no default padding, same circle. */
+  padding: 0;
   border-radius: 50%;
   border: 2px solid var(--gray-200);
   cursor: pointer;
   transition: all 0.2s;
+}
+/* An outline, not the border: the selected state below already uses the indigo border. */
+.swatch:focus-visible {
+  outline: 2px solid var(--indigo-600);
+  outline-offset: 2px;
 }
 .swatch:hover {
   transform: scale(1.15);
@@ -2327,6 +2345,13 @@ a:hover {
   display: flex;
   gap: 1rem;
   margin-top: 1.5rem;
+}
+/* "Choose options" and "Out of stock": grey like the quick-add's disabled button, so a button
+   that cannot be clicked does not look like one that can. (0,3,0) also beats `.btn-primary:hover`;
+   `:not(.added)` keeps the green confirmation winning (specs/bugfix-pdp-add-without-options.md). */
+.product-detail-actions .btn:disabled:not(.added) {
+  background: var(--gray-400);
+  cursor: not-allowed;
 }
 
 /* ─── Cart ───────────────────────────────────────────────── */
@@ -5027,6 +5052,12 @@ a:hover {
    flipped. Scoped to .vector-panel so SearchPage's own pagers are untouched. */
 .vector-panel .pagination {
   margin: 0 0 0.9rem;
+}
+
+/* Holds the pager's place in a single-page panel so both lists start at the same height
+   (specs/feature-vector-search-comparison.md). */
+.vector-pager-spacer {
+  visibility: hidden;
 }
 
 /* Names the score column. It carries the ONLY text that differs between the two

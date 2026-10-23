@@ -1,0 +1,306 @@
+{
+  "sku": "VT10",
+  "name": "Vitalia Top",
+  "image": "/default/v/t/vt10-ly_main.jpg",
+  "description": "<p>The Vitalia Top is all about mixing it up. An interesting mix of cotton &amp; rayon materials makes this top hard to pin down. Wear it casual or dress it up. There are no rules here. </p><p>Features:</p><ul><li>V-neck</li><li>Capped sleeve</li><li>Sits on the hips</li><li>Faux wrap detail</li><li>Dry clean recommended</li></ul>",
+  "url_key": "vitalia-top",
+  "visibility": [
+    {
+      "label": "Catalog, Search",
+      "value": "4"
+    }
+  ],
+  "new": null,
+  "sale": null,
+  "cost": 23.31,
+  "configurable_attributes": "[\"fashion_color\",\"fashion_size\"]",
+  "price": [
+    {
+      "original_price": 98,
+      "is_discounted": false,
+      "price": 98
+    }
+  ],
+  "fashion_material": [
+    {
+      "label": "Cotton",
+      "value": "47"
+    },
+    {
+      "label": "Rayon",
+      "value": "53"
+    }
+  ],
+  "fashion_color": [
+    {
+      "label": "Gold",
+      "value": "5"
+    },
+    {
+      "label": "Peach",
+      "value": "22"
+    },
+    {
+      "label": "Lily",
+      "value": "27"
+    },
+    {
+      "label": "Latte",
+      "value": "28"
+    },
+    {
+      "label": "Khaki",
+      "value": "23"
+    }
+  ],
+  "fashion_size": [
+    {
+      "label": "XL",
+      "value": "33"
+    },
+    {
+      "label": "XS",
+      "value": "37"
+    },
+    {
+      "label": "S",
+      "value": "36"
+    },
+    {
+      "label": "M",
+      "value": "35"
+    },
+    {
+      "label": "L",
+      "value": "34"
+    }
+  ],
+  "source": {
+    "date_of_manufacture": "2023-08-02",
+    "created_at": "2022-09-07 14:57:19",
+    "description": [
+      "<p>The Vitalia Top is all about mixing it up. An interesting mix of cotton &amp; rayon materials makes this top hard to pin down. Wear it casual or dress it up. There are no rules here. </p><p>Features:</p><ul><li>V-neck</li><li>Capped sleeve</li><li>Sits on the hips</li><li>Faux wrap detail</li><li>Dry clean recommended</li></ul>"
+    ],
+    "has_video": [],
+    "indexed_attributes": [
+      "price",
+      "name",
+      "url_key",
+      "description",
+      "fashion_material",
+      "fashion_style",
+      "status",
+      "tax_class_id",
+      "fashion_color",
+      "fashion_size",
+      "has_video"
+    ],
+    "children_ids": [
+      48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63
+    ],
+    "attribute_set_id": "11",
+    "updated_at": "2022-09-07 14:57:19",
+    "price": [
+      {
+        "original_price": 98,
+        "group_id": 0,
+        "price": 98,
+        "is_discounted": false
+      },
+      {
+        "original_price": 98,
+        "group_id": 1,
+        "price": 98,
+        "is_discounted": false
+      },
+      {
+        "original_price": 98,
+        "group_id": 2,
+        "price": 98,
+        "is_discounted": false
+      },
+      {
+        "original_price": 98,
+        "group_id": 3,
+        "price": 98,
+        "is_discounted": false
+      }
+    ],
+    "manufacture_location": "47.2030827,-1.5532463",
+    "id": 1098,
+    "sku": "VT10",
+    "stock": {
+      "qty": 0,
+      "status": false
+    },
+    "children.url_key": ["vitalia-top"],
+    "configurable_attributes": ["fashion_color", "fashion_size"],
+    "image": "/default/v/t/vt10-ly_main.jpg",
+    "cost": 23.31,
+    "visibility": {
+      "label": "Catalog, Search",
+      "value": "4"
+    },
+    "fashion_material": [
+      {
+        "label": "Cotton",
+        "value": "47"
+      },
+      {
+        "label": "Rayon",
+        "value": "53"
+      }
+    ],
+    "type_id": "configurable",
+    "children.description": [
+      "<p>The Vitalia Top is all about mixing it up. An interesting mix of cotton &amp; rayon materials makes this top hard to pin down. Wear it casual or dress it up. There are no rules here. </p><p>Features:</p><ul><li>V-neck</li><li>Capped sleeve</li><li>Sits on the hips</li><li>Faux wrap detail</li><li>Dry clean recommended</li></ul>"
+    ],
+    "fashion_color": [
+      {
+        "label": "Gold",
+        "value": 5
+      },
+      {
+        "label": "Peach",
+        "value": 22
+      },
+      {
+        "label": "Lily",
+        "value": 27
+      },
+      {
+        "label": "Latte",
+        "value": 28
+      },
+      {
+        "label": "Khaki",
+        "value": 23
+      }
+    ],
+    "fashion_size": [
+      {
+        "label": "XL",
+        "value": 33
+      },
+      {
+        "label": "XS",
+        "value": 37
+      },
+      {
+        "label": "S",
+        "value": 36
+      },
+      {
+        "label": "M",
+        "value": 35
+      },
+      {
+        "label": "L",
+        "value": 34
+      }
+    ],
+    "tax_class_id": [
+      {
+        "label": "Taxable Goods",
+        "value": 2
+      }
+    ],
+    "has_options": false,
+    "entity_id": "1098",
+    "url_key": ["vitalia-top"],
+    "required_options": false,
+    "children.indexed_attributes": [
+      "name",
+      "url_key",
+      "description",
+      "fashion_material",
+      "fashion_style",
+      "status",
+      "tax_class_id",
+      "fashion_color",
+      "fashion_size",
+      "has_video"
+    ],
+    "fashion_style": [
+      {
+        "label": "Short Sleeve",
+        "value": "62"
+      },
+      {
+        "label": "V-neck",
+        "value": "75"
+      }
+    ],
+    "name": ["Vitalia Top"],
+    "category": [
+      {
+        "is_virtual": "false",
+        "category_uid": "Mg==",
+        "id": "cat_2"
+      },
+      {
+        "is_virtual": "false",
+        "category_uid": "OA==",
+        "name": "Tops",
+        "id": "cat_8"
+      },
+      {
+        "is_virtual": "false",
+        "category_uid": "OQ==",
+        "name": "Blouses & Shirts",
+        "id": "cat_9",
+        "is_parent": true
+      },
+      {
+        "is_virtual": "false",
+        "category_uid": "MTU=",
+        "name": "Shop The Look",
+        "id": "cat_15"
+      },
+      {
+        "is_virtual": "false",
+        "category_uid": "MTc=",
+        "name": "Outside the Lines",
+        "id": "cat_17",
+        "is_parent": true
+      }
+    ],
+    "children.sku": [
+      "VT10-PE-XS",
+      "VT10-PE-S",
+      "VT10-PE-M",
+      "VT10-PE-L",
+      "VT10-LY-XS",
+      "VT10-LY-S",
+      "VT10-LY-M",
+      "VT10-LY-L",
+      "VT10-LA-XS",
+      "VT10-LA-S",
+      "VT10-LA-M",
+      "VT10-LA-L",
+      "VT10-KH-XS",
+      "VT10-KH-S",
+      "VT10-KH-M",
+      "VT10-KH-L"
+    ],
+    "children_attributes": [
+      "indexed_attributes",
+      "url_key",
+      "description",
+      "fashion_material",
+      "fashion_style",
+      "fashion_color",
+      "fashion_size",
+      "has_video"
+    ],
+    "status": [
+      {
+        "label": "Enabled",
+        "value": 1
+      }
+    ]
+  },
+  "stock": {
+    "status": false
+  }
+}

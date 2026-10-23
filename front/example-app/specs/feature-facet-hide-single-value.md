@@ -18,8 +18,9 @@
         `fashion_style__value`, `date_of_manufacture` (3+ options each) are unaffected.
 -   [x] A facet that's hidden this way but still has an _active_ filter on it (edge case: filtering narrowed
         it down to 1 remaining option after the user already selected a value) is still removable via the
-        active-filter chip row (`ActiveFilterChips` reads `activeFilters` directly, independent of
-        `visibleAggregations`'s filtering) — hiding the facet group itself doesn't strand the user.
+        active-filter chip row (`ActiveFilterChips` reads `activeFilters` directly) — hiding the facet group
+        itself doesn't strand the user. Its labels come from the full `aggregations` plus labels remembered
+        from earlier responses, never from `visibleAggregations` (see `bugfix-facet-chip-labels-lost.md`).
 
 ## SDK contract used
 

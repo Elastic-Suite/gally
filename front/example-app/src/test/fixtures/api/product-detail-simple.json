@@ -1,0 +1,178 @@
+{
+  "sku": "LLV-LIV-ALB-001",
+  "name": "Snow White - illustrated picture book",
+  "image": "/papershop/l/l/llv-liv-alb-001.jpg",
+  "description": "A large-format picture book after Brothers Grimm, text of 1812. 32 board pages, hardcover. A full-page illustration on every spread.",
+  "url_key": "snow-white-illustrated-picture-book",
+  "visibility": [
+    {
+      "label": "Catalog, Search",
+      "value": "4"
+    }
+  ],
+  "new": false,
+  "sale": true,
+  "cost": 7.81,
+  "configurable_attributes": null,
+  "price": [
+    {
+      "original_price": 17.38,
+      "is_discounted": true,
+      "price": 13.9
+    }
+  ],
+  "llv_is_eco": null,
+  "llv_color": null,
+  "llv_format": [
+    {
+      "label": "15 x 15 cm",
+      "value": "carre-15"
+    }
+  ],
+  "llv_material": null,
+  "source": {
+    "short_description": [
+      "A large-format picture book after Brothers Grimm, text of 1812."
+    ],
+    "created_at": "2026-02-26 14:12:14",
+    "description": [
+      "A large-format picture book after Brothers Grimm, text of 1812. 32 board pages, hardcover. A full-page illustration on every spread."
+    ],
+    "llv_brand": [
+      {
+        "label": "Lièvre & Cie",
+        "value": "lievre-et-cie"
+      }
+    ],
+    "llv_page_count": 32,
+    "indexed_attributes": [
+      "cost",
+      "created_at",
+      "description",
+      "image",
+      "llv_author",
+      "llv_binding",
+      "llv_brand",
+      "llv_format",
+      "llv_language",
+      "llv_origin",
+      "llv_page_count",
+      "llv_publication_year",
+      "name",
+      "new",
+      "price",
+      "sale",
+      "short_description",
+      "type_id",
+      "url_key",
+      "visibility",
+      "weight"
+    ],
+    "llv_format": [
+      {
+        "label": "15 x 15 cm",
+        "value": "carre-15"
+      }
+    ],
+    "price": [
+      {
+        "original_price": 17.38,
+        "group_id": 0,
+        "price": 13.9,
+        "is_discounted": true
+      },
+      {
+        "original_price": 17.38,
+        "group_id": 1,
+        "price": 13.9,
+        "is_discounted": true
+      },
+      {
+        "original_price": 17.38,
+        "group_id": 2,
+        "price": 13.9,
+        "is_discounted": true
+      },
+      {
+        "original_price": 17.38,
+        "group_id": 3,
+        "price": 13.9,
+        "is_discounted": true
+      }
+    ],
+    "id": 215,
+    "sku": "LLV-LIV-ALB-001",
+    "stock": {
+      "qty": 753,
+      "status": true
+    },
+    "new": false,
+    "image": "/papershop/l/l/llv-liv-alb-001.jpg",
+    "llv_binding": [
+      {
+        "label": "Hardcover",
+        "value": "relie"
+      }
+    ],
+    "cost": 7.81,
+    "visibility": {
+      "label": "Catalog, Search",
+      "value": "4"
+    },
+    "type_id": "simple",
+    "llv_publication_year": 1812,
+    "weight": 0.3,
+    "url_key": ["snow-white-illustrated-picture-book"],
+    "sale": true,
+    "llv_author": [
+      {
+        "label": "Brothers Grimm",
+        "value": "grimm"
+      }
+    ],
+    "name": ["Snow White - illustrated picture book"],
+    "llv_origin": [
+      {
+        "label": "France",
+        "value": "france"
+      }
+    ],
+    "category": [
+      {
+        "is_virtual": "false",
+        "category_uid": "MQ==",
+        "id": "cat_llv_1"
+      },
+      {
+        "is_virtual": "false",
+        "category_uid": "MjA=",
+        "name": "Books",
+        "id": "cat_llv_20",
+        "is_parent": true
+      },
+      {
+        "is_virtual": "false",
+        "category_uid": "Mjg=",
+        "name": "Children's books",
+        "id": "cat_llv_28",
+        "is_parent": true
+      },
+      {
+        "is_virtual": "false",
+        "category_uid": "Mjk=",
+        "name": "Picture books",
+        "id": "cat_llv_29",
+        "is_parent": false
+      }
+    ],
+    "llv_language": [
+      {
+        "label": "English",
+        "value": "anglais"
+      }
+    ]
+  },
+  "stock": {
+    "status": true
+  }
+}

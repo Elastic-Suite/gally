@@ -9,6 +9,8 @@ import { useGallyConfig } from '../contexts/ConfigContext'
 import { useAutocomplete } from '../hooks/useSearch'
 import { cmsPageUrl, useCmsAutocomplete } from '../hooks/useCms'
 import SearchOverlay, {
+  ACP_LISTBOX_IDS,
+  acpOptionId,
   attributeFilterUrl,
   getAutocompleteAttributes,
   getCategoryMatches,
@@ -234,6 +236,9 @@ export default function SearchBar({
   const isOverlayOpen = focused
   const highlightedKey =
     highlightedIndex >= 0 ? flatItems[highlightedIndex]?.key ?? null : null
+  // The columns, and so the listboxes, exist only from 2 characters; below that the panel shows the
+  // prompt (SearchOverlay).
+  const listShown = isOverlayOpen && query.trim().length >= 2
 
   return (
     <form
@@ -250,6 +255,16 @@ export default function SearchBar({
         type="text"
         className="search-bar"
         placeholder={t('bar.placeholder')}
+        // The combobox pattern (specs/bugfix-autocomplete-screen-reader.md): the columns are listboxes,
+        // the keyboard highlight is announced through aria-activedescendant.
+        role="combobox"
+        aria-label={t('bar.label')}
+        aria-autocomplete="list"
+        aria-expanded={listShown}
+        aria-controls={listShown ? ACP_LISTBOX_IDS.join(' ') : undefined}
+        aria-activedescendant={
+          listShown && highlightedKey ? acpOptionId(highlightedKey) : undefined
+        }
         value={query}
         onChange={handleInputChange}
         onFocus={() => setFocused(true)}

@@ -211,7 +211,10 @@ present in all 85 Venia documents. Labels added for `com_en` and `com_fr`.
     on the same line whichever surface added it.
 -   Availability is still `getProductFields().available`, never `stock.status` directly.
 
-## Known divergence, open for a decision
+## Known divergence - resolved 2026-10-23
+
+Both now gate on a complete selection: `bugfix-pdp-add-without-options.md` brought the product page
+in line with the overlay. The original note:
 
 **The overlay gates on a complete selection; the product page does not.**
 `feature-configurable-option-selection.md` states "add-to-cart must not be gated on a selection",

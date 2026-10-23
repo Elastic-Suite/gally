@@ -20,7 +20,7 @@ export const ONE_WAY_SORT_FIELDS = ['_score', 'category__position']
 // {Category,Price,Stock}DefaultSortOrderProvider.php:48). The storefront translates them itself
 // until the API does. Keep this list to those labels only: any other field's label is the
 // merchant's, and is already localized. Recorded in missing-features.md.
-const API_FIXED_LABEL_CODES = [
+export const API_FIXED_LABEL_CODES = [
   '_score',
   'category__position',
   'price__price',
@@ -90,6 +90,15 @@ export function useSortOptions(context: SortContext): SortOption[] {
     }
   }, [localizedCatalog, catalog, context])
 
+  return localizeSortOptions(options, t)
+}
+
+// Relevance first, and the app's own label for the codes the API leaves in English. A plain
+// function so it can be tested without rendering the hook (specs/test-plan-translations.md).
+export function localizeSortOptions(
+  options: SortOption[],
+  t: (key: string) => string
+): SortOption[] {
   // Relevance first: the API appends it last, but on search it is the preselected default.
   const ordered = [
     ...options.filter((option) => option.code === '_score'),

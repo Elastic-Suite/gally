@@ -10,6 +10,8 @@
   "swatchTitle": "{{label}} ({{count}})",
   "min": "Min: {{value}}",
   "max": "Max: {{value}}",
+  "rangeMin": "Minimum {{label}}",
+  "rangeMax": "Maximum {{label}}",
   "chip": {
     "default": "{{label}}: {{value}}",
     "range": "{{label}}: {{gte}}–{{lte}}"

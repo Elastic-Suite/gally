@@ -77,6 +77,22 @@ export default function Facets({
     (v) => v !== undefined
   )
 
+  // Chip labels outlive the aggregation they came from: a filter that narrows a facet to
+  // one option, or that the API answers without that aggregation at all, would otherwise
+  // turn its chip into the raw field code and value. Updated during render, not in an
+  // effect, so the chip never shows the raw code for a frame.
+  // Seeded with the first aggregations: a page that mounts with the server's results would otherwise
+  // never remember them (specs/bugfix-facet-chip-labels-lost.md, follow-up).
+  const [knownLabels, setKnownLabels] = useState<KnownLabels>(() =>
+    mergeLabels({}, aggregations)
+  )
+  const [labelsSeenFor, setLabelsSeenFor] = useState(aggregations)
+  if (labelsSeenFor !== aggregations) {
+    setLabelsSeenFor(aggregations)
+    setKnownLabels((prev) => mergeLabels(prev, aggregations))
+  }
+  const chipLabels = mergeLabels(knownLabels, aggregations)
+
   return (
     // The <aside> and its heading are rendered unconditionally: the sidebar's shell —
     // its box, shadow, padding and sticky offset — does not depend on the results, so
@@ -104,7 +120,7 @@ export default function Facets({
       ) : (
         <>
           <ActiveFilterChips
-            aggregations={visibleAggregations}
+            labels={chipLabels}
             activeFilters={activeFilters}
             onFilterChange={onFilterChange}
           />
@@ -138,6 +154,29 @@ export default function Facets({
   )
 }
 
+// Facet label and option labels per field, as last seen in any response.
+type KnownLabels = Record<
+  string,
+  { label: string; options: Record<string, string> }
+>
+
+// Labels from `aggregations` win; fields and options it lacks keep their earlier label.
+function mergeLabels(
+  known: KnownLabels,
+  aggregations: Aggregation[]
+): KnownLabels {
+  const merged = { ...known }
+  for (const agg of aggregations) {
+    const options = { ...merged[agg.field]?.options }
+    for (const opt of agg.options ?? []) options[opt.value] = opt.label
+    merged[agg.field] = {
+      label: agg.label || merged[agg.field]?.label,
+      options,
+    }
+  }
+  return merged
+}
+
 interface FilterChip {
   key: string
   text: string
@@ -145,11 +184,11 @@ interface FilterChip {
 }
 
 function ActiveFilterChips({
-  aggregations,
+  labels,
   activeFilters,
   onFilterChange,
 }: {
-  aggregations: Aggregation[]
+  labels: KnownLabels
   activeFilters: ActiveFilters
   onFilterChange: (field: string, value: FilterValue | undefined) => void
 }) {
@@ -158,17 +197,16 @@ function ActiveFilterChips({
 
   for (const [field, value] of Object.entries(activeFilters)) {
     if (value === undefined) continue
-    const agg = aggregations.find((a) => a.field === field)
-    const fieldLabel = agg?.label || field
+    const known = labels[field]
+    const fieldLabel = known?.label || field
 
     if (Array.isArray(value)) {
       value.forEach((v: string) => {
-        const opt = agg?.options?.find((o) => o.value === v)
         chips.push({
           key: `${field}:${v}`,
           text: t('chip.default', {
             label: fieldLabel,
-            value: opt?.label || v,
+            value: known?.options[v] || v,
           }),
           onRemove: () => {
             const next = value.filter((x: string) => x !== v)
@@ -193,12 +231,11 @@ function ActiveFilterChips({
         onRemove: () => onFilterChange(field, undefined),
       })
     } else {
-      const opt = agg?.options?.find((o) => o.value === value)
       chips.push({
         key: field,
         text: t('chip.default', {
           label: fieldLabel,
-          value: opt?.label || value,
+          value: (typeof value === 'string' && known?.options[value]) || value,
         }),
         onRemove: () => onFilterChange(field, undefined),
       })
@@ -342,8 +379,13 @@ function FacetGroup({
             const color = guessColor(opt.label)
             const isActive = Array.isArray(active) && active.includes(opt.value)
             return (
-              <div
+              // A real button, so the keyboard reaches it and a screen reader names it
+              // (specs/bugfix-facet-swatches-keyboard.md).
+              <button
+                type="button"
                 key={opt.value}
+                aria-pressed={isActive}
+                aria-label={opt.label}
                 className={`swatch ${isActive ? 'active' : ''}`}
                 style={{
                   background: color,
@@ -401,7 +443,13 @@ function FacetGroup({
         )
       })}
       {(hasMoreLocally || canFetchFromServer) && !expanded && (
-        <div className="facet-show-more" onClick={handleShowMore}>
+        // A real button: reachable with the keyboard
+        // (specs/bugfix-facet-show-more-and-slider-names.md).
+        <button
+          type="button"
+          className="facet-show-more"
+          onClick={handleShowMore}
+        >
           {loadingMore ? (
             t('loading')
           ) : (
@@ -412,13 +460,17 @@ function FacetGroup({
                 : t('showMoreCount', { count: filteredOptions.length - 5 })}
             </>
           )}
-        </div>
+        </button>
       )}
       {expanded && filteredOptions.length > 5 && (
-        <div className="facet-show-more" onClick={() => setExpanded(false)}>
+        <button
+          type="button"
+          className="facet-show-more"
+          onClick={() => setExpanded(false)}
+        >
           <Icon name="remove" />
           {t('showLess')}
-        </div>
+        </button>
       )}
     </div>
   )
@@ -513,6 +565,7 @@ function SliderFacet({
           />
           <input
             type="range"
+            aria-label={t('rangeMin', { label: aggregation.label })}
             min={min}
             max={max}
             value={localMin}
@@ -524,6 +577,7 @@ function SliderFacet({
           />
           <input
             type="range"
+            aria-label={t('rangeMax', { label: aggregation.label })}
             min={min}
             max={max}
             value={localMax}

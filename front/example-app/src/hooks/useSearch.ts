@@ -20,7 +20,7 @@ interface SearchOptions {
   currentPage?: number
   isAutocomplete?: boolean
   // Overrides the field selection for callers that need more than the grid does — the PDP
-  // passes PRODUCT_DETAIL_FIELDS. Whoever overrides it MUST match the selection its server
+  // passes productDetailFields(). Whoever overrides it MUST match the selection its server
   // pre-fetch used, or the post-hydration refetch changes the page under the user; see
   // ../sdk/fields.ts.
   selectedFields?: string[]
@@ -31,6 +31,8 @@ interface SearchOptions {
   // to itself with a different `?q=`) is adopted the same way. Any option change with no
   // matching seed still refetches normally.
   initialData?: ServerSearchResult
+  /** Send no request: not loading, the previous result kept (specs/bugfix-story-companion-requests.md). */
+  skip?: boolean
 }
 
 interface SearchResult {
@@ -43,6 +45,15 @@ interface SearchResult {
   appliedSort?: AppliedSort
   loading: boolean
   error: string | null
+  /** The searchQuery this result was produced for; null before the first result. Lets a caller
+   * tell a settled result from one left over by the previous query (useTrackSearch). */
+  resultQuery: string | null
+  /** The categoryCode this result was produced for; null before the first result or without one. */
+  resultCategory: string | null
+  /** The key of the request this result answers (query, category, page, sort, page size, facets);
+   * null before the first result. `settled` compares it with the current options
+   * (specs/bugfix-tracking-stale-count-after-facet.md). */
+  resultKey: string | null
 }
 
 // The option subset that determines the result set. Must cover every option the fetch
@@ -69,6 +80,9 @@ export function useSearch(options: SearchOptions) {
           // Already settled — the server did this request.
           loading: false,
           error: null,
+          resultQuery: options.searchQuery ?? '',
+          resultCategory: options.categoryCode ?? null,
+          resultKey: searchKey(options),
         }
       : {
           products: [],
@@ -80,9 +94,12 @@ export function useSearch(options: SearchOptions) {
           // catalog context resolves `doSearch` early-returns without touching this. Starting
           // at `false` advertised "settled, zero results" before anything had been requested,
           // which made empty states (the facet sidebar's, the results list's) flash first.
-          // Matches useCms, which already starts loading.
-          loading: true,
+          // Matches useCms, which already starts loading. A skipped search never loads.
+          loading: !options.skip,
           error: null,
+          resultQuery: null,
+          resultCategory: null,
+          resultKey: null,
         }
   )
 
@@ -98,10 +115,18 @@ export function useSearch(options: SearchOptions) {
 
   const optionsRef = useRef(options)
   optionsRef.current = options
+  // Numbers the requests: only the latest one may write the result, whatever order the answers
+  // arrive in (specs/bugfix-search-out-of-order-responses.md).
+  const latestRequest = useRef(0)
 
   const doSearch = useCallback(async () => {
     if (!selectedLocalizedCatalog) return
+    const requestId = ++latestRequest.current
     setResult((prev) => ({ ...prev, loading: true, error: null }))
+    // Captured now: by the time the response lands the options may already have moved on.
+    const requestedQuery = optionsRef.current.searchQuery ?? ''
+    const requestedCategory = optionsRef.current.categoryCode ?? null
+    const requestedKey = searchKey(optionsRef.current)
     try {
       const sm = getSearchManager()
       const hasCategory = Boolean(optionsRef.current.categoryCode)
@@ -128,6 +153,8 @@ export function useSearch(options: SearchOptions) {
         sortDirection: optionsRef.current.sortDirection,
       })
 
+      // Stale when a newer request (or a seed, a skip, a clear) came after it: drop it.
+      if (requestId !== latestRequest.current) return
       setResult({
         products: response.getCollection(),
         total: response.getTotalCount(),
@@ -141,17 +168,30 @@ export function useSearch(options: SearchOptions) {
         },
         loading: false,
         error: null,
+        resultQuery: requestedQuery,
+        resultCategory: requestedCategory,
+        resultKey: requestedKey,
       })
     } catch (e: unknown) {
+      if (requestId !== latestRequest.current) return
       setResult((prev) => ({
         ...prev,
         loading: false,
         error: (e as Error).message || 'Search failed',
+        resultQuery: requestedQuery,
+        resultCategory: requestedCategory,
+        resultKey: requestedKey,
       }))
     }
   }, [selectedLocalizedCatalog, selectedCatalog])
 
   useEffect(() => {
+    if (optionsRef.current.skip) {
+      // A request still in flight is dropped too.
+      latestRequest.current++
+      setResult((prev) => (prev.loading ? { ...prev, loading: false } : prev))
+      return
+    }
     const key = searchKey(optionsRef.current)
     // Already showing exactly this query's server-fetched data.
     if (serverFetchedKey.current === key) return
@@ -163,12 +203,17 @@ export function useSearch(options: SearchOptions) {
     // The caller only passes initialData while the view matches it (isServerFetchedView),
     // so if it is here it belongs to these options.
     if (optionsRef.current.initialData) {
+      // The seed is the answer for these options: a request still in flight is now stale.
+      latestRequest.current++
       serverFetchedKey.current = key
       setResult({
         ...optionsRef.current.initialData,
         currentPage: optionsRef.current.currentPage ?? 1,
         loading: false,
         error: null,
+        resultQuery: optionsRef.current.searchQuery ?? '',
+        resultCategory: optionsRef.current.categoryCode ?? null,
+        resultKey: key,
       })
       return
     }
@@ -182,6 +227,7 @@ export function useSearch(options: SearchOptions) {
     options.sortField,
     options.sortDirection,
     options.pageSize,
+    options.skip,
     // eslint-disable-next-line react-hooks/exhaustive-deps
     JSON.stringify(options.filters),
   ])
@@ -223,7 +269,15 @@ export function useSearch(options: SearchOptions) {
     [selectedLocalizedCatalog]
   )
 
-  return { ...result, refetch: doSearch, viewMoreOptions }
+  // The result on screen answers exactly the current options: not loading, no error, same key.
+  // "Same query" or "same category" is not enough - after a facet, sort or page change the result is
+  // still the old options' for one render (specs/bugfix-tracking-stale-count-after-facet.md).
+  const settled =
+    !result.loading &&
+    result.error === null &&
+    result.resultKey === searchKey(options)
+
+  return { ...result, settled, refetch: doSearch, viewMoreOptions }
 }
 
 export function useAutocomplete() {
@@ -239,10 +293,14 @@ export function useAutocomplete() {
   const debounceRef = useRef<ReturnType<typeof setTimeout> | undefined>(
     undefined
   )
+  // The debounce only cancels a request not yet sent; this drops answers to requests that were
+  // superseded after they left (specs/bugfix-search-out-of-order-responses.md).
+  const latestRequest = useRef(0)
 
   const search = useCallback(
     (query: string) => {
       if (debounceRef.current) clearTimeout(debounceRef.current)
+      const requestId = ++latestRequest.current
 
       if (!query || query.length < 2 || !selectedLocalizedCatalog) {
         setResults([])
@@ -250,6 +308,7 @@ export function useAutocomplete() {
         // Deleting back down to one character must drop the terms too — otherwise the
         // previous query's suggestions stay on screen with nothing they belong to.
         setTermSuggestions([])
+        setLoading(false)
         return
       }
 
@@ -267,15 +326,19 @@ export function useAutocomplete() {
             selectedFields: productFields(selectedCatalog?.code ?? ''),
             filters: [],
           })
+          // Stale when a newer request (or a seed, a skip, a clear) came after it: drop it.
+          if (requestId !== latestRequest.current) return
           setResults(response.getCollection())
           setAggregations(response.getAggregations())
           setTermSuggestions(response.getTermSuggestions())
         } catch {
+          if (requestId !== latestRequest.current) return
           setResults([])
           setAggregations([])
           setTermSuggestions([])
         } finally {
-          setLoading(false)
+          // Only the latest request ends the loading state; a newer one is still running.
+          if (requestId === latestRequest.current) setLoading(false)
         }
       }, 300)
     },
@@ -283,6 +346,8 @@ export function useAutocomplete() {
   )
 
   const clear = useCallback(() => {
+    latestRequest.current++
+    setLoading(false)
     setResults([])
     setAggregations([])
     setTermSuggestions([])

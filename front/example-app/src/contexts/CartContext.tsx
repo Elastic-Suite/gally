@@ -6,7 +6,7 @@ import {
   useEffect,
   ReactNode,
 } from 'react'
-import { getTracker, TrackingEventType } from '../sdk'
+import { useTracking } from '../hooks/useTracking'
 import { useCatalog } from './CatalogContext'
 
 export interface CartItem {
@@ -61,7 +61,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([])
   // The catalog whose saved cart is in `items`. Null until the first read.
   const [loadedFor, setLoadedFor] = useState<string | null>(null)
-  const { selectedCatalog, selectedLocalizedCatalog } = useCatalog()
+  const { selectedCatalog } = useCatalog()
+  const { trackAddToCart } = useTracking()
   const catalogCode = selectedCatalog?.code ?? null
   const ready = loadedFor !== null && loadedFor === catalogCode
 
@@ -103,22 +104,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
       })
 
       // Track add to cart
-      try {
-        getTracker().push({
-          eventType: TrackingEventType.ADD_TO_CART,
-          metadataCode: 'product',
-          localizedCatalogCode: selectedLocalizedCatalog?.code || '',
-          entityCode: item.sku,
-          payload: JSON.stringify({
-            cart: { qty },
-            child_sku: item.childSku || item.sku,
-          }),
-        })
-      } catch (e) {
-        console.warn('[Tracker] add_to_cart error', e)
-      }
+      // Through useTracking, which sends the event and writes it to the on-screen event log
+      // (specs/bugfix-add-to-cart-event-log.md). Still the only place ADD_TO_CART fires.
+      trackAddToCart(item.sku, qty, item.childSku)
     },
-    [selectedLocalizedCatalog]
+    [trackAddToCart]
   )
 
   // A line is identified by sku AND variant — the same pair addToCart dedupes on above. Keying

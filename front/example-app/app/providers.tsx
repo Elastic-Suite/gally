@@ -3,6 +3,7 @@
 import React from 'react'
 import { CatalogProvider } from '../src/contexts/CatalogContext'
 import { CartProvider } from '../src/contexts/CartContext'
+import { EventLogProvider } from '../src/contexts/EventLogContext'
 import { DemoProvider } from '../src/contexts/DemoContext'
 import { SearchBarProvider } from '../src/contexts/SearchBarContext'
 import { LocaleProvider } from '../src/contexts/LocaleContext'
@@ -61,13 +62,18 @@ export default function Providers({
           >
             <AxisLabelProvider labels={axisLabels}>
               <I18nBridge>
-                <CartProvider>
-                  <DemoProvider>
-                    <SearchBarProvider>
-                      <AppShell>{children}</AppShell>
-                    </SearchBarProvider>
-                  </DemoProvider>
-                </CartProvider>
+                {/* Above CartProvider: addToCart writes its ADD_TO_CART entry to the event log
+                    (specs/bugfix-add-to-cart-event-log.md). Mounted once - AppShell must not
+                    mount a second one, or the panel would read an empty log of its own. */}
+                <EventLogProvider>
+                  <CartProvider>
+                    <DemoProvider>
+                      <SearchBarProvider>
+                        <AppShell>{children}</AppShell>
+                      </SearchBarProvider>
+                    </DemoProvider>
+                  </CartProvider>
+                </EventLogProvider>
               </I18nBridge>
             </AxisLabelProvider>
           </CatalogProvider>
