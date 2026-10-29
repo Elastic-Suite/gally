@@ -48,7 +48,15 @@ Les triplets sont stockés dans `gally_configuration`. Ils sont communs à tous 
 
 Paramètre global : `maxAge` = 90 jours.
 
-Ces valeurs sont des points de départ, à calibrer sur un vrai catalogue.
+Ces valeurs sont des points de départ, à calibrer sur un vrai catalogue. Elles s'écartent des valeurs par défaut d'ElasticSuite :
+
+| Paramètre | ElasticSuite | Gally (départ) |
+|---|---|---|
+| `size` | 5 (non passé par `CoOccurrenceQuery`) | 10, pour garder des candidats après le filtre `targetRule` |
+| `min_doc_count` | un seul réglage global, 5 par défaut | un par triplet : 2 / 3 / 5 |
+| `maxAge` | désactivé par défaut (tout l'historique) ; 100 jours si `limited_events_lookup` est activé | 90 jours, toujours actif |
+
+**À revoir en fin de développement** : repasser sur ces valeurs (voir la section 11).
 
 ### 4.2 Calcul (logique reprise d'ElasticSuite, `CoOccurrence.php`)
 
@@ -57,7 +65,7 @@ On lance une requête sur l'index des sessions :
 - filtre : sessions contenant la SKU source dans le champ de l'événement source ;
 - filtre : `end_time > maintenant - maxAge` ;
 - agrégation : `significant_terms` sur le champ de l'événement cible, avec `size` et `min_doc_count` propres au triplet ;
-- `background_filter` : le même filtre `maxAge`. Sans lui, l'arrière-plan est l'index entier, et on comparerait 90 jours de premier plan à tout l'historique.
+- pas de `background_filter`, comme dans ElasticSuite : l'arrière-plan est l'index des sessions entier, sans filtre d'âge. Un `background_filter` sur `maxAge` serait plus juste (on compare aujourd'hui 90 jours de premier plan à tout l'historique), mais ce n'est pas le comportement d'ElasticSuite ; il pourra être ajouté si les résultats le demandent.
 
 La SKU source est ensuite exclue du résultat.
 
@@ -69,15 +77,17 @@ Un `terms` renvoie les produits les plus fréquents dans les sessions de la sour
 
 Exemple : 1 000 sessions, `VELO-01` commandé dans 20 d'entre elles.
 
-| Produit | Premier plan (20 sessions avec VELO-01) | Arrière-plan (1 000 sessions) | Score JLH |
+| Produit | Premier plan (20 sessions avec VELO-01) | Arrière-plan (1 000 sessions) | Sur-représentation (premier plan / arrière-plan) |
 |---|---|---|---|
-| VELO-01 | 20/20 = 100 % | 20/1000 = 2 % | 49,0 (source, exclue) |
-| ANTIVOL | 5/20 = 25 % | 12/1000 = 1,2 % | 4,96 |
-| CASQUE | 8/20 = 40 % | 30/1000 = 3 % | 4,93 |
-| SAC-CABAS | 15/20 = 75 % | 700/1000 = 70 % | 0,05 |
-| CHAUSSETTES | 2/20 = 10 % | 100/1000 = 10 % | 0 |
+| VELO-01 | 20/20 = 100 % | 20/1000 = 2 % | × 50 (source, exclue) |
+| ANTIVOL | 5/20 = 25 % | 12/1000 = 1,2 % | × 20,8 |
+| CASQUE | 8/20 = 40 % | 30/1000 = 3 % | × 13,3 |
+| SAC-CABAS | 15/20 = 75 % | 700/1000 = 70 % | × 1,07 |
+| CHAUSSETTES | 2/20 = 10 % | 100/1000 = 10 % | × 1 (aucune) |
 
-Score JLH (par défaut) = (premier plan − arrière-plan) × (premier plan / arrière-plan). Un `terms` aurait classé SAC-CABAS en premier, alors qu'il est présent dans 70 % de toutes les commandes.
+Un `terms` aurait classé SAC-CABAS en premier, alors qu'il est présent dans 70 % de toutes les commandes : `significant_terms` le relègue en fin de liste.
+
+**Algorithme de score : GND**, comme ElasticSuite. C'est la valeur par défaut du `SignificantTerm` d'ElasticSuite, que `CoOccurrence.php` ne change pas, et du `SignificantTerms` porté dans Gally. GND (Google Normalized Distance) mesure à quel point un produit et la source apparaissent ensemble plutôt que séparément. Ses valeurs diffèrent du rapport ci-dessus, mais le principe est le même : un produit présent partout (SAC-CABAS) n'est pas significatif.
 
 #### Requête (les trois triplets en un seul aller-retour)
 
@@ -92,22 +102,19 @@ POST <tracking_session>/_search
     "order": {
       "filter": { "term": { "product_order": "VELO-01" } },
       "aggs": { "co": { "significant_terms": {
-        "field": "product_order", "size": 10, "min_doc_count": 2,
-        "background_filter": { "range": { "end_time": { "gte": "now-90d" } } }
+        "field": "product_order", "size": 10, "min_doc_count": 2, "gnd": {}
       } } }
     },
     "cart": {
       "filter": { "term": { "product_cart": "VELO-01" } },
       "aggs": { "co": { "significant_terms": {
-        "field": "product_cart", "size": 10, "min_doc_count": 3,
-        "background_filter": { "range": { "end_time": { "gte": "now-90d" } } }
+        "field": "product_cart", "size": 10, "min_doc_count": 3, "gnd": {}
       } } }
     },
     "view": {
       "filter": { "term": { "product_view": "VELO-01" } },
       "aggs": { "co": { "significant_terms": {
-        "field": "product_view", "size": 10, "min_doc_count": 5,
-        "background_filter": { "range": { "end_time": { "gte": "now-90d" } } }
+        "field": "product_view", "size": 10, "min_doc_count": 5, "gnd": {}
       } } }
     }
   }
@@ -261,13 +268,14 @@ Validé le 2026-10-29 par un vrai transform sur des index jetables (OpenSearch 2
 ## 10. Performance
 
 - Les agrégations des trois triplets sont regroupées en une requête multi-agrégations, ou en `_msearch`.
-- Les co-occurrences sont mises en cache (composant `Cache` de Gally).
+- Les co-occurrences sont mises en cache en mémoire le temps de la requête HTTP, comme dans ElasticSuite. Pas de cache persistant (composant `Cache` de Gally) pour l'instant : les recommandations restent à jour avec les sessions, sans invalidation à gérer. À ajouter seulement si les performances le demandent.
 - `maxAge` limite le volume de sessions parcourues.
 
 ## 11. Points restant à préciser (non bloquants)
 
 - Où vit la liste d'exclusion des catégories (globale, par localized catalog ou par recommender).
 - L'acceptation d'un pourcentage négatif sur `higher than` / `lower than`.
+- **TODO fin de développement** : repasser sur les valeurs de co-occurrence (`size`, `min_doc_count`, `maxAge`, boosts) et comparer aux valeurs d'ElasticSuite (section 4.1).
 
 ## 12. Hors périmètre MVP (phase 2)
 
@@ -286,8 +294,21 @@ Validé le 2026-10-29 par un vrai transform sur des index jetables (OpenSearch 2
 | Élément ES | Devenir dans Gally |
 |---|---|
 | `CoOccurrence` (`significant_terms` sur les sessions) | Repris (logique) |
-| Triplets `orderRelated` (10) / `addToCartRelated` (5) | Repris, avec en plus `view → view` (2) |
-| `min_doc_count`, `maxAge` (`CoOccurrencePlugin`) | Repris en configuration, par triplet |
+| Filtre de session « contient le produit source » (`getSessionFilter`) | Repris, sur les champs `product_*` ; la source peut être une liste de SKU (terms), comme dans `SimilarProductCoOccurrenceQuery` |
+| Filtre d'âge sur la fin de session | Repris, sur `end_time` |
+| Arrière-plan = index entier (pas de `background_filter`) | Repris |
+| Score `significant_terms` ignoré, seule la liste compte | Repris (pondération par le score en phase 2) |
+| Exclusion du produit source (`array_diff`) | Repris |
+| Erreur OpenSearch → liste vide (`catch`) | Repris, avec un log |
+| Cache en mémoire par jeu d'arguments, le temps de la requête | Repris tel quel |
+| Algorithme de score GND (défaut de `SignificantTerm`) | Repris (même défaut dans le `SignificantTerms` de Gally) |
+| Bucket `__other_docs` ignoré | Repris |
+| Triplets `orderRelated` (10) / `addToCartRelated` (5) | Repris, avec en plus `view → view` (2) ; une requête multi-agrégations au lieu d'une requête par triplet |
+| `min_doc_count`, `maxAge` (`CoOccurrencePlugin`), `size` | Repris en configuration, par triplet, avec d'autres valeurs de départ (section 4.1) |
+| Identifiants produit (`entity_id`) | Remplacés par la SKU |
+| Co-occurrents utilisés comme « like » d'un More Like This (`includeOriginalDocs`) | Remplacé par un `terms` sur la SKU : seuls les produits co-occurrents sont renvoyés |
+| Co-occurrence à deux sauts (`orderSimilarRelated`, `addToCartSimilarRelated`) | Phase 2 |
+| Restriction aux événements de l'entreprise (B2B, `restrict_to_company`) | Non repris : pas de B2B dans Gally |
 | `Upsell\SearchQuery\Category`, `HigherPrice` | Remplacés par les opérateurs relatifs |
 | `ManualProducts`, `ItemProvider` (liens manuels) | Remplacés par le rule engine |
 | More Like This (similarité) | Remplacé par la similarité par règles |
