@@ -155,6 +155,7 @@ La maquette de formulaire (branche `feat-Recmmendation-mockup`) sert de référe
 | Similarity | boost optionnel : interrupteur, règle, modèle `constant_score` / `attribute_value`, valeur | désactivé | trie le bloc similarité, comme le bundle Boost (étape 4b) |
 
 - `isActive` garde `true` par défaut.
+- Boost de similarité (étape 4b) : les modèles du bundle Boost sont réutilisés via une interface `BoostConfigInterface` (règle, modèle, config), implémentée par `Boost` et par `SimilarityBoostConfig` côté recommender. `BoostModelInterface::getFunction()` prend désormais cette interface (rupture de compatibilité pour un modèle de boost personnalisé), et le choix du modèle est centralisé dans `ModelProvider::getFunction()`. Le boost s'applique comme un boost catalogue (`function_score`, `multiply`), avec une requête de bloc similarité par recommender.
 - **Pas de boost propre à la co-occurrence** (présent dans la maquette) : l'ordre du bloc co-occurrence vient des boosts des triplets (section 4.1).
 
 ## 6. Opérateurs relatifs au produit source
