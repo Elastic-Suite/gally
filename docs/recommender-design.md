@@ -125,9 +125,16 @@ Chaque bucket renvoie `key` (la SKU), `doc_count` (sessions au premier plan), `b
 
 ### 4.3 Injection dans la requête catalogue
 
-- Chaque triplet devient une clause `should` : un `terms` sur `sku` dans un `constant_score` avec le boost du triplet.
+Reprise du `Matcher` et du `SearchQueryBuilder` d'ElasticSuite (requête des produits liés) :
+
+- Chaque triplet devient une clause `should` : un `terms` sur `sku.untouched` avec le boost du triplet. Une requête `terms` a déjà un score constant égal à son boost : pas besoin de `constant_score` (type absent de Gally).
+- `minimum_should_match: 1`, comme ElasticSuite : seuls les produits co-occurrents sortent, filtrés par la `targetRule`.
 - Les scores se cumulent : un produit commandé **et** vu avec la source vaut 12.
-- La clause est placée dans la **requête principale**, pour que les `top_hits` du `RecommenderManager` héritent du `_score`. Aujourd'hui la requête n'a que des filtres, donc l'ordre est arbitraire.
+- La requête est **notée** et placée dans la requête principale, comme `addSearchFilter()` d'ElasticSuite (qui pose la requête de la collection, pas un filtre) : les `top_hits` du `RecommenderManager` héritent du `_score`.
+- La source de la co-occurrence est le SKU en cours : le manager boucle déjà sur chaque SKU source, comme ElasticSuite fait une recherche par produit affiché.
+- Sans aucune co-occurrence, pas de recherche pour ce SKU (comme `isPreventingZeroConstraintsRequests` d'ElasticSuite).
+
+Conséquence (étape 3, conception stricte validée) : un recommender ne renvoie plus les produits de sa `targetRule` sans donnée comportementale. Le bloc de complément arrive avec la `similarityRule` (étape 4).
 
 ## 5. Similarité par règles
 
