@@ -173,19 +173,22 @@ La maquette de formulaire (branche `feat-Recmmendation-mockup`) sert de référe
 
 Ces opérateurs ne sont disponibles **que dans le contexte recommender**, pas dans les catégories virtuelles ni dans les boosts.
 
-### 6.2 Sémantique
+### 6.2 Sémantique (validée le 2026-10-30, reprise d'ElasticSuite `Upsell\SearchQuery\Category` et `HigherPrice`)
 
-- **Multivalué** : `same as` = au moins une valeur en commun.
-- **Catégories** : on exclut la catégorie racine et les catégories virtuelles (souvent des catégories marketing transverses).
-- **Prix** : on compare le prix du price group courant (`SearchContext`), côté source et côté candidat.
-- **Pourcentage** : `higher than` seul = strictement supérieur, sans limite. `higher than +X %` = supérieur, et au plus X % au-dessus. Pour exprimer un « prix proche », on combine `higher than -X %` ET `lower than +Y %`. *À préciser : l'acceptation d'un pourcentage négatif.*
+- **Règles concernées** : `targetRule`, `similarityRule` et `similarityBoostRule`. Pas la `sourceRule`, qui décrit la source elle-même.
+- **Multivalué** : `same as` = au moins une valeur en commun ; `not same as` = aucune valeur en commun.
+- **Catégories** : comme ElasticSuite (`getCategoryIds()` moins la racine du store), on prend les catégories **directes** de la source (`is_parent: false`), sans la racine (niveau 1). Les catégories virtuelles n'en font pas partie, comme dans ElasticSuite où on ne leur assigne pas de produits. Côté candidats, le filtre catégorie porte sur toutes les entrées du champ `category` : les produits des sous-catégories correspondent, comme dans ElasticSuite. L'option ElasticSuite « catégories vues en co-occurrence » n'est pas reprise (signal `view → category_view`, phase 2).
+- **Prix** : on compare le prix du price group courant (`SearchContext`), côté source et côté candidat, comme le prix du groupe client dans ElasticSuite.
+- **Pourcentage** (comme `HigherPrice` d'ElasticSuite) : `higher than` = ≥ source ; le % optionnel est un **plafond** (≤ source × (1 + X %)). `lower than` = ≤ source ; le % optionnel est un **plancher** (≥ source × (1 − X %)). Pas de pourcentage négatif. Un « prix proche » s'écrit `higher than 10 %` OU `lower than 10 %`.
+- **Valeur absente sur la source** (pas de marque, pas de catégorie directe) : le nœud ne correspond à rien. Contrairement à ElasticSuite, qui supprime la condition, ce qui dans une combinaison « any » ouvrirait tout le catalogue.
 - **Multi-SKU (panier)** : la résolution se fait SKU par SKU.
 
 ### 6.3 Points techniques
 
-- **Résolution des valeurs source** : récupérer le `_source` du produit dans la requête déjà faite par `getApplicableRecommenders`, puis le passer via `$filterContext` à `RuleEngineManager::transformRuleToGallyFilters`.
-- **Cache des règles** : la clé actuelle est construite sur la règle et le localized catalog. Pour une règle relative, il faut soit inclure les valeurs résolues dans la clé, soit cacher la règle avant résolution. Sinon le cache est empoisonné par le premier produit source.
-- **UI admin** : gérer les opérateurs sans valeur et ceux avec un pourcentage optionnel.
+- **Résolution par réécriture** : avant d'appeler le rule engine, le recommender remplace chaque nœud relatif par des nœuds absolus existants, calculés avec les valeurs de la source (ex. `price higher than 20 %` → `price ≥ 100` ET `price ≤ 120`). Les valeurs viennent du document de la source, récupéré par la requête déjà faite dans `getApplicableRecommenders`. On ne passe donc pas par `$filterContext`.
+- **Cache des règles** : sa clé est calculée sur la règle **résolue**, qui contient les valeurs de la source. Il n'y a donc pas d'empoisonnement par le premier produit source, sans changer le cache. Reste le problème préexistant du groupe de prix absent de la clé (voir section 11).
+- **Opérateurs exposés à l'admin** : l'endpoint des opérateurs du rule engine accepte un contexte ; les opérateurs relatifs n'apparaissent que dans le contexte `recommender`.
+- **UI admin** (étape 6) : gérer les opérateurs sans valeur et ceux avec un pourcentage optionnel.
 
 ## 7. Configurations types (documentation, pas de presets)
 
@@ -297,8 +300,9 @@ Validé le 2026-10-29 par un vrai transform sur des index jetables (OpenSearch 2
 ## 11. Points restant à préciser (non bloquants)
 
 - Où vit la liste d'exclusion des catégories (globale, par localized catalog ou par recommender).
-- L'acceptation d'un pourcentage négatif sur `higher than` / `lower than`.
 - **TODO fin de développement** : repasser sur les valeurs de co-occurrence (`size`, `min_doc_count`, `maxAge`, boosts) et comparer aux valeurs d'ElasticSuite (section 4.1).
+- **TODO cache des règles et groupes de prix (problème préexistant, hors recommender)** : la clé de cache du rule engine (`RuleEngineManager::getRuleCacheKey`, `rule_engine_rule_<localized catalog>_<md5 de la règle>`) ne tient pas compte du groupe de prix (groupe client). Pourtant, le filtre prix généré embarque le `group_id` du `SearchContext` au moment de la traduction (`PriceTypeDefaultFilterInputType`). Une règle portant sur le prix, mise en cache pour le groupe 0, est donc resservie telle quelle au groupe 1. Cela touche les boosts, les catégories virtuelles et le recommender. Pour le recommender, les bornes résolues dépendent déjà du prix de la source dans le bon groupe, mais le `group_id` du filtre reste celui du premier appel. Piste : ajouter le groupe de prix à la clé quand la règle contient un nœud prix (ou toujours). À traiter dans un ticket séparé.
+- **TODO validation des opérateurs des règles (problème préexistant, hors recommender)** : les règles des boosts (`conditionRule`) et des catégories virtuelles ne sont validées que comme du JSON, sans contrôle des opérateurs. Une règle contenant un opérateur inconnu du rule engine pour le type d'attribut (par exemple un opérateur relatif `same_as`, réservé au recommender, envoyé directement par l'API) est acceptée. À la recherche, `AttributeRule` lève une exception, que `RuleEngineManager::transformRuleToGallyFilters` intercepte en renvoyant une requête « tous les produits ». Le back-office n'expose pas ces opérateurs hors du contexte `recommender`, donc seul un appel direct à l'API est concerné. Piste : un contrôle générique dans gally-standard qui refuse à l'enregistrement tout opérateur non supporté pour le type d'attribut, dans le contexte de la règle (le recommender le fait déjà pour sa `sourceRule`, validateur `SourceRule`). À traiter dans un ticket séparé.
 
 ## 12. Hors périmètre MVP (phase 2)
 
