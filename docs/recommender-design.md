@@ -142,6 +142,21 @@ Conséquence (étape 3, conception stricte validée) : un recommender ne renvoie
 - Elle forme le bloc de complément (voir la section 3).
 - **Pas de More Like This** : la similarité est exclusivement déterministe.
 
+### 5.1 Champs du recommender (validés le 2026-10-30, à partir de la maquette)
+
+La maquette de formulaire (branche `feat-Recmmendation-mockup`) sert de référence, avec ses erreurs de brouillon corrigées (orthographe `co_occurrence`, libellés copiés d'autres entités, champs facultatifs non nullables, positions en double).
+
+| Section | Champ | Défaut | Rôle |
+|---|---|---|---|
+| Co-occurrence | `enableCoOccurrence` | `false` (migration : `true` pour les recommenders existants) | active le bloc co-occurrence |
+| Co-occurrence | `targetRule` (« Filter products ») | — | filtre les produits co-occurrents |
+| Similarity | `enableSimilarity` | `false` | active le bloc similarité |
+| Similarity | `similarityRule` | — | produits du bloc de complément |
+| Similarity | boost optionnel : interrupteur, règle, modèle `constant_score` / `attribute_value`, valeur | désactivé | trie le bloc similarité, comme le bundle Boost (étape 4b) |
+
+- `isActive` garde `true` par défaut.
+- **Pas de boost propre à la co-occurrence** (présent dans la maquette) : l'ordre du bloc co-occurrence vient des boosts des triplets (section 4.1).
+
 ## 6. Opérateurs relatifs au produit source
 
 ### 6.1 Opérateurs du MVP
