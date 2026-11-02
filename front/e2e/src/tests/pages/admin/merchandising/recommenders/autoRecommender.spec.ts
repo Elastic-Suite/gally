@@ -9,6 +9,7 @@ import { Filter, FilterType } from '../../../../../helper/filter'
 import { AlertMessage, AlertMessageType } from '../../../../../helper/alertMessage'
 import { generateTestId, TestId } from "../../../../../utils/testIds"
 import { deleteEntity, getCommonFormTestIds } from "../../../../../utils/form"
+import { RulesManager } from '../../../../../helper/rulesManager'
 
 const resourceName = 'Recommender'
 
@@ -28,6 +29,17 @@ const testIds = {
     localizedCatalogs: 'localizedCatalogs',
     recommenderTypes: 'recommenderTypes',
     priority: generateTestId(TestId.INPUT_TEXT, TestId.INPUT_INTEGER, 'priority'),
+    enableCoOccurrence: 'enableCoOccurrence',
+    enableSimilarity: 'enableSimilarity',
+    sourceRule: 'sourceRule',
+    targetRule: 'targetRule',
+    similarityRule: 'similarityRule',
+    enableSimilarityBoost: 'enableSimilarityBoost',
+    similarityBoostRule: 'similarityBoostRule',
+    preview: generateTestId(TestId.RECOMMENDER_PREVIEW),
+    previewLocalizedCatalog: 'previewLocalizedCatalog',
+    previewProductSku: generateTestId(TestId.INPUT_TEXT, 'previewProductSku'),
+    previewSubmit: generateTestId(TestId.BUTTON, 'previewSubmit'),
   },
   ...Grid.getCommonGridTestIds(resourceName)
 } as const
@@ -38,6 +50,8 @@ const texts = {
     name: 'Name',
     priority: 'Priority',
     isActive: 'Enable',
+    enableCoOccurrence: 'Enable co-occurrence',
+    enableSimilarity: 'Enable similarity',
     localizedCatalogs: 'Localized catalog(s)',
     recommenderTypes: 'Applied to',
     actions: 'Actions'
@@ -71,7 +85,25 @@ const texts = {
   editValues: {
     localizedCatalogs: ['COM French Catalog'],
     editedLocalizedCatalogDisplay: 'COM Catalog - COM French Catalog',
-  }
+  },
+  rules: {
+    // Field labels of the default localized catalog (com_fr), where "Category" is the category_gear select attribute
+    category: 'Catégorie',
+    price: 'Prix',
+    categoryOperators: ['is equal', 'is not equal'],
+    sameAs: 'is the same as the source product',
+    notSameAs: 'is different from the source product',
+    higherThan: 'is higher than the source product, by at most (optional %)',
+    percentage: '20',
+  },
+  preview: {
+    localizedCatalog: 'COM French Catalog',
+    unknownSku: 'UNKNOWN-SKU',
+    sourceNotFound: 'The source product does not exist in this localized catalog.',
+    sku: 'VA11-GO-NA',
+    recommendedSkus: ['VA17-SI-NA', 'VA18-GO-NA', 'VA06', 'VA05'],
+    ruleOrigin: 'Similarity rule',
+  },
 } as const
 
 const urls = {
@@ -102,6 +134,13 @@ test('Pages > Merchandising > Recommenders > Auto recommenders', { tag: ['@premi
   const localizedCatalogs = new Dropdown(page, testIds.form.localizedCatalogs, true)
   const recommenderTypes = new Dropdown(page, testIds.form.recommenderTypes, true)
   const priorityInput = page.getByTestId(testIds.form.priority)
+  const enableCoOccurrenceSwitch = new Switch(page, testIds.form.enableCoOccurrence)
+  const enableSimilaritySwitch = new Switch(page, testIds.form.enableSimilarity)
+  const sourceRule = new RulesManager(page, testIds.form.sourceRule)
+  const targetRule = new RulesManager(page, testIds.form.targetRule)
+  const similarityRule = new RulesManager(page, testIds.form.similarityRule)
+  const enableSimilarityBoostSwitch = new Switch(page, testIds.form.enableSimilarityBoost)
+  const similarityBoostRule = new RulesManager(page, testIds.form.similarityBoostRule)
   const saveButton = page.getByTestId(testIds.form.submitButton)
 
   // Define a name for the new created Entity.
@@ -121,6 +160,51 @@ test('Pages > Merchandising > Recommenders > Auto recommenders', { tag: ['@premi
         await localizedCatalogs.selectValue(texts.createValues[i].localizedCatalogs)
         await recommenderTypes.selectValue(texts.createValues[i].recommenderTypes)
         await priorityInput.fill(texts.createValues[i].priority)
+
+        if (i === 0) {
+          await test.step('The source rule has no operator relative to the source product', async () => {
+            const index = await sourceRule.addAttributeRule(texts.rules.category)
+            await sourceRule.expectOperatorsToBe(index, [...texts.rules.categoryOperators])
+            await sourceRule.removeAttributeRule(index)
+          })
+
+          await test.step('Enable the co-occurrence and the similarity blocks', async () => {
+            await enableCoOccurrenceSwitch.expectToBeChecked(false)
+            await targetRule.expectToBeVisible(false)
+            await enableCoOccurrenceSwitch.enable()
+            await targetRule.expectToBeVisible()
+
+            await enableSimilaritySwitch.expectToBeChecked(false)
+            await similarityRule.expectToBeVisible(false)
+            await enableSimilaritySwitch.enable()
+            await similarityRule.expectToBeVisible()
+          })
+
+          await test.step('The similarity boost can be enabled', async () => {
+            await enableSimilarityBoostSwitch.expectToBeChecked(false)
+            await similarityBoostRule.expectToBeVisible(false)
+            await enableSimilarityBoostSwitch.enable()
+            await similarityBoostRule.expectToBeVisible()
+            await enableSimilarityBoostSwitch.disable()
+            await similarityBoostRule.expectToBeVisible(false)
+          })
+
+          await test.step('Add similarity conditions relative to the source product', async () => {
+            const categoryIndex = await similarityRule.addAttributeRule(texts.rules.category)
+            await similarityRule.expectOperatorsToBe(categoryIndex, [
+              ...texts.rules.categoryOperators,
+              texts.rules.sameAs,
+              texts.rules.notSameAs,
+            ])
+            await similarityRule.selectOperator(categoryIndex, texts.rules.sameAs)
+            await similarityRule.expectAttributeRuleToBe(categoryIndex, texts.rules.category, texts.rules.sameAs, null)
+
+            const priceIndex = await similarityRule.addAttributeRule(texts.rules.price)
+            await similarityRule.selectOperator(priceIndex, texts.rules.higherThan)
+            await similarityRule.fillValue(priceIndex, texts.rules.percentage)
+          })
+        }
+
         await saveButton.click()
         await expect(page).toHaveURL(urls.grid)
       })
@@ -140,6 +224,30 @@ test('Pages > Merchandising > Recommenders > Auto recommenders', { tag: ['@premi
   await test.step('Edit an auto recommender', async () => {
     await editLink.click()
     await expect(page).toHaveURL(urls.edit)
+
+    await test.step('The similarity conditions relative to the source product are saved', async () => {
+      await enableSimilaritySwitch.expectToBeChecked()
+      await similarityRule.expectAttributeRuleToBe(0, texts.rules.category, texts.rules.sameAs, null)
+      await similarityRule.expectAttributeRuleToBe(1, texts.rules.price, texts.rules.higherThan, texts.rules.percentage)
+    })
+
+    await test.step('Preview the recommendations of a source product', async () => {
+      const preview = page.getByTestId(testIds.form.preview)
+      await new Dropdown(page, testIds.form.previewLocalizedCatalog, false, preview).selectValue(texts.preview.localizedCatalog)
+
+      await preview.getByTestId(testIds.form.previewProductSku).fill(texts.preview.unknownSku)
+      await preview.getByTestId(testIds.form.previewSubmit).click()
+      await expect(preview).toContainText(texts.preview.sourceNotFound)
+
+      // Same direct category (cat_3 or cat_5) and a price between 58 and 69.60 (+20%).
+      await preview.getByTestId(testIds.form.previewProductSku).fill(texts.preview.sku)
+      await preview.getByTestId(testIds.form.previewSubmit).click()
+      const rows = preview.locator('tbody tr')
+      await expect(rows).toHaveCount(texts.preview.recommendedSkus.length)
+      for (const sku of texts.preview.recommendedSkus) {
+        await expect(rows.filter({ hasText: sku })).toContainText(texts.preview.ruleOrigin)
+      }
+    })
 
     await localizedCatalogs.expectToHaveValue(texts.createValues[0].localizedCatalogs)
     await localizedCatalogs.clear()
@@ -209,6 +317,12 @@ test('Pages > Merchandising > Recommenders > Auto recommenders', { tag: ['@premi
     for (let i = 0; i < 2; i++) {
       await test.step('Delete auto recommender #' + i, async () => {
         await expect(page).toHaveURL(urls.grid)
+        // The grid may contain other recommenders: only open the test one.
+        await grid.expectRowsAfterFiltersToBe(
+          filter,
+          { [testIds.filter.name]: names[i] },
+          [{ columnName: texts.gridHeaders.name, value: names[i] }]
+        )
         await page.locator(`[data-testid="${testIds.grid}"] a`).first().click()
         await deleteEntity(
           page,
