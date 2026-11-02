@@ -34,6 +34,8 @@ const testIds = {
     sourceRule: 'sourceRule',
     targetRule: 'targetRule',
     similarityRule: 'similarityRule',
+    enableSimilarityBoost: 'enableSimilarityBoost',
+    similarityBoostRule: 'similarityBoostRule',
     preview: generateTestId(TestId.RECOMMENDER_PREVIEW),
     previewLocalizedCatalog: 'previewLocalizedCatalog',
     previewProductSku: generateTestId(TestId.INPUT_TEXT, 'previewProductSku'),
@@ -137,6 +139,8 @@ test('Pages > Merchandising > Recommenders > Auto recommenders', { tag: ['@premi
   const sourceRule = new RulesManager(page, testIds.form.sourceRule)
   const targetRule = new RulesManager(page, testIds.form.targetRule)
   const similarityRule = new RulesManager(page, testIds.form.similarityRule)
+  const enableSimilarityBoostSwitch = new Switch(page, testIds.form.enableSimilarityBoost)
+  const similarityBoostRule = new RulesManager(page, testIds.form.similarityBoostRule)
   const saveButton = page.getByTestId(testIds.form.submitButton)
 
   // Define a name for the new created Entity.
@@ -174,6 +178,15 @@ test('Pages > Merchandising > Recommenders > Auto recommenders', { tag: ['@premi
             await similarityRule.expectToBeVisible(false)
             await enableSimilaritySwitch.enable()
             await similarityRule.expectToBeVisible()
+          })
+
+          await test.step('The similarity boost can be enabled', async () => {
+            await enableSimilarityBoostSwitch.expectToBeChecked(false)
+            await similarityBoostRule.expectToBeVisible(false)
+            await enableSimilarityBoostSwitch.enable()
+            await similarityBoostRule.expectToBeVisible()
+            await enableSimilarityBoostSwitch.disable()
+            await similarityBoostRule.expectToBeVisible(false)
           })
 
           await test.step('Add similarity conditions relative to the source product', async () => {
