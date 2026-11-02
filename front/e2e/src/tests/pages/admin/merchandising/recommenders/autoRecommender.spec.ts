@@ -34,6 +34,10 @@ const testIds = {
     sourceRule: 'sourceRule',
     targetRule: 'targetRule',
     similarityRule: 'similarityRule',
+    preview: generateTestId(TestId.RECOMMENDER_PREVIEW),
+    previewLocalizedCatalog: 'previewLocalizedCatalog',
+    previewProductSku: generateTestId(TestId.INPUT_TEXT, 'previewProductSku'),
+    previewSubmit: generateTestId(TestId.BUTTON, 'previewSubmit'),
   },
   ...Grid.getCommonGridTestIds(resourceName)
 } as const
@@ -89,6 +93,14 @@ const texts = {
     notSameAs: 'is different from the source product',
     higherThan: 'is higher than the source product, by at most (optional %)',
     percentage: '20',
+  },
+  preview: {
+    localizedCatalog: 'COM French Catalog',
+    unknownSku: 'UNKNOWN-SKU',
+    sourceNotFound: 'The source product does not exist in this localized catalog.',
+    sku: 'VA11-GO-NA',
+    recommendedSkus: ['VA17-SI-NA', 'VA18-GO-NA', 'VA06', 'VA05'],
+    ruleOrigin: 'Similarity rule',
   },
 } as const
 
@@ -204,6 +216,24 @@ test('Pages > Merchandising > Recommenders > Auto recommenders', { tag: ['@premi
       await enableSimilaritySwitch.expectToBeChecked()
       await similarityRule.expectAttributeRuleToBe(0, texts.rules.category, texts.rules.sameAs, null)
       await similarityRule.expectAttributeRuleToBe(1, texts.rules.price, texts.rules.higherThan, texts.rules.percentage)
+    })
+
+    await test.step('Preview the recommendations of a source product', async () => {
+      const preview = page.getByTestId(testIds.form.preview)
+      await new Dropdown(page, testIds.form.previewLocalizedCatalog, false, preview).selectValue(texts.preview.localizedCatalog)
+
+      await preview.getByTestId(testIds.form.previewProductSku).fill(texts.preview.unknownSku)
+      await preview.getByTestId(testIds.form.previewSubmit).click()
+      await expect(preview).toContainText(texts.preview.sourceNotFound)
+
+      // Same direct category (cat_3 or cat_5) and a price between 58 and 69.60 (+20%).
+      await preview.getByTestId(testIds.form.previewProductSku).fill(texts.preview.sku)
+      await preview.getByTestId(testIds.form.previewSubmit).click()
+      const rows = preview.locator('tbody tr')
+      await expect(rows).toHaveCount(texts.preview.recommendedSkus.length)
+      for (const sku of texts.preview.recommendedSkus) {
+        await expect(rows.filter({ hasText: sku })).toContainText(texts.preview.ruleOrigin)
+      }
     })
 
     await localizedCatalogs.expectToHaveValue(texts.createValues[0].localizedCatalogs)

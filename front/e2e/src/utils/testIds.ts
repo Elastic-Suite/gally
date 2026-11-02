@@ -94,6 +94,7 @@ export enum TestId {
   GRID_JOB_BUTTON = 'gridJobButton',
   FIELD_SET = 'fieldSet',
   PREVIEW_REQUIRED_MESSAGE = 'previewRequiredMessage',
+  RECOMMENDER_PREVIEW = 'recommenderPreview',
   RESOURCE_TABLE_NB_CUSTOM_VALUES_MESSAGE = 'resourceTableNbCustomValuesMessage',
   TREE = 'tree',
   TREE_ITEM_TITLE_BUTTON = 'treeItemTitleButton',
