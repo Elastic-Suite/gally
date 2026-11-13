@@ -2,6 +2,8 @@
 
 ## Status: draft | approved | implemented
 
+## Ticket: #XXXXXX (optional; from the branch name when it carries one)
+
 ## Page/Component: src/views/<X>.tsx (and/or app/[locale]/<route>/page.tsx)
 
 ## Behaviour (testable)
