@@ -61,13 +61,13 @@
   --radius-pill: 50px;
 
   /* Layout — the page cap, shared by the content column and both header rows so their left
-     and right edges line up. See specs/feature-larger-product-grid.md. */
+     and right edges line up. See docs/specs/feature-larger-product-grid.md. */
   --layout-max-width: 1600px;
 
   /* Product card. These are the SMALL values, kept by the home-page carousel and by anything
      else drawing a card outside a listing. `.products-grid` raises all five above a 1200px
      viewport; below it the grid uses exactly these. Never move them onto `.product-card`
-     itself — see specs/feature-larger-product-grid.md. */
+     itself — see docs/specs/feature-larger-product-grid.md. */
   --product-grid-column: 220px;
   --product-card-image-height: 180px;
   --product-card-body-padding: 1rem;
@@ -134,7 +134,7 @@ a:hover {
    isn't covered by the sticky header/search bar. Raised back up only while the
    search overlay (ACP) is open, so it can still sit above the rest of the page. */
 .header-sticky-group {
-  /* Not sticky since specs/feature-header-scrolls-with-page.md: the whole header, search band
+  /* Not sticky since docs/specs/feature-header-scrolls-with-page.md: the whole header, search band
      included, scrolls away with the page. `position: relative` stays only so the z-index
      applies - the popup rule below raises the group above the scrim. */
   position: relative;
@@ -154,12 +154,12 @@ a:hover {
 /* Deliberately NOT sticky. It used to be `sticky; top: 0`, which did almost nothing: sticky
    is bounded by its containing block, and this row's parent (.header-sticky-group) is only as
    tall as this row plus the search band, so it unpinned again after ~88px of scrolling. The
-   whole group scrolls with the page now (specs/feature-header-scrolls-with-page.md). `z-index`
+   whole group scrolls with the page now (docs/specs/feature-header-scrolls-with-page.md). `z-index`
    went with the positioning — it is inert on a static block child, and
    leaving it would imply a stacking order this row no longer participates in. */
-/* Light since specs/feature-header-light-two-row.md, and it holds two rows: .header-inner and the
+/* Light since docs/specs/feature-header-light-two-row.md, and it holds two rows: .header-inner and the
    category nav. The tint lives here and NOT on .header-sticky-group: the search band paints
-   nothing (specs/feature-sticky-search-band.md). */
+   nothing (docs/specs/feature-sticky-search-band.md). */
 .header {
   background: linear-gradient(180deg, var(--indigo-50) 0%, var(--white) 100%);
   color: var(--gray-900);
@@ -199,7 +199,7 @@ a:hover {
 /* When the search overlay is open, the rest of the header recedes along
    with the page behind it — only the search form itself stays crisp. The items are dimmed one by
    one, not .header-inner as a whole: a filter on an ancestor of the search bar would blur it and
-   become its containing block (specs/feature-header-search-drop.md). */
+   become its containing block (docs/specs/feature-header-search-drop.md). */
 .header-sticky-group:has(.search-bar-wrapper.overlay-open)
   .header-inner
   > :not(.header-search-slot),
@@ -256,7 +256,7 @@ a:hover {
   overflow-x: auto;
 }
 
-/* Plain text links on the light header (specs/feature-header-light-two-row.md), the current one
+/* Plain text links on the light header (docs/specs/feature-header-light-two-row.md), the current one
    underlined, shared with the footer's copy of the same component (SectionLinks). Direct
    children only: the four links are the nav's children, nothing is nested. */
 .header-nav > a,
@@ -333,7 +333,7 @@ a:hover {
 /* ─── Header Search ──────────────────────────────────────── */
 /* The search sits in the top row, filling the gap between the section links and the selects; it
    used to have its own band under the header. On focus it moves below the header into the place
-   the band had, widening as it goes, and the overlay opens under it. specs/feature-header-search-drop.md.
+   the band had, widening as it goes, and the overlay opens under it. docs/specs/feature-header-search-drop.md.
    The slot is a fixed height so the row does not change when the bar leaves it. It paints
    nothing, and must not be positioned: the bar is placed against .header-sticky-group. */
 .header-search-slot {
@@ -414,7 +414,7 @@ a:hover {
    centre of a pill this wide it reads as flat purple with a notch top and bottom. Only possible because
    --search-border-angle is registered with @property at the top of this file - an unregistered
    custom property cannot be interpolated and would jump. See
-   specs/feature-header-light-two-row.md. */
+   docs/specs/feature-header-light-two-row.md. */
 .search-bar {
   width: 100%;
   /* Slim at rest, to fit the top row; full size once open. */
@@ -473,9 +473,9 @@ a:hover {
   inset: 0;
   z-index: 90;
   /* The panel above owns no background of its own (see
-     specs/feature-acp-visual-redesign.md), so this is the only ground the
+     docs/specs/feature-acp-visual-redesign.md), so this is the only ground the
      panel's text ever gets — it has to hide the page behind it on its own.
-     A light wash since specs/feature-acp-light-glass.md (it was a .92 dark indigo,
+     A light wash since docs/specs/feature-acp-light-glass.md (it was a .92 dark indigo,
      at odds with the light header): pale indigo-50 at the top to indigo-100 at the
      bottom, 88% opaque, so the white product cards still have a ground to stand
      out from. The panel text is dark to match. */
@@ -495,7 +495,7 @@ a:hover {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  /* --search-drop: the bar drops below the header on desktop (specs/feature-header-search-drop.md). */
+  /* --search-drop: the bar drops below the header on desktop (docs/specs/feature-header-search-drop.md). */
   padding: calc(
       var(--header-height, 8.5rem) - var(--acp-page-offset, 0px) + 1rem +
         var(--search-drop, 0px)
@@ -892,7 +892,7 @@ a:hover {
 }
 
 /* ─── Hero Section ─── */
-/* Light and centred since specs/feature-header-light-two-row.md: the dark gradient block moved
+/* Light and centred since docs/specs/feature-header-light-two-row.md: the dark gradient block moved
    into the title as text colour. Full bleed through the negative margin, as before. */
 .hero {
   background: radial-gradient(
@@ -998,7 +998,7 @@ a:hover {
 
 /* ─── Homepage blocks ────────────────────────────────────── */
 /* The sample shops' homepage: wide hero, a panel slider, two promo cards, a mirrored panel slider,
-   with one 3rem gap between the four. See specs/feature-homepage-blocks.md.
+   with one 3rem gap between the four. See docs/specs/feature-homepage-blocks.md.
    The hero and the two panels share one surface. The border is what separates them from the
    white page; the light ground alone blended into it. */
 .home-hero,
@@ -1230,7 +1230,7 @@ a:hover {
 /* The page's closing block: what vector search is for, with this shop's measured requests as
    cards. Its surface is lighter than the hero and panels on purpose, so it reads as the closing
    note rather than a fourth panel. The cards use the product card's look and hover lift.
-   See specs/feature-home-vector-block.md. */
+   See docs/specs/feature-home-vector-block.md. */
 .home-vector {
   display: flex;
   flex-direction: column;
@@ -1411,7 +1411,7 @@ a:hover {
   background: var(--indigo-800);
 }
 
-/* The eco mark (specs/feature-eco-badge.md). Position only — this wrapper changes which corner
+/* The eco mark (docs/specs/feature-eco-badge.md). Position only — this wrapper changes which corner
    the pill anchors to and nothing else, so there is still one badge idiom rather than two.
    It has to sit opposite the badge stack: a card draws exactly one badge, and an eco product that
    is also on sale must be able to show both without them landing on each other. */
@@ -1462,7 +1462,7 @@ a:hover {
    It is bottom-anchored and only as tall as its content (`inset: auto 0 0 0`). It used to be
    `inset: 0`, sized against a 180px picture that it genuinely filled; the listing picture is
    300px now, and a full cover blurs out the merchandising the page exists to show at the exact
-   moment someone reaches for it. See specs/feature-quick-add-bottom-band.md.
+   moment someone reaches for it. See docs/specs/feature-quick-add-bottom-band.md.
    That geometry was also a containment guard — an overlay that is exactly its container can
    never escape it — and dropping it makes `.product-card-image`'s `overflow: hidden` the only
    thing holding the parked band off the name and price. Read the note on that rule before
@@ -1488,7 +1488,8 @@ a:hover {
   color: var(--gray-900);
   /* Prefixed FIRST, standard LAST. lightningcss treats the pair as one property and keeps only
      the last, so standard-first ships `-webkit-` alone and Blink drops the blur entirely. See
-     specs/bugfix-acp-scrim-blur-dropped.md. */
+     bugfix-acp-scrim-blur-dropped.md (removed; see
+     git show 2745ce7c:front/example-app/specs/bugfix-acp-scrim-blur-dropped.md). */
   -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
   /* Rises from the bottom edge of the picture. The travel is a full 100% — one panel height —
@@ -1684,7 +1685,7 @@ a:hover {
 .product-card-body {
   /* Vertical padding is its own variable and is much tighter than the horizontal one: the SKU
      line added a third row to this box, and the space for it came out of the padding so the card
-     kept its height. See specs/feature-listing-card-sku.md. */
+     kept its height. See docs/specs/feature-listing-card-sku.md. */
   padding: var(--product-card-body-padding-y) var(--product-card-body-padding);
   flex: 1;
   display: flex;
@@ -1780,7 +1781,7 @@ a:hover {
 }
 
 /* Dark and light marketing buttons of the homepage blocks: dark on the light hero and panels,
-   light on the dark promo-card panels. See specs/feature-homepage-blocks.md. */
+   light on the dark promo-card panels. See docs/specs/feature-homepage-blocks.md. */
 .btn-dark {
   background: var(--gray-900);
   color: var(--white);
@@ -1834,7 +1835,7 @@ a:hover {
   border: none;
   height: fit-content;
   position: sticky;
-  /* Nothing in the header stays on screen (specs/feature-header-scrolls-with-page.md), so the
+  /* Nothing in the header stays on screen (docs/specs/feature-header-scrolls-with-page.md), so the
      sidebar only needs a small gap from the viewport top. */
   top: 1rem;
 }
@@ -1842,7 +1843,8 @@ a:hover {
 /* Phones and tablets: the sidebar becomes an off-canvas drawer. This block must come after the base
    rule above - same specificity, so the later one wins. Placed before it, the base rule set
    `position: sticky` back and the hidden drawer kept its full height in the page
-   (specs/bugfix-facets-drawer-in-flow.md). */
+   (bugfix-facets-drawer-in-flow.md
+   (removed; see git show 2745ce7c:front/example-app/specs/bugfix-facets-drawer-in-flow.md)). */
 .facets-drawer-backdrop,
 .facets-drawer-close {
   display: none;
@@ -2239,7 +2241,8 @@ a:hover {
 
 /* The gap marker between the sliding window and the first/last page button. Muted and not a
    button, because it is a gap - the old pager drew it looking like a disabled control that
-   could not be clicked. See specs/bugfix-pagination-window-fixed-to-first-pages.md. */
+   could not be clicked. See bugfix-pagination-window-fixed-to-first-pages.md
+   (removed; see git show 2745ce7c:front/example-app/specs/bugfix-pagination-window-fixed-to-first-pages.md). */
 .pagination span {
   color: var(--gray-500);
 }
@@ -2439,7 +2442,7 @@ a:hover {
 }
 
 /* Lines on the left, the totals recap on the right, level with the first line. Not sticky on
-   purpose (specs/feature-cart-summary-side-column.md). The layout lives on the wrapper because
+   purpose (docs/specs/feature-cart-summary-side-column.md). The layout lives on the wrapper because
    CheckoutPage reuses .cart-summary on its own. */
 .cart-layout {
   display: grid;
@@ -2711,7 +2714,7 @@ a:hover {
 }
 
 /* ─── Category Nav ─── */
-/* The header's second row since specs/feature-header-light-two-row.md: plain text links, no
+/* The header's second row since docs/specs/feature-header-light-two-row.md: plain text links, no
    card. The negative margin cancels .header's 2rem side padding so the rule above the row runs
    full width; the list itself is capped like every other header row. */
 .category-nav {
@@ -2733,7 +2736,7 @@ a:hover {
 }
 
 /* Block, not inline: vertical padding on an inline box does not grow the line box, so on a
-   wrapped bar row 1 painted over row 2. See specs/feature-category-trail-nav-and-breadcrumb.md.
+   wrapped bar row 1 painted over row 2. See docs/specs/feature-category-trail-nav-and-breadcrumb.md.
    Child combinator: the submenu's links are descendants of the item too, and keep their own
    rules below. */
 .category-nav-item > a {
@@ -2996,7 +2999,7 @@ a:hover {
 
 /* Category pages only: under the breadcrumb, the title block is a small banner - title, count
    and the subcategory chips on the left, three product photos fanned on the right. Scoped to
-   .category-hero so every other .page-title is untouched (specs/feature-category-hero-banner.md).
+   .category-hero so every other .page-title is untouched (docs/specs/feature-category-hero-banner.md).
    The right padding keeps the chips clear of the photos. */
 .category-hero {
   position: relative;
@@ -3111,7 +3114,7 @@ a:hover {
 }
 
 /* ─── Footer ─────────────────────────────────────────────── */
-/* Mirrors the light header (specs/feature-footer-light.md): the header's tint turned upside
+/* Mirrors the light header (docs/specs/feature-footer-light.md): the header's tint turned upside
    down, the same lockup and section links as row 1, the powered-by line under a full-width
    rule as row 2. */
 .footer {
@@ -4566,7 +4569,7 @@ a:hover {
 /* The blog reuses the catalog's card idiom rather than inventing a second one:
    same white surface, same radius/shadow, same lift on hover as .product-card. */
 /* Full content width, like the product pages, so the breadcrumb sits in the same place
-   (specs/feature-page-width-breadcrumb.md). */
+   (docs/specs/feature-page-width-breadcrumb.md). */
 .blog-page {
   margin: 0;
 }
@@ -4716,7 +4719,7 @@ a:hover {
 
 /* ─── Blog post (detail) ─────────────────────────────────── */
 /* The page is full width so the breadcrumb lines up with every other page. The article below
-   it is one centred column with a reading measure (specs/feature-page-width-breadcrumb.md). The
+   it is one centred column with a reading measure (docs/specs/feature-page-width-breadcrumb.md). The
    hero is inside it too: its picture is a product cut-out cropped with object-fit: cover, and
    at the full width it showed only a slice of it. */
 .blog-post {
@@ -4885,7 +4888,7 @@ a:hover {
    order. 30 rows a side fit where 8 cards used to. */
 .vector-page {
   /* No cap of its own: one would centre it, and its breadcrumb with it, on a wide screen
-     (specs/feature-page-width-breadcrumb.md). The panels stay equal at any width. */
+     (docs/specs/feature-page-width-breadcrumb.md). The panels stay equal at any width. */
   margin: 0;
 }
 
@@ -4908,7 +4911,7 @@ a:hover {
 .vector-head h1 {
   font-size: 1.8rem;
   /* The gap the intro paragraph used to give; the intro is now said during the demo
-     (specs/feature-vector-search-comparison.md). */
+     (docs/specs/feature-vector-search-comparison.md). */
   margin-bottom: 1.5rem;
 }
 
@@ -5168,7 +5171,7 @@ a:hover {
 }
 
 /* ─── Phone header and search overlay tabs ───────────────── */
-/* specs/feature-mobile-header-and-acp-tabs.md. Everything that changes layout sits under
+/* docs/specs/feature-mobile-header-and-acp-tabs.md. Everything that changes layout sits under
    max-width, so desktop (769px and up) is untouched. At the end of the file on purpose: it
    follows the header, category menu, quick-add and overlay rules it adjusts, and wins over
    them by source order at equal specificity. */
@@ -5221,7 +5224,7 @@ a:hover {
 
   /* While the overlay is open, the rows above the search fold away and the search sits at the
      top. display: none on the rows themselves - nothing positioned or transformed around the
-     search form (specs/feature-header-search-drop.md). */
+     search form (docs/specs/feature-header-search-drop.md). */
   .header-sticky-group:has(.search-bar-wrapper.overlay-open)
     .header-inner
     > :not(.header-search-slot),

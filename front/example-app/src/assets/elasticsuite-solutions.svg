@@ -2,7 +2,7 @@
      sprite on https://elasticsuite.io/ ; only the symbol wrapper was turned into an
      svg root so the file stands alone. Exact sprite symbol id, and why the original
      use/xlink:href snippet could not be used directly, are recorded in
-     specs/feature-header-brand-lockup.md.
+     docs/specs/feature-header-brand-lockup.md.
      The brand colours (#F56553 and white) are deliberately not design system tokens;
      see docs/design-system.md, "Brand assets". The white wordmark means the asset
      only works on a dark surface, which is what the header is. -->

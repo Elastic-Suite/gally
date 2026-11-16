@@ -14,7 +14,7 @@ import { getVectorDemoQueries } from '../sdk/vectorSearch'
 import Icon from '../components/Icon'
 
 // Each row shows 3 products and fetches only 3: cards hidden with CSS would still be reported by
-// trackDisplay as displayed. See specs/feature-homepage-blocks.md.
+// trackDisplay as displayed. See docs/specs/feature-homepage-blocks.md.
 const ROW_SIZE = 3
 
 // Panel-shaped placeholder, so the page does not jump when the products arrive.
@@ -81,7 +81,7 @@ export default function Homepage() {
   // hardware and stationery shops returned nothing at all. Label and query are one pair in the
   // locale files because the catalogue's language follows the locale segment: a French visitor
   // must be sent to "robe", not "dress". A shop with no entry gets a plain browse link rather than
-  // another shop's query — see specs/feature-hero-cta-per-catalog.md.
+  // another shop's query — see docs/specs/feature-hero-cta-per-catalog.md.
   const heroKey = `homepage.hero.shops.${selectedCatalog?.code ?? ''}`
   const hasHeroQuery =
     !!selectedCatalog && i18n.exists(`${heroKey}.query`, { ns: 'category' })
@@ -191,7 +191,7 @@ export default function Homepage() {
 
       {/* Vector search: what it is for, with this shop's measured requests as examples. The last
           entry of each list is its control (a request keyword search answers well), so it stays
-          off the cards. See specs/feature-home-vector-block.md. */}
+          off the cards. See docs/specs/feature-home-vector-block.md. */}
       <section className="home-vector">
         <span className="home-vector-eyebrow">
           <Icon name="sparkles" />

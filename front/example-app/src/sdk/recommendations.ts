@@ -6,7 +6,7 @@ import { productFields, SearchDocument } from './fields'
 //
 // The recommender is rule-based, not behavioural: each rule matches seed SKUs and names the
 // products to offer for them. Nothing reads tracking events. See
-// specs/feature-real-recommendations.md.
+// docs/specs/feature-real-recommendations.md.
 //
 // The query returns a flat list of `Product` - the same type as search - so the card's field list
 // works as the selection and ProductCard renders the results unchanged. Seed SKUs never come back.

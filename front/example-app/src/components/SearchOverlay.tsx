@@ -147,7 +147,7 @@ interface SearchOverlayProps {
   close: () => void
 }
 
-// Phones show the three columns as tabs (specs/feature-mobile-header-and-acp-tabs.md); desktop
+// Phones show the three columns as tabs (docs/specs/feature-mobile-header-and-acp-tabs.md); desktop
 // keeps all three side by side and never shows the tab bar.
 type OverlayTab = 'products' | 'blog' | 'suggestions'
 
@@ -218,7 +218,7 @@ export default function SearchOverlay({
   // under the bar. Capped at the header height: past that the bar is off screen anyway.
   //
   // Phones (768px and below) fold the header rows above the search away while the popup is
-  // open (specs/feature-mobile-header-and-acp-tabs.md). The header then shrinks under a page
+  // open (docs/specs/feature-mobile-header-and-acp-tabs.md). The header then shrinks under a page
   // that does not move, so an offset recorded here would no longer match it, and a page
   // scrolled even slightly would leave the search above the screen. So on phones the page
   // goes to the top for the popup's lifetime, the offset is 0, and the scroll comes back on

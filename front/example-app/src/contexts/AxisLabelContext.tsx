@@ -8,7 +8,7 @@ import { AxisLabels, axisLabel } from '../sdk/axisLabels'
 // reason. Two things follow from fetching there rather than in the PDP:
 //
 //  - the heading is in the server-rendered HTML, so it does not pop in on hydration. That was the
-//    objection in specs/feature-configurable-option-selection.md to using the aggregation's
+//    objection in docs/specs/feature-configurable-option-selection.md to using the aggregation's
 //    localized label, and it is why this is not a useEffect.
 //  - the quick-add overlay on a listing row reads the same labels as the PDP, without a second
 //    request. One fetch per catalogue per page load, not one per product.

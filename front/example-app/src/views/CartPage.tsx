@@ -83,7 +83,7 @@ export default function CartPage() {
         <h1>{t('title', { count: itemCount })}</h1>
       </div>
 
-      {/* Lines on the left, totals on the right (specs/feature-cart-summary-side-column.md) */}
+      {/* Lines on the left, totals on the right (docs/specs/feature-cart-summary-side-column.md) */}
       <div className="cart-layout">
         <div className="cart-lines">
           {items.map((item) => (

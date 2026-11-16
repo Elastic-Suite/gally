@@ -5,7 +5,8 @@ import Icon from './Icon'
 
 // The one pager. It replaced five hand-copied ones, each of which built its page numbers as
 // `Array.from({ length: Math.min(pageCount, N) }, (_, i) => i + 1)` — always the first N pages,
-// whatever page you were on. See specs/bugfix-pagination-window-fixed-to-first-pages.md.
+// whatever page you were on. See bugfix-pagination-window-fixed-to-first-pages.md
+// (removed; see git show 2745ce7c:front/example-app/specs/bugfix-pagination-window-fixed-to-first-pages.md).
 //
 // The arrows are chevron icons drawn here; the labels a call site passes are their accessible
 // names, read by screen readers and not drawn.

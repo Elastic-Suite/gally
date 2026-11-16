@@ -42,7 +42,7 @@ export default function Header() {
   // leaves the slot for a place below the header, and back; CSS can only animate that between
   // two known boxes, and the slot's depends on the links and selects of each catalog and
   // language. data-search-slot tells the CSS the variables exist. See
-  // specs/feature-header-search-drop.md.
+  // docs/specs/feature-header-search-drop.md.
   useLayoutEffect(() => {
     const group = groupRef.current
     if (!group) return
@@ -135,7 +135,7 @@ export default function Header() {
           </Link>
         </div>
 
-        {/* The category row is part of the header since specs/feature-header-light-two-row.md:
+        {/* The category row is part of the header since docs/specs/feature-header-light-two-row.md:
             here in the app shell it is outside <main>, so no navigation ever swaps it out. It is
             inside <header> on purpose, so the two rows share one surface. */}
         <CategoryNav />

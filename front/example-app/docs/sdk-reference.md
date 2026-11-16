@@ -9,6 +9,7 @@ These facts were found the hard way. Never "simplify" them away.
 -   **GraphQL endpoint:** `/api/graphql` (no auth required for public queries)
 -   **Search:** `products(localizedCatalog, requestType, currentPage, pageSize, search, currentCategoryId, sort, filter)`
 -   **Category tree:** `getCategoryTree(catalogId, localizedCatalogId) { categories }` — nested `{ id, name, level, path, isVirtual, count, children }`
+-   **⚠️ Gotcha:** the tree's `count` counts only products **assigned** to the category (one terms aggregation on `category.id`). A virtual category picks its products by a rule at search time, so its `count` is always 0. Never show it as the size of a virtual category's listing: the hero uses the listing's own total, and the nav flyout and subcategory chips show no count (`CategoryPage.tsx`, `CategoryNav.tsx`). The category facet is not affected. See `bugfix-virtual-category-count.md` (removed; see `git show 2745ce7c:front/example-app/specs/bugfix-virtual-category-count.md`).
 -   **Tracking:** `createTrackingEvent` mutation via `TrackingEventManager`
 -   **RequestType enum:** `product_catalog` (requires `currentCategoryId`), `product_search` (works without category), `product_autocomplete`
 -   **⚠️ Gotcha:** `product_catalog` requests **fail** if `currentCategoryId` is not provided. When browsing without a category, use `product_search` with an empty search string instead.
@@ -16,25 +17,27 @@ These facts were found the hard way. Never "simplify" them away.
 
 ### The catalogs the demo data defines
 
-Three catalogs, six localized catalogs. The `[locale]` URL segment is the **localized** code (right
-column), which is what every SDK call wants — a parent catalog code is never a valid segment.
+The sample data has four fixture sets, in `api/packages/gally-sample-data/src/DataFixtures/`. Each
+set defines its own catalogs. The `[locale]` URL segment is the **localized** code, which is what
+every SDK call wants. A parent catalog code is never a valid segment.
 
-| Catalog             | Localized catalog | Locale | Currency |                      |
-| ------------------- | ----------------- | ------ | -------- | -------------------- |
-| `com` — COM Catalog | `com_fr`          | fr_FR  | EUR      | **landing default**  |
-|                     | `com_en`          | en_US  | EUR      |                      |
-| `fr` — FR Catalog   | `fr_fr`           | fr_FR  | EUR      |                      |
-|                     | `fr_en`           | en_US  | EUR      |                      |
-| `uk` — UK Catalog   | `en_fr`           | fr_FR  | GBP      | no documents indexed |
-|                     | `en_en`           | en_US  | GBP      | no documents indexed |
+| Fixture set    | Catalog                            | Localized catalogs                                     | Locales             | Currency          |
+| -------------- | ---------------------------------- | ------------------------------------------------------ | ------------------- | ----------------- |
+| `00_toolbox`   | `toolbox` - Toolbox Bricolage      | `toolbox_fr`, `toolbox_en`, `toolbox_de`               | fr_FR, en_US, de_DE | EUR               |
+| `01_fashion`   | `fashion` - Fiora Fashion          | `fashion_fr`, `fashion_en`, `fashion_de`               | fr_FR, en_US, de_DE | EUR               |
+| `02_papershop` | `papershop` - Le livre & le lièvre | `papershop_fr`, `papershop_en`, `papershop_de`         | fr_FR, en_US, de_DE | EUR               |
+| `default`      | `com`, `fr`, `uk`                  | `com_fr`, `com_en`, `fr_fr`, `fr_en`, `en_fr`, `en_en` | fr_FR, en_US        | EUR, GBP for `uk` |
 
-⚠️ **The `uk` catalog's localized codes start with `en_`, not `uk_`** — so `en_en` / `en_fr` are the
-_British_ catalog, not an "English" one, and they are the two with **no indexed documents at all**:
-they render an empty storefront. Confirmed against
-`api/packages/gally-sample-data/src/DataFixtures/{catalogs,localized_catalogs}.yaml`.
+An instance only has the sets that were loaded into it. On 2026-11-13 the local instance had only
+`papershop_fr`, `papershop_en` and `papershop_de`, and `/example` redirected to `papershop_fr`.
 
-The app also ships German UI strings (`src/locales/de/`, mapped in `src/sdk/catalogs.ts`) even
-though no `de_DE` localized catalog exists — German is reachable only if one is added to the data.
+In the `default` set, **the `uk` catalog's localized codes start with `en_`, not `uk_`**. So `en_en`
+and `en_fr` are the _British_ catalog, not an "English" one. Each set's catalogs are in its own
+`catalogs.yaml` and `localized_catalogs.yaml`.
+
+The app ships German UI strings (`src/locales/de/`, mapped in `src/sdk/catalogs.ts`). The toolbox,
+fashion and papershop sets each define a `de_DE` localized catalog, so German is reachable, for
+example at `/example/papershop_de`.
 
 ## SDK Usage (`@elastic-suite/gally-sdk`)
 
@@ -119,7 +122,7 @@ it is the only way to reach two things the stitching does not expose:
 Neither is a declared source field, so neither is stitched onto `Product`; introspecting the type
 returns 118 fields and both are absent. Don't add `source` to the shared `PRODUCT_FIELDS`: it is the
 whole document, and listings request 20 at a time. See
-`specs/feature-configurable-option-selection.md`.
+`docs/specs/feature-configurable-option-selection.md`.
 
 **Configurable children are not usable for variant resolution.** The parent document carries
 `children_ids` and `children.sku` (real child SKUs, e.g. `VSK12-RN-8`), but the other `children.*`
@@ -143,7 +146,7 @@ Key source fields:
     is indexed to fall back on. **Read availability through `isAvailable()` / `getProductFields().available`
     (`src/sdk/productFields.ts`), never `stock.status` directly** — it treats `status: true` + `qty: 0`
     as out of stock, and distinguishes `qty === undefined` ("not requested", so `status` governs) from
-    `qty === 0`. See `specs/bugfix-stock-count-zero-on-parents.md`.
+    `qty === 0`. See `bugfix-stock-count-zero-on-parents.md` (removed; see `git show 2745ce7c:front/example-app/specs/bugfix-stock-count-zero-on-parents.md`).
 -   `visibility` (array of `{ label, value }`)
 -   `new` (boolean), `url_key`, `cost`
 
@@ -152,7 +155,7 @@ Key source fields:
 `fetchPublicConfiguration()` (`sdk/server.ts`), scoped to the localized catalog. Build full URLs
 with `mediaUrl(config, path)` (`sdk/config.ts`): on the server with the awaited config, in client
 components with `useGallyConfig()` or `useMediaUrl()` (`contexts/ConfigContext.tsx`). Never
-hardcode the host. See `specs/feature-public-configuration.md`.
+hardcode the host. See `docs/specs/feature-public-configuration.md`.
 
 ### Unset booleans in raw `_source` are `[]`, not `false`
 
@@ -166,4 +169,4 @@ from `_source` with `=== true`, never a truthy read.
 This only bites on the raw-`_source` path — the stitched GraphQL `Product` type returns plain
 booleans. The PDP is on that path because `PRODUCT_DETAIL_FIELDS` (`src/sdk/fields.ts:47`) asks
 for `source`, which is how the "New" badge came to render on all 222. See
-`specs/bugfix-new-badge-empty-array-truthy.md`.
+`bugfix-new-badge-empty-array-truthy.md` (removed; see `git show 2745ce7c:front/example-app/specs/bugfix-new-badge-empty-array-truthy.md`).

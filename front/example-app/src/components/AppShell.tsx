@@ -22,7 +22,8 @@ import { EXPLAIN_ENABLED } from '../sdk/explain'
 // response (4 templates, ~47KB of an 80KB document) and show four red errors in the
 // overlay. The `mounted` gate below expresses the same intent without the throw: these
 // components are simply never rendered on the server. `dynamic()` stays, for the code
-// split. See specs/bugfix-dynamic-ssr-false-bailout.md.
+// split. See bugfix-dynamic-ssr-false-bailout.md
+// (removed; see git show 2745ce7c:front/example-app/specs/bugfix-dynamic-ssr-false-bailout.md).
 const EventLog = dynamic(() => import('./EventLog'))
 const IntroScreen = dynamic(() => import('./IntroScreen'))
 const StoryCompanion = dynamic(() => import('./StoryCompanion'))

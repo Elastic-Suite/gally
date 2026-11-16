@@ -8,7 +8,8 @@ import { useEffect, useState } from 'react'
 // target, or UI deliberately kept out of the server payload. It is the
 // SSR-safe alternative to `next/dynamic`'s `ssr: false`, which implements the
 // same intent by *throwing* `BailoutToCSR` during the server render; see
-// specs/bugfix-dynamic-ssr-false-bailout.md for why that mattered here.
+// bugfix-dynamic-ssr-false-bailout.md
+// (removed; see git show 2745ce7c:front/example-app/specs/bugfix-dynamic-ssr-false-bailout.md) for why that mattered here.
 export function useMounted(): boolean {
   const [mounted, setMounted] = useState(false)
   // eslint-disable-next-line react-hooks/set-state-in-effect -- flag flips after hydration; the server render must match the first client render

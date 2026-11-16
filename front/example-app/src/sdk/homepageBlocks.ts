@@ -2,7 +2,7 @@
 // translate lives here - product photo paths (relative to the media base, resolved with
 // mediaUrl()) and category ids, which belong to the catalog and so serve all three languages.
 // The text is in category.json under homepage.blocks.<catalog>.<key>.
-// A catalog with no entry keeps the plain text hero. See specs/feature-homepage-blocks.md.
+// A catalog with no entry keeps the plain text hero. See docs/specs/feature-homepage-blocks.md.
 
 export interface PromoCard {
   key: string // text under homepage.blocks.<catalog>.cards.<key>

@@ -30,7 +30,7 @@ export default function ProductCard({ product }: Props) {
   // ../sdk/productFields.ts so the product page overlays the same set on its own picture.
   // A card gets exactly ONE: it is one picture in a grid of them, and a stack of pills eats the
   // product it is meant to sell. That holds at every card size — the listing picture is taller
-  // than it was (see specs/feature-larger-product-grid.md), which is not a reason to stack more. getProductBadges() is ordered by priority, so taking
+  // than it was (see docs/specs/feature-larger-product-grid.md), which is not a reason to stack more. getProductBadges() is ordered by priority, so taking
   // the first is the whole selection rule — never re-sort here, or a card and its PDP would
   // disagree about which badge matters most.
   const badges = getProductBadges(fields).slice(0, 1)
@@ -56,7 +56,7 @@ export default function ProductCard({ product }: Props) {
           </div>
         )}
         {/* Opposite corner, outside the single-badge slot above, so an eco product that is also on
-            sale shows both. See specs/feature-eco-badge.md. */}
+            sale shows both. See docs/specs/feature-eco-badge.md. */}
         {fields.isEco && <EcoMark />}
         <Link
           href={`/product/${encodeURIComponent(sku)}`}
@@ -83,7 +83,7 @@ export default function ProductCard({ product }: Props) {
         </Link>
         {/* Same string and same translation key as the product page's `.product-detail-brand`,
             so a card and its PDP never word the SKU differently. Smaller than the PDP's 0.9rem
-            on purpose - see specs/feature-listing-card-sku.md. */}
+            on purpose - see docs/specs/feature-listing-card-sku.md. */}
         <div className="product-card-sku">{t('page.sku', { sku })}</div>
         <div className="product-card-price">
           {isDiscounted && originalPrice && (

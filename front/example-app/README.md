@@ -27,4 +27,4 @@ There are no tests in this workspace (`npm test` prints "no tests").
 ## Working on it
 
 Read **[`AGENTS.md`](AGENTS.md)** first. It is the entry point and holds the routing table for
-`docs/`, `specs/` and the directory-level rules.
+`docs/`, `docs/specs/` and the directory-level rules.

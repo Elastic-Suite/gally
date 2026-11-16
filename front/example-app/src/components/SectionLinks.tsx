@@ -8,12 +8,12 @@ import { defaultListingPath } from '../sdk/categoryTree'
 import { EXPLAIN_ENABLED } from '../sdk/explain'
 
 // The section links, shared by the header (`header-nav`) and the footer (`footer-nav`), so
-// both always agree on what is current (specs/feature-footer-light.md).
+// both always agree on what is current (docs/specs/feature-footer-light.md).
 //
 // No Home item — the brand lockup is the link to `/`. Plain text links, the active one
-// underlined (specs/feature-header-light-two-row.md). Up to 600px wide, the header's copy turns
+// underlined (docs/specs/feature-header-light-two-row.md). Up to 600px wide, the header's copy turns
 // into a pill track with the active link in a white pill, in CSS only: they stay links with
-// aria-current (specs/feature-mobile-header-and-acp-tabs.md). Every link is a direct child of
+// aria-current (docs/specs/feature-mobile-header-and-acp-tabs.md). Every link is a direct child of
 // the <nav>, so `.header-nav > a` / `.footer-nav > a` style all four.
 export default function SectionLinks({ className }: { className: string }) {
   const { t } = useTranslation('common')

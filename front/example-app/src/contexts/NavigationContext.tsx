@@ -19,10 +19,11 @@ import { useLinkStatus } from 'next/link'
 //
 // This used to be Next's job: a `loading.tsx` per route created a Suspense boundary, and the
 // boundary is what let a click transition immediately instead of freezing on the old page
-// (specs/feature-navigation-loading-feedback.md). Those files are gone, because the same
+// (docs/specs/feature-navigation-loading-feedback.md). Those files are gone, because the same
 // boundary makes React stream the page into a `<div hidden>` at the end of the document and
 // move it into place with a script — so with JavaScript disabled the product list was in the
-// response but never rendered. See specs/bugfix-ssr-product-list-behind-suspense.md.
+// response but never rendered. See bugfix-ssr-product-list-behind-suspense.md
+// (removed; see git show 2745ce7c:front/example-app/specs/bugfix-ssr-product-list-behind-suspense.md).
 //
 // Without a boundary the server sends complete HTML, and the feedback has to come from the
 // client instead: `useLinkStatus()` reports the pending state of the navigation its parent

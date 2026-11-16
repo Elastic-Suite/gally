@@ -71,7 +71,7 @@ export const CATALOG_AXIS_CODES: Record<string, string[]> = {
 
 // Non-axis fields a single catalogue owns. Both drive a badge and neither varies a variant, so
 // they are not in CATALOG_AXIS_CODES: `fashion_material` feeds the material pill on Venia and
-// `llv_is_eco` the sustainability mark on the paper shop (specs/feature-eco-badge.md).
+// `llv_is_eco` the sustainability mark on the paper shop (docs/specs/feature-eco-badge.md).
 export const CATALOG_EXTRA_FIELDS: Record<string, string[]> = {
   com: ['fashion_material { label value }'],
   papershop: ['llv_is_eco'],
@@ -100,7 +100,9 @@ const COMMON_PRODUCT_FIELDS = [
   // so this cannot follow whatever a product declares. Miss one and it does not error:
   // getVariantAxes() returns nothing and the card adds a configurable straight to the basket
   // without asking. That was the bug in the two newest catalogues; see
-  // specs/bugfix-listing-axes-missing-for-new-catalogs.md. Add a catalogue's axes to
+  // bugfix-listing-axes-missing-for-new-catalogs.md (removed; see
+  // git show 2745ce7c:front/example-app/specs/bugfix-listing-axes-missing-for-new-catalogs.md).
+  // Add a catalogue's axes to
   // CATALOG_AXIS_CODES in the same change that adds the catalogue.
   //
   // Beware: `configurable_attributes` comes back as a STRING, not a list — see parseAxisCodes()

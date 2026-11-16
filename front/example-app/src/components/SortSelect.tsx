@@ -18,7 +18,7 @@ interface SortSelectProps {
   context: SortContext
   // '' until the visitor picks a sort: no sort on a category page (the category's configured
   // default applies), `_score` on the search page. Keeping it empty is what lets both views
-  // reuse the server-rendered first page - see specs/feature-dynamic-sort-options.md.
+  // reuse the server-rendered first page - see docs/specs/feature-dynamic-sort-options.md.
   field: string
   direction: SortDirection
   // The sort the API reported for the last result. While `field` is '', that is the default.

@@ -11,7 +11,8 @@ import {
 // Picks the skeleton for a navigation in flight, from the href it is heading to. The route
 // files can no longer do this — a `loading.tsx` would put the skeleton back in the initial
 // HTML and push the real page into a `<div hidden>` (see
-// specs/bugfix-ssr-product-list-behind-suspense.md) — so the destination is read from the
+// bugfix-ssr-product-list-behind-suspense.md
+// (removed; see git show 2745ce7c:front/example-app/specs/bugfix-ssr-product-list-behind-suspense.md)) — so the destination is read from the
 // URL instead, in the one place that knows a navigation is pending.
 //
 // Only the four server-fetched routes get one. Everywhere else returns null, which tells
@@ -27,7 +28,7 @@ export default function RouteSkeleton({
   const path = `/${href.replace(/^\/+/, '').split('/').slice(1).join('/')}`
 
   // No CategoryNav here any more: it lives in the header, outside the children AppShell swaps
-  // out, so it stays on screen by itself (specs/feature-header-light-two-row.md).
+  // out, so it stays on screen by itself (docs/specs/feature-header-light-two-row.md).
   if (path.startsWith('/category/')) return <CategoryPageSkeleton />
   if (path.startsWith('/product/')) return <ProductPageSkeleton />
   // The blog LIST is client-fetched and renders its own loading state; only an article has
