@@ -45,7 +45,7 @@ export default function ProductPage({
   const { trackProductView } = useTracking()
   // Axis code → chosen option value. Starts empty: nothing is pre-selected, because the index
   // holds no (colour × size) → child mapping, so a default would be a claim about a variant
-  // this app cannot actually resolve. See specs/feature-configurable-option-selection.md.
+  // this app cannot actually resolve. See docs/specs/feature-configurable-option-selection.md.
   const [selectedOptions, setSelectedOptions] = useState<
     Record<string, string>
   >({})

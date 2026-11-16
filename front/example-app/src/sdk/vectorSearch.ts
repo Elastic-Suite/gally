@@ -165,7 +165,7 @@ export async function fetchVectorSearchProducts(
 // Keyed by localized catalog, because a suggestion is only worth offering in the catalogue it was
 // measured against. Four sample shops ship now, and one flat list meant the hardware shop invited
 // visitors to try "wedding guest outfit" — nothing comes back, at the exact moment the page is
-// meant to impress. See specs/feature-vector-demo-queries-per-catalog.md for every query's
+// meant to impress. See docs/specs/feature-vector-demo-queries-per-catalog.md for every query's
 // measured keyword count and vector top hit.
 //
 // English keys only, for the reason above: the other localized catalogs get no suggestions rather

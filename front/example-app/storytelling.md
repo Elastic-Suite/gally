@@ -3,7 +3,7 @@
 > **Out of date as of 2026-10-05 - the guided demo is paused.** This is the original story
 > intent. Its routes, queries, cart contents and file table describe an older app. For the
 > current state and the decisions a rebuild needs, see
-> [`specs/feature-guided-demo-rebuild.md`](specs/feature-guided-demo-rebuild.md).
+> [`docs/specs/feature-guided-demo-rebuild.md`](docs/specs/feature-guided-demo-rebuild.md).
 
 ## Overview
 

@@ -6,7 +6,8 @@ import { ReactNode } from 'react'
 //     used to be a `loading.tsx` per route, which is a Suspense boundary — and a boundary
 //     also defers the FIRST document, streaming the real page into a `<div hidden>` that a
 //     script moves into place, so the product list did not exist for a client with
-//     JavaScript off. See specs/bugfix-ssr-product-list-behind-suspense.md;
+//     JavaScript off. See bugfix-ssr-product-list-behind-suspense.md
+// (removed; see git show 2745ce7c:front/example-app/specs/bugfix-ssr-product-list-behind-suspense.md);
 //  2. the views' own `if (loading)` branches, still reached whenever the client
 //     refetches — sorting, filtering or paging a category.
 //
@@ -24,7 +25,7 @@ import { ReactNode } from 'react'
 // Those variables are why this file needs no size of its own: .products-grid raises them
 // above a 1200px viewport (220->340px column, 180->300px picture) and the skeleton follows the
 // card automatically. Do not hardcode a height back in — see
-// specs/feature-larger-product-grid.md.
+// docs/specs/feature-larger-product-grid.md.
 //   .product-detail     grid-template-columns: 1fr 1fr
 //   .product-detail-image   aspect-ratio: 1
 //   .blog-post-hero     320px
@@ -289,7 +290,7 @@ export function SearchPageSkeleton() {
 export function CategoryPageSkeleton() {
   return (
     <div>
-      {/* The breadcrumb, then the banner of specs/feature-category-hero-banner.md: h1
+      {/* The breadcrumb, then the banner of docs/specs/feature-category-hero-banner.md: h1
           (2.4rem), the item count and a chip row. A category with no subcategories loses the
           chip row on arrival - the skeleton cannot know. The photos are left out: they are
           decoration. */}

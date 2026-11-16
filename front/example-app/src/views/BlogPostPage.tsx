@@ -72,7 +72,7 @@ export default function BlogPostPage({
       </div>
 
       {/* The article reads as one centred column; the breadcrumb above stays at the
-          page edge like on every other page (specs/feature-page-width-breadcrumb.md). */}
+          page edge like on every other page (docs/specs/feature-page-width-breadcrumb.md). */}
       <div className="blog-post-body">
         {post.image && (
           <div className="blog-post-hero">

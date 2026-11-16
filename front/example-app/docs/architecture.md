@@ -17,7 +17,7 @@ catalogs and categories already resolved in `app/[locale]/layout.tsx`.
 
 There are deliberately no `loading.tsx` / Suspense boundaries above these routes: a streamed
 `notFound()` can only paint 404 UI under a 200. See
-`specs/bugfix-ssr-product-list-behind-suspense.md`.
+`bugfix-ssr-product-list-behind-suspense.md` (removed; see `git show 2745ce7c:front/example-app/specs/bugfix-ssr-product-list-behind-suspense.md`).
 
 For hard SDK constraints see `sdk-reference.md`; for tokens and component patterns see
 `design-system.md`. **Regenerate this file after structural refactors.**
@@ -61,7 +61,7 @@ app/
 the initial document too: React streams the real page into a `<div hidden>` at the end of the
 response and moves it into place with a script, so with JavaScript off the product list is in the
 HTML but never rendered. Navigation feedback comes from `src/contexts/NavigationContext.tsx` instead.
-See `specs/bugfix-ssr-product-list-behind-suspense.md` before adding one back.
+See `bugfix-ssr-product-list-behind-suspense.md` (removed; see `git show 2745ce7c:front/example-app/specs/bugfix-ssr-product-list-behind-suspense.md`) before adding one back.
 
 Pattern per route: `generateMetadata()` for SEO, `resolveLocale()` for the catalog, `tServer()` for
 strings, then render the `src/views/` component. Pages that must not be indexed spread `NOINDEX`.
@@ -111,7 +111,7 @@ src/
 │   ├── useTracking.ts     # trackCategoryView/ProductView/Search/Display/AddToCart/Order
 │   ├── useAddedFlash.ts   # ADDED_FLASH_MS + the transient "added to cart" state
 │   ├── useMounted.ts      # Client-only render gate — the sanctioned replacement for
-│   │                      #   dynamic(..., { ssr: false }); see specs/bugfix-dynamic-ssr-false-bailout.md
+│   │                      #   dynamic(..., { ssr: false }); see `bugfix-dynamic-ssr-false-bailout.md` (removed; see `git show 2745ce7c:front/example-app/specs/bugfix-dynamic-ssr-false-bailout.md`)
 │   └── useStoryActions.ts # Scenario action engine: DOM polling, highlights, navigation, timers
 ├── components/
 │   ├── AppShell.tsx        # Former App.tsx minus <Routes>: Header + main + Footer, and the
@@ -180,23 +180,23 @@ editing in either directory.
 
 ## Feature → file
 
-| Feature                                                                                  | Start at                                                                                       |
-| ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| Autocomplete popup, suggestions, keyboard nav                                            | `components/SearchOverlay.tsx`, `components/SearchBar.tsx`                                     |
-| Search results, sort, pagination                                                         | `views/SearchPage.tsx`, `hooks/useSearch.ts`                                                   |
-| Facets, filter chips, show-more                                                          | `components/Facets.tsx`                                                                        |
-| Category browse and nav                                                                  | `views/CategoryPage.tsx`, `components/CategoryNav.tsx`, `app/[locale]/category/`               |
-| Product detail                                                                           | `views/ProductPage.tsx`, `sdk/productFields.ts`                                                |
-| Configurable option selection (colour/size)                                              | `components/VariantSelector.tsx`, `sdk/fields.ts` (`PRODUCT_DETAIL_FIELDS`)                    |
-| Cart / checkout                                                                          | `contexts/CartContext.tsx`, `views/CartPage.tsx`, `views/CheckoutPage.tsx`                     |
-| Blog / CMS                                                                               | `views/BlogPage.tsx`, `views/BlogPostPage.tsx`, `sdk/cmsFields.ts`, `hooks/useCms.ts`          |
-| SEO, metadata, OG, JSON-LD                                                               | `sdk/seo.ts`, `components/JsonLd.tsx`, the route's `generateMetadata`                          |
-| Catalog / language switching                                                             | `contexts/CatalogContext.tsx`, `contexts/LocaleContext.tsx`, `components/LocaleLink.tsx`       |
-| Translations                                                                             | `src/locales/<lang>/<ns>.json`; server side via `sdk/serverI18n.ts`                            |
-| Tracking / analytics                                                                     | `hooks/useTracking.ts`, `contexts/EventLogContext.tsx`                                         |
-| Loading states                                                                           | `components/skeletons.tsx` + `components/RouteSkeleton.tsx` + `contexts/NavigationContext.tsx` |
-| Guided demo, intro, audience modes (paused - see `specs/feature-guided-demo-rebuild.md`) | `contexts/DemoContext.tsx`, `src/scenarios/`, `components/StoryCompanion.tsx`                  |
-| Anything visual                                                                          | `src/styles.css` + `docs/design-system.md`                                                     |
+| Feature                                                                                       | Start at                                                                                       |
+| --------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| Autocomplete popup, suggestions, keyboard nav                                                 | `components/SearchOverlay.tsx`, `components/SearchBar.tsx`                                     |
+| Search results, sort, pagination                                                              | `views/SearchPage.tsx`, `hooks/useSearch.ts`                                                   |
+| Facets, filter chips, show-more                                                               | `components/Facets.tsx`                                                                        |
+| Category browse and nav                                                                       | `views/CategoryPage.tsx`, `components/CategoryNav.tsx`, `app/[locale]/category/`               |
+| Product detail                                                                                | `views/ProductPage.tsx`, `sdk/productFields.ts`                                                |
+| Configurable option selection (colour/size)                                                   | `components/VariantSelector.tsx`, `sdk/fields.ts` (`PRODUCT_DETAIL_FIELDS`)                    |
+| Cart / checkout                                                                               | `contexts/CartContext.tsx`, `views/CartPage.tsx`, `views/CheckoutPage.tsx`                     |
+| Blog / CMS                                                                                    | `views/BlogPage.tsx`, `views/BlogPostPage.tsx`, `sdk/cmsFields.ts`, `hooks/useCms.ts`          |
+| SEO, metadata, OG, JSON-LD                                                                    | `sdk/seo.ts`, `components/JsonLd.tsx`, the route's `generateMetadata`                          |
+| Catalog / language switching                                                                  | `contexts/CatalogContext.tsx`, `contexts/LocaleContext.tsx`, `components/LocaleLink.tsx`       |
+| Translations                                                                                  | `src/locales/<lang>/<ns>.json`; server side via `sdk/serverI18n.ts`                            |
+| Tracking / analytics                                                                          | `hooks/useTracking.ts`, `contexts/EventLogContext.tsx`                                         |
+| Loading states                                                                                | `components/skeletons.tsx` + `components/RouteSkeleton.tsx` + `contexts/NavigationContext.tsx` |
+| Guided demo, intro, audience modes (paused - see `docs/specs/feature-guided-demo-rebuild.md`) | `contexts/DemoContext.tsx`, `src/scenarios/`, `components/StoryCompanion.tsx`                  |
+| Anything visual                                                                               | `src/styles.css` + `docs/design-system.md`                                                     |
 
-Faster than this table for anything already built: `ls specs/` — the filenames are feature names, and
+Faster than this table for anything already built: `ls docs/specs/` — the filenames are feature names, and
 each spec names the files it touched.

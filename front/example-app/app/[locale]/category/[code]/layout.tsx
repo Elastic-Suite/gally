@@ -8,7 +8,7 @@ import {
 // because what a missing category means depends on the `?from=` switch marker and Next does not
 // give a layout its search params — a layout does not rerender on navigation, so they would be
 // stale. Both remaining callers still 404 before the response flushes, which is what the check
-// was in the layout for. See specs/feature-catalog-switch-missing-target.md.
+// was in the layout for. See docs/specs/feature-catalog-switch-missing-target.md.
 export default async function CategoryGuard({
   children,
   params,

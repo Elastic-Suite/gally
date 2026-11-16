@@ -54,7 +54,8 @@ export default function CategoryPage({
   const code = Array.isArray(params.code) ? params.code[0] : params.code
   const { categories } = useCatalog()
   const [page, setPage] = useState(1)
-  // The phone drawer (specs/bugfix-facets-drawer-in-flow.md). Desktop shows the sidebar always.
+  // The phone drawer (bugfix-facets-drawer-in-flow.md
+  // (removed; see git show 2745ce7c:front/example-app/specs/bugfix-facets-drawer-in-flow.md)). Desktop shows the sidebar always.
   const [facetsOpen, setFacetsOpen] = useState(false)
   const [sortField, setSortField] = useState('')
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc')

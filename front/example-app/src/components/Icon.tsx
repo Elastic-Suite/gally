@@ -34,7 +34,7 @@ import {
 
 // The storefront's only icon set: ionicons outline. Each export is an SVG data URI, drawn as a
 // mask over currentColor, so an icon takes the colour and the size (1em) of the text around it.
-// No hooks: usable from server components too. See specs/feature-ionicons-outline.md.
+// No hooks: usable from server components too. See docs/specs/feature-ionicons-outline.md.
 const ICONS = {
   add: addOutline,
   'arrow-back': arrowBackOutline,

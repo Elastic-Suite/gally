@@ -55,7 +55,8 @@ export async function generateMetadata({
   // 404 status is reachable if a Suspense boundary is ever reintroduced above this route (it
   // would make the page stream, and a streamed notFound() can only paint 404 UI under a
   // 200). The fetch is cache()d, so it costs nothing. See
-  // specs/bugfix-ssr-product-list-behind-suspense.md.
+  // bugfix-ssr-product-list-behind-suspense.md
+  // (removed; see git show 2745ce7c:front/example-app/specs/bugfix-ssr-product-list-behind-suspense.md).
   if (trail.length === 0)
     await missingInCatalog(locale, resolved, await searchParams)
 

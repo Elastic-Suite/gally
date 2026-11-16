@@ -5,9 +5,9 @@ import Link from './LocaleLink'
 import { useTranslation } from 'react-i18next'
 import brandMark from '../assets/gally-rabbit.svg'
 
-// The logo link, shared by the header and the footer (specs/feature-footer-light.md). The
+// The logo link, shared by the header and the footer (docs/specs/feature-footer-light.md). The
 // class names stay `header-logo*` because the header is where the lockup is specified
-// (specs/feature-logo-gally-example.md); the footer reuses it as is.
+// (docs/specs/feature-logo-gally-example.md); the footer reuses it as is.
 export default function BrandLockup() {
   const { t } = useTranslation('common')
   return (

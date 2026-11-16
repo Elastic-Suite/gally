@@ -19,7 +19,7 @@ import Icon from './Icon'
 // What it deliberately does NOT do is invent a child SKU. The index carries `children.sku` but no
 // per-child attribute values, so no chosen combination can be resolved to a real child — the
 // parent SKU plus the chosen labels as `variant` is the only honest payload, and it is exactly
-// what the product page already sends. See specs/feature-configurable-option-selection.md.
+// what the product page already sends. See docs/specs/feature-configurable-option-selection.md.
 
 interface Props {
   product: SearchDocument
@@ -100,7 +100,8 @@ export default function QuickAdd({
             image,
             // Labels in axis order, matching the product page's format exactly so the same
             // combination lands on the same cart line whichever surface added it — line identity
-            // is sku + variant (specs/bugfix-cart-variant-line-identity.md).
+            // is sku + variant. See bugfix-cart-variant-line-identity.md (removed; see
+            // git show 2745ce7c:front/example-app/specs/bugfix-cart-variant-line-identity.md).
             variant: chosen.length
               ? axes
                   .map(

@@ -5,7 +5,7 @@ import Icon from './Icon'
 
 // Every product picture goes through here, so a missing file shows the same placeholder
 // everywhere instead of the browser's broken-image icon. A few demo products point at images
-// that were never published (specs/feature-product-image-placeholder.md).
+// that were never published (docs/specs/feature-product-image-placeholder.md).
 export default function ProductImage({
   src,
   alt,

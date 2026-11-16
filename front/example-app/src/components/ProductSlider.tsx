@@ -3,7 +3,7 @@ import ProductCard from './ProductCard'
 import type { SearchDocument } from '../sdk/fields'
 
 // The homepage's panel layout: a title column beside the row instead of a heading above it, so
-// those rows do not look like the cart and product page ones. See specs/feature-homepage-blocks.md.
+// those rows do not look like the cart and product page ones. See docs/specs/feature-homepage-blocks.md.
 interface Panel {
   eyebrow: string
   seeAllHref: string | null

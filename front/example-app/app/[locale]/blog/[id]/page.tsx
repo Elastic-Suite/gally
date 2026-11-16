@@ -38,7 +38,8 @@ export async function generateMetadata({
   // Metadata resolves before the response flushes, so this is the last point at which a real 404
   // status is reachable if a Suspense boundary is ever reintroduced above this route (it would
   // make the page stream, and a streamed notFound() can only paint 404 UI under a 200). The fetch
-  // is cache()d, so it costs nothing. See specs/bugfix-ssr-product-list-behind-suspense.md.
+  // is cache()d, so it costs nothing. See bugfix-ssr-product-list-behind-suspense.md
+  // (removed; see git show 2745ce7c:front/example-app/specs/bugfix-ssr-product-list-behind-suspense.md).
   if (!doc)
     await missingInCatalog(locale, resolved, await searchParams, BLOG_FALLBACK)
 
@@ -70,7 +71,7 @@ export default async function Page({ params, searchParams }: Params) {
   const doc = await fetchCmsPageById(resolved.localizedCatalog.code, id)
 
   // A missing article is a real 404. A catalog switch is the one exception — the id belonged to
-  // the catalog just left. See specs/feature-catalog-switch-missing-target.md.
+  // the catalog just left. See docs/specs/feature-catalog-switch-missing-target.md.
   if (!doc)
     await missingInCatalog(locale, resolved, await searchParams, BLOG_FALLBACK)
 

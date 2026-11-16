@@ -110,7 +110,7 @@ export default function VariantSelector({
         // server pre-fetch returns the document only, so the heading would arrive on hydration.
         // That objection does not apply to this source: the fetch is in the layout, which is
         // already a server component, so the heading is in the SSR HTML.
-        // See specs/feature-axis-labels-from-api.md.
+        // See docs/specs/feature-axis-labels-from-api.md.
         const heading = axisLabel(axis.code)
         const asSwatches = isColorAxis(axis.code)
 

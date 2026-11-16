@@ -2,7 +2,7 @@
 
 import { useTranslation } from 'react-i18next'
 
-// The sustainability mark for `llv_is_eco` products — see specs/feature-eco-badge.md.
+// The sustainability mark for `llv_is_eco` products — see docs/specs/feature-eco-badge.md.
 //
 // Deliberately NOT one of getProductBadges()'s entries. A card draws exactly one badge, and 23 of
 // papershop's 104 eco products already win that slot with a sale or new pill; a fourth badge would

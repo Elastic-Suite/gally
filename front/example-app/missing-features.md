@@ -5,7 +5,7 @@
 > Audited 2026-07-30 by diffing the full file tree, then reading each `main`-only module to check whether its
 > capability exists anywhere in the new tree (possibly renamed/merged, not just same filename).
 > Statuses rechecked against the code on 2026-10-12. Since the audit the app moved from Create React App to
-> Next.js 16 App Router (`specs/feature-nextjs-migration-phase1.md`): routes live in `app/`, views in `src/views/`.
+> Next.js 16 App Router (`docs/specs/feature-nextjs-migration-phase1.md`): routes live in `app/`, views in `src/views/`.
 
 Legend: **fully missing** = no trace in the new app · **partial** = some capability remains but reduced/changed
 
@@ -35,9 +35,9 @@ vector-search page was gated behind a `Bundle.VECTOR_SEARCH` flag.
 Both are fetched again now, but nothing is shown or hidden based on them:
 
 -   `/public_configurations` is read in SSR for the media host (`src/sdk/server.ts`, `src/contexts/ConfigContext.tsx`,
-    `specs/feature-public-configuration.md`).
+    `docs/specs/feature-public-configuration.md`).
 -   `{ extraBundles { name } }` is passed to the SDK's `SearchManager` (`src/sdk/bundles.ts`,
-    `specs/feature-sdk-bundles.md`).
+    `docs/specs/feature-sdk-bundles.md`).
 -   Still missing: hiding a page or block when its bundle is absent. The vector search page is not gated.
 
 Old files, for reference:
@@ -68,7 +68,7 @@ Was fully missing. A query now hits both indices: the search page shows product 
 results ("Articles"), and `/blog` lists the indexed posts with content-type and topic filters taken from the
 API's aggregations, a sort, and pagination. Data comes from `src/hooks/useCms.ts`; the views are
 `src/views/SearchPage.tsx`, `src/views/BlogPage.tsx`, `src/views/BlogPostPage.tsx` and `src/views/CmsPage.tsx`.
-See `specs/feature-blog-cms.md` and `specs/feature-search-result-type-switch.md`.
+See `docs/specs/feature-blog-cms.md` and `docs/specs/feature-search-result-type-switch.md`.
 
 Old files, for reference:
 
@@ -92,7 +92,7 @@ grid. **Do not confuse with `VectorSearchPage.tsx` on this branch** — that's a
 Was fully missing. Reusable `Tabs`/`TabPanel` abstraction used to switch between Products/CMS results with
 lazy-mounted panels. Replaced by a centered "Products / Articles" segmented switch on the search page
 (`src/views/SearchPage.tsx`, still a tablist for assistive tech). See
-`specs/feature-search-result-type-switch.md`. No generic `Tabs` component was ported.
+`docs/specs/feature-search-result-type-switch.md`. No generic `Tabs` component was ported.
 
 -   `src/components/Tabs/Tabs.tsx`, `TabPanel.tsx`, `a11yProps.tsx`
 
@@ -108,7 +108,7 @@ paginated independently. The vector side calls the premium `vectorSearchProducts
 through a local raw fetcher (`src/sdk/vectorSearch.ts`) — the SDK has no vector support, and
 `VectorProduct` carries the same fields as `Product`, so the old app's
 `transformVectorSearchDocumentsIntoProducts` mapping layer is no longer needed. See
-`specs/feature-vector-search-comparison.md`.
+`docs/specs/feature-vector-search-comparison.md`.
 
 The name collision noted here is also resolved: the explain visualiser is now `src/views/ExplainPage.tsx`,
 matching its `/explain` route, and `VectorSearchPage.tsx` is the comparison. Not gated behind a bundle
@@ -126,7 +126,7 @@ pages had a default sort from `category_configuration.defaultSorting`. Both list
 select from `productSortingOptions`, with labels in the catalog's language, through the shared
 `src/components/SortSelect.tsx`. The category page's "Default" entry sends no sort, so the API applies the
 category's configured default, and the entry names the field it used. See
-`specs/feature-dynamic-sort-options.md`.
+`docs/specs/feature-dynamic-sort-options.md`.
 
 -   `src/hooks/useProductSort.ts`
 -   `src/services/product.ts`
@@ -168,7 +168,7 @@ shared and kept. A new demo shop needs its prefix added there.
 -   A real install usually shares one product model across its catalogs, so this mostly matters for
     the demo.
 
-See `specs/feature-dynamic-sort-options.md`.
+See `docs/specs/feature-dynamic-sort-options.md`.
 
 ---
 
@@ -180,7 +180,7 @@ See `specs/feature-dynamic-sort-options.md`.
 Was fully missing. Now a `CategoryFacet` in `src/components/Facets.tsx`, dispatched whenever
 `aggregation.type === 'category'` (confirmed as a real backend aggregation type via live API + the SDK's
 `ResponseFilterType.CATEGORY`). Single-select, `eq` filter on `category__id` — reuses the existing
-checkbox-row styling, no new CSS. See `specs/feature-facet-category.md`.
+checkbox-row styling, no new CSS. See `docs/specs/feature-facet-category.md`.
 
 -   `src/components/Facets/FacetCategory.tsx` (old, for reference)
 
@@ -192,7 +192,7 @@ Was partial. `useSearch.ts` now exposes `viewMoreOptions(field)`, calling the SD
 full option list from the server once; the existing client-side search box then filters over that fuller
 set (not a per-keystroke server round trip). Before that full list is loaded, the search box queries the
 server with the API's `optionSearch` argument (debounced), so values outside the first batch are found
-too. See `specs/feature-facet-load-more.md`.
+too. See `docs/specs/feature-facet-load-more.md`.
 
 -   `src/components/Facets/FacetLoadMore.tsx` (old, for reference)
 
@@ -202,7 +202,7 @@ too. See `specs/feature-facet-load-more.md`.
 Was fully missing. New `ActiveFilterChips` in `src/components/Facets.tsx`, rendered above the facet list —
 removable pills per active filter (checkbox/slider/boolean/category) + "Clear all". New CSS classes
 `.active-filters`/`.filter-chip`/`.filter-chip-clear` in `styles.css`, built only from existing tokens.
-See `specs/feature-facet-active-filters.md`.
+See `docs/specs/feature-facet-active-filters.md`.
 
 -   `src/components/Facets/Facets.tsx` (old, for reference)
 
@@ -212,9 +212,9 @@ See `specs/feature-facet-active-filters.md`.
 Was partial. Search bar typeahead included an "Attributs" group (e.g. "Color: Red") that applied a facet
 filter directly on selection. `src/components/SearchOverlay.tsx` now shows attribute values again
 (`AcpAttribute`, `getAutocompleteAttributes()`). The backend decides which attributes appear. Clicking a
-value opens the search page filtered by that value, without the typed text (`specs/bugfix-acp-attribute-drops-query.md`).
+value opens the search page filtered by that value, without the typed text (`bugfix-acp-attribute-drops-query.md` (removed; see `git show 2745ce7c:front/example-app/specs/bugfix-acp-attribute-drops-query.md`)).
 The "Popular search terms" group now comes from the engine's `termSuggestions`, not a hardcoded list
-(`specs/feature-acp-real-term-suggestions.md`).
+(`docs/specs/feature-acp-real-term-suggestions.md`).
 
 -   `src/components/SearchBar/SearchBar.tsx`
 
@@ -229,7 +229,7 @@ The "Popular search terms" group now comes from the engine's `termSuggestions`, 
 node with everything else nested under it as children, rendered via one collapsible sidebar menu item. This
 branch's `fetchCategoryTree()` discarded that root node entirely and returned only its children, so there
 was never a way to browse "everything" from the nav bar. Fixed by keeping the root as its own childless
-leading entry ahead of its former children — see `specs/feature-category-nav-root.md`. That spec also covers
+leading entry ahead of its former children — see `docs/specs/feature-category-nav-root.md`. That spec also covers
 a second, unrelated bug found in the same component: the hover submenu was invisible due to an
 `overflow-x`/`overflow-y` CSS clipping issue (not a z-index/stacking problem, despite how it looked).
 
@@ -250,7 +250,7 @@ The storefront works around it:
 -   the nav flyout shows no count for them (`src/components/CategoryNav.tsx`).
 
 Real fix in the API: count a virtual category with its rule when building the tree. Then remove the
-workaround. See `specs/bugfix-virtual-category-count.md`.
+workaround. See `bugfix-virtual-category-count.md` (removed; see `git show 2745ce7c:front/example-app/specs/bugfix-virtual-category-count.md`).
 
 ### Mobile off-canvas navigation drawer
 
@@ -260,7 +260,7 @@ no drawer:
 
 -   Desktop: `src/components/CategoryNav.tsx` shows the top level, with a hover flyout one level deep.
 -   768px and below: the category menu is one row that scrolls sideways. It has no flyouts, so a tap
-    opens the top-level category page (`specs/feature-mobile-header-and-acp-tabs.md`).
+    opens the top-level category page (`docs/specs/feature-mobile-header-and-acp-tabs.md`).
 -   Still missing: reaching a subcategory from the nav on a phone, and any level below the second.
 
 -   `src/components/Menu/Menu.tsx`, `MenuItem.tsx`, `MenuList.tsx`
@@ -338,8 +338,8 @@ comparison, no code read for this section.
     cost → pricing plans) that closes the storytelling scenario; see `storytelling.md` Act 5.
 -   **Storytelling/demo layer** (`DemoContext`, `StoryCompanion`, `IntroScreen`, `useStoryActions`) — the full
     5-act guided scenario, audience-mode toggle, and right-side story companion panel. Net new, no `main`
-    equivalent at all. **Paused and currently unreachable** - see `specs/feature-guided-demo-rebuild.md`.
-    A rebuild with one tour per sample catalog is planned in `specs/feature-guided-tour-per-catalog.md`.
+    equivalent at all. **Paused and currently unreachable** - see `docs/specs/feature-guided-demo-rebuild.md`.
+    A rebuild with one tour per sample catalog is planned in `docs/specs/feature-guided-tour-per-catalog.md`.
 -   **`CheckoutPage`** — checkout tunnel (delivery and payment on one prefilled step → confirmation) with `ORDER` tracking.
     Net new.
 -   **Cart AOV boosters** (`CartPage`) — free-shipping progress bar, real cross-sell recommendations,
@@ -348,8 +348,8 @@ comparison, no code read for this section.
     tracking events in real time, for demo/debug purposes. Net new.
 -   **Color swatch facet type** in `Facets.tsx` — not present in the old app's facet set.
 -   **Blog** (`src/views/BlogPage.tsx`, `src/views/BlogPostPage.tsx`) - browsable `cms_page` index with type and
-    topic filters. See `specs/feature-blog-cms.md`.
--   **Eco badge** on product cards and the product page (`src/components/EcoMark.tsx`). See `specs/feature-eco-badge.md`.
--   **Category hero banner** on category pages. See `specs/feature-category-hero-banner.md`.
--   **Real recommendations** from the API. See `specs/feature-real-recommendations.md`.
--   **Vector search block** on the home page. See `specs/feature-home-vector-block.md`.
+    topic filters. See `docs/specs/feature-blog-cms.md`.
+-   **Eco badge** on product cards and the product page (`src/components/EcoMark.tsx`). See `docs/specs/feature-eco-badge.md`.
+-   **Category hero banner** on category pages. See `docs/specs/feature-category-hero-banner.md`.
+-   **Real recommendations** from the API. See `docs/specs/feature-real-recommendations.md`.
+-   **Vector search block** on the home page. See `docs/specs/feature-home-vector-block.md`.

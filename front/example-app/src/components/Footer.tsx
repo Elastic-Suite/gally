@@ -5,7 +5,7 @@ import SectionLinks from './SectionLinks'
 export default function Footer() {
   const { t } = useTranslation('common')
   return (
-    // One row (specs/feature-footer-single-row.md): the header's lockup on the left, the
+    // One row (docs/specs/feature-footer-single-row.md): the header's lockup on the left, the
     // powered-by line in the centre, the header's section links on the right.
     <footer className="footer">
       <BrandLockup />

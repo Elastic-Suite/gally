@@ -18,9 +18,9 @@ import { resolveLocale, cachedCategoryTree } from './server'
 //
 // The mark is validated against the catalog list on every call. Without that, appending
 // `?from=whatever` to any junk URL would turn a 404 into a 200 somewhere else — the soft-404
-// that specs/feature-locale-segment-phase2.md forbids.
+// that docs/specs/feature-locale-segment-phase2.md forbids.
 //
-// See specs/feature-catalog-switch-missing-target.md, which also records why this is not a
+// See docs/specs/feature-catalog-switch-missing-target.md, which also records why this is not a
 // not-found.tsx boundary.
 
 export const SWITCH_PARAM = 'from'
