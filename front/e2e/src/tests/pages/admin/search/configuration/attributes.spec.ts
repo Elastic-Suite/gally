@@ -47,6 +47,8 @@ const texts = {
     isSpannable: true,
     defaultSearchAnalyzer: ['standard', 'reference'],
     searchTermCategory: 'Category',
+    // The grid shows the label of the default localized catalog, which is French in the sample data
+    categoryLabel: 'Catégorie',
   }
 } as const
 
@@ -130,7 +132,7 @@ test('Pages > Search > Configurations > Attributes', {tag: ['@premium', '@standa
         [
           {
             columnName: texts.gridHeaders.defaultLabel,
-            value: texts.filtersToApply.searchTermCategory,
+            value: texts.filtersToApply.categoryLabel,
           },
         ]
       )
