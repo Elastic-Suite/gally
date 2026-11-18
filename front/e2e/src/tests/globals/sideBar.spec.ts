@@ -17,6 +17,12 @@ test('Globals > Layout > Side Bar', {tag: ['@premium', '@standard']}, async ({pa
   const sidebar = page.getByTestId(testIds.sideBar)
   const collapseButton = page.getByTestId(testIds.collapseButton)
 
+  // The lists below are taken once, with .all(), which does not wait. Wait until the menu has
+  // rendered its section icons and expand buttons, or the lists come back short and the loops
+  // check and click nothing.
+  await expect(page.getByTestId(testIds.labelMenuItemIcon).first()).toBeVisible()
+  await expect(page.getByTestId(testIds.menuItemChildrenButton).first()).toBeVisible()
+
   const labelMenuItemIconList = await page
     .getByTestId(testIds.labelMenuItemIcon)
     .all()
@@ -46,20 +52,11 @@ test('Globals > Layout > Side Bar', {tag: ['@premium', '@standard']}, async ({pa
 
   await collapseButton.click()
 
-  // Wait for menu transition to end
-  await page.evaluate((sideBarTestId) => {
-    return new Promise<void>((resolve) => {
-      const element = document.querySelector(`[data-testid="${sideBarTestId}"]`)
-
-      element?.addEventListener('animationend', () => resolve(), {
-        once: true,
-      })
-    })
-  }, testIds.sideBar)
-
-  await expect((await sidebar.boundingBox())?.width).toBeLessThan(
-    defaultSideBarWidth as number
-  )
+  // Poll the width until the transition ends. Listening for 'animationend' after the click
+  // hangs when the animation has already finished.
+  await expect
+    .poll(async () => (await sidebar.boundingBox())?.width)
+    .toBeLessThan(defaultSideBarWidth as number)
 
   for (const locator of [...labelMenuLinkItemList, ...labelMenuItemIconList]) {
     await expect(locator).not.toBeVisible()
@@ -67,7 +64,9 @@ test('Globals > Layout > Side Bar', {tag: ['@premium', '@standard']}, async ({pa
 
   await collapseButton.click()
 
-  await expect((await sidebar.boundingBox())?.width).toBe(defaultSideBarWidth)
+  await expect
+    .poll(async () => (await sidebar.boundingBox())?.width)
+    .toBe(defaultSideBarWidth)
 
   for (const locator of [...labelMenuLinkItemList, ...labelMenuItemIconList]) {
     await expect(locator).toBeVisible()

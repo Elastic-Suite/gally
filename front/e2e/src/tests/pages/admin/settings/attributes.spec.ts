@@ -155,11 +155,13 @@ test('Pages > Settings > Tab > Attributes', {tag: ['@premium', '@standard']}, as
     })
 
     let term = 'Category'
+    // Default label of the category attribute, i.e. its label in the default (French) catalog.
+    const categoryDefaultLabel = 'Catégorie'
     await test.step(`Search in the grid '${term}'`, async () => {
       await grid.expectRowsAfterSearchToBe(
         filter,
         term,
-        [{columnName: GridLabelsAndFilters.defaultLabel.gridLabel, value: term}],
+        [{columnName: GridLabelsAndFilters.defaultLabel.gridLabel, value: categoryDefaultLabel}],
         2
       )
       await grid.expectAllFiltersRemoved(filter, defaultRowCount)
