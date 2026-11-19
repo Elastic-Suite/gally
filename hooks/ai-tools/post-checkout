@@ -1,0 +1,10 @@
+#!/bin/sh
+# Relinks the Gally AI skills after a branch switch or a pull in ai-tools/, so a skill added or
+# removed by the branch gets or loses its link. `make ai-skills` points ai-tools' core.hooksPath here.
+# post-checkout passes 0 as third argument for a file checkout, which cannot add or remove a skill.
+[ "${3-1}" = 0 ] && exit 0
+# Hooks run at the top of ai-tools/; the gally checkout is its parent. Git's variables would point
+# the Makefile's git calls at ai-tools/, so drop them.
+unset GIT_DIR GIT_WORK_TREE GIT_INDEX_FILE
+cd .. && [ -f Makefile ] || exit 0
+make --no-print-directory ai-skills || true
