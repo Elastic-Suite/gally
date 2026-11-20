@@ -1,0 +1,4 @@
+#!/bin/sh
+# A rebase or an amend can add or remove a skill, and a rebase checks out other commits on the way
+# (post-checkout then relinks for those). Relink once more for the final state, as after a checkout.
+exec "$(dirname "$0")/post-checkout"

@@ -226,10 +226,11 @@ AI_SKILLS_REPO ?= git@github.com:Elastic-Suite/gally-ai-tools.git
 AI_SKILLS_DIRS ?= .claude/skills .agents/skills
 
 # The repo is cloned into ai-tools/ (gitignored, like api/packages/*) and each skill is linked into every AI_SKILLS_DIRS folder.
-# Edits in ai-tools/ apply directly. A branch switch or a pull there relinks by itself: ai-tools uses the hooks in
-# hooks/ai-tools/. Run it by hand after git clean -x here or git reset --hard in ai-tools/, which fire no hook.
+# Edits in ai-tools/ apply directly. A branch switch, a pull or a rebase there relinks by itself: ai-tools uses the hooks
+# in hooks/ai-tools/. Run it by hand after git clean -x here, or git reset --hard or git cherry-pick in ai-tools/, which
+# fire none of them.
 # Clones with the same SSH key as this checkout (core.sshCommand), unless GIT_SSH_COMMAND is already set.
-ai-skills: ## Clone the Gally AI skills into ai-tools/ (private repo) and link them into .claude/skills and .agents/skills, branch switches and pulls in ai-tools/ relink by themselves, pass "without-ai-skills=1" to skip
+ai-skills: ## Clone the Gally AI skills into ai-tools/ (private repo) and link them into .claude/skills and .agents/skills, branch switches, pulls and rebases in ai-tools/ relink by themselves, pass "without-ai-skills=1" to skip
 ifeq ($(without-ai-skills),)
 	@[ -d ai-tools ] || GIT_SSH_COMMAND="$${GIT_SSH_COMMAND:-$$(git config --get core.sshCommand || echo ssh)}" git clone $(AI_SKILLS_REPO) ai-tools
 	@git -C ai-tools config core.hooksPath ../hooks/ai-tools
