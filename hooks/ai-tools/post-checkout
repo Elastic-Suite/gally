@@ -1,6 +1,7 @@
 #!/bin/sh
-# Relinks the Gally AI skills after a branch switch or a pull in ai-tools/, so a skill added or
-# removed by the branch gets or loses its link. `make ai-skills` points ai-tools' core.hooksPath here.
+# Relinks the Gally AI skills after a branch switch in ai-tools/, and after a pull (post-merge) or a
+# rebase (post-rewrite), so a skill added or removed by the branch gets or loses its link.
+# git reset --hard and git cherry-pick run none of these hooks: run make ai-skills by hand after them. `make ai-skills` points ai-tools' core.hooksPath here.
 # post-checkout passes 0 as third argument for a file checkout, which cannot add or remove a skill.
 [ "${3-1}" = 0 ] && exit 0
 # Hooks run at the top of ai-tools/; the gally checkout is its parent. Git's variables would point
