@@ -35,8 +35,12 @@ exactly, or the server-rendered page and the hydrated one disagree.
 
 ## Where to read what
 
-This is the only routing table for the app. `CLAUDE.md` beside this file is a redirect here and
-carries no rules — don't copy anything back into it.
+This is the only routing table for the app. There is no `CLAUDE.md`: Claude Code loads this file
+when none exists, so don't create one.
+
+The **`gally-storefront`** skill covers work in this app: task router, the SDK traps that cause
+silent empty results, the token contract, how to verify in the Docker stack, the `docs/specs/`
+ritual. It defers to this file and `docs/`.
 
 | You need                                                      | Read                                                  |
 | ------------------------------------------------------------- | ----------------------------------------------------- |

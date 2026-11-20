@@ -78,7 +78,7 @@ exec: ## Execute a command on a given container
 db: ## Connect to the DB
 	@$(PHP_DATABASE) sh -c 'psql $$POSTGRES_DB $$POSTGRES_USER'
 
-init-dev-env: .env ## Initialize current environment with dev repositories
+init-dev-env: .env ## Initialize current environment with dev repositories and the AI skills, pass "without-ai-skills=1" or set WITHOUT_AI_SKILLS=1 in .env to skip the skills, example: make init-dev-env without-ai-skills=1
 	$(DOCKER_COMP) run --rm --entrypoint="rm -rf nodes_modules/gally* pwa/node_modules/gally* example-app/node_modules/gally*" pwa
 	[ -d api/packages/gally-standard ] || git clone git@github.com:Elastic-Suite/gally-standard.git api/packages/gally-standard
 	[ -d api/packages/gally-premium ] || git clone git@github.com:Elastic-Suite/gally-premium.git api/packages/gally-premium
@@ -88,6 +88,7 @@ init-dev-env: .env ## Initialize current environment with dev repositories
 	$(MAKE) switch-dev-env
 	cd front && yarn install --frozen-lockfile --network-timeout 120000 && cd -
 	sh ./hooks/initHooksPath.sh
+	$(MAKE) ai-skills
 
 switch-dev-env: ## Switch current environment with dev repositories on a composer version, pass the parameter "v=" to set the composer version, example: make switch-dev-env v=2.3.0
 	@$(eval v ?= dev-main)
@@ -216,3 +217,43 @@ fixtures_load: ## Load fixtures (Delete DB and Elasticsearch data). "catalogs=" 
 index_clear: ## Delete all Elasticsearch indices and data streams
 index_clear: c=gally:index:clear --with-data-streams --with-transforms
 index_clear: sf
+
+## —— AI tools 🤖 ——————————————————————————————————————————————————————————————
+AI_SKILLS_REPO ?= git@github.com:Elastic-Suite/gally-ai-tools.git
+
+# Folders that get one link per skill: .claude/skills for Claude Code, .agents/skills for Codex, Cursor, Gemini CLI,
+# Copilot, OpenCode and others. Add an agent's own folder (two levels deep, like .windsurf/skills) on the command line or in .env.
+AI_SKILLS_DIRS ?= .claude/skills .agents/skills
+
+# Skip the AI skills: WITHOUT_AI_SKILLS=1 in .env or the shell, or without-ai-skills=1 on the command line. Use it when the
+# skills are installed once for all checkouts from a separate clone (make install there). 0, false and no count as not set.
+without-ai-skills ?= $(WITHOUT_AI_SKILLS)
+
+# The repo is cloned into ai-tools/ (gitignored, like api/packages/*) and each skill is linked into every AI_SKILLS_DIRS folder.
+# Edits in ai-tools/ apply directly. A branch switch, a pull or a rebase there relinks by itself: ai-tools uses the hooks
+# in hooks/ai-tools/. Run it by hand after git clean -x here, or git reset --hard or git cherry-pick in ai-tools/, which
+# fire none of them.
+# Clones with the same SSH key as this checkout (core.sshCommand), unless GIT_SSH_COMMAND is already set.
+ai-skills: ## Clone the Gally AI skills into ai-tools/ (private repo) and link them into .claude/skills and .agents/skills, branch switches, pulls and rebases in ai-tools/ relink by themselves, pass "without-ai-skills=1" or set WITHOUT_AI_SKILLS=1 in .env to skip
+ifeq ($(filter-out 0 false no,$(without-ai-skills)),)
+	@[ -d ai-tools ] || GIT_SSH_COMMAND="$${GIT_SSH_COMMAND:-$$(git config --get core.sshCommand || echo ssh)}" git clone $(AI_SKILLS_REPO) ai-tools
+	@git -C ai-tools config core.hooksPath ../hooks/ai-tools
+	@for dir in $(AI_SKILLS_DIRS); do \
+		mkdir -p "$$dir"; \
+		for link in "$$dir"/*; do \
+			if [ -L "$$link" ] && [ ! -e "$$link" ] && readlink "$$link" | grep -q '^\.\./\.\./ai-tools/'; then \
+				rm "$$link"; echo "Removed $$link (no longer in ai-tools)"; \
+			fi; \
+		done; \
+		for skill in ai-tools/skills/*/; do \
+			name=$$(basename "$$skill"); target=$$dir/$$name; \
+			[ -f "$$skill/SKILL.md" ] || continue; \
+			if grep -qE '^\s*internal: true' "$$skill/SKILL.md"; then [ -L "$$target" ] && rm "$$target"; continue; fi; \
+			if [ -e "$$target" ] && [ ! -L "$$target" ]; then echo "Skipped $$target: a real folder is in the way"; continue; fi; \
+			ln -sfn "../../ai-tools/skills/$$name" "$$target"; \
+		done; \
+	done
+	@echo "AI skills linked from ai-tools ($$(git -C ai-tools rev-parse --abbrev-ref HEAD)) into $(AI_SKILLS_DIRS):" $$(ls $(firstword $(AI_SKILLS_DIRS)))
+else
+	@echo "Skipping the AI skills (without-ai-skills or WITHOUT_AI_SKILLS is set)"
+endif

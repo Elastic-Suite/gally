@@ -6,3 +6,6 @@
 /docker/certbot/certs/
 **/node_modules
 **/vendor
+/ai-tools/
+/.claude/skills/
+/.agents/skills/

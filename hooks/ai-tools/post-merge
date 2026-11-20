@@ -1,0 +1,3 @@
+#!/bin/sh
+# A pull can add or remove a skill too: same relink as after a checkout.
+exec "$(dirname "$0")/post-checkout"
