@@ -17,30 +17,27 @@ x-base-php: &php-base
   tty: true
 
 services:
-  proxy:
-    ports: !override
-      - "${HTTP_PORT:-80}:80"
-      - "${HTTPS_PORT:-443}:443"
-    environment:
-      - HTTPS_PORT=${HTTPS_PORT:-443}
-
   certbot:
     environment:
       - SELF_SIGNED=true
 
-  varnish:
-    depends_on: !override
-      - router
-    environment:
-      - CRON_UPSTREAM=${CRON_UPSTREAM:-}
-
   router:
+    build:
+      target: gally_router_base
+    ports: !override
+      - "${HTTP_PORT:-80}:80"
+      - "${HTTPS_PORT:-443}:443"
     volumes:
       - ./api/public:/app/public
     depends_on:
-      - example
+      pwa:
+        condition: service_started
+      example:
+        condition: service_started
     environment:
+      - PWA_UPSTREAM=pwa:3000
       - EXAMPLE_UPSTREAM=example:3001
+      - HTTPS_PORT=${HTTPS_PORT:-443}
 
   php:
     <<: *php-base
@@ -61,6 +58,7 @@ services:
       - cron
 
   pwa:
+    profiles: !reset []
     user: ${UUID?You must set UUID env var}:${GUID?You must set GUID env var}
     build:
       target: gally_pwa_dev

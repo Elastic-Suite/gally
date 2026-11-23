@@ -17,11 +17,15 @@ services:
     environment:
       - SELF_SIGNED=true
 
-  varnish:
-    depends_on: !override
-      - router
+  router:
+    build:
+      target: gally_router_base
+    depends_on:
+      pwa:
+        condition: service_started
     environment:
-      - CRON_UPSTREAM=
+      - PWA_UPSTREAM=pwa:3000
+      - EXAMPLE_UPSTREAM=pwa:3000
   php:
     <<: *php-base
     healthcheck:
@@ -43,6 +47,7 @@ services:
       CRONTAB: ~
 
   pwa:
+    profiles: !reset []
     build:
       target: gally_pwa_ci
     volumes:

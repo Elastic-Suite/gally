@@ -1,0 +1,90 @@
+# Gally application routing, included by the HTTPS server, or by the HTTP one when HTTPS_ENABLED=false
+root /app/public;
+
+client_body_buffer_size 4m;
+client_max_body_size 256m;
+fastcgi_buffers 64 16k;
+fastcgi_buffer_size 64k;
+
+# Front apps: proxied to node containers when PWA_UPSTREAM / EXAMPLE_UPSTREAM are set (dev, CI, int),
+# otherwise the pre-rendered admin is served from the image. Generated at startup, see docker-entrypoint.d/25-replace-custom-var-env.sh
+include /etc/nginx/conf.d/snippets/front.conf;
+
+location /{{API_ROUTE_PREFIX}} {
+    rewrite ^/{{API_ROUTE_PREFIX}}/(.*)$ /$1 break;
+
+    # Overwrite X-Forwarded-For with actual client IP
+    add_header X-Forwarded-For $http_x_forwarded_for;
+
+    # to let webapp know it's https traffic.
+    add_header X-Forwarded-Proto $http_x_forwarded_proto;
+
+    # to let webapp know the client port.
+    add_header X-Forwarded-Port $http_x_forwarded_port;
+
+    try_files $uri /index.php$is_args$args;
+}
+
+# Route toutes les requêtes vers l'application PHP API Platform pour $API_SERVER_NAME
+location ~ ^/index\.php(/|$) {
+
+    # when PHP-FPM is configured to use TCP
+    fastcgi_pass fastcgi_backend;
+
+    fastcgi_split_path_info ^(.+\.php)(/.*)$;
+    include fastcgi_params;
+
+    # optionally set the value of the environment variables used in the application
+    # fastcgi_param APP_ENV prod;
+    # fastcgi_param APP_SECRET <app-secret-id>;
+    # fastcgi_param DATABASE_URL "mysql://db_user:db_pass@host:3306/db_name";
+
+    # When you are using symlinks to link the document root to the
+    # current version of your application, you should pass the real
+    # application path instead of the path to the symlink to PHP
+    # FPM.
+    # Otherwise, PHP's OPcache may not properly detect changes to
+    # your PHP files (see https://github.com/zendtech/ZendOptimizerPlus/issues/126
+    # for more information).
+    # Caveat: When PHP-FPM is hosted on a different machine from nginx
+    #         $realpath_root may not resolve as you expect! In this case try using
+    #         $document_root instead.
+    fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+    fastcgi_param DOCUMENT_ROOT $realpath_root;
+    # Public port, so that Symfony builds absolute URLs with the published HTTPS port
+    fastcgi_param SERVER_PORT $gally_server_port;
+    # Prevents URIs that include the front controller. This will 404:
+    # http://example.com/index.php/some-path
+    # Remove the internal directive to allow URIs like this
+    internal;
+}
+
+location ~ \.php$ {
+    return 404;
+}
+
+# WebSocket support
+proxy_http_version 1.1;
+proxy_set_header Upgrade $http_upgrade;
+proxy_set_header Connection "upgrade";
+
+# Forwarded headers for the front apps, kept as is when TLS is terminated upstream (Traefik, ingress, load balancer...)
+proxy_set_header X-Real-IP $remote_addr;
+proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header X-Forwarded-Proto $gally_forwarded_proto;
+proxy_set_header X-Forwarded-Port $gally_forwarded_port;
+proxy_buffer_size 64k;
+proxy_buffers 64 16k;
+proxy_busy_buffers_size 64k;
+
+# Overwrite X-Forwarded-For with actual client IP
+add_header X-Forwarded-For $http_x_forwarded_for;
+
+# to let webapp know it's https traffic.
+add_header X-Forwarded-Proto $http_x_forwarded_proto;
+
+# to let webapp know the client port.
+add_header X-Forwarded-Port $http_x_forwarded_port;
+
+access_log /dev/stdout main;
+error_log /dev/stderr notice;

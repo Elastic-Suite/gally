@@ -6,7 +6,12 @@ services:
   router:
     build:
       context: ./docker/router
+      target: gally_router_base
+    depends_on:
+      pwa:
+        condition: service_started
     environment:
+      - PWA_UPSTREAM=pwa:3000
       - EXAMPLE_UPSTREAM=pwa:3001
 
   php:
@@ -18,6 +23,7 @@ services:
       <<: *php-base-env
 
   pwa:
+    profiles: !reset []
     build:
       target: gally_pwa_int
       args:

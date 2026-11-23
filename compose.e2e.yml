@@ -8,6 +8,6 @@ services:
       - SERVER_BASE_URL=https://${E2E_SERVER_NAME:-gally.e2e}${HTTPS_PORT:+:$HTTPS_PORT}
       - API_SERVER_BASE_URL=https://${E2E_SERVER_NAME:-gally.e2e}${HTTPS_PORT:+:$HTTPS_PORT}/${API_ROUTE_PREFIX:-api}
     depends_on:
-      - proxy
+      - router
     extra_hosts:
       - ${E2E_SERVER_NAME:-gally.e2e}:host-gateway

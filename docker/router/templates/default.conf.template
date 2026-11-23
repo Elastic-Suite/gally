@@ -70,90 +70,26 @@ upstream fastcgi_backend {
 #    error_log /dev/stderr notice;
 #}
 
-# Pwa and common domain name
+map $http_x_forwarded_proto $gally_forwarded_proto {
+    ""      $scheme;
+    default $http_x_forwarded_proto;
+}
+
+map $http_x_forwarded_port $gally_forwarded_port {
+    ""      $gally_server_port;
+    default $http_x_forwarded_port;
+}
+
+# Plain HTTP: ACME challenge, then a redirect to HTTPS, or the application itself when TLS is terminated upstream (HTTPS_ENABLED=false).
+# The included snippet is generated at startup, see docker-entrypoint.d/25-replace-custom-var-env.sh
 server {
     server_name $SERVER_NAME;
-    root /app/public;
     listen 80;
+    set $gally_server_port $server_port;
 
-    client_body_buffer_size 4m;
-    client_max_body_size 256m;
-    fastcgi_buffers 64 16k;
-    fastcgi_buffer_size 64k;
-
-    location / {
-        proxy_pass http://$PWA_UPSTREAM;
+    location /.well-known/acme-challenge/ {
+        root /var/www/certbot;
     }
 
-    location ~ ^/(example|ws) {
-        proxy_pass http://$EXAMPLE_UPSTREAM;
-    }
-
-    location /{{API_ROUTE_PREFIX}} {
-        rewrite ^/{{API_ROUTE_PREFIX}}/(.*)$ /$1 break;
-
-        # Overwrite X-Forwarded-For with actual client IP
-        add_header X-Forwarded-For $http_x_forwarded_for;
-
-        # to let webapp know it's https traffic.
-        add_header X-Forwarded-Proto $http_x_forwarded_proto;
-
-        # to let webapp know the client port.
-        add_header X-Forwarded-Port $http_x_forwarded_port;
-
-        try_files $uri /index.php$is_args$args;
-    }
-
-    # Route toutes les requêtes vers l'application PHP API Platform pour $API_SERVER_NAME
-    location ~ ^/index\.php(/|$) {
-
-        # when PHP-FPM is configured to use TCP
-        fastcgi_pass fastcgi_backend;
-
-        fastcgi_split_path_info ^(.+\.php)(/.*)$;
-        include fastcgi_params;
-
-        # optionally set the value of the environment variables used in the application
-        # fastcgi_param APP_ENV prod;
-        # fastcgi_param APP_SECRET <app-secret-id>;
-        # fastcgi_param DATABASE_URL "mysql://db_user:db_pass@host:3306/db_name";
-
-        # When you are using symlinks to link the document root to the
-        # current version of your application, you should pass the real
-        # application path instead of the path to the symlink to PHP
-        # FPM.
-        # Otherwise, PHP's OPcache may not properly detect changes to
-        # your PHP files (see https://github.com/zendtech/ZendOptimizerPlus/issues/126
-        # for more information).
-        # Caveat: When PHP-FPM is hosted on a different machine from nginx
-        #         $realpath_root may not resolve as you expect! In this case try using
-        #         $document_root instead.
-        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
-        fastcgi_param DOCUMENT_ROOT $realpath_root;
-        # Prevents URIs that include the front controller. This will 404:
-        # http://example.com/index.php/some-path
-        # Remove the internal directive to allow URIs like this
-        internal;
-    }
-
-    location ~ \.php$ {
-        return 404;
-    }
-
-    # WebSocket support
-    proxy_http_version 1.1;
-    proxy_set_header Upgrade $http_upgrade;
-    proxy_set_header Connection "upgrade";
-
-    # Overwrite X-Forwarded-For with actual client IP
-    add_header X-Forwarded-For $http_x_forwarded_for;
-
-    # to let webapp know it's https traffic.
-    add_header X-Forwarded-Proto $http_x_forwarded_proto;
-
-    # to let webapp know the client port.
-    add_header X-Forwarded-Port $http_x_forwarded_port;
-
-    access_log /dev/stdout main;
-    error_log /dev/stderr notice;
+    include /etc/nginx/conf.d/snippets/http.conf;
 }
