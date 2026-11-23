@@ -17,11 +17,6 @@ services:
     environment:
       - SELF_SIGNED=true
 
-  varnish:
-    depends_on: !override
-      - router
-    environment:
-      - CRON_UPSTREAM=
   php:
     <<: *php-base
     healthcheck:

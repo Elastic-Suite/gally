@@ -46,13 +46,13 @@ services:
       - ./docker/certbot/certs:/etc/nginx/certs
       - ./docker/certbot/www:/var/www/certbot
     depends_on:
-      varnish: 
-        condition: service_healthy
+      router:
+        condition: service_started
       certbot:
           condition: service_healthy
     environment:
       - SERVER_NAME=${SERVER_NAME:-gally.localhost}
-      - BACKEND_UPSTREAM=varnish:80
+      - BACKEND_UPSTREAM=router:80
         
   certbot:
     build:
@@ -62,34 +62,6 @@ services:
       - ./docker/certbot/www:/var/www/certbot
     environment:
       - SERVER_NAME=${SERVER_NAME:-gally.localhost}
-
-  varnish:
-    build:
-      context: ./docker/varnish
-    depends_on:
-      - router
-      - cron
-    healthcheck:
-      test: ["CMD", "sh", "-c", "nc -z localhost 80"]
-      interval: 5s
-      timeout: 3s
-      retries: 10
-      start_period: 10s
-    environment:
-      - BACKEND_HOST=router
-      - BACKEND_PORT=80
-      - PHP_UPSTREAM=php
-      - CRON_UPSTREAM=cron
-      - VARNISH_SIZE=512M
-    labels:
-      - traefik.enable=true
-      # Serve gally over http
-      - traefik.http.routers.gally-$COMPOSE_PROJECT_NAME-http.rule=Host(`${SERVER_NAME:-gally.localhost}`)
-      - traefik.http.routers.gally-$COMPOSE_PROJECT_NAME-http.entrypoints=http
-      # Serve gally over https
-      - traefik.http.routers.gally-$COMPOSE_PROJECT_NAME-https.rule=Host(`${SERVER_NAME:-gally.localhost}`)
-      - traefik.http.routers.gally-$COMPOSE_PROJECT_NAME-https.entrypoints=https
-      - traefik.http.routers.gally-$COMPOSE_PROJECT_NAME-https.tls=true
 
   router:
     build:
@@ -105,7 +77,16 @@ services:
       - PWA_UPSTREAM=${PWA_UPSTREAM:-pwa:3000}
       - API_UPSTREAM=${API_UPSTREAM:-php:9000}
       - EXAMPLE_UPSTREAM=${PWA_UPSTREAM:-pwa:3000}
-  
+    labels:
+      - traefik.enable=true
+      # Serve gally over http
+      - traefik.http.routers.gally-$COMPOSE_PROJECT_NAME-http.rule=Host(`${SERVER_NAME:-gally.localhost}`)
+      - traefik.http.routers.gally-$COMPOSE_PROJECT_NAME-http.entrypoints=http
+      # Serve gally over https
+      - traefik.http.routers.gally-$COMPOSE_PROJECT_NAME-https.rule=Host(`${SERVER_NAME:-gally.localhost}`)
+      - traefik.http.routers.gally-$COMPOSE_PROJECT_NAME-https.entrypoints=https
+      - traefik.http.routers.gally-$COMPOSE_PROJECT_NAME-https.tls=true
+
   php:
     <<: *php-base
     healthcheck:
